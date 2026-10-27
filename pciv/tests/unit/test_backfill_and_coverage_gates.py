@@ -26,57 +26,57 @@ from types import MappingProxyType
 
 import pytest
 
-from omega_engine_operating_system.adapters.packet_seat import (
+from operating_system.adapters.packet_seat import (
     PacketSeatAdapterV1,
     ProviderCallSpy,
     RetryAuthorizedV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.backfill import (
+from operating_system.adapters.prompt_civ.backfill import (
     BackfillReceiptV1,
     PromptCivBackfillEngineV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.cas import ContentAddressedStorageV1
-from omega_engine_operating_system.adapters.prompt_civ.domain import (
+from operating_system.adapters.prompt_civ.cas import ContentAddressedStorageV1
+from operating_system.adapters.prompt_civ.domain import (
     DomainPlacementV1,
     hard_domain_eligible,
 )
-from omega_engine_operating_system.adapters.prompt_civ.event_log import (
+from operating_system.adapters.prompt_civ.event_log import (
     DurableEventLogV1,
     EventIdentityConflictError,
     PromptCivEventV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.fitness import (
+from operating_system.adapters.prompt_civ.fitness import (
     ComparativeClaimAuditorV1,
     ParetoFrontSelectorV1,
     PromptFitnessCalculatorV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.forge import (
+from operating_system.adapters.prompt_civ.forge import (
     MetaOperatorProposalV1,
     MetaProposalRegistryV1,
     PopulationPolicyV1,
     PromptMutationEngineV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.genealogy import (
+from operating_system.adapters.prompt_civ.genealogy import (
     LineageGraphV1,
     RelationshipType,
 )
-from omega_engine_operating_system.adapters.prompt_civ.immunity import (
+from operating_system.adapters.prompt_civ.immunity import (
     DAGHopDistanceCalculatorV1,
     GlobalCustodyRegistryV1,
     ImmunityPropagationEngineV1,
     LineageTaintEngineV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.matching import (
+from operating_system.adapters.prompt_civ.matching import (
     ReferenceTrailEvaporationCalculatorV1,
     is_candidate_eligible,
 )
-from omega_engine_operating_system.adapters.prompt_civ.rank import (
+from operating_system.adapters.prompt_civ.rank import (
     AncestralRankCalculatorV1,
     ExactRowReductionSolverV1,
     RankCertificateVerifierV1,
     reconstruct_transition_matrix,
 )
-from omega_engine_operating_system.adapters.prompt_civ.record import (
+from operating_system.adapters.prompt_civ.record import (
     PromptGenomeRegistryV1,
     PromptGenomeV1,
     PromptViewEngineV1,
@@ -89,11 +89,11 @@ from omega_engine_operating_system.adapters.prompt_civ.record import (
 # ==============================================================================
 
 def test_backfill_default_and_env_root(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
-    monkeypatch.delenv("OMEGA_INTELLIGENCE_ROOT", raising=False)
+    monkeypatch.delenv("CORE_INTELLIGENCE_ROOT", raising=False)
     engine_default = PromptCivBackfillEngineV1()
     assert engine_default.intelligence_root == Path("_intelligence")
 
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(tmp_path / "env_intel"))
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(tmp_path / "env_intel"))
     engine_env = PromptCivBackfillEngineV1()
     assert engine_env.intelligence_root == tmp_path / "env_intel"
 
@@ -450,7 +450,7 @@ def test_fitness_obligations_and_pareto() -> None:
         "ob_1",
         {"obligation_id": "ob_1", "sealed_receipt_digest": "sha_123", "verifier_status": "VERIFIED_EXACT"},
     ) == 0
-    from omega_engine_prompt_civilization.domain.causal_witness import seal_causal_witness
+    from pciv.domain.causal_witness import seal_causal_witness
 
     assert calc.extract_obligation_success_credit(
         "ob_1",
@@ -527,7 +527,7 @@ def test_lineage_graph_dag_path_and_cycle_prevention() -> None:
             witness_receipt={"unverified": True},
         )
 
-    from omega_engine_prompt_civilization.domain.causal_witness import seal_causal_witness
+    from pciv.domain.causal_witness import seal_causal_witness
 
     # Add valid witnessed inheritance edge A -> B
     dag.add_edge(

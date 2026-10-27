@@ -14,17 +14,17 @@ from typing import Any, Dict
 from uuid import uuid4
 
 REPO_ROOT = next((parent for parent in Path(__file__).resolve().parents
-    if (parent / "omega_engine_pfp").is_dir() and (parent / "omega_engine_woland").is_dir()), None)
+    if (parent / "pfp").is_dir() and (parent / "adversary").is_dir()), None)
 if REPO_ROOT is not None and str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.exact_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.exact_checker import (
     verify_candidate,
 )
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.independent_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.independent_checker import (
     independent_check,
 )
-from omega_engine_pfp.infrastructure import synthesis_matrix as matrix_support
+from pfp.infrastructure import synthesis_matrix as matrix_support
 
 MODELS = [
     {

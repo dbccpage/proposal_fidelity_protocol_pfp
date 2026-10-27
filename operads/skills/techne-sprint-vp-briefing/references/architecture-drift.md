@@ -81,12 +81,12 @@ Blackrod action: revoke DONE credit
 
 ---
 
-# Optional Woland Handoff
+# Optional Adversary Handoff
 
 If the sprint reveals hidden contradiction, unrouted solver power, architecture drift,
-fake certainty, or unexplained residue, VP Engineering may recommend Woland review.
+fake certainty, or unexplained residue, VP Engineering may recommend Adversary review.
 
-Woland provides adversarial diagnosis.
+Adversary provides adversarial diagnosis.
 Blackrod retains final enforcement authority.
 
 ---

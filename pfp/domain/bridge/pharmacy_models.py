@@ -1,4 +1,4 @@
-"""Compatibility re-exports for Pharmacy models from omega_engine_woland.stage."""
+"""Compatibility re-exports for Pharmacy models from adversary.stage."""
 from __future__ import annotations
 
 from .pharmacy_seeder import (

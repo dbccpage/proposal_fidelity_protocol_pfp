@@ -10,13 +10,13 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.quantum.c029_coset import verify_independent_coset
-from omega_engine_pfp.infrastructure import challenge_execution as execution
+from pfp.domain.quantum.c029_coset import verify_independent_coset
+from pfp.infrastructure import challenge_execution as execution
 
 CHALLENGE = execution.ROOT / (
-    "omega_engine_pfp/tests/demo_004/c_quantum/c029_surface_code_min_weight_decoding"
+    "pfp/tests/demo_004/c_quantum/c029_surface_code_min_weight_decoding"
 )
-CURRENT_SOURCE = "omega_engine_pfp/domain/quantum/c029_coset.py"
+CURRENT_SOURCE = "pfp/domain/quantum/c029_coset.py"
 CHECKER_ID = "c029:gf2_coset_optimality.v1"
 
 
@@ -115,7 +115,7 @@ def test_original_maximum_weighted_cases_reject_nonminimal_generated_errors(name
 
 def test_no_matching_or_primary_checker_dependency_even_when_poisoned(monkeypatch):
     historical = importlib.import_module(
-        "omega_engine_pfp.tests.demo_004.c_quantum.c029_surface_code_min_weight_decoding"
+        "pfp.tests.demo_004.c_quantum.c029_surface_code_min_weight_decoding"
         ".judge_packet.checkers.independent_checker"
     )
     case = case_file()
@@ -132,7 +132,7 @@ def test_no_matching_or_primary_checker_dependency_even_when_poisoned(monkeypatc
         return original_import(name, *args, **kwargs)
 
     monkeypatch.setattr(builtins, "__import__", guarded)
-    module = importlib.reload(importlib.import_module("omega_engine_pfp.domain.quantum.c029_coset"))
+    module = importlib.reload(importlib.import_module("pfp.domain.quantum.c029_coset"))
     assert module.verify_independent_coset(case, original_answer())[0] is True
     assert module.verify_independent_coset(case, bad)[0] is False
 

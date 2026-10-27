@@ -19,7 +19,7 @@ import types
 from pathlib import Path
 
 ORIGINAL = "a76ad617a666820db649685b53602a423d766c12"
-SOURCE = "omega_engine_pfp/use_cases/symbol_game_runner.py"
+SOURCE = "pfp/use_cases/symbol_game_runner.py"
 PAPER = Path(__file__).absolute().parents[1]
 
 

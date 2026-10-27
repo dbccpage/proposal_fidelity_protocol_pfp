@@ -6,14 +6,14 @@ import subprocess
 
 import pytest
 
-from omega_engine_woland.tests.pilots.challenge_suite.replay_snapshots import replay
+from adversary.tests.pilots.challenge_suite.replay_snapshots import replay
 
 
 @pytest.mark.parametrize(
     "module",
     [
-        "omega_engine_education/pilots/challenge_suite/live.py",
-        "omega_engine_pfp/infrastructure/challenge_live.py",
+        "education/pilots/challenge_suite/live.py",
+        "pfp/infrastructure/challenge_live.py",
     ],
 )
 @pytest.mark.parametrize("fails", [False, True])
@@ -43,10 +43,10 @@ def test_deleted_captured_paths_are_temporary_even_on_replay_failure(tmp_path, f
     (run / "summary.json").write_text("{}")
     (run / "stage_1/receipt.json").write_text("{}")
     sources = {
-        "omega_engine_education/__init__.py": b"",
-        "omega_engine_pfp/__init__.py": b"",
-        "omega_engine_pfp/infrastructure/__init__.py": b"",
-        "omega_engine_education/pilots/challenge_suite/__init__.py": b"",
+        "education/__init__.py": b"",
+        "pfp/__init__.py": b"",
+        "pfp/infrastructure/__init__.py": b"",
+        "education/pilots/challenge_suite/__init__.py": b"",
         module: (
             b"def replay_live(path):\n    raise ValueError('fixture failure')\n"
             if fails
@@ -64,5 +64,5 @@ def test_deleted_captured_paths_are_temporary_even_on_replay_failure(tmp_path, f
     )
     result = replay(checkout, evidence, tmp_path / "receipt.json")
     assert result["status"] == ("FAIL" if fails else "PASS")
-    assert not (checkout / "omega_engine_education").exists()
+    assert not (checkout / "education").exists()
     assert git("status", "--porcelain") == ""

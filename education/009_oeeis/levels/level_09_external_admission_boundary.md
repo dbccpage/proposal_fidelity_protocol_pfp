@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/domain/external_admission.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/domain/external_admission.py
 ---
 
 # EIS Level 09: External Human Admission Boundary: Authority Isolation
 
 **AuthorityEffect:** None.  
 **Level:** Level 09 (External Human Ratification, Exact Rule Binding & Anti-Phantom Fences)  
-**Python Admission Seam:** [`omega_engine_epistemic_immune_system.domain.external_admission`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py)  
+**Python Admission Seam:** [`eis.domain.external_admission`](../../../../eis/domain/external_admission.py)  
 **Primary Types:** `HumanAntiSkillAdmissionDecisionV1`, `ExternalAdmissionRequestV1`  
 **Core Falsifiers:** `F-CUSTODY-02`, `F-IMMUNE-03`, `F-IMMUNE-04`
 
@@ -56,9 +56,9 @@ graph TD
 A core constitutional invariant of the Symbol Game repository is that **autonomous AI agents and LLM swarms possess zero authority to promote rules into operational enforcement**. If an agent could discover a bug, generate a detector, test it, and promote it to `Admitted`, the entire security and mathematical verification perimeter could be subverted by a compromised or hallucinating model.
 
 Level 09 establishes the **External Human Admission Boundary**:
-- Autonomous agents can mine, propose, and evaluate candidates, packaging them into [`ExternalAdmissionRequestV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py).
+- Autonomous agents can mine, propose, and evaluate candidates, packaging them into [`ExternalAdmissionRequestV1`](../../../../eis/domain/external_admission.py).
 - Operational admission authority exists strictly **outside** the four agent host roots.
-- An admission decision is an authenticated, external human transaction ([`HumanAntiSkillAdmissionDecisionV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py)) bound immutably to the exact byte-level hash of the detector rule and its declared scope.
+- An admission decision is an authenticated, external human transaction ([`HumanAntiSkillAdmissionDecisionV1`](../../../../eis/domain/external_admission.py)) bound immutably to the exact byte-level hash of the detector rule and its declared scope.
 - Reusing an admission decision against modified rule bytes is rejected with `F-CUSTODY-02`.
 
 ---
@@ -89,7 +89,7 @@ Level 09 establishes the **External Human Admission Boundary**:
 ## 3. Python Domain Seam
 
 ```python
-# omega_engine_epistemic_immune_system.domain.external_admission
+# eis.domain.external_admission
 @dataclass(frozen=True)
 class HumanAntiSkillAdmissionDecisionV1:
     decision_id: str

@@ -7,22 +7,22 @@ from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_pfp.infrastructure.estimated_gateway import (
+from operations.domain.rop.result import Err
+from pfp.infrastructure.estimated_gateway import (
     DurableRunGateway,
     EstimatedBudgetGateway,
     create_accounted_openrouter_gateway,
     create_accounted_anthropic_gateway,
 )
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
-from omega_engine_woland.domain.providers.types import (
+from pfp.infrastructure.task_turn import prepare_task_turn
+from adversary.domain.providers.types import (
     CandidateRequest,
     DecodingParamsV1,
     Provider,
     thaw_json,
 )
-from omega_engine_woland.infrastructure.providers.openai_compat import build_openai_compat_body
-from omega_engine_woland.infrastructure.providers.anthropic_messages import build_anthropic_body
+from adversary.infrastructure.providers.openai_compat import build_openai_compat_body
+from adversary.infrastructure.providers.anthropic_messages import build_anthropic_body
 
 
 def _output_bound(gateway):

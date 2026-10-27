@@ -7,12 +7,12 @@ from functools import partial
 from importlib import import_module
 from pathlib import Path
 
-from omega_engine_governance.domain.intelligence_community import canonical_intelligence_route
+from governance.domain.intelligence_community import canonical_intelligence_route
 
 
 def _dispatch(module, command, args):
     if not module.endswith(".demo_commands"):
-        from omega_engine_pfp import _initialize_exact_ports
+        from pfp import _initialize_exact_ports
 
         _initialize_exact_ports()
     return getattr(import_module(module), command)(args)
@@ -43,7 +43,7 @@ def register_source_bound_checker_subparser(
     check.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.code_change_commands",
+            "pfp.entrypoints.cli.code_change_commands",
             "cmd_code_change_check_source_bound",
         )
     )
@@ -58,14 +58,14 @@ def register_code_change_subparsers(
     )
     cc_create.add_argument("--payload", type=Path, required=True)
     cc_create.add_argument("--task-id", required=True)
-    cc_create.add_argument("--carrier-id", default="omega-code-change-proposal-v1")
+    cc_create.add_argument("--carrier-id", default="core-code-change-proposal-v1")
     cc_create.add_argument("--step-budget", type=int, default=None)
     cc_create.add_argument("--artifact-dir", type=Path, default=None)
     cc_create.add_argument("--output", type=Path, default=None)
     cc_create.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.code_change_commands",
+            "pfp.entrypoints.cli.code_change_commands",
             "cmd_code_change_create_task",
         )
     )
@@ -87,7 +87,7 @@ def register_code_change_subparsers(
     cc_attach.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.code_change_commands",
+            "pfp.entrypoints.cli.code_change_commands",
             "cmd_code_change_attach_candidate",
         )
     )
@@ -104,7 +104,7 @@ def register_code_change_subparsers(
     cc_eval.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.code_change_commands",
+            "pfp.entrypoints.cli.code_change_commands",
             "cmd_code_change_evaluate",
         )
     )
@@ -115,7 +115,7 @@ def register_code_change_subparsers(
     cc_verify.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.code_change_commands",
+            "pfp.entrypoints.cli.code_change_commands",
             "cmd_code_change_verify_run_root",
         )
     )
@@ -145,7 +145,7 @@ def register_code_change_subparsers(
     cc_run.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.code_change_commands",
+            "pfp.entrypoints.cli.code_change_commands",
             "cmd_code_change_run_fixture",
         )
     )
@@ -158,7 +158,7 @@ def register_code_change_subparsers(
     cc_render.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.code_change_commands",
+            "pfp.entrypoints.cli.code_change_commands",
             "cmd_code_change_render_markdown",
         )
     )
@@ -169,7 +169,7 @@ def register_gate11_subparsers(sub: argparse._SubParsersAction[argparse.Argument
     g_self.add_argument("--out-dir", type=Path, default=None)
     g_self.set_defaults(
         func=partial(
-            _dispatch, "omega_engine_pfp.entrypoints.cli.gate11_commands", "cmd_gate11_self"
+            _dispatch, "pfp.entrypoints.cli.gate11_commands", "cmd_gate11_self"
         )
     )
 
@@ -179,7 +179,7 @@ def register_gate11_subparsers(sub: argparse._SubParsersAction[argparse.Argument
     g_ingest.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.gate11_commands",
+            "pfp.entrypoints.cli.gate11_commands",
             "cmd_gate11_ingest",
         )
     )
@@ -189,7 +189,7 @@ def register_gate11_subparsers(sub: argparse._SubParsersAction[argparse.Argument
     g_project.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.gate11_commands",
+            "pfp.entrypoints.cli.gate11_commands",
             "cmd_gate11_project",
         )
     )
@@ -207,7 +207,7 @@ def register_glyph_subparsers(
         "--presentations",
         help=(
             "Path to the rewrite presentations THIS HOST pins (see "
-            "omega_engine_governance/contracts/pinned/"
+            "governance/contracts/pinned/"
             "symbol_game_presentations.json). A packet's presentation_ref is "
             "resolved against this file and nothing else; without it, every row "
             "about a presentation is UNCHECKABLE."
@@ -217,7 +217,7 @@ def register_glyph_subparsers(
         "--carrier",
         help=(
             "Path to the carrier THIS HOST pins (see "
-            "omega_engine_governance/contracts/pinned/symbol_game_carrier.json). "
+            "governance/contracts/pinned/symbol_game_carrier.json). "
             "Without it the packet's own carrier is used and the run tops out "
             "at SELF_CONSISTENT_ONLY."
         ),
@@ -225,7 +225,7 @@ def register_glyph_subparsers(
     verify.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.glyph_commands",
+            "pfp.entrypoints.cli.glyph_commands",
             "cmd_verify_glyph_reply",
         )
     )
@@ -274,7 +274,7 @@ def register_prompt_subparsers(sub: argparse._SubParsersAction[argparse.Argument
     compile_p.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.prompt_commands",
+            "pfp.entrypoints.cli.prompt_commands",
             "cmd_compile_prompt",
         )
     )
@@ -286,7 +286,7 @@ def register_prompt_subparsers(sub: argparse._SubParsersAction[argparse.Argument
     verify_p.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.prompt_commands",
+            "pfp.entrypoints.cli.prompt_commands",
             "cmd_verify_prompt",
         )
     )
@@ -296,7 +296,7 @@ def register_prompt_subparsers(sub: argparse._SubParsersAction[argparse.Argument
     )
     create_from_p.add_argument("--artifact", type=Path, required=True)
     create_from_p.add_argument("--task-id", required=True)
-    create_from_p.add_argument("--carrier-id", default="omega-llm-turn-v1")
+    create_from_p.add_argument("--carrier-id", default="core-llm-turn-v1")
     create_from_p.add_argument(
         "--role", default="user", choices=["user", "assistant", "system", "tool"]
     )
@@ -313,7 +313,7 @@ def register_prompt_subparsers(sub: argparse._SubParsersAction[argparse.Argument
     create_from_p.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.prompt_commands",
+            "pfp.entrypoints.cli.prompt_commands",
             "cmd_create_task_from_prompt",
         )
     )
@@ -337,12 +337,12 @@ def register_run_subparsers(sub: argparse._SubParsersAction[argparse.ArgumentPar
         run_p.add_argument("--candidate-budget", type=int, default=3)
         run_p.add_argument("--operation-budget", type=int, default=20)
         run_p.add_argument("--max-steps", type=int, default=4, help="Max reduction steps")
-        run_p.add_argument("--carrier-id", default="omega-symbol-game-v1")
+        run_p.add_argument("--carrier-id", default="core-symbol-game-v1")
         run_p.add_argument("--output-dir", type=Path, default=Path(canonical_intelligence_route("_intelligence/symbol_game")))
         run_p.add_argument("--output", type=Path, default=None)
         run_p.set_defaults(
             func=partial(
-                _dispatch, "omega_engine_pfp.entrypoints.cli.run_commands", "cmd_run_turn"
+                _dispatch, "pfp.entrypoints.cli.run_commands", "cmd_run_turn"
             )
         )
 
@@ -363,13 +363,13 @@ def register_turn_subparsers(sub: argparse._SubParsersAction[argparse.ArgumentPa
     create.add_argument("--parent-packet-id", default=None)
     create.add_argument("--conversation-root-id", default=None)
     create.add_argument("--task-id", required=True)
-    create.add_argument("--carrier-id", default="omega-llm-turn-v1")
+    create.add_argument("--carrier-id", default="core-llm-turn-v1")
     create.add_argument("--step-budget", type=int, default=None)
     create.add_argument("--artifact-dir", type=Path, default=None)
     create.add_argument("--output", type=Path, default=None)
     create.set_defaults(
         func=partial(
-            _dispatch, "omega_engine_pfp.entrypoints.cli.turn_commands", "cmd_create_task"
+            _dispatch, "pfp.entrypoints.cli.turn_commands", "cmd_create_task"
         )
     )
 
@@ -387,7 +387,7 @@ def register_turn_subparsers(sub: argparse._SubParsersAction[argparse.ArgumentPa
     attach.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.turn_commands",
+            "pfp.entrypoints.cli.turn_commands",
             "cmd_attach_candidate",
         )
     )
@@ -404,7 +404,7 @@ def register_turn_subparsers(sub: argparse._SubParsersAction[argparse.ArgumentPa
     evaluate.add_argument("--output", type=Path, default=None)
     evaluate.set_defaults(
         func=partial(
-            _dispatch, "omega_engine_pfp.entrypoints.cli.turn_commands", "cmd_evaluate"
+            _dispatch, "pfp.entrypoints.cli.turn_commands", "cmd_evaluate"
         )
     )
 
@@ -414,7 +414,7 @@ def register_turn_subparsers(sub: argparse._SubParsersAction[argparse.ArgumentPa
     verify.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.turn_commands",
+            "pfp.entrypoints.cli.turn_commands",
             "cmd_verify_run_root",
         )
     )
@@ -425,7 +425,7 @@ def register_turn_subparsers(sub: argparse._SubParsersAction[argparse.ArgumentPa
     render.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.turn_commands",
+            "pfp.entrypoints.cli.turn_commands",
             "cmd_render_markdown",
         )
     )
@@ -447,7 +447,7 @@ def register_workbench_subparsers(sub: argparse._SubParsersAction[argparse.Argum
     search.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.workbench_commands",
+            "pfp.entrypoints.cli.workbench_commands",
             "cmd_search_gauge",
         )
     )
@@ -457,7 +457,7 @@ def register_workbench_subparsers(sub: argparse._SubParsersAction[argparse.Argum
     serve.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.workbench_commands",
+            "pfp.entrypoints.cli.workbench_commands",
             "cmd_serve_workbench",
         )
     )
@@ -470,7 +470,7 @@ def register_demo_subparsers(sub):
     listing.add_argument("--json", action="store_true")
     listing.set_defaults(
         func=partial(
-            _dispatch, "omega_engine_pfp.entrypoints.cli.demo_commands", "cmd_list"
+            _dispatch, "pfp.entrypoints.cli.demo_commands", "cmd_list"
         )
     )
     run = commands.add_parser("run", help="Run into a fresh output directory")
@@ -488,7 +488,7 @@ def register_demo_subparsers(sub):
     policy.add_argument("--max-cost-microusd", type=int)
     run.add_argument("--env-file", type=Path)
     run.set_defaults(
-        func=partial(_dispatch, "omega_engine_pfp.entrypoints.cli.demo_commands", "cmd_run")
+        func=partial(_dispatch, "pfp.entrypoints.cli.demo_commands", "cmd_run")
     )
     verify = commands.add_parser(
         "verify", help="Replay fixture receipts; integrity-check live receipts"
@@ -496,7 +496,7 @@ def register_demo_subparsers(sub):
     verify.add_argument("receipt", type=Path)
     verify.set_defaults(
         func=partial(
-            _dispatch, "omega_engine_pfp.entrypoints.cli.demo_commands", "cmd_verify"
+            _dispatch, "pfp.entrypoints.cli.demo_commands", "cmd_verify"
         )
     )
 
@@ -522,7 +522,7 @@ def register_challenge_subparsers(
     build.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.challenge_commands",
+            "pfp.entrypoints.cli.challenge_commands",
             "cmd_challenge_build",
         )
     )
@@ -537,7 +537,7 @@ def register_challenge_subparsers(
     commit.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.challenge_commands",
+            "pfp.entrypoints.cli.challenge_commands",
             "cmd_challenge_commit",
         )
     )
@@ -552,7 +552,7 @@ def register_challenge_subparsers(
     freeze.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.challenge_commands",
+            "pfp.entrypoints.cli.challenge_commands",
             "cmd_challenge_freeze",
         )
     )
@@ -568,7 +568,7 @@ def register_challenge_subparsers(
     score.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.challenge_commands",
+            "pfp.entrypoints.cli.challenge_commands",
             "cmd_challenge_score",
         )
     )
@@ -579,7 +579,7 @@ def register_challenge_subparsers(
     status.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.challenge_commands",
+            "pfp.entrypoints.cli.challenge_commands",
             "cmd_challenge_status",
         )
     )
@@ -594,7 +594,7 @@ def register_challenge_subparsers(
     run_arms.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.challenge_commands",
+            "pfp.entrypoints.cli.challenge_commands",
             "cmd_challenge_run_arms",
         )
     )
@@ -618,7 +618,7 @@ def _add_swarm_developer_commands(
     p_run.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.swarm_developer",
+            "pfp.entrypoints.cli.swarm_developer",
             "cmd_run_swarm",
         )
     )
@@ -637,7 +637,7 @@ def _add_swarm_developer_commands(
     p_audit.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.swarm_developer",
+            "pfp.entrypoints.cli.swarm_developer",
             "cmd_fireproof_audit",
         )
     )
@@ -647,7 +647,7 @@ def _add_swarm_developer_commands(
     p_val.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.swarm_developer",
+            "pfp.entrypoints.cli.swarm_developer",
             "cmd_validate_contract",
         )
     )
@@ -680,7 +680,7 @@ def register_mode_subparsers(
     listing.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.mode_commands",
+            "pfp.entrypoints.cli.mode_commands",
             "cmd_mode_list",
         )
     )
@@ -692,7 +692,7 @@ def register_mode_subparsers(
     show.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.mode_commands",
+            "pfp.entrypoints.cli.mode_commands",
             "cmd_mode_show",
         )
     )
@@ -703,7 +703,7 @@ def register_mode_subparsers(
     validate.set_defaults(
         func=partial(
             _dispatch,
-            "omega_engine_pfp.entrypoints.cli.mode_commands",
+            "pfp.entrypoints.cli.mode_commands",
             "cmd_mode_validate",
         )
     )

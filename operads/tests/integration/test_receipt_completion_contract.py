@@ -4,7 +4,7 @@ import sqlite3
 
 from blake3 import blake3
 
-from omega_engine_operads.infrastructure.storage.receipt_ledger import (
+from operads.infrastructure.storage.receipt_ledger import (
     ChainStatus,
     ReceiptLedger,
 )
@@ -16,7 +16,7 @@ def independent_tip(rows):
     for sequence, payload, prev_digest, stored_digest in rows:
         assert prev_digest == previous
         encoded = (
-            b"omega.oewas.receipt_ledger.v1"
+            b"core.oewas.receipt_ledger.v1"
             + str(sequence).encode("ascii")
             + b"\0"
             + previous.encode("ascii")

@@ -9,7 +9,7 @@ Empirical verification and white-box boundary stress suite for:
 - domain/biochem/ (Hill cooperative quorum, kinetic proofreading, Kd > 0 bounds)
 - domain/solvers/ (9-dot gauge break, terminal reality gate, strict descent)
 
-Soviet Lev Landau Falsification Methodology:
+Examiner Falsification Methodology:
 Every test explicitly documents:
 - Invariant: Mathematical, structural, or demographic law enforced.
 - Break: Deliberate adversarial attack, boundary condition, or invalid injection.
@@ -35,12 +35,12 @@ import pytest
 # -----------------------------------------------------------------------------
 # Part 1 Imports: Cemetery & DAG Persistence
 # -----------------------------------------------------------------------------
-from omega_engine_pfp.domain.entities.cemetery_entry import CemeteryEntry, TailReceipt
-from omega_engine_pfp.domain.exceptions import (
+from pfp.domain.entities.cemetery_entry import CemeteryEntry, TailReceipt
+from pfp.domain.exceptions import (
     LedgerIntegrityError,
     LedgerTruncationError,
 )
-from omega_engine_pfp.infrastructure.persistence.cemetery_sink import (
+from pfp.infrastructure.persistence.cemetery_sink import (
     ALLOWED_ENTRY_KEYS,
     GENESIS_DIGEST,
     HEADER_SCHEMA,
@@ -51,7 +51,7 @@ from omega_engine_pfp.infrastructure.persistence.cemetery_sink import (
 # -----------------------------------------------------------------------------
 # Part 2 Imports: Exact Rational Kernel & Linear Algebra
 # -----------------------------------------------------------------------------
-from omega_engine_pfp.domain.exact import (
+from pfp.domain.exact import (
     ONE,
     ZERO,
     ExactError,
@@ -62,25 +62,25 @@ from omega_engine_pfp.domain.exact import (
     linalg as L,
     parse_q,
 )
-from omega_engine_pfp.domain.ports.exact_ports import ExactLinearAlgebraPort
+from pfp.domain.ports.exact_ports import ExactLinearAlgebraPort
 
 # -----------------------------------------------------------------------------
 # Part 3 Imports: Epistemic Immune System & Pharmacy
 # -----------------------------------------------------------------------------
-from omega_engine_pfp.domain.immune.models import (
+from pfp.domain.immune.models import (
     FailureClass,
     FailureReceipt,
     Finding as PharmacyFinding,
     PharmacyDisposition,
 )
-from omega_engine_pfp.domain.immune.thymus import (
+from pfp.domain.immune.thymus import (
     ApoptosisReceipt,
     SelfPanel,
     SelfPanelEntry,
     ThymusGate,
     ThymusSelectionResult,
 )
-from omega_engine_pfp.domain.immune.danger_gate import (
+from pfp.domain.immune.danger_gate import (
     DangerDecision,
     DangerSeverity,
     Signal1AstMatch,
@@ -88,13 +88,13 @@ from omega_engine_pfp.domain.immune.danger_gate import (
     TwoSignalDangerGate,
     TwoSignalDecision,
 )
-from omega_engine_pfp.domain.immune.treg import (
+from pfp.domain.immune.treg import (
     AuthorityLevel,
     AutoimmuneToxicityReport,
     RegulatoryAntibody,
     TregSupervisor,
 )
-from omega_engine_pfp.domain.immune.clonal_selection import (
+from pfp.domain.immune.clonal_selection import (
     ClonalCandidate,
     ClonalSelectionEngine,
     KillConditionReceipt,
@@ -103,7 +103,7 @@ from omega_engine_pfp.domain.immune.clonal_selection import (
 # -----------------------------------------------------------------------------
 # Part 4 Imports: Polarized Operads
 # -----------------------------------------------------------------------------
-from omega_engine_pfp.domain.operad.errors import (
+from pfp.domain.operad.errors import (
     ArityMismatchError,
     IllTypedCompositionError,
     OperadError,
@@ -112,25 +112,25 @@ from omega_engine_pfp.domain.operad.errors import (
     ProhibitedRepairError,
     SliceViolationError,
 )
-from omega_engine_pfp.domain.operad.graft import GraftSite, PlanarGraft
-from omega_engine_pfp.domain.operad.morphisms import (
+from pfp.domain.operad.graft import GraftSite, PlanarGraft
+from pfp.domain.operad.morphisms import (
     CandidatePatch,
     ConstructiveMorphism,
     Finding as OperadFinding,
     InterrogativeMorphism,
     RepairMorphism,
 )
-from omega_engine_pfp.domain.operad.operad import PolarizedOperadTriad
-from omega_engine_pfp.domain.operad.polarity import Polarity
+from pfp.domain.operad.operad import PolarizedOperadTriad
+from pfp.domain.operad.polarity import Polarity
 
 # -----------------------------------------------------------------------------
 # Part 5 Imports: Prompt Civilization & Socratic Elenchus
 # -----------------------------------------------------------------------------
-from omega_engine_pfp.domain.civilization.elenchus import (
+from pfp.domain.civilization.elenchus import (
     ElenchusResult,
     SocraticElenchusBureau,
 )
-from omega_engine_pfp.domain.civilization.models import (
+from pfp.domain.civilization.models import (
     CivilizationPrompt,
     CivilizationState,
     PopulationTier,
@@ -141,16 +141,16 @@ from omega_engine_pfp.domain.civilization.models import (
 # -----------------------------------------------------------------------------
 # Part 6 Imports: Biochem (Allostery & Proofreading)
 # -----------------------------------------------------------------------------
-from omega_engine_pfp.domain.biochem.allostery import (
+from pfp.domain.biochem.allostery import (
     AllostericConsensusGate,
     AllostericDecision,
     HillParameters,
 )
-from omega_engine_pfp.domain.biochem.errors import (
+from pfp.domain.biochem.errors import (
     DissociationError,
     ZeroFloatViolationError,
 )
-from omega_engine_pfp.domain.biochem.proofreading import (
+from pfp.domain.biochem.proofreading import (
     DissociationReceipt,
     HopfieldNinioProofreader,
     KineticProofreadingState,
@@ -159,13 +159,13 @@ from omega_engine_pfp.domain.biochem.proofreading import (
 # -----------------------------------------------------------------------------
 # Part 7 Imports: Solvers and Retraction
 # -----------------------------------------------------------------------------
-from omega_engine_pfp.domain.models import ObstructionScore, StepVerdict
-from omega_engine_pfp.domain.solvers.retraction import (
+from pfp.domain.models import ObstructionScore, StepVerdict
+from pfp.domain.solvers.retraction import (
     RetractionTurnOutcome,
     compute_obstruction_score,
     execute_retraction_turn,
 )
-from omega_engine_pfp.domain.solvers import (
+from pfp.domain.solvers import (
     AdmitDatum,
     HolonomyLoopClosed,
     HomologyBoundaryClosed,
@@ -976,14 +976,14 @@ class TestPolarizedOperadAdversarialHardening:
         Mutation: Granting slice permits execution.
         """
         triad = PolarizedOperadTriad()
-        triad.grant_slice("soviet_builder", {"propose_candidate", "graft_vertex"})
+        triad.grant_slice("builder", {"propose_candidate", "graft_vertex"})
 
         # Authorized call succeeds
-        triad.check_slice_permission("soviet_builder", "propose_candidate")
+        triad.check_slice_permission("builder", "propose_candidate")
 
         # Unauthorized call fails
         with pytest.raises(SliceViolationError) as exc_info:
-            triad.check_slice_permission("soviet_builder", "evaluate_verdict")
+            triad.check_slice_permission("builder", "evaluate_verdict")
         assert "attempted to invoke unlicensed operad operation 'evaluate_verdict'" in str(exc_info.value)
 
 

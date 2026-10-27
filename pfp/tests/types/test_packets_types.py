@@ -16,7 +16,7 @@ from pydantic import ValidationError
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from pfp_types_test_support import load_yaml, parity_problems, pfp_root  # noqa: E402
-from omega_engine_pfp.domain.homology import cycle_balance as M
+from pfp.domain.homology import cycle_balance as M
 
 FIXTURES = {
     "problem": "01_genesis_cycle_balance_problem.json",

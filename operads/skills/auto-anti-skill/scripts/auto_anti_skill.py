@@ -3,7 +3,7 @@
 
 **AuthorityEffect:** None. Canonical skill admitted under ooutwire register Entry 0275.
 Executes prompt civilization CLI for dialogue segmentation and candidate mining,
-enforcing all outputs strictly under `omega_engine_epistemic_immune_system/antiskills/ooutwire/`.
+enforcing all outputs strictly under `eis/antiskills/ooutwire/`.
 """
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-RUNTIME_MODULE = "omega_engine.crates.prompt_civilization.cli"
+RUNTIME_MODULE = "engine.crates.prompt_civilization.cli"
 
 _ABSENT = f"""\
 auto-anti-skill: REFUSED - runtime absent.
@@ -40,7 +40,7 @@ def _required_ooutwire_output(root: Path) -> Path:
     if not output.is_absolute():
         output = root / output
     output = output.resolve(strict=False)
-    allowed = (root / "omega_engine_epistemic_immune_system" / "antiskills" / "ooutwire").resolve()
+    allowed = (root / "eis" / "antiskills" / "ooutwire").resolve()
     if not output.is_relative_to(allowed) or output == allowed:
         raise SystemExit("auto-anti-skill output must be a file under ooutwire/")
     relative = output.relative_to(allowed)
@@ -67,15 +67,15 @@ def main() -> int:
     # Provide sensible defaults if not explicitly passed
     cmd = sys.argv[1]
     if cmd == "segment-dialogue" and "--source" not in sys.argv:
-        default_source = root / "omega_engine_epistemic_immune_system" / "antiskills" / "fixtures" / "default_transcript.txt"
+        default_source = root / "eis" / "antiskills" / "fixtures" / "default_transcript.txt"
         sys.argv.extend(["--source", str(default_source)])
     elif cmd == "mine-candidates" and "--episodes" not in sys.argv:
-        default_episodes = root / "omega_engine_epistemic_immune_system" / "antiskills" / "fixtures" / "default_episodes.json"
+        default_episodes = root / "eis" / "antiskills" / "fixtures" / "default_episodes.json"
         sys.argv.extend(["--episodes", str(default_episodes)])
 
     sys.path.insert(0, str(root))
     try:
-        from omega_engine.crates.prompt_civilization.cli import main as runtime_main
+        from engine.crates.prompt_civilization.cli import main as runtime_main
     except ImportError:
         raise SystemExit(_ABSENT) from None
 

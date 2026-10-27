@@ -4,9 +4,9 @@ paths:
   - ".claude/**"
   - ".codex/**"
   - ".grok/**"
-  - "omega_engine_operads/**"
-  - "omega_engine_operations/**/cicd/**"
-  - "omega_engine_pfp/**"
+  - "operads/**"
+  - "operations/**/cicd/**"
+  - "pfp/**"
 ---
 
 # Rule: Operad Architecture & Swarm Protocols

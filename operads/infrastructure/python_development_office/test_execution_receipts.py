@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operads.domain.python_development_office.test_execution_receipt import (
+from operads.domain.python_development_office.test_execution_receipt import (
     TestExecutionReceipt,
 )
 

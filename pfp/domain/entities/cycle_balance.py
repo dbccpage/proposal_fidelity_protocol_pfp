@@ -116,7 +116,7 @@ class ProblemEntity(Entity):
     def to_canonical_dict(self) -> dict[str, Any]:
         """Convert to RFC 8785 / canonical serialization dictionary."""
         return {
-            "schema_version": "omega.symbol_game.cycle_balance.problem.v1",
+            "schema_version": "core.symbol_game.cycle_balance.problem.v1",
             "problem_id": self.id.value,
             "case_id": self.case_id.value,
             "authority_effect": "None",
@@ -196,7 +196,7 @@ class CandidateEntity(Entity):
 
     def to_canonical_dict(self) -> dict[str, Any]:
         return {
-            "schema_version": "omega.symbol_game.cycle_balance.candidate.v1",
+            "schema_version": "core.symbol_game.cycle_balance.candidate.v1",
             "candidate_id": self.id.value,
             "problem_digest": self.problem_digest.value,
             "authority_effect": "None",
@@ -253,7 +253,7 @@ class VerifierEntity(Entity):
 
     def to_canonical_dict(self) -> dict[str, Any]:
         return {
-            "schema_version": "omega.symbol_game.cycle_balance.verifier.v1",
+            "schema_version": "core.symbol_game.cycle_balance.verifier.v1",
             "verifier_id": self.id.value,
             "arithmetic_domain": self.arithmetic_domain.value,
             "problem_digest": self.problem_digest.value,
@@ -326,7 +326,7 @@ class ReceiptEntity(Entity):
 
     def to_canonical_dict(self, include_receipt_digest: bool = True) -> dict[str, Any]:
         return {
-            "schema_version": "omega.symbol_game.cycle_balance.receipt.v1",
+            "schema_version": "core.symbol_game.cycle_balance.receipt.v1",
             "receipt_id": self.id.value,
             "authority_effect": "None",
             "problem_digest": self.problem_digest.value,

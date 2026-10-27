@@ -54,7 +54,7 @@ governance_dependency: "None"
 # Application Note: Epistemic Immune System, Negative Selection, and Two-Signal Danger Gates
 
 **Status:** Downstream Mathematical Application  
-**Context:** Formulates the mathematical foundation of the Omega Engine Epistemic Immune System (OEEIS): detector state spaces, the sealed Self-Panel, the Negative Selection Algorithm (NSA), the Two-Signal Danger Activation Gate, and Clonal Selection with Regulatory T-Cell (Treg) peripheral tolerance. Grounded in `MASTER_DEMO_VISION_SYMBOL_GAME_OEWAS_EIS.md` (not found at source pin `c419cc6beb`, 2026-10-20), `demo_eis_failure_classes` (now at `omega_engine_atlas/coda_atlas/F004_papers/015_pfp/003_pfp_host_admitted_failure_detectors/demos/demo_eis_failure_classes/`), and Challenges C081–C090.  
+**Context:** Formulates the mathematical foundation of the engine Epistemic Immune System (OEEIS): detector state spaces, the sealed Self-Panel, the Negative Selection Algorithm (NSA), the Two-Signal Danger Activation Gate, and Clonal Selection with Regulatory T-Cell (Treg) peripheral tolerance. Grounded in `MASTER_DEMO_VISION_SYMBOL_GAME_OEWAS_EIS.md` (not found at source pin `c419cc6beb`, 2026-10-20), `demo_eis_failure_classes` (now at `atlas/coda_atlas/F004_papers/015_pfp/003_pfp_host_admitted_failure_detectors/demos/demo_eis_failure_classes/`), and Challenges C081–C090.  
 **Authority:** None. Artificial immune system models and host boundary verification.
 
 ---

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 from ..dtos.api_error_dto import ApiErrorDTO
 from ..dtos.command_dtos import VerifyCatalogCommand
 from ..dtos.success_dtos import VerifyCatalogResultDTO

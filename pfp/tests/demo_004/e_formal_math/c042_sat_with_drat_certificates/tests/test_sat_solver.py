@@ -5,9 +5,9 @@ Unit tests for CDCL SAT solver and DRAT proof emission.
 
 import unittest
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import verify_drat_certificate
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.sat_solver import solve_cnf
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import format_dimacs_cnf
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import verify_drat_certificate
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.sat_solver import solve_cnf
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import format_dimacs_cnf
 
 
 class TestCDCLSolver(unittest.TestCase):
@@ -32,7 +32,7 @@ class TestCDCLSolver(unittest.TestCase):
         self.assertTrue(ok, f"DRAT verification failed: {msg}")
 
     def test_triangle_k2_unsat(self):
-        from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.family_solvers import encode_coloring
+        from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.family_solvers import encode_coloring
 
         num_vars, clauses, _ = encode_coloring(3, 2, [[0, 1], [1, 2], [0, 2]])
         is_sat, model, drat = solve_cnf(num_vars, clauses)

@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 Three phases (SG-CP v1), all of which score the frozen reference solver against
 this package's own judge packet (a self-consistency check, not a model
-evaluation and not a Woland verdict):
+evaluation and not a Adversary verdict):
 
   * Phase 1 records the digest of judge_packet/manifest.json in
     commitments/c022_stabilizer_code_distance_judge_commitment.json.
@@ -43,8 +43,8 @@ from typing import Any
 # Ensure repository root is in sys.path
 _file_path = Path(__file__).resolve()
 for _parent in _file_path.parents:
-    if (_parent / "omega_engine_projects").exists() and (
-        _parent / "omega_engine_providers"
+    if (_parent / "projects").exists() and (
+        _parent / "providers"
     ).exists():
         _root_str = str(_parent)
         if _root_str not in sys.path:
@@ -53,28 +53,28 @@ for _parent in _file_path.parents:
 
 try:
     from .budget_gate import BudgetGate
-    from .woland_gate import GATE_SCOPE, WolandGate
+    from .adversary_gate import GATE_SCOPE, AdversaryGate
 except (ImportError, ValueError):
     try:
         from budget_gate import BudgetGate
-        from woland_gate import GATE_SCOPE, WolandGate
+        from adversary_gate import GATE_SCOPE, AdversaryGate
     except (ImportError, ValueError):
-        from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.budget_gate import (
+        from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.budget_gate import (
             BudgetGate,
         )
-        from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.woland_gate import (
+        from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.adversary_gate import (
             GATE_SCOPE,
-            WolandGate,
+            AdversaryGate,
         )
 
 try:
     from ..judge_packet.checkers.dual_evaluator import evaluate_dual
     from ..reference_solver.solver import solve
 except (ImportError, ValueError):
-    from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.judge_packet.checkers.dual_evaluator import (
+    from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.judge_packet.checkers.dual_evaluator import (
         evaluate_dual,
     )
-    from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.reference_solver.solver import (
+    from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.reference_solver.solver import (
         solve,
     )
 
@@ -202,13 +202,13 @@ def reference_claim_hygiene(
         ),
         "does_not_support": (
             "Any statement about a model (none was evaluated), about checker soundness or independence, "
-            "about proof-system completeness, or a Woland verdict."
+            "about proof-system completeness, or a Adversary verdict."
         ),
         "narrowest_defensible_claim": (
             f"Reference self-consistency label {verdict} on the {total} judge case files that match the committed manifest."
         ),
         "next_test_needed": (
-            "Score a participant submission under a commitment made before the run and have the Woland swarm "
+            "Score a participant submission under a commitment made before the run and have the Adversary swarm "
             "evaluate the bound checker receipts."
         ),
     }
@@ -243,7 +243,7 @@ class CommitRevealRunner:
         )
         self.intelligence_repo_root: Path | None = intelligence_repo_root
         self.budget_gate: BudgetGate = BudgetGate()
-        self.woland_gate: WolandGate = WolandGate(base_repo_root=intelligence_repo_root)
+        self.adversary_gate: AdversaryGate = AdversaryGate(base_repo_root=intelligence_repo_root)
         self.authority_effect: str = "None"
 
     def run_phase1_judge_commitment(self) -> dict[str, Any]:
@@ -272,7 +272,7 @@ class CommitRevealRunner:
             "mutation_count": mutation_count,
             "phase": "PHASE_1_OPERATOR_JUDGE_COMMITMENT",
             "protocol": "SG-CP-v1",
-            "schema": "omega.symbol-game.judge-commitment.v1",
+            "schema": "core.symbol-game.judge-commitment.v1",
             "total_judge_files": len(file_list),
         }
 
@@ -316,7 +316,7 @@ class CommitRevealRunner:
             "judge_commitment_sha256": sha256_of_file(self.judge_commit_file),
             "phase": "PHASE_2_SOLVER_FREEZE_RECORD",
             "protocol": "SG-CP-v1",
-            "schema": "omega.symbol-game.freeze-record.v1",
+            "schema": "core.symbol-game.freeze-record.v1",
             "solver_files": solver_files_info,
         }
 
@@ -463,14 +463,14 @@ class CommitRevealRunner:
         budget_accounting = self.budget_gate.to_accounting_dict()
         timestamp_slug = datetime.now(timezone.utc).strftime("%m%d%Y_%H%M%S")
         effective_run_id = run_id if run_id is not None else f"{timestamp_slug}_{task_key}"
-        provisional_verdict = self.woland_gate.determine_terminal_verdict(
+        provisional_verdict = self.adversary_gate.determine_terminal_verdict(
             case_results, defect_count=defects
         )
         claim_hygiene = reference_claim_hygiene(
             provisional_verdict, total_cases, passed_cases, agreements
         )
 
-        verdict, _path_woland, _path_sg, digests = self.woland_gate.evaluate_and_persist(
+        verdict, _path_adversary, _path_sg, digests = self.adversary_gate.evaluate_and_persist(
             task_key=task_key,
             run_id=effective_run_id,
             case_results=case_results,
@@ -502,11 +502,11 @@ class CommitRevealRunner:
             "phase": "PHASE_3_REVEAL_AND_SCORING_RECEIPT",
             "protocol": "SG-CP-v1",
             "run_id": effective_run_id,
-            "schema": "omega.symbol-game.scoring-receipt.v1",
+            "schema": "core.symbol-game.scoring-receipt.v1",
             "scored_utc": utc_now(),
             "task_key": task_key,
             "verdict": verdict,
-            "woland_bundle_digests": digests,
+            "adversary_bundle_digests": digests,
         }
 
         atomic_write_json(self.scoring_receipt_file, scoring_receipt_payload)

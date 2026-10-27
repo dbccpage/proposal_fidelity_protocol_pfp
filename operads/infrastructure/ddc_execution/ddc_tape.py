@@ -8,26 +8,26 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Sequence
 
-from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+from operating_system.adapters.intelligence_custody.ic_routing import (
     IcMigrationRefusal,
     intelligence_path,
     read_activation,
     safe_path,
 )
-from omega_engine_operating_system.adapters.intelligence_custody.intelligence_root import (
+from operating_system.adapters.intelligence_custody.intelligence_root import (
     IntelligenceRootUnresolvedError,
     resolve_intelligence_repo_root,
 )
-from omega_engine_operads.application.ddc_execution.parse_ddc_tape_use_case import (
+from operads.application.ddc_execution.parse_ddc_tape_use_case import (
     ParseDdcTapeUseCase,
 )
-from omega_engine_operads.domain.ddc_execution.errors import (
+from operads.domain.ddc_execution.errors import (
     OperadDomainError,
     Refusal,
 )
-from omega_engine_operads.domain.ddc_execution.tape import OperadCompositionReceipt
-from omega_engine_operads.domain.operad.errors import Err, Ok, Result
-from omega_engine_operads.skill_operad.ddc_operad_parser import DdcOperadParser
+from operads.domain.ddc_execution.tape import OperadCompositionReceipt
+from operads.domain.operad.errors import Err, Ok, Result
+from operads.skill_operad.ddc_operad_parser import DdcOperadParser
 
 
 def _refusal(error: Any) -> Refusal:

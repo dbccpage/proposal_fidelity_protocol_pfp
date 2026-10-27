@@ -5,8 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.domain.operad.errors import Err, Ok, Result
-from omega_engine_operads.domain.python_development_office.errors import (
+from operads.domain.operad.errors import Err, Ok, Result
+from operads.domain.python_development_office.errors import (
     SourceReadError,
 )
 

@@ -1,7 +1,7 @@
 //! Thin transport over the already-built exact native matrix owner.
 //! Input maps are original cochain matrices d_k: C^k -> C^{k+1}.
 //! No elimination algorithm is implemented here. AuthorityEffect: None.
-use omega_symbol_game_runtime::rational::RationalMatrix;
+use core_symbol_game_runtime::rational::RationalMatrix;
 use serde_json::{json, Value};
 use std::io::{self, Read};
 

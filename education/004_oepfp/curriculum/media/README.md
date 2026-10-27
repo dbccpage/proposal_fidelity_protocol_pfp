@@ -18,13 +18,13 @@ To render all 5 scenes to MP4 and multiplex them with the narration audio:
 
 ```bash
 # Fast draft quality (480p15, renders in ~2 minutes):
-python omega_engine_education/scripts/render_all_animations.py --quality l --mux
+python education/scripts/render_all_animations.py --quality l --mux
 
 # High definition (1080p60 for YouTube / production):
-python omega_engine_education/scripts/render_all_animations.py --quality h --mux
+python education/scripts/render_all_animations.py --quality h --mux
 ```
 
-The resulting video files are written to `omega_engine_education/media/videos/`:
+The resulting video files are written to `education/media/videos/`:
 - `scene1_with_voiceover.mp4` (State Machine & 3-Cycle Holonomy)
 - `scene2_with_voiceover.mp4` ($S(N)$ Tower Construction)
 - `scene3_with_voiceover.mp4` (Coboundaries $d^0, d^1$ & Defect Triad $\Phi_1, \Gamma_2$)
@@ -40,11 +40,11 @@ You do not need to manually record reading all transcripts. You can synthesize t
 ### A. Local Neural Voice Cloning (F5-TTS / Coqui XTTS-v2)
 1. Record a 20-second sample of your voice using the included helper script:
    ```bash
-   python omega_engine_education/scripts/record_voice_sample.py --output my_voice.wav
+   python education/scripts/record_voice_sample.py --output my_voice.wav
    ```
 2. Run the renderer with your audio reference:
    ```bash
-   python omega_engine_education/scripts/render_all_animations.py --voice-backend f5tts --reference-audio my_voice.wav --quality h --mux
+   python education/scripts/render_all_animations.py --voice-backend f5tts --reference-audio my_voice.wav --quality h --mux
    ```
 
 ### B. Cloud API (ElevenLabs)
@@ -54,11 +54,11 @@ You do not need to manually record reading all transcripts. You can synthesize t
    ```
 2. Run the renderer:
    ```bash
-   python omega_engine_education/scripts/render_all_animations.py --voice-backend elevenlabs --quality h --mux
+   python education/scripts/render_all_animations.py --voice-backend elevenlabs --quality h --mux
    ```
 
 ### C. Offline Native Synthesis (Windows SAPI5)
 Windows built-in speech engine requires zero configuration or API keys:
 ```bash
-python omega_engine_education/scripts/render_all_animations.py --voice-backend sapi5 --quality l --mux
+python education/scripts/render_all_animations.py --voice-backend sapi5 --quality l --mux
 ```

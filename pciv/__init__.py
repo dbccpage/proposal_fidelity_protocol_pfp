@@ -1,4 +1,4 @@
-"""omega_engine_prompt_civilization
+"""pciv
 
 Sovereign Clean Architecture package for Prompt Civilization, Lamarckian Retro-Inheritance,
 Lineage DAGs, Genetic Prompt Forge, Demographic Reserves, and Epistemic Immunity Gatekeeping.

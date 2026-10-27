@@ -16,7 +16,7 @@ TARGET_TESTS = (
     "research/mssn_sn_tower/code/python/tests/test_target_checkers.py",
     "research/mssn_sn_tower/code/python/tests/test_anti_evidence.py",
 )
-CLI = "omega_engine_pfp.infrastructure.tower_research.reach.cli"
+CLI = "pfp.infrastructure.tower_research.reach.cli"
 
 # (name, argv); "{python}" is replaced by the running interpreter.
 STEPS: tuple[tuple[str, tuple[str, ...]], ...] = (

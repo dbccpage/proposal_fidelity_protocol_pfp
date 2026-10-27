@@ -14,7 +14,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c039_lattice_z2_gauge_theory_gauss_law.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c039_lattice_z2_gauge_theory_gauss_law.reference_solver.solver import (
     solve,
 )
 

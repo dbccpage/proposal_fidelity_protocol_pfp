@@ -11,8 +11,8 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_operads.skill_operad.domain.planar import ColorMismatch
-from omega_engine_operads.skill_operad.skill_compiler import op_inventory
+from operads.skill_operad.domain.planar import ColorMismatch
+from operads.skill_operad.skill_compiler import op_inventory
 
 REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / ".git").exists())
 
@@ -72,7 +72,7 @@ def _anti_op_wrong_port(data: dict) -> None:
 
 def _missing_symbol(data: dict) -> None:
     _op(data, "sfh.scan")["binding"] = (
-        "omega_engine_operations/use_cases/verification/silent_failure_hunter.py::no_such_fn"
+        "operations/use_cases/verification/silent_failure_hunter.py::no_such_fn"
     )
 
 

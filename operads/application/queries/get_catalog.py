@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 from ...domain.entities.catalog_v3 import EstateCatalogV3
 from ..dtos.api_error_dto import ApiErrorDTO
 from ..dtos.query_dtos import GetCatalogQuery

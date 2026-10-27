@@ -141,15 +141,15 @@ def _wire(value: Any) -> Any:
     value = freeze(value)
     if isinstance(value, _FrozenValue):
         body = [_wire(item) for item in value.items]
-        return ['omega-canonical-v1', value.tag, body]
+        return ['core-canonical-v1', value.tag, body]
     if value is None:
-        return ['omega-canonical-v1', 'null', None]
+        return ['core-canonical-v1', 'null', None]
     if isinstance(value, bool):
-        return ['omega-canonical-v1', 'bool', value]
+        return ['core-canonical-v1', 'bool', value]
     if isinstance(value, int):
-        return ['omega-canonical-v1', 'int', str(value)]
+        return ['core-canonical-v1', 'int', str(value)]
     if isinstance(value, str):
-        return ['omega-canonical-v1', 'string', value]
+        return ['core-canonical-v1', 'string', value]
     raise CanonicalizationError('frozen value escaped the canonical type algebra')
 
 def canonical_wire(value: Any) -> Any:
@@ -241,7 +241,7 @@ def canonical_unwire(value: Any) -> Any:
     if not isinstance(value, list) or len(value) != 3:
         raise CanonicalizationError('canonical wire node must be a three-item array')
     marker, tag, body = value
-    if marker != 'omega-canonical-v1' or not isinstance(tag, str):
+    if marker != 'core-canonical-v1' or not isinstance(tag, str):
         raise CanonicalizationError('canonical wire marker or tag is invalid')
     if tag == 'null':
         if body is not None:

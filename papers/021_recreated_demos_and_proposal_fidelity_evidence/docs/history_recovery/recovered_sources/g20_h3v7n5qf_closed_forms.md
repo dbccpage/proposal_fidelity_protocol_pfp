@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 H3V7N5QF, the sibling testbed of 19L57G1, computes several counts exactly within declared bounds and leaves their closed forms open. That is the classic guess-then-prove shape. Guessing is where a model may help and where a no-model fitter is a real competitor. Checking a guess against the exported evidence is exact and cheap. The proof is the hard part.
 
-The task stresses the Symbol Game's split between conjecture and certificate, OEWAS (Omega Engine Workflows, Agents, Skills) evidence binding, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against calling a fitted formula a closed form. A pass gives proved formulas for counts the repository has only computed. A formula that matches finitely many values without a proof is a conjecture and is scored as one.
+The task stresses the Symbol Game's split between conjecture and certificate, OEWAS (Engine Workflows, Agents, Skills) evidence binding, and the OEEIS (Engine Epistemic Immune System) danger gate against calling a fitted formula a closed form. A pass gives proved formulas for counts the repository has only computed. A formula that matches finitely many values without a proof is a conjecture and is scored as one.
 
 ## 3. Formal Problem and Bounds
 
@@ -97,7 +97,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_linear_algebra](../../../../omega_engine/crates_rs/omega_linear_algebra/) (exact rational solving for fits); [omega_kernel](../../../../omega_engine/crates_rs/omega_kernel/) (exact rationals).
+- the_symbol_game: [core_linear_algebra](../../../../engine/crates_rs/core_linear_algebra/) (exact rational solving for fits); [core_kernel](../../../../engine/crates_rs/core_kernel/) (exact rationals).
 - H3V7N5QF (`1681998`): `H3V7N5QF:code/seventh/`, `H3V7N5QF:code/ninth/`, `H3V7N5QF:code/run_eighteenth.py`, `H3V7N5QF:code/run_nineteenth.py`, `H3V7N5QF:evidence/`, `H3V7N5QF:code/lean_report.py`, `H3V7N5QF:ci/OEWAS_GATES.md`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), [U17](../../upgrades/u17_lean_verifier_backend.md) (with Mathlib for H3V7N5QF).
 

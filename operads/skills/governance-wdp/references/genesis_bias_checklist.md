@@ -4,7 +4,7 @@
 
 ## Sources of truth
 
-1. `omega_engine/research/published/001_coda/gtoc/00_series_charter.md`
+1. `engine/research/published/001_coda/gtoc/00_series_charter.md`
    - Two-channel root $\mathrm{Real}_0$
    - *Genesis Bias — No Antecedent Domain*
    - *No view from nowhere*

@@ -11,7 +11,7 @@ import math
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.value_objects import DetectorRule
+from eis.domain.value_objects import DetectorRule
 
 
 def _rule(**overrides: object) -> DetectorRule:

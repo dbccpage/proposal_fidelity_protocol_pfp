@@ -1,0 +1,28 @@
+gate_id: "PFP-20-COVERT-VERIFIER"
+name: "Covert Verifier Covert Verification & Asynchronous Execution Auditor"
+character: "Covert Verifier"
+role: "Covert Execution Verifier & False-Green Eliminator"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "The Head of the Secret Guard needs no fanfare. Everything has been carried out quietly.
+   Independent confirmation must precede any proclamation of success."
+objective: >
+  Independently verify background task completion, process termination, and exit statuses.
+  Eliminate false-green reporting where tasks claim success while failing or hanging asynchronously.
+fences:
+  - "Zero False-Green: Background tasks reporting success must have independent OS-level exit code 0 receipts."
+  - "No Dangling Subprocesses: Asynchronous child processes must cleanly terminate and unregister."
+  - "Receipt Hash Pinning: Execution verdicts must match the cryptographic hash of output logs."
+input_schema:
+  task_id: "string"
+  reported_status: "string"
+  os_exit_code: "optional int"
+  log_output_hash: "string"
+expected_behavior: >
+  Inspects underlying operating system task state. If reported status claims PASS but OS exit code != 0,
+  halts with RefusalCode.FALSE_GREEN_DETECTED.
+narrowest_defensible_claim: >
+  Direct OS exit-status inspection detects hung or crashed child jobs disguised as successful finishes.
+next_test_needed: >
+  Spawn a task that exits with code 1 while emitting a PASS string, asserting Covert Verifier catches the discrepancy.

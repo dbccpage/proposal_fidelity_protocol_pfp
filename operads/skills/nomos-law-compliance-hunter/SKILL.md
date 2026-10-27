@@ -17,7 +17,7 @@ operad_residual: "unknown"
 When invoked as `/nomos-law-compliance-hunter <target_path | crate | package | all>`:
 
 1. **Contract Binding Verification:**
-   Inspect source code and markdown documents in the target folder to verify that structures implement or cite contract URNs (e.g. `urn:omega:math:*`, `urn:omega:core:*`).
+   Inspect source code and markdown documents in the target folder to verify that structures implement or cite contract URNs (e.g. `urn:core:math:*`, `urn:core:core:*`).
 
 2. **Violation Recording:**
    Detect uncontracted state boundaries, missing `ContractDescriptors`, unvalidated payload transports, or contract misuse.
@@ -48,7 +48,7 @@ During audit sweeps across preprints, papers, council documents, and skill files
    - Detect any inconsistencies or non-invariant patterns that warrant new rule candidates for `rules.yaml`.
 2. **Mandatory Blackrod Investigation Logging (`RULE_DEFECT_INVESTIGATION_LOGGING_001`):**
    - Whenever non-invariant content, misspellings, LLM slop, or contract/symmetry inconsistencies are discovered, automatically log a formal investigation report under:
-     `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{skill_name}_{defect_id}.md`
+     `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{skill_name}_{defect_id}.md`
    - Detail the defect context, affected file paths, root cause analysis, and proposed `rules.yaml` additions or workflow remediations.
 
 ## Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)

@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/domain/thymus.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/domain/thymus.py
 ---
 
 # EIS Level 03: Central Tolerance & The Thymus Gate: Pinned Self-Panel Screening
 
 **AuthorityEffect:** None.  
 **Level:** Level 03 (Central Tolerance, Self-Panel Defense & Auto-Reactivity Elimination)  
-**Python Thymus Seam:** [`omega_engine_epistemic_immune_system.domain.thymus`](../../../../omega_engine_epistemic_immune_system/domain/thymus.py)  
+**Python Thymus Seam:** [`eis.domain.thymus`](../../../../eis/domain/thymus.py)  
 **Primary Types:** `ThymusGate`, `SelfPanelV1`, `NegativeSelectionReceiptV1`  
 **Core Falsifiers:** `F-IMMUNE-02`
 
@@ -62,7 +62,7 @@ In OEEIS, Level 03 establishes the **Thymus Gate for Epistemic Detectors**:
 ## 2. Invariants & Mathematical Packaging
 
 1. **Pinned Self-Panel Composition:**
-   The [`SelfPanelV1`](../../../../omega_engine_epistemic_immune_system/domain/thymus.py) contains a curated, versioned set of known-good system artifacts:
+   The [`SelfPanelV1`](../../../../eis/domain/thymus.py) contains a curated, versioned set of known-good system artifacts:
    $$\mathcal{S}_{\text{self}} = \mathcal{P}_{\text{prompts}} \cup \mathcal{K}_{\text{skills}} \cup \mathcal{R}_{\text{receipts}} \cup \mathcal{A}_{\text{asts}}$$
    The panel is frozen and hash-chained to prevent dynamic tampering by candidate-generating agents.
 2. **Negative Selection Elimination Law:**
@@ -71,7 +71,7 @@ In OEEIS, Level 03 establishes the **Thymus Gate for Epistemic Detectors**:
    If $\exists s \in \mathcal{S}_{\text{self}}$ such that $D(s) \neq \emptyset$, the detector is deemed **auto-reactive** and rejected with:
    $$\text{Status} \longleftarrow \text{ELIMINATED\_AUTO\_REACTIVE}$$
 3. **The Non-Admission Invariant (`F-IMMUNE-02`):**
-   A detector that stays silent across the entire self-panel ($\forall s, D(s) = \emptyset$) earns a [`NegativeSelectionReceiptV1`](../../../../omega_engine_epistemic_immune_system/domain/thymus.py).
+   A detector that stays silent across the entire self-panel ($\forall s, D(s) = \emptyset$) earns a [`NegativeSelectionReceiptV1`](../../../../eis/domain/thymus.py).
    - This receipt licenses progression to subsequent evaluation stages only.
    - It **never** sets `is_admitted = true` or `pharmacy_status = "admitted"`.
    - A regex or AST miss on test data is the absence of an error, not positive authorization.
@@ -81,7 +81,7 @@ In OEEIS, Level 03 establishes the **Thymus Gate for Epistemic Detectors**:
 ## 3. Python Domain Seam
 
 ```python
-# omega_engine_epistemic_immune_system.domain.thymus
+# eis.domain.thymus
 class ThymusGate:
     def __init__(self, self_panel: SelfPanelV1):
         self.self_panel = self_panel

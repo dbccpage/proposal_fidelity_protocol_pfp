@@ -6,14 +6,14 @@ from datetime import datetime, timezone
 
 import pytest
 
-from omega_engine_operads.domain.entities.catalog_v3 import EstateCatalogV3
-from omega_engine_operads.domain.entities.composition_v3 import CompositionV3
-from omega_engine_operads.domain.entities.operation_v3 import (
+from operads.domain.entities.catalog_v3 import EstateCatalogV3
+from operads.domain.entities.composition_v3 import CompositionV3
+from operads.domain.entities.operation_v3 import (
     OperationV3,
     PortSpecV3,
 )
-from omega_engine_operads.domain.entities.skill_document_v3 import SkillDocumentV3
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.entities.skill_document_v3 import SkillDocumentV3
+from operads.domain.value_objects import (
     AdmissionFacet,
     ColourId,
     ContentDigest,
@@ -28,7 +28,7 @@ from omega_engine_operads.domain.value_objects import (
     SkillLifecycleV3,
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.bootstrap import create_oeop_container
+from operads.infrastructure.bootstrap import create_oeop_container
 
 
 def _catalog(epoch, changed=None):

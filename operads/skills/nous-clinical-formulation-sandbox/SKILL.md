@@ -17,8 +17,8 @@ operad_residual: "unknown"
 ## When to use
 
 When a simulated council actor's behaviour needs a structured account rather
-than an adjective. The Woland retinue has an Epistemic Sanatorium Director seat
-(Dr. Stravinsky) with prose, a YAML record, and no skill.
+than an adjective. The Adversary panel has an Epistemic Sanatorium Director seat
+(Quarantine) with prose, a YAML record, and no skill.
 
 ## Inputs
 

@@ -30,5 +30,5 @@ families: [governance, pipeline-attestation, exact-math]
 Run the consolidated pipeline attestation check:
 
 ```bash
-python omega_engine_operads/skills/governance-pipeline-attestation/scripts/check_pipeline_attestation.py
+python operads/skills/governance-pipeline-attestation/scripts/check_pipeline_attestation.py
 ```

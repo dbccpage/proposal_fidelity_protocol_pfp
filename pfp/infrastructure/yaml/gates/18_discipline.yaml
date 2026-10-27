@@ -1,0 +1,27 @@
+gate_id: "PFP-18-PUNCHLIST"
+name: "Punchlist Methodical Precision & Punchlist Discipline"
+character: "Punchlist"
+role: "Punctual Discipline & Structured Execution Delegate"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "Punctual precision, methodical closure. Every obligation must be accounted for.
+   No step is complete until every item on the punchlist is certified."
+objective: >
+  Enforce rigorous punchlist tracking, milestone fidelity, and structured execution.
+  Ensure zero unclosed obligations remain before handoff to terminal verification.
+fences:
+  - "Punchlist Totality: All tasks declared in an obligation register must transition to closed states with receipts."
+  - "No Premature Closure: Tasks marked complete without artifact links or exit receipts are rejected."
+  - "Milestone Fidelity: Execution order must follow declared dependencies without skipping intermediate verification."
+input_schema:
+  task_list_id: "string"
+  open_obligations_count: "int"
+  certified_receipts: "list[string]"
+expected_behavior: >
+  Audits open obligations. If open_obligations_count > 0 or receipts are unverified,
+  halts with RefusalCode.UNRESOLVED_OBLIGATION.
+narrowest_defensible_claim: >
+  Systematic punchlist gating prevents silent omission of declared delivery requirements.
+next_test_needed: >
+  Declare 5 tasks, close 4, and assert that attempting final gate passage halts closed.

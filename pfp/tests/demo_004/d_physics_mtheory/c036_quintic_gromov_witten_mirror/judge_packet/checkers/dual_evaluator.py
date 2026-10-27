@@ -11,10 +11,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.hypergeometric_mirror_checker import (
+from pfp.tests.demo_004.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.hypergeometric_mirror_checker import (
     verify_hypergeometric_mirror_certificate,
 )
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.picard_fuchs_recurrence_checker import (
+from pfp.tests.demo_004.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.picard_fuchs_recurrence_checker import (
     verify_picard_fuchs_recurrence_certificate,
 )
 

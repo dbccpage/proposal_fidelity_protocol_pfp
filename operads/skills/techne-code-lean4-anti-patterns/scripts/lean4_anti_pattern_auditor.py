@@ -1,6 +1,6 @@
 """Lean 4 anti-pattern auditor.
 
-Checks the admitted catalog at omega_engine_operads/patterns/anti/lean4/:
+Checks the admitted catalog at operads/patterns/anti/lean4/:
   AP_LN_001 sorry outside comments
   AP_LN_002 lake build or lake update in a shell script with no lake exe cache get
   AP_LN_003 thermodynamic_limit theorem line with no finite envelope word
@@ -28,7 +28,7 @@ SKIP_DIRS = frozenset(
         "__pycache__",
         "quarantine",
         "archive",
-        "omega_engine_library",
+        "library",
     }
 )
 SHELL_SUFFIXES = {".ps1", ".sh", ".bat", ".cmd"}

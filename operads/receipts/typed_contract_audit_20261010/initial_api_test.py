@@ -3,12 +3,12 @@
 from dataclasses import replace
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_workflows_agents_skills.application.typed_contract_audit import (
+from operations.domain.rop.result import Ok
+from workflows_agents_skills.application.typed_contract_audit import (
     audit_typed_contracts,
 )
-from omega_engine_workflows_agents_skills.domain.anti_skills import AntiSkillSubjectV1
-from omega_engine_workflows_agents_skills.infrastructure.typed_contract_compiler import (
+from workflows_agents_skills.domain.anti_skills import AntiSkillSubjectV1
+from workflows_agents_skills.infrastructure.typed_contract_compiler import (
     compile_typed_contracts,
 )
 

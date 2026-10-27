@@ -11,12 +11,12 @@ from copy import deepcopy
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
-from omega_engine_epistemic_immune_system.infrastructure.authenticated_custody import (
+from eis.infrastructure.authenticated_custody import (
     NativeAttestationVerifier,
     SignedHostHealth,
 )
 
-SCHEMA = "omega.eis.signed-attestation.v1"
+SCHEMA = "core.eis.signed-attestation.v1"
 PROFILE = "sha256:" + "b" * 64
 CONTENT = json.dumps({"verified": True, "phi1": "0"}, sort_keys=True)
 RULE = b"fixture guard rule version 1"
@@ -44,7 +44,7 @@ def binding():
 
 def policy():
     return {
-        "schema_version": "omega.eis.trust-policy.v1",
+        "schema_version": "core.eis.trust-policy.v1",
         "trust_domain": "synthetic-fixture-only",
         "keys": [
             {
@@ -120,7 +120,7 @@ def signed(
             if purpose == "admission"
             else json.dumps(
                 {
-                    "schema_version": "omega.eis.observed-evidence.v1",
+                    "schema_version": "core.eis.observed-evidence.v1",
                     "observer_id": issuer,
                     "run_id": event,
                     "subject_digest": expected["subject_digest"],

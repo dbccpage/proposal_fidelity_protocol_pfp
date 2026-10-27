@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pathlib
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.governance.commit_reveal_runner import (
     run_provisional_evaluation,
 )
 

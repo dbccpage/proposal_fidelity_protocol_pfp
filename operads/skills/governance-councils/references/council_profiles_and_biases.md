@@ -1,6 +1,6 @@
 # Council Profiles, Epistemic Biases & Lineage Defense Reference
 
-This reference document consolidates the operational mandates, epistemic biases, attack vectors, and immune countermeasures for the 12 sovereign councils of the Anomalon Omega Engine, formerly held as standalone council agent personas.
+This reference document consolidates the operational mandates, epistemic biases, attack vectors, and immune countermeasures for the 12 sovereign councils of the Sentinel Engine, formerly held as standalone council agent personas.
 
 All council deliberations operate under strict claim discipline:
 $$\text{AuthorityEffect: None}$$

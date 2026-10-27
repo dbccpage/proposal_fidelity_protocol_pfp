@@ -11,21 +11,21 @@ maturity: draft
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/oegpciv/epic_pciv_v10rc.md
-  - omega_engine_education/documentation/010_oepciv/01_v10rc_system_design_and_integration.md
+  - product_planning_office/plans/epics/oegpciv/epic_pciv_v10rc.md
+  - education/documentation/010_oepciv/01_v10rc_system_design_and_integration.md
 prerequisites:
   - ../00_index.md
   - ../01_v10rc_system_design_and_integration.md
 related:
   - ../normal_forms/normal_form_contract_schema.yaml
-  - nf_02_lamarckian_pfp_woland_loop.md
+  - nf_02_lamarckian_pfp_adversary_loop.md
 last_verified: 2026-10-09
 ---
 
 # nf_01_prompt_society_and_civilization: Normative Form for Prompt Societies and Civilizations
 
 **AuthorityEffect:** None.  
-**Normal Form Schema ID:** `urn:omega:nf:prompt_civilization:society_and_civilization:v1.0.0`
+**Normal Form Schema ID:** `urn:core:nf:prompt_civilization:society_and_civilization:v1.0.0`
 
 ---
 
@@ -124,4 +124,4 @@ where:
 1. **What this supports:** Formally defines the normative schema, mathematical state space, and invariant laws for prompt societies and civilizations.
 2. **What this does not support:** Does not imply that societies possess autonomous legal or moral personhood; they are deterministic computational coordination structures.
 3. **Narrowest defensible claim:** The schema provides an unambiguous, machine-checkable standard for grouping prompt families under shared task protocols with strict budget conservation.
-4. **Next test needed:** Schema validation tests against synthetic and live society fixtures in `omega_engine_prompt_civilization/tests/unit/test_society_schema.py`.
+4. **Next test needed:** Schema validation tests against synthetic and live society fixtures in `pciv/tests/unit/test_society_schema.py`.

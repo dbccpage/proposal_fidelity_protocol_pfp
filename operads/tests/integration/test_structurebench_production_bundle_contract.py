@@ -9,15 +9,15 @@ import json
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import PharmacyCatalogRepository
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
+from eis.infrastructure.pharmacy_writer import (
     filesystem_catalog_bytes,
 )
-from omega_engine_woland.infrastructure.estates.oeeis_immune import OeeisImmuneAdapter
-from omega_engine_woland.use_cases.persistence import (
+from adversary.infrastructure.estates.oeeis_immune import OeeisImmuneAdapter
+from adversary.use_cases.persistence import (
     persist_bout_run_folder, persist_bout_run_folder_historical,
 )
-from omega_engine_operads.structurebench import (
+from operads.structurebench import (
     ConstraintOutcome,
     StructureBenchEvaluator,
 )
@@ -74,7 +74,7 @@ def persist(root, run_key, *, candidate_id=None, missing=None, phi="0", verdict=
     tape, head = independent_tape(steps)
     receipt = {key: summary[key] for key in ("task_key", "selected_candidate_id")}
     if historical:
-        material = {"schema": "omega.woland.bout-receipt-id.v1", "dda_actions_sha256": digest(tape),
+        material = {"schema": "core.adversary.bout-receipt-id.v1", "dda_actions_sha256": digest(tape),
                     "novella_sha256": digest(novella.encode("utf-8")), "summary_core_sha256": digest(pretty(summary))}
         identity = "sha256:" + digest(json.dumps(material, sort_keys=True, separators=(",", ":")).encode())
         summary["receipt_id"] = receipt["receipt_id"] = identity
@@ -92,8 +92,8 @@ def persist(root, run_key, *, candidate_id=None, missing=None, phi="0", verdict=
         assert (run / "dda_actions.jsonl").read_bytes() == tape
     else:
         assert not list(run.glob("dda*"))
-        summary["bundle_schema_version"] = "omega.woland.reported-run-bundle.v2"
-        material = {"schema": "omega.woland.bout-receipt-id.v3", "ddc_sha256": digest(tape),
+        summary["bundle_schema_version"] = "core.adversary.reported-run-bundle.v2"
+        material = {"schema": "core.adversary.bout-receipt-id.v3", "ddc_sha256": digest(tape),
                     "uns_sha256": digest(novella.encode("utf-8")),
                     "summary_core_sha256": digest(pretty(summary)),
                     "uts_sha256": digest((run / "uts.jsonl").read_bytes())}

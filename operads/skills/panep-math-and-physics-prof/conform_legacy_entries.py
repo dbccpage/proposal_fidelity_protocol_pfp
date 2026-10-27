@@ -13,7 +13,7 @@ Both also tend to carry bare non-namespaced aliases and miss `## Provenance`.
 FIX (governance-safe). This tool maps that legacy vocabulary to the nearest
 HONEST *canonical* schema value — it adds NO new enum values, so the governed
 status/kind/primitive/migration vocabulary is unchanged (canonical enums:
-omega_engine/research/encyclopedia/readme.md). The blanket maps preserve intent:
+engine/research/encyclopedia/readme.md). The blanket maps preserve intent:
   kind:        doctrine             -> proposition   (a checkable claim/requirement)
   kind:        theorem-package      -> theorem       (a bundled theorem)
   kind:        concept              -> definition    (a named construct)
@@ -38,7 +38,7 @@ RESIDUAL MANUAL STEPS — this tool cannot fix these; `--fix` may still leave
 `regen_encyclopedia.py` red until a human resolves them:
   * Duplicate `id:` (V1) — two entries colliding on one ENC-NNNN must be
     renumbered to the next free id; the conformer never touches ids.
-  * `uses:` pointing at Lean module names (e.g. `OmegaCore.PrimitiveDifference`,
+  * `uses:` pointing at Lean module names (e.g. `CoreCore.PrimitiveDifference`,
     `QM.GOMC_01_Architecture`) — these are not ENC ids (V4 fails). Deciding
     whether to drop them (record the dep under `sources:`/`lean_refs:`) or map
     them to a real ENC id is a per-entry call.
@@ -66,7 +66,7 @@ import sys
 
 # legacy value -> canonical value. Every target on the RHS is already a canonical
 # enum value (see the enum sets in regen_encyclopedia.py and the schema table in
-# omega_engine/research/encyclopedia/readme.md) — this map adds NO new vocabulary,
+# engine/research/encyclopedia/readme.md) — this map adds NO new vocabulary,
 # so the governed status/kind/primitive/migration enums are unchanged.
 # Idempotent by construction: no target value is ever a key in its own field-map,
 # so a second pass over an already-conformed entry is a no-op.
@@ -96,7 +96,7 @@ PROV_TEMPLATE = (
 # default scope: encyclopedia entries tree, relative to repo root
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 ENTRIES_GLOB = os.path.join(
-    REPO_ROOT, "omega_engine", "research", "encyclopedia", "entries", "**", "*.md"
+    REPO_ROOT, "engine", "research", "encyclopedia", "entries", "**", "*.md"
 )
 
 

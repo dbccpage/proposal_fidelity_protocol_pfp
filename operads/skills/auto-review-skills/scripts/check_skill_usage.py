@@ -6,7 +6,7 @@ Zero external references is **not** sufficient evidence to archive/delete a skil
 Prefer: eval bank (`.agents/evals/skills/`), human retirement evidence, ooutwire.
 
 Usage:
-    python omega_engine_operads/skills/auto-review-skills/scripts/check_skill_usage.py [--repo-root PATH] [--skills SKILL1,SKILL2...]
+    python operads/skills/auto-review-skills/scripts/check_skill_usage.py [--repo-root PATH] [--skills SKILL1,SKILL2...]
 """
 
 from __future__ import annotations
@@ -23,14 +23,14 @@ DEFAULT_TARGET_SKILLS = [
     "cisco-defense-skill-scanner",
     "integration-audit-workflow",
     "maturin-verify",
-    "omega-allopoietic-engine",
-    "omega-lggr-qmcoda",
+    "core-allopoietic-engine",
+    "core-lggr-qmcoda",
     "operad-lattice",
     "pydantic-models",
     "publication-quality-plotting",
     "projection-obstruction",
     "systematic-debugging",
-    "woland",
+    "adversary",
 ]
 
 SKIP_DIRS = {
@@ -60,7 +60,7 @@ SEARCH_EXTENSIONS = (
 def repo_root_from(start: Path | None = None) -> Path:
     here = (start or Path.cwd()).resolve()
     for candidate in [here, *here.parents]:
-        if (candidate / ".git").exists() and (candidate / "omega_engine_py").is_dir():
+        if (candidate / ".git").exists() and (candidate / "engine_py").is_dir():
             return candidate
     return Path.cwd().resolve()
 
@@ -81,7 +81,7 @@ def check_usage(repo_root: Path, target_skills: list[str]) -> dict[str, list[str
                 for s in target_skills:
                     if s in content:
                         # Skip counting references inside the skill's own package directory
-                        if f"omega_engine_operads/skills/{s}/" in rel_path or any(
+                        if f"operads/skills/{s}/" in rel_path or any(
                             f"{host}/skills/{s}/" in rel_path
                             for host in (".agents", ".claude", ".codex", ".grok")
                         ):

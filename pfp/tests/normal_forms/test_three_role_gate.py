@@ -3,7 +3,7 @@
 AuthorityEffect: None.
 
 Expected verdicts are read from
-``omega_engine_pfp/domain/fixtures/three_role_provenance_fixtures.json``; the
+``pfp/domain/fixtures/three_role_provenance_fixtures.json``; the
 tests also mutate admitted packets field by field to show that every
 refusal reason is reachable and that no verdict ever carries authority.
 """
@@ -15,7 +15,7 @@ import json
 import unittest
 from pathlib import Path
 
-from omega_engine_pfp.domain.provenance import (
+from pfp.domain.provenance import (
     AUTHORITY_EFFECT,
     GateVerdict,
     ObserverDeclaration,
@@ -30,7 +30,7 @@ from omega_engine_pfp.domain.provenance import (
 )
 
 
-# Exact strings from `omega_sheaf_theory::empirical_presheaf` for the Bell
+# Exact strings from `core_sheaf_theory::empirical_presheaf` for the Bell
 # scenario `evaluate_l1_claim` binds: contexts {0,2}|{0,3}|{1,2}|{1,3},
 # arities 2,2,2,2. NORM_L1, ADMISSIBILITY_NONCONTEXTUAL, TERMINAL_RULE_L1
 # and LAYER_DIAGNOSTIC.

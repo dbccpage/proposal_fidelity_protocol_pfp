@@ -12,13 +12,13 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.sugra_matrix_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.sugra_matrix_checker import (
     verify_sugra_matrix_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.sugra_weight_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.sugra_weight_checker import (
     verify_sugra_weight_certificate,
 )
 

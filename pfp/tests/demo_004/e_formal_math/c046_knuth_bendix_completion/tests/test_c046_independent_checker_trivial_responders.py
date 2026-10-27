@@ -13,10 +13,10 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.independent_checker import (
     check_independent,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
     solve,
 )
 

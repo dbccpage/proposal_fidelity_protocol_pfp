@@ -8,12 +8,12 @@ from dataclasses import asdict
 from fractions import Fraction
 from importlib.resources import files
 
-from omega_engine_pfp.domain.demos import (
+from pfp.domain.demos import (
     DemoRefusal,
     strict_descent,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research import loader
-from omega_engine_pfp.use_cases.mssn_demo import evaluate_cases
+from pfp.infrastructure.adapters.mssn_research import loader
+from pfp.use_cases.mssn_demo import evaluate_cases
 
 from .canonical import digest
 
@@ -67,13 +67,13 @@ def run_named(scenario_id, fixture, proposals, quarantine, *, live: bool = False
             all(c["matches_expectation"] for cases in levels.values() for c in cases),
             "level case expectations",
         )
-        from omega_engine_pfp.infrastructure.adapters.mssn_scenarios.product_cell_ring import (
+        from pfp.infrastructure.adapters.mssn_scenarios.product_cell_ring import (
             run_product_cell_ring,
         )
 
         return {"status": "CHECKED", "levels": levels, "product_cell_ring": run_product_cell_ring()}
     if kind == "protocol":
-        from omega_engine_pfp.infrastructure.adapters.mssn_scenarios.protocol import (
+        from pfp.infrastructure.adapters.mssn_scenarios.protocol import (
             run_all_protocol_matrix,
             run_live_protocol_matrix,
         )
@@ -100,7 +100,7 @@ def run_named(scenario_id, fixture, proposals, quarantine, *, live: bool = False
             "matrix": value,
         }
     if kind == "sign-gauge":
-        from omega_engine_pfp.infrastructure.adapters.mssn_research.sign_switching import (
+        from pfp.infrastructure.adapters.mssn_research.sign_switching import (
             classify_sign_gauge,
             verify_cycle,
             verify_gauge,
@@ -126,7 +126,7 @@ def run_named(scenario_id, fixture, proposals, quarantine, *, live: bool = False
             "cases": json.loads(json.dumps(outcomes, default=str)),
         }
     if kind == "finite-library":
-        from omega_engine_pfp.infrastructure.adapters.mssn_scenarios import (
+        from pfp.infrastructure.adapters.mssn_scenarios import (
             antimorphic_reversal,
             polygraph_confluence,
             product_cell_ring,
@@ -143,9 +143,9 @@ def run_named(scenario_id, fixture, proposals, quarantine, *, live: bool = False
         }
         return {"status": "CHECKED", "scope": fixture["scope"], "result": functions[scenario_id]()}
     if kind == "tower-lift":
-        from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import LiftGoal
-        from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
-        from omega_engine_pfp.domain.mssn_research.grammar.lift_policies import (
+        from pfp.domain.mssn_research.grammar.spectral_geometry import LiftGoal
+        from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+        from pfp.domain.mssn_research.grammar.lift_policies import (
     check_lift_necessity_certificate,
     execute_bounded_lift_necessity_search,
 )
@@ -193,7 +193,7 @@ def run_named(scenario_id, fixture, proposals, quarantine, *, live: bool = False
 
 
 def native(fixture, proposals):
-    from omega_engine_woland.infrastructure.providers.adapters.native_functional import (
+    from adversary.infrastructure.providers.adapters.native_functional import (
         NativeFunctionalInputRefused,
         NativeFunctionalRefusal,
         NativeFunctionalUnavailable,
@@ -247,21 +247,21 @@ def immune(fixture, proposals, quarantine):
     """The OEEIS two-signal screen on the pharmacy controls, farm probes and replies.
 
     All screening is the single OEEIS implementation in
-    `omega_engine_epistemic_immune_system.infrastructure.immune_demo_screens`.
+    `eis.infrastructure.immune_demo_screens`.
     Signal 2 comes from host payload checks, never from the number of detector
     matches. The pharmacy's native classes need the built Symbol Game host; without
     it this scenario is a typed refusal (NATIVE_PHARMACY_UNAVAILABLE).
     """
-    from omega_engine_epistemic_immune_system.infrastructure.immune_demo_screens import (
+    from eis.infrastructure.immune_demo_screens import (
         screen_farm_probe,
         screen_pharmacy_control,
         screen_reply,
     )
-    from omega_engine_epistemic_immune_system.infrastructure.native_pharmacy import (
+    from eis.infrastructure.native_pharmacy import (
         NativePharmacy,
         NativePharmacyUnavailable,
     )
-    from omega_engine_pfp.infrastructure.adapters.mssn_scenarios.immune_fixtures import (
+    from pfp.infrastructure.adapters.mssn_scenarios.immune_fixtures import (
         NEGATIVE_FIXTURES,
         POSITIVE_FIXTURES,
     )
@@ -289,7 +289,7 @@ def immune(fixture, proposals, quarantine):
         )
     farm = []
     if fixture.get("farm_probes"):
-        from omega_engine_epistemic_immune_system.infrastructure.mssn_domains import DOMAINS
+        from eis.infrastructure.mssn_domains import DOMAINS
 
         for domain in DOMAINS.values():
             for probe in domain.probes:

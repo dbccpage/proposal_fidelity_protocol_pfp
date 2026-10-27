@@ -29,14 +29,17 @@ are deserved is for review, by reading the cited evidence.
 `governance/**/*.py` and `csharp/**/*.cs`, discovered with
 `git ls-files --cached --others --exclude-standard`. Runtime sources must
 reach L4D. Test sources are in the `test` support category (L2D or better,
-still complete and byte-bound); that category is marked as awaiting the
-maintainer's approval in the policy.
+still complete and byte-bound); Jeremy approved that category on 2026-10-26.
 
 The imported trees (`pfp/`, `eis/`, `operads/`, `pciv/`, `ops/`, `papers/`,
-`education/`) are listed as not yet governed. PFP Lab does not import them.
-They can join once their package names settle and a
-[`baseline.json`](baseline.json) of their current bytes is agreed; a listed
-file is grandfathered only while its bytes are unchanged.
+`education/`, `code/`) are still listed as not yet governed. Jeremy approved
+bringing them in; that happens once the rename of private names lands, by
+adding them to the populations (Python, Rust and Lean 4) and recording a
+[`baseline.json`](baseline.json) of their exact bytes with
+`checker baseline --write --allow-add --reason ...`. A listed file is
+grandfathered only while its bytes are unchanged. The screen of what scoring
+them would find is in
+[`docs/governance/imported_trees.md`](../docs/governance/imported_trees.md).
 
 ## Tools
 
@@ -45,6 +48,7 @@ file is grandfathered only while its bytes are unchanged.
 | `python -m governance.tools.checker check [--changed-since REF]` | Check every governed source (or only the changed ones); exit 1 on any failure |
 | `python -m governance.tools.checker explain PATH` | Category, floor, hash, recorded score and problems for one file |
 | `python -m governance.tools.checker record PATH --contract C --score S` | Make a contract and score current; the old ones move to history |
+| `python -m governance.tools.checker baseline [--write] [--allow-add --reason TEXT]` | Recompute the grandfather list: keep entries that still fail with unchanged bytes, drop the rest; `--allow-add` (maintainer's call) adds the other failing sources |
 | `python -m governance.tools.evidence NAME -- COMMAND ...` | Run a tool and keep `NAME.log` and `NAME.run.json` (command, versions, times, exit status, input hashes) |
 | `python -m governance.tools.metrics OUT.json PATH ...` | Gate 5 metrics and ceilings: cyclomatic (lizard), cognitive (complexipy, Python), nesting (AST for Python, brace depth for C#) |
 | `python -m governance.tools.mutation NAME --target FILE ... -- TESTS` | Six-outcome mutation campaign (AST for Python, lexical for C#) |

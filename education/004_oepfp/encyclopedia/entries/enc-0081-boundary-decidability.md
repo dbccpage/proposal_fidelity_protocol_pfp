@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.2"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.1 'Theorem IV.2'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.1 'Theorem IV.2'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -35,7 +35,7 @@ If $\mathrm{Parse}_\Gamma$, $L_\Gamma$, and $V_\Gamma$ are total deterministic p
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.1
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.1
   (statement and proof copied verbatim). Original header line:
   `**Theorem IV.2 (Boundary Decidability).** [PROVED] If $\mathrm{Parse}_\Gamma$, $L_\Gamma$, and $V_\Gamma$ are total deterministic polynomial-time procedures, then $\mathcal{V}$ is total and polynomial-time.`
 

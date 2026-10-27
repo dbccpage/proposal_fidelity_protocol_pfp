@@ -74,7 +74,7 @@ Every nested packet is an ordered tree that serializes back deterministically wi
 <summary>Click to view solution</summary>
 
 ```python
-from omega_engine_pfp.domain.tower import grammar
+from pfp.domain.tower import grammar
 
 packet = grammar.parse("op<<0>op<<1><>>>")
 

@@ -70,10 +70,10 @@ AuthorityEffect: None.
 import json
 import os
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
+from pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
 from typing import Any, Dict
 
-from omega_engine_pfp.domain.normal_forms.bqnf_validator import BqnfValidator
+from pfp.domain.normal_forms.bqnf_validator import BqnfValidator
 
 # Load the CDC events from JSON
 DATA_PATH = NORMAL_FORMS_DIR / "data" / "cdc_events.json"

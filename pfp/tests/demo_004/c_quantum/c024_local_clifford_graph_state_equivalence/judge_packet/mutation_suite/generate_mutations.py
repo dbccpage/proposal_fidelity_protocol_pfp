@@ -23,18 +23,18 @@ from typing import Any
 # Ensure repository root is in sys.path
 _p = Path(__file__).resolve()
 for _par in _p.parents:
-    if (_par / "omega_engine_projects").exists():
+    if (_par / "projects").exists():
         if str(_par) not in sys.path:
             sys.path.insert(0, str(_par))
         break
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.reference_solver.cut_rank import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.reference_solver.cut_rank import (
     cut_rank,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.reference_solver.graph import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.reference_solver.graph import (
     SimpleGraph,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.reference_solver.solver import (
     solve,
 )
 

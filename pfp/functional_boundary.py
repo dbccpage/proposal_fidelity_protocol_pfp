@@ -1,14 +1,14 @@
 """Fail closed when legacy Python code would calculate named functionals.
 
 Phi1, Gamma2, and Xi values must originate in
-``omega_engine/crates_rs/omega_functional/src``. A caller may still use
+``engine/crates_rs/core_functional/src``. A caller may still use
 Python for packets, proposals, and display; it may not mint these values.
 """
 
 from __future__ import annotations
 
 
-FUNCTIONAL_OWNER = "omega_engine/crates_rs/omega_functional/src"
+FUNCTIONAL_OWNER = "engine/crates_rs/core_functional/src"
 REFUSAL_CODE = "RUST_FUNCTIONAL_REQUIRED"
 
 

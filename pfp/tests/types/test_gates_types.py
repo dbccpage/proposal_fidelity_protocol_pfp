@@ -12,10 +12,10 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp.infrastructure.contract_loading import load_gate_register_from_files
+from pfp.infrastructure.contract_loading import load_gate_register_from_files
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.contracts import gate_types as gt
+from pfp.domain.contracts import gate_types as gt
 
 HERE = Path(__file__).resolve()
 GATES = HERE.parents[2] / "infrastructure" / "yaml" / "gates"
@@ -73,14 +73,14 @@ def test_negative_self_loop_intergate() -> None:
 
 def test_negative_file_prefix_mismatch() -> None:
     entry = dict(_raw()["primary_gates"][0])
-    entry["file"] = "02_koroviev_nocebo_plunge.yaml"
+    entry["file"] = "02_nocebo_plunge.yaml"
     with pytest.raises(ValidationError):
         gt.PrimaryGate.model_validate(entry, strict=False)
 
 
 def test_negative_gate_id_out_of_range() -> None:
     entry = dict(_raw()["primary_gates"][0])
-    entry["gate_id"] = "PFP-23-HELLA"
+    entry["gate_id"] = "PFP-23-SYNTAX-PREFILTER"
     with pytest.raises(ValidationError):
         gt.PrimaryGate.model_validate(entry, strict=False)
 

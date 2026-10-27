@@ -7,8 +7,8 @@ import json
 import unittest
 from pathlib import Path
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import evaluate_dual
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import solve
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import evaluate_dual
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import solve
 
 PKG_ROOT = Path(__file__).resolve().parent.parent
 

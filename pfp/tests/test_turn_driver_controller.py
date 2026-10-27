@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.controllers.turn_driver_controller import (
+from pfp.controllers.turn_driver_controller import (
     DriverMovePacket,
     EngineTurnStateV1,
     PromptPolicyV1,
@@ -178,7 +178,7 @@ def test_real_native_driver_matches_independent_python_canonical_golden(tmp_path
             "state": dict(reversed(state.to_dict().items())),
         },
         "action": "turn_driver_next_prompt",
-        "schema_version": "omega.symbol-game.runtime-request.v1",
+        "schema_version": "core.symbol-game.runtime-request.v1",
     }
     output = subprocess.run(
         [str(controller.host.binary_path), "invoke"],

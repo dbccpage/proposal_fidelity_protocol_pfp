@@ -13,8 +13,8 @@ import hashlib
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.aggregates.code_change_attestation import (
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from pfp.domain.aggregates.code_change_attestation import (
     ASSUMPTIONS_SHA256,
     CHECK_SCHEMA,
     CHECKER_ID,
@@ -23,19 +23,19 @@ from omega_engine_pfp.domain.aggregates.code_change_attestation import (
     SourceBoundCheckResultV1,
     protocol_bytes,
 )
-from omega_engine_pfp.domain.aggregates.code_change_bind import (
+from pfp.domain.aggregates.code_change_bind import (
     assert_candidate_binds_patch,
     verify_patch_bytes,
 )
-from omega_engine_pfp.domain.aggregates.code_change_patch import CodeChangePatchArtifactV1
-from omega_engine_pfp.domain.entities.candidate_artifact import CandidateArtifactV1
-from omega_engine_pfp.domain.exceptions import CanonicalizationError
-from omega_engine_pfp.domain.shared_kernel.path import is_normalized_relative_posix
-from omega_engine_pfp.domain.validation import _require_digest
-from omega_engine_pfp.ffi import RustSymbolGameHost
-from omega_engine_pfp.use_cases.code_change import BoundCandidate, CodeChangeSession
+from pfp.domain.aggregates.code_change_patch import CodeChangePatchArtifactV1
+from pfp.domain.entities.candidate_artifact import CandidateArtifactV1
+from pfp.domain.exceptions import CanonicalizationError
+from pfp.domain.shared_kernel.path import is_normalized_relative_posix
+from pfp.domain.validation import _require_digest
+from pfp.ffi import RustSymbolGameHost
+from pfp.use_cases.code_change import BoundCandidate, CodeChangeSession
 
-_LOCUS = "omega_engine_pfp.infrastructure.code_change_checker"
+_LOCUS = "pfp.infrastructure.code_change_checker"
 _GATES = ("gate_ownership", "gate_protected", "gate_syntax")
 
 

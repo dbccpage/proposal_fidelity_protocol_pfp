@@ -14,11 +14,11 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.anti_skill_admission.generate_truth_boundary_canary import (
+from operads.application.anti_skill_admission.generate_truth_boundary_canary import (
     generate_truth_boundary_canary,
 )
-from omega_engine_operads.infrastructure import skill_budget_census
-from omega_engine_operads.infrastructure.skill_budget_census import (
+from operads.infrastructure import skill_budget_census
+from operads.infrastructure.skill_budget_census import (
     EVAL_BANK_SCHEMA,
     GATE_SOURCE,
     CensusError,
@@ -26,7 +26,7 @@ from omega_engine_operads.infrastructure.skill_budget_census import (
     read_eval_bank_index,
     read_gate_terms,
 )
-from omega_engine_operads.skill_operad.skill_compiler.budget_gate import (
+from operads.skill_operad.skill_compiler.budget_gate import (
     DEFAULT_GOVERNED,
     DEFAULT_MAX_BYTES,
     DEFAULT_MAX_LINES,
@@ -43,12 +43,12 @@ FORBIDDEN_ENGINES = (
 )
 SCANNED_SOURCES = (
     GATE_SOURCE,
-    Path("omega_engine_operads/infrastructure/skill_budget_census.py"),
-    Path("omega_engine_operads/application/operad/compiler_service.py"),
+    Path("operads/infrastructure/skill_budget_census.py"),
+    Path("operads/application/operad/compiler_service.py"),
     Path(
-        "omega_engine_operads/application/anti_skill_admission/generate_truth_boundary_canary.py"
+        "operads/application/anti_skill_admission/generate_truth_boundary_canary.py"
     ),
-    Path("omega_engine_operads/skill_operad/skill_compiler/eval_runner.py"),
+    Path("operads/skill_operad/skill_compiler/eval_runner.py"),
 )
 
 
@@ -66,11 +66,11 @@ def _write_skill(root: Path, name: str, text: str) -> None:
 
 def test_gate_source_names_the_live_file_not_the_missing_operations_path() -> None:
     assert GATE_SOURCE.as_posix().endswith(
-        "omega_engine_operads/skill_operad/skill_compiler/budget_gate.py"
+        "operads/skill_operad/skill_compiler/budget_gate.py"
     )
     assert (REPO / GATE_SOURCE).is_file()
     assert (
-        REPO / "omega_engine_operations/skill_operad/skill_compiler/budget_gate.py"
+        REPO / "operations/skill_operad/skill_compiler/budget_gate.py"
     ).is_file() is False
     assert ".agents/operad/skill_compiler/budget_gate.py" not in (skill_budget_census.__doc__ or "")
     assert "5 of 110" not in (skill_budget_census.__doc__ or "")

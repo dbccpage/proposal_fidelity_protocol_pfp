@@ -9,7 +9,7 @@ from pathlib import Path
 
 def _repo_root() -> Path:
     for candidate in (Path(__file__).resolve(), *Path(__file__).resolve().parents):
-        if (candidate / ".agents").is_dir() and (candidate / "omega_engine").is_dir():
+        if (candidate / ".agents").is_dir() and (candidate / "engine").is_dir():
             return candidate
     raise RuntimeError("repository root not found")
 
@@ -47,7 +47,7 @@ def main() -> int:
     root = _repo_root()
     _required_ooutwire_output(root)
     sys.path.insert(0, str(root))
-    from omega_engine.crates.prompt_civilization.cli import main as runtime_main
+    from engine.crates.prompt_civilization.cli import main as runtime_main
 
     return runtime_main()
 

@@ -147,7 +147,7 @@ When approved:
 3b. **PR create failure / dual-block:** if `gh pr create` / `POST .../pulls` returns HTTP 500, load `/github` (full dual-block procedure). Do not invent open PRs. Status page green ≠ create works.
 
 3. **Canonical write, deterministic mirror:** edit only `.agents/skills/<name>`.
-   Run `omega_engine_operations/use_cases/sync_cross_host_skills.py --skills
+   Run `operations/use_cases/sync_cross_host_skills.py --skills
    <name>`, then its `--check` mode. Never ask a model to reproduce mirror bytes.
 4. **Meta isolation:** land only the explicitly reviewed packages and receipts.
    Never sweep concurrent paper, code, or research work into the change.
@@ -292,7 +292,7 @@ ROI estimate: [time saved per occurrence × expected frequency]
 **Domain orchestrator template:**
 When a new domain (e.g., FSP, consciousness) requires coordinated multi-agent work:
 
-1. Create agent in `omega_engine/agents/<domain>.md` with: routing table, dead-end blocklist,
+1. Create agent in `engine/agents/<domain>.md` with: routing table, dead-end blocklist,
    pipeline state, priority stack, escalation rules, key file inventory
 2. Create matching skill in `.claude/skills/<domain>/SKILL.md` with: triggers,
    routing table (subset), quick reference, dead-end blocklist (subset)
@@ -300,7 +300,7 @@ When a new domain (e.g., FSP, consciousness) requires coordinated multi-agent wo
    matching domain sections simultaneously (cross-domain replication)
 
 **Agent-skill coherence check** (IAK-011):
-When a new agent is created in `omega_engine/agents/`, check:
+When a new agent is created in `engine/agents/`, check:
 
 1. Does a matching skill exist in `.claude/skills/`? If not → propose creation
 2. Does the agent reference skills that don't exist? If so → flag gap
@@ -327,14 +327,14 @@ To analyze sprint-wide learnings, run: `/autoskill` during or after retrospectiv
 2. Did any agent receive consistent feedback patterns?
 3. Are there conventions established this sprint worth capturing?
 
-## Omega Doctrine Wiring (panepistimion-math-prof + GT* skills)
+## Core Doctrine Wiring (panepistimion-math-prof + GT* skills)
 
 Governed by `.claude/skills/_shared/meta_skill_governance.md` — **which does not exist on
 disk** (verified 2026-07-22), so the auto-commit licence below rests on a missing
 governor. The former A00 backstop (`CLAUDE.md:11-14`) is **gone** — PR #1594 retired
 A00 CLAUDE.md narrowing on 2026-07-30 and CLAUDE.md now routes git through `/github`.
 On **sprint
-completion** and on **every autoskill fire**, run two channels for the Omega
+completion** and on **every autoskill fire**, run two channels for the Core
 math doctrine:
 
 1. **Channel 1 -- index refresh (always, free):** regenerate the Wizard manifest
@@ -398,7 +398,7 @@ This enables the meta-recursive loop:
 
 ## Session metrics
 
-The model writes qualitative rows using schema `omega.autoskill.run.v1`. Derive
+The model writes qualitative rows using schema `core.autoskill.run.v1`. Derive
 every count with:
 
 ```text
@@ -413,7 +413,7 @@ eligible-signal denominator. Historical percentages are not current policy.
 ```text
 User: /autoskill
 
-Omega: Analyzing this session for durable preferences...
+Core: Analyzing this session for durable preferences...
 
 # Autoskill Report
 

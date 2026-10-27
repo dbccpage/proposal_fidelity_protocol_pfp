@@ -9,10 +9,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.types.base import PfpBaseModel, PfpDomainModel
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.infrastructure.yaml_loading import (
+from pfp.domain.types.base import PfpBaseModel, PfpDomainModel
+from pfp.infrastructure.model_loading import load_yaml_model
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.infrastructure.yaml_loading import (
     StrictYamlError,
     strict_yaml_load,
     strict_yaml_load_all,
@@ -185,7 +185,7 @@ def test_load_yaml_model_unquoted_boolean_rejection():
 def test_storage_adapter_duplicate_key_rejection(tmp_path: Path):
     bad_yaml = tmp_path / "bad.yaml"
     bad_yaml.write_text("a: 1\na: 2\n", encoding="utf-8")
-    adapter = PfpFileSystemStorageAdapter(data_root=Path("omega_engine_pfp/infrastructure/yaml"))
+    adapter = PfpFileSystemStorageAdapter(data_root=Path("pfp/infrastructure/yaml"))
     with pytest.raises((StrictYamlError, ValueError)):
         adapter._load_yaml(bad_yaml)
 
@@ -195,7 +195,7 @@ def test_storage_adapter_duplicate_key_rejection(tmp_path: Path):
 # =============================================================================
 
 def test_all_infrastructure_yaml_files_pass_strict_loading():
-    yaml_dir = Path("omega_engine_pfp/infrastructure/yaml")
+    yaml_dir = Path("pfp/infrastructure/yaml")
     assert yaml_dir.is_dir(), f"Missing yaml directory at {yaml_dir}"
     yaml_files = list(yaml_dir.rglob("*.yaml"))
     assert len(yaml_files) >= 200, f"Expected >= 200 YAML files, found {len(yaml_files)}"

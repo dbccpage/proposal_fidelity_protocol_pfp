@@ -18,13 +18,13 @@ from __future__ import annotations
 from pathlib import Path
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import (
+from eis.domain.pharmacy_catalog import (
     PharmacyCatalogRepository,
 )
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.infrastructure.pharmacy_writer import (
     filesystem_catalog_bytes,
 )
-from omega_engine_operads.domain.prompt_hierarchy import (
+from operads.domain.prompt_hierarchy import (
     AntiOpBinding,
     AntibodyBinding,
     PromptGateReceipt,
@@ -33,8 +33,8 @@ from omega_engine_operads.domain.prompt_hierarchy import (
     load_prompt_node_from_binding_dict,
     parse_prompt_uri,
 )
-from omega_engine_operads.application.prompt_gates import evaluate_prompt_gates
-from omega_engine_operads.infrastructure.parser.prompt_hierarchy_loader import (
+from operads.application.prompt_gates import evaluate_prompt_gates
+from operads.infrastructure.parser.prompt_hierarchy_loader import (
     load_prompt_node_from_pfp_yaml,
 )
 
@@ -49,7 +49,7 @@ def _find_repo_root() -> Path:
 
 def _evaluate_registered_prompt(node, payload, **kwargs):
     # Fixture detectors stand for host implementations outside these keyword tests.
-    from omega_engine_operads.domain.prompt_hierarchy.evaluator import DEFAULT_KEYWORD_PATTERNS
+    from operads.domain.prompt_hierarchy.evaluator import DEFAULT_KEYWORD_PATTERNS
     detectors = {op.op_id: (lambda value: False) for op in node.anti_ops
                  if not DEFAULT_KEYWORD_PATTERNS.get(op.op_id)}
     detectors.update(kwargs.pop("custom_detectors", {}) or {})
@@ -146,7 +146,7 @@ def _pfp_research_04_path() -> Path:
     repo_root = _find_repo_root()
     fixture = (
         repo_root
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -156,7 +156,7 @@ def _pfp_research_04_path() -> Path:
         return fixture
     return (
         repo_root
-        / "omega_engine_education"
+        / "education"
         / "documentation"
         / "004_oepfp"
         / "workflows"
@@ -351,7 +351,7 @@ def test_receipt_to_dict_format() -> None:
         antibodies_evaluated=("ab1",),
     )
     d = receipt.to_dict()
-    assert d["schema_version"] == "omega.prompt_hierarchy.gate_receipt.v1"
+    assert d["schema_version"] == "core.prompt_hierarchy.gate_receipt.v1"
     assert d["prompt_uri"] == "prompt://test/sub/task/st/id"
     assert d["status"] == "PASS"
     assert d["authority_effect"] == "None"

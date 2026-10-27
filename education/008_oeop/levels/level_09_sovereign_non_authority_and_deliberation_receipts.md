@@ -8,8 +8,8 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/domain/operad/treg.py
-  - omega_engine_operads/domain/operad/evidence.py
+  - operads/domain/operad/treg.py
+  - operads/domain/operad/evidence.py
   - .agents/skills/thanatos-human-promotion-firewall/SKILL.md
   - .agents/AGENTS.md
 last_verified: 2026-10-01
@@ -25,7 +25,7 @@ last_verified: 2026-10-01
 
 The most catastrophic failure mode of autonomous multi-agent systems is **autonomous authority escalation**: an agent swarm deliberates, agrees with its own proposal, and autonomously executes a high-consequence external action (pushing directly to production, deleting databases, publishing unverified research) under the illusion that consensus equals authorization.
 
-To make authority escalation mathematically unrepresentable, the Anomalon Engine enforces the **GTOC-5 Sovereign Authority Firewall**:
+To make authority escalation mathematically unrepresentable, the Sentinel Engine enforces the **GTOC-5 Sovereign Authority Firewall**:
 
 $$\boxed{\forall \, \text{Receipt } R, \quad R.\text{authority\_effect} \equiv \textbf{"None"}}$$
 
@@ -50,7 +50,7 @@ $$\boxed{\operatorname{Verify}(A) = \text{Pass} \centernot\implies \operatorname
 A passing verification result is evidence that artifact $A$ satisfied the specific tested predicates. It is **not** an operational license. In code:
 
 ```rust
-// omega_wdp/src/ddc/non_authority.rs
+// core_wdp/src/ddc/non_authority.rs
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum AuthorityEffect {
     None,
@@ -157,13 +157,13 @@ To run the local audit checks verifying non-authority firewalls and receipt inte
 
 ```powershell
 # 1. Rust crate non-authority assertion test
-cargo test --package omega_wdp --test test_ddc_authority_firewall
+cargo test --package core_wdp --test test_ddc_authority_firewall
 
 # 2. Audit append-only log truncation safety
-py -3.12 -m pytest omega_engine_operations/tests/unit/test_append_only_log_truncation.py
+py -3.12 -m pytest operations/tests/unit/test_append_only_log_truncation.py
 
 # 3. Check for unauthorized git push attempts
-py -3.12 -m pytest omega_engine_operations/tests/unit/test_git_push_firewall.py
+py -3.12 -m pytest operations/tests/unit/test_git_push_firewall.py
 ```
 
 ### The Level 09 Governance Invariants

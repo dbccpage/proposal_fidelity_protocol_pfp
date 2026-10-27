@@ -5,10 +5,10 @@ kind: architecture-reference
 status: IMPLEMENTED
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/skill_operad/yaml/rules_registry.yaml
-  - omega_engine_operads/skill_operad/skill_compiler/rule_scope.py
-  - omega_engine_operads/skill_operad/skill_compiler/rule_gate.py
-  - omega_engine_operations/use_cases/cicd/pr_fast_gate.py
+  - operads/skill_operad/yaml/rules_registry.yaml
+  - operads/skill_operad/skill_compiler/rule_scope.py
+  - operads/skill_operad/skill_compiler/rule_gate.py
+  - operations/use_cases/cicd/pr_fast_gate.py
 last_verified: 2026-10-07
 ---
 
@@ -56,7 +56,7 @@ Each finding has a test that triggers it
 
 ## Where the gate runs
 
-- `py -3.12 -m omega_engine_operads.skill_operad.skill_compiler.rule_gate --repo-root .`
+- `py -3.12 -m operads.skill_operad.skill_compiler.rule_gate --repo-root .`
 - Pre-commit hook `rule-gate`, on every commit (`always_run`): pre-commit never
   passes a deleted file, and a deleted rule or mirror is what R1 and R7 catch.
 - The fast PR gate, check 5 `rule-gate`, when the branch changes or deletes a

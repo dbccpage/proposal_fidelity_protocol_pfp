@@ -85,20 +85,20 @@ No live provider call, GPU work, new formal proof, external deposit, or DOI
 reservation was performed. The current receipt records interpreter/tool
 versions and the executed scope; older counts remain historical.
 
-## The revised Landau companion
+## The revised Examiner companion
 
-The [quiz](../_lev_landau_theoretical_minimum_quiz/quiz.md) progresses from
+The [quiz](../_lev_examiner_theoretical_minimum_quiz/quiz.md) progresses from
 declarations and minimal witnesses through both balance proofs, exact
 matrices, exponential positivity, receipt forgery, batching, pairing, and
 every Fock length class. The final problem audits the publication claim.
 
-The [guide](../_lev_landau_theoretical_minimum_quiz/study_guide.md) gives
+The [guide](../_lev_examiner_theoretical_minimum_quiz/study_guide.md) gives
 prerequisites, notation, a reading route, and replay boundaries. The
-[worked key](../_lev_landau_theoretical_minimum_quiz/instructor_key.md)
+[worked key](../_lev_examiner_theoretical_minimum_quiz/instructor_key.md)
 provides complete solutions and partial-credit allocations totaling 100.
 The 80-point competence target and oral defense are teaching conventions;
 no measured learner benefit is claimed. Apartment 50 remains fictional
-Bulgakov staging.
+the novelist staging.
 
 ## References and Zenodo materials
 

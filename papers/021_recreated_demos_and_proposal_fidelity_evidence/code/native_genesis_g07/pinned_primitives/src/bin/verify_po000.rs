@@ -7,12 +7,12 @@
 //!
 //! `AuthorityEffect: None.`
 
-use omega_ooutwire_primitives::alpha_projection_obstruction::verify::verify_receipt_text;
+use core_ooutwire_primitives::alpha_projection_obstruction::verify::verify_receipt_text;
 use std::path::Path;
 
 fn main() {
     let receipt_path = std::env::args().nth(1).unwrap_or_else(|| {
-        let default_path = omega_ooutwire_primitives::alpha_projection_obstruction::receipt_path();
+        let default_path = core_ooutwire_primitives::alpha_projection_obstruction::receipt_path();
         default_path.to_string_lossy().into_owned()
     });
 

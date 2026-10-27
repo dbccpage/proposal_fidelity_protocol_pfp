@@ -11,7 +11,7 @@ import pytest
 import yaml
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.operad.specification import (
+from pfp.domain.operad.specification import (
     ArchitectureSpec,
     parse_architecture_json,
 )

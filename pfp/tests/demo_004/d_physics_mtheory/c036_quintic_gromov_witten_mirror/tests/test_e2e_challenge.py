@@ -16,16 +16,16 @@ import subprocess
 import sys
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.hypergeometric_mirror_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.hypergeometric_mirror_checker import (
     verify_hypergeometric_mirror_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.picard_fuchs_recurrence_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.picard_fuchs_recurrence_checker import (
     verify_picard_fuchs_recurrence_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.reference_solver.solver import (
     solve,
 )
 

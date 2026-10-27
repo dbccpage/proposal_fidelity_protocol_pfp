@@ -11,4 +11,4 @@ Reserved (not implemented v1; skill may list them only after a follow-up PR):
 - `semantic_scholar` ext
 - `pubmed` ext
 
-User-Agent identifies Anomalon research lookup; no API key required for these public endpoints in v1.
+User-Agent identifies Sentinel research lookup; no API key required for these public endpoints in v1.

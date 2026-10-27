@@ -16,7 +16,7 @@ This is ChatGPT's Q40 challenge, rerun as it was written. The first attempt did 
 
 Generation is hard because the solver must get phase tracking right (Y = iXZ), extract an independent commuting basis over F2, and enumerate the full ground space. Verification is cheap: every claim in a `SOLVED` answer can be checked by exact symplectic and rational arithmetic in well under a second for n ≤ 8.
 
-The task stresses the engine turn driver, stateful retraction, the sandbox and the matched-arms harness in OEWAS (Omega Engine Workflows, Agents, Skills). It also exercises OEEIS (Omega Engine Epistemic Immune System) screening of schema-valid but wrong certificates. The commuting-Pauli stabilizer formalism is textbook (Gottesman 1997, quant-ph/9705052), so a pass is real but modest evidence of capability. A pass in arm A alone is not evidence that the game adds capability; that needs the arm comparison in §9.
+The task stresses the engine turn driver, stateful retraction, the sandbox and the matched-arms harness in OEWAS (Engine Workflows, Agents, Skills). It also exercises OEEIS (Engine Epistemic Immune System) screening of schema-valid but wrong certificates. The commuting-Pauli stabilizer formalism is textbook (Gottesman 1997, quant-ph/9705052), so a pass is real but modest evidence of capability. A pass in arm A alone is not evidence that the game adds capability; that needs the arm comparison in §9.
 
 ## 3. Formal Problem and Bounds
 
@@ -111,7 +111,7 @@ In either mode, `generate_benchmark.py` and the 40 cases in the demo folder are 
   - term IDs that sort differently as strings than as positions;
   - a duplicate term `id`, which must return `UNKNOWN`.
 
-**Checkers.** The exact checker is the Rust port of the Q40 certificate checker (U14): F2 symplectic rank, phase-tracked Pauli products, exhaustive 2^k enumeration, rational energies, with every model-supplied integer parsed through a guarded path that rejects rather than crashes. The independent second checker builds the 2^n × 2^n Hermitian matrix over Q(i), confirms that H − E₀I is positive semidefinite by an exact LDLᴴ factorization, and confirms that its kernel dimension equals `degeneracy` by exact rank. It never uses the claimed basis, so it shares no logic with the first checker, and it runs on every case, not only n ≤ 6. The numpy float checker in `omega_engine_symbol_game/infrastructure/quantum/dense_checker.py` may appear only as labelled secondary evidence.
+**Checkers.** The exact checker is the Rust port of the Q40 certificate checker (U14): F2 symplectic rank, phase-tracked Pauli products, exhaustive 2^k enumeration, rational energies, with every model-supplied integer parsed through a guarded path that rejects rather than crashes. The independent second checker builds the 2^n × 2^n Hermitian matrix over Q(i), confirms that H − E₀I is positive semidefinite by an exact LDLᴴ factorization, and confirms that its kernel dimension equals `degeneracy` by exact rank. It never uses the claimed basis, so it shares no logic with the first checker, and it runs on every case, not only n ≤ 6. The numpy float checker in `symbol_game/infrastructure/quantum/dense_checker.py` may appear only as labelled secondary evidence.
 
 **Mutation suite.** At least 30 corrupted outputs the checker must reject: sign-flipped σᵢ, energy off by one term weight, unreduced fraction, missing minimizer, extra non-minimizer, degeneracy without the 2^{n−k} factor, a dependent basis, a commuting pair offered as witness, a string exponent where an integer is required. A mutation that crashes the checker counts as a checker defect and pauses scoring.
 
@@ -163,9 +163,9 @@ Operands expected: (1) phase-tracked product of two Pauli words with an explicit
 
 ## 13. Estate Reuse and Prerequisites
 
-- Q40 demo: `omega_engine_projects/mssn_sn_symgam/demos/demo_q40_quantum_solver/` (`TASK.md`, `solver.py` as arm E).
-- Python reference: `omega_engine_symbol_game/domain/quantum/` (`pauli.py`, `stabilizer_solver.py`, `certificate_checker.py`), to be ported to Rust.
-- Rust: `omega_engine/crates_rs/omega_quantum_physics/src/pauli.rs` and `binary_field.rs` give commutation and the symplectic product, but no phase-tracked string products. The checker must be written in Rust under U14.
+- Q40 demo: `projects/mssn_sn_symgam/demos/demo_q40_quantum_solver/` (`TASK.md`, `solver.py` as arm E).
+- Python reference: `symbol_game/domain/quantum/` (`pauli.py`, `stabilizer_solver.py`, `certificate_checker.py`), to be ported to Rust.
+- Rust: `engine/crates_rs/core_quantum_physics/src/pauli.rs` and `binary_field.rs` give commutation and the symplectic product, but no phase-tracked string products. The checker must be written in Rust under U14.
 - Upgrades: base [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md); plus [U10](../../upgrades/u10_synthesis_loop_v2.md) and [U14](../../upgrades/u14_rust_quantum_stabilizer_port.md). Recommended: [U18](../../upgrades/u18_demo_registry_unification.md) so `symbol-game demo run` can reach Q40.
 
 ## 14. Claim Hygiene

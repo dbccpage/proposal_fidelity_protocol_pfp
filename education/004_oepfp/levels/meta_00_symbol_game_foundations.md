@@ -11,12 +11,12 @@ maturity: draft
 claim_status: specified
 authority_effect: "None"
 source_paths:
-  - omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/readme.md  # not found at source pin c419cc6beb (2026-10-20)
-  - omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/core_invariants.md  # not found at source pin c419cc6beb (2026-10-20)
-  - omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/oesos_symbol_game_lab_provenance.md  # not found at source pin c419cc6beb (2026-10-20)
-  - omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/symbol_game_monograph.md  # not found at source pin c419cc6beb (2026-10-20)
+  - education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/readme.md  # not found at source pin c419cc6beb (2026-10-20)
+  - education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/core_invariants.md  # not found at source pin c419cc6beb (2026-10-20)
+  - education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/oesos_symbol_game_lab_provenance.md  # not found at source pin c419cc6beb (2026-10-20)
+  - education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/symbol_game_monograph.md  # not found at source pin c419cc6beb (2026-10-20)
 prerequisites:
-  - ../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_pre_genesis_to_mssn/paper.md
+  - ../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_pre_genesis_to_mssn/paper.md
   - ../../001_oegen/genesis.md
 aliases:
   - 0_symbol_game.md

@@ -31,7 +31,7 @@ The witnesses in [AP_MD_029_intersection_without_ambient](../../anti/markdown/AP
 
 `AP_MD_005` still owns a quotient at the wrong degree, a cochain evaluated on a chain of another dimension, and naming $C^1/\operatorname{im}d_0$ as first cohomology when $d_1$ exists. This pattern does not replace that repair.
 
-`/woland-proof-scope-rule` still owns a stronger negative sentence beside a proved bound, including a non-recovery claim labeled proved next to a cycle bound, and an unqualified infinite-time persistence exclusion beside an all-time zero certificate. `/woland-proof-premise-rule` still owns a transferred bound that drops a hypothesis the argument uses. `AP_MD_004` still owns acceptance by an unfixed family. `AP_MD_002` still owns spaced identifiers in a printed Lean listing. `AP_MD_003` still owns the ambient traceless space called the product tangent space. `AP_MD_001` still owns a stated command, version, or test count the package does not match.
+`/adversary-proof-scope-rule` still owns a stronger negative sentence beside a proved bound, including a non-recovery claim labeled proved next to a cycle bound, and an unqualified infinite-time persistence exclusion beside an all-time zero certificate. `/adversary-proof-premise-rule` still owns a transferred bound that drops a hypothesis the argument uses. `AP_MD_004` still owns acceptance by an unfixed family. `AP_MD_002` still owns spaced identifiers in a printed Lean listing. `AP_MD_003` still owns the ambient traceless space called the product tangent space. `AP_MD_001` still owns a stated command, version, or test count the package does not match.
 
 Images of the two injections inside $T$ may be intersected. A declared harmonic subspace may be intersected. Those are not this defect.
 

@@ -29,5 +29,5 @@ Operational specifications for specialized PR review and quality gates in the re
 ## 5. Local HTTP Containment & PR Trigger Coverage
 
 - Compare Node and Python local-only forwarding rules by header presence, including empty values and mixed-case names. Use `tests/server_admission.test.mjs` to require refusals with zero provider dispatch on both handlers and successful direct-local controls.
-- When changing the OEWAS router, wire DTOs, or API app, require each exact source path in the PR filter and the unconditional containment step; verify `omega_engine_pfp/tests/test_symbol_game_pr_workflow.py`, including path-removal controls.
+- When changing the OEWAS router, wire DTOs, or API app, require each exact source path in the PR filter and the unconditional containment step; verify `pfp/tests/test_symbol_game_pr_workflow.py`, including path-removal controls.
 - A failed CI job with no recorded steps supplies no test result. Report it separately from local replay; inaccessible failure annotations remain unknown, not a code diagnosis or passing check.

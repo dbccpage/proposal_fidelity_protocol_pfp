@@ -8,28 +8,28 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.python_development_office.quality_inventory import (
+from operads.application.python_development_office.quality_inventory import (
     PythonQualityInventoryGate,
     QualityInventoryDependencies,
 )
-from omega_engine_operads.application.python_development_office.test_receipt_verification import (
+from operads.application.python_development_office.test_receipt_verification import (
     ReceiptVerificationRequest,
     verify_test_execution_receipts,
 )
-from omega_engine_operads.domain.operad.errors import Ok
-from omega_engine_operads.domain.python_development_office.quality_inventory import (
+from operads.domain.operad.errors import Ok
+from operads.domain.python_development_office.quality_inventory import (
     TestTierRule as TierRule,
 )
-from omega_engine_operads.infrastructure.python_development_office.quality_adapters import (
+from operads.infrastructure.python_development_office.quality_adapters import (
     FileSystemPythonInventoryRepository,
 )
-from omega_engine_operads.infrastructure.python_development_office.quality_policy import (
+from operads.infrastructure.python_development_office.quality_policy import (
     load_quality_policy,
 )
-from omega_engine_operads.infrastructure.python_development_office.test_execution_receipts import (
+from operads.infrastructure.python_development_office.test_execution_receipts import (
     FileSystemTestExecutionReceiptRepository,
 )
-from omega_engine_operads.tests.python_development_office.quality_test_support import (
+from operads.tests.python_development_office.quality_test_support import (
     FixedUtcClock,
     StubComplexityAnalyzer,
     StubExecutionReceiptRepository,
@@ -72,7 +72,7 @@ def test_default_policy_classifies_production_test_and_frozen_sources(tmp_path: 
 
 def test_filesystem_receipt_loader_refuses_tampered_digest(tmp_path: Path) -> None:
     receipt = {
-        "schema": "omega.python_test_execution_receipt.v1",
+        "schema": "core.python_test_execution_receipt.v1",
         "receipt_id": "tampered",
         "tier": "unit",
         "execution_kind": "pytest",

@@ -9,9 +9,9 @@ claim_status: scoped
 authority_effect: "None"
 source_revision: 305b9690f97fc3f5c13e361cfe752a6d5dc7ad8d
 source_paths:
-  - omega_engine_pfp/entrypoints/cli/finite_qm_prompt.py
-  - omega_engine_pfp/infrastructure/finite_qm_prompt.py
-  - omega_engine_pfp/infrastructure/finite_qm_cochain_judge.py
+  - pfp/entrypoints/cli/finite_qm_prompt.py
+  - pfp/infrastructure/finite_qm_prompt.py
+  - pfp/infrastructure/finite_qm_cochain_judge.py
 last_verified: 2026-10-22
 verification_scope: stage names and work-unit pins rechecked with hashlib against committed blobs at 305b9690; the displayed prepare output was not re-run; native judging and providers not run
 ---
@@ -28,9 +28,9 @@ Beginner route: follow this page in order, stop at each check, then complete the
 
 ## 1. Name the actual mathematical job
 
-The [public input](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_public_input.json) supplies a square-shaped graph with four oriented edges and one declared face. Each edge carries an exact number: `(2, -3, 5, 7)`. The task asks how much disagreement remains after subtracting differences of vertex potentials. A potential assigns one number to each vertex. An independent dual witness supplies a lower bound on every such repair.
+The [public input](../../../../pfp/fixtures/finite_qm_workflow/c4_public_input.json) supplies a square-shaped graph with four oriented edges and one declared face. Each edge carries an exact number: `(2, -3, 5, 7)`. The task asks how much disagreement remains after subtracting differences of vertex potentials. A potential assigns one number to each vertex. An independent dual witness supplies a lower bound on every such repair.
 
-This is a finite cochain precursor in a finite-QM research workflow. It does not derive physical quantum mechanics. The [work unit](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json) leaves scalar-field selection, a Hilbert carrier, positivity, Born pairing, tensor structure and unitary dynamics as unpaid imports. Lean and paper anchors are explicitly unbound for this task.
+This is a finite cochain precursor in a finite-QM research workflow. It does not derive physical quantum mechanics. The [work unit](../../../../pfp/fixtures/finite_qm_workflow/c4_work_unit.json) leaves scalar-field selection, a Hilbert carrier, positivity, Born pairing, tensor structure and unitary dynamics as unpaid imports. Lean and paper anchors are explicitly unbound for this task.
 
 **Check:** Would the label `finite_qm` make this a derivation of the Born rule? No. The checker evaluates the supplied finite complex and the submitted certificate. A physical bridge needs its own assumptions, statement and evidence.
 
@@ -64,9 +64,9 @@ Worked example: the face sum of (2, −3, 5, 7). Narration matches the spoken se
 
 | Asset | Read it to answer |
 | --- | --- |
-| [prompt_template.yaml](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml) | What do the system and user prompts ask the proposer to construct? |
-| [workflow.yaml](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml) | What work, evidence and transitions belong to P0 through P5? |
-| [mode.yaml](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml) | Which techniques, bounds and provider policy apply? |
+| [prompt_template.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml) | What do the system and user prompts ask the proposer to construct? |
+| [workflow.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml) | What work, evidence and transitions belong to P0 through P5? |
+| [mode.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml) | Which techniques, bounds and provider policy apply? |
 
 The six research stages are P0 mine, P1 derive, P2 verify, P3 repair when needed, P4 challenge and P5 record. They are distinct from the eleven numbered public runtime stages and the 101 numbered teaching specifications in the [levels catalogue](../levels/README.md).
 
@@ -79,7 +79,7 @@ The focused CLI prepares P1 derivation and P3 repair turns and can check a submi
 From the repository root, run this complete command:
 
 ```powershell
-py -3.12 -m omega_engine_pfp.entrypoints.cli.finite_qm_prompt prepare omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json --source-root . --attempt docs-walkthrough-1 --stage P1_DERIVE
+py -3.12 -m pfp.entrypoints.cli.finite_qm_prompt prepare pfp/fixtures/finite_qm_workflow/c4_work_unit.json --source-root . --attempt docs-walkthrough-1 --stage P1_DERIVE
 ```
 
 This command was executed for this documentation review under Python 3.12.10 with exit status 0. Its relevant output was:
@@ -110,7 +110,7 @@ The CLI checks the work unit's declared source pins against file bytes below `--
 
 The response schema requires exactly `task_id`, `attempt_id`, `input_sha256` and `answer`. Copy the first three values from the prepared schema. `checker_id` belongs to the binding metadata; it is not an extra response field.
 
-The [shared task-turn owner](../../../../omega_engine_pfp/infrastructure/task_turn.py) binds the prepared task and expected attempt. The finite-QM compiler places the stage instruction and original mission slots in that task and includes the system prompt's SHA-256 in its context. Thus the input hash is not just a hash of the four edge numbers.
+The [shared task-turn owner](../../../../pfp/infrastructure/task_turn.py) binds the prepared task and expected attempt. The finite-QM compiler places the stage instruction and original mission slots in that task and includes the system prompt's SHA-256 in its context. Thus the input hash is not just a hash of the four edge numbers.
 
 The schema inside `answer` requires four entries: `potential`, `dual_witness`, `phi1` and `gamma2`. Both vectors have four rational coordinates. Each rational has exactly integer `num` and positive integer `den`, in reduced form. Use `{"num":3,"den":1}`, not `3.0`, `"3"`, or a nonreduced `6/2` pair. A correctly shaped rational can still be mathematically wrong.
 
@@ -121,12 +121,12 @@ Keep the original response bytes. Reformatting a response before checking change
 After saving a complete schema-conforming response as `reply.json`, the checking command is:
 
 ```powershell
-py -3.12 -m omega_engine_pfp.entrypoints.cli.finite_qm_prompt check omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json reply.json --source-root . --attempt docs-walkthrough-1 --stage P1_DERIVE
+py -3.12 -m pfp.entrypoints.cli.finite_qm_prompt check pfp/fixtures/finite_qm_workflow/c4_work_unit.json reply.json --source-root . --attempt docs-walkthrough-1 --stage P1_DERIVE
 ```
 
-This is an instruction for a later checking step, not a command executed by this documentation review. It requires an existing discoverable native host; an externally located host can be selected through the existing `OMEGA_SYMBOL_GAME_HOST` setting. Use the [runtime ownership guide](17_runtime_ownership_and_replay.md) for that environment. An unavailable host is an infrastructure limitation, not a false mathematical certificate and not an accepted result.
+This is an instruction for a later checking step, not a command executed by this documentation review. It requires an existing discoverable native host; an externally located host can be selected through the existing `CORE_SYMBOL_GAME_HOST` setting. Use the [runtime ownership guide](17_runtime_ownership_and_replay.md) for that environment. An unavailable host is an infrastructure limitation, not a false mathematical certificate and not an accepted result.
 
-The [native judge adapter](../../../../omega_engine_pfp/infrastructure/finite_qm_cochain_judge.py) parses the supplied rational witnesses and calls the existing cochain evaluator. It checks the submitted candidate against the problem; it does not establish validity by comparing it with a stored answer. The required equations are:
+The [native judge adapter](../../../../pfp/infrastructure/finite_qm_cochain_judge.py) parses the supplied rational witnesses and calls the existing cochain evaluator. It checks the submitted candidate against the problem; it does not establish validity by comparing it with a stored answer. The required equations are:
 
 ```text
 d1*d0 = 0
@@ -146,7 +146,7 @@ Here `c` is the public edge data, `a` the proposed vertex potential, `r` its rem
 If the checking process identifies an appropriate repairable witness failure, a fresh request can be prepared with the original work unit and a new attempt:
 
 ```powershell
-py -3.12 -m omega_engine_pfp.entrypoints.cli.finite_qm_prompt prepare omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json --source-root . --attempt docs-walkthrough-2 --stage P3_REPAIR --failure-code G3_WITNESS
+py -3.12 -m pfp.entrypoints.cli.finite_qm_prompt prepare pfp/fixtures/finite_qm_workflow/c4_work_unit.json --source-root . --attempt docs-walkthrough-2 --stage P3_REPAIR --failure-code G3_WITNESS
 ```
 
 Do not treat this example failure code as an observed failure of the worked certificate. The workflow defines fixed guidance for schema, cochain, witness, countermodel and scope failures. It does not accept arbitrary feedback text that could leak an expected answer. P3 requires a failure code and a complete replacement certificate; it does not ask for a patch to the old response.
@@ -154,7 +154,7 @@ Do not treat this example failure code as an observed failure of the worked cert
 Use the new preparation's binding in the replacement. Check it with the same P3 and failure-code arguments:
 
 ```powershell
-py -3.12 -m omega_engine_pfp.entrypoints.cli.finite_qm_prompt check omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json reply_repaired.json --source-root . --attempt docs-walkthrough-2 --stage P3_REPAIR --failure-code G3_WITNESS
+py -3.12 -m pfp.entrypoints.cli.finite_qm_prompt check pfp/fixtures/finite_qm_workflow/c4_work_unit.json reply_repaired.json --source-root . --attempt docs-walkthrough-2 --stage P3_REPAIR --failure-code G3_WITNESS
 ```
 
 Stage and guidance change the task identity. Reusing the P1 input hash in a P3 response is an identity failure even when its arithmetic happens to be correct. The mode allows two candidate attempts. The manual workflow must preserve that bound; repeatedly invoking an offline preparation command is not an automatic budget controller.

@@ -9,8 +9,8 @@ native operation and independent certificate checks are bound. Checked
 out-of-scope controls are not solved mathematical capabilities.
 
 The local challenge swarm does not have a cohomology operation bound through
-`omega_engine_woland`. It returns `WOLAND_EXECUTION_UNAVAILABLE` and produces no
-Woland act trace or authorization receipt. The following problem specification
+`adversary`. It returns `ADVERSARY_EXECUTION_UNAVAILABLE` and produces no
+Adversary act trace or authorization receipt. The following problem specification
 defines the intended mathematical contract, not proof of implemented capability.
 Billing is unavailable; serialized input size is not measured token usage.
 

@@ -22,11 +22,11 @@ from fractions import Fraction
 from pathlib import Path
 import pytest
 
-from omega_engine_pfp.controllers import SymbolGameController, SymbolGameEngine
-from omega_engine_pfp.domain.exact.q import Q
-from omega_engine_pfp.domain.models import ObstructionScore, StepVerdict
-from omega_engine_pfp.domain.events import TurnExecutedEvent
-from omega_engine_pfp.domain.solvers import (
+from pfp.controllers import SymbolGameController, SymbolGameEngine
+from pfp.domain.exact.q import Q
+from pfp.domain.models import ObstructionScore, StepVerdict
+from pfp.domain.events import TurnExecutedEvent
+from pfp.domain.solvers import (
     BASE,
     AdmitDatum,
     AdmitForm,
@@ -57,7 +57,7 @@ from omega_engine_pfp.domain.solvers import (
 
 @pytest.fixture(autouse=True)
 def _bind_exact_ports() -> None:
-    from omega_engine_pfp import initialize_exact_ports
+    from pfp import initialize_exact_ports
 
     initialize_exact_ports()
 

@@ -16,7 +16,7 @@ from pathlib import Path
 
 RUNNER_PATH = Path(__file__).resolve().parents[1] / "run_c057_matrix.py"
 RUNNER_MODULE = (
-    "omega_engine_pfp.tests.demo_004.f_program_synthesis."
+    "pfp.tests.demo_004.f_program_synthesis."
     "c057_sorting_network_synthesis.run_c057_matrix"
 )
 SOURCE = RUNNER_PATH.read_text(encoding="utf-8")

@@ -47,7 +47,7 @@ def dispatch_target(target_id: str, agent_id: Optional[str] = None) -> Result[Di
         if os.path.exists(os.path.join(base_dir, "json", "composition_matrix.json"))
         else os.path.join(base_dir, "composition_matrix.json")
     )
-    workflows_dir = os.path.join(repo_root, "omega_engine_operads", "workflows")
+    workflows_dir = os.path.join(repo_root, "operads", "workflows")
 
     if not os.path.exists(sig_path) or not os.path.exists(slice_path) or not os.path.exists(comp_path):
         return Failure(DomainError("FILE_NOT_FOUND", "Operad JSON registry files missing"))
@@ -171,7 +171,7 @@ def dispatch_target(target_id: str, agent_id: Optional[str] = None) -> Result[Di
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Anomalon operad registry resolver (no execution)")
+    parser = argparse.ArgumentParser(description="Sentinel operad registry resolver (no execution)")
     parser.add_argument("target", help="Skill ID, Workflow ID, or composite operation to execute")
     parser.add_argument("--agent", help="Optional agent slice ID to enforce capability licensing", default=None)
     args = parser.parse_args()

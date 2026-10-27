@@ -51,8 +51,8 @@ Every skill suggestion pass evaluates the 12-step declaration order:
 ## 3. Inputs & Sources
 
 1. **Active Session Context & Tool Errors:** MCP failures, repetitive complex multi-step commands, domain-specific research needs.
-2. **Recent God Run Receipts:** `omega_engine/_god/runs/` (e.g. `brg_campaign`, `paper_repair_and_skill_panel_sweep`, `qmcoda-hott-frontier`).
-3. **Foundational Research Series:** `100_mathematical_foundations` and `008_omega_engine_master.md`.
+2. **Recent God Run Receipts:** `engine/_god/runs/` (e.g. `brg_campaign`, `paper_repair_and_skill_panel_sweep`, `qmcoda-hott-frontier`).
+3. **Foundational Research Series:** `100_mathematical_foundations` and `008_engine_master.md`.
 4. **External Registries:** `https://github.com/k-dense-ai/scientific-agent-skills`, arXiv, PyPI, OpenAlex.
 
 ---
@@ -98,12 +98,12 @@ Every suggestion pass, including `/auto-oe-autop` Stage 6:
 
 | File | Action |
 | --- | --- |
-| `omega_engine_operads/skills/ooutwire/proposed_skills_register.md` | **APPEND** one `### Entry NNNN:` block per candidate |
-| `omega_engine_operads/skills/ooutwire/recommended_skills_to_build.md` | **REFRESH** the ranked "Build next" table |
+| `operads/skills/ooutwire/proposed_skills_register.md` | **APPEND** one `### Entry NNNN:` block per candidate |
+| `operads/skills/ooutwire/recommended_skills_to_build.md` | **REFRESH** the ranked "Build next" table |
 
 ### Host root mirror (after write)
 
-Copy the new package directory **and** the `omega_engine_operads/skills/ooutwire/` inbox to
+Copy the new package directory **and** the `operads/skills/ooutwire/` inbox to
 every other host root. Derive this list from the filesystem (`ls -d .*/skills`):
 
 ```text
@@ -119,7 +119,7 @@ every other host root. Derive this list from the filesystem (`ls -d .*/skills`):
 
 * **Date Proposed:** YYYY-MM-DD
 * **Source Session:** <short label>
-* **Proposed Target Path:** `omega_engine_operads/skills/goo-<skill-name>/SKILL.md`
+* **Proposed Target Path:** `operads/skills/goo-<skill-name>/SKILL.md`
 * **Confidence Level:** **HIGH** | **MEDIUM** | **LOW**
 * **Category / Family:** `<category>` / `<family>`
 * **Description:** <one paragraph; nonclaims explicit>
@@ -141,10 +141,10 @@ register records confidence so a weak admission stays legible as weak.
 
 ---
 
-## 5. Paper Outline Proposal: Omega Skill Lifecycle Management System
+## 5. Paper Outline Proposal: Core Skill Lifecycle Management System
 
 ```markdown
-# Paper 011: Omega Skill-Capture, Agent Discovery, and Lifecycle Management
+# Paper 011: Core Skill-Capture, Agent Discovery, and Lifecycle Management
 
 ## A Typed 12-Step Audit Protocol for Autonomous Agent Evolution
 

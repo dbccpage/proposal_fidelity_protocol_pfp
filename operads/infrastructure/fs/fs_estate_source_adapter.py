@@ -6,8 +6,8 @@ import pathlib
 import hashlib
 import stat
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operations.domain.rop.result import Err, Ok, Result
+from operads.domain.capability_catalog_v1 import (
     CapabilityCatalogRefusal,
     decode_capability_catalog,
 )
@@ -22,13 +22,13 @@ class FsEstateSourceAdapter(EstateSourcePort):
     def __init__(self, base_path: pathlib.Path) -> None:
         self._base_path = base_path.absolute()
         self._skills_by_path = {}
-        canonical = self._base_path / "omega_engine_operads"
-        self._source_prefix = "omega_engine_operads/" if (
+        canonical = self._base_path / "operads"
+        self._source_prefix = "operads/" if (
             (canonical / "skills").is_dir() or (canonical / "skill_operad").is_dir()
         ) else ".agents/"
 
     def list_skill_paths(self, estate_ref: EstateRef) -> Result[tuple[str, ...], OeopDomainError]:
-        catalog_path = self._base_path / "omega_engine_operads/skill_operad/json/capability_catalog.v1.json"
+        catalog_path = self._base_path / "operads/skill_operad/json/capability_catalog.v1.json"
         if self._source_prefix == ".agents/":
             catalog_path = self._base_path / ".agents" / "skill_operads" / "capability_catalog.v1.json"
         if not catalog_path.is_file() and self._source_prefix == ".agents/":
@@ -36,7 +36,7 @@ class FsEstateSourceAdapter(EstateSourcePort):
         if not catalog_path.is_file():
             catalog_path = (
                 self._base_path
-                / "omega_engine_operads"
+                / "operads"
                 / "skill_operad"
                 / "json"
                 / "capability_catalog.v1.json"
@@ -79,10 +79,10 @@ class FsEstateSourceAdapter(EstateSourcePort):
             except CatalogCompileRefusal:
                 meta = {}
             generated = type(meta.get("metadata")) is dict and meta["metadata"].get(
-                "omega-generated"
+                "core-generated"
             ) == "oewas.typed-capability.v1"
             canonical = tuple(resource for resource in skill.package_resources if resource.path.startswith(
-                "omega_engine_operads/catalog/contracts/v1/"
+                "operads/catalog/contracts/v1/"
             ) and resource.path.endswith(".json"))
             if not generated and not canonical:
                 return Ok(None)

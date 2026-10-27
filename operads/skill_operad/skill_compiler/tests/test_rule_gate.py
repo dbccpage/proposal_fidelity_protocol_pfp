@@ -11,7 +11,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_operads.skill_operad.skill_compiler import rule_gate, rule_scope
+from operads.skill_operad.skill_compiler import rule_gate, rule_scope
 
 HOSTS = (".agents", ".claude", ".codex", ".grok")
 DOCS = ("GEMINI.md", ".agents/AGENTS.md", ".claude/AGENTS.md", ".codex/AGENTS.md", ".grok/AGENTS.md")
@@ -26,7 +26,7 @@ GATE_SOURCE = "def enforce_alpha() -> bool:\n    return True\n"
 
 def _registry() -> dict:
     return {
-        "schema_version": "omega.oewas.rules_registry.v1",
+        "schema_version": "core.oewas.rules_registry.v1",
         "authority_effect": "None",
         "rules_root": "rules",
         "host_roots": list(HOSTS),

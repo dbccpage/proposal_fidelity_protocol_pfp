@@ -8,7 +8,7 @@ four as `auto-auto-<x>`, seven as `lib-lib-<x>`, one tripled as
 `vp-engineering`). None of it was caught by any gate; it surfaced only when someone ran
 a one-line loop by hand. Memory is not a gate. This is.
 
-Run from the repo root: python -m omega_engine_operads.skill_operad.verify_skill_names
+Run from the repo root: python -m operads.skill_operad.verify_skill_names
 Exit 0 if every host agrees; exit 1 with a report otherwise (use in a gate).
 
 Optional: --fix rewrites `name:` to the directory name (directory is authoritative,
@@ -30,7 +30,7 @@ def check(fix: bool = False) -> int:
     problems: list[str] = []
     fixed = 0
 
-    roots = ["omega_engine_operads/skills", *HOSTS]
+    roots = ["operads/skills", *HOSTS]
     for host in roots:
         root = pathlib.Path(host)
         if not root.is_dir():

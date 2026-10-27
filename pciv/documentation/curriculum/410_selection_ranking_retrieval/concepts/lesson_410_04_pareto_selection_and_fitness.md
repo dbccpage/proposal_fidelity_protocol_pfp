@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 410 (Selection, Ranking & Retrieval)  
 **Level Source:** Level 04 ([`level_04_pareto_selection_and_fitness.md`](../../levels/level_04_pareto_selection_and_fitness.md))  
-**Rust Seam:** [`omega_prompt_civilization::fitness`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/fitness.rs)
+**Rust Seam:** [`core_prompt_civilization::fitness`](../../../../engine/crates_rs/core_prompt_civilization/src/fitness.rs)
 
 ## 1. Pedagogical Objective
 Evaluate prompt fitness as exact rational vectors over $\mathbb{Q}$ partitioned into non-dominated Pareto fronts, treating honest contract refusals as compliance rather than prompt failure.

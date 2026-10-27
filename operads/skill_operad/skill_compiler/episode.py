@@ -19,8 +19,8 @@ from pathlib import Path
 from typing import Any
 
 CONFIDENCE_OK = frozenset({"HIGH", "MEDIUM", "LOW"})
-INPUT_SCHEMA = "omega.skill_compiler.episode.input.v1"
-EPISODE_SCHEMA = "omega.skill_compiler.episode.v1"
+INPUT_SCHEMA = "core.skill_compiler.episode.input.v1"
+EPISODE_SCHEMA = "core.skill_compiler.episode.v1"
 INPUT_FIELDS = frozenset(
     {
         "schema",

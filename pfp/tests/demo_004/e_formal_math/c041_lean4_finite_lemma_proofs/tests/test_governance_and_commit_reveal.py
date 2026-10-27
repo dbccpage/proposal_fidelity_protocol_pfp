@@ -16,19 +16,19 @@ import json
 import shutil
 from pathlib import Path
 
-import omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.commit_reveal_runner as runner_mod
+import pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.commit_reveal_runner as runner_mod
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.budget_gate import (
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.budget_gate import (
     HARD_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
     C041BudgetGate,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.commit_reveal_runner import (
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.commit_reveal_runner import (
     CommitRevealRunner,
     ManifestCustodyError,
     reference_case_outcome,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.woland_gate import (
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.adversary_gate import (
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     case_passed,
@@ -200,7 +200,7 @@ def test_phase3_counts_warranted_refusals_separately_from_verified_answers(tmp_p
     assert receipt["receipt"]["verified_answer_cases"] == 60
     assert receipt["receipt"]["warranted_refusal_cases"] == 4
     assert (
-        tmp_path / "intel" / "_intelligence" / "_woland" / "runs" / "t_warranted" / "receipt.json"
+        tmp_path / "intel" / "_intelligence" / "_adversary" / "runs" / "t_warranted" / "receipt.json"
     ).is_file()
     assert runner.phase3_file.parent == copied_package / "commitments"
 
@@ -265,7 +265,7 @@ def _committed_runner(tmp_path: Path) -> tuple[Path, CommitRevealRunner]:
 
 def _run_dirs(tmp_path: Path, task_key: str) -> list[Path]:
     intel = tmp_path / "intel" / "_intelligence"
-    return [intel / "_woland" / "runs" / task_key, intel / "symbol_game" / "runs" / task_key]
+    return [intel / "_adversary" / "runs" / task_key, intel / "symbol_game" / "runs" / task_key]
 
 
 def test_phase3_reruns_a_transient_reference_infra_error_and_labels_from_the_real_answer(

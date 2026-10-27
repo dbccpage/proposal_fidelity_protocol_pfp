@@ -8,7 +8,7 @@
 
 ## 1. Test Suite Summary
 
-The comprehensive unit, boundary, dual checker, and mutation test suite for C022 (Stabilizer Code Distance with Lower-Bound Certificates) has been authored and verified against `c022_stabilizer_code_distance.md` and SG-CP v1. All tests adhere strictly to the Lev Landau Soviet falsification methodology (verifying Invariant, Break, Witness, and Mutation) and strict claim hygiene (narrow, bounded, defensible claims with zero hype verbs).
+The comprehensive unit, boundary, dual checker, and mutation test suite for C022 (Stabilizer Code Distance with Lower-Bound Certificates) has been authored and verified against `c022_stabilizer_code_distance.md` and SG-CP v1. All tests adhere strictly to the Examiner falsification methodology (verifying Invariant, Break, Witness, and Mutation) and strict claim hygiene (narrow, bounded, defensible claims with zero hype verbs).
 
 | Test Module | Focus Area | Tests | Status | Execution Time |
 |:---|:---|:---:|:---:|:---:|
@@ -16,7 +16,7 @@ The comprehensive unit, boundary, dual checker, and mutation test suite for C022
 | `judge_packet/mutation_suite/test_checker_mutations.py` | Mutation testing suite across 41 corrupted certificates verifying 100% kill rate (Checker 1 & Checker 2) | 41 | PASS | 0.93s |
 | `tests/test_dual_checkers.py` | Dual independent checkers, base codes (five-qubit, Steane, Shor, toric), controls, poisoned cases | 6 | PASS | 0.35s |
 | `tests/test_participant_packet.py` | Participant packet schema, 12 public worked examples, runner CLI, canonical RFC 8785 JSON formatting | 4 | PASS | 0.44s |
-| `tests/test_governance_and_commit_reveal.py` | Tier T3 budget controller ($1.00 ceiling, $0.05 target, 70B ceiling, no fallbacks), Woland gate, 3-Phase Commit-Reveal | 6 | PASS | 2.15s |
+| `tests/test_governance_and_commit_reveal.py` | Tier T3 budget controller ($1.00 ceiling, $0.05 target, 70B ceiling, no fallbacks), Adversary gate, 3-Phase Commit-Reveal | 6 | PASS | 2.15s |
 | `tests/test_e2e_challenge.py` | Comprehensive E2E test suite (Features, boundaries $n \in [1, 20]$, cross-seam integration, complete execution) | 4 | PASS | 2.07s |
 | **Total** | **Complete C022 Challenge Verification** | **69** | **PASS** | **6.28s** |
 
@@ -51,14 +51,14 @@ The comprehensive unit, boundary, dual checker, and mutation test suite for C022
 - Asserts presence and valid schema of `TASK.md`, `accounting.json`, `runner.py`, and 12 public worked examples.
 
 ### 5. `tests/test_governance_and_commit_reveal.py` (6 tests)
-- Asserts BudgetGate initialization, ceiling $\$1.00$, parameter ceiling $70\text{B}$, Woland reality gate bundle persistence, and 3-Phase Commit-Reveal tamper detection.
+- Asserts BudgetGate initialization, ceiling $\$1.00$, parameter ceiling $70\text{B}$, Adversary reality gate bundle persistence, and 3-Phase Commit-Reveal tamper detection.
 
 ### 6. `tests/test_e2e_challenge.py` (4 tests)
 - Runs full end-to-end solve, dual evaluate, and commit pipeline across multiple code families.
 
 ---
 
-## 3. Lev Landau Falsification Matrix
+## 3. Examiner Falsification Matrix
 
 | Invariant | Break Attempt | Witness | Mutation Test | Result |
 |:---|:---|:---|:---|:---|

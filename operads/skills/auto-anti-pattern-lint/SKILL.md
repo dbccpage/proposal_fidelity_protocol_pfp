@@ -35,7 +35,7 @@ Automate detection of known repository anti-patterns codified in `_intelligence/
 ## Execution Command
 
 ```powershell
-py -3.12 omega_engine_operads/skills/anti-pattern-lint/scripts/anti_pattern_lint.py --catalog .agents/patterns --check
+py -3.12 operads/skills/anti-pattern-lint/scripts/anti_pattern_lint.py --catalog .agents/patterns --check
 ```
 
 The lint checks that every required catalog slot exists under `anti/` and `helpful/` and that each `AP_*.md` names a dual pattern file. Empty slots are valid. OEAUTOP calls this script on every run.

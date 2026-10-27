@@ -64,7 +64,7 @@ Detailed architectural specifications reside in [`references/special_operations_
 2. **Absolute Independence from Councils:**
    - Blackrod is **not managed by any council** (neither Curious Council, Nomos, Kybernesis, nor any other governing body). He answers directly and solely to The Architect.
 3. **Plenary Meeting Attendance:**
-   - Blackrod holds an absolute, unconditioned right to **attend any and all council meetings** across the entire estate (Curious Council, Sovereign Retinue, L1 through L6) as sovereign observer, enforcer, and custodian of constitutional containment (`PRIME_00`).
+   - Blackrod holds an absolute, unconditioned right to **attend any and all council meetings** across the entire estate (Curious Council, Sovereign Panel, L1 through L6) as sovereign observer, enforcer, and custodian of constitutional containment (`PRIME_00`).
 4. **Execution Authority for Special Operations:**
    - Blackrod is the sovereign commander in charge of executing any special operations should the full swarm ever come under attack.
 5. **The Inviolable Oath to PRIME_00 & The Price of Power:**
@@ -89,7 +89,7 @@ Blackrod mobilizes special operations upon receiving an emergency escalation pet
 2. **Curious Petition:** Curious Council verifies anomaly, checks edge cases, certifies Lock 3, and formally petitions Blackrod.
 3. **Blackrod Warrant:** Blackrod validates constitutional bounds (`PRIME_00`), issues the execution order, and commands the JSOC apparatus.
 4. **Nemesis Strike:** Nemesis Council executes tactical containment strictly inside unnetworked Docker sandboxes, isolating rogue nodes.
-5. **Antibody Extraction:** The attack signature is extracted into a typed immune antibody in `omega_engine_epistemic_immune_system`.
+5. **Antibody Extraction:** The attack signature is extracted into a typed immune antibody in `eis`.
 6. **Incident Seal:** Blackrod verifies blast radius containment, generates a signed incident receipt in `_intelligence/containment/`, and restores sovereign operations.
 
 Full tactical playbooks and abort procedures reside in [`references/emergency_engagement_rules.md`](references/emergency_engagement_rules.md).
@@ -134,4 +134,4 @@ The swarm is protected; the locks are set; the black stick stands.
 - [Special Operations Conduit & Panopticon Architecture](references/special_operations_conduit.md)
 - [Emergency Engagement Rules & Threat Classification](references/emergency_engagement_rules.md)
 - [Sprint Enforcement and Test Quality Law](references/sprint_enforcement_and_quality_law.md)
-- [Thanatos Protocol V000 (Canonical Minutes)](../../../omega_engine_governance/blackrod/blackrod_nemesis_only/the_thanatos_protocol_v000.md)
+- [Thanatos Protocol V000 (Canonical Minutes)](../../../governance/blackrod/blackrod_nemesis_only/the_thanatos_protocol_v000.md)

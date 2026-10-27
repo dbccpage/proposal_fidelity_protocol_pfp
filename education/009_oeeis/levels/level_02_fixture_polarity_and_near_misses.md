@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/domain/external_admission.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/domain/external_admission.py
 ---
 
 # EIS Level 02: Fixture Polarity & Near-Miss Verification
 
 **AuthorityEffect:** None.  
 **Level:** Level 02 (Behavioral Fixture Mapping & Negative Control Fences)  
-**Python Admission Seam:** [`omega_engine_epistemic_immune_system.domain.external_admission`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py)  
+**Python Admission Seam:** [`eis.domain.external_admission`](../../../../eis/domain/external_admission.py)  
 **Primary Policies:** `FixturePolarityMapV1`, `FixtureValidationFailureV1`  
 **Core Falsifiers:** `F-FIX-01`, `F-FIX-02`, `F-PHARM-03`
 
@@ -58,7 +58,7 @@ graph TD
     end
 ```
 
-In automated security and linting pipelines, the labels "positive" and "negative" are notoriously ambiguous: does a "positive test" mean the code tested was *good*, or does it mean the vulnerability detector tested *positive* for a bug? In the Omega Engine codebase, the city seeders historically referred to the triggering defect as `negative_fixture` (a bad input), while OEEIS documentation referred to the triggering defect as `positive_fixture` (a positive detection).
+In automated security and linting pipelines, the labels "positive" and "negative" are notoriously ambiguous: does a "positive test" mean the code tested was *good*, or does it mean the vulnerability detector tested *positive* for a bug? In the engine codebase, the city seeders historically referred to the triggering defect as `negative_fixture` (a bad input), while OEEIS documentation referred to the triggering defect as `positive_fixture` (a positive detection).
 
 Level 02 eliminates this semantic ambiguity by establishing **Behavioral Fixture Mapping**:
 1. All fixtures are defined strictly by **expected detector behavior**:
@@ -72,7 +72,7 @@ Level 02 eliminates this semantic ambiguity by establishing **Behavioral Fixture
 ## 2. Invariants & Mathematical Packaging
 
 1. **Explicit Producer Polarity Mapping (`F-FIX-01`):**
-   The system binds a versioned [`FixturePolarityMapV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py) keyed by `(producer_id, schema_version)`:
+   The system binds a versioned [`FixturePolarityMapV1`](../../../../eis/domain/external_admission.py) keyed by `(producer_id, schema_version)`:
    $$\operatorname{resolve\_fixtures}(\text{artifact}, \text{producer}) \longrightarrow (\text{must\_match}, \text{must\_not\_match})$$
    A producer without an explicit entry in `FixturePolarityMapV1` is rejected with `FIXTURE_POLARITY_UNDECLARED`. Persisted database fields are never silently relabeled in place.
 2. **Decisive Near-Miss Verification:**
@@ -81,16 +81,16 @@ Level 02 eliminates this semantic ambiguity by establishing **Behavioral Fixture
    A candidate that fires on $y \in \text{must\_not\_match}$ fails preflight with `OVERFITTED_DETECTOR_TRIGGERED_ON_NEAR_MISS`.
 3. **Fixture Validation Failure & Immediate Non-Effectiveness (`F-PHARM-03`, `F-FIX-02`):**
    If a running detector fails to validate against its fixture bank during periodic health checks:
-   - OEEIS records a [`FixtureValidationFailureV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py).
+   - OEEIS records a [`FixtureValidationFailureV1`](../../../../eis/domain/external_admission.py).
    - The detector's operational binding becomes **immediately non-effective**, as both `diagnostic_eligible` and `enforcing_eligible` predicates require a currently validating fixture bank.
-   - A [`RetirementProposalV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py) is submitted to the external epoch review queue; custody status is not altered automatically.
+   - A [`RetirementProposalV1`](../../../../eis/domain/external_admission.py) is submitted to the external epoch review queue; custody status is not altered automatically.
 
 ---
 
 ## 3. Python Domain Seam
 
 ```python
-# omega_engine_epistemic_immune_system.domain.external_admission
+# eis.domain.external_admission
 @dataclass(frozen=True)
 class FixturePolarityMapV1:
     producer_id: str

@@ -1,6 +1,6 @@
 """Thin native sandbox adapter. Unavailable isolation is a typed refusal.
 
-AuthorityEffect: None. Resource enforcement belongs to omega_sandbox; Python
+AuthorityEffect: None. Resource enforcement belongs to core_sandbox; Python
 never launches the submitted command or substitutes an unrestricted process.
 """
 
@@ -9,9 +9,9 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSandboxHost
-from omega_engine_pfp.domain.ports.process_sandbox import (
+from operations.domain.rop.result import Err
+from operating_system.adapters.rust_host.ffi import RustSandboxHost
+from pfp.domain.ports.process_sandbox import (
     ProcessSandboxPort,
     SandboxExecutionResult,
     SandboxOutcomeKind,
@@ -98,7 +98,7 @@ class LocalProcessSandbox(ProcessSandboxPort):
             observation = None
             if observe_resources:
                 if (set(data) != {"schema_version", "outcome", "observation"}
-                        or data["schema_version"] != "omega.sandbox.resource-observation.v1"):
+                        or data["schema_version"] != "core.sandbox.resource-observation.v1"):
                     raise ValueError("Resource profile unavailable")
                 observation = _resource_observation(data["observation"], max_output_bytes)
                 data = data["outcome"]

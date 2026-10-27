@@ -22,7 +22,7 @@ repo_root = next((p for p in Path(__file__).resolve().parents if (p / '.git').ex
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     JoinDependency,
     RelationalSchema,
@@ -34,12 +34,12 @@ from omega_engine_pfp.domain.normal_forms.relational import (
     evaluate_join_dependency_on_relation,
     is_5nf_implied_by_keys,
 )
-from omega_engine_pfp.domain.normal_forms.relational_extensions import (
+from pfp.domain.normal_forms.relational_extensions import (
     MultivaluedDependency,
     chase_tableau_cell_partition,
     check_4nf,
 )
-from omega_engine_pfp.infrastructure.normal_form_loading import validate_contract_file
+from pfp.infrastructure.normal_form_loading import validate_contract_file
 
 
 class TestFagin5NFClassicalSchemas(unittest.TestCase):

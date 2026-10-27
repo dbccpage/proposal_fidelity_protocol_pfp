@@ -7,12 +7,12 @@ import json
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_operads.application.immune_guards import (
+from operads.application.immune_guards import (
     allosteric_consensus_substitute,
     immune_guarded_substitute,
     validate_workflow_immune_guard,
 )
-from omega_engine_operads.application.ports.immune_screen_port import (
+from operads.application.ports.immune_screen_port import (
     DetectorIdentity,
     DetectorMatch,
     HostDangerObservation,
@@ -20,11 +20,11 @@ from omega_engine_operads.application.ports.immune_screen_port import (
     ImmuneVerdict,
     SensorReading,
 )
-from omega_engine_operads.domain.planar_substitution import (
+from operads.domain.planar_substitution import (
     OperadOperation,
     SubstitutionError,
 )
-from omega_engine_operads.domain.workflow_graph import (
+from operads.domain.workflow_graph import (
     DangerSignalPolicy,
     WorkflowFinding,
     WorkflowReport,
@@ -171,7 +171,7 @@ def main():
     root = next(parent for parent in Path(__file__).resolve().parents if (parent / ".git").exists())
     path = (
         root
-        / "omega_engine/crates_rs/tests/omega_operads/fixtures/python_immune_guards_v1.json"
+        / "engine/crates_rs/tests/core_operads/fixtures/python_immune_guards_v1.json"
     )
     path.write_text(
         json.dumps({"timing": "pre-implementation", "vectors": rows}, ensure_ascii=False, indent=2)

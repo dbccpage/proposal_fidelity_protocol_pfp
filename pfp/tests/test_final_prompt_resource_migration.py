@@ -10,11 +10,11 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters import pfp_frozen_replay as frozen
+from pfp.infrastructure.adapters import pfp_frozen_replay as frozen
 
 ROOT = Path(__file__).resolve().parents[2]
-OLD = "omega_engine_education/pfp/infrastructure/yaml/prompts/versioned/"
-CURRENT = "omega_engine_pfp/infrastructure/yaml/prompts/versioned/"
+OLD = "education/pfp/infrastructure/yaml/prompts/versioned/"
+CURRENT = "pfp/infrastructure/yaml/prompts/versioned/"
 SOURCES = {
     "PFP-prompt-role-registry-v1.0.0.yaml":
         "34df63f05c168570e7942dc7cd4c4ddd4911723f35996dc008390bdc4e504d68",
@@ -35,7 +35,7 @@ def destination(name):
 
 
 def test_old_application_root_is_retired():
-    assert not (ROOT / "omega_engine_education/pfp").exists()
+    assert not (ROOT / "education/pfp").exists()
 
 
 def test_versioned_directory_is_retired():
@@ -47,14 +47,14 @@ def test_original_identity_reads_exact_frozen_bytes(name, expected, tmp_path, mo
     monkeypatch.chdir(tmp_path)
     raw = frozen.read_frozen_prompt_source(OLD + name)
     assert hashlib.sha256(raw).hexdigest() == expected
-    assert not (tmp_path / "omega_engine_education").exists()
+    assert not (tmp_path / "education").exists()
     assert not (ROOT / destination(name)).exists()
     if name != "README.md":
-        bundle = ROOT / "omega_engine_woland/tests/pilots/evidence/pfp_ownership_migration_20261012"
+        bundle = ROOT / "adversary/tests/pilots/evidence/pfp_ownership_migration_20261012"
         manifest = json.loads((bundle / "frozen_runtime.json").read_bytes())
         assert manifest["files"][OLD + name] == expected
         assert raw == (bundle / "frozen_sources" / (OLD + name)).read_bytes()
-        snapshot = ROOT / "omega_engine_woland/tests/pilots/evidence/po035_simplified_20261012/source_snapshot"
+        snapshot = ROOT / "adversary/tests/pilots/evidence/po035_simplified_20261012/source_snapshot"
         assert raw == (snapshot / (OLD + name)).read_bytes()
 
 
@@ -68,7 +68,7 @@ def test_original_identity_lookup_is_explicit_not_a_path_rewrite(name):
 
 
 def test_unversioned_active_templates_conform_to_slug_and_prefix():
-    prompts_root = ROOT / "omega_engine_pfp/infrastructure/yaml/prompts"
+    prompts_root = ROOT / "pfp/infrastructure/yaml/prompts"
     for sub in ("templates", "schemas", "reprs"):
         sub_dir = prompts_root / sub
         assert sub_dir.exists(), f"Missing subdirectory {sub}"
@@ -81,8 +81,8 @@ def test_unversioned_active_templates_conform_to_slug_and_prefix():
 
 
 def test_current_profile_does_not_silently_read_an_old_paper(monkeypatch):
-    from omega_engine_pfp.infrastructure import numbered_prompts
-    from omega_engine_woland.tests.pilots.relational_spacetime.trial_prompts import SOURCE_PATH
+    from pfp.infrastructure import numbered_prompts
+    from adversary.tests.pilots.relational_spacetime.trial_prompts import SOURCE_PATH
 
     source = ROOT / SOURCE_PATH
     original = Path.read_bytes

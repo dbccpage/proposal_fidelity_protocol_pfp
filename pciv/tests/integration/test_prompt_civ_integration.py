@@ -9,15 +9,15 @@ from dataclasses import replace
 
 import pytest
 
-from omega_engine_prompt_civilization.controllers.prompt_civ_controller import (
+from pciv.controllers.prompt_civ_controller import (
     PromptCivilizationController,
 )
-from omega_engine_prompt_civilization.domain.models import (
+from pciv.domain.models import (
     CustodyTier,
     PopulationTier,
     PromptGenomeV1,
 )
-from omega_engine_prompt_civilization.use_cases.custody import (
+from pciv.use_cases.custody import (
     PromptCustodyLedgerV1,
     PromptReviewReceiptV1,
 )

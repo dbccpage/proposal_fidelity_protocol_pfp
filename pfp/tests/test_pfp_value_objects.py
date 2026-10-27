@@ -13,26 +13,26 @@ from __future__ import annotations
 from dataclasses import dataclass
 import unittest
 
-from omega_engine_pfp.domain.value_objects.numerics import BoundedTemperature
-from omega_engine_pfp.domain.value_objects.topology import ByteSpanVO
-from omega_engine_pfp.domain.value_objects.identifiers import CheckerIdVO
-from omega_engine_pfp.domain.value_objects.numerics import DifficultyRung
-from omega_engine_pfp.domain.value_objects.topology import EdgeVO
-from omega_engine_pfp.domain.value_objects.taxonomy import EvaluationStatusVO
-from omega_engine_pfp.domain.value_objects.taxonomy import ExecutionModeVO
-from omega_engine_pfp.domain.value_objects.topology import MatrixShape
-from omega_engine_pfp.domain.value_objects.numerics import MicroUsdSpend
-from omega_engine_pfp.domain.value_objects.identifiers import NormalFormId
-from omega_engine_pfp.domain.value_objects.identifiers import PilotId
-from omega_engine_pfp.domain.value_objects.identifiers import PromptId
-from omega_engine_pfp.domain.value_objects.identifiers import RequestId
-from omega_engine_pfp.domain.value_objects.identifiers import Sha256Digest
-from omega_engine_pfp.domain.value_objects.taxonomy import SpanRoleVO
-from omega_engine_pfp.domain.value_objects.numerics import StageNumber
-from omega_engine_pfp.domain.value_objects.numerics import StratumLevel
-from omega_engine_pfp.domain.value_objects.taxonomy import TaskFamilyVO
-from omega_engine_pfp.domain.value_objects.taxonomy import TrialStatusVO
-from omega_engine_pfp.domain.value_objects.topology import VertexId
+from pfp.domain.value_objects.numerics import BoundedTemperature
+from pfp.domain.value_objects.topology import ByteSpanVO
+from pfp.domain.value_objects.identifiers import CheckerIdVO
+from pfp.domain.value_objects.numerics import DifficultyRung
+from pfp.domain.value_objects.topology import EdgeVO
+from pfp.domain.value_objects.taxonomy import EvaluationStatusVO
+from pfp.domain.value_objects.taxonomy import ExecutionModeVO
+from pfp.domain.value_objects.topology import MatrixShape
+from pfp.domain.value_objects.numerics import MicroUsdSpend
+from pfp.domain.value_objects.identifiers import NormalFormId
+from pfp.domain.value_objects.identifiers import PilotId
+from pfp.domain.value_objects.identifiers import PromptId
+from pfp.domain.value_objects.identifiers import RequestId
+from pfp.domain.value_objects.identifiers import Sha256Digest
+from pfp.domain.value_objects.taxonomy import SpanRoleVO
+from pfp.domain.value_objects.numerics import StageNumber
+from pfp.domain.value_objects.numerics import StratumLevel
+from pfp.domain.value_objects.taxonomy import TaskFamilyVO
+from pfp.domain.value_objects.taxonomy import TrialStatusVO
+from pfp.domain.value_objects.topology import VertexId
 
 
 class TestValueObjectsInputTesting(unittest.TestCase):

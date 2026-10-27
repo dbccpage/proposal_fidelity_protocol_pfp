@@ -16,7 +16,7 @@ authority_effect: None
 
 ## Description
 
-Unbounded accumulation of rustc incremental compilation cache artifacts in `omega_engine/crates_rs/target/debug/incremental/` during repeated iterative testing, leading to developer workstation disk exhaustion.
+Unbounded accumulation of rustc incremental compilation cache artifacts in `engine/crates_rs/target/debug/incremental/` during repeated iterative testing, leading to developer workstation disk exhaustion.
 
 ## Detection Signature
 
@@ -24,7 +24,7 @@ Unbounded accumulation of rustc incremental compilation cache artifacts in `omeg
   Cargo build or test commands halting with:
   `error: failed to write to ...: There is not enough space on the disk. (os error 112)`
 - Filesystem:
-  `omega_engine/crates_rs/target/debug/incremental/` expanding to 15–30+ GB while host drive capacity drops to zero bytes.
+  `engine/crates_rs/target/debug/incremental/` expanding to 15–30+ GB while host drive capacity drops to zero bytes.
 
 ## Hazard & Failure Mode
 

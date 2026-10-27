@@ -8,16 +8,16 @@
 //!
 //! `AuthorityEffect: None.`
 
-use omega_ooutwire_primitives::boundary::reflection_census;
-use omega_ooutwire_primitives::bounds::Bounds;
-use omega_ooutwire_primitives::hash::hex;
-use omega_ooutwire_primitives::measure::{Measure, MeasureKind};
-use omega_ooutwire_primitives::minima::challenge3;
-use omega_ooutwire_primitives::omega::{Config, Gate, Omega, Report};
-use omega_ooutwire_primitives::outside::{Scripted, Silent};
-use omega_ooutwire_primitives::reading::{readings, Reading};
-use omega_ooutwire_primitives::replay::replay;
-use omega_ooutwire_primitives::tree::build_tree;
+use core_ooutwire_primitives::boundary::reflection_census;
+use core_ooutwire_primitives::bounds::Bounds;
+use core_ooutwire_primitives::hash::hex;
+use core_ooutwire_primitives::measure::{Measure, MeasureKind};
+use core_ooutwire_primitives::minima::challenge3;
+use core_ooutwire_primitives::omega::{Config, Gate, Core, Report};
+use core_ooutwire_primitives::outside::{Scripted, Silent};
+use core_ooutwire_primitives::reading::{readings, Reading};
+use core_ooutwire_primitives::replay::replay;
+use core_ooutwire_primitives::tree::build_tree;
 
 fn print_report(title: &str, report: &Report, bounds: &Bounds) {
     println!("=== {title} ===");
@@ -79,15 +79,15 @@ fn run_reading(reading: &Reading) {
     // Unpushed: a silent outside.
     let mut cfg = Config::sealed(reading.name);
     cfg.closure_policy = false;
-    let report = Omega::new(Silent, cfg).run(&reading.genesis);
+    let report = Core::new(Silent, cfg).run(&reading.genesis);
     print_report(&format!("reading {}, silent outside, closure policy off", reading.name), &report, &bounds);
     // Pushed: one demand, first class, licence, fuel.
     let script = Scripted::one_demand(reading.target, 6);
-    let mut omega = Omega::new(script, Config::sealed(reading.name));
-    let report = omega.run(&reading.genesis);
+    let mut omega = Core::new(script, Config::sealed(reading.name));
+    let report = core.run(&reading.genesis);
     print_report(&format!("reading {}, scripted outside", reading.name), &report, &bounds);
     println!("what the outside was asked, in order:");
-    for l in &omega.outside.log {
+    for l in &core.outside.log {
         println!("  {l}");
     }
     println!();
@@ -95,7 +95,7 @@ fn run_reading(reading: &Reading) {
 
 fn main() {
     let full = std::env::args().any(|a| a == "--full");
-    println!("ooutwire_primitives — the Omega engine over the sealed primitives.  AuthorityEffect: None.\n");
+    println!("ooutwire_primitives — the Core engine over the sealed primitives.  AuthorityEffect: None.\n");
 
     println!("--- sealed Challenge 3, recomputed (pins: L mu1 6 raw / 3 classes; L mu2 2 / 1; F mu1 10 / 5; F mu2 2 / 1) ---");
     for reading in readings() {

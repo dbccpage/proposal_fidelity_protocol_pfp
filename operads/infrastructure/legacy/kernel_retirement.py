@@ -5,12 +5,12 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_operations.domain.rop.result import Err, Refusal
+from operations.domain.rop.result import Err, Refusal
 
 RUNTIME_RETIRED = "RUNTIME_RETIRED"
 KERNEL_RETIRED_MESSAGE = (
     "the Python higher-operad kernel is retired; its Rust successor "
-    "omega_engine/crates_rs/omega_operad_theory has no Python seam yet"
+    "engine/crates_rs/core_operad_theory has no Python seam yet"
 )
 
 

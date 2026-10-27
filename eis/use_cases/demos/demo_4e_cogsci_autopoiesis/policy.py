@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 
-from omega_engine_pfp.domain.demos import refuse_model_functionals
+from pfp.domain.demos import refuse_model_functionals
 
 DEMO_ID = "demo_4e_cogsci_autopoiesis"
 SCOPE = (

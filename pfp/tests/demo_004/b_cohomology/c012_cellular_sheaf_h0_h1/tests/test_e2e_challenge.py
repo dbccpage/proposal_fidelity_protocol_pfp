@@ -6,7 +6,7 @@ Verifies the entire lifecycle:
 3. Mutation suite kills all 40 hostile mutations.
 4. Manifest SHA-256 byte-level agreement.
 5. Reference self-consistency label REFERENCE_SELF_CONSISTENT (a self-check of the reference solver,
-   not a Woland verdict), computed on a temporary copy of the package.
+   not a Adversary verdict), computed on a temporary copy of the package.
 
 AuthorityEffect: None.
 """
@@ -18,13 +18,13 @@ import shutil
 import tempfile
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.commit_reveal_runner import (
     CommitRevealRunner,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.adversary_gate import (
     TERMINAL_REFERENCE_SELF_CONSISTENT,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.participant_packet.runner import (
     load_cases,
     load_solver_func,
     run_cases,

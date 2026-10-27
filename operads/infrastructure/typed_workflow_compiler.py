@@ -30,8 +30,8 @@ def example_workflow(repo_root: Path) -> TypedWorkflowV1:
     by_id = {str(doc.operations[0].operation_id): doc for doc in bundle.documents}
     nodes = []
     for node_id, operation_id in (
-        ("audit", "woland-claim-audit"),
-        ("falsifier", "woland-scope-falsifier"),
+        ("audit", "adversary-claim-audit"),
+        ("falsifier", "adversary-scope-falsifier"),
     ):
         doc = by_id[operation_id]
         nodes.append(
@@ -43,7 +43,7 @@ def example_workflow(repo_root: Path) -> TypedWorkflowV1:
             )
         )
     return TypedWorkflowV1(
-        "woland-claim-audit-workflow",
+        "adversary-claim-audit-workflow",
         "audit",
         tuple(nodes),
         (WorkflowBindingV1("falsifier", "audit", 0),),
@@ -59,7 +59,7 @@ def _compile_receipt(
 ) -> dict:
     workflow = parse_typed_workflow(workflow_path.read_bytes()).to_domain()
     from ..application.typed_workflow_compiler import compile_typed_workflow
-    from ..application.woland_candidate_plan import port_contract
+    from ..application.adversary_candidate_plan import port_contract
 
     bundle = compile_typed_contracts(root)
     selected_ids = {node.operation_id for node in workflow.nodes}

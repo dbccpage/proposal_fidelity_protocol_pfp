@@ -11,7 +11,7 @@ maturity: draft
 claim_status: specified
 authority_effect: "None"
 source_paths:
-  - omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/001_the_symbol_game_and_packets.md  # not found at source pin c419cc6beb (2026-10-20)
+  - education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/001_the_symbol_game_and_packets.md  # not found at source pin c419cc6beb (2026-10-20)
 prerequisites:
   - ./meta_00_symbol_game_foundations.md
   - ./meta_01_symbol_game_historical_curriculum.md
@@ -103,7 +103,7 @@ For systems coupling untrusted neural models directly to PFP packet generators, 
 ## 5. Digest Trees & Canonical Serialization
 
 To support cross-platform determinism:
-- **Canonical Serialization:** Packet payloads sealed by `PacketCodec.seal` use NFC, the `omega-canonical-v1` marker, and a bare SHA-256 digest. `omega_engine/crates_rs/omega_symbol_game_runtime/src/canonical.rs` frames that digest. RFC 8785 is the separate `jcs.rs` module in that crate, not this sealer.
+- **Canonical Serialization:** Packet payloads sealed by `PacketCodec.seal` use NFC, the `core-canonical-v1` marker, and a bare SHA-256 digest. `engine/crates_rs/core_symbol_game_runtime/src/canonical.rs` frames that digest. RFC 8785 is the separate `jcs.rs` module in that crate, not this sealer.
 - **Digest:** The sealer digest is bare SHA-256. It is not a blake3 Merkle tree.
 - **Symbol Stability:** Identifiers remain stable across models, toolchains, and protocol versions.
 
@@ -133,7 +133,7 @@ The verification pipeline binds three representations into an atomic receipt:
 
 ### Scoped Terminal Status Taxonomy
 
-The eight names match `CodaTerminal` in [`omega_state/src/coda_gtla_protocol.rs`](../../../../omega_engine/crates_rs/omega_state/src/coda_gtla_protocol.rs) (checked 2026-10-20). The routing axis is a separate enum, `RoutingTerminal` in [`omega_types/src/routing.rs`](../../../../omega_engine/crates_rs/omega_types/src/routing.rs).
+The eight names match `CodaTerminal` in [`core_state/src/coda_gtla_protocol.rs`](../../../../engine/crates_rs/core_state/src/coda_gtla_protocol.rs) (checked 2026-10-20). The routing axis is a separate enum, `RoutingTerminal` in [`core_types/src/routing.rs`](../../../../engine/crates_rs/core_types/src/routing.rs).
 
 The host checker terminates in exactly one of eight typed statuses:
 - `ExactRepair`: Residual resolved to zero via licensed same-level repair.
@@ -158,6 +158,6 @@ The host checker terminates in exactly one of eight typed statuses:
    - Does not establish neural attention weights as mathematically identical to combinatorial cochains.
    - Does not grant operational authority or claim global truth from local green test vectors.
 3. **The narrowest defensible claim:**
-   - The Proposal Fidelity Protocol separates untrusted generation from deterministic verification across `omega-canonical-v1` envelopes. The digest is bare SHA-256 over NFC text. RFC 8785 names `jcs.rs`, not this sealer.
+   - The Proposal Fidelity Protocol separates untrusted generation from deterministic verification across `core-canonical-v1` envelopes. The digest is bare SHA-256 over NFC text. RFC 8785 names `jcs.rs`, not this sealer.
 4. **Next test needed:**
-   - Cross-validate envelope schema serialization against `PacketCodec.seal`: NFC, the `omega-canonical-v1` marker, and bare SHA-256.
+   - Cross-validate envelope schema serialization against `PacketCodec.seal`: NFC, the `core-canonical-v1` marker, and bare SHA-256.

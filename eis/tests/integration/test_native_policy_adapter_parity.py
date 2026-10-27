@@ -4,22 +4,22 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.external_admission import (
+from eis.domain.external_admission import (
     AntibodyObservationV1,
     ExternalAdmissionRequestV1,
     distinct_observations,
 )
-from omega_engine_epistemic_immune_system.domain.guard_activation import (
+from eis.domain.guard_activation import (
     ActivationRefusal,
     DangerSignalReceiptV1,
     DetectorHitRefV1,
     evaluate_activation,
 )
-from omega_engine_epistemic_immune_system.domain.provisional_promotion import (
+from eis.domain.provisional_promotion import (
     ObservationSupportPolicyV1,
     RawObservationV1,
 )
-from omega_engine_epistemic_immune_system.infrastructure.native_domain import (
+from eis.infrastructure.native_domain import (
     NativeExternalAdmissionPolicy,
     NativeGuardActivationPolicy,
     NativeProvisionalPromotionPolicy,

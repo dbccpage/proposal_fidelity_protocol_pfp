@@ -9,7 +9,7 @@
 > are quarantined: the row "Genesis Series Batch (G01–G25)" of the inventory table,
 > Section 6 and the genesis items of the claim-hygiene section. The harness's artifact
 > verifier returns "verified" for every challenge
-> (`omega_engine_projects/mssn_sn_symgam/challenges/k_genesis_19l57g1/run_genesis_suite.py` (original path not found at source pin c419cc6beb; recovered copy under `015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/`),
+> (`projects/mssn_sn_symgam/challenges/k_genesis_19l57g1/run_genesis_suite.py` (original path not found at source pin c419cc6beb; recovered copy under `015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/`),
 > lines 230 to 261), and none of the 11 items labelled `CHECKED` has Lean code that
 > compiled: six timed out, two failed and three had none
 > (`results/genesis_master_report.json`, field `lean_verification`). For G25 the
@@ -26,11 +26,11 @@
 > audit behind these notices is recorded in the collection's
 > `verification/residuals.md`, section 8.
 
-> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy, differing only in paths, of the note of the same name without the `level_` prefix in [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). Links to `omega_engine_projects/` were repointed to [`omega_engine_pfp/tests/demo_004/`](../../../../omega_engine_pfp/tests/demo_004/) and to the atlas FSP and MUB(6) estates; targets still missing are marked in place. The collection's `verification/residuals.md` and every `_intelligence/` run folder named below are not found at the pin. Arithmetic rechecked with exact integers and fractions: $912/1296 = 19/27$ and $(1296-2\cdot192)/1296 = 19/27$; $199+57=256$ subgraphs; the four C005 arm costs sum to $1691/12500 = 0.13528$; the C043 to C049 spend cells equal the sums of the per-model spends in the detailed notes. An exact two-sided McNemar test gives $p\approx0.0357$ for 20 against 8 discordant pairs, so $p=0.035$ for 25/50 against 37/50 is attainable, but the paired records are not retained, so it cannot be recomputed. The FSP table rows sum to \$0.00565, not the \$0.01496 total, which must include queries the table does not list. The C043 row cites $W(3,3)>26$, but the C043 panel uses $W(2,3)$ and $W(2,4)$; run identifiers for C043 (`1790621422` here, `1790620716` in the note) and C046 (`1790624975` here, `1790624400` in the note) disagree. In Domain E the 39/80 against 38/80 difference is one case, too small to rank the two models.
+> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy, differing only in paths, of the note of the same name without the `level_` prefix in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). Links to `projects/` were repointed to [`pfp/tests/demo_004/`](../../../../pfp/tests/demo_004/) and to the atlas FSP and MUB(6) estates; targets still missing are marked in place. The collection's `verification/residuals.md` and every `_intelligence/` run folder named below are not found at the pin. Arithmetic rechecked with exact integers and fractions: $912/1296 = 19/27$ and $(1296-2\cdot192)/1296 = 19/27$; $199+57=256$ subgraphs; the four C005 arm costs sum to $1691/12500 = 0.13528$; the C043 to C049 spend cells equal the sums of the per-model spends in the detailed notes. An exact two-sided McNemar test gives $p\approx0.0357$ for 20 against 8 discordant pairs, so $p=0.035$ for 25/50 against 37/50 is attainable, but the paired records are not retained, so it cannot be recomputed. The FSP table rows sum to \$0.00565, not the \$0.01496 total, which must include queries the table does not list. The C043 row cites $W(3,3)>26$, but the C043 panel uses $W(2,3)$ and $W(2,4)$; run identifiers for C043 (`1790621422` here, `1790620716` in the note) and C046 (`1790624975` here, `1790624400` in the note) disagree. In Domain E the 39/80 against 38/80 difference is one case, too small to rank the two models.
 
 > **Correction notice (2026-09-28).** Many figures in this document were corrected or
 > withdrawn when Papers 003, 006, 008, 009 and 010 of this collection, and the
-> meron-cluster benchmark paper in `omega_engine_atlas/coda_atlas/F004_papers/008_fsp/000_meron_sign_problem`,
+> meron-cluster benchmark paper in `atlas/coda_atlas/F004_papers/008_fsp/000_meron_sign_problem`,
 > were revised against the retained evidence. For example, no 28-probe study exists;
 > the failure catalog holds 61 entries, of which 5 are marked active and none is applied
 > by code; the paired-bout "10/10" counted a field that is true in every record; and
@@ -39,14 +39,14 @@
 > authoritative. The text below is kept unchanged as a historical working record.
 
 > **AuthorityEffect:** `None` · Canonical Findings & Demonstration Ledger · Council Governance: `L3_logos_techne`  
-> **Location:** [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/symbol_game_challenge_and_demos_findings.md`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/symbol_game_challenge_and_demos_findings.md)  
-> **Parent Estate:** [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/)  
+> **Location:** [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/symbol_game_challenge_and_demos_findings.md`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/symbol_game_challenge_and_demos_findings.md)  
+> **Parent Estate:** [`atlas/coda_atlas/F004_papers/015_pfp/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/)  
 > **Related Retrospective:** [`challenges_findings_and_updates.md`](level_challenges_findings_and_updates.md)  
 > **Primary Source Suites:**  
-> - [`omega_engine_atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/)  
-> - [`omega_engine_pfp/tests/demo_004/b_cohomology/c017_nonabelian_lattice_holonomy/`](../../../../omega_engine_pfp/tests/demo_004/b_cohomology/c017_nonabelian_lattice_holonomy/)  
-> - [`omega_engine_pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/`](../../../../omega_engine_pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/)  
-> - [`omega_engine_atlas/coda_atlas/F004_papers/setup_and_results.md`](../../../../omega_engine_atlas/coda_atlas/F004_papers/setup_and_results.md)  
+> - [`atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/`](../../../../atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/)  
+> - [`pfp/tests/demo_004/b_cohomology/c017_nonabelian_lattice_holonomy/`](../../../../pfp/tests/demo_004/b_cohomology/c017_nonabelian_lattice_holonomy/)  
+> - [`pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/`](../../../../pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/)  
+> - [`atlas/coda_atlas/F004_papers/setup_and_results.md`](../../../../atlas/coda_atlas/F004_papers/setup_and_results.md)  
 > **Date:** September 28, 2026  
 
 ---
@@ -60,25 +60,25 @@ This document records the empirical results, model scale evaluations, cryptograp
 | **FSP Blind Cluster Recovery** | `fsp/demos/blind_cluster_recovery/` | LLaMA-3.3-70B, DeepSeek-V4-Flash, GLM-5.3-Flash, Tencent-Hy4, Qwen-3.7-Max | Blind $\mathbb{Z}_2^{N_c}$ parity cancellation on 4-site fermion chain ($Z=912$) | **Score 4/4** (R2 LLaMA, R3 GLM, R1 Qwen) | **\$0.01496** | `REC_FSP_BLIND_1790605314`<br/>SHA-256: `cd3ffdd...` | **DELIVERED** |
 | **C017 Non-Abelian Holonomy** | `mssn_sn_symgam/.../c017_nonabelian_lattice_holonomy/` | LLaMA-3.3-70B, stealth/space-bunny-alpha | Discrete connection curvature ($\Gamma_2 > 0$) in non-Abelian groups $S_3, Q_8$ | Arm 1: **0/5 (0%)**<br/>Arm 2: **0/5 (0%)**<br/>Arm 5: **3/5 (60%)**<br/>Arm 6 (Decimation): **4/5 (80.0%)** | **\$0.00337** | `REC_C017_ARM5_HYBRID_1790608900`<br/>`REC_C017_ARM6_DECIMATION_1790623384` | **DELIVERED** |
 | **C005 Hosted Decoding Controls** | `mssn_sn_symgam/.../c005_hosted_decode_controls/` | Hermes-3-Llama-3.1-405B | Exact integer potential propagation $\Phi_1(c)=0$ across 50 hidden consistency cases | Arm 1: **50.0%**<br/>Arm 2: **74.0%** ($p=0.035$)<br/>Arm 4: **8.0%** | **\$0.13528** | `receipt.json`<br/>SHA-256 verified | **DELIVERED** |
-| **C043 Ramsey & Van der Waerden** | `mssn_sn_symgam/.../c043_ramsey_vdw_constructions/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Combinatorial lower bounds $R(4,4)>17$, $W(3,3)>26$ avoiding monochromatic subgraphs | Space Bunny Alpha: **5/10 (50.0%)**<br/>LLaMA 70B: **1/10 (10.0%)**<br/>LLaMA 8B: **1/10 (10.0%)** | **\$0.00231** | `_woland/runs/c043_eval_1790621422`<br/>`PASS_TO_MASTER` | **DELIVERED** |
-| **C044 Finite Group Identification** | `mssn_sn_symgam/.../c044_finite_group_identification/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Bijective isomorphism witnesses to SmallGroups catalog ($|G| \le 64$) | Space Bunny Alpha: **3/10 (30.0%)**<br/>LLaMA 70B: **3/10 (30.0%)**<br/>LLaMA 8B: **3/10 (30.0%)** | **\$0.00336** | `_woland/runs/c044_eval_1790622696`<br/>`PASS_TO_MASTER` | **DELIVERED** |
-| **C045 Knot Polynomials from PD** | `mssn_sn_symgam/.../c045_knot_polynomials_from_pd/` | LLaMA-3.3-70B, Space Bunny Alpha, LLaMA-3.1-8B | Topological polynomials (Jones $V(t)$, Alexander $\Delta(t)$, Writhe) from PD diagrams ($n \le 7$) | LLaMA 70B: **8/10 (80.0%)**<br/>LLaMA 8B: **3/10 (30.0%)**<br/>Space Bunny Alpha: **2/10 (20.0%)** | **\$0.00305** | `_woland/runs/c045_eval_1790623789`<br/>`PASS_TO_MASTER` | **DELIVERED** |
-| **C046 Knuth-Bendix Completion** | `mssn_sn_symgam/.../c046_knuth_bendix_completion/` | LLaMA-3.1-8B, LLaMA-3.3-70B, Space Bunny Alpha | Confluent and terminating TRS under LPO with critical pair joinability | LLaMA 8B: **8/10 (80.0%)**<br/>LLaMA 70B: **7/10 (70.0%)**<br/>Space Bunny Alpha: **4/10 (40.0%)** | **\$0.00203** | `_woland/runs/c046_eval_1790624975`<br/>`PASS_TO_MASTER` | **DELIVERED** |
-| **C047 Sequence Law Discovery** | `mssn_sn_symgam/.../c047_sequence_law_discovery/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Holonomic recurrence relations $\sum p_i(n) a(n+i) = 0$ and Bareiss minor absence proofs | Space Bunny Alpha: **4/10 (40.0%)**<br/>LLaMA 70B: **2/10 (20.0%)**<br/>LLaMA 8B: **0/10 (0.0%)** | **\$0.00180** | `_woland/runs/c047_eval_1790624985`<br/>`PASS_TO_MASTER` | **DELIVERED** |
-| **C048 Ternary Quadratic Forms** | `mssn_sn_symgam/.../c048_ternary_quadratic_forms/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Global rational points vs local $p$-adic Hilbert obstructions $(-ac, -bc)_v = -1$ | Space Bunny Alpha: **10/10 (100.0%)**<br/>LLaMA 70B: **8/10 (80.0%)**<br/>LLaMA 8B: **5/10 (50.0%)** | **\$0.00110** | `_woland/runs/c048_eval_1790625286`<br/>`PASS_TO_MASTER` | **DELIVERED** |
-| **C049 Finite Category Universal Constructions** | `mssn_sn_symgam/.../c049_finite_category_universal_constructions/` | LLaMA-3.3-70B, Space Bunny Alpha, LLaMA-3.1-8B | Categorical limits, colimits, and adjoint pairs ($F \dashv G$) with triangle identity witnesses | LLaMA 70B: **6/10 (60.0%)**<br/>Space Bunny Alpha: **5/10 (50.0%)**<br/>LLaMA 8B: **4/10 (40.0%)** | **\$0.00103** | `_woland/runs/c049_eval_1790625868`<br/>`PASS_TO_MASTER` | **DELIVERED** |
-| **C050 Equational Theorem Proving** | `mssn_sn_symgam/.../c050_equational_theorem_proving/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Birkhoff equational completeness: step-by-step rewrite replay vs finite countermodel generation | Space Bunny Alpha: **6/10 (60.0%)**<br/>LLaMA 70B: **3/10 (30.0%)**<br/>LLaMA 8B: **1/10 (10.0%)** | **\$0.00132** | `_woland/runs/c050_eval_1790626479`<br/>`PASS_TO_MASTER` | **DELIVERED** |
-| **MUB(6) Moduli Torus Verification** | `omega_mub` & `mub_verify/` | Exact Rational $\mathbb{Q}$ Bareiss Engine | Conjectures 2(a) and 2(b) on Karlsson Torus family $K_6(x,y) \in \mathbb{T}^2$ | **20/20 (100%)** $\gamma_1=0$<br/>**20/20 (100%)** $\gamma_2=0$ | Local \$0.00 | In-tree formal certification | **DELIVERED** |
+| **C043 Ramsey & Van der Waerden** | `mssn_sn_symgam/.../c043_ramsey_vdw_constructions/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Combinatorial lower bounds $R(4,4)>17$, $W(3,3)>26$ avoiding monochromatic subgraphs | Space Bunny Alpha: **5/10 (50.0%)**<br/>LLaMA 70B: **1/10 (10.0%)**<br/>LLaMA 8B: **1/10 (10.0%)** | **\$0.00231** | `_adversary/runs/c043_eval_1790621422`<br/>`PASS_TO_MASTER` | **DELIVERED** |
+| **C044 Finite Group Identification** | `mssn_sn_symgam/.../c044_finite_group_identification/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Bijective isomorphism witnesses to SmallGroups catalog ($|G| \le 64$) | Space Bunny Alpha: **3/10 (30.0%)**<br/>LLaMA 70B: **3/10 (30.0%)**<br/>LLaMA 8B: **3/10 (30.0%)** | **\$0.00336** | `_adversary/runs/c044_eval_1790622696`<br/>`PASS_TO_MASTER` | **DELIVERED** |
+| **C045 Knot Polynomials from PD** | `mssn_sn_symgam/.../c045_knot_polynomials_from_pd/` | LLaMA-3.3-70B, Space Bunny Alpha, LLaMA-3.1-8B | Topological polynomials (Jones $V(t)$, Alexander $\Delta(t)$, Writhe) from PD diagrams ($n \le 7$) | LLaMA 70B: **8/10 (80.0%)**<br/>LLaMA 8B: **3/10 (30.0%)**<br/>Space Bunny Alpha: **2/10 (20.0%)** | **\$0.00305** | `_adversary/runs/c045_eval_1790623789`<br/>`PASS_TO_MASTER` | **DELIVERED** |
+| **C046 Knuth-Bendix Completion** | `mssn_sn_symgam/.../c046_knuth_bendix_completion/` | LLaMA-3.1-8B, LLaMA-3.3-70B, Space Bunny Alpha | Confluent and terminating TRS under LPO with critical pair joinability | LLaMA 8B: **8/10 (80.0%)**<br/>LLaMA 70B: **7/10 (70.0%)**<br/>Space Bunny Alpha: **4/10 (40.0%)** | **\$0.00203** | `_adversary/runs/c046_eval_1790624975`<br/>`PASS_TO_MASTER` | **DELIVERED** |
+| **C047 Sequence Law Discovery** | `mssn_sn_symgam/.../c047_sequence_law_discovery/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Holonomic recurrence relations $\sum p_i(n) a(n+i) = 0$ and Bareiss minor absence proofs | Space Bunny Alpha: **4/10 (40.0%)**<br/>LLaMA 70B: **2/10 (20.0%)**<br/>LLaMA 8B: **0/10 (0.0%)** | **\$0.00180** | `_adversary/runs/c047_eval_1790624985`<br/>`PASS_TO_MASTER` | **DELIVERED** |
+| **C048 Ternary Quadratic Forms** | `mssn_sn_symgam/.../c048_ternary_quadratic_forms/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Global rational points vs local $p$-adic Hilbert obstructions $(-ac, -bc)_v = -1$ | Space Bunny Alpha: **10/10 (100.0%)**<br/>LLaMA 70B: **8/10 (80.0%)**<br/>LLaMA 8B: **5/10 (50.0%)** | **\$0.00110** | `_adversary/runs/c048_eval_1790625286`<br/>`PASS_TO_MASTER` | **DELIVERED** |
+| **C049 Finite Category Universal Constructions** | `mssn_sn_symgam/.../c049_finite_category_universal_constructions/` | LLaMA-3.3-70B, Space Bunny Alpha, LLaMA-3.1-8B | Categorical limits, colimits, and adjoint pairs ($F \dashv G$) with triangle identity witnesses | LLaMA 70B: **6/10 (60.0%)**<br/>Space Bunny Alpha: **5/10 (50.0%)**<br/>LLaMA 8B: **4/10 (40.0%)** | **\$0.00103** | `_adversary/runs/c049_eval_1790625868`<br/>`PASS_TO_MASTER` | **DELIVERED** |
+| **C050 Equational Theorem Proving** | `mssn_sn_symgam/.../c050_equational_theorem_proving/` | Space Bunny Alpha, LLaMA-3.3-70B, LLaMA-3.1-8B | Birkhoff equational completeness: step-by-step rewrite replay vs finite countermodel generation | Space Bunny Alpha: **6/10 (60.0%)**<br/>LLaMA 70B: **3/10 (30.0%)**<br/>LLaMA 8B: **1/10 (10.0%)** | **\$0.00132** | `_adversary/runs/c050_eval_1790626479`<br/>`PASS_TO_MASTER` | **DELIVERED** |
+| **MUB(6) Moduli Torus Verification** | `core_mub` & `mub_verify/` | Exact Rational $\mathbb{Q}$ Bareiss Engine | Conjectures 2(a) and 2(b) on Karlsson Torus family $K_6(x,y) \in \mathbb{T}^2$ | **20/20 (100%)** $\gamma_1=0$<br/>**20/20 (100%)** $\gamma_2=0$ | Local \$0.00 | In-tree formal certification | **DELIVERED** |
 | **Genesis Series Batch (G01–G25)** | `mssn_sn_symgam/.../k_genesis_19l57g1/` | LLaMA-3.3-70B-Instruct | Minimal admission, finite non-uniqueness, relation typing, Lean reproofs | **11 CHECKED**<br/>**1 CHOSEN_ANALOGY**<br/>**13 OPEN** | **\$0.00698** | `REC_GENESIS_SUITE_1790611114`<br/>SHA-256 verified | **DELIVERED** |
-| **Challenge Mutation Suites** | C011, C012, C022, C031 | Dual Checker Evaluators | Lev Landau mutation kill matrix across 150 synthetic corruptions | **150/150 (100%)** kill rate | Local \$0.00 | In-tree mutation suites | **DELIVERED** |
+| **Challenge Mutation Suites** | C011, C012, C022, C031 | Dual Checker Evaluators | Examiner mutation kill matrix across 150 synthetic corruptions | **150/150 (100%)** kill rate | Local \$0.00 | In-tree mutation suites | **DELIVERED** |
 
 ---
 
 ## 2. Demonstration 1: Fermion Sign Problem (FSP) Blind Cluster Recovery
 
 ### 2.1 Experimental Apparatus & Physical Setup
-- **Harness:** [`omega_engine_atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/run_blind_benchmark.py`](../../../../omega_engine_atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/run_blind_benchmark.py)
-- **Ground Truth Oracle:** Relational SQLite Transfer Matrix Engine ([`exact_models.py`](../../../../omega_engine_atlas/coda_atlas/F004_papers/008_fsp/code/sign_sql/exact_models.py))
+- **Harness:** [`atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/run_blind_benchmark.py`](../../../../atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/run_blind_benchmark.py)
+- **Ground Truth Oracle:** Relational SQLite Transfer Matrix Engine ([`exact_models.py`](../../../../atlas/coda_atlas/F004_papers/008_fsp/code/sign_sql/exact_models.py))
 - **Physical Model:** 4-site periodic fermion chain, 2 Trotter repetitions ($T=4$), interaction parameter $q=3$ ($a=1, b=1$).
 - **State Space Dimensions:**
   - Total Breakup Subgraphs: $256$
@@ -183,7 +183,7 @@ To address the token exhaustion barrier identified on `base_03_s3_periodic_torus
 ## 4. Demonstration 3: Challenge C005 Hosted Decoding Controls
 
 ### 4.1 Benchmark Setup & Methodology
-- **Harness:** [`omega_engine_pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py`](../../../../omega_engine_pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py)
+- **Harness:** [`pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py`](../../../../pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py)
 - **Model:** `nousresearch/hermes-3-llama-3.1-405b` via OpenRouter.
 - **Task:** 50 hidden consistency cases evaluating potential propagation $\Phi_1(c) = 0$ vs chord loop obstructions $\Gamma_2 > 0$.
 - **Arms Evaluated:**
@@ -209,7 +209,7 @@ To address the token exhaustion barrier identified on `base_03_s3_periodic_torus
 ## 5. Demonstration 4: MUB-6 Moduli Variety & Exact Rational Karlsson Torus Proof
 
 ### 5.1 Mathematical Invariant & Apparatus
-- **Crate & Suite:** [`omega_engine/crates_rs/omega_mub/`](../../../../omega_engine/crates_rs/omega_mub/) and [`omega_engine_atlas/coda_atlas/F004_papers/010_mub6/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/010_mub6/)
+- **Crate & Suite:** [`engine/crates_rs/core_mub/`](../../../../engine/crates_rs/core_mub/) and [`atlas/coda_atlas/F004_papers/010_mub6/`](../../../../atlas/coda_atlas/F004_papers/010_mub6/)
 - **Algebraic Engine:** Bareiss fraction-free determinants and exact cyclotomic arithmetic over $\mathbb{Q}$.
 - **Object of Study:** Complex Hadamard matrices of order 6 ($d=6$) and mutually unbiased bases.
 
@@ -227,12 +227,12 @@ To address the token exhaustion barrier identified on `base_03_s3_periodic_torus
 ## 6. Demonstration 5: Genesis 19L57G1 Challenge Series Batch Evaluation (G01–G25)
 
 ### 6.1 Purpose & Governance Apparatus
-- **Directory:** `omega_engine_projects/mssn_sn_symgam/challenges/k_genesis_19l57g1/` (not found at source pin c419cc6beb, 2026-10-20; recovered sources are in [`021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/))
-- **Harness:** [`run_genesis_suite.py`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/run_genesis_suite.py) (recovered copy; the original path is not found at source pin c419cc6beb, 2026-10-20)
+- **Directory:** `projects/mssn_sn_symgam/challenges/k_genesis_19l57g1/` (not found at source pin c419cc6beb, 2026-10-20; recovered sources are in [`021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/))
+- **Harness:** [`run_genesis_suite.py`](../../../../atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/run_genesis_suite.py) (recovered copy; the original path is not found at source pin c419cc6beb, 2026-10-20)
 - **Monograph:** `genesis_series_synthesis.md` (not found at source pin c419cc6beb, 2026-10-20)
 - **Model Evaluated:** `meta-llama/llama-3.3-70b-instruct` via OpenRouter.
 - **Budget Ceiling & Spend:** Target $\le \$0.05$; actual spend **\$0.00698 USD** across all 25 challenges (25 API queries).
-- **Cryptographic Receipt:** `REC_GENESIS_SUITE_1790611114` (SHA-256 verified in [`results/genesis_receipt.json`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/results/genesis_receipt.json) (recovered copy)).
+- **Cryptographic Receipt:** `REC_GENESIS_SUITE_1790611114` (SHA-256 verified in [`results/genesis_receipt.json`](../../../../atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/recovered_sources/results/genesis_receipt.json) (recovered copy)).
 - **Dual Verification Engines:** Local Lean 4 syntax/axiom audit (`lean`) and 19L57G1 repository cross-check.
 - **Binding Governance Constraint:** Adherence to the author's binding refusal clause (`19L57G1:CLAUDE.md`, commit `b55fc96a`). The prompt and evaluation firewalls intercepted external identification smuggling between DDC letters and 19L57G1 primitives.
 
@@ -242,14 +242,14 @@ To address the token exhaustion barrier identified on `base_03_s3_periodic_torus
    - Evaluates solid internal finite combinatorial properties of the 19L57G1 system: reading F non-uniqueness across 5 classes, the exact $2^{n-2}$ cut formula, first-demand isomorphism invariance, commuting squares, cost-two floor, tied-minima census beyond arity 2, and choice-free Lean reproofs.
 2. **`CHOSEN_ANALOGY` (1 challenge):** G25.
    - Complies with the author's binding refusal clause.
-   - Audits the estate claim in `.claude/AGENTS.md` asserting that $D_2$ is embedded in `omega_homology`: **0 occurrences exist in `omega_homology/src`**. It is an external analogy, not an internal code dependency.
+   - Audits the estate claim in `.claude/AGENTS.md` asserting that $D_2$ is embedded in `core_homology`: **0 occurrences exist in `core_homology/src`**. It is an external analogy, not an internal code dependency.
 3. **`OPEN` (13 challenges):** G03, G05, G07, G10, G12, G14, G15, G18, G19, G20, G21, G22, G24.
    - Identifies structural boundaries: the Alpha Engine cannot endogenously generate demand without external stimulus (G14), path boundedness requires external halting policies (G15), and the four holes (refusal, budget, license, halt) are declarable axioms, not derived consequences (G24).
 
 ### 6.3 Strategic Conclusion on 19L57G1
 - **Internal Rigor:** 19L57G1 is a sound, self-contained formal exploration of minimal finite admission and tied non-uniqueness.
-- **Estate Relation:** 19L57G1 is **not an earned foundation** for the Omega Engine. The Omega Engine's operations (Discrete Deformation Calculus, exact rational cochains $\Phi_1, \Gamma_2$, transfer matrices, simplicial gauge theory) do not derive from 19L57G1's admission grammar.
-- **Operational Recommendation:** Decouple Omega development from 19L57G1, classify the $D_2$ correspondence as an analogy rather than a dependency, and keep sealed directories in 19L57G1 untouched.
+- **Estate Relation:** 19L57G1 is **not an earned foundation** for the engine. The engine's operations (Discrete Deformation Calculus, exact rational cochains $\Phi_1, \Gamma_2$, transfer matrices, simplicial gauge theory) do not derive from 19L57G1's admission grammar.
+- **Operational Recommendation:** Decouple Core development from 19L57G1, classify the $D_2$ correspondence as an analogy rather than a dependency, and keep sealed directories in 19L57G1 untouched.
 
 ---
 
@@ -282,7 +282,7 @@ graph TD
         G1[Minimal Finite Admission Grammar]
         G2[Refusal Clause Interception: No Identity Smuggling]
         G3[11 Checked Finite Theorems vs 13 Open Incompletenesses]
-        G4[External Analogy: 0 Code Occurrences in Omega Kernels]
+        G4[External Analogy: 0 Code Occurrences in Core Kernels]
         G1 --> G2 --> G3 --> G4
     end
 ```
@@ -295,8 +295,8 @@ We implemented and verified **Challenge C043 (`c043_ramsey_vdw_constructions`)**
 
 ### 7.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen solver module `reference_solver/solver.py` integrating algebraic seeds (Paley $P_{17}$, Greenwood-Gleason $K_{16}$, cyclic Van der Waerden sequences) with vertex-embedding search and CDCL SAT fallback.
-- **Dual Checkers:** Primary Python checker ([`ramsey_vdw_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)) + Independent Matrix/Array Checker ([`independent_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)).
-- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed)** sealed in `_intelligence/_woland/runs/c043_eval_1790620716/`.
+- **Dual Checkers:** Primary Python checker ([`ramsey_vdw_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)) + Independent Matrix/Array Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)).
+- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed)** sealed in `_intelligence/_adversary/runs/c043_eval_1790620716/`.
 
 ### 7.2 Multi-Scale Empirical Matrix (Including Space Bunny Alpha)
 
@@ -317,8 +317,8 @@ We implemented, verified, and sealed **Challenge C044 (`c044_finite_group_identi
 
 ### 8.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen solver module `reference_solver/solver.py` integrating exact algebraic group closure, Latin square validation, recomputable invariant sieving (element order histograms, center order, derived subgroup order, abelianization factors, conjugacy classes, $x^k = e$ solutions), and structured basis backtracking isomorphism search.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/judge_packet/checkers/exact_checker.py)) + Independent Matrix Checker ([`independent_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/judge_packet/checkers/independent_checker.py)).
-- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 1.458s, 48/48 hostile mutations killed)** sealed into `_intelligence/_woland/runs/c044_eval_1790622696`.
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/judge_packet/checkers/exact_checker.py)) + Independent Matrix Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/judge_packet/checkers/independent_checker.py)).
+- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 1.458s, 48/48 hostile mutations killed)** sealed into `_intelligence/_adversary/runs/c044_eval_1790622696`.
 
 ### 8.2 Multi-Scale Empirical Matrix
 
@@ -339,8 +339,8 @@ We implemented, verified, and sealed **Challenge C045 (`c045_knot_polynomials_fr
 
 ### 9.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating combinatorial Euler rotation verification ($V - E + F = 2$), Alexander arc matrix reduction, state-sum Kauffman bracket in $\mathbb{Z}[A, A^{-1}]$, Jones polynomial normalization $V(t) = (-A^3)^{-w} \langle K \rangle |_{A = t^{-1/4}}$, and Rolfsen catalog classification up to 7 crossings.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c045_knot_polynomials_from_pd/judge_packet/checkers/exact_checker.py)) + Independent Structural Checker ([`independent_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c045_knot_polynomials_from_pd/judge_packet/checkers/independent_checker.py)).
-- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.427s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c045_eval_1790623789`.
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c045_knot_polynomials_from_pd/judge_packet/checkers/exact_checker.py)) + Independent Structural Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c045_knot_polynomials_from_pd/judge_packet/checkers/independent_checker.py)).
+- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.427s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c045_eval_1790623789`.
 
 ### 9.2 Multi-Scale Empirical Matrix
 
@@ -361,8 +361,8 @@ We implemented, verified, and sealed **Challenge C046 (`c046_knuth_bendix_comple
 
 ### 10.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating Robinson first-order unification, subterm replacement, Lexicographic Path Order (LPO) with symbol precedence, priority agenda saturation, critical pair overlap enumeration, and variable canonicalization.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c046_knuth_bendix_completion/judge_packet/checkers/exact_checker.py)) + Independent Confluence Checker ([`independent_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c046_knuth_bendix_completion/judge_packet/checkers/independent_checker.py)).
-- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.721s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c046_eval_1790624975`.
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c046_knuth_bendix_completion/judge_packet/checkers/exact_checker.py)) + Independent Confluence Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c046_knuth_bendix_completion/judge_packet/checkers/independent_checker.py)).
+- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.721s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c046_eval_1790624975`.
 
 ### 10.2 Multi-Scale Empirical Matrix
 
@@ -383,8 +383,8 @@ We implemented, verified, and sealed **Challenge C047 (`c047_sequence_law_discov
 
 ### 11.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` providing exact Gaussian elimination over $\mathbb{Q}$, nullspace projection, Bareiss fraction-free determinants for absence proofs, and algebraic root checking.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c047_sequence_law_discovery/judge_packet/exact_checker.py)) + Independent Recurrence Checker ([`independent_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c047_sequence_law_discovery/judge_packet/independent_checker.py)).
-- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.774s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c047_eval_1790624985`.
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c047_sequence_law_discovery/judge_packet/exact_checker.py)) + Independent Recurrence Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c047_sequence_law_discovery/judge_packet/independent_checker.py)).
+- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.774s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c047_eval_1790624985`.
 
 ### 11.2 Multi-Scale Empirical Matrix
 
@@ -405,8 +405,8 @@ We implemented, verified, and sealed **Challenge C048 (`c048_ternary_quadratic_f
 
 ### 12.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating Pollard's rho, Miller-Rabin primality, Holzer bounded rational point search, and Serre Hilbert symbol valuations over $\mathbb{Q}_v$ ($v \in \{\infty, 2, p\}$).
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c048_ternary_quadratic_forms/judge_packet/exact_checker.py)) + Independent Diophantine Checker ([`independent_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c048_ternary_quadratic_forms/judge_packet/independent_checker.py)).
-- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.066s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c048_eval_1790625286`.
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c048_ternary_quadratic_forms/judge_packet/exact_checker.py)) + Independent Diophantine Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c048_ternary_quadratic_forms/judge_packet/independent_checker.py)).
+- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.066s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c048_eval_1790625286`.
 
 ### 12.2 Multi-Scale Empirical Matrix
 
@@ -427,8 +427,8 @@ We implemented, verified, and sealed **Challenge C049 (`c049_finite_category_uni
 
 ### 13.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating categorical duality ($C^{\mathrm{op}}$) to evaluate limits and colimits via universal arrow factorizations, alongside naturality and triangle identity verification for adjunctions.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c049_finite_category_universal_constructions/judge_packet/exact_checker.py)) + Independent Category Checker ([`independent_checker.py`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c049_finite_category_universal_constructions/judge_packet/independent_checker.py)).
-- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.450s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c049_eval_1790625868` (SHA-256: `88b989fd6c50851e0a9ffa799b9d817594508a8678e47636a146b8d51de78702`).
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c049_finite_category_universal_constructions/judge_packet/exact_checker.py)) + Independent Category Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c049_finite_category_universal_constructions/judge_packet/independent_checker.py)).
+- **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.450s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c049_eval_1790625868` (SHA-256: `88b989fd6c50851e0a9ffa799b9d817594508a8678e47636a146b8d51de78702`).
 
 ### 13.2 Multi-Scale Empirical Matrix
 
@@ -477,17 +477,17 @@ In strict accordance with repository Claim Discipline:
    - In C017, structured operational decoding (pinned canonical plaquette tokens + path multiplication scratchpads $g_{\text{acc}} = g_{\text{acc}} \cdot U(e)$) increases dual-checker pass rates on non-Abelian curvature detection from 0% (0/5) to 60% (3/5) on LLaMA-3.3-70B under sub-\$0.01 API spend.
    - In C005, numeric scratchpad conditioning significantly improves consistency classification accuracy on Hermes-3-Llama-3.1-405B ($50\% \to 74\%$, $p=0.035$).
    - Conjectures 2(a) and 2(b) are checked by the oracle at 100% exact rational closure across 20 sampled points on the Karlsson family $K_6(x,y)$.
-   - Batch evaluation across 25 genesis challenges (G01–G25) on LLaMA-3.3-70B under sub-\$0.01 spend demonstrates that 19L57G1 possesses 11 internally checked finite combinatorial properties, while the crosswalk claim of $D_2$ embedding in `omega_homology` has 0 occurrences in source code.
+   - Batch evaluation across 25 genesis challenges (G01–G25) on LLaMA-3.3-70B under sub-\$0.01 spend demonstrates that 19L57G1 possesses 11 internally checked finite combinatorial properties, while the crosswalk claim of $D_2$ embedding in `core_homology` has 0 occurrences in source code.
 2. **What is NOT Supported:**
    - General polynomial-time solutions to generic NP-hard problems, continuous thermodynamic field theories, or global quantum bounds (affirming the Troyer-Wiese barrier).
    - Direct zero-shot transfer of prompt-only epistemic antibodies to non-Abelian lattice gauge curvature ($\Gamma_2 > 0$) without structural coordinate pinning and operational path-multiplication tokens.
    - Closed-form non-Abelian holonomy evaluation on large periodic tori ($L, M \ge 5$) without hierarchical decimation.
    - Unassisted exact state-sum computation for knots with high crossing counts ($n \ge 8$).
-   - Claims that 19L57G1 serves as a derived mathematical foundation for the Omega Engine, or that DDC runes derive from 19L57G1 primitives.
+   - Claims that 19L57G1 serves as a derived mathematical foundation for the engine, or that DDC runes derive from 19L57G1 primitives.
    - Claims that language models possess general reasoning capabilities or physical intuition.
 3. **Narrowest Defensible Claim:**
    - On finite combinatorial and formal mathematical presentations (Ramsey graphs $\le 17$ vertices, groups $\le 64$ elements, knot diagrams $\le 7$ crossings, first-order theories $\le 5$ axioms, ternary forms $|a|,|b|,|c| \le 10^{18}$, finite categories $\le 12$ objects), deliberate frontier reasoning models (Space Bunny Alpha) detect discrete invariant separations, rewrite reductions, and local obstructions with slightly higher aggregate verified fidelity (48.8%) than the tested dense baselines (47.5% and 31.3%).
-   - Prompt-level epistemic negative constraints resolve 1D Abelian parity cancellations in fermion cluster models, but fail on non-Abelian lattice holonomies ($S_3, Q_8$) under unconstrained decoding; augmenting the grammar with pinned canonical plaquette tokens and directed edge accumulator scratchpads increases dual-checker pass rates from 0% to 60% on LLaMA-3.3-70B, achieving 100% verification on open non-flat lattices. 19L57G1 is a self-contained toy model of minimal finite admission; its relationship to Omega is an external analogy rather than a code dependency.
+   - Prompt-level epistemic negative constraints resolve 1D Abelian parity cancellations in fermion cluster models, but fail on non-Abelian lattice holonomies ($S_3, Q_8$) under unconstrained decoding; augmenting the grammar with pinned canonical plaquette tokens and directed edge accumulator scratchpads increases dual-checker pass rates from 0% to 60% on LLaMA-3.3-70B, achieving 100% verification on open non-flat lattices. 19L57G1 is a self-contained toy model of minimal finite admission; its relationship to Core is an external analogy rather than a code dependency.
 4. **Next Test Needed:**
    - Wave 3 domain development (Program Synthesis C051–C060 or Computational Biology C061–C070).
    - Author and verify reference solvers and dual checkers for C013 (integral homology with torsion) and C023 (Clifford circuit synthesis from tableaux).
@@ -498,11 +498,11 @@ In strict accordance with repository Claim Discipline:
 
 ## 8. Wave 3 Program Synthesis: Challenge C051 Exact LP Solver with Duals
 
-### 8.1 Overview & Verification Under Woland Reality Gate
-- **Challenge Target:** C051 Exact LP Solver with Dual and Farkas Certificates (`omega_engine_pfp/tests/demo_004/f_program_synthesis/c051_exact_lp_solver_with_duals/`)
+### 8.1 Overview & Verification Under Adversary Reality Gate
+- **Challenge Target:** C051 Exact LP Solver with Dual and Farkas Certificates (`pfp/tests/demo_004/f_program_synthesis/c051_exact_lp_solver_with_duals/`)
 - **Protocol:** SG-CP v1
 - **Reference Solver Digest:** `d91f3cc6549826d3a732d1f7ba8a0a4b1dc3de54b1f4b68038fbf34cd83f0fe8`
-- **Woland Terminal Verdict:** `PASS_TO_MASTER`
+- **Adversary Terminal Verdict:** `PASS_TO_MASTER`
 - **Verification Results:**
   - 64/64 Hidden Cases Passed (100.0%) across 40 base (24 optimal with 10 degenerate vertices, 8 infeasible, 8 unbounded), 16 gauge controls, and 8 poisoned cases.
   - 48/48 Hostile Mutations Killed (100.0%) with zero checker crashes across dual independent checkers.
@@ -527,11 +527,11 @@ Across a 10-problem sweep covering standard 2x2 LPs, degenerate vertices, 3D pol
 
 ## 9. Wave 3 Program Synthesis: Challenge C052 Max-Flow with Min-Cut Certificates
 
-### 9.1 Overview & Verification Under Woland Reality Gate
-- **Challenge Target:** C052 Max-Flow with Min-Cut Certificates (`omega_engine_pfp/tests/demo_004/f_program_synthesis/c052_maxflow_mincut_certificates/`)
+### 9.1 Overview & Verification Under Adversary Reality Gate
+- **Challenge Target:** C052 Max-Flow with Min-Cut Certificates (`pfp/tests/demo_004/f_program_synthesis/c052_maxflow_mincut_certificates/`)
 - **Protocol:** SG-CP v1
 - **Reference Solver Digest:** `8b26c642a1f4dc15c767f298a3f6004e0bd9398660b98d336f9e91ac4d9032d6`
-- **Woland Terminal Verdict:** `PASS_TO_MASTER`
+- **Adversary Terminal Verdict:** `PASS_TO_MASTER`
 - **Verification Results:**
   - 64/64 Hidden Cases Passed (100.0%) across 32 base (layered, adversarial bottlenecks, bipartite matching, disconnected, dense, 64-bit integer capacities $> 2^{63}$), 16 gauge controls, and 16 poisoned cases.
   - 48/48 Hostile Mutations Killed (100.0%) with zero checker crashes across dual independent checkers.
@@ -837,6 +837,6 @@ With the completion of Challenge C060, **Domain F (`f_program_synthesis`) is 100
 - **C059:** SQL Synthesis under Three-Valued-Logic Fences — `PASS_TO_MASTER`
 - **C060:** Checker Synthesis Scored by Mutation Kill Rate — `PASS_TO_MASTER`
 
-**Domain Status:** 10 / 10 Challenges Complete (100.0%), all verified under SG-CP v1 with dual checkers and Woland Reality Gates.
+**Domain Status:** 10 / 10 Challenges Complete (100.0%), all verified under SG-CP v1 with dual checkers and Adversary Reality Gates.
 
 

@@ -2,7 +2,7 @@
 
 The operational activation use case now requires a current signed host-health
 report. Signed admission decisions and observed evidence use the native
-`omega_epistemic_immune_system::authenticated` verifier and the existing
+`core_epistemic_immune_system::authenticated` verifier and the existing
 SQLite `ReceiptLedger`. The legacy Formulary and four-conjunct activation
 primitive retain their narrower, unauthenticated metadata interfaces.
 
@@ -14,7 +14,7 @@ automatic admission. The fixed keys in `tests/auth_support.py` are public test
 data. A verified signature identifies a configured key, not a human being or
 an independently correct measurement. Deployment must establish that mapping.
 
-The policy schema is `omega.eis.trust-policy.v1`, with `trust_domain` and a
+The policy schema is `core.eis.trust-policy.v1`, with `trust_domain` and a
 nonempty `keys` array. Each key specifies `issuer`, `key_id`, a lowercase
 32-byte `public_key_hex`, permitted `purposes` and exact `scopes`, integer
 `not_before`, `not_after`, `max_lifetime_seconds`, `revoked`, and optional
@@ -41,7 +41,7 @@ bound request; a previously verified view cannot be transplanted to it.
 ## Signed bytes and limits
 
 `SignedEvidence` contains `attestation` and lowercase `evidence_hex`.
-Attestations use `omega.eis.signed-attestation.v1`; unknown fields refuse.
+Attestations use `core.eis.signed-attestation.v1`; unknown fields refuse.
 Ed25519 strict verification covers UTF-8 JSON encoding of this ordered array,
 with no whitespace, maps or floats:
 
@@ -62,7 +62,7 @@ history size at most 4,096 events. Exceeding a budget refuses.
 Validity is `issued_at <= now < expires_at`, inside the key's validity window
 and maximum lifetime. Revoked keys refuse even historical authorization.
 The structured health/observation evidence schema is
-`omega.eis.observed-evidence.v1`, with exactly `observer_id`, `run_id`,
+`core.eis.observed-evidence.v1`, with exactly `observer_id`, `run_id`,
 `subject_digest`, `source_digest`, and `outcome` in addition to the schema
 field. Even a correctly signed narrative `ACCEPTED` is insufficient.
 
@@ -126,8 +126,8 @@ Self-panel survival and external-review eligibility do not admit the rule.
 This small fixture bank does not adopt a prior-art theorem or establish a
 universal false-positive rate.
 
-Run focused tests with a freshly built `omega_symbol_game` host configured by
-`OMEGA_SYMBOL_GAME_HOST`. Python test signing requires the `dev` extra;
+Run focused tests with a freshly built `core_symbol_game` host configured by
+`CORE_SYMBOL_GAME_HOST`. Python test signing requires the `dev` extra;
 production signature verification stays in Rust. Reproduction commands and
 the mutation/RED/GREEN evidence are in the
 [follow-on checkpoint](../receipts/authenticated_custody_20261012/README.md).

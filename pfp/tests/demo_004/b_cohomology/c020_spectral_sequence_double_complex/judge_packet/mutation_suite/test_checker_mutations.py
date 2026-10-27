@@ -5,10 +5,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.judge_packet.checkers.exact_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.judge_packet.checkers.exact_checker import (
     check_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.judge_packet.checkers.independent_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.judge_packet.checkers.independent_checker import (
     independent_check_certificate,
 )
 

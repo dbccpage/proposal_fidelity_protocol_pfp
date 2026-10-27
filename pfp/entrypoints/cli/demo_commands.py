@@ -5,7 +5,7 @@ from dataclasses import asdict
 
 
 def cmd_list(args):
-    from omega_engine_pfp.infrastructure.demos.catalog import scenarios
+    from pfp.infrastructure.demos.catalog import scenarios
 
     rows = [asdict(s) for s in scenarios()]
     if args.json:
@@ -17,7 +17,7 @@ def cmd_list(args):
 
 
 def cmd_run(args):
-    from omega_engine_pfp.infrastructure.demos.execution import run
+    from pfp.infrastructure.demos.execution import run
 
     receipt = run(
         args.scenario_id,
@@ -45,7 +45,7 @@ def cmd_run(args):
 
 
 def cmd_verify(args):
-    from omega_engine_pfp.infrastructure.demos.execution import verify
+    from pfp.infrastructure.demos.execution import verify
 
     print(json.dumps(verify(args.receipt), sort_keys=True))
     return 0

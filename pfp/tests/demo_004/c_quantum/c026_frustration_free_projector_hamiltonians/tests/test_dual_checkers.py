@@ -5,10 +5,10 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.solver import (
     solve,
 )
 

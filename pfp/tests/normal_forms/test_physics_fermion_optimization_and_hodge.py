@@ -10,13 +10,13 @@ from __future__ import annotations
 import unittest
 from fractions import Fraction
 
-from omega_engine_pfp.domain.normal_forms.quantum_forms import verify_bssnf, verify_micnf
-from omega_engine_pfp.domain.normal_forms.relational_extensions import (
+from pfp.domain.normal_forms.quantum_forms import verify_bssnf, verify_micnf
+from pfp.domain.normal_forms.relational_extensions import (
     Simplicial2DComplex,
     verify_simplicial_dhnf,
     verify_zfnf_scaling_invariance,
 )
-from omega_engine_pfp.domain.normal_forms.tower_forms import verify_zfnf
+from pfp.domain.normal_forms.tower_forms import verify_zfnf
 
 
 class TestPhysicsFermionOptimizationAndHodge(unittest.TestCase):

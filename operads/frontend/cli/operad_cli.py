@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from omega_engine_operads.application.operad import (
+from operads.application.operad import (
     OperadBudgetService,
     OperadCompilerService,
 )
@@ -80,11 +80,11 @@ def main(args: Optional[list[str]] = None) -> int:
     subparsers = parser.add_subparsers(dest="command", help="Available operad commands")
 
     compile_p = subparsers.add_parser("compile", help="Compile skills into ColouredOperad")
-    compile_p.add_argument("--skills-dir", type=str, default="omega_engine_operads/skills", help="Path to skills directory")
+    compile_p.add_argument("--skills-dir", type=str, default="operads/skills", help="Path to skills directory")
     compile_p.add_argument("--json", action="store_true", help="Output JSON receipt")
 
     budget_p = subparsers.add_parser("budget", help="Audit skill line and byte budgets")
-    budget_p.add_argument("--skills-dir", type=str, default="omega_engine_operads/skills", help="Path to skills directory")
+    budget_p.add_argument("--skills-dir", type=str, default="operads/skills", help="Path to skills directory")
     budget_p.add_argument("--json", action="store_true", help="Output JSON receipt")
 
     parsed = parser.parse_args(args)

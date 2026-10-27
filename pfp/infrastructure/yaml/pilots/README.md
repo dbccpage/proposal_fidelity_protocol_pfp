@@ -6,9 +6,9 @@
 
 ## Overview
 
-This directory houses the machine-readable JSON/YAML Schema specifications and type definitions corresponding to every YAML asset deployed across the PFP pilot estate (`omega_engine_woland/tests/pilots/pilot_*`).
+This directory houses the machine-readable JSON/YAML Schema specifications and type definitions corresponding to every YAML asset deployed across the PFP pilot estate (`adversary/tests/pilots/pilot_*`).
 
-Required fields and closed enums in the `*.schema.yaml` files follow the Pydantic models in `omega_engine_pfp/domain/types/`. Those models emit JSON Schema draft 2020-12 from `model_json_schema()`. Fields typed as an enum unioned with `str` stay open in the schema so a non-enum label still validates.
+Required fields and closed enums in the `*.schema.yaml` files follow the Pydantic models in `pfp/domain/types/`. Those models emit JSON Schema draft 2020-12 from `model_json_schema()`. Fields typed as an enum unioned with `str` stay open in the schema so a non-enum label still validates.
 
 ## Directory Contents
 

@@ -30,7 +30,7 @@ _repo_root = next((p for p in Path(__file__).resolve().parents if (p / "pyprojec
 if _repo_root is not None and str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.lean_compiler import (  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.lean_compiler import (  # noqa: E402
     WHITELISTED_AXIOMS,
     compile_lean4_code,
     lean_version,

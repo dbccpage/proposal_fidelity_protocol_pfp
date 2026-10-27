@@ -6,7 +6,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_pfp.domain.exceptions import DomainError
+from pfp.domain.exceptions import DomainError
 
 
 class ExactRefusal(DomainError):

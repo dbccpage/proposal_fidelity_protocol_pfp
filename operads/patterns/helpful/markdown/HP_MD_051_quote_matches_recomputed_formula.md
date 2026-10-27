@@ -36,9 +36,9 @@ The witness in [AP_MD_051_quoted_fraction_not_the_formula](../../anti/markdown/A
 
 The brief route `SECOND_MOMENT_BOUND` names the same `||W|| <= 11` and 128-scaling. It is the stated cause of this printed fraction, not a second pattern.
 
-`/woland-proof-scope-rule` still keeps the written TL-3/TL-4 estimates outside the finite checks. The review says those estimates remain prose. This pattern does not certify them.
+`/adversary-proof-scope-rule` still keeps the written TL-3/TL-4 estimates outside the finite checks. The review says those estimates remain prose. This pattern does not certify them.
 
-The self-comparison `window_floor == window_floor` stays with the test-quality law and `/woland-check-sensitivity-pattern`. The missing support-radius witness is a different row and was not given this id. The ring diagnostic with no retained source was not given this id. `AP_MD_014` still owns a pass verdict whose counted payload is zero. PR #588's scan that returns `[]` and completes PASS is not this pattern.
+The self-comparison `window_floor == window_floor` stays with the test-quality law and `/adversary-check-sensitivity-pattern`. The missing support-radius witness is a different row and was not given this id. The ring diagnostic with no retained source was not given this id. `AP_MD_014` still owns a pass verdict whose counted payload is zero. PR #588's scan that returns `[]` and completes PASS is not this pattern.
 
 ## Dual Anti-Pattern
 

@@ -1,4 +1,4 @@
-"""Fail-closed, non-symmetric OEWAS plan compilation for Woland.
+"""Fail-closed, non-symmetric OEWAS plan compilation for Adversary.
 
 This compiler checks a *declared* ordered boundary and binds the exact source
 documents. Its output is always a candidate: source text cannot self-admit and
@@ -25,8 +25,8 @@ from ..domain.value_objects.lifecycle_facets import (
 )
 from .commands.compile_catalog import operation_content_digest
 
-_SOURCE_PREFIX = "omega_engine_workflows_agents_skills/catalog/operands/v1/"
-_TYPED_SOURCE_PREFIX = "omega_engine_workflows_agents_skills/catalog/contracts/v1/"
+_SOURCE_PREFIX = "workflows_agents_skills/catalog/operands/v1/"
+_TYPED_SOURCE_PREFIX = "workflows_agents_skills/catalog/contracts/v1/"
 _SOURCE_NAME = re.compile(r"[a-z][a-z0-9_-]*\Z")
 _CAPABILITY_NAME = re.compile(r"[a-z][a-z0-9_.:/-]{0,127}\Z")
 _MAX_SOURCES = 64
@@ -259,7 +259,7 @@ def compile_candidate_plan(
         (doc.source_relative_path, str(doc.raw_digest)) for doc, _ in by_id.values()
     ))
     payload = {
-        "schema": "oewas.woland.candidate_plan.v0.1",
+        "schema": "oewas.adversary.candidate_plan.v0.1",
         "root": root.operation_id,
         "inputs": [port_contract(port) for port in inputs],
         "output": port_contract(output),

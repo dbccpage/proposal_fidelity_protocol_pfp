@@ -5,10 +5,10 @@ Runs both checkers and verifies 100% agreement.
 
 from typing import Any, Dict, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.independent_checker import (
     check_independent,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.ramsey_vdw_checker import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.ramsey_vdw_checker import (
     check as check_primary,
 )
 

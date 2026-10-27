@@ -171,7 +171,7 @@ class PublicationCustodyTests(unittest.TestCase):
         """Counterexample: 012 after 010 with 011 missing and not reserved must fail."""
         ids = [f"{i:03}" for i in range(1, 11)] + ["012"]
         self.assertTrue(validate_selection(ids, {}))
-        self.assertEqual(validate_selection(ids, {"011": "omega_engine_projects/fsp/meron_sign_problem"}), [])
+        self.assertEqual(validate_selection(ids, {"011": "projects/fsp/meron_sign_problem"}), [])
         self.assertTrue(validate_selection(ids, {"011": ""}))
         self.assertTrue(validate_selection(ids + ["011"], {"011": "elsewhere"}))
         self.assertTrue(validate_selection(["002", "003"], {}))

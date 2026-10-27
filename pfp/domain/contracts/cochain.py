@@ -13,7 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from .contracts import ContractSpec, InvariantCheck, Postcondition, Precondition
 
 PROMPT_COCHAIN_EVALUATION_CONTRACT_ID = (
-    "urn:omega:pfp:contract:prompt_cochain_evaluation:v1.0.0"
+    "urn:core:pfp:contract:prompt_cochain_evaluation:v1.0.0"
 )
 
 RULE_PROMPT_COCHAIN_CHAIN_LAW_001 = "RULE_PROMPT_COCHAIN_CHAIN_LAW_001"

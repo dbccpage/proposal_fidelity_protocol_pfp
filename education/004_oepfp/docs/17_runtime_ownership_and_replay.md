@@ -8,11 +8,11 @@ maturity: experimental
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp/README.md
-  - omega_engine_woland/tests/pilots/relational_spacetime
-  - omega_engine_pfp/use_cases/pfp_calculation_contracts.py
-  - omega_engine_pfp/infrastructure/adapters/pfp_frozen_replay.py
-  - omega_engine_woland/tests/pilots/evidence/pfp_ownership_migration_20261012
+  - pfp/README.md
+  - adversary/tests/pilots/relational_spacetime
+  - pfp/use_cases/pfp_calculation_contracts.py
+  - pfp/infrastructure/adapters/pfp_frozen_replay.py
+  - adversary/tests/pilots/evidence/pfp_ownership_migration_20261012
 last_verified: 2026-10-20
 verification_scope: module paths, CLI flags, stage executors and linked files checked at c419cc6beb; no command or test was run
 ---
@@ -21,12 +21,12 @@ verification_scope: module paths, CLI flags, stage executors and linked files ch
 
 AuthorityEffect: None.
 
-> **Source check (2026-10-20, pin `c419cc6beb`).** Every `python -m` module and every flag in the commands below exists at the pin, with two corrections made in place: the C059 matrix module is now under `omega_engine_woland.tests.pilots`, and the stage numbering for `assemble` is restated against the current 11-stage controller. The Paper 008 and Paper 002 links now point to the Atlas `015_pfp` deposits. `finite_gauge/sign_graph.py` and `finite_gauge/frontier_search.py` still have the same SHA-256 as the Paper 002 copies. The numbers in this page (40, 15 and 25 replay calls, 106 modules, 12 collisions, 111 contracts, 28 controls) are historical observations from 2026-10-12 and earlier; they were not re-counted.
+> **Source check (2026-10-20, pin `c419cc6beb`).** Every `python -m` module and every flag in the commands below exists at the pin, with two corrections made in place: the C059 matrix module is now under `adversary.tests.pilots`, and the stage numbering for `assemble` is restated against the current 11-stage controller. The Paper 008 and Paper 002 links now point to the Atlas `015_pfp` deposits. `finite_gauge/sign_graph.py` and `finite_gauge/frontier_search.py` still have the same SHA-256 as the Paper 002 copies. The numbers in this page (40, 15 and 25 replay calls, 106 modules, 12 collisions, 111 contracts, 28 controls) are historical observations from 2026-10-12 and earlier; they were not re-counted.
 
 PFP research identifiers are provenance, not application boundaries. A paper
 number such as PO035 belongs in a seed's citation and evidence record. Active
 code for that research is discoverable as
-`omega_engine_woland/tests/pilots/relational_spacetime`, with
+`adversary/tests/pilots/relational_spacetime`, with
 `tasks`, `finite_checks`, `trial_prompts`, `parameter_trials`, `compact_prompts`,
 `compact_checks`, and `compact_trials` modules.
 
@@ -40,16 +40,16 @@ Other ownership repairs remove numbered runner filenames, move challenge and
 judge-audit compositions beside the pilots, separate executable normal-form code
 from YAML/SQL assets, retire duplicate canonical-type monoliths, and replace the
 type census's legacy alias search with exact current paths. The
-[package ownership map](../../../../omega_engine_pfp/README.md) gives the direct entry points.
+[package ownership map](../../../../pfp/README.md) gives the direct entry points.
 
-The public `omega_engine_pfp.infrastructure.UnifiedPfpDemoRunner` name resolves
+The public `pfp.infrastructure.UnifiedPfpDemoRunner` name resolves
 to the same class as `infrastructure.pilot_runners.pilot_dispatch`. It does not
 load a retired `demo_runners` module or introduce a replacement implementation.
 For example, an unsupported demo remains an explicit refusal:
 
 ```python
-from omega_engine_pfp import DemoCatalog, DemoSpec
-from omega_engine_pfp.infrastructure import UnifiedPfpDemoRunner
+from pfp import DemoCatalog, DemoSpec
+from pfp.infrastructure import UnifiedPfpDemoRunner
 
 catalog = DemoCatalog(demos=[DemoSpec(
     id="unregistered-example", title="Unknown demo", seed="public input")])
@@ -71,8 +71,8 @@ the retained MUB6/Regge illustration or retired cohomology scenario into evidenc
 a refused demo cannot become a passing pilot through a missing-attribute default.
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.pfp run-demo demo_003
-python -m omega_engine_pfp.entrypoints.cli.pfp run-demo demo_001
+python -m pfp.entrypoints.cli.pfp run-demo demo_003
+python -m pfp.entrypoints.cli.pfp run-demo demo_001
 ```
 
 The first command refuses with exit 2 and lists the unmet original checks.
@@ -82,7 +82,7 @@ its result is scoped to that scenario, not a replacement for the original
 twelve-demo aggregate or its mathematical obligations. Historical artifacts,
 fixtures and prior reports remain unchanged.
 
-The consolidated application owner is `omega_engine_pfp`, merged on main in
+The consolidated application owner is `pfp`, merged on main in
 PR #829. This cleanup follows that owner and does not recreate the retired apps.
 Its current inventory records 106 model/enum modules and 12 public-name
 collisions across the combined package. Distinct records remain under semantic
@@ -97,8 +97,8 @@ lesson/dossier boundary belongs to the remaining application absorption.
 Prepare a numbered-stage prompt through the current public command:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.pfp assemble --demo-id demo_002 --stage 1
-python -m omega_engine_pfp.entrypoints.cli.pfp assemble --demo-id demo_002 --stage 1 --seed-json public-task.json --json
+python -m pfp.entrypoints.cli.pfp assemble --demo-id demo_002 --stage 1
+python -m pfp.entrypoints.cli.pfp assemble --demo-id demo_002 --stage 1 --seed-json public-task.json --json
 ```
 
 `public-task.json` supplies public prompt data, for example
@@ -110,11 +110,11 @@ For model stages 1–4 and 6–8, the copied schema binds `demo_id` to the reque
 identity. Its remaining stage requirements and source YAML stay unchanged;
 stage 0 and host-only stage 5 retain their existing empty model schema.
 (Stage numbers corrected 2026-10-20: `assemble` now accepts stages 0 to 11
-(`STAGE_COUNT = 11`). [controller.yaml](../../../../omega_engine_pfp/infrastructure/yaml/stages/controller.yaml)
+(`STAGE_COUNT = 11`). [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml)
 marks stages 2, 3, 4, 6 and 11 as model stages and 1, 5, 7, 8, 9 and 10 as host
 stages. `AssemblePromptUseCase` loads a model schema for every non-host stage and
 for stage 1, whose file carries a repair-turn schema; stage 0 and the other host
-stages get an empty schema ([assemble_prompt.py](../../../../omega_engine_pfp/use_cases/assemble_prompt.py)
+stages get an empty schema ([assemble_prompt.py](../../../../pfp/use_cases/assemble_prompt.py)
 lines 42-58). The CLI help text still says "Stage index (0-8)".)
 Assembly performs no model dispatch or independent task checking. A valid
 response shape still needs the selected stage's host checks. The existing
@@ -140,9 +140,9 @@ Run historical records through their pinned runtime, without recreating legacy
 imports in the active application:
 
 ```powershell
-.venv/Scripts/python.exe -m omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay --bundle omega_engine_woland/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile scratchpad-temperature-logit
-.venv/Scripts/python.exe -m omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay --bundle omega_engine_woland/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile compact-three-stage
-.venv/Scripts/python.exe -m omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay --bundle omega_engine_woland/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile five-final-prompts
+.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle adversary/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile scratchpad-temperature-logit
+.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle adversary/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile compact-three-stage
+.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle adversary/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile five-final-prompts
 ```
 
 These profiles verify 40 experiment calls, 15 compact-round calls, and 25 source
@@ -154,12 +154,12 @@ part of replay. Current-source replay continues to refuse source drift.
 ## Audit the current original judge packets
 
 The existing audit runner lives in
-`omega_engine_woland.tests.pilots.judge_packet_audit`; its current task tree is
-`omega_engine_pfp/tests/demo_004`. Select the packages needed for the question.
+`adversary.tests.pilots.judge_packet_audit`; its current task tree is
+`pfp/tests/demo_004`. Select the packages needed for the question.
 For a source-only inspection of the retained Hodge packet:
 
 ```powershell
-python -m omega_engine_woland.tests.pilots.judge_packet_audit.audit --repo-root . --packages C014 --skip-execution --out "$env:TEMP/c014-audit-new" --work-dir "$env:TEMP/c014-audit-work-new"
+python -m adversary.tests.pilots.judge_packet_audit.audit --repo-root . --packages C014 --skip-execution --out "$env:TEMP/c014-audit-new" --work-dir "$env:TEMP/c014-audit-work-new"
 ```
 
 Choose fresh output/work directories to retain earlier audit packets. Inspect
@@ -188,7 +188,7 @@ Select a model and explicit output, call and financial limits. For example,
 this deliberately permits only one provider attempt:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.symbol_game demo run demo_3 --live --model YOUR_MODEL_ID --output-dir "$env:TEMP/demo3-pfp-one" --max-output-tokens 1024 --max-provider-calls 1 --max-estimated-cost-microusd 4000
+python -m pfp.entrypoints.cli.symbol_game demo run demo_3 --live --model YOUR_MODEL_ID --output-dir "$env:TEMP/demo3-pfp-one" --max-output-tokens 1024 --max-provider-calls 1 --max-estimated-cost-microusd 4000
 ```
 
 Use a new output directory each time. The estimate is not a vendor-enforced
@@ -201,11 +201,11 @@ Its retained transcript reports the attempted turn and refusal, not a completed
 experiment. No fixed grid or repeated paid campaign is required.
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.symbol_game demo run demo_3 --output-dir "$env:TEMP/demo3-offline"
-python -m omega_engine_pfp.entrypoints.cli.symbol_game demo verify "$env:TEMP/demo3-offline/receipt.json"
+python -m pfp.entrypoints.cli.symbol_game demo run demo_3 --output-dir "$env:TEMP/demo3-offline"
+python -m pfp.entrypoints.cli.symbol_game demo verify "$env:TEMP/demo3-offline/receipt.json"
 ```
 
-The package-root `python -m omega_engine_pfp` exposes a different command set;
+The package-root `python -m pfp` exposes a different command set;
 use the explicit module above or the installed `symbol-game` entrypoint.
 Successful live verification remains an integrity check, not model replay or
 an efficacy claim. Preserve old output directories and run old artifacts with
@@ -228,7 +228,7 @@ model admission and prices as synthetic; an outdated vendor allowlist is not a
 reason to shrink the original case set or token limit. The current matrix
 controls demonstrate this procedure without claiming live model performance.
 
-The old `WolandMatrixTransportAdapter` is retired. It kept a second post-hoc
+The old `AdversaryMatrixTransportAdapter` is retired. It kept a second post-hoc
 float budget, collapsed conversation fields, and manufactured a replacement
 provider response. Current callers inject an existing gateway directly into
 `synthesis_matrix.run_matrix` or `formal_matrix`; they do not patch a private
@@ -242,9 +242,9 @@ the smaller output bound visible. This example changes C059's original
 ```python
 from dataclasses import replace
 from pathlib import Path
-from omega_engine_pfp.infrastructure.pilot_matrix import make_pilot_gateways
-from omega_engine_pfp.infrastructure.synthesis_matrix import run_matrix
-from omega_engine_woland.tests.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix import SPEC
+from pfp.infrastructure.pilot_matrix import make_pilot_gateways
+from pfp.infrastructure.synthesis_matrix import run_matrix
+from adversary.tests.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix import SPEC
 
 model = "<explicit authorized OpenRouter model>"
 spec = replace(SPEC, cases=SPEC.cases[:1], max_tokens=512,
@@ -266,7 +266,7 @@ those obligations or establish neural performance.
 
 ## Numbered seed stages and refusal replay
 
-The [numbered-stage runbook](../../../../omega_engine_pfp/documentation/pfp_seed_execution.md)
+The [numbered-stage runbook](../../../../pfp/documentation/pfp_seed_execution.md)
 uses the same accounted PFP boundary for `pfp run-seed`. Select explicit model,
 call, output-token and financial limits. Start with the shortest useful prefix;
 Stage5 remains the independent host verification step. Original stage prompts,
@@ -306,8 +306,8 @@ outside the historical pilot estate. The default derivation still allows five
 loops; this smaller example selects one, so it does not complete that protocol:
 
 ```powershell
-python -m omega_engine_woland.tests.pilots.relational_spacetime.baseline --run pilot_0000199 --model YOUR_FREE_MODEL_ID --loops 1 --output "$env:TEMP/po035-current-one"
-python -m omega_engine_woland.tests.pilots.relational_spacetime.baseline --replay --pilot pilot_0000199 --output "$env:TEMP/po035-current-one"
+python -m adversary.tests.pilots.relational_spacetime.baseline --run pilot_0000199 --model YOUR_FREE_MODEL_ID --loops 1 --output "$env:TEMP/po035-current-one"
+python -m adversary.tests.pilots.relational_spacetime.baseline --replay --pilot pilot_0000199 --output "$env:TEMP/po035-current-one"
 ```
 
 The selected model must satisfy the existing zero-price and decoding capability
@@ -321,9 +321,9 @@ maximum-liability caps. No automatic retry or budget reset follows a stop.
 Compact runs retain preparation and source-drift refusal before dispatch:
 
 ```powershell
-python -m omega_engine_woland.tests.pilots.relational_spacetime.compact_trials prepare --model YOUR_FREE_MODEL_ID --output "$env:TEMP/po035-compact-prep"
-python -m omega_engine_woland.tests.pilots.relational_spacetime.compact_trials run --pilot pilot_0000199 --model YOUR_FREE_MODEL_ID --preflight "$env:TEMP/po035-compact-prep/preflight.json" --output "$env:TEMP/po035-compact-current"
-python -m omega_engine_woland.tests.pilots.relational_spacetime.compact_trials replay --pilot pilot_0000199 --output "$env:TEMP/po035-compact-current"
+python -m adversary.tests.pilots.relational_spacetime.compact_trials prepare --model YOUR_FREE_MODEL_ID --output "$env:TEMP/po035-compact-prep"
+python -m adversary.tests.pilots.relational_spacetime.compact_trials run --pilot pilot_0000199 --model YOUR_FREE_MODEL_ID --preflight "$env:TEMP/po035-compact-prep/preflight.json" --output "$env:TEMP/po035-compact-current"
+python -m adversary.tests.pilots.relational_spacetime.compact_trials replay --pilot pilot_0000199 --output "$env:TEMP/po035-compact-current"
 ```
 
 `parameter_trials run scratchpad|temperature|logit` likewise requires `--pilot`,
@@ -337,7 +337,7 @@ Current v2 replay rechecks the actual raw reply, PFP bindings, ledger and origin
 observer. Current source drift refuses; original v1 captures and snapshots retain
 their bytes and use the frozen replay commands above. Malformed completion text
 has an explicit refusal, not a missing-answer crash. Finite fixture controls do
-not establish model efficacy, the PO035 analytical claims, complete Woland
+not establish model efficacy, the PO035 analytical claims, complete Adversary
 accounting integration or completion of the original campaigns.
 
 Two implementation lessons are now exercised by the current controls. A host
@@ -351,7 +351,7 @@ reported liability does not turn them into an accepted independent generation.
 
 ## Governed research proposals through PFP
 
-The [two governed research CLIs](../../099_project_anomalon/001_fully_governed_and_auditable_agentic_ai_systems/README.md#current-bounded-research-runner)
+The [two governed research CLIs](../../099_project_sentinel/001_fully_governed_and_auditable_agentic_ai_systems/README.md#current-bounded-research-runner)
 reuse one accounted gateway for their original stress and solver-coupling
 experiments. A proposal travels as a string inside the checked PFP answer, then
 passes unchanged to its original strict parser and perimeter. Declaration key
@@ -425,7 +425,7 @@ match. Preserve those observations instead of replacing them with the expected
 answer or refusing a valid result only because its representation differs.
 Original checkers, historical responses and scientific protocols retain their
 owners and bytes. These repairs establish state consistency, not execution of
-every pilot or completion of the PFP/Woland migration.
+every pilot or completion of the PFP/Adversary migration.
 
 ## Evaluate an existing typed pilot response
 
@@ -434,10 +434,10 @@ pilot aggregate and into its evaluator:
 
 ```python
 from pathlib import Path
-from omega_engine_pfp.domain.types.pilot_spec import PilotSpec
-from omega_engine_pfp.domain.types.seed_prompts import SeedPrompt
-from omega_engine_pfp.domain.types.pilot_response import PilotResponse
-from omega_engine_pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
+from pfp.domain.types.pilot_spec import PilotSpec
+from pfp.domain.types.seed_prompts import SeedPrompt
+from pfp.domain.types.pilot_response import PilotResponse
+from pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
 
 spec = PilotSpec.from_yaml(Path("spec.yaml").read_text(encoding="utf-8"))
 seed = SeedPrompt.from_yaml(Path("seed.yaml").read_text(encoding="utf-8"))
@@ -460,12 +460,12 @@ The original response remains available for inspection after checking.
 These are offline checks of retained response text and declared identities.
 They neither authenticate its provenance nor retroactively add a shared PFP
 task/attempt/input binding to an old record. Use the existing shared turn path
-for current Woland model interactions and the original versioned replay readers
+for current Adversary model interactions and the original versioned replay readers
 for historical custody. The old YAML schemas and files remain unchanged.
 
-## Landau quiz through the shared PFP turn
+## Examiner quiz through the shared PFP turn
 
-The [Landau quiz runner](../../_lev_landau_theoretical_minimum_quiz/z_solutions_and_verifiers/llm_quiz_runner.py)
+The [Examiner quiz runner](../../_lev_examiner_theoretical_minimum_quiz/z_solutions_and_verifiers/llm_quiz_runner.py)
 retains its thirteen current layer specifications, original zero/few-shot
 conversation, mock fixtures and independent quiz checks. Its live transport
 delegates to the existing PFP/accounted boundary. The original wire answer is
@@ -479,7 +479,7 @@ finding. Retain the actual reply and known/unknown accounting observations.
 An uncertain send or bill stops later layers under the same allowance.
 Neither a `:free` model suffix nor a private API key authorizes a fresh budget.
 
-The [quiz usage instructions](../../_lev_landau_theoretical_minimum_quiz/README.md)
+The [quiz usage instructions](../../_lev_examiner_theoretical_minimum_quiz/README.md)
 show explicit model, call and financial selection with fresh output paths.
 Temperature remains zero and the original output bound is 150 tokens; no
 provider schema constraint or answer-bearing fixture is added to the request.
@@ -495,7 +495,7 @@ existing accounted PFP gateway. Its answer passes the shared task/attempt/input
 check, while `LlmReply.raw_response` preserves the original decoded vendor
 envelope. Supply the same gateway across callers to retain the continuing call
 and cost allowance; a key or an extra facade instance cannot create new spend
-authority. See the [Python composition](../../../../omega_engine_woland/documentation/shared_teamwork.md#two-prompt-python-completion-facade).
+authority. See the [Python composition](../../../../adversary/documentation/shared_teamwork.md#two-prompt-python-completion-facade).
 
 Review the callable facade as well as the preferred backend when checking a
 migration. The earlier backend migration did not cover this separate exported
@@ -510,7 +510,7 @@ sender inventory or establish a new model-performance result.
 The retained `naked_prompt_launder.py` scene used the deleted
 `bench/head_to_head` directory. Its generator, direct/CoT prompts, verdict parser
 and exact potential-propagation judge now live in the existing task-profile
-estate at `omega_engine_pfp.tests.demo_004.a_mechanism.consistency_teaching`.
+estate at `pfp.tests.demo_004.a_mechanism.consistency_teaching`.
 They come from [the original source at bc42aa0](https://github.com/dbccpage/the_symbol_game/tree/bc42aa0a7156fcdf2122f0c8c43a52268e9eac84/bench/head_to_head).
 Only the used judge is recovered: the historical exponential `phi1` minimizer
 and its paper-path bootstrap remain historical. The graph construction, verdict
@@ -519,8 +519,8 @@ logic and original direct/CoT prompt text are retained.
 For a zero-provider exercise, compare the original clean and poisoned instances:
 
 ```python
-from omega_engine_pfp.tests.demo_004.a_mechanism.consistency_teaching.tasks import generate_instance
-from omega_engine_pfp.tests.demo_004.a_mechanism.consistency_teaching.host import host_verdict
+from pfp.tests.demo_004.a_mechanism.consistency_teaching.tasks import generate_instance
+from pfp.tests.demo_004.a_mechanism.consistency_teaching.host import host_verdict
 
 clean = generate_instance(n_items=3, n_relations=3, poisoned=False, seed=1)
 poisoned = generate_instance(n_items=3, n_relations=3, poisoned=True, seed=1)
@@ -532,7 +532,7 @@ This checks exact finite constraints. It does not measure what an LLM will say,
 and a model can correctly identify the poisoned graph. A recorded wrong answer
 is a finding about that response, not a general law of model behavior.
 
-Current recording belongs to `omega_engine_pfp.infrastructure.consistency_teaching`.
+Current recording belongs to `pfp.infrastructure.consistency_teaching`.
 Its `record_one(..., gateway=existing_gateway)` accepts the enclosing run's
 accounted gateway. Use that same gateway for successive cases. Original public
 arguments and the 2,048-token default remain; no key-only sender or implicit
@@ -541,7 +541,7 @@ arguments and the 2,048-token default remain; no key-only sender or implicit
 From the repository root, select an explicit model and a new output directory:
 
 ```powershell
-python omega_engine_education/documentation/004_oepfp/curriculum/scenes/naked_prompt_launder.py record --model YOUR_MODEL --output-dir NEW_DIRECTORY --max-provider-calls 2 --max-output-tokens 2048 --max-estimated-cost-microusd 500
+python education/documentation/004_oepfp/curriculum/scenes/naked_prompt_launder.py record --model YOUR_MODEL --output-dir NEW_DIRECTORY --max-provider-calls 2 --max-output-tokens 2048 --max-estimated-cost-microusd 500
 ```
 
 The estimated allowance uses the existing gateway policy; it is not a hard
@@ -555,7 +555,7 @@ Rendering is separate and makes no provider call. It requires the existing
 Matplotlib/FFmpeg tools and a fresh MP4 path:
 
 ```powershell
-python omega_engine_education/documentation/004_oepfp/curriculum/scenes/naked_prompt_launder.py render --input SAVED_CAPTURE.json --output NEW_CLIP.mp4
+python education/documentation/004_oepfp/curriculum/scenes/naked_prompt_launder.py render --input SAVED_CAPTURE.json --output NEW_CLIP.mp4
 ```
 
 Historical `_render` JSON/MP4 files retain their bytes and old meaning. Rendering
@@ -594,7 +594,7 @@ provider responses; no live provider/local run or full sender coverage is claime
 To inspect the current normal-form YAML specifications, use the existing audit:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.pfp_normal_forms audit-contracts
+python -m pfp.entrypoints.cli.pfp_normal_forms audit-contracts
 ```
 
 It checks the catalog against its declared standard. Zero findings means the
@@ -603,7 +603,7 @@ chase, zero candidate defects or any stage-transition invariant. The existing
 `run-examples` command in the same module exercises selected relational examples.
 Those finite results do not certify every registered normal form.
 
-`python -m omega_engine_pfp.entrypoints.cli.pfp verify-contracts` and the
+`python -m pfp.entrypoints.cli.pfp verify-contracts` and the
 `VerifyPfpContractsUseCase` execution-verification methods cannot establish those
 claims from metadata alone. They now return an explicit unavailable-verifier
 refusal instead of constructing successful execution receipts. Missing or
@@ -620,9 +620,9 @@ Historical YAML, scientific sources and receipts retain their bytes and meaning.
 
 ## Current Paper 008 graph benchmark
 
-New runs use `omega_engine_pfp.infrastructure.retraction_benchmark` and its
-`omega_engine_pfp.entrypoints.retraction_benchmark` command. The original
-[Paper 008 runner](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py),
+New runs use `pfp.infrastructure.retraction_benchmark` and its
+`pfp.entrypoints.retraction_benchmark` command. The original
+[Paper 008 runner](../../../../atlas/coda_atlas/F004_papers/015_pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py),
 paper deposit and recorded results retain their bytes and historical behavior.
 The current derivative retains the six graphs, integer potential/cycle checks,
 prompt text and verdict parser. It replaces direct HTTP and the old float budget
@@ -640,7 +640,7 @@ The four original conditions answer different questions:
 For a small offline exercise with the original deterministic stub:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.retraction_benchmark --conditions baseline hinted --tasks retract_01_tree_clean retract_03_triangle_poisoned --output-dir NEW_OFFLINE_DIRECTORY
+python -m pfp.entrypoints.retraction_benchmark --conditions baseline hinted --tasks retract_01_tree_clean retract_03_triangle_poisoned --output-dir NEW_OFFLINE_DIRECTORY
 ```
 
 The stub reads prompt text; it measures no LLM. In particular, its blind
@@ -650,7 +650,7 @@ the conditions and scoring, not model behavior or a general PFP advantage.
 For a separately authorized live run, select the model and allowance explicitly:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.retraction_benchmark --live --model YOUR_MODEL_ID --conditions baseline scratchpad --tasks retract_01_tree_clean --max-output-tokens 128 --max-provider-calls 2 --max-estimated-cost-microusd 1000 --output-dir NEW_LIVE_DIRECTORY
+python -m pfp.entrypoints.retraction_benchmark --live --model YOUR_MODEL_ID --conditions baseline scratchpad --tasks retract_01_tree_clean --max-output-tokens 128 --max-provider-calls 2 --max-estimated-cost-microusd 1000 --output-dir NEW_LIVE_DIRECTORY
 ```
 
 The original 128-token limit now includes the PFP envelope. A larger explicit
@@ -677,7 +677,7 @@ Current captures retain raw wire, PFP checking and original host certificates.
 Recheck them without credentials or provider calls:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.retraction_benchmark --replay SAVED_CURRENT_DIRECTORY
+python -m pfp.entrypoints.retraction_benchmark --replay SAVED_CURRENT_DIRECTORY
 ```
 
 Replay requires the current capture schema and matching source/prompt/reply
@@ -696,10 +696,10 @@ paid model study.
 ## Finite signed-graph workbench
 
 The existing `symbol-game search-gauge` and `symbol-game serve` routes use
-`omega_engine_pfp.infrastructure.adapters.finite_gauge` for their checker.
+`pfp.infrastructure.adapters.finite_gauge` for their checker.
 The two current modules are byte-identical copies of the retained
-[Paper 002 sign checker](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py)
-and [bounded search checker](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py).
+[Paper 002 sign checker](../../../../atlas/coda_atlas/F004_papers/015_pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py)
+and [bounded search checker](../../../../atlas/coda_atlas/F004_papers/015_pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py).
 The paper deposit and its historical receipts remain unchanged. Current runs
 load one canonical module pair, without the removed `research.*` namespaces or
 a source-checkout fallback. The relative import preserves one set of current
@@ -708,22 +708,22 @@ witness types; historical classes are not aliases for current runtime types.
 Run a small graph directly through the existing command:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.symbol_game search-gauge --fixture gauge_even_triangle --node-budget 8 --pace-ms 0
-python -m omega_engine_pfp.entrypoints.cli.symbol_game search-gauge --fixture gauge_odd_triangle --node-budget 8 --pace-ms 0
-python -m omega_engine_pfp.entrypoints.cli.symbol_game search-gauge --fixture gauge_odd_triangle --node-budget 3 --pace-ms 0
+python -m pfp.entrypoints.cli.symbol_game search-gauge --fixture gauge_even_triangle --node-budget 8 --pace-ms 0
+python -m pfp.entrypoints.cli.symbol_game search-gauge --fixture gauge_odd_triangle --node-budget 8 --pace-ms 0
+python -m pfp.entrypoints.cli.symbol_game search-gauge --fixture gauge_odd_triangle --node-budget 3 --pace-ms 0
 ```
 
 These exercise `GAUGE_VERIFIED`, `RESTRICTED_OBSTRUCTION` and budget-limited
 `UNKNOWN`, respectively. The last JSONL event contains the independently
 rechecked result. A partial search does not establish an obstruction. Use a new
 `--output-dir` to retain the existing event and result files, or provide a typed
-YAML packet with `--input-file omega_engine_pfp/fixtures/gauge_odd_triangle_input.yaml`.
+YAML packet with `--input-file pfp/fixtures/gauge_odd_triangle_input.yaml`.
 
 With the existing optional `web` dependencies installed, the same implementation
 drives the local workbench:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.symbol_game serve --port 8765
+python -m pfp.entrypoints.cli.symbol_game serve --port 8765
 ```
 
 Open `http://127.0.0.1:8765`. The existing API and event stream retain their

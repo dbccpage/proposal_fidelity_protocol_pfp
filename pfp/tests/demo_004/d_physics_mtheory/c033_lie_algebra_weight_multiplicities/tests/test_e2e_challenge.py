@@ -10,15 +10,15 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance.commit_reveal_runner import (
     COMMITMENT_STATUS_REGENERATED,
     RECEIPT_BINDS_SUPERSEDED_COMMITMENT,
     inspect_commitments,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.solver import (
     solve,
 )
 
@@ -31,7 +31,7 @@ RETIRED_SELF_SCORE_LABEL = "PASS_TO_MASTER"
 
 That receipt is a historical record and is kept unchanged. The label scored the
 reference solver against its own judge packet; it was never a model evaluation or
-a Woland verdict, and the current gate emits REFERENCE_SELF_CONSISTENT instead.
+a Adversary verdict, and the current gate emits REFERENCE_SELF_CONSISTENT instead.
 """
 
 

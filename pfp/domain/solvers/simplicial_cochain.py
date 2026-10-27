@@ -12,7 +12,7 @@ The quantity this module computes is the cycle holonomy sum
 sum_k |r_k| over one chosen fundamental cycle basis. It is zero exactly when
 every cycle in that basis closes, but its positive values depend on the basis,
 so it is not Phi_1 (the L1 distance to the coboundaries, which
-omega_functional computes). Nothing here reports it as Phi_1.
+core_functional computes). Nothing here reports it as Phi_1.
 AuthorityEffect: None.
 """
 

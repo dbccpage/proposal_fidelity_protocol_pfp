@@ -18,7 +18,7 @@ The source computation reproduces and exposes these defects:
 
 | Observation | Actual retained count | Interpretation |
 |---|---:|---|
-| Yaroslava labels a task alias as “Packet ID” | 15 | The reported text does not identify the actual 64-character packet digest. |
+| Punchlist labels a task alias as “Packet ID” | 15 | The reported text does not identify the actual 64-character packet digest. |
 | Two-step AST run emits `EXACT_REPAIR/PASS_TO_MASTER` at `(Phi,Gamma,active)=(4,1,4)` | 3 | The original source hard-codes the final terminal by loop position. |
 | Specimen round 2 instructs child `..._step_2_step_3`, while the ledger emits `..._step_3` | 3 | Narrative and emitted child identifiers disagree. |
 | Final AST narrative instructs an additional child that is not emitted | 3 | The dialogue's descent text contradicts the source's final terminal branch. |

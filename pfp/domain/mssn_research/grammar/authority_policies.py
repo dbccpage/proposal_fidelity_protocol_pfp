@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 from fractions import Fraction
 
-from omega_engine_pfp.domain.mssn_research.grammar.authority import (
+from pfp.domain.mssn_research.grammar.authority import (
     DialectContainer,
     HodgePacket,
     HorizonStatus,
@@ -15,7 +15,7 @@ from omega_engine_pfp.domain.mssn_research.grammar.authority import (
     MasterHorizonPacket,
     PayloadEncoding,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
 
 from ..packets.value_objects import RefusalCode
 from .errors import (

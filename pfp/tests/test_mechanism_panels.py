@@ -4,14 +4,14 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_woland.tests.pilots.challenge_suite.mechanism_panels import (
+from adversary.tests.pilots.challenge_suite.mechanism_panels import (
     ROUND5,
     VERSION,
     build_compaction_panels,
     build_panels,
     generate_board,
 )
-from omega_engine_pfp.infrastructure.mechanism_sessions import (
+from pfp.infrastructure.mechanism_sessions import (
     _structure,
     prepare_session_turn,
     replay_session,
@@ -93,7 +93,7 @@ def test_original_default_board_keeps_v1_bfs_behavior():
 
 
 def test_original_compaction_panel_sizes_union_witnesses_and_late_constraint_controls():
-    from omega_engine_pfp.infrastructure.context_compaction_sessions import _schedule
+    from pfp.infrastructure.context_compaction_sessions import _schedule
     panel = build_compaction_panels(version="c007.panels.v1")
     assert [len(panel[key]) for key in ("hidden", "relabel", "poison")] == [40, 12, 16]
     assert panel == build_compaction_panels(version="c007.panels.v1")

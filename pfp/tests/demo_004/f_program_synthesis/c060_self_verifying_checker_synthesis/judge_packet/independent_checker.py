@@ -62,7 +62,7 @@ def evaluate_phi1_independent(case: Any, cert: Any) -> Tuple[str, Optional[str]]
             return "REJECT", "SCHEMA"
 
     raw_d0 = case["d0"]
-    raw_omega = case["omega"]
+    raw_core = case["omega"]
     raw_w = case["w"]
     raw_alpha = cert["alpha"]
     raw_r = cert["r"]
@@ -71,7 +71,7 @@ def evaluate_phi1_independent(case: Any, cert: Any) -> Tuple[str, Optional[str]]
 
     if (
         not isinstance(raw_d0, list)
-        or not isinstance(raw_omega, list)
+        or not isinstance(raw_core, list)
         or not isinstance(raw_w, list)
     ):
         return "REJECT", "SCHEMA"
@@ -86,12 +86,12 @@ def evaluate_phi1_independent(case: Any, cert: Any) -> Tuple[str, Optional[str]]
     if val_f is None:
         return "REJECT", "NONCANONICAL_RATIONAL"
 
-    omega_f = []
-    for x in raw_omega:
+    core_f = []
+    for x in raw_core:
         xf = _parse_canonical_rat(x)
         if xf is None:
             return "REJECT", "NONCANONICAL_RATIONAL"
-        omega_f.append(xf)
+        core_f.append(xf)
 
     w_f = []
     for x in raw_w:
@@ -133,7 +133,7 @@ def evaluate_phi1_independent(case: Any, cert: Any) -> Tuple[str, Optional[str]]
             rf.append(xf)
         d0_f.append(rf)
 
-    m = len(omega_f)
+    m = len(core_f)
     if m == 0 or len(w_f) != m or len(r_f) != m or len(y_f) != m or len(d0_f) != m:
         return "REJECT", "DIMENSION"
 
@@ -149,7 +149,7 @@ def evaluate_phi1_independent(case: Any, cert: Any) -> Tuple[str, Optional[str]]
     # r == omega - d0 * alpha
     for i in range(m):
         rec_i = sum(d0_f[i][j] * alpha_f[j] for j in range(k))
-        if r_f[i] != omega_f[i] - rec_i:
+        if r_f[i] != core_f[i] - rec_i:
             return "REJECT", "RESIDUAL_MISMATCH"
 
     # sum w_e |r_e| == value
@@ -169,7 +169,7 @@ def evaluate_phi1_independent(case: Any, cert: Any) -> Tuple[str, Optional[str]]
             return "REJECT", "DUAL_BOUND_VIOLATED"
 
     # y^T * omega == value
-    dual_sum = sum(y_f[i] * omega_f[i] for i in range(m))
+    dual_sum = sum(y_f[i] * core_f[i] for i in range(m))
     if dual_sum != val_f:
         return "REJECT", "DUAL_VALUE_MISMATCH"
 

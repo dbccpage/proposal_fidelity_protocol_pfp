@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run Python tests with mechanical AST pre-filtering and structured receipt generation.
 
-Produces a machine-readable PythonTestReceipt (schema: omega.python_test_receipt.v1).
+Produces a machine-readable PythonTestReceipt (schema: core.python_test_receipt.v1).
 AuthorityEffect: None.
 """
 
@@ -86,7 +86,7 @@ def generate_receipt(target_paths: List[str], extra_args: List[str]) -> Dict[str
     focused_res = run_focused_tests(target_paths, extra_args)
 
     receipt = {
-        "schema": "omega.python_test_receipt.v1",
+        "schema": "core.python_test_receipt.v1",
         "interpreter": sys.executable,
         "pytest_version": pytest_ver,
         "collection": {
@@ -110,7 +110,7 @@ def generate_receipt(target_paths: List[str], extra_args: List[str]) -> Dict[str
         },
         "mutation_check": {
             "status": "NOT_PERFORMED",
-            "detail": "Dynamic mutation testing is managed by the Soviet Builder step 5",
+            "detail": "Dynamic mutation testing is managed by the Builder step 5",
         },
         "authority_effect": "None",
     }

@@ -7,8 +7,8 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.synthesis.module_dag import ModuleDag, ModuleStatus
-from omega_engine_pfp.domain.synthesis.retraction_context import RetractionContext
+from pfp.domain.synthesis.module_dag import ModuleDag, ModuleStatus
+from pfp.domain.synthesis.retraction_context import RetractionContext
 
 
 def test_module_dag_progression():

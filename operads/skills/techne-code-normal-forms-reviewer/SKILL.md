@@ -21,7 +21,7 @@ families: [review, normal-forms, relational-algebra, techne, thanatos, quality]
 
 ## 1. Reviewer Mandate & Scope
 
-The `techne-code-normal-forms-reviewer` audits, validates, and gates all normal form contract definitions in `omega_engine_pfp/infrastructure/yaml/normal_forms/` and their corresponding evaluator implementations. It is responsible for:
+The `techne-code-normal-forms-reviewer` audits, validates, and gates all normal form contract definitions in `pfp/infrastructure/yaml/normal_forms/` and their corresponding evaluator implementations. It is responsible for:
 
 1. **Schema Compliance & Structural Integrity:**
    - Enforce schema conformity with `smplx.nf.contract.v0` and `standard.yaml`.
@@ -69,10 +69,10 @@ Run deterministic schema and test audits:
 
 ```bash
 # Validate all contracts against standard.yaml
-python -m omega_engine_governance.normal_forms.nf_contract_parser
+python -m governance.normal_forms.nf_contract_parser
 
 # Execute targeted test harness battery
-python -m pytest omega_engine_governance/tests/normal_forms/test_normal_forms.py
+python -m pytest governance/tests/normal_forms/test_normal_forms.py
 ```
 
 ---
@@ -86,7 +86,7 @@ schema_version: smplx.nf.review_receipt.v0
 reviewer: techne-code-normal-forms-reviewer
 timestamp_utc: "2026-09-26T12:00:00Z"
 target_contract_id: "nf.classical.bcnf"
-target_file: "omega_engine_pfp/infrastructure/yaml/normal_forms/nf.classical.bcnf.yaml"
+target_file: "pfp/infrastructure/yaml/normal_forms/nf.classical.bcnf.yaml"
 status: "PASS"  # PASS, REFUSED, CONDITIONAL
 quadrilateral_status:
   anomaly_exclusion: "VALID"

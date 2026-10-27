@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Mapping, Optional, Sequence
 
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Failure, Result, Success, err, ok
+from pfp.domain.mssn_research.shared_kernel.result import Failure, Result, Success, err, ok
 from .errors import (
     DecodingError,
     InvolutionIdentityError,

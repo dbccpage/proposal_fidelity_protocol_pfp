@@ -7,12 +7,12 @@ import jsonschema
 import pytest
 import yaml
 
-from omega_engine_woland.tests.pilots.relational_spacetime import trial_prompts as prompts
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import ROOT
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import TEMPLATE
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import response_schema
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import digest
+from adversary.tests.pilots.relational_spacetime import trial_prompts as prompts
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
+from adversary.tests.pilots.relational_spacetime.tasks import ROOT
+from adversary.tests.pilots.relational_spacetime.tasks import TEMPLATE
+from adversary.tests.pilots.relational_spacetime.tasks import response_schema
+from pfp.infrastructure.adapters.pfp_evidence import digest
 
 
 def public_workpad(pilot, loop):

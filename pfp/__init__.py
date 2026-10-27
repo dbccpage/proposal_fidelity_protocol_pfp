@@ -136,7 +136,7 @@ _EXPORTS.update(
         "RewriteRequest": (".domain.rewriting.rewrites", "RewriteRequest"),
         "SpanPartition": (".domain.rewriting.rewriting_types", "SpanPartition"),
         "TerminalStatus": (".domain.kernel.result", "TerminalStatus"),
-        "WolandGateId": (".domain.contracts.gates", "WolandGateId"),
+        "AdversaryGateId": (".domain.contracts.gates", "AdversaryGateId"),
         "PfpController": (".controllers.pfp_controller", "PfpController"),
         "build_parser": (".entrypoints.cli.pfp", "build_parser"),
         "main": (".entrypoints.cli.pfp", "main"),

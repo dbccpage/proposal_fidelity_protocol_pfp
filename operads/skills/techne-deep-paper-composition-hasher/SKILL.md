@@ -43,7 +43,7 @@ Zip verification passes only when every bound path, every entry in `SHA256SUMS` 
 
 4. **Claim Hygiene, Dialect Firewall & Identity Parity**:
    - Forbidden promotional verbs inside claim statements and prose, with the References section exempt.
-   - In-house jargon and over-guarded bureaucratic boilerplate (`AuthorityEffect`, `GTLA`, `Woland`, `OMC`, `REVIEW_SCOPE`, `Withdrawn as a theorem of this deposit`, naked `Paper 001` numbers, relative `.md` links in PDF).
+   - In-house jargon and over-guarded bureaucratic boilerplate (`AuthorityEffect`, `GTLA`, `Adversary`, `OMC`, `REVIEW_SCOPE`, `Withdrawn as a theorem of this deposit`, naked `Paper 001` numbers, relative `.md` links in PDF).
    - Cross-file author, version, and publication date parity across `.md`, `.tex`, `.pdf` (page 1), `README.md`, and `zenodo_metadata.json`.
 
 5. **Evidence Closure & Bibliography Verification**:
@@ -54,13 +54,13 @@ Zip verification passes only when every bound path, every entry in `SHA256SUMS` 
 
 ```powershell
 # Emit a local catalog. Do not commit it as an attestation.
-py -3.12 omega_engine_operads/skills/techne-deep-paper-composition-hasher/hasher.py `
-    omega_engine_atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction `
+py -3.12 operads/skills/techne-deep-paper-composition-hasher/hasher.py `
+    atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction `
     --output-yaml paper_composition_manifest.yaml
 
 # Fail unless every ledger-bound path and SHA256SUMS entry is in the zip. The receipt stores zip_sha256.
-py -3.12 omega_engine_operads/skills/techne-deep-paper-composition-hasher/hasher.py `
-    omega_engine_atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction `
+py -3.12 operads/skills/techne-deep-paper-composition-hasher/hasher.py `
+    atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction `
     --verify-zip path\to\release.zip `
     --checksum-manifest path\to\SHA256SUMS `
     --receipt-path path\to\paper_composition_receipt.json

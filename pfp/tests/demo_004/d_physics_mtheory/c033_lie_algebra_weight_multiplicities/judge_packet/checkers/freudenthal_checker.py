@@ -16,7 +16,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.lie_algebra import (
+from pfp.tests.demo_004.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.lie_algebra import (
     freudenthal_multiplicities,
     get_rank,
     is_algebra_supported,

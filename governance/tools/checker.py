@@ -21,7 +21,11 @@ CodeScoringRecordV2 schema of SCORING.md section 6 and adds the per-gate
 ``basis`` and the ``evidence`` list that review needs.
 
 Commands: ``check [--changed-since REF] [--json]``, ``population``,
-``explain PATH`` and ``record SOURCE --contract FILE --score FILE``.
+``explain PATH``, ``record SOURCE --contract FILE --score FILE`` and
+``baseline [--write] [--allow-add --reason TEXT]``. ``baseline`` keeps only the
+entries whose source still fails with unchanged bytes, so the list shrinks as
+files are scored; adding entries needs ``--allow-add`` and a reason, and is
+for the maintainer to approve.
 """
 
 from __future__ import annotations
@@ -46,7 +50,7 @@ LEVELS: tuple[str, ...] = ("L1", "L2", "L3", "L4", "L5")
 
 Grade = Literal["E", "D", "C", "B", "A", "A+"]
 Level = Literal["L1", "L2", "L3", "L4", "L5"]
-Language = Literal["Python", "C#"]
+Language = Literal["Python", "C#", "Rust", "Lean 4"]
 Digest = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
 GateName = Literal["G1", "G2", "G3", "G4", "G5"]
 
@@ -219,6 +223,7 @@ class RunRecord(Record):
 
 
 ROOT = Path(__file__).resolve().parents[2]
+USAGE_ERROR = 2
 RATIO_TOLERANCE = Fraction(1, 10**9)
 
 
@@ -500,6 +505,42 @@ def command_record(repo: Repository, path: str, contract_file: Path, score_file:
     return 0 if not problems else 1
 
 
+def baseline_entries(repo: Repository, allow_add: bool, reason: str) -> dict[str, BaselineEntry]:
+    """Kept entries (still failing, same bytes) plus, with ``allow_add``, every other failing source."""
+    entries: dict[str, BaselineEntry] = {}
+    for path in repo.population():
+        digest = sha256_file(repo.root / path)
+        if not check_source(repo, path):
+            continue
+        listed = repo.baseline.entries.get(path)
+        if listed is not None and listed.sha256 == digest:
+            entries[path] = listed
+        elif allow_add:
+            entries[path] = BaselineEntry(sha256=digest, reason=reason)
+    return entries
+
+
+def command_baseline(repo: Repository, write: bool, allow_add: bool, reason: str, out: TextIO) -> int:
+    if allow_add and not reason.strip():
+        out.write("governance-check: --allow-add needs a --reason\n")
+        return USAGE_ERROR
+    entries = baseline_entries(repo, allow_add, reason)
+    before = set(repo.baseline.entries)
+    added, dropped = sorted(set(entries) - before), sorted(before - set(entries))
+    out.write(f"baseline: {len(entries)} entries ({len(added)} added, {len(dropped)} dropped)\n")
+    out.writelines(f"  dropped {path}\n" for path in dropped)
+    if write:
+        body = Baseline(
+            schema_version="pfp.governance-baseline.v1",
+            authority_effect="None",
+            rule=repo.baseline.rule,
+            entries=dict(sorted(entries.items())),
+        )
+        target = repo.root / "governance" / "baseline.json"
+        target.write_text(body.model_dump_json(by_alias=True, indent=2) + "\n", encoding="utf-8", newline="\n")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="governance-check", description=__doc__.split("\n\n")[0])
     parser.add_argument("--root", type=Path, default=ROOT)
@@ -514,10 +555,11 @@ def build_parser() -> argparse.ArgumentParser:
     record.add_argument("path")
     record.add_argument("--contract", type=Path, required=True)
     record.add_argument("--score", type=Path, required=True)
+    baseline = commands.add_parser("baseline")
+    baseline.add_argument("--write", action="store_true")
+    baseline.add_argument("--allow-add", action="store_true")
+    baseline.add_argument("--reason", default="")
     return parser
-
-
-USAGE_ERROR = 2
 
 
 def main(argv: Sequence[str] | None = None, out: TextIO | None = None) -> int:
@@ -540,6 +582,8 @@ def _run(args: argparse.Namespace, repo: Repository, stream: TextIO) -> int:
         return 0
     if args.command == "explain":
         return command_explain(repo, args.path.replace("\\", "/"), stream)
+    if args.command == "baseline":
+        return command_baseline(repo, args.write, args.allow_add, args.reason, stream)
     return command_record(repo, args.path.replace("\\", "/"), args.contract, args.score, stream)
 
 

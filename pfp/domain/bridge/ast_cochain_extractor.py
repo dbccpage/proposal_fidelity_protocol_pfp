@@ -1,4 +1,4 @@
-"""Compatibility re-exports for AST Cochain Extractor from omega_engine_woland.stage.
+"""Compatibility re-exports for AST Cochain Extractor from adversary.stage.
 
 Imports remain available if the sister package fails, but any use refuses
 with the captured dependency error instead of returning a fabricated result.

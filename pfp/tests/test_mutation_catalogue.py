@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.tests.mutation_catalogue import (
+from pfp.tests.mutation_catalogue import (
     DEFAULT_TESTS,
     EXCLUDE_FROM_RUNS,
     MUTANTS,
@@ -82,7 +82,7 @@ def test_the_default_selection_covers_every_test_file() -> None:
     """
     directory = Path(__file__).resolve().parent
     on_disk = {
-        f"omega_engine_pfp/tests/{path.name}"
+        f"pfp/tests/{path.name}"
         for path in directory.glob("test_*.py")
     }
     # EXCLUDE_FROM_RUNS is a deliberate omission, not a gap: this very file
@@ -100,6 +100,6 @@ def test_rust_selections_use_the_ambient_toolchain_and_scoped_serial_library_tes
 ):
     rust_mutants = [mutant for mutant in MUTANTS if mutant.runner == "cargo"]
     assert [mutant.mutant_id for mutant in rust_mutants] == ["M01", "M02", "M03", "M04"]
-    expected = ("test", "-j", "1", "-p", "omega_symbol_game_runtime", "--lib")
+    expected = ("test", "-j", "1", "-p", "core_symbol_game_runtime", "--lib")
     for mutant in rust_mutants:
         assert mutant.tests == expected, mutant.mutant_id

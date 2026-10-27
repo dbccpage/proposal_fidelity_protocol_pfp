@@ -9,9 +9,9 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_woland.tests.pilots.cot_miner import classify_trace, mine, schema_terms
+from adversary.tests.pilots.cot_miner import classify_trace, mine, schema_terms
 
-PILOT = Path(__file__).resolve().parents[2] / "omega_engine_pfp" / "tests" / "pilot_0000000"
+PILOT = Path(__file__).resolve().parents[2] / "pfp" / "tests" / "pilot_0000000"
 RESULTS = PILOT / "misc" if (PILOT / "misc").is_dir() else PILOT / "results"
 SCHEMA = (
     Path(__file__).resolve().parents[1]

@@ -12,7 +12,7 @@ import sqlite3
 from fractions import Fraction
 from hashlib import sha256
 
-from omega_engine_pfp.domain.prompt_representations import (
+from pfp.domain.prompt_representations import (
     RawPromptRepresentation,
     RelationalSpanRow,
     SqlitePromptRepresentation,
@@ -20,21 +20,21 @@ from omega_engine_pfp.domain.prompt_representations import (
     canonical_json_str,
     sha256_digest,
 )
-from omega_engine_pfp.domain.prompt_representations.symbolic_prompt_representation import (
+from pfp.domain.prompt_representations.symbolic_prompt_representation import (
     WIRE_PAIR_REGEX,
 )
-from omega_engine_pfp.infrastructure.pilot_matrix import (
+from pfp.infrastructure.pilot_matrix import (
     complete_pilot_turn,
     validate_pilot_gateways,
 )
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
-from omega_engine_woland.infrastructure.providers.openai_compat import (
+from pfp.infrastructure.task_turn import prepare_task_turn
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
+from adversary.infrastructure.providers.openai_compat import (
     build_openai_compat_body,
     parse_openai_compat_response,
 )
-from omega_engine_woland.infrastructure.providers.wire import decode_reply
-from omega_engine_woland.infrastructure.providers.anthropic_messages import (
+from adversary.infrastructure.providers.wire import decode_reply
+from adversary.infrastructure.providers.anthropic_messages import (
     build_anthropic_body, parse_anthropic_response,
 )
 
@@ -62,7 +62,7 @@ def _provider_plan(plan, provider, pricing_snapshot):
         return plan
     if provider != Provider.ANTHROPIC:
         raise ValueError("UNSUPPORTED_EMPIRICAL_PROVIDER")
-    from omega_engine_pfp.infrastructure.estimated_gateway import anthropic_price
+    from pfp.infrastructure.estimated_gateway import anthropic_price
 
     return [{**row, "provider": provider.value,
              "pricing": anthropic_price(pricing_snapshot, row["model"])} for row in plan]
@@ -289,7 +289,7 @@ def _observed(row, expected):
         if not checked["schema_valid"] or checked["failure_class"] != "NONE":
             raise ValueError("PFP_" + checked["failure_class"])
         if provider == Provider.ANTHROPIC:
-            from omega_engine_pfp.infrastructure.estimated_gateway import rate_anthropic_usage
+            from pfp.infrastructure.estimated_gateway import rate_anthropic_usage
 
             rated = rate_anthropic_usage(body, expected["pricing"])
             if (exchange.get("attempt_state") != "CompletedRatedEstimate"

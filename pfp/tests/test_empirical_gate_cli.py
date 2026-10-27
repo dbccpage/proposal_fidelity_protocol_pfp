@@ -3,7 +3,7 @@
 import json
 from hashlib import sha256
 
-from omega_engine_pfp.entrypoints import empirical_gates as cli
+from pfp.entrypoints import empirical_gates as cli
 
 
 def token_inputs(tmp_path):
@@ -62,12 +62,12 @@ def test_existing_output_is_preserved_before_any_dispatch(tmp_path, capsys):
     assert not list(tmp_path.glob('*.sqlite3'))
 
 
-def test_woland_uses_same_empirical_entrypoint(monkeypatch):
-    from omega_engine_woland.entrypoints.cli import main as woland_main
+def test_adversary_uses_same_empirical_entrypoint(monkeypatch):
+    from adversary.entrypoints.cli import main as adversary_main
 
     received = []
     monkeypatch.setattr(cli, 'main', lambda args: received.append(args) or 0)
-    assert woland_main(['empirical', '--suite', 'rewrites', '--plan']) == 0
+    assert adversary_main(['empirical', '--suite', 'rewrites', '--plan']) == 0
     assert received == [['--suite', 'rewrites', '--plan']]
 
 

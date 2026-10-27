@@ -1,7 +1,7 @@
 """Exact library: differential tests against fractions.Fraction on a seeded
 corpus, golden vectors for the text form, and refusals by exact code.
 
-Migrated into omega_engine_pfp/tests/test_exact.py under Clean Architecture.
+Migrated into pfp/tests/test_exact.py under Clean Architecture.
 AuthorityEffect: None.
 """
 
@@ -13,7 +13,7 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_pfp.domain.exact import (
+from pfp.domain.exact import (
     QI,
     Alg,
     ExactError,
@@ -32,9 +32,9 @@ from omega_engine_pfp.domain.exact import (
     qi_from_q,
     sha256,
 )
-from omega_engine_pfp.domain.exact import linalg as L
-from omega_engine_pfp.domain.exact import poly as P
-from omega_engine_pfp.domain.exceptions import DomainError
+from pfp.domain.exact import linalg as L
+from pfp.domain.exact import poly as P
+from pfp.domain.exceptions import DomainError
 
 SEED = 20260924
 
@@ -228,7 +228,7 @@ def test_intervals() -> None:
 
 
 def test_linear_algebra() -> None:
-    from omega_engine_pfp import initialize_exact_ports
+    from pfp import initialize_exact_ports
 
     initialize_exact_ports()
     reg = [[Q(1), Q(1, 2), Q(1, 2)], [Q(1, 2), Q(1), Q(1, 2)], [Q(1, 2), Q(1, 2), Q(1)]]
@@ -290,8 +290,8 @@ def test_exact_type_equality_invariants() -> None:
 
 def test_exact_rust_adapter_protocol_compliance() -> None:
     """Verify RustExactEngineAdapter implements Domain Protocols and delegates correctly."""
-    from omega_engine_pfp.domain.ports import ExactDigestPort, ExactLinearAlgebraPort
-    from omega_engine_pfp.infrastructure.adapters.exact_rust_adapter import (
+    from pfp.domain.ports import ExactDigestPort, ExactLinearAlgebraPort
+    from pfp.infrastructure.adapters.exact_rust_adapter import (
         RustExactEngineAdapter,
     )
 

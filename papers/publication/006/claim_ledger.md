@@ -13,10 +13,10 @@ P6-15 is corrected in this revision, and P6-16 to P6-18 are new.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   ID                Claim                                               Evidence                                                                                        Status and boundary
   ----------------- --------------------------------------------------- ----------------------------------------------------------------------------------------------- ---------------------------
-  P6-01             The production sink records ordered refusal entries `omega_engine_pfp/infrastructure/persistence/cemetery_sink.py`                          Source-inspected local
+  P6-01             The production sink records ordered refusal entries `pfp/infrastructure/persistence/cemetery_sink.py`                          Source-inspected local
                     with predecessor digests and a count/head header.                                                                                                   storage
 
-  P6-02             Restart verification checks entry shape, order,     Same source; `omega_engine_pfp/tests/test_cemetery_sink.py`                             Finite positive and hostile
+  P6-02             Restart verification checks entry shape, order,     Same source; `pfp/tests/test_cemetery_sink.py`                             Finite positive and hostile
                     chain, count, and head.                                                                                                                             cases; no universal parser
                                                                                                                                                                         proof
 
@@ -43,7 +43,7 @@ P6-15 is corrected in this revision, and P6-16 to P6-18 are new.
                     caller-supplied evidence, not sink-computed native                                                                                                  verify event truth
                     results.
 
-  P6-09             Invalid detector regex yields a typed refusal; a    `omega_engine_pfp/domain/immune/clonal_selection.py`;                                   Finite rule-maintenance
+  P6-09             Invalid detector regex yields a typed refusal; a    `pfp/domain/immune/clonal_selection.py`;                                   Finite rule-maintenance
                     benign-panel match produces a kill-condition        `test_kill_condition_refuses_an_invalid_pattern_without_raising` in the repository regression   contract
                     record.                                             suite
 
@@ -52,7 +52,7 @@ P6-15 is corrected in this revision, and P6-16 to P6-18 are new.
                                                                                                                                                                         1,000-independent-example
                                                                                                                                                                         claim
 
-  P6-11             The explicit toxicity threshold is inclusive at     `omega_engine_pfp/domain/immune/treg.py`; `test_treg_downgrades_at_exactly_tau`,        Exact policy arithmetic
+  P6-11             The explicit toxicity threshold is inclusive at     `pfp/domain/immune/treg.py`; `test_treg_downgrades_at_exactly_tau`,        Exact policy arithmetic
                     1/5; the unlabelled-corpus score is 0 or 1.         `test_treg_keeps_a_detector_just_below_tau`, and                                                over supplied trigger
                                                                         `test_treg_prompt_corpus_toxicity_is_zero_or_one` in the repository regression suite            labels
 
@@ -80,14 +80,14 @@ P6-15 is corrected in this revision, and P6-16 to P6-18 are new.
                                                                                                                                                                         repository
 
   P6-17             The catalog does not record which bytes an          `test_006_catalog_file.py::test_evidence_digests_hash_identifiers_not_receipts`;                Comparison against an
-                    `evidence_sha256` value covers. Both baseline       `omega_engine_woland/domain/immune/seeder.py`;                                                  independently retained
-                    harvesters hash short identifying strings, and 19   `omega_engine_operations/domain/symbol_game_bridge/pharmacy_seeder.py`                          anchor only; not
+                    `evidence_sha256` value covers. Both baseline       `adversary/domain/immune/seeder.py`;                                                  independently retained
+                    harvesters hash short identifying strings, and 19   `operations/domain/symbol_game_bridge/pharmacy_seeder.py`                          anchor only; not
                     stored values are reproduced from a defect label                                                                                                    immutability or proof of
                     joined with run and task identifiers found in                                                                                                       reproduction
                     retained run records.
 
 P6-18             No code at the baseline matches proposals against   Source search at the baseline;                                                                  Negative finding of a
-                    the catalog fixtures or derives a repair from a     `omega_engine_external_application/prompt_doctor/use_cases/repair_service.py`                   source search at one commit
+                    the catalog fixtures or derives a repair from a     `external_application/prompt_doctor/use_cases/repair_service.py`                   source search at one commit
                     positive fixture; the nearest consumer tests
                     `target_pattern` as a prompt substring.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

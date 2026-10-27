@@ -22,10 +22,10 @@ reachable_terminal_statuses:
   - Refused
   - Invalid
 source_paths:
-  - omega_engine_education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
+  - education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
+  - education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
+  - education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
+  - education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
 ---
 
 # The Symbol Game Level 100: Open Horizon Claim Ledger & Release Sealing
@@ -38,7 +38,7 @@ source_paths:
 **Primary Domain Error Code:** `ERR_RELEASE_MANIFEST_DEFECT`  
 **Evaluator Module:** `AuthorityModule` (`ReleaseManifestContract`)  
 
-**Source status (checked 2026-10-20 at `c419cc6beb`):** specification only. No evaluator named `AuthorityModule` or contract `ReleaseManifestContract`, no packet schema for this level and no level referee exist in source (`git grep` over `*.rs`, `*.py`, `*.lean`, `*.yaml` and `*.json`). The `REFEREE:` lines below state specified outcomes, not recorded runs, and `carrier_digest` values are placeholders, not computed digests. The terminal names follow [`CodaTerminal`](../../../../omega_engine/crates_rs/omega_state/src/coda_gtla_protocol.rs).
+**Source status (checked 2026-10-20 at `c419cc6beb`):** specification only. No evaluator named `AuthorityModule` or contract `ReleaseManifestContract`, no packet schema for this level and no level referee exist in source (`git grep` over `*.rs`, `*.py`, `*.lean`, `*.yaml` and `*.json`). The `REFEREE:` lines below state specified outcomes, not recorded runs, and `carrier_digest` values are placeholders, not computed digests. The terminal names follow [`CodaTerminal`](../../../../engine/crates_rs/core_state/src/coda_gtla_protocol.rs).
 
 ---
 
@@ -51,7 +51,7 @@ $$\mathcal{S}_{100} = \Big( \mathcal{C},\; \mathcal{R}_{\text{active}},\; \mathc
 - **Carrier ($\mathcal{C}$):** `Immutable release candidate manifest with unresolved open horizon obligations`. Pinned and immutable upon arena initialization.
 - **Active State ($\mathcal{R}_{\text{active}}$):** Current assigned valuations, configurations, and candidate structures configured on the carrier.
 - **Evaluator Register ($\mathcal{D}_{\text{evaluator}}$):** Instantiation of `AuthorityModule` via `ReleaseManifestContract` calculating level-specific objective defect metrics.
-- **History Trace ($\mathcal{H}_{\text{trace}}$):** Specified append-only record of proposed turn vectors, referee decisions and state digests (the runtime packet sealer `omega-canonical-v1` is not RFC 8785).
+- **History Trace ($\mathcal{H}_{\text{trace}}$):** Specified append-only record of proposed turn vectors, referee decisions and state digests (the runtime packet sealer `core-canonical-v1` is not RFC 8785).
 - **Invariants ($\mathcal{I}_{\text{invariants}}$):** Fuel ceiling ($T \le 8$), boundary protection masks, and non-mutation constraints.
 
 ### Conceptual Arena Scope

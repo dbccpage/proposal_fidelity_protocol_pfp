@@ -11,9 +11,9 @@ from pathlib import Path
 import pytest
 import yaml
 from pydantic import ValidationError
-from omega_engine_pfp.tests.pilot_custody_support import is_historical_dossier
+from pfp.tests.pilot_custody_support import is_historical_dossier
 
-from omega_engine_pfp.domain.types.base import (
+from pfp.domain.types.base import (
     ArmTemplate,
     CheckerId,
     CohomologyDefectClass,
@@ -30,16 +30,16 @@ from omega_engine_pfp.domain.types.base import (
     TrialStatus,
     VariableIdentifierPermutation,
 )
-from omega_engine_pfp.domain.types.pilot_comparison import (
+from pfp.domain.types.pilot_comparison import (
     ComparisonAggregates,
     ComparisonRatios,
     PilotComparisonResults,
 )
-from omega_engine_pfp.domain.types.pilot_comparison import (
+from pfp.domain.types.pilot_comparison import (
     TestComparisonEntry as ComparisonEntryModel,
     TestKindAggregate as KindAggregateModel,
 )
-from omega_engine_pfp.domain.types.pilot_response import (
+from pfp.domain.types.pilot_response import (
     CostDetails,
     EvaluationReport,
     ExecutionReceipt,
@@ -51,7 +51,7 @@ from omega_engine_pfp.domain.types.pilot_response import (
     SanitizationReport,
     TokenUsageDetails,
 )
-from omega_engine_pfp.domain.types.pilot_spec import (
+from pfp.domain.types.pilot_spec import (
     PilotCoordinates,
     PilotHostGate,
     PilotIngress,
@@ -59,7 +59,7 @@ from omega_engine_pfp.domain.types.pilot_spec import (
     PilotSpec,
     PilotTestPlanReference,
 )
-from omega_engine_pfp.domain.types.prompt_templates import (
+from pfp.domain.types.prompt_templates import (
     AntibodySlot,
     AntipatternSlot,
     GuidanceSlot,
@@ -69,25 +69,25 @@ from omega_engine_pfp.domain.types.prompt_templates import (
     PromptTemplate,
     RuleSlot,
 )
-from omega_engine_pfp.domain.types.rewrite_test_plan import (
+from pfp.domain.types.rewrite_test_plan import (
     RewriteTestCase,
     RewriteTestItem,
     RewriteTestPlan,
 )
-from omega_engine_pfp.domain.types.rewrite_test_plan import (
+from pfp.domain.types.rewrite_test_plan import (
     TestPlanCounts as PlanCountsModel,
     TestPlanExpectedOutcome as PlanExpectedOutcomeModel,
     TestPlanSeedRef as PlanSeedRefModel,
     TestPlanTemplateRef as PlanTemplateRefModel,
 )
-from omega_engine_pfp.domain.types.seed_prompts import (
+from pfp.domain.types.seed_prompts import (
     CodebookSlotModel,
     ExpectedOutcome,
     InputTypingModel,
     RewriteMetadataModel,
     SeedPrompt,
 )
-from omega_engine_pfp.domain.types.test_spec import (
+from pfp.domain.types.test_spec import (
     ActualTestOutcome,
     ExpectedTestOutcome,
     TestMetrics,
@@ -96,7 +96,7 @@ from omega_engine_pfp.domain.types.test_spec import (
 
 DRAFT = "https://json-schema.org/draft/2020-12/schema"
 SCHEMA_DIR = Path(__file__).resolve().parents[2] / "infrastructure" / "yaml" / "pilots"
-PILOT_0000000 = Path(__file__).resolve().parents[3] / "omega_engine_pfp" / "tests" / "pilot_0000000"
+PILOT_0000000 = Path(__file__).resolve().parents[3] / "pfp" / "tests" / "pilot_0000000"
 
 ROOT_MODELS = {
     "pilot_spec_v1.schema.yaml": PilotSpec,

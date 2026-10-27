@@ -7,18 +7,18 @@ maturity: draft
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_product_planning_office/receipts/requested_plan_completion_2026_10_02.json
-  - omega_engine/crates_rs/omega_prompt_civilization/src/lib.rs
-  - omega_engine_operating_system/adapters/prompt_civ/event_log.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - product_planning_office/receipts/requested_plan_completion_2026_10_02.json
+  - engine/crates_rs/core_prompt_civilization/src/lib.rs
+  - operating_system/adapters/prompt_civ/event_log.py
 ---
 
 # Prompt Civilization & Lamarckian Evolution Levels Catalog: Level 00 to Level 10
 
 **AuthorityEffect:** None.  
 **System Domain:** Governed Prompt Evolution, Population Dynamics, and Lamarckian Trace Inheritance  
-**Canonical Epic Planning Reference:** [`epic_claude_oeeis_oeprmptciv_plan.md`](../../../omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)  
-**Underlying Pure Rust Calculus Crate:** [`omega_prompt_civilization`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/lib.rs)  
+**Canonical Epic Planning Reference:** [`epic_claude_oeeis_oeprmptciv_plan.md`](../../../product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)  
+**Underlying Pure Rust Calculus Crate:** [`core_prompt_civilization`](../../../engine/crates_rs/core_prompt_civilization/src/lib.rs)  
 **Total Progressive Levels:** 11 Levels ($N = 0 \dots 10$)
 
 ---
@@ -27,12 +27,12 @@ source_paths:
 
 Prompt Civilization establishes a content-addressed, byte-preserving, and non-authoritative evolutionary arena for Large Language Model (LLM) prompts within the Symbol Game Proposal Fidelity Protocol (PFP). Rather than treating prompts as mutating natural-language strings with unmeasured fitness, the civilization models prompt search under strict algebraic invariants:
 
-1. **Separation of Governed Material from Occurrence:** Prompt genomes ([`PromptGenomeV1`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/record.rs)) are immutable sidecars identified by domain-separated SHA-256 digests over governed prompt packets and protected boundary allocations. Re-executions of unchanged prompts create execution occurrences ([`ExecutionOccurrenceV1`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/record.rs)), never duplicate genomes.
+1. **Separation of Governed Material from Occurrence:** Prompt genomes ([`PromptGenomeV1`](../../../engine/crates_rs/core_prompt_civilization/src/record.rs)) are immutable sidecars identified by domain-separated SHA-256 digests over governed prompt packets and protected boundary allocations. Re-executions of unchanged prompts create execution occurrences ([`ExecutionOccurrenceV1`](../../../engine/crates_rs/core_prompt_civilization/src/record.rs)), never duplicate genomes.
 2. **Two-Graph Separation:** Lineage is partitioned into an **Inheritance DAG** (recording causal `DirectMutation`, `Repair`, and `Retry` relationships) and a **Reference Graph** (recording `RetrievedPrecedent` citations). Reference citation edges never affect ancestral ranking or inherited immunity.
-3. **Canalized Mutation Operators:** Mutation operators ([`MutationOperatorCandidateV1`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/forge.rs)) may edit only plastic bytes strictly outside protected boundary spans. System framings, type contracts, and claim-hygiene fences are canalized and immutable.
+3. **Canalized Mutation Operators:** Mutation operators ([`MutationOperatorCandidateV1`](../../../engine/crates_rs/core_prompt_civilization/src/forge.rs)) may edit only plastic bytes strictly outside protected boundary spans. System framings, type contracts, and claim-hygiene fences are canalized and immutable.
 4. **Lamarckian Retro-Inheritance:** Learned phenotypic modifications—specifically typed antibody references derived from falsified executions—propagate forward to all descendants and backward across the inheritance DAG for at most 10 hops with $(1/2)^d$ attenuation, without horizon resetting.
 5. **Exact Rational Multi-Objective Fitness:** Fitness dimensions are exact rationals over $\mathbb{Q}$ partitioned into non-dominated Pareto fronts. Honest contract refusals and identified obstructions ($\Phi_1 > 0$, $\Gamma_2 > 0$) are measured as compliance, not prompt failure.
-6. **Inverse Lineage PageRank:** Ancestral precedent utility is solved via an exact fixed-point certificate over $\mathbb{Q}$ ([`omega.spectral.pagerank.v2`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/rank.rs)), allocating human inspection budget without minting operational authority.
+6. **Inverse Lineage PageRank:** Ancestral precedent utility is solved via an exact fixed-point certificate over $\mathbb{Q}$ ([`core.spectral.pagerank.v2`](../../../engine/crates_rs/core_prompt_civilization/src/rank.rs)), allocating human inspection budget without minting operational authority.
 7. **Ecological Reserves & Evaporation:** Working populations are allocated across disjoint reserve buckets (Front, Unmeasured, Baseline) via the largest-remainder method, preventing monoculture and competitive release. Precedent citations evaporate over epoch-based half-lives.
 8. **Durable Append-Only Persistence:** Producer-minted UUIDv5 event identities and independent payload digests guarantee that replay from [`event_log.jsonl`](../../../_intelligence/prompt_civ/events/event_log.jsonl) and Content-Addressed Storage (CAS) recovers identical state without duplicate provider calls.
 

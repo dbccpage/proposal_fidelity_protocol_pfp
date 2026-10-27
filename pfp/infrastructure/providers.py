@@ -30,7 +30,7 @@ class SeedHostVerifier:
         self.evaluations = []
 
     def _evaluate(self, demo_id, candidate):
-        from omega_engine_pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
+        from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
         result = evaluate_seed_response(demo_id,candidate)
         self.evaluations.append(result.to_dict())
         return result
@@ -90,7 +90,7 @@ class SeedHostVerifier:
                     executed_mutations=0,authority_effect="None")
 
     def verify_mode(self, mode_id, mode_input):
-        from omega_engine_pfp.infrastructure.pilot_runners.pfp_mode_additional_checks import (
+        from pfp.infrastructure.pilot_runners.pfp_mode_additional_checks import (
             execute_additional_mode_check,
         )
         return execute_additional_mode_check(mode_id, mode_input)
@@ -303,7 +303,7 @@ class OpenRouterLiveProvider(PfpLlmProviderPort):
         """Exactly one accounted attempt; legacy timeout/retry args never add sends."""
         from uuid import uuid4
 
-        from omega_engine_woland.domain.providers.types import (
+        from adversary.domain.providers.types import (
             CandidateRequest,
             ChatMessage,
             DecodingParamsV1,

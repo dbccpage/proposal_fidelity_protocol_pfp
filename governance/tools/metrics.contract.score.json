@@ -56,41 +56,41 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-10-26T22:47:20Z",
+    "evaluation_timestamp": "2026-10-27T00:34:42Z",
     "evidence": [
       {
         "path": "governance/evidence/pytest-all.run.json",
-        "sha256": "3e1f44bdb70c51fbaed798740d4641b9478bcdc00c5f01cee31436c5e48e32f8",
+        "sha256": "71f528bbea7e9aae4f2283bd24a861d91b7ce5459d413e395f10ff31107bf0f6",
         "note": ""
       },
       {
         "path": "governance/evidence/pytest-optimized.run.json",
-        "sha256": "fc692d45ba8d3c898638723113bcba20eda7cbf02aaee3ebc6c3d7809c2d304e",
+        "sha256": "719adc93ee70ce5a85af45e9c433fba0083ab1772ae397ea2c6c1f9f5fbf5486",
         "note": ""
       },
       {
         "path": "governance/evidence/mypy-strict.run.json",
-        "sha256": "76319884403a88bf08bb4541be9145d00a3e13d1164afb96c03686ae4ca9de69",
+        "sha256": "d961bc762fae9b1c97b72d12d6fb4a12cdbd9d2119edf5059705f117d4a4251d",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-check.run.json",
-        "sha256": "8431471010b65a2ab6063e66b031ce4dbfcac4218d1fbd2b644b129b422af629",
+        "sha256": "abacda4d18fb20da02faa67999c87bf798b1865101854e5214332dd501be9457",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-format.run.json",
-        "sha256": "7a94a9f92dbd0147adc07d0768e9eabe1887cf159f70bfa82ebc64ef10f21990",
+        "sha256": "a811c24773de164a191f213c8f14bcaacd7d5fd7a282fc1042854580941704cc",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.run.json",
-        "sha256": "27f9ba71f92251771816c868d43bdcc26964ef3cd1136486459bd30b67db303e",
+        "sha256": "0ac4beb70c2bd9d4507329170b8cd9cd20a7675c66439873ba72da2174605cb8",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.json",
-        "sha256": "f04129f0407bfbff610b3b910c41720ad9f949eed5db0b1c5540c06449f9e4d4",
+        "sha256": "986c809f1e3b28e042f4b08e891bcb6b8ecd1518fdbd742adc4ddab9749726b1",
         "note": ""
       }
     ],
@@ -111,7 +111,7 @@
   },
   "history": [
     {
-      "recorded_at": "2026-10-26T22:47:25.013467Z",
+      "recorded_at": "2026-10-26T23:15:32.188960Z",
       "contract": {
         "AuthorityEffect": "None",
         "artifact": {
@@ -201,6 +201,116 @@
           {
             "path": "governance/evidence/metrics.json",
             "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+            "note": ""
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 53,
+          "survived": 1,
+          "demonstrably_equivalent": 1,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 0.9814814814814815,
+          "report": {
+            "path": "governance/evidence/m-gov-evidence-metrics.mutation.json",
+            "sha256": "c3408c4835673d659b5e7763ab95325d452fbc51ffa3286f2ec405be75c0c28f",
+            "note": "campaign m-gov-evidence-metrics"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-10-27T00:34:47.231534Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "governance/tools/metrics.py",
+          "language": "Python",
+          "sha256": "d07e910926b11167b42896e45cfba4cc0e2177c4cb2eeebf54a5d7ae0154ebb9"
+        },
+        "contract_urn": "urn:pfp-governance:metrics:v1",
+        "symbols": [
+          "band",
+          "csharp_nesting",
+          "file_metrics",
+          "main",
+          "nesting_depth",
+          "python_nesting",
+          "report"
+        ],
+        "owned_invariants": [
+          "A metric that is not measured is null, never 0.",
+          "The file ceiling is the lowest metric band."
+        ],
+        "boundaries": [
+          "C# cognitive complexity is not measured by any available tool and is reported null."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "governance/tools/metrics.py",
+          "language": "Python",
+          "sha256": "d07e910926b11167b42896e45cfba4cc0e2177c4cb2eeebf54a5d7ae0154ebb9"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Gate 5 measurement with the rubric's band table, an AST nesting measure for Python, a conservative brace estimate for C# (so no false zero), and declared null for unmeasured metrics.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "B",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Header declares AuthorityEffect: None and a unique contract URN; the exported names (__all__ or public types) are the ones the docstring describes and the contract lists. Not B: no requirement-to-symbol trace beyond this contract.",
+          "G2": "Non-Numeric profile: inputs are admitted by strict Pydantic models before use (RULE_PY_001) and outputs are typed; behaviour matches the documented contract in the module docstring and README. Band boundaries follow the SCORING.md table and are tested at every edge.",
+          "G3": "Every expected failure is a typed exception with a stable code (AdmissionError, BudgetExceededError, UnknownPackError) or a typed verdict; no assert in production code (Ruff S101, AST test) and the whole suite passes under python -O; no bare or broad except (Ruff BLE001/E722). Not B: panic-freedom is tested, not proven.",
+          "G4": "Unit and boundary tests for every branch, negative tests for each refusal, run under pytest and under python -O. Every band edge, elif handling, inner scopes, brace masking and the report command are tested. Mutation R = 53/54 (see mutation_accounting).",
+          "G5": "Functions are single-purpose; complexity measured per function. Metrics: worst function: cyclomatic 7, cognitive 8, nesting 2; metrics ceiling A+."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-10-26T23:15:24Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pytest-all.run.json",
+            "sha256": "ac13dda4ddfee46632288a8f83f92901001d71edf7e59feb89991ea0138d967c",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pytest-optimized.run.json",
+            "sha256": "469cf18591973524446be0aa049eee34a95a383bfdec6af5b4f6a1cf4f1fec20",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/mypy-strict.run.json",
+            "sha256": "c93f2a9f889e37a842371166ac68a95832dad30ef2661beeb970449fa1ee7837",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-check.run.json",
+            "sha256": "82618ca866c9824afeeb2137c68566d65ac91444ccc8ee4d5b5ca93dd568f27b",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-format.run.json",
+            "sha256": "9075870f4bdd11f4340650fd09620abbb8197a28788ececcaf8f9f30d63f1243",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.run.json",
+            "sha256": "cdbcb7937d8a7ccef4546ec2463569f0565045755f2c8f7597ff17a81cd3299a",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.json",
+            "sha256": "5da0f13ed26026ae00782a794bb92732d206d79bee52d181ae804a1dbd22cd12",
             "note": ""
           }
         ],

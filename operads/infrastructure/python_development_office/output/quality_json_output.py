@@ -5,10 +5,10 @@ from __future__ import annotations
 import json
 from dataclasses import asdict
 
-from omega_engine_operads.domain.python_development_office.quality_errors import (
+from operads.domain.python_development_office.quality_errors import (
     PythonQualityGateError,
 )
-from omega_engine_operads.domain.python_development_office.quality_inventory import (
+from operads.domain.python_development_office.quality_inventory import (
     QualityInventoryReceipt,
 )
 
@@ -24,7 +24,7 @@ def format_quality_refusal(error: PythonQualityGateError) -> str:
 
     return json.dumps(
         {
-            "schema": "omega.python_quality_inventory.v1",
+            "schema": "core.python_quality_inventory.v1",
             "status": "REFUSED",
             "error": {"code": error.code, "detail": error.detail},
             "authority_effect": "None",

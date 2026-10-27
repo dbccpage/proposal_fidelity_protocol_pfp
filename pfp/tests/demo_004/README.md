@@ -7,13 +7,13 @@ with stored-answer comparisons.
 Run one finite host control, with no provider call or new run directory:
 
 ```powershell
-python -m omega_engine_education.pilots.challenge_suite --check --challenge C039
+python -m education.pilots.challenge_suite --check --challenge C039
 ```
 
 Grade a supplied SPK-001 JSON envelope against the same case:
 
 ```powershell
-python -m omega_engine_education.pilots.challenge_suite --check --challenge C039 --reply candidate.json
+python -m education.pilots.challenge_suite --check --challenge C039 --reply candidate.json
 ```
 
 The second command labels its input caller-supplied, unauthenticated evidence.
@@ -23,7 +23,7 @@ another case with `--ordinal 1`, or another partition with `--split held_out`.
 Run a fresh bounded OpenRouter trial using existing credentials:
 
 ```powershell
-python -m omega_engine_education.pilots.challenge_suite --live deepseek/deepseek-v3.2 --challenge C039 --arm typed_witness --output new-live-run
+python -m education.pilots.challenge_suite --live deepseek/deepseek-v3.2 --challenge C039 --arm typed_witness --output new-live-run
 ```
 
 The existing adapter checks current model availability/pricing, refuses an
@@ -44,8 +44,8 @@ Use the stable seed IDs in [`seeds.yaml`](../matrix/seeds.yaml). Its historical
 `folder` labels do not identify directories in the current estate.
 
 ```powershell
-python -m omega_engine_pfp.infrastructure.pilot_runner --check-seeds
-python -m omega_engine_pfp.infrastructure.pilot_runner --seed-id DEMO_01
+python -m pfp.infrastructure.pilot_runner --check-seeds
+python -m pfp.infrastructure.pilot_runner --seed-id DEMO_01
 ```
 
 Seed preparation preserves the complete prompt, including its trailing newline,
@@ -57,7 +57,7 @@ grader. Seed-specific executable checks remain necessary.
 The fixed grid and generator are retired. Start with one task, a typed
 prompt/response contract and an independent check. Collate its result and cost,
 then choose further runs to answer an improvement or failure-discovery question.
-The [shared PFP guide](../../../omega_engine_pfp/documentation/pfp_seed_execution.md)
+The [shared PFP guide](../../../pfp/documentation/pfp_seed_execution.md)
 explains replay and extensions without requiring a combinatorial campaign.
 
 The [existing integration evidence](../evidence/demo004_pfp_learning/README.md)

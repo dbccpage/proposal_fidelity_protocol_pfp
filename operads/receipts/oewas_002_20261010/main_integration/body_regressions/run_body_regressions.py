@@ -12,47 +12,47 @@ import uuid
 from pathlib import Path
 
 ROOT = Path('C:/Users/a343o/.codex/worktrees/oewas-typed-contracts/the_symbol_game')
-OUT = ROOT / 'omega_engine_workflows_agents_skills/receipts/oewas_002_20261010/main_integration/body_regressions'
+OUT = ROOT / 'workflows_agents_skills/receipts/oewas_002_20261010/main_integration/body_regressions'
 EXPECTED_MAIN = 'e5dc7774a305a078150a5f06e63c0e2a3e0272e6'
 TESTS = [
-    'omega_engine_workflows_agents_skills/tests/unit/test_candidate_instruction_body_binding.py',
-    'omega_engine_workflows_agents_skills/tests/unit/test_woland_candidate_plan.py',
-    'omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_audit.py',
+    'workflows_agents_skills/tests/unit/test_candidate_instruction_body_binding.py',
+    'workflows_agents_skills/tests/unit/test_adversary_candidate_plan.py',
+    'workflows_agents_skills/tests/unit/test_typed_contract_audit.py',
 ]
 PRODUCTION = [
-    'omega_engine_workflows_agents_skills/application/woland_candidate_plan.py',
-    'omega_engine_workflows_agents_skills/application/typed_workflow_compiler.py',
-    'omega_engine_workflows_agents_skills/application/typed_contract_audit.py',
-    'omega_engine_workflows_agents_skills/application/woland_instruction_admission.py',
-    'omega_engine_workflows_agents_skills/application/woland_task_selection.py',
-    'omega_engine_workflows_agents_skills/application/commands/compile_catalog.py',
-    'omega_engine_workflows_agents_skills/application/anti_skill/anti_skill_v2.py',
-    'omega_engine_workflows_agents_skills/application/dtos/success_dtos.py',
-    'omega_engine_workflows_agents_skills/contracts/typed_capabilities_v1.py',
-    'omega_engine_workflows_agents_skills/contracts/typed_workflow_v1.py',
-    'omega_engine_workflows_agents_skills/domain/entities/typed_workflow.py',
-    'omega_engine_workflows_agents_skills/domain/entities/typed_contract_package.py',
-    'omega_engine_workflows_agents_skills/domain/entities/operation_v3.py',
-    'omega_engine_workflows_agents_skills/domain/entities/skill_document_v3.py',
-    'omega_engine_workflows_agents_skills/domain/value_objects/operands.py',
-    'omega_engine_workflows_agents_skills/domain/value_objects/lifecycle_facets.py',
-    'omega_engine_workflows_agents_skills/domain/value_objects/content_digest.py',
-    'omega_engine_workflows_agents_skills/domain/anti_skills/anti_skill_v2.py',
-    'omega_engine_workflows_agents_skills/domain/anti_skills/json_wire.py',
-    'omega_engine_workflows_agents_skills/domain/capability_catalog_v1.py',
-    'omega_engine_workflows_agents_skills/infrastructure/typed_contract_compiler.py',
-    'omega_engine_workflows_agents_skills/infrastructure/fs/woland_operand_source.py',
-    'omega_engine_workflows_agents_skills/infrastructure/parser/markdown_parser_adapter.py',
-    'omega_engine_operations/domain/rop/result.py',
+    'workflows_agents_skills/application/adversary_candidate_plan.py',
+    'workflows_agents_skills/application/typed_workflow_compiler.py',
+    'workflows_agents_skills/application/typed_contract_audit.py',
+    'workflows_agents_skills/application/adversary_instruction_admission.py',
+    'workflows_agents_skills/application/adversary_task_selection.py',
+    'workflows_agents_skills/application/commands/compile_catalog.py',
+    'workflows_agents_skills/application/anti_skill/anti_skill_v2.py',
+    'workflows_agents_skills/application/dtos/success_dtos.py',
+    'workflows_agents_skills/contracts/typed_capabilities_v1.py',
+    'workflows_agents_skills/contracts/typed_workflow_v1.py',
+    'workflows_agents_skills/domain/entities/typed_workflow.py',
+    'workflows_agents_skills/domain/entities/typed_contract_package.py',
+    'workflows_agents_skills/domain/entities/operation_v3.py',
+    'workflows_agents_skills/domain/entities/skill_document_v3.py',
+    'workflows_agents_skills/domain/value_objects/operands.py',
+    'workflows_agents_skills/domain/value_objects/lifecycle_facets.py',
+    'workflows_agents_skills/domain/value_objects/content_digest.py',
+    'workflows_agents_skills/domain/anti_skills/anti_skill_v2.py',
+    'workflows_agents_skills/domain/anti_skills/json_wire.py',
+    'workflows_agents_skills/domain/capability_catalog_v1.py',
+    'workflows_agents_skills/infrastructure/typed_contract_compiler.py',
+    'workflows_agents_skills/infrastructure/fs/adversary_operand_source.py',
+    'workflows_agents_skills/infrastructure/parser/markdown_parser_adapter.py',
+    'operations/domain/rop/result.py',
     'conftest.py', 'pyproject.toml',
 ]
 PLANS = [
-    'omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_007_american_ic_partition_and_typed_schema_plan.md',
-    'omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_009_cross_engine_ingress_parity_oewas_oeeis_oewoland_plan.md',
+    'product_planning_office/plans/epics/oewas/epic_oe_oewas_007_american_ic_partition_and_typed_schema_plan.md',
+    'product_planning_office/plans/epics/oewas/epic_oe_oewas_009_cross_engine_ingress_parity_oewas_oeeis_oeadversary_plan.md',
 ]
 SOURCE_FILES = sorted(TESTS + PRODUCTION + PLANS + [
     p.relative_to(ROOT).as_posix()
-    for p in (ROOT / 'omega_engine_workflows_agents_skills/catalog/contracts/v1').rglob('*')
+    for p in (ROOT / 'workflows_agents_skills/catalog/contracts/v1').rglob('*')
     if p.is_file() and p.suffix in {'.json', '.md'}
 ], key=lambda value: value.encode('utf-8'))
 
@@ -67,7 +67,7 @@ def inventory() -> list[dict]:
 ENVIRONMENT_SET = {
     'PYTEST_DISABLE_PLUGIN_AUTOLOAD': '1',
     'PYTHONDONTWRITEBYTECODE': '1',
-    'OMEGA_CREDENTIAL_DISCOVERY': 'off',
+    'CORE_CREDENTIAL_DISCOVERY': 'off',
 }
 env = os.environ.copy()
 env.update(ENVIRONMENT_SET)
@@ -132,7 +132,7 @@ record = {
     'ic_plan_references': [
         {'path': PLANS[0], 'line': 15, 'claim': 'OEOS composition and checkout lease bind _intelligence/_oeos; path-only rename invalidates ownership/recovery'},
         {'path': PLANS[0], 'line': 21, 'claim': '007/OEOS owns inventoried, lease-aware copy/verify/cutover/recovery;009 owns producer integration'},
-        {'path': PLANS[1], 'line': 15, 'claim': 'Woland runtime and bout service use legacy intelligence storage;007 owns cutover'},
+        {'path': PLANS[1], 'line': 15, 'claim': 'Adversary runtime and bout service use legacy intelligence storage;007 owns cutover'},
         {'path': PLANS[1], 'line': 33, 'claim': '009 requires actual writer/reader pairs after007 cutover'},
     ],
 }

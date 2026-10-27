@@ -15,7 +15,7 @@ from __future__ import annotations
 from fractions import Fraction
 import pytest
 
-from omega_engine_pfp.domain.ensemble.models import (
+from pfp.domain.ensemble.models import (
     EnsembleRole,
     EnsembleSpec,
     ModelRef,

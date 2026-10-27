@@ -94,7 +94,7 @@ class PythonQualityPolicy:
     receipt_max_age_hours: int = 168
 
     def __post_init__(self) -> None:
-        if self.schema != "omega.python_quality_policy.v1":
+        if self.schema != "core.python_quality_policy.v1":
             raise ValueError(f"unsupported policy schema: {self.schema!r}")
         if not self.version.strip():
             raise ValueError("policy version must not be empty")
@@ -186,7 +186,7 @@ class QualityInventoryReceipt:
     test_tiers: tuple[TestTierEvidence, ...]
     unresolved_obligations: tuple[str, ...]
     authority_effect: str = "None"
-    schema: str = "omega.python_quality_inventory.v1"
+    schema: str = "core.python_quality_inventory.v1"
     claim_ceiling: str = (
         "Static structure plus execution-receipt consistency only; this receipt does not certify "
         "semantic DDD or behavioral coverage, authenticate command execution, or prove production "

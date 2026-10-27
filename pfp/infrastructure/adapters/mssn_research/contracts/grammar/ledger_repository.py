@@ -7,13 +7,13 @@ import re
 from hashlib import sha256
 from pathlib import Path
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import EpistemicQuarantineLedger
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.entities import EpistemicQuarantineLedger
+from pfp.domain.mssn_research.grammar.errors import (
     GrammarDomainError,
     LedgerSerializationError,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
+from pfp.domain.mssn_research.packets.value_objects import RefusalCode
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
 
 from .ledger_codec import deserialize_ledger_from_jsonl, serialize_ledger_to_jsonl
 

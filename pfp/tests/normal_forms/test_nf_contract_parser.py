@@ -12,10 +12,10 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.infrastructure.normal_forms.catalog import check_catalog
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import load_yaml
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import CONTRACTS_DIR
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import STANDARD_PATH
+from pfp.infrastructure.normal_forms.catalog import check_catalog
+from pfp.infrastructure.normal_forms.contract_model import load_yaml
+from pfp.infrastructure.normal_forms.contract_paths import CONTRACTS_DIR
+from pfp.infrastructure.normal_forms.contract_paths import STANDARD_PATH
 
 
 def _minimal_contract() -> dict:
@@ -188,10 +188,10 @@ class TestNfContractParser(unittest.TestCase):
             self.assertIn("unsupported_verified_status", codes)
 
     def test_migration_v0_to_v1_and_validation(self):
-        from omega_engine_pfp.infrastructure.normal_forms.migrate_contract import (
+        from pfp.infrastructure.normal_forms.migrate_contract import (
             migrate_v0_to_v1,
         )
-        from omega_engine_pfp.infrastructure.normal_forms.validate_v1 import (
+        from pfp.infrastructure.normal_forms.validate_v1 import (
             validate_contract_v1,
         )
 

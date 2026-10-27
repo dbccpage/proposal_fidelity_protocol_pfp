@@ -9,9 +9,9 @@ import math
 from dataclasses import dataclass
 from typing import Any
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.entities.projection_receipt import Obstruction, ProjectionReceipt
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.entities.projection_receipt import Obstruction, ProjectionReceipt
 
 
 def _is_sha256(value: Any) -> bool:

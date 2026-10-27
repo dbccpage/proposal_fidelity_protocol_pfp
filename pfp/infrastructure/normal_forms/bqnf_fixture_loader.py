@@ -10,8 +10,8 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.normal_forms.fixture_ports import (
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from pfp.domain.normal_forms.fixture_ports import (
     BqnfFixtures,
     parse_bqnf_fixture_payload,
 )

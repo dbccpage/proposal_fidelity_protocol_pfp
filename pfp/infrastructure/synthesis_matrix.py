@@ -19,12 +19,12 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from omega_engine_pfp.infrastructure.pilot_matrix import (
+from pfp.infrastructure.pilot_matrix import (
     complete_pilot_turn,
     make_pilot_gateways,
     validate_pilot_gateways,
 )
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
 
 API_KEY_ENV = "OPENROUTER_API_KEY"
 OUTCOME_ACCEPTED = "ACCEPTED"

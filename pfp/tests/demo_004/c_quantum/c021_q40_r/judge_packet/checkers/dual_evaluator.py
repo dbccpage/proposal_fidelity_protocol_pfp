@@ -23,10 +23,10 @@ except (ImportError, ValueError):
             verify_spectral_optimality,
         )
     except (ImportError, ValueError):
-        from omega_engine_pfp.tests.demo_004.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
+        from pfp.tests.demo_004.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
             verify_certificate,
         )
-        from omega_engine_pfp.tests.demo_004.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
+        from pfp.tests.demo_004.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
             secondary_numeric_check,
             verify_spectral_optimality,
         )

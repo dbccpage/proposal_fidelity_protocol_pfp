@@ -72,7 +72,7 @@ By convention in Grammar 000:
 <summary>Click to view solution</summary>
 
 ```python
-from omega_engine_pfp.domain.tower import grammar
+from pfp.domain.tower import grammar
 
 # 1. Empty application
 empty_app = grammar.parse("op<>")

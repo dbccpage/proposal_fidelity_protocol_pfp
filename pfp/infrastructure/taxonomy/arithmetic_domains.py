@@ -10,7 +10,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-from omega_engine_pfp.infrastructure.yaml_loading import strict_yaml_load
+from pfp.infrastructure.yaml_loading import strict_yaml_load
 from pydantic import BaseModel, ConfigDict, Field
 
 

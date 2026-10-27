@@ -1,8 +1,8 @@
 """Legacy Symbol Game copy of the anti-skill pharmacy domain models.
 
 See the package docstring: this copy is legacy, diverged from both OEEIS
-(`omega_engine_epistemic_immune_system`) and the native pharmacy
-(`omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs`), and is
+(`eis`) and the native pharmacy
+(`engine/crates_rs/core_prompt_civilization/src/pharmacy.rs`), and is
 kept only for existing callers. It is not a faithful port of either.
 AuthorityEffect: None.
 """

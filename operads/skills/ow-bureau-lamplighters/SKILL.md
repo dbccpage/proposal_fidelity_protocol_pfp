@@ -13,7 +13,7 @@ families: [ooutwire, lamplighters, surveillance, wiretaps, clean_up, bureaus, b0
 **Status:** `ADMITTED`  
 **Classification:** `TOP SECRET // SCI // AP: PROGRAM INDIGO // OPERATION POKROV`  
 **AuthorityEffect:** `None`  
-**Governing Context:** [`omega_engine_cognitive_operations/ooutwire`](../../../omega_engine_cognitive_operations/ooutwire)  
+**Governing Context:** [`cognitive_operations/ooutwire`](../../../cognitive_operations/ooutwire)  
 
 ---
 
@@ -25,7 +25,7 @@ Led by **Toby Esterhase**, the **Lamplighters** monitor background telemetry, wi
 
 ## 2. Integrated Execution Bureaus
 
-This skill absorbs and coordinates the specialized execution bureaus defined in [`omega_engine_cognitive_operations/ooutwire/bureaus/`](../../../omega_engine_cognitive_operations/ooutwire/bureaus):
+This skill absorbs and coordinates the specialized execution bureaus defined in [`cognitive_operations/ooutwire/bureaus/`](../../../cognitive_operations/ooutwire/bureaus):
 
 1. **Bureau 02 / Core (`02_bureau_lamplighters_surveillance.yaml`)**:
    - Passive DAG wiretapping: silently captures state deltas without mutation.

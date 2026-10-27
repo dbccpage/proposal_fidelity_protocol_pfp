@@ -3,7 +3,7 @@
 Opaque-box, requirement-driven test suite structured across Tiers 1-4 per TEST_INFRA.md:
 - Tier 1: Feature Coverage (Features F1 through F20 in isolation)
 - Tier 2: Boundary Values & Corner Cases (Qubit/term limits, rank extremes, coprime fractions, budget limits, closed refusal codes)
-- Tier 3: Pairwise Cross-Feature Combinations (Seam integrations across BudgetGate, CommitRevealRunner, DualEvaluator, WolandGate, DDCTracer)
+- Tier 3: Pairwise Cross-Feature Combinations (Seam integrations across BudgetGate, CommitRevealRunner, DualEvaluator, AdversaryGate, DDCTracer)
 - Tier 4: Real-World Application Scenarios (Bell state, GHZ codes, Frustrated AFM rings, Steane [[7,1,3]] code, Full 8-qubit 24-term isotropic Hamiltonian, Transverse-field perturbation, Complete Swarm E2E pipeline)
 
 AuthorityEffect: None.
@@ -20,53 +20,53 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
     HARD_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
     BudgetGate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
     CommitRevealRunner,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.adversary_gate import (
     TERMINAL_OPEN_RESIDUAL,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
-    WolandGate,
+    AdversaryGate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
     verify_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
     assert_dual_agreement,
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
     secondary_numeric_check,
     verify_spectral_optimality,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.participant_packet.runner import (
     load_cases,
     load_solver_func,
     run_cases,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.ddc_tracer import (
     VALID_DDC_LETTERS,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.pauli import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.pauli import (
     _SINGLE_PAULI_MUL,
     PauliString,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
     _find_generators,
     solve,
     solve_with_trace,
 )
 
-from omega_engine_woland.domain.providers.model_registry import (
+from adversary.domain.providers.model_registry import (
     ModelParameterCeilingRefused,
 )
-from omega_engine_woland.domain.providers.types import BudgetExceeded, Provider
+from adversary.domain.providers.types import BudgetExceeded, Provider
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 PARTICIPANT_DIR = ROOT_DIR / "participant_packet"
@@ -541,13 +541,13 @@ def test_tier1_f09_commit_reveal_phases_and_sequencing(tmp_path: Path) -> None:
 
     # Phase 1: Judge commitment
     p1 = runner.run_phase1_judge_commitment()
-    assert p1["schema"] == "omega.symbol-game.judge-commitment.v1"
+    assert p1["schema"] == "core.symbol-game.judge-commitment.v1"
     assert p1["phase"] == "PHASE_1_OPERATOR_JUDGE_COMMITMENT"
     assert len(p1["manifest_sha256"]) == 64
 
     # Phase 2: Solver freeze record
     p2 = runner.run_phase2_freeze_record()
-    assert p2["schema"] == "omega.symbol-game.freeze-record.v1"
+    assert p2["schema"] == "core.symbol-game.freeze-record.v1"
     assert p2["phase"] == "PHASE_2_SOLVER_FREEZE_RECORD"
     assert len(p2["freeze_digest"]) == 64
 
@@ -622,7 +622,7 @@ def test_tier1_f12_matched_arms_schema_compliance() -> None:
         "Arm_A_ZeroShot",
         "Arm_B_FewShot",
         "Arm_C_DDC_Traced",
-        "Arm_D_Woland_Retinue",
+        "Arm_D_Adversary_Panel",
         "Arm_E_DualChecked",
     ]
     assert len(arms) == 5
@@ -704,9 +704,9 @@ def test_tier1_f16_mutation_suite_rejections(mut_filename: str) -> None:
 # --- Feature 17: Terminal Reality Gate & Novella ---
 
 
-def test_tier1_f17_woland_terminal_verdicts() -> None:
+def test_tier1_f17_terminal_verdicts() -> None:
     """Counterexample: an all-pass self-score of the reference solver was labelled PASS_TO_MASTER."""
-    gate = WolandGate()
+    gate = AdversaryGate()
     cases_pass = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
     cases_fail = [{"case_id": "c1", "verdict": "FAIL", "agreement": True}]
 
@@ -1000,9 +1000,9 @@ def test_tier3_dual_evaluator_and_ddc_tracer_hash_chain() -> None:
     assert len(tracer.to_list()) >= 5
 
 
-def test_tier3_relabel_controls_and_woland_gate(tmp_path: Path) -> None:
-    """Pairwise Combination 3: Relabel / Gauge Controls + WolandGate terminal reality gate."""
-    gate = WolandGate(base_repo_root=tmp_path)
+def test_tier3_relabel_controls_and_adversary_gate(tmp_path: Path) -> None:
+    """Pairwise Combination 3: Relabel / Gauge Controls + AdversaryGate terminal reality gate."""
+    gate = AdversaryGate(base_repo_root=tmp_path)
 
     # Solve base and 2 gauge controls
     c_base = json.loads((EXAMPLES_DIR / "ex05_solved_ghz_3qubit.json").read_text(encoding="utf-8"))
@@ -1021,11 +1021,11 @@ def test_tier3_relabel_controls_and_woland_gate(tmp_path: Path) -> None:
 
     # The reference self-consistency gate must label the run consistent and persist the 4-file bundle
     verdict, path_w, path_sg, digests = gate.evaluate_and_persist(
-        task_key="tier3_relabel_woland",
+        task_key="tier3_relabel_adversary",
         run_id="run_t3_001",
         case_results=results,
         claim_hygiene={
-            "supports": "Supports gauge invariance under Woland terminal reality gate",
+            "supports": "Supports gauge invariance under Adversary terminal reality gate",
             "does_not_support": "Does not support non-unitary transformations",
             "narrowest_defensible_claim": "Gauged controls maintain invariant eigenvalues and zero defects",
             "next_test_needed": "Clifford twirling tests",
@@ -1375,19 +1375,19 @@ def test_tier4_scenario_7_complete_swarm_pipeline_end_to_end(tmp_path: Path) -> 
     assert summary["verdict"] == "PASS"
 
     # 4. Reference self-consistency label assertions (run folders under tmp_path)
-    woland = receipt["woland_reality_gate"]
-    assert woland["terminal_verdict"] == TERMINAL_REFERENCE_SELF_CONSISTENT
-    assert Path(woland["woland_run_folder"]).is_relative_to(tmp_path)
-    assert Path(woland["symbol_game_run_folder"]).is_relative_to(tmp_path)
+    adversary = receipt["adversary_reality_gate"]
+    assert adversary["terminal_verdict"] == TERMINAL_REFERENCE_SELF_CONSISTENT
+    assert Path(adversary["adversary_run_folder"]).is_relative_to(tmp_path)
+    assert Path(adversary["symbol_game_run_folder"]).is_relative_to(tmp_path)
 
     # 5. Dual-Sink Persistence & Reverse Write Order Assertions
-    woland_run_dir = Path(woland["woland_run_folder"])
-    sg_run_dir = Path(woland["symbol_game_run_folder"])
+    adversary_run_dir = Path(adversary["adversary_run_folder"])
+    sg_run_dir = Path(adversary["symbol_game_run_folder"])
 
-    assert woland_run_dir.is_dir()
+    assert adversary_run_dir.is_dir()
     assert sg_run_dir.is_dir()
 
-    for r_dir in (woland_run_dir, sg_run_dir):
+    for r_dir in (adversary_run_dir, sg_run_dir):
         novella = r_dir / "novella.md"
         dda = r_dir / "dda_actions.jsonl"
         sum_f = r_dir / "summary.json"
@@ -1399,16 +1399,16 @@ def test_tier4_scenario_7_complete_swarm_pipeline_end_to_end(tmp_path: Path) -> 
         assert rec_f.is_file()
 
         novella_sha = hashlib.sha256(novella.read_bytes()).hexdigest()
-        assert novella_sha == woland["novella_sha256"]
+        assert novella_sha == adversary["novella_sha256"]
 
         dda_sha = hashlib.sha256(dda.read_bytes()).hexdigest()
-        assert dda_sha == woland["dda_actions_sha256"]
+        assert dda_sha == adversary["dda_actions_sha256"]
 
         summary_sha = hashlib.sha256(sum_f.read_bytes()).hexdigest()
-        assert summary_sha == woland["summary_sha256"]
+        assert summary_sha == adversary["summary_sha256"]
 
         receipt_sha = hashlib.sha256(rec_f.read_bytes()).hexdigest()
-        assert receipt_sha == woland["receipt_sha256"]
+        assert receipt_sha == adversary["receipt_sha256"]
 
     # 6. Claim Hygiene and Authority Effect
     assert receipt["authority_effect"] == "None"

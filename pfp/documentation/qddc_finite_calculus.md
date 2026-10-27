@@ -134,7 +134,7 @@ The step API includes no unverified Hamiltonian splitting.
 
 ### Which target corresponds to zero DDC residual?
 
-For positive L1 weights, Phi_1(omega)=min_alpha ||omega-d alpha||_(1,w)
+For positive L1 weights, Phi_1(omega)=min_alpha ||core-d alpha||_(1,w)
 vanishes exactly on im d. Harmonic gamma=0 is insufficient: the filled
 triangle cycle has nonzero coexact component and zero harmonic component.
 
@@ -175,8 +175,8 @@ filesystem or persistent ledger.
 
 ## Executable ownership and limits
 
-- Rust: `omega_quantum_physics::qddc` composes the existing exact operator,
-  density, channel, and `omega_solvers` Hodge owners. Public traits are
+- Rust: `core_quantum_physics::qddc` composes the existing exact operator,
+  density, channel, and `core_solvers` Hodge owners. Public traits are
   `ExactHodge`, `ExactGenerator`, and `ExactDensityStep`.
 - Host: seven `qddc_*` actions in the canonical Symbol Game dispatcher.
 - Python: Pydantic v2 contracts in `domain/homology/qddc.py`, `QddcPort`, and

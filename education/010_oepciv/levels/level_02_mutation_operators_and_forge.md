@@ -14,16 +14,16 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_product_planning_office/receipts/requested_plan_completion_2026_10_02.json
-  - omega_engine/crates_rs/omega_prompt_civilization/src/forge.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - product_planning_office/receipts/requested_plan_completion_2026_10_02.json
+  - engine/crates_rs/core_prompt_civilization/src/forge.rs
 ---
 
 # Prompt Civ Level 02: Mutation Operators & Canalized Forge: Core vs Scaffold
 
 **AuthorityEffect:** None.  
 **Level:** Level 02 (Operator Scope & Canalized Plasticity)  
-**Rust Forge Seam:** [`omega_prompt_civilization::forge`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/forge.rs)  
+**Rust Forge Seam:** [`core_prompt_civilization::forge`](../../../../engine/crates_rs/core_prompt_civilization/src/forge.rs)  
 **Primary Types:** `MutationOperatorCandidateV1`, `MetaOperatorProposalV1`, `ForgeActionV1`  
 **Core Falsifiers:** `F-BIO-03`, `F-PROMPT-03`, `F-META-01`
 
@@ -71,7 +71,7 @@ Level 02 establishes the **Canalized Forge Architecture** (drawing from C.H. Wad
    $$\text{birth\_custody} = \text{CustodyTier::Wild}$$
    No mutation operator carries a schema field or permission to set custody to `Candidate`, `Reviewed`, or `Admitted`.
 3. **Meta-Operator Epoch Boundary (`F-META-01`):**
-   Proposals that modify operational parameters (such as evidence aggregation rules, checker selection, or quorum policies) are encapsulated in [`MetaOperatorProposalV1`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/forge.rs).
+   Proposals that modify operational parameters (such as evidence aggregation rules, checker selection, or quorum policies) are encapsulated in [`MetaOperatorProposalV1`](../../../../engine/crates_rs/core_prompt_civilization/src/forge.rs).
    - A meta-operator proposal **never** takes effect within its current evaluation epoch.
    - It cannot alter the checker, judge, or test bank evaluating its own lineage.
    - It takes effect only when ratified by an external decision in a subsequent epoch.
@@ -81,7 +81,7 @@ Level 02 establishes the **Canalized Forge Architecture** (drawing from C.H. Wad
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::forge
+// core_prompt_civilization::forge
 pub struct MutationOperatorCandidateV1 {
     pub operator_id: OperatorId,
     pub target_domain: DomainId,

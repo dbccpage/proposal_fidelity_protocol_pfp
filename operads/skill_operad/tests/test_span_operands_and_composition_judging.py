@@ -20,10 +20,10 @@ import hashlib
 from pathlib import Path
 
 import pytest
-from omega_engine_operads.skill_operad.application.use_cases.validate_operad_use_case import (
+from operads.skill_operad.application.use_cases.validate_operad_use_case import (
     validate_composition_grading,
 )
-from omega_engine_operads.skill_operad.domain import (
+from operads.skill_operad.domain import (
     ADMITTED_FINITE_COLOURS,
     AgentSlice,
     ArityMismatchError,
@@ -313,11 +313,11 @@ def test_span_multicategory_morphism_execution() -> None:
         name="verify_code_contract",
         source_colours=("Code", "Contract"),
         target_colour="Receipt",
-        transform=lambda inputs: SpanOperand.verify_integrity(verify_contract(inputs)) and pytest.importorskip("omega_engine_operations.domain.rop.result").Ok(verify_contract(inputs)),  # type: ignore
+        transform=lambda inputs: SpanOperand.verify_integrity(verify_contract(inputs)) and pytest.importorskip("operations.domain.rop.result").Ok(verify_contract(inputs)),  # type: ignore
     )
 
     # Simple clean transformer
-    from omega_engine_operads.skill_operad.domain.errors import Ok
+    from operads.skill_operad.domain.errors import Ok
     clean_morphism = SpanMulticategoryMorphism(
         name="verify_code_contract",
         source_colours=("Code", "Contract"),

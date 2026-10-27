@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.infrastructure.autopoiesis.git_learning import command
-from omega_engine_operads.infrastructure.autopoiesis.learning_store import (
+from operads.infrastructure.autopoiesis.git_learning import command
+from operads.infrastructure.autopoiesis.learning_store import (
     LearningStore,
 )
 
@@ -30,7 +30,7 @@ def repo(tmp_path: Path) -> Path:
     (root / "gate.py").write_text(
         "import sys\nprint('PASS' if sys.argv[1] != 'missing' else 'PASS')\n", encoding="utf-8"
     )
-    for host in ("omega_engine_operads", ".agents", ".claude", ".codex", ".grok"):
+    for host in ("operads", ".agents", ".claude", ".codex", ".grok"):
         path = root / host / "skills" / "fixture"
         path.mkdir(parents=True)
         (path / "SKILL.md").write_text("---\nname: fixture\n---\nFixture", encoding="utf-8")
@@ -40,7 +40,7 @@ def repo(tmp_path: Path) -> Path:
         "add",
         "--",
         "gate.py",
-        "omega_engine_operads/skills/fixture/SKILL.md",
+        "operads/skills/fixture/SKILL.md",
         ".agents/skills/fixture/SKILL.md",
         ".claude/skills/fixture/SKILL.md",
         ".codex/skills/fixture/SKILL.md",

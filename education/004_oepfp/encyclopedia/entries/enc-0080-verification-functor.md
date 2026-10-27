@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.1"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.1 'Definition IV.1'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.1 'Definition IV.1'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -46,7 +46,7 @@ defined by the sequential evaluation:
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.1
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.1
   (statement copied verbatim; definition carries no status bracket).
   Original header line:
   `**Definition IV.1 (Verification Functor $\mathcal{V}$).** Fix a task family $X$, a finite packet grammar $\Gamma$, a total deterministic parser $\mathrm{Parse}_\Gamma$, a local replay checker $L_\Gamma$, and a global boundary verifier $V_\Gamma$. The verification functor is the composite:`

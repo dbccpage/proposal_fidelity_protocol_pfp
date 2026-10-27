@@ -12,11 +12,11 @@ import json
 import sys
 from dataclasses import asdict
 
-from omega_engine_operating_system.adapters.security import (
+from operating_system.adapters.security import (
     FixtureOnlyAeadProtector,
 )
-from omega_engine_operating_system.infrastructure import EncryptedArtifactCas
-from omega_engine_pfp.domain import (
+from operating_system.infrastructure import EncryptedArtifactCas
+from pfp.domain import (
     CandidateArtifactV1,
     CodeChangePatchArtifactV1,
     CodeChangeProposalPayloadV1,
@@ -30,23 +30,23 @@ from omega_engine_pfp.domain import (
     render_code_change_run_root_markdown,
     verify_code_change_run_root,
 )
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     attach_candidate as attach_code_change_candidate,
 )
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     verify_markdown_does_not_mutate_claims as verify_code_markdown_claims,
 )
-from omega_engine_pfp.infrastructure.serialization import (
+from pfp.infrastructure.serialization import (
     write_content_addressed_json,
 )
-from omega_engine_pfp.infrastructure.trace import (
+from pfp.infrastructure.trace import (
     TERMINAL_PATH_COMPLETE,
     TracedCodeChangeController,
     TraceRefusal,
     fixture_gateway,
     scripted_openai_payload,
 )
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     CandidateRequest,
 )
 
@@ -66,12 +66,12 @@ def cmd_code_change_check_source_bound(args: argparse.Namespace) -> int:
     reply. This snapshots selected source bytes; it does not assert that Git
     attests them or that the patch applies. Replay is local to this invocation.
     """
-    from omega_engine_pfp.domain.shared_kernel.path import is_normalized_relative_posix
-    from omega_engine_pfp.infrastructure.code_change_checker import (
+    from pfp.domain.shared_kernel.path import is_normalized_relative_posix
+    from pfp.infrastructure.code_change_checker import (
         NativeCheckerTrust,
         SourceBoundCodeChangeChecker,
     )
-    from omega_engine_pfp.use_cases.code_change import (
+    from pfp.use_cases.code_change import (
         CodeChangeSession,
         SubmitPatchCandidateUseCase,
     )
@@ -82,7 +82,7 @@ def cmd_code_change_check_source_bound(args: argparse.Namespace) -> int:
         return 2
     checker = None
     report = {
-        "schema_version": "omega.pfp.source-bound-code-change-cli.v1",
+        "schema_version": "core.pfp.source-bound-code-change-cli.v1",
         "authority_effect": "None",
         "provider_calls": 0,
         "native_calls": 0,
@@ -149,7 +149,7 @@ def cmd_code_change_check_source_bound(args: argparse.Namespace) -> int:
         report["refusal"] = {
             "code": "CHECKER_INPUT_MALFORMED",
             "message": str(exc),
-            "locus": "omega_engine_pfp.entrypoints.cli.code_change_commands",
+            "locus": "pfp.entrypoints.cli.code_change_commands",
         }
         status = 2
     report["native_calls"] = 0 if checker is None else checker.native_calls

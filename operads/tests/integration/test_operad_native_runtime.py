@@ -1,13 +1,13 @@
 """Actual native kernel plus Python value oracle; no model calls."""
 import pytest
-from omega_engine_operads.skill_operad.skill_compiler.op_inventory import OpSpec, OpInventory, HostBinding, Wire, SkillDecomposition
-from omega_engine_operads.skill_operad.resolver.native_runtime import native_validate, NativeOperadRefusal
-from omega_engine_operads.skill_operad.resolver.resolver import run
+from operads.skill_operad.skill_compiler.op_inventory import OpSpec, OpInventory, HostBinding, Wire, SkillDecomposition
+from operads.skill_operad.resolver.native_runtime import native_validate, NativeOperadRefusal
+from operads.skill_operad.resolver.resolver import run
 
 
 def inventory(wire):
     ops=tuple(OpSpec(op_id=name,summary=name,inputs=inputs,output="Code",binding=HostBinding(target="native:"+target)) for name,inputs,target in (("pair",("Code","Code"),"pair"),("sum",("Code","Code"),"sum"),("identity",("Code",),"identity")))
-    return OpInventory(schema_version="omega.oewas.op_inventory.v3",skills=(SkillDecomposition(skill_id="finite-controls",ops=ops,wiring=wire if isinstance(wire,Wire) else Wire(op="identity",args=(wire,))),))
+    return OpInventory(schema_version="core.oewas.op_inventory.v3",skills=(SkillDecomposition(skill_id="finite-controls",ops=ops,wiring=wire if isinstance(wire,Wire) else Wire(op="identity",args=(wire,))),))
 
 
 def binary_trees(depth):
@@ -19,7 +19,7 @@ def binary_trees(depth):
 
 
 def test_finite_depth_three_value_tree_interface_and_order_differential():
-    from omega_engine_operads.skill_operad.resolver.resolver import _wire_leaves, _wire_ops
+    from operads.skill_operad.resolver.resolver import _wire_leaves, _wire_ops
     trees=binary_trees(3)
     assert len(trees)==26
     term_ids=set()
@@ -38,8 +38,8 @@ def test_finite_depth_three_value_tree_interface_and_order_differential():
 
 
 def test_runtime_dispatches_native_plan_without_python_tree_interpreter(monkeypatch):
-    from omega_engine_operads.skill_operad.resolver import resolver
-    from omega_engine_operads.skill_operad.resolver.native_runtime import run_native
+    from operads.skill_operad.resolver import resolver
+    from operads.skill_operad.resolver.native_runtime import run_native
     def forbidden(*args,**kwargs):
         raise AssertionError("runtime must not use the Python oracle")
     monkeypatch.setattr(resolver,"run",forbidden)
@@ -53,7 +53,7 @@ def test_runtime_dispatches_native_plan_without_python_tree_interpreter(monkeypa
     assert result.completed and result.output==[1,[2,3]]
     assert seen==[(2,3),(1,[2,3])]
     assert result.native_term_id and result.native_plan_digest
-    assert result.interpreter_version=="omega.oewas.native-plan-host.v1"
+    assert result.interpreter_version=="core.oewas.native-plan-host.v1"
     changed=run_native(inv,wire,[3,2,1],{"pair":pair},{})
     assert changed.native_term_id==result.native_term_id
     assert changed.input_digest!=result.input_digest

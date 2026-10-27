@@ -1,7 +1,7 @@
 """Typed gate register for the PFP gates directory.
 
 Models the three gate families named in ``gates/README.md``: the 13 primary
-retinue gates, the 10 intergate transitions between them, and the 3 empirical
+panel gates, the 10 intergate transitions between them, and the 3 empirical
 benchmark gates.  Gate bodies remain in the per-gate YAML files; this module
 types the register and the identity header of each file.
 
@@ -43,7 +43,7 @@ def gate_ordinal(gate_ref: str) -> int:
 
 
 class PrimaryGate(_Frozen):
-    """One of the 22 primary retinue verification gates."""
+    """One of the 22 primary panel verification gates."""
 
     gate_id: StrictStr = Field(pattern=_GATE_REF_PATTERN)
     name: StrictStr = Field(min_length=1)

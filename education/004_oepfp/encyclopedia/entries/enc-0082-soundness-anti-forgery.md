@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.3"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.1 'Theorem IV.3'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.1 'Theorem IV.3'"
 uses: ["ENC-0099"]
 lean_status: NOT-STARTED
 lean_refs: []
@@ -86,7 +86,7 @@ therefore CONDITIONAL on both hypotheses above and is not mechanized.
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.1
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.1
   (statement copied verbatim; no proof present in source). Original header
   line:
   `**Theorem IV.3 (Soundness Anti-Forgery).** [PROVED] If $V_\Gamma$ is sound for specification $S$ (i.e., $V_\Gamma(x,P) = 1 \Rightarrow \mathrm{True}_S(x,P)$), then $\mathsf{GlobalValid}$ implies $\mathrm{True}_S$.`

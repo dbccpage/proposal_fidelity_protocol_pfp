@@ -19,16 +19,16 @@ from math import ceil
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnReplyV1, SeatTurnRequestV1
-from omega_engine_pfp.infrastructure.seat_transport.routing import (
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1, SeatTurnRequestV1
+from pfp.infrastructure.seat_transport.routing import (
     RouteLeg,
     RoutingTable,
     admit_spend,
 )
-from omega_engine_pfp.infrastructure.seat_transport.transport import SYMBOL_GAME_PROTOCOL_V2
-from omega_engine_woland.domain.providers.types import CandidateRequest, Provider
-from omega_engine_woland.infrastructure.providers.openai_compat import parse_openai_compat_response
+from pfp.infrastructure.seat_transport.transport import SYMBOL_GAME_PROTOCOL_V2
+from adversary.domain.providers.types import CandidateRequest, Provider
+from adversary.infrastructure.providers.openai_compat import parse_openai_compat_response
 
 Transport = Callable[[str, CandidateRequest, int], bytes]
 
@@ -36,7 +36,7 @@ MACHINE_BLOCK = re.compile(r"```machine\s*\n(.*?)```", re.DOTALL)
 REQUIRED_MACHINE_KEYS = ("AUTHORITY_EFFECT", "RESIDUAL_COLOUR", "DISPOSITION", "DDC_LETTER")
 RESIDUAL_COLOURS = ("Open", "Closed", "Exact")
 
-SYSTEM_TEMPLATE = """You are seat '{seat_id}' (cognitive operator: {operator}) in scene '{scene_id}' of Woland's Swarm Dialectic.
+SYSTEM_TEMPLATE = """You are seat '{seat_id}' (cognitive operator: {operator}) in scene '{scene_id}' of Adversary's Swarm Dialectic.
 You have no authority. End your reply with exactly one machine block:
 
 ```machine
@@ -196,7 +196,7 @@ class RoutedSeatExecutor:
 
         system = SYSTEM_TEMPLATE.format(
             seat_id=request.seat_id,
-            operator=request.cognitive_operator or "adversarial_retinue",
+            operator=request.cognitive_operator or "adversarial_panel",
             scene_id=request.scene_id,
         )
         user = request.prompt_text

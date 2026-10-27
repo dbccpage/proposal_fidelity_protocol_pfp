@@ -78,11 +78,11 @@ Three signature pairs share identical input/output colours but differ fundamenta
 Execute any metaskill via its local runner:
 
 ```bash
-python omega_engine_operads/skills/<skill_name>/scripts/execute.py
+python operads/skills/<skill_name>/scripts/execute.py
 ```
 
 Or invoke via the unified execution engine:
 
 ```bash
-python -m omega_engine_operads.frontend.cli.meta_operad_cli <skill_name>
+python -m operads.frontend.cli.meta_operad_cli <skill_name>
 ```

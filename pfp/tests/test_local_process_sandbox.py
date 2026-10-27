@@ -12,10 +12,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSandboxHost
-from omega_engine_pfp.domain.ports.process_sandbox import SandboxOutcomeKind
-from omega_engine_pfp.infrastructure.sandbox.local_process_sandbox import (
+from operations.domain.rop.result import Err, Ok, Refusal
+from operating_system.adapters.rust_host.ffi import RustSandboxHost
+from pfp.domain.ports.process_sandbox import SandboxOutcomeKind
+from pfp.infrastructure.sandbox.local_process_sandbox import (
     LocalProcessSandbox,
 )
 
@@ -99,7 +99,7 @@ def test_missing_native_host_never_executes_command(tmp_path: Path) -> None:
 def test_native_transport_failure_never_retries_submitted_command(
     monkeypatch, tmp_path, native_failure
 ):
-    binary = tmp_path / "omega-sandbox-run"
+    binary = tmp_path / "core-sandbox-run"
     binary.touch()
     calls = []
 

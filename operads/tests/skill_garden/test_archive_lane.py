@@ -21,8 +21,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.infrastructure.skill_garden import archive_lane as lane
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden import archive_lane as lane
+from operads.infrastructure.skill_garden.usage_ledger import (
     repo_root_from,
 )
 

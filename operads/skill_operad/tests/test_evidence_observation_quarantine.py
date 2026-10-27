@@ -42,7 +42,7 @@ class ResidualObservationQuarantineTests(unittest.TestCase):
     def test_current_recorder_row_is_still_only_an_observation(self) -> None:
         observation = classify_residual_observation(
             {
-                "schema": "omega.operad.execution_trace.v1",
+                "schema": "core.operad.execution_trace.v1",
                 "entry_id": "sha256:" + "a" * 64,
                 "skill_id": "skill",
                 "run_id": "run",
@@ -107,7 +107,7 @@ class LegacyHigherMathShellTests(unittest.TestCase):
 
     def test_hott_quasicategory_caller_values_have_no_authority(self) -> None:
         module = self._load(
-            "omega_engine/crates/homotopy_type_theory/quasi_category.py",
+            "engine/crates/homotopy_type_theory/quasi_category.py",
             "legacy_hott_quasi_category",
         )
         if module is None:
@@ -121,7 +121,7 @@ class LegacyHigherMathShellTests(unittest.TestCase):
 
     def test_higher_category_booleans_have_no_authority(self) -> None:
         quasi_module = self._load(
-            "omega_engine/crates/higher_category_theory/simplicial/quasicategory.py",
+            "engine/crates/higher_category_theory/simplicial/quasicategory.py",
             "legacy_higher_quasicategory",
         )
         if quasi_module is None:
@@ -131,7 +131,7 @@ class LegacyHigherMathShellTests(unittest.TestCase):
         self.assertFalse(quasi.has_authoritative_inner_horn_verification())
 
         horn_module = self._load(
-            "omega_engine/crates/higher_category_theory/simplicial/horn_lifting.py",
+            "engine/crates/higher_category_theory/simplicial/horn_lifting.py",
             "legacy_horn_lifting",
         )
         if horn_module is None:

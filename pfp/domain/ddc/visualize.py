@@ -82,7 +82,7 @@ def export_cochain_graph_data(
         "summary": {
             "num_vertices": complex_.num_vertices,
             "num_edges": complex_.num_edges,
-            # L1 norm and Gamma2 calculations belong to omega_functional, not this Python view.
+            # L1 norm and Gamma2 calculations belong to core_functional, not this Python view.
             "cochain_l1_norm": None,
             "closure_defect_gamma2": None,
             "functional_status": "FUNCTIONAL_BOUNDARY_UNAVAILABLE",
@@ -219,7 +219,7 @@ def get_lyapunov_plot_renderer() -> Optional[LyapunovPlotRendererPort]:
         try:
             import importlib
             adapter_mod = importlib.import_module(
-                "omega_engine_pfp.infrastructure.adapters.ddc_plot_adapter"
+                "pfp.infrastructure.adapters.ddc_plot_adapter"
             )
             _PLOT_RENDERER = getattr(adapter_mod, "render_lyapunov_descent_plot")
         except Exception:

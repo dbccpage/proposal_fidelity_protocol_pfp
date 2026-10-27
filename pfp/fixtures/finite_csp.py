@@ -7,19 +7,19 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from typing import Any
 
-from omega_engine_pfp.domain.entities.projection_receipt import (
+from pfp.domain.entities.projection_receipt import (
     Obstruction,
     ProjectionReceipt,
     DetectorCase,
     SolverManifest,
     SolverProposal,
 )
-from omega_engine_pfp.domain.entities.problem import (
+from pfp.domain.entities.problem import (
     IdentityAdapter,
     RuntimeProblem,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import canonical_json, domain_digest, freeze
-from omega_engine_pfp.domain import CandidateArtifactV1, PacketEnvelopeV2
+from pfp.domain.shared_kernel.canonical import canonical_json, domain_digest, freeze
+from pfp.domain import CandidateArtifactV1, PacketEnvelopeV2
 
 
 State = tuple[tuple[str, int], ...]
@@ -60,7 +60,7 @@ class FiniteCspProjector:
     @property
     def config_digest(self) -> str:
         return domain_digest(
-            "omega.oesos.projector-config.v1",
+            "core.oesos.projector-config.v1",
             {
                 "projector_id": self.projector_id,
                 "domains": self.domains,
@@ -107,7 +107,7 @@ class FiniteCspProjector:
             == tuple(item.constraint_id for item in self.constraints)
             and envelope.payload == freeze(expected_payload)
             and envelope.source_digest
-            == domain_digest("omega.oesos.fixture-source.v1", expected_payload)
+            == domain_digest("core.oesos.fixture-source.v1", expected_payload)
         )
 
     def project(self, state: Any) -> ProjectionReceipt:
@@ -133,7 +133,7 @@ class FiniteCspProjector:
                 )
         return ProjectionReceipt(
             projector_id=self.projector_id,
-            state_hash=domain_digest("omega.oesos.state.v1", self.meaning(normalized)),
+            state_hash=domain_digest("core.oesos.state.v1", self.meaning(normalized)),
             obstructions=tuple(obstructions),
             witness="finite-csp-independent-replay-v1",
         )
@@ -291,7 +291,7 @@ def build_demo_problem(
     projector = FiniteCspProjector(domains=domains, constraints=constraints)
     normalized_initial = normalize_state(initial)
     initial_state_hash = domain_digest(
-        "omega.oesos.native-state.v1", normalized_initial
+        "core.oesos.native-state.v1", normalized_initial
     )
     exact_state: State = (("x", 1), ("y", 1))
     payload = {
@@ -316,7 +316,7 @@ def build_demo_problem(
         constraints=tuple(item.constraint_id for item in constraints),
         protected_boundaries=tuple(item.constraint_id for item in constraints),
         step_budget=step_budget,
-        source_digest=domain_digest("omega.oesos.fixture-source.v1", payload),
+        source_digest=domain_digest("core.oesos.fixture-source.v1", payload),
     )
     adapter = IdentityAdapter(
         source_carrier_id="finite-csp-v1",

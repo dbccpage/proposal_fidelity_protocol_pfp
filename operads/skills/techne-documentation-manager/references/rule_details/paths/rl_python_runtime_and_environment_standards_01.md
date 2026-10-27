@@ -38,7 +38,7 @@ This rule codifies Windows Python 3.12 runtime discipline, Windows pytest tempor
 > **Upward Traversal over Static Parent Indices & Subpackage Sentinel Anchors:**
 >
 > 1. Evaluators, contract parsers, schema loaders, test modules, and estate inspection tools must not rely on fragile static parent indices (`Path(__file__).resolve().parents[k]`) to locate the repository root or sibling assets.
-> 2. Relocated packages under `omega_engine_pfp/`, `omega_engine_atlas/coda_atlas/F004_papers/`, `omega_engine_operations/`, and nested worktrees reside at differing directory depths. Code discovering repository roots and configuration assets must use dynamic upward search (e.g., walking upward until encountering `.git` or `pyproject.toml`):
+> 2. Relocated packages under `pfp/`, `atlas/coda_atlas/F004_papers/`, `operations/`, and nested worktrees reside at differing directory depths. Code discovering repository roots and configuration assets must use dynamic upward search (e.g., walking upward until encountering `.git` or `pyproject.toml`):
 >    ```python
 >    def find_repo_root(curr: Path = Path(__file__).resolve()) -> Path:
 >        for parent in curr.parents:
@@ -59,7 +59,7 @@ This rule codifies Windows Python 3.12 runtime discipline, Windows pytest tempor
 > **Workspace Locality, Ephemeral Worktree Teardown & Sparse Disk Hygiene:**
 >
 > 1. **Workspace Boundary:** Worktrees created for autonomous editing MUST reside inside the workspace root under `.worktrees/<name>`. External worktrees (e.g. in `~/.codex/worktrees/`) trigger platform tool permission refusals.
-> 2. **Monorepo Sparse-Checkout Requirement:** Full checkouts of this 75,000+ file repository consume tens of gigabytes and exhaust workstation disk space. Scoped worktrees must initialize sparse checkout (`git sparse-checkout init --cone` and `git sparse-checkout set <packages>`), excluding massive documentation/kernel directories (`omega_engine_atlas`, `omega_engine_education`, `omega_engine_research_papers`, `lean4`, `_ooutwire`).
+> 2. **Monorepo Sparse-Checkout Requirement:** Full checkouts of this 75,000+ file repository consume tens of gigabytes and exhaust workstation disk space. Scoped worktrees must initialize sparse checkout (`git sparse-checkout init --cone` and `git sparse-checkout set <packages>`), excluding massive documentation/kernel directories (`atlas`, `education`, `research_papers`, `lean4`, `_ooutwire`).
 > 3. **Ephemeral Worktree Teardown:** Temporary worktrees in temp paths must be explicitly removed (`git worktree remove --force <path>`) upon completion to prevent disk exhaustion.
 
 ## Filesystem Inspection & Build Directory Pruning Invariant (`RULE_PYTHON_FILESYSTEM_AUDIT_PRUNING_001`)

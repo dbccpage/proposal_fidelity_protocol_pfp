@@ -3,7 +3,7 @@
 import unittest
 from datetime import datetime, timezone
 
-from omega_engine_operads.domain.entities import (
+from operads.domain.entities import (
     CapabilitySliceV3,
     DocumentLeafNode,
     EstateCatalogV3,
@@ -11,7 +11,7 @@ from omega_engine_operads.domain.entities import (
     PortSpecV3,
     SkillDocumentV3,
 )
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.value_objects import (
     AdmissionFacet,
     AuthorityEffect,
     ColourId,

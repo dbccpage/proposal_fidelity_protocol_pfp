@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 _JUDGE = importlib.import_module(
-    "omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet"
+    "projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet"
 )
 JUDGE_DIR = Path(list(_JUDGE.__path__)[0])
 PACKAGE_DIR = JUDGE_DIR.parent

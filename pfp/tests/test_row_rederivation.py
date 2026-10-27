@@ -9,17 +9,17 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.calculus_receipt import RowOutcome
-from omega_engine_pfp.domain.glyph_calculus import (
+from pfp.domain.calculus_receipt import RowOutcome
+from pfp.domain.glyph_calculus import (
     REFUSAL_STATEMENT_ILL_FORMED,
 )
-from omega_engine_pfp.domain.glyph_calculus import Carrier
-from omega_engine_pfp.domain.presentation_pins import (
+from pfp.domain.glyph_calculus import Carrier
+from pfp.domain.presentation_pins import (
     PinnedPresentation,
     PinnedRule,
     PresentationPins,
 )
-from omega_engine_pfp.domain.row_rederivation import (
+from pfp.domain.row_rederivation import (
     BLIND_SPOT_NOT_A_PERMUTATION,
     BLIND_SPOT_NO_CARRIER,
     BLIND_SPOT_NO_DECIDER,

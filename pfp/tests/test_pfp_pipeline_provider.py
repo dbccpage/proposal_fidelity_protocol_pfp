@@ -9,21 +9,21 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
-from omega_engine_woland.domain.providers.types import Provider
-from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
+from adversary.domain.providers.types import Provider
+from adversary.infrastructure.providers.gateway import unbudgeted_gateway
 
 MODEL = "offline-numbered-stage-fixture"
 
 @pytest.fixture
 def campaign(monkeypatch):
-    module = importlib.import_module("omega_engine_pfp.infrastructure.adapters.pfp_campaign")
+    module = importlib.import_module("pfp.infrastructure.adapters.pfp_campaign")
     monkeypatch.setattr(module, "snapshot_pricing", lambda _: pytest.fail("unexpected pricing/network"))
     return module
 
 
 def packet(stage=1, **changes):
-    from omega_engine_pfp.domain.prompts.prompts import PromptPacket
+    from pfp.domain.prompts.prompts import PromptPacket
     values = dict(demo_id="provider-fixture", stage=stage,
         system="Return the requested object.", user="A bounded fixture",
         response_schema={"type": "object"}, seed_sha256="a" * 64)
@@ -37,7 +37,7 @@ def frozen_legacy_capture(campaign, output):
     These are new local fixtures for the exact retained v1 replay contract, not
     claims of reproduction or replacement of any historical provider run.
     """
-    from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPrompt
+    from pfp.domain.contracts.pfp_runtime import PfpPrompt
     output.mkdir()
     price = dict(row=dict(id=MODEL, pricing=dict(prompt="0", completion="0.000001")))
     campaign.write_new(output / "pricing.json", price)

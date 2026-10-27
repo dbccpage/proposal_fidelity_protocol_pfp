@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.context_compaction_sessions import (
+from pfp.infrastructure.context_compaction_sessions import (
     constraint_retention,
     prepare_compaction_turn,
     replay_compaction_session,

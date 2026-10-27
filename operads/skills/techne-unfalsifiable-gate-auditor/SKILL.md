@@ -30,7 +30,7 @@ This skill finds them.
 
 Sprint 029 opened `EPIC-OE-SYMGAM-011` and found its acceptance gate stated as:
 
-> **Rust Test Suite:** All genesis, observer regime, and Landau quiz tests pass.
+> **Rust Test Suite:** All genesis, observer regime, and Examiner quiz tests pass.
 
 A suite containing one trivial assertion satisfies that exactly. The sprint had
 to derive criteria from the spec and rewrite its own gate before it could use it.
@@ -51,8 +51,8 @@ hardening pass that stopped partway.
 ## 3. The Tool
 
 ```powershell
-python omega_engine_operations/domain/product_planning/epic_criteria_audit.py
-python omega_engine_operations/domain/product_planning/epic_criteria_audit.py --family symgam
+python operations/domain/product_planning/epic_criteria_audit.py
+python operations/domain/product_planning/epic_criteria_audit.py --family symgam
 ```
 
 Exit `0` when every audited epic names a falsifier, `1` when any does not, `2` on

@@ -1,4 +1,4 @@
-r"""Tests for Categorical Coloured Operad Prompt in omega_engine_pfp.
+r"""Tests for Categorical Coloured Operad Prompt in pfp.
 
 Covers Milestone 3 requirements:
 - Colours C
@@ -17,7 +17,7 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_pfp.domain.operad import (
+from pfp.domain.operad import (
     AnnihilatorDecoy,
     ColouredOperadPrompt,
     CongruenceIdeal,
@@ -249,7 +249,7 @@ def test_annihilator_decoy_refutation_witness_checks():
 
 def test_coloured_operad_prompt_envelope_validation():
     prompt = ColouredOperadPrompt(
-        schema_id="omega.coda.categorical-operad-prompt.v2",
+        schema_id="core.coda.categorical-operad-prompt.v2",
         family_name="test_family",
         prompt_id="P_TEST",
         colours=(

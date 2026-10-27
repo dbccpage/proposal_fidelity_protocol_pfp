@@ -14,7 +14,7 @@ families: [ooutwire, dialectic, philosophy, interrogation, intelligence, directo
 **Classification:** `TOP SECRET // SCI // AP: PROGRAM INDIGO // OPERATION POKROV`  
 **Handling Caveat:** `EYES ONLY: OOUTWIRE, MEEKERS`  
 **AuthorityEffect:** `None`  
-**Governing Context:** [`omega_engine_cognitive_operations/ooutwire`](../../../omega_engine_cognitive_operations/ooutwire)  
+**Governing Context:** [`cognitive_operations/ooutwire`](../../../cognitive_operations/ooutwire)  
 
 ---
 
@@ -26,7 +26,7 @@ The **Epistemological Directorate** operates under the direct command of **Ooutw
 
 ## 2. Integrated Directorates & Epistemic Philosophers
 
-This skill coordinates the 8 philosophical lenses and operational directorates defined in [`omega_engine_cognitive_operations/ooutwire/directorates/`](../../../omega_engine_cognitive_operations/ooutwire/directorates):
+This skill coordinates the 8 philosophical lenses and operational directorates defined in [`cognitive_operations/ooutwire/directorates/`](../../../cognitive_operations/ooutwire/directorates):
 
 1. **The Dialectical Philosophers (`01_directorate_epistemological.yaml`)**:
    - Socrates: Elenctic refutation, feigned humility, exposing self-contradiction.

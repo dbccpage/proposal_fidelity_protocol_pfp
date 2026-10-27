@@ -2,7 +2,7 @@
 
 The host pins the packet and signed path rows before seeing a model proposal.
 These methods check exact finite equations and path pairings. They cannot admit
-named functional claims until a Rust omega_functional adapter is connected.
+named functional claims until a Rust core_functional adapter is connected.
 """
 from __future__ import annotations
 from dataclasses import dataclass
@@ -50,7 +50,7 @@ class BqnfCertificateGate:
             alpha = check_alpha_witness(packet, proposed_alpha)
         except PacketError as exc:
             return GateResult('RefusedBadAlpha', False, str(exc))
-        return GateResult('RefusedFunctionalAdapterUnavailable', False, 'd0*alpha=c1 replayed exactly; Phi1 and Gamma2 require the Rust omega_functional adapter', witness=alpha)
+        return GateResult('RefusedFunctionalAdapterUnavailable', False, 'd0*alpha=c1 replayed exactly; Phi1 and Gamma2 require the Rust core_functional adapter', witness=alpha)
 
     def verify_cancellation(self, cancellation_ids: Any, xi: Any) -> GateResult:
         try:
@@ -63,5 +63,5 @@ class BqnfCertificateGate:
             witness = verify_meron_witness(self.sectors, cancellation_ids, xi)
         except WitnessError as exc:
             return GateResult('RefusedInvalidXi', False, str(exc))
-        return GateResult('RefusedFunctionalAdapterUnavailable', False, 'finite path pairing replayed exactly; Phi1, Gamma2, and scalar Xi require the Rust omega_functional adapter', witness=witness)
+        return GateResult('RefusedFunctionalAdapterUnavailable', False, 'finite path pairing replayed exactly; Phi1, Gamma2, and scalar Xi require the Rust core_functional adapter', witness=witness)
 __all__ = ['HostPacket', 'GateResult', 'BqnfCertificateGate']

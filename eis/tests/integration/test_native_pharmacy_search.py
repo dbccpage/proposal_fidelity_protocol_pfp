@@ -4,11 +4,11 @@ import json
 import os
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_search import rule_content_sha256
-from omega_engine_epistemic_immune_system.use_cases.pharmacy_search import PharmacySearchIndex
+from eis.domain.pharmacy_search import rule_content_sha256
+from eis.use_cases.pharmacy_search import PharmacySearchIndex
 
 pytestmark = pytest.mark.skipif(
-    not os.environ.get("OMEGA_SYMBOL_GAME_HOST"), reason="set OMEGA_SYMBOL_GAME_HOST to current build"
+    not os.environ.get("CORE_SYMBOL_GAME_HOST"), reason="set CORE_SYMBOL_GAME_HOST to current build"
 )
 
 QUERY = dict(domain="mathematics", tags=["tao"], stage="answer", prompt_field="claims",

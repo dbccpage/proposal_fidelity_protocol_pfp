@@ -19,7 +19,7 @@ from pathlib import Path
 def find_repo_root() -> Path:
     current = Path(__file__).resolve()
     for parent in current.parents:
-        if (parent / ".agents").is_dir() and (parent / "omega_engine").is_dir():
+        if (parent / ".agents").is_dir() and (parent / "engine").is_dir():
             return parent
     raise RuntimeError(f"Could not locate repo root from {current}")
 
@@ -27,9 +27,9 @@ def find_repo_root() -> Path:
 def test_alphabet_matches_paper(repo_root: Path) -> None:
     dda_path = (
         repo_root
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_wdp"
+        / "core_wdp"
         / "src"
         / "ddc"
         / "ddc_alphabet.rs"
@@ -39,7 +39,7 @@ def test_alphabet_matches_paper(repo_root: Path) -> None:
 
     candidate_paths = [
         repo_root
-        / "omega_engine_atlas"
+        / "atlas"
         / "coda_atlas"
         / "F004_papers"
         / "001_finite_obstruction_calculus"
@@ -52,7 +52,7 @@ def test_alphabet_matches_paper(repo_root: Path) -> None:
         / "automaton.py",
         repo_root
         / "research"
-        / "omega_engine_discrete_deformation_calculus"
+        / "discrete_deformation_calculus"
         / "code"
         / "ddc"
         / "automaton.py",
@@ -88,7 +88,7 @@ def test_alphabet_matches_paper(repo_root: Path) -> None:
 def test_paper_codes_exist_in_op_verification(repo_root: Path) -> None:
     candidate_paths = [
         repo_root
-        / "omega_engine_atlas"
+        / "atlas"
         / "coda_atlas"
         / "F004_papers"
         / "001_finite_obstruction_calculus"
@@ -101,7 +101,7 @@ def test_paper_codes_exist_in_op_verification(repo_root: Path) -> None:
         / "automaton.py",
         repo_root
         / "research"
-        / "omega_engine_discrete_deformation_calculus"
+        / "discrete_deformation_calculus"
         / "code"
         / "ddc"
         / "automaton.py",
@@ -112,9 +112,9 @@ def test_paper_codes_exist_in_op_verification(repo_root: Path) -> None:
 
     op_verif_path = (
         repo_root
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_wdp"
+        / "core_wdp"
         / "src"
         / "ddc"
         / "op_verification.rs"

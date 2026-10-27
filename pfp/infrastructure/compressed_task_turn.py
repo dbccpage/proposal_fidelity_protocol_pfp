@@ -1,7 +1,7 @@
 """Expand one retained tree node through the existing PFP preparation boundary."""
 
-from omega_engine_pfp.domain.prompts.compression import CompressedPromptTree, expand_prompt_tree
-from omega_engine_pfp.infrastructure.task_turn import PreparedTaskTurn, prepare_task_turn
+from pfp.domain.prompts.compression import CompressedPromptTree, expand_prompt_tree
+from pfp.infrastructure.task_turn import PreparedTaskTurn, prepare_task_turn
 
 
 def prepare_compressed_turn(tree: CompressedPromptTree | dict, node_id: str) -> PreparedTaskTurn:

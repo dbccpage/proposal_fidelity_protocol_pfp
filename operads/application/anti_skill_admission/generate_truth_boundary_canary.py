@@ -11,7 +11,7 @@ from pathlib import Path
 
 def generate_truth_boundary_canary(output: Path) -> tuple[Path, ...]:
     raise RuntimeError(
-        "Legacy Python prompt_civilization runtime is retired in favor of omega_engine/crates_rs/omega_prompt_civilization"
+        "Legacy Python prompt_civilization runtime is retired in favor of engine/crates_rs/core_prompt_civilization"
     )
 
 

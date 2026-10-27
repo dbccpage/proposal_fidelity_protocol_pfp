@@ -11,14 +11,14 @@ tower_level: null
 primitive: null
 aliases: ["paper:sn-packets:licensed-lift", "paper:sn-packets:slevel-lift-boundary"]
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
   - "s_n_packets_and_the_symbol_game.md §2 'Definition of S(n)'"
-  - ".planning/omega_symbol_game_slevel_product_plan.md §Key Definitions To Reconcile"
+  - ".planning/core_symbol_game_slevel_product_plan.md §Key Definitions To Reconcile"
 uses: []
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_lift_patch_semantics.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_lift_patch_semantics.lean"
   - "PaperER007.applyLift_advances_level"
   - "PaperER007.applyLift_strictly_decreases_budget"
   - "PaperER007.applyLift_increases_declared_mass"
@@ -42,7 +42,7 @@ Thus a silent relabeling is not a licensed lift.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean`.
 
 The Lean theorem names are:
 

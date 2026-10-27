@@ -8,7 +8,7 @@ no external publication status or DOI is inferred here.
 1. Carroll, Jeremy H. (2026). *PFP I: Exact Graph Repair and the Boundary
    Between a Proposal and a Certificate*. Version 0.1.0, author-review
    preprint. Repository path
-   `omega_engine_atlas/coda_atlas/omega_engine_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions`.
+   `atlas/coda_atlas/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions`.
 2. Harary, Frank (1953). “On the notion of balance of a signed graph.”
    *Michigan Mathematical Journal*, 2(2), 143–146.
    DOI [10.1307/mmj/1028989917](https://doi.org/10.1307/mmj/1028989917).

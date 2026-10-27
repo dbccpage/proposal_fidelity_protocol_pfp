@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.infrastructure import numbered_prompts as prompts
-from omega_engine_pfp.infrastructure.adapters import pfp_evidence
-from omega_engine_woland.tests.pilots.relational_spacetime import (
+from pfp.infrastructure import numbered_prompts as prompts
+from pfp.infrastructure.adapters import pfp_evidence
+from adversary.tests.pilots.relational_spacetime import (
     baseline,
     compact_trials,
     parameter_trials,
@@ -16,8 +16,8 @@ from omega_engine_woland.tests.pilots.relational_spacetime import (
 
 
 def test_distribution_resource_root_is_independent_of_working_directory(tmp_path, monkeypatch):
-    module = tmp_path / "installed/omega_engine_pfp/infrastructure/po035/cases.py"
-    pilot = tmp_path / "installed/omega_engine_woland/tests/pilots/relational_spacetime/tasks.py"
+    module = tmp_path / "installed/pfp/infrastructure/po035/cases.py"
+    pilot = tmp_path / "installed/adversary/tests/pilots/relational_spacetime/tasks.py"
     module.parent.mkdir(parents=True)
     pilot.parent.mkdir(parents=True)
     module.touch()
@@ -34,7 +34,7 @@ def test_current_numbered_renderer_uses_its_canonical_resource_root(tmp_path, mo
     monkeypatch.chdir(tmp_path)
     assert prompts.ROOT == pfp_evidence.resource_root(Path(prompts.__file__))
     prompt = prompts.build_prompt("pilot_0000201", 1)
-    assert prompt["construction_path"] == "omega_engine_pfp/infrastructure/numbered_prompts.py"
+    assert prompt["construction_path"] == "pfp/infrastructure/numbered_prompts.py"
     assert prompt["provider_dispatches"] == 0
 
 
@@ -56,7 +56,7 @@ def test_distribution_probe_checks_public_task_and_current_ide_commands(tmp_path
     import socket
     import urllib.request
 
-    from omega_engine_pfp.tests import installed_package_probe
+    from pfp.tests import installed_package_probe
 
     def forbidden(*args, **kwargs):
         pytest.fail("Offline installed command probe attempted network access.")
@@ -74,7 +74,7 @@ def test_distribution_probe_checks_public_task_and_current_ide_commands(tmp_path
 
 
 def test_current_ide_probe_requires_explicit_native_before_temp_io(tmp_path, monkeypatch):
-    from omega_engine_pfp.tests import installed_package_probe
+    from pfp.tests import installed_package_probe
 
     monkeypatch.chdir(tmp_path)
     with pytest.raises(ValueError, match="^INSTALLED_NATIVE_HOST_REQUIRED$"):
@@ -87,8 +87,8 @@ def test_distribution_probe_requires_current_challenge_resources_and_source_bind
 ):
     import socket
 
-    from omega_engine_pfp.tests import installed_package_probe
-    from omega_engine_woland.tests.pilots.challenge_suite.catalog import ROOT
+    from pfp.tests import installed_package_probe
+    from adversary.tests.pilots.challenge_suite.catalog import ROOT
 
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(
@@ -98,14 +98,14 @@ def test_distribution_probe_requires_current_challenge_resources_and_source_bind
     )
     controls = installed_package_probe.installed_challenge_probe(ROOT)
     assert controls == [
-        "ten installed historical-v3 challenge starts: full-Retinue intake/source bindings, zero model calls"
+        "ten installed historical-v3 challenge starts: full-Panel intake/source bindings, zero model calls"
     ]
     assert not list(tmp_path.iterdir())
 
 
 def test_distribution_probe_exercises_one_original_isolated_host_fixture():
-    from omega_engine_pfp.tests import installed_package_probe
-    from omega_engine_woland.tests.pilots.challenge_suite.catalog import ROOT
+    from pfp.tests import installed_package_probe
+    from adversary.tests.pilots.challenge_suite.catalog import ROOT
 
     assert installed_package_probe.installed_host_fixture_probe(ROOT) == [
         "installed C054 host fixture: isolated original dual-judge verification and empty-witness refusal; no model evidence"
@@ -113,7 +113,7 @@ def test_distribution_probe_exercises_one_original_isolated_host_fixture():
 
 
 def test_public_pfp_runner_preserves_canonical_identity_and_refusal(tmp_path, monkeypatch):
-    from omega_engine_pfp.tests.installed_package_probe import public_pfp_api_probe
+    from pfp.tests.installed_package_probe import public_pfp_api_probe
 
     monkeypatch.chdir(tmp_path)
     assert public_pfp_api_probe() == [

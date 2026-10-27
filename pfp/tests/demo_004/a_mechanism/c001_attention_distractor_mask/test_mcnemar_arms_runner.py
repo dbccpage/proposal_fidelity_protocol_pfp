@@ -4,7 +4,7 @@ test_mcnemar_arms_runner.py — Targeted test verifying McNemar evaluation execu
 
 from fractions import Fraction
 
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.mcnemar_arms_evaluation import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.mcnemar_arms_evaluation import (
     compute_mcnemar_exact,
     remove_distractor_spans,
     run_mcnemar_hidden_base_arms_evaluation,

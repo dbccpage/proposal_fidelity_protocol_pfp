@@ -15,16 +15,16 @@ from .budget_gate import (
     FallbackNotAllowedError,
 )
 from .commit_reveal_runner import CommitRevealRunner
-from .woland_gate import (
+from .adversary_gate import (
     RUN_FOLDER_EXISTS,
     TERMINAL_OPEN_RESIDUAL,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     TERMINAL_VERDICTS,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
     generate_c011_novella,
-    persist_woland_run_bundle,
+    persist_adversary_run_bundle,
 )
 
 __all__ = [
@@ -37,10 +37,10 @@ __all__ = [
     "TARGET_BUDGET_USD",
     "TARGET_BUDGET_MICROUSD",
     "MODEL_PARAMETER_CEILING",
-    "WolandGate",
+    "AdversaryGate",
     "CommitRevealRunner",
     "generate_c011_novella",
-    "persist_woland_run_bundle",
+    "persist_adversary_run_bundle",
     "RunFolderExistsError",
     "RUN_FOLDER_EXISTS",
     "TERMINAL_REFERENCE_SELF_CONSISTENT",

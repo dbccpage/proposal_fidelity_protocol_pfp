@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_prompt_civilization/src/pharmacy.rs
 ---
 
 # EIS Level 00: Innate Pharmacy Barriers: The 12 Canonical Failure Classes
 
 **AuthorityEffect:** None.  
 **Level:** Level 00 (Innate Static Grammar Barriers & Hard Dispositions)  
-**Rust Pharmacy Seam:** [`omega_prompt_civilization::pharmacy`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs)  
+**Rust Pharmacy Seam:** [`core_prompt_civilization::pharmacy`](../../../../engine/crates_rs/core_prompt_civilization/src/pharmacy.rs)  
 **Primary Types:** `FailureClass`, `DetectorReport`, `Disposition`, `Finding`  
 **Core Falsifiers:** `F-BIO-07`, `F-IMMUNE-01`
 
@@ -77,7 +77,7 @@ The innate barrier acts before any learned antibodies, model-based judges, or dy
 
 ## 2. The 12 Canonical Failure Classes
 
-The failure classes are strictly defined in `omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs:29`:
+The failure classes are strictly defined in `engine/crates_rs/core_prompt_civilization/src/pharmacy.rs:29`:
 
 | # | Variant (Code) | What the Detector Looks For |
 |---|---|---|
@@ -115,7 +115,7 @@ The failure classes are strictly defined in `omega_engine/crates_rs/omega_prompt
 ## 4. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::pharmacy
+// core_prompt_civilization::pharmacy
 pub enum FailureClass {
     SelfCertification,
     FakeReceipt,

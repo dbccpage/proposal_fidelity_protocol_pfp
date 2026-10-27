@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from .symbol_game_controller import SymbolGameController
     from .symbol_game_engine import SymbolGameEngine
     from .turn_controller import TurnController
-    from omega_engine_pfp.controllers.pfp_controller import PfpController
+    from pfp.controllers.pfp_controller import PfpController
 
 __all__ = list(dict.fromkeys([*__all__, 'PfpController']))
 
@@ -24,7 +24,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     'SymbolGameController': ('.symbol_game_controller', 'SymbolGameController'),
     'SymbolGameEngine': ('.symbol_game_engine', 'SymbolGameEngine'),
     'TurnController': ('.turn_controller', 'TurnController'),
-    'PfpController': ('omega_engine_pfp.controllers.pfp_controller', 'PfpController'),
+    'PfpController': ('pfp.controllers.pfp_controller', 'PfpController'),
 }
 
 

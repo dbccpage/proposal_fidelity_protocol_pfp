@@ -11,7 +11,7 @@ unchanged; only its location moved.
 ``` ext
 User: Review lesson 000.05 (Topological Knots) for pedagogy quality.
 
-Omega: [Invokes /lib-pedagogy-improvement]
+Core: [Invokes /lib-pedagogy-improvement]
 
 Step 0: Learning Objectives
 - LO1: Define topological knot and distinguish from everyday knot.

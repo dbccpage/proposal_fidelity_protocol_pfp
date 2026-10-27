@@ -16,18 +16,18 @@ authority_effect: None
 
 ## Description
 
-Selectively prune `omega_engine/crates_rs/target/debug/incremental/` when disk capacity is low or upon encountering `os error 112`, preserving compiled third-party dependencies in `target/debug/deps/`.
+Selectively prune `engine/crates_rs/target/debug/incremental/` when disk capacity is low or upon encountering `os error 112`, preserving compiled third-party dependencies in `target/debug/deps/`.
 
 ## Remediation & Implementation
 
 ```powershell
 # PowerShell on Windows
-Remove-Item -Recurse -Force "omega_engine\crates_rs\target\debug\incremental"
+Remove-Item -Recurse -Force "engine\crates_rs\target\debug\incremental"
 ```
 
 ```bash
 # Bash on Linux/macOS
-rm -rf omega_engine/crates_rs/target/debug/incremental
+rm -rf engine/crates_rs/target/debug/incremental
 ```
 
 ## Operadic Property

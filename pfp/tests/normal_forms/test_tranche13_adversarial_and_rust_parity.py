@@ -1,7 +1,7 @@
 """Tranche 13: End-to-End Adversarial, Falsification & Rust Crate Parity Gates (Tests 236-250).
 
 Aligned System:
-- omega_engine/crates_rs/
+- engine/crates_rs/
 - research/mssn_sn_tower/normal_forms/contracts/
 
 Invariants Enforced:

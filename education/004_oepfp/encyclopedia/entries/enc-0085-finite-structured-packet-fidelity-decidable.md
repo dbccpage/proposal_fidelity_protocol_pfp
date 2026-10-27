@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.6"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.2 'Theorem IV.6'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.2 'Theorem IV.6'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -35,7 +35,7 @@ If all field comparisons and normalizers are total deterministic polynomial-time
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.2
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.2
   (statement and proof copied verbatim). Original header line:
   `**Theorem IV.6 (Finite Structured Packet Fidelity Is Decidable).** [PROVED] If all field comparisons and normalizers are total deterministic polynomial-time, then $F(s, P)$ is decidable in polynomial time.`
 

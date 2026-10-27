@@ -12,14 +12,14 @@ from .budget_gate import (
     FallbackNotAllowedError,
 )
 from .commit_reveal_runner import CommitRevealRunner
-from .woland_gate import (
+from .adversary_gate import (
     RUN_FOLDER_EXISTS,
     TERMINAL_OPEN_RESIDUAL,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     TERMINAL_VERDICTS,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
     generate_c024_novella,
     sanitize_run_key,
 )
@@ -41,7 +41,7 @@ __all__ = [
     "CommitRevealRunner",
     "FallbackNotAllowedError",
     "RunFolderExistsError",
-    "WolandGate",
+    "AdversaryGate",
     "generate_c024_novella",
     "sanitize_run_key",
 ]

@@ -7,7 +7,7 @@ This records scoped local observations, not a publication or system grade.
   integration residual. The original source hashes match the request manifest.
   Mathematical measurement is `NOT_MEASURED`; source application is
   `NOT_PERFORMED`; activation remains `HOLD` and admission `Unadmitted`.
-- `omega_engine_woland/tests/test_ddc_code_repair.py`: 22 pytest cases passed,
+- `adversary/tests/test_ddc_code_repair.py`: 22 pytest cases passed,
   Python 3.12, actual configured native host, no provider call.
 - Paper 023's existing `code/tests/test_replay.py`: seven pytest cases passed.
   Its `code/replay.py` separately returned all six named controls true.

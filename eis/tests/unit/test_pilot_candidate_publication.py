@@ -6,13 +6,13 @@ import subprocess
 from pathlib import Path
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import PharmacyCatalogRepository
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
+from eis.infrastructure.pharmacy_writer import (
     filesystem_byte_writer,
     filesystem_catalog_bytes,
     release_publication_marker,
 )
-from omega_engine_epistemic_immune_system.domain.pharmacy_models import Antibody
+from eis.domain.pharmacy_models import Antibody
 
 
 def candidate():
@@ -138,7 +138,7 @@ def test_script_repetition_and_reformat_are_not_new_observations(tmp_path):
 
 def test_bad_control_or_changed_rule_is_refused_before_publication(tmp_path):
     from scripts.harvest_pilot_immunology import DEFAULT_DEFINITIONS, harvest_and_publish
-    from omega_engine_epistemic_immune_system.domain.pharmacy_search import rule_content_sha256
+    from eis.domain.pharmacy_search import rule_content_sha256
     root = Path(__file__).resolve().parents[3]
     definitions = tmp_path / "definitions.json"
     packet = json.loads((root / DEFAULT_DEFINITIONS).read_bytes())
@@ -158,7 +158,7 @@ def test_bad_control_or_changed_rule_is_refused_before_publication(tmp_path):
 
 def test_refused_admission_cannot_change_catalog(tmp_path):
     from scripts.harvest_pilot_immunology import DEFAULT_DEFINITIONS, harvest_and_publish
-    from omega_engine_epistemic_immune_system.domain.external_admission import HumanAntiSkillAdmissionDecisionV1
+    from eis.domain.external_admission import HumanAntiSkillAdmissionDecisionV1
 
     class RefusingGate:
         def apply_admission(self, decision, target_rule_bytes):

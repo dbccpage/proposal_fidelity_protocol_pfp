@@ -6,10 +6,10 @@ Tests for Exact and Independent Dual Checkers in C044 Finite Group Identificatio
 import json
 from pathlib import Path
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.solver import (
     solve,
 )
 

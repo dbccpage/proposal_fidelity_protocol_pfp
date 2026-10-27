@@ -7,10 +7,10 @@ and recomputable topological invariants.
 
 from typing import Any, Dict, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.knots_catalog import (
+from pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.knots_catalog import (
     CANONICAL_KNOTS,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.pd_validator import (
+from pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.pd_validator import (
     validate_and_parse_pd,
 )
 
@@ -127,7 +127,7 @@ def check_exact(case: Dict[str, Any], ans: Dict[str, Any]) -> Tuple[bool, str]:
             return False, f"Invalid compare kind: {kind}"
 
         # Import reference solver to cross-verify truth on compare
-        from omega_engine_pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.solver import (
+        from pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.solver import (
             solve as ref_solve,
         )
 

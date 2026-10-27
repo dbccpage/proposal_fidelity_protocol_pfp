@@ -3,7 +3,7 @@
 AuthorityEffect: None.
 
 Verifies:
-1. All 12 modular type files import cleanly from omega_engine_pfp.domain.types:
+1. All 12 modular type files import cleanly from pfp.domain.types:
    - base
    - pilot_spec
    - pilot_response
@@ -26,8 +26,8 @@ from __future__ import annotations
 import importlib
 import pytest
 
-from omega_engine_pfp import domain
-from omega_engine_pfp.domain import types
+from pfp import domain
+from pfp.domain import types
 
 
 MODULE_NAMES = [
@@ -50,7 +50,7 @@ MODULE_NAMES = [
 @pytest.mark.parametrize("mod_name", MODULE_NAMES)
 def test_types_submodule_importable(mod_name: str):
     """Verify each submodule in pfp.domain.types can be imported independently."""
-    mod = importlib.import_module(f"omega_engine_pfp.domain.types.{mod_name}")
+    mod = importlib.import_module(f"pfp.domain.types.{mod_name}")
     assert mod is not None
 
 
@@ -83,15 +83,15 @@ def test_domain_reexports_canonical_types():
 
 def test_core_model_instantiation():
     """Verify core models instantiate correctly with default configurations."""
-    from omega_engine_pfp.domain.types.pilot_spec import (
+    from pfp.domain.types.pilot_spec import (
         PilotSpec,
         PilotCoordinates,
         PilotIngress,
         PilotHostGate,
     )
-    from omega_engine_pfp.domain.types.prompt_templates import NegativeMutationFixture
-    from omega_engine_pfp.domain.types.seed_prompts import SeedPrompt, ExpectedOutcome
-    from omega_engine_pfp.domain.types.base import EvaluationStatus, CheckerId
+    from pfp.domain.types.prompt_templates import NegativeMutationFixture
+    from pfp.domain.types.seed_prompts import SeedPrompt, ExpectedOutcome
+    from pfp.domain.types.base import EvaluationStatus, CheckerId
 
     # NegativeMutationFixture
     fix = NegativeMutationFixture(

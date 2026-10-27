@@ -44,7 +44,7 @@ _SCENES = Path(__file__).resolve().parent
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
-from omega_engine_woland.infrastructure.providers.adapters.native_functional import compute_graph_phi1
+from adversary.infrastructure.providers.adapters.native_functional import compute_graph_phi1
 
 # Exact play_demo.py carrier. Claims are all 1; holonomy 1+1+1 = 3.
 PLAY_VERTICES: Tuple[str, ...] = ("a", "b", "c")

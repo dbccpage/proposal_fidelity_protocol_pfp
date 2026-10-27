@@ -10,7 +10,7 @@ from typing import Any
 
 import yaml  # type: ignore[import-untyped]
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 
 from ..catalog_v2 import (
     EstateCatalogV2,
@@ -205,7 +205,7 @@ def compile_estate_catalog_v2(
     family_anti_skills: Mapping[str, Sequence[str]] | None = None,
     meta_skill_operations: Mapping[str, Sequence[str]] | None = None,
     node_assignments: Sequence[NodeAssignmentV1] = (),
-    catalog_id: str = "woland_engineering_shadow_v2",
+    catalog_id: str = "adversary_engineering_shadow_v2",
 ) -> Result[EstateCatalogV2, EstateDiagnosticsV1]:
     """Compile selected legacy-current skill bytes into an immutable V2 binding."""
 

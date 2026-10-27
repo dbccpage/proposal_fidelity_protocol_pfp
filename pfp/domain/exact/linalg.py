@@ -3,11 +3,11 @@ definiteness, rank, characteristic polynomial.
 
 In Clean Architecture, this module defines the domain Value Object types
 (Matrix) and shape invariants, and delegates exact computational algorithms
-to the injected ExactLinearAlgebraPort backed by omega_linear_algebra:
-- omega_linear_algebra (determinant via Bareiss fraction-free elimination, exact LDLT, rank, SNF)
-- omega_homology (simplicial chains, boundaries, orientations)
-- omega_holonomy (connections, curvatures, loop holonomy)
-- omega_functional (Phi_1, Gamma_2, Xi)
+to the injected ExactLinearAlgebraPort backed by core_linear_algebra:
+- core_linear_algebra (determinant via Bareiss fraction-free elimination, exact LDLT, rank, SNF)
+- core_homology (simplicial chains, boundaries, orientations)
+- core_holonomy (connections, curvatures, loop holonomy)
+- core_functional (Phi_1, Gamma_2, Xi)
 
 AuthorityEffect: None.
 """
@@ -69,20 +69,20 @@ def is_symmetric(m: Sequence[Sequence[Q]]) -> bool:
 
 
 def det(m: Sequence[Sequence[Q]]) -> Q:
-    """Exact determinant of square matrix m, delegating to omega_linear_algebra."""
+    """Exact determinant of square matrix m, delegating to core_linear_algebra."""
     mm = as_matrix(m)
     _square(mm)
     return get_linear_algebra_port().determinant(mm)
 
 
 def rank(m: Sequence[Sequence[Q]]) -> int:
-    """Exact rank of rectangular matrix m, delegating to omega_linear_algebra."""
+    """Exact rank of rectangular matrix m, delegating to core_linear_algebra."""
     mm = as_matrix(m)
     return get_linear_algebra_port().rank(mm)
 
 
 def leading_minors(m: Sequence[Sequence[Q]]) -> tuple[Q, ...]:
-    """All leading principal minors of square matrix m, delegating to omega_linear_algebra."""
+    """All leading principal minors of square matrix m, delegating to core_linear_algebra."""
     mm = as_matrix(m)
     _square(mm)
     return get_linear_algebra_port().leading_minors(mm)
@@ -101,7 +101,7 @@ def first_nonpositive_minor(m: Sequence[Sequence[Q]]) -> int | None:
 
 
 def is_positive_definite(m: Sequence[Sequence[Q]]) -> bool:
-    """Sylvester's criterion for positive definiteness, delegating to omega_linear_algebra."""
+    """Sylvester's criterion for positive definiteness, delegating to core_linear_algebra."""
     mm = as_matrix(m)
     if not is_symmetric(mm):
         raise ExactError("RR-SHAPE", "positive definiteness needs a symmetric matrix")
@@ -109,7 +109,7 @@ def is_positive_definite(m: Sequence[Sequence[Q]]) -> bool:
 
 
 def char_poly(m: Sequence[Sequence[Q]]) -> Poly:
-    """Exact characteristic polynomial det(xI - m), delegating to omega_linear_algebra."""
+    """Exact characteristic polynomial det(xI - m), delegating to core_linear_algebra."""
     mm = as_matrix(m)
     _square(mm)
     return get_linear_algebra_port().characteristic_polynomial(mm)

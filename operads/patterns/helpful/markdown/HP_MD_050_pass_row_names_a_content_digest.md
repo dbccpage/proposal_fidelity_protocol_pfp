@@ -31,4 +31,4 @@ The witness in [AP_MD_050_zero_digest_governance_pass](../../anti/markdown/AP_MD
 
 `AP_MD_049` still owns `certificate_verified` true beside `NOT_MEASURED` and `NOT_RUN`. These summaries keep that flag false. That honesty is not this repair. `AP_MD_014` still owns `PASS_TO_MASTER` with a zero demo count. `AP_PY_005` still owns treating any 64-hex shape as fitness evidence without hashing a payload. This pattern only binds a summary `PASS` whose digest is the zero sentinel.
 
-`/woland-check-sensitivity-pattern` still owns an empty counterexample search. A `NON_BLOCKING` critique that says no search was run is not this pattern. `governance-ddc` `PASS` with a nonzero digest, and the `N_A` rows, are not this defect.
+`/adversary-check-sensitivity-pattern` still owns an empty counterexample search. A `NON_BLOCKING` critique that says no search was run is not this pattern. `governance-ddc` `PASS` with a nonzero digest, and the `N_A` rows, are not this defect.

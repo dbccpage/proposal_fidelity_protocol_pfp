@@ -46,7 +46,7 @@ class PfpConsoleView:
     def render_gate_receipt(receipt: GateReceipt) -> str:
         lines = [
             "=" * 70,
-            f" WOLAND TRIBUNAL RECEIPT: {receipt.candidate_id} [{receipt.terminal_disposition.upper()}]",
+            f" ADVERSARY TRIBUNAL RECEIPT: {receipt.candidate_id} [{receipt.terminal_disposition.upper()}]",
             f" All Gates Passed: {receipt.all_passed}",
             "-" * 70,
         ]

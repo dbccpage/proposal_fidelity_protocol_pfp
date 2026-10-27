@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-orchestrate_autop.py — Autonomous Omega Engine Meta-Pipeline (AutoP) Runner
+orchestrate_autop.py — Autonomous Engine Meta-Pipeline (AutoP) Runner
 
 Default/post-run: return a read-only current-IDE auto-learn handoff.
 Explicit --maintenance: execute AutoP stages 0–8 in strict sequential order:
@@ -8,7 +8,7 @@ Explicit --maintenance: execute AutoP stages 0–8 in strict sequential order:
   Stage 1: Episode compilation & candidate intake into runs/skill_compiler/episodes/
   Stage 2: Knowledge parity check & 6-host packaging parity gate
   Stage 3: Skill budget gate (max 300 lines / 20480 bytes)
-  Stage 4: Multi-host skill census & retinue verification
+  Stage 4: Multi-host skill census & panel verification
   Stage 5: Skill compiler regression evals (eval_runner.py)
   Stage 6: Ooutwire register audit & candidate proposal emission
   Stage 7: Auto-docs session documentation synthesis & comment slop audit
@@ -33,7 +33,7 @@ def find_repo_root(start: Optional[Path] = None) -> Path:
     curr = (start or Path.cwd()).resolve()
     for _ in range(10):
         if (curr / ".git").exists() and (
-            (curr / "omega_engine").is_dir() or (curr / ".agents").is_dir()
+            (curr / "engine").is_dir() or (curr / ".agents").is_dir()
         ):
             return curr
         if curr.parent == curr:
@@ -205,10 +205,10 @@ def _scan_root_for(skill_id: str, repo_root: Path) -> Path:
     if skill_id == "techne-code-lean4-anti-patterns":
         return repo_root
     if skill_id == "techne-code-rust-anti-patterns":
-        crates = repo_root / "omega_engine" / "crates_rs"
+        crates = repo_root / "engine" / "crates_rs"
         if crates.is_dir():
             return crates
-    return repo_root / "omega_engine_operads" / "skills"
+    return repo_root / "operads" / "skills"
 
 
 def _anti_pattern_command(
@@ -221,7 +221,7 @@ def _anti_pattern_command(
         return [
             sys.executable,
             str(script),
-            str(repo_root / "omega_engine_operads" / "skills"),
+            str(repo_root / "operads" / "skills"),
             "--output",
             str(receipt_path),
             "--summary",
@@ -231,7 +231,7 @@ def _anti_pattern_command(
             sys.executable,
             str(script),
             "--catalog",
-            str(repo_root / "omega_engine_operads" / "patterns"),
+            str(repo_root / "operads" / "patterns"),
             "--report-out",
             str(receipt_path),
             "--check",
@@ -253,7 +253,7 @@ def invoke_anti_pattern_skills(
     res: AutopStageResult,
 ) -> List[Dict[str, Any]]:
     """Run every anti-pattern skill entrypoint. Findings warn; a broken catalog fails."""
-    skills_root = repo_root / "omega_engine_operads" / "skills"
+    skills_root = repo_root / "operads" / "skills"
     skill_ids = discover_anti_pattern_skills(skills_root)
     if REQUIRED_ANTI_PATTERN_SKILL not in skill_ids:
         res.errors.append(f"Missing required skill {REQUIRED_ANTI_PATTERN_SKILL}")
@@ -314,7 +314,7 @@ def execute_stage_1(repo_root: Path, errors: List[str]) -> AutopStageResult:
     if errors:
         entry = {
             "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-            "source": "woland-research-paper",
+            "source": "adversary-research-paper",
             "error_count": len(errors),
             "errors": errors[:10],
             "disposition": "RECORDED_FOR_ANTI_SKILL_ANALYSIS",
@@ -334,9 +334,9 @@ def execute_stage_1(repo_root: Path, errors: List[str]) -> AutopStageResult:
     # Invoke auto-anti-skill: segment-dialogue and mine-candidates
     # -------------------------------------------------------------------------
     antiskill_script = (
-        repo_root / "omega_engine_operads" / "skills" / "auto-anti-skill" / "scripts" / "auto_anti_skill.py"
+        repo_root / "operads" / "skills" / "auto-anti-skill" / "scripts" / "auto_anti_skill.py"
     )
-    ooutwire_dir = repo_root / "omega_engine_epistemic_immune_system" / "antiskills" / "ooutwire"
+    ooutwire_dir = repo_root / "eis" / "antiskills" / "ooutwire"
     ooutwire_dir.mkdir(parents=True, exist_ok=True)
 
     if antiskill_script.exists():
@@ -366,7 +366,7 @@ def execute_stage_1(repo_root: Path, errors: List[str]) -> AutopStageResult:
             source_arg = str(run_transcript)
         else:
             default_fixture = (
-                repo_root / "omega_engine_epistemic_immune_system" / "antiskills" / "fixtures" / "default_transcript.txt"
+                repo_root / "eis" / "antiskills" / "fixtures" / "default_transcript.txt"
             )
             source_arg = str(default_fixture)
 
@@ -396,7 +396,7 @@ def execute_stage_1(repo_root: Path, errors: List[str]) -> AutopStageResult:
                 str(candidates_output),
             ]
             default_episodes = (
-                repo_root / "omega_engine_epistemic_immune_system" / "antiskills" / "fixtures" / "default_episodes.json"
+                repo_root / "eis" / "antiskills" / "fixtures" / "default_episodes.json"
             )
             if default_episodes.exists():
                 mine_cmd.extend(["--episodes", str(default_episodes)])
@@ -417,7 +417,7 @@ def execute_stage_1(repo_root: Path, errors: List[str]) -> AutopStageResult:
     # -------------------------------------------------------------------------
     # Active Anti-Skill Enforcement: Audit AutoP candidate transitions
     # -------------------------------------------------------------------------
-    validator_path = repo_root / "omega_engine_epistemic_immune_system" / "antiskills" / "validator.py"
+    validator_path = repo_root / "eis" / "antiskills" / "validator.py"
     if validator_path.exists():
         try:
             import importlib.util
@@ -458,7 +458,7 @@ def execute_stage_1(repo_root: Path, errors: List[str]) -> AutopStageResult:
         repo_str = str(repo_root)
         if repo_str not in sys.path:
             sys.path.insert(0, repo_str)
-        from omega_engine_woland.use_cases.intelligence_digestion.digestion_service import (
+        from adversary.use_cases.intelligence_digestion.digestion_service import (
             digest_and_archive_intelligence,
         )
         digestion_receipt = digest_and_archive_intelligence(repo_root)
@@ -470,7 +470,7 @@ def execute_stage_1(repo_root: Path, errors: List[str]) -> AutopStageResult:
 
     # Devour & Archive OMC DAGs (Extract active blockers, archive cleared files)
     try:
-        from omega_engine_woland.use_cases.intelligence_digestion.omc_dag_miner import (
+        from adversary.use_cases.intelligence_digestion.omc_dag_miner import (
             devour_and_archive_omc_dags,
         )
         omc_receipt = devour_and_archive_omc_dags(repo_root)
@@ -492,7 +492,7 @@ def execute_stage_2(repo_root: Path) -> AutopStageResult:
     # 1. Knowledge Parity
     kp_candidates = [
         repo_root
-        / "omega_engine_operads"
+        / "operads"
         / "skill_operad"
         / "skill_compiler"
         / "knowledge_parity.py",
@@ -510,7 +510,7 @@ def execute_stage_2(repo_root: Path) -> AutopStageResult:
     # 2. 6-Host Parity Gate
     sync_script = (
         repo_root
-        / "omega_engine_operations"
+        / "operations"
         / "use_cases"
         / "packaging"
         / "sync_cross_host_skills.py"
@@ -542,7 +542,7 @@ def execute_stage_3(repo_root: Path) -> AutopStageResult:
     res = AutopStageResult(3, "skill_budget_gate", "PASS")
     bg_candidates = [
         repo_root
-        / "omega_engine_operads"
+        / "operads"
         / "skill_operad"
         / "skill_compiler"
         / "budget_gate.py",
@@ -563,13 +563,13 @@ def execute_stage_3(repo_root: Path) -> AutopStageResult:
 
 
 # -----------------------------------------------------------------------------
-# Stage 4: Multi-Host Skill Census & Retinue Audit
+# Stage 4: Multi-Host Skill Census & Panel Audit
 # -----------------------------------------------------------------------------
 def execute_stage_4(repo_root: Path) -> AutopStageResult:
     res = AutopStageResult(4, "multi_host_skill_census", "PASS")
     census_script = (
         repo_root
-        / "omega_engine_operations"
+        / "operations"
         / "use_cases"
         / "packaging"
         / "multi_host_skill_census.py"
@@ -595,7 +595,7 @@ def execute_stage_5(repo_root: Path) -> AutopStageResult:
     res = AutopStageResult(5, "skill_compiler_eval_runner", "PASS")
     eval_candidates = [
         repo_root
-        / "omega_engine_operads"
+        / "operads"
         / "skill_operad"
         / "skill_compiler"
         / "eval_runner.py",
@@ -620,7 +620,7 @@ def execute_stage_5(repo_root: Path) -> AutopStageResult:
 # -----------------------------------------------------------------------------
 def execute_stage_6(repo_root: Path, errors: List[str]) -> AutopStageResult:
     res = AutopStageResult(6, "ooutwire_register_audit", "PASS")
-    ooutwire_dir = repo_root / "omega_engine_operads" / "skills" / "ooutwire"
+    ooutwire_dir = repo_root / "operads" / "skills" / "ooutwire"
     prop_reg = ooutwire_dir / "proposed_skills_register.md"
     rec_queue = ooutwire_dir / "recommended_skills_to_build.md"
 
@@ -645,7 +645,7 @@ def execute_stage_6(repo_root: Path, errors: List[str]) -> AutopStageResult:
 def execute_stage_7(repo_root: Path) -> AutopStageResult:
     res = AutopStageResult(7, "auto_docs_and_comment_slop_audit", "PASS")
     auto_docs_script = (
-        repo_root / "omega_engine_operations" / "use_cases" / "packaging" / "auto_docs_service.py"
+        repo_root / "operations" / "use_cases" / "packaging" / "auto_docs_service.py"
     )
     if auto_docs_script.exists():
         code, out, err = run_cmd(
@@ -678,7 +678,7 @@ def execute_stage_8(repo_root: Path) -> AutopStageResult:
     runs_dir.mkdir(parents=True, exist_ok=True)
     digest_path = runs_dir / "governance_digest.json"
     apply_path = runs_dir / "governance_apply.json"
-    module = "omega_engine_operads.frontend.cli"
+    module = "operads.frontend.cli"
     code, out, err = run_cmd(
         [sys.executable, "-m", module, "--json", "digest-governance", "--out", str(digest_path)],
         cwd=repo_root,
@@ -808,7 +808,7 @@ def run_anti_pattern_lint_on_changed(repo_root: Path) -> Dict[str, Any]:
     """Run auto-anti-pattern-lint on changed files and capture remediation suggestions."""
     lint_script = (
         repo_root
-        / "omega_engine_operads"
+        / "operads"
         / "skills"
         / "auto-anti-pattern-lint"
         / "scripts"
@@ -855,13 +855,13 @@ def post_run_handoff(repo_root: Path, source: Optional[Path] = None) -> Dict[str
     lint_summary = run_anti_pattern_lint_on_changed(repo_root)
     remediations = lint_summary.get("remediation_suggestions", [])
     repair_script = (
-        repo_root / "omega_engine_operads" / "skills" / "auto-learn" / "scripts" / "auto_learn.py"
+        repo_root / "operads" / "skills" / "auto-learn" / "scripts" / "auto_learn.py"
     )
     return {
         "status": "IDE_LEARNING_REQUIRED",
         "action": "INVOKE_AUTO_LEARN",
         "learner": "current IDE assistant session",
-        "skill_path": str(repo_root / "omega_engine_operads" / "skills" / "auto-learn" / "SKILL.md"),
+        "skill_path": str(repo_root / "operads" / "skills" / "auto-learn" / "SKILL.md"),
         "repair_entrypoint": (
             str(repair_script.relative_to(repo_root)).replace("\\", "/")
             if repair_script.is_file()
@@ -939,7 +939,7 @@ def main():
 
         if args.repair and remediations:
             repair_script = (
-                repo_root / "omega_engine_operads" / "skills" / "auto-learn" / "scripts" / "auto_learn.py"
+                repo_root / "operads" / "skills" / "auto-learn" / "scripts" / "auto_learn.py"
             )
             if repair_script.is_file():
                 print(

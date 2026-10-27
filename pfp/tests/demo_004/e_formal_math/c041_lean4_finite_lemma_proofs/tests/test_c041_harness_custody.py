@@ -16,10 +16,10 @@ import inspect
 import json
 
 import pytest
-from omega_engine_pfp.infrastructure.formal_matrix import (
+from pfp.infrastructure.formal_matrix import (
     ArmAntibodyStore,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import symbol_game_experiment as exp
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import symbol_game_experiment as exp
 
 CASE = {"case_id": "c041_pub_03", "prelude": "", "statement": "∀ b : Bool, (b && true) = b"}
 

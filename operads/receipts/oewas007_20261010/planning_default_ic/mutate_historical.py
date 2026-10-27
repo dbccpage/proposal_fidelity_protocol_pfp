@@ -7,17 +7,17 @@ import sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
 OUT = Path(__file__).resolve().parent
-TEST = "omega_engine_product_planning_office/tests/test_prior_art_historical_sources.py"
+TEST = "product_planning_office/tests/test_prior_art_historical_sources.py"
 CASES = [
-    ("historical_mutation_guessed_bytes", "omega_engine_product_planning_office/infrastructure/prior_art_sources.py",
+    ("historical_mutation_guessed_bytes", "product_planning_office/infrastructure/prior_art_sources.py",
      b"return resolve_historical_path(repository_root, original_relative)",
      b'return repository_root / "_ic/darpa/research" / Path(original_relative).relative_to("_intelligence/research")',
      TEST + "::test_missing_source_never_guesses_unbound_bytes[tampered_both]"),
-    ("historical_mutation_arbitrary_missing", "omega_engine_product_planning_office/use_cases/prior_art_epic_audit.py",
+    ("historical_mutation_arbitrary_missing", "product_planning_office/use_cases/prior_art_epic_audit.py",
      b'if historical_source_resolver is not None and origin.startswith("_intelligence/"):',
      b'if historical_source_resolver is not None:',
      TEST + "::test_ordinary_missing_or_escaping_paths_do_not_invoke_history[missing.pdf]"),
-    ("historical_mutation_output_escape", "omega_engine_product_planning_office/use_cases/prior_art_epic_audit.py",
+    ("historical_mutation_output_escape", "product_planning_office/use_cases/prior_art_epic_audit.py",
      b'if root.resolve() not in selected.parents or not selected.is_file():', b'if False:',
      TEST + "::test_injected_path_must_still_be_contained_regular_file"),
 ]

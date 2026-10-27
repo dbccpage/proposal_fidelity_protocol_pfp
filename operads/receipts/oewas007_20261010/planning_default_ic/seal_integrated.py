@@ -2,7 +2,7 @@
 from __future__ import annotations
 import hashlib,json,subprocess,time
 from pathlib import Path
-ROOT=Path.cwd();OUT=ROOT/'omega_engine_workflows_agents_skills/receipts/oewas007_20261010/planning_default_ic'
+ROOT=Path.cwd();OUT=ROOT/'workflows_agents_skills/receipts/oewas007_20261010/planning_default_ic'
 assert not (OUT/'receipt.json').exists()
 def digest(raw):return hashlib.sha256(raw).hexdigest()
 def record(path):
@@ -22,7 +22,7 @@ for name,argv in [
  versions[name]={'command_argv':argv,'exit_code':result.returncode,'stdout_sha256':digest(result.stdout),'stderr_sha256':digest(result.stderr),'reported_version':result.stdout.decode('utf8').strip()}
 (OUT/'tool_versions.json').write_bytes((json.dumps(versions,indent=2,sort_keys=True)+'\n').encode())
 checks={}
-for family,expected in [('koroviev','83123ff485c6261a234d7b010774c7555a17196c65e8ab37fb14cbc42c187fb8'),('planning','e72493704da8eea71875646e5968871c8174ecae154a1f9a7a2c95660434b396')]:
+for family,expected in [('defect_hunter','83123ff485c6261a234d7b010774c7555a17196c65e8ab37fb14cbc42c187fb8'),('planning','e72493704da8eea71875646e5968871c8174ecae154a1f9a7a2c95660434b396')]:
  p=OUT.parent/family/'receipt.json';assert digest(p.read_bytes())==expected
  d=json.loads(p.read_bytes());verified=[]
  entries=d['artifacts']
@@ -36,11 +36,11 @@ for change in nav['changes']:
  before=(ROOT/change['before_path']).read_bytes();after=(ROOT/change['path']).read_bytes()
  assert digest(before)==change['before_sha256'] and digest(after)==change['after_sha256']
  assert before.replace(nav['old_module'].encode(),nav['new_module'].encode())==after
-registry=ROOT/'omega_engine_product_planning_office/plans/epics/epic_relevance_5_prior_art.yaml'
+registry=ROOT/'product_planning_office/plans/epics/epic_relevance_5_prior_art.yaml'
 assert digest(registry.read_bytes())=='995ca04f8ef001c50f8816051f263b16cfa8b6a0223b59ba07ddfcc9dc2e28cf'
 comparisons=[]
 for stem,key in [('epic_obstruction_walk','epics'),('prior_art_epic_map','prior_epic_inventory')]:
- base='omega_engine_product_planning_office/receipts/'
+ base='product_planning_office/receipts/'
  oldrel=base+stem+'_20261010_oewas002_successor.json';newrel=base+stem+'_20261010_oewas007_integrated_ic_successor.json';old=load(oldrel);new=load(newrel)
  assert new['immediate_predecessor']['sha256']==digest((ROOT/oldrel).read_bytes())
  delta={r['path'] for r in new['successor_review']['changed_inventory_rows']}; unchanged=0
@@ -52,7 +52,7 @@ for stem,key in [('epic_obstruction_walk','epics'),('prior_art_epic_map','prior_
  for f in old:
   if f not in {key,'immediate_predecessor','successor_review'}:assert old[f]==new[f]
  if key=='epics':
-  p='omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_002_planar_tree_substitution_and_workflow_dag_plan.md'
+  p='product_planning_office/plans/epics/oewas/epic_oe_oewas_002_planar_tree_substitution_and_workflow_dag_plan.md'
   assert next(r for r in old[key] if r['path']==p)==next(r for r in new[key] if r['path']==p)
  comparisons.append({'successor':newrel,**record(ROOT/newrel),'changed_rows':len(delta),'unchanged_rows':unchanged,'all_original_base_and_source_metadata_preserved':True,'upstream002_row_unchanged':True})
 (OUT/'integrated_custody_comparison.json').write_bytes((json.dumps({'authority_effect':'None','earlier_seals':checks,'registry_sha256':digest(registry.read_bytes()),'navigation_changes_are_exact_module_replacements':True,'successors':comparisons},indent=2,sort_keys=True)+'\n').encode())

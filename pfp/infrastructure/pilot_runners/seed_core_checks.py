@@ -12,10 +12,10 @@ import sympy as sp
 
 
 def genesis_replay(command: str) -> dict:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
     root = Path(__file__).resolve().parents[3]
-    configured = os.environ.get("OMEGA_GENESIS_REPLAY_BINARY")
-    binary = Path(configured) if configured else root / "omega_engine/crates_rs/target/debug/genesis_replay.exe"
+    configured = os.environ.get("CORE_GENESIS_REPLAY_BINARY")
+    binary = Path(configured) if configured else root / "engine/crates_rs/target/debug/genesis_replay.exe"
     if not binary.is_file():
         raise SeedCheckFailure("NATIVE_GENESIS_REPLAY_UNAVAILABLE: build the existing genesis_replay binary")
     try:
@@ -33,8 +33,8 @@ def genesis_replay(command: str) -> dict:
 
 
 def native_expected(seed_id: str) -> dict:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
-    source = Path(__file__).resolve().parents[3] / "omega_engine/crates_rs/omega_ooutwire_primitives/src/bin/genesis_replay.rs"
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    source = Path(__file__).resolve().parents[3] / "engine/crates_rs/core_ooutwire_primitives/src/bin/genesis_replay.rs"
     try:
         source_digest = sha256(source.read_bytes()).hexdigest()
     except OSError as exc:
@@ -70,11 +70,11 @@ def native_expected(seed_id: str) -> dict:
 
 
 def core_expected(number: int) -> dict:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import boundary
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import boundary
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
     if number == 3:
         import importlib.util
-        grammar = Path(__file__).resolve().parents[3] / "omega_engine_education/documentation/003_oemssn/grammar/mssn.ebnf"
+        grammar = Path(__file__).resolve().parents[3] / "education/documentation/003_oemssn/grammar/mssn.ebnf"
         try:
             raw = grammar.read_bytes()
         except OSError as exc:
@@ -165,10 +165,10 @@ def core_expected(number: int) -> dict:
 
 
 def hodge_check(payload: dict) -> dict:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import compare
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import vector
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import wire
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import compare
+    from pfp.infrastructure.pilot_runners.seed_checks import vector
+    from pfp.infrastructure.pilot_runners.seed_checks import wire
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
     if set(payload) != {"potential", "harmonic", "face_potential", "d0_adjoint", "d1_adjoint", "comparison"}:
         raise SeedCheckFailure("HODGE_WITNESS_FIELDS")
     d0 = sp.Matrix([[-1,1,0],[-1,0,1],[0,-1,1]])
@@ -188,10 +188,10 @@ def hodge_check(payload: dict) -> dict:
 
 
 def channel_check(payload: dict) -> dict:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import compare
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import rational
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import wire
+    from pfp.infrastructure.pilot_runners.seed_checks import compare
+    from pfp.infrastructure.pilot_runners.seed_checks import rational
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import wire
     required = {"kraus", "density", "marginal_first", "marginal_second", "output", "remote_after", "branch_index", "branch_probability", "branch_remote", "factor_order"}
     if set(payload) != required:
         raise SeedCheckFailure("CHANNEL_WITNESS_FIELDS")

@@ -13,18 +13,18 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Callable
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import (
+from pfp.domain.contracts.pfp_runtime import (
     PfpPreparedStage,
     PfpPrompt,
     PfpStageReceipt,
 )
-from omega_engine_pfp.use_cases.pfp_proposal import ProposalCheck
-from omega_engine_pfp.use_cases.pfp_stages import PfpStagePolicy
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
-from omega_engine_woland.infrastructure.providers.budget_ledger import SqliteBudgetLedger
-from omega_engine_woland.infrastructure.providers.openai_compat import build_openai_compat_body
-from omega_engine_woland.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
-from omega_engine_woland.infrastructure.providers.wire import decode_reply
+from pfp.use_cases.pfp_proposal import ProposalCheck
+from pfp.use_cases.pfp_stages import PfpStagePolicy
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
+from adversary.infrastructure.providers.budget_ledger import SqliteBudgetLedger
+from adversary.infrastructure.providers.openai_compat import build_openai_compat_body
+from adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
+from adversary.infrastructure.providers.wire import decode_reply
 
 MAX_OUTPUT = 3000
 CAP = 50000
@@ -283,7 +283,7 @@ class PfpPipelineProviderAdapter:
             self.max_output_tokens = self.capture["max_output_tokens"]
         else:
             from uuid import uuid4
-            from omega_engine_pfp.infrastructure.pilot_matrix import _scope, _output_bound
+            from pfp.infrastructure.pilot_matrix import _scope, _output_bound
 
             if self.output.exists():
                 raise ValueError("RUN_ALREADY_EXISTS")
@@ -310,8 +310,8 @@ class PfpPipelineProviderAdapter:
 
     def _prepare(self, packet):
         from dataclasses import replace
-        from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
-        from omega_engine_woland.domain.providers.types import Provider
+        from pfp.infrastructure.task_turn import prepare_task_turn
+        from adversary.domain.providers.types import Provider
 
         prompt = PfpPrompt(packet.system,
             packet.user + "\nReturn only JSON satisfying this response schema:\n"
@@ -389,7 +389,7 @@ class PfpPipelineProviderAdapter:
             answer = self._replay_current(directory, turn, packet_sha256, wire)
             self._completed_stages.add(packet.stage)
             return answer
-        from omega_engine_pfp.infrastructure.pilot_matrix import complete_pilot_turn
+        from pfp.infrastructure.pilot_matrix import complete_pilot_turn
 
         directory.mkdir()
         self._save(directory / "request.json", wire)
@@ -439,8 +439,8 @@ class PfpPipelineProviderAdapter:
 
     def _replay_current(self, directory, turn, packet_sha256, wire):
         import base64
-        from omega_engine_woland.domain.providers.types import Provider
-        from omega_engine_woland.infrastructure.providers.openai_compat import parse_openai_compat_response
+        from adversary.domain.providers.types import Provider
+        from adversary.infrastructure.providers.openai_compat import parse_openai_compat_response
 
         exchange = json.loads((directory / "exchange.json").read_bytes())
         stored = json.loads((directory / "receipt.json").read_bytes())
@@ -468,7 +468,7 @@ class PfpPipelineProviderAdapter:
             # A gateway refusal/ambiguous send may have no decoded completion.
             # Recheck its request/action and retained wire without inventing one.
             from dataclasses import replace
-            from omega_engine_woland.use_cases.providers.completion import request_digest
+            from adversary.use_cases.providers.completion import request_digest
 
             allowed_no_send = {"CALL_ALLOWANCE_EXHAUSTED", "ESTIMATED_BUDGET_EXCEEDED",
                 "FUZZY_BUDGET_MILESTONE_REACHED", "UNRECONCILED_ATTEMPT",

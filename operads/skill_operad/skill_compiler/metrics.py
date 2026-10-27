@@ -16,7 +16,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-RUN_SCHEMA = "omega.autoskill.run.v1"
+RUN_SCHEMA = "core.autoskill.run.v1"
 SIGNAL_FIELDS = frozenset({"signal_type", "description", "durable", "confidence", "evidence"})
 CONFIDENCE = frozenset({"HIGH", "MEDIUM", "LOW"})
 
@@ -64,7 +64,7 @@ def load_run(path: Path) -> dict[str, Any]:
 
 def _git_skill_commit_count(repo_root: Path) -> int | None:
     proc = subprocess.run(
-        ["git", "log", "--format=%H", "--", "omega_engine_operads/skills", ".agents/skills"],
+        ["git", "log", "--format=%H", "--", "operads/skills", ".agents/skills"],
         cwd=repo_root,
         capture_output=True,
         text=True,
@@ -83,7 +83,7 @@ def summarize(run: dict[str, Any], repo_root: Path) -> dict[str, Any]:
     durable = sum(1 for row in signals if row["durable"])
     evidenced = sum(1 for row in signals if row.get("evidence"))
     return {
-        "schema": "omega.autoskill.metrics.v1",
+        "schema": "core.autoskill.metrics.v1",
         "session_id": run["session_id"],
         "signal_count": len(signals),
         "durable_signal_count": durable,

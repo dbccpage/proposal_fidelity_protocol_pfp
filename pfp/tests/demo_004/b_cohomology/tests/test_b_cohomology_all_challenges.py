@@ -7,12 +7,12 @@ import io
 import json
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.judge.certificate_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.judge.certificate_checker import (
     check_cohomology_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.runner import run_cases
+from projects.mssn_sn_symgam.challenges.b_cohomology.runner import run_cases
 
-from omega_engine_pfp.domain.ports import cohomology_port
+from pfp.domain.ports import cohomology_port
 
 MODULES = {
     "c011": "c011_solver",
@@ -48,7 +48,7 @@ def test_legacy_solver_uses_shared_port_and_preserves_refusal(monkeypatch, chall
     port = RecordingPort(result)
     monkeypatch.setattr(cohomology_port, "_DEFAULT_SOLVER", port)
     module = importlib.import_module(
-        f"omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.solvers.{module_name}"
+        f"projects.mssn_sn_symgam.challenges.b_cohomology.solvers.{module_name}"
     )
     supplied = {"payload": "case", "challenge": "ignored"}
     assert getattr(module, f"solve_{challenge}")(supplied) is result
@@ -109,7 +109,7 @@ def test_empty_or_unavailable_run_is_incomplete(monkeypatch):
 
 def test_solve_cli_exits_nonzero_on_refusal(monkeypatch, capsys):
     module = importlib.import_module(
-        "omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.solve"
+        "projects.mssn_sn_symgam.challenges.b_cohomology.solve"
     )
     port = RecordingPort({"status": "UNKNOWN", "refusal": "NATIVE_OPERATION_UNAVAILABLE"})
     monkeypatch.setattr(cohomology_port, "_DEFAULT_SOLVER", port)
@@ -120,7 +120,7 @@ def test_solve_cli_exits_nonzero_on_refusal(monkeypatch, capsys):
 
 def test_runner_cli_exits_nonzero_for_missing_suite(monkeypatch, tmp_path):
     module = importlib.import_module(
-        "omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.runner"
+        "projects.mssn_sn_symgam.challenges.b_cohomology.runner"
     )
     monkeypatch.setattr(module, "__file__", str(tmp_path / "runner.py"))
     assert module.main(["--suite", "hidden"]) == 1

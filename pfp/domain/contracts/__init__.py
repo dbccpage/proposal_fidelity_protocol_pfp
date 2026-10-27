@@ -11,11 +11,11 @@ from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:
     from .contracts import ContractAuditReceipt, ContractSpec, InvariantCheck, Postcondition, Precondition
     from .gate_types import ComparisonOperator, EmpiricalGate, GateRegister, Intergate, PrimaryGate, gate_ordinal
-    from .gates import GateReceipt, GateSpec, GateVerdict, WolandGateId
+    from .gates import GateReceipt, GateSpec, GateVerdict, AdversaryGateId
     from .schema_register import EnvelopeSchemaEntry, GrammarSchemaEntry, SchemaRegister
     from .schemas import SchemaCatalog, SchemaSpec, SchemaValidationResult
 
-__all__ = ['ComparisonOperator', 'ContractAuditReceipt', 'ContractSpec', 'EmpiricalGate', 'EnvelopeSchemaEntry', 'GateReceipt', 'GateRegister', 'GateSpec', 'GateVerdict', 'GrammarSchemaEntry', 'Intergate', 'InvariantCheck', 'Postcondition', 'Precondition', 'PrimaryGate', 'SchemaCatalog', 'SchemaRegister', 'SchemaSpec', 'SchemaValidationResult', 'WolandGateId', 'gate_ordinal']
+__all__ = ['ComparisonOperator', 'ContractAuditReceipt', 'ContractSpec', 'EmpiricalGate', 'EnvelopeSchemaEntry', 'GateReceipt', 'GateRegister', 'GateSpec', 'GateVerdict', 'GrammarSchemaEntry', 'Intergate', 'InvariantCheck', 'Postcondition', 'Precondition', 'PrimaryGate', 'SchemaCatalog', 'SchemaRegister', 'SchemaSpec', 'SchemaValidationResult', 'AdversaryGateId', 'gate_ordinal']
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     'ContractAuditReceipt': ('.contracts', 'ContractAuditReceipt'),
@@ -32,7 +32,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     'GateReceipt': ('.gates', 'GateReceipt'),
     'GateSpec': ('.gates', 'GateSpec'),
     'GateVerdict': ('.gates', 'GateVerdict'),
-    'WolandGateId': ('.gates', 'WolandGateId'),
+    'AdversaryGateId': ('.gates', 'AdversaryGateId'),
     'EnvelopeSchemaEntry': ('.schema_register', 'EnvelopeSchemaEntry'),
     'GrammarSchemaEntry': ('.schema_register', 'GrammarSchemaEntry'),
     'SchemaRegister': ('.schema_register', 'SchemaRegister'),

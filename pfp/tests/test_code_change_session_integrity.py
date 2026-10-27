@@ -32,15 +32,15 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.controllers.code_change_controller import (
+from pfp.controllers.code_change_controller import (
     CodeChangeController,
 )
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     CanonicalizationError,
     CodeChangeProposalPayloadV1,
     build_code_change_proposal_envelope,
 )
-from omega_engine_pfp.use_cases.code_change import CodeChangeSession
+from pfp.use_cases.code_change import CodeChangeSession
 
 OWNED = "src"
 PROTECTED = "README.md"

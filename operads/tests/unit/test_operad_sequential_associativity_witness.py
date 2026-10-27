@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_operads.domain.operad import (
+from operads.domain.operad import (
     ColourSignature,
     OperationId,
     OperationSignature,

@@ -4,7 +4,7 @@
 
 `.agents/operad/OWNERSHIP.md` (a historical path: `.agents/operad/` does not exist at `201dc8d`;
 the surviving ownership note is
-`omega_engine_operads/skill_operad/_docs/OWNERSHIP.md`) describes the intended structure as a coloured
+`operads/skill_operad/_docs/OWNERSHIP.md`) describes the intended structure as a coloured
 non-symmetric multicategory. The root `coloured_operad.py` is a historical JSON
 compatibility API; `domain/` is the newer domain surface. Symmetric scaffolding is
 experimental, and scalar quotient observations must not be promoted into

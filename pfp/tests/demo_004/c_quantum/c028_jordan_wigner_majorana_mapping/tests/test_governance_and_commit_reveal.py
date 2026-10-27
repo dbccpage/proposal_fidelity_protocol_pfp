@@ -25,15 +25,15 @@ from governance.budget_gate import (
     C028BudgetGate,
 )
 from governance.commit_reveal_runner import CommitRevealRunner
-from governance.woland_gate import (
+from governance.adversary_gate import (
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     RunFolderExistsError,
-    WolandRealityGate,
+    AdversaryRealityGate,
 )
 
-from omega_engine_woland.domain.providers.model_registry import ModelParameterCeilingRefused
-from omega_engine_woland.domain.providers.types import Provider
+from adversary.domain.providers.model_registry import ModelParameterCeilingRefused
+from adversary.domain.providers.types import Provider
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 PACKAGE_NAME = PACKAGE_ROOT.name
@@ -153,8 +153,8 @@ def test_budget_gate_admission_and_settlement_fail_closed():
     assert unavailable.value.code == "BUDGET_GATE_UNAVAILABLE"
 
 
-def test_woland_gate_pass_verdict(tmp_path: Path):
-    gate = WolandRealityGate(base_repo_root=tmp_path)
+def test_adversary_gate_pass_verdict(tmp_path: Path):
+    gate = AdversaryRealityGate(base_repo_root=tmp_path)
     verdict = gate.evaluate_verdict(
         cases_evaluated=38,
         cases_passed=38,
@@ -168,19 +168,19 @@ def test_woland_gate_pass_verdict(tmp_path: Path):
     assert gate.evaluate_verdict(38, 38 - 1, 48, 48, 0, CEILING_USD) == TERMINAL_REFUSE
 
 
-def test_woland_gate_refuses_empty_suites_and_inexact_inputs(tmp_path: Path):
+def test_adversary_gate_refuses_empty_suites_and_inexact_inputs(tmp_path: Path):
     """Counterexample: 0 of 0 mutations passed (kill rate defaulted to 1.0), and float costs were accepted."""
-    gate = WolandRealityGate(base_repo_root=tmp_path)
+    gate = AdversaryRealityGate(base_repo_root=tmp_path)
     assert gate.evaluate_verdict(38, 38, 0, 0, 0, CEILING_USD) == "REFERENCE_SELF_INCONSISTENT"
     assert gate.evaluate_verdict(0, 0, 48, 48, 0, CEILING_USD) == "REFERENCE_SELF_INCONSISTENT"
     with pytest.raises(TypeError):
         gate.evaluate_verdict(38, 38, 48, 48, 0.01, 1.00)
 
 
-def test_woland_gate_never_deletes_an_existing_run(tmp_path: Path):
+def test_adversary_gate_never_deletes_an_existing_run(tmp_path: Path):
     """Counterexample: persist_run rmtree'd an existing run folder under _intelligence before writing."""
-    gate = WolandRealityGate(base_repo_root=tmp_path)
-    existing = tmp_path / "_intelligence" / "_woland" / "runs" / "kept_run"
+    gate = AdversaryRealityGate(base_repo_root=tmp_path)
+    existing = tmp_path / "_intelligence" / "_adversary" / "runs" / "kept_run"
     existing.mkdir(parents=True)
     (existing / "sentinel.txt").write_text("earlier run", encoding="utf-8")
     with pytest.raises(RunFolderExistsError):

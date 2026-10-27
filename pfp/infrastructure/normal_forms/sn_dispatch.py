@@ -13,7 +13,7 @@ from typing import Any, Callable
 
 import yaml
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
+from pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
 
 RPCNF_ID = "nf.physics.rpcnf"
 _DEFAULT_KEY = ("phi0", "phi1", "phi2", "phi3")
@@ -24,11 +24,11 @@ Form = Callable[[dict[str, Any], dict[str, str] | None], dict[str, Any]]
 
 
 def _sn_form_table() -> dict[str, Form]:
-    from omega_engine_pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_pdnf
-    from omega_engine_pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_pvnf
-    from omega_engine_pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_rpnf
-    from omega_engine_pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_scnf
-    from omega_engine_pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_state
+    from pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_pdnf
+    from pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_pvnf
+    from pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_rpnf
+    from pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_scnf
+    from pfp.infrastructure.normal_forms.sn_forms import evaluate_sn_state
 
     return {
         "nf.derivation.pdnf": evaluate_sn_pdnf,
@@ -110,7 +110,7 @@ def evaluate_sn_state_transition(
     contract_path: Path | None = None,
 ) -> dict[str, Any]:
     """Open an in-memory session, evaluate one transition, and close it."""
-    from omega_engine_pfp.infrastructure.normal_forms.evaluator import (
+    from pfp.infrastructure.normal_forms.evaluator import (
         NormalFormsEvaluator,
     )
 

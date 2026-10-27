@@ -77,7 +77,7 @@ import unittest
 # Ensure current lesson directory is on sys.path
 lesson_dir = Path(".").resolve()
 if not (lesson_dir / "educational_governor.py").is_file():
-    candidates = [lesson_dir / "omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_how_to_play_the_symbol_game"]
+    candidates = [lesson_dir / "education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_how_to_play_the_symbol_game"]
     lesson_dir = next((p for p in candidates if (p / "educational_governor.py").is_file()), lesson_dir)
 if str(lesson_dir) not in sys.path:
     sys.path.insert(0, str(lesson_dir))
@@ -392,13 +392,13 @@ Layer 3 (The Discrete Host Governor / Replay Oracle). Neither the LLM weights (L
   - Paper 032: §1, §3 (The Wager), §5 (Discrete $L_1$ Projection), §10 (Replay Governance)
   - Paper 003: §III (Epistemic Immune System), §IV (Discrete Host Governor Mechanics)
 - **Claim Ledger IDs:** `PO032-C01`, `PO032-C02`, `PO032-C04`
-- **Formal Verification Source:** [`omega_engine_education/notebooks/lessons/how_to_play/test_how_to_play_scenarios.py`](test_how_to_play_scenarios.py)
-- **Interactive Engine:** [`omega_engine_education/notebooks/lessons/how_to_play/interactive_board.py`](interactive_board.py)
+- **Formal Verification Source:** [`education/notebooks/lessons/how_to_play/test_how_to_play_scenarios.py`](test_how_to_play_scenarios.py)
+- **Interactive Engine:** [`education/notebooks/lessons/how_to_play/interactive_board.py`](interactive_board.py)
 - **Visual Assets:**
-  - [`assets/01_dual_space_governor_loop.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_education/notebooks/lessons/how_to_play/assets/01_dual_space_governor_loop.svg)
-  - [`assets/02_triangle_constraint_cycle.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_education/notebooks/lessons/how_to_play/assets/02_triangle_constraint_cycle.svg)
-  - [`assets/03_four_legal_moves.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_education/notebooks/lessons/how_to_play/assets/03_four_legal_moves.svg)
-  - [`assets/04_strict_lyapunov_descent.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_education/notebooks/lessons/how_to_play/assets/04_strict_lyapunov_descent.svg)""")
+  - [`assets/01_dual_space_governor_loop.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/01_dual_space_governor_loop.svg)
+  - [`assets/02_triangle_constraint_cycle.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/02_triangle_constraint_cycle.svg)
+  - [`assets/03_four_legal_moves.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/03_four_legal_moves.svg)
+  - [`assets/04_strict_lyapunov_descent.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/04_strict_lyapunov_descent.svg)""")
     )
 
     for index, cell in enumerate(cells):
@@ -460,7 +460,7 @@ import unittest
 
 lesson_dir = Path(".").resolve()
 if not (lesson_dir / "educational_governor.py").is_file():
-    candidates = [lesson_dir / "omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_how_to_play_the_symbol_game"]
+    candidates = [lesson_dir / "education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_how_to_play_the_symbol_game"]
     lesson_dir = next((p for p in candidates if (p / "educational_governor.py").is_file()), lesson_dir)
 if str(lesson_dir) not in sys.path:
     sys.path.insert(0, str(lesson_dir))

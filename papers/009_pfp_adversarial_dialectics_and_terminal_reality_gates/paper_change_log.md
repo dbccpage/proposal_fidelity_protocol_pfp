@@ -27,7 +27,7 @@ Entries are dated. Earlier entries keep their original scope.
 ### Added
 
 - Appendix A, "Where a gate's verdict comes from". It applies the protocol of
-  Sections 2, 4 and 7 to the terminal gate of the repository's seven-act Woland
+  Sections 2, 4 and 7 to the terminal gate of the repository's seven-act Adversary
   engine at commit `30609de2c3928238715375a9bac608256fa381d8`, with a table that
   sets each operation's name beside what it does and four falsifiers: input
   replacement (Act IV replaces the cochain by zeros and Act VII then authorizes),
@@ -37,13 +37,13 @@ Entries are dated. Earlier entries keep their original scope.
   receipts (the C012 copy of the gate reports agreement and repair for a refused
   run with no cases). Each falsifier gives a fixed input, the expected status and
   the observed status, and the fix: commit `a054c8ce1` for F1 to F3 (tests
-  `omega_engine_woland/tests/test_honest_gate_falsifiers.py` and
+  `adversary/tests/test_honest_gate_falsifiers.py` and
   `test_adversarial_m1_it2_1_challenger.py`) and commit `e6fbc15cf` for F4
-  (`omega_engine_projects/mssn_sn_symgam/challenges/harness_tests/test_harness_honesty.py`).
+  (`projects/mssn_sn_symgam/challenges/harness_tests/test_harness_honesty.py`).
 - The falsifiers are replayed by the collection's
-  `tools/replay_woland_gate_falsifiers.py`, which extracts the audited packages
+  `tools/replay_adversary_gate_falsifiers.py`, which extracts the audited packages
   with `git archive`, calls single act functions with a stub runtime and calls no
-  model; its record is the collection's `verification/woland_gate_falsifiers.json`.
+  model; its record is the collection's `verification/adversary_gate_falsifiers.json`.
 - Claim ledger rows G009-14 to G009-18.
 
 ### Changed
@@ -105,13 +105,13 @@ and current verification recorded before deposit readiness is asserted.
   protected Lean files and all earlier verification records remain unchanged.
 - Corrected stale 1.2.1 description and companion headers to the v0.1 designation,
   preserved internal revision history, and aligned Python support with 3.12.
-- Expanded the Landau companion to 24 questions, eight study levels, a separate
+- Expanded the Examiner companion to 24 questions, eight study levels, a separate
   instructor key, and a capstone with exact counts and changed-input controls.
 - Added notebook assertions, source/output replay, and a reproducible PDF build.
   Updated the manuscript, TeX, PDF, metadata, manifests, and release ZIP together.
 
 This review does not publish to Zenodo, establish a DOI, call providers, or
-reexecute the historical Woland audit or its corrected-code tests.
+reexecute the historical Adversary audit or its corrected-code tests.
 
 ## 2026-10-23 — author-review harness extension
 

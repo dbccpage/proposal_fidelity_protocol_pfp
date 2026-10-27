@@ -12,7 +12,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 An isomorphism given as images of generators is cheap to verify. The checker extends the map by breadth-first search, checks consistency, and checks the homomorphism law on at most 64² = 4,096 products. Finding it is hard. There are 51 groups of order 32 and 267 of order 64, and many of them agree on cheap invariants, so identification needs a sequence of invariants that finally separates them, followed by an isomorphism search.
 
-This stresses the Symbol Game's decomposition into invariant stages, the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that orders those stages, and the OEEIS (Omega Engine Epistemic Immune System) against the classic failure of declaring two groups isomorphic because a few invariants agree. A pass shows that a synthesized module identifies these groups without a computer-algebra system. It does not show anything new about groups.
+This stresses the Symbol Game's decomposition into invariant stages, the OEWAS (Engine Workflows, Agents, Skills) workflow that orders those stages, and the OEEIS (Engine Epistemic Immune System) against the classic failure of declaring two groups isomorphic because a few invariants agree. A pass shows that a synthesized module identifies these groups without a computer-algebra system. It does not show anything new about groups.
 
 ## 3. Formal Problem and Bounds
 
@@ -124,8 +124,8 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse, and there is no group-theory crate. The map extender and invariant checker are new Rust work, for example beside `omega_engine/crates_rs/omega_category_theory`.
-- Exact arithmetic for `GF(p)` matrices can reuse `omega_engine/crates_rs/omega_symbol_game_runtime/src/f2.rs` for `p = 2`.
+- The catalog row lists no estate reuse, and there is no group-theory crate. The map extender and invariant checker are new Rust work, for example beside `engine/crates_rs/core_category_theory`.
+- Exact arithmetic for `GF(p)` matrices can reuse `engine/crates_rs/core_symbol_game_runtime/src/f2.rs` for `p = 2`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras; [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended.
 
 ## 14. Claim Hygiene

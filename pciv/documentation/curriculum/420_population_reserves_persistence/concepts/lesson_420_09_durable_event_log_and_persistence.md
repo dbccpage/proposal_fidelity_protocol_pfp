@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 420 (Reserves, Security & Ecology)  
 **Level Source:** Level 09 ([`level_09_durable_event_log_and_persistence.md`](../../levels/level_09_durable_event_log_and_persistence.md))  
-**Python Persistence Seam:** [`omega_engine_operating_system.adapters.prompt_civ.event_log`](../../../../omega_engine_operating_system/adapters/prompt_civ/event_log.py)
+**Python Persistence Seam:** [`operating_system.adapters.prompt_civ.event_log`](../../../../operating_system/adapters/prompt_civ/event_log.py)
 
 ## 1. Pedagogical Objective
 Verify durable append-only event logging, producer-minted UUIDv5 event identities, Content-Addressed Storage (CAS) packet persistence, and crash replay recovery with zero redundant LLM API provider calls.

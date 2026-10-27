@@ -38,11 +38,11 @@ def guard():
 
 def skills():
     root = APPLICATION.parent
-    folder = root / "omega_engine_operads/catalog/contracts/v1"
-    contracts = [json.loads((folder / name).read_bytes()) for name in ("woland_claim_audit.json", "woland_scope_falsifier.json")]
+    folder = root / "operads/catalog/contracts/v1"
+    contracts = [json.loads((folder / name).read_bytes()) for name in ("adversary_claim_audit.json", "adversary_scope_falsifier.json")]
     return dict(contracts=contracts,
                 instructions={row["instruction"]["path"]: (root / row["instruction"]["path"]).read_text(encoding="utf-8") for row in contracts},
-                bindings=[dict(source="woland-scope-falsifier", target="woland-claim-audit", slot=0)], root="woland-claim-audit")
+                bindings=[dict(source="adversary-scope-falsifier", target="adversary-claim-audit", slot=0)], root="adversary-claim-audit")
 
 
 @pytest.mark.parametrize("mode,data", [(1, {"text":"op<<0><1>>", "level":1}), (4, guard()),

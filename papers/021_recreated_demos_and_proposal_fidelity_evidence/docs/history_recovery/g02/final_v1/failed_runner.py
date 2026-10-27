@@ -232,7 +232,7 @@ def main() -> None:
         (output / "source.rs").write_bytes(source.read_bytes())
         argv = [str(compiler), "--edition", "2021", "--crate-name", "paper011_g02_cut_bitmask",
                 str(source), "-L", f"dependency={args.deps.resolve()}", "--extern",
-                f"omega_kernel={args.kernel_rlib.resolve(strict=True)}", "--extern",
+                f"core_kernel={args.kernel_rlib.resolve(strict=True)}", "--extern",
                 f"serde_json={args.serde_rlib.resolve(strict=True)}", "-o", str(executable)]
         run = subprocess.run(argv, capture_output=True, check=False, cwd=PACKAGE, timeout=180)
         (output / "stdout.bin").write_bytes(run.stdout)

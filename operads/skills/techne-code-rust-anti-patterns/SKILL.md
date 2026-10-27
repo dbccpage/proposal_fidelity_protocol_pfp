@@ -12,7 +12,7 @@ families: [techne, quality, rust]
 
 **Status:** canonical-candidate. **AuthorityEffect:** None.
 
-Audit `omega_engine/crates_rs/` against the existing Rust pattern catalog.
+Audit `engine/crates_rs/` against the existing Rust pattern catalog.
 Static matches are review leads, not compiler findings or certification.
 
 ## Existing owners
@@ -35,7 +35,7 @@ and [Auto Learn](../auto-learn/SKILL.md) before repair.
 2. Run the requested signature checker and retain its exit status and scope:
 
    ```powershell
-   .venv/Scripts/python.exe omega_engine_operads/skills/techne-code-rust-anti-patterns/scripts/rust_anti_pattern_auditor.py --path omega_engine/crates_rs --check
+   .venv/Scripts/python.exe operads/skills/techne-code-rust-anti-patterns/scripts/rust_anti_pattern_auditor.py --path engine/crates_rs --check
    ```
 
    This lexical script masks comments/literals and checks exact derive names on

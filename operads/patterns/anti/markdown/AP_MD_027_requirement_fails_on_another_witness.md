@@ -29,7 +29,7 @@ A republication check is `FAIL`, and the errors list repeats that check's requir
 
 ## Witness
 
-Historical receipts. This digest did not rerun gates, XeLaTeX, pytest, or Lean, and did not open the PDF. Source folder `_ic/inr/omega_paper_reviews/wdp_six_corrections_20261009/`.
+Historical receipts. This digest did not rerun gates, XeLaTeX, pytest, or Lean, and did not open the PDF. Source folder `_ic/inr/core_paper_reviews/wdp_six_corrections_20261009/`.
 
 `severe_receipt.json` check `C02` has requirement "PDF text includes the declared title, version and date" and detail:
 

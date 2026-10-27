@@ -1,0 +1,61 @@
+# Epic: Rust workspace custody, raw-byte authority detection and scoped kernel requirements
+
+**Epic ID:** `EPIC-OE-OEWAS-006`
+**AuthorityEffect:** None
+**Status:** `RESEARCH_HOLD`
+**Reviewed:** 2026-10-10
+**Owner:** OEWAS maintainers and dependency owners named below.
+
+The [shared-review reconciliation](../../../receipts/epic_design_review_20261010.md) records the readable review and unavailable attachments. Full-scope readiness is held. Existing tests are source references, not current execution receipts.
+
+## Source inspection and repaired obstructions
+
+The named crates exist in [the canonical workspace](../../../../engine/crates_rs/Cargo.toml); do not create `core_oewas`. [pharmacy ingestion/detection](../../../../engine/crates_rs/core_prompt_civilization/src/pharmacy.rs) already emits PersonaAuthorityLeak. [existing authority fuzz tests](../../../../engine/crates_rs/core_prompt_civilization/tests/adversarial_authority_fuzz.rs) exercise Unicode/nesting. Extend the public ingestion boundary instead of reimplementing a detector already present.
+
+Crates legitimately contain documentation, schemas, payload data and allocating cold adapters. A blanket zero-prose/zero-Vec scan is not architecture verification. Allocation freedom applies only to a named kernel and declared buffers. Static absence of unwrap also does not prove panic freedom. Existing lexical authority detection does not validate cryptographic delegation.
+
+## Bounded contract and dependency decisions
+
+Use `pharmacy::ingest_and_detect` and `detect_with_raw_bytes` through their current public Rust signatures with one finite DetectionContext. Input is exact JSON bytes; output is DetectorReport or HostIngestError. Oracle: expected FailureClass/disposition and independently computed raw/semantic digests according to this crate's schemas. Keep sorted-JSON and canonical-wire schemas distinct.
+
+OEWAS006 owns workspace reference inventory, Python/native parity and allocation-sensitive kernel selection. Before allocation tests, name the production function, bounded input family, buffer owner, allocator instrumentation and threshold. No generic build discharges that blocker. The broader AST reviewer stays held pending reuse of an existing analyzer with a false-positive policy, not a new regex framework. Governance owns delegation trust.
+
+## Obstruction review and TDD test plan
+
+**Independent oracle for these slices:** expected FailureClass/disposition and independently computed raw/semantic digests according to this crate's schemas. Keep sorted-JSON and canonical-wire schemas distinct.
+
+Candidate: `engine/crates_rs/core_prompt_civilization/tests/pharmacy_raw_binding_contract.rs`.
+
+1. **RED → minimal GREEN:** feed escaped persona/admin and nested variants through actual ingestion; require PersonaAuthorityLeak and Refuse, plus a neutral-persona healthy control. Reuse detector behavior already GREEN; only a demonstrated missed variant warrants a code change. Refactor after the focused case passes.
+2. **RED → minimal GREEN:** provide two valid encodings of the same semantic payload; require equal semantic identity and distinct raw identity. A first-encoding receipt transplanted onto the second must be rejected by its consuming verification port. OEWAS006 must name that production consumer/schema before authoring this assertion; the detector alone cannot verify another stored receipt. This arm stays blocked explicitly.
+3. **RED → minimal GREEN:** feed malformed JSON, BOM/invalid UTF-8 and nonstandard numeric constants through decoding; require JsonSyntax, BomProhibited or InvalidUtf8 as appropriate and no clean report. Corrected bytes are a fresh-candidate recovery control. The current serde_json Value decoder can collapse duplicate keys; the native owner must settle duplicate-key rejection at the raw boundary before claiming complete authority-field coverage. Add a duplicate-key falsifier after that public policy is agreed; never describe it as an existing HostIngestError variant.
+
+| Theoretical minimum | Obligation |
+| --- | --- |
+| INVARIANT | Model persona assertions cannot supply host-derived authority; raw identity stays separate from semantic content. |
+| BREAK | Bypass persona inspection or hash only parsed Value while claiming raw-byte identity. |
+| WITNESS | Authority candidate refuses and equivalent encodings retain distinct raw identities. |
+| MUTATION | The linked pharmacy persona-inspection branch emits PersonaAuthorityLeak. Remove that branch in an isolated production mutation and require RED. Source-inspected, not mutation-executed here. |
+
+Examiner controls: neutral candidate (1), invalid encoding (2), foreign raw receipt (3), nested authority falsifier (4), public ingestion and mutation (5). This suite cannot establish zero-allocation or global panic freedom.
+
+### Execution and evidence discipline
+
+Use the explicitly invoked [ext-mattpocock-tdd skill](../../../../.agents/skills/ext-mattpocock-tdd/SKILL.md). Its current entry declares a Code-to-Code operation; the concrete sequence above is this plan's local design. Observe one behavior test RED, implement minimal GREEN, then refactor with adjacent controls. Already-GREEN behavior is reuse, not fabricated RED. No proposed tests were authored or run by this review.
+
+Run from repository root after authoring the named candidate file:
+
+```powershell
+cargo test --manifest-path engine/crates_rs/Cargo.toml -p core_prompt_civilization --test pharmacy_raw_binding_contract -j 1
+```
+
+Four-stage route: DOC_MGR pins bytes/UTF-8/links; DEV_MGR with Syntax Prefilter/Scope Guard binds the public port and budget; QA_MGR/Inspector run one-to-three files per batch and at most three repair attempts; BUILDER checks invariant/falsifier and Adversary adjudicates recorded evidence, preserving Defect Hunter dissent. Rust work uses one crate and `-j 1`. SoftwareQaReceiptV1 requires its actual schema/writer; this Markdown is not one.
+
+## Claim discipline
+
+- Supports: source-inspected residual scope and prospective behavior tests.
+- Does not support: implementation completion, executed tests, automatic admission, full design readiness or a mathematical theorem.
+- Narrowest claim: Finite detector behavior is testable; native parity, allocation and authority trust remain owned blockers.
+- Next evidence: bind the candidate test to the public port, observe real RED/minimal GREEN/refactor, and retain source/candidate/test digests, command, exit status and mutation/restoration evidence under `receipts/`.
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

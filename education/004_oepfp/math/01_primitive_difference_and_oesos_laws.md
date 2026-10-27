@@ -1,7 +1,7 @@
 # 01. Primitive Difference & The Two-Rule OESOS Law
 
 **AuthorityEffect:** `None`  
-**Estate:** `omega_engine_education/documentation/004_oepfp/math/`  
+**Estate:** `education/documentation/004_oepfp/math/`  
 **Parent Document:** [`oesos_layers_index.md`](oesos_layers_index.md)  
 **Status:** Canonical Foundation  
 **Research Terminal:** `FRONTIER_OBSTRUCTION`  
@@ -120,7 +120,7 @@ Both reducts agree on every fact at Layer L0 (the presence of the marked occurre
 
 ```mermaid
 graph TD
-    Start["Active Obstruction &Omega;"] --> R1{"R1: Resolving Path in<br/>Reach_C(x)?"}
+    Start["Active Obstruction &Core;"] --> R1{"R1: Resolving Path in<br/>Reach_C(x)?"}
     R1 -- Yes --> Repair["&empty; Outcome: Repair(p, y)<br/>(Context C unchanged)"]
     R1 -- No --> Exhaust{"Exhaustion Certified?<br/>Exhausted_C(x)"}
     Exhaust -- No --> Unknown["&empty; Outcome: Unknown(r)<br/>(Search incomplete)"]

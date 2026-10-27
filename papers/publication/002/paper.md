@@ -96,7 +96,7 @@ The proof yields two independently checkable witness types:
   -----------------------------------------------------------------------
 
 The implementation in
-[sign_graph.py](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py)
+[sign_graph.py](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py)
 constructs a spanning forest by breadth-first traversal. A conflicting
 edge closes an odd walk through the tree. If there is no conflict, the
 assigned bits form a gauge. Construction is linear in the graph's
@@ -115,7 +115,7 @@ graph theorem.
 
 The parity carrier must not be confused with the rational edge reports
 of the companion paper PFP I (Carroll, 2026; see
-[docs/references.md](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier/docs/references.md)).
+[docs/references.md](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/docs/references.md)).
 Reports $(1,1,0)$ around an oriented triangle have even parity but
 rational sum two. Their uniform-weight rational repair cost is two. The
 coefficient system and the allowed changes are part of the claim.
@@ -169,7 +169,7 @@ exponential candidate search? Its purpose is to exercise the protocol
 used when a future candidate grammar lacks such a simple complete
 solver.
 
-[frontier_search.py](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py)
+[frontier_search.py](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py)
 enumerates the $2^{|V|}$ bit assignments in lexicographic order. It
 checks fixed batches of at most eight, independent of worker count, and
 consumes completed results in canonical order. Thread scheduling
@@ -278,7 +278,7 @@ $$-W_\star=-e^{-1}\frac{(1/4)^3}{3!}
 =-\frac{e^{-1}}{384}.$$
 
 The retained [exact
-checker](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py)
+checker](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py)
 enumerates all rooted three-hop sequences. Its asserted finite facts are
 192 sequences, evenly split into 96 positive and 96 negative, with every
 positive three-hop sequence visiting only energies at most two. It also
@@ -329,7 +329,7 @@ The four frozen finite-graph files were copied from the author's non-Git
 Genesis workspace on 2026-09-23. The matrix snapshot repair of
 2026-09-24 changed the search module and one regression test. The
 [provenance
-record](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md)
+record](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md)
 retains both original and repaired hashes and records later packaging
 changes with their current hashes. The baseline named above supplies the
 exact repository revision for the sources discussed here.
@@ -370,7 +370,7 @@ Useful negative controls include an odd self-loop, an all-positive
 triangle, a malformed closed walk, floating-point matrix input, a
 changed presentation key, a skipped frontier interval, and a one-shot
 matrix iterator. The
-[notebook](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb)
+[notebook](https://github.com/dbccpage/the_symbol_game/blob/c819bec432446dd3c9b1edf1583384cfe76c6c71/atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb)
 illustrates the finite checker; its saved outputs are not independent
 experimental data.
 
@@ -421,7 +421,7 @@ and are not current execution evidence.
 - Carroll, Jeremy H. (2026). *PFP I: Exact Graph Repair and the Boundary
   Between a Proposal and a Certificate*. Version 1.3.0, author-review
   preprint, Paper 001 in this series. Repository path
-  `omega_engine_atlas/coda_atlas/omega_engine_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions`.
+  `atlas/coda_atlas/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions`.
 - Harary, Frank (1953). "On the notion of balance of a signed graph."
   *Michigan Mathematical Journal*, 2(2), 143--146.
   [doi:10.1307/mmj/1028989917](https://doi.org/10.1307/mmj/1028989917).

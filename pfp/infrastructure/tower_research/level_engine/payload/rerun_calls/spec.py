@@ -46,12 +46,12 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.digest import digest_of
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import ZERO, Q, fmt_q
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.digest import digest_of
+from operations.use_cases.level_engine.research_engine.exact.q import ZERO, Q, fmt_q
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 from ..shared import rows
 
 CHALLENGE_ID = "rerun_calls"

@@ -6,7 +6,7 @@ AuthorityEffect: None. This is a resource bound, not a convergence theorem.
 import time
 from dataclasses import dataclass
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import (
+from pfp.domain.contracts.pfp_runtime import (
     PfpPipelineFailure,
     PfpPipelinePort,
     PfpPipelineRun,
@@ -14,12 +14,12 @@ from omega_engine_pfp.domain.contracts.pfp_runtime import (
     PfpStagePort,
     PfpStageReceipt,
 )
-from omega_engine_pfp.domain.stages.host_stages import (
+from pfp.domain.stages.host_stages import (
     challenge_replay,
     host_passed,
     receipt_terminal,
 )
-from omega_engine_pfp.domain.stages.stages import (
+from pfp.domain.stages.stages import (
     HOST_STAGES,
     STAGE_COUNT,
     ChallengeReplay,

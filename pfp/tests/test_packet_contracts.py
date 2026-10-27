@@ -25,7 +25,7 @@ import pytest
 
 yaml = pytest.importorskip("yaml")
 
-_GOV_CONTRACTS = Path(__file__).resolve().parents[2] / "omega_engine_governance" / "contracts"
+_GOV_CONTRACTS = Path(__file__).resolve().parents[2] / "governance" / "contracts"
 CONTRACTS = (
     _GOV_CONTRACTS / "contracts_pfp"
     if (_GOV_CONTRACTS / "contracts_pfp").is_dir()

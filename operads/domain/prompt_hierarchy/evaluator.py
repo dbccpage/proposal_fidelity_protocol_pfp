@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Callable, Mapping, Sequence
 from typing import Any
 
-from omega_engine_operads.domain.operad import (
+from operads.domain.operad import (
     ColourSignature,
     ColouredOperad,
     OperationId,

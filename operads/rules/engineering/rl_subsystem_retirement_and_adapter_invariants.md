@@ -1,7 +1,7 @@
 ---
 paths:
-  - "omega_engine/**"
-  - "omega_engine_woland/infrastructure/providers/**"
+  - "engine/**"
+  - "adversary/infrastructure/providers/**"
   - "**/adapters/**"
 ---
 

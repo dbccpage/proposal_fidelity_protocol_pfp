@@ -13,7 +13,7 @@ them. This gate holds three things:
 A skill whose frontmatter sets ``disable-model-invocation: true`` is not listed to the model and
 is exempt from 1 and 2. Run::
 
-    python -m omega_engine_operads.skill_operad.skill_compiler.skill_listing \
+    python -m operads.skill_operad.skill_compiler.skill_listing \
         --repo-root .
 
 Exit 0 when all three hold, 1 otherwise.
@@ -30,16 +30,16 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operads.domain.capability_catalog_v1 import (
     CapabilityCatalogRefusal,
 )
-from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+from operads.infrastructure.capability_catalog_compiler import (
     CatalogCompileRefusal,
     compile_capability_catalog,
     verify_host_projections,
 )
 
-SKILLS_DIR = Path("omega_engine_operads/skills")
+SKILLS_DIR = Path("operads/skills")
 DESCRIPTION_CAP_BYTES = 120
 #: Ratchet: the listing measured 30,507 B over 232 skills when this gate was added, plus about
 #: 5 % headroom for new skills. Lower it when the listing shrinks; raising it needs a reason in
@@ -102,7 +102,7 @@ def catalog_problems(repo_root: Path) -> list[str]:
     try:
         verify_host_projections(repo_root, compile_capability_catalog(repo_root))
     except (CatalogCompileRefusal, CapabilityCatalogRefusal) as error:
-        return [f"{error} (rebuild: python -m omega_engine_operads."
+        return [f"{error} (rebuild: python -m operads."
                 "infrastructure.capability_catalog_compiler --repo-root . --write)"]
     return []
 

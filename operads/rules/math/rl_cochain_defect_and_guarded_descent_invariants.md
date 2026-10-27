@@ -1,7 +1,7 @@
 ---
 paths:
-  - "omega_engine/**"
-  - "omega_engine_atlas/**/code/**"
+  - "engine/**"
+  - "atlas/**/code/**"
   - "**/*.lean"
   - "**/exact/**"
   - "**/solvers/**"

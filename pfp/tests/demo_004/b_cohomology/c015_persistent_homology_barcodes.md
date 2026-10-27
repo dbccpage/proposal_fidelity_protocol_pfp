@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Persistent homology tracks when homology classes are born and die along a filtration. The standard algorithm reduces the filtered boundary matrix by column additions (Edelsbrunner, Letscher and Zomorodian 2002; Zomorodian and Carlsson 2005). The reduction can be written R = D·V with V upper triangular and invertible, and the pairing it yields does not depend on which valid reduction is used (Cohen-Steiner, Edelsbrunner and Morozov 2006). That makes a compact certificate: the submitted R and V. Producing a correct reduction at 2,000 simplices without index or ordering mistakes is error-prone; checking D·V = R over F₂ is one sparse product.
 
-The challenge stresses the Symbol Game's exact host, OEWAS (Omega Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Omega Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified barcode solver. It says nothing about what the bars mean for any data set.
+The challenge stresses the Symbol Game's exact host, OEWAS (Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified barcode solver. It says nothing about what the bars mean for any data set.
 
 ## 3. Formal Problem and Bounds
 
@@ -49,7 +49,7 @@ Columns are sparse lists of row indices (0-based, in input order); unlisted colu
 - **Hidden base cases:** 32, eight with N between 1,500 and 2,000.
 - **Relabel controls:** 12. Vertex relabelling with the order kept; permutations among simplices of equal value that stay face-compatible. The index pairing may change under the second kind; the value barcode must not, so these controls compare value barcodes only.
 - **Poisoned but schema-valid:** 10. RP² and Klein-bottle filtrations (a Q-coefficient solver gets different essential bars); a filtration where the natural-looking pairing by value is not the reduction's pairing; long runs of ties.
-- **Exact checker:** new Rust code over F₂: sparse product D·V, triangularity, reducedness, and extraction of pairs. `omega_homology::ph_matrix_reduction::reduce_z2` exists but its module is labelled a best-effort shell, so it may serve only after it passes this challenge's mutation suite.
+- **Exact checker:** new Rust code over F₂: sparse product D·V, triangularity, reducedness, and extraction of pairs. `core_homology::ph_matrix_reduction::reduce_z2` exists but its module is labelled a best-effort shell, so it may serve only after it passes this challenge's mutation suite.
 - **Independent second checker:** an established external library, PHAT or GUDHI, run at packet-build time through the crate's existing format adapters (`phat_io.rs`, `gudhi_io.rs`), comparing value barcodes.
 - **Checker mutation suite:** a V with a nonzero below the diagonal; an R that is not reduced (two equal lowest rows); a correct R with one pair reported wrongly; an essential class that is actually paired; a barcode with a zero-length bar kept; a pair whose dimensions differ by more than one.
 
@@ -57,7 +57,7 @@ Columns are sparse lists of row indices (0-based, in input order); unlisted colu
 
 - **A: Symbol Game.** U05 synthesis of the reduction and the certificate output.
 - **B: Ordinary iterative.** **C: Representation ablation.** **D: Repeated sampling**, cost-matched.
-- **E: No-model baseline.** The standard reduction with clearing (Chen and Kerber 2011; `omega_homology` has `twist_algorithm.rs` and `clearing_optimization.rs`), wrapped as `solve`. Clearing zeroes columns without recording the column operations, so E must also recover V for the certificate. Expected to solve every case.
+- **E: No-model baseline.** The standard reduction with clearing (Chen and Kerber 2011; `core_homology` has `twist_algorithm.rs` and `clearing_optimization.rs`), wrapped as `solve`. Clearing zeroes columns without recording the column operations, so E must also recover V for the certificate. Expected to solve every case.
 
 Arm F does not apply.
 
@@ -101,7 +101,7 @@ operand value_barcode_for_ties.v1 | kind: guard | when: filtration values tie | 
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_homology` (`ph_matrix_reduction.rs`, `persistent_homology.rs`, `barcode.rs`, `persistence_pairing.rs`, `twist_algorithm.rs`, `clearing_optimization.rs`, `phat_io.rs`, `gudhi_io.rs`, `vietoris_rips.rs`), all labelled best-effort shells, so each must pass the mutation suite before use.
+- `engine/crates_rs/core_homology` (`ph_matrix_reduction.rs`, `persistent_homology.rs`, `barcode.rs`, `persistence_pairing.rs`, `twist_algorithm.rs`, `clearing_optimization.rs`, `phat_io.rs`, `gudhi_io.rs`, `vietoris_rips.rs`), all labelled best-effort shells, so each must pass the mutation suite before use.
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrades: none in the catalog. Checker work: the exact F₂ certificate checker in §6.
 

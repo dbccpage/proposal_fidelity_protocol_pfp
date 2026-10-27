@@ -13,10 +13,10 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.hypergeometric_mirror_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.hypergeometric_mirror_checker import (
     verify_hypergeometric_mirror_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.picard_fuchs_recurrence_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.judge_packet.checkers.picard_fuchs_recurrence_checker import (
     verify_picard_fuchs_recurrence_certificate,
 )
 

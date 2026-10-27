@@ -20,7 +20,7 @@ Computing the polynomials is not the hard part. A Kauffman-bracket state sum ove
 
 Each is a place where a plausible module is silently wrong, and the relabel and Reidemeister controls expose exactly those errors.
 
-This stresses the Symbol Game's typed residuals when two computed invariants disagree across equivalent diagrams, the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that separates parsing from evaluation, and the OEEIS (Omega Engine Epistemic Immune System) against overreach such as "Δ = 1, so unknot". A pass shows a correct convention-disciplined implementation. It does not show knot recognition.
+This stresses the Symbol Game's typed residuals when two computed invariants disagree across equivalent diagrams, the OEWAS (Engine Workflows, Agents, Skills) workflow that separates parsing from evaluation, and the OEEIS (Engine Epistemic Immune System) against overreach such as "Δ = 1, so unknot". A pass shows a correct convention-disciplined implementation. It does not show knot recognition.
 
 ## 3. Formal Problem and Bounds
 
@@ -72,7 +72,7 @@ A complete answer gives exact equality of the writhe and both polynomials with t
 - **Hidden base:** 40 diagrams with 3 to 14 crossings, drawn from random braid closures and generated diagrams rather than published tables, including the `Δ = 1` pair and a mutant pair.
 - **Relabel and gauge controls:** 20. Cyclic edge relabelling, orientation reversal (both polynomials are unchanged for knots), mirror images (the Jones polynomial must satisfy `V(t) ↦ V(t⁻¹)`), and R1, R2 and R3 moves applied by the operator. R1 changes the writhe but not the normalised polynomial.
 - **Poisoned but schema-valid:** 8. Tuples rotated so that the under-strand is not first. That either changes the diagram or fails the orientation check, and the expected answer comes from the second checker. Also links presented as knots, `note` fields naming the wrong knot, and labels out of range.
-- **Exact checker:** a Rust state-sum bracket implementation and an Alexander-matrix determinant computed with the Bareiss routine in `omega_engine/crates_rs/omega_linear_algebra/src/determinant.rs`, extended to polynomial entries.
+- **Exact checker:** a Rust state-sum bracket implementation and an Alexander-matrix determinant computed with the Bareiss routine in `engine/crates_rs/core_linear_algebra/src/determinant.rs`, extended to polynomial entries.
 - **Independent second checker:** a pinned external implementation (for example SnapPy or Sage), chosen and hashed at packet-build time.
 - **Mutation suite:** the checker must reject, on a chiral knot, a Jones polynomial with `t` replaced by `t⁻¹` (the mirror answer), a bracket with no writhe correction, an Alexander polynomial off by a unit `±tᵏ`, a coefficient map with an extra zero entry (the non-canonical form is rejected by schema) and a Boolean writhe.
 
@@ -136,7 +136,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse. `omega_engine/crates_rs/omega_linear_algebra` supplies exact determinants, and a Laurent-polynomial extension is new work.
+- The catalog row lists no estate reuse. `engine/crates_rs/core_linear_algebra` supplies exact determinants, and a Laurent-polynomial extension is new work.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras; [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended.
 
 ## 14. Claim Hygiene

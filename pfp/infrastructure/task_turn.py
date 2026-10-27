@@ -10,13 +10,13 @@ import base64
 from dataclasses import dataclass, field, replace
 from hashlib import sha256
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import (
+from pfp.domain.contracts.pfp_runtime import (
     PfpPrompt,
     PfpPromptTemplate,
     PfpTaskPrompt,
 )
-from omega_engine_pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase, task_input_sha256
-from omega_engine_pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
+from pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase, task_input_sha256
+from pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
 
 
 _UNSETTLED_ATTEMPT_STATES = frozenset({
@@ -42,7 +42,7 @@ class PreparedTaskTurn:
     task: PfpTaskPrompt
     prompt: PfpPrompt
     checker_id: str
-    # Woland adds source-bound diagnostics after preparation. They deliberately
+    # Adversary adds source-bound diagnostics after preparation. They deliberately
     # remain outside the public task and its historical input digest profile.
     observation_metadata: dict = field(default_factory=dict, compare=False)
 

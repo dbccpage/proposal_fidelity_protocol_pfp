@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import hmac
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 from ...application.dtos.success_dtos import SignedManifestEnvelopeDTO
 from ...domain.errors.domain_errors import DomainInvariantError, OeopDomainError
 

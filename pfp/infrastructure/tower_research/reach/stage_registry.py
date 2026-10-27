@@ -19,7 +19,7 @@ from typing import Any
 
 from .canonical import canonical_bytes, digest, sha256_hex
 
-from omega_engine_pfp.domain.tower import registry as _registry
+from pfp.domain.tower import registry as _registry
 from importlib.resources import files
 
 TABLE_PATH = "research/mssn_sn_tower/_archive/source_inputs_2026_09_25/atlas_direct/stages.tsv"

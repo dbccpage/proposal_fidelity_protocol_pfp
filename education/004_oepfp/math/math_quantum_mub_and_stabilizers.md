@@ -96,7 +96,7 @@ In $d=6$, the set $\mathcal{H}_6$ of complex Hadamard matrices (up to equivalenc
 
 ## 3. Deltoid Cusp Desingularization & The 6-Cycle Holonomy Defect
 
-In `demo_3_mub6` and the Rust engine `omega_mub`, candidate matrices near the Deltoid cusp locus are evaluated via exact rational desingularization.
+In `demo_3_mub6` and the Rust engine `core_mub`, candidate matrices near the Deltoid cusp locus are evaluated via exact rational desingularization.
 
 ### 3.1 The Segre Variety Locus
 Near the 3 deltoid cusps ($\theta \in \{0, 2\pi/3, 4\pi/3\}$), the corner minors of candidate matrices are governed by the Segre variety equation:
@@ -104,7 +104,7 @@ Near the 3 deltoid cusps ($\theta \in \{0, 2\pi/3, 4\pi/3\}$), the corner minors
 $$(a - 1)(d - 1) = (b - 1)(c - 1)$$
 
 ### 3.2 Exact Rational Cusp Parameters
-The exact rational parameters governing the blow-up chart (pinned in `omega_engine/crates_rs/omega_mub/src/omega_native/mub6_constants.rs`) are listed below. *Provenance (read 2026-10-20 in [`omega_mub/fixtures/mub6_constants.json`](../../../../omega_engine/crates_rs/omega_mub/fixtures/mub6_constants.json)):* all three are recorded as `assumed_constant`. The gap $\varepsilon_{\mathrm{cusp}} = (81/100 - 1/6)^2 = (193/300)^2 = 37249/90000$ assumes that the candidate fourth basis has column-0 real part in $[9/10, 1]$; the Lipschitz bound $L_{\mathrm{proj}} = 85/9$ has no derivation or check in the crate; and $\delta = 1/1000$ is chosen, with the only check $\delta < \varepsilon / L$. Every number derived below inherits these assumptions:
+The exact rational parameters governing the blow-up chart (pinned in `engine/crates_rs/core_mub/src/core_native/mub6_constants.rs`) are listed below. *Provenance (read 2026-10-20 in [`core_mub/fixtures/mub6_constants.json`](../../../../engine/crates_rs/core_mub/fixtures/mub6_constants.json)):* all three are recorded as `assumed_constant`. The gap $\varepsilon_{\mathrm{cusp}} = (81/100 - 1/6)^2 = (193/300)^2 = 37249/90000$ assumes that the candidate fourth basis has column-0 real part in $[9/10, 1]$; the Lipschitz bound $L_{\mathrm{proj}} = 85/9$ has no derivation or check in the crate; and $\delta = 1/1000$ is chosen, with the only check $\delta < \varepsilon / L$. Every number derived below inherits these assumptions:
 
 $$\varepsilon_{\mathrm{cusp}} = \frac{37249}{90000}, \qquad L_{\mathrm{proj}} = \frac{85}{9}, \qquad \delta = \frac{1}{1000}$$
 $$\delta_{\mathrm{crit}} = \frac{\varepsilon_{\mathrm{cusp}}}{L_{\mathrm{proj}}} = \frac{37249}{850000} \approx 0.043822$$

@@ -20,15 +20,15 @@ import random
 import unittest
 from fractions import Fraction
 
-from omega_engine_pfp.domain.normal_forms.reconciliation import (
+from pfp.domain.normal_forms.reconciliation import (
     verify_observer_lattice_monotonicity,
 )
-from omega_engine_pfp.domain.normal_forms.relational_extensions import (
+from pfp.domain.normal_forms.relational_extensions import (
     Simplicial2DComplex,
     verify_simplicial_dhnf,
     verify_zfnf_scaling_invariance,
 )
-from omega_engine_pfp.domain.normal_forms.topology import verify_tsnf
+from pfp.domain.normal_forms.topology import verify_tsnf
 
 
 class TestZeroFloatDualityScalingInvariance(unittest.TestCase):

@@ -6,14 +6,14 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_pfp.infrastructure.sampling_frontier import (
+from pfp.infrastructure.sampling_frontier import (
     ANCHORS,
     bind_original_anchors,
     coverage_at_k,
     pin_ladder,
     rescore_samples,
 )
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
+from pfp.infrastructure.task_turn import prepare_task_turn
 
 
 def prepared(sample_id, seed):

@@ -27,7 +27,7 @@ If the page is long, read one section and run the matching notebook cells. Leave
 ### Anchors & Provenance
 - **Paper 032 Anchor**: *The Symbol Game: Three-Layer Sovereignty and Discrete L1 Projection* (Section 1: Foundations and the Wager).
 - **Paper 033 Anchor**: *The Symbol Game Practitioner's Field Manual* (Section 2: The Three-Cycle Play Demo).
-- **Substrate Module**: `omega_engine_education.notebooks.scenes.three_cycle_phi1` (Exact rational cycle defect computation).
+- **Substrate Module**: `education.notebooks.scenes.three_cycle_phi1` (Exact rational cycle defect computation).
 
 ---
 

@@ -23,7 +23,7 @@ whenever an agent's prose lists capabilities its slice does not grant.
 - all `.agents/skills/*/SKILL.md` frontmatter
 - `.agents/skill_operads/operad_signature.json`
 - `.agents/skill_operads/agent_capability_slices.json`
-- Current Woland Retinue role declarations and typed package contracts; standalone agent manifests are retired.
+- Current Adversary Panel role declarations and typed package contracts; standalone agent manifests are retired.
 
 ## Protocol
 

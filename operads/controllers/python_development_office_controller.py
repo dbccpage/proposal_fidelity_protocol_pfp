@@ -7,48 +7,48 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, TextIO
 
-from omega_engine_operads.application.python_development_office.project import (
+from operads.application.python_development_office.project import (
     ProjectScanner,
 )
-from omega_engine_operads.application.python_development_office.quality_inventory import (
+from operads.application.python_development_office.quality_inventory import (
     PythonQualityInventoryGate,
     QualityInventoryDependencies,
 )
-from omega_engine_operads.application.python_development_office.rules.registry import (
+from operads.application.python_development_office.rules.registry import (
     RuleRegistry,
 )
-from omega_engine_operads.domain.operad.errors import Err
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.operad.errors import Err
+from operads.domain.python_development_office import (
     ArchitectureConfig,
     ScanResult,
 )
-from omega_engine_operads.domain.python_development_office.quality_errors import (
+from operads.domain.python_development_office.quality_errors import (
     QualityPolicyLoadError,
 )
-from omega_engine_operads.infrastructure.python_development_office.config import (
+from operads.infrastructure.python_development_office.config import (
     load_config,
 )
-from omega_engine_operads.infrastructure.python_development_office.output.console_output import (
+from operads.infrastructure.python_development_office.output.console_output import (
     format_console_output,
 )
-from omega_engine_operads.infrastructure.python_development_office.output.json_output import (
+from operads.infrastructure.python_development_office.output.json_output import (
     format_json_output,
 )
-from omega_engine_operads.infrastructure.python_development_office.output.quality_json_output import (
+from operads.infrastructure.python_development_office.output.quality_json_output import (
     format_quality_receipt,
     format_quality_refusal,
 )
-from omega_engine_operads.infrastructure.python_development_office.quality_adapters import (
+from operads.infrastructure.python_development_office.quality_adapters import (
     FileSystemPythonInventoryRepository,
     RuffComplexityAnalyzer,
 )
-from omega_engine_operads.infrastructure.python_development_office.quality_policy import (
+from operads.infrastructure.python_development_office.quality_policy import (
     load_quality_policy,
 )
-from omega_engine_operads.infrastructure.python_development_office.source_repository import (
+from operads.infrastructure.python_development_office.source_repository import (
     FileSystemSourceRepository,
 )
-from omega_engine_operads.infrastructure.python_development_office.test_execution_receipts import (
+from operads.infrastructure.python_development_office.test_execution_receipts import (
     FileSystemTestExecutionReceiptRepository,
     SystemUtcClock,
 )

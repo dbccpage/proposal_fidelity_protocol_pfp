@@ -13,12 +13,12 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.domain.value_objects.taxonomy import (
+from pfp.domain.value_objects.taxonomy import (
     VALID_TASK_FAMILIES,
     get_valid_task_families,
     TaskFamilyVO,
 )
-from omega_engine_pfp.infrastructure.taxonomy.task_families import (
+from pfp.infrastructure.taxonomy.task_families import (
     TaskFamilyEnum,
 )
 
@@ -43,7 +43,7 @@ _BEDROCK = frozenset(
 )
 _MATRIX = (
     Path(__file__).resolve().parents[3]
-    / "omega_engine_education"
+    / "education"
     / "pilots"
     / "matrix"
     / "max_pilot_matrix.yaml"

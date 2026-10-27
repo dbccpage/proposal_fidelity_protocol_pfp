@@ -7,7 +7,7 @@ author's.
 Core Lean 4 only (no imports). Mechanizes:
 
 * Lemma C, "negative selection screens what it screens", from
-  `omega_engine_atlas/coda_atlas/F004_papers/015_pfp/003_pfp_host_admitted_failure_detectors/paper.md`
+  `atlas/coda_atlas/F004_papers/015_pfp/003_pfp_host_admitted_failure_detectors/paper.md`
   Appendix A.4 (lines 727 to 760 at commit `8ac5da188`), ledger row P3-22.
   A detector rule has a screened predicate `P` and an executed predicate `E`
   over a universe `U`. The screen admits the rule for a finite panel `S`
@@ -15,7 +15,7 @@ Core Lean 4 only (no imports). Mechanizes:
   admitted rule never fires on a member of `S`.
 
 * The OEEIS Thymus gate and its Self-Panel Soundness theorem from
-  `omega_engine_education/documentation/004_oepfp/math/math_epistemic_immune_system_and_negative_selection.md`
+  `education/documentation/004_oepfp/math/math_epistemic_immune_system_and_negative_selection.md`
   Section 2 (lines 80 to 97): `Thymus(d) = ADMIT` exactly when every sealed
   self item `s` has `d s = 0`, and every admitted detector has zero false
   positives on the sealed panel. This is Lemma C part 1 with `E = P = d`,

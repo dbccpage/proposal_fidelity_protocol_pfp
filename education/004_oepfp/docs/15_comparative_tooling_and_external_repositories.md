@@ -11,8 +11,8 @@ maturity: canonical
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp
-  - omega_engine_education/documentation/004_oepfp
+  - pfp
+  - education/documentation/004_oepfp
 last_verified: 2026-10-20
 verification_scope: repository count and local pilot paths checked; external repositories were not re-inspected and no commits are pinned
 ---
@@ -21,7 +21,7 @@ verification_scope: repository count and local pilot paths checked; external rep
 
 **Status:** Canonical Reference Manual  
 **AuthorityEffect:** `None`  
-**Governing Standard:** Landau Theoretical Minimum & Claim Hygiene Rule  
+**Governing Standard:** Examiner Theoretical Minimum & Claim Hygiene Rule  
 
 ---
 
@@ -41,7 +41,7 @@ Below is an evaluation of external GitHub repositories identified as potentially
 
 > **Inventory correction (2026-10-20).** Earlier text said 13 repositories. The tables below name 18 projects: Mathlib4, LeanDojo-v2, LeanCopilot (section 2); CivAgent, CatDock, CEO, AgentCiv (section 3); sharpen, AutoPrompt, gpt-prompt-engineer, TheBigPromptLibrary, DAIR Prompt-Engineering-Guide (section 4); vLLM, SGLang, LLMLingua, Representation Engineering, llm-attacks, Prompt Guard via llama-cookbook (section 5). Counts per section: 3 + 4 + 5 + 6 = 18. None is pinned to a commit, and this page records reading of public descriptions, not inspected behavior; the [deep research prompt review](pfp_pciv_eis_llms_deep_research_prompt.md#pass-one-review-and-second-pass-research-prompt) asks for pinned versions before any integration.
 >
-> **Local paths (2026-10-20, pin `c419cc6beb`).** The `pilots/` tree named below has moved. `c041_lean4_finite_lemma_proofs` is now under [`omega_engine_pfp/tests/demo_004/e_formal_math/`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs.md). Directories `pilot_0000045` and `pilot_0000046` exist under `omega_engine_woland/tests/pilots/`, but their current READMEs describe other experiments (intrinsic triangle fans and an offline Hodge slice), not "unknown filtration inputs" or "prompt compression information loss"; the pilot bindings below are historical proposals. `_intelligence/` is not present; intelligence records now live under `_ic/` (for example `_ic/antibodies/antibodies_log.md`). `omega_engine_operations/use_cases/woland_bout/` is not present.
+> **Local paths (2026-10-20, pin `c419cc6beb`).** The `pilots/` tree named below has moved. `c041_lean4_finite_lemma_proofs` is now under [`pfp/tests/demo_004/e_formal_math/`](../../../../pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs.md). Directories `pilot_0000045` and `pilot_0000046` exist under `adversary/tests/pilots/`, but their current READMEs describe other experiments (intrinsic triangle fans and an offline Hodge slice), not "unknown filtration inputs" or "prompt compression information loss"; the pilot bindings below are historical proposals. `_intelligence/` is not present; intelligence records now live under `_ic/` (for example `_ic/antibodies/antibodies_log.md`). `operations/use_cases/adversary_bout/` is not present.
 
 ---
 
@@ -56,7 +56,7 @@ Formal theorem proving provides the mathematical backbone for PFP's obstruction 
 | **[LeanCopilot](https://github.com/lean-dojo/LeanCopilot)** | **Proposer Only** | LLM-assisted tactic suggestion and premise retrieval. | Acts strictly as an automated **Proposer**. It suggests candidate proof tactics; the sovereign Lean 4 kernel evaluates them. | Must carry zero authority. A proposed tactic is an untrusted string until accepted by the proof kernel. |
 
 ### Concrete Pilot Binding
-In `pilots/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs/` (now [`omega_engine_pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs/`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs.md)), connect a minimal obstruction lemma (discrete boundary vanishing on a toy 3-simplex) to Mathlib's chain complex typeclass.
+In `pilots/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs/` (now [`pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs/`](../../../../pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs.md)), connect a minimal obstruction lemma (discrete boundary vanishing on a toy 3-simplex) to Mathlib's chain complex typeclass.
 
 ---
 
@@ -66,12 +66,12 @@ Multi-agent coordination frameworks frequently simulate management hierarchies, 
 
 | Repository | PFP Axis | Mechanism | Concrete Utility in PFP | Failure Mode / Boundary Fence |
 |---|---|---|---|---|
-| **[CivAgent](https://github.com/LeoLin990405/civagent)** | **Bout Topology** | Configurable decision topologies (centralized, distributed, veto-bearing, jury-based). | Serves as an empirical test harness for the **Woland Adversarial Tribunal**. PFP can run identical proposals through different bout structures (direct evaluator vs. adversarial pair vs. 3-agent veto jury) to measure consensus distortion and refusal rates. | Social structures are hypotheses, not evaluators. A unanimous multi-agent consensus is not evidence of mathematical validity. |
+| **[CivAgent](https://github.com/LeoLin990405/civagent)** | **Bout Topology** | Configurable decision topologies (centralized, distributed, veto-bearing, jury-based). | Serves as an empirical test harness for the **Adversary Adversarial Tribunal**. PFP can run identical proposals through different bout structures (direct evaluator vs. adversarial pair vs. 3-agent veto jury) to measure consensus distortion and refusal rates. | Social structures are hypotheses, not evaluators. A unanimous multi-agent consensus is not evidence of mathematical validity. |
 | **[CatDock](https://github.com/CatDock/CatDock)** & **[CEO](https://github.com/ivfarias/ceo)** | **Memory Layout** | Hierarchical dispatch and durable cross-session team storage. | Inspect their disk-backed context stores to compare with PFP's `_intelligence/documentation/sessions/` and RFC 8785 canonical JSON envelopes. | Prompt-driven hierarchies tend to accumulate circular mutual agreements without fail-closed terminal states. |
 | **[AgentCiv](https://github.com/agentciv/agentciv)** | **Coordination Experiment** | Simulated society where roles and governance emerge under resource constraints. | Useful for testing coordination under explicit token and communication bounds; distant from formal proof and receipt verification. | Self-reported project outcomes require independent replication before adoption. |
 
 ### Concrete Pilot Binding
-In `omega_engine_operations/use_cases/woland_bout/`, implement a discrete CivAgent-style veto topology as a deterministic tournament configuration, testing whether a single adversarial prosecutor stops invalid proposals faster than a voting committee.
+In `operations/use_cases/adversary_bout/`, implement a discrete CivAgent-style veto topology as a deterministic tournament configuration, testing whether a single adversarial prosecutor stops invalid proposals faster than a voting committee.
 
 ---
 

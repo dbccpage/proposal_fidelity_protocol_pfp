@@ -1,7 +1,7 @@
 ---
 paths:
-  - "omega_engine*/**/*.py"
-  - "omega_simplex*/**/*.py"
+  - "engine*/**/*.py"
+  - "core_simplex*/**/*.py"
 ---
 
 # Rule: Domain-Driven Design & Package Standards

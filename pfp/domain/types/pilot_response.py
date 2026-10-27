@@ -9,8 +9,8 @@ from typing import Any, Literal
 
 from pydantic import ConfigDict, Field, field_validator, model_validator
 
-from omega_engine_pfp.domain.value_objects.identifiers import PilotId
-from omega_engine_pfp.domain.value_objects.identifiers import RequestId
+from pfp.domain.value_objects.identifiers import PilotId
+from pfp.domain.value_objects.identifiers import RequestId
 from .base import (
     AuthorityEffect,
     EvaluationStatus,

@@ -46,5 +46,5 @@ $$
 
 ```powershell
 # Run TDVP trace-norm projection verification suite
-python -m pytest omega_engine_py/omega_quantum_physics/tests/test_tdvp_projection.py -v
+python -m pytest engine_py/core_quantum_physics/tests/test_tdvp_projection.py -v
 ```

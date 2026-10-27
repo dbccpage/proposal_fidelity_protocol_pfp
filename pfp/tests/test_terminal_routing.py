@@ -5,8 +5,8 @@ AuthorityEffect: None.
 
 import pytest
 
-from omega_engine_pfp.domain.kernel.result import TerminalStatus
-from omega_engine_pfp.infrastructure.terminal_routing import (
+from pfp.domain.kernel.result import TerminalStatus
+from pfp.infrastructure.terminal_routing import (
     ROUTING_TERMINALS,
     load_terminal_routing,
     routing_terminal,

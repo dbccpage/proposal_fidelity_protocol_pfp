@@ -1,6 +1,6 @@
 # OEWAS V3 Comprehensive Test Suite & Execution Guide
 
-This document catalogs all test suites, fixtures, benchmarks, and edge-case fuzz tests implemented for the **OEWAS V3 (Omega Engine Workflows, Agents & Skills)** subsystem under Clean Architecture and Operadic Domain-Driven Design.
+This document catalogs all test suites, fixtures, benchmarks, and edge-case fuzz tests implemented for the **OEWAS V3 (Engine Workflows, Agents & Skills)** subsystem under Clean Architecture and Operadic Domain-Driven Design.
 
 ---
 
@@ -12,7 +12,7 @@ This document catalogs all test suites, fixtures, benchmarks, and edge-case fuzz
 ### Test Directory Layout
 
 ```text
-omega_engine_operads/
+operads/
 ├── _docs/
 │   └── oewas_test_suite_execution_guide.md   <-- (This Document)
 ├── _img/
@@ -44,7 +44,7 @@ omega_engine_operads/
     │   ├── test_goo_migration_manifest_parity.py
     │   ├── test_higher_operad_adapter.py
     │   ├── test_higher_operad_laws_and_cyclic_graphs.py
-    │   ├── test_legacy_woland_projection.py
+    │   ├── test_legacy_adversary_projection.py
     │   ├── test_manifest_signature_adversarial_matrix.py
     │   ├── test_openapi_schema_and_swagger_docs.py
     │   ├── test_outbox_message_dispatcher.py
@@ -85,7 +85,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_e2e_multi_stage_agentic_terms.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_e2e_multi_stage_agentic_terms.py -p no:cacheprovider
   ```
 
 #### 2. Lossless Multi-Document Schema Migration (v1/v2 $\to$ v3)
@@ -95,7 +95,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_e2e_schema_migration_lossless.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_e2e_schema_migration_lossless.py -p no:cacheprovider
   ```
 
 #### 3. Outbox Transaction Atomicity & Rollback
@@ -107,7 +107,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_outbox_transaction_atomicity.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_outbox_transaction_atomicity.py -p no:cacheprovider
   ```
 
 #### 4. Outbox Message Dispatcher & At-Least-Once Delivery
@@ -120,7 +120,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_outbox_message_dispatcher.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_outbox_message_dispatcher.py -p no:cacheprovider
   ```
 
 #### 5. Concurrent Multi-Worker Idempotency Harness
@@ -133,7 +133,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_concurrent_multi_worker_idempotency.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_concurrent_multi_worker_idempotency.py -p no:cacheprovider
   ```
 
 #### 6. Asynchronous HTTP ASGI Multi-Tenant Stress Test
@@ -143,7 +143,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_asgi_multi_tenant_compile_catalog.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_asgi_multi_tenant_compile_catalog.py -p no:cacheprovider
   ```
 
 #### 7. Sustained 120-Request Parallel Burst Load Benchmark
@@ -153,7 +153,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_benchmark_burst_load.py -s -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_benchmark_burst_load.py -s -p no:cacheprovider
   ```
 
 #### 8. SQLite WAL Unit of Work & Journal
@@ -163,7 +163,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_sqlite_journal_unit_of_work.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_sqlite_journal_unit_of_work.py -p no:cacheprovider
   ```
 
 #### 9. Higher Operad Adapter
@@ -173,7 +173,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_higher_operad_adapter.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_higher_operad_adapter.py -p no:cacheprovider
   ```
 
 #### 10. Goo-Type Skill Migration Manifest Parity
@@ -183,7 +183,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_goo_migration_manifest_parity.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_goo_migration_manifest_parity.py -p no:cacheprovider
   ```
 
 #### 11. Agent-to-Agent Workflow DAG Compilation & Validation
@@ -197,7 +197,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_agent_to_agent_dag_compilation.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_agent_to_agent_dag_compilation.py -p no:cacheprovider
   ```
 
 #### 12. Projection Manifest Cryptographic Signature & Verification
@@ -211,7 +211,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_projection_manifest_signature_verification.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_projection_manifest_signature_verification.py -p no:cacheprovider
   ```
 
 #### 13. CLI Frontend Exit Codes, JSON Output & CP1252 Terminal Safety
@@ -225,7 +225,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_cli_frontend_encoding_and_exit_codes.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_cli_frontend_encoding_and_exit_codes.py -p no:cacheprovider
   ```
 
 #### 14. OpenAPI Schema Reflection, Swagger UI & ReDoc Accessibility
@@ -239,7 +239,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_openapi_schema_and_swagger_docs.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_openapi_schema_and_swagger_docs.py -p no:cacheprovider
   ```
 
 #### 15. Full End-to-End Multi-Agent Lifecycle Roundtrip
@@ -254,10 +254,10 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_e2e_full_lifecycle_roundtrip.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_e2e_full_lifecycle_roundtrip.py -p no:cacheprovider
   ```
 
-#### 16. SQL Constraint Rejection Matrix & Primary Key Isolation (Landau Class 2)
+#### 16. SQL Constraint Rejection Matrix & Primary Key Isolation (Examiner Class 2)
 
 - **File**: [`tests/integration/test_sql_constraint_rejection_matrix.py`](../tests/integration/test_sql_constraint_rejection_matrix.py)
 - **What it tests**:
@@ -267,10 +267,10 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_sql_constraint_rejection_matrix.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_sql_constraint_rejection_matrix.py -p no:cacheprovider
   ```
 
-#### 17. Higher Operad Laws & Arbitrary N-Node Cyclic Graph Rejection (Landau Class 1 & 2)
+#### 17. Higher Operad Laws & Arbitrary N-Node Cyclic Graph Rejection (Examiner Class 1 & 2)
 
 - **File**: [`tests/integration/test_higher_operad_laws_and_cyclic_graphs.py`](../tests/integration/test_higher_operad_laws_and_cyclic_graphs.py)
 - **What it tests**:
@@ -279,10 +279,10 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_higher_operad_laws_and_cyclic_graphs.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_higher_operad_laws_and_cyclic_graphs.py -p no:cacheprovider
   ```
 
-#### 18. Cryptographic Manifest Signature Adversarial Attack Matrix (Landau Class 2)
+#### 18. Cryptographic Manifest Signature Adversarial Attack Matrix (Examiner Class 2)
 
 - **File**: [`tests/integration/test_manifest_signature_adversarial_matrix.py`](../tests/integration/test_manifest_signature_adversarial_matrix.py)
 - **What it tests**:
@@ -292,7 +292,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/integration/test_manifest_signature_adversarial_matrix.py -p no:cacheprovider
+  python -m pytest operads/tests/integration/test_manifest_signature_adversarial_matrix.py -p no:cacheprovider
   ```
 
 ---
@@ -312,7 +312,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/unit/test_domain_value_objects_boundary_and_fuzz.py -p no:cacheprovider
+  python -m pytest operads/tests/unit/test_domain_value_objects_boundary_and_fuzz.py -p no:cacheprovider
   ```
 
 #### 2. Markdown Parser Edge-Case Fuzz & AST Recovery
@@ -325,11 +325,11 @@ omega_engine_operads/
   - Invalid enum facets $\to$ returns typed error with invalid literal.
   - Corrupt binary / non-UTF-8 bytes $\to$ returns typed `ENCODING_ERROR`.
   - Interleaved multi-language fences (`python`, `bash`, `oewas.*`) $\to$ exact byte span slice preservation.
-  - **Unicode Multi-Byte Span Accuracy (Soviet Patch 1)**: asserts that multi-byte UTF-8 symbols (Φ₁, 🚀, ∇²ψ) do not shift subsequent byte spans.
+  - **Unicode Multi-Byte Span Accuracy (Strict Patch 1)**: asserts that multi-byte UTF-8 symbols (Φ₁, 🚀, ∇²ψ) do not shift subsequent byte spans.
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/unit/test_markdown_parser_edge_case_fuzz.py -p no:cacheprovider
+  python -m pytest operads/tests/unit/test_markdown_parser_edge_case_fuzz.py -p no:cacheprovider
   ```
 
 #### 3. Core Domain Value Objects
@@ -339,7 +339,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/unit/test_domain_value_objects.py -p no:cacheprovider
+  python -m pytest operads/tests/unit/test_domain_value_objects.py -p no:cacheprovider
   ```
 
 #### 4. Lossless Markdown Parser
@@ -349,7 +349,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/unit/test_lossless_markdown_parser.py -p no:cacheprovider
+  python -m pytest operads/tests/unit/test_lossless_markdown_parser.py -p no:cacheprovider
   ```
 
 #### 5. Application Railway Handlers
@@ -359,7 +359,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/unit/test_application_railway_handlers.py -p no:cacheprovider
+  python -m pytest operads/tests/unit/test_application_railway_handlers.py -p no:cacheprovider
   ```
 
 #### 6. SkillDocumentV3 Aggregate
@@ -369,10 +369,10 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/unit/test_skill_document_v3_aggregate.py -p no:cacheprovider
+  python -m pytest operads/tests/unit/test_skill_document_v3_aggregate.py -p no:cacheprovider
   ```
 
-#### 7. Lossless Markdown Parser Property & Conservation Laws (Landau Class 1)
+#### 7. Lossless Markdown Parser Property & Conservation Laws (Examiner Class 1)
 
 - **File**: [`tests/unit/test_markdown_parser_property_laws.py`](../tests/unit/test_markdown_parser_property_laws.py)
 - **What it tests**:
@@ -381,7 +381,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/unit/test_markdown_parser_property_laws.py -p no:cacheprovider
+  python -m pytest operads/tests/unit/test_markdown_parser_property_laws.py -p no:cacheprovider
   ```
 
 ---
@@ -395,7 +395,7 @@ omega_engine_operads/
 - **Run command**:
 
   ```powershell
-  python -m pytest omega_engine_operads/tests/architecture/test_clean_architecture_ast_boundaries.py -p no:cacheprovider
+  python -m pytest operads/tests/architecture/test_clean_architecture_ast_boundaries.py -p no:cacheprovider
   ```
 
 ---
@@ -405,14 +405,14 @@ omega_engine_operads/
 Run the per-file commands above one at a time. Do not pass a test directory or a long list of files to one `pytest` invocation. For example:
 
 ```powershell
-python -m pytest omega_engine_operads/tests/unit/test_application_railway_handlers.py -p no:cacheprovider
-python -m pytest omega_engine_operads/tests/integration/test_outbox_transaction_atomicity.py -p no:cacheprovider
-python -m pytest omega_engine_operads/tests/architecture/test_clean_architecture_ast_boundaries.py -p no:cacheprovider
+python -m pytest operads/tests/unit/test_application_railway_handlers.py -p no:cacheprovider
+python -m pytest operads/tests/integration/test_outbox_transaction_atomicity.py -p no:cacheprovider
+python -m pytest operads/tests/architecture/test_clean_architecture_ast_boundaries.py -p no:cacheprovider
 ```
 
 ---
 
-## 4. Techne Code Soviet Builder Hardening & Mutation Verification Report
+## 4. Techne Code Builder Hardening & Mutation Verification Report
 
 ### Theoretical Minimum Matrix
 
@@ -423,7 +423,7 @@ python -m pytest omega_engine_operads/tests/architecture/test_clean_architecture
 | 3 | Cryptographic HMAC manifest signatures must reject forged keys and altered metadata in constant time. | Forged envelopes accepted or timing leaked. | `res.is_err` with `SIGNATURE_VERIFICATION_FAILED`. | In `manifest_signature_provider.py`, replace `hmac.compare_digest` with `return Ok(True)`. |
 | 4 | Markdown parser spans form a gap-free partition with strict byte conservation $\bigoplus_i \text{node}_i = \text{raw}$. | Dropped trailing prose or multi-byte drift. | `reconstructed == raw_bytes` and `span[i+1].start == span[i].end`. | In `markdown_parser_adapter.py`, omit trailing prose leaf node append. |
 
-### Mutation Verification Evidence (Mandatory Lev Landau Discipline)
+### Mutation Verification Evidence (Mandatory Examiner Discipline)
 
 | Test | Mutation Applied | Red Under Mutation? | Failure Message Observed | Green After Revert? |
 | --- | --- | --- | --- | --- |

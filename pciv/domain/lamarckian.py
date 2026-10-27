@@ -1,7 +1,7 @@
 """Lamarckian Mutation Receipt and Cochain Residual Value Objects (NF-02).
 
 Conforms to normative specification:
-`urn:omega:nf:prompt_civilization:lamarckian_pfp_woland_loop:v1.0.0`
+`urn:core:nf:prompt_civilization:lamarckian_pfp_adversary_loop:v1.0.0`
 
 Enforces:
 - Rule 1: Protected Core Invariance (Core(G_{g+1}) == Core(G_g)).
@@ -103,7 +103,7 @@ class CochainResidualV1:
 class LamarckianMutationReceiptV1:
     """Normative machine receipt certifying a Lamarckian retro-inheritance mutation.
 
-    Schema: `urn:omega:nf:prompt_civilization:lamarckian_pfp_woland_loop:v1.0.0`
+    Schema: `urn:core:nf:prompt_civilization:lamarckian_pfp_adversary_loop:v1.0.0`
     """
 
     receipt_id: str

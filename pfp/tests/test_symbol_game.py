@@ -1,11 +1,11 @@
-"""Tests for omega_engine_pfp package and unified SymbolGameController."""
+"""Tests for pfp package and unified SymbolGameController."""
 
 from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.controllers.symbol_game_controller import SymbolGameController
-from omega_engine_pfp.functional_boundary import RustFunctionalRequired
+from pfp.controllers.symbol_game_controller import SymbolGameController
+from pfp.functional_boundary import RustFunctionalRequired
 
 
 def test_symbol_game_turn_execution():

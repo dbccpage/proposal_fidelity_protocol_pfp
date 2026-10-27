@@ -29,12 +29,12 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, TypeAda
 _HERE = Path(__file__).resolve().parent
 _PFP_DIR = _HERE.parent
 _REPO_ROOT = next((p for p in _PFP_DIR.parents if (p / ".git").exists()), None)
-_EDUCATION_ROOT = (_REPO_ROOT or _PFP_DIR.parent) / "omega_engine_education"
-_PILOTS_ROOT = (_REPO_ROOT or _PFP_DIR.parent) / "omega_engine_woland" / "tests" / "pilots"
+_EDUCATION_ROOT = (_REPO_ROOT or _PFP_DIR.parent) / "education"
+_PILOTS_ROOT = (_REPO_ROOT or _PFP_DIR.parent) / "adversary" / "tests" / "pilots"
 if __package__ in (None, "") and _REPO_ROOT is not None and str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from omega_engine_pfp.domain.pilots.checker_registry import (  # noqa: E402
+from pfp.domain.pilots.checker_registry import (  # noqa: E402
     is_integer,
     strict_json,
     valid_triangle_repair,
@@ -61,7 +61,7 @@ def _require_seed_catalog_mappings(data):
 
 def _seed_catalog_from_snapshot(raw: bytes, path: Path):
     """Existing source/count/hash checks against one caller-owned byte snapshot."""
-    from omega_engine_pfp.infrastructure.pilot_runners.mssn_seeds import MSSN_SEEDS_CATALOG
+    from pfp.infrastructure.pilot_runners.mssn_seeds import MSSN_SEEDS_CATALOG
 
     from ..domain.stages.demos import DemoCatalog, DemoSpec
 
@@ -267,7 +267,7 @@ def get_ground_truth(task_family: str, difficulty_rung: int = 1) -> dict[str, An
         }
     else:
         try:
-            from omega_engine_pfp.infrastructure.catalogs.task_families import (
+            from pfp.infrastructure.catalogs.task_families import (
                 TaskFamilyRegistry,
             )
 
@@ -414,7 +414,7 @@ def _resolve_checker_id(task_family: str) -> str:
     if task_family in known:
         return known[task_family]
     try:
-        from omega_engine_pfp.infrastructure.catalogs.task_families import (
+        from pfp.infrastructure.catalogs.task_families import (
             TaskFamilyRegistry,
         )
 
@@ -726,7 +726,7 @@ if __name__ == "__main__":
 
 
 def _mssn_required_ids():
-    from omega_engine_pfp.infrastructure.pilot_runners.mssn_seeds import MSSN_SEEDS_CATALOG
+    from pfp.infrastructure.pilot_runners.mssn_seeds import MSSN_SEEDS_CATALOG
     return tuple(MSSN_SEEDS_CATALOG)
 
 
@@ -789,14 +789,14 @@ def _mssn_bound_reader(directory):
 
 def _mssn_compilation_paths():
     return {
-        "loader": "omega_engine_pfp/infrastructure/pilot_runner.py",
-        "metadata": "omega_engine_pfp/infrastructure/pilot_runners/mssn_seeds.py",
-        "catalog": "omega_engine_woland/tests/pilots/matrix/seeds.yaml",
-        "template": "omega_engine_pfp/infrastructure/yaml/prompts/templates/template_single_slot.yaml",
-        "assembler": "omega_engine_pfp/use_cases/pfp_prompt.py",
-        "prompt_input": "omega_engine_pfp/domain/contracts/pfp_runtime.py",
-        "schema_owner": "omega_engine_pfp/infrastructure/pilot_runners/seed_checks.py",
-        "json_ingress": "omega_engine_pfp/domain/pfp_ingress.py",
+        "loader": "pfp/infrastructure/pilot_runner.py",
+        "metadata": "pfp/infrastructure/pilot_runners/mssn_seeds.py",
+        "catalog": "adversary/tests/pilots/matrix/seeds.yaml",
+        "template": "pfp/infrastructure/yaml/prompts/templates/template_single_slot.yaml",
+        "assembler": "pfp/use_cases/pfp_prompt.py",
+        "prompt_input": "pfp/domain/contracts/pfp_runtime.py",
+        "schema_owner": "pfp/infrastructure/pilot_runners/seed_checks.py",
+        "json_ingress": "pfp/domain/pfp_ingress.py",
     }
 
 
@@ -851,8 +851,8 @@ def _mssn_template_snapshot(raw):
 
 
 def _mssn_bundle_prompt(seed, template, response_schema):
-    from omega_engine_pfp.domain.contracts.pfp_runtime import PfpStagePromptInput
-    from omega_engine_pfp.use_cases.pfp_prompt import AssemblePfpStagePromptUseCase
+    from pfp.domain.contracts.pfp_runtime import PfpStagePromptInput
+    from pfp.use_cases.pfp_prompt import AssemblePfpStagePromptUseCase
     literal_user = template["user_prompt"].replace("[USER PROMPT]", seed.seed)
     packet = AssemblePfpStagePromptUseCase().execute(PfpStagePromptInput(
         template["system_prompt"], "{user_prompt}", {"user_prompt": literal_user}, response_schema,
@@ -865,7 +865,7 @@ def _mssn_bundle_prompt(seed, template, response_schema):
 def _mssn_validate_one_bundle(entry, catalog, read_bound, template):
     from jsonschema import Draft202012Validator
 
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import seed_candidate_schema
+    from pfp.infrastructure.pilot_runners.seed_checks import seed_candidate_schema
     if type(entry) is not dict or set(entry) != {"demo_id", "seed", "expected", "response_schema"}:
         raise ValueError("BUNDLE_RECORD_SHAPE")
     seed = catalog.get_by_id(entry["demo_id"])

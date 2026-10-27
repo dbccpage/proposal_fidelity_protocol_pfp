@@ -2,9 +2,9 @@
 
 from decimal import Decimal
 
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
-from omega_engine_woland.infrastructure.providers.openai_compat import build_openai_compat_body
-from omega_engine_woland.infrastructure.providers.openrouter_experiment_deadline import dispatch_deadline
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
+from adversary.infrastructure.providers.openai_compat import build_openai_compat_body
+from adversary.infrastructure.providers.openrouter_experiment_deadline import dispatch_deadline
 
 from .pfp_derivation import PfpDerivationAdapter
 from .pfp_derivation import write_current

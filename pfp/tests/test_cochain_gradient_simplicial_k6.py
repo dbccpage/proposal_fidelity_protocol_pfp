@@ -26,9 +26,9 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.controllers import SymbolGameController, SymbolGameEngine
-from omega_engine_pfp.domain.events import TurnExecutedEvent
-from omega_engine_pfp.domain.solvers import (
+from pfp.controllers import SymbolGameController, SymbolGameEngine
+from pfp.domain.events import TurnExecutedEvent
+from pfp.domain.solvers import (
     CochainCarrier,
     CochainGradientInjectionHook,
     Simplicial1Cochain,
@@ -36,7 +36,7 @@ from omega_engine_pfp.domain.solvers import (
     SimplicialRetractionReceipt,
     run_simplicial_retraction_loop,
 )
-from omega_engine_pfp.infrastructure.adapters.exact_rust_adapter import (
+from pfp.infrastructure.adapters.exact_rust_adapter import (
     RustExactEngineAdapter,
 )
 

@@ -14,7 +14,7 @@
 
 > **Correction notice (2026-09-28).** Many figures in this document were corrected or
 > withdrawn when Papers 003, 006, 008, 009 and 010 of this collection, and the
-> meron-cluster benchmark paper in `omega_engine_projects/fsp/meron_sign_problem`,
+> meron-cluster benchmark paper in `projects/fsp/meron_sign_problem`,
 > were revised against the retained evidence. For example, no 28-probe study exists;
 > the failure catalog holds 61 entries, of which 5 are marked active and none is applied
 > by code; the paired-bout "10/10" counted a field that is true in every record; and
@@ -23,9 +23,9 @@
 > authoritative. The text below is kept unchanged as a historical working record.
 
 > **AuthorityEffect:** None · Empirical Findings & Challenge Demonstrations Hub  
-> **Location:** [`omega_engine_atlas/coda_atlas/omega_engine_symbol_game/symbol_game_challenge_and_demos_findings/`](../../../../../../omega_engine_atlas/coda_atlas/omega_engine_symbol_game/symbol_game_challenge_and_demos_findings/)  
-> **Parent Estate:** [`omega_engine_atlas/coda_atlas/omega_engine_symbol_game/`](../../../../../../omega_engine_atlas/coda_atlas/omega_engine_symbol_game/)  
-> **Related Source:** [`omega_engine_projects/mssn_sn_symgam/challenges/`](../../../../../../omega_engine_projects/mssn_sn_symgam/challenges/)
+> **Location:** [`atlas/coda_atlas/symbol_game/symbol_game_challenge_and_demos_findings/`](../../../../../../atlas/coda_atlas/symbol_game/symbol_game_challenge_and_demos_findings/)  
+> **Parent Estate:** [`atlas/coda_atlas/symbol_game/`](../../../../../../atlas/coda_atlas/symbol_game/)  
+> **Related Source:** [`projects/mssn_sn_symgam/challenges/`](../../../../../../projects/mssn_sn_symgam/challenges/)
 
 ---
 

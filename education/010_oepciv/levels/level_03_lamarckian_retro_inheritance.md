@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_prompt_civilization/src/immunity.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_prompt_civilization/src/immunity.rs
 ---
 
 # Prompt Civ Level 03: Lamarckian Retro-Inheritance & Hop-Bounded Immunity
 
 **AuthorityEffect:** None.  
 **Level:** Level 03 (Phenotypic Trace Inheritance & Backward Attenuation)  
-**Rust Immunity Seam:** [`omega_prompt_civilization::immunity`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/immunity.rs)  
+**Rust Immunity Seam:** [`core_prompt_civilization::immunity`](../../../../engine/crates_rs/core_prompt_civilization/src/immunity.rs)  
 **Primary Types:** `ImmunityAcquisitionV1`, `ImmunityPropagationV1`, `AntibodyRefV1`  
 **Core Falsifiers:** `F-IMMUNE-09`, `F-IMMUNE-10`, `F-IMMUNE-11`, `F-SCOPE-01`
 
@@ -52,7 +52,7 @@ graph TD
     end
 ```
 
-Classical Darwinian genetic algorithms mutate prompt text blindly, discarding the rich diagnostic receipts generated when execution fails. Lamarckian evolution, in contrast, incorporates acquired phenotypic adaptations directly into the organism's hereditary lineage. In Prompt Civilization, when a prompt execution triggers a formal failure receipt or cochain obstruction, the Epistemic Immune System (OEEIS) generates an **antibody reference** ([`AntibodyRefV1`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/immunity.rs)).
+Classical Darwinian genetic algorithms mutate prompt text blindly, discarding the rich diagnostic receipts generated when execution fails. Lamarckian evolution, in contrast, incorporates acquired phenotypic adaptations directly into the organism's hereditary lineage. In Prompt Civilization, when a prompt execution triggers a formal failure receipt or cochain obstruction, the Epistemic Immune System (OEEIS) generates an **antibody reference** ([`AntibodyRefV1`](../../../../engine/crates_rs/core_prompt_civilization/src/immunity.rs)).
 
 Level 03 defines how acquired immunity propagates across the inheritance topology:
 1. **Durable Forward Inheritance:** All future descendants inherit the acquired antibody reference without expiration.
@@ -89,7 +89,7 @@ Level 03 defines how acquired immunity propagates across the inheritance topolog
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::immunity
+// core_prompt_civilization::immunity
 pub enum PropagationDirection {
     Forward,
     Backward,

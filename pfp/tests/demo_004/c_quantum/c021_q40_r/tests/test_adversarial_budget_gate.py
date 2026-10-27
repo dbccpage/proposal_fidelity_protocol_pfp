@@ -45,21 +45,21 @@ import unittest
 from typing import Any, Mapping
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
     FALLBACK_NOT_ALLOWED,
     BudgetCeilingExceededError,
     BudgetGate,
     FallbackNotAllowedError,
 )
 
-from omega_engine_woland.domain.providers.model_registry import (
+from adversary.domain.providers.model_registry import (
     ModelNotAllowed,
     ModelNotRegistered,
     ModelParameterCeilingRefused,
     ModelRegistry,
     ModelSpecV1,
 )
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     BudgetExceeded,
     Provider,
 )

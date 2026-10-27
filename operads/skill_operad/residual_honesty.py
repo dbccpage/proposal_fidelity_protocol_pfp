@@ -163,7 +163,7 @@ def check_skill_frontmatter(
 def run_checks(repo_root: Path) -> dict[str, Any]:
     operad = repo_root / ".agents" / "operad"
     if not operad.is_dir():
-        alt_operad = repo_root / "omega_engine_operads" / "skill_operad"
+        alt_operad = repo_root / "operads" / "skill_operad"
         if alt_operad.is_dir():
             operad = alt_operad
     sig_path = (
@@ -176,7 +176,7 @@ def run_checks(repo_root: Path) -> dict[str, Any]:
         if (operad / "json" / "evidence_trace.json").is_file()
         else operad / "evidence_trace.json"
     )
-    skills_root = repo_root / "omega_engine_operads" / "skills"
+    skills_root = repo_root / "operads" / "skills"
     try:
         observations = load_residual_observations(trace_path)
     except (OSError, UnicodeError, json.JSONDecodeError, ResidualObservationError) as exc:
@@ -203,7 +203,7 @@ def run_checks(repo_root: Path) -> dict[str, Any]:
     legacy = [o for o in observations if o.classification == "LegacyResidualObservation"]
     recorded = [o for o in observations if o.classification == "RecordedResidualObservation"]
     return {
-        "schema": "omega.operad.residual_honesty.v1",
+        "schema": "core.operad.residual_honesty.v1",
         "errors": all_errs,
         "error_count": len(all_errs),
         "contractive_skills_with_evidence": sorted(

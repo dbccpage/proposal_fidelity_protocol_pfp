@@ -7,7 +7,7 @@ Everything here has `AuthorityEffect: None`.
   loaded by the prompt reviewer.
 - `admitted/registry.json` remains the legacy v0 registry read by the
   deterministic prompt reviewer and remains empty. The separately verified
-  truth-boundary V2 registry and its Woland-only activation profile live under
+  truth-boundary V2 registry and its Adversary-only activation profile live under
   `admitted/truth_boundary_v2/`; they are not converted into v0 repair specs.
 - `fixtures/` contains named evaluation cases and computed receipts. A passing
   fixture receipt is evidence about those exact cases only; it does not admit a
@@ -18,16 +18,16 @@ Everything here has `AuthorityEffect: None`.
 V2 admission requires distinct contexts, a clean negative control, no
 protected-field loss, a replayed `COMPUTED_PASS` receipt, and an explicit human
 decision bound by the external governance verifier. The first admitted V2
-registry is scoped only to `woland-engineering-v1`; it neither activates the
+registry is scoped only to `adversary-engineering-v1`; it neither activates the
 legacy reviewer nor grants global activation. Frequency and syntactic validity
 never grant admission.
 
 The executable implementation lives in
-`omega_engine/crates/prompt_civilization/`. The source archive described in
+`engine/crates/prompt_civilization/`. The source archive described in
 [PROVENANCE.md](PROVENANCE.md) is never imported by the runtime.
 
 Historical PR and conversation-DAG mining follows the shared
-[Historical PR Immunity Campaign Contract](../../omega_engine_operads/skills/_shared/historical_pr_immunity_campaign.md).
+[Historical PR Immunity Campaign Contract](../../operads/skills/_shared/historical_pr_immunity_campaign.md).
 Raw observations remain in the content-addressed campaign store and are never
 runtime-loaded. Any anti-skill candidate bundles exported from the campaign
 enter `ooutwire/` only. A merged PR, legacy antibody score, repeated trace, or

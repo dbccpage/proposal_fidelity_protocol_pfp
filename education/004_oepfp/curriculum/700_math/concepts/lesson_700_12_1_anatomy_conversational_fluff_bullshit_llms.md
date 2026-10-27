@@ -30,7 +30,7 @@ Unconstrained language models generate substantial extraneous tokens:
 - **Smuggled Ontology**: Invoking continuous manifolds, Hilbert spaces, or quantum terms in discrete algebraic tasks.
 - **Unpriced Rewrites**: Intermediate assertions made without proof citations.
 
-### The Woland Swarm Operational Axiom
+### The Adversary Swarm Operational Axiom
 > *"An unpriced rewrite is a smuggled axiom."*
 
 The Symbol Game enforces a **Support Restriction Operator** $\mathcal{P}_K: \Delta(V) \to \Delta(K)$, acting as an $L_1$ convex relaxation of $L_0$ token support sparsity.

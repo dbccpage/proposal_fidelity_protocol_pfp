@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.carrier_decoding import (
+from pfp.domain.carrier_decoding import (
     BLIND_SPOT_TOKEN_BOUNDARY,
     CONSTRAINT_BY_PROVIDER,
     OPENAI_BAN_BIAS,
@@ -15,7 +15,7 @@ from omega_engine_pfp.domain.carrier_decoding import (
     resolve_constraint,
     verify_emission,
 )
-from omega_engine_pfp.domain.glyph_calculus import Carrier
+from pfp.domain.glyph_calculus import Carrier
 
 APL_ALPHA = "⍺"  # U+237A, the symgam.md:77 impostor
 
@@ -91,7 +91,7 @@ class TestProviderTableParity:
         checks.
         """
         providers = pytest.importorskip(
-            "omega_engine_woland.domain.providers.types"
+            "adversary.domain.providers.types"
         )
         declared = {member.value for member in providers.Provider}
         missing = declared - set(CONSTRAINT_BY_PROVIDER)

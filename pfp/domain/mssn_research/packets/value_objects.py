@@ -9,7 +9,7 @@ import re
 from dataclasses import dataclass
 from enum import Enum
 
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
 
 
 class ValidationDisposition(str, Enum):

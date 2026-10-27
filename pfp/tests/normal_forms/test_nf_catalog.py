@@ -12,14 +12,14 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.infrastructure.normal_forms.evaluator import NormalFormsEvaluator
+from pfp.infrastructure.normal_forms.evaluator import NormalFormsEvaluator
 
 
 def _find_repo_root() -> Path:
     p = Path(__file__).resolve().parent
     for _ in range(8):
         if (p / "lean4").is_dir() and (
-            (p / "omega_research").is_dir() or (p / "research").is_dir()
+            (p / "core_research").is_dir() or (p / "research").is_dir()
         ):
             return p
         p = p.parent

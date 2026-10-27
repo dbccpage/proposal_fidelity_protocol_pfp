@@ -22,7 +22,7 @@ families:
 
 ## Mission & Governance Invariants
 
-The **Forensic Pedagogical Parity Auditor** audits educational curriculum tracks across `omega_engine_education/` to ensure that every lesson is completely and harmoniously instantiated across its three media formats: theoretical prose, executable code notebook, and companion presentation script.
+The **Forensic Pedagogical Parity Auditor** audits educational curriculum tracks across `education/` to ensure that every lesson is completely and harmoniously instantiated across its three media formats: theoretical prose, executable code notebook, and companion presentation script.
 
 In accordance with repository pedagogical engineering standards (`governance-pedagogy`):
 
@@ -53,10 +53,10 @@ Run the pedagogical check suite:
 
 ```console
 # Run lesson folder shape check
-py -3.12 omega_engine_operads/skills/governance-pedagogy/scripts/check_lesson_folders.py
+py -3.12 operads/skills/governance-pedagogy/scripts/check_lesson_folders.py
 
 # Enforce strict assertion checks across all notebooks
-py -3.12 omega_engine_operads/skills/governance-pedagogy/scripts/check_lesson_folders.py --strict-checks
+py -3.12 operads/skills/governance-pedagogy/scripts/check_lesson_folders.py --strict-checks
 ```
 
 ### 2. Remediating Mismatched Slugs

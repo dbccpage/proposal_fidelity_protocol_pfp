@@ -2,7 +2,7 @@
 
 This module does not construct a packet from a Hamiltonian or decide whether a
 Hamiltonian has a sign problem. Named Phi1, Gamma2, and Xi functional values
-belong to omega_functional; this Python module only checks supplied equations.
+belong to core_functional; this Python module only checks supplied equations.
 """
 from __future__ import annotations
 from dataclasses import dataclass
@@ -98,4 +98,4 @@ def check_left_null_witness(packet: CochainPacket, witness: object) -> tuple[Fra
 def check_zero_defect(d0: object, d1: object, c1: object) -> None:
     """Retired solver entry point: refuse until a Rust adapter is connected."""
     check_cochain_packet(d0, d1, c1)
-    raise FunctionalAdapterUnavailable('Phi1 calculation requires omega_functional Rust adapter')
+    raise FunctionalAdapterUnavailable('Phi1 calculation requires core_functional Rust adapter')

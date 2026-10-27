@@ -15,10 +15,10 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 410 (Selection, Ranking & Retrieval)  
 **Level Source:** Level 05 ([`level_05_inverse_lineage_pagerank.md`](../../levels/level_05_inverse_lineage_pagerank.md))  
-**Rust Seam:** [`omega_prompt_civilization::rank`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/rank.rs)
+**Rust Seam:** [`core_prompt_civilization::rank`](../../../../engine/crates_rs/core_prompt_civilization/src/rank.rs)
 
 ## 1. Pedagogical Objective
-Understand how ancestral utility is computed via an exact fixed-point certificate over $\mathbb{Q}$ under contract `omega.spectral.pagerank.v2`, allocating human review budget without minting proof authority.
+Understand how ancestral utility is computed via an exact fixed-point certificate over $\mathbb{Q}$ under contract `core.spectral.pagerank.v2`, allocating human review budget without minting proof authority.
 
 ## 2. Key Concepts
 1. **Inverse Lineage Flow:** Importance flows *backward* from high-performing descendant prompts to credit foundational ancestor genomes.

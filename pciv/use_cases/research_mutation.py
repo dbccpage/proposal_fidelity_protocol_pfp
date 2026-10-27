@@ -1,8 +1,8 @@
 """Use the existing protected-span engine to separate immutable host context from edits."""
 
-from omega_engine_operads.domain.autopoiesis.learning import canonical
-from omega_engine_prompt_civilization.domain.models import ProtectedSpanV1, PromptGenomeV1
-from omega_engine_prompt_civilization.use_cases.forge import PromptMutationEngineV1
+from operads.domain.autopoiesis.learning import canonical
+from pciv.domain.models import ProtectedSpanV1, PromptGenomeV1
+from pciv.use_cases.forge import PromptMutationEngineV1
 
 
 def bind_mutation(experiment, parent, candidate):

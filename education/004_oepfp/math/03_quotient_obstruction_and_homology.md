@@ -1,7 +1,7 @@
 # 03. Quotient Obstruction Calculus & Homological Algebra
 
 **AuthorityEffect:** `None`  
-**Estate:** `omega_engine_education/documentation/004_oepfp/math/`  
+**Estate:** `education/documentation/004_oepfp/math/`  
 **Parent Document:** [`oesos_layers_index.md`](oesos_layers_index.md)  
 **Status:** Canonical Foundation  
 **Layers Covered:** L3 (Obstruction Reporting), L4 (Quotient & Structural Exhaustion)  

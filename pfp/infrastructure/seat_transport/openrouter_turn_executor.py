@@ -8,15 +8,15 @@ from __future__ import annotations
 
 from typing import Any, Sequence
 
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnReplyV1, SeatTurnRequestV1
-from omega_engine_woland.infrastructure.providers.llm_gateway import (
+from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1, SeatTurnRequestV1
+from adversary.infrastructure.providers.llm_gateway import (
     LlmGateway,
 )
 
 from .transport import SYMBOL_GAME_PROTOCOL_V2
 
 DEFAULT_MODEL = "openai/gpt-4o-mini"
-SYSTEM_DIRECTIVE_TEMPLATE = """You are acting as seat '{seat_id}' (cognitive operator: {cognitive_operator}) in the scene '{scene_id}' within Woland's Swarm Dialectic.
+SYSTEM_DIRECTIVE_TEMPLATE = """You are acting as seat '{seat_id}' (cognitive operator: {cognitive_operator}) in the scene '{scene_id}' within Adversary's Swarm Dialectic.
 
 CRITICAL INVARIANTS:
 1. You have zero sovereign authority. You MUST output a machine block at the end of your response.
@@ -68,8 +68,8 @@ class OpenRouterTurnExecutor:
 
     def __call__(self, request: SeatTurnRequestV1) -> SeatTurnReplyV1:
         """Retired raw duplicate; use NativeBoutExecutionAdapter or PFP teamwork."""
-        from omega_engine_operations.domain.rop.result import Refusal
-        from omega_engine_pfp.infrastructure.openrouter_seat_gateway import SeatTurnRefused
+        from operations.domain.rop.result import Refusal
+        from pfp.infrastructure.openrouter_seat_gateway import SeatTurnRefused
         raise SeatTurnRefused(Refusal(
             "LEGACY_SEAT_TRANSPORT_RETIRED",
             "Raw Python seat execution is retired; use the PFP-mediated native bout or teamwork backend.",

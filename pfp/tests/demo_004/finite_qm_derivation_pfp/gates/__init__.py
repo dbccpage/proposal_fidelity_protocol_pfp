@@ -3,7 +3,7 @@
 AuthorityEffect: None.
 """
 
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.gates.gate_engine import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.gates.gate_engine import (
     FINITE_QM_GATE_IDS,
     FiniteQmGateReceipt,
     evaluate_all_gates,

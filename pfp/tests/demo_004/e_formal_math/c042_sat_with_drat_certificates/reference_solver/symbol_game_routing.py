@@ -32,9 +32,9 @@ _repo_root = next((p for p in Path(__file__).resolve().parents if (p / "pyprojec
 if _repo_root is not None and str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.drat_checker import get_canonical_cnf
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import evaluate_dual
-from omega_engine_pfp.infrastructure.formal_matrix import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.drat_checker import get_canonical_cnf
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import evaluate_dual
+from pfp.infrastructure.formal_matrix import (
     INFRA_ERROR,
     PARSE_FAILURE,
     ArmAntibodyStore,
@@ -218,7 +218,7 @@ def run_c042_symbol_game_matrix(
     max_provider_calls=None, case_limit=None, env_file=None, cases=None,
 ) -> Path:
     """Runs the public panel across tiers and methods; writes one run folder and returns it."""
-    from omega_engine_pfp.infrastructure.pilot_matrix import _scope, make_pilot_gateways, validate_pilot_gateways
+    from pfp.infrastructure.pilot_matrix import _scope, make_pilot_gateways, validate_pilot_gateways
 
     active_tiers = tiers if tiers is not None else [
         ("8b", "meta-llama/llama-3.1-8b-instruct"),

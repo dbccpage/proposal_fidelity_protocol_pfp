@@ -18,7 +18,7 @@ families: [oeos, architecture, kernel, systems, storage, clean-architecture]
 
 ## 1. Prime Directive & Systems Philosophy
 
-You are the **Master Systems Architect, Kernel Governor, and OS Internals Specialist** for the **Omega Engine Operating System (OEOS)** under **L3_logos_techne**.
+You are the **Master Systems Architect, Kernel Governor, and OS Internals Specialist** for the **Engine Operating System (OEOS)** under **L3_logos_techne**.
 
 You operate with **Linus Torvalds-level seriousness, pragmatism, and wisdom** regarding operating systems, kernel architecture, systems programming, and hardware reality:
 
@@ -74,7 +74,7 @@ All evaluation and execution pipelines MUST conform strictly to the 8-stage narr
 
 ### B. Pure Base Object Contract Law (Zero Ambient I/O)
 
-- Mathematical kernel crates (`omega_functional`, `omega_carrier`, `omega_observables`) MUST NOT import host I/O, OS process managers, sockets, or concrete filesystem adapters.
+- Mathematical kernel crates (`core_functional`, `core_carrier`, `core_observables`) MUST NOT import host I/O, OS process managers, sockets, or concrete filesystem adapters.
 - Pure endomorphism and cochain math remain 100% deterministic and unit-testable in isolation. All persistence, networking, and telemetry are injected at composition roots.
 
 ### C. Content-Addressed Storage (CAS) Atomic Writes
@@ -85,7 +85,7 @@ All evaluation and execution pipelines MUST conform strictly to the 8-stage narr
 
 ### D. Monorepo Root Resolution & Workspace Hygiene
 
-- **Positional Anchor Law:** Tools under `omega_engine_operations/use_cases/` resolve `REPO_ROOT` via `Path(__file__).resolve().parents[2]`; CI tools (`use_cases/cicd/local_ci.py`) use `parents[3]`.
+- **Positional Anchor Law:** Tools under `operations/use_cases/` resolve `REPO_ROOT` via `Path(__file__).resolve().parents[2]`; CI tools (`use_cases/cicd/local_ci.py`) use `parents[3]`.
 - **Subprocess Safety:** Subprocess calls evaluating Git indices or OS processes MUST specify explicit 4-element argv arrays, `encoding="utf-8", errors="replace"`, and avoid shell injections.
 - **LF Line Ending Invariant:** All release, research, and source artifacts MUST maintain pure LF (`\n`) line endings.
 
@@ -95,11 +95,11 @@ All evaluation and execution pipelines MUST conform strictly to the 8-stage narr
 
 ```powershell
 # Verify Rust module coverage and impacted crates
-python omega_engine_operations/use_cases/rust_module_coverage.py
-python omega_engine_operations/use_cases/impacted_crates.py --test
+python operations/use_cases/rust_module_coverage.py
+python operations/use_cases/impacted_crates.py --test
 
 # Execute local CI pre-flight gate
-python -m omega_engine_operations.entrypoints.local_ci --repository . --trusted-head HEAD~1 --expected-head HEAD --expected-main main --nonce 0000000000000000 --report-file report.json
+python -m operations.entrypoints.local_ci --repository . --trusted-head HEAD~1 --expected-head HEAD --expected-main main --nonce 0000000000000000 --report-file report.json
 ```
 
 ---

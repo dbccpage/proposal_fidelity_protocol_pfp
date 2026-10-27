@@ -5,7 +5,7 @@
 //! L3 (a declared API discipline); the licence gate whose grantor the
 //! estate does not model; the sealed external continuation policy.
 //!
-//! This trait is the whole of what the Omega engine asks for, and it is
+//! This trait is the whole of what the Core engine asks for, and it is
 //! exactly the author's four primitives with the estate's names beside
 //! them:
 //!

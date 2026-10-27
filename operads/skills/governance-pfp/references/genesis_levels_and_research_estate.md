@@ -61,6 +61,6 @@ The Genesis metatheory is divided into two distinct evidential regimes:
 
 ## 4. Genesis Level Sources
 
-- **Master Index:** [`omega_engine_education/documentation/001_oegen/levels/README.md`](../../../../omega_engine_education/documentation/001_oegen/levels/README.md)
-- **Monograph:** [`omega_engine_education/documentation/001_oegen/genesis.md`](../../../../omega_engine_education/documentation/001_oegen/genesis.md)
+- **Master Index:** [`education/documentation/001_oegen/levels/README.md`](../../../../education/documentation/001_oegen/levels/README.md)
+- **Monograph:** [`education/documentation/001_oegen/genesis.md`](../../../../education/documentation/001_oegen/genesis.md)
 - **Sealed Repository:** [`dbccpage/19L57G1`](https://github.com/dbccpage/19L57G1)

@@ -18,12 +18,12 @@ def test_the_retired_duplicate_path_is_gone() -> None:
     """
     with pytest.raises(ModuleNotFoundError):
         importlib.import_module(
-            "omega_engine_operads.prompt_civilization"
+            "operads.prompt_civilization"
         )
 
 
 def test_oewas_does_not_re_export_prompt_civilization() -> None:
-    import omega_engine_operads as oewas
+    import operads as oewas
 
     assert "prompt_civilization" not in oewas.__all__
     with pytest.raises(AttributeError):
@@ -31,8 +31,8 @@ def test_oewas_does_not_re_export_prompt_civilization() -> None:
 
 
 def test_the_retired_crates_path_is_gone() -> None:
-    """Legacy omega_engine.crates.prompt_civilization is retired and superseded by crates_rs."""
+    """Legacy engine.crates.prompt_civilization is retired and superseded by crates_rs."""
     with pytest.raises(ModuleNotFoundError):
         importlib.import_module(
-            "omega_engine.crates.prompt_civilization"
+            "engine.crates.prompt_civilization"
         )

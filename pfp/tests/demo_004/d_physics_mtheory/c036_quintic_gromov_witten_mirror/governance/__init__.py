@@ -15,9 +15,9 @@ from .commit_reveal_runner import (
     phase3_reveal_and_score,
     verify_commitments,
 )
-from .woland_gate import (
+from .adversary_gate import (
     CANONICAL_OUTPUT_FILES,
-    WolandGate,
+    AdversaryGate,
 )
 
 __all__ = [
@@ -25,7 +25,7 @@ __all__ = [
     "BudgetCeilingExceededError",
     "FallbackNotAllowedError",
     "ModelParameterCeilingError",
-    "WolandGate",
+    "AdversaryGate",
     "CANONICAL_OUTPUT_FILES",
     "phase1_commit_judge",
     "phase2_freeze_solver",

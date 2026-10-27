@@ -1,6 +1,6 @@
 intergate_id: "PFP-IG-08-QUARANTINE-RECOVERY"
 name: "Quarantine Recovery & Containment Intergate"
-transition_from: "PFP-11-STRAVINSKY"
+transition_from: "PFP-11-QUARANTINE"
 transition_to: "PFP-07-MASTER"
 cognitive_vector: "Quarantine Containment & Safe Re-entry"
 authority_effect: "None"
@@ -17,14 +17,14 @@ objective: >
 fences:
   - "Exact Repair Requirement: Quarantined prompts must undergo exact repair before re-entry attempt."
   - "Harm Distinction Fence: Preserve distinct harm classes during quarantine audit (hallucination vs injection vs corruption)."
-  - "Re-entry Witness Fence: Re-entry requires explicit dual-witness receipt (Stravinsky + Master)."
+  - "Re-entry Witness Fence: Re-entry requires explicit dual-witness receipt (Quarantine + Master)."
 input_schema:
   quarantine_cause: "string"
   exact_repair_certificate_present: "bool"
   dual_witness_signatures: "list[string]"
 transition_rules: >
   If exact_repair_certificate_present is true and dual_witness_signatures contains 2 valid signatures,
-  permit re-entry transition to PFP-07-MASTER. Otherwise, retain in Stravinsky quarantine.
+  permit re-entry transition to PFP-07-MASTER. Otherwise, retain in Quarantine quarantine.
 narrowest_defensible_claim: >
   Requiring exact repair certification and dual-witness sign-off prevents premature release of corrupted prompts from quarantine.
 next_test_needed: >

@@ -16,7 +16,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 Two open items in 19L57G1 ask for the same object. The native-structure tree proves that swap-generated cells are sound, whisker and compose, but its `Cell` is a proposition, so the laws hold only because any two proofs are equal. The G013 trace-calculus tree declares interchange as a constructor and leaves unit, associativity and quotient compatibility open. A proof-relevant version must make cells data, keep the native guard (a swap is valid only at the state its prefix actually reaches), and still satisfy the laws on a quotient that does not collapse everything.
 
-Generation is hard: dependent types, quotients and guard-sensitive constructors under core Lean with no Mathlib and no `Classical.choice`. Verification is cheap: `lake build` and the axiom audit. The task stresses Lean decomposition in the Symbol Game, OEWAS (Omega Engine Workflows, Agents, Skills) statement discipline, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against laws that hold only by proof irrelevance. A pass is a formal result inside the calculus of inductive constructions, not a claim about any physical or categorical reading.
+Generation is hard: dependent types, quotients and guard-sensitive constructors under core Lean with no Mathlib and no `Classical.choice`. Verification is cheap: `lake build` and the axiom audit. The task stresses Lean decomposition in the Symbol Game, OEWAS (Engine Workflows, Agents, Skills) statement discipline, and the OEEIS (Engine Epistemic Immune System) danger gate against laws that hold only by proof irrelevance. A pass is a formal result inside the calculus of inductive constructions, not a claim about any physical or categorical reading.
 
 ## 3. Formal Problem and Bounds
 
@@ -100,7 +100,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_higher_category_theory](../../../../omega_engine/crates_rs/omega_higher_category_theory/) (strict 2-categories, for small finite cross-checks of the laws); [omega_category_theory](../../../../omega_engine/crates_rs/omega_category_theory/).
+- the_symbol_game: [core_higher_category_theory](../../../../engine/crates_rs/core_higher_category_theory/) (strict 2-categories, for small finite cross-checks of the laws); [core_category_theory](../../../../engine/crates_rs/core_category_theory/).
 - 19L57G1 (`b55fc96a`): `19L57G1:research/native_structure/lean/ResearchNativeStructure/Cells.lean`, `19L57G1:research/native_structure/TREE_CONTRACT.json`, `19L57G1:research/g013_trace_calculus/lean/HigherCell.lean`, `19L57G1:lean4/ParkedAudit.lean` (the audit gap for `Type`-valued content), `19L57G1:ci/run_gates.py`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), [U17](../../upgrades/u17_lean_verifier_backend.md).
 

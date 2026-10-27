@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Sequence
 
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     ExactRationalTensor,
     HostFenceAudit,
     PontryaginKillFlags,
@@ -12,13 +12,13 @@ from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
     ReversalMap,
     TraceInvarianceDisposition,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.lexical import (
+from pfp.domain.mssn_research.grammar.lexical import (
     Alphabet,
     ProbabilityMass,
     QuantifierMask,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     Rational,
     StageLevel,
 )

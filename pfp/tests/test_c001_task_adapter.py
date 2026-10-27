@@ -6,17 +6,17 @@ import json
 
 import pytest
 
-from omega_engine_pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_public_set,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.solve import solve
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate
-from omega_engine_pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
-from omega_engine_pfp.use_cases.pfp_proposal import task_turn_validator
+from pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.solve import solve
+from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate
+from pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
+from pfp.use_cases.pfp_proposal import task_turn_validator
 
 
 def adapter():
-    from omega_engine_woland.tests.pilots.challenge_suite import c001
+    from adversary.tests.pilots.challenge_suite import c001
 
     return c001
 

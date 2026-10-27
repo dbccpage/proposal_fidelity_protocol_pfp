@@ -8,12 +8,12 @@ from __future__ import annotations
 import sqlite3
 from typing import Any
 
-from omega_engine_pfp.infrastructure.normal_forms.bqnf_extrema import RepairTally
-from omega_engine_pfp.infrastructure.normal_forms.bqnf_extrema import accumulate_delta
-from omega_engine_pfp.infrastructure.normal_forms.bqnf_extrema import apply_addition
-from omega_engine_pfp.infrastructure.normal_forms.bqnf_extrema import apply_removal
-from omega_engine_pfp.infrastructure.normal_forms.sales_cochain import compute_true_median
-from omega_engine_pfp.infrastructure.normal_forms.sales_cochain import estimate_quantile
+from pfp.infrastructure.normal_forms.bqnf_extrema import RepairTally
+from pfp.infrastructure.normal_forms.bqnf_extrema import accumulate_delta
+from pfp.infrastructure.normal_forms.bqnf_extrema import apply_addition
+from pfp.infrastructure.normal_forms.bqnf_extrema import apply_removal
+from pfp.infrastructure.normal_forms.sales_cochain import compute_true_median
+from pfp.infrastructure.normal_forms.sales_cochain import estimate_quantile
 
 _SUPPORTED = {"INSERT", "UPDATE", "DELETE"}
 

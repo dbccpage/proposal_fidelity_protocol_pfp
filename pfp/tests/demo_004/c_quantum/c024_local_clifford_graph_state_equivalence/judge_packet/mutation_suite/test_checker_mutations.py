@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
 

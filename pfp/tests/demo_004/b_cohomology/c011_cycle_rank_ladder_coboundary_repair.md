@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 This is the Symbol Game's home problem written as a certificate task. The live traces show where models break: on the diamond (b₁ = 2) a 7B model reached Φ₁ = 0 with host guidance; on K4 (b₁ = 3) it fixed one cycle and fell into the AM-4 stationary attractor (`research/mssn_sn_tower/demos/anti_morphism_observations.md`). Reaching Φ₁ = 0 is also not the same as a minimal repair. Repairing each fundamental cycle on its own chord reaches zero, but when a tree edge lies on several cycles, repairing that shared edge can be cheaper. So generation is hard in two ways (find an exact cochain; find the cheapest one), while verification is cheap: a potential and a dual circulation certify optimality in linear time.
 
-The challenge stresses the Symbol Game's retraction loop and strict descent, OEWAS (Omega Engine Workflows, Agents, Skills) task decomposition by cycles (U13), and the OEEIS (Omega Engine Epistemic Immune System) kinetic proofreading gate. A pass shows the game can produce a certified minimum-L1 repair solver up to b₁ = 16. It does not show anything about degree-2 obstructions, which belong to [C019](c019_h2_obstruction_extension.md).
+The challenge stresses the Symbol Game's retraction loop and strict descent, OEWAS (Engine Workflows, Agents, Skills) task decomposition by cycles (U13), and the OEEIS (Engine Epistemic Immune System) kinetic proofreading gate. A pass shows the game can produce a certified minimum-L1 repair solver up to b₁ = 16. It does not show anything about degree-2 obstructions, which belong to [C019](c019_h2_obstruction_extension.md).
 
 ## 3. Formal Problem and Bounds
 
@@ -57,7 +57,7 @@ Rationals are canonical strings (`"-3"`, `"5/12"`; never `"1/1"` or decimals). O
 - **Hidden base cases:** 48 (three per b₁ from 1 to 16).
 - **Relabel and gauge controls:** 24. Vertex renaming; reversing an edge (negates c_e; Φ₁ unchanged; that repair entry flips sign); adding a coboundary δψ to c (Φ₁ unchanged; the potential shifts by ψ).
 - **Poisoned but schema-valid:** 16. Cases where chord-only repair reaches zero but costs more than the optimum; cases where the cheapest edge per unit is a shared tree edge; weights that make two different repairs tie; claims near 10^20.
-- **Exact checker:** `omega_functional`'s `Phi1Functional::verify_exact_certificate`, reached through the `omega_symbol_game` binary's `verify_l1_certificate`.
+- **Exact checker:** `core_functional`'s `Phi1Functional::verify_exact_certificate`, reached through the `core_symbol_game` binary's `verify_l1_certificate`.
 - **Independent second checker:** a separately written Python `Fraction` verifier of the three certificate conditions, plus `exact_solve_l1_primal_dual` recomputing Φ₁ independently of the submission.
 - **Checker mutation suite:** a dual with one |y_e| = w_e + 1/12; a dual with one vertex imbalance; a potential off by one at one vertex; phi1 off by 1/12; `"1/1"`; `"0.5"`; a zero-reaching non-optimal repair with a dual that is feasible but has a smaller objective.
 
@@ -67,7 +67,7 @@ Rationals are canonical strings (`"-3"`, `"5/12"`; never `"1/1"` or decimals). O
 - **B: Ordinary iterative.** Plain-language synthesis with the same tools and history.
 - **C: Representation ablation.** A's controller and checks with plain-text packets.
 - **D: Repeated sampling.** Independent whole solvers, filtered on public examples, cost-matched.
-- **E: No-model baseline.** `omega_solvers::solve_weighted_l1_projection` (exact sparse simplex over Q with a dual witness), wrapped as `solve`. It is expected to solve every case; if A matches E, the result is useful automation without an incremental model advantage.
+- **E: No-model baseline.** `core_solvers::solve_weighted_l1_projection` (exact sparse simplex over Q with a dual witness), wrapped as `solve`. It is expected to solve every case; if A matches E, the result is useful automation without an incremental model advantage.
 
 Arm F does not apply (catalog arms A–E).
 
@@ -93,7 +93,7 @@ Candidate models: `meta-llama/llama-3.3-70b-instruct`, Qwen3-32B, `deepseek/deep
 
 ## 11. OEEIS, Attention, Logit and Scratch-Space Hooks
 
-- **Kinetic proofreading** (catalog hook; `HopfieldNinioProofreader` in `omega_engine_symbol_game/domain/biochem/proofreading.py`): a candidate solver is admitted only after passing successive independent stages (public examples, the Python certificate verifier, the Rust verifier), each of which can discard it. The proofreading discard rate and the cost of each stage are logged. This is a verification pipeline modelled on proofreading, not a chemical claim.
+- **Kinetic proofreading** (catalog hook; `HopfieldNinioProofreader` in `symbol_game/domain/biochem/proofreading.py`): a candidate solver is admitted only after passing successive independent stages (public examples, the Python certificate verifier, the Rust verifier), each of which can discard it. The proofreading discard rate and the cost of each stage are logged. This is a verification pipeline modelled on proofreading, not a chemical claim.
 - **Antimorphisms expected:** AM-4 stationary repeats during synthesis repair turns; AM-5 global sign inversion (negating every claim); chord-only repair reported as optimal; floats in output (the Q40 `int(...)` crash pattern, now a checker mutation).
 - **Scratch space (U12, optional):** the per-cycle residual ledger from [C006](../a_mechanism/c006_host_scratch_space_vs_cot.md). **Layer 2:** grammar-constrained certificate JSON is allowed in every arm equally. **Layer 1:** not applicable.
 
@@ -113,9 +113,9 @@ operand slack_edges_fix_potential.v1 | kind: move | when: an optimal dual y is k
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_solvers` (`exact_weighted_l1_lp.rs`, `phi1_l1_boundary_solver.rs`) and `omega_engine/crates_rs/omega_functional` (`phi1.rs`, `graph_phi1.rs`, `dual_witness.rs`).
-- `omega_engine/crates_rs/omega_symbol_game` (`verify_l1_certificate`, `exact_solve_l1_primal_dual`).
-- `omega_engine/crates_rs/omega_solvers/src/hodge_certificate_checker.rs` checks the unit-weight version of these conditions in `f64` with a tolerance; it is not used as a checker here.
+- `engine/crates_rs/core_solvers` (`exact_weighted_l1_lp.rs`, `phi1_l1_boundary_solver.rs`) and `engine/crates_rs/core_functional` (`phi1.rs`, `graph_phi1.rs`, `dual_witness.rs`).
+- `engine/crates_rs/core_symbol_game` (`verify_l1_certificate`, `exact_solve_l1_primal_dual`).
+- `engine/crates_rs/core_solvers/src/hodge_certificate_checker.rs` checks the unit-weight version of these conditions in `f64` with a tolerance; it is not used as a checker here.
 - `research/mssn_sn_tower/demos/anti_morphism_observations.md` for the public boards.
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrade: [U13](../../upgrades/u13_cohomological_task_decomposition.md).

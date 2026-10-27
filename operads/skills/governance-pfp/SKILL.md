@@ -94,7 +94,7 @@ Directly mined from the comprehensive audit review of 338 registered entries and
 ## 2. What Governance-PFP Must PROMOTE (The Six Coalescence Pillars)
 
 1. **Multidimensional Parameter Matrix Architecture (`RULE_PFP_MULTIDIMENSIONAL_MATRIX_001`)**
-   - Knobs span orthogonal dimensions defined in [`dimension_register.yaml`](../../../omega_engine_woland/tests/pilots/dimensions/dimension_register.yaml):
+   - Knobs span orthogonal dimensions defined in [`dimension_register.yaml`](../../../adversary/tests/pilots/dimensions/dimension_register.yaml):
      - **Open Task Family Universe:** The task universe is unbounded and coextensive with all problems that can be posed as text prompts (symbolic manipulation, combinatorial search, graph theory, automated reasoning, constraint satisfaction, code generation, cochain defect verification, semantic parsing, formal refutation, etc.). An initial finite seed suite (e.g. `linear_algebra`, `graph_facts`, `graph_repair`, `refusal`, `cochain_defect`, `magma_associativity`) serves solely as a Phase 1 calibration fixture slice for baseline failure-boundary benchmarking, not a closed domain boundary.
      - **Multi-Rung Difficulty Scaling:** Difficulty rungs (e.g. Rungs 1â€“5 and beyond) calibrated to baseline model failure boundaries where unstructured prompt-response loops break down.
      - **Representation Rewrites:** Encodings across representations and syntax styles (`raw_prose`, `structured_spans`, `ebnf_wire_v1`, `sn_wire_v2`, `mss_boundary_v1`, `hieroglyphic_glyphs`, or domain ASTs).
@@ -128,7 +128,7 @@ Directly mined from the comprehensive audit review of 338 registered entries and
      3. `tests/test_pilot.py`: Focused regression checks for demonstrated defects; no fixed mutation count.
      4. `README.md`: Concise problem specification and mathematical invariant description.
 7. **Optional Research Derivation Profiles (`RULE_PFP_PILOT_MODUS_OPERANDI_AND_LIFT_PROTOCOL_001`)**
-   - Historical recipe in [`MODUS_OPERANDI.md`](../../../omega_engine_woland/tests/pilots/MODUS_OPERANDI.md) for empirical pilots (`pilot_0000000` through `pilot_0000099`):
+   - Historical recipe in [`MODUS_OPERANDI.md`](../../../adversary/tests/pilots/MODUS_OPERANDI.md) for empirical pilots (`pilot_0000000` through `pilot_0000099`):
      - **Mechanized Paper Claim Grounding:** Advanced pilots (Rungs 2â€“6) must reject trivial toy seeds and ground problems in verified Lean 4 Mathlib theorems and Python certified oracles in `coda_atlas/F004_papers/`.
      - **Root Directory Hygiene:** Pilot roots contain only sovereign specs (`spec.yaml`, `seed.yaml`, `prompt_template.yaml`, `p_star.yaml`, `README.md`, `results/`, `tests/`).
      - **Granular Test Capsules:** Every run is encapsulated in sequential zero-padded folders (`tests/test_00/` through `tests/test_99/`) containing `test_spec.yaml`, `input.yaml`, and `response.yaml`.
@@ -148,7 +148,7 @@ Directly mined from the comprehensive audit review of 338 registered entries and
 4. **Stage Opcode Allocation Formula**: Governs internal evaluator dispatch offset $\mathrm{base}(N) = 128 + 8 \times (N - 22)$ for $N \ge 22$ (internal evaluator metadata only; never serialized into MSS wire packets).
 5. **Stage Retraction Down-Map Law**: Retraction down-rule $d_N(u_N(x)) = x$ is a conditional lift obligation for future accepted lifts. Newly introduced terms return typed `NON_DESCENT` (`stage_status.py`, `goo-mssn-stage-retraction-gate`).
 6. **Delimiter Balancing & $\Sigma_{36}$ Wire Alphabet**: Balanced delimiters (nested brackets/parentheses), $\Sigma_{36}$ alphabet compliance, base distinction `<>` classified as Diff, never Atom (`symbol-game-packet-codec-guard`).
-7. **Two-Object Identity & Four Non-Overlapping Domains**: Strict non-conflation of **Object A** (Proposal Fidelity Protocol runtime â€” untrusted neural proposals, packetization, zero authority) and **Object B** (Minimal Symbol System monograph â€” cochains, quotient obstructions, discrete optimization). Partitioned across PFP/SGPP (runtime), MSS-N/$S(n)$ (pure math), CEC (context extension), and Authority/Omega (sovereign gate).
+7. **Two-Object Identity & Four Non-Overlapping Domains**: Strict non-conflation of **Object A** (Proposal Fidelity Protocol runtime â€” untrusted neural proposals, packetization, zero authority) and **Object B** (Minimal Symbol System monograph â€” cochains, quotient obstructions, discrete optimization). Partitioned across PFP/SGPP (runtime), MSS-N/$S(n)$ (pure math), CEC (context extension), and Authority/Core (sovereign gate).
 
 ---
 
@@ -156,10 +156,10 @@ Directly mined from the comprehensive audit review of 338 registered entries and
 
 ```bash
 # Consolidated PFP invariant verification check
-python omega_engine_operads/skills/governance-pfp/scripts/check_pfp.py
+python operads/skills/governance-pfp/scripts/check_pfp.py
 
 # Backward-compatible verification alias
-python omega_engine_operads/skills/governance-pfp/scripts/check_symbol_game.py
+python operads/skills/governance-pfp/scripts/check_symbol_game.py
 ```
 
 ---

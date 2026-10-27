@@ -11,15 +11,15 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_operations.use_cases.packaging.project_typed_contracts import (
+from operations.use_cases.packaging.project_typed_contracts import (
     project_typed_packages,
 )
-from omega_engine_operations.use_cases.packaging.sync_cross_host_skills import HOST_SKILL_ROOTS
-from omega_engine_operads.contracts.typed_capabilities_v1 import (
+from operations.use_cases.packaging.sync_cross_host_skills import HOST_SKILL_ROOTS
+from operads.contracts.typed_capabilities_v1 import (
     ROOT,
     canonical_bytes,
 )
-from omega_engine_operads.infrastructure.typed_contract_compiler import (
+from operads.infrastructure.typed_contract_compiler import (
     TypedContractCompileRefusal,
     compile_typed_contracts,
 )
@@ -41,13 +41,13 @@ def _estate(tmp_path):
 
 
 def _entry(root, kind):
-    instruction = _resource(root, ROOT + "/instructions/woland_claim_audit.md")
+    instruction = _resource(root, ROOT + "/instructions/adversary_claim_audit.md")
     row = {
         "schema_version": "oewas.typed-capability.v1",
         "kind": kind,
         "skill_id": "digested-" + kind.replace("_", "-"),
         "description": "Review a digested input contract.",
-        "binding": "woland.digested_guidance.v1",
+        "binding": "adversary.digested_guidance.v1",
         "instruction": instruction,
         "inputs": [{"name": "candidate", "colour": "Code", "wire_type": "code_text"}],
         "output": {
@@ -93,7 +93,7 @@ def _entry(root, kind):
                 "antibody_id": "ab_silent_input_schema_coercion",
                 "pharmacy_status": "candidate",
                 "prompt": instruction,
-                "prompt_uri": "prompt://woland/digestion/input/review/TYPED_INPUT",
+                "prompt_uri": "prompt://adversary/digestion/input/review/TYPED_INPUT",
                 "signal1_epitope": "str(raw_step)",
                 "signal2_required_danger": "STRICT_INPUT_VIOLATION",
                 "harmful_example": 'raw_step = {"op": str(raw_step)}',
@@ -181,7 +181,7 @@ def test_retired_lesson_source_uses_its_exact_git_revision_without_restoring_own
         (lambda row: row.update(prompt_uri="unbound-prompt"), "CONTRACT_SCHEMA_REFUSED"),
         (lambda row: row.update(pharmacy_status="admitted"), "CONTRACT_SCHEMA_REFUSED"),
         (lambda row: row.update(binding="model.chosen.executor"), "CONTRACT_SCHEMA_REFUSED"),
-        (lambda row: row.update(skill_id="woland-claim-audit"), "CONTRACT_ID_REFUSED"),
+        (lambda row: row.update(skill_id="adversary-claim-audit"), "CONTRACT_ID_REFUSED"),
         (lambda row: row.update(dependencies=["missing-owner"]), "DEPENDENCY_REFUSED"),
     ],
 )
@@ -196,7 +196,7 @@ def test_false_provenance_detached_antibodies_and_promotion_refuse(tmp_path, cha
 
 
 def test_prompt_attachment_reuses_existing_inert_binding(tmp_path):
-    from omega_engine_operads.domain.prompt_hierarchy.evaluator import (
+    from operads.domain.prompt_hierarchy.evaluator import (
         evaluate_prompt_gates,
     )
 
@@ -229,7 +229,7 @@ def test_changed_prompt_refuses_before_any_projection(tmp_path):
 
 
 def test_guidance_composition_preserves_lesson_and_original_pair_api(tmp_path):
-    from omega_engine_operads.application.woland_candidate_plan import (
+    from operads.application.adversary_candidate_plan import (
         PlanNodeV01,
         compile_candidate_plan,
     )
@@ -254,11 +254,11 @@ def test_guidance_composition_preserves_lesson_and_original_pair_api(tmp_path):
 
 
 def test_real_digested_entries_reuse_catalog_and_source_owners(tmp_path):
-    from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+    from operads.infrastructure.capability_catalog_compiler import (
         compile_capability_catalog,
     )
-    from omega_engine_operads.infrastructure.typed_contract_compiler import read_typed_package_resource
-    from omega_engine_operads.domain.capability_catalog_v1 import ResourceRefV1
+    from operads.infrastructure.typed_contract_compiler import read_typed_package_resource
+    from operads.domain.capability_catalog_v1 import ResourceRefV1
 
     root = _estate(tmp_path)
     shutil.copytree(REPO / ROOT / "lessons", root / ROOT / "lessons")
@@ -271,7 +271,7 @@ def test_real_digested_entries_reuse_catalog_and_source_owners(tmp_path):
                 destination.write_bytes(read_typed_package_resource(REPO, row["skill_id"], ResourceRefV1(**resource)))
     bundle = compile_typed_contracts(root)
     assert len(bundle.packages) == 2 + len(list((REPO / ROOT / "lessons").glob("*.json")))
-    antibody = dict(bundle.packages)["woland-input-coercion-antibody"].decode()
+    antibody = dict(bundle.packages)["adversary-input-coercion-antibody"].decode()
     assert "```text\n" in antibody
     assert ">   " not in antibody
     project_typed_packages(root, bundle.packages)

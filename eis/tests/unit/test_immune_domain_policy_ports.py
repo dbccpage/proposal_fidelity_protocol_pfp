@@ -6,19 +6,19 @@ from unittest.mock import Mock
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.external_admission import (
+from eis.domain.external_admission import (
     AntibodyObservationV1,
     ReplayResult,
     ReplayVerifierV1,
     distinct_observations,
 )
-from omega_engine_epistemic_immune_system.domain.guard_activation import (
+from eis.domain.guard_activation import (
     DangerSignalReceiptV1,
     DetectorHitRefV1,
     GuardActivationReceiptV1,
     evaluate_activation,
 )
-from omega_engine_epistemic_immune_system.domain.provisional_promotion import (
+from eis.domain.provisional_promotion import (
     PromotionResult,
     ProvisionalPromotionEngineV1,
 )

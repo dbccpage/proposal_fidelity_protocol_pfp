@@ -16,7 +16,7 @@ An agent can propose changes to the software that organizes its own attempts.
 Whether the changes improve research performance is an experimental question;
 whether a particular submitted result passes a declared checker is a separate
 verification question. We implement an explicit experimental re-entry path over
-existing Omega Engine subsystems, inspired by mechanisms reported for AIDE2.
+existing Engine subsystems, inspired by mechanisms reported for AIDE2.
 The path retains candidate ancestry, isolates candidate execution, reserves
 provider liability against one durable budget, separates public feedback from
 private grading, and requires fresh confirmation before replacing an
@@ -57,7 +57,7 @@ the external paper appears.
 | Owner | Implemented responsibility | Evidence ceiling |
 | --- | --- | --- |
 | OEOP | Versioned experiment, candidate, evaluation and decision contracts; existing typed workflow compilation | A typed connection does not prove callback correctness |
-| Woland | Explicit research orchestration, public search, private evaluation, confirmation and retained evidence | Experimental selection does not deploy a capability |
+| Adversary | Explicit research orchestration, public search, private evaluation, confirmation and retained evidence | Experimental selection does not deploy a capability |
 | PFP | Exclusive provider admission, transport, reservations and token-usage settlement | List-price accounting is not an invoice audit |
 | OEEIS | Scoped failure guidance with reproducers and benign controls | Diagnostic candidates are not admitted or activated antibodies |
 | OEPCIV | Protected host context, candidate genealogy, rejected branches and exact Pareto comparison | Ancestry does not authenticate an external author |

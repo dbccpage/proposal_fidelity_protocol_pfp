@@ -6,5 +6,5 @@
 - Kitaev, A. Y. (2001). "Unpaired Majorana fermions in quantum wires." Physics-Uspekhi, 44(10S), 131.
 - Bravyi, S. & Kitaev, A. (2002). "Fermionic quantum computation." Annals of Physics, 298(1), 210-226.
 - Bonderson, P., Freedman, M., & Nayak, C. (2008). "Measurement-only topological quantum computation." Physical Review Letters, 101(1), 010501.
-- Proposal Fidelity Protocol (PFP) Majorana Carrier Bridge: `omega_engine_projects/ms_majorana/code/pfp_majorana_bridge.py`.
-- Multi-Qubit Majorana Noise and Referee Engine: `omega_engine_projects/ms_majorana/code/majorana_multiqubit_noise.py`.
+- Proposal Fidelity Protocol (PFP) Majorana Carrier Bridge: `projects/ms_majorana/code/pfp_majorana_bridge.py`.
+- Multi-Qubit Majorana Noise and Referee Engine: `projects/ms_majorana/code/majorana_multiqubit_noise.py`.

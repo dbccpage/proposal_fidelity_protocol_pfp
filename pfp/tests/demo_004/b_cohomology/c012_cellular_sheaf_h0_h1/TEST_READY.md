@@ -8,7 +8,7 @@
 
 ## 1. Test Suite Summary
 
-The comprehensive unit, boundary, dual checker, and mutation test suite for C012 (Cellular Sheaf Cohomology $H^0$ and $H^1$) has been authored and verified against `c012_cellular_sheaf_h0_h1.md` and SG-CP v1. All tests adhere strictly to the Lev Landau Soviet falsification methodology (verifying Invariant, Break, Witness, and Mutation) and strict claim hygiene (narrow, bounded, defensible claims with zero hype verbs).
+The comprehensive unit, boundary, dual checker, and mutation test suite for C012 (Cellular Sheaf Cohomology $H^0$ and $H^1$) has been authored and verified against `c012_cellular_sheaf_h0_h1.md` and SG-CP v1. All tests adhere strictly to the Examiner falsification methodology (verifying Invariant, Break, Witness, and Mutation) and strict claim hygiene (narrow, bounded, defensible claims with zero hype verbs).
 
 | Test Module | Focus Area | Tests | Status | Execution Time |
 |:---|:---|:---:|:---:|:---:|
@@ -16,7 +16,7 @@ The comprehensive unit, boundary, dual checker, and mutation test suite for C012
 | `judge_packet/mutation_suite/test_checker_mutations.py` | Mutation testing suite across 41 corrupted certificates verifying 100% kill rate (Checker 1 & Checker 2) | 41 | PASS | 0.45s |
 | `tests/test_dual_checkers.py` | Dual independent checkers, base cases, controls, poisoned cases, consensus verification | 2 | PASS | 0.28s |
 | `tests/test_participant_packet.py` | Participant packet schema, 20 public worked examples, runner CLI, canonical RFC 8785 JSON formatting | 3 | PASS | 0.33s |
-| `tests/test_governance_and_commit_reveal.py` | Tier T2 budget controller ($0.50 ceiling, $0.05 target, 70B ceiling, no fallbacks), Woland gate, 3-Phase Commit-Reveal | 4 | PASS | 1.85s |
+| `tests/test_governance_and_commit_reveal.py` | Tier T2 budget controller ($0.50 ceiling, $0.05 target, 70B ceiling, no fallbacks), Adversary gate, 3-Phase Commit-Reveal | 4 | PASS | 1.85s |
 | `tests/test_e2e_challenge.py` | Comprehensive E2E test suite (Features, boundaries, cross-seam integration, complete execution) | 1 | PASS | 1.36s |
 | **Total** | **Complete C012 Challenge Verification** | **56** | **PASS** | **4.68s** |
 
@@ -51,14 +51,14 @@ The comprehensive unit, boundary, dual checker, and mutation test suite for C012
 - `test_runner_execution`: Runs `runner.py` on examples producing valid RFC 8785 JSON-L.
 
 ### 5. `tests/test_governance_and_commit_reveal.py` (4 tests)
-- Asserts BudgetGate initialization, ceiling $\$0.50$, model ceiling $70\text{B}$, Woland reality gate bundle persistence, and 3-Phase Commit-Reveal tamper detection.
+- Asserts BudgetGate initialization, ceiling $\$0.50$, model ceiling $70\text{B}$, Adversary reality gate bundle persistence, and 3-Phase Commit-Reveal tamper detection.
 
 ### 6. `tests/test_e2e_challenge.py` (1 test)
 - Runs full end-to-end solve, dual evaluate, and commit pipeline.
 
 ---
 
-## 3. Lev Landau Falsification Matrix
+## 3. Examiner Falsification Matrix
 
 | Invariant | Break Attempt | Witness | Mutation Test | Result |
 |:---|:---|:---|:---|:---|

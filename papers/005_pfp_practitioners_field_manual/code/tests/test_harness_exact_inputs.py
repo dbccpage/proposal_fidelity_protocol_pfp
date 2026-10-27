@@ -27,7 +27,7 @@ def _cut(claims):
 
 
 def _session(claims, monkeypatch):
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_BIN", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_BIN", raising=False)
     session = SymbolGameStreamingSession(VERTICES, EDGES, CLAIMS, MockLLMStreamingProposer([_cut(claims)]))
     session.initialize()
     return session

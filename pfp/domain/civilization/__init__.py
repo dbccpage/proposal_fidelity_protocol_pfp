@@ -3,11 +3,11 @@
 AuthorityEffect: None.
 """
 
-from omega_engine_pfp.domain.civilization.elenchus import (
+from pfp.domain.civilization.elenchus import (
     ElenchusResult,
     SocraticElenchusBureau,
 )
-from omega_engine_pfp.domain.civilization.models import (
+from pfp.domain.civilization.models import (
     CivilizationPrompt,
     CivilizationState,
     PopulationTier,

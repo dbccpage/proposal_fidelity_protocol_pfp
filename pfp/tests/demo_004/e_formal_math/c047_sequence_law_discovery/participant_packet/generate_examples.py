@@ -3,11 +3,11 @@ import math
 import os
 import random
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.reference_solver import (
     solve,
 )
 
-out_dir = "omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math/c047_sequence_law_discovery/participant_packet/examples"
+out_dir = "projects/mssn_sn_symgam/challenges/e_formal_math/c047_sequence_law_discovery/participant_packet/examples"
 os.makedirs(out_dir, exist_ok=True)
 
 examples = []

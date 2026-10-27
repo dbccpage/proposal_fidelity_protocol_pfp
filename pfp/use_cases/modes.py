@@ -8,7 +8,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from omega_engine_pfp.domain.modes import ModeContract, ModesManifest
+from pfp.domain.modes import ModeContract, ModesManifest
 
 
 class ListModesUseCase:

@@ -3,7 +3,7 @@
 Tests:
   1. AssemblePromptUseCase
   2. ExecuteStagePipelineUseCase
-  3. EvaluateWolandGatesUseCase
+  3. EvaluateAdversaryGatesUseCase
   4. RunDemoUseCase
   5. VerifyPfpContractsUseCase
   6. RewritePromptUseCase
@@ -17,23 +17,23 @@ import json
 import unittest
 from typing import Any, Dict, Mapping
 
-from omega_engine_pfp.domain.contracts.gates import WolandGateId
-from omega_engine_pfp.domain.prompts.prompts import PromptPacket
-from omega_engine_pfp.domain.kernel.result import RefusalCode, TerminalStatus
-from omega_engine_pfp.domain.rewriting.rewrites import Binding, RewriteRequest, Segment
-from omega_engine_pfp.domain.stages.stages import Stage5Response
-from omega_engine_pfp.infrastructure import (
+from pfp.domain.contracts.gates import AdversaryGateId
+from pfp.domain.prompts.prompts import PromptPacket
+from pfp.domain.kernel.result import RefusalCode, TerminalStatus
+from pfp.domain.rewriting.rewrites import Binding, RewriteRequest, Segment
+from pfp.domain.stages.stages import Stage5Response
+from pfp.infrastructure import (
     UnifiedPfpDemoRunner,
 )
-from omega_engine_pfp.infrastructure.gate_evaluators import WolandTribunalGateEvaluator
-from omega_engine_pfp.infrastructure.providers import OfflineDeterministicPfpProvider
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.assemble_prompt import AssemblePromptUseCase
-from omega_engine_pfp.use_cases.evaluate_gates import EvaluateWolandGatesUseCase
-from omega_engine_pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
-from omega_engine_pfp.use_cases.rewrite_prompt import RewritePromptUseCase
-from omega_engine_pfp.use_cases.run_demo import RunDemoUseCase
-from omega_engine_pfp.use_cases.verify_contracts import VerifyPfpContractsUseCase
+from pfp.infrastructure.gate_evaluators import AdversaryTribunalGateEvaluator
+from pfp.infrastructure.providers import OfflineDeterministicPfpProvider
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.assemble_prompt import AssemblePromptUseCase
+from pfp.use_cases.evaluate_gates import EvaluateAdversaryGatesUseCase
+from pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
+from pfp.use_cases.rewrite_prompt import RewritePromptUseCase
+from pfp.use_cases.run_demo import RunDemoUseCase
+from pfp.use_cases.verify_contracts import VerifyPfpContractsUseCase
 
 _CLEAN_ATTESTATIONS = {
     "text": "simplicial carrier with exact boundary",
@@ -141,19 +141,19 @@ class TestPfpUseCases(unittest.TestCase):
         self.assertFalse(receipt.all_stages_passed)
         self.assertEqual(receipt.completed_stages, (1, 2, 3, 4, 5))
 
-    def test_02f_woland_gate_without_prior_failures_attestation_fails_closed(self) -> None:
+    def test_02f_adversary_gate_without_prior_failures_attestation_fails_closed(self) -> None:
         spec = next(
             g
             for g in self.storage.list_gate_specs()
-            if g.gate_id == WolandGateId.PFP_13_WOLAND.value
+            if g.gate_id == AdversaryGateId.PFP_13_ADVERSARY.value
         )
-        verdict = WolandTribunalGateEvaluator().evaluate_gate(spec, {})
+        verdict = AdversaryTribunalGateEvaluator().evaluate_gate(spec, {})
         self.assertFalse(verdict.passed)
         self.assertEqual(verdict.refusal_code, RefusalCode.MISSING_ATTESTATION.value)
 
     def test_02g_float_attestation_is_rejected_with_reason(self) -> None:
-        spec = next(g for g in self.storage.list_gate_specs() if "MARGARITA" in g.gate_id)
-        verdict = WolandTribunalGateEvaluator().evaluate_gate(
+        spec = next(g for g in self.storage.list_gate_specs() if "PRIMAL_DUAL" in g.gate_id)
+        verdict = AdversaryTribunalGateEvaluator().evaluate_gate(
             spec, {"duality_gap": 0.0, "requires_exact_zero": True}
         )
         self.assertFalse(verdict.passed)
@@ -187,9 +187,9 @@ class TestPfpUseCases(unittest.TestCase):
         self.assertEqual(receipt.completed_stages, (1, 2))
         self.assertEqual(receipt.final_terminal_status, TerminalStatus.BLOCKED_BY_EVIDENCE)
 
-    def test_03_evaluate_woland_gates_use_case(self) -> None:
-        gate_evaluator = WolandTribunalGateEvaluator()
-        use_case = EvaluateWolandGatesUseCase(gate_evaluator=gate_evaluator)
+    def test_03_evaluate_adversary_gates_use_case(self) -> None:
+        gate_evaluator = AdversaryTribunalGateEvaluator()
+        use_case = EvaluateAdversaryGatesUseCase(gate_evaluator=gate_evaluator)
         res = use_case.evaluate("candidate_001", candidate_state=dict(_CLEAN_ATTESTATIONS))
         self.assertTrue(res.is_ok)
         receipt = res.unwrap()
@@ -198,7 +198,7 @@ class TestPfpUseCases(unittest.TestCase):
         self.assertEqual(len(receipt.verdicts), 13)
 
     def test_03b_gates_fail_closed_on_missing_attestations(self) -> None:
-        use_case = EvaluateWolandGatesUseCase(gate_evaluator=WolandTribunalGateEvaluator())
+        use_case = EvaluateAdversaryGatesUseCase(gate_evaluator=AdversaryTribunalGateEvaluator())
         receipt = use_case.evaluate("candidate_001", candidate_state={"claims": []}).unwrap()
         self.assertFalse(receipt.all_passed)
         self.assertEqual(receipt.terminal_disposition, "Refused")
@@ -206,11 +206,11 @@ class TestPfpUseCases(unittest.TestCase):
         self.assertEqual(len(refused), 12)
 
     def test_03c_gates_reject_bool_as_int_and_each_missing_field(self) -> None:
-        evaluator = WolandTribunalGateEvaluator()
+        evaluator = AdversaryTribunalGateEvaluator()
         state = dict(_CLEAN_ATTESTATIONS, round_number=True)
         receipt = evaluator.evaluate_tribunal("c", state)
-        azazello = next(v for v in receipt.verdicts if "AZAZELLO" in v.gate_id)
-        self.assertEqual(azazello.refusal_code, "MISSING_ATTESTATION")
+        scope_guard = next(v for v in receipt.verdicts if "SCOPE_GUARD" in v.gate_id)
+        self.assertEqual(scope_guard.refusal_code, "MISSING_ATTESTATION")
         for field in _CLEAN_ATTESTATIONS:
             partial = {k: v for k, v in _CLEAN_ATTESTATIONS.items() if k != field}
             self.assertFalse(evaluator.evaluate_tribunal("c", partial).all_passed, field)

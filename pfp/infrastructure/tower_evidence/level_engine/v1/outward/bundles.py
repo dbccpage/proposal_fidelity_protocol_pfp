@@ -487,7 +487,7 @@ def transport_certificate(level: int, binding: Mapping[str, object], result: Lev
                    "row_sha256": row["row_sha256"]},
     }
     payload_digest = sha256_tag(b"mssn.transport-certificate\0" + dumps(payload))
-    envelope = {"canonicalization_profile": "omega-sorted-json-no-float-v1", "payload_digest": payload_digest,
+    envelope = {"canonicalization_profile": "core-sorted-json-no-float-v1", "payload_digest": payload_digest,
                 "payload_domain_tag": "mssn.transport-certificate"}
     envelope["record_digest"] = sha256_tag(dumps({**payload, "envelope": envelope}))
     return {**payload, "envelope": envelope}

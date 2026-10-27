@@ -1,7 +1,7 @@
 # AuthorityEffect: None.
 """Tests for Lean 4 compiler wrapper and diagnostic/axiom parser."""
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.lean_compiler import (
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.lean_compiler import (
     WHITELISTED_AXIOMS,
     compile_lean4_code,
 )

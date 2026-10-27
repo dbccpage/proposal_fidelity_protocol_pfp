@@ -23,7 +23,7 @@ from pathlib import Path, PurePosixPath
 
 import yaml
 
-from omega_engine_operads.skill_operad.skill_compiler import rule_scope
+from operads.skill_operad.skill_compiler import rule_scope
 
 DEFAULT_REGISTRY = Path(__file__).resolve().parents[1] / "yaml" / "rules_registry.yaml"
 REGISTER_HEADING = "## Progressive Disclosure & Domain Invariant Rule Register"
@@ -417,7 +417,7 @@ def render_register_table(registry: dict) -> str:
     root = registry["rules_root"]
     rows = []
     for entry in registry["rules"]:
-        path = f"omega_engine_operads/{root}/{entry['path']}"
+        path = f"operads/{root}/{entry['path']}"
         skills = ", ".join(f"`{skill}`" for skill in entry["skills"])
         rows.append(f"| **{entry['topic']}** | [`{path}`]({path}) | {skills} | {entry['summary']} |")
     return REGISTER_TABLE_HEADER + "\n".join(rows) + "\n"
@@ -472,8 +472,8 @@ def write_register(repo_root: Path, registry: dict) -> list[str]:
 def run_gate(repo_root: Path, registry_path: Path = DEFAULT_REGISTRY) -> GateReport:
     registry = load_registry(registry_path)
     hosts = registry["host_roots"]
-    owned_estate = (repo_root / "omega_engine_operads").is_dir()
-    source = repo_root / "omega_engine_operads" / registry["rules_root"]
+    owned_estate = (repo_root / "operads").is_dir()
+    source = repo_root / "operads" / registry["rules_root"]
     rules_dir = source if owned_estate else repo_root / hosts[0] / registry["rules_root"]
     canon = read_rule_tree(rules_dir)
     compared_hosts = hosts if owned_estate else hosts[1:]

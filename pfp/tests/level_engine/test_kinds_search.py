@@ -5,14 +5,14 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import encode
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import (
+from operations.use_cases.level_engine.research_engine.encoding import encode
+from operations.use_cases.level_engine.research_engine.errors import (
     ClaimFrozen,
     Refusal,
     StageRefusal,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.guards import ResourceBound
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import (
+from operations.use_cases.level_engine.research_engine.guards import ResourceBound
+from operations.use_cases.level_engine.research_engine.kinds import (
     Closure,
     ConstOracle,
     Denied,
@@ -31,13 +31,13 @@ from omega_engine_operations.use_cases.level_engine.research_engine.kinds import
     req_json,
     satisfies,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.level import (
+from operations.use_cases.level_engine.research_engine.level import (
     ROOT,
     hosted,
     load_fixtures,
     load_spec,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.regimek import (
+from operations.use_cases.level_engine.research_engine.regimek import (
     BASE,
     RegimeK,
     Stage,
@@ -46,7 +46,7 @@ from omega_engine_operations.use_cases.level_engine.research_engine.regimek impo
     claims_unchanged,
     host,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed import (
+from operations.use_cases.level_engine.research_engine.sealed import (
     AdmitForm,
     AdmitInst,
     NewDatum,
@@ -57,7 +57,7 @@ from omega_engine_operations.use_cases.level_engine.research_engine.sealed impor
     replay,
     sealed_iso,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.search import (
+from operations.use_cases.level_engine.research_engine.search import (
     canonical_k,
     check_count,
     class_size_formula,
@@ -65,7 +65,7 @@ from omega_engine_operations.use_cases.level_engine.research_engine.search impor
     iter_class,
     pruning_sound,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import (
+from operations.use_cases.level_engine.research_engine.structure import (
     FiniteStructure,
     RelSym,
 )
@@ -150,7 +150,7 @@ def test_rule_forms_enumerate_all_tuples() -> None:
     r = replay((AdmitForm(1),) + tuple())  # no data
     assert list(RegimeOracle(r).instances(0)) == []
     s, node, arc = _graph()
-    from omega_engine_operations.use_cases.level_engine.research_engine.sealed import AdmitRuleAll
+    from operations.use_cases.level_engine.research_engine.sealed import AdmitRuleAll
 
     rr = replay(s.history + (AdmitRuleAll(arc),))
     assert len(list(RegimeOracle(rr).instances(arc))) == 9
@@ -323,10 +323,10 @@ def test_pruned_and_unpruned_minima_agree() -> None:
 def test_denied_terminal_holds_exhaustively() -> None:
     """Where a claim-only requirement fails, no delta of the unpruned class
     (fresh data and fresh forms allowed) is a valid response."""
-    from omega_engine_operations.use_cases.level_engine.research_engine.regimek import (
+    from operations.use_cases.level_engine.research_engine.regimek import (
         valid_response,
     )
-    from omega_engine_operations.use_cases.level_engine.research_engine.search import (
+    from operations.use_cases.level_engine.research_engine.search import (
         denied_terminal,
     )
 
@@ -344,7 +344,7 @@ def test_denied_terminal_holds_exhaustively() -> None:
 def test_canonical_key_agrees_with_the_sealed_partition() -> None:
     from derivation.engine import READINGS
 
-    from omega_engine_operations.use_cases.level_engine.research_engine.sealed import (
+    from operations.use_cases.level_engine.research_engine.sealed import (
         Impose,
         delta_events,
     )
@@ -371,7 +371,7 @@ def test_iso_budget_is_a_named_terminal() -> None:
 
 
 def test_budget_unknown_when_evaluation_budget_runs_out(monkeypatch: pytest.MonkeyPatch) -> None:
-    import omega_engine_operations.use_cases.level_engine.research_engine.search as S
+    import operations.use_cases.level_engine.research_engine.search as S
     s, node, arc = _graph()
     regk = host(s.history, frozenset({0, 1}), (Holds("h", (2, (0, 1))), Holds("h2", (2, (1, 2)))), ((2, ()),))
     monkeypatch.setattr(S, "EVAL_BUDGET", 3)
@@ -381,7 +381,7 @@ def test_budget_unknown_when_evaluation_budget_runs_out(monkeypatch: pytest.Monk
 
 
 def test_a_class_over_the_budget_is_declared_before_enumeration(monkeypatch: pytest.MonkeyPatch) -> None:
-    import omega_engine_operations.use_cases.level_engine.research_engine.search as S
+    import operations.use_cases.level_engine.research_engine.search as S
     s, node, arc = _graph()
     regk = host(s.history, frozenset({0, 1}), (Holds("h", (2, (0, 1))), Holds("h2", (2, (1, 2)))), ((2, ()),))
     count = S.class_size_formula(regk, BASE, ResourceBound(3), True)
@@ -403,7 +403,7 @@ def test_a_class_over_the_budget_is_declared_before_enumeration(monkeypatch: pyt
 
 
 def test_an_enumeration_that_outruns_its_count_is_refused(monkeypatch: pytest.MonkeyPatch) -> None:
-    import omega_engine_operations.use_cases.level_engine.research_engine.search as S
+    import operations.use_cases.level_engine.research_engine.search as S
     s, node, arc = _graph()
     regk = host(s.history, frozenset({0, 1}), (Holds("h", (2, (0, 1))),), ((2, ()),))
     monkeypatch.setattr(S, "class_size_formula", lambda *a: 2)

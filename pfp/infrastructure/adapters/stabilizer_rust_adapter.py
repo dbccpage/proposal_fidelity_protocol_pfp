@@ -6,12 +6,12 @@ from collections.abc import Mapping
 from copy import deepcopy
 from typing import Any
 
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_operating_system.adapters.rust_host.ffi import (
+from operations.domain.rop.result import Err
+from operating_system.adapters.rust_host.ffi import (
     RustSymbolGameHost,
     locate_host_binary,
 )
-from omega_engine_pfp.domain.ports.stabilizer_port import StabilizerPort
+from pfp.domain.ports.stabilizer_port import StabilizerPort
 
 
 class StabilizerRustAdapter(StabilizerPort):

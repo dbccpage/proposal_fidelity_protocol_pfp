@@ -1,20 +1,20 @@
 //! G03 transport: declared adapter and existing source-pinned native owners.
 use std::collections::{BTreeMap, BTreeSet};
 use std::io::{self, Read};
-use omega_ooutwire_primitives::bounds::Bounds;
-use omega_ooutwire_primitives::candidate::{delta_events, Item};
-use omega_ooutwire_primitives::canonical::try_canonical;
-use omega_ooutwire_primitives::event::Event;
-use omega_ooutwire_primitives::mark::{Mark, Pair};
-use omega_ooutwire_primitives::measure::MeasureKind;
-use omega_ooutwire_primitives::minima::{min_responses, try_quotient};
-use omega_ooutwire_primitives::reading::{READING_F, READING_L};
-use omega_ooutwire_primitives::regime::Regime;
-use omega_ooutwire_primitives::renaming::{rename, Bijection, Key};
-use omega_ooutwire_primitives::replay::{replay, replay_from};
-use omega_ooutwire_primitives::response::response_valid_naive;
-use omega_ooutwire_primitives::separability::collapsed_pairs;
-use omega_ooutwire_primitives::token::Token;
+use core_ooutwire_primitives::bounds::Bounds;
+use core_ooutwire_primitives::candidate::{delta_events, Item};
+use core_ooutwire_primitives::canonical::try_canonical;
+use core_ooutwire_primitives::event::Event;
+use core_ooutwire_primitives::mark::{Mark, Pair};
+use core_ooutwire_primitives::measure::MeasureKind;
+use core_ooutwire_primitives::minima::{min_responses, try_quotient};
+use core_ooutwire_primitives::reading::{READING_F, READING_L};
+use core_ooutwire_primitives::regime::Regime;
+use core_ooutwire_primitives::renaming::{rename, Bijection, Key};
+use core_ooutwire_primitives::replay::{replay, replay_from};
+use core_ooutwire_primitives::response::response_valid_naive;
+use core_ooutwire_primitives::separability::collapsed_pairs;
+use core_ooutwire_primitives::token::Token;
 use serde_json::{json, Value};
 
 fn number(v: &Value, key: &str) -> Result<usize, String> {

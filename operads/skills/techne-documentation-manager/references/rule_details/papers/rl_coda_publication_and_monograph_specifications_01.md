@@ -8,7 +8,7 @@ Parent: [CODA Publication & Monograph Specifications](../../../../../rules/paper
 
 **AuthorityEffect:** None.
 
-This document codifies the mandatory publication rubric, file quartet layout, proof triad tie-out, frontmatter ordering, descriptions standard, and deposit boundary invariants extracted from `omega_engine_atlas/coda_atlas/_kits/` (`coda_publication_rubric.md`, `descriptions_specification.md`, `paper_frontmatter_specification.md`, `obstruction_paper_kit/`, `paper_template/`). Cross-references: [`rl_research_paper_template_and_harmonization_discipline.md`](../../../../../rules/papers/rl_research_paper_template_and_harmonization_discipline.md), [`rl_research_paper_and_monograph_packaging.md`](../../../../../rules/papers/rl_research_paper_and_monograph_packaging.md), [`rl_paper_harmonization_and_provenance_discipline.md`](../../../../../rules/papers/rl_paper_harmonization_and_provenance_discipline.md).
+This document codifies the mandatory publication rubric, file quartet layout, proof triad tie-out, frontmatter ordering, descriptions standard, and deposit boundary invariants extracted from `atlas/coda_atlas/_kits/` (`coda_publication_rubric.md`, `descriptions_specification.md`, `paper_frontmatter_specification.md`, `obstruction_paper_kit/`, `paper_template/`). Cross-references: [`rl_research_paper_template_and_harmonization_discipline.md`](../../../../../rules/papers/rl_research_paper_template_and_harmonization_discipline.md), [`rl_research_paper_and_monograph_packaging.md`](../../../../../rules/papers/rl_research_paper_and_monograph_packaging.md), [`rl_paper_harmonization_and_provenance_discipline.md`](../../../../../rules/papers/rl_paper_harmonization_and_provenance_discipline.md).
 
 ---
 
@@ -17,7 +17,7 @@ This document codifies the mandatory publication rubric, file quartet layout, pr
 > **Research Program & Monograph Naming Syntax:**
 >
 > 1. **Program Directory Syntax (`NNN_<lowercase_slug>`):**
->    Research Program containers under `omega_research/programs/` or `omega_engine_atlas/coda_atlas/` must follow `^\d{3}_[a-z0-9_]+$`.
+>    Research Program containers under `core_research/programs/` or `atlas/coda_atlas/` must follow `^\d{3}_[a-z0-9_]+$`.
 >    - Prefix: Exactly three decimal digits `NNN` in `000` to `899` (e.g., `001_coda`, `004_projection_obstruction`).
 >    - Separator: Exactly one underscore (`_`). Hyphens or double underscores directly following prefix digits are prohibited.
 >    - Slug: Lowercase alphanumeric words separated by single underscores.
@@ -70,7 +70,7 @@ This document codifies the mandatory publication rubric, file quartet layout, pr
 
 > **Monograph header:**
 >
-> The top of a monograph file is four centered lines, and only four lines: Title, Author, Date, Version. The line format is owned by [`paper_frontmatter_specification.md`](../../../../../../omega_engine_atlas/coda_atlas/_kits/paper_frontmatter_specification.md) and checked by `paper_header_schema.py`.
+> The top of a monograph file is four centered lines, and only four lines: Title, Author, Date, Version. The line format is owned by [`paper_frontmatter_specification.md`](../../../../../../atlas/coda_atlas/_kits/paper_frontmatter_specification.md) and checked by `paper_header_schema.py`.
 >
 > 1. **Title:** `#` plus the monograph title.
 > 2. **Author:** the author name. The canonical author is `Jeremy H. Carroll`.

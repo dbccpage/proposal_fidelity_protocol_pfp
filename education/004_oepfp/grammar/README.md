@@ -34,20 +34,20 @@ This directory houses the authoritative EBNF grammar specifications, syntax prof
 
 To run the PFP grammar conformance tests locally:
 ```bash
-py -3.12 -m pytest omega_engine_pfp/tests/protocol/test_pfp_grammar.py omega_engine_pfp/tests/types/test_grammar_types.py
+py -3.12 -m pytest pfp/tests/protocol/test_pfp_grammar.py pfp/tests/types/test_grammar_types.py
 ```
 
 The cross-grammar checker is at
-`omega_engine_education/documentation/004_oepfp/grammar/check_grammars.py`:
+`education/documentation/004_oepfp/grammar/check_grammars.py`:
 ```bash
-py -3.12 omega_engine_education/documentation/004_oepfp/grammar/check_grammars.py
+py -3.12 education/documentation/004_oepfp/grammar/check_grammars.py
 ```
 
 > **Status at `201dc8d` (2026-10-15).** The pytest command above passes (14
 > tests). `check_grammars.py` fails: it reads `../python/domain/boundary.ebnf`,
-> which does not exist. `omega_engine_pfp/scripts/check_pfp_grammar.py` also
+> which does not exist. `pfp/scripts/check_pfp_grammar.py` also
 > fails, with `ModuleNotFoundError: check_grammars`. Earlier versions of this
-> page named `omega_engine_education/code/check_pfp.py` and a
+> page named `education/code/check_pfp.py` and a
 > `030_the_symbol_game_proposal_fidelity_protocol_pfp/` path; neither exists.
 
 ---

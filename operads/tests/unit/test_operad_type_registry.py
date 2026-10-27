@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_operads.skill_operad.skill_compiler import operad_type_registry as registry
+from operads.skill_operad.skill_compiler import operad_type_registry as registry
 
 ROOT = registry.repo_root()
 
@@ -19,7 +19,7 @@ def _codes(tmp_path: Path, *types: dict) -> list[str]:
     return [finding.code for finding in registry.run(ROOT, _write(tmp_path, *types))[1]]
 
 
-POLARITY = {"python": "omega_engine_pfp.domain.operad.polarity:Polarity",
+POLARITY = {"python": "pfp.domain.operad.polarity:Polarity",
             "values": ["CONSTRUCTIVE", "INTERROGATIVE", "CORRECTIVE", "GATE"]}
 
 
@@ -55,18 +55,18 @@ def test_uses_is_a_subset_and_parts_must_cover_the_set(tmp_path):
 
 
 def test_rust_letter_map_and_open_carriers(tmp_path):
-    ddc = {"rust_enum": "omega_engine/crates_rs/omega_wdp/src/ddc/ddc_alphabet.rs#DdcOp", "rust_map": "letter",
+    ddc = {"rust_enum": "engine/crates_rs/core_wdp/src/ddc/ddc_alphabet.rs#DdcOp", "rust_map": "letter",
            "values": ["ExactRepair", "ResidualProjection", "ContextExposure", "Integration", "Lift", "Descent",
                       "Refusal", "Terminalize"]}
     assert _codes(tmp_path, _type(["E", "R", "C", "I", "Λ", "D", "M", "T"], ddc)) == []
-    struct = {"rust_struct": "omega_engine/crates_rs/omega_operad_theory/src/foundation/colour.rs#OperadColour",
+    struct = {"rust_struct": "engine/crates_rs/core_operad_theory/src/foundation/colour.rs#OperadColour",
               "values": []}
     assert "SETTLED_BUT_DIVERGENT" in _codes(tmp_path, _type(["Audit"], struct, closed=True))
     assert _codes(tmp_path, _type(["Audit"], struct, closed=False)) == []
 
 
 def test_letters_of_refuses_a_motif_outside_the_alphabet(tmp_path):
-    uses = {"python": "omega_engine_operads.domain.anti_skills.anti_skill_v2:PREDICATE_MODES",
+    uses = {"python": "operads.domain.anti_skills.anti_skill_v2:PREDICATE_MODES",
             "role": "uses", "values": ["ALL", "ANY"]}
     letters = {"id": "alphabet", "canonical": {"status": "SETTLED", "values": ["ALL", "ANY", "C", "M"]},
                "sources": [uses]}
@@ -79,7 +79,7 @@ def test_letters_of_refuses_a_motif_outside_the_alphabet(tmp_path):
     assert registry.run(ROOT, _write(tmp_path, letters, motif))[1] == []
 
 
-@pytest.mark.parametrize("source", [{"python": "omega_engine_operads.no_such_module:X", "values": []},
+@pytest.mark.parametrize("source", [{"python": "operads.no_such_module:X", "values": []},
                                     {"data": "no/such/file.yaml", "select": "a", "values": []}])
 def test_an_unreadable_source_fails_closed(tmp_path, source):
     assert "SOURCE_UNREADABLE" in _codes(tmp_path, _type(["x"], source))

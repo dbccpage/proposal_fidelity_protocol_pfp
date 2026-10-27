@@ -24,34 +24,34 @@ to a fresh run. Test references name files under `code/tests/`.
                     (-2,1,1) gives zero                                                                                                                                                                                                                                                              changed
                     discrepancy
 
-  G005-04           The session refuses    [Session](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/play_demo.py);                             Enumeration-path
+  G005-04           The session refuses    [Session](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/play_demo.py);                             Enumeration-path
                     (5,0,0), admits        `test_play_demo.py::test_worked_session_offline_enumeration` (Python enumeration path); `test_play_demo.py::test_worked_session_matches_manual` (native path, skips without pins)                                                                         result in this
                     (-2,1,1), and restores                                                                                                                                                                                                                                                           package; native
                     the prior snapshot                                                                                                                                                                                                                                                               result needs a
                                                                                                                                                                                                                                                                                                      configured run
 
-  G005-05           The package quickstart [Quickstart](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/quickstart.py), [adapter                Native graph path,
-                    delegates the named    copy](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/native_functional.py);                         not every runtime
+  G005-05           The package quickstart [Quickstart](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/quickstart.py), [adapter                Native graph path,
+                    delegates the named    copy](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/native_functional.py);                         not every runtime
                     minimum to the native  `test_quickstart_native.py::test_quickstart_requires_native_pin`, `test_quickstart_native.py::test_approximate_or_boolean_input_is_rejected`, `test_quickstart_native.py::test_candidate_enumeration_is_retired`,                                         surface
                     adapter and rejects    `test_quickstart_native.py::test_projection_replays_native_and_is_idempotent` (native, skips without pins)
                     missing pins and
                     non-exact inputs
 
-  G005-06           CUT permits            [Governor copy](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py),         Source-inspected;
+  G005-06           CUT permits            [Governor copy](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py),         Source-inspected;
                     non-increase,          `step_cut`                                                                                                                                                                                                                                                no arbitrary-search
                     including stationary                                                                                                                                                                                                                                                             termination
                     outcomes                                                                                                                                                                                                                                                                         guarantee
 
-  G005-07           Hashes bind declared   Guide Section 6; [functional-boundary notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/FUNCTIONAL_BOUNDARY.md) at the baseline                                                     No unsigned
+  G005-07           Hashes bind declared   Guide Section 6; [functional-boundary notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/FUNCTIONAL_BOUNDARY.md) at the baseline                                                     No unsigned
                     bytes; current replay                                                                                                                                                                                                                                                            producer
                     needs matching sources                                                                                                                                                                                                                                                           authentication or
                     and inputs                                                                                                                                                                                                                                                                       semantic proof
 
   G005-08           Domain labels and      [Scenario                                                                                                                                                                                                                                                 No domain theorem
-                    hypothetical chat      implementation](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/multi_domain_symbol_game_bouts.py)   or measured LLM
+                    hypothetical chat      implementation](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/multi_domain_symbol_game_bouts.py)   or measured LLM
                     costs are illustrative                                                                                                                                                                                                                                                           comparison
 
-  G005-09           The native-test        [Fixture](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/tests/conftest.py) and tests explicitly    No build, automatic
+  G005-09           The native-test        [Fixture](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/tests/conftest.py) and tests explicitly    No build, automatic
                     fixture consumes       requesting `native_functional`                                                                                                                                                                                                                            pin, or
                     caller pins and skips                                                                                                                                                                                                                                                            source-to-binary
                     only its dependent                                                                                                                                                                                                                                                               attestation
@@ -92,7 +92,7 @@ to a fresh run. Test references name files under `code/tests/`.
                     exact proposal is
                     scored as before
 
-G005-13           The streaming harness  [Harness](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/llm_streaming_harness.py);                 Governor Python
+G005-13           The streaming harness  [Harness](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/llm_streaming_harness.py);                 Governor Python
                     refuses float and      `test_harness_exact_inputs.py::test_float_or_bool_claim_value_is_refused`; `test_harness_exact_inputs.py::test_exact_values_are_scored`                                                                                                                   path; no live
                     Boolean claim values                                                                                                                                                                                                                                                             provider run
                     and scores integers
@@ -106,13 +106,13 @@ Tests that request the `native_functional` fixture need configured pins;
 without them they skip and state that reason. No skipped case counts as
 a successful native execution. For this revision the package tests were
 run once with a pinned `solve_graph_phi1` built from the unchanged
-`omega_functional` source (SHA-256
+`core_functional` source (SHA-256
 `2b0379557993246cacb1ed8964f9f096964019ecc1c2fb781e6b18f2ca6c8a65`, a
 Windows build): 75 passed, none skipped. The executable is not
 deposited; another reader must build and pin their own.
 
 Four cases in [the adversarial
-module](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/tests/test_adversarial_challenges.py),
+module](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/tests/test_adversarial_challenges.py),
 class `TestQuickstartAdversarialMath`, also recompute the projected
 cochain's defect with the Python helper `evaluate_defect` after the
 native projection:

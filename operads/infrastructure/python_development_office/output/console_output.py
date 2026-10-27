@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from typing import TextIO
 
-from omega_engine_operads.domain.python_development_office.scan_result import (
+from operads.domain.python_development_office.scan_result import (
     ScanResult,
 )
 

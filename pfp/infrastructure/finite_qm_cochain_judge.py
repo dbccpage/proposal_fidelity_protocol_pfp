@@ -7,8 +7,8 @@ AuthorityEffect: None.
 import json
 from fractions import Fraction
 
-from omega_engine_pfp.domain.cochain import CochainRefusal
-from omega_engine_pfp.ffi import (
+from pfp.domain.cochain import CochainRefusal
+from pfp.ffi import (
     evaluate_prompt_cochain_disposition as evaluate_prompt_cochain,
 )
 

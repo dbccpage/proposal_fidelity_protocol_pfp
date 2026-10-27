@@ -18,13 +18,13 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.immune_guards import (
+from operads.application.immune_guards import (
     admit_skill_with_thymus,
     allosteric_consensus_substitute,
     immune_guarded_substitute,
     validate_workflow_immune_guard,
 )
-from omega_engine_operads.application.ports.immune_screen_port import (
+from operads.application.ports.immune_screen_port import (
     DetectorIdentity,
     DetectorMatch,
     HostDangerObservation,
@@ -32,15 +32,15 @@ from omega_engine_operads.application.ports.immune_screen_port import (
     ImmuneVerdict,
     SensorReading,
 )
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operads.domain.capability_catalog_v1 import (
     CapabilityCatalogRefusal,
     SkillCapabilityV1,
 )
-from omega_engine_operads.domain.planar_substitution import (
+from operads.domain.planar_substitution import (
     OperadOperation,
     SubstitutionError,
 )
-from omega_engine_operads.domain.workflow_graph import (
+from operads.domain.workflow_graph import (
     DangerSignalPolicy,
     WorkflowReport,
 )
@@ -107,7 +107,7 @@ def test_the_domain_does_not_import_the_immune_system() -> None:
             for node in ast.walk(tree)
             if isinstance(node, ast.ImportFrom)
         ] + [alias.name for node in ast.walk(tree) if isinstance(node, ast.Import) for alias in node.names]
-        assert not any(name.startswith("omega_engine_epistemic_immune_system") for name in names), relative
+        assert not any(name.startswith("eis") for name in names), relative
 
 
 def test_guards_follow_the_port_verdict() -> None:
@@ -178,7 +178,7 @@ def test_the_port_records_refuse_untyped_values() -> None:
 
 
 def test_the_oeeis_adapter_checks_independence_on_every_danger_verdict() -> None:
-    from omega_engine_operads.infrastructure.immune import OeeisImmuneAdapter
+    from operads.infrastructure.immune import OeeisImmuneAdapter
 
     adapter = OeeisImmuneAdapter(self_panel=["theorem coboundary_nilpotent : d1 * d0 = 0"])
     assert adapter.danger_verdict([MATCH], DANGER, detector=DETECTOR).blocks is True
@@ -216,7 +216,7 @@ def test_the_oeeis_adapter_checks_independence_on_every_danger_verdict() -> None
 
 
 def test_the_oeeis_adapter_counts_each_sensor_once() -> None:
-    from omega_engine_operads.infrastructure.immune import OeeisImmuneAdapter
+    from operads.infrastructure.immune import OeeisImmuneAdapter
 
     adapter = OeeisImmuneAdapter(self_panel=["clean"])
     assert adapter.quorum_verdict([SensorReading("a", 1), SensorReading("b", 1)]).blocks is False
@@ -233,7 +233,7 @@ def test_the_oeeis_adapter_counts_each_sensor_once() -> None:
 
 
 def test_the_oeeis_adapter_thymus_verdicts() -> None:
-    from omega_engine_operads.infrastructure.immune import OeeisImmuneAdapter
+    from operads.infrastructure.immune import OeeisImmuneAdapter
 
     adapter = OeeisImmuneAdapter(self_panel=["theorem coboundary_nilpotent : d1 * d0 = 0"])
     assert adapter.trigger_tolerance_verdict("r", ["d1 * d0"]).decision == "REFUSED"

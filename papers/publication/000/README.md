@@ -6,7 +6,7 @@ Markdown rendering (`paper.md`), and its claim ledger. `source.md` and
 their original repository-relative links. Use the linked renderings for reading.
 
 Code baseline: 3f3399766108adc4c4e7615dce2573a57be57dd6. Revised source path:
-`omega_engine_atlas/coda_atlas/omega_engine_pfp/000_pfp_introduction/paper.md`.
+`atlas/coda_atlas/pfp/000_pfp_introduction/paper.md`.
 
 Build identities are in `build_receipt.json`; the collection manifest records
 all inputs and outputs. Related revised papers link to sibling packages; code

@@ -7,9 +7,9 @@ import urllib.request
 
 import pytest
 
-from omega_engine_pfp.infrastructure import formal_matrix as matrix
-from omega_engine_pfp.infrastructure import pilot_matrix
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+from pfp.infrastructure import formal_matrix as matrix
+from pfp.infrastructure import pilot_matrix
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 
 ARGS = [

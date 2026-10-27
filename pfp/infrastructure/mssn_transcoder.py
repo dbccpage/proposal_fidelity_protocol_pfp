@@ -200,7 +200,7 @@ class MssnCycleRepairTranscoder:
 
         # Build Object 1: Problem Carrier Contract
         problem = {
-            "schema_version": "omega.symbol_game.cycle_balance.problem.v1",
+            "schema_version": "core.symbol_game.cycle_balance.problem.v1",
             "problem_id": "SG-PROB-GENESIS-CYCLE-003",
             "case_id": "case_day3_cycle_balance_repair",
             "authority_effect": "None",
@@ -231,7 +231,7 @@ class MssnCycleRepairTranscoder:
 
         # Build Object 2: Candidate Proposal Packet
         candidate = {
-            "schema_version": "omega.symbol_game.cycle_balance.candidate.v1",
+            "schema_version": "core.symbol_game.cycle_balance.candidate.v1",
             "candidate_id": "SG-CAND-CYCLE-REPAIR-001",
             "problem_digest": prob_digest,
             "authority_effect": "None",
@@ -250,7 +250,7 @@ class MssnCycleRepairTranscoder:
 
         # Build Object 3: Host Verifier Contract
         verifier = {
-            "schema_version": "omega.symbol_game.cycle_balance.verifier.v1",
+            "schema_version": "core.symbol_game.cycle_balance.verifier.v1",
             "verifier_id": "PFP-V02-EXACT-INTEGER-SNF-SOLVER",
             "arithmetic_domain": "EXACT_INTEGER",
             "problem_digest": prob_digest,
@@ -269,7 +269,7 @@ class MssnCycleRepairTranscoder:
 
         # Build Object 4: Verifier Receipt Envelope
         receipt = {
-            "schema_version": "omega.symbol_game.cycle_balance.receipt.v1",
+            "schema_version": "core.symbol_game.cycle_balance.receipt.v1",
             "receipt_id": "RCPT-GENESIS-CYCLE-003",
             "authority_effect": "None",
             "problem_digest": prob_digest,

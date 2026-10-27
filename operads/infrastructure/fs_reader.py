@@ -11,7 +11,7 @@ from typing import Any
 
 import yaml  # type: ignore[import-untyped]
 
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operads.domain.capability_catalog_v1 import (
     CapabilityCatalogV1,
     decode_capability_catalog,
 )
@@ -64,7 +64,7 @@ def parse_skill_frontmatter(text: str) -> dict[str, Any]:
     Returning ``{}`` meant every declared field fell to a default, so a skill
     that declared no signature was silently handed a fabricated one -- the same
     silent-defaulting failure that let operad colours drift. The Rust reader
-    (`omega_oewas::estate`) already refused it; Python now agrees.
+    (`core_oewas::estate`) already refused it; Python now agrees.
 
     None of the 133 tracked shipped skills is affected: all carry frontmatter.
     """

@@ -28,12 +28,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.poly import evaluate as value_at
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import Q, fmt_q
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.poly import evaluate as value_at
+from operations.use_cases.level_engine.research_engine.exact.q import Q, fmt_q
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 from ..shared import certificates, lean_list, lean_q, render, rows
 from ..table_polynomial.spec import LEAN_DEFS as POLY_DEFS
 from ..table_polynomial.spec import computed, declared, polynomial, table
@@ -85,7 +85,7 @@ LEAN_CALLS = {"polynomial": "polynomial table_{f} coefs_{f}", "roots_vanish": "r
 
 
 def _data(fs: FiniteStructure) -> list[tuple[str, str, str]]:
-    from omega_engine_operations.use_cases.level_engine.research_engine import lean_text as T
+    from operations.use_cases.level_engine.research_engine import lean_text as T
 
     a, d = table(fs), declared(fs)
     assert a is not None and d is not None

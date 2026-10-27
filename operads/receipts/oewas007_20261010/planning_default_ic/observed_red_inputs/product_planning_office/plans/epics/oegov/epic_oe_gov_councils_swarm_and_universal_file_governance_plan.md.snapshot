@@ -1,0 +1,60 @@
+# Epic: Government Council Attribution and Read-Only File Jurisdiction Proposals
+
+**Epic ID:** `EPIC-OE-GOV-COUNCILS-SWARM-001`
+**AuthorityEffect:** None
+**Status:** `RESEARCH_HOLD`
+
+**Lifecycle scope:** Design dependency open; smallest read-only slice proposed
+**Canonical Home:** [governance](../../../../governance/)
+**Skill Inheritance:** [Adversary](../../../../adversary/)
+**Date:** October 2026
+
+## Intent and current boundary
+
+Retain named file personas and council representatives as fictional aids for Adversary-style adversarial deliberation. Pride, anxiety, denial and emotional stakes describe the presentation, not actual feelings in source files or a verified resilience metric. Council attribution identifies proposed reviewers; it does not certify code or confer authority.
+
+The existing [AttributionReceiptV1](../../../../governance/sentinel_councils/attribution_receipt_v1.py) derives actor lineage and excludes correctness/admission verdicts. A universal file census or semantic jurisdiction classifier is not yet established. Do not advertise every file across a fixed 21-estate count as already assigned.
+
+## Smallest useful slice and dependencies
+
+1. Pin an explicit eligible root list, supported languages, small canonical council roster, roster digest/version, proposal schema and ambiguity policy. Inventory actual roots rather than infer scope from a historical table.
+2. Classify two hand-labeled source fixtures by content, citing exact spans. Identical bytes at different paths must retain classification; mixed/unsupported/invalid content returns UNKNOWN or AMBIGUOUS.
+3. Emit immutable read-only proposals binding content and roster digests. Keep attribution separate from evaluator verdicts. Require human review before registry application.
+4. Expand one file family at a time after mutation/recovery witnesses; keep high-council/sub-council hierarchy tied to the real roster, not invented universal assignments.
+5. Use theatrical adversarial prompts as optional fixture presentations. Measure concrete parser, routing or claim-hygiene outcomes; do not claim human emotion or psychological targeting as an executed software test.
+
+## Acceptance and ceiling
+
+The two-file classifier must be deterministic, path-independent, source-bound and side-effect free. Ambiguity and malformed inputs remain explicit. A candidate council label is a review suggestion, not fiduciary ownership, admission or proof of correctness. This epic authorizes no universal source rewrite or live registry mutation.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** No universal file census/classifier implementation is currently established by this epic. Existing AttributionReceiptV1 derives actor lineage and rejects verdict-bearing attribution fields. Panel personalities are a fictional presentation mechanism; neither human emotions in files nor universal psychological resilience is a measured software property.
+
+**Bounded behavior and public port:** Use AttributionReceiptV1.from_actor for current attribution. Propose a separate read-only classify_file(bytes,language,roster_revision) port returning candidate council IDs, cited source spans, content digest and UNKNOWN/AMBIGUOUS status. Start with two explicit files and a pinned small roster; require human review before any registry write.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Syntax Prefilter checks malformed input; Bare Metal Anchor/Techne implements the smallest production change; Defect Hunter and the Inspector challenge the independent oracle; Punchlist checks custody before Adversary records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | Attribution with injected correctness/admission fields must refuse; preserve attribution-only schema; a real known actor produces the independently expected lineage. | Extend `governance/tests/test_attribution_receipt.py::test_attribution_cannot_carry_verdict`; literal actor/mentor fixture and forbidden field names. |
+| 2 | The same bytes moved to another folder must yield identical content classification; implement one deterministic rule for two tiny files; ambiguous mixed-domain or invalid syntax returns UNKNOWN/AMBIGUOUS. | Proposed `governance/tests/test_file_council_classification.py::test_content_not_path_and_ambiguity`; independently labeled fixtures and exact cited spans, not classifier self-scores. |
+| 3 | A roster revision/digest transplanted from another corpus must refuse; implement exact input binding; restore the pinned roster and recover unchanged proposal bytes. | Proposed `governance/tests/test_file_council_classification.py::test_roster_transplant_and_recovery`; separate SHA-256 computation and literal roster identity. |
+| 4 | Dry-run proposals must leave live files and registries byte-identical; implement a proposal-only writer to scratch; reject symlink/path traversal before reading outside the chosen root. | Proposed `governance/tests/test_file_census_dry_run.py::test_dry_run_no_live_writes`; before/after tree manifest and explicit out-of-root fixture. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Remove forbidden attribution-field rejection in [attribution_receipt_v1.py](../../../../governance/sentinel_councils/attribution_receipt_v1.py) and require the verdict-injection witness to fail. The classifier/census mutation target is currently absent: identify the actual content/path decision branch only after the smallest adapter is implemented, then flip it and recover. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+~~~powershell
+py -3.12 -m pytest governance/tests/test_attribution_receipt.py -q
+py -3.12 -m pytest governance/tests/test_file_council_classification.py -q
+py -3.12 -m pytest governance/tests/test_file_census_dry_run.py -q
+~~~
+
+**Cross-epic sink ownership:** Governance owns canonical contracts and decision schemas; Government Councils owns roster/attribution and deliberation applications; Operations owns classified packaging/parity; Adversary owns digestion orchestration while core_intelligence owns native lifecycle decisions. Skill/rule/antibody outputs enter their owning admission queue as candidates, with source/target digest custody. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Two content classifications and attribution records do not prove universal coverage, ownership, correctness or emotion. Broader census requires an explicit root/roster/schema inventory and bounded expansion; proposals cannot auto-admit files or alter authority. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

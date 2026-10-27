@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_product_planning_office/receipts/requested_plan_completion_2026_10_02.json
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - product_planning_office/receipts/requested_plan_completion_2026_10_02.json
 ---
 
 # Prompt Civ Level 10: Open Horizons & Multi-Island Ecology: v0.2 Frontiers
 
 **AuthorityEffect:** None.  
 **Level:** Level 10 (Multi-Island Evolutionary Ecology, Recombination & v0.2 Horizons)  
-**Planning Roadmap Reference:** [`EPIC-OE-PROMPT-CIV-003`](../../../omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)  
+**Planning Roadmap Reference:** [`EPIC-OE-PROMPT-CIV-003`](../../../product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)  
 **Primary Mechanisms:** Crossover Recombination, Island Migration, Intelligence Metabolism
 
 ---
@@ -82,10 +82,10 @@ The v0.1 production release of Prompt Civilization focuses on canalized mutation
 
 | Planned Feature | Governing Epic / Reference | Target Rust Crate / Module | Epistemic Posture |
 | :--- | :--- | :--- | :--- |
-| **Crossover Recombination** | `EPIC-OE-PROMPT-CIV-003` §a | `omega_prompt_civilization::forge` | Research proposal; no operational authority |
-| **Island Topology & Migration** | `EPIC-OE-PROMPT-CIV-003` §b | `omega_prompt_civilization::domain` | Multi-population isolation policy |
-| **Frozen Settlement Policy** | `EPIC-OE-PROMPT-CIV-003` §c | `omega_prompt_civilization::record` | Canonical anchor declaration |
-| **Intelligence Metabolism** | `EPIC-OE-PROMPT-CIV-003` §d | `omega_engine_operating_system` | Bounded token and energy allocation |
+| **Crossover Recombination** | `EPIC-OE-PROMPT-CIV-003` §a | `core_prompt_civilization::forge` | Research proposal; no operational authority |
+| **Island Topology & Migration** | `EPIC-OE-PROMPT-CIV-003` §b | `core_prompt_civilization::domain` | Multi-population isolation policy |
+| **Frozen Settlement Policy** | `EPIC-OE-PROMPT-CIV-003` §c | `core_prompt_civilization::record` | Canonical anchor declaration |
+| **Intelligence Metabolism** | `EPIC-OE-PROMPT-CIV-003` §d | `operating_system` | Bounded token and energy allocation |
 
 ---
 

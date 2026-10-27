@@ -60,7 +60,7 @@ operad_residual: "unknown"
 
 ## When to Activate
 
-## description: Comprehensive verification system for Omega Engine sessions. Use after completing features, before PRs, or when ensuring quality gates pass
+## description: Comprehensive verification system for Engine sessions. Use after completing features, before PRs, or when ensuring quality gates pass
 
 ## Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)
 

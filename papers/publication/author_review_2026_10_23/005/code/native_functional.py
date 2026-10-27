@@ -1,5 +1,5 @@
 # Vendored copy, kept in this package so that it runs without the repository.
-# vendored-from-path: omega_engine_providers/adapters/native_functional.py
+# vendored-from-path: providers/adapters/native_functional.py
 # vendored-from-commit: 52cb5457f6c485ba548cfd292f6012a941ed22cf
 # vendored-from-sha256: 0f3590824eeedf1b91919eeac997193ef9ae16013f84857a79341dd7d402c045
 # The source file is byte-identical at commit 691a01ec3e0ee4f06b4d13b1b8f751edb67c5cee.
@@ -24,7 +24,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Mapping, Sequence
 
-FUNCTIONAL_OWNER = "omega_engine/crates_rs/omega_functional/src"
+FUNCTIONAL_OWNER = "engine/crates_rs/core_functional/src"
 
 
 class NativeFunctionalUnavailable(RuntimeError):
@@ -86,8 +86,8 @@ def compute_graph_phi1(
         })
     if set(claims) - edge_keys:
         raise ValueError("claim edge absent from declared carrier")
-    binary = os.environ.get("OMEGA_FUNCTIONAL_GRAPH_BIN")
-    expected = os.environ.get("OMEGA_FUNCTIONAL_GRAPH_SHA256", "").lower()
+    binary = os.environ.get("CORE_FUNCTIONAL_GRAPH_BIN")
+    expected = os.environ.get("CORE_FUNCTIONAL_GRAPH_SHA256", "").lower()
     if not binary or re.fullmatch(r"[0-9a-f]{64}", expected) is None:
         raise NativeFunctionalUnavailable("pinned native graph executable required")
     try:

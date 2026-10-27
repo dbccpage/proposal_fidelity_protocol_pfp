@@ -11,7 +11,7 @@ import hashlib
 import json
 import pytest
 
-from omega_engine_prompt_civilization.domain.lamarckian import (
+from pciv.domain.lamarckian import (
     CochainResidualV1,
     LamarckianMutationReceiptV1,
 )

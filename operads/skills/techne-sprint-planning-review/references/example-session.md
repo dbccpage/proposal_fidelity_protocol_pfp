@@ -11,7 +11,7 @@ unchanged; only its location moved.
 ``` ext
 User: /sprint-review 051
 
-Omega: I'll review Sprint 051 for approval.
+Core: I'll review Sprint 051 for approval.
 
 Loading agents: Product Owner, Blackrod, Scrum Master...
 

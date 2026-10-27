@@ -6,7 +6,7 @@ import hashlib
 from fractions import Fraction
 
 import pytest
-from omega_engine_woland.tests.pilots.judge_packet_audit import reference_values as rv
+from adversary.tests.pilots.judge_packet_audit import reference_values as rv
 
 
 def test_quintic_gv_invariants_match_candelas_et_al() -> None:

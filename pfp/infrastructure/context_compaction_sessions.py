@@ -13,13 +13,13 @@ from copy import deepcopy
 from fractions import Fraction
 from hashlib import sha256
 
-from omega_engine_pfp.domain.cohomology.certificate_checker import check_certificate
-from omega_engine_pfp.domain.cohomology.validation import exact_fraction
-from omega_engine_pfp.domain.solvers.simplicial_cochain import CochainCarrier
-from omega_engine_pfp.infrastructure.adapters.rust_cohomology_adapter import (
+from pfp.domain.cohomology.certificate_checker import check_certificate
+from pfp.domain.cohomology.validation import exact_fraction
+from pfp.domain.solvers.simplicial_cochain import CochainCarrier
+from pfp.infrastructure.adapters.rust_cohomology_adapter import (
     RustCohomologySolverAdapter,
 )
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
+from pfp.infrastructure.task_turn import prepare_task_turn
 
 
 def _bytes(value):

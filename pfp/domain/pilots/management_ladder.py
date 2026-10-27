@@ -5,8 +5,8 @@ No provider I/O. Ground truth never enters the public prompt packet.
 from dataclasses import dataclass
 import json
 
-from omega_engine_pfp.domain.pfp_ingress import strict_json
-from omega_engine_pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
+from pfp.domain.pfp_ingress import strict_json
+from pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
 
 VERSION = 'pfp.management-ladder.v2'
 SEED = 12015

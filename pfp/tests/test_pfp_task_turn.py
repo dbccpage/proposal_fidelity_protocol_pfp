@@ -8,9 +8,9 @@ from dataclasses import replace
 
 import pytest
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
-from omega_engine_pfp.entrypoints.cli.pfp import main
-from omega_engine_pfp.use_cases import pfp_prompt, pfp_proposal
+from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
+from pfp.entrypoints.cli.pfp import main
+from pfp.use_cases import pfp_prompt, pfp_proposal
 
 
 def task(schema=None):
@@ -260,8 +260,8 @@ def test_local_definition_reference_is_supported():
     ],
 )
 def test_invalid_local_reference_contracts_refuse_before_provider_admission(schema, reason):
-    from omega_engine_pfp.infrastructure.task_turn import complete_task_turn
-    from omega_engine_woland.domain.providers.types import CandidateRequest, Provider
+    from pfp.infrastructure.task_turn import complete_task_turn
+    from adversary.domain.providers.types import CandidateRequest, Provider
 
     class NoSendGateway:
         calls = 0

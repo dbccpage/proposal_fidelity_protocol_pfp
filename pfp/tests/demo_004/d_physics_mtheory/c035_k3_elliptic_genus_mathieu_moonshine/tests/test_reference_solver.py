@@ -9,11 +9,11 @@ from __future__ import annotations
 
 import time
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.ddc_tracer import (
     VALID_DDC_LETTERS,
     DDCTracer,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.mathieu_moonshine import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.mathieu_moonshine import (
     CLASS_SIZES_M24,
     CLASSES_M24,
     G_ORDER,
@@ -21,7 +21,7 @@ from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_e
     TABLE_M24,
     is_exact_int,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.solver import (
     solve,
 )
 
@@ -327,7 +327,7 @@ def test_no_hardcoded_coefficient_tables():
     import ast
     from pathlib import Path
 
-    from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver import (
+    from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver import (
         mathieu_moonshine,
     )
 
@@ -373,7 +373,7 @@ def test_dynamic_k3_elliptic_genus_specialization():
     2. The underlying series arithmetic evaluates at y=1 (z=0) to exactly 24.
     3. The solver emits genuine DDC trace steps reflecting specialization.
     """
-    from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.mathieu_moonshine import (
+    from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.mathieu_moonshine import (
         compute_k3_elliptic_genus,
     )
 
@@ -396,7 +396,7 @@ def test_dynamic_k3_elliptic_genus_specialization():
     )
 
     # 3. DDC trace validation
-    from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.solver import (
+    from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.solver import (
         get_last_tracer,
     )
 

@@ -5,11 +5,11 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.ddc_tracer import (
     VALID_DDC_LETTERS,
     DDCTracer,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.lie_algebra import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.lie_algebra import (
     freudenthal_multiplicities,
     tensor_product_decomposition,
     weyl_dimension,

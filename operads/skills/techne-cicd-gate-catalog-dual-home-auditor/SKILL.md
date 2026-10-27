@@ -26,8 +26,8 @@ The **Techne CI/CD Gate Catalog Dual-Home Auditor** enforces 1-to-1 parity betwe
 
 1. **Gate Catalog Dual-Home Parity Invariant (`RULE_GATE_CATALOG_DUAL_HOME_001`):**
    - Any modification to gate routes, module entrypoints, timeout budgets, or failure codes must be applied simultaneously to both:
-     - `omega_engine_operations/domain/cicd/gate_catalog_v3.yaml`
-     - `omega_engine_operations/domain/cicd/catalog.py` (`GATE_CATALOG_V3`)
+     - `operations/domain/cicd/gate_catalog_v3.yaml`
+     - `operations/domain/cicd/catalog.py` (`GATE_CATALOG_V3`)
    - Both catalogs must match byte-for-byte in gate IDs, entrypoints, timeouts, and route ordering.
 
 2. **Committed-Byte Git Reader Purity Invariant (`RULE_GIT_CAT_FILE_ARGV_001`):**
@@ -56,7 +56,7 @@ The **Techne CI/CD Gate Catalog Dual-Home Auditor** enforces 1-to-1 parity betwe
 ## 3. Verification Commands
 
 ```powershell
-python -m pytest omega_engine_operations/tests/cicd/test_local_ci_protocol.py --basetemp=.pytest_temp -v
+python -m pytest operations/tests/cicd/test_local_ci_protocol.py --basetemp=.pytest_temp -v
 ```
 
 ---

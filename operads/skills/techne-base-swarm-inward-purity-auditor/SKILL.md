@@ -1,6 +1,6 @@
 ---
 name: techne-base-swarm-inward-purity-auditor
-description: "Check omega_engine_woland.stage stays a generic runtime with no character lore or domain-specific branching."
+description: "Check adversary.stage stays a generic runtime with no character lore or domain-specific branching."
 operad_source_colours: ["Code"]
 operad_target_colour: "Audit"
 operad_arity: 1
@@ -25,10 +25,10 @@ The **Base Swarm Inward Purity Auditor** enforces architectural generality and d
 ## 2. Invariants & Rules
 
 1. **Base Engine Generality:**
-   - `omega_engine_woland.stage` is a pure generic base framework containing generic scheduling, typed sink protocols (`UtsSink`, `UnsSink`, `DdaSink`, `SgtSink`, `CemeterySink`, `AntibodySink`, `GenealogySink`), and telemetry.
+   - `adversary.stage` is a pure generic base framework containing generic scheduling, typed sink protocols (`UtsSink`, `UnsSink`, `DdaSink`, `SgtSink`, `CemeterySink`, `AntibodySink`, `GenealogySink`), and telemetry.
    - It must NEVER contain character lore, dramatic novella rendering, or domain-specific dialectic branching.
 2. **Bounded Swarm Isolation:**
-   - Specific swarms (such as the 7-Act Master & Margarita dialectic) must be isolated in dedicated bounded contexts (e.g. `omega_engine_woland`) with standard Clean Architecture layer boundaries.
+   - Specific swarms (such as the 7-Act Master & Primal Dual dialectic) must be isolated in dedicated bounded contexts (e.g. `adversary`) with standard Clean Architecture layer boundaries.
 3. **Canonical Output Emission:**
    - Bounded run executions must emit exactly 4 canonical output files (`receipt.json`, `novella.md`, `dda_actions.jsonl`, `summary.json`) into isolated run folders under `_intelligence/_<swarm>/runs/<task_key>/`.
 

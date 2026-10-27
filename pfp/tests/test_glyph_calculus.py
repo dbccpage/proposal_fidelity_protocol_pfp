@@ -15,7 +15,7 @@ import unicodedata
 
 import pytest
 
-from omega_engine_pfp.domain.glyph_calculus import (
+from pfp.domain.glyph_calculus import (
     CLOSED_OPS,
     REFUSAL_CARRIER_CODEPOINT,
     REFUSAL_DUPLICATE_KEY,

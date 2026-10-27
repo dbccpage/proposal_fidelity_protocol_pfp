@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 A Clifford unitary is fixed, up to global phase, by its tableau: the images of X₁…Xₙ and Z₁…Zₙ under conjugation, with signs. Checking a circuit against a tableau is a linear-time F2 simulation with sign bits. Producing the circuit requires a correct elimination order and, above all, correct sign handling; the sign row is where plausible circuits fail.
 
-The task is the reverse of C021. There the solver reads Pauli words; here it must produce a gate sequence whose conjugation action matches exactly. It stresses host checks in OEWAS (Omega Engine Workflows, Agents, Skills) that report which tableau entries are still wrong, and OEEIS (Omega Engine Epistemic Immune System) screening of circuits correct on the F2 part and wrong on signs. Canonical-form synthesis is known (Aaronson and Gottesman 2004), so a pass shows competent assembly, not a new method.
+The task is the reverse of C021. There the solver reads Pauli words; here it must produce a gate sequence whose conjugation action matches exactly. It stresses host checks in OEWAS (Engine Workflows, Agents, Skills) that report which tableau entries are still wrong, and OEEIS (Engine Epistemic Immune System) screening of circuits correct on the F2 part and wrong on signs. Canonical-form synthesis is known (Aaronson and Gottesman 2004), so a pass shows competent assembly, not a new method.
 
 ## 3. Formal Problem and Bounds
 
@@ -97,8 +97,8 @@ Operands expected: (1) clear a column to a single X with CNOTs; (2) turn Y into 
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_quantum_physics/src/clifford.rs`: exact H and S in Q(ζ₂₄), Sp(2, F2) and Sp(4, F2) enumeration, and `symplectic_order`.
-- `omega_engine/crates_rs/omega_quantum_physics/src/pauli.rs` and `cyclotomic.rs` (`Cyc8`) for the dense second check.
+- `engine/crates_rs/core_quantum_physics/src/clifford.rs`: exact H and S in Q(ζ₂₄), Sp(2, F2) and Sp(4, F2) enumeration, and `symplectic_order`.
+- `engine/crates_rs/core_quantum_physics/src/pauli.rs` and `cyclotomic.rs` (`Cyc8`) for the dense second check.
 - No n-qubit tableau type with signs exists in Rust; it is part of [U14](../../upgrades/u14_rust_quantum_stabilizer_port.md).
 - Upgrades: base [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), plus U14. [U12](../../upgrades/u12_host_scratch_space_working_memory.md) is recommended.
 

@@ -25,7 +25,7 @@ This rule codifies learned failure detector and antibody carrier honesty, catalo
 
 > **No Self-Activation:**
 >
-> 1. **Sightings Only Count:** Stores that count failure sightings (Rust `omega_woland::file_adapters::FileFailureHistory`; Python `FileAntibodyAdapter` in the city and Prompt Civilization) record a new or re-seen pattern as `PENDING`. A sighting count never activates an antibody.
+> 1. **Sightings Only Count:** Stores that count failure sightings (Rust `core_adversary::file_adapters::FileFailureHistory`; Python `FileAntibodyAdapter` in the city and Prompt Civilization) record a new or re-seen pattern as `PENDING`. A sighting count never activates an antibody.
 > 2. **Admission Is Kept:** A record is `ACTIVE` only because an admission act wrote it, and it keeps that status when the pattern is seen again.
 > 3. **Pharmacy Candidates:** Farming into the OEEIS pharmacy writes `CANDIDATE` only and never rewrites an admitted or rejected entry. Guidance is injected only from entries whose recorded status is `admitted` (`admitted_antibodies`).
 
@@ -46,8 +46,8 @@ This rule codifies learned failure detector and antibody carrier honesty, catalo
 
 > **Procedural Anti-Ops vs. Empirical Antibodies Boundary:**
 >
-> 1. **OEWAS Ownership for Anti-Ops & Contract Totality:** Procedural syntax, import boundary, and semantic restriction checkers (Anti-Ops / Anti-Skills) must live solely in `omega_engine_operads` (`domain/anti_skills/`). The package root `omega_engine_operads.domain.anti_skills` is the authoritative single export surface for both definitions (`ACTIVE_ANTI_SKILLS`, `AntiSkillDefinition`) and the full v2 typed evaluation contract suite (`AntiSkillSpecV2`, `AntiSkillEvaluationReceiptV2`, `AntiSkillFixtureBankV1`, `VerifiedAntiSkillRegistryV1`, `canonical_id`, `canonical_json_bytes`). Other crates must import all anti-skill types through OEWAS re-exports.
-> 2. **OEEIS Ownership for Antibodies:** Empirical failure detectors (Antibodies) and pharmacy catalogs must live solely in `omega_engine_epistemic_immune_system`.
+> 1. **OEWAS Ownership for Anti-Ops & Contract Totality:** Procedural syntax, import boundary, and semantic restriction checkers (Anti-Ops / Anti-Skills) must live solely in `operads` (`domain/anti_skills/`). The package root `operads.domain.anti_skills` is the authoritative single export surface for both definitions (`ACTIVE_ANTI_SKILLS`, `AntiSkillDefinition`) and the full v2 typed evaluation contract suite (`AntiSkillSpecV2`, `AntiSkillEvaluationReceiptV2`, `AntiSkillFixtureBankV1`, `VerifiedAntiSkillRegistryV1`, `canonical_id`, `canonical_json_bytes`). Other crates must import all anti-skill types through OEWAS re-exports.
+> 2. **OEEIS Ownership for Antibodies:** Empirical failure detectors (Antibodies) and pharmacy catalogs must live solely in `eis`.
 > 3. **Filesystem Custody under `.agents/`:** The filesystem definitions for anti-skills and antibodies reside canonically in `.agents/antiskills/` and `.agents/antibodies/`.
 > 4. **Two-Signal Danger Gate Requirement:** In runtime evaluation, an antibody is inert unless its recorded status is `admitted`. Even when admitted, it fires ONLY when both Signal 1 (Epitope detected in candidate payload) AND Signal 2 (Independent host danger signal witnessed by an external observer/test runner) are simultaneously present.
 

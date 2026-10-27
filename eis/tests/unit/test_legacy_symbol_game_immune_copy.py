@@ -1,6 +1,6 @@
 """The Symbol Game's second immune copy is documented as legacy, with its differences.
 
-`omega_engine_pfp/domain/immune` is not reconciled with OEEIS (its
+`pfp/domain/immune` is not reconciled with OEEIS (its
 callers would break). Instead it names OEEIS as the owner and lists how it
 differs; these tests pin each listed difference so the notice cannot go stale
 silently.
@@ -8,23 +8,23 @@ silently.
 
 from __future__ import annotations
 
-import omega_engine_pfp.domain.immune as legacy
-from omega_engine_epistemic_immune_system.domain.danger_gate import TwoSignalDangerGate
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+import pfp.domain.immune as legacy
+from eis.domain.danger_gate import TwoSignalDangerGate
+from eis.domain.value_objects import (
     DangerDecision,
     DangerSeverity,
     Signal2Danger,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     DetectionContext as OeeisContext,
 )
-from omega_engine_pfp.domain.immune.models import DetectionContext as LegacyContext
+from pfp.domain.immune.models import DetectionContext as LegacyContext
 
 
 def test_the_legacy_package_names_oeeis_as_owner() -> None:
     doc = legacy.__doc__ or ""
     assert "LEGACY COPY" in doc
-    assert "omega_engine_epistemic_immune_system" in doc
+    assert "eis" in doc
 
 
 def test_documented_difference_default_persona_roles() -> None:

@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.judge_packet.checkers.exact_checker as exact_checker_module
+import projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.judge_packet.checkers.exact_checker as exact_checker_module
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
 

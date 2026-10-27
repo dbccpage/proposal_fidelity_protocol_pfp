@@ -31,7 +31,7 @@ operad_residual: "unknown"
 
 ## Evidence Capture
 
-## Techne Code Soviet Inspector Compatibility
+## Techne Code Inspector Compatibility
 
 ## Test Gap Classification
 
@@ -61,7 +61,7 @@ operad_residual: "unknown"
 
 ### 5. Test Context and Mocks
 
-**Rule (source-scanning matchers):** A test/gate that scans Rust source TEXT (e.g. a `tests/*conformance.rs` gate) must strip literals+comments before substring-matching (reuse `anomalon_councils::test_quality::strip_literals_and_comments`), require an identifier boundary on **both** sides, and strip each file once. See rust-principal-developer → *Source-Scanning Matcher Hygiene*.
+**Rule (source-scanning matchers):** A test/gate that scans Rust source TEXT (e.g. a `tests/*conformance.rs` gate) must strip literals+comments before substring-matching (reuse `sentinel_councils::test_quality::strip_literals_and_comments`), require an identifier boundary on **both** sides, and strip each file once. See rust-principal-developer → *Source-Scanning Matcher Hygiene*.
 **Rule:** Production code should prefer `Result` types over `unwrap()`/`expect()`. Only use `expect()` when an invariant guarantees success, and document the invariant with a `// SAFETY:` or `# Invariant` comment.
 
 #### E. Fixed Examples (Session 2026-03-24)
@@ -93,7 +93,7 @@ operad_residual: "unknown"
 **Source:** Session 2026-03-24 (user explicit stop after compiler stack overflow)
 **NEVER** run background builds on Windows. The canonical build target is Linux.
 **Verification strategy on Windows (no compilation):**
-**CRITICAL: Do NOT compile the `omega_engine` workspace on Windows unless the user explicitly requests it.**
+**CRITICAL: Do NOT compile the `engine` workspace on Windows unless the user explicitly requests it.**
 
 ### Cross-Platform Compilation (Windows Resource Constraint)
 
@@ -134,7 +134,7 @@ When porting or refactoring multi-file test suites where some test files remain 
 
 ## When to Activate
 
-## description: Test patterns for omega_engine Rust crates (inline tests, property tests, categorical invariants, edge cases). Use when writing tests under omega_engine/crates/
+## description: Test patterns for engine Rust crates (inline tests, property tests, categorical invariants, edge cases). Use when writing tests under engine/crates/
 
 ## Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)
 

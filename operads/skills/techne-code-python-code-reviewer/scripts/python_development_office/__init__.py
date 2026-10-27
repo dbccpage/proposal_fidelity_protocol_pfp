@@ -5,11 +5,11 @@ reassembled inside the techne-code-python-code-reviewer skill folder.
 **AuthorityEffect:** None. Findings are measurements. A clean scan is not a
 review, not a proof, and not admission of anything.
 
-Reassembled 2026-08-17 from `dbccpage/anomalonpy` `6f39bd7042`, where this
-engine was spread across four layers of the `omega_engine_operations`
+Reassembled 2026-08-17 from `dbccpage/sentinelpy` `6f39bd7042`, where this
+engine was spread across four layers of the `operations`
 application (`domain/`, `use_cases/`, `infrastructure/`,
 `controllers/`, `frontend/cli/`). `.agents/COPY.md` forbids importing
-`omega_engine_operations` into CODA to make a skill work, so the slice was
+`operations` into CODA to make a skill work, so the slice was
 copied here with its layer boundaries intact and its imports rewritten.
 
 Standard library only.

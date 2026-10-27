@@ -11,7 +11,7 @@ from .exceptions import (
     InvariantViolationError,
     SecurityPathViolationError,
 )
-from omega_engine_pfp.domain.shared_kernel import (
+from pfp.domain.shared_kernel import (
     MAX_CANDIDATE_BUDGET,
     MAX_OPERATION_BUDGET,
     AuthorityEffect,

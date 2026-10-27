@@ -29,7 +29,7 @@ from ..infrastructure.persistence import PromptCivProjectionEngineV1
 from .backfill import PromptCivBackfillEngineV1
 from .e2e import PromptCivE2EFixtureV1
 from .fitness import ParetoFrontSelectorV1, PromptFitnessCalculatorV1
-from omega_engine_prompt_civilization.domain.causal_witness import (
+from pciv.domain.causal_witness import (
     PLACEHOLDER_WITNESS,
     seal_causal_witness,
 )
@@ -287,8 +287,8 @@ class PromptCivIntegrationRunnerV1:
         # 2. Ingest checked-in genealogy JSONL records if present
         genealogy_candidates = [
             self.intelligence_root / "nara/permanent_records/prompt_genealogy.jsonl",
-            self.intelligence_root / "nara/permanent_records/darpa/woland/prompt_genealogy.jsonl",
-            self.intelligence_root / "darpa/woland/prompt_genealogy.jsonl",
+            self.intelligence_root / "nara/permanent_records/darpa/adversary/prompt_genealogy.jsonl",
+            self.intelligence_root / "darpa/adversary/prompt_genealogy.jsonl",
         ]
         genealogy_path = next((p for p in genealogy_candidates if p.exists()), genealogy_candidates[-1])
         genealogy_records: List[Dict[str, Any]] = []

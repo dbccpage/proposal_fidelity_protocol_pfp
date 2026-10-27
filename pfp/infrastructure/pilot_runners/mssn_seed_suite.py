@@ -9,9 +9,9 @@ import time
 from typing import Any, Dict, List
 
 from ...domain.stages.demos import CheckResult, DemoRunReceipt, DemoSpec
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_checks import evaluate_demo_n02
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_checks import evaluate_demo_n03
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_seeds import (
+from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_demo_n02
+from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_demo_n03
+from pfp.infrastructure.pilot_runners.mssn_seeds import (
     MSSN_SEEDS_CATALOG as SEEDS_MSSN50,
 )
 

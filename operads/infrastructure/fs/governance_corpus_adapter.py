@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 from pathlib import Path
 
-from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import intelligence_path
+from operating_system.adapters.intelligence_custody.ic_routing import intelligence_path
 
 from ...application.governance_digest.textops import sha256_text
 from ...application.ports.governance_corpus_port import GovernanceCorpusPort
@@ -87,7 +87,7 @@ class FsGovernanceCorpusAdapter(GovernanceCorpusPort):
         teamwork_index, handoffs = self._teamwork(agents / "teamwork")
         harvest_receipts, harvest_index = self._harvest(path("_intelligence/harvest"))
         omc_records, omc_unstructured = self._audits(path("_intelligence/omc_dags"), "omc_dags")
-        reviews, review_unstructured = self._audits(path("_intelligence/omega_paper_reviews"), "omega_paper_reviews")
+        reviews, review_unstructured = self._audits(path("_intelligence/core_paper_reviews"), "core_paper_reviews")
         absent: list[str] = []
         runs = path("_intelligence/symbol_game/runs")
         stale: list[TextDoc] = []
@@ -117,7 +117,7 @@ class FsGovernanceCorpusAdapter(GovernanceCorpusPort):
             paper_reviews=tuple(reviews),
             unstructured_counts=(
                 ("omc_dags", omc_unstructured),
-                ("omega_paper_reviews", review_unstructured),
+                ("core_paper_reviews", review_unstructured),
             ),
             absent_corpora=tuple(absent),
             stale_pointers=tuple(stale),

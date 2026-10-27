@@ -2,11 +2,11 @@
 
 import unittest
 
-from omega_engine_operads.domain.value_objects import EstateRef
-from omega_engine_operads.domain.value_objects.lifecycle_facets import (
+from operads.domain.value_objects import EstateRef
+from operads.domain.value_objects.lifecycle_facets import (
     AdmissionFacet,
 )
-from omega_engine_operads.infrastructure.fs.legacy_catalog_reader_adapter import (
+from operads.infrastructure.fs.legacy_catalog_reader_adapter import (
     LegacyCatalogReaderAdapter,
 )
 

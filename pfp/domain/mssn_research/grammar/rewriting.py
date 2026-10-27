@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     ContentDigest,
     Rational,
 )
@@ -185,7 +185,7 @@ class KleeneEntry:
 
 @dataclass(frozen=True)
 class KleeneCochain:
-    """Kleene-valued obstruction cochain Omega."""
+    """Kleene-valued obstruction cochain Core."""
     entries: tuple[KleeneEntry, ...]
 
     def __post_init__(self) -> None:
@@ -278,7 +278,7 @@ class DDAEventRecord:
 
 @dataclass(frozen=True)
 class RuntimeKernel:
-    """Level 12: Minimal irredundant runtime configuration (B, C, x, Omega)."""
+    """Level 12: Minimal irredundant runtime configuration (B, C, x, Core)."""
     budget: int
     context: str
     state: str

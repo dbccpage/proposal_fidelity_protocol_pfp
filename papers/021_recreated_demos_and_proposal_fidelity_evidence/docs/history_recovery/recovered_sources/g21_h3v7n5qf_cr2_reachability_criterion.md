@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 In the sixteenth derivation of H3V7N5QF, a deleted assertion leaves a leftover record. Under the chosen reading, reachability is one-way and is decided by a carrying criterion through the mass. Under the unchosen set reading C-R2, neither that criterion nor the ninth derivation's has-a-term criterion agrees with search. The question is open (16:O2) and has an exact oracle: exhaustive search at a bound.
 
-Generation is hard: a criterion must be stated without running search and must hold on every ordered pair. Verification is cheap: evaluate the criterion and compare with search. The task stresses hypothesis generation against an oracle in the Symbol Game, OEWAS (Omega Engine Workflows, Agents, Skills) counterexample bookkeeping, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against a criterion that quietly calls the search. `UNKNOWN`, and refutations of candidate criteria, are honest outcomes.
+Generation is hard: a criterion must be stated without running search and must hold on every ordered pair. Verification is cheap: evaluate the criterion and compare with search. The task stresses hypothesis generation against an oracle in the Symbol Game, OEWAS (Engine Workflows, Agents, Skills) counterexample bookkeeping, and the OEEIS (Engine Epistemic Immune System) danger gate against a criterion that quietly calls the search. `UNKNOWN`, and refutations of candidate criteria, are honest outcomes.
 
 ## 3. Formal Problem and Bounds
 
@@ -97,7 +97,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_search](../../../../omega_engine/crates_rs/omega_search/) (search strategies for candidate criteria); [omega_solvers](../../../../omega_engine/crates_rs/omega_solvers/) (SAT with unsat cores, for family-level impossibility at a bound).
+- the_symbol_game: [core_search](../../../../engine/crates_rs/core_search/) (search strategies for candidate criteria); [core_solvers](../../../../engine/crates_rs/core_solvers/) (SAT with unsat cores, for family-level impossibility at a bound).
 - H3V7N5QF (`1681998`): `H3V7N5QF:code/sixteenth/`, `H3V7N5QF:code/ninth/reach.py`, `H3V7N5QF:evidence/sixteenth/`, `H3V7N5QF:lean4/Sixteenth/Reach.lean`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). [U17](../../upgrades/u17_lean_verifier_backend.md) (with Mathlib) only if a Lean proof is submitted.
 

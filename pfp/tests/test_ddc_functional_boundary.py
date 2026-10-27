@@ -6,7 +6,7 @@ from fractions import Fraction
 import unittest
 from unittest.mock import patch
 
-from omega_engine_pfp.domain.ddc import (
+from pfp.domain.ddc import (
     Cochain1,
     DDACascadeSolver,
     FunctionalBoundaryUnavailable,

@@ -14,11 +14,11 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     _source_root = next((p for p in Path(__file__).resolve().parents
-        if (p / "omega_engine_pfp").is_dir()), None)
+        if (p / "pfp").is_dir()), None)
     if _source_root is not None:
         sys.path.insert(0, str(_source_root))
 
-from omega_engine_pfp.infrastructure.consistency_teaching import (
+from pfp.infrastructure.consistency_teaching import (
     DEFAULT_MODEL, TEACHING_ITEMS, TEACHING_RELATIONS, TEACHING_SEED,
     record_one as _record_one, record_main,
 )

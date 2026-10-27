@@ -21,7 +21,7 @@
 > working record.
 
 > **AuthorityEffect:** `None` · Empirical Benchmark Report  
-> **Parent Estate:** [`omega_engine_atlas/coda_atlas/omega_engine_symbol_game/symbol_game_challenge_and_demos_findings/`](./)  
+> **Parent Estate:** [`atlas/coda_atlas/symbol_game/symbol_game_challenge_and_demos_findings/`](./)  
 > **Location:** [`c043_space_bunny_and_combinatorial_findings.md`](c043_space_bunny_and_combinatorial_findings.md)  
 > **Date:** September 28, 2026  
 > **Scope:** Domain E (`e_formal_math`) — Challenge C043 (Ramsey & Van der Waerden Lower-Bound Constructions)  
@@ -34,9 +34,9 @@
 We evaluated the newly released **Space Bunny Alpha** (`stealth/space-bunny-alpha`) model on OpenRouter against open-weights baselines (LLaMA 3.3 70B and LLaMA 3.1 8B) on **Challenge C043: Ramsey and van der Waerden Lower-Bound Constructions**.
 
 All candidate outputs were judged against dual independent checkers:
-1. Primary Python Checker: [`ramsey_vdw_checker.py`](../../../../../../omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)
-2. Independent Matrix/Bitmask Checker: [`independent_checker.py`](../../../../../../omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)
-3. Cryptographic Commit-Reveal Scoring Receipt: `PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed) sealed in `_intelligence/_woland/runs/c043_eval_1790620716/`.
+1. Primary Python Checker: [`ramsey_vdw_checker.py`](../../../../../../projects/mssn_sn_symgam/challenges/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)
+2. Independent Matrix/Bitmask Checker: [`independent_checker.py`](../../../../../../projects/mssn_sn_symgam/challenges/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)
+3. Cryptographic Commit-Reveal Scoring Receipt: `PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed) sealed in `_intelligence/_adversary/runs/c043_eval_1790620716/`.
 
 ---
 

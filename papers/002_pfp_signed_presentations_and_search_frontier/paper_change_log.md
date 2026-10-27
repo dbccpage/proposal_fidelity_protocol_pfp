@@ -4,7 +4,7 @@
 
 Recorded canonical Zenodo record <https://zenodo.org/records/23114127> (DOI: `10.5281/zenodo.23114127`, Concept DOI: `10.5281/zenodo.23114126`) across deposit metadata, `README.md`, publication catalog, and atlas `zenodo_records.md`.
 
-## 2026-10-02 - First preprint review and Landau companion revision
+## 2026-10-02 - First preprint review and Examiner companion revision
 
 
 - Kept the initial publication version at 0.1.0 and reconciled the current

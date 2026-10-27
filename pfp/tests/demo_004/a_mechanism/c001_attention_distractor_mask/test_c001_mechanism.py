@@ -48,7 +48,7 @@ except ImportError:  # pragma: no cover
     torch = None
 
 # Canonical Challenge C001 imports
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
     HARD_KILL_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
     MechanismBudgetController,
@@ -60,24 +60,24 @@ from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_
     resolve_fluff_positions,
     verify_position_ids_invariant,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_case,
     generate_hidden_base_set,
     generate_mutation_cases,
     generate_poisoned_cases,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.run_woland_bout import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.run_adversary_bout import (
     DDC_LETTERS,
     RECEIPT_SCHEMA,
     assert_witness_dominance,
     build_c001_ddc_action_tape,
     execute_9dot_gauge_break,
-    run_woland_c001_bout,
+    run_adversary_c001_bout,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solve import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solve import (
     solve,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
     ConstraintSystem,
     extract_contradiction_cycle,
     format_int,
@@ -87,13 +87,13 @@ from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_
     verify_certificate,
 )
 
-from omega_engine_epistemic_immune_system.domain.danger_gate import DangerEvaluationResult
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_gate import DangerEvaluationResult
+from eis.domain.danger_signals import (
     SignalIndependenceRefusal,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import DangerDecision
-from omega_engine_operations.domain.rop.result import Refusal
-from omega_engine_woland.domain.providers.types import BudgetExceeded
+from eis.domain.value_objects import DangerDecision
+from operations.domain.rop.result import Refusal
+from adversary.domain.providers.types import BudgetExceeded
 
 # ===========================================================================
 # Helper: Exact McNemar Computation
@@ -253,7 +253,7 @@ class TestDDCAlphabetAndWitnessDominance:
 
         # Verify hash chaining on a dda_actions.jsonl persisted into tmp_path
         run_dir = tmp_path / "bout"
-        assert run_woland_c001_bout(custom_run_dir=run_dir).is_ok
+        assert run_adversary_c001_bout(custom_run_dir=run_dir).is_ok
         dda_file = run_dir / "dda_actions.jsonl"
         assert dda_file.is_file(), "Persisted dda_actions.jsonl not found"
 
@@ -948,14 +948,14 @@ class TestMcNemarStatisticalSignificance:
 def bout_run_dir(tmp_path_factory: pytest.TempPathFactory) -> Path:
     """Run the bout once into a pytest temporary folder (the real run store is never read)."""
     target = tmp_path_factory.mktemp("c001_quad_bundle") / "run"
-    res = run_woland_c001_bout(custom_run_dir=target)
+    res = run_adversary_c001_bout(custom_run_dir=target)
     assert res.is_ok, res
     return target
 
 
 class TestStructureBenchQuadBundle:
     """Verifies that a bout run folder written to tmp_path has valid cryptographic bindings and
-    the REFERENCE_SELF_CONSISTENT label (a reference self-check, not a Woland verdict)."""
+    the REFERENCE_SELF_CONSISTENT label (a reference self-check, not a Adversary verdict)."""
 
     def test_quad_bundle_artifacts_exist_and_non_empty(self, bout_run_dir: Path):
         """Verify that all 4 canonical StructureBench files exist and are non-empty."""

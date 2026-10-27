@@ -10,8 +10,8 @@ import dataclasses
 import json
 from pathlib import Path
 
-from omega_engine_operads.domain.planar_substitution import OperadOperation
-from omega_engine_operads.domain.workflow_graph import (
+from operads.domain.planar_substitution import OperadOperation
+from operads.domain.workflow_graph import (
     WorkflowError,
     unknown_operations,
     validate_workflow,
@@ -109,7 +109,7 @@ def main():
         rows.append({"input": value, "expected": expected, "unknown_operations": unknown})
     path = (
         Path(__file__).resolve().parents[2]
-        / "omega_engine/crates_rs/tests/omega_operads/fixtures/python_workflow_v1.json"
+        / "engine/crates_rs/tests/core_operads/fixtures/python_workflow_v1.json"
     )
     path.write_text(
         json.dumps(

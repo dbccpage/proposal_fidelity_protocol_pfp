@@ -62,12 +62,12 @@ def configure_parser(parser: argparse.ArgumentParser) -> None:
 
 
 def execute(args: argparse.Namespace) -> int:
-    from omega_engine_operations.domain.level_engine_context import (
+    from operations.domain.level_engine_context import (
         configure_context,
     )
-    from omega_engine_operations.infrastructure.level_engine_ports import ports
-    from omega_engine_operations.use_cases.level_engine.dispatch import run
-    from omega_engine_pfp.infrastructure.tower_research.level_engine.context import (
+    from operations.infrastructure.level_engine_ports import ports
+    from operations.use_cases.level_engine.dispatch import run
+    from pfp.infrastructure.tower_research.level_engine.context import (
         installed_context,
     )
     ctx = installed_context(repository_root=args.workspace, vendor_root=args.vendor,

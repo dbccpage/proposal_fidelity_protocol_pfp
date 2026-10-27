@@ -7,7 +7,7 @@ import pytest
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError, ValidationError
 
-from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import (
+from pfp.infrastructure.pilot_runners.seed_checks import (
     _seed_rational_schema,
     _seed_value_schema,
     seed_candidate_schema,

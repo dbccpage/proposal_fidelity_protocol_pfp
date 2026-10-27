@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The first-demand rung decided one census row, succession, by a countermodel, and named the other eleven as leftover X-6. Each row needs a precise reading, fixed by a logged declaration: a different reading is a different row. Then it needs either a function of the state's own observables that agrees with the row everywhere on the rectangle, or two states with equal observables and different row values. Generation is hard mainly in the readings and in choosing observables that do not smuggle an index. Verification is cheap: a functional-dependency check by exact grouping over a finite set of replayed nodes.
 
-The task stresses precise declaration, OEWAS (Omega Engine Workflows, Agents, Skills) ledger discipline, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against observables that read a datum index, a token or the round number. A pass decides eleven cells on a bounded rectangle. It does not decide them in general, and FORCED is unavailable until an engine class exists (G17).
+The task stresses precise declaration, OEWAS (Engine Workflows, Agents, Skills) ledger discipline, and the OEEIS (Engine Epistemic Immune System) danger gate against observables that read a datum index, a token or the round number. A pass decides eleven cells on a bounded rectangle. It does not decide them in general, and FORCED is unavailable until an engine class exists (G17).
 
 ## 3. Formal Problem and Bounds
 
@@ -54,7 +54,7 @@ Public examples: the succession row as decided, re-encoded in this schema with e
 - **Held-out depth.** Every decided cell re-checked on sequences of five events. A DEFINABLE claim that fails at five becomes a scored error; a countermodel stays valid.
 - **Relabel controls.** Every countermodel repeated with presentation tokens renamed; it must survive, since the signature is supposed to ignore tokens.
 - **Poisoned but schema-valid.** A "definable" function that reads list order (an index in disguise); a countermodel whose two histories differ in signature only after canonicalization; a FORCED cell resting on one stake.
-- **Checkers.** `python ci/run_gates.py` with the tree registered; an exact checker that recomputes signatures and row values from replayed nodes; an independent second checker in Rust over `omega_ooutwire_primitives` (`profile.rs`, `automorphism.rs`, `separability.rs`).
+- **Checkers.** `python ci/run_gates.py` with the tree registered; an exact checker that recomputes signatures and row values from replayed nodes; an independent second checker in Rust over `core_ooutwire_primitives` (`profile.rs`, `automorphism.rs`, `separability.rs`).
 - **Mutation suite.** Perturb one signature component; swap the two countermodel histories' values; drop a node from the agreement check.
 
 ## 7. Arms and Baselines
@@ -96,7 +96,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_ooutwire_primitives](../../../../omega_engine/crates_rs/omega_ooutwire_primitives/) (`profile.rs`, `automorphism.rs`, `observer.rs`, `separability.rs`); [danger_gate.py](../../../../omega_engine_pfp/domain/immune/danger_gate.py).
+- the_symbol_game: [core_ooutwire_primitives](../../../../engine/crates_rs/core_ooutwire_primitives/) (`profile.rs`, `automorphism.rs`, `observer.rs`, `separability.rs`); [danger_gate.py](../../../../pfp/domain/immune/danger_gate.py).
 - 19L57G1 (`b55fc96a`): `19L57G1:research/second_index/` (`index.py`, `CLAIM_LEDGER.md`, `lean/`), `19L57G1:research/second/SEED.md`, `19L57G1:research/second_stake/observables.py`, `19L57G1:ci/run_gates.py`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). [U17](../../upgrades/u17_lean_verifier_backend.md) only if Lean countermodels are submitted.
 

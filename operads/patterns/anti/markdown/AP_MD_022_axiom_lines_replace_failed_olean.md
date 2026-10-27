@@ -27,7 +27,7 @@ A formal Lean stage fails because `lake build` exits 1 while creating an `.olean
 
 ## Witness
 
-Historical receipt, not a fresh Lean build. This digest did not rerun gates. Source folder `_ic/inr/omega_paper_reviews/pfp_mssn_batch_20260930_140849/`.
+Historical receipt, not a fresh Lean build. This digest did not rerun gates. Source folder `_ic/inr/core_paper_reviews/pfp_mssn_batch_20260930_140849/`.
 
 `009/run_all_receipt.json` (`SWARM_REV_20260930_141404`) has `overall_status` `NEEDS_REVISION` and verdict `NOT READY FOR ZENODO REPUBLICATION`. Stages 0, 1, 3, 4, 5, and 6 are `PASS`. Stage 2 is `FAIL`. `rounds_executed` is 1. `obstruction_report.status` is `TERMINAL_OBSTRUCTION`.
 
@@ -41,17 +41,17 @@ The same error records thirteen info lines, `RuntimeLimits.lean:176` through `:1
 
 The stderr in that error is:
 
-> failed to write 'C:\Users\a343o\.gemini\antigravity\worktrees\the_symbol_game\sync_with_remote_main\omega_engine_atlas\coda_atlas\omega_engine_pfp\009_the_symbol_game_adversarial_dialectics_and_terminal_reality_gates\lean4\.lake\build\lib\lean\RuntimeLimits.olean': failed to create file
+> failed to write 'C:\Users\a343o\.gemini\antigravity\worktrees\the_symbol_game\sync_with_remote_main\atlas\coda_atlas\pfp\009_the_symbol_game_adversarial_dialectics_and_terminal_reality_gates\lean4\.lake\build\lib\lean\RuntimeLimits.olean': failed to create file
 
 > error: Lean exited with code 1
 
 The error then names required targets that logged failures: `Level15AuthorityCalculus` and `RuntimeLimits`. The quoted create failure is `RuntimeLimits.olean` only.
 
-Stage 1 `old_man_survived` includes:
+Stage 1 `red_team_survived` includes:
 
 > Mechanized proof terms verified without unproven axioms or sorry escapes.
 
-`summary.remediation_route` is `python -m omega_engine_research_papers.use_cases.paper_edition.cli rebuild` with a paper path. `summary.obstruction_report.required_work` is:
+`summary.remediation_route` is `python -m research_papers.use_cases.paper_edition.cli rebuild` with a paper path. `summary.obstruction_report.required_work` is:
 
 > Automated review and harmonization exhausted fuel without resolving all gates. The unresolved defects listed above require manual code/proof editing, algorithm redesign, or further mathematical research before publication on Zenodo can proceed.
 

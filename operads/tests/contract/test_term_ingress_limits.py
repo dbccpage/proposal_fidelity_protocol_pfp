@@ -9,7 +9,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from omega_engine_governance.domain.ingress.limits import (
+from governance.domain.ingress.limits import (
     MAX_ADMITTED_TEXT_BYTES,
     MAX_REFUSAL_BODY_BYTES,
     MAX_REQUEST_BODY_BYTES,
@@ -18,10 +18,10 @@ from omega_engine_governance.domain.ingress.limits import (
     REFUSAL_TEXT_TOO_LARGE,
     IngressRefusal,
 )
-from omega_engine_operads.controllers.wire_dtos import (
+from operads.controllers.wire_dtos import (
     CompileLicensedTermRequest,
 )
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
+from operads.infrastructure.bootstrap import OeopContainer
 
 TERM_PATH = "/api/oeop/v3/terms:compile"
 

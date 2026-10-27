@@ -15,16 +15,16 @@ import shutil
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.governance import (
-    woland_gate as woland_gate_module,
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.governance import (
+    adversary_gate as adversary_gate_module,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.governance.budget_gate import (
     BudgetCeilingExceededError,
     BudgetGate,
     BudgetGateUnavailable,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.governance.commit_reveal_runner import (
     ManifestCustodyError,
     lf_normalized_bytes,
     phase1_commit_judge,
@@ -32,12 +32,12 @@ from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_
     phase3_reveal_and_score,
     verify_manifest_entries,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.governance.adversary_gate import (
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
-from omega_engine_woland.domain.providers.types import Provider
+from adversary.domain.providers.types import Provider
 
 CHALLENGE_DIR = Path(__file__).resolve().parent.parent
 CONSISTENT = "REFERENCE_SELF_CONSISTENT"
@@ -101,9 +101,9 @@ def test_budget_gate_declared_ceiling_is_exact():
         BudgetGate(ceiling_usd=True)
 
 
-def test_woland_gate_quad_persistence(tmp_path: Path):
-    """WolandGate must persist the 4-file bundle, stamped with the self-check scope, under the given base_dir."""
-    gate = WolandGate(task_key="c032_test_run", base_dir=tmp_path)
+def test_adversary_gate_quad_persistence(tmp_path: Path):
+    """AdversaryGate must persist the 4-file bundle, stamped with the self-check scope, under the given base_dir."""
+    gate = AdversaryGate(task_key="c032_test_run", base_dir=tmp_path)
     novella = gate.generate_novella(
         CONSISTENT, {"total_cases": 42, "passed_count": 42, "agreements_count": 42}
     )
@@ -114,10 +114,10 @@ def test_woland_gate_quad_persistence(tmp_path: Path):
         novella=novella,
     )
 
-    woland_dir = res["woland_run_dir"]
+    adversary_dir = res["adversary_run_dir"]
     symgam_dir = res["symgam_run_dir"]
 
-    for d in (woland_dir, symgam_dir):
+    for d in (adversary_dir, symgam_dir):
         assert tmp_path in d.parents
         assert (d / "novella.md").is_file()
         assert (d / "dda_actions.jsonl").is_file()
@@ -128,10 +128,10 @@ def test_woland_gate_quad_persistence(tmp_path: Path):
         assert "| Judge cases scored | 42 |" in (d / "novella.md").read_text(encoding="utf-8")
 
 
-def test_woland_gate_labels_come_from_exact_counts():
+def test_adversary_gate_labels_come_from_exact_counts():
     """Counterexamples: an empty suite, one checker disagreement and a float Phi_1 must not be consistent,
     and a PASS_TO_MASTER label must be refused."""
-    gate = WolandGate(base_dir=Path("unused"))
+    gate = AdversaryGate(base_dir=Path("unused"))
     assert gate.determine_terminal_verdict(0, 0, 0) == INCONSISTENT
     assert gate.determine_terminal_verdict(42, 42, 41) == INCONSISTENT
     assert gate.determine_terminal_verdict(42, 42, 42) == CONSISTENT
@@ -141,20 +141,20 @@ def test_woland_gate_labels_come_from_exact_counts():
         gate.generate_novella("PASS_TO_MASTER", {})
 
 
-def test_woland_gate_never_replaces_a_run_folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_adversary_gate_never_replaces_a_run_folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """Counterexample: a second run in the same second rmtree'd the first run folder and copied over it."""
 
-    class _Frozen(woland_gate_module.datetime):
+    class _Frozen(adversary_gate_module.datetime):
         @classmethod
         def now(cls, tz=None):
-            return cls(2026, 9, 29, 12, 0, 0, tzinfo=woland_gate_module.timezone.utc)
+            return cls(2026, 9, 29, 12, 0, 0, tzinfo=adversary_gate_module.timezone.utc)
 
-    monkeypatch.setattr(woland_gate_module, "datetime", _Frozen)
-    gate = WolandGate(task_key="c032_collision", base_dir=tmp_path)
+    monkeypatch.setattr(adversary_gate_module, "datetime", _Frozen)
+    gate = AdversaryGate(task_key="c032_collision", base_dir=tmp_path)
     first = gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="first")
     with pytest.raises(RunFolderExistsError):
         gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="second")
-    assert (first["woland_run_dir"] / "novella.md").read_text(encoding="utf-8") == "first"
+    assert (first["adversary_run_dir"] / "novella.md").read_text(encoding="utf-8") == "first"
 
 
 def test_commit_reveal_workflow(tmp_path: Path):
@@ -180,7 +180,7 @@ def test_commit_reveal_workflow(tmp_path: Path):
     assert p3["all_agreed"] is True
     assert (commitments / "c032_scoring_receipt.json").is_file()
     assert (
-        tmp_path / "_intelligence" / "_woland" / "runs" / "c032_six_d_sugra_anomaly_cancellation"
+        tmp_path / "_intelligence" / "_adversary" / "runs" / "c032_six_d_sugra_anomaly_cancellation"
     ).is_dir()
 
 

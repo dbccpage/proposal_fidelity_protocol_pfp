@@ -43,6 +43,6 @@ Run the checks from the package root as described in the [README](../README.md).
 
 The current execution record is `v01_review_2026_10_02.json`. The historical Lean
 reports remain unchanged; this review did not run the pinned compiler. The
-[Landau companion](../_lev_landau_theoretical_minimum_quiz/study_guide.md) includes
+[Examiner companion](../_lev_examiner_theoretical_minimum_quiz/study_guide.md) includes
 a separate key, 24 questions and `tools/study_capstone.py`, which reuses the host
 and retained evidence. No provider calls or learner measurements were made.

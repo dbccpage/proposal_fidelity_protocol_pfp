@@ -12,11 +12,11 @@ from typing import Any
 import pytest
 import yaml
 
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.infrastructure.pharmacy_writer import (
     filesystem_byte_writer,
     filesystem_catalog_bytes,
 )
-from omega_engine_epistemic_immune_system.domain import (
+from eis.domain import (
     ANTIBODY_TEMPLATES,
     Antibody,
     ConstraintType,
@@ -115,7 +115,7 @@ class TestCandidateAntibodiesFormalSpecifications:
     ) -> None:
         spec = _load_yaml_spec(filename)
 
-        assert spec["schema_version"] == "omega.immune.antibody-spec.v1"
+        assert spec["schema_version"] == "core.immune.antibody-spec.v1"
         assert spec["antibody_id"] == expected_id
         assert spec["failure_class"] == expected_class
         assert spec["constraint_type"] == expected_constraint
@@ -161,7 +161,7 @@ class TestAdversarialMutationFixtures:
         pattern = re.compile(spec["target_pattern"])
         source = (
             Path(__file__).resolve().parents[3]
-            / "omega_engine_atlas"
+            / "atlas"
             / "coda_atlas"
             / "F004_papers"
             / "001_finite_obstruction_calculus"
@@ -178,7 +178,7 @@ class TestPharmacySeederIntegration:
     """Verifies that the new candidate antibodies integrate into PharmacySeeder and templates."""
 
     def test_classifier_recognizes_new_candidate_failure_classes(self) -> None:
-        assert classify_failure("defect:float_tolerance_leak:omega_types") == "float_tolerance_leak"
+        assert classify_failure("defect:float_tolerance_leak:core_types") == "float_tolerance_leak"
         assert classify_failure("defect:implicit_credential_discovery:openrouter") == "implicit_credential_discovery"
         assert classify_failure("defect:limit_honesty_violation:omc_dag") == "limit_honesty_violation"
 
@@ -199,7 +199,7 @@ class TestPharmacySeederIntegration:
         seeder = PharmacySeeder(tmp_path, byte_writer=filesystem_byte_writer, byte_source=filesystem_catalog_bytes)
 
         defects = [
-            "defect:float_tolerance_leak:omega_types.rational_bridge",
+            "defect:float_tolerance_leak:core_types.rational_bridge",
             "defect:implicit_credential_discovery:openrouter.adapter",
         ]
 

@@ -5,11 +5,11 @@ from copy import deepcopy
 import jsonschema
 import pytest
 
-from omega_engine_pfp.domain.contracts.pfp_calculations import (
+from pfp.domain.contracts.pfp_calculations import (
     calculation_binding_failures,
     same_typed_value,
 )
-from omega_engine_pfp.use_cases.pfp_calculation_contracts import (
+from pfp.use_cases.pfp_calculation_contracts import (
     calculation_schema,
     public_workpad_schema,
 )

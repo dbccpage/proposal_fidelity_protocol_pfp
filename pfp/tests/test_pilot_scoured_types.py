@@ -18,27 +18,27 @@ from pathlib import Path
 
 import pytest
 import yaml
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
+from pfp.infrastructure.model_loading import load_yaml_model
 
-from omega_engine_pfp.domain.types import AntibodySlot
-from omega_engine_pfp.domain.types import ArmTemplate
-from omega_engine_pfp.domain.types import EvaluationStatus
-from omega_engine_pfp.domain.types import PromptTemplate
-from omega_engine_pfp.domain.types import PfpUniversalPromptTemplate
-from omega_engine_pfp.domain.types import PilotComparisonResults
-from omega_engine_pfp.domain.types import PilotResponse
-from omega_engine_pfp.domain.types import PilotSpec
-from omega_engine_pfp.domain.types import PStarPrompt
-from omega_engine_pfp.domain.types import RepresentationRewrite
-from omega_engine_pfp.domain.types import RewriteTestPlan
-from omega_engine_pfp.domain.types import SeedPrompt
-from omega_engine_pfp.domain.types import TestSpec
+from pfp.domain.types import AntibodySlot
+from pfp.domain.types import ArmTemplate
+from pfp.domain.types import EvaluationStatus
+from pfp.domain.types import PromptTemplate
+from pfp.domain.types import PfpUniversalPromptTemplate
+from pfp.domain.types import PilotComparisonResults
+from pfp.domain.types import PilotResponse
+from pfp.domain.types import PilotSpec
+from pfp.domain.types import PStarPrompt
+from pfp.domain.types import RepresentationRewrite
+from pfp.domain.types import RewriteTestPlan
+from pfp.domain.types import SeedPrompt
+from pfp.domain.types import TestSpec
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-PILOT_0000000 = REPO_ROOT / "omega_engine_pfp" / "tests" / "pilot_0000000"
+PILOT_0000000 = REPO_ROOT / "pfp" / "tests" / "pilot_0000000"
 MUB6_PROMPT = (
     REPO_ROOT
-    / "omega_engine_projects"
+    / "projects"
     / "mub6"
     / "prompts"
     / "subgap_r7_enc1147_karlsson_stengle_prompt.yaml"
@@ -213,7 +213,7 @@ def test_mub6_frontier_prompt_packet_lineage_and_antibodies():
 
 
 def test_max_pilot_matrix_yaml_and_results_estate():
-    matrix_dir = REPO_ROOT / "omega_engine_woland" / "tests" / "pilots" / "matrix"
+    matrix_dir = REPO_ROOT / "adversary" / "tests" / "pilots" / "matrix"
     matrix_yaml = matrix_dir / "max_pilot_matrix.yaml"
     matrix_md = matrix_dir / "max_pilot_matrix.md"
 
@@ -226,7 +226,7 @@ def test_max_pilot_matrix_yaml_and_results_estate():
     assert raw_matrix["host_checker"] == "PFP-01-EXACT-LINALG"
     assert len(raw_matrix["pilots"]) == 75
 
-    results_dir = REPO_ROOT / "omega_engine_woland" / "tests" / "pilots" / "results"
+    results_dir = REPO_ROOT / "adversary" / "tests" / "pilots" / "results"
     assert results_dir.exists(), "pilots/results directory must exist"
 
     for idx, p_info in enumerate(raw_matrix["pilots"]):
@@ -273,8 +273,8 @@ def test_max_pilot_matrix_yaml_and_results_estate():
 def test_offline_evaluator_dry_run_execution(tmp_path):
     import shutil
 
-    from omega_engine_woland.tests.pilots.offline_evaluator import run_all_pilots
-    source = REPO_ROOT / "omega_engine_woland" / "tests" / "pilots" / "results"
+    from adversary.tests.pilots.offline_evaluator import run_all_pilots
+    source = REPO_ROOT / "adversary" / "tests" / "pilots" / "results"
     shutil.copytree(source, tmp_path / "results")
     reports = run_all_pilots(tmp_path / "results")
     assert len(reports) == 75
@@ -286,7 +286,7 @@ def test_offline_evaluator_dry_run_execution(tmp_path):
 
 
 def test_offline_evaluator_negative_mutation_suite():
-    from omega_engine_woland.tests.pilots.offline_evaluator import run_negative_mutation_suite
+    from adversary.tests.pilots.offline_evaluator import run_negative_mutation_suite
 
     reports = run_negative_mutation_suite()
     assert len(reports) >= 20

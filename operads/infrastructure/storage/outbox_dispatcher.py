@@ -8,7 +8,7 @@ import time
 from dataclasses import dataclass
 from typing import Callable, Dict, List
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 
 from ...domain.errors.domain_errors import OeopDomainError
 from .sqlite_unit_of_work import SqliteUnitOfWork

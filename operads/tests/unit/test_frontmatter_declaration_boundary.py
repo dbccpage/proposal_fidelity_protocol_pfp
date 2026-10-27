@@ -4,9 +4,9 @@ import hashlib
 
 import pytest
 
-from omega_engine_operads.domain.value_objects import SkillId
-from omega_engine_operads.domain.value_objects.lifecycle_facets import AdmissionFacet
-from omega_engine_operads.infrastructure.parser.markdown_parser_adapter import (
+from operads.domain.value_objects import SkillId
+from operads.domain.value_objects.lifecycle_facets import AdmissionFacet
+from operads.infrastructure.parser.markdown_parser_adapter import (
     LosslessMarkdownParserAdapter,
 )
 

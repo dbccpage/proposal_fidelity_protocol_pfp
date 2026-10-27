@@ -7,11 +7,11 @@ from .budget_gate import (
     C025BudgetGate,
 )
 from .commit_reveal_runner import CommitRevealRunner
-from .woland_gate import (
+from .adversary_gate import (
     TERMINAL_OPEN_RESIDUAL,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
-    WolandRealityGate,
+    AdversaryRealityGate,
 )
 
 __all__ = [
@@ -21,6 +21,6 @@ __all__ = [
     "TERMINAL_REFERENCE_SELF_CONSISTENT",
     "TERMINAL_REFUSE",
     "TERMINAL_OPEN_RESIDUAL",
-    "WolandRealityGate",
+    "AdversaryRealityGate",
     "CommitRevealRunner",
 ]

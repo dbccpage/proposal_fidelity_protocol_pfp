@@ -20,19 +20,19 @@ _RESEARCH_DIR = os.path.abspath(os.path.join(_CURRENT_DIR, "..", ".."))
 if _RESEARCH_DIR not in sys.path:
     sys.path.insert(0, _RESEARCH_DIR)
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import TowerGrammar
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.entities import TowerGrammar
+from pfp.domain.mssn_research.grammar.errors import (
     DaggerInvolutionError,
     QuarantineViolationError,
     ScopeBoundaryViolationError,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.foundational_policies import (
+from pfp.domain.mssn_research.grammar.foundational_policies import (
     check_dagger_involution_law,
     check_dagger_trace_invariance,
     check_permanent_quarantine_isolation,
     check_pontryagin_firewall,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     DaggerProfunctor,
     EdgeInvolution,
     HostFenceAudit,
@@ -41,10 +41,10 @@ from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
     ReversalMap,
     TraceInvarianceDisposition,
 )
-from omega_engine_pfp.domain.mssn_research.packets.entities import Packet
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import Opcode, RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import Rational, StageLevel
+from pfp.domain.mssn_research.packets.entities import Packet
+from pfp.domain.mssn_research.packets.value_objects import Opcode, RefusalCode
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
+from pfp.domain.mssn_research.shared_kernel.value_objects import Rational, StageLevel
 
 
 class TestLevel9DaggerCategoriesAndInvolution(unittest.TestCase):

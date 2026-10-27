@@ -7,12 +7,12 @@ from typing import TypeVar
 
 from pydantic import ValidationError
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operating_system.adapters.rust_host.majorana_math import (
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operating_system.adapters.rust_host.majorana_math import (
     NativeMathRefusal,
     call_native,
 )
-from omega_engine_pfp.domain.homology.qddc import (
+from pfp.domain.homology.qddc import (
     Contract,
     DeformationRequest,
     DeformationResult,

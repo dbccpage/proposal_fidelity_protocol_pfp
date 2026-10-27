@@ -1,7 +1,7 @@
 """Test Non-Zero Obstruction Bout and False Exactness Refusal.
 
 Verifies:
-1. Execution of a Woland dialectic bout with non-trivial 1-cochains (Phi_1 != 0, Gamma_2 != 0).
+1. Execution of a Adversary dialectic bout with non-trivial 1-cochains (Phi_1 != 0, Gamma_2 != 0).
 2. Verification that DdcOperadParser correctly flags non-exact residual effects
    (residual_contractive or residual_non_contractive) from hash-chained DDC action records.
 3. Strict enforcement that DdcOperadParser refuses false exactness claims
@@ -17,9 +17,9 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_woland.domain.models import WolandBoutRequestV1
-from omega_engine_woland.runtime import build_woland_service
-from omega_engine_operads.skill_operad.ddc_operad_parser import DdcOperadParser
+from adversary.domain.models import AdversaryBoutRequestV1
+from adversary.runtime import build_adversary_service
+from operads.skill_operad.ddc_operad_parser import DdcOperadParser
 
 
 @pytest.fixture(scope="module")
@@ -28,10 +28,10 @@ def nonzero_bout_run_dir(tmp_path_factory: pytest.TempPathFactory) -> Path:
     repo_root = Path(__file__).resolve().parents[3]
     scratch_dir = tmp_path_factory.mktemp("nonzero_bout_root")
 
-    service = build_woland_service(repo_root=scratch_dir)
+    service = build_adversary_service(repo_root=scratch_dir)
 
     # Carrier: C3 triangle with non-trivial 1-cochains (all edges = 1, sum around loop = 3 != 0)
-    req = WolandBoutRequestV1(
+    req = AdversaryBoutRequestV1(
         objective="Verify non-zero obstruction bout on C3 triangle carrier",
         task_key="foc_006_nonzero_test_bout",
         carrier_context={
@@ -106,7 +106,7 @@ def test_ddc_parser_flags_non_exact_residual_effect(nonzero_bout_run_dir: Path) 
 def test_refuse_false_exactness_claim(nonzero_bout_run_dir: Path, tmp_path: Path) -> None:
     """Verify that DdcOperadParser refuses false exactness claims in operad_signature.json."""
     repo_root = Path(__file__).resolve().parents[3]
-    operad_orig_dir = repo_root / "omega_engine_operads" / "skill_operad"
+    operad_orig_dir = repo_root / "operads" / "skill_operad"
     ddc_file = nonzero_bout_run_dir / "ddc.jsonl"
 
     # Set up sandbox operad directory

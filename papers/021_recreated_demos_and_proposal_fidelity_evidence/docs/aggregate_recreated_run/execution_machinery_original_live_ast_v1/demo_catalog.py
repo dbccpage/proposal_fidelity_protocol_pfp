@@ -35,9 +35,9 @@ DEMO_IDS = (
     "demo_system_coverage",
     "demo_token_frontier",
     "demo_tower_lift",
-    "demo_woland_tribunal",
+    "demo_adversary_tribunal",
 )
-OLD_PREFIX = "omega_engine_projects.mssn_sn_symgam"
+OLD_PREFIX = "projects.mssn_sn_symgam"
 LOCAL_PREFIX = "paper011_source"
 
 

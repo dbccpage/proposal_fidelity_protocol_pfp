@@ -21,19 +21,19 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
     verify_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
     CheckerDisagreementError,
     assert_dual_agreement,
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
     secondary_numeric_check,
     verify_spectral_optimality,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
     solve,
 )
 

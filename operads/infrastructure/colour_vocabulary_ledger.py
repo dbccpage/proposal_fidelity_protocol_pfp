@@ -7,9 +7,9 @@ labels." Its acceptance matrix opens with the ten colours, whose decisive
 mutation is *"reorder, omit, or add one colour"*.
 
 The vocabulary is declared in more than one place, and the code already knows
-it. `omega_oewas/src/model.rs` carries this above `ADMITTED_COLOURS`:
+it. `core_oewas/src/model.rs` carries this above `ADMITTED_COLOURS`:
 
-    This is the single vocabulary. `omega_engine_operads`
+    This is the single vocabulary. `operads`
     carries it twice more (a domain tuple and the machine registry
     `.agents/operad/operad_signature.json`); those three drifted apart once,
     dropping `Contract` and `Diagram`, which silently changed the arity of
@@ -27,7 +27,7 @@ reports that standing and does not open the file. `read_rust_colours` and
 `read_claimed_site_count` refuse with `NONCLAIM` rather than returning an empty
 colour set. The site-count sentence in the missing comment is `UNVERIFIED`.
 `.agents/operad/` is `HISTORICAL` and absent. This module does not recreate it
-and does not create `omega_oewas`. A missing site stays on the record. The
+and does not create `core_oewas`. A missing site stays on the record. The
 sites that remain are not a closed owner set.
 
 This ledger still compares declarations it can read, so a colour drift fails a
@@ -75,7 +75,7 @@ CANONICAL_ORDER = (
     "Post",
 )
 
-RUST_MODEL = Path("omega_engine/crates_rs/omega_oewas/src/model.rs")
+RUST_MODEL = Path("engine/crates_rs/core_oewas/src/model.rs")
 
 
 @dataclass(frozen=True, slots=True)
@@ -108,7 +108,7 @@ def rust_model_status(repo_root: Path) -> PathClaim:
         path=path,
         standing="MISSING",
         claim="NONCLAIM",
-        detail="omega_oewas is not a workspace member; the file is not opened",
+        detail="core_oewas is not a workspace member; the file is not opened",
     )
 
 
@@ -122,7 +122,7 @@ def _refuse_missing_rust_model(repo_root: Path) -> None:
 
 
 PLANAR_SUBSTITUTION = Path(
-    "omega_engine_operads/domain/planar_substitution.py"
+    "operads/domain/planar_substitution.py"
 )
 OPERAD_COLOURS_MODULE = Path(".agents/operad/domain/colours.py")
 OPERAD_SIGNATURE = Path(".agents/operad/operad_signature.json")

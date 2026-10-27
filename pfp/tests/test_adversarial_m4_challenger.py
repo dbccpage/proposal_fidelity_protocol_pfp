@@ -21,17 +21,17 @@ from __future__ import annotations
 import hashlib
 from fractions import Fraction
 
-from omega_engine_pfp.domain.cochain import (
+from pfp.domain.cochain import (
     ClosedNonExactClass,
     CochainRefusal,
     ExactCoboundary,
     PrimeTriadContext,
     PromptCellComplex,
 )
-from omega_engine_pfp.ffi import (
+from pfp.ffi import (
     evaluate_prompt_cochain_disposition as evaluate_prompt_cochain,
 )
-from omega_engine_pfp.ffi import get_default_host
+from pfp.ffi import get_default_host
 
 
 # =============================================================================

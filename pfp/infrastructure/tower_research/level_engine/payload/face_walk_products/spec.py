@@ -49,8 +49,8 @@ from itertools import combinations
 from types import ModuleType
 from typing import Any, Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_json, tree_module
+from operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_json, tree_module
 
 CHALLENGE_ID = "face_walk_products"
 ANSWER_TYPE = "M"

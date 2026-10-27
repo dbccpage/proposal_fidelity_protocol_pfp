@@ -67,19 +67,19 @@ Under no circumstances may a consolidated skill retain the `goo-` prefix. All 6 
 
 ## 3. ROP Monad & Runtime Defect Firewall Suite
 
-**Target Host:** `techne-code-soviet-inspector`  
+**Target Host:** `techne-code-inspector`  
 **Automated Fitness Function:** `python .agents/skills/governance-rop-runtime/scripts/check_rop_runtime.py`
 
 | Legacy Skill | Devolved Invariant |
 | :--- | :--- |
 | `goo-operad-rop-result-monad-gate` | Elimination of naked exceptions; propagation of `Result[T, E]` monads |
-| `goo-woland-rop-monad-strictness` | Strict ROP container return enforcement across agent runtimes |
+| `goo-adversary-rop-monad-strictness` | Strict ROP container return enforcement across agent runtimes |
 | `goo-probe-defect-firewall` | Separation of apparatus probe errors from computational defects |
 | `goo-simulation-probe-error-defect-firewall` | Explicit exception raising on malformed simulation probes |
 | `goo-atomic-trace-ledger-concurrency-guard` | Thread locking and atomic staging replacement for evidence traces |
 | `goo-polymorphic-value-object-equality-guard` | Symmetric `__eq__` and `__hash__` rejecting string coercion |
 | `goo-callback-immutable-family-snapshot-guard` | Immutable tuple snapshotting of test families at entry points |
-| `goo-woland-predictive-framing-bout-evaluator` | Separation of narrative dialogue rendering from raw JSONL traces |
+| `goo-adversary-predictive-framing-bout-evaluator` | Separation of narrative dialogue rendering from raw JSONL traces |
 
 ---
 
@@ -100,7 +100,7 @@ Under no circumstances may a consolidated skill retain the `goo-` prefix. All 6 
 | `goo-fastmcp-cross-encoder-hybrid-retrieval-gate` | SQLite FTS5 BM25 + dense vector hybrid search contracts |
 | `goo-prompts-university-library-custody` | Domain goal prompts management with non-claim fences |
 | `goo-cognitive-expectancy-envelope-harness` | Cognitive expectancy envelopes and prompt audit gates |
-| `goo-bulgakov-dramatic-cochain-synthesizer` | Separation of dramatic dialogue rendering from JSONL envelopes |
+| `goo-novelist-dramatic-cochain-synthesizer` | Separation of dramatic dialogue rendering from JSONL envelopes |
 | `goo-master-planning-office-reorg-guard` | Single-level master planning document layout |
 | `goo-skill-md-factorization-sweep` | Extraction of subtopic modules into `references/` |
 | `goo-gate-executability-requirement` | Executable check script requirement for packages labeled as gates |
@@ -161,9 +161,9 @@ Under no circumstances may a consolidated skill retain the `goo-` prefix. All 6 
 
 ---
 
-## 8. Soviet Testing & Falsification Suite
+## 8. Strict Testing & Falsification Suite
 
-**Target Host:** `techne-code-soviet-builder` & `rip-testing`  
+**Target Host:** `techne-code-builder` & `rip-testing`  
 **Automated Fitness Function:** `python -m pytest <path> --basetemp=scratch/pytest_tmp`
 
 | Legacy Skill | Devolved Invariant |
@@ -174,7 +174,7 @@ Under no circumstances may a consolidated skill retain the `goo-` prefix. All 6 
 | `goo-pytest-windows-basetemp-isolation-enforcer` | Mandatory `--basetemp` temp isolation on Windows |
 | `goo-python-replay-admission-boundary-adversary` | Admission boundary replay tests |
 | `goo-package-local-pythonpath-isolation-gate` | Package-local PYTHONPATH isolation (no monorepo escapes) |
-| `goo-universe-anomalonica-playpen-math-conventions` | Math convention adherence in playpen test modules |
+| `goo-universe-sentinelica-playpen-math-conventions` | Math convention adherence in playpen test modules |
 | `goo-symbol-game-shared-kernel-ddd-synchronizer` | Shared domain value object synchronization |
 | `goo-bqnf-delta-conformance-oracle` | Conformance delta evaluation |
 | `goo-operational-pipeline-attestation-gate` | Sealed pipeline execution trace verification |

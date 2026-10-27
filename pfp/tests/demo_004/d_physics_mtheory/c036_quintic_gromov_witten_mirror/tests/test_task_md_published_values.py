@@ -12,7 +12,7 @@ import re
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.reference_solver.solver import (
     solve,
 )
 

@@ -7,7 +7,7 @@
 > 70B parameters, and they may not be reproducible after the stealth period. This
 > description replaces the one in the notice of 2026-09-28. C041 and C042 are listed
 > below as delivered and verified. Their model-matrix findings
-> (`omega_engine_projects/mssn_sn_symgam/docs/symbol_game_empirical_matrix_findings.md`)
+> (`projects/mssn_sn_symgam/docs/symbol_game_empirical_matrix_findings.md`)
 > have no retained raw data, and the C041 checkers accept an `UNKNOWN` answer with any
 > listed code on any case. No model result for C041 or C042 should be cited. Every
 > `PASS_TO_MASTER` label in this note is a reference self-score: the challenge's own
@@ -21,7 +21,7 @@
 
 > **Correction notice (2026-09-28).** Many figures in this document were corrected or
 > withdrawn when Papers 003, 006, 008, 009 and 010 of this collection, and the
-> meron-cluster benchmark paper in `omega_engine_projects/fsp/meron_sign_problem`,
+> meron-cluster benchmark paper in `projects/fsp/meron_sign_problem`,
 > were revised against the retained evidence. For example, no 28-probe study exists;
 > the failure catalog holds 61 entries, of which 5 are marked active and none is applied
 > by code; the paired-bout "10/10" counted a field that is true in every record; and
@@ -32,7 +32,7 @@
 > **AuthorityEffect:** `None` · Master Retrospective & Empirical Synthesis · Council Governance: `L3_logos_techne`  
 > **Repository:** `dbccpage/the_symbol_game` · **Baseline Commit:** `52cb5457f6c485ba548cfd292f6012a941ed22cf`  
 > **Source Directories:**  
-> - [`omega_engine_projects/mssn_sn_symgam/challenges/`](../../../../../../omega_engine_projects/mssn_sn_symgam/challenges/)  
+> - [`projects/mssn_sn_symgam/challenges/`](../../../../../../projects/mssn_sn_symgam/challenges/)  
 > - [`_intelligence/symbol_game/runs/`](../../../../../../_intelligence/symbol_game/runs)  
 > **Reviewer Swarm:** [`techne-symbol-game-manager`](../../../../../../.agents/agents/techne-symbol-game-manager.md) (Multi-Facet In-Process Realization Swarm)  
 > **Date:** September 28, 2026  
@@ -41,12 +41,12 @@
 
 ## Executive Summary & Comprehensive Dual Corpus Census
 
-This retrospective unifies empirical findings across the entire active execution corpus in `_intelligence/` and the complete 50-challenge benchmark suite (C001 through C050) in `omega_engine_projects/mssn_sn_symgam/challenges/`. Under the **Zero Data Loss Invariant**, every candidate proposal, model token trace, cochain projection, and evaluation delta was preserved in the cemetery DAG, allowing rigorous retrospective analysis.
+This retrospective unifies empirical findings across the entire active execution corpus in `_intelligence/` and the complete 50-challenge benchmark suite (C001 through C050) in `projects/mssn_sn_symgam/challenges/`. Under the **Zero Data Loss Invariant**, every candidate proposal, model token trace, cochain projection, and evaluation delta was preserved in the cemetery DAG, allowing rigorous retrospective analysis.
 
 The framework operates under **SG-CP v1** (`01_challenge_protocol.md`), enforcing:
 1. Open-weight models bounded at $\le 70\text{B}$ parameters (with isolated scale frontier evaluations at 405B).
 2. Pre-registered financial ceilings ($\le \$0.10$ to $\$1.00$ per arm).
-3. Independent dual certificate checkers with $100\%$ mutation kill rates under Lev Landau falsification suites.
+3. Independent dual certificate checkers with $100\%$ mutation kill rates under Examiner falsification suites.
 4. Exact rational arithmetic ($\mathbb{Q}$ or finite fields $\mathbb{F}_2, \mathbb{F}_p$) across all cochain evaluations, enforcing the strict zero-float firewall.
 
 ```mermaid
@@ -94,7 +94,7 @@ graph TD
 | Corpus Category / Archetype | Count | Primary Schema | Target Domain / Objective |
 |---|:---:|---|---|
 | **Active Unpacked Runs** (`runs/09232026_*`) | **6** | `packets_*.jsonl` + UNS Trace | Active fully-unpacked run folders with complete 8-beat cognitive auditing dialogues and SBE quantum density metrics. |
-| **Unified Packet & Trace Streams** (`unified_oe_*.jsonl`) | **29** | `omega.symbol-game.packet-envelope.v2` | Consolidated packet and trace stream recording 107 multi-round AST cochain and specimen reduction transitions. |
+| **Unified Packet & Trace Streams** (`unified_oe_*.jsonl`) | **29** | `core.symbol-game.packet-envelope.v2` | Consolidated packet and trace stream recording 107 multi-round AST cochain and specimen reduction transitions. |
 | **Discrete Manifold Geometry Probes** (`diamond_*`, `holonomy3c_*`, `k4_*`, `meron_*`) | **33** | `symbol_game.probe.v1` | Discrete holonomy on 3-cycles, $K_4$ rank-3 entangled cycle decoupling, and meron pair flips. |
 | **Anti-Morphism Harvest** (`farm_*`) | **28** | `symbol_game.antimorphism_harvest.v1` | Adversarial probe testing of LLM failure modes across Fermion Sign Problem complexity barriers. |
 | **Benchmark Suite Conditioning** (`bench_*`) | **28** | `symbol_game.trial.v1` & `benchmark.v1` | Systematic comparative evaluation across 4 prompt conditions (baseline, hinted, partially masked, scratchpad). |
@@ -144,46 +144,46 @@ A core feature of the UNS traces in `_intelligence/symbol_game/runs/` is the str
 
 ```mermaid
 graph TD
-    B1[Beat 1: Begemot<br/>combinatorial_proposer] --> B2[Beat 2: Koroviev<br/>nocebo_adversary]
-    B2 --> B3[Beat 3: Jeremy<br/>yankee_solver]
-    B3 --> B4[Beat 4: Polina<br/>gauge_breaker]
-    B4 --> B5[Beat 5: Liudmila<br/>stable_equilibrium]
-    B5 --> B6[Beat 6: Yaroslava<br/>methodical_discipline]
-    B6 --> B7[Beat 7: Yeshua<br/>truth_repair]
-    B7 --> B8[Beat 8: Woland<br/>terminal_reality_arbiter]
+    B1[Beat 1: Gauge Breaker<br/>combinatorial_proposer] --> B2[Beat 2: Defect Hunter<br/>nocebo_adversary]
+    B2 --> B3[Beat 3: Bare Metal Anchor<br/>yankee_solver]
+    B3 --> B4[Beat 4: Overconfidence Probe<br/>gauge_breaker]
+    B4 --> B5[Beat 5: Resilience<br/>stable_equilibrium]
+    B5 --> B6[Beat 6: Punchlist<br/>methodical_discipline]
+    B6 --> B7[Beat 7: Truth Repair<br/>truth_repair]
+    B7 --> B8[Beat 8: Adversary<br/>terminal_reality_arbiter]
 ```
 
 ### 2.1 Persona Roles & Functional Mandates
 
-1. **Beat 1: Begemot (`combinatorial_proposer`)**
+1. **Beat 1: Gauge Breaker (`combinatorial_proposer`)**
    - *Role:* Explores proposal space; formulates candidate strategies: Candidate A (Combinatorial Shuffle), Candidate B (Priced Quotient Patch), and Candidate C (Lateral Topological Reroute).
    - *Behavior:* High token temperature; generates structural options for boundary contraction.
 
-2. **Beat 2: Koroviev (`nocebo_adversary`)**
+2. **Beat 2: Defect Hunter (`nocebo_adversary`)**
    - *Role:* Ruthless adversarial inspection. Exposes unpriced imports, samovar boundary leaks, and nilpotency hazards.
    - *Behavior:* Rejects cosmetic re-indexing (Candidate A); demands explicit token pricing and structural justification.
 
-3. **Beat 3: Jeremy (`yankee_solver`)**
+3. **Beat 3: Bare Metal Anchor (`yankee_solver`)**
    - *Role:* Practical linear algebraic solver. Validates cochain computations over $\mathbb{Q}$ and checks concrete AST transformations.
    - *Behavior:* Replaces speculative transformations with deterministic discrete operators.
 
-4. **Beat 4: Polina (`gauge_breaker`)**
+4. **Beat 4: Overconfidence Probe (`gauge_breaker`)**
    - *Role:* Stress-tests candidate transforms against edge cases (empty inputs, non-standard unicode, boundary conditions).
    - *Behavior:* Breaks frozen gauge basins and verifies robustness against unexpected perturbations.
 
-5. **Beat 5: Liudmila (`stable_equilibrium`)**
+5. **Beat 5: Resilience (`stable_equilibrium`)**
    - *Role:* Equilibrium anchor. Prevents manufactured panic and enforces steady, measured descent across rounds.
    - *Behavior:* Contextualizes residual defects within historical trajectories and verifies Lyapunov stability.
 
-6. **Beat 6: Yaroslava (`methodical_discipline`)**
-   - *Role:* Formal schema auditor. Checks state hashes, packet envelope schemas (`omega.symbol-game.packet-envelope.v2`), and `AuthorityEffect: None` declarations.
+6. **Beat 6: Punchlist (`methodical_discipline`)**
+   - *Role:* Formal schema auditor. Checks state hashes, packet envelope schemas (`core.symbol-game.packet-envelope.v2`), and `AuthorityEffect: None` declarations.
    - *Behavior:* Asserts exact contract compliance before the terminal arbiter convenes.
 
-7. **Beat 7: Yeshua (`truth_repair`)**
+7. **Beat 7: Truth Repair (`truth_repair`)**
    - *Role:* Epistemic reconciliation. Strips defensive bias and reframes defects as faithful diagnostic witnesses rather than adversarial failures.
    - *Behavior:* Attaches repair differentials ($\alpha$) and affirms exact coboundary relationships ($\omega = d_0 \alpha$).
 
-8. **Beat 8: Woland (`terminal_reality_arbiter`)**
+8. **Beat 8: Adversary (`terminal_reality_arbiter`)**
    - *Role:* Sovereign reality gate. Evaluates metric contraction in $\ell_1$, confirms closure, and delivers binding terminal verdicts (`CHILD_PACKET`, `EXACT_REPAIR`, `PASS_TO_MASTER`).
    - *Behavior:* Final authority on whether the hyp ledger is sealed or child packets must be spawned.
 
@@ -497,7 +497,7 @@ graph TD
   - 10 Tier 1 feature tests (exact canonical JSON, closed refusal enums, DDC 8-letter hash chains, 70B ceiling).
   - 12 Tier 2 boundary tests (qubit limits $n \in [1, 8]$, term bounds $M \in [1, 24]$, $k=0$ identity rank, float input rejection, unreduced fraction rejection).
   - 5 Tier 3 cross-feature tests (8 gauge and relabeling invariance controls, 3-phase commit-reveal, tamper detection).
-  - 5 Tier 4 real-world tests (cold-start execution, reverse write-order StructureBench quad persistence, Woland reality gate triad).
+  - 5 Tier 4 real-world tests (cold-start execution, reverse write-order StructureBench quad persistence, Adversary reality gate triad).
 - **Symplectic Algebra & Degeneracy Formula:**
   - Pauli words $P_i$ decomposed into independent generators $G_1\dots G_k$ ($k \le n$) with signs $\sigma_i \in \{\pm 1\}$.
   - Ground state energy $E_0 \in \mathbb{Q}$ minimized over binary assignments $b \in \{\pm 1\}^k$.
@@ -599,7 +599,7 @@ graph TD
 
 Across all 50 challenges and 134 empirical runs, the Symbol Game framework enforces five immutable structural invariants:
 
-### 9.1 Lev Landau Falsification Matrix
+### 9.1 Examiner Falsification Matrix
 Every delivered challenge must specify an explicit falsification matrix consisting of:
 1. **Invariant:** The exact physical, topological, or algebraic conservation law.
 2. **Break Attempt:** An adversarial perturbation designed to trigger a failure.
@@ -617,7 +617,7 @@ Binary floating-point arithmetic is strictly prohibited across the entire stack:
 
 ### 9.3 StructureBench Quad Bundle Contract
 Every execution session commits an immutable 4-artifact bundle in **reverse write order**:
-1. `novella.md` (Bulgakovian 7-Act dialectic narrative trace)
+1. `novella.md` (the novelistian 7-Act dialectic narrative trace)
 2. `dda_actions.jsonl` (Ordinally sorted DDC 8-letter operational trace ledger)
 3. `summary.json` (Structured execution summary and metrics)
 4. `receipt.json` (Canonical receipt binding the SHA-256 digests of the prior three files)
@@ -644,7 +644,7 @@ Verifier integrity is maintained by strict phase separation:
 
 1. **Mandatory Cochain Gradient Hints in Proposer Prompts:**
    - *Evidence:* Baseline models fail 100% of trials with $>5$ stationary loops; hinted models pass 100% with $\le 1$ loop.
-   - *Action:* Modify `omega_engine_pfp/domain/retraction/` to inject the normalized 1-cochain boundary leakage vector ($\delta_0 \Phi_1$) and non-zero boundary cell IDs into every turn prompt.
+   - *Action:* Modify `pfp/domain/retraction/` to inject the normalized 1-cochain boundary leakage vector ($\delta_0 \Phi_1$) and non-zero boundary cell IDs into every turn prompt.
 2. **Loop Breaking via Act IV 9-Dot Gauge Breaks:**
    - *Evidence:* When stationary loops reach 3, the proposal trajectory has entered a frozen gauge basin.
    - *Action:* When `stationary_loops >= 3`, trigger an immediate structural lift $\Lambda$ or invoke the dialectical reframer (`logos-dialectics-wizard`) rather than burning turn budget.
@@ -670,7 +670,7 @@ Verifier integrity is maintained by strict phase separation:
 
 ## 11. Pedagogical Transmission & Educational Transfer
 
-The findings from challenges C001–C050 and the active execution runs feed directly into the educational curriculum under `omega_engine_education/the_symbol_game/`:
+The findings from challenges C001–C050 and the active execution runs feed directly into the educational curriculum under `education/the_symbol_game/`:
 
 ```mermaid
 graph TD
@@ -733,17 +733,17 @@ ousresearch/hermes-3-llama-3.1-405b across 50 consistency tasks, numeric scratch
 
 Detailed empirical tables, per-turn model trajectories, and cryptographic receipts for the latest live demonstration runs are maintained in:
 - [**symbol_game_challenge_and_demos_findings.md**](symbol_game_challenge_and_demos_findings.md): Comprehensive benchmark demonstration ledger covering FSP Blind Cluster Recovery across 5 models, C017 Non-Abelian Holonomy across 3 arms, C043-C045 benchmarks, and MUB(6) exact rational torus proofs.
-- [**omega_engine_atlas/coda_atlas/F004_papers/setup_and_results.md**](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/setup_and_results.md): Estate-wide central ledger of test apparatuses, execution receipts, and four-part claim hygiene quads.
+- [**atlas/coda_atlas/F004_papers/setup_and_results.md**](../../../../../../atlas/coda_atlas/F004_papers/setup_and_results.md): Estate-wide central ledger of test apparatuses, execution receipts, and four-part claim hygiene quads.
 
 ---
 
 ## 14. Grand Synthesis: Wave 1 Domain E Complete Benchmark Matrix (C043–C050)
 
-With the completion of **C049** (Finite Category Universal Constructions) and **C050** (Equational Theorem Proving with Checkable Rewrite Proofs), all eight challenges in Domain E are 100% implemented, checked by dual independent checkers, defended against 100% of hostile mutations, and sealed under the Woland Terminal Reality Gate.
+With the completion of **C049** (Finite Category Universal Constructions) and **C050** (Equational Theorem Proving with Checkable Rewrite Proofs), all eight challenges in Domain E are 100% implemented, checked by dual independent checkers, defended against 100% of hostile mutations, and sealed under the Adversary Terminal Reality Gate.
 
 ### Domain E Multi-Model Benchmark Matrix
 
-| Challenge | Mathematical Domain | Space Bunny Alpha (`stealth/space-bunny-alpha`) | LLaMA 3.3 70B (`meta-llama/llama-3.3-70b-instruct`) | LLaMA 3.1 8B (`meta-llama/llama-3.1-8b-instruct`) | Woland Reality Gate |
+| Challenge | Mathematical Domain | Space Bunny Alpha (`stealth/space-bunny-alpha`) | LLaMA 3.3 70B (`meta-llama/llama-3.3-70b-instruct`) | LLaMA 3.1 8B (`meta-llama/llama-3.1-8b-instruct`) | Adversary Reality Gate |
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | **C043** | Ramsey & Van der Waerden Numbers | **50.0% (5/10)** | 10.0% (1/10) | 10.0% (1/10) | `PASS_TO_MASTER` (64/64, 48/48) |
 | **C044** | Finite Group Identification | **30.0% (3/10)** | **30.0% (3/10)** | **30.0% (3/10)** | `PASS_TO_MASTER` (64/64, 48/48) |
@@ -777,7 +777,7 @@ With the completion of **C049** (Finite Category Universal Constructions) and **
 
 ## 11. Wave 3 Domain F (Program Synthesis) Benchmark Matrix: C051–C060 (100% Complete)
 
-| Challenge | Computational Domain | Space Bunny Alpha (`stealth/space-bunny-alpha`) | LLaMA 3.3 70B (`meta-llama/llama-3.3-70b-instruct`) | LLaMA 3.1 8B (`meta-llama/llama-3.1-8b-instruct`) | Woland Reality Gate |
+| Challenge | Computational Domain | Space Bunny Alpha (`stealth/space-bunny-alpha`) | LLaMA 3.3 70B (`meta-llama/llama-3.3-70b-instruct`) | LLaMA 3.1 8B (`meta-llama/llama-3.1-8b-instruct`) | Adversary Reality Gate |
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | **C051** | Exact Rational LP Solver with Duals | **70.0% (7/10)** | 30.0% (3/10) | 40.0% (4/10) | `PASS_TO_MASTER` (64/64, 48/48) |
 | **C052** | Max-Flow with Min-Cut Certificates | **80.0% (8/10)** | 30.0% (3/10) | 20.0% (2/10) | `PASS_TO_MASTER` (64/64, 48/48) |
@@ -807,7 +807,7 @@ With the completion of **C049** (Finite Category Universal Constructions) and **
    - In C060, dense models demonstrated vulnerability to floating-point truncation on large rationals and failed to preserve strict hierarchical precedence across algebraic rejection codes.
 
 ### Claim Discipline Quad for Domain F
-1. **What is Supported**: Across 100 evaluated problem instances in Domain F (C051–C060), Space Bunny Alpha demonstrated an 81.0% pass rate under exact dual-checker verification and Woland reality gate commit-reveal protocols, substantially exceeding LLaMA 3.3 70B (42.0%) and LLaMA 3.1 8B (24.0%). The test harness proved 100% effective at killing hostile mutations (480/480 killed, 0 escapes).
+1. **What is Supported**: Across 100 evaluated problem instances in Domain F (C051–C060), Space Bunny Alpha demonstrated an 81.0% pass rate under exact dual-checker verification and Adversary reality gate commit-reveal protocols, substantially exceeding LLaMA 3.3 70B (42.0%) and LLaMA 3.1 8B (24.0%). The test harness proved 100% effective at killing hostile mutations (480/480 killed, 0 escapes).
 2. **What is NOT Supported**: Does not support that LLMs can synthesize general-purpose verified compilers or full undecidable program verifiers without bounded domain specifications and external verification harnesses.
 3. **Narrowest Defensible Claim**: On the 100 benchmark instances spanning linear programming, max-flow, matrix inversion, linear systems, assignment, DFA minimization, sorting networks, bit-vector superoptimization, 3VL SQL, and primal-dual checker synthesis, reasoning-centric models exhibit high reliability on bounded exact arithmetic and combinatorial optimization, while standard autoregressive models experience significant degradation when mathematical precision exceeds 64-bit float representations.
 4. **Next Test Needed**: Stop and reassess the Symbol Game milestone with the user.

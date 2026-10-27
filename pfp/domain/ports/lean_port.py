@@ -7,11 +7,11 @@ from __future__ import annotations
 
 from typing import Any, Protocol
 
-from omega_engine_pfp.domain.lean_bridge.models import (
+from pfp.domain.lean_bridge.models import (
     LeanVerificationReceipt,
     LeanVerificationRequest,
 )
-from omega_engine_pfp.domain.shared_kernel.result import Result
+from pfp.domain.shared_kernel.result import Result
 
 
 class LeanVerifierPort(Protocol):

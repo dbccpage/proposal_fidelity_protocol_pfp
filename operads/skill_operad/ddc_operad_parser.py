@@ -18,7 +18,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 try:
     from .coloured_operad import Colour, ColouredOperad, Operation
@@ -201,7 +201,7 @@ class DdcOperadParser:
                 Refusal(
                     code="EMPTY_DDC_TAPE",
                     message="DDC tape contains zero action records",
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
             )
 
@@ -303,7 +303,7 @@ class DdcOperadParser:
                 Refusal(
                     code="EVIDENCE_EXPORT_ERROR",
                     message=f"Failed to export evidence receipt to {dest}: {exc}",
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
             )
 
@@ -337,7 +337,7 @@ class DdcOperadParser:
                         f"residual is {receipt.terminal_residual} != 0 (actual measured effect is '{receipt.residual_effect}'). "
                         "An exact residual_effect requires Delta_T = 0."
                     ),
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
             )
 
@@ -349,7 +349,7 @@ class DdcOperadParser:
                         f"Refusing registration for '{skill_id}': expected residual_effect '{expected_residual_effect}' "
                         f"does not match measured '{receipt.residual_effect}'."
                     ),
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
             )
 
@@ -380,7 +380,7 @@ class DdcOperadParser:
                 Refusal(
                     code="OPERAD_SIGNATURE_NOT_FOUND",
                     message=f"operad_signature.json not found at {sig_path}",
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
             )
 
@@ -451,7 +451,7 @@ class DdcOperadParser:
                             f"Refusing false exactness claim for existing operation '{skill_id}': signature claims 'exact', "
                             f"but measured terminal residual is {receipt.terminal_residual} != 0 (actual effect: '{effective_effect}')."
                         ),
-                        locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                        locus="operads.skill_operad.ddc_operad_parser",
                     )
                 )
             if found_op.get("residual_effect") != effective_effect:
@@ -502,13 +502,13 @@ class DdcOperadParser:
                     return [], Refusal(
                         code="INVALID_TAPE_LINE",
                         message=f"Line {line_no} is not a valid JSON object: {exc}",
-                        locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                        locus="operads.skill_operad.ddc_operad_parser",
                     )
                 if not isinstance(record, dict):
                     return [], Refusal(
                         code="INVALID_TAPE_LINE",
                         message=f"Line {line_no} is not a valid JSON object",
-                        locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                        locus="operads.skill_operad.ddc_operad_parser",
                     )
                 records.append(record)
             return records, None
@@ -521,7 +521,7 @@ class DdcOperadParser:
                 return [], Refusal(
                     code="TAPE_NOT_FOUND",
                     message=f"No ddc.jsonl or dda_actions.jsonl found in directory: {path}",
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
             path = found
 
@@ -532,7 +532,7 @@ class DdcOperadParser:
             return [], Refusal(
                 code="TAPE_FILE_NOT_FOUND",
                 message=f"DDC tape file does not exist: {path}",
-                locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                locus="operads.skill_operad.ddc_operad_parser",
             )
 
         try:
@@ -546,7 +546,7 @@ class DdcOperadParser:
                     return [], Refusal(
                         code="INVALID_TAPE_LINE",
                         message=f"Line {line_no} is not a valid JSON object",
-                        locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                        locus="operads.skill_operad.ddc_operad_parser",
                     )
                 records.append(record)
             return records, None
@@ -554,7 +554,7 @@ class DdcOperadParser:
             return [], Refusal(
                 code="TAPE_READ_ERROR",
                 message=f"Failed to read DDC tape: {exc}",
-                locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                locus="operads.skill_operad.ddc_operad_parser",
             )
 
     def _parse_and_validate_hash_chain(
@@ -572,7 +572,7 @@ class DdcOperadParser:
                 return False, Refusal(
                     code="MALFORMED_PAYLOAD",
                     message=f"Step {seq} payload is not a record",
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
 
             # Sequence continuity
@@ -580,7 +580,7 @@ class DdcOperadParser:
                 return False, Refusal(
                     code="SEQUENCE_MISMATCH",
                     message=f"Step {seq} declared sequence={record_seq}",
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
 
             # Parent hash continuity
@@ -588,7 +588,7 @@ class DdcOperadParser:
                 return False, Refusal(
                     code="HASH_CHAIN_BROKEN",
                     message=f"Step {seq} parent_sha256={parent_sha256!r} does not match expected {expected_parent!r}",
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
 
             # Verify cryptographic digest of material
@@ -606,7 +606,7 @@ class DdcOperadParser:
                 return False, Refusal(
                     code="RECORD_DIGEST_MISMATCH",
                     message=f"Step {seq} record_sha256={record_sha256} != computed {computed_sha}",
-                    locus="omega_engine_operads.skill_operad.ddc_operad_parser",
+                    locus="operads.skill_operad.ddc_operad_parser",
                 )
 
             raw_letter = str(payload.get("letter", "")).strip()

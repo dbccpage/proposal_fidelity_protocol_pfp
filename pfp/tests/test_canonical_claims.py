@@ -17,11 +17,11 @@ import json
 from pathlib import Path
 import pytest
 
-from omega_engine_operations.domain.benchmarks.ablation import (
+from operations.domain.benchmarks.ablation import (
     canonical_rfc8785_json,
     sorted_compact_json,
 )
-from omega_engine_operations.domain.benchmarks.models import (
+from operations.domain.benchmarks.models import (
     canonical_rfc8785_json as models_canonical_rfc8785_json,
     sorted_compact_json as models_sorted_compact_json,
 )
@@ -60,7 +60,7 @@ def test_utf16_vs_unicode_codepoint_sorting_distinction():
     # In contrast, true RFC 8785 JCS (as implemented in Rust) places the emoji first.
     # This test asserts that the docstrings honestly record this difference.
     assert "UTF-16" in sorted_compact_json.__doc__
-    assert "omega_symbol_game_runtime::jcs" in sorted_compact_json.__doc__
+    assert "core_symbol_game_runtime::jcs" in sorted_compact_json.__doc__
 
 
 def test_claim_hygiene_across_benchmark_modules():

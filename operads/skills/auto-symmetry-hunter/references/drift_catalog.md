@@ -75,11 +75,11 @@ Any violation is `DANGEROUS_DRIFT` or `CONTRADICTION`.
 
 ```text
 Blackrod                      = enforcement
-Woland                        = adversarial revelation
+Adversary                        = adversarial revelation
 VP Engineering                = engineering diagnosis
 SVP SADC                      = council decision
-Techne Code Soviet Inspector  = test-quality veto        (evaluator)
-Techne Code Soviet Builder    = NO authority             (producer)
+Techne Code Inspector  = test-quality veto        (evaluator)
+Techne Code Builder    = NO authority             (producer)
 techne-code-contracts-adversary = code-hygiene evaluator (ACCEPT is a proposal)
 techne-code-contracts-improver  = NO authority           (producer)
 techne-code-{rust,python}-code-reviewer      = evaluator (holds VETO)
@@ -103,11 +103,11 @@ patches what it reviews, or when an edit grants a producer a veto. Flag
 
 ### 5. Build Policy Invariant
 
-For omega_engine:
+For engine:
 
 ```text
 Linux/CI is canonical build target.
-Do not compile omega_engine on Windows unless explicitly requested.
+Do not compile engine on Windows unless explicitly requested.
 If requested, use single-threaded cargo check/test (-j 1).
 No toolchain channel is pinned: a skill that hardcodes `+nightly` or
 `+stable` contradicts CLAUDE.md SAGA-26 S3 and is a STALE_RULE.
@@ -179,7 +179,7 @@ compliance §0 firewall count ≠ wizard universal list length     → STALE_RUL
 domain managers that touch Python without wizard #14 / PROD cite → MISSING_PROPAGATION
 LLM YAML `nine_certificate_conditions_satisfied: true` treated as evidence
   without host Up-Lift auditor                                        → AUTHORITY_COLLISION
-panepistimion-cs-ml-prof-symbol-games / omega-lggr-qmcoda missing 007
+panepistimion-cs-ml-prof-symbol-games / core-lggr-qmcoda missing 007
   mss_reconstruction_spine entry when QMCODA is in scope              → MISSING_PROPAGATION
 programme folder without readme map after multi-artifact bloom        → MISSING_PROPAGATION
 Paper 005 runtime + 020 auditor + MSS-N genesis compressed into one
@@ -199,7 +199,7 @@ SPK-006 host checker without adversarial regressions for intro-kind,
 GTLA term paper missing §5b primitives box or §5c claim_ledger/change_log      → MISSING_PROPAGATION
 Abstract “proves” while body labels Conjecture / Status “not proved”             → DANGEROUS_DRIFT
 Legacy `*_ledger.md` dual-live with `*_claim_ledger.md`                          → CLAIM_LEDGER_DRIFT
-Paper claims ACCEPT without ENC ownership and no `/omega-math-dev` handoff       → MISSING_PROPAGATION
+Paper claims ACCEPT without ENC ownership and no `/core-math-dev` handoff       → MISSING_PROPAGATION
 Mint ENC id from registry tail only (ignore on-disk enc-* max)                   → DANGEROUS_DRIFT
 paper-repair packaging PASS sold as CODA_CHECK_PASSED / MECHANIZED / lake green     → AUTHORITY_COLLISION
 Lean path-bound sold as LEAN_BUILD_GREEN when lakefile roots ≠ cited stems         → DANGEROUS_DRIFT
@@ -209,7 +209,7 @@ skill host package-count lag (e.g. .grok 30 vs .agents 61) after mirror-all orde
 DEFAULT_SKILLS-only sync sold as full all-host garden mirror                          → DANGEROUS_DRIFT
 paper-repair pilot path `006_symbol_game_foundations.md` (missing) treated as live → STALE_RULE
 P3 / SG monograph nested-only path when flat `007_the_symbol_game_monograph.md` lives → STALE_RULE
-archive park of research/omega_sweeper sold as T4 product-rail delete/replace         → AUTHORITY_COLLISION
+archive park of research/core_sweeper sold as T4 product-rail delete/replace         → AUTHORITY_COLLISION
 paper Date bump without claim_ledger Date alignment (DATE_MISMATCH left open)         → MISSING_PROPAGATION
 SciSpace/v001 wrappers prompt used after v002 exists without fence note                 → STALE_RULE
 SciSpace harvest abstracts sold as PROVED / MECHANIZED / GlobalGreen                    → AUTHORITY_COLLISION
@@ -254,7 +254,7 @@ AUTHORITY_COLLISION — packaging residual sold as GlobalGreen or authority mint
 
 **Relation to governance-wdp:** that skill owns Primitive Difference honesty and no-view-from-nowhere scans. Symmetry-hunter owns **cross-artifact** agreement that the inventory slots and fences appear consistently across paper family skills, ledgers, and estate tools. Prefer **route + reference**, not duplicate the hunter checklist.
 
-**Omega-as-algorithm posture (interpretive, non-authority):** the stack is steered toward a **replayable packet machine** (declared slots → solve/terminalize → residual) so operators can vary signs/laws and compare engines. That is a research posture, not a license to mint continuum QM or authority. LGGR + Q + CODA packaging serves that posture when slots are explicit and flipable.
+**Core-as-algorithm posture (interpretive, non-authority):** the stack is steered toward a **replayable packet machine** (declared slots → solve/terminalize → residual) so operators can vary signs/laws and compare engines. That is a research posture, not a license to mint continuum QM or authority. LGGR + Q + CODA packaging serves that posture when slots are explicit and flipable.
 
 
 ## Cross-host packaging patterns (detail)
@@ -288,5 +288,5 @@ During audit sweeps across preprints, papers, council documents, and skill files
    - Detect any inconsistencies or non-invariant patterns that warrant new rule candidates for `rules.yaml`.
 2. **Mandatory Blackrod Investigation Logging (`RULE_DEFECT_INVESTIGATION_LOGGING_001`):**
    - Whenever non-invariant content, misspellings, LLM slop, or contract/symmetry inconsistencies are discovered, automatically log a formal investigation report under:
-     `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{skill_name}_{defect_id}.md`
+     `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{skill_name}_{defect_id}.md`
    - Detail the defect context, affected file paths, root cause analysis, and proposed `rules.yaml` additions or workflow remediations.

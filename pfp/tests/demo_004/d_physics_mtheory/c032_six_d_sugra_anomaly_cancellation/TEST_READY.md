@@ -7,11 +7,11 @@
 ## Test Commands (Local Sequential Execution)
 ```bash
 # 1. Participant Packet & Reference Solver
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_participant_packet.py omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_reference_solver.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_participant_packet.py projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_reference_solver.py -v
 
 # 2. Dual Checkers & Mutation Suite
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_dual_checkers.py omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/judge_packet/mutation_suite/test_checker_mutations.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_dual_checkers.py projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/judge_packet/mutation_suite/test_checker_mutations.py -v
 
 # 3. Governance & E2E Integration
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_governance_and_commit_reveal.py omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_e2e_challenge.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_governance_and_commit_reveal.py projects/mssn_sn_symgam/challenges/d_physics_mtheory/c032_six_d_sugra_anomaly_cancellation/tests/test_e2e_challenge.py -v
 ```

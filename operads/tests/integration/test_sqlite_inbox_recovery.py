@@ -10,19 +10,19 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_operads.domain.entities.catalog_v3 import EstateCatalogV3
-from omega_engine_operads.domain.errors.domain_errors import DomainInvariantError
-from omega_engine_operads.domain.events.domain_events import EstateCapturedV3
-from omega_engine_operads.domain.value_objects.content_digest import ContentDigest
-from omega_engine_operads.domain.value_objects.identifier import EstateRef
-from omega_engine_operads.infrastructure.storage.outbox_dispatcher import (
+from operations.domain.rop.result import Err, Ok
+from operads.domain.entities.catalog_v3 import EstateCatalogV3
+from operads.domain.errors.domain_errors import DomainInvariantError
+from operads.domain.events.domain_events import EstateCapturedV3
+from operads.domain.value_objects.content_digest import ContentDigest
+from operads.domain.value_objects.identifier import EstateRef
+from operads.infrastructure.storage.outbox_dispatcher import (
     OutboxMessageDispatcher,
 )
-from omega_engine_operads.infrastructure.storage.sqlite_inbox_subscriber import (
+from operads.infrastructure.storage.sqlite_inbox_subscriber import (
     SqliteInboxSubscriber,
 )
-from omega_engine_operads.infrastructure.storage.sqlite_unit_of_work import (
+from operads.infrastructure.storage.sqlite_unit_of_work import (
     SqliteUnitOfWork,
 )
 
@@ -253,9 +253,9 @@ def seed_outbox(path, *, document_count=0):
 CRASH_WORKER = r"""
 import os
 import sys
-from omega_engine_operads.infrastructure.storage.outbox_dispatcher import OutboxMessageDispatcher
-from omega_engine_operads.infrastructure.storage.sqlite_inbox_subscriber import SqliteInboxSubscriber
-from omega_engine_operads.infrastructure.storage.sqlite_unit_of_work import SqliteUnitOfWork
+from operads.infrastructure.storage.outbox_dispatcher import OutboxMessageDispatcher
+from operads.infrastructure.storage.sqlite_inbox_subscriber import SqliteInboxSubscriber
+from operads.infrastructure.storage.sqlite_unit_of_work import SqliteUnitOfWork
 
 path, phase = sys.argv[1:]
 def local_effect(connection, event):

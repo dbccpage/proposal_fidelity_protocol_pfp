@@ -1,7 +1,7 @@
 """Adversarial Stress-Test Harness for Milestone 3 Governance and Commit-Reveal.
 
 Challenger 1 (Milestone 3 - C021 Q40-R Stabilizer Challenge).
-Empirically stress-tests commit_reveal_runner.py and woland_gate.py against:
+Empirically stress-tests commit_reveal_runner.py and adversary_gate.py against:
 1. Manifest and Case File Tampering:
    - Modification of bytes in judge_packet/manifest.json (timestamp, counts, file hashes).
    - Modification of bytes in individual judge case files (semantic changes vs syntax corruption).
@@ -16,8 +16,8 @@ Empirically stress-tests commit_reveal_runner.py and woland_gate.py against:
    - Invocation of Phase 3 (Reveal and Score) without Phase 1 and Phase 2.
    - Invocation of Phase 3 with Phase 1 present but Phase 2 missing.
    - Invocation of Phase 3 with Phase 2 present but Phase 1 missing.
-4. Collision Protection in woland_gate.py:
-   - Persisting run bundle to existing task_key in _intelligence/_woland/runs/.
+4. Collision Protection in adversary_gate.py:
+   - Persisting run bundle to existing task_key in _intelligence/_adversary/runs/.
    - Persisting run bundle to existing run_id in _intelligence/symbol_game/runs/.
    - Direct persist_single_bundle invocation against existing target directory.
    - Verifying existing run bundles remain byte-for-byte intact upon collision rejection.
@@ -43,15 +43,15 @@ import shutil
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
     CommitRevealRunner,
     sha256_of_file,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.adversary_gate import (
     RUN_FOLDER_EXISTS,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
     persist_single_bundle,
 )
 
@@ -328,16 +328,16 @@ class TestOutOfOrderExecution:
 
 
 # ============================================================================
-# Suite 4: Collision Protection in woland_gate.py
+# Suite 4: Collision Protection in adversary_gate.py
 # ============================================================================
 
 
-class TestWolandGateCollisionProtection:
+class TestAdversaryGateCollisionProtection:
     """Adversarial suite verifying RUN_FOLDER_EXISTS collision protection."""
 
-    def test_woland_gate_task_key_collision_raises(self, tmp_path: Path) -> None:
-        """Attempting to persist a bundle when the Woland task directory exists must fail."""
-        gate = WolandGate(base_repo_root=tmp_path)
+    def test_adversary_gate_task_key_collision_raises(self, tmp_path: Path) -> None:
+        """Attempting to persist a bundle when the Adversary task directory exists must fail."""
+        gate = AdversaryGate(base_repo_root=tmp_path)
         cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
         claim = {
             "supports": "s",
@@ -363,11 +363,11 @@ class TestWolandGateCollisionProtection:
                 claim_hygiene=claim,
             )
         assert exc_info.value.code == RUN_FOLDER_EXISTS
-        assert "Woland run directory already exists" in str(exc_info.value)
+        assert "Adversary run directory already exists" in str(exc_info.value)
 
-    def test_woland_gate_run_id_collision_raises(self, tmp_path: Path) -> None:
+    def test_adversary_gate_run_id_collision_raises(self, tmp_path: Path) -> None:
         """Attempting to persist a bundle when the Symbol Game run directory exists must fail."""
-        gate = WolandGate(base_repo_root=tmp_path)
+        gate = AdversaryGate(base_repo_root=tmp_path)
         cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
         claim = {
             "supports": "s",
@@ -412,7 +412,7 @@ class TestWolandGateCollisionProtection:
 
     def test_collision_leaves_existing_files_intact(self, tmp_path: Path) -> None:
         """Assert that an aborted collision attempt leaves pre-existing bundle files untouched."""
-        gate = WolandGate(base_repo_root=tmp_path)
+        gate = AdversaryGate(base_repo_root=tmp_path)
         cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
         claim = {
             "supports": "s",
@@ -421,7 +421,7 @@ class TestWolandGateCollisionProtection:
             "next_test_needed": "t",
         }
 
-        _, path_woland, _, _ = gate.evaluate_and_persist(
+        _, path_adversary, _, _ = gate.evaluate_and_persist(
             task_key="intact_check_task",
             run_id="intact_check_run",
             case_results=cases,
@@ -429,8 +429,8 @@ class TestWolandGateCollisionProtection:
         )
 
         # Snapshot receipts
-        receipt_before = (path_woland / "receipt.json").read_bytes()
-        novella_before = (path_woland / "novella.md").read_bytes()
+        receipt_before = (path_adversary / "receipt.json").read_bytes()
+        novella_before = (path_adversary / "novella.md").read_bytes()
 
         # Trigger collision
         with pytest.raises(RunFolderExistsError):
@@ -442,13 +442,13 @@ class TestWolandGateCollisionProtection:
             )
 
         # Assert no corruption or truncation occurred
-        assert (path_woland / "receipt.json").read_bytes() == receipt_before
-        assert (path_woland / "novella.md").read_bytes() == novella_before
+        assert (path_adversary / "receipt.json").read_bytes() == receipt_before
+        assert (path_adversary / "novella.md").read_bytes() == novella_before
 
     def test_no_temp_directory_leakage_on_collision(self, tmp_path: Path) -> None:
         """Verifies that no hidden temporary directories (.task_key.*) remain in the parent."""
-        runs_parent = tmp_path / "_intelligence" / "_woland" / "runs"
-        gate = WolandGate(base_repo_root=tmp_path)
+        runs_parent = tmp_path / "_intelligence" / "_adversary" / "runs"
+        gate = AdversaryGate(base_repo_root=tmp_path)
         cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
         claim = {
             "supports": "s",
@@ -487,7 +487,7 @@ class TestStructureBenchReverseWriteOrder:
 
     def test_altering_novella_breaks_receipt_binding(self, tmp_path: Path) -> None:
         """Altering novella.md post-hoc must invalidate the digest stored in receipt.json."""
-        gate = WolandGate(base_repo_root=tmp_path)
+        gate = AdversaryGate(base_repo_root=tmp_path)
         cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
         claim = {
             "supports": "s",
@@ -496,15 +496,15 @@ class TestStructureBenchReverseWriteOrder:
             "next_test_needed": "t",
         }
 
-        _, path_woland, _, digests = gate.evaluate_and_persist(
+        _, path_adversary, _, digests = gate.evaluate_and_persist(
             task_key="reverse_order_novella",
             run_id="reverse_order_novella_run",
             case_results=cases,
             claim_hygiene=claim,
         )
 
-        novella_file = path_woland / "novella.md"
-        receipt_file = path_woland / "receipt.json"
+        novella_file = path_adversary / "novella.md"
+        receipt_file = path_adversary / "receipt.json"
         receipt_data = json.loads(receipt_file.read_text(encoding="utf-8"))
 
         # Verify initial binding matches
@@ -521,7 +521,7 @@ class TestStructureBenchReverseWriteOrder:
 
     def test_altering_dda_actions_breaks_receipt_binding(self, tmp_path: Path) -> None:
         """Altering dda_actions.jsonl post-hoc must invalidate the digest stored in receipt.json."""
-        gate = WolandGate(base_repo_root=tmp_path)
+        gate = AdversaryGate(base_repo_root=tmp_path)
         cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
         claim = {
             "supports": "s",
@@ -530,15 +530,15 @@ class TestStructureBenchReverseWriteOrder:
             "next_test_needed": "t",
         }
 
-        _, path_woland, _, digests = gate.evaluate_and_persist(
+        _, path_adversary, _, digests = gate.evaluate_and_persist(
             task_key="reverse_order_dda",
             run_id="reverse_order_dda_run",
             case_results=cases,
             claim_hygiene=claim,
         )
 
-        dda_file = path_woland / "dda_actions.jsonl"
-        receipt_file = path_woland / "receipt.json"
+        dda_file = path_adversary / "dda_actions.jsonl"
+        receipt_file = path_adversary / "receipt.json"
         receipt_data = json.loads(receipt_file.read_text(encoding="utf-8"))
 
         # Tamper dda_actions.jsonl
@@ -558,7 +558,7 @@ class TestStructureBenchReverseWriteOrder:
         Counterexample (old tape): eight rows whose metadata were constants such as
         "verified": True. The tape now holds three rows of measured values.
         """
-        gate = WolandGate(base_repo_root=tmp_path)
+        gate = AdversaryGate(base_repo_root=tmp_path)
         cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
         claim = {
             "supports": "s",
@@ -567,14 +567,14 @@ class TestStructureBenchReverseWriteOrder:
             "next_test_needed": "t",
         }
 
-        _, path_woland, _, _ = gate.evaluate_and_persist(
+        _, path_adversary, _, _ = gate.evaluate_and_persist(
             task_key="hash_chain_test",
             run_id="hash_chain_run",
             case_results=cases,
             claim_hygiene=claim,
         )
 
-        dda_file = path_woland / "dda_actions.jsonl"
+        dda_file = path_adversary / "dda_actions.jsonl"
         lines = dda_file.read_text(encoding="utf-8").splitlines()
         assert len(lines) == 3  # intake, scoring, label: measured values only
         assert (
@@ -621,7 +621,7 @@ class TestStructureBenchReverseWriteOrder:
 
     def test_altering_summary_breaks_receipt_binding(self, tmp_path: Path) -> None:
         """Altering summary.json post-hoc must invalidate the digest stored in receipt.json."""
-        gate = WolandGate(base_repo_root=tmp_path)
+        gate = AdversaryGate(base_repo_root=tmp_path)
         cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
         claim = {
             "supports": "s",
@@ -630,15 +630,15 @@ class TestStructureBenchReverseWriteOrder:
             "next_test_needed": "t",
         }
 
-        _, path_woland, _, _ = gate.evaluate_and_persist(
+        _, path_adversary, _, _ = gate.evaluate_and_persist(
             task_key="reverse_order_summary",
             run_id="reverse_order_summary_run",
             case_results=cases,
             claim_hygiene=claim,
         )
 
-        summary_file = path_woland / "summary.json"
-        receipt_file = path_woland / "receipt.json"
+        summary_file = path_adversary / "summary.json"
+        receipt_file = path_adversary / "receipt.json"
         receipt_data = json.loads(receipt_file.read_text(encoding="utf-8"))
 
         # Tamper summary.json
@@ -649,16 +649,16 @@ class TestStructureBenchReverseWriteOrder:
         assert sha256_of_file(summary_file) != receipt_data["summary_sha256"]
 
     def test_scoring_receipt_binds_receipt_sha256(self, tmp_path: Path) -> None:
-        """Phase 3 scoring receipt must bind receipt_sha256 of the Woland bundle."""
+        """Phase 3 scoring receipt must bind receipt_sha256 of the Adversary bundle."""
         dest_challenge, runner = _setup_isolated_challenge(tmp_path)
         runner.run_phase1_judge_commitment()
         runner.run_phase2_freeze_record()
         scoring_receipt = runner.run_phase3_reveal_and_score(task_key="test_scoring_binds_receipt")
 
-        woland_info = scoring_receipt["woland_reality_gate"]
-        woland_dir = Path(woland_info["woland_run_folder"])
-        receipt_file = woland_dir / "receipt.json"
+        adversary_info = scoring_receipt["adversary_reality_gate"]
+        adversary_dir = Path(adversary_info["adversary_run_folder"])
+        receipt_file = adversary_dir / "receipt.json"
 
         assert receipt_file.exists()
         actual_receipt_sha = sha256_of_file(receipt_file)
-        assert actual_receipt_sha == woland_info["receipt_sha256"]
+        assert actual_receipt_sha == adversary_info["receipt_sha256"]

@@ -56,8 +56,8 @@ commit `a623568eb0f853b968bc419bf06dfc6af256ab02`. Paper ID PO-008.
                                                                                                                                                                                                                                      general sheaf
                                                                                                                                                                                                                                      gluing theorem.
 
-  PFP008-08         The baseline audit         [Audit source](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/use_cases/level_engine/lean_audit.py); [mocked       Baseline
-                    requires a matching build  custody tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/tests/level_engine/test_lean.py)                     publication race
+  PFP008-08         The baseline audit         [Audit source](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/use_cases/level_engine/lean_audit.py); [mocked       Baseline
+                    requires a matching build  custody tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/tests/level_engine/test_lean.py)                     publication race
                     and generator-declared                                                                                                                                                                                           reproduced with
                     axiom census; the local                                                                                                                                                                                          mocked Lean and
                     correction also carries                                                                                                                                                                                          corrected in the
@@ -70,14 +70,14 @@ commit `a623568eb0f853b968bc419bf06dfc6af256ab02`. Paper ID PO-008.
                                                                                                                                                                                                                                      Quot.sound.
 
   PFP008-09         Historical reads use       [Resolver                                                                                                                                                                             Optional digest
-                    pinned Git blobs; active   source](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/infrastructure/tower_evidence/level_engine/resolver.py);   must be supplied
-                    reads use v2 package       [focused tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/tests/level_engine/test_evidence_resolver.py)       for hash
+                    pinned Git blobs; active   source](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/infrastructure/tower_evidence/level_engine/resolver.py);   must be supplied
+                    reads use v2 package       [focused tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/tests/level_engine/test_evidence_resolver.py)       for hash
                     resources, with no                                                                                                                                                                                               comparison; byte
                     fallback between them.                                                                                                                                                                                           identity alone is
                                                                                                                                                                                                                                      not scientific
                                                                                                                                                                                                                                      validation.
 
-  PFP008-10         Historical 150/150 labels  [Runner](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_projects/mssn_sn_symgam/challenges/run_150_tests_suite.py) assigns    Aggregate PASS or
+  PFP008-10         Historical 150/150 labels  [Runner](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/projects/mssn_sn_symgam/challenges/run_150_tests_suite.py) assigns    Aggregate PASS or
                     are insufficient as        VERIFIED on some missing receipts and exceptions                                                                                                                                      VERIFIED count
                     scientific success                                                                                                                                                                                               does not
                     evidence.                                                                                                                                                                                                        establish actual
@@ -306,9 +306,9 @@ Lean 4.34.0, on 2026-09-28. Each exited with status 0.
 
   `py -3.12 -m pytest research/mssn_sn_tower/code/python/tests/test_mssn_grammar.py`                                                              Grammar                 57 passed
 
-  `py -3.12 -m pytest omega_engine_operations/tests/level_engine/test_evidence_resolver.py`                                                       Resolver                10 passed
+  `py -3.12 -m pytest operations/tests/level_engine/test_evidence_resolver.py`                                                       Resolver                10 passed
 
-  `py -3.12 -m pytest omega_engine_operations/tests/level_engine/test_lean.py`                                                                    Custody control logic   11 passed
+  `py -3.12 -m pytest operations/tests/level_engine/test_lean.py`                                                                    Custody control logic   11 passed
                                                                                                                                                   with fake Lean
                                                                                                                                                   responses
 
@@ -324,7 +324,7 @@ Lean 4.34.0, on 2026-09-28. Each exited with status 0.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Here `<package>` is this package's folder, `<challenges>` is
-`omega_engine_projects/mssn_sn_symgam/challenges`, and `<scratch>` is an
+`projects/mssn_sn_symgam/challenges`, and `<scratch>` is an
 untracked scratch directory. Every pytest command also used
 `-p no:cacheprovider` and a scratch `--basetemp`, one file per command.
 The source-bound review receipt linked above is the fresh execution

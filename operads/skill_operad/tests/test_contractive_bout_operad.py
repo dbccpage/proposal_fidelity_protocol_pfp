@@ -25,7 +25,7 @@ from fractions import Fraction
 from pathlib import Path
 
 import pytest
-from omega_engine_operads.skill_operad.ddc_operad_parser import (
+from operads.skill_operad.ddc_operad_parser import (
     DdcOperadParser,
     OperadCompositionReceipt,
 )
@@ -171,7 +171,7 @@ def test_contractive_bout_signature_refusal_of_false_exactness(
 ) -> None:
     """Verify that DdcOperadParser refuses false exactness claims for contractive non-zero bouts."""
     repo_root = Path(__file__).resolve().parents[3]
-    operad_orig_dir = repo_root / "omega_engine_operads" / "skill_operad"
+    operad_orig_dir = repo_root / "operads" / "skill_operad"
 
     # Set up sandbox operad directory
     tmp_json = tmp_path / "json"
@@ -251,7 +251,7 @@ def test_contractive_bout_honest_registration(
 ) -> None:
     """Verify that honest registration of residual_contractive updates operad_signature.json."""
     repo_root = Path(__file__).resolve().parents[3]
-    operad_orig_dir = repo_root / "omega_engine_operads" / "skill_operad"
+    operad_orig_dir = repo_root / "operads" / "skill_operad"
 
     # Set up sandbox operad directory
     tmp_json = tmp_path / "json"

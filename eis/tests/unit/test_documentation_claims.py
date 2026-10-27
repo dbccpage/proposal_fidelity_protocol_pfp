@@ -18,9 +18,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import omega_engine_epistemic_immune_system as package
-from omega_engine_epistemic_immune_system.infrastructure import mssn_classifier
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import FARM_CODES
+import eis as package
+from eis.infrastructure import mssn_classifier
+from eis.infrastructure.mssn_ports import FARM_CODES
 
 ROOT = Path(package.__file__).resolve().parent
 

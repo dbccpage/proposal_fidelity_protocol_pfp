@@ -5,10 +5,10 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.ddc_tracer import (
     VALID_DDC_LETTERS,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.diophantine_u1 import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.diophantine_u1 import (
     canonical_representative,
     complete_chiral_u1,
     enumerate_chiral_u1,
@@ -16,7 +16,7 @@ from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anom
     is_primitive,
     solve_pair,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.solver import (
     solve,
     solve_with_trace,
 )

@@ -19,7 +19,7 @@ from pathlib import Path
 
 def check(package: Path, source_root: Path) -> dict[str, object]:
     inventory = json.loads((package / "docs/source_inventory_2026_10_02.json").read_text())
-    prefix = "omega_engine_pfp/domain/ddc/"
+    prefix = "pfp/domain/ddc/"
     hashes = {}
     for entry in inventory["inspected_sources"]:
         if not entry["path"].startswith(prefix):
@@ -32,8 +32,8 @@ def check(package: Path, source_root: Path) -> dict[str, object]:
     if len(hashes) != 7:
         raise ValueError("expected seven pinned DDC source modules")
     for name, relative in (
-        ("omega_engine_pfp", "omega_engine_pfp"),
-        ("omega_engine_pfp.domain", "omega_engine_pfp/domain"),
+        ("pfp", "pfp"),
+        ("pfp.domain", "pfp/domain"),
     ):
         module = types.ModuleType(name)
         module.__path__ = [str(source_root / relative)]
@@ -47,7 +47,7 @@ def check(package: Path, source_root: Path) -> dict[str, object]:
     for index, block in enumerate(blocks, 1):
         exec(compile(block, f"paper.md:section3-block-{index}", "exec"), namespace)
     residual = namespace["residual"]
-    from omega_engine_pfp.domain.ddc.cochains import FunctionalBoundaryUnavailable
+    from pfp.domain.ddc.cochains import FunctionalBoundaryUnavailable
 
     try:
         residual.l1_norm()

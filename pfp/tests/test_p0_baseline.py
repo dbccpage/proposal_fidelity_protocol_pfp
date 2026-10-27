@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp.infrastructure.pilot_baseline import MATRIX, build_baseline
+from pfp.infrastructure.pilot_baseline import MATRIX, build_baseline
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / ".git").exists())
 BASE = "df84a59644c2a6837756273ccedd7b1233525407"

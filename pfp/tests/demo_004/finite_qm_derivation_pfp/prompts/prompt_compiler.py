@@ -15,11 +15,11 @@ from dataclasses import dataclass
 from hashlib import sha256
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.a_mechanism.derivation_dag_pfp_staged_benchmark import (
+from pfp.tests.demo_004.a_mechanism.derivation_dag_pfp_staged_benchmark import (
     CarrierDerivationProjection,
     derivation_candidate_json_schema,
 )
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.miner import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.miner import (
     MinedDerivationWorkUnit,
 )
 

@@ -47,7 +47,7 @@ The **Techne Four-Host Parity Verifier** (former historical rule superseded by g
 ## 3. Verification Commands
 
 ```powershell
-python -m pytest omega_engine_operations/tests/packaging/test_sync_cross_host_skills.py --basetemp=.pytest_temp -v
+python -m pytest operations/tests/packaging/test_sync_cross_host_skills.py --basetemp=.pytest_temp -v
 ```
 
 ---

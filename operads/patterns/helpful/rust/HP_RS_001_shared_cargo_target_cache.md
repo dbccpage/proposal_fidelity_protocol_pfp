@@ -16,19 +16,19 @@ authority_effect: None
 
 ## Description
 
-Explicitly bind `$env:CARGO_TARGET_DIR` (or `--target-dir`) to the primary repository's pre-compiled target cache (`<repo_root>/omega_engine/crates_rs/target`) when operating within worktrees.
+Explicitly bind `$env:CARGO_TARGET_DIR` (or `--target-dir`) to the primary repository's pre-compiled target cache (`<repo_root>/engine/crates_rs/target`) when operating within worktrees.
 
 ## Remediation & Implementation
 
 ```powershell
 # PowerShell on Windows
-$env:CARGO_TARGET_DIR = "c:\Users\a343o\source\repos\the_symbol_game\omega_engine\crates_rs\target"
+$env:CARGO_TARGET_DIR = "c:\Users\a343o\source\repos\the_symbol_game\engine\crates_rs\target"
 cargo test -p <target_crate> -j 1
 ```
 
 ```bash
 # Bash on Linux/macOS
-export CARGO_TARGET_DIR="/path/to/the_symbol_game/omega_engine/crates_rs/target"
+export CARGO_TARGET_DIR="/path/to/the_symbol_game/engine/crates_rs/target"
 cargo test -p <target_crate> -j 1
 ```
 

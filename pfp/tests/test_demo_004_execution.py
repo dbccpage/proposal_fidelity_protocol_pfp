@@ -2,8 +2,8 @@
 
 import pytest
 
-from omega_engine_pfp.domain.stages.demos import DemoSpec
-from omega_engine_pfp.infrastructure.pilot_runners import (
+from pfp.domain.stages.demos import DemoSpec
+from pfp.infrastructure.pilot_runners import (
     challenge_host_control as runner_004,
 )
 
@@ -56,7 +56,7 @@ def test_demo_executes_one_real_finite_control():
 def test_actual_c039_judges_reject_mutated_degeneracy():
     import json
 
-    from omega_engine_pfp.infrastructure.challenge_live import choose_case
+    from pfp.infrastructure.challenge_live import choose_case
 
     row = choose_case("C039", "development", 0)
     control = runner_004.isolated(dict(kind="NO_LLM", row=row), timeout=20)
@@ -87,13 +87,13 @@ def test_saved_real_responses_reproduce_observed_outcomes():
     import json
     from hashlib import sha256
 
-    from omega_engine_pfp.infrastructure.adapters.pfp_campaign import grade_reply
-    from omega_engine_pfp.infrastructure.challenge_execution import isolated
-    from omega_engine_woland.tests.pilots.challenge_suite.catalog import ROOT
+    from pfp.infrastructure.adapters.pfp_campaign import grade_reply
+    from pfp.infrastructure.challenge_execution import isolated
+    from adversary.tests.pilots.challenge_suite.catalog import ROOT
 
     folder = (
         ROOT
-        / "omega_engine_woland/tests/pilots/evidence/demo004_pfp_learning/validation/implementation_20261012"
+        / "adversary/tests/pilots/evidence/demo004_pfp_learning/validation/implementation_20261012"
     )
     observations = json.loads((folder / "observations.json").read_bytes())
     for record in observations["records"]:

@@ -8,9 +8,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Protocol, runtime_checkable
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.entities.projection_receipt import (
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.entities.projection_receipt import (
     DetectorCase,
     ProjectionReceipt,
     SolverManifest,
@@ -58,7 +58,7 @@ class Projector(OperatorBase):
 
     @property
     def config_digest(self) -> str:
-        return domain_digest("omega.oesos.projector-config.v1", self.config)
+        return domain_digest("core.oesos.projector-config.v1", self.config)
 
     def _apply_once(self, input_data: Any) -> Any | OperatorFailure:
         try:
@@ -104,7 +104,7 @@ class Retractor(OperatorBase):
 
     @property
     def config_digest(self) -> str:
-        return domain_digest("omega.oesos.retractor-config.v1", self.config)
+        return domain_digest("core.oesos.retractor-config.v1", self.config)
 
     def _apply_once(self, input_data: Any) -> Any | OperatorFailure:
         try:
@@ -158,7 +158,7 @@ class IdentityAdapter:
     @property
     def config_digest(self) -> str:
         return domain_digest(
-            "omega.oesos.adapter-config.v1",
+            "core.oesos.adapter-config.v1",
             {
                 "adapter_id": self.adapter_id,
                 "source_carrier_id": self.source_carrier_id,
@@ -199,7 +199,7 @@ class RuntimeProblem:
     @property
     def runtime_id(self) -> str:
         return domain_digest(
-            "omega.oesos.runtime-problem.v1",
+            "core.oesos.runtime-problem.v1",
             {
                 "packet_id": self.envelope.packet_id,
                 "projector_id": self.projector.projector_id,

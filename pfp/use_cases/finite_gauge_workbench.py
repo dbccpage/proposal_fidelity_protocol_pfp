@@ -13,7 +13,7 @@ from hashlib import sha256
 from threading import Condition
 from typing import Any, Callable
 
-from omega_engine_pfp.domain.finite_gauge import (
+from pfp.domain.finite_gauge import (
     CheckerIdentity,
     GaugeRefusal,
     GaugeRefusalCode,
@@ -22,8 +22,8 @@ from omega_engine_pfp.domain.finite_gauge import (
     SearchReceipt,
     fixture_catalog,
 )
-from omega_engine_pfp.domain.kernel.result import Result
-from omega_engine_pfp.domain.ports.finite_gauge import FiniteGaugeCheckerPort
+from pfp.domain.kernel.result import Result
+from pfp.domain.ports.finite_gauge import FiniteGaugeCheckerPort
 
 EventSink = Callable[[dict[str, Any]], None]
 

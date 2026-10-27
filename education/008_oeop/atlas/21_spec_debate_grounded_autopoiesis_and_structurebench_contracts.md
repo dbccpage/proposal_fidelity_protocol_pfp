@@ -1,7 +1,7 @@
 # Debate-Grounded Autopoietic Evolution, Operad Convergence Telemetry & StructureBench Contract Verification
 
-**Bounded Context:** `omega_engine_operads`  
-**Location:** this chapter. Its former source copy `_docs/09_spec_debate_grounded_autopoiesis_and_structurebench_contracts.md` in the retired OEWAS package has no successor under `omega_engine_operads`.  
+**Bounded Context:** `operads`  
+**Location:** this chapter. Its former source copy `_docs/09_spec_debate_grounded_autopoiesis_and_structurebench_contracts.md` in the retired OEWAS package has no successor under `operads`.  
 **Status:** Canonical Design Specification  
 **Governing Councils:** `L3_logos_techne` (Code & Architecture), `L2_dianoia` (Discursive Reasoning), `L3_logos_thanatos` (Adversarial Truth)  
 **AuthorityEffect:** `None`  
@@ -11,7 +11,7 @@
 
 ## 1. Executive Summary & Architectural Topology
 
-The **Omega Engine Workflows, Agents & Skills (`omega_engine_operads`)** subsystem governs the autopoietic lifecycle of skills, colored operad morphisms, and multi-agent workflow pipelines.
+The **Engine Workflows, Agents & Skills (`operads`)** subsystem governs the autopoietic lifecycle of skills, colored operad morphisms, and multi-agent workflow pipelines.
 
 This specification establishes three rigorous foundations drawn from the latest literature synthesis:
 

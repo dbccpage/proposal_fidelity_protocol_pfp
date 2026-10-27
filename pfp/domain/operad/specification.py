@@ -166,8 +166,8 @@ class GraftTree(SpecificationMetadata):
     expected_output_colour: Identifier
 
 
-DPO_OWNER = "omega_engine_pfp.domain.rewriting.finite_dpo.apply_registered_rule"
-DENSITY_OWNER = "omega_quantum_physics::density_matrix::ExactDensityMatrix"
+DPO_OWNER = "pfp.domain.rewriting.finite_dpo.apply_registered_rule"
+DENSITY_OWNER = "core_quantum_physics::density_matrix::ExactDensityMatrix"
 DPO_OBLIGATIONS = frozenset(
     {
         "monic_interfaces",
@@ -186,7 +186,7 @@ DPO_OBLIGATIONS = frozenset(
 
 class DPODeclaration(SpecificationMetadata):
     declaration_id: Identifier
-    owner: Literal["omega_engine_pfp.domain.rewriting.finite_dpo.apply_registered_rule"] = DPO_OWNER
+    owner: Literal["pfp.domain.rewriting.finite_dpo.apply_registered_rule"] = DPO_OWNER
     owner_source_artifact_id: Identifier
     supported_schema: Literal["finite-attributed-directed-graph-identity-key-monic-v1"]
     rule_artifact_id: Identifier
@@ -299,7 +299,7 @@ class DensityDeclaration(SpecificationMetadata):
     dimension: Positive
     coefficient_domain: Literal["Q(i)"] = "Q(i)"
     matrix_artifact_id: Identifier
-    owner: Literal["omega_quantum_physics::density_matrix::ExactDensityMatrix"] = DENSITY_OWNER
+    owner: Literal["core_quantum_physics::density_matrix::ExactDensityMatrix"] = DENSITY_OWNER
     owner_source_artifact_id: Identifier
     obligations: Annotated[tuple[BoundObligation, ...], Field(min_length=3, max_length=16)]
     verification_status: Literal["matrix_not_loaded_hermiticity_trace_psd_not_verified"] = (
@@ -332,7 +332,7 @@ class PartialTraceRGStep(SpecificationMetadata):
     coarse_density_id: Identifier
     trace_factor_id: Identifier
     operation: Literal["partial_trace_first", "partial_trace_second"]
-    owner: Literal["omega_quantum_physics::density_matrix::ExactDensityMatrix"] = DENSITY_OWNER
+    owner: Literal["core_quantum_physics::density_matrix::ExactDensityMatrix"] = DENSITY_OWNER
     owner_source_artifact_id: Identifier
     channel_artifact_id: Identifier
     scale_parameter: RationalToken
@@ -478,20 +478,20 @@ class ArchitectureSpec(SpecificationMetadata):
             _require_owner_source(
                 artifacts,
                 declaration.owner_source_artifact_id,
-                "omega_engine_pfp/domain/rewriting/finite_dpo.py",
+                "pfp/domain/rewriting/finite_dpo.py",
             )
         for receipt in self.receipts:
             if isinstance(receipt, SignedReceiptMetadata):
                 _require_owner_source(
                     artifacts,
                     receipt.verifier_source_artifact_id,
-                    "omega_engine/crates_rs/omega_epistemic_immune_system/src/authenticated.rs",
+                    "engine/crates_rs/core_epistemic_immune_system/src/authenticated.rs",
                 )
         for density in densities.values():
             _require_owner_source(
                 artifacts,
                 density.owner_source_artifact_id,
-                "omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs",
+                "engine/crates_rs/core_quantum_physics/src/density_matrix.rs",
             )
             if (
                 density.fiber_id not in fibers
@@ -502,7 +502,7 @@ class ArchitectureSpec(SpecificationMetadata):
             _require_owner_source(
                 artifacts,
                 step.owner_source_artifact_id,
-                "omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs",
+                "engine/crates_rs/core_quantum_physics/src/density_matrix.rs",
             )
             if step.fine_density_id not in densities or step.coarse_density_id not in densities:
                 raise ValueError("RG step references an unknown density declaration")

@@ -9,9 +9,9 @@ claim_status: verified
 authority_effect: "None"
 source_paths:
   - .agents/AGENTS.md
-  - omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py
+  - operations/use_cases/packaging/sync_cross_host_skills.py
   - .agents/rules/rust_and_python_engineering_standards.md
-  - omega_engine_education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/19_spec_skill_consolidation_and_deep_modules.md
+  - education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/19_spec_skill_consolidation_and_deep_modules.md
 last_verified: 2026-10-01
 ---
 
@@ -103,7 +103,7 @@ flowchart TD
 
 1. **Phase 1 (Factorization & Budget Ceiling):** Ensure the parent `SKILL.md` remains strictly $\le 300$ lines and $\le 20\text{ KB}$. Detailed manuals, checklists, and formulas must reside in `references/<topic>.md`.
 2. **Phase 2 (Four-Host Atomic Deletion):** Subsumed or retired micro-skills must be deleted atomically across all four host roots using `git rm -r`.
-3. **Phase 3 (Family Registry Regeneration):** Run `python omega_engine_operations/skill_operad/regen_family_registry.py` to refresh `_shared/family_registry.md`, and sync `_shared/` to all four hosts.
+3. **Phase 3 (Family Registry Regeneration):** Run `python operations/skill_operad/regen_family_registry.py` to refresh `_shared/family_registry.md`, and sync `_shared/` to all four hosts.
 4. **Phase 4 (Registry & Catalog Pruning):**
    - Prune retired entries from `.agents/registry/capabilities.yaml` and `lifecycle.yaml`, then mirror identically.
    - Prune retired skill IDs from `operad_signature.json`, `agent_capability_slices.json`, and `capability_catalog.v1.json`.
@@ -113,17 +113,17 @@ flowchart TD
 
 ## 4. Cross-Host Synchronization Tooling
 
-The canonical tool for syncing skills across hosts is [`sync_cross_host_skills.py`](../../../../omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py):
+The canonical tool for syncing skills across hosts is [`sync_cross_host_skills.py`](../../../../operations/use_cases/packaging/sync_cross_host_skills.py):
 
 ```powershell
 # Sync a single updated skill across all 4 host roots:
-py -3.12 omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py --skills <skill_name>
+py -3.12 operations/use_cases/packaging/sync_cross_host_skills.py --skills <skill_name>
 
 # Sync all skills across all 4 host roots:
-py -3.12 omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py --all
+py -3.12 operations/use_cases/packaging/sync_cross_host_skills.py --all
 
 # Dry-run parity check without mutating files:
-py -3.12 omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py --dry-run
+py -3.12 operations/use_cases/packaging/sync_cross_host_skills.py --dry-run
 ```
 
 ---
@@ -158,10 +158,10 @@ To audit cross-host parity locally:
 
 ```powershell
 # 1. Assert host root parity
-py -3.12 -m pytest omega_engine_operations/tests/unit/test_host_root_parity.py
+py -3.12 -m pytest operations/tests/unit/test_host_root_parity.py
 
 # 2. Check for banned live doctrine in skill documentation
-py -3.12 omega_engine_operations/domain/cicd/knowledge_parity.py
+py -3.12 operations/domain/cicd/knowledge_parity.py
 ```
 
 ### The Level 08 Governance Invariants

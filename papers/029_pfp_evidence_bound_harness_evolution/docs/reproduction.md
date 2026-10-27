@@ -6,7 +6,7 @@ they do not port the frozen Linux-only candidate runner to Windows. A future liv
 Windows campaign needs a separately reviewed containment adapter and protocol.
 
 Use the retained source revision and source manifest, Python 3.12, and the existing
-native `omega_symbol_game` executable for the budget and typed-operation tests.
+native `core_symbol_game` executable for the budget and typed-operation tests.
 The verification receipt identifies the actual executable bytes used locally;
 it does not assert a fresh source-to-binary build. Live execution requires a
 separate observed Linux container preflight.
@@ -18,7 +18,7 @@ the original journal must not be rebound to those bytes. Reproduce the original
 zero-call report from the retained archive with this offline command:
 
 ```powershell
-py -3.12 omega_engine_woland/documentation/harness_evolution/replay_review_archive.py --output C:/temp/aide2-frozen-replay
+py -3.12 adversary/documentation/harness_evolution/replay_review_archive.py --output C:/temp/aide2-frozen-replay
 ```
 
 Use a new destination. The helper authenticates the original archive digest,
@@ -34,10 +34,10 @@ campaign replay/report commands require the original **frozen source tree**,
 not current main:
 
 ```powershell
-py -3.12 -m pytest omega_engine_woland/tests/research/test_harness_contracts.py omega_engine_woland/tests/providers/test_harness_anthropic_budget.py -q
-py -3.12 -m pytest omega_engine_woland/tests/test_ddc_code_repair.py omega_engine_woland/tests/providers/test_completion_failure_bytes.py omega_engine_operads/tests/autopoiesis/test_learning_loop.py -q
-py -3.12 -m omega_engine_woland.entrypoints.research.harness_cli replay --output omega_engine_woland/documentation/harness_evolution/campaign
-py -3.12 -m omega_engine_woland.entrypoints.research.harness_cli report --output omega_engine_woland/documentation/harness_evolution/campaign
+py -3.12 -m pytest adversary/tests/research/test_harness_contracts.py adversary/tests/providers/test_harness_anthropic_budget.py -q
+py -3.12 -m pytest adversary/tests/test_ddc_code_repair.py adversary/tests/providers/test_completion_failure_bytes.py operads/tests/autopoiesis/test_learning_loop.py -q
+py -3.12 -m adversary.entrypoints.research.harness_cli replay --output adversary/documentation/harness_evolution/campaign
+py -3.12 -m adversary.entrypoints.research.harness_cli report --output adversary/documentation/harness_evolution/campaign
 ```
 
 If Windows temporary-directory ACLs prevent pytest allocation, pass a new writable
@@ -58,8 +58,8 @@ PDF bytes. Keep the original digests and use the pinned extractor for comparison
 Rebuild the selected author-review PDFs through the existing collection tool:
 
 ```powershell
-py -3.12 omega_engine_atlas/coda_atlas/F004_papers/015_pfp/tools/build_publications.py --author-review --pdf
-py -3.12 omega_engine_atlas/coda_atlas/F004_papers/015_pfp/tools/check_publications.py --author-review
+py -3.12 atlas/coda_atlas/F004_papers/015_pfp/tools/build_publications.py --author-review --pdf
+py -3.12 atlas/coda_atlas/F004_papers/015_pfp/tools/check_publications.py --author-review
 ```
 
 This writes a separate dated review collection, without `--deposit`. Historical

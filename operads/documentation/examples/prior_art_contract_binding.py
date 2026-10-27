@@ -1,6 +1,6 @@
 """One source-to-contract experiment through existing selection/admission ports.
 
-The context is a literal, independently chosen ordered Woland claim-audit
+The context is a literal, independently chosen ordered Adversary claim-audit
 signature. This is not automatic extraction of a paper's intended semantics.
 The temporary key demonstrates signature checking without installing trust.
 """
@@ -16,16 +16,16 @@ import shutil
 import subprocess
 import tempfile
 
-from ...application.woland_candidate_plan import PlanNodeV01
-from ...application.woland_instruction_admission import (
+from ...application.adversary_candidate_plan import PlanNodeV01
+from ...application.adversary_instruction_admission import (
     InstructionAdmissionRefusal,
     SIGNATURE_NAMESPACE,
     source_snapshot_digest,
     verify_signed_instruction_admission,
 )
-from ...application.woland_task_selection import (
-    WolandCandidateRouteV01,
-    WolandTaskShapeV01,
+from ...application.adversary_task_selection import (
+    AdversaryCandidateRouteV01,
+    AdversaryTaskShapeV01,
     select_candidate_plan,
 )
 from ...domain.entities.operation_v3 import PortSpecV3
@@ -34,10 +34,10 @@ from ...domain.value_objects.identifier import ColourId, SchemaRef
 from ...infrastructure.typed_contract_compiler import compile_typed_contracts
 
 
-SOURCE = "omega_engine_operads/catalog/contracts/v1/woland_claim_audit.json"
+SOURCE = "operads/catalog/contracts/v1/adversary_claim_audit.json"
 SOURCE_SHA256 = "dc4a3787a2947e20a9f020c43c857ccbc21afd577e2bf1b590367d8ac4eca0a4"
 VALIDATOR_SHA256 = "1636ead64509ccee21b79700bcf30ad7b755fcaf38525a2b6ca5fed7e81b804d"
-PROFILE = b"Woland claim audit: ordered findings then original subject; Receipt output. v1\n"
+PROFILE = b"Adversary claim audit: ordered findings then original subject; Receipt output. v1\n"
 
 
 def _digest(raw: bytes) -> str:
@@ -58,9 +58,9 @@ def prepare_context(repo_root: Path):
         raise ValueError("RETAINED_SOURCE_CHANGED: review a new experiment revision")
     package = compile_typed_contracts(repo_root)
     documents = tuple(doc for doc in package.documents if doc.source_relative_path == SOURCE)
-    task = WolandTaskShapeV01(
+    task = AdversaryTaskShapeV01(
         request_digest=_digest(b"Audit the supplied candidate against its declared evidence scope.\n"),
-        workload_profile_id="woland.claim-audit.source-contract-v1",
+        workload_profile_id="adversary.claim-audit.source-contract-v1",
         workload_profile_digest=_digest(PROFILE), domain_id="claim-hygiene",
         inputs=(
             _port("findings", "Audit", "anti_skill_hits",
@@ -70,14 +70,14 @@ def prepare_context(repo_root: Path):
         ),
         output=_port("receipt", "Receipt", "typed_audit_receipt",
                      "6c495f0160af63a2cd04ca761b390b973c5bc4e9a2a9bbd386ab83610bd99347"),
-        required_operation_ids=frozenset({"woland-claim-audit"}),
+        required_operation_ids=frozenset({"adversary-claim-audit"}),
         allowed_effects=frozenset({"read_subject", "emit_finding"}),
         max_nodes=1, max_instruction_bytes=4096,
     )
-    return task, WolandCandidateRouteV01(
+    return task, AdversaryCandidateRouteV01(
         "route.claim-audit.source-contract-v1", task.workload_profile_id,
         task.workload_profile_digest, task.domain_id, documents,
-        PlanNodeV01("woland-claim-audit"),
+        PlanNodeV01("adversary-claim-audit"),
     )
 
 
@@ -88,7 +88,7 @@ def sign_fixture_manifest(work_dir: Path, task, selected):
         raise RuntimeError("SIGNATURE_VERIFIER_UNAVAILABLE")
     work_dir.mkdir(parents=True, exist_ok=True)
     manifest = {
-        "schema_version": "oewas.woland.instruction_admission.v0.1",
+        "schema_version": "oewas.adversary.instruction_admission.v0.1",
         "decision": "APPROVE", "reviewer_identity": "fixture.source-contract",
         "authority_effect": "None", "request_digest": task.request_digest,
         "task_shape_digest": selected.task_shape_digest,

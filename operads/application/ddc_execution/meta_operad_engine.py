@@ -2,24 +2,24 @@
 
 from collections.abc import Callable, Sequence
 
-from omega_engine_operads.domain.ddc_execution.entities import OperadMorphism
-from omega_engine_operads.domain.ddc_execution.errors import (
+from operads.domain.ddc_execution.entities import OperadMorphism
+from operads.domain.ddc_execution.errors import (
     OperadDomainError,
     PermissionDeniedError,
     Refusal,
 )
-from omega_engine_operads.domain.ddc_execution.execution import (
+from operads.domain.ddc_execution.execution import (
     ExecutionOutcome,
     ExecutionPlan,
 )
-from omega_engine_operads.domain.ddc_execution.protocols import (
+from operads.domain.ddc_execution.protocols import (
     ArtifactCustodyPort,
     MorphismEvaluatorPort,
     OperadRegistryPort,
     TraceStoragePort,
 )
-from omega_engine_operads.domain.ddc_execution.value_objects import OperadOperation
-from omega_engine_operads.domain.operad.errors import Err, Ok, Result
+from operads.domain.ddc_execution.value_objects import OperadOperation
+from operads.domain.operad.errors import Err, Ok, Result
 
 
 class MetaOperadEngineUseCase:

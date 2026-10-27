@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 
-The final application owner is `omega_engine_pfp`. Move the existing educational
+The final application owner is `pfp`. Move the existing educational
 PFP implementation into the corresponding Symbol Game layers, refactor both
 native crates, verify the integrated implementation, then rename the combined
 Python owner. The final state has one implementation and no compatibility app,
@@ -34,13 +34,13 @@ Repeat the tracked-file inventory after merged changes before moving files.
 
 | Source | Combined owner before final rename | Required handling |
 | --- | --- | --- |
-| `omega_engine_education/pfp/domain/` | `omega_engine_symbol_game/domain/` | Preserve every defining module and its validation behavior. |
-| `omega_engine_education/pfp/use_cases/` | `omega_engine_symbol_game/use_cases/` | Keep injected ports, stage transitions and typed failures. |
-| `omega_engine_education/pfp/controllers/` | `omega_engine_symbol_game/controllers/` | Preserve controller operations; bind canonical infrastructure. |
-| `omega_engine_education/pfp/infrastructure/` | `omega_engine_symbol_game/infrastructure/` | Move evaluators, catalogs, generators, YAML, campaign adapters and replay tools together. |
-| `omega_engine_education/pfp/frontend/cli.py` | `omega_engine_symbol_game/entrypoints/cli/pfp.py` | Preserve all commands and meaningful process exit codes. |
-| `omega_engine_education/pfp/frontend/normal_forms_cli.py` | `omega_engine_symbol_game/entrypoints/cli/pfp_normal_forms.py` | Repair import depth and direct-script root discovery. |
-| `omega_engine_education/pfp/frontend/view.py` | `omega_engine_symbol_game/entrypoints/cli/pfp_view.py` | Repair relative imports after increased nesting. |
+| `education/pfp/domain/` | `symbol_game/domain/` | Preserve every defining module and its validation behavior. |
+| `education/pfp/use_cases/` | `symbol_game/use_cases/` | Keep injected ports, stage transitions and typed failures. |
+| `education/pfp/controllers/` | `symbol_game/controllers/` | Preserve controller operations; bind canonical infrastructure. |
+| `education/pfp/infrastructure/` | `symbol_game/infrastructure/` | Move evaluators, catalogs, generators, YAML, campaign adapters and replay tools together. |
+| `education/pfp/frontend/cli.py` | `symbol_game/entrypoints/cli/pfp.py` | Preserve all commands and meaningful process exit codes. |
+| `education/pfp/frontend/normal_forms_cli.py` | `symbol_game/entrypoints/cli/pfp_normal_forms.py` | Repair import depth and direct-script root discovery. |
+| `education/pfp/frontend/view.py` | `symbol_game/entrypoints/cli/pfp_view.py` | Repair relative imports after increased nesting. |
 | PFP `tests/`, `scripts/`, `type_register/`, `_canonical_types/` | Corresponding combined application directories | Preserve test discovery, census roots, generation commands and asset links. |
 
 Only nine equal-relative-path collisions were found, all package `__init__.py`
@@ -53,7 +53,7 @@ migrate callers to defining modules rather than silently replacing one type.
 Inspect every existing lazy public export before changing package initializers.
 
 After integration and verification, atomically rename the combined directory to
-`omega_engine_pfp`, update active consumers and rerun the verification scope.
+`pfp`, update active consumers and rerun the verification scope.
 The intermediate name is not a second permanent application.
 
 ## Behavior that must survive and become executable
@@ -83,7 +83,7 @@ The intermediate name is not a second permanent application.
 
 ## Native crates
 
-Refactor `omega_symbol_game` and `omega_symbol_game_runtime` as part of this
+Refactor `core_symbol_game` and `core_symbol_game_runtime` as part of this
 integration, not merely as a directory rename. Inventory every exported Rust item,
 host command, request/response wire shape, environment override and Python FFI
 consumer first. Split responsibilities along existing domain/application/host
@@ -107,7 +107,7 @@ package-data boundaries. Preserve the v1 evidence exclusion policy.
 
 Migrate Python imports, dynamic `import_module` strings, subprocess `-m` commands,
 documentation source paths and CLI defaults throughout active consumers. These
-include education scripts/pilot checkers/replay runners, Woland runtime/adapters,
+include education scripts/pilot checkers/replay runners, Adversary runtime/adapters,
 operations Level Engine and CI routing, providers, governance, cognitive
 operations, immune-system consumers, host command location and `.github` routes.
 Update `pytest.ini`, test manifests and changed-file classifiers; preserve the
@@ -124,7 +124,7 @@ and repository markers only for operations that actually require a checkout.
 Do not bulk-rewrite old namespace strings inside source-bound history. Preserve
 raw provider outputs, config/source hashes, stage receipts, `source_snapshot/`,
 `_legacy_source_archives/`, sealed manifests, vendor pins, Lean build/audit custody,
-and existing Woland receipts. The Level Engine v1 tree and v2 historical
+and existing Adversary receipts. The Level Engine v1 tree and v2 historical
 certificates/manifests contain provenance package names; those are not active
 import instructions and their byte hashes must not change.
 
@@ -135,7 +135,7 @@ No cross-version fallback or manufactured replacement digest is permitted.
 
 The challenge campaign snapshot replayer invokes a legacy module inside a clean
 detached historical checkout. Keep historical command selection tied to that
-checkout/revision while routing new runs through `omega_engine_pfp`. Test both
+checkout/revision while routing new runs through `pfp`. Test both
 paths. Dossier `prepare.py` Git-show locations remain historical locators, and
 older checker drift continues to refuse incompatible replay rather than being
 repinned. Historical receipts need not claim the new implementation was executed.
@@ -152,7 +152,7 @@ repinned. Historical receipts need not claim the new implementation was executed
    Record existing failures separately; never weaken a gate to obtain a green run.
 5. Run bounded live checks through the real provider path, retain raw responses,
    costs and checker outcomes, then replay those runs offline with zero dispatch.
-6. Rename the integrated Python owner to `omega_engine_pfp`; remove old active
+6. Rename the integrated Python owner to `pfp`; remove old active
    roots and imports, update scripts/resources/test routes and generated guidance.
 7. Recheck imports, all affected tests, host parity and an installed wheel from
    outside the checkout; verify preserved history by byte hashes and Git replay.
@@ -168,7 +168,7 @@ Remaining errors are follow-up work, not grounds for extending this delivery
 into another tuning campaign. Targeted failure discovery remains a secondary
 goal when it produces useful antibodies, patterns or implementation repairs.
 
-The combined active owner is `omega_engine_pfp`; the former educational PFP
+The combined active owner is `pfp`; the former educational PFP
 and Symbol Game runtime roots have been removed. Its public commands are
 `pfp`, `symbol-game` and `level-engine`. Both native crates now separate
 requests, exact operations, host execution, parsing and certificate checking
@@ -204,11 +204,11 @@ and the inherited `use_cases/modes.py` infrastructure dependency. Do not repin
 history or weaken assertions to label these green. Reproduce only the specific
 failure needed for the next concrete repair.
 
-The scoped Woland learning result is applied code: prompt constraints match the
+The scoped Adversary learning result is applied code: prompt constraints match the
 validator, unavailable sources remain unavailable, and replay cannot silently
 cross changed source identities. No new receipt garden or framework is needed.
 
-The temporary shared Woland exchange state disappeared before final observation
+The temporary shared Adversary exchange state disappeared before final observation
 submission. Scoped IDE learning was applied in the existing code and summarized
 above; a final backend completion transition is not claimed. This does not change
 the observed live/replay results or the preservation of tracked historical blobs.

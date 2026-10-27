@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.infrastructure.schema_validator import (
+from pfp.infrastructure.schema_validator import (
     PfpSchemaValidatorAdapter,
 )
 
@@ -26,13 +26,13 @@ def without_jsonschema(name, *args, **kwargs):
         raise ModuleNotFoundError("No module named 'jsonschema'")
     return original_import(name, *args, **kwargs)
 builtins.__import__ = without_jsonschema
-from omega_engine_pfp.infrastructure.pilot_runner import build_requests
+from pfp.infrastructure.pilot_runner import build_requests
 requests = build_requests('import_probe', 'linear_algebra')
 if not requests:
     raise RuntimeError('Core pilot import did not produce requests')
-from omega_engine_pfp.infrastructure.pilot_runner import build_p_star_yaml
+from pfp.infrastructure.pilot_runner import build_p_star_yaml
 build_p_star_yaml('IMPORT_PROBE', 'linear_algebra')
-from omega_engine_pfp.infrastructure.schema_validator import PfpSchemaValidatorAdapter
+from pfp.infrastructure.schema_validator import PfpSchemaValidatorAdapter
 validation = PfpSchemaValidatorAdapter.validate_payload({'type': 'object', 'additionalProperties': False}, {})
 if validation.is_valid or validation.errors != ["ValidatorException: No module named 'jsonschema'"]:
     raise RuntimeError('Missing schema engine allowed a contract check')

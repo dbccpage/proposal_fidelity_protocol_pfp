@@ -229,7 +229,7 @@ also remain true. But the divergence, defined as inflow minus outflow, is
 The declarations explicitly prove that the own-negative fixture has
 zeroGap equal to true and balanced equal to false. Thus a theorem about
 one arithmetic clause can be true even when the proposed certificate fails
-as a whole. [Paper 001](https://github.com/dbccpage/the_symbol_game/blob/23893fc44162555fa12ceda3e1665982e3d7a14e/omega_engine_atlas/coda_atlas/omega_engine_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper.md) supplies the general weak-duality argument explaining
+as a whole. [Paper 001](https://github.com/dbccpage/the_symbol_game/blob/23893fc44162555fa12ceda3e1665982e3d7a14e/atlas/coda_atlas/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper.md) supplies the general weak-duality argument explaining
 why every certificate clause is needed.
 
 The file uses exact-rational definitions and kernel-decided finite
@@ -278,10 +278,10 @@ Lean's documentation explains the role of extensionality, quotients, and
 choice in that logical environment.
 [Official Lean reference](https://lean-lang.org/theorem_proving_in_lean4/Axioms-and-Computation/).
 
-The Level Engine [build driver](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/use_cases/level_engine/lean_build.py)
+The Level Engine [build driver](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/use_cases/level_engine/lean_build.py)
 pins Lean 4.34.0 and records source hashes, return codes, and whether the
 sources remained stable. Its
-[axiom-audit driver](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/use_cases/level_engine/lean_audit.py)
+[axiom-audit driver](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/use_cases/level_engine/lean_audit.py)
 requires a successful build receipt matching the current source bytes and
 toolchain before running a fresh report.
 
@@ -299,14 +299,14 @@ the publisher recomputes its expected hashes. A bounded mocked reproduction
 returned success and published the changed source; the downstream snapshot
 reader correctly rejected its mismatched build/audit identities.
 
-The local correction in the [verification patch](https://github.com/dbccpage/the_symbol_game/blob/23893fc44162555fa12ceda3e1665982e3d7a14e/omega_engine_atlas/coda_atlas/omega_engine_pfp/verification/source_delta.patch)
+The local correction in the [verification patch](https://github.com/dbccpage/the_symbol_game/blob/23893fc44162555fa12ceda3e1665982e3d7a14e/atlas/coda_atlas/pfp/verification/source_delta.patch)
 carries the audited source map through the receipt and snapshot writer,
 refuses a post-audit edit, and validates copied bytes against that map. The
 regression tests exercise this control logic with fake Lean responses. They
 do not establish a fresh Lean build, filesystem locking, or protection against
 an edit that is made and reverted between observations.
 
-The [custody tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/tests/level_engine/test_lean.py)
+The [custody tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/tests/level_engine/test_lean.py)
 use isolated fake tool responses to check these failure paths. They include
 a changed source after a success receipt, an absent receipt, an incomplete
 declaration census, and disallowed axioms even when report replacement is
@@ -329,7 +329,7 @@ An old evidence path may no longer exist in the working directory.
 Substituting a current file with the same name can quietly change the
 evidence while leaving the citation looking intact.
 
-The [versioned resolver](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/infrastructure/tower_evidence/level_engine/resolver.py)
+The [versioned resolver](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/infrastructure/tower_evidence/level_engine/resolver.py)
 has two deliberately separate read modes:
 
 | Mode | Required source | Missing-data behavior |
@@ -345,7 +345,7 @@ empty segments, and other noncanonical forms. An optional SHA-256 check
 rejects a mismatch. A caller that omits this digest has not obtained that
 additional content check.
 
-The [resolver tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/tests/level_engine/test_evidence_resolver.py)
+The [resolver tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/tests/level_engine/test_evidence_resolver.py)
 create a temporary Git repository, commit bytes containing line endings
 and a zero byte, remove the working file, and read the original bytes
 through v1. They also check wrong digests, unavailable revisions, missing
@@ -363,7 +363,7 @@ reviewed.
 ## 8. A benchmark label is not an observation
 
 The historical
-[150-test runner](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_projects/mssn_sn_symgam/challenges/run_150_tests_suite.py)
+[150-test runner](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/projects/mssn_sn_symgam/challenges/run_150_tests_suite.py)
 contains a concrete evidence failure: some absent-receipt cases receive
 VERIFIED, caught provider exceptions can also receive VERIFIED, and some
 route or metric values are fixed records rather than measurements from
@@ -379,15 +379,15 @@ validated benchmark results.
 A sound replacement requires recording which operation actually ran, preserving
 raw outputs, distinguishing missing and failed execution from success,
 and applying an independent outcome oracle to each experimental claim.
-The controlled-evaluation design belongs to [Paper 003](https://github.com/dbccpage/the_symbol_game/blob/23893fc44162555fa12ceda3e1665982e3d7a14e/omega_engine_atlas/coda_atlas/omega_engine_pfp/003_pfp_host_admitted_failure_detectors/paper.md).
+The controlled-evaluation design belongs to [Paper 003](https://github.com/dbccpage/the_symbol_game/blob/23893fc44162555fa12ceda3e1665982e3d7a14e/atlas/coda_atlas/pfp/003_pfp_host_admitted_failure_detectors/paper.md).
 Sections 9 and 10 apply the same standard to the challenge corpus and to
 recorded model runs.
 
 ## 9. The challenge corpus at a stated commit
 
-At the census revision, `omega_engine_projects/mssn_sn_symgam/challenges/` holds challenge
+At the census revision, `projects/mssn_sn_symgam/challenges/` holds challenge
 specifications written against one protocol,
-[SG-CP v1](https://github.com/dbccpage/the_symbol_game/blob/a623568eb0f853b968bc419bf06dfc6af256ab02/omega_engine_projects/mssn_sn_symgam/challenges/01_challenge_protocol.md).
+[SG-CP v1](https://github.com/dbccpage/the_symbol_game/blob/a623568eb0f853b968bc419bf06dfc6af256ab02/projects/mssn_sn_symgam/challenges/01_challenge_protocol.md).
 This paper audits C001 to C050, in five subfolders: mechanism (C001 to C010),
 cohomology (C011 to C020), quantum information (C021 to C030), physics
 (C031 to C040), and formal mathematics (C041 to C050). The folder also holds
@@ -544,7 +544,7 @@ counts above are transcribed from the report and could not be recomputed from
 per-case data here.
 
 The C005 runs also depart from the protocol. The
-[C005 specification](https://github.com/dbccpage/the_symbol_game/blob/a623568eb0f853b968bc419bf06dfc6af256ab02/omega_engine_projects/mssn_sn_symgam/challenges/a_mechanism/c005_hosted_decode_controls_bakeoff.md)
+[C005 specification](https://github.com/dbccpage/the_symbol_game/blob/a623568eb0f853b968bc419bf06dfc6af256ab02/projects/mssn_sn_symgam/challenges/a_mechanism/c005_hosted_decode_controls_bakeoff.md)
 and SG-CP v1 both limit models to open weights with at most 70B total
 parameters and set a ceiling of $0.10 per arm. The runs used a 405B model and a
 ceiling of $2.00 per benchmark run. They are reported here as a deviation from
@@ -669,7 +669,7 @@ number, basis ordering, or path representation, so the trace supports no
 classification of the Hamiltonian's sign problem. The source of the rule that
 the host applied is not retained with the trace. The baseline's
 check for a related question,
-[sign_switching.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/infrastructure/adapters/mssn_research/sign_switching.py),
+[sign_switching.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/infrastructure/adapters/mssn_research/sign_switching.py),
 takes a real symmetric matrix in a declared basis and decides whether some
 diagonal ±1 change of basis makes every off-diagonal entry nonpositive; when
 none exists, it returns a cycle whose positive entries have odd parity. The
@@ -736,8 +736,8 @@ values, and compare certificates for all 125 integer triangle assignments
 with edge values from −2 to 2 against an independent bounded potential search.
 This is a finite test domain, not a proof of a general graph algorithm.
 
-The [quiz](_lev_landau_theoretical_minimum_quiz/quiz.md) and
-[worked study guide](_lev_landau_theoretical_minimum_quiz/study_guide.md)
+The [quiz](_lev_examiner_theoretical_minimum_quiz/quiz.md) and
+[worked study guide](_lev_examiner_theoretical_minimum_quiz/study_guide.md)
 connect each calculation to its source, scope limit and changed-input control.
 
 The old repository-root commands refer to the code baseline, whose directory

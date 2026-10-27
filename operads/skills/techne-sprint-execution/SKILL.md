@@ -133,7 +133,7 @@ Track daily:
 
 ## PPT Compliance Gate
 
-**MANDATORY:** Every sprint must create planning documents in `coda_project_planning/sprints/{NNN}/` **before** execution begins — even if the plan originated from Omega Engine plan mode, a backlog item, or ad-hoc user request.
+**MANDATORY:** Every sprint must create planning documents in `coda_project_planning/sprints/{NNN}/` **before** execution begins — even if the plan originated from Engine plan mode, a backlog item, or ad-hoc user request.
 
 **Required before execution:**
 
@@ -141,7 +141,7 @@ Track daily:
 - `quality_gates.md` ext
 - `sprint_{NNN}_plan.md` ext
 
-**If sprint was planned outside the PPT workflow** (e.g., Omega Engine plan file, direct user instruction), create the PPT documents from the plan before executing stories.
+**If sprint was planned outside the PPT workflow** (e.g., Engine plan file, direct user instruction), create the PPT documents from the plan before executing stories.
 
 **Source:** Sprint 307 — PPT workflow bypassed; documents created retroactively. Flagged as process violation in retrospective.
 
@@ -185,7 +185,7 @@ IF cleanup sprint is attempted without planning docs:
 | sprint-retrospective | Reviews execution outcomes after DevOps review |
 | blackrod | Enforces quality during execution |
 | run-tests | Validates code changes during execution |
-| `techne-code-soviet-inspector` | MANDATORY: validates test assertions before story DONE |
+| `techne-code-inspector` | MANDATORY: validates test assertions before story DONE |
 | code-review | Reviews PRs created during execution |
 | commit | Used for committing story implementations |
 

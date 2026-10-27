@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Protocol
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 
 class RunTrigger(str, Enum):
@@ -21,8 +21,8 @@ class RunTrigger(str, Enum):
     DEMO = "demo"
     BENCH = "bench"
     TRIAL = "trial"
-    WOLAND = "woland"
-    WOLAND_SKILL = "woland_skill"
+    ADVERSARY = "adversary"
+    ADVERSARY_SKILL = "adversary_skill"
     OEWAS = "oewas"
     CHALLENGE = "challenge"
     MINING = "mining"

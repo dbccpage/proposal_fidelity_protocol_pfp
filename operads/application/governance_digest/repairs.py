@@ -9,11 +9,11 @@ from __future__ import annotations
 
 from ...domain.governance_digest.records import EditLocator, RepairSpec
 
-PY_RULE = "omega_engine_operads/rules/engineering/rl_python_engineering_standards.md"
-PY_CONTRACTS_RULE = "omega_engine_operads/rules/engineering/rl_python_contracts_and_runtime_invariants.md"
-RS_RULE = "omega_engine_operads/rules/engineering/rl_rust_engineering_standards.md"
-RS_SKILL = "omega_engine_operads/skills/techne-code-rust-anti-patterns/SKILL.md"
-HUNTER = "omega_engine_operads/skills/auto-code-anti-pattern-hunter/SKILL.md"
+PY_RULE = "operads/rules/engineering/rl_python_engineering_standards.md"
+PY_CONTRACTS_RULE = "operads/rules/engineering/rl_python_contracts_and_runtime_invariants.md"
+RS_RULE = "operads/rules/engineering/rl_rust_engineering_standards.md"
+RS_SKILL = "operads/skills/techne-code-rust-anti-patterns/SKILL.md"
+HUNTER = "operads/skills/auto-code-anti-pattern-hunter/SKILL.md"
 
 PY_NESTING_HEADING = "## Structural Pattern Matching & Control Flow Nesting Invariant (`RULE_PYTHON_CYCLOMATIC_AND_NESTING_DISCIPLINE_001`)"
 PY_MONKEY_HEADING = "## Standard Library Monkeypatch Signature Parity Invariant (`RULE_PYTHON_MONKEYPATCH_SIGNATURE_PARITY_001`)"
@@ -27,15 +27,15 @@ RS_002_ROW = (
 )
 LEAN_LINK = (
     "[**`techne-code-python-lean4-anti-patterns`**](file:///c:/Users/a343o/source/repos/the_symbol_game/"
-    "omega_engine_operads/skills/techne-code-python-lean4-anti-patterns/SKILL.md)"
+    "operads/skills/techne-code-python-lean4-anti-patterns/SKILL.md)"
 )
 
-CITE_PY_002 = "\n> **Pattern estate:** `AP_PY_002` / `HP_PY_002` (`omega_engine_operads/patterns/anti/python/`).\n\n"
+CITE_PY_002 = "\n> **Pattern estate:** `AP_PY_002` / `HP_PY_002` (`operads/patterns/anti/python/`).\n\n"
 CITE_RS_CARGO = (
     "\n> **Pattern estate:** `AP_RS_001` / `HP_RS_001`, `AP_RS_003` / `HP_RS_003` "
-    "(`omega_engine_operads/patterns/anti/rust/`).\n\n"
+    "(`operads/patterns/anti/rust/`).\n\n"
 )
-CITE_RS_002 = "\n> **Pattern estate:** `AP_RS_002` / `HP_RS_002` (`omega_engine_operads/patterns/anti/rust/`).\n\n"
+CITE_RS_002 = "\n> **Pattern estate:** `AP_RS_002` / `HP_RS_002` (`operads/patterns/anti/rust/`).\n\n"
 MYPY_BLOCK = (
     "## Scoped Mypy Import Checking Invariant (`RULE_PYTHON_MYPY_IGNORE_SCOPE_001`)\n"
     "\n"
@@ -44,7 +44,7 @@ MYPY_BLOCK = (
     "> 1. Setting `ignore_missing_imports = true` under an unscoped `[tool.mypy]` "
     "silences missing modules across the whole tree.\n"
     "> 2. Scope overrides to the modules that need them. "
-    "See `AP_PY_001` / `HP_PY_001` in `omega_engine_operads/patterns/anti/python/`.\n"
+    "See `AP_PY_001` / `HP_PY_001` in `operads/patterns/anti/python/`.\n"
     "\n"
 )
 RS_003_ROW = (

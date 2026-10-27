@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 Scores the frozen reference solver against this package's own judge packet and
 checks that the judge's hostile mutations are rejected. It evaluates no model
-and is not a Woland verdict. Labels: REFERENCE_SELF_CONSISTENT or
+and is not a Adversary verdict. Labels: REFERENCE_SELF_CONSISTENT or
 REFERENCE_SELF_INCONSISTENT.
 
 Custody, stated plainly: the solver and judge file digests are computed when
@@ -14,7 +14,7 @@ the bytes that were scored; they are not a commitment made before the run
 normalised to LF, so they equal git-blob content on every platform.
 
 The run folder is built in a staging directory beside its destination under
-``<intelligence root>/_intelligence/_woland/runs/`` and moved into place with
+``<intelligence root>/_intelligence/_adversary/runs/`` and moved into place with
 os.replace. A crash moves a failure receipt into the run folder instead of
 leaving an empty folder. Nothing under ``_intelligence/`` is deleted.
 """
@@ -33,22 +33,22 @@ from pathlib import Path
 from typing import Any
 
 for _parent in Path(__file__).resolve().parents:
-    if (_parent / "omega_engine_pfp").is_dir() and (_parent / "omega_engine_woland").is_dir():
+    if (_parent / "pfp").is_dir() and (_parent / "adversary").is_dir():
         if str(_parent) not in sys.path:
             sys.path.insert(0, str(_parent))
         break
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.judge_packet.exact_checker import (
+from pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.judge_packet.exact_checker import (
     check_solution,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.judge_packet.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.judge_packet.independent_checker import (
     independent_check,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.reference_solver import (
     solve,
 )
 
-from omega_engine_operating_system.adapters.intelligence_custody.intelligence_root import (
+from operating_system.adapters.intelligence_custody.intelligence_root import (
     resolve_intelligence_repo_root,
 )
 
@@ -200,7 +200,7 @@ def run_gate(intelligence_repo_root: Path | None = None) -> bool:
         if intelligence_repo_root is not None
         else resolve_intelligence_repo_root()
     )
-    run_dir = repo_root / "_ic/darpa/woland" / "runs" / run_id
+    run_dir = repo_root / "_ic/darpa/adversary" / "runs" / run_id
     if run_dir.exists():
         raise RunFolderExistsError(f"run folder already exists: {run_dir}")
     run_dir.parent.mkdir(parents=True, exist_ok=True)
@@ -327,7 +327,7 @@ def run_gate(intelligence_repo_root: Path | None = None) -> bool:
                 f"- Run ID: `{run_id}`",
                 f"- Label: `{verdict}`",
                 f"- Scope: `{GATE_SCOPE}`: the frozen reference solver scored against this package's own judge packet; "
-                "no model was evaluated and this is not a Woland verdict.",
+                "no model was evaluated and this is not a Adversary verdict.",
                 "- Digests were computed at reveal time; there is no commitment made before the run.",
                 f"- Judge cases passed by both checkers: {passed_cases}/{total_cases}",
                 f"- Hostile mutations rejected ({MUTATION_KILL_RULE}): {killed_mutations}/{total_mutations}",

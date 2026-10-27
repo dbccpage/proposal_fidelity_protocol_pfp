@@ -11,10 +11,10 @@ maturity: canonical
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_education/documentation/004_oepfp/docs/14_release_checklist.md
+  - education/documentation/004_oepfp/docs/14_release_checklist.md
 source_revision: c419cc6beb
 prerequisites: []
-verification: none at the 2026-10-20 pin (the former test omega_engine_education/the_symbol_game/tests/test_documentation_route_canonical.py is not present)
+verification: none at the 2026-10-20 pin (the former test education/the_symbol_game/tests/test_documentation_route_canonical.py is not present)
 aliases:
   - 03_oss_packaging.md
 related:

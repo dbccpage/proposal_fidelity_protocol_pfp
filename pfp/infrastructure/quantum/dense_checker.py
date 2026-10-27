@@ -14,7 +14,7 @@ from typing import Any, Mapping
 
 import numpy as np
 
-from omega_engine_pfp.domain.quantum.hamiltonian import parse_challenge
+from pfp.domain.quantum.hamiltonian import parse_challenge
 
 
 # Standard Pauli matrices

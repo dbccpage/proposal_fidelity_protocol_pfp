@@ -15,7 +15,7 @@ sources:
 uses: ["ENC-0914", "ENC-0915", "ENC-0917", "ENC-0918"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -44,7 +44,7 @@ If either component is already target-image injective, then the pair is safe.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
 
 The Lean theorem names are:
 

@@ -16,7 +16,7 @@ Paper 033 drives the Paper 032 governor on a weighted three-cycle.
 The initial edge assertions have nonzero irreducible defect; a host
 `CUT` replaces claims and checks zero. This is a *different declared
 board* from the one-edge adapter, and that `CUT` changes claims. It
-does not prove that Alpha observations always admit an Omega repair.
+does not prove that Alpha observations always admit an Core repair.
 
 > **Claim-typing legend**
 > - **[Pinned]**: taken from a file this repository already has.
@@ -25,7 +25,7 @@ does not prove that Alpha observations always admit an Omega repair.
 > - **[Open]**: something this sitting does not decide.
 ## Anchors
 
-- Former notebook: `13_alpha_to_omega_execution`
+- Former notebook: `13_alpha_to_core_execution`
 - The code checks one finite example. It is not a general proof.
 
 ## Exercise

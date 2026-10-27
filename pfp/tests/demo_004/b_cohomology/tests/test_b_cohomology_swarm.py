@@ -6,19 +6,19 @@ from decimal import Decimal
 from fractions import Fraction
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.swarm.budget_controller import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.swarm.budget_controller import (
     BudgetController,
     BudgetExhaustedRefusal,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.swarm.cohomology_solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.swarm.cohomology_solver import (
     CohomologySolver,
     verify_independent_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.swarm.lggr_detector import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.swarm.lggr_detector import (
     LggrDetector,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.swarm.woland_overseer import (
-    WolandCohomologyOverseer,
+from projects.mssn_sn_symgam.challenges.b_cohomology.swarm.adversary_overseer import (
+    AdversaryCohomologyOverseer,
 )
 
 
@@ -57,10 +57,10 @@ def test_direct_host_does_not_create_second_execution_path():
 
 
 def test_overseer_refuses_without_emitting_fake_acts_or_receipts(tmp_path):
-    overseer = WolandCohomologyOverseer(tmp_path)
+    overseer = AdversaryCohomologyOverseer(tmp_path)
     result = overseer.execute_challenge("c011", {"nodes": []}, task_key="test")
     assert result.verdict == "REFUSE"
-    assert result.refusal == "WOLAND_EXECUTION_UNAVAILABLE"
+    assert result.refusal == "ADVERSARY_EXECUTION_UNAVAILABLE"
     assert result.receipt_sha256 is None
     assert result.certificate is None
     assert result.billed_cost_usd is None
@@ -68,11 +68,11 @@ def test_overseer_refuses_without_emitting_fake_acts_or_receipts(tmp_path):
 
 
 def test_battery_never_promotes_unexecuted_cases(tmp_path):
-    result = WolandCohomologyOverseer(tmp_path).execute_battery([{"id": "a"}, {"id": "b"}])
+    result = AdversaryCohomologyOverseer(tmp_path).execute_battery([{"id": "a"}, {"id": "b"}])
     assert result.total_cases == 2
     assert result.passed_cases == 0
     assert result.verdict == "REFUSE"
-    assert all(case["refusal"] == "WOLAND_EXECUTION_UNAVAILABLE" for case in result.case_results)
+    assert all(case["refusal"] == "ADVERSARY_EXECUTION_UNAVAILABLE" for case in result.case_results)
     assert list(tmp_path.iterdir()) == []
 
 
@@ -102,7 +102,7 @@ def test_budget_controller_thresholds_and_accounting():
 
     # Test accounting export
     acc = ctrl.to_accounting_dict()
-    assert acc["schema_version"] == "omega.accounting.v1"
+    assert acc["schema_version"] == "core.accounting.v1"
     assert acc["hard_ceiling_usd"] == "0.25"
     assert acc["target_ceiling_usd"] == "0.05"
 

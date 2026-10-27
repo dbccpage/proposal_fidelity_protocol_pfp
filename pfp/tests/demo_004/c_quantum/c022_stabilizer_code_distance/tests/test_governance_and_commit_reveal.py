@@ -16,21 +16,21 @@ from fractions import Fraction
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.budget_gate import (
     HARD_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
     BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.commit_reveal_runner import (
     CommitRevealRunner,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.governance.adversary_gate import (
     GATE_SCOPE,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
@@ -147,8 +147,8 @@ def test_budget_gate_accounting_dict():
     assert d["model_parameter_ceiling"] == "70B"
 
 
-def test_woland_gate_terminal_verdicts(tmp_path):
-    gate = WolandGate(base_repo_root=tmp_path)
+def test_adversary_gate_terminal_verdicts(tmp_path):
+    gate = AdversaryGate(base_repo_root=tmp_path)
     # All pass, 0 defects, exact zero defect values
     verdict = gate.determine_terminal_verdict(
         [{"verdict": "PASS", "agreement": True}],
@@ -166,9 +166,9 @@ def test_woland_gate_terminal_verdicts(tmp_path):
     assert verdict_fail == TERMINAL_REFUSE
 
 
-def test_woland_gate_defect_values_are_exact_without_tolerance(tmp_path):
+def test_adversary_gate_defect_values_are_exact_without_tolerance(tmp_path):
     """Counterexample: phi1=0.0 (float) was accepted and a Phi_1 below 1e-6 passed under a float tolerance."""
-    gate = WolandGate(base_repo_root=tmp_path)
+    gate = AdversaryGate(base_repo_root=tmp_path)
     passing = [{"verdict": "PASS", "agreement": True}]
     assert gate.determine_terminal_verdict(passing, phi1=Fraction(1, 10**7)) == TERMINAL_REFUSE
     with pytest.raises(TypeError):
@@ -176,27 +176,27 @@ def test_woland_gate_defect_values_are_exact_without_tolerance(tmp_path):
     assert gate.determine_terminal_verdict([]) == "REFERENCE_SELF_INCONSISTENT"
 
 
-def test_woland_gate_persistence(tmp_path):
-    gate = WolandGate(base_repo_root=tmp_path)
+def test_adversary_gate_persistence(tmp_path):
+    gate = AdversaryGate(base_repo_root=tmp_path)
     claim_hygiene = {
         "supports": "Stabilizer code distance",
         "does_not_support": "Unbounded models",
         "narrowest_defensible_claim": "Reference solver passes 100% of cases",
         "next_test_needed": "Hostile fuzzing",
     }
-    verdict, p_woland, p_sg, digests = gate.evaluate_and_persist(
+    verdict, p_adversary, p_sg, digests = gate.evaluate_and_persist(
         task_key="c022_unit_test",
         run_id="run_c022_unit_test",
         case_results=[{"verdict": "PASS", "agreement": True}],
         claim_hygiene=claim_hygiene,
     )
     assert verdict == TERMINAL_REFERENCE_SELF_CONSISTENT
-    assert p_woland.exists()
-    assert (p_woland / "receipt.json").exists()
-    assert (p_woland / "novella.md").exists()
-    assert (p_woland / "dda_actions.jsonl").exists()
-    assert (p_woland / "summary.json").exists()
-    receipt = json.loads((p_woland / "receipt.json").read_text(encoding="utf-8"))
+    assert p_adversary.exists()
+    assert (p_adversary / "receipt.json").exists()
+    assert (p_adversary / "novella.md").exists()
+    assert (p_adversary / "dda_actions.jsonl").exists()
+    assert (p_adversary / "summary.json").exists()
+    receipt = json.loads((p_adversary / "receipt.json").read_text(encoding="utf-8"))
     assert receipt["gate_scope"] == GATE_SCOPE
     assert "letter_tape" not in receipt
 
@@ -233,7 +233,7 @@ def test_commit_reveal_pipeline(tmp_path):
     assert p3["evaluation_summary"]["passed_cases"] == total
     assert p3["evaluation_summary"]["agreement_count"] == total
     assert (
-        tmp_path / "intelligence" / "_intelligence" / "_woland" / "runs" / "c022_cr_pipeline_test"
+        tmp_path / "intelligence" / "_intelligence" / "_adversary" / "runs" / "c022_cr_pipeline_test"
     ).is_dir()
 
 

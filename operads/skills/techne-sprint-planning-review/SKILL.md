@@ -100,14 +100,14 @@ Updated Sprint 113-0 session -- user directive "Ignore orphans"
 | Sprint Review | Tier 11 | LAMBDA-129 | Inspector | Enacted |
 | Product Owner Review | Tier 11 | LAMBDA-129 | Inspector | Embedded |
 | Blackrod Quality Review | Tier 14 | LAMBDA-151 | Analyst | Extended |
-| Techne Code Soviet Inspector | Tier 10 | LAMBDA-100 | Inspector | Enacted |
+| Techne Code Inspector | Tier 10 | LAMBDA-100 | Inspector | Enacted |
 | Scrum Master Approval | Tier 7 | LAMBDA-046 | Analyst | Embodied |
 
 ### Mandatory Defect Investigation Logging (`RULE_DEFECT_INVESTIGATION_LOGGING_001`)
 
 Whenever this skill encounters any error, build failure, veto, linter defect, anti-pattern breach, proof/contract obstruction, or process violation:
 1. Automatically create a formal investigation report under:
-   `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{skill_name}_{defect_id}.md`
+   `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{skill_name}_{defect_id}.md`
 2. Include full error trace/context, root cause analysis, affected files, and recommended workflow remediation plan for Blackrod review.
 
 ## Related Skills
@@ -118,22 +118,22 @@ Whenever this skill encounters any error, build failure, veto, linter defect, an
 | sprint-execution | Follows: executes after approval |
 | sprint-retrospective | Follows execution: reviews outcomes |
 | blackrod | Co-reviewer: enforces quality gates |
-| `techne-code-soviet-inspector` | MANDATORY: validates test assertions before approval |
+| `techne-code-inspector` | MANDATORY: validates test assertions before approval |
 
 **Family:** sprint-workflow (see [family_registry.md](../_shared/family_registry.md))
 
 ## Witness Artifact and Review Constraint (MANDATORY)
 
-**Witness Artifact** = one of: Log file, Screenshot hash file, or Test report — stored under `omega_engine/omega_engine_operations/evidence/` and referenced by **file path**.
+**Witness Artifact** = one of: Log file, Screenshot hash file, or Test report — stored under `engine/operations/evidence/` and referenced by **file path**.
 
 **Demo step — no text-only credit:**
 
 - Reject demo output that is **only** text (e.g. "It works"). Such output is not verifiable and is treated as assertion, not evidence.
-- For each completed ticket or demo outcome, require at least one **Witness Artifact path** under `omega_engine/omega_engine_operations/evidence/`, or an explicit approved exception (e.g. "Planning-only sprint; no demo artifacts" with Product Owner/Blackrod note).
+- For each completed ticket or demo outcome, require at least one **Witness Artifact path** under `engine/operations/evidence/`, or an explicit approved exception (e.g. "Planning-only sprint; no demo artifacts" with Product Owner/Blackrod note).
 
-**Review Constraint:** A story **cannot be CLOSED** (marked DONE for review/credit) unless a Witness Artifact exists at a stated path in `omega_engine/omega_engine_operations/evidence/`. **No path = No credit.**
+**Review Constraint:** A story **cannot be CLOSED** (marked DONE for review/credit) unless a Witness Artifact exists at a stated path in `engine/operations/evidence/`. **No path = No credit.**
 
-In `review.md`, every completed ticket must list an **Evidence path** (file path under `omega_engine/omega_engine_operations/evidence/`). Missing path → story not counted as completed.
+In `review.md`, every completed ticket must list an **Evidence path** (file path under `engine/operations/evidence/`). Missing path → story not counted as completed.
 
 ## Constraints
 
@@ -145,7 +145,7 @@ Summary:
 
 - Sprint cannot proceed without explicit approval (APPROVAL_REQUIRED)
 - Review decisions must cite specific evidence from artifacts (EVIDENCE_BASED)
-- Every completed ticket in review must have a file path under `omega_engine/omega_engine_operations/evidence/` (EVIDENCE_PATH_REQUIRED). No path = No credit.
+- Every completed ticket in review must have a file path under `engine/operations/evidence/` (EVIDENCE_PATH_REQUIRED). No path = No credit.
 
 ## Integration Points
 
@@ -154,7 +154,7 @@ Summary:
 | Inbound | sprint-planning | Review consumes plan, kickoff, and quality_gates artifacts produced by planning |
 | Outbound | sprint-execution | After approval, execution begins using the reviewed and approved plan |
 | Bidirectional | blackrod | Blackrod co-reviews quality gates (Step 8) and can block approval; review findings may trigger Blackrod escalations |
-| Inbound | `techne-code-soviet-inspector` | Techne Code Soviet Inspector audit (Step 7) must pass before Blackrod quality review proceeds |
+| Inbound | `techne-code-inspector` | Techne Code Inspector audit (Step 7) must pass before Blackrod quality review proceeds |
 | Outbound | sprint-planning | If changes requested, review sends feedback back to planning for revision |
 
 **Example session:** See [`example-session.md`](references/example-session.md).

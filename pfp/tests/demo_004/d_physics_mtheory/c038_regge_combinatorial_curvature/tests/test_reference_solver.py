@@ -14,13 +14,13 @@ import unittest
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.reference_solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.reference_solver import (
     exact_transport,
     graph_curvature,
     regge_surface,
     solver,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.reference_solver.solver import (
     get_last_tracer,
     solve,
 )

@@ -2,7 +2,7 @@
 
 Referenced by `rust-principal-developer`, `rust-tester`, `rust-code-reviewer`.
 Do not re-host this list inline — a copy is `DUPLICATE_RULE` (auto-symmetry-hunter
-SYM-006). Enforced as a veto by the Techne Code Soviet Inspector.
+SYM-006). Enforced as a veto by the Techne Code Inspector.
 
 ## A test must be able to fail for the right reason
 

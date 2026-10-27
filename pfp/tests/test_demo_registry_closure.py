@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.infrastructure.demos.catalog import (
+from pfp.infrastructure.demos.catalog import (
     implementation_digest,
     lookup,
     registry_closure,
@@ -29,7 +29,7 @@ def test_demo_registry_set_closure():
     """Verify that curriculum demo directories and registered front-ends form an exact closed set."""
     report = registry_closure()
     assert report.is_closed, f"Demo registry set-closure failed: {report}"
-    assert report.schema_version == "omega.mssn.catalog.v2"
+    assert report.schema_version == "core.mssn.catalog.v2"
     assert report.demo_dirs_count == 28
     assert report.front_ends_count == 28
     assert report.missing_demo_dirs == ()
@@ -53,7 +53,7 @@ def test_q40_quantum_solver_registered_in_catalog():
     assert q40.challenge_id == "C021"
     assert q40.kind == "quantum"
     assert q40.test == ""
-    assert q40.use_case == "omega_engine_pfp.use_cases.mssn_demo"
+    assert q40.use_case == "pfp.use_cases.mssn_demo"
 
     # Test fixture bytes integrity via SHA-256
     row = lookup("demo_q40_quantum_solver")
@@ -76,20 +76,20 @@ def test_implementation_digest_integrity():
 
 
 def test_implementation_digest_uses_current_provider_owner(monkeypatch, tmp_path):
-    from omega_engine_pfp.infrastructure.demos import catalog
+    from pfp.infrastructure.demos import catalog
 
     real_files = catalog.files
     original_catalog = real_files(catalog.PACKAGE).joinpath("catalog.json").read_bytes()
     before = catalog.implementation_digest()
-    provider_root = tmp_path / "woland"
+    provider_root = tmp_path / "adversary"
     for owner, path in catalog._CURRENT_IMPLEMENTATION_OWNERS.values():
         current = provider_root / path
         current.parent.mkdir(parents=True, exist_ok=True)
         current.write_bytes(real_files(owner).joinpath(path).read_bytes())
 
     def current_files(package):
-        assert package != "omega_engine_providers", "retired resources must not be probed"
-        return provider_root if package == "omega_engine_woland" else real_files(package)
+        assert package != "providers", "retired resources must not be probed"
+        return provider_root if package == "adversary" else real_files(package)
 
     monkeypatch.setattr(catalog, "files", current_files)
     assert catalog.implementation_digest() == before
@@ -103,7 +103,7 @@ def test_implementation_digest_uses_current_provider_owner(monkeypatch, tmp_path
 
 
 def test_implementation_digest_binds_pfp_turn_sources(monkeypatch):
-    from omega_engine_pfp.infrastructure.demos import catalog
+    from pfp.infrastructure.demos import catalog
 
     before = catalog.implementation_digest()
     # Removing one actual dependency must change the current code identity.

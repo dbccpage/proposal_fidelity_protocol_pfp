@@ -27,11 +27,11 @@ _repo_root = next((p for p in Path(__file__).resolve().parents if (p / "pyprojec
 if _repo_root is not None and str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.infrastructure.formal_matrix import (  # noqa: E402
+from pfp.infrastructure.formal_matrix import (  # noqa: E402
     new_run_nonce,
     run_folder,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.symbol_game_experiment import (  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.symbol_game_experiment import (  # noqa: E402
     load_calibrated_10_lemma_panel,
     parse_cli,
     run_benchmark_panel,
@@ -56,7 +56,7 @@ METHODS = [
 def run_full_matrix(tiers=None, methods=None, *, gateways=None, max_tokens=512,
     max_estimated_cost_microusd=None, max_provider_calls=None, case_limit=None,
     env_file=None, cases=None) -> List[Dict[str, Any]]:
-    from omega_engine_pfp.infrastructure.pilot_matrix import _scope, make_pilot_gateways, validate_pilot_gateways
+    from pfp.infrastructure.pilot_matrix import _scope, make_pilot_gateways, validate_pilot_gateways
 
     active_tiers = TIERS if tiers is None else tiers
     active_methods = METHODS if methods is None else methods

@@ -1,11 +1,11 @@
 # Operadic Semantics Map
 
-> **HISTORICAL.** Paths in this note that name `.agents/operad/` are not the live tree. The executable tree is `skill_operad/`. The consolidation record is [chapter 23](../../../omega_engine_education/documentation/008_oewas/atlas/23_plan_oewas_consolidation_oeeis_and_demo_integration.md).
+> **HISTORICAL.** Paths in this note that name `.agents/operad/` are not the live tree. The executable tree is `skill_operad/`. The consolidation record is [chapter 23](../../../education/documentation/008_oewas/atlas/23_plan_oewas_consolidation_oeeis_and_demo_integration.md).
 
 **AuthorityEffect: None.** Read this before typing a skill or composing a pipeline.
 
 For the atlas and current nonclaims, see the
-[OEWAS Atlas and Encyclopedia](../../../omega_engine_education/documentation/008_oewas/atlas/00_oewas_atlas_encyclopedia.md).
+[OEWAS Atlas and Encyclopedia](../../../education/documentation/008_oewas/atlas/00_oewas_atlas_encyclopedia.md).
 
 This file tells a model that has never seen the repo what the skill signatures mean.
 It is descriptive: where the implementation and the theory disagree, this file records
@@ -66,7 +66,7 @@ discovered independently twice.
 - **`entry`** -- a single point of entry a human invokes. The `rip-*` family calls itself
   "SINGLE POINT OF ENTRY"; `0-oe-commit` is one too.
 - **`discipline`** -- a reusable stage another skill invokes. `paper-build` calls itself
-  "OEARS stage_5"; `thanatos-old-man-chatgpt-red-team` runs "at the very end of EVERY
+  "OEARS stage_5"; `thanatos-chatgpt-red-team` runs "at the very end of EVERY
   /rip-* workflow".
 
 **The law: an `entry` skill may invoke `discipline` skills, but never another `entry`.**
@@ -140,7 +140,7 @@ What is **not** true today, stated plainly so no one builds on it:
    zero-of-zero as confirmed. A replacement requires a workflow-supported triple;
    colour-compatible operations are not interchangeable.
 6. **`bulk_operad_ingest.py` is DEF-OP-01 quarantined.** Dry-run by default; writes require
-   `OMEGA_BULK_OPERAD_INGEST=1`. `infer_colours()` is still heuristic -- treat any colour it
+   `CORE_BULK_OPERAD_INGEST=1`. `infer_colours()` is still heuristic -- treat any colour it
    produced as unverified. Residual is always forced to `unknown` on ingest.
 7. **`operad_signature.json` identities/compositions layout** is not fully round-trip
    consistent with `to_signature_dict()`; compositions live primarily in

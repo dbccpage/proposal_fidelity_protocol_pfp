@@ -32,15 +32,15 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp import initialize_exact_ports
-from omega_engine_pfp.domain.entities.coboundary_score import (
+from pfp import initialize_exact_ports
+from pfp.domain.entities.coboundary_score import (
     CandidateProposal,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     freeze,
 )
-from omega_engine_pfp.domain.solvers import (
+from pfp.domain.solvers import (
     BASE,
     AdmitDatum,
     AdmitForm,
@@ -52,14 +52,14 @@ from omega_engine_pfp.domain.solvers import (
     host,
     run_retraction_loop,
 )
-from omega_engine_pfp.infrastructure.architecture_fitness import (
+from pfp.infrastructure.architecture_fitness import (
     load_baseline,
 )
-from omega_engine_pfp.infrastructure.release_gate import (
+from pfp.infrastructure.release_gate import (
     LayerOutcome,
     verify_lean_concordance,
 )
-from omega_engine_pfp.use_cases.scoring import score_discrete_proposal
+from pfp.use_cases.scoring import score_discrete_proposal
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -134,7 +134,7 @@ def test_f_symgam_002_budget_bounded_steps() -> None:
 # ---------------------------------------------------------------------------
 def test_f_symgam_003_epics_crate_has_no_pyo3() -> None:
     """F-SYMGAM-003: the host Cargo.toml that owns the epics modules has no pyo3 dependency."""
-    cargo_path = REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "Cargo.toml"
+    cargo_path = REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "Cargo.toml"
     assert cargo_path.exists(), f"Missing Cargo.toml at {cargo_path}"
     content = cargo_path.read_text(encoding="utf-8")
     assert "pyo3" not in content, "F-SYMGAM-003 violated: pyo3 dependency found in symbol game host"
@@ -176,7 +176,7 @@ def test_f_symgam_004_phi1_simplicial_composite_defect() -> None:
 def test_f_symgam_005_seven_distinct_acts_and_host_identity() -> None:
     """F-SYMGAM-005: Act::ALL contains exactly seven distinct acts in strict sequence."""
     retraction_rs = (
-        REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "epics" / "retraction.rs"
+        REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "epics" / "retraction.rs"
     )
     content = retraction_rs.read_text(encoding="utf-8")
     expected_acts = [
@@ -191,7 +191,7 @@ def test_f_symgam_005_seven_distinct_acts_and_host_identity() -> None:
     for act in expected_acts:
         assert act in content, f"Missing expected act {act} in retraction.rs"
 
-    host_rs = REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "host.rs"
+    host_rs = REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "host.rs"
     host_sources = [host_rs, *sorted(host_rs.with_suffix("").glob("*.rs"))]
     host_content = "\n".join(path.read_text(encoding="utf-8") for path in host_sources)
     assert "fn same_carrier_identity" in host_content
@@ -204,7 +204,7 @@ def test_f_symgam_005_seven_distinct_acts_and_host_identity() -> None:
 def test_f_symgam_006_orientation_reversal_refusal() -> None:
     """F-SYMGAM-006: Orientation-reversing simplicial morphism vertex maps are refused."""
     transport_rs = (
-        REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "epics" / "transport.rs"
+        REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "epics" / "transport.rs"
     )
     content = transport_rs.read_text(encoding="utf-8")
     assert "OrientationReversed" in content
@@ -216,7 +216,7 @@ def test_f_symgam_006_orientation_reversal_refusal() -> None:
 def test_f_symgam_007_debate_logarithmic_bound() -> None:
     """F-SYMGAM-007: Disagreement localization satisfies logarithmic round bound ceil(log2 N)."""
     debate_rs = (
-        REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "epics" / "debate.rs"
+        REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "epics" / "debate.rs"
     )
     content = debate_rs.read_text(encoding="utf-8")
     assert "DisagreementLocalizationEngine" in content
@@ -252,7 +252,7 @@ def test_f_symgam_008_manifold_scoring_strictly_rational() -> None:
 # ---------------------------------------------------------------------------
 def test_f_symgam_009_architecture_fitness_ratchet() -> None:
     """F-SYMGAM-009: Recorded domain pathlib offences are within baseline ratchet, seam allowlist is minimal."""
-    from omega_engine_pfp.infrastructure.architecture_fitness import (
+    from pfp.infrastructure.architecture_fitness import (
         domain_offences,
         ratchet_violations,
         seam_importers,
@@ -261,7 +261,7 @@ def test_f_symgam_009_architecture_fitness_ratchet() -> None:
 
     baseline_path = (
         REPO_ROOT
-        / "omega_engine_pfp"
+        / "pfp"
         / "infrastructure"
         / "architecture_baseline.json"
     )
@@ -294,12 +294,12 @@ def test_f_symgam_010_lean_concordance_unverifiable() -> None:
 def test_f_symgam_011_genesis_empty_quiz_refusal() -> None:
     """F-SYMGAM-011: Empty quiz is refused, and primitive difference carries no payload."""
     genesis_rs = (
-        REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "genesis.rs"
+        REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "genesis.rs"
     )
     content = genesis_rs.read_text(encoding="utf-8")
     assert "EmptyQuiz" in content
-    assert "LandauReceiptV1" in content
-    assert "omega.symbol.genesis_landau.v1" in content or "omega.symbol_game.genesis_landau.v1" in content
+    assert "ExaminerReceiptV1" in content
+    assert "core.symbol.genesis_examiner.v1" in content or "core.symbol_game.genesis_examiner.v1" in content
 
 
 # ---------------------------------------------------------------------------
@@ -308,7 +308,7 @@ def test_f_symgam_011_genesis_empty_quiz_refusal() -> None:
 def test_f_symgam_012_exact_guards_and_blank_reviewer() -> None:
     """F-SYMGAM-012: Guard compilation produces exact guards and refuses blank reviewers."""
     guard_rs = (
-        REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "epics" / "guard.rs"
+        REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "epics" / "guard.rs"
     )
     content = guard_rs.read_text(encoding="utf-8")
     assert "GuardScope::Exact" in content or "CandidateFingerprint" in content
@@ -321,7 +321,7 @@ def test_f_symgam_012_exact_guards_and_blank_reviewer() -> None:
 def test_f_symgam_013_probing_eigenvalues_refusal() -> None:
     """F-SYMGAM-013: Probing refuses float eigenvalues and computes exact characteristic polynomials."""
     probing_rs = (
-        REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "epics" / "probing.rs"
+        REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "epics" / "probing.rs"
     )
     content = probing_rs.read_text(encoding="utf-8")
     assert "EigenvaluesNotExact" in content
@@ -334,7 +334,7 @@ def test_f_symgam_013_probing_eigenvalues_refusal() -> None:
 def test_f_symgam_014_coda_layer_bridging_refused() -> None:
     """F-SYMGAM-014: Cross-layer promotion between CODA layers is refused with SeamCrossing."""
     coda_rs = (
-        REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "epics" / "coda.rs"
+        REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "epics" / "coda.rs"
     )
     content = coda_rs.read_text(encoding="utf-8")
     assert "SeamCrossing" in content
@@ -346,7 +346,7 @@ def test_f_symgam_014_coda_layer_bridging_refused() -> None:
 def test_f_symgam_015_library_citation_never_proof_and_census() -> None:
     """F-SYMGAM-015: Citation is never proof, and library census sums to exactly 5,000."""
     library_rs = (
-        REPO_ROOT / "omega_engine" / "crates_rs" / "omega_symbol_game" / "src" / "epics" / "library.rs"
+        REPO_ROOT / "engine" / "crates_rs" / "core_symbol_game" / "src" / "epics" / "library.rs"
     )
     content = library_rs.read_text(encoding="utf-8")
     assert "CitationIsNotProof" in content
@@ -360,17 +360,17 @@ def test_f_symgam_016_ooutwire_manifest_and_registry_census() -> None:
     """F-SYMGAM-016: Manifest declares 16 integrated_then_deleted records; registry holds 19 games."""
     manifest_path = (
         REPO_ROOT
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_symbol_game"
+        / "core_symbol_game"
         / "registry"
         / "ooutwire_ingestion_manifest.yaml"
     )
     registry_path = (
         REPO_ROOT
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_symbol_game"
+        / "core_symbol_game"
         / "registry"
         / "registry_glyph_games.yaml"
     )

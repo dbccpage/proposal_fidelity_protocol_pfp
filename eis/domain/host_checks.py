@@ -15,10 +15,10 @@ Signal 1 (see `danger_signals`).
   functional values (phi, gamma, xi), verdict labels (verified, certified) and
   the authority label. Keys are compared after lower-casing and removing
   underscores, the normalisation used by
-  `omega_engine_pfp.domain.demos.refuse_model_functionals`, which raises
+  `pfp.domain.demos.refuse_model_functionals`, which raises
   on the first such key; this check reports all of them.
 - `persona_authority_leak_loci` is the Python-only PERSONA_AUTHORITY_LEAK
-  check. The native pharmacy (`omega_prompt_civilization::pharmacy`) does not
+  check. The native pharmacy (`core_prompt_civilization::pharmacy`) does not
   implement it, so it is kept here as a separately named check: a string that
   names an unauthorised persona (for example "system administrator") while no
   granted role name appears in the same string. Matching uses Python's Unicode
@@ -30,7 +30,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from omega_engine_epistemic_immune_system.domain.definitions_loader import (
+from eis.domain.definitions_loader import (
     load_screening_vocabulary,
 )
 

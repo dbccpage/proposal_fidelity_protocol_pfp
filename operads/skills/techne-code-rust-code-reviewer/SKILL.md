@@ -26,7 +26,7 @@ script below discovers direct Cargo crates and includes loose files in its
 review any gap explicitly; cache directories are deliberately excluded.
 
 ```powershell
-.venv/Scripts/python.exe omega_engine_operads/skills/techne-code-rust-code-reviewer/scripts/rust_crate_reviewer.py --base-dir omega_engine/crates_rs --check
+.venv/Scripts/python.exe operads/skills/techne-code-rust-code-reviewer/scripts/rust_crate_reviewer.py --base-dir engine/crates_rs --check
 ```
 
 The automated reviewer uses regex/source heuristics, not a compiler AST. Read

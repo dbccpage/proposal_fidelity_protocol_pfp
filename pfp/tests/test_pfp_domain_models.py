@@ -20,40 +20,40 @@ from __future__ import annotations
 import json
 import unittest
 
-from omega_engine_pfp.domain.contracts.contracts import (
+from pfp.domain.contracts.contracts import (
     ContractAuditReceipt,
     ContractSpec,
     Precondition,
 )
-from omega_engine_pfp.domain.contracts.gates import GateReceipt, GateSpec, GateVerdict, WolandGateId
-from omega_engine_pfp.domain.contracts.schemas import (
+from pfp.domain.contracts.gates import GateReceipt, GateSpec, GateVerdict, AdversaryGateId
+from pfp.domain.contracts.schemas import (
     SchemaCatalog,
     SchemaSpec,
     SchemaValidationResult,
 )
-from omega_engine_pfp.domain.homology.carrier import Carrier, Edge, ProtoSupport
-from omega_engine_pfp.domain.homology.cochain import (
+from pfp.domain.homology.carrier import Carrier, Edge, ProtoSupport
+from pfp.domain.homology.cochain import (
     BoundaryMatrix,
     Cochain,
     IntegerChain,
     IntegerMatrix,
 )
-from omega_engine_pfp.domain.homology.ddc import DDCStep, DDCTape
-from omega_engine_pfp.domain.normal_forms.contracts import (
+from pfp.domain.homology.ddc import DDCStep, DDCTape
+from pfp.domain.normal_forms.contracts import (
     NFClassification,
     NFIdentity,
     NFPurpose,
     NormalFormContract,
     NormalFormVerificationReceipt,
 )
-from omega_engine_pfp.domain.prompts.packets import (
+from pfp.domain.prompts.packets import (
     PacketEnvelope,
     PacketVerificationReceipt,
     canonical_json_bytes,
     sha256_canonical_hex,
 )
-from omega_engine_pfp.domain.prompts.prompts import PromptPacket, PromptSlot, PromptTemplate
-from omega_engine_pfp.domain.rewriting.rewrites import (
+from pfp.domain.prompts.prompts import PromptPacket, PromptSlot, PromptTemplate
+from pfp.domain.rewriting.rewrites import (
     Binding,
     Boundary,
     ComparisonTrial,
@@ -62,7 +62,7 @@ from omega_engine_pfp.domain.rewriting.rewrites import (
     Segment,
     parse_boundary,
 )
-from omega_engine_pfp.domain.rewriting.wires import (
+from pfp.domain.rewriting.wires import (
     AppTerm,
     AtomTerm,
     SyntaxProfile,
@@ -71,15 +71,15 @@ from omega_engine_pfp.domain.rewriting.wires import (
     WireCodec,
     WirePacket,
 )
-from omega_engine_pfp.domain.stages.demos import CheckResult, DemoRunReceipt, DemoSpec
-from omega_engine_pfp.domain.stages.modes import (
+from pfp.domain.stages.demos import CheckResult, DemoRunReceipt, DemoSpec
+from pfp.domain.stages.modes import (
     ModeCluster,
     ModeFile,
     ModesManifest,
     ModeSummary,
     VerifierContract,
 )
-from omega_engine_pfp.domain.stages.stages import (
+from pfp.domain.stages.stages import (
     ControllerStageRef,
     Executor,
     InputContract,
@@ -218,21 +218,21 @@ class TestPfpDomainModels(unittest.TestCase):
         self.assertEqual(len(receipt.checks), 1)
 
     def test_06_gates_models(self) -> None:
-        """Test Woland Gate specifications and verdicts."""
+        """Test Adversary Gate specifications and verdicts."""
         spec = GateSpec(
-            gate_id=WolandGateId.PFP_13_WOLAND.value,
-            name="Woland",
-            character="Woland",
+            gate_id=AdversaryGateId.PFP_13_ADVERSARY.value,
+            name="Adversary",
+            character="Adversary",
             role="Reality anchor and final tribunal check",
             doctrine="Fail closed reality check",
             objective="Audit candidate validity against exact oracle",
         )
-        self.assertEqual(spec.gate_id, "PFP-13-WOLAND")
+        self.assertEqual(spec.gate_id, "PFP-13-REALITY-GATE")
 
         verdict = GateVerdict(
-            gate_id=WolandGateId.PFP_13_WOLAND.value,
+            gate_id=AdversaryGateId.PFP_13_ADVERSARY.value,
             passed=True,
-            character="Woland",
+            character="Adversary",
             observation="Replay verified",
         )
         receipt = GateReceipt(

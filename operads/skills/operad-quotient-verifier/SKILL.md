@@ -68,7 +68,7 @@ The operation is evaluated against the Discrete Deformation Calculus (DDC) resid
 Upon completion, the verifier emits a typed `OperadVerificationReceiptV1`:
 
 ```yaml
-schema_version: omega.operad-verification-receipt.v1
+schema_version: core.operad-verification-receipt.v1
 status: VERIFIED
 authority_effect: None
 operation_digest: sha256/full-64-lower-hex

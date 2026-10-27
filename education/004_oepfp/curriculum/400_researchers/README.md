@@ -35,6 +35,6 @@
 - `lesson_400_20_the_r_b_g_proof_program.ipynb`
 - `lesson_400_21_the_lggr_paradox.ipynb`
 - `lesson_400_22_detector_adequacy_and_asymmetric_verdict.ipynb`
-- `lesson_400_23_the_woland_swarm_axiom.ipynb`
+- `lesson_400_23_the_adversary_swarm_axiom.ipynb`
 - `lesson_400_24_dialectical_9_dot_gauge_breaks.ipynb`
 - `lesson_400_25_professional_capstone.ipynb`

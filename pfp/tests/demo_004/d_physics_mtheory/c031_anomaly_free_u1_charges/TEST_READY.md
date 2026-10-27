@@ -8,7 +8,7 @@
 
 ## 1. Test Suite Summary
 
-The comprehensive, opaque-box, requirement-driven E2E and unit test suite for C031 (Anomaly-Free Chiral $U(1)$ Charge Assignments) has been authored and verified against `c031_anomaly_free_u1_charges.md`, architecture designs, and SG-CP v1. All tests adhere strictly to the Lev Landau Soviet falsification methodology (verifying Invariant, Break, Witness, and Mutation) and strict claim hygiene (narrow, bounded, defensible claims with zero hype verbs).
+The comprehensive, opaque-box, requirement-driven E2E and unit test suite for C031 (Anomaly-Free Chiral $U(1)$ Charge Assignments) has been authored and verified against `c031_anomaly_free_u1_charges.md`, architecture designs, and SG-CP v1. All tests adhere strictly to the Examiner falsification methodology (verifying Invariant, Break, Witness, and Mutation) and strict claim hygiene (narrow, bounded, defensible claims with zero hype verbs).
 
 | Test Module | Focus Area | Tests | Status | Execution Time |
 |:---|:---|:---:|:---:|:---:|
@@ -16,7 +16,7 @@ The comprehensive, opaque-box, requirement-driven E2E and unit test suite for C0
 | `tests/test_reference_solver.py` | Reference solver mathematical invariants, $n \le 4$ non-existence identity, exact counts for $n=5,6$, $O(1)$ solve_pair resolvent, spectator pair completions, DDC 8-letter hash chain | 9 | PASS | 0.38s |
 | `tests/test_dual_checkers.py` | Dual independent checkers, 46 judge cases (32 base, 8 controls, 6 poisoned), manifest UTF-8 ordinal sorting, 100% dual evaluator agreement | 5 | PASS | 1.40s |
 | `judge_packet/mutation_suite/test_checker_mutations.py` | Mutation testing suite across 36 corrupted certificates verifying 100% kill rate (Checker 1 & Checker 2) | 37 | PASS | 0.63s |
-| `tests/test_governance_and_commit_reveal.py` | Tier T3 budget controller ($1.00 ceiling, $0.05 target, 70B ceiling, no fallbacks), Woland 7-Act reality gate, 3-Phase Commit-Reveal runner | 4 | PASS | 2.54s |
+| `tests/test_governance_and_commit_reveal.py` | Tier T3 budget controller ($1.00 ceiling, $0.05 target, 70B ceiling, no fallbacks), Adversary 7-Act reality gate, 3-Phase Commit-Reveal runner | 4 | PASS | 2.54s |
 | `tests/test_e2e_challenge.py` | Comprehensive 4-Tier E2E test suite (Features, boundaries $n \in [3, 12], Q \le 2\cdot 10^6$, cross-seam integration, full bout) | 12 | PASS | 3.38s |
 | **Total** | **Complete C031 Challenge Verification** | **71** | **PASS** | **8.80s** |
 
@@ -63,7 +63,7 @@ The comprehensive, opaque-box, requirement-driven E2E and unit test suite for C0
 ### 5. `tests/test_governance_and_commit_reveal.py` (4 tests)
 - `test_budget_gate_configuration_and_limits`: Validates BudgetController initialization, $1,000,000\,\mu\text{USD}$ hard ceiling, $50,000\,\mu\text{USD}$ target, and fail-closed halting on over-budget quotes.
 - `test_budget_gate_fallback_and_model_admittance`: Validates rejection of `allow_fallbacks=True`, admission of $\le 70\text{B}$ open-weights models, and rejection of $> 70\text{B}$ models.
-- `test_woland_gate_verdict_and_bundle_persistence`: Validates Bulgakovian 7-Act dialectic novella generation, StructureBench reverse write order 4-file bundle (`novella.md` $\to$ `dda_actions.jsonl` $\to$ `summary.json` $\to$ `receipt.json`), atomic renaming, dual-sink persistence, and `RunFolderExistsError` collision protection.
+- `test_adversary_gate_verdict_and_bundle_persistence`: Validates the novelistian 7-Act dialectic novella generation, StructureBench reverse write order 4-file bundle (`novella.md` $\to$ `dda_actions.jsonl` $\to$ `summary.json` $\to$ `receipt.json`), atomic renaming, dual-sink persistence, and `RunFolderExistsError` collision protection.
 - `test_commit_reveal_runner_three_phases_and_tamper`: Validates the complete 3-phase Commit-Reveal state machine: Phase 1 commitment, Phase 2 freeze, Phase 3 reveal and scoring, and cryptographic tamper detection on manifest modification.
 
 ### 6. `tests/test_e2e_challenge.py` (12 tests across 4 Tiers)
@@ -78,7 +78,7 @@ The comprehensive, opaque-box, requirement-driven E2E and unit test suite for C0
   - `test_tier2_closed_refusal_codes`: Validates all closed refusal codes at boundary conditions.
   - `test_tier2_out_of_scope_witnesses`: Validates all 3 `OUT_OF_SCOPE` witness kinds.
 - **Tier 3 (Cross-Seam Integration)**:
-  - `test_tier3_commit_reveal_runner_and_governance`: Validates end-to-end integration of CommitRevealRunner, BudgetGate, and WolandGate.
+  - `test_tier3_commit_reveal_runner_and_governance`: Validates end-to-end integration of CommitRevealRunner, BudgetGate, and AdversaryGate.
   - `test_tier3_ddc_tracer_receipt_chain`: Validates DDC tracer step chaining and hash verification on end-to-end solve.
 - **Tier 4 (Real-World Scenarios & Falsification)**:
   - `test_tier4_all_46_judge_cases_pass_with_100_percent_agreement`: Evaluates all 46 hidden cases (32 base, 8 controls, 6 poisoned) with dual evaluator, asserting 100% agreement and 0 defects.
@@ -86,7 +86,7 @@ The comprehensive, opaque-box, requirement-driven E2E and unit test suite for C0
 
 ---
 
-## 3. Lev Landau Falsification Matrix
+## 3. Examiner Falsification Matrix
 
 | Invariant | Break Attempt | Witness | Mutation Test | Result |
 |:---|:---|:---|:---|:---|
@@ -108,22 +108,22 @@ In compliance with repository governance rules, **never execute whole-suite swee
 
 ```bash
 # 1. Participant packet tests (4 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_participant_packet.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_participant_packet.py -v
 
 # 2. Reference solver & Diophantine engine tests (9 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_reference_solver.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_reference_solver.py -v
 
 # 3. Dual independent checkers & cases tests (5 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py -v
 
 # 4. Hostile mutation kill suite (37 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_checker_mutations.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_checker_mutations.py -v
 
-# 5. Governance, Tier T3 budget gate, Woland gate, and Commit-Reveal runner (4 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_governance_and_commit_reveal.py -v
+# 5. Governance, Tier T3 budget gate, Adversary gate, and Commit-Reveal runner (4 tests)
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_governance_and_commit_reveal.py -v
 
 # 6. Comprehensive 4-Tier E2E integration test suite (12 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_e2e_challenge.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_e2e_challenge.py -v
 ```
 
 ---

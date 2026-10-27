@@ -13,10 +13,10 @@ been reserved for them.
 2. Carroll, Jeremy H. (2026a). *PFP II: Signed Certificates, Resumable Search,
    and a Restricted Path-Pairing Obstruction*. Version 1.1.0, author-review
    preprint. Repository path
-   `omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier`.
+   `atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier`.
 3. Carroll, Jeremy H. (2026b). *PFP III: Admitting Failure Detectors and Testing
    Their Effects*. Version 1.1.0, author-review preprint. Repository path
-   `omega_engine_atlas/coda_atlas/omega_engine_pfp/003_pfp_host_admitted_failure_detectors`.
+   `atlas/coda_atlas/pfp/003_pfp_host_admitted_failure_detectors`.
 4. Necula, George C. (1997). “Proof-carrying code.” *Proceedings of the 24th
    ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages
    (POPL ’97)*, pp. 106–119. ACM Press.

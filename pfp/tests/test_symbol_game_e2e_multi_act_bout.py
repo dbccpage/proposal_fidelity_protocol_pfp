@@ -21,20 +21,20 @@ from fractions import Fraction
 import json
 import pytest
 
-from omega_engine_pfp import initialize_exact_ports
-from omega_engine_pfp.controllers import SymbolGameController, SymbolGameEngine
-from omega_engine_pfp.domain.entities.coboundary_score import (
+from pfp import initialize_exact_ports
+from pfp.controllers import SymbolGameController, SymbolGameEngine
+from pfp.domain.entities.coboundary_score import (
     CandidateProposal,
     CoboundaryScoreResult,
 )
-from omega_engine_pfp.domain.exact.q import Q
-from omega_engine_pfp.domain.models import ObstructionScore, StepVerdict
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.exact.q import Q
+from pfp.domain.models import ObstructionScore, StepVerdict
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     canonical_json,
     freeze,
 )
-from omega_engine_pfp.domain.solvers import (
+from pfp.domain.solvers import (
     BASE,
     AdmitDatum,
     AdmitForm,
@@ -52,7 +52,7 @@ from omega_engine_pfp.domain.solvers import (
     host,
     run_retraction_loop,
 )
-from omega_engine_pfp.use_cases.scoring import (
+from pfp.use_cases.scoring import (
     score_cochain_proposal,
     score_discrete_proposal,
 )

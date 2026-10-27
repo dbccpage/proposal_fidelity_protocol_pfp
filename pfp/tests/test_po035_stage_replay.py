@@ -2,13 +2,13 @@
 
 import json
 
-from omega_engine_woland.tests.pilots.relational_spacetime import typed_signals as adaptive
-from omega_engine_woland.tests.pilots.relational_spacetime import baseline as campaign
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import proposal_body
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
-from omega_engine_pfp.infrastructure.adapters import pfp_derivation as adapter
-from omega_engine_pfp.tests._po035_historical import historical_derivation
-from omega_engine_pfp.use_cases.pfp_derivation_loops import run_derivation_loops
+from adversary.tests.pilots.relational_spacetime import typed_signals as adaptive
+from adversary.tests.pilots.relational_spacetime import baseline as campaign
+from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
+from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from pfp.infrastructure.adapters import pfp_derivation as adapter
+from pfp.tests._po035_historical import historical_derivation
+from pfp.use_cases.pfp_derivation_loops import run_derivation_loops
 
 
 def test_real_host_stages_replay_with_provider_key_order(tmp_path, monkeypatch):

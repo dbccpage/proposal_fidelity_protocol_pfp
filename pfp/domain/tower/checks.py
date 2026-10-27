@@ -13,12 +13,12 @@ import re
 from dataclasses import dataclass
 from fractions import Fraction
 
-from omega_engine_pfp.domain.tower.registry import (
+from pfp.domain.tower.registry import (
     PROPOSAL_BLOCK_SIZE,
     PROPOSAL_START,
     STAGES,
 )
-from omega_engine_pfp.domain.tower.wire import (
+from pfp.domain.tower.wire import (
     App,
     Atom,
     Diff,

@@ -20,16 +20,16 @@ import math
 from fractions import Fraction
 from typing import Any, Mapping, NoReturn
 
-from omega_engine_woland.domain.providers.budget import (
+from adversary.domain.providers.budget import (
     DEFAULT_MAX_OUTPUT_TOKENS,
     BudgetController,
 )
-from omega_engine_woland.domain.providers.model_registry import (
+from adversary.domain.providers.model_registry import (
     OPEN_WEIGHT_CEILING_PARAMETERS,
     ModelNotAllowed,
     ModelRegistry,
 )
-from omega_engine_woland.domain.providers.types import Provider
+from adversary.domain.providers.types import Provider
 
 TARGET_BUDGET_USD: float = 0.05
 HARD_CEILING_USD: float = 1.00
@@ -54,14 +54,14 @@ class BudgetCeilingExceededError(ValueError):
 
 
 class BudgetGateUnavailable(RuntimeError):
-    """Raised instead of calling a provider API that omega_engine_providers does not offer."""
+    """Raised instead of calling a provider API that providers does not offer."""
 
     def __init__(self, operation: str, missing_api: str) -> None:
         self.code = BUDGET_API_UNAVAILABLE
         self.operation = operation
         self.missing_api = missing_api
         super().__init__(
-            f"{BUDGET_API_UNAVAILABLE}: {operation} needs {missing_api}, which omega_engine_providers "
+            f"{BUDGET_API_UNAVAILABLE}: {operation} needs {missing_api}, which providers "
             "does not provide; nothing was admitted or recorded"
         )
 
@@ -162,7 +162,7 @@ class BudgetGate:
     ) -> NoReturn:
         """Refuse: this check relied on ModelRegistry.get and BudgetController.quote_cost.
 
-        Neither exists. Admission in omega_engine_providers needs a provider
+        Neither exists. Admission in providers needs a provider
         (ModelRegistry.admit_under_ceiling) and a pricing time (PriceTable.quote),
         which this signature does not carry, so no call is admitted.
         """

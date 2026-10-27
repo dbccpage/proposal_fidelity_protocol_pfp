@@ -21,31 +21,31 @@ _RESEARCH_DIR = os.path.abspath(os.path.join(_CURRENT_DIR, "..", ".."))
 if _RESEARCH_DIR not in sys.path:
     sys.path.insert(0, _RESEARCH_DIR)
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import TowerGrammar
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.entities import TowerGrammar
+from pfp.domain.mssn_research.grammar.errors import (
     AlternationDepthExceededError,
     OptimalityInvariantError,
     TensorInvariantError,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.foundational_policies import (
+from pfp.domain.mssn_research.grammar.foundational_policies import (
     check_level7_orbit_primitivity,
     check_level8_primal_dual_gap,
     check_stage_quantifier_alternation,
     check_tensor_product_invariants,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.lexical import (
+from pfp.domain.mssn_research.grammar.lexical import (
     Alphabet,
     QuantifierMask,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     ExactRationalMatrix,
     ExactRationalTensor,
 )
-from omega_engine_pfp.domain.mssn_research.packets.entities import App, Atom, Diff, Packet
-from omega_engine_pfp.domain.mssn_research.packets.invariants import check_simplex_distinctness
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import Opcode, RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import Rational, StageLevel
+from pfp.domain.mssn_research.packets.entities import App, Atom, Diff, Packet
+from pfp.domain.mssn_research.packets.invariants import check_simplex_distinctness
+from pfp.domain.mssn_research.packets.value_objects import Opcode, RefusalCode
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
+from pfp.domain.mssn_research.shared_kernel.value_objects import Rational, StageLevel
 
 
 class TestLevel3AbstractSimplices(unittest.TestCase):

@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Choosing an optimal contraction order for a tensor network is NP-hard in general. This spec relies only on the exact cost checker, not on the hardness proof. Checking a proposed order is trivial: replay it, multiply dimensions and add. That asymmetry makes the task a clean search problem with a cheap exact verifier, and the natural test of the engine's search stack against greedy heuristics.
 
-There is no compact lower-bound certificate, so the honest answer when the bound cannot be met is `UNKNOWN`, not a fabricated order. The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) search control (beam, annealing, dynamic programming on small subnetworks) and OEEIS (Omega Engine Epistemic Immune System) screening of orders whose stated cost differs from their replayed cost.
+There is no compact lower-bound certificate, so the honest answer when the bound cannot be met is `UNKNOWN`, not a fabricated order. The task stresses OEWAS (Engine Workflows, Agents, Skills) search control (beam, annealing, dynamic programming on small subnetworks) and OEEIS (Engine Epistemic Immune System) screening of orders whose stated cost differs from their replayed cost.
 
 ## 3. Formal Problem and Bounds
 
@@ -60,7 +60,7 @@ Each step names two live tensors; the result of a step is named by concatenating
 
 ## 7. Arms and Baselines
 
-Arms A–D per the protocol, each synthesizing the planner. Arm E is the no-model baseline: greedy contraction followed by `omega_search` simulated annealing and beam search, with exact subset dynamic programming for networks of at most 12 tensors. E is strong here. If A only matches E, the result is automation without a model advantage. Arm F does not apply.
+Arms A–D per the protocol, each synthesizing the planner. Arm E is the no-model baseline: greedy contraction followed by `core_search` simulated annealing and beam search, with exact subset dynamic programming for networks of at most 12 tensors. E is strong here. If A only matches E, the result is automation without a model advantage. Arm F does not apply.
 
 ## 8. Budget, Models and Provenance
 
@@ -97,8 +97,8 @@ Operands expected: (1) contract along the largest shared dimension first when it
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_search` (`beam.rs`, `simulated_annealing.rs`, `genetic.rs`, `semantic_dag_planner.rs`) for arm E and for arm A's search.
-- `omega_engine/crates_rs/omega_kernel` for exact integers; big-integer costs follow the exact wire form in the estate rules.
+- `engine/crates_rs/core_search` (`beam.rs`, `simulated_annealing.rs`, `genetic.rs`, `semantic_dag_planner.rs`) for arm E and for arm A's search.
+- `engine/crates_rs/core_kernel` for exact integers; big-integer costs follow the exact wire form in the estate rules.
 - No tensor-network module exists in the estate; the replay checker and the subset dynamic program are new Rust work.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). [U21](../../upgrades/u21_economic_compute_allocation.md) is relevant for dividing budget between model calls and search time.
 

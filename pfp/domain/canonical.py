@@ -1,6 +1,6 @@
-"""JCS-style JSON encoding and separate omega-canonical-v1 wire aliases.
+"""JCS-style JSON encoding and separate core-canonical-v1 wire aliases.
 
-Provides JCS-style encoding and the separate omega-canonical-v1 wire aliases.
+Provides JCS-style encoding and the separate core-canonical-v1 wire aliases.
 Shared integer/string subset compatibility does not certify every binary64
 rendering or byte parity with the Rust implementations. ``allow_bigint=True``
 is an arbitrary-integer extension outside the bounded JCS integer policy.
@@ -17,14 +17,14 @@ import math
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_pfp.domain.exceptions import CanonicalizationError
-from omega_engine_pfp.domain.shared_kernel.canonical import (
-    canonical_bytes as omega_canonical_bytes,
+from pfp.domain.exceptions import CanonicalizationError
+from pfp.domain.shared_kernel.canonical import (
+    canonical_bytes as core_canonical_bytes,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import (
-    canonical_json as omega_canonical_json,
+from pfp.domain.shared_kernel.canonical import (
+    canonical_json as core_canonical_json,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.shared_kernel.canonical import (
     canonical_unwire,
     canonical_wire,
     domain_digest,
@@ -252,9 +252,9 @@ def canonicalize_json_str(raw_json: str) -> str:
     return rfc8785_canonical_json(parsed)
 
 
-# Aliases for omega-canonical-v1 compatibility
-canonical_json = omega_canonical_json
-canonical_bytes = omega_canonical_bytes
+# Aliases for core-canonical-v1 compatibility
+canonical_json = core_canonical_json
+canonical_bytes = core_canonical_bytes
 
 __all__ = [
     "MAX_SAFE_INTEGER",

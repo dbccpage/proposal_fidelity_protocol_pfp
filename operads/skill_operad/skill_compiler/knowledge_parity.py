@@ -61,7 +61,7 @@ def main() -> int:
     parser.add_argument("--repo-root", default=None)
     parser.add_argument(
         "--skills-root",
-        default="omega_engine_operads/skills",
+        default="operads/skills",
         help="Relative skills root to scan",
     )
     args = parser.parse_args()

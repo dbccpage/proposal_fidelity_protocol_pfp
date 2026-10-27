@@ -29,7 +29,7 @@ A review report says a snapshot byte-limit stop was eliminated and that the repu
 
 ## Witness
 
-Historical receipts. This digest did not rerun the gate, rebuild the archive, or open the tar. Source folder `_ic/inr/omega_paper_reviews/symbol_game_swarm_2026-10-02/`.
+Historical receipts. This digest did not rerun the gate, rebuild the archive, or open the tar. Source folder `_ic/inr/core_paper_reviews/symbol_game_swarm_2026-10-02/`.
 
 `004_the_symbol_game_native_verification_and_evidence_custody/republication_gate_receipt.json` has `status` `BLOCKED`. Check `A01` is `FAIL`. Its detail is:
 

@@ -21,7 +21,7 @@ Resolving shared repository catalogs through a single authoritative domain repos
 ## Implementation Pattern
 
 ```python
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import PharmacyCatalogRepository
+from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
 
 catalog_file = PharmacyCatalogRepository.catalog_path(self.repo_root)
 self.antibodies_dir = catalog_file.parent

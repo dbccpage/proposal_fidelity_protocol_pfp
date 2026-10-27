@@ -11,14 +11,14 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_pfp.infrastructure.estimated_gateway import DurableRunGateway
-from omega_engine_woland.domain.providers.allowlist import ModelAllowlist
-from omega_engine_woland.domain.providers.attempt import TransportFailure
-from omega_engine_woland.domain.providers.budget import BudgetController, GatewayPolicy, PriceTable
-from omega_engine_woland.domain.providers.types import CandidateRequest, Provider, ProviderError
-from omega_engine_woland.infrastructure.providers.gateway import OearsLlmGateway
-from omega_engine_woland.infrastructure.providers.openai_compat import OpenAiCompatTransport
+from operations.domain.rop.result import Err, Ok
+from pfp.infrastructure.estimated_gateway import DurableRunGateway
+from adversary.domain.providers.allowlist import ModelAllowlist
+from adversary.domain.providers.attempt import TransportFailure
+from adversary.domain.providers.budget import BudgetController, GatewayPolicy, PriceTable
+from adversary.domain.providers.types import CandidateRequest, Provider, ProviderError
+from adversary.infrastructure.providers.gateway import OearsLlmGateway
+from adversary.infrastructure.providers.openai_compat import OpenAiCompatTransport
 
 MODEL = "openai/gpt-4o-mini"
 OTHER_MODEL = "deepseek/deepseek-v4-flash"
@@ -120,7 +120,7 @@ def test_binding_exposes_the_exact_persistable_run_and_accounting_path(tmp_path)
 def test_existing_ledger_inspection_and_reopening_release_windows_file_handles(tmp_path):
     import gc
 
-    from omega_engine_pfp.infrastructure.estimated_gateway import DurableRunGateway
+    from pfp.infrastructure.estimated_gateway import DurableRunGateway
 
     enabled = gc.isenabled()
     gc.disable()  # Connection ownership must not rely on eventual cyclic GC.
@@ -258,7 +258,7 @@ def test_unbound_calls_cannot_escape_action_claims(tmp_path):
 
 
 def test_unsupported_real_transport_keeps_pre_dispatch_hard_refusal(tmp_path, monkeypatch):
-    from omega_engine_woland.infrastructure.providers import http
+    from adversary.infrastructure.providers import http
 
     monkeypatch.setattr(http, "post_json", lambda *args: pytest.fail("No vendor send authorized"))
     real_http = OpenAiCompatTransport(Provider.OPENROUTER, api_key="synthetic-not-a-vendor-key")
@@ -306,7 +306,7 @@ def test_crash_after_atomic_claim_before_admission_never_reopens_the_action(tmp_
 
 
 def test_durable_factory_requires_scope_before_credentials_or_network(tmp_path, monkeypatch):
-    from omega_engine_pfp.infrastructure import estimated_gateway
+    from pfp.infrastructure import estimated_gateway
 
     monkeypatch.setattr(estimated_gateway, "resolve_openrouter_key", lambda *args: pytest.fail("scope admission must precede credentials"))
     with pytest.raises(ValueError, match="DURABLE_RUN_ID_REQUIRED"):

@@ -84,12 +84,12 @@ class RustCohomologySolverAdapter(CohomologySolverPort):
             if type(verified) is not bool:
                 raise ValueError("certificate_verified must be a Boolean")
             if verified is not True:
-                # omega_functional rejected the host's own certificate: the
+                # core_functional rejected the host's own certificate: the
                 # numbers are not a solution and must not be reported as one.
                 return dict(
                     _unknown(
                         "NATIVE_CERTIFICATE_NOT_VERIFIED",
-                        "omega_functional did not verify the primal-dual certificate",
+                        "core_functional did not verify the primal-dual certificate",
                     ),
                     native_outcome=outcome,
                 )

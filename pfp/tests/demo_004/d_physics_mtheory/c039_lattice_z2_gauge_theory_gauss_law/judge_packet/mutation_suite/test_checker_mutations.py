@@ -9,13 +9,13 @@ import json
 import unittest
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c039_lattice_z2_gauge_theory_gauss_law.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c039_lattice_z2_gauge_theory_gauss_law.judge_packet.checkers.dual_evaluator import (
     evaluate_answer,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c039_lattice_z2_gauge_theory_gauss_law.judge_packet.checkers.homology_cohomology_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c039_lattice_z2_gauge_theory_gauss_law.judge_packet.checkers.homology_cohomology_checker import (
     verify_homology_cohomology_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c039_lattice_z2_gauge_theory_gauss_law.judge_packet.checkers.stabilizer_tableau_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c039_lattice_z2_gauge_theory_gauss_law.judge_packet.checkers.stabilizer_tableau_checker import (
     verify_stabilizer_tableau_certificate,
 )
 

@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.participant_packet.runner import (
     load_solver_func,
     run_benchmark,
 )

@@ -14,16 +14,16 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_prompt_civilization/src/rank.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_prompt_civilization/src/rank.rs
 ---
 
 # Prompt Civ Level 05: Inverse Lineage PageRank: Certified Ancestral Utility
 
 **AuthorityEffect:** None.  
 **Level:** Level 05 (Markov Lineage Diffusion & Fixed-Point Certification)  
-**Rust Rank Seam:** [`omega_prompt_civilization::rank`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/rank.rs)  
-**Primary Contract:** `omega.spectral.pagerank.v2`  
+**Rust Rank Seam:** [`core_prompt_civilization::rank`](../../../engine/crates_rs/core_prompt_civilization/src/rank.rs)  
+**Primary Contract:** `core.spectral.pagerank.v2`  
 **Core Falsifiers:** `F-RANK-01`, `F-RANK-02`, `F-RANK-03`, `F-RES-03`, `F-RES-04`
 
 ---
@@ -63,7 +63,7 @@ Traditional PageRank flows influence forward from cited documents to citing docu
 Level 05 establishes **Inverse Lineage PageRank ($r_{\text{inv}}$)**:
 - Lineage diffusion flows backward from children to parents along the **Inheritance DAG**.
 - The transition probability is modulated by the child's exact verified pass fraction $q_c \in \mathbb{Q}$.
-- The rank is certified as an exact rational fixed-point solution under the contract `omega.spectral.pagerank.v2`.
+- The rank is certified as an exact rational fixed-point solution under the contract `core.spectral.pagerank.v2`.
 - $r_{\text{inv}}$ represents "useful genealogical precedent," allocating human inspection budget without minting operational authority.
 
 ---
@@ -99,7 +99,7 @@ Level 05 establishes **Inverse Lineage PageRank ($r_{\text{inv}}$)**:
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::rank
+// core_prompt_civilization::rank
 pub struct AncestralRankCertificateV1 {
     pub community_id: CommunityId,
     pub node_order: Vec<PromptId>,

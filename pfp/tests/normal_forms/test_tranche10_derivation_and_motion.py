@@ -257,9 +257,9 @@ class TestTranche10DerivationAndMotion(unittest.TestCase):
         """Planckian thermal distribution scaling n(omega) = 1 / (exp(beta*omega) - 1)."""
         beta = 1.0
         omega = 2.0
-        n_omega = 1.0 / (math.exp(beta * omega) - 1.0)
-        self.assertGreater(n_omega, 0.0)
-        self.assertLess(n_omega, 1.0)
+        n_core = 1.0 / (math.exp(beta * omega) - 1.0)
+        self.assertGreater(n_core, 0.0)
+        self.assertLess(n_core, 1.0)
 
     # -------------------------------------------------------------------------
     # Test 178: Horizon Emission Entropy Area Law

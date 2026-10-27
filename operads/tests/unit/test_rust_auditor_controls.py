@@ -228,7 +228,7 @@ def test_invalid_explicit_root_does_not_fallback_to_live_repository(
 
 
 def test_invalid_explicit_crate_is_an_error(tmp_path: Path) -> None:
-    for crate in ("missing", "..", "../omega_solvers"):
+    for crate in ("missing", "..", "../core_solvers"):
         completed, _ = _run(REVIEW, tmp_path, tmp_path / "report.json", "--crate", crate)
         assert completed.returncode == 2
 

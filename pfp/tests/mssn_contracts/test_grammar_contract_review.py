@@ -22,30 +22,30 @@ _RESEARCH_DIR = os.path.abspath(os.path.join(_CURRENT_DIR, "..", ".."))
 if _RESEARCH_DIR not in sys.path:
     sys.path.insert(0, _RESEARCH_DIR)
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import TokenFrontier, TowerGrammar
-from omega_engine_pfp.domain.mssn_research.grammar.errors import FrontierInconsistencyError, GrammarDomainError
-from omega_engine_pfp.domain.mssn_research.grammar.lexical import (
+from pfp.domain.mssn_research.grammar.entities import TokenFrontier, TowerGrammar
+from pfp.domain.mssn_research.grammar.errors import FrontierInconsistencyError, GrammarDomainError
+from pfp.domain.mssn_research.grammar.lexical import (
     Alphabet,
     FrontierCandidate,
     ParserStateId,
     ProbabilityMass,
     QuantifierMask,
 )
-from omega_engine_pfp.domain.mssn_research.packets.entities import App, Atom, Diff, Packet
-from omega_engine_pfp.domain.mssn_research.packets.errors import MalformedWireError, PacketDomainError, StageFloorViolationError
-from omega_engine_pfp.domain.mssn_research.packets.invariants import (
+from pfp.domain.mssn_research.packets.entities import App, Atom, Diff, Packet
+from pfp.domain.mssn_research.packets.errors import MalformedWireError, PacketDomainError, StageFloorViolationError
+from pfp.domain.mssn_research.packets.invariants import (
     check_gram_matrix_positive_definiteness,
     check_opcode_stage_floor,
     check_simplex_distinctness,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import (
+from pfp.domain.mssn_research.packets.value_objects import (
     Opcode,
     RefusalCode,
     ValidationDisposition,
     WireBytes,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import Rational, StageLevel
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
+from pfp.domain.mssn_research.shared_kernel.value_objects import Rational, StageLevel
 
 
 class TestReviewFinding1AdmissionFailsClosed(unittest.TestCase):

@@ -1,9 +1,9 @@
 //! Source-bound discriminating controls for the exact native mathematical owner.
 //! Inputs follow mub6_matolcsi_weiner_conj2.rs tests at source head 526ffd17.
-use omega_mub::omega_native::mub6_matolcsi_weiner_conj2::{
+use core_mub::core_native::mub6_matolcsi_weiner_conj2::{
     gamma1_permutations, gamma2_permutations, verify_gamma1,
 };
-use omega_number_theory::cyclotomic::Cyc24;
+use core_number_theory::cyclotomic::Cyc24;
 
 #[test]
 fn declared_sign_pattern_counts() {

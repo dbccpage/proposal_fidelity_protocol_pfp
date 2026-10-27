@@ -2,7 +2,7 @@
 
 These handlers are the composition root for Gate 11: each builds the native
 exact adapter and hands it to the fixture host, so every Phi1, Gamma2 and class
-in a Gate 11 record was issued by ``omega_functional`` through the OEOS seam.
+in a Gate 11 record was issued by ``core_functional`` through the OEOS seam.
 
 AuthorityEffect: None.
 """
@@ -17,7 +17,7 @@ from .io_utils import _read_json, _write_json, _write_verdict_md
 
 
 def _functional_port():
-    from omega_engine_pfp.infrastructure.adapters.exact_rust_adapter import (
+    from pfp.infrastructure.adapters.exact_rust_adapter import (
         RustExactEngineAdapter,
     )
 
@@ -25,7 +25,7 @@ def _functional_port():
 
 
 def cmd_gate11_self(args: argparse.Namespace) -> int:
-    from omega_engine_pfp.fixtures.gate11_residual_dual import host_verify_self
+    from pfp.fixtures.gate11_residual_dual import host_verify_self
 
     result = host_verify_self(_functional_port())
     if args.out_dir is not None:
@@ -38,7 +38,7 @@ def cmd_gate11_self(args: argparse.Namespace) -> int:
 
 
 def cmd_gate11_ingest(args: argparse.Namespace) -> int:
-    from omega_engine_pfp.fixtures.gate11_residual_dual import parse_gate11_symbolic_reply
+    from pfp.fixtures.gate11_residual_dual import parse_gate11_symbolic_reply
 
     path = Path(args.reply)
     text = path.read_text(encoding="utf-8")
@@ -66,12 +66,12 @@ def cmd_gate11_project(args: argparse.Namespace) -> int:
     violation: it records that Phi1 was never certified for that fixture, and
     leaves the exit code alone.
     """
-    from omega_engine_pfp.fixtures.gate11_residual_dual import (
+    from pfp.fixtures.gate11_residual_dual import (
         contract_bound_holds,
         frozen_fixtures,
         project_fixture_phi_gamma,
     )
-    from omega_engine_pfp.domain.shared_kernel.exact import to_canonical_string
+    from pfp.domain.shared_kernel.exact import to_canonical_string
 
     port = _functional_port()
     out: dict[str, Any] = {}

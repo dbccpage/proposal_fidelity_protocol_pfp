@@ -32,7 +32,7 @@ _worktree_root = next(
     (
         parent
         for parent in Path(__file__).resolve().parents
-        if (parent / "omega_engine_pfp").is_dir() and (parent / "omega_engine_woland").is_dir()
+        if (parent / "pfp").is_dir() and (parent / "adversary").is_dir()
     ),
     None,
 )
@@ -42,35 +42,35 @@ if _worktree_root is not None and str(_worktree_root) not in sys.path:
 if TYPE_CHECKING:
     from openai import OpenAI
 
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.budget_controller import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.budget_controller import (
     BudgetController,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import (
     get_hidden_base_cases,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import (
     verify_consistency_certificate,
     verify_cycle_repair,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.runner import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.runner import (
     wilson_score_interval,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
     CONSISTENCY_JSON_SCHEMA,
     CYCLE_REPAIR_JSON_SCHEMA,
     validate_json_schema,
 )
-from omega_engine_pfp.infrastructure.estimated_gateway import (
+from pfp.infrastructure.estimated_gateway import (
     DurableRunGateway,
     EstimatedBudgetGateway,
 )
-from omega_engine_pfp.infrastructure.pilot_matrix import (
+from pfp.infrastructure.pilot_matrix import (
     complete_pilot_turn,
     make_pilot_gateways,
     validate_pilot_gateways,
 )
-from omega_engine_pfp.infrastructure.synthesis_matrix import RunnerRefusal, prepare_output_dir
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
+from pfp.infrastructure.synthesis_matrix import RunnerRefusal, prepare_output_dir
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
 
 SYSTEM_PROMPT = "Solve the supplied C005 task; put the complete task JSON proposal in answer."
 

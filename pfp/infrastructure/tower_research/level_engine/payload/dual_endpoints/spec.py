@@ -33,10 +33,10 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.kinds import Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 from ..shared import certificates, lean_list, position, render, rows
 
 CHALLENGE_ID = "dual_endpoints"

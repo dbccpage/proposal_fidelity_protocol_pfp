@@ -5,9 +5,9 @@ kind: architecture-reference
 status: IMPLEMENTED
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/skill_operad/skill_compiler/skill_listing.py
-  - omega_engine_operads/skill_operad/skill_compiler/tests/test_skill_listing.py
-  - omega_engine_operations/use_cases/cicd/pr_fast_gate.py
+  - operads/skill_operad/skill_compiler/skill_listing.py
+  - operads/skill_operad/skill_compiler/tests/test_skill_listing.py
+  - operations/use_cases/cicd/pr_fast_gate.py
   - .agents/skills
 last_verified: 2026-10-07
 ---
@@ -22,7 +22,7 @@ skill nothing.
 Claude Code shows the model each skill it may invoke as a name and a description, inside a fixed
 budget of about 1% of context. Past the budget, skills are listed by name only.
 [Chapter 25](25_review_agent_setup.md) finding F4 measured 251 skills carrying about 55.7 KB of
-descriptions. Only the first 74 were listed with a description. `woland`, `research`,
+descriptions. Only the first 74 were listed with a description. `adversary`, `research`,
 `deep-research` and every `techne-*` skill reached the model as a bare name, so the model could not
 tell when to use them.
 
@@ -63,7 +63,7 @@ The budget is a ratchet. Lower it when the listing shrinks. Raising it needs a r
 because each byte over the real budget pushes some skill back to name only.
 
 ```text
-python -m omega_engine_operads.skill_operad.skill_compiler.skill_listing --repo-root .
+python -m operads.skill_operad.skill_compiler.skill_listing --repo-root .
 ```
 
 `pr_fast_gate.py` runs it as `skill-listing` when a change touches a `SKILL.md` in any host mirror,
@@ -82,4 +82,4 @@ A further test keeps the budget within 10% of the tree, so the ratchet cannot dr
 - **Duplicates.** Six prefix pairs and six `goo-*` skills overlap. Merging them changes callers, so
   it is its own PR.
 - **Op binding.** A short description helps the model choose a skill. Slice 10 lets `/research` and
-  Woland seats choose ops through the resolver instead ([chapter 27](27_spec_op_resolver.md)).
+  Adversary seats choose ops through the resolver instead ([chapter 27](27_spec_op_resolver.md)).

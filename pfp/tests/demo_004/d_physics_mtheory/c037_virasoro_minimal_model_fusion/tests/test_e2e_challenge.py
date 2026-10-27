@@ -16,16 +16,16 @@ import subprocess
 import sys
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.combinatorial_fusion_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.combinatorial_fusion_checker import (
     verify_combinatorial_fusion_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.verlinde_cyclotomic_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.verlinde_cyclotomic_checker import (
     verify_verlinde_cyclotomic_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.reference_solver.solver import (
     solve,
 )
 

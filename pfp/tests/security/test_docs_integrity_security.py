@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.documentation_integrity import configuration
-from omega_engine_pfp.documentation_integrity.domain import IntegrityError
-from omega_engine_pfp.domain.documentation_integrity.policies import is_document_relative_path
+from pfp.documentation_integrity import configuration
+from pfp.documentation_integrity.domain import IntegrityError
+from pfp.domain.documentation_integrity.policies import is_document_relative_path
 
 
 @pytest.mark.parametrize(

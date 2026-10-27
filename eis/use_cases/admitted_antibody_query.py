@@ -1,6 +1,6 @@
 """Read side of the pharmacy: only human-admitted antibodies may be injected.
 
-Farming records candidates; admission is a separate human act. Consumers (Woland and
+Farming records candidates; admission is a separate human act. Consumers (Adversary and
 other swarms) inject guidance only from antibodies whose recorded status is
 ``admitted``. Candidates, rejected and retired entries are never returned, and an entry
 that does not reconstruct as a valid ``Antibody`` is reported, not returned.
@@ -14,7 +14,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass, fields
 from typing import Any
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_models import (
+from eis.domain.pharmacy_models import (
     Antibody,
     PharmacyStatus,
 )

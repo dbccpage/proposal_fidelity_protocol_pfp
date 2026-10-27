@@ -7,7 +7,7 @@ is not a claim that any package's tests pass.
 ## Census commit and scope
 
 The census reads the tree of commit `a623568eb0f853b968bc419bf06dfc6af256ab02`
-(2026-09-28). The challenge folder `omega_engine_projects/mssn_sn_symgam/challenges/`
+(2026-09-28). The challenge folder `projects/mssn_sn_symgam/challenges/`
 is inspected at that historical revision; its layout is not asserted for
 current main. Folder paths below are relative to that challenge folder.
 The [machine-readable inventory](historical_census_inventory.json) records
@@ -113,7 +113,7 @@ is pending. No scoring receipt is retained for C015 to C020 or C045 to C051.
 | ID | Folder | Contents | Test files | Retained result |
 | --- | --- | --- | --- | --- |
 | C001 | `a_mechanism/c001_attention_distractor_mask` | A real-weights harness for Qwen2.5-0.5B-Instruct (`empirical_neural_mcnemar_evaluation.py`) and a 200-case McNemar module that labels itself a synthetic fixture with injected baseline failures (`mcnemar_arms_evaluation.py`) | 12 | None. The harness writes its report only to an untracked run folder, and it lists the full 200-case sweep as a next test. |
-| C005 | `a_mechanism/c005_hosted_decode_controls` | Host checker `checkers.py`, case generator `cases.py`, and the two benchmark scripts `benchmark_3arm_scratchpad.py` and `benchmark_arm4_hybrid.py` | 1 | Aggregate counts in `omega_engine_atlas/coda_atlas/omega_engine_pfp/c005_structured_decoding_controls_empirical_results.md`. The per-case rows were written to an untracked run folder and are not in the repository. |
+| C005 | `a_mechanism/c005_hosted_decode_controls` | Host checker `checkers.py`, case generator `cases.py`, and the two benchmark scripts `benchmark_3arm_scratchpad.py` and `benchmark_arm4_hybrid.py` | 1 | Aggregate counts in `atlas/coda_atlas/pfp/c005_structured_decoding_controls_empirical_results.md`. The per-case rows were written to an untracked run folder and are not in the repository. |
 
 ## Category C
 

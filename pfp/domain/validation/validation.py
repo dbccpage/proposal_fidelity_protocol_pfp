@@ -6,11 +6,11 @@ AuthorityEffect: None.
 from __future__ import annotations
 
 import hashlib
-from omega_engine_pfp.domain.shared_kernel.path import is_normalized_relative_posix
+from pfp.domain.shared_kernel.path import is_normalized_relative_posix
 import re
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.errors import (
+from pfp.domain.errors import (
     CanonicalizationError,
     FORBIDDEN_WIRE_KEYS,
     REFUSAL_FORBIDDEN_AUTHORITY_FIELD,

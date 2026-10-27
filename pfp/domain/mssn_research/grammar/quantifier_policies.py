@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from fractions import Fraction
 
-from omega_engine_pfp.domain.mssn_research.grammar.quantification import (
+from pfp.domain.mssn_research.grammar.quantification import (
     BoundedAlternationBlock,
     ExactPhi4Certificate,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     Rational,
 )
 
@@ -54,7 +54,7 @@ def check_bounded_quantifier_block(block: BoundedAlternationBlock) -> Result[boo
 def check_phi4_dual_certificate(cert: ExactPhi4Certificate) -> Result[bool, GrammarDomainError]:
     """Invariant 19 (Level 14): Exact Degree-4 LP Weak Duality & Bianchi Nilpotence.
 
-    Mirrors omega_engine/crates_rs/omega_functional/src/phi4.rs.
+    Mirrors engine/crates_rs/core_functional/src/phi4.rs.
     1. Checks discrete Bianchi coboundary nilpotence: d_3 ∘ d_2 = 0.
     2. Checks dual cycle condition: d_3^T * v = 0.
     3. Checks dual capacity bounds: |v_sigma| <= mu_sigma for all 4-cells.

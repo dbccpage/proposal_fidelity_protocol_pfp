@@ -12,24 +12,24 @@ import json
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+from operating_system.adapters.intelligence_custody.ic_routing import (
     read_activation,
     safe_path,
 )
-from omega_engine_operating_system.adapters.intelligence_custody.intelligence_root import (
+from operating_system.adapters.intelligence_custody.intelligence_root import (
     resolve_intelligence_repo_root,
 )
-from omega_engine_prompt_civilization.domain.models import ProtectedSpanV1
-from omega_engine_prompt_civilization.infrastructure.cas import ContentAddressedStorageV1
-from omega_engine_prompt_civilization.use_cases.fitness import PromptFitnessCalculatorV1
-from omega_engine_prompt_civilization.use_cases.forge import PromptMutationEngineV1
-from omega_engine_woland.domain.evidence import CheckerVerdict, sha256_ref
-from omega_engine_woland.domain.models import SymbolGameRequestV1
-from omega_engine_woland.infrastructure.native import DefaultNativeOperationPort
-from omega_engine_woland.infrastructure.symbol_game_checker import SymbolGameCandidateChecker
-from omega_engine_woland.runtime import build_woland_runtime
-from omega_engine_woland.stage.domain import WorkPacketV1
-from omega_engine_woland.use_cases.bout_service import execute_7act_woland_bout
+from pciv.domain.models import ProtectedSpanV1
+from pciv.infrastructure.cas import ContentAddressedStorageV1
+from pciv.use_cases.fitness import PromptFitnessCalculatorV1
+from pciv.use_cases.forge import PromptMutationEngineV1
+from adversary.domain.evidence import CheckerVerdict, sha256_ref
+from adversary.domain.models import SymbolGameRequestV1
+from adversary.infrastructure.native import DefaultNativeOperationPort
+from adversary.infrastructure.symbol_game_checker import SymbolGameCandidateChecker
+from adversary.runtime import build_adversary_runtime
+from adversary.stage.domain import WorkPacketV1
+from adversary.use_cases.bout_service import execute_7act_adversary_bout
 
 CORE = b"# Immutable core: exact arithmetic; AuthorityEffect: None.\n"
 AGENTS = ("agent_alpha", "agent_beta", "agent_gamma")
@@ -106,10 +106,10 @@ def run_stress_test(
             fitness = PromptFitnessCalculatorV1(
                 candidate_checker=SymbolGameCandidateChecker(SymbolGameRequestV1(case_json)),
             )
-            runtime = build_woland_runtime(output_dir=output_dir, fixture_mode=True)
-            bout = execute_7act_woland_bout(
+            runtime = build_adversary_runtime(output_dir=output_dir, fixture_mode=True)
+            bout = execute_7act_adversary_bout(
                 runtime.profile, runtime, packet, candidate_checker=fitness,
-                output_dir=output_dir / "_woland", fixture_seats=True,
+                output_dir=output_dir / "_adversary", fixture_seats=True,
                 native_support=DefaultNativeOperationPort(),
             )
             if bout.is_err:
@@ -153,7 +153,7 @@ def run_stress_test(
                  if key not in {"bout_receipt_sha256", "checker_receipt_refs", "input_packet_sha256"}}
                 for row in rounds]
     summary = {
-        "schema": "omega.prompt_civ.fixture_evolution.v2", "authority_effect": "None",
+        "schema": "core.prompt_civ.fixture_evolution.v2", "authority_effect": "None",
         "source_sha256": sha256_ref(Path(__file__).read_bytes()), "seed": seed,
         "total_generations": num_generations, "total_agents": len(AGENTS),
         "total_bouts_executed": len(rounds), "learning_updates": sum(bool(row["new_hints"]) for row in rounds),

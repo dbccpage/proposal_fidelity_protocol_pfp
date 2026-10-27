@@ -7,7 +7,7 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_prompt_civilization.domain.models import (
+from pciv.domain.models import (
     CivilizationPrompt,
     CivilizationState,
     PopulationTier,

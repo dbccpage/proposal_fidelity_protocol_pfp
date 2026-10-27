@@ -21,7 +21,7 @@ typed models and checks it:
 
 Usage::
 
-    python -m omega_engine_operads.skill_operad.skill_compiler.op_inventory \
+    python -m operads.skill_operad.skill_compiler.op_inventory \
         --repo-root .
 
 AuthorityEffect: None. Reads the inventory, the v1 signature and bound source files.
@@ -42,10 +42,10 @@ from typing import Literal, Union
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from omega_engine_operads.domain.ddc_execution.constants import (
+from operads.domain.ddc_execution.constants import (
     ADMITTED_FINITE_COLOURS,
 )
-from omega_engine_operads.skill_operad.domain.planar import (
+from operads.skill_operad.domain.planar import (
     ArityMismatch,
     ColoredOp,
     ColorMismatch,
@@ -54,9 +54,9 @@ from omega_engine_operads.skill_operad.domain.planar import (
     nullary,
 )
 
-SCHEMA_VERSION = "omega.oewas.op_inventory.v3"
-INVENTORY_PATH = Path("omega_engine_operads/skill_operad/yaml/op_inventory.yaml")
-PRIMARY_SIGNATURE_PATH = Path("omega_engine_operads/skill_operad/json/operad_signature.json")
+SCHEMA_VERSION = "core.oewas.op_inventory.v3"
+INVENTORY_PATH = Path("operads/skill_operad/yaml/op_inventory.yaml")
+PRIMARY_SIGNATURE_PATH = Path("operads/skill_operad/json/operad_signature.json")
 LEGACY_SIGNATURE_PATH = Path(".agents/skill_operads/operad_signature.json")
 SIGNATURE_PATH = PRIMARY_SIGNATURE_PATH
 
@@ -108,7 +108,7 @@ class SkillDecomposition(_Model):
 
 
 class OpInventory(_Model):
-    schema_version: Literal["omega.oewas.op_inventory.v2", "omega.oewas.op_inventory.v3"]
+    schema_version: Literal["core.oewas.op_inventory.v2", "core.oewas.op_inventory.v3"]
     subcolours: dict[str, tuple[str, ...]] = {}
     skills: tuple[SkillDecomposition, ...]
 
@@ -208,7 +208,7 @@ def _binding_error(repo_root: Path, binding: str) -> str | None:
 def _coarse_ops(repo_root: Path) -> dict[str, dict]:
     sig_path = repo_root / PRIMARY_SIGNATURE_PATH
     if not sig_path.exists() and not (
-        sig_path.parent.is_dir() or (repo_root / "omega_engine_operads/skills").is_dir()
+        sig_path.parent.is_dir() or (repo_root / "operads/skills").is_dir()
     ):
         sig_path = repo_root / LEGACY_SIGNATURE_PATH
     data = json.loads(sig_path.read_text(encoding="utf-8"))

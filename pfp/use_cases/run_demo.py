@@ -10,8 +10,8 @@ from __future__ import annotations
 
 from typing import List, Union
 
-from omega_engine_pfp.domain.value_objects.identifiers import PilotId
-from omega_engine_pfp.domain.value_objects.taxonomy import TrialStatusVO
+from pfp.domain.value_objects.identifiers import PilotId
+from pfp.domain.value_objects.taxonomy import TrialStatusVO
 
 from ..domain.aggregates.pilot_aggregate import PilotAggregate
 from ..domain.kernel.ports import PfpDemoCatalogPort, PfpDemoRunnerPort

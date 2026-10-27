@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from omega_engine_pfp.domain.stages.mode_catalog import ModeCatalog, ModeContractHeader
+from pfp.domain.stages.mode_catalog import ModeCatalog, ModeContractHeader
 
 from .yaml_loading import strict_yaml_load
 

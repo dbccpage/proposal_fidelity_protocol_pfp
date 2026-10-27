@@ -12,7 +12,7 @@ import re
 from collections.abc import Callable
 from dataclasses import dataclass, replace
 
-from omega_engine_operations.domain.rop.result import Err, Ok
+from operations.domain.rop.result import Err, Ok
 
 from ..contracts.typed_capabilities_v1 import canonical_bytes, digest_bytes
 from ..contracts.typed_workflow_v1 import TypedWorkflowWireV1
@@ -28,7 +28,7 @@ from .commands.compile_catalog import operation_content_bytes, operation_content
 from .dtos.api_error_dto import ApiErrorDTO
 from .dtos.query_dtos import ValidateWorkflowsQuery, WorkflowEdgeDTO, WorkflowNodeDTO
 from .dtos.success_dtos import WorkflowValidationResultDTO
-from .woland_candidate_plan import (
+from .adversary_candidate_plan import (
     CandidateInstructionPlanV01,
     PlanNodeV01,
     PlanRefusal,

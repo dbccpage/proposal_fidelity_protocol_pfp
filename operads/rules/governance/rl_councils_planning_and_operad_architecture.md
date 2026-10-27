@@ -4,8 +4,8 @@ paths:
   - ".claude/**"
   - ".codex/**"
   - ".grok/**"
-  - "omega_engine_governance/**"
-  - "omega_engine_product_planning_office/**"
+  - "governance/**"
+  - "product_planning_office/**"
   - "**/plans/**"
 ---
 
@@ -19,7 +19,7 @@ paths:
 
 ## Definitions, loaded on demand
 
-- [Part 1](../../skills/techne-documentation-manager/references/rule_details/governance/rl_councils_planning_and_operad_architecture_01.md): Rule: Councils, Planning, Contract Authority & Review Protocols; Lead Governance Council Prefix Standardization Invariant; Council Prefix & Hot-Context Factorization Invariant; Lexical, Vocabulary & Abbreviation Symmetry Invariant; Master Relational Council Schema & Fibration Invariant; Quad-Agent Planning & Lev Landau Theoretical Minimum Invariant; Product Planning Office Epic Manifest & Domain Subfolder Invariant; Product Planning Epic Hygiene; Single Canonical Contract Source of Truth Invariant.
+- [Part 1](../../skills/techne-documentation-manager/references/rule_details/governance/rl_councils_planning_and_operad_architecture_01.md): Rule: Councils, Planning, Contract Authority & Review Protocols; Lead Governance Council Prefix Standardization Invariant; Council Prefix & Hot-Context Factorization Invariant; Lexical, Vocabulary & Abbreviation Symmetry Invariant; Master Relational Council Schema & Fibration Invariant; Quad-Agent Planning & Examiner Theoretical Minimum Invariant; Product Planning Office Epic Manifest & Domain Subfolder Invariant; Product Planning Epic Hygiene; Single Canonical Contract Source of Truth Invariant.
 - [Part 2](../../skills/techne-documentation-manager/references/rule_details/governance/rl_councils_planning_and_operad_architecture_02.md): 12-Agent Governance Review & Hardening Protocol; Education Domain Partitioning Invariant.
 
 ## Stable invariant references

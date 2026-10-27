@@ -3,7 +3,7 @@
   Formal Lean 4 mechanizations for the finite derivations, exact LP/trace-norm dualities,
   and explicit import-boundary counterexamples in:
     HISTORICAL pointer, not a live recount:
-    omega_engine_atlas/coda_atlas/F004_papers/003_quantum_foundations/dag_pregenesis_to_finite_qm/derivation_dag.json
+    atlas/coda_atlas/F004_papers/003_quantum_foundations/dag_pregenesis_to_finite_qm/derivation_dag.json
 
   AuthorityEffect: None.
   Core Lean 4 only: zero Mathlib imports, zero incomplete proofs, zero custom `axiom`.
@@ -2238,7 +2238,7 @@ theorem ds_qm072_bit_shadow_q1_q4_obstruction_and_p7_c10_bloch_refutation
   refine ⟨by omega, by decide, by decide⟩
 
 /-- Bare-table contextwise separability, single global joint-table CHSH bound, PR-box non-extension,
-    and Landau–Tsirelson SOS certificate (`DS-QM073-FINITE-CHSH-AND-PR-BOX`,
+    and Examiner–Tsirelson SOS certificate (`DS-QM073-FINITE-CHSH-AND-PR-BOX`,
     `DS-R-ENTANGLEMENT-TO-BELL`, `DS-QM073-BELL-THEOREM-OBSTRUCTED`, `DS-R-BELL-THEOREM`):
     1. Bare joint table separability (`P8-C3`): any single `2 × 2` context table
        `((p00, p01), (p10, p11))` is the exact sum of four rank-1 deterministic local product

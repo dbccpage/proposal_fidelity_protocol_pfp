@@ -17,25 +17,25 @@ from fractions import Fraction
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.governance.budget_gate import (
     HARD_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
     BudgetCeilingExceededError,
     C026BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.governance.commit_reveal_runner import (
     CommitRevealRunner,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.governance.adversary_gate import (
     GATE_SCOPE,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     RunFolderExistsError,
-    WolandRealityGate,
+    AdversaryRealityGate,
 )
 
-from omega_engine_woland.domain.providers.types import BudgetExceeded, Provider
+from adversary.domain.providers.types import BudgetExceeded, Provider
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 PACKAGE_NAME = PACKAGE_ROOT.name
@@ -162,8 +162,8 @@ def test_budget_gate_charges_through_the_provider_budget_api():
     assert gate.spent_microusd == receipt.cost_microusd
 
 
-def test_woland_reality_gate_verdicts(tmp_path: Path):
-    wgate = WolandRealityGate(base_repo_root=tmp_path)
+def test_adversary_reality_gate_verdicts(tmp_path: Path):
+    wgate = AdversaryRealityGate(base_repo_root=tmp_path)
 
     # Pass condition
     v_pass = wgate.evaluate_verdict(
@@ -210,9 +210,9 @@ def test_woland_reality_gate_verdicts(tmp_path: Path):
     assert v_cost_fail == TERMINAL_REFUSE
 
 
-def test_woland_reality_gate_refuses_empty_suites_and_inexact_inputs(tmp_path: Path):
+def test_adversary_reality_gate_refuses_empty_suites_and_inexact_inputs(tmp_path: Path):
     """Counterexample: 0 of 0 mutations passed the gate, and float costs or bool counts were accepted."""
-    wgate = WolandRealityGate(base_repo_root=tmp_path)
+    wgate = AdversaryRealityGate(base_repo_root=tmp_path)
     assert (
         wgate.evaluate_verdict(10, 10, 0, 0, COST_USD, CEILING_USD) == "REFERENCE_SELF_INCONSISTENT"
     )
@@ -225,10 +225,10 @@ def test_woland_reality_gate_refuses_empty_suites_and_inexact_inputs(tmp_path: P
         wgate.evaluate_verdict(True, True, 12, 12, COST_USD, CEILING_USD)
 
 
-def test_woland_reality_gate_never_deletes_an_existing_run(tmp_path: Path):
+def test_adversary_reality_gate_never_deletes_an_existing_run(tmp_path: Path):
     """Counterexample: allow_overwrite=True rmtree'd an existing run folder under _intelligence."""
-    wgate = WolandRealityGate(base_repo_root=tmp_path)
-    existing = tmp_path / "_intelligence" / "_woland" / "runs" / "kept_run"
+    wgate = AdversaryRealityGate(base_repo_root=tmp_path)
+    existing = tmp_path / "_intelligence" / "_adversary" / "runs" / "kept_run"
     existing.mkdir(parents=True)
     (existing / "sentinel.txt").write_text("earlier run", encoding="utf-8")
     with pytest.raises(RunFolderExistsError):

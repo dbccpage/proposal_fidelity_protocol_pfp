@@ -7,10 +7,10 @@ import sys
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.domain.demos import DemoRefusal
-from omega_engine_pfp.infrastructure.demos import execution
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+from operations.domain.rop.result import Ok
+from pfp.domain.demos import DemoRefusal
+from pfp.infrastructure.demos import execution
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 
 def test_live_proposal_checks_actual_bound_reply(tmp_path):
@@ -42,7 +42,7 @@ def test_failed_live_turn_is_retained_and_stops_later_proposals(tmp_path, raw, c
 
 
 def test_live_requires_explicit_bounds_before_output_or_credentials(tmp_path, monkeypatch):
-    monkeypatch.setattr("omega_engine_pfp.infrastructure.estimated_gateway.resolve_openrouter_key",
+    monkeypatch.setattr("pfp.infrastructure.estimated_gateway.resolve_openrouter_key",
         lambda *a, **k: pytest.fail("credentials before preflight"))
     with pytest.raises(DemoRefusal, match="LIVE_BOUNDS_REQUIRED"):
         execution.run("demo_3", tmp_path / "new", live=True, model="openai/gpt-4o-mini")
@@ -51,7 +51,7 @@ def test_live_requires_explicit_bounds_before_output_or_credentials(tmp_path, mo
 
 @pytest.mark.skipif(sys.platform != "win32", reason="existing live artifact protector requires Windows DPAPI")
 def test_trace_pair_and_pricing_configuration_refuse_without_sends(tmp_path, monkeypatch):
-    import omega_engine_pfp.infrastructure.estimated_gateway as factory
+    import pfp.infrastructure.estimated_gateway as factory
     monkeypatch.setattr(factory, "resolve_openrouter_key", lambda *a, **k: pytest.fail("credential lookup"))
     with pytest.raises(ValueError, match="TRACE_AND_ARTIFACT_STORE_REQUIRED_TOGETHER"):
         factory.create_accounted_openrouter_gateway("model", 256, trace=object())
@@ -68,10 +68,10 @@ def test_trace_pair_and_pricing_configuration_refuse_without_sends(tmp_path, mon
 
 @pytest.mark.skipif(sys.platform != "win32", reason="existing live artifact protector requires Windows DPAPI")
 def test_actual_composition_preserves_encrypted_trace_and_original_host(tmp_path, monkeypatch):
-    import omega_engine_pfp.infrastructure.estimated_gateway as factory
-    from omega_engine_pfp.infrastructure.adapters.mssn_scenarios.protocol import run_live_arm
-    from omega_engine_pfp.infrastructure.trace.execution_trace import verify_trace
-    from omega_engine_pfp.infrastructure.trace.provider_dispatch import DISPATCH_COMPLETE, derive_dispatch_outcomes
+    import pfp.infrastructure.estimated_gateway as factory
+    from pfp.infrastructure.adapters.mssn_scenarios.protocol import run_live_arm
+    from pfp.infrastructure.trace.execution_trace import verify_trace
+    from pfp.infrastructure.trace.provider_dispatch import DISPATCH_COMPLETE, derive_dispatch_outcomes
 
     calls, wires = [], []
     def send(request, timeout):
@@ -104,7 +104,7 @@ def test_actual_composition_preserves_encrypted_trace_and_original_host(tmp_path
     assert len(outcomes) == 1 and outcomes[0].status == DISPATCH_COMPLETE
     assert store.get_canonical(outcomes[0].encrypted_artifact_ref) == wires[0]
     assert execution.verify(output / "receipt.json")["status"] == "INTEGRITY_ONLY"
-    monkeypatch.setattr("omega_engine_pfp.infrastructure.trace.provider_dispatch.derive_dispatch_outcomes",
+    monkeypatch.setattr("pfp.infrastructure.trace.provider_dispatch.derive_dispatch_outcomes",
         lambda *a, **k: ())
     with pytest.raises(DemoRefusal, match="PROVIDER_EVIDENCE_MISSING"):
         execution.verify(output / "receipt.json")

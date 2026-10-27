@@ -51,7 +51,7 @@ It is a systems and methods report. Its bounded test cases are evidence about
 their exercised paths; a passing test suite would not prove every reachable
 program behavior.
 
-The scope is the [Rust `omega_symbol_game` crate][rust-crate], its [protocol][protocol],
+The scope is the [Rust `core_symbol_game` crate][rust-crate], its [protocol][protocol],
 the Python [native seam wrapper][ffi], and the named transport and regression
 sources below. The repository that holds those files is private. This deposit
 includes an immutable copy of the audited source at the code baseline,
@@ -110,18 +110,18 @@ admission result. Likewise, a finite conservative-extension witness in the
 foundation library does not wire a carrier-changing lift into the default
 host protocol.
 
-Python's `omega_engine_pfp.ffi.RustSymbolGameHost` delegates process
+Python's `pfp.ffi.RustSymbolGameHost` delegates process
 location and invocation to the operating-system adapter. The supported
-`OMEGA_SYMBOL_GAME_HOST` environment override belongs to that seam.
+`CORE_SYMBOL_GAME_HOST` environment override belongs to that seam.
 Convenience methods retain the full railway outcome or typed refusal.
 Equivalent names in Python and Rust are insufficient to establish functional
 parity: parity needs a declared common input domain, output relation, and
 differential evidence.
 
 A separate tutorial adapter,
-`omega_engine_providers.adapters.native_functional.compute_graph_phi1`,
-requires `OMEGA_FUNCTIONAL_GRAPH_BIN` and
-`OMEGA_FUNCTIONAL_GRAPH_SHA256`. It validates the executable digest and exact
+`providers.adapters.native_functional.compute_graph_phi1`,
+requires `CORE_FUNCTIONAL_GRAPH_BIN` and
+`CORE_FUNCTIONAL_GRAPH_SHA256`. It validates the executable digest and exact
 graph inputs, then parses a narrowly shaped native result. This is a separate
 binary-selection contract. Configuring one environment variable family does
 not configure the other.
@@ -142,7 +142,7 @@ Three serialization distinctions must survive documentation:
 | --- | --- |
 | Domain canonical algebra | Tagged values, including exact integers, fractions, and supported compound types |
 | `PacketCodec` helper | NFC normalization followed by tagged domain encoding |
-| Restricted host profile | `omega-sorted-json-no-float-v1` for its outer request structure |
+| Restricted host profile | `core-sorted-json-no-float-v1` for its outer request structure |
 
 The [domain canonical module][canonical] explicitly encodes type information.
 For example, an integer and a string containing the same digits remain
@@ -166,7 +166,7 @@ alone, authenticates who produced the record.
 ## 5. Restricted host execution
 
 The [host implementation][host] admits the following narrow successful path.
-The request uses `omega.oesos.rust-prime-host-request.v1`, carries exactly one
+The request uses `core.oesos.rust-prime-host-request.v1`, carries exactly one
 candidate, and binds the host registry and build-stamped source revision.
 The arithmetic domain is rational and the acceptance mode is
 `must_equal_replayed_normal_form-v1`. This restricted request wire accepts
@@ -344,10 +344,10 @@ toolchain, and run only the relevant targets from the extracted root. The
 principal native commands are:
 
 ```powershell
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test host_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test foundation_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test invoke_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test native_cli_intake
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test host_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test foundation_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test invoke_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test native_cli_intake
 ```
 
 `host_contract` checks the worked path and hostile variations.
@@ -358,7 +358,7 @@ A historical author-run report records the four native targets on 2026-09-28 EDT
 (2026-09-29 UTC), using Rust 1.98.0 on Windows (x86_64-pc-windows-msvc). It
 reports `host_contract` 12 passed, `foundation_contract` 11, `invoke_contract`
 32 and `native_cli_intake` 9, with no failures. The run commit is
-`1c7092c3db2ab2fa65999cf2555aff7733b97b99`. The `omega_symbol_game` crate tree
+`1c7092c3db2ab2fa65999cf2555aff7733b97b99`. The `core_symbol_game` crate tree
 at that commit and at the code baseline is
 `75d77aa5e1f30dfc102f00c8f7cb6159418dec63`. This is retained historical
 execution evidence. The 2026-10-02 package-local receipt does not record a
@@ -376,7 +376,7 @@ different tree.
 
 For Python, collect and run `test_packet_contracts.py`,
 `test_exact_functional_port.py`, `test_functional_boundary.py`, and
-`test_ffi_seam_isolation.py` under `omega_engine_pfp/tests/`.
+`test_ffi_seam_isolation.py` under `pfp/tests/`.
 The exact-functional suite contains scripted refusal cases and native cases.
 Its native cases can skip when the executable is missing; a receipt must retain
 that distinction. A scripted host tests adapter handling, not native arithmetic.
@@ -480,14 +480,14 @@ public inspection copy is `audited_source/pfp-iv-native-source-52cb5457.tar.gz`.
 
 [pcc]: https://doi.org/10.1145/263699.263712
 [jcs]: https://doi.org/10.17487/RFC8785
-[rust-crate]: https://github.com/dbccpage/the_symbol_game/tree/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game
-[protocol]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/protocol.rs
-[main]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/main.rs
-[invoke]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/invoke.rs
-[host]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/host.rs
-[host-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/tests/host_contract.rs
-[ffi]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/ffi.py
-[envelope]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/entities/packet_envelope.py
-[canonical]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/shared_kernel/canonical.py
-[codec]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/packet_codec.py
-[boundary-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/test_functional_boundary.py
+[rust-crate]: https://github.com/dbccpage/the_symbol_game/tree/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game
+[protocol]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/protocol.rs
+[main]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/main.rs
+[invoke]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/invoke.rs
+[host]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/host.rs
+[host-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/tests/host_contract.rs
+[ffi]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/ffi.py
+[envelope]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/entities/packet_envelope.py
+[canonical]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/shared_kernel/canonical.py
+[codec]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/packet_codec.py
+[boundary-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_functional_boundary.py

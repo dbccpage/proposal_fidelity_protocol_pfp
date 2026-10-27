@@ -136,7 +136,7 @@ def _load_flat_routes_without_yaml(text: str) -> dict[str, Any]:
 
 
 def _skill_package_names(repo_root: Path) -> set[str]:
-    skills = repo_root / "omega_engine_operads" / "skills"
+    skills = repo_root / "operads" / "skills"
     if not skills.is_dir():
         return set()
     return {
@@ -147,21 +147,21 @@ def _skill_package_names(repo_root: Path) -> set[str]:
 
 
 RETIRED_STANDALONE_SWARMS: tuple[str, ...] = (
-    "omega-cognitive-operations-swarm",
-    "omega-engine-governing-councils-swarm",
-    "omega-engine-project-management-swarm",
-    "omega-engine-research-swarm",
-    "omega-engine-software-development-swarm",
-    "omega-paper-review-swarm",
-    "omega-swarm-developer",
+    "core-cognitive-operations-swarm",
+    "governing-councils-swarm",
+    "project-management-swarm",
+    "research-swarm",
+    "software-development-swarm",
+    "core-paper-review-swarm",
+    "core-swarm-developer",
 )
 
 
 def _operad_skill_ids(repo_root: Path) -> set[str]:
     candidates = [
-        repo_root / "omega_engine_operads" / "skill_operad" / "json" / "operad_signature.json",
+        repo_root / "operads" / "skill_operad" / "json" / "operad_signature.json",
     ]
-    if not (candidates[0].parent.is_dir() or (repo_root / "omega_engine_operads/skills").is_dir()):
+    if not (candidates[0].parent.is_dir() or (repo_root / "operads/skills").is_dir()):
         candidates += [
             repo_root / ".agents" / "skill_operads" / "operad_signature.json",
             repo_root / ".agents" / "operad" / "json" / "operad_signature.json",
@@ -299,7 +299,7 @@ def resolve_text(
     if _looks_like_new_skill(blob, routes):
         return ResolveResult(
             disposition="NEW_SKILL",
-            target="omega_engine_operads/skills/ooutwire/proposed_skills_register.md",
+            target="operads/skills/ooutwire/proposed_skills_register.md",
             cite="NEW_SKILL last resort → ooutwire only; never auto-admit.",
             rationale="Explicit new-skill request with multi-bucket activation signals.",
             confidence=conf,
@@ -313,7 +313,7 @@ def resolve_text(
     if existing:
         return ResolveResult(
             disposition="EXISTING_OP",
-            target=f"omega_engine_operads/skills/{existing}/SKILL.md",
+            target=f"operads/skills/{existing}/SKILL.md",
             skill_id=existing,
             cite="Route to existing skill; compressive edit only after approval.",
             rationale=f"Referenced existing skill package/operad id: {existing}",
@@ -333,7 +333,7 @@ def resolve_text(
     target_skill = locus_skill or "autoskill"
     return ResolveResult(
         disposition="SKILL_PROSE",
-        target=f"omega_engine_operads/skills/{target_skill}/SKILL.md",
+        target=f"operads/skills/{target_skill}/SKILL.md",
         skill_id=target_skill,
         cite="Prefer references/ or compress; avoid additive bloat.",
         rationale="No contract/gate/new-skill match; default compressive skill prose.",
@@ -360,7 +360,7 @@ def main() -> int:
         "--file",
         required=True,
         type=Path,
-        help="Validated omega.skill_compiler.episode.input.v1 JSON file",
+        help="Validated core.skill_compiler.episode.input.v1 JSON file",
     )
     args = parser.parse_args()
     root = Path(args.repo_root).resolve() if args.repo_root else repo_root_from()

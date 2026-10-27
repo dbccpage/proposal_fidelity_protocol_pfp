@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Protocol, Sequence
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 BqnfFixture = dict[str, Any]
 BqnfFixtures = tuple[BqnfFixture, ...]

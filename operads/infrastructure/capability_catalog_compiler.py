@@ -20,7 +20,7 @@ from typing import Any, NoReturn
 
 import yaml
 
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operads.domain.capability_catalog_v1 import (
     OPERAD_COLOURS_V1,
     AgentCapabilityV1,
     CapabilityCatalogRefusal,
@@ -226,7 +226,7 @@ def _read_tracked(repo_root: Path, relative: str) -> bytes:
 
 
 def _neutral_path(path: str) -> str:
-    for prefix in ("omega_engine_operads/", ".agents/"):
+    for prefix in ("operads/", ".agents/"):
         if path.startswith(prefix):
             return path[len(prefix) :]
     _refuse("CANONICAL_HOST_REFUSED", path, "source is outside the capability source roots")
@@ -271,7 +271,7 @@ def _skill_from_source(
         _refuse("SKILL_NAME_PATH_REFUSED", path, f"name={name!r}")
     description = _required_text(meta, "description", path)
     metadata = meta.get("metadata")
-    if type(metadata) is dict and metadata.get("omega-generated") == "oewas.typed-capability.v1":
+    if type(metadata) is dict and metadata.get("core-generated") == "oewas.typed-capability.v1":
         return _generated_skill(repo_root, path, raw, skill_id, package_paths, tracked_paths)
     source_colours = _string_list(
         meta,
@@ -384,8 +384,8 @@ def compile_capability_catalog(
     )
     # Explicit inventories still support retained host-format fixtures. Live
     # discovery always selects OEOP and cannot fall back to generated host bytes.
-    prefix = "omega_engine_operads/" if tracked_paths is None or any(
-        path.startswith("omega_engine_operads/skills/") for path in inventory.paths
+    prefix = "operads/" if tracked_paths is None or any(
+        path.startswith("operads/skills/") for path in inventory.paths
     ) else ".agents/"
     agent_paths = tuple(
         path
@@ -522,7 +522,7 @@ def write_host_projections(repo_root: Path, catalog: CapabilityCatalogV1) -> Non
         for filename, payload in projections.items():
             _atomic_write(target_skill_operads / filename, payload)
         written = True
-    ops_operad = repo_root / "omega_engine_operads" / "skill_operad" / "json"
+    ops_operad = repo_root / "operads" / "skill_operad" / "json"
     if ops_operad.is_dir():
         for filename, payload in projections.items():
             _atomic_write(ops_operad / filename, payload)
@@ -557,7 +557,7 @@ def verify_host_projections(repo_root: Path, catalog: CapabilityCatalogV1) -> No
                     "bytes differ from compiled projection",
                 )
         verified = True
-    ops_operad = repo_root / "omega_engine_operads" / "skill_operad" / "json"
+    ops_operad = repo_root / "operads" / "skill_operad" / "json"
     if ops_operad.is_dir():
         for filename, payload in expected.items():
             path = ops_operad / filename

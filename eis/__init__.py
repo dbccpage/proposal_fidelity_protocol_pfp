@@ -1,7 +1,7 @@
-"""Omega Engine Epistemic Immune System (OEEIS).
+"""Engine Epistemic Immune System (OEEIS).
 
 The one owner of the package's immune logic. Other bounded contexts (OEWAS,
-the Woland swarm) consume it through application-layer ports.
+the Adversary swarm) consume it through application-layer ports.
 
 What is implemented:
 

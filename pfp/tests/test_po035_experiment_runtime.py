@@ -10,21 +10,21 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters.pfp_derivation import microusd
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import canonical, digest
-from omega_engine_pfp.tests._po035_historical import (
+from pfp.infrastructure.adapters.pfp_derivation import microusd
+from pfp.infrastructure.adapters.pfp_evidence import canonical, digest
+from pfp.tests._po035_historical import (
     historical_derivation as pfp_derivation,
 )
-from omega_engine_pfp.tests._po035_historical import (
+from pfp.tests._po035_historical import (
     historical_experiment as pfp_experiment,
 )
-from omega_engine_pfp.use_cases.pfp_derivation_loops import (
+from pfp.use_cases.pfp_derivation_loops import (
     DerivationLimits,
     run_derivation_loops,
 )
-from omega_engine_woland.tests.pilots.relational_spacetime import parameter_trials as experiments
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID, proposal_body
+from adversary.tests.pilots.relational_spacetime import parameter_trials as experiments
+from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID, proposal_body
 
 PAID_PROFILE = {"model": "fixture/model", "ceiling_usd_per_token": "0.0000004"}
 CONTROL_MARKER = "INDEPENDENT_CONTROL_RESPONSE_MUST_NOT_ENTER_TREATMENT"
@@ -183,7 +183,7 @@ def test_temperature_pair_has_two_fresh_requests_and_real_wire_values(tmp_path, 
 def test_logit_bias_reaches_actual_wire_and_bound_receipts(tmp_path, monkeypatch):
     import sys
 
-    module = "omega_engine_woland.tests.pilots.relational_spacetime.decoding_controls"
+    module = "adversary.tests.pilots.relational_spacetime.decoding_controls"
     tokenizer = tmp_path / "tokenizer-fixture"
     tokenizer.write_bytes(b"host-only tokenizer fixture")
     _missing_module = object()

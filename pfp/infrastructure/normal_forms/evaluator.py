@@ -9,43 +9,43 @@ import sqlite3
 from pathlib import Path
 from typing import Any, Optional
 
-from omega_engine_pfp.infrastructure.normal_forms.bqnf_repair import (
+from pfp.infrastructure.normal_forms.bqnf_repair import (
     process_bqnf_incremental_repair as repair_bqnf,
 )
-from omega_engine_pfp.infrastructure.normal_forms.db_context import NormalFormsDbContext
-from omega_engine_pfp.infrastructure.normal_forms.relational_eval import (
+from pfp.infrastructure.normal_forms.db_context import NormalFormsDbContext
+from pfp.infrastructure.normal_forms.relational_eval import (
     evaluate_5nf_project_join_integrity as witness_5nf,
 )
-from omega_engine_pfp.infrastructure.normal_forms.relational_eval import (
+from pfp.infrastructure.normal_forms.relational_eval import (
     normalize_0nf_to_1nf as flatten_0nf,
 )
-from omega_engine_pfp.infrastructure.normal_forms.sales_cochain import (
+from pfp.infrastructure.normal_forms.sales_cochain import (
     apply_sales_cdc as record_sales_cdc,
 )
-from omega_engine_pfp.infrastructure.normal_forms.sales_cochain import (
+from pfp.infrastructure.normal_forms.sales_cochain import (
     compute_true_median as median_of,
 )
-from omega_engine_pfp.infrastructure.normal_forms.sales_cochain import (
+from pfp.infrastructure.normal_forms.sales_cochain import (
     estimate_quantile as quantile_of,
 )
-from omega_engine_pfp.infrastructure.normal_forms.schema_sql import install_schema
-from omega_engine_pfp.infrastructure.normal_forms.sn_dispatch import (
+from pfp.infrastructure.normal_forms.schema_sql import install_schema
+from pfp.infrastructure.normal_forms.sn_dispatch import (
     evaluate_sn_transition as dispatch_sn,
 )
-from omega_engine_pfp.infrastructure.normal_forms.sn_dispatch import resolve_contract
-from omega_engine_pfp.infrastructure.normal_forms.sn_forms import (
+from pfp.infrastructure.normal_forms.sn_dispatch import resolve_contract
+from pfp.infrastructure.normal_forms.sn_forms import (
     evaluate_sn_pdnf as form_pdnf,
 )
-from omega_engine_pfp.infrastructure.normal_forms.sn_forms import (
+from pfp.infrastructure.normal_forms.sn_forms import (
     evaluate_sn_pvnf as form_pvnf,
 )
-from omega_engine_pfp.infrastructure.normal_forms.sn_forms import (
+from pfp.infrastructure.normal_forms.sn_forms import (
     evaluate_sn_rpnf as form_rpnf,
 )
-from omega_engine_pfp.infrastructure.normal_forms.sn_forms import (
+from pfp.infrastructure.normal_forms.sn_forms import (
     evaluate_sn_scnf as form_scnf,
 )
-from omega_engine_pfp.infrastructure.normal_forms.sn_forms import (
+from pfp.infrastructure.normal_forms.sn_forms import (
     evaluate_sn_state as form_state,
 )
 

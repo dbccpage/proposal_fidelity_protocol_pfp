@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[3]
-AUTO_LEARN_SCRIPT = REPO / "omega_engine_operads" / "skills" / "auto-learn" / "scripts" / "auto_learn.py"
+AUTO_LEARN_SCRIPT = REPO / "operads" / "skills" / "auto-learn" / "scripts" / "auto_learn.py"
 
 
 def _load_auto_learn():
@@ -170,7 +170,7 @@ def test_repair_integration_with_anti_pattern_lint_recheck(tmp_path: Path):
 
     # Initial audit should detect AP_MD_058
     lint_script = (
-        REPO / "omega_engine_operads" / "skills" / "auto-anti-pattern-lint" / "scripts" / "anti_pattern_lint.py"
+        REPO / "operads" / "skills" / "auto-anti-pattern-lint" / "scripts" / "anti_pattern_lint.py"
     )
     assert lint_script.is_file()
 

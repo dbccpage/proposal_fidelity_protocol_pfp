@@ -23,39 +23,39 @@ from typing import Any, Dict
 
 import pytest
 
-from omega_engine_operating_system.adapters.rust_host.ffi import (
+from operating_system.adapters.rust_host.ffi import (
     canonical_request_bytes,
 )
-from omega_engine_operations.domain.rop.result import Refusal
-from omega_engine_pfp.controllers.pfp_controller import PfpController
-from omega_engine_pfp.domain.cochain import (
+from operations.domain.rop.result import Refusal
+from pfp.controllers.pfp_controller import PfpController
+from pfp.domain.cochain import (
     CochainRefusal,
     PromptCellComplex,
     _fraction_to_wire,
     _parse_bigint,
     _parse_fraction,
 )
-from omega_engine_pfp.domain.kernel.result import (
+from pfp.domain.kernel.result import (
     RefusalCode,
 )
-from omega_engine_pfp.domain.ports.decode_control_port import (
+from pfp.domain.ports.decode_control_port import (
     ControlKind,
     DecodeControlSpec,
     GrammarMask,
 )
-from omega_engine_pfp.domain.stages.stages import Stage5Response
-from omega_engine_pfp.ffi import RustSymbolGameHost
-from omega_engine_pfp.ffi import (
+from pfp.domain.stages.stages import Stage5Response
+from pfp.ffi import RustSymbolGameHost
+from pfp.ffi import (
     evaluate_prompt_cochain_disposition as evaluate_prompt_cochain,
 )
-from omega_engine_pfp.infrastructure.adapters.decode_controls.vllm_decode_adapter import (
+from pfp.infrastructure.adapters.decode_controls.vllm_decode_adapter import (
     VllmDecodeAdapter,
 )
-from omega_engine_pfp.infrastructure.providers import (
+from pfp.infrastructure.providers import (
     OfflineDeterministicPfpProvider,
 )
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.execute_stage_pipeline import (
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.execute_stage_pipeline import (
     ExecuteStagePipelineUseCase,
 )
 
@@ -277,7 +277,7 @@ def test_pfp_controller_defaults_to_fail_closed_stage_five():
 
 def test_rust_host_fails_closed_when_binary_does_not_exist():
     """RustSymbolGameHost with a non-existent binary returns HOST_BINARY_NOT_FOUND refusal, not a mock pass."""
-    nonexistent = Path("C:/nonexistent/path/to/omega_symbol_game.exe")
+    nonexistent = Path("C:/nonexistent/path/to/core_symbol_game.exe")
     host = RustSymbolGameHost(binary_path=nonexistent)
 
     res = host.invoke_runtime("canonical_json", {"a": 1})
@@ -404,7 +404,7 @@ def test_evaluate_prompt_cochain_refuses_invalid_host():
         d0_matrix=((Fraction(-1), Fraction(1)),),
         d1_matrix=(),
     )
-    nonexistent = Path("C:/nonexistent/omega_symbol_game.exe")
+    nonexistent = Path("C:/nonexistent/core_symbol_game.exe")
     fake_host = RustSymbolGameHost(binary_path=nonexistent)
 
     disposition = evaluate_prompt_cochain(
@@ -418,19 +418,19 @@ def test_evaluate_prompt_cochain_refuses_invalid_host():
     assert isinstance(disposition, CochainRefusal)
     assert disposition.code == "HOST_BINARY_NOT_FOUND"
 
-def test_all_woland_model_routes_keep_pfp_and_confine_direct_io():
-    from omega_engine_pfp.infrastructure.architecture_fitness import woland_pfp_route_violations
-    assert woland_pfp_route_violations(Path(__file__).resolve().parents[2]) == ()
+def test_all_adversary_model_routes_keep_pfp_and_confine_direct_io():
+    from pfp.infrastructure.architecture_fitness import adversary_pfp_route_violations
+    assert adversary_pfp_route_violations(Path(__file__).resolve().parents[2]) == ()
 
 
 @pytest.fixture
-def woland_route_estate(tmp_path):
+def adversary_route_estate(tmp_path):
     """Copy current owner sources only; never import or execute a sender."""
     import shutil
 
-    from omega_engine_pfp.infrastructure.architecture_fitness import WOLAND_PFP_ROUTES
+    from pfp.infrastructure.architecture_fitness import ADVERSARY_PFP_ROUTES
     root = Path(__file__).resolve().parents[2]
-    for relative in {*WOLAND_PFP_ROUTES, 'omega_engine/crates_rs/omega_symbol_game/src/woland_host.rs'}:
+    for relative in {*ADVERSARY_PFP_ROUTES, 'engine/crates_rs/core_symbol_game/src/adversary_host.rs'}:
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(root / relative, target)
@@ -438,49 +438,49 @@ def woland_route_estate(tmp_path):
 
 
 @pytest.mark.parametrize('source', [
-    'from omega_engine_woland.infrastructure.providers.http import *\npost_json({})\n',
+    'from adversary.infrastructure.providers.http import *\npost_json({})\n',
     'from urllib.request import urlopen as send\nfrom json import loads as send\nsend({})\n',
-    'from omega_engine_woland.infrastructure.providers.openrouter_transport import openrouter_transport as send\nsend()\n',
+    'from adversary.infrastructure.providers.openrouter_transport import openrouter_transport as send\nsend()\n',
     'import openai as client\nclient.OpenAI()\n',
     'from anthropic import Anthropic as Client\nClient()\n',
     'import httpx as h\nh.post("https://example.invalid")\n',
     'from urllib.request import urlopen as send\nsend("https://example.invalid")\n',
     'import urllib.request as http\nhttp.urlopen("https://example.invalid")\n',
-    'from omega_engine_woland.infrastructure.providers.http import post_json as send\nsend({})\n',
+    'from adversary.infrastructure.providers.http import post_json as send\nsend({})\n',
 ])
-def test_new_unmediated_woland_sender_is_refused_without_executing_it(woland_route_estate, source):
-    from omega_engine_pfp.infrastructure.architecture_fitness import woland_pfp_route_violations
-    path = woland_route_estate / 'omega_engine_woland/use_cases/new_sender.py'
+def test_new_unmediated_adversary_sender_is_refused_without_executing_it(adversary_route_estate, source):
+    from pfp.infrastructure.architecture_fitness import adversary_pfp_route_violations
+    path = adversary_route_estate / 'adversary/use_cases/new_sender.py'
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(source, encoding='utf-8')
-    assert any('new_sender.py' in item for item in woland_pfp_route_violations(woland_route_estate))
+    assert any('new_sender.py' in item for item in adversary_pfp_route_violations(adversary_route_estate))
 
 
 @pytest.mark.parametrize('before,after', [
     ('turn = prepare_teamwork_turn(', 'turn = unchecked_turn('),
     ('observed = check_teamwork_reply(', 'observed = unchecked_reply('),
 ])
-def test_removing_a_live_pfp_prepare_or_check_is_detected(woland_route_estate, before, after):
-    from omega_engine_pfp.infrastructure.architecture_fitness import woland_pfp_route_violations
-    path = woland_route_estate / 'omega_engine_woland/infrastructure/teamwork_remote.py'
+def test_removing_a_live_pfp_prepare_or_check_is_detected(adversary_route_estate, before, after):
+    from pfp.infrastructure.architecture_fitness import adversary_pfp_route_violations
+    path = adversary_route_estate / 'adversary/infrastructure/teamwork_remote.py'
     source = path.read_text(encoding='utf-8')
     assert before in source
     path.write_text(source.replace(before, after), encoding='utf-8')
     assert any('RemoteTeamworkExecutor._attempt' in item
-               for item in woland_pfp_route_violations(woland_route_estate))
+               for item in adversary_pfp_route_violations(adversary_route_estate))
 
 
-def test_unwrapped_native_live_seats_are_detected(woland_route_estate):
-    from omega_engine_pfp.infrastructure.architecture_fitness import woland_pfp_route_violations
-    path = woland_route_estate / 'omega_engine/crates_rs/omega_symbol_game/src/woland_host.rs'
+def test_unwrapped_native_live_seats_are_detected(adversary_route_estate):
+    from pfp.infrastructure.architecture_fitness import adversary_pfp_route_violations
+    path = adversary_route_estate / 'engine/crates_rs/core_symbol_game/src/adversary_host.rs'
     source = path.read_text(encoding='utf-8')
-    path.write_text(source.replace('omega_woland::pfp_gateway::PfpSeatExecutor {',
+    path.write_text(source.replace('core_adversary::pfp_gateway::PfpSeatExecutor {',
                                    'RoutedSeatExecutor {'), encoding='utf-8')
-    assert any('native live seats' in item for item in woland_pfp_route_violations(woland_route_estate))
+    assert any('native live seats' in item for item in adversary_pfp_route_violations(adversary_route_estate))
 
 
-def test_guard_allows_prose_and_ordinary_provider_metadata(woland_route_estate):
-    from omega_engine_pfp.infrastructure.architecture_fitness import woland_pfp_route_violations
-    path = woland_route_estate / 'omega_engine_woland/use_cases/provider_notes.py'
+def test_guard_allows_prose_and_ordinary_provider_metadata(adversary_route_estate):
+    from pfp.infrastructure.architecture_fitness import adversary_pfp_route_violations
+    path = adversary_route_estate / 'adversary/use_cases/provider_notes.py'
     path.write_text('"""Do not call openai.OpenAI or urllib.request.urlopen."""\n', encoding='utf-8')
-    assert woland_pfp_route_violations(woland_route_estate) == ()
+    assert adversary_pfp_route_violations(adversary_route_estate) == ()

@@ -43,4 +43,4 @@ Test cases that write output files, JSON artifacts, or live timestamps directly 
 
 ## Prevention & Resolution
 
-Always use the `tmp_path` fixture for any file-writing test. In `WF_WOLAND`, verify `git status --porcelain` post-execution; if any tracked files were modified, fail immediately with `TEST_MUTATED_REPOSITORY_STATE`.
+Always use the `tmp_path` fixture for any file-writing test. In `WF_ADVERSARY`, verify `git status --porcelain` post-execution; if any tracked files were modified, fail immediately with `TEST_MUTATED_REPOSITORY_STATE`.

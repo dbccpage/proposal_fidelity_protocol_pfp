@@ -33,7 +33,7 @@ from ...domain import (
     WireKey,
 )
 
-ENVELOPE_SCHEMA_V2: str = "omega.symbol-game.envelope.v2"
+ENVELOPE_SCHEMA_V2: str = "core.symbol-game.envelope.v2"
 
 
 def serialize_envelope_v2(envelope: PacketEnvelopeV2) -> str:

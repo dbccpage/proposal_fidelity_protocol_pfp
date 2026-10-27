@@ -18,7 +18,7 @@ AuthorityEffect: None.
 
 ## What this gate owns
 
-1. **4-Directory Lesson Architecture:** Within the checker's explicit curriculum-root allowlist, each directory whose name starts with three or four ASCII digits and an underscore (`NNN_*` or `NNNN_*`) is a track. Legacy roots remain declared, and `omega_engine_education/documentation/007_oelggr/curriculum` is included. Each track contains four subdirectories: `concepts/`, `notebooks/`, `scripts/`, and `videos/`. A lesson is defined by matching slugs across all four subdirectories. The concept document links directly to the companion notebook.
+1. **4-Directory Lesson Architecture:** Within the checker's explicit curriculum-root allowlist, each directory whose name starts with three or four ASCII digits and an underscore (`NNN_*` or `NNNN_*`) is a track. Legacy roots remain declared, and `education/documentation/007_oelggr/curriculum` is included. Each track contains four subdirectories: `concepts/`, `notebooks/`, `scripts/`, and `videos/`. A lesson is defined by matching slugs across all four subdirectories. The concept document links directly to the companion notebook.
 2. **Laboratory Engineering Standards (`LabEngineer`):**
    - **Environment Preflight:** Code cell asserting runtime environment (`sys.version`, Python >= 3.10).
    - **Prediction Gate:** Code cell committing `prediction = "..."` prior to test evaluation.
@@ -69,13 +69,13 @@ supplement role establishes no recording, mathematical result or learner outcome
 ## Verification
 
 ```bash
-python omega_engine_operads/skills/governance-pedagogy/scripts/check_lesson_folders.py
+python operads/skills/governance-pedagogy/scripts/check_lesson_folders.py
 ```
 
 The script exits 0 when every numbered-track lesson folder has its prose page, notebook, `videos/` directory, and prose link. It prints `open_learning_checks` for notebooks with no `assert`. Exit 0 with a non-zero open count means the shape holds and those checks are still open.
 
 ```bash
-python omega_engine_operads/skills/governance-pedagogy/scripts/check_lesson_folders.py --strict-checks
+python operads/skills/governance-pedagogy/scripts/check_lesson_folders.py --strict-checks
 ```
 
 `--strict-checks` exits 1 when any numbered-track notebook has no `assert`.

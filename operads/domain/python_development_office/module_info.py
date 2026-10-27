@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from omega_engine_operads.domain.python_development_office.imported_symbol import (
+from operads.domain.python_development_office.imported_symbol import (
     ImportedSymbol,
 )
 

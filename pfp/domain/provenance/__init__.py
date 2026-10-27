@@ -9,7 +9,7 @@ never mints promotion: an admitted packet only says the authorizer may act.
 
 from __future__ import annotations
 
-from omega_engine_pfp.domain.provenance.three_role_gate import (
+from pfp.domain.provenance.three_role_gate import (
     AUTHORITY_EFFECT,
     GateVerdict,
     ObserverDeclaration,

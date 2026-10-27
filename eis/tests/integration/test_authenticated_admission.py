@@ -2,12 +2,12 @@
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.external_admission import AdmissionError
-from omega_engine_epistemic_immune_system.infrastructure.authenticated_custody import (
+from eis.domain.external_admission import AdmissionError
+from eis.infrastructure.authenticated_custody import (
     AuthenticatedEisLedger,
     NativeAttestationVerifier,
 )
-from omega_engine_epistemic_immune_system.tests.auth_support import (
+from eis.tests.auth_support import (
     NOW,
     RULE,
     binding,
@@ -16,7 +16,7 @@ from omega_engine_epistemic_immune_system.tests.auth_support import (
     signed,
     signing_bytes,
 )
-from omega_engine_operads.infrastructure.storage.receipt_ledger import (
+from operads.infrastructure.storage.receipt_ledger import (
     GENESIS_DIGEST,
     ReceiptLedger,
 )

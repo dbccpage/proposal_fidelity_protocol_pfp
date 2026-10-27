@@ -11,8 +11,8 @@ source_paths:
   - .agents/skills/
   - .agents/registry/capabilities.yaml
   - .agents/registry/lifecycle.yaml
-  - omega_engine_operads/domain/capability_catalog_v1.py
-  - omega_engine_operads/skill_operad/json/capability_catalog.v1.json
+  - operads/domain/capability_catalog_v1.py
+  - operads/skill_operad/json/capability_catalog.v1.json
 last_verified: 2026-10-01
 ---
 
@@ -24,7 +24,7 @@ last_verified: 2026-10-01
 
 ## 1. Executive Intuition: Skills as Reusable Operadic Morphisms
 
-In the Anomalon multi-agent ecosystem, an agent skill is not an ad-hoc prompt snippet or arbitrary text file. A skill is a **first-class operadic morphism**:
+In the Sentinel multi-agent ecosystem, an agent skill is not an ad-hoc prompt snippet or arbitrary text file. A skill is a **first-class operadic morphism**:
 
 $$f_{\mathrm{skill}} \in \mathcal{O}(c_1, \ldots, c_k;\, c_{\mathrm{target}})$$
 
@@ -32,7 +32,7 @@ To ensure that LLM agents can discover, index, and load skills on demand without
 
 ---
 
-## 2. Canonical Structure of an Anomalon Skill Package
+## 2. Canonical Structure of an Sentinel Skill Package
 
 Every skill lives inside its own hermetic directory under `.agents/skills/<skill_name>/` (and mirrored across all active host roots):
 
@@ -146,13 +146,13 @@ To verify that all skill packages in the repository adhere to the packaging stan
 
 ```powershell
 # 1. Run the skill budget gate audit across all skills
-py -3.12 omega_engine_operations/domain/cicd/budget_gate.py
+py -3.12 operations/domain/cicd/budget_gate.py
 
 # 2. Assert four-host bit-level parity for skills and registries
-py -3.12 omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py --dry-run
+py -3.12 operations/use_cases/packaging/sync_cross_host_skills.py --dry-run
 
 # 3. Test OEWAS catalog ingestion and validation
-# Retired: OEWAS tests/unit/test_capability_catalog.py has no successor file under omega_engine_operads.
+# Retired: OEWAS tests/unit/test_capability_catalog.py has no successor file under operads.
 ```
 
 ### The Level 01 Governance Invariants

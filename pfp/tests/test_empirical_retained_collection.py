@@ -4,8 +4,8 @@ import copy
 
 import pytest
 
-from omega_engine_pfp.infrastructure.pilot_runners.empirical_gates import collect_token_amortization
-from omega_engine_pfp.tests.test_empirical_gate_collection import MODELS, TASKS, gateways
+from pfp.infrastructure.pilot_runners.empirical_gates import collect_token_amortization
+from pfp.tests.test_empirical_gate_collection import MODELS, TASKS, gateways
 
 
 def test_retained_settled_prefix_continues_same_allowance_without_resending(tmp_path):

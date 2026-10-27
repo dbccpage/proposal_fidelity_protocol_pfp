@@ -12,13 +12,13 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Optional, Sequence
 
-from omega_engine_pfp.domain.mssn_research.grammar.authority import (
+from pfp.domain.mssn_research.grammar.authority import (
     DialectContainer,
     HodgePacket,
     IndObjectPacket,
     MasterHorizonPacket,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     DownMapObstruction,
     EdgeInvolution,
     ExactRationalTensor,
@@ -26,29 +26,29 @@ from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
     QuarantinedShadowPacket,
     ReversalMap,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.lexical import (
+from pfp.domain.mssn_research.grammar.lexical import (
     Alphabet,
     FrontierCandidate,
     ProbabilityMass,
     QuantifierMask,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.quantification import (
+from pfp.domain.mssn_research.grammar.quantification import (
     BoundedAlternationBlock,
     ExactPhi4Certificate,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.rewriting import (
+from pfp.domain.mssn_research.grammar.rewriting import (
     BQNFRoute,
     BQNFViewCochain,
     DDAEventRecord,
     PolygraphPacket,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import (
+from pfp.domain.mssn_research.grammar.spectral_geometry import (
     AutopoieticExpansionCyclePacket,
     Regge4DPacket,
     ZetaShadowPacket,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
 
 from ..packets.entities import Packet
 from ..packets.value_objects import Opcode, RefusalCode
@@ -252,7 +252,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Tensor product applications require Stage 8 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.foundational_policies import (
+        from pfp.domain.mssn_research.grammar.foundational_policies import (
             check_tensor_product_invariants,
         )
         return check_tensor_product_invariants(tensor)
@@ -312,7 +312,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Polygraph packets require Stage 11 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.rewriting_policies import (
+        from pfp.domain.mssn_research.grammar.rewriting_policies import (
     check_peak_claim_confluence,
     check_step_continuity,
 )
@@ -328,7 +328,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"DDA event records require Stage 12 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.rewriting_policies import (
+        from pfp.domain.mssn_research.grammar.rewriting_policies import (
             check_dda_event_proof,
         )
         return check_dda_event_proof(event)
@@ -340,7 +340,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"BQNF cochains require Stage 13 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.rewriting_policies import (
+        from pfp.domain.mssn_research.grammar.rewriting_policies import (
             check_bqnf_route_repair,
         )
         return check_bqnf_route_repair(cochain, route)
@@ -352,7 +352,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Bounded alternation blocks require Stage 14 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.quantifier_policies import (
+        from pfp.domain.mssn_research.grammar.quantifier_policies import (
             check_bounded_quantifier_block,
         )
         return check_bounded_quantifier_block(block)
@@ -364,7 +364,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Phi_4 cavity certificates require Stage 14 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.quantifier_policies import (
+        from pfp.domain.mssn_research.grammar.quantifier_policies import (
             check_phi4_dual_certificate,
         )
         return check_phi4_dual_certificate(cert)
@@ -376,7 +376,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Master horizon packets require Stage 15 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.authority_policies import (
+        from pfp.domain.mssn_research.grammar.authority_policies import (
             check_master_horizon_authority,
         )
         return check_master_horizon_authority(packet)
@@ -388,7 +388,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Ind-object packets require Stage 16 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.authority_policies import (
+        from pfp.domain.mssn_research.grammar.authority_policies import (
             check_ind_object_morphism,
         )
         return check_ind_object_morphism(packet)
@@ -400,7 +400,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Dialect containers require Stage 17 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.authority_policies import (
+        from pfp.domain.mssn_research.grammar.authority_policies import (
             check_dialect_container_integrity,
         )
         return check_dialect_container_integrity(container)
@@ -412,7 +412,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Hodge decomposition packets require Stage 18 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.authority_policies import (
+        from pfp.domain.mssn_research.grammar.authority_policies import (
             check_hodge_decomposition,
         )
         return check_hodge_decomposition(packet)
@@ -424,7 +424,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Zeta spectral shadow packets require Stage 19 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.spectral_policies import (
+        from pfp.domain.mssn_research.grammar.spectral_policies import (
             check_zeta_spectral_quarantine,
         )
         return check_zeta_spectral_quarantine(packet)
@@ -436,7 +436,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Autopoietic cycle packets require Stage 20 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.spectral_policies import (
+        from pfp.domain.mssn_research.grammar.spectral_policies import (
             check_autopoietic_expansion_cycle,
         )
         return check_autopoietic_expansion_cycle(packet)
@@ -448,7 +448,7 @@ class TowerGrammar:
                 code=RefusalCode.UNKNOWN_OPCODE,
                 message=f"Regge 4D simplicial packets require Stage 21 or higher; current is Stage {self.stage_level.level}"
             ))
-        from omega_engine_pfp.domain.mssn_research.grammar.spectral_policies import (
+        from pfp.domain.mssn_research.grammar.spectral_policies import (
             check_regge_4d_simplicial_curvature,
         )
         return check_regge_4d_simplicial_curvature(packet)
@@ -775,7 +775,7 @@ class EpistemicQuarantineLedger:
 
     def verify_isolation_against_stage(self, target_stage: StageLevel) -> Result[bool, GrammarDomainError]:
         """Verify that no quarantined packet in this ledger can be promoted/imported into target_stage (FW-SCOPE)."""
-        from omega_engine_pfp.domain.mssn_research.grammar.foundational_policies import (
+        from pfp.domain.mssn_research.grammar.foundational_policies import (
             check_permanent_quarantine_isolation,
         )
         for entry in self.entries:

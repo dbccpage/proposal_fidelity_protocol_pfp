@@ -7,7 +7,7 @@ operad_source_colours: ["Code"]
 operad_target_colour: "Witness"
 operad_arity: 1
 operad_residual: "contractive"
-dual_pattern: HP_PY_018_landau_mutation_sensitivity_protocol
+dual_pattern: HP_PY_018_examiner_mutation_sensitivity_protocol
 language: python
 authority_effect: None
 ---
@@ -47,4 +47,4 @@ Tests that assert mathematical or boolean tautologies without exercising product
 
 ## Prevention & Resolution
 
-Apply the Lev Landau mutation protocol: test suites must be evaluated against deliberate property-breaking mutations. An AST linter must reject literal comparisons in test assertions.
+Apply the Examiner mutation protocol: test suites must be evaluated against deliberate property-breaking mutations. An AST linter must reject literal comparisons in test assertions.

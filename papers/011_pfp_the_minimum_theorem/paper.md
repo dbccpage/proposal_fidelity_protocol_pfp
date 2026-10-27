@@ -51,7 +51,7 @@ Run this from the repository root. It imports no provider and writes only to a t
 import contextlib, io, json, sys, tempfile
 from pathlib import Path
 from types import SimpleNamespace
-sys.path.insert(0, str(Path("ow/omega_engine_pfp_v0.2/demo_001/rounds_03_20/code").resolve()))
+sys.path.insert(0, str(Path("ow/pfp_v0.2/demo_001/rounds_03_20/code").resolve()))
 import calculus_reference_check as c
 import run_live_round as r
 problems, fixtures = c.fixtures()
@@ -74,7 +74,7 @@ print(c.check(p, w)["status"])
 
 Observed output: `invalid_extraction`, `checked_accept`, `checked_accept`, `[1,2,3,4,5,6,7]`, `P1`, `checked_accept`. No runtime fixes are claimed by these planning documents.
 
-Reproduction environment: Python 3.12.14; the command above exits 0 because it records observations rather than asserting the desired future behavior. Tested scope is the two imported standalone modules and their fixtures at the reviewed commit. The reference self-tests were also run with `python ow/omega_engine_pfp_v0.2/demo_001/rounds_03_20/code/calculus_reference_check.py self-test` under Python 3.12.14, exit 0: all ten fixture expectations matched. Those ten cases do not cover the malformed-host and outer-contract failures above.
+Reproduction environment: Python 3.12.14; the command above exits 0 because it records observations rather than asserting the desired future behavior. Tested scope is the two imported standalone modules and their fixtures at the reviewed commit. The reference self-tests were also run with `python ow/pfp_v0.2/demo_001/rounds_03_20/code/calculus_reference_check.py self-test` under Python 3.12.14, exit 0: all ten fixture expectations matched. Those ten cases do not cover the malformed-host and outer-contract failures above.
 
 ### Theoretical minimum and an inspected mutation target
 
@@ -89,7 +89,7 @@ The following isolated guard experiment checks the actual source function and it
 
 ```python
 from pathlib import Path
-path = Path("ow/omega_engine_pfp_v0.2/python/domain/stage_semantic.py")
+path = Path("ow/pfp_v0.2/python/domain/stage_semantic.py")
 source = path.read_text(encoding="utf-8")
 guard = ('        if reply["candidate_id"] not in ids:\n'
          '            raise ValueError("EXTRACTION_NOT_AUDIT_ADMITTED")\n')
@@ -254,4 +254,4 @@ A million correlated tests supplies no distribution-free production guarantee. U
 5. Add stress and deployment-environment trials only after functional/custody checks are stable. Timeouts, cancellations and resumes are first-class outcomes.
 6. At the final rounds, produce a release decision packet with remaining obligations, deployment scope and rollback evidence. Test volume, `should_continue: true`, and model-written reports cannot authorize `PROD`.
 
-Implementation work should preserve the existing thin Python orchestration and native mathematical owners. Finite educational enumerations are reference oracles, not a new competing production solver. Use the existing PFP ports and the Woland/Woland path where already integrated; verify that route rather than claiming it from a folder name.
+Implementation work should preserve the existing thin Python orchestration and native mathematical owners. Finite educational enumerations are reference oracles, not a new competing production solver. Use the existing PFP ports and the Adversary/Adversary path where already integrated; verify that route rather than claiming it from a folder name.

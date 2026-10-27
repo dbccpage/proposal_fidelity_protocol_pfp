@@ -8,21 +8,21 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any, Protocol, Sequence, runtime_checkable
 
-from omega_engine_pfp.domain.decoding.antimorphism import (
+from pfp.domain.decoding.antimorphism import (
     AntimorphismTransitionModel,
 )
-from omega_engine_pfp.domain.decoding.cohomology import (
+from pfp.domain.decoding.cohomology import (
     InformationCohomologyBarcode,
     QuarantinedShadowPacket,
 )
-from omega_engine_pfp.domain.decoding.errors import DecodingError
-from omega_engine_pfp.domain.decoding.polygraph import (
+from pfp.domain.decoding.errors import DecodingError
+from pfp.domain.decoding.polygraph import (
     Confluence2Cell,
     TarskiPolygraph,
 )
-from omega_engine_pfp.domain.decoding.token_frontier import TokenFrontier
-from omega_engine_pfp.domain.decoding.vocabulary import WireVocabulary
-from omega_engine_pfp.domain.shared_kernel.result import Result
+from pfp.domain.decoding.token_frontier import TokenFrontier
+from pfp.domain.decoding.vocabulary import WireVocabulary
+from pfp.domain.shared_kernel.result import Result
 
 
 @runtime_checkable

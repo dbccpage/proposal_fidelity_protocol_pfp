@@ -15,7 +15,7 @@ This rule enforces type safety, exact rational arithmetic, null-totality SQL fen
 ## 1. Strict Boolean Type Safety & Dataclass Hash Discipline
 
 - **Strict Identity Validation**: When verifying schema-declared boolean fields, never use list membership (`val in [True, False]`). Always assert strict identity: `assert type(val) is bool` (rejecting integer 0 and 1).
-- **Value Object Exact-Type Equality & Mypy Narrowing**: Strongly-typed Value Objects governed by `urn:omega:governance:value_object_equality:v2.0.0` must enforce exact-type equality via `assert type(self) is type(other)` in `__eq__`. To ensure static type checkers (Mypy) narrow `other: object` to the target type without generating attribute-access errors, immediately follow with `assert isinstance(other, <Class>)` before accessing attributes.
+- **Value Object Exact-Type Equality & Mypy Narrowing**: Strongly-typed Value Objects governed by `urn:core:governance:value_object_equality:v2.0.0` must enforce exact-type equality via `assert type(self) is type(other)` in `__eq__`. To ensure static type checkers (Mypy) narrow `other: object` to the target type without generating attribute-access errors, immediately follow with `assert isinstance(other, <Class>)` before accessing attributes.
 - **Explicit Array Equality**: Dataclasses holding NumPy `ndarray` fields must implement explicit `__eq__` (using `np.array_equal`) and `__hash__` (using `.tobytes()`) to avoid ambiguous boolean truth evaluations.
 
 ---
@@ -55,7 +55,7 @@ This rule enforces type safety, exact rational arithmetic, null-totality SQL fen
   3. *Pillar III (Dependency Preservation)*: State whether all original constraints and laws remain checkable locally within sub-components.
   4. *Pillar IV (Syntactic Decision Procedure)*: Verification must be decidable from the declared schema, carrier size, and constraints, never from contingent runtime row contents.
 - **Authorization and Custody Firewall**: Every contract must declare `authorized_by: null` and `certified_implies_authorized: false`. Form certification provides evidence of structural adherence; it confers zero authority to alter execution budgets or license state transitions.
-- **Validation Oracle**: Every YAML contract specification must pass `omega_engine_governance.normal_forms.nf_harness.validate_contract_file` with zero defects.
+- **Validation Oracle**: Every YAML contract specification must pass `governance.normal_forms.nf_harness.validate_contract_file` with zero defects.
 
 ---
 

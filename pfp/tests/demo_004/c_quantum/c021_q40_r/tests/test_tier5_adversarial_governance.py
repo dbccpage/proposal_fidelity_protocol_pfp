@@ -5,7 +5,7 @@ AuthorityEffect: None.
 
 Covers:
 1. Micro-USD precision, rounding, ceiling division, and zero-dollar transactions in BudgetGate & BudgetController.
-2. StructureBench reverse write order protocol, cryptographic hash binding, and file corruption detection in WolandGate.
+2. StructureBench reverse write order protocol, cryptographic hash binding, and file corruption detection in AdversaryGate.
 3. CommitRevealRunner sequence state machine, manifest path traversal vulnerability auditing, missing commit files, and CLI edge cases.
 4. Participant packet runner.py resilience against hostile solvers, corrupted inputs, format polymorphism, and CLI handling.
 """
@@ -22,45 +22,45 @@ from typing import Any
 from unittest.mock import patch
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
     BudgetGate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
     CommitRevealRunner,
     sha256_of_file,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
     main as commit_reveal_main,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.adversary_gate import (
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
     persist_single_bundle,
     sanitize_run_key,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.participant_packet.runner import (
     canonical_json_str,
     load_cases,
     load_solver_func,
     run_cases,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.participant_packet.runner import (
     main as participant_runner_main,
 )
 
-from omega_engine_woland.domain.providers.budget import (
+from adversary.domain.providers.budget import (
     BudgetController,
     PriceQuoteV1,
     PriceTable,
     _leg_cost_microusd,
     fixture_pricing_observation,
 )
-from omega_engine_woland.domain.providers.model_registry import (
+from adversary.domain.providers.model_registry import (
     ModelNotAllowed,
 )
-from omega_engine_woland.domain.providers.types import BudgetExceeded, Provider
+from adversary.domain.providers.types import BudgetExceeded, Provider
 
 # ==============================================================================
 # Helper functions for independent cryptographic verification
@@ -320,24 +320,24 @@ class TestTier5MicroUsdPrecisionAndRounding:
 
 
 # ==============================================================================
-# Suite 2: WolandGate StructureBench Protocol & Cryptographic Integrity
+# Suite 2: AdversaryGate StructureBench Protocol & Cryptographic Integrity
 # ==============================================================================
 
 
-class TestTier5WolandGateStructureBenchProtocol:
-    """Adversarial stress-testing of WolandGate StructureBench write order and file bindings."""
+class TestTier5AdversaryGateStructureBenchProtocol:
+    """Adversarial stress-testing of AdversaryGate StructureBench write order and file bindings."""
 
     @pytest.fixture
     def temp_sink_roots(self, tmp_path: Path) -> tuple[Path, Path]:
-        woland_root = tmp_path / "intel_root"
-        return woland_root, tmp_path
+        adversary_root = tmp_path / "intel_root"
+        return adversary_root, tmp_path
 
     def test_reverse_write_order_cryptographic_seal(
         self, temp_sink_roots: tuple[Path, Path]
     ) -> None:
         """Verifies that all 4 files are generated, written in order, and cryptographically sealed."""
         repo_root, _ = temp_sink_roots
-        gate = WolandGate(base_repo_root=repo_root)
+        gate = AdversaryGate(base_repo_root=repo_root)
 
         case_results = [{"verdict": "PASS", "agreement": True}]
         claim_hygiene = {
@@ -347,7 +347,7 @@ class TestTier5WolandGateStructureBenchProtocol:
             "next_test_needed": "None",
         }
 
-        verdict, p_woland, p_sg, digests = gate.evaluate_and_persist(
+        verdict, p_adversary, p_sg, digests = gate.evaluate_and_persist(
             task_key="tier5_seal_test",
             run_id="run_tier5_seal",
             case_results=case_results,
@@ -355,11 +355,11 @@ class TestTier5WolandGateStructureBenchProtocol:
         )
 
         assert verdict == TERMINAL_REFERENCE_SELF_CONSISTENT
-        assert p_woland.exists()
+        assert p_adversary.exists()
         assert p_sg.exists()
 
         # Verify cryptographic binding for both sinks
-        check_w = verify_bundle_hash_bindings(p_woland)
+        check_w = verify_bundle_hash_bindings(p_adversary)
         assert check_w["overall_valid"] is True
 
         check_sg = verify_bundle_hash_bindings(p_sg)
@@ -368,9 +368,9 @@ class TestTier5WolandGateStructureBenchProtocol:
     def test_novella_modification_breaks_binding(self, temp_sink_roots: tuple[Path, Path]) -> None:
         """Injects 1 single byte corruption into novella.md and asserts detection."""
         repo_root, _ = temp_sink_roots
-        gate = WolandGate(base_repo_root=repo_root)
+        gate = AdversaryGate(base_repo_root=repo_root)
 
-        _, p_woland, _, _ = gate.evaluate_and_persist(
+        _, p_adversary, _, _ = gate.evaluate_and_persist(
             task_key="novella_corrupt_test",
             run_id="run_novella_corrupt",
             case_results=[{"verdict": "PASS", "agreement": True}],
@@ -383,11 +383,11 @@ class TestTier5WolandGateStructureBenchProtocol:
         )
 
         # Tamper with novella.md
-        novella_file = p_woland / "novella.md"
+        novella_file = p_adversary / "novella.md"
         content = novella_file.read_text(encoding="utf-8")
         novella_file.write_text(content + "\n<!-- malicious injection -->\n", encoding="utf-8")
 
-        check = verify_bundle_hash_bindings(p_woland)
+        check = verify_bundle_hash_bindings(p_adversary)
         assert check["novella_binding"] is False
         assert check["overall_valid"] is False
 
@@ -396,10 +396,10 @@ class TestTier5WolandGateStructureBenchProtocol:
     ) -> None:
         """Injects a label alteration (inconsistent -> consistent) into summary.json and asserts detection."""
         repo_root, _ = temp_sink_roots
-        gate = WolandGate(base_repo_root=repo_root)
+        gate = AdversaryGate(base_repo_root=repo_root)
 
         # Force a REFUSE verdict via defect_count=1
-        verdict, p_woland, _, _ = gate.evaluate_and_persist(
+        verdict, p_adversary, _, _ = gate.evaluate_and_persist(
             task_key="summary_corrupt_test",
             run_id="run_summary_corrupt",
             case_results=[{"verdict": "FAIL", "agreement": False}],
@@ -413,7 +413,7 @@ class TestTier5WolandGateStructureBenchProtocol:
         )
         assert verdict == TERMINAL_REFUSE
 
-        summary_file = p_woland / "summary.json"
+        summary_file = p_adversary / "summary.json"
         summary_data = json.loads(summary_file.read_text(encoding="utf-8"))
         assert summary_data["verdict"] == TERMINAL_REFUSE
 
@@ -423,7 +423,7 @@ class TestTier5WolandGateStructureBenchProtocol:
             json.dumps(summary_data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
 
-        check = verify_bundle_hash_bindings(p_woland)
+        check = verify_bundle_hash_bindings(p_adversary)
         assert check["summary_binding"] is False
         assert check["overall_valid"] is False
 
@@ -435,9 +435,9 @@ class TestTier5WolandGateStructureBenchProtocol:
         Counterexample (old tape): eight rows of constant metadata; the tape now holds three measured rows.
         """
         repo_root, _ = temp_sink_roots
-        gate = WolandGate(base_repo_root=repo_root)
+        gate = AdversaryGate(base_repo_root=repo_root)
 
-        _, p_woland, _, _ = gate.evaluate_and_persist(
+        _, p_adversary, _, _ = gate.evaluate_and_persist(
             task_key="dda_tamper_test",
             run_id="run_dda_tamper",
             case_results=[{"verdict": "PASS", "agreement": True}],
@@ -449,7 +449,7 @@ class TestTier5WolandGateStructureBenchProtocol:
             },
         )
 
-        dda_file = p_woland / "dda_actions.jsonl"
+        dda_file = p_adversary / "dda_actions.jsonl"
         lines = dda_file.read_text(encoding="utf-8").splitlines()
         assert len(lines) == 3  # intake, scoring, label: measured values only
 
@@ -457,17 +457,17 @@ class TestTier5WolandGateStructureBenchProtocol:
         truncated_lines = lines[:-1]
         dda_file.write_text("\n".join(truncated_lines) + "\n", encoding="utf-8")
 
-        check = verify_bundle_hash_bindings(p_woland)
+        check = verify_bundle_hash_bindings(p_adversary)
         assert check["dda_actions_binding"] is False
         # Even if someone forged dda_actions_sha256 in receipt.json, head check fails:
-        receipt_file = p_woland / "receipt.json"
+        receipt_file = p_adversary / "receipt.json"
         receipt_data = json.loads(receipt_file.read_text(encoding="utf-8"))
         receipt_data["dda_actions_sha256"] = hashlib.sha256(dda_file.read_bytes()).hexdigest()
         receipt_file.write_text(
             json.dumps(receipt_data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
 
-        check2 = verify_bundle_hash_bindings(p_woland)
+        check2 = verify_bundle_hash_bindings(p_adversary)
         assert check2["dda_actions_binding"] is True  # forged file hash matches
         assert check2["dda_head_binding"] is False  # but head record does not match!
         assert check2["overall_valid"] is False
@@ -515,16 +515,16 @@ class TestTier5WolandGateStructureBenchProtocol:
         leftovers = list(tmp_path.glob(".*"))
         assert len(leftovers) == 0
 
-    def test_woland_gate_authority_effect_enforcement(
+    def test_adversary_gate_authority_effect_enforcement(
         self, temp_sink_roots: tuple[Path, Path]
     ) -> None:
-        """Audits that WolandGate strictly forces AuthorityEffect: 'None' regardless of caller input."""
+        """Audits that AdversaryGate strictly forces AuthorityEffect: 'None' regardless of caller input."""
         repo_root, _ = temp_sink_roots
-        gate = WolandGate(base_repo_root=repo_root)
+        gate = AdversaryGate(base_repo_root=repo_root)
 
         # The gate writes authority_effect itself; callers have no parameter to raise it
 
-        _, p_woland, _, _ = gate.evaluate_and_persist(
+        _, p_adversary, _, _ = gate.evaluate_and_persist(
             task_key="auth_effect_test",
             run_id="run_auth_effect",
             case_results=[{"verdict": "PASS", "agreement": True}],
@@ -536,23 +536,23 @@ class TestTier5WolandGateStructureBenchProtocol:
             },
         )
 
-        summary_out = json.loads((p_woland / "summary.json").read_text(encoding="utf-8"))
-        receipt_out = json.loads((p_woland / "receipt.json").read_text(encoding="utf-8"))
-        novella_out = (p_woland / "novella.md").read_text(encoding="utf-8")
+        summary_out = json.loads((p_adversary / "summary.json").read_text(encoding="utf-8"))
+        receipt_out = json.loads((p_adversary / "receipt.json").read_text(encoding="utf-8"))
+        novella_out = (p_adversary / "novella.md").read_text(encoding="utf-8")
 
         assert summary_out["authority_effect"] == "None"
         assert receipt_out["authority_effect"] == "None"
         assert "**AuthorityEffect**: None" in novella_out
 
-    def test_woland_gate_empty_cases_verdict_refuse(self) -> None:
+    def test_adversary_gate_empty_cases_verdict_refuse(self) -> None:
         """Audits that an empty case_results list deterministically yields TERMINAL_REFUSE."""
-        gate = WolandGate()
+        gate = AdversaryGate()
         verdict = gate.determine_terminal_verdict([])
         assert verdict == TERMINAL_REFUSE
 
-    def test_woland_gate_defect_overrides_closed_residual(self) -> None:
+    def test_adversary_gate_defect_overrides_closed_residual(self) -> None:
         """Audits that defect_count > 0 takes priority over has_closed_residual, forcing TERMINAL_REFUSE."""
-        gate = WolandGate()
+        gate = AdversaryGate()
         verdict = gate.determine_terminal_verdict(
             [{"verdict": "PASS", "agreement": True}],
             defect_count=1,
@@ -560,13 +560,13 @@ class TestTier5WolandGateStructureBenchProtocol:
         )
         assert verdict == TERMINAL_REFUSE
 
-    def test_woland_gate_phi1_gamma2_precision_thresholds(self) -> None:
+    def test_adversary_gate_phi1_gamma2_precision_thresholds(self) -> None:
         """Defect values are exact and have no tolerance.
 
         Counterexample: phi1=gamma2=1e-6 (floats) passed under a 1e-6 tolerance. Only an exact zero is
         consistent; any measured non-zero Fraction is inconsistent; floats and bools are refused.
         """
-        gate = WolandGate()
+        gate = AdversaryGate()
         cases = [{"verdict": "PASS", "agreement": True}]
 
         # Exact zero (or not measured) -> REFERENCE_SELF_CONSISTENT
@@ -761,7 +761,7 @@ class TestTier5CommitRevealRunnerAdversarial:
     ) -> None:
         """Audits that supplying an already-existing custom --task-key raises RunFolderExistsError."""
         intel_root = tmp_path / "intel_cli_test"
-        existing_run = intel_root / "_intelligence" / "_woland" / "runs" / "custom_collision_key"
+        existing_run = intel_root / "_intelligence" / "_adversary" / "runs" / "custom_collision_key"
         existing_run.mkdir(parents=True)
 
         runner = CommitRevealRunner(

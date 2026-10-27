@@ -31,9 +31,9 @@ and identifiers. Read the [manuscript](paper.md), the
 - `jupyter_notebooks/signed_exchange_and_frontier.ipynb`: a companion notebook
   with stored outputs; it runs from this folder or from `jupyter_notebooks/`.
 - `docs/`: the description, references, and an integration note.
-- `_lev_landau_theoretical_minimum_quiz/`: the fictional Apartment 50 preface,
+- `_lev_examiner_theoretical_minimum_quiz/`: the fictional Apartment 50 preface,
   an eight-level, 14-problem quiz, a study guide, and a separate worked key.
-  Start with [the study guide](_lev_landau_theoretical_minimum_quiz/study_guide.md).
+  Start with [the study guide](_lev_examiner_theoretical_minimum_quiz/study_guide.md).
 - `verify_deposit.py`, `tools/`, and `scripts/`: release tooling.
 
 ## Toolchain for this revision
@@ -95,7 +95,7 @@ cargo build -j 1 --manifest-path code/rust/Cargo.toml --bin solve_sign_graph
 ```
 
 `code/native_sign_graph.py` uses the executable named by the environment
-variable `OMEGA_SIGN_GRAPH_BIN`, or else one built in `code/rust/target/`.
+variable `CORE_SIGN_GRAPH_BIN`, or else one built in `code/rust/target/`.
 When no executable exists it uses the Python checker, and the binary-discovery
 test in `code/tests/test_native_sign_graph.py` is skipped with the build
 command as its reason. When an executable is found it decides: a native

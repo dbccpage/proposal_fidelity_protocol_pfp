@@ -62,7 +62,7 @@ class PfpSymbolMapping(PfpBaseModel):
 
 
 class PfpRewritingContract(PfpBaseModel):
-    schema_id: Literal["omega.pfp.rewriting.types.v1"] = "omega.pfp.rewriting.types.v1"
+    schema_id: Literal["core.pfp.rewriting.types.v1"] = "core.pfp.rewriting.types.v1"
     title: str
     authority_effect: AuthorityEffect = AuthorityEffect.NONE
     source: str

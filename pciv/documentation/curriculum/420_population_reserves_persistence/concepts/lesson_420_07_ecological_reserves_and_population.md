@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 420 (Reserves, Security & Ecology)  
 **Level Source:** Level 07 ([`level_07_ecological_reserves_and_population.md`](../../levels/level_07_ecological_reserves_and_population.md))  
-**Rust Seam:** [`omega_prompt_civilization::forge`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/forge.rs)
+**Rust Seam:** [`core_prompt_civilization::forge`](../../../../engine/crates_rs/core_prompt_civilization/src/forge.rs)
 
 ## 1. Pedagogical Objective
 Analyze how population quotas are allocated across disjoint reserve buckets (Frontier $3/5$, Unmeasured $1/4$, Baseline $3/20$) via the largest-remainder method to prevent monoculture and competitive release.

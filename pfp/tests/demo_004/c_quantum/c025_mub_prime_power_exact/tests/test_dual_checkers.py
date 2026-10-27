@@ -1,16 +1,16 @@
 # AuthorityEffect: None.
 """Tests for Exact Checker, Independent Checker, and Dual Evaluator."""
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.judge_packet.checkers.exact_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.judge_packet.checkers.exact_checker import (
     verify_exact,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.judge_packet.checkers.independent_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.judge_packet.checkers.independent_checker import (
     verify_independent,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.reference_solver.solver import (
     solve,
 )
 

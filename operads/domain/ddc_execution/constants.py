@@ -20,4 +20,4 @@ ADMITTED_FINITE_COLOURS: tuple[str, ...] = (
 )
 
 REQUIRED_CONTRACTIVE_RUNS: int = 3
-EVIDENCE_TRACE_SCHEMA: str = "omega.operad.evidence_trace.v1"
+EVIDENCE_TRACE_SCHEMA: str = "core.operad.evidence_trace.v1"

@@ -5,7 +5,7 @@ port type connectivity, input/output colour matching, and unreachable node
 absence", and deliverable 2 for a `CycleObstructionDetector`. Deliverable 2 is
 not provided; the reason is stated below.
 
-A workflow in `omega_engine_operads/workflows/*.json` declares a signature -- `source_colours`
+A workflow in `operads/workflows/*.json` declares a signature -- `source_colours`
 and `target_colour` -- and a `pipeline` of `{slot, operation}` steps where each
 operation names a skill. That is exactly planar substitution: each step
 substitutes its skill into the given slot of the workflow composed so far. So

@@ -10,7 +10,7 @@ import random
 import unittest
 from itertools import combinations
 
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     JoinDependency,
     RelationalSchema,
@@ -27,7 +27,7 @@ from omega_engine_pfp.domain.normal_forms.relational import (
     check_sknf,
     synthesize_5nf_projections,
 )
-from omega_engine_pfp.domain.normal_forms.relational_extensions import (
+from pfp.domain.normal_forms.relational_extensions import (
     MultivaluedDependency,
     check_4nf,
 )

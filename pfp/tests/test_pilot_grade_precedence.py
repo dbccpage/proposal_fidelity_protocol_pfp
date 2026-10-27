@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.pilot_runner import grade
+from pfp.infrastructure.pilot_runner import grade
 
 
 @pytest.mark.parametrize(

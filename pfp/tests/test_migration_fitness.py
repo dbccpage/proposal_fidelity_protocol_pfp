@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.infrastructure.migration_fitness import (
+from pfp.infrastructure.migration_fitness import (
     DEFAULT_MAP,
     MAP_SCHEMA,
     check_file_map,
@@ -20,8 +20,8 @@ from omega_engine_pfp.infrastructure.migration_fitness import (
 
 @pytest.fixture
 def mapped_repo(tmp_path: Path):
-    source = "omega_engine_pfp/domain/example.py"
-    target = "omega_engine/crates_rs/omega_symbol_game/src/lib.rs"
+    source = "pfp/domain/example.py"
+    target = "engine/crates_rs/core_symbol_game/src/lib.rs"
     (tmp_path / source).parent.mkdir(parents=True)
     (tmp_path / source).write_text("VALUE = 1\n", encoding="utf-8")
     (tmp_path / target).parent.mkdir(parents=True)
@@ -50,9 +50,9 @@ def test_a_complete_map_checks_original_bytes_and_existing_native_owner(mapped_r
 
 
 def test_new_tracked_source_cannot_disappear_from_the_migration_map(mapped_repo):
-    findings = _check(mapped_repo, extra_paths=("omega_engine_pfp/domain/new.py",))
+    findings = _check(mapped_repo, extra_paths=("pfp/domain/new.py",))
     assert [(value.code, value.path) for value in findings] == [
-        ("UNMAPPED_SOURCE", "omega_engine_pfp/domain/new.py")
+        ("UNMAPPED_SOURCE", "pfp/domain/new.py")
     ]
 
 
@@ -96,9 +96,9 @@ def test_duplicate_source_rows_do_not_count_as_complete_coverage(mapped_repo):
     "target",
     [
         "../secret.rs",
-        "omega_engine/crates_rs/absent.rs",
+        "engine/crates_rs/absent.rs",
         "other/lib.rs",
-        "omega_symbol_game::graph",
+        "core_symbol_game::graph",
     ],
 )
 def test_native_targets_must_name_existing_repository_owner_files(mapped_repo, target):
@@ -124,7 +124,7 @@ def test_duplicate_json_keys_refuse_before_rows_are_interpreted(mapped_repo):
 
 
 def test_map_size_bound_accepts_exact_limit_and_refuses_extra_bytes(mapped_repo, monkeypatch):
-    from omega_engine_pfp.infrastructure import migration_fitness
+    from pfp.infrastructure import migration_fitness
 
     root, map_path, document, source, _ = mapped_repo
     raw = json.dumps(document).encode("utf-8")
@@ -141,12 +141,12 @@ def test_a_symlink_cannot_make_an_external_file_a_native_owner(mapped_repo):
     root, _, document, _, _ = mapped_repo
     outside = root.parent / (root.name + "-external.rs")
     outside.write_text("external", encoding="utf-8")
-    link = root / "omega_engine/crates_rs/outside.rs"
+    link = root / "engine/crates_rs/outside.rs"
     try:
         link.symlink_to(outside)
     except OSError:
         pytest.skip("host cannot create test symlinks")
-    document["files"][0]["rust_targets"] = ["omega_engine/crates_rs/tests/outside.rs"]
+    document["files"][0]["rust_targets"] = ["engine/crates_rs/tests/outside.rs"]
     assert [value.code for value in _check(mapped_repo)] == ["BAD_RUST_TARGET"]
 
 
@@ -158,7 +158,7 @@ def test_a_native_owner_claim_requires_an_actual_target(mapped_repo):
 
 def test_even_noncode_assets_require_reviewed_bytes(mapped_repo):
     root, map_path, document, _, _ = mapped_repo
-    asset = "omega_engine_pfp/fixtures/example.json"
+    asset = "pfp/fixtures/example.json"
     (root / asset).parent.mkdir(parents=True)
     (root / asset).write_text("{}", encoding="utf-8")
     document["files"][0]["path"] = asset
@@ -244,7 +244,7 @@ def test_explicit_source_binding_reconciliation_preserves_fixed_base_rows_and_pi
     assert hashlib.sha256(previous_raw).hexdigest() == previous_map["sha256"]
     previous = json.loads(previous_raw)
     assert reconciliation["receipt"] == (
-        "_ic/woland/rust_map_reconciliation_20261013/reconciliation.json"
+        "_ic/adversary/rust_map_reconciliation_20261013/reconciliation.json"
     )
     receipt_file = root / reconciliation["receipt"]
     receipt_raw = (
@@ -313,7 +313,7 @@ def test_explicit_source_binding_reconciliation_preserves_fixed_base_rows_and_pi
         assert historical_oid == historical["blob_oid"], path
         assert historical_raw.replace(b"\r\n", b"\n") == base_raw, path
         if classification == "MIXED_EOL_AND_REVIEWED_PATH_FIX":
-            assert path == "omega_engine_pfp/infrastructure/tower_evidence/level_engine/resolver.py"
+            assert path == "pfp/infrastructure/tower_evidence/level_engine/resolver.py"
             assert record["normalized_pre_fix_sha256"] == hashlib.sha256(base_raw).hexdigest()
             assert raw != base_raw
         else:
@@ -377,7 +377,7 @@ def test_native_driver_review_preserves_previous_map_and_current_source_bindings
         if "bytes_reviewed" in new[path]:
             assert len(raw) == new[path]["bytes_reviewed"], path
     manifest = json.loads(
-        _git_blob(root, DRIVER_PROMPT_LANDING, "omega_engine_pfp/migration_manifest.json")
+        _git_blob(root, DRIVER_PROMPT_LANDING, "pfp/migration_manifest.json")
     )
     assert manifest["migration_complete"] is False
     assert "prompt_identity_and_turn_lifecycle_parity" in manifest["remaining"]
@@ -443,9 +443,9 @@ def test_prompt_artifact_review_preserves_prior_pins_and_scoped_current_bindings
         assert hashlib.sha256(raw).hexdigest() == new_row["source_sha256"], path
         if "bytes_reviewed" in new_row:
             assert len(raw) == new_row["bytes_reviewed"], path
-    assert new["omega_engine_pfp/domain/aggregates/prompt_artifact.py"]["status"] == "partial_native"
-    assert new["omega_engine_pfp/use_cases/prompt_artifact.py"]["status"] == "partial_native"
-    manifest = json.loads((root / "omega_engine_pfp/migration_manifest.json").read_bytes())
+    assert new["pfp/domain/aggregates/prompt_artifact.py"]["status"] == "partial_native"
+    assert new["pfp/use_cases/prompt_artifact.py"]["status"] == "partial_native"
+    manifest = json.loads((root / "pfp/migration_manifest.json").read_bytes())
     assert manifest["migration_complete"] is False
     assert "native_canonical_prompt_artifact_parity" in manifest["implemented"]
     assert "prompt_identity_and_turn_lifecycle_parity" in manifest["remaining"]

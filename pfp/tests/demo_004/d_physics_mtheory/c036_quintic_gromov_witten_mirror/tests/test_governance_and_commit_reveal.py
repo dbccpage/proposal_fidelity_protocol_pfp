@@ -16,15 +16,15 @@ from fractions import Fraction
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.governance import (
-    woland_gate as woland_gate_module,
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.governance import (
+    adversary_gate as adversary_gate_module,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.governance.budget_gate import (
     BudgetCeilingExceededError,
     BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.governance.commit_reveal_runner import (
     ManifestCustodyError,
     lf_normalized_bytes,
     phase1_commit_judge,
@@ -33,10 +33,10 @@ from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quin
     verify_commitments,
     verify_manifest_entries,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.governance.adversary_gate import (
     CANONICAL_OUTPUT_FILES,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
 CHALLENGE_DIR = Path(__file__).resolve().parent.parent
@@ -112,12 +112,12 @@ def test_budget_gate_audit_accounting_config():
     assert audit["target_usd"] == 0.05
 
 
-def test_woland_gate_quad_persistence(tmp_path: Path):
-    """Asserts WolandGate writes all 4 bundle files and a report of the measured values.
+def test_adversary_gate_quad_persistence(tmp_path: Path):
+    """Asserts AdversaryGate writes all 4 bundle files and a report of the measured values.
 
     Counterexample: the report used to be a fixed seven-act narrative ("Act I: Patriarch's
     Ponds" ... "Act VII") whatever the counts were; it must now show the counts it was given."""
-    gate = WolandGate(task_key="c036_quintic_gromov_witten_mirror", base_dir=tmp_path)
+    gate = AdversaryGate(task_key="c036_quintic_gromov_witten_mirror", base_dir=tmp_path)
     novella = gate.generate_novella(CONSISTENT, {"total_cases": 28, "agreements_count": 28})
 
     receipt = {"challenge_id": "c036_quintic_gromov_witten_mirror", "verdict": CONSISTENT}
@@ -131,7 +131,7 @@ def test_woland_gate_quad_persistence(tmp_path: Path):
         novella=novella,
     )
 
-    for run_dir in (targets["woland_run_dir"], targets["symgam_run_dir"]):
+    for run_dir in (targets["adversary_run_dir"], targets["symgam_run_dir"]):
         assert run_dir.is_dir()
         assert tmp_path in run_dir.parents
         for fname in CANONICAL_OUTPUT_FILES:
@@ -145,10 +145,10 @@ def test_woland_gate_quad_persistence(tmp_path: Path):
         assert "Act " not in novella_content
 
 
-def test_woland_gate_labels_come_from_exact_counts():
+def test_adversary_gate_labels_come_from_exact_counts():
     """Counterexamples: an empty suite, one checker disagreement and a float Phi_1 must not be consistent,
     and a PASS_TO_MASTER label must be refused."""
-    gate = WolandGate(base_dir=Path("unused"))
+    gate = AdversaryGate(base_dir=Path("unused"))
     assert gate.determine_terminal_verdict(0, 0, 0) == INCONSISTENT
     assert gate.determine_terminal_verdict(28, 28, 27) == INCONSISTENT
     assert gate.determine_terminal_verdict(28, 28, 28) == CONSISTENT
@@ -158,20 +158,20 @@ def test_woland_gate_labels_come_from_exact_counts():
         gate.generate_novella("PASS_TO_MASTER", {})
 
 
-def test_woland_gate_never_replaces_a_run_folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_adversary_gate_never_replaces_a_run_folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """Counterexample: every run wrote into the same runs/<task_key> folder and overwrote the previous bundle."""
 
-    class _Frozen(woland_gate_module.datetime):
+    class _Frozen(adversary_gate_module.datetime):
         @classmethod
         def now(cls, tz=None):
-            return cls(2026, 9, 29, 12, 0, 0, tzinfo=woland_gate_module.timezone.utc)
+            return cls(2026, 9, 29, 12, 0, 0, tzinfo=adversary_gate_module.timezone.utc)
 
-    monkeypatch.setattr(woland_gate_module, "datetime", _Frozen)
-    gate = WolandGate(task_key="c036_collision", base_dir=tmp_path)
+    monkeypatch.setattr(adversary_gate_module, "datetime", _Frozen)
+    gate = AdversaryGate(task_key="c036_collision", base_dir=tmp_path)
     first = gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="first")
     with pytest.raises(RunFolderExistsError):
         gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="second")
-    assert (first["woland_run_dir"] / "novella.md").read_text(encoding="utf-8") == "first"
+    assert (first["adversary_run_dir"] / "novella.md").read_text(encoding="utf-8") == "first"
 
 
 def test_commit_reveal_workflow(tmp_path: Path):

@@ -21,7 +21,7 @@ import pytest
 
 def test_f_support_01_support_is_independent_of_ingestion_order() -> None:
     """F-SUPPORT-01: Support count and promotion decision are invariant under permutation of observations."""
-    from omega_engine_epistemic_immune_system.use_cases.provisional_promotion import (
+    from eis.use_cases.provisional_promotion import (
         ObservationSupportPolicyV1,
         RawObservationV1,
     )
@@ -66,7 +66,7 @@ def test_f_support_01_support_is_independent_of_ingestion_order() -> None:
 
 def test_f_support_02_non_transitive_overlap_case() -> None:
     """F-SUPPORT-02: A-B correlated, B-C correlated, A-C not correlated -> support = 2."""
-    from omega_engine_epistemic_immune_system.use_cases.provisional_promotion import (
+    from eis.use_cases.provisional_promotion import (
         ObservationSupportPolicyV1,
         RawObservationV1,
     )
@@ -107,7 +107,7 @@ def test_f_support_03_support_is_feasible_without_relabelling() -> None:
 
     Correlation keys are host-bound from sealed receipts.
     """
-    from omega_engine_epistemic_immune_system.use_cases.provisional_promotion import (
+    from eis.use_cases.provisional_promotion import (
         ObservationSupportPolicyV1,
         RawObservationV1,
     )
@@ -137,7 +137,7 @@ def test_f_support_03_support_is_feasible_without_relabelling() -> None:
 
 def test_f_support_04_support_is_monotone() -> None:
     """F-SUPPORT-04: Adding an observation never lowers support."""
-    from omega_engine_epistemic_immune_system.use_cases.provisional_promotion import (
+    from eis.use_cases.provisional_promotion import (
         ObservationSupportPolicyV1,
         RawObservationV1,
     )
@@ -158,7 +158,7 @@ def test_f_support_04_support_is_monotone() -> None:
 
 def test_f_pharm_01_duplicate_collapse_replays_count_as_one() -> None:
     """F-PHARM-01: Ten replays of one defect yield support = 1 and do not promote."""
-    from omega_engine_epistemic_immune_system.use_cases.provisional_promotion import (
+    from eis.use_cases.provisional_promotion import (
         ObservationSupportPolicyV1,
         RawObservationV1,
     )
@@ -184,7 +184,7 @@ def test_f_pharm_01_duplicate_collapse_replays_count_as_one() -> None:
 
 def test_f_pharm_02_parser_bug_phantoms_permanently_retired() -> None:
     """F-PHARM-02: Farming any of the three parser-bug phantom IDs is skipped with typed reason."""
-    from omega_engine_woland.stage.domain.immune.models import Antibody
+    from adversary.stage.domain.immune.models import Antibody
 
     retired_phantom_ids = [
         "ab_syntax_error_e033d14a",
@@ -202,7 +202,7 @@ def test_f_pharm_02_parser_bug_phantoms_permanently_retired() -> None:
 
 def test_f_pharm_03_fixture_validation_failure_makes_binding_non_effective() -> None:
     """F-PHARM-03: When must_match fails or must_not_match fires, binding is non-effective immediately."""
-    from omega_engine_epistemic_immune_system.domain.external_admission import (
+    from eis.domain.external_admission import (
         FixtureValidationEngineV1,
         OperationalBindingV1,
     )
@@ -231,7 +231,7 @@ def test_f_pharm_03_fixture_validation_failure_makes_binding_non_effective() -> 
 
 def test_f_pharm_04_descent_follows_declared_inheritance_edges_only() -> None:
     """F-PHARM-04: Traversing reference edges or objective matches as descent is refused."""
-    from omega_engine_operating_system.adapters.prompt_civ.genealogy import (
+    from operating_system.adapters.prompt_civ.genealogy import (
         LineageGraphV1,
         RelationshipType,
     )
@@ -246,7 +246,7 @@ def test_f_pharm_04_descent_follows_declared_inheritance_edges_only() -> None:
 
 def test_f_fix_01_fixture_polarity_map_explicit_declaration() -> None:
     """F-FIX-01: Producers require explicit FixturePolarityMapV1; unmapped raises FIXTURE_POLARITY_UNDECLARED."""
-    from omega_engine_epistemic_immune_system.domain.external_admission import (
+    from eis.domain.external_admission import (
         FixturePolarityMapV1,
         FixturePolarityResolverV1,
     )
@@ -254,17 +254,17 @@ def test_f_fix_01_fixture_polarity_map_explicit_declaration() -> None:
     resolver = FixturePolarityResolverV1()
 
     # the city mapping: negative_fixture is triggering defect (must_match), positive is repaired (must_not_match)
-    woland_map = FixturePolarityMapV1(
-        producer="omega_engine_woland.stage.domain.immune.seeder",
+    adversary_map = FixturePolarityMapV1(
+        producer="adversary.stage.domain.immune.seeder",
         schema_version="1.0",
         must_match_field="negative_fixture",
         must_not_match_field="positive_fixture",
     )
-    resolver.register_map(woland_map)
+    resolver.register_map(adversary_map)
 
     # Resolving registered producer works
     polarity = resolver.resolve_polarity(
-        producer="omega_engine_woland.stage.domain.immune.seeder",
+        producer="adversary.stage.domain.immune.seeder",
         schema_version="1.0",
     )
     assert polarity.must_match_field == "negative_fixture"
@@ -277,7 +277,7 @@ def test_f_fix_01_fixture_polarity_map_explicit_declaration() -> None:
 
 def test_f_fix_02_validation_failure_proposes_retirement_custody_unchanged() -> None:
     """F-FIX-02: Fixture validation failure emits RetirementProposalV1; custody remains unchanged."""
-    from omega_engine_epistemic_immune_system.domain.external_admission import (
+    from eis.domain.external_admission import (
         FixtureValidationEngineV1,
         OperationalBindingV1,
         RetirementProposalV1,
@@ -303,7 +303,7 @@ def test_f_fix_02_validation_failure_proposes_retirement_custody_unchanged() -> 
 
 def test_f_res_05_propagated_references_are_never_observations() -> None:
     """F-RES-05: Propagated or inherited antibody references cannot count toward support."""
-    from omega_engine_epistemic_immune_system.use_cases.provisional_promotion import (
+    from eis.use_cases.provisional_promotion import (
         ObservationSupportPolicyV1,
         RawObservationV1,
     )

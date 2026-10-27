@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, Optional, Tuple
 from uuid import uuid4
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 
 from ...application.ports.journal_port import JournalPort
 from ...application.ports.unit_of_work_port import OeopUnitOfWorkPort

@@ -6,8 +6,8 @@ from dataclasses import asdict
 from fractions import Fraction
 from typing import Any, Mapping, Sequence
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err
 
 from ..domain.allostery import DEFAULT_PARAMETERS, AllostericDecision
 from ..domain.external_admission import (

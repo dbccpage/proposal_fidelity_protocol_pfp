@@ -7,23 +7,23 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_operating_system.adapters.rust_host.ffi import locate_host_binary
-from omega_engine_pfp.domain.demos import (
+from operating_system.adapters.rust_host.ffi import locate_host_binary
+from pfp.domain.demos import (
     DemoRefusal,
     refuse_model_functionals,
     strict_descent,
 )
-from omega_engine_pfp.domain.tower import grammar, parser, wire
-from omega_engine_pfp.domain.tower.profile import validate_stage
-from omega_engine_pfp.infrastructure.adapters.mssn_research import loader
-from omega_engine_pfp.infrastructure.demos.canonical import canonical, digest
-from omega_engine_pfp.infrastructure.demos.catalog import lookup, scenarios
-from omega_engine_pfp.infrastructure.demos.execution import run, verify
-from omega_engine_pfp.use_cases.mssn_demo import evaluate_cases
+from pfp.domain.tower import grammar, parser, wire
+from pfp.domain.tower.profile import validate_stage
+from pfp.infrastructure.adapters.mssn_research import loader
+from pfp.infrastructure.demos.canonical import canonical, digest
+from pfp.infrastructure.demos.catalog import lookup, scenarios
+from pfp.infrastructure.demos.execution import run, verify
+from pfp.use_cases.mssn_demo import evaluate_cases
 
 # The immune scenarios call the native pharmacy detector. With no host binary
 # they must refuse with exactly this code, naming the missing binary; with a
-# built host (OMEGA_SYMBOL_GAME_HOST or the workspace target) they must run.
+# built host (CORE_SYMBOL_GAME_HOST or the workspace target) they must run.
 NATIVE_PHARMACY_SCENARIOS = frozenset(
     {"antimorphism_farm", "demo_4e_cogsci_autopoiesis", "demo_eis_failure_classes"}
 )
@@ -55,7 +55,7 @@ def offline(monkeypatch):
     monkeypatch.setattr(socket, "create_connection", refused)
     for name in ("OPENROUTER_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY"):
         monkeypatch.setenv(name, "dummy-offline-key")
-    for name in ("OMEGA_FUNCTIONAL_GRAPH_BIN", "OMEGA_FUNCTIONAL_GRAPH_SHA256"):
+    for name in ("CORE_FUNCTIONAL_GRAPH_BIN", "CORE_FUNCTIONAL_GRAPH_SHA256"):
         monkeypatch.delenv(name, raising=False)
 
 
@@ -198,10 +198,10 @@ def test_live_receipt_verifies_integrity_without_replaying_a_model(tmp_path, mon
 
     if sys.platform != "win32":
         pytest.skip("existing live artifact protector requires Windows DPAPI")
-    from omega_engine_woland.infrastructure.providers import openai_compat
-    from omega_engine_pfp.infrastructure.demos import execution
-    from omega_engine_pfp.infrastructure.trace import gateway_factories
-    from omega_engine_pfp.infrastructure.trace.provider_dispatch import (
+    from adversary.infrastructure.providers import openai_compat
+    from pfp.infrastructure.demos import execution
+    from pfp.infrastructure.trace import gateway_factories
+    from pfp.infrastructure.trace.provider_dispatch import (
         scripted_openai_payload,
     )
 

@@ -6,17 +6,17 @@ import dataclasses
 import json
 from pathlib import Path
 
-from omega_engine_epistemic_immune_system.domain.danger_gate import TwoSignalDangerGate
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_gate import TwoSignalDangerGate
+from eis.domain.danger_signals import (
     SignalIndependenceRefusal,
     signal1_digest,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     DangerSeverity,
     Signal1Match,
     Signal2Danger,
 )
-from omega_engine_epistemic_immune_system.tests.generate_rust_independence_fixtures import (
+from eis.tests.generate_rust_independence_fixtures import (
     projected_danger,
     projected_match,
 )
@@ -97,7 +97,7 @@ def main():
     root = next(parent for parent in Path(__file__).resolve().parents if (parent / ".git").exists())
     path = (
         root
-        / "omega_engine/crates_rs/tests/omega_epistemic_immune_system/fixtures/python_signal_gate_v1.json"
+        / "engine/crates_rs/tests/core_epistemic_immune_system/fixtures/python_signal_gate_v1.json"
     )
     path.write_text(
         json.dumps({"timing": "pre-implementation", "vectors": rows}, ensure_ascii=False, indent=2)

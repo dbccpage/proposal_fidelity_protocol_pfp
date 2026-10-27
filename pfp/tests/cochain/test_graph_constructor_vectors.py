@@ -10,10 +10,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.cochain import PromptCellComplex
+from pfp.domain.cochain import PromptCellComplex
 
 ROOT = Path(__file__).resolve().parents[3]
-CASES = json.loads((ROOT / "omega_engine/crates_rs/tests/omega_symbol_game_runtime/fixtures/cochain_constructor_vectors.json").read_text(encoding="utf-8"))
+CASES = json.loads((ROOT / "engine/crates_rs/tests/core_symbol_game_runtime/fixtures/cochain_constructor_vectors.json").read_text(encoding="utf-8"))
 
 
 def _coefficient(value):

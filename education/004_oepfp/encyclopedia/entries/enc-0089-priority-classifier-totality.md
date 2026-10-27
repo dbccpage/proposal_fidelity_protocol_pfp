@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.10"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.3 'Theorem IV.10'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.3 'Theorem IV.10'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -48,7 +48,7 @@ Every declared action receives exactly one label.
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.3
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.3
   (statement and proof copied verbatim). Original header line:
   `**Theorem IV.10 (Priority Classifier Totality).** [PROVED] Every declared action receives exactly one label.`
 

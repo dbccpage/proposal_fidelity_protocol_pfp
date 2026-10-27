@@ -41,7 +41,7 @@ Why does the Symbol Game require that an assertion like `ASSERT e1 -> residue_0`
 
 <details>
 <summary><b>Click to reveal solution</b></summary>
-Because without an explicit evidence citation or parent hash, the rewrite is unpriced. Under the Woland Swarm operational axiom ("An unpriced rewrite is a smuggled axiom"), unpriced steps allow models to silently smuggle unwarranted mathematical assumptions into a derivation.
+Because without an explicit evidence citation or parent hash, the rewrite is unpriced. Under the Adversary Swarm operational axiom ("An unpriced rewrite is a smuggled axiom"), unpriced steps allow models to silently smuggle unwarranted mathematical assumptions into a derivation.
 </details>
 
 ## 6. Anchors

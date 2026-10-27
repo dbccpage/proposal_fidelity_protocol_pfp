@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 420 (Reserves, Security & Ecology)  
 **Level Source:** Level 10 ([`level_10_open_horizons_and_multi_island_ecology.md`](../../levels/level_10_open_horizons_and_multi_island_ecology.md))  
-**Planning Reference:** [`EPIC-OE-PROMPT-CIV-003`](../../../../omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)
+**Planning Reference:** [`EPIC-OE-PROMPT-CIV-003`](../../../../product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)
 
 ## 1. Pedagogical Objective
 Examine v0.2 open horizons including multi-island evolutionary ecology, homologous block crossover recombination, island migration policy, and intelligence metabolism.

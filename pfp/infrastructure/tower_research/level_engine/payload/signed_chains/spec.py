@@ -47,11 +47,11 @@ from __future__ import annotations
 
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.digest import canonical_json, sha256, signature_verifies
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Forbid, Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure, fmt_digest
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.digest import canonical_json, sha256, signature_verifies
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Forbid, Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure, fmt_digest
 from ..lists import nat
 from ..shared import rows
 

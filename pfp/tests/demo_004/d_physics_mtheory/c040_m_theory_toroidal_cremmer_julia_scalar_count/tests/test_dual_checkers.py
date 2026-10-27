@@ -15,22 +15,22 @@ import json
 import unittest
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.judge_packet.checkers import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.judge_packet.checkers import (
     coset_group_theory_checker,
     field_reduction_checker,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.judge_packet.checkers.coset_group_theory_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.judge_packet.checkers.coset_group_theory_checker import (
     verify_coset_group_theory_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.judge_packet.checkers.dual_evaluator import (
     CheckerDisagreementError,
     assert_dual_agreement,
     evaluate_answer,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.judge_packet.checkers.field_reduction_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.judge_packet.checkers.field_reduction_checker import (
     verify_field_reduction_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.reference_solver.solver import (
     solve,
 )
 

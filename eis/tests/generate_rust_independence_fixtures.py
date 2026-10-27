@@ -5,12 +5,12 @@ import dataclasses
 import json
 from pathlib import Path
 
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_signals import (
     SignalIndependenceRefusal,
     assert_signals_independent,
     signal1_digest,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import Signal1Match, Signal2Danger
+from eis.domain.value_objects import Signal1Match, Signal2Danger
 
 
 def projected_match(value):
@@ -72,7 +72,7 @@ def main():
         [Signal1Match("z","last",offset=0),Signal1Match("a","first",offset=1)],
     ]
     digest_rows = [{"input":[projected_match(value) for value in values],"expected":signal1_digest(values)} for values in sets]
-    path=Path(__file__).resolve().parents[2]/"omega_engine/crates_rs/tests/omega_epistemic_immune_system/fixtures/python_independence_v1.json"
+    path=Path(__file__).resolve().parents[2]/"engine/crates_rs/tests/core_epistemic_immune_system/fixtures/python_independence_v1.json"
     path.write_text(json.dumps({"vectors":rows,"digests":digest_rows},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(f"Frozen {len(rows)} independence and {len(digest_rows)} match-digest vectors before implementation.")
 

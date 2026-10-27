@@ -11,7 +11,7 @@
 
 The original `exact_matrix_digest` traversed its input twice, and `search_exact_matrix` traversed it again. A one-shot iterator of a positive triangle could consequently be hashed and checked as an empty matrix. The paper-local repair first snapshots the matrix rows, then validates, hashes, and checks that same snapshot. The new regression checks both direct hashing and the search entry point.
 
-From `omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier/`, run:
+From `atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/`, run:
 
 ```powershell
 py -3 -B -m unittest discover -s tests -p 'test_*.py' -v

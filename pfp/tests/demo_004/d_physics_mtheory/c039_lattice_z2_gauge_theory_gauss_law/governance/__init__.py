@@ -1,6 +1,6 @@
 """Governance package for Challenge C039."""
 
 from .budget_gate import BudgetGate
-from .woland_gate import WolandGate
+from .adversary_gate import AdversaryGate
 
-__all__ = ["BudgetGate", "WolandGate"]
+__all__ = ["BudgetGate", "AdversaryGate"]

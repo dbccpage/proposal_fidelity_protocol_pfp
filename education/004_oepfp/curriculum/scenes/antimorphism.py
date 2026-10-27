@@ -227,7 +227,7 @@ def land_cycle_witness(proposal: Sequence[int]) -> tuple[int, ...]:
 
 def phi1_cycle(proposal: Sequence[int]) -> int:
     """Φ₁ on the single-cycle basis: |holonomy| = |Σ pᵢ|. Zero ⟺ admissible."""
-    from omega_engine_woland.infrastructure.providers.adapters.native_functional import compute_graph_phi1
+    from adversary.infrastructure.providers.adapters.native_functional import compute_graph_phi1
 
     if any(type(value) is not int for value in proposal):
         raise TypeError("cycle claims must be exact integers")

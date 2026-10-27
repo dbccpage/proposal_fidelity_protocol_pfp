@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_pfp/domain/immune/treg.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - pfp/domain/immune/treg.py
 ---
 
 # EIS Level 08: Regulatory Supervision & Reversible Anergy: Treg Oversight
 
 **AuthorityEffect:** None.  
 **Level:** Level 08 (Regulatory Suppression, Reversible Anergy & False-Positive Auditing)  
-**Python Treg Seam:** [`omega_engine_pfp.domain.immune.treg`](../../../../omega_engine_pfp/domain/immune/treg.py)
+**Python Treg Seam:** [`pfp.domain.immune.treg`](../../../../pfp/domain/immune/treg.py)
 **Primary Types:** `TregSupervisor`, `FalsePositiveReceiptV1`, `AnergyProposalV1`  
 **Core Falsifiers:** `F-BIO-06`
 
@@ -62,8 +62,8 @@ In human biology, *regulatory T-cells* (Treg) maintain peripheral tolerance by s
 
 In OEEIS, Level 08 establishes the **Regulatory Supervision and Anergy Architecture**:
 - In production pipelines, even admitted detectors may produce false positives when encountering novel, benign idioms.
-- The [`TregSupervisor`](../../../../omega_engine_pfp/domain/immune/treg.py) tracks verified false-positive receipts ([`FalsePositiveReceiptV1`](../../../../omega_engine_pfp/domain/immune/treg.py)) emitted by post-hoc human audits.
-- When false positives cross a declared threshold, the supervisor emits an [`AnergyProposalV1`](../../../../omega_engine_pfp/domain/immune/treg.py) recommending suspension.
+- The [`TregSupervisor`](../../../../pfp/domain/immune/treg.py) tracks verified false-positive receipts ([`FalsePositiveReceiptV1`](../../../../pfp/domain/immune/treg.py)) emitted by post-hoc human audits.
+- When false positives cross a declared threshold, the supervisor emits an [`AnergyProposalV1`](../../../../pfp/domain/immune/treg.py) recommending suspension.
 - **The Non-Self-Suspension Law:** Detectors never suspend themselves. Suspension is an external epoch decision ratified outside autonomous swarms.
 
 ---
@@ -90,7 +90,7 @@ In OEEIS, Level 08 establishes the **Regulatory Supervision and Anergy Architect
 ## 3. Python Domain Seam
 
 ```python
-# omega_engine_pfp.domain.immune.treg
+# pfp.domain.immune.treg
 @dataclass(frozen=True)
 class FalsePositiveReceiptV1:
     receipt_id: str

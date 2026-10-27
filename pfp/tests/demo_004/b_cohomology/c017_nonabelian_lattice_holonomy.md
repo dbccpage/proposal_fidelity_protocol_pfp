@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 For abelian groups, flatness and gauge-triviality reduce to the coboundary questions of [C011](c011_cycle_rank_ladder_coboundary_repair.md). For nonabelian groups the order of multiplication matters: the holonomy around a plaquette is an ordered product, it changes by conjugation under a change of base point or gauge, and a solver that multiplies in the wrong order or tests only an abelian invariant (sign, determinant) gives confident wrong answers. S₃ (order 6), the quaternion group Q₈ (order 8) and SL(2, F₃) (order 24) are the smallest useful test groups; Q₈ is a subgroup of SL(2, F₃), and SL(2, F₃) is isomorphic to the binary tetrahedral group.
 
-Generation is hard: the solver must choose a spanning tree, gauge-fix along it, multiply loops in the right order and separate "not flat" from "flat but not trivial" on a torus. Verification is cheap: the checker multiplies each plaquette once and applies a gauge. The challenge stresses the Symbol Game's exact host, OEWAS (Omega Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Omega Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified nonabelian flatness solver. It is not a lattice gauge theory result.
+Generation is hard: the solver must choose a spanning tree, gauge-fix along it, multiply loops in the right order and separate "not flat" from "flat but not trivial" on a torus. Verification is cheap: the checker multiplies each plaquette once and applies a gauge. The challenge stresses the Symbol Game's exact host, OEWAS (Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified nonabelian flatness solver. It is not a lattice gauge theory result.
 
 ## 3. Formal Problem and Bounds
 
@@ -54,7 +54,7 @@ Element names follow the case's table. The example lists are abbreviated. A cert
 - **Hidden base cases:** 36 (12 per group).
 - **Relabel and gauge controls:** 18. Random gauge transformations (verdict unchanged; certificates transform), relabelled group elements through an automorphism of the group, and lattice reflections.
 - **Poisoned but schema-valid:** 12. Commutator-subgroup plaquettes (sign or determinant tests say flat); order-reversal traps; flat periodic connections whose A and B are conjugate but not equal.
-- **Exact checker:** `omega_holonomy` (`compute_loop_holonomy`, `is_flat`, `plaquette_curvature`, `apply_gauge_transformation`) over `BigRational` and `GaussianRational`, plus a GF(3) scalar if that route is chosen for SL(2, F₃).
+- **Exact checker:** `core_holonomy` (`compute_loop_holonomy`, `is_flat`, `plaquette_curvature`, `apply_gauge_transformation`) over `BigRational` and `GaussianRational`, plus a GF(3) scalar if that route is chosen for SL(2, F₃).
 - **Independent second checker:** a separately written Python checker that uses only the case's multiplication table, never matrices.
 - **Checker mutation suite:** a plaquette listed in the reverse order with a holonomy computed in the forward order; a gauge that trivializes all but one edge; a `FLAT_NONTRIVIAL` claim on an open lattice; a loop that is contractible; an element name not in the table.
 
@@ -106,8 +106,8 @@ operand torus_global_holonomy.v1 | kind: move | when: periodic boundary and all 
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_holonomy` (`holonomy.rs`, `curvature.rs`, `connection.rs`, `matrix.rs` with `GaussianRational`, `graph.rs`).
-- `omega_engine/crates_rs/omega_symbol_game` (ordered loop product host action).
+- `engine/crates_rs/core_holonomy` (`holonomy.rs`, `curvature.rs`, `connection.rs`, `matrix.rs` with `GaussianRational`, `graph.rs`).
+- `engine/crates_rs/core_symbol_game` (ordered loop product host action).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrades: none in the catalog. Checker work: a GF(3) scalar type or the binary tetrahedral representation for SL(2, F₃).
 

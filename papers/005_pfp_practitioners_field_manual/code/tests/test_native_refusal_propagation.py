@@ -1,6 +1,6 @@
 """compute_phi1 never replaces a configured native calculator's refusal with a Python answer.
 
-Without OMEGA_FUNCTIONAL_GRAPH_BIN the minimum comes from exact enumeration of
+Without CORE_FUNCTIONAL_GRAPH_BIN the minimum comes from exact enumeration of
 spanning-forest potentials. With it, the native adapter decides and any error it
 raises propagates to the caller. Edge weights must be exact integers or fractions on
 both paths; a float or Boolean weight is refused rather than converted.
@@ -23,7 +23,7 @@ def _graph(weight_ca=2):
 
 
 def test_enumeration_path_without_native_configuration(monkeypatch):
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_BIN", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_BIN", raising=False)
     phi, potential = compute_phi1(_graph(), CLAIMS)
     assert phi == Fraction(3)
     residual_sum = sum(
@@ -34,15 +34,15 @@ def test_enumeration_path_without_native_configuration(monkeypatch):
 
 
 def test_configured_native_failure_is_not_replaced(monkeypatch, tmp_path):
-    monkeypatch.setenv("OMEGA_FUNCTIONAL_GRAPH_BIN", str(tmp_path / "absent-solver.exe"))
-    monkeypatch.setenv("OMEGA_FUNCTIONAL_GRAPH_SHA256", "0" * 64)
+    monkeypatch.setenv("CORE_FUNCTIONAL_GRAPH_BIN", str(tmp_path / "absent-solver.exe"))
+    monkeypatch.setenv("CORE_FUNCTIONAL_GRAPH_SHA256", "0" * 64)
     with pytest.raises(Exception):
         compute_phi1(_graph(), CLAIMS)
 
 
 @pytest.mark.parametrize("weight", [4.5, True], ids=["float", "bool"])
 def test_float_or_bool_weight_is_refused(monkeypatch, weight):
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_BIN", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_BIN", raising=False)
     with pytest.raises(TypeError):
         compute_phi1(_graph(weight_ca=weight), CLAIMS)
 
@@ -53,6 +53,6 @@ def test_zero_weight_edge_is_refused_at_construction():
 
 
 def test_exact_fraction_weight_is_accepted(monkeypatch):
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_BIN", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_BIN", raising=False)
     phi, _ = compute_phi1(_graph(weight_ca=Fraction(5, 2)), CLAIMS)
     assert phi == Fraction(3)

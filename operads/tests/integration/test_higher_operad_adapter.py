@@ -5,11 +5,11 @@ from dataclasses import asdict, replace
 
 import pytest
 
-from omega_engine_operads.domain.entities import (
+from operads.domain.entities import (
     OperationV3,
     PortSpecV3,
 )
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.value_objects import (
     AdmissionFacet,
     AuthorityEffect,
     ColourId,
@@ -22,7 +22,7 @@ from omega_engine_operads.domain.value_objects import (
     SkillLifecycleV3,
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.operad.higher_operad_adapter import (
+from operads.infrastructure.operad.higher_operad_adapter import (
     HigherOperadAdapter,
 )
 
@@ -63,7 +63,7 @@ class HigherOperadAdapterTests(unittest.TestCase):
         self.assertTrue(res.unwrap())
 
         auth_res = self.adapter.authorize_term(
-            agent_id="agent_woland",
+            agent_id="agent_adversary",
             term_expr="my_skill:audit(Code)",
         )
         self.assertTrue(auth_res.is_err)
@@ -232,7 +232,7 @@ class HigherOperadAdapterTests(unittest.TestCase):
         self.assertTrue(res.is_ok, res)
 
     def test_actual_native_operation_keeps_optional_retirement_metadata(self) -> None:
-        from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+        from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
 
         operation = self._two_slot_root()
         legacy = asdict(operation)

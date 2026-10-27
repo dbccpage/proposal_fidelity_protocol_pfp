@@ -27,19 +27,19 @@ import json
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from omega_engine_epistemic_immune_system.domain.host_checks import (
+from eis.domain.host_checks import (
     MalformedPayload,
     persona_authority_leak_loci,
     protected_field_loci,
     protected_field_spans,
     strict_json,
 )
-from omega_engine_epistemic_immune_system.domain.ports import (
+from eis.domain.ports import (
     MatcherBindingRefusal,
     bound_rules,
 )
-from omega_engine_epistemic_immune_system.domain.safe_pattern import compile_safe_pattern
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.safe_pattern import compile_safe_pattern
+from eis.domain.value_objects import (
     REGEX_MATCHER_ID,
     DangerSeverity,
     DetectorRule,
@@ -245,7 +245,7 @@ class PharmacyScreenReport:
 class PharmacyMatcher:
     """Native failure classes plus the separately attributed Python persona check.
 
-    The twelve classes run in `omega_prompt_civilization` through the host
+    The twelve classes run in `core_prompt_civilization` through the host
     action `pharmacy_detect`; supplemental persona text is checked by
     `persona_authority_leak_loci`. The native self-certification and fake-receipt
     detectors inspect host-only keys, so this matcher declares the

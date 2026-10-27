@@ -5,12 +5,12 @@ AuthorityEffect: None. Rust port pending.
 """
 from __future__ import annotations
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     LevelEngineResourcesPort,
     configure_context,
     configure_vendor_import_scope,
 )
-from omega_engine_pfp.domain.tower.level_engine import LevelEngineOutcome
+from pfp.domain.tower.level_engine import LevelEngineOutcome
 
 
 class ResearchLevelEngineRunner:
@@ -21,12 +21,12 @@ class ResearchLevelEngineRunner:
 
     def run(self, challenge_id: str) -> LevelEngineOutcome:
         configure_context(self.context)
-        from omega_engine_pfp.infrastructure.tower_research.level_engine.vendor_loading import (
+        from pfp.infrastructure.tower_research.level_engine.vendor_loading import (
             vendor_import_scope,
         )
 
         configure_vendor_import_scope(vendor_import_scope)
-        from omega_engine_operations.use_cases.level_engine.research_engine.level import (
+        from operations.use_cases.level_engine.research_engine.level import (
             check_expectations,
             run_level,
         )

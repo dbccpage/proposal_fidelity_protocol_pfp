@@ -6,18 +6,18 @@ from datetime import datetime, timezone
 
 import pytest
 
-from omega_engine_operads.domain.entities import (
+from operads.domain.entities import (
     EstateCatalogV3,
     OperationV3,
     PortSpecV3,
 )
-from omega_engine_operads.domain.events import (
+from operads.domain.events import (
     CatalogCompiledV3,
     CompositionBoundV3,
     EstateCapturedV3,
     OperationDeclaredV3,
 )
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.value_objects import (
     AdmissionFacet,
     AuthorityEffect,
     CausationId,
@@ -35,7 +35,7 @@ from omega_engine_operads.domain.value_objects import (
     SkillLifecycleV3,
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.storage.sqlite_unit_of_work import (
+from operads.infrastructure.storage.sqlite_unit_of_work import (
     SqliteUnitOfWork,
 )
 

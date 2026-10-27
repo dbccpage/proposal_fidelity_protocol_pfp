@@ -1,21 +1,21 @@
 # OEWAS-009: the task cannot borrow another task's evidence
 
-Hella tested the real pharmacy boundary. Two malformed catalog containers raised
+Syntax Prefilter tested the real pharmacy boundary. Two malformed catalog containers raised
 raw exceptions, and candidate writes returned success without independently
 reading their payloads. The repaired boundary returns typed errors, verifies
 stored bytes and correlation, and keeps new antibodies inactive.
 
-Koroviev challenged the plan's native-runtime assumption. A text pharmacy host
+Defect Hunter challenged the plan's native-runtime assumption. A text pharmacy host
 already existed, but the typed truth-boundary trio had never been exposed. Its
 historical proposed catalog and human-admission records were preserved.
 
-Azazello exposed the three existing declarative predicates through a bounded
+Scope Guard exposed the three existing declarative predicates through a bounded
 native action. The compiled deployment binds its raw specifications and native
 source. Six historical predicate cases remain distinct from the live profile's
 scope checks. Negative controls challenge stale pins, malformed bytes, foreign
 subjects, task transplants and uncovered scopes.
 
-Woland followed the evidence into composition. The first control showed that a
+Adversary followed the evidence into composition. The first control showed that a
 foreign-task bout could reach trace storage after pre-seal subject construction
 failed. The boundary now refuses before trace, antibody or genealogy writes.
 The same explicitly pinned native gate screens both swarm and service entrances.

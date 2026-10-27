@@ -17,7 +17,7 @@ from pathlib import Path
 
 from pydantic import TypeAdapter
 
-from omega_engine_operations.domain.rop.result import Err
+from operations.domain.rop.result import Err
 
 from ..application.anti_skill.anti_skill_v2 import (
     anti_skill_v2_implementation_digest,
@@ -65,8 +65,8 @@ from ..domain.value_objects.lifecycle_facets import (
 )
 from ..domain.value_objects.operands import InstructionOperand
 
-CONTRACT_FILES = ("woland_claim_audit.json", "woland_scope_falsifier.json")
-GENERATED_IDS = ("woland-claim-audit", "woland-scope-falsifier")
+CONTRACT_FILES = ("adversary_claim_audit.json", "adversary_scope_falsifier.json")
+GENERATED_IDS = ("adversary-claim-audit", "adversary-scope-falsifier")
 
 
 class TypedContractCompileRefusal(ValueError):
@@ -171,14 +171,14 @@ def _port(
 def _render(wire, body: str, binding_text: str, source_path: str, contracts_digest: str) -> bytes:
     # Only standard Agent Skills fields; domain metadata is a string-key/value map.
     metadata = {
-        "omega-contract": source_path,
-        "omega-contracts-digest": contracts_digest,
-        "omega-generated": SCHEMA,
-        "omega-kind": wire.kind,
-        "omega-source-colours": json.dumps([port.colour for port in wire.inputs]),
-        "omega-target-colour": wire.output.colour,
-        "omega-arity": str(len(wire.inputs)),
-        "omega-residual": "unknown",
+        "core-contract": source_path,
+        "core-contracts-digest": contracts_digest,
+        "core-generated": SCHEMA,
+        "core-kind": wire.kind,
+        "core-source-colours": json.dumps([port.colour for port in wire.inputs]),
+        "core-target-colour": wire.output.colour,
+        "core-arity": str(len(wire.inputs)),
+        "core-residual": "unknown",
     }
     frontmatter = (
         "---\nname: "
@@ -215,7 +215,7 @@ def _render(wire, body: str, binding_text: str, source_path: str, contracts_dige
         + "\n\nSource admission: `Unadmitted`. AuthorityEffect: None.\n"
         "The finite detector reports findings. It does not activate a production guard.\n\n"
         "From the repository root, run the offline audit with:\n\n```text\n"
-        "python -m omega_engine_operads.infrastructure.typed_contract_compiler "
+        "python -m operads.infrastructure.typed_contract_compiler "
         "--repo-root . --audit-subject <subject.json>\n```\n"
     )
     return text.encode("utf-8")
@@ -348,7 +348,7 @@ def _guidance_sources(root: Path, existing_ids: tuple[str, ...]):
 
 def _require_listable_description(wire) -> None:
     """Refuse a description the model listing gate would reject after projection."""
-    from omega_engine_operads.skill_operad.skill_compiler.skill_listing import (
+    from operads.skill_operad.skill_compiler.skill_listing import (
         DESCRIPTION_CAP_BYTES,
     )
 
@@ -559,7 +559,7 @@ def compile_typed_contracts(repo_root: Path) -> CompiledTypedPackageV1:
                 residual_effect="unknown",
                 invocation="discipline",
                 invocation_explicit=False,
-                families=("woland",),
+                families=("adversary",),
                 declared_dependencies=wire.dependencies,
                 declared_triggers=("PRE_SEAL",)
                 if not isinstance(wire, DigestedGuidanceWireV1)
@@ -610,7 +610,7 @@ def main(argv: list[str] | None = None) -> int:
                 return 1
             sys.stdout.buffer.write(canonical_bytes(result.value.to_dict()))
         else:
-            from omega_engine_operations.use_cases.packaging.project_typed_contracts import (
+            from operations.use_cases.packaging.project_typed_contracts import (
                 project_typed_packages,
             )
 

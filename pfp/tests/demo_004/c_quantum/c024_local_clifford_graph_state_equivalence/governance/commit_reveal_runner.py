@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 Three phases (SG-CP v1), all of which score the frozen reference solver against
 this package's own judge packet (a self-consistency check, not a model
-evaluation and not a Woland verdict):
+evaluation and not a Adversary verdict):
 
   * Phase 1 records the digest of judge_packet/manifest.json in
     commitments/c024_local_clifford_graph_state_equivalence_judge_commitment.json.
@@ -43,8 +43,8 @@ from typing import Any
 # Ensure repository root is in sys.path
 _file_path = Path(__file__).resolve()
 for _parent in _file_path.parents:
-    if (_parent / "omega_engine_projects").exists() and (
-        _parent / "omega_engine_providers"
+    if (_parent / "projects").exists() and (
+        _parent / "providers"
     ).exists():
         _root_str = str(_parent)
         if _root_str not in sys.path:
@@ -53,29 +53,29 @@ for _parent in _file_path.parents:
 
 try:
     from .budget_gate import HARD_CEILING_MICROUSD, BudgetGate
-    from .woland_gate import GATE_SCOPE, WolandGate
+    from .adversary_gate import GATE_SCOPE, AdversaryGate
 except (ImportError, ValueError):
     try:
         from budget_gate import HARD_CEILING_MICROUSD, BudgetGate
-        from woland_gate import GATE_SCOPE, WolandGate
+        from adversary_gate import GATE_SCOPE, AdversaryGate
     except (ImportError, ValueError):
-        from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.budget_gate import (
+        from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.budget_gate import (
             HARD_CEILING_MICROUSD,
             BudgetGate,
         )
-        from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.woland_gate import (
+        from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.adversary_gate import (
             GATE_SCOPE,
-            WolandGate,
+            AdversaryGate,
         )
 
 try:
     from ..judge_packet.checkers.dual_evaluator import evaluate_dual
     from ..reference_solver.solver import solve
 except (ImportError, ValueError):
-    from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.judge_packet.checkers.dual_evaluator import (
+    from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.judge_packet.checkers.dual_evaluator import (
         evaluate_dual,
     )
-    from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.reference_solver.solver import (
+    from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.reference_solver.solver import (
         solve,
     )
 
@@ -182,13 +182,13 @@ def reference_claim_hygiene(verdict: str, total: int, passed: int) -> dict[str, 
         "supports": f"The frozen reference solver's outputs were accepted by the dual evaluator on {passed}/{total} judge cases.",
         "does_not_support": (
             "Any statement about a model (none was evaluated), about checker soundness or independence, "
-            "about local-unitary equivalence beyond the Clifford group, or a Woland verdict."
+            "about local-unitary equivalence beyond the Clifford group, or a Adversary verdict."
         ),
         "narrowest_defensible_claim": (
             f"Reference self-consistency label {verdict} on the {total} judge case files that match the committed manifest."
         ),
         "next_test_needed": (
-            "Score a participant submission under a commitment made before the run and have the Woland swarm "
+            "Score a participant submission under a commitment made before the run and have the Adversary swarm "
             "evaluate the bound checker receipts."
         ),
     }
@@ -222,7 +222,7 @@ class CommitRevealRunner:
         )
 
         self.budget_gate = BudgetGate(ceiling_microusd=HARD_CEILING_MICROUSD)
-        self.woland_gate = WolandGate(
+        self.adversary_gate = AdversaryGate(
             intelligence_root=None
             if intelligence_repo_root is None
             else Path(intelligence_repo_root) / "_ic"
@@ -414,10 +414,10 @@ class CommitRevealRunner:
         case_count = len(case_results)
         passed_count = sum(1 for r in case_results if r["checker_pass"] is True)
         claim_hygiene = reference_claim_hygiene(
-            self.woland_gate.judge(case_results), case_count, passed_count
+            self.adversary_gate.judge(case_results), case_count, passed_count
         )
 
-        persisted = self.woland_gate.persist_run(
+        persisted = self.adversary_gate.persist_run(
             task_key=task_key,
             case_results=case_results,
             dda_events=dda_events,
@@ -429,7 +429,7 @@ class CommitRevealRunner:
         portable_persisted = {
             key: value
             for key, value in persisted.items()
-            if key not in {"symbol_game_run_dir", "woland_run_dir"}
+            if key not in {"symbol_game_run_dir", "adversary_run_dir"}
         }
 
         scoring_receipt = {

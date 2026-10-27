@@ -12,8 +12,8 @@ import sys
 import time
 from pathlib import Path
 
-from omega_engine_governance.domain.intelligence_community import canonical_intelligence_route
-from omega_engine_pfp.domain import (
+from governance.domain.intelligence_community import canonical_intelligence_route
+from pfp.domain import (
     DEFAULT_REQUIRED_REPLY_FIELDS,
     ObjectiveTypedV1,
     RegimeKind,
@@ -24,8 +24,8 @@ from omega_engine_pfp.domain import (
     compile_prompt_artifact,
     render_prompt_body,
 )
-from omega_engine_pfp.functional_boundary import require_rust_functional
-from omega_engine_pfp.infrastructure.serialization import (
+from pfp.functional_boundary import require_rust_functional
+from pfp.infrastructure.serialization import (
     write_content_addressed_json,
 )
 
@@ -105,7 +105,7 @@ def cmd_run_turn(args: argparse.Namespace) -> int:
     write_content_addressed_json(artifacts_dir, "prompt-artifact", prompt_artifact.to_dict())
 
     # 2. Execute SymbolGameEngine
-    from omega_engine_pfp.controllers.symbol_game_engine import SymbolGameEngine
+    from pfp.controllers.symbol_game_engine import SymbolGameEngine
 
     engine = SymbolGameEngine(target_dir=run_dir)
     outcome = engine.execute_turn(task_id=task_id, prompt=prompt_text)
@@ -159,7 +159,7 @@ def cmd_run_turn(args: argparse.Namespace) -> int:
 
     # 4. Write full receipt.json
     receipt = {
-        "schema_version": "omega.symbol-game.receipt.v1",
+        "schema_version": "core.symbol-game.receipt.v1",
         "task_id": task_id,
         "prompt_packet_id": prompt_envelope.packet_id,
         "candidate_id": candidate.candidate_id,

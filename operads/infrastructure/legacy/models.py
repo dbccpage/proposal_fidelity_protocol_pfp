@@ -14,7 +14,7 @@ from pathlib import PurePosixPath
 from types import MappingProxyType
 from typing import Any
 
-from omega_engine_operads.domain.value_objects.authority import AuthorityEffect
+from operads.domain.value_objects.authority import AuthorityEffect
 
 NAME_PATTERN = re.compile(r"^[a-z0-9_\-]+$")
 DIGEST_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")

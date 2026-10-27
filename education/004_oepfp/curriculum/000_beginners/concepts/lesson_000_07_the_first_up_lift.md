@@ -72,8 +72,8 @@ To prevent this silent corruption:
 <summary>Click to view solution</summary>
 
 ```python
-from omega_engine_pfp.domain.tower import grammar
-from omega_engine_pfp.domain.tower import updown_maps
+from pfp.domain.tower import grammar
+from pfp.domain.tower import updown_maps
 
 diff = grammar.Diff()
 atom0 = grammar.Atom("0")

@@ -12,12 +12,12 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_operads.skill_operad.resolver import resolver
-from omega_engine_operads.skill_operad.resolver.executors import (
+from operads.skill_operad.resolver import resolver
+from operads.skill_operad.resolver.executors import (
     HOST_DETECTORS,
     HOST_EXECUTORS,
 )
-from omega_engine_operads.skill_operad.skill_compiler.op_inventory import (
+from operads.skill_operad.skill_compiler.op_inventory import (
     INVENTORY_PATH,
     OpInventory,
 )

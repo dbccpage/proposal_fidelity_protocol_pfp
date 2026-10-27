@@ -15,7 +15,7 @@ from pathlib import Path
 import re
 import pytest
 
-from omega_engine_pfp.domain.models import (
+from pfp.domain.models import (
     AuthorityEffect,
     ObstructionScore,
     ProblemReductionResult,
@@ -24,7 +24,7 @@ from omega_engine_pfp.domain.models import (
     SymbolGameStepOutcome,
     SymbolToken,
 )
-from omega_engine_pfp.domain.exceptions import ForbiddenAuthorityError
+from pfp.domain.exceptions import ForbiddenAuthorityError
 
 
 @dataclass(frozen=True)

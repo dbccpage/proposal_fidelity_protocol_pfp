@@ -9,8 +9,8 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import ExactError
-from omega_engine_operations.use_cases.level_engine.research_engine.exact import (
+from operations.use_cases.level_engine.research_engine.errors import ExactError
+from operations.use_cases.level_engine.research_engine.exact import (
     QI,
     Alg,
     Interval,
@@ -20,10 +20,10 @@ from omega_engine_operations.use_cases.level_engine.research_engine.exact import
     alg_sign_of,
     isolate,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.exact import linalg as L
-from omega_engine_operations.use_cases.level_engine.research_engine.exact import poly as P
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import fmt_q, parse_q
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.qi import (
+from operations.use_cases.level_engine.research_engine.exact import linalg as L
+from operations.use_cases.level_engine.research_engine.exact import poly as P
+from operations.use_cases.level_engine.research_engine.exact.q import fmt_q, parse_q
+from operations.use_cases.level_engine.research_engine.exact.qi import (
     fmt_qi,
     parse_qi,
     qi_from_q,

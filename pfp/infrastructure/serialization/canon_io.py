@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from omega_engine_pfp.domain.solvers.canon import loads
+from pfp.domain.solvers.canon import loads
 
 
 def load_path(path: Path) -> object:

@@ -53,7 +53,7 @@ repository ships whose content is derived from other files"*:
 
 | Artifact | Generator | Custody question |
 | --- | --- | --- |
-| `plans/epics/epic_manifest.json` | `generate_epic_manifest.py` (delegating to `epic_manifest_audit.py --write`) | Does a test call the audit with the real repo root across direct files and canonical domain subfolders (`oesymgam`, `oewas`, `oeeis`, `oewoland`)? |
+| `plans/epics/epic_manifest.json` | `generate_epic_manifest.py` (delegating to `epic_manifest_audit.py --write`) | Does a test call the audit with the real repo root across direct files and canonical domain subfolders (`oesymgam`, `oewas`, `oeeis`, `oeadversary`)? |
 | `contracts/MIRROR_MANIFEST.json` | Rust to Python contract mirror | Is the shipped per-file SHA256 recomputed against disk? |
 | `architecture_baseline.json` | `architecture_fitness.py` | Is the ratchet compared to the live import graph? |
 | `canonical_gate_catalog_sha256` | `domain.cicd.catalog.GATE_CATALOG_V3` | Does anything recompute it from the shipped YAML? |
@@ -221,7 +221,7 @@ self-comparison, not evidence.
      `Target Crates` entry. An unresolved target is not necessarily wrong -- the
      work may be to create it -- but it is a question to settle before planning
      rather than during discovery.
-19. **Partitioned domain subfolder inventory.** When content-addressed artifacts (such as `epic_manifest.json`) span domain subfolders, the custody audit scanner must traverse both root direct files and canonical domain subfolders (`oesymgam/`, `oewas/`, `oeeis/`, `oewoland/`), excluding out-of-scope sprint plans and governance documents per directory charters. Shipped manifest tests must verify that `audit_epic_manifest(REPO_ROOT)` passes against the real tree and that every registered epic matches disk byte-for-byte with uniform LF line endings.
+19. **Partitioned domain subfolder inventory.** When content-addressed artifacts (such as `epic_manifest.json`) span domain subfolders, the custody audit scanner must traverse both root direct files and canonical domain subfolders (`oesymgam/`, `oewas/`, `oeeis/`, `oeadversary/`), excluding out-of-scope sprint plans and governance documents per directory charters. Shipped manifest tests must verify that `audit_epic_manifest(REPO_ROOT)` passes against the real tree and that every registered epic matches disk byte-for-byte with uniform LF line endings.
 
 ---
 

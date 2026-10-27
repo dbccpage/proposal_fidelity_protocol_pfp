@@ -1,4 +1,4 @@
-"""Typed, evidence-only packets for rapid Omega research iteration.
+"""Typed, evidence-only packets for rapid Core research iteration.
 
 These packets carry frozen inputs and model proposals. They never authorize a
 patch, certify a theorem, or promote an evidence level.
@@ -14,7 +14,7 @@ import json
 import re
 from typing import Any, Dict, Mapping
 
-from omega_engine_governance.contracts import AuthorityEffect
+from governance.contracts import AuthorityEffect
 from ..shared_kernel.research_digest import canonical_bytes, digest_payload
 
 
@@ -87,7 +87,7 @@ class FrozenCorpus:
     source_root: str
     files: tuple[CorpusFileRef, ...]
     corpus_sha256: str
-    schema_version: str = "omega.frozen_research_corpus.v1"
+    schema_version: str = "core.frozen_research_corpus.v1"
 
     def __post_init__(self) -> None:
         if not self.source_root or not self.files:
@@ -153,7 +153,7 @@ class ResearchSeedPacket:
     parent_ledger_sha256: str | None = None
     evidence_ceiling: EvidenceCeiling = EvidenceCeiling.EXPLORATORY_ONLY
     authority_effect: AuthorityEffect = AuthorityEffect.None_
-    schema_version: str = "omega.research_seed_packet.v1"
+    schema_version: str = "core.research_seed_packet.v1"
 
     def __post_init__(self) -> None:
         if not self.objective.strip() or not self.proposer_id.strip():
@@ -216,7 +216,7 @@ class ResearchProposal:
     declared_cochain_verdict: str | None = None
     requested_terminal: str = "human_review"
     authority_effect: AuthorityEffect = AuthorityEffect.None_
-    schema_version: str = "omega.research_proposal.v1"
+    schema_version: str = "core.research_proposal.v1"
 
     def __post_init__(self) -> None:
         if _SAFE_ID.fullmatch(self.proposal_id) is None:
@@ -286,7 +286,7 @@ class ReplayTracePacket:
     step_index: int
     status: str
     authority_effect: str = "none"
-    schema_version: str = "omega.replay_trace.v1"
+    schema_version: str = "core.replay_trace.v1"
 
     def __post_init__(self) -> None:
         _require_sha256(self.paper_sha256, "paper_sha256")

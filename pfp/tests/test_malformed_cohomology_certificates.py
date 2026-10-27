@@ -6,22 +6,22 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.tests.demo_004.b_cohomology.c013_integral_homology_torsion.judge_packet.checkers import (
+from pfp.tests.demo_004.b_cohomology.c013_integral_homology_torsion.judge_packet.checkers import (
     snf_algebraic_checker,
 )
-from omega_engine_pfp.tests.demo_004.b_cohomology.c013_integral_homology_torsion.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.b_cohomology.c013_integral_homology_torsion.judge_packet.checkers.dual_evaluator import (
     evaluate_dual as evaluate_snf,
 )
-from omega_engine_pfp.tests.demo_004.b_cohomology.c013_integral_homology_torsion.reference_solver.solver import (
+from pfp.tests.demo_004.b_cohomology.c013_integral_homology_torsion.reference_solver.solver import (
     solve as solve_snf,
 )
-from omega_engine_pfp.tests.demo_004.b_cohomology.c016_cohomology_ring_cup_products.judge_packet.checkers import (
+from pfp.tests.demo_004.b_cohomology.c016_cohomology_ring_cup_products.judge_packet.checkers import (
     algebraic_cup_checker,
 )
-from omega_engine_pfp.tests.demo_004.b_cohomology.c016_cohomology_ring_cup_products.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.b_cohomology.c016_cohomology_ring_cup_products.judge_packet.checkers.dual_evaluator import (
     evaluate_dual as evaluate_cup,
 )
-from omega_engine_pfp.tests.demo_004.b_cohomology.c016_cohomology_ring_cup_products.reference_solver.solver import (
+from pfp.tests.demo_004.b_cohomology.c016_cohomology_ring_cup_products.reference_solver.solver import (
     solve as solve_cup,
 )
 

@@ -946,7 +946,7 @@ The declared contact input, absent through every prior phase, arrived
 and was executed against the interface those phases had already
 committed.  Recorded facts of the run: base `a5caee2`; sealed
 blind-native-base `ccd3a53`; one external Lean file bound by
-`contact/omega_primdiff/CONTACT_MANIFEST.json` (manifest sha256
+`contact/core_primdiff/CONTACT_MANIFEST.json` (manifest sha256
 `3b65253d8338b5f0283a29a194fe673d0200ca091284ab92ef315246e328065f`,
 file sha256
 `d9cdb350a53c513e3e211e72f17262be6ba85d7da6159f910388c7137e814a89`);

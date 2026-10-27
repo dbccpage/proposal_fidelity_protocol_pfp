@@ -6,7 +6,7 @@ import hashlib
 from pathlib import Path, PurePosixPath
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.aggregates.research_claim import (
+from pfp.domain.aggregates.research_claim import (
     INITIAL_STATE_DOMAIN,
     MAX_SOURCE_BYTES,
     RESEARCH_ALLOWED_TRANSFORMS,
@@ -23,14 +23,14 @@ from omega_engine_pfp.domain.aggregates.research_claim import (
     _validate_initial_state,
     normalized_source_digest,
 )
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.exceptions import RefusalError
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.exceptions import RefusalError
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     domain_digest,
     thaw,
 )
-from omega_engine_pfp.domain.validation import (
+from pfp.domain.validation import (
     _fail,
     _require_exact_dict,
     _require_positive_int,

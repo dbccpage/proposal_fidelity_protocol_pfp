@@ -1,4 +1,4 @@
-"""Evaluate Woland Tribunal Gates Use Case.
+"""Evaluate Adversary Tribunal Gates Use Case.
 
 Zero infrastructure imports; depends strictly on domain ports, aggregates, and value objects.
 AuthorityEffect: None.
@@ -9,14 +9,14 @@ from __future__ import annotations
 from typing import Any, Dict, Optional, Union
 
 from ..domain.aggregates.pilot_aggregate import PilotAggregate
-from ..domain.contracts.gates import GateReceipt, WolandGateId
+from ..domain.contracts.gates import GateReceipt, AdversaryGateId
 from ..domain.kernel.ports import PfpGateEvaluatorPort
 from ..domain.kernel.result import DomainError, RefusalCode, Result
 from ..domain.value_objects.identifiers import PilotId, RequestId
 
 
-class EvaluateWolandGatesUseCase:
-    """Evaluates candidate proposals and pilots against the Woland Tribunal 13 gates."""
+class EvaluateAdversaryGatesUseCase:
+    """Evaluates candidate proposals and pilots against the Adversary Tribunal 13 gates."""
 
     def __init__(self, gate_evaluator: PfpGateEvaluatorPort) -> None:
         self.gate_evaluator = gate_evaluator
@@ -42,7 +42,7 @@ class EvaluateWolandGatesUseCase:
     def evaluate_pilot(
         self,
         pilot: PilotAggregate,
-        gate_id: Optional[WolandGateId] = None,
+        gate_id: Optional[AdversaryGateId] = None,
         execution_receipt: Optional[Dict[str, Any]] = None,
     ) -> Result[GateReceipt, DomainError]:
         """Evaluate a PilotAggregate directly against tribunal gates."""

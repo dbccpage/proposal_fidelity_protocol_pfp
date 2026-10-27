@@ -35,8 +35,8 @@ import json
 import re
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result
+from operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result
 from derivation.compression import Family, Fn, class_count, sig_list
 
 CHALLENGE_ID = "tagged_digest"

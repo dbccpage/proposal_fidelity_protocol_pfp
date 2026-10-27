@@ -10,9 +10,9 @@ its paid stage, or citing its result as evidence needs Jeremy's approval.
 | Source of the test | Test #3 from Jeremy's Gemini Notebook answer (2026-10-15), amended as below |
 | Stage A (free) | Detector adequacy battery: deterministic, no model calls, no network |
 | Stage B (paid) | Trace prediction study: written plan only; needs written approval and a lock of its own |
-| Code | `omega_engine_pfp/use_cases/detector_adequacy/` |
-| Lock manifest | `omega_engine_pfp/documentation/detector_adequacy/lock_da_001.json` |
-| Results | `omega_engine_pfp/documentation/detector_adequacy/results/` |
+| Code | `pfp/use_cases/detector_adequacy/` |
+| Lock manifest | `pfp/documentation/detector_adequacy/lock_da_001.json` |
+| Results | `pfp/documentation/detector_adequacy/results/` |
 
 ## 1. The claim under test
 
@@ -50,27 +50,27 @@ sound witness.
 Checked by reading the code at `dc4346860`. No code was run for this section.
 
 - **No adequacy computation over traces exists.**
-  - `omega_engine_pfp/domain/entities/lab.py:69` defines `DetectorAdequacyReceipt`.
+  - `pfp/domain/entities/lab.py:69` defines `DetectorAdequacyReceipt`.
   - `OesosLab.solve` (`lab.py:188-193`) fills it with `adequate=True, failures=()` without
     running a case.
   - The specification says the same: `ch07_finite_obstruction_calculus.md` (lines
     439-464) records "DetectorAdequacy for the extractor is OPEN", and notes that a
     collapsing extractor makes every trace `Exact`.
 - **NGD is computed only over caller-supplied booleans.**
-  - `omega_engine_woland/infrastructure/lggr_adapter.py:19` computes
+  - `adversary/infrastructure/lggr_adapter.py:19` computes
     `Delta_E = E_G - prod(E_i)`.
   - Its adequacy flag comes from two checks: at least five samples, and no evaluator that
     is constant across them. The blind-spot input `realizable_defects_in_blind_spot` is a
     boolean the caller declares.
   - No code on main turns a trace into the local verdicts it consumes.
 - **The nearest runnable terminalizer is `TraceValidator.validate_trace`.**
-  - Location: `omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/033_reasoning_trace_validation_via_l1_obstruction_geometry/code/mod_reasoning_trace_validation_core.py:143`.
+  - Location: `atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/033_reasoning_trace_validation_via_l1_obstruction_geometry/code/mod_reasoning_trace_validation_core.py:143`.
   - It is exact rational and refuses floats. It returns `Exact`,
     `CohomologicalObstruction`, `CarrierFailure` or `BudgetExceeded`, with an exact dual
     certificate.
   - It has no extractor. The caller supplies the carrier graph and the cochain.
-- **Red verdicts with no sound witness already exist** (omega_mub review of 2026-10-15,
-  `/mnt/project-files/reports/omega_mub_review_2026-10-15/report.md`):
+- **Red verdicts with no sound witness already exist** (core_mub review of 2026-10-15,
+  `/mnt/project-files/reports/core_mub_review_2026-10-15/report.md`):
   - The degree-4 SDP check "refutes" a positive semidefinite Gram matrix
     (`mub6_degree4_sdp.rs:124-211`).
   - The triad search reports non-existence after testing 64 of 360 points
@@ -119,7 +119,7 @@ differences:
   Singular and inconsistent systems are out of scope.
 
 **Rule deviation, declared.** The relations re-derive matrix-vector products in Python,
-even though `omega_linear_algebra` is the authoritative owner of exact linear algebra.
+even though `core_linear_algebra` is the authoritative owner of exact linear algebra.
 The relations use matrix-vector products and comparisons only; there is no elimination
 routine. Moving them behind the Rust port is follow-up work if `D2` is adopted.
 
@@ -167,8 +167,8 @@ For each detector and family:
 
 **Witness replay.** `witness_replay.py` re-derives each named step:
 - the reduced matrix by Cramer's rule;
-- products and answers with the Woland dossier checker (`check_answer`, `mv` in
-  `omega_engine_woland/tests/pilots/replay_runners/dossier_capsules/checking.py`).
+- products and answers with the Adversary dossier checker (`check_answer`, `mv` in
+  `adversary/tests/pilots/replay_runners/dossier_capsules/checking.py`).
 
 None of the detectors' parsing or arithmetic is used. A witness replays when it names at
 least one step and every named step is defective.
@@ -213,13 +213,13 @@ later the same day; amendment 6.2 records that and every change to 5.1-5.4.
 
 ### 5.1 Data
 
-- **pilot_003 is pre-lock exploratory data.** It is owned by the "OEWAS, Woland and
+- **pilot_003 is pre-lock exploratory data.** It is owned by the "OEWAS, Adversary and
   prompt pilots" thread and was approved and run before this lock. Its replies are
   `{answer, ops[]}` with no intermediate steps, so no trace detector can read them.
   - It may be used to develop the Stage B prompt and parser.
   - It may not be used as confirmatory evidence.
 - **The confirmatory dataset** is collected after the Stage B lock:
-  - the same 36 exact linear-system items (Woland `c054_exact_linear_systems`);
+  - the same 36 exact linear-system items (Adversary `c054_exact_linear_systems`);
   - a prompt that asks for the structured trace schema of section 3;
   - one pinned model id, temperature 0, `max_tokens` 500;
   - raw request and response bytes with SHA-256;
@@ -227,7 +227,7 @@ later the same day; amendment 6.2 records that and every change to 5.1-5.4.
 
 ### 5.2 Outcome judge (F3)
 
-- **Primary outcome.** Terminal failure: the final answer fails Woland `check_answer`
+- **Primary outcome.** Terminal failure: the final answer fails Adversary `check_answer`
   against the posed system.
 - **Secondary outcome.** Oscillation: two calls on the same item give different answers.
   It is measured only if the budget allows the second call (36 extra calls). Otherwise it
@@ -327,7 +327,7 @@ see the posed item, the outcome judge, or any count taken across the whole trace
 anthropic's api key in .env. $2 cap". The key stays on Jeremy's PC, so the calls run there.
 
 **Lock.** `lock_da_001_stage_b.json` pins `stage_b.py`, `stage_b_analysis.py`,
-`local_detector.py`, the Stage A locked files and the Woland checker, plus the SHA-256 of
+`local_detector.py`, the Stage A locked files and the Adversary checker, plus the SHA-256 of
 the prompt. The lock commit is the commit that adds that manifest. `stage_b run` refuses
 to dispatch when any pinned file differs from the manifest in the worktree or at the lock
 commit. Item and bootstrap seeds are derived from the lock commit
@@ -390,4 +390,4 @@ commit. Item and bootstrap seeds are derived from the lock commit
 **Offline check before the lock.** The fixture transport (`--fixture`, no network) plants
 clean traces, misreads (M1), upstream rref errors (M4) and junk replies. On it `D4` is red
 only on failures and green on every M4 trace, and the pipeline runs end to end
-(`omega_engine_pfp/tests/test_detector_adequacy_stage_b.py`).
+(`pfp/tests/test_detector_adequacy_stage_b.py`).

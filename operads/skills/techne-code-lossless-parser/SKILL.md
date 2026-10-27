@@ -6,7 +6,7 @@ operad_target_colour: "Code"
 operad_arity: 2
 operad_residual: "unknown"
 operad_equivariant: false
-agent_scope: ["all", "techne-code-soviet-builder", "techne-dev"]
+agent_scope: ["all", "techne-code-builder", "techne-dev"]
 families: [techne-code, parser, ast]
 ---
 

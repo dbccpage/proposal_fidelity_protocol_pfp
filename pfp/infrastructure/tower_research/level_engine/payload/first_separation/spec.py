@@ -24,15 +24,15 @@ from __future__ import annotations
 
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import load_path
-from omega_engine_operations.use_cases.level_engine.research_engine.components import ROOT
-from omega_engine_operations.use_cases.level_engine.research_engine.guards import ResourceBound
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import ConstOracle, Oracle, RegimeOracle, Separate, satisfies
-from omega_engine_operations.use_cases.level_engine.research_engine.level import FixtureVerdict, LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.regimek import BASE, RegimeK, admit_response
-from omega_engine_operations.use_cases.level_engine.research_engine.search import decide_k
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed import Bounds, NewForm, NewInst, Supply, replay
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed_evidence import lean_citation
+from operations.use_cases.level_engine.research_engine.canon import load_path
+from operations.use_cases.level_engine.research_engine.components import ROOT
+from operations.use_cases.level_engine.research_engine.guards import ResourceBound
+from operations.use_cases.level_engine.research_engine.kinds import ConstOracle, Oracle, RegimeOracle, Separate, satisfies
+from operations.use_cases.level_engine.research_engine.level import FixtureVerdict, LevelResult
+from operations.use_cases.level_engine.research_engine.regimek import BASE, RegimeK, admit_response
+from operations.use_cases.level_engine.research_engine.search import decide_k
+from operations.use_cases.level_engine.research_engine.sealed import Bounds, NewForm, NewInst, Supply, replay
+from operations.use_cases.level_engine.research_engine.sealed_evidence import lean_citation
 import partial_decide
 from derivation.engine import READINGS
 
@@ -121,7 +121,7 @@ class OracleFactory:
         self.stub = stub
 
     def __call__(self, r: object) -> Oracle:
-        from omega_engine_operations.use_cases.level_engine.research_engine.sealed import Regime
+        from operations.use_cases.level_engine.research_engine.sealed import Regime
 
         assert isinstance(r, Regime)
         return RegimeOracle(r) if self.stub is None else ConstOracle(r, self.stub)

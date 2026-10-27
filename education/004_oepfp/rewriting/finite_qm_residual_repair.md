@@ -6,7 +6,7 @@ AuthorityEffect: None. Source revision: `000ee9b0c234eda74340e424d6cfb3f6ec001df
 
 ## Keep the original question visible
 
-The original input is `c=(2,-3,5,7)` with edges `01,12,23,03` and one face `01+12+23-03`. A valid mathematical answer is `a=(0,2,-1,4)`, `w=(-1,-1,-1,1)`, `phi1=3`, `gamma2=3`. The [public input](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_public_input.json) and [work unit](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json) own those assumptions and response requirements.
+The original input is `c=(2,-3,5,7)` with edges `01,12,23,03` and one face `01+12+23-03`. A valid mathematical answer is `a=(0,2,-1,4)`, `w=(-1,-1,-1,1)`, `phi1=3`, `gamma2=3`. The [public input](../../../../pfp/fixtures/finite_qm_workflow/c4_public_input.json) and [work unit](../../../../pfp/fixtures/finite_qm_workflow/c4_work_unit.json) own those assumptions and response requirements.
 
 There are two different meanings of repair. A **cochain repair** subtracts vertex differences from the observed edge list. A **proposal repair** replaces an incorrect submitted certificate. Neither grants permission to change the observations to make a desired answer pass. *(Definition.)*
 
@@ -112,4 +112,4 @@ Worked example: achieved cost 3 against the zero dual. Narration matches the spo
 
 A heuristic LLM rewrite requires a declared comparison with fixed tasks, scoring, budget, source pins and retained failures. Reversible representation and exact certificate checks do not establish that empirical improvement. This review ran no providers, native judge, build or full suite. The arithmetic is a finite derivation on the supplied rational data. *(Scope.)*
 
-Sources: [prompt compiler](../../../../omega_engine_pfp/infrastructure/finite_qm_prompt.py), [judge adapter](../../../../omega_engine_pfp/infrastructure/finite_qm_cochain_judge.py), [workflow stages and guidance](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml), [mode and bounds](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml), [Chapter 02 quotient classes](../math/02_math_cochain_complexes_repairs_and_quotients.md), and [Chapter 03 optimality conditions](../math/03_math_obstruction_mass_duality_and_exact_lp.md).
+Sources: [prompt compiler](../../../../pfp/infrastructure/finite_qm_prompt.py), [judge adapter](../../../../pfp/infrastructure/finite_qm_cochain_judge.py), [workflow stages and guidance](../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml), [mode and bounds](../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml), [Chapter 02 quotient classes](../math/02_math_cochain_complexes_repairs_and_quotients.md), and [Chapter 03 optimality conditions](../math/03_math_obstruction_mass_duality_and_exact_lp.md).

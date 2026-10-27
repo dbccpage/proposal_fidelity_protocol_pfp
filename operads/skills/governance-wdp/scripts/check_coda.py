@@ -26,7 +26,7 @@ from pathlib import Path
 def find_repo_root() -> Path:
     current = Path(__file__).resolve()
     for parent in current.parents:
-        if (parent / ".agents").is_dir() and (parent / "omega_engine").is_dir():
+        if (parent / ".agents").is_dir() and (parent / "engine").is_dir():
             return parent
     raise RuntimeError(f"Could not locate repo root from {current}")
 
@@ -48,7 +48,7 @@ PIPELINE_RULES_ORDER = (
 def test_pipeline_rules_order_and_completeness(repo_root: Path) -> None:
     rules_dir = (
         repo_root
-        / "omega_engine_governance"
+        / "governance"
         / "_law"
         / "00_constitution"
         / "coda"
@@ -75,7 +75,7 @@ def test_pipeline_rules_order_and_completeness(repo_root: Path) -> None:
 
 
 def test_layer5_continuum_identity(repo_root: Path) -> None:
-    coda_root = repo_root / "omega_engine_atlas" / "coda_atlas" / "F004_papers" / "001_finite_obstruction_calculus" / "000_witnessed_difference_programme" / "code" / "coda_application"
+    coda_root = repo_root / "atlas" / "coda_atlas" / "F004_papers" / "001_finite_obstruction_calculus" / "000_witnessed_difference_programme" / "code" / "coda_application"
     if not coda_root.is_dir():
         raise FileNotFoundError(f"Missing CODA root directory: {coda_root}")
 
@@ -89,7 +89,7 @@ def test_layer5_continuum_identity(repo_root: Path) -> None:
     assert "The Continuum" in content, "layer5_q.py must designate Layer 5 as The Continuum"
 
     # Check coda_q.md
-    coda_q_md = repo_root / "omega_engine_atlas" / "coda_atlas" / "F004_papers" / "001_finite_obstruction_calculus" / "000_witnessed_difference_programme" / "docs" / "source_archive" / "coda_component_packages" / "q" / "coda_q.md"
+    coda_q_md = repo_root / "atlas" / "coda_atlas" / "F004_papers" / "001_finite_obstruction_calculus" / "000_witnessed_difference_programme" / "docs" / "source_archive" / "coda_component_packages" / "q" / "coda_q.md"
     if not coda_q_md.is_file():
         raise FileNotFoundError(f"Missing required monograph: {coda_q_md}")
     q_text = coda_q_md.read_text(encoding="utf-8")
@@ -101,7 +101,7 @@ def test_layer5_continuum_identity(repo_root: Path) -> None:
 
 
 def test_anti_hallucination_nomenclature(repo_root: Path) -> None:
-    coda_root = repo_root / "omega_engine_atlas" / "coda_atlas" / "F004_papers" / "001_finite_obstruction_calculus" / "000_witnessed_difference_programme" / "code" / "coda_application"
+    coda_root = repo_root / "atlas" / "coda_atlas" / "F004_papers" / "001_finite_obstruction_calculus" / "000_witnessed_difference_programme" / "code" / "coda_application"
     if not coda_root.is_dir():
         raise FileNotFoundError(f"Missing CODA root directory: {coda_root}")
 

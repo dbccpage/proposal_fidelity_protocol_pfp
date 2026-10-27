@@ -22,14 +22,14 @@ import hashlib
 import json
 from typing import Any
 
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     DownMapObstruction,
     EdgeInvolution,
     ProtectedDistinction,
     ReversalMap,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.domain.mssn_research.grammar.entities import (
     AntimorphismTransitionModel,
     EpistemicQuarantineLedger,
 )

@@ -40,7 +40,7 @@ The **Test Silent Skip Detector** audits test suites to eliminate false-green il
    - `all(...)` over an empty collection is `True`. Any claim of the form "every X satisfies P" reads as evidence when there were no X, and the reader cannot tell the difference from the result alone.
    - Every universal quantifier over a collection that **can** be empty needs its empty case decided on purpose: refused, reported separately, or deliberately admitted as vacuously true. All three are legitimate; leaving it undecided is not.
    - Vacuous truth is sometimes exactly right. Ground inertia depends on it -- an empty observer context family *must* make every pair equivalent. So this is a question for a reviewer, never an automatic defect, and a tool that claimed to tell the difference would be an unfalsifiable instrument.
-   - Tool: `python omega_engine_operations/domain/cicd/vacuous_quantifier_scan.py` reports guarded and unguarded quantifier sites. A diagnostic; it blocks nothing.
+   - Tool: `python operations/domain/cicd/vacuous_quantifier_scan.py` reports guarded and unguarded quantifier sites. A diagnostic; it blocks nothing.
    - Witnesses, four consecutive sprints and four mechanisms: 48 tests all aimed at `tmp_path` fixtures (028); six epic gates nothing could turn red (029); soundness certified against an empty witness set (030); a universal quantifier over an empty edge set (031).
 5. **Degenerate Cases Belong Inside Exhaustive Loops:**
    - When a rule is asserted over a set of cases, include the **degenerate** one -- the identity, the empty input, the self-comparison -- even when it looks like padding. It looks like padding precisely because it is the case an implementation is most likely to special-case without anyone noticing.
@@ -61,8 +61,8 @@ The **Test Silent Skip Detector** audits test suites to eliminate false-green il
 ## 2b. The Tool
 
 ```powershell
-python -m omega_engine_operations.use_cases.verification.fail_closed_audit `
-  omega_engine_governance omega_engine_operations --max 64
+python -m operations.use_cases.verification.fail_closed_audit `
+  governance operations --max 64
 ```
 
 Exit `0` when the count is at or under the ceiling, `1` above it. Without
@@ -89,7 +89,7 @@ found". It now raises `EmptyScan` instead of reporting clean on an empty read.
 Run it through the stopping-point battery rather than on its own:
 
 ```powershell
-python -m omega_engine_operations.use_cases.verification.stopping_point
+python -m operations.use_cases.verification.stopping_point
 ```
 
 ---

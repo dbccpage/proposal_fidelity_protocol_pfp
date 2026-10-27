@@ -17,7 +17,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 NS-9 (`VERIFIED_FINITE`) already covers a battery of states. At the 240 states within two steps of the twelve sealed named states, over the 28-event alphabet, there are 88,338 commuting squares. Both costs have zero square boundary on all of them. Another 2,382 squares at those states do not commute. The catalog's "240 states and 28 events" census is therefore done; NS-10 asks about every square.
 
-Searching for a counterexample is easy to automate. A general argument is harder. Checking either is cheap: the kernel checks a counterexample by `decide` and a proof by elaboration. The task stresses the Symbol Game's move from census to lemma, OEWAS (Omega Engine Workflows, Agents, Skills) pipelines, and OEEIS (Omega Engine Epistemic Immune System) resistance to reading "no violation in the battery" as a theorem.
+Searching for a counterexample is easy to automate. A general argument is harder. Checking either is cheap: the kernel checks a counterexample by `decide` and a proof by elaboration. The task stresses the Symbol Game's move from census to lemma, OEWAS (Engine Workflows, Agents, Skills) pipelines, and OEEIS (Engine Epistemic Immune System) resistance to reading "no violation in the battery" as a theorem.
 
 ## 3. Formal Problem and Bounds
 
@@ -105,7 +105,7 @@ The catalog row requires none of these. They are recommended.
 
 **19L57G1, read-only.** At HEAD: `19L57G1:research/native_structure/` (`CLAIMS.md`, `input.json`, `run.py`, `evidence/receipt.json`, `lean/`) and `19L57G1:research/native_bridge/`; at `3100c4e`: `19L57G1:lean4/Derivation/PrimitivePassage.lean` and `19L57G1:code/derivation/primitive_passage.py`.
 
-**the_symbol_game.** `omega_engine/crates_rs/omega_homology`, for the square-boundary vocabulary, and `omega_engine_pfp/domain/immune/`.
+**the_symbol_game.** `engine/crates_rs/core_homology`, for the square-boundary vocabulary, and `pfp/domain/immune/`.
 
 **Upgrades.**
 

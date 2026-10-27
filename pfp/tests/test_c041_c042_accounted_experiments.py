@@ -5,19 +5,19 @@ import json
 
 import pytest
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import (
     symbol_game_experiment as lean,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import (
     run_symbol_game_matrix as sweep,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver import (
     symbol_game_routing as sat,
 )
-from omega_engine_pfp.infrastructure.formal_matrix import ArmAntibodyStore
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_woland.domain.providers.attempt import ProviderFailure, RetryClass
+from pfp.infrastructure.formal_matrix import ArmAntibodyStore
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
+from operations.domain.rop.result import Err
+from adversary.domain.providers.attempt import ProviderFailure, RetryClass
 
 
 MODEL = "vendor/model"
@@ -172,7 +172,7 @@ def test_c042_unknown_cost_stops_all_arms_and_cases(tmp_path, monkeypatch):
 
 
 def test_outer_matrix_composes_one_allowance_and_does_not_reset_for_arm(tmp_path, monkeypatch):
-    from omega_engine_pfp.infrastructure import pilot_matrix
+    from pfp.infrastructure import pilot_matrix
 
     folder = tmp_path / "matrix"
     created, providers = [], []

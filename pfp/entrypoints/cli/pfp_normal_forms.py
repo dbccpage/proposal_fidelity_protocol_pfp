@@ -15,15 +15,15 @@ if __name__ == "__main__" and __package__ is None:
     if str(repo_root) not in sys.path:
         sys.path.insert(0, str(repo_root))
 
-from omega_engine_pfp.domain.normal_forms.examples import (
+from pfp.domain.normal_forms.examples import (
     order_line,
     order_line_fails_second_normal_form,
     street_journal_title,
     street_journal_title_passes_third_and_fails_boyce_codd,
     street_journal_title_split,
 )
-from omega_engine_pfp.domain.normal_forms.relational import find_candidate_keys
-from omega_engine_pfp.infrastructure.normal_forms import (
+from pfp.domain.normal_forms.relational import find_candidate_keys
+from pfp.infrastructure.normal_forms import (
     CONTRACTS_DIR,
     NormalFormsEvaluator,
     check_catalog,
@@ -32,7 +32,7 @@ from omega_engine_pfp.infrastructure.normal_forms import (
 
 def run_normal_forms_cli(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="omega_engine_education_nf",
+        prog="education_nf",
         description="Normal Forms Verification and Evaluation CLI",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)

@@ -8,19 +8,19 @@ import Expressivity
 import GrammarCeiling
 import GrammarDepthCeiling
 
-#print axioms OmegaCosmology.SymbolGame.expressivityNorm
-#print axioms OmegaCosmology.SymbolGame.expressivityNorm_nil
-#print axioms OmegaCosmology.SymbolGame.expressivityNorm_cons
-#print axioms OmegaCosmology.SymbolGame.expressivityNorm_nonneg
-#print axioms OmegaCosmology.SymbolGame.grammarCeiling
-#print axioms OmegaCosmology.SymbolGame.grammarCeiling_zero
-#print axioms OmegaCosmology.SymbolGame.grammarCeiling_one
-#print axioms OmegaCosmology.SymbolGame.grammarCeiling_two
-#print axioms OmegaCosmology.SymbolGame.grammarCeiling_three
-#print axioms OmegaCosmology.SymbolGame.grammarCeiling_four
-#print axioms OmegaCosmology.SymbolGame.grammarCeiling_eight
-#print axioms OmegaCosmology.SymbolGame.expressivityNorm_le_length_mul_cap
-#print axioms OmegaCosmology.SymbolGame.expressivity_norm_le_grammar_ceiling
+#print axioms CoreCosmology.SymbolGame.expressivityNorm
+#print axioms CoreCosmology.SymbolGame.expressivityNorm_nil
+#print axioms CoreCosmology.SymbolGame.expressivityNorm_cons
+#print axioms CoreCosmology.SymbolGame.expressivityNorm_nonneg
+#print axioms CoreCosmology.SymbolGame.grammarCeiling
+#print axioms CoreCosmology.SymbolGame.grammarCeiling_zero
+#print axioms CoreCosmology.SymbolGame.grammarCeiling_one
+#print axioms CoreCosmology.SymbolGame.grammarCeiling_two
+#print axioms CoreCosmology.SymbolGame.grammarCeiling_three
+#print axioms CoreCosmology.SymbolGame.grammarCeiling_four
+#print axioms CoreCosmology.SymbolGame.grammarCeiling_eight
+#print axioms CoreCosmology.SymbolGame.expressivityNorm_le_length_mul_cap
+#print axioms CoreCosmology.SymbolGame.expressivity_norm_le_grammar_ceiling
 #print axioms PaperER007.FixedAlphabetTerm
 #print axioms PaperER007.FixedAlphabetTerm.symbolsDeclared
 #print axioms PaperER007.FixedAlphabetTerm.operatorsDeclared

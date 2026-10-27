@@ -9,8 +9,8 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 
 def test_direct_and_module_entrypoints_expose_same_commands() -> None:
     commands = (
-        [sys.executable, "omega_engine_pfp/scripts/docs_integrity.py", "--help"],
-        [sys.executable, "-m", "omega_engine_pfp.scripts.docs_integrity", "--help"],
+        [sys.executable, "pfp/scripts/docs_integrity.py", "--help"],
+        [sys.executable, "-m", "pfp.scripts.docs_integrity", "--help"],
     )
     outputs = []
     for command in commands:

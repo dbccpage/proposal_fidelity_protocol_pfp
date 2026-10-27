@@ -18,7 +18,7 @@ from fractions import Fraction
 from functools import lru_cache
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.lie_algebra import (
+from pfp.tests.demo_004.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.reference_solver.lie_algebra import (
     CARTAN_MATRICES,
     get_positive_roots,
     get_rank,

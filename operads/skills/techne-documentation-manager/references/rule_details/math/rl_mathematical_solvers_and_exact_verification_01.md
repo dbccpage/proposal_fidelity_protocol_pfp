@@ -8,7 +8,7 @@ Parent: [Mathematical Solvers & Sovereign Rust Delegation](../../../../../rules/
 
 **AuthorityEffect:** None.
 
-This rule codifies sovereign Rust math delegation, projector endomorphism purity, packed operator contraction, matrix shape purity, and native solver fallback integrity across `omega_engine` crates.
+This rule codifies sovereign Rust math delegation, projector endomorphism purity, packed operator contraction, matrix shape purity, and native solver fallback integrity across `engine` crates.
 
 ---
 
@@ -18,7 +18,7 @@ This rule codifies sovereign Rust math delegation, projector endomorphism purity
 >
 > 1. A Projector $P: C \to C$ must be deterministic, stateless, and idempotent ($P(P(x)) = P(x)$).
 > 2. Projectors are strictly forbidden from calculating $\Phi_1$, calculating $\Gamma_2$, validating `PacketEnvelope`, judging numerical exactness, or certifying solver retractions.
-> 3. All $\Phi/\Gamma$ calculations belong exclusively to `omega_engine/crates_rs/omega_functional/`.
+> 3. All $\Phi/\Gamma$ calculations belong exclusively to `engine/crates_rs/core_functional/`.
 
 ---
 
@@ -37,22 +37,22 @@ This rule codifies sovereign Rust math delegation, projector endomorphism purity
 > **Sovereign Rust Math Delegation Rule:**
 >
 > 1. **Zero Ad-Hoc Python Mathematical Solvers:**
->    Python code in `omega_engine` and `omega_engine_pfp` is strictly prohibited from re-implementing mathematical elimination algorithms, numerical solvers, simplicial complex structures, holonomy loop products, or defect functionals when sovereign Rust crates exist under `omega_engine/crates_rs/`.
+>    Python code in `engine` and `pfp` is strictly prohibited from re-implementing mathematical elimination algorithms, numerical solvers, simplicial complex structures, holonomy loop products, or defect functionals when sovereign Rust crates exist under `engine/crates_rs/`.
 > 2. **Sovereign Foundation Ownership:**
->    - **Linear Algebra (`omega_linear_algebra`)**: Fraction-free Bareiss determinants, exact LDLᵀ decomposition, Sylvester positive definiteness, exact $\mathbb{Q}$-rank via `ExactRowReduction`, and Smith Normal Form.
->    - **Simplicial Homology (`omega_homology`)**: Canonical simplicial complexes, face maps, boundary/coboundary matrices ($d \circ d = 0$), Betti numbers, and chain complexes.
->    - **Discrete Holonomy (`omega_holonomy`)**: Discrete connections, connection Laplacians, loop curvature, and path-ordered holonomy products.
->    - **Defect Functionals (`omega_functional`)**: $\Phi_1$, $\Gamma_2$, $\Xi$ defect evaluation, obstruction mass, and exact dual witness certification.
->    - **Exact Numbers (`omega_number_theory`)**: Rational, quadratic and cyclotomic scalars, finite fields, polynomials, and exact real-embedding signs.
->    - **Groups (`omega_lie_theory`), Fusion (`omega_fusion_categories`), Probability (`omega_finite_probability`)**: Group/Lie/Weyl algebra, fusion and modular data, stochastic maps and majorization, respectively.
->    - **Kernel (`omega_kernel`) and Solvers (`omega_solvers`)**: Certified rational enclosures and bounded combinatorics; exact search proposals with independently replayed certificates, respectively.
+>    - **Linear Algebra (`core_linear_algebra`)**: Fraction-free Bareiss determinants, exact LDLᵀ decomposition, Sylvester positive definiteness, exact $\mathbb{Q}$-rank via `ExactRowReduction`, and Smith Normal Form.
+>    - **Simplicial Homology (`core_homology`)**: Canonical simplicial complexes, face maps, boundary/coboundary matrices ($d \circ d = 0$), Betti numbers, and chain complexes.
+>    - **Discrete Holonomy (`core_holonomy`)**: Discrete connections, connection Laplacians, loop curvature, and path-ordered holonomy products.
+>    - **Defect Functionals (`core_functional`)**: $\Phi_1$, $\Gamma_2$, $\Xi$ defect evaluation, obstruction mass, and exact dual witness certification.
+>    - **Exact Numbers (`core_number_theory`)**: Rational, quadratic and cyclotomic scalars, finite fields, polynomials, and exact real-embedding signs.
+>    - **Groups (`core_lie_theory`), Fusion (`core_fusion_categories`), Probability (`core_finite_probability`)**: Group/Lie/Weyl algebra, fusion and modular data, stochastic maps and majorization, respectively.
+>    - **Kernel (`core_kernel`) and Solvers (`core_solvers`)**: Certified rational enclosures and bounded combinatorics; exact search proposals with independently replayed certificates, respectively.
 > 3. **Clean Architecture Port Contract:**
 >    Inward domain layers (`domain/exact/`, `domain/solvers/`) must define pure Value Objects, shape validations, and typed Domain Protocols (`domain/ports/exact_ports.py`). They must delegate all mathematical computations through domain ports to native infrastructure adapters (`infrastructure/adapters/exact_rust_adapter.py`) backed by the FFI seam (`RustSymbolGameHost`).
 > 4. **Anti-Sham Parity Guard:**
 >    Infrastructure adapters must never wrap back around and call Python domain math functions (circular self-assignment anti-pattern). Adapters must invoke native host actions directly.
-> 5. **Physics and Program Custody:** `omega_quantum_physics` owns reusable finite physics and its finite MUB kernel; CLI, FFI, campaign, paper-specific, protocol and receipt code belongs to the calling program. Foundations never depend on the physics crate, and consumers import mathematical owners directly without forwarding facades.
+> 5. **Physics and Program Custody:** `core_quantum_physics` owns reusable finite physics and its finite MUB kernel; CLI, FFI, campaign, paper-specific, protocol and receipt code belongs to the calling program. Foundations never depend on the physics crate, and consumers import mathematical owners directly without forwarding facades.
 > 6. **Exact Wire Canonical Form:**
->    When serializing `Exact` (`num_rational::BigRational`) values for cross-boundary FFI transport, integer rationals with unit denominators must be serialized without slash (e.g. `"1"`, `"0"`, `"-5"`), never as `"1/1"`, preserving strict canonical parsing under `omega_kernel::parse_exact`.
+>    When serializing `Exact` (`num_rational::BigRational`) values for cross-boundary FFI transport, integer rationals with unit denominators must be serialized without slash (e.g. `"1"`, `"0"`, `"-5"`), never as `"1/1"`, preserving strict canonical parsing under `core_kernel::parse_exact`.
 
 ---
 

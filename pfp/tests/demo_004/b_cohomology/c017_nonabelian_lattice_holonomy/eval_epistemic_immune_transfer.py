@@ -25,30 +25,30 @@ REPO_ROOT = next(
     (
         parent
         for parent in Path(__file__).resolve().parents
-        if (parent / "omega_engine_pfp").is_dir() and (parent / "omega_engine_woland").is_dir()
+        if (parent / "pfp").is_dir() and (parent / "adversary").is_dir()
     ),
     None,
 )
 if REPO_ROOT is not None and str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from omega_engine_pfp.infrastructure.estimated_gateway import (
+from pfp.infrastructure.estimated_gateway import (
     DurableRunGateway,
     EstimatedBudgetGateway,
 )
-from omega_engine_pfp.infrastructure.pilot_matrix import (
+from pfp.infrastructure.pilot_matrix import (
     complete_pilot_turn,
     make_pilot_gateways,
     validate_pilot_gateways,
 )
-from omega_engine_pfp.infrastructure.synthesis_matrix import RunnerRefusal, prepare_output_dir
-from omega_engine_pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.dual_evaluator import (  # noqa: E402
+from pfp.infrastructure.synthesis_matrix import RunnerRefusal, prepare_output_dir
+from pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.dual_evaluator import (  # noqa: E402
     evaluate_dual,
 )
-from omega_engine_pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (  # noqa: E402
+from pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (  # noqa: E402
     solve as reference_solve,
 )
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
 
 
 def _model_slug(model_id: str) -> str:

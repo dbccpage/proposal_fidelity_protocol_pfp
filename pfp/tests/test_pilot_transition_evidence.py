@@ -6,10 +6,10 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.domain.value_objects.identifiers import CheckerIdVO
-from omega_engine_pfp.domain.value_objects.taxonomy import EvaluationStatusVO, TrialStatusVO
-from omega_engine_pfp.tests.test_pilot_use_cases import _make_sample_pilot
-from omega_engine_pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
+from pfp.domain.value_objects.identifiers import CheckerIdVO
+from pfp.domain.value_objects.taxonomy import EvaluationStatusVO, TrialStatusVO
+from pfp.tests.test_pilot_use_cases import _make_sample_pilot
+from pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
 
 
 def _pilot():

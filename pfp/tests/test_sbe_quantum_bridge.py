@@ -5,7 +5,7 @@ Verifies:
 2. Exact-type equality and hash discipline on SBEDensityReport.
 3. TextStateProjector normalization ||psi||_2 = 1.
 4. AuthorityEffect is strictly None.
-5. Zero dependency on omega_engine_woland.stage.
+5. Zero dependency on adversary.stage.
 """
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ import math
 import numpy as np
 import pytest
 
-from omega_engine_pfp.domain.bridge.sbe import (
+from pfp.domain.bridge.sbe import (
     SBE_DIMENSION,
     SBEAnalyzer,
     SBEDensityReport,

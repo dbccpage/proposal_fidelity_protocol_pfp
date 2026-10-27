@@ -10,7 +10,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from typing import Sequence
 
-from omega_engine_prompt_civilization.domain.intelligence_metabolism.models import MinedRecordV1
+from pciv.domain.intelligence_metabolism.models import MinedRecordV1
 
 
 class DailyDigestGenerator:

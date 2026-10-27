@@ -6,15 +6,15 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
-from omega_engine_pfp.infrastructure.pilot_runners.empirical_gates import (
+from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
+from pfp.infrastructure.pilot_runners.empirical_gates import (
     collect_injection_containment,
     collect_token_amortization,
     summarize_injection_containment,
     summarize_token_amortization,
 )
-from omega_engine_woland.domain.providers.types import Provider
-from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+from adversary.domain.providers.types import Provider
+from adversary.infrastructure.providers.gateway import unbudgeted_gateway
 
 
 MODELS = tuple(f"synthetic/model-{index}" for index in range(4))

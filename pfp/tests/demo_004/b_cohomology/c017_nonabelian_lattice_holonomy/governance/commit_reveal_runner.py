@@ -5,7 +5,7 @@ one process.  It is deliberately *not* described as commit/reveal: no solver
 commitment was persisted before the judge cases were published.
 
 It scores the reference solver against this package's own judge packet (a
-self-consistency check, not a model evaluation and not a Woland verdict). Every
+self-consistency check, not a model evaluation and not a Adversary verdict). Every
 entry of judge_packet/manifest.json is verified over LF-normalised bytes before
 scoring, and every scored case and mutation file must be listed there. Empty
 suites are refused.
@@ -19,16 +19,16 @@ import pathlib
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.governance.budget_gate import (
     check_budget_gate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.governance.woland_gate import (
-    evaluate_woland_terminal_gate,
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.governance.adversary_gate import (
+    evaluate_adversary_terminal_gate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (
     solve,
 )
 
@@ -151,7 +151,7 @@ def run_provisional_evaluation() -> dict[str, Any]:
     }
 
     # Policy: no commitment was made before the run. That is recorded, and it does not change the label.
-    verdict, verdict_reason, verdict_details = evaluate_woland_terminal_gate(
+    verdict, verdict_reason, verdict_details = evaluate_adversary_terminal_gate(
         eval_summary, budget_ok
     )
     verdict_details = {

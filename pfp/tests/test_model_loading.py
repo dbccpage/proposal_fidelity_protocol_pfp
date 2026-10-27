@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.types.base import PfpDomainModel
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
+from pfp.domain.types.base import PfpDomainModel
+from pfp.infrastructure.model_loading import load_yaml_model
 
 
 class InputModel(PfpDomainModel):

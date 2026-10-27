@@ -11,17 +11,17 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_pfp.domain.aggregates.cycle_balance_aggregate import (
+from pfp.domain.aggregates.cycle_balance_aggregate import (
     CycleBalanceQuartetAggregate,
 )
-from omega_engine_pfp.domain.entities.base import Entity
-from omega_engine_pfp.domain.entities.cycle_balance import (
+from pfp.domain.entities.base import Entity
+from pfp.domain.entities.cycle_balance import (
     CandidateEntity,
     ProblemEntity,
     ReceiptEntity,
     VerifierEntity,
 )
-from omega_engine_pfp.domain.homology.cycle_balance import (
+from pfp.domain.homology.cycle_balance import (
     ActiveObstruction,
     BoundaryMatrices,
     Carrier,
@@ -38,8 +38,8 @@ from omega_engine_pfp.domain.homology.cycle_balance import (
     VerificationRule,
     VerificationStatus,
 )
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.domain.value_objects.cycle_balance import (
+from pfp.domain.kernel.result import RefusalCode
+from pfp.domain.value_objects.cycle_balance import (
     ActiveObstructionVO,
     BoundaryMatricesVO,
     CarrierEdgeVO,
@@ -48,7 +48,7 @@ from omega_engine_pfp.domain.value_objects.cycle_balance import (
     ClaimHygieneVO,
     StaticCellBoundsVO,
 )
-from omega_engine_pfp.domain.value_objects.identifiers import (
+from pfp.domain.value_objects.identifiers import (
     CandidateId,
     CaseId,
     ProblemId,
@@ -56,7 +56,7 @@ from omega_engine_pfp.domain.value_objects.identifiers import (
     Sha256Digest,
     VerifierId,
 )
-from omega_engine_pfp.domain.value_objects.taxonomy import (
+from pfp.domain.value_objects.taxonomy import (
     ArithmeticDomainVO,
     ClaimedMoveVO,
     VerificationRuleVO,

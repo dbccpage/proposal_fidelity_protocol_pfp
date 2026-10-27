@@ -8,12 +8,12 @@ import urllib.request
 
 import pytest
 
-from omega_engine_pfp.domain.demos import DemoRefusal
-from omega_engine_pfp.infrastructure.adapters.mssn_scenarios.protocol import (
+from pfp.domain.demos import DemoRefusal
+from pfp.infrastructure.adapters.mssn_scenarios.protocol import (
     FIXTURES,
     run_live_arm,
 )
-from omega_engine_pfp.infrastructure.demos.execution import run
+from pfp.infrastructure.demos.execution import run
 
 SENTINEL = "sk-or-demo3-live-sentinel-not-a-real-key"
 STUB_TEXT = "LIVE_PROVIDER_BYTES_not_a_move_batch"
@@ -106,7 +106,7 @@ def test_live_demo_3_records_provider_bytes(tmp_path, monkeypatch):
     """An unsettled/unbound reply stays recorded and stops before later arms."""
     _require_windows()
     monkeypatch.setenv("OPENROUTER_API_KEY", SENTINEL)
-    monkeypatch.setattr("omega_engine_pfp.infrastructure.estimated_gateway.snapshot_pricing",
+    monkeypatch.setattr("pfp.infrastructure.estimated_gateway.snapshot_pricing",
         lambda *a, **k: {"catalog_sha256": "fixture", "row": {"id": MODEL,
             "pricing": {"prompt": "0.000000001", "completion": "0.000000001"}}})
     calls = {"n": 0}

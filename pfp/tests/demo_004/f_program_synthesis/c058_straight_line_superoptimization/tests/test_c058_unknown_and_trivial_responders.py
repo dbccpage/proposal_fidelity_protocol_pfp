@@ -15,11 +15,11 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet import (
     exact_checker,
     independent_checker,
 )
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.reference_solver import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.reference_solver import (
     solve,
 )
 

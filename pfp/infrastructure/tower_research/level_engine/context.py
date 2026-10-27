@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from importlib.resources import files
 from pathlib import Path, PurePosixPath
 
-from omega_engine_operations.domain.level_engine_context import ContextRefusal
+from operations.domain.level_engine_context import ContextRefusal
 
 
 def _inside(root: Path, relative: str) -> Path:
@@ -124,9 +124,9 @@ def installed_context(*, repository_root: Path | None = None, vendor_root: Path 
                       governance_root: Path | None = None, evidence_root: Path | None = None,
                       reach_root: Path | None = None) -> LevelEngineContext:
     """Resolve installed resources; never infer a repository from module parents."""
-    runtime = Path(str(files("omega_engine_pfp").joinpath("infrastructure", "tower_research", "level_engine")))
-    evidence = evidence_root or Path(str(files("omega_engine_pfp").joinpath("infrastructure", "tower_evidence", "level_engine")))
-    governance = governance_root or Path(str(files("omega_engine_governance"))) / "contracts" / "level_engine" / "v2"
+    runtime = Path(str(files("pfp").joinpath("infrastructure", "tower_research", "level_engine")))
+    evidence = evidence_root or Path(str(files("pfp").joinpath("infrastructure", "tower_evidence", "level_engine")))
+    governance = governance_root or Path(str(files("governance"))) / "contracts" / "level_engine" / "v2"
     # This snapshot carries the recorded audit; it does not claim a fresh local build.
     lean = lean_root or evidence / "v2" / "lean" / "sources"
     return LevelEngineContext(runtime, evidence, governance, repository_root, vendor_root,

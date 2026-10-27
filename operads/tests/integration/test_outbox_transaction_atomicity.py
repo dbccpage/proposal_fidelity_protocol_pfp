@@ -8,22 +8,22 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_operads.application.commands.compile_catalog import (
+from operations.domain.rop.result import Err, Ok
+from operads.application.commands.compile_catalog import (
     CompileCatalogCommand,
 )
-from omega_engine_operads.domain.entities.catalog_v3 import EstateCatalogV3
-from omega_engine_operads.domain.events.domain_events import (
+from operads.domain.entities.catalog_v3 import EstateCatalogV3
+from operads.domain.events.domain_events import (
     DocumentImportedV3,
     EstateCapturedV3,
 )
-from omega_engine_operads.domain.errors.domain_errors import DomainInvariantError
-from omega_engine_operads.domain.value_objects.content_digest import ContentDigest
-from omega_engine_operads.domain.value_objects.identifier import (
+from operads.domain.errors.domain_errors import DomainInvariantError
+from operads.domain.value_objects.content_digest import ContentDigest
+from operads.domain.value_objects.identifier import (
     EstateRef,
     IdempotencyKey,
 )
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
+from operads.infrastructure.bootstrap import OeopContainer
 
 
 class TestOutboxTransactionAtomicity(unittest.TestCase):

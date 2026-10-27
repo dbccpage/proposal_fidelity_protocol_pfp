@@ -44,8 +44,8 @@ _repo_root = next((p for p in Path(__file__).resolve().parents if (p / "pyprojec
 if _repo_root is not None and str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.dual_evaluator import evaluate_dual  # noqa: E402
-from omega_engine_pfp.infrastructure.formal_matrix import (  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.dual_evaluator import evaluate_dual  # noqa: E402
+from pfp.infrastructure.formal_matrix import (  # noqa: E402
     INFRA_ERROR,
     PARSE_FAILURE,
     ArmAntibodyStore,
@@ -60,7 +60,7 @@ from omega_engine_pfp.infrastructure.formal_matrix import (  # noqa: E402
     run_folder,
     write_json,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.lean_compiler import lean_version  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.lean_compiler import lean_version  # noqa: E402
 
 # Hieroglyphic rune mapping for M5
 RUNE_MAP = {
@@ -219,7 +219,7 @@ FORMATTERS = {
 
 
 def _accounting_states(gateway) -> dict[str, str]:
-    from omega_engine_pfp.infrastructure.estimated_gateway import DurableRunGateway, EstimatedBudgetGateway
+    from pfp.infrastructure.estimated_gateway import DurableRunGateway, EstimatedBudgetGateway
 
     if not isinstance(gateway, (DurableRunGateway, EstimatedBudgetGateway)):
         return {}
@@ -343,7 +343,7 @@ def run_benchmark_panel(
     *, gateway=None, max_tokens: int = 512, task_id=None, attempt_id=None,
 ) -> Dict[str, Any]:
     """Runs the panel for one (method, model) arm and writes its record to the run folder."""
-    from omega_engine_pfp.infrastructure.pilot_matrix import validate_pilot_gateways
+    from pfp.infrastructure.pilot_matrix import validate_pilot_gateways
 
     if not cases or method not in {*FORMATTERS, "M3_RETRACTION"}:
         raise RunnerConfigError("EMPTY_OR_UNKNOWN_EXPERIMENT_SELECTION")
@@ -462,7 +462,7 @@ def parse_cli(argv=None):
 
 
 def main(argv=None) -> None:
-    from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.run_symbol_game_matrix import run_full_matrix
+    from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.run_symbol_game_matrix import run_full_matrix
 
     args = parse_cli(argv)
     run_full_matrix(args.tiers, args.method, max_tokens=args.max_output_tokens,

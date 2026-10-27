@@ -1,5 +1,5 @@
 """
-test_m3_adversarial_challenge.py — Adversarial Stress-Test Harness for Milestone 3 Woland Overseer & Quad Bundle.
+test_m3_adversarial_challenge.py — Adversarial Stress-Test Harness for Milestone 3 Adversary Overseer & Quad Bundle.
 
 Adversarially tests and challenges:
 1. Hash Chain Tampering Attacks:
@@ -25,7 +25,7 @@ Adversarially tests and challenges:
    - Bridge node collision edge case when system items contain '9'
 5. Invariant & UTF-8 Encoding Attacks:
    - Strict absence of UTF-8 BOM (\xef\xbb\xbf) across all artifacts
-   - Lossless Cyrillic decoding for Bulgakovian narrative and persona
+   - Lossless Cyrillic decoding for the novelistian narrative and persona
    - Strict Claim Hygiene: zero forbidden hype verbs in summary.json
 6. End-to-end Bout Execution & Determinism:
    - Isolated directory execution producing the label REFERENCE_SELF_CONSISTENT and exact Phi_1 = "0"
@@ -42,14 +42,14 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.run_woland_bout import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.run_adversary_bout import (
     DDC_LETTERS,
     assert_witness_dominance,
     execute_9dot_gauge_break,
     persist_quad_bundle,
-    run_woland_c001_bout,
+    run_adversary_c001_bout,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
     ConstraintSystem,
 )
 
@@ -58,7 +58,7 @@ from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_
 def pilot_dirs(tmp_path_factory: pytest.TempPathFactory) -> List[Path]:
     """Run the bout once into a pytest temporary folder; the real run store is never read or written."""
     target = tmp_path_factory.mktemp("c001_adversarial") / "pilot"
-    res = run_woland_c001_bout(custom_run_dir=target)
+    res = run_adversary_c001_bout(custom_run_dir=target)
     assert res.is_ok, res
     return [target]
 
@@ -548,15 +548,15 @@ def test_attack_cyrillic_narrative_encoding_fidelity(pilot_dirs: List[Path]) -> 
     novella_text = (pilot_dirs[0] / "novella.md").read_text(encoding="utf-8")
 
     cyrillic_samples = [
-        "Воланд",
-        "Коровьев-Фагот",
-        "Бегемот",
-        "Азазелло",
-        "Гелла",
-        "Мастер",
-        "Маргарита",
-        "Доктор Стравинский",
-        "Иван Бездомный",
+        "Adversary",
+        "Defect Hunter",
+        "Gauge Breaker",
+        "Scope Guard",
+        "Syntax Prefilter",
+        "Manuscript Truth",
+        "Primal Dual",
+        "Quarantine",
+        "Scar Chronicler",
         "Рукописи не горят",
         "Свежесть бывает только одна",
     ]
@@ -608,11 +608,11 @@ def test_isolated_end_to_end_bout_determinism_and_exact_potential(tmp_path: Path
     run1_dir = tmp_path / "run_1"
     run2_dir = tmp_path / "run_2"
 
-    res1 = run_woland_c001_bout(custom_run_dir=run1_dir, force=True, seed=42)
+    res1 = run_adversary_c001_bout(custom_run_dir=run1_dir, force=True, seed=42)
     assert res1.is_ok
     info1 = res1.unwrap()
 
-    res2 = run_woland_c001_bout(custom_run_dir=run2_dir, force=True, seed=42)
+    res2 = run_adversary_c001_bout(custom_run_dir=run2_dir, force=True, seed=42)
     assert res2.is_ok
     info2 = res2.unwrap()
 

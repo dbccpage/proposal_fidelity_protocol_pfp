@@ -4,24 +4,24 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
-from omega_engine_pfp.infrastructure.seat_transport.openrouter_turn_executor import (
+from pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
+from pfp.infrastructure.seat_transport.openrouter_turn_executor import (
     OpenRouterTurnExecutor,
 )
-from omega_engine_woland.stage.infrastructure.default_adapters import (
+from adversary.stage.infrastructure.default_adapters import (
     AntigravityAgentTurnAdapter,
 )
 
 
 def test_raw_python_turn_executor_refuses_without_provider_call():
-    from omega_engine_pfp.infrastructure.openrouter_seat_gateway import SeatTurnRefused
+    from pfp.infrastructure.openrouter_seat_gateway import SeatTurnRefused
     class NoGateway:
         def complete(self, **kwargs):
             raise AssertionError("retired executor sent a request")
     executor = object.__new__(OpenRouterTurnExecutor)
     executor._gateway = NoGateway()
     with pytest.raises(SeatTurnRefused) as failure:
-        executor(SeatTurnRequestV1(scene_id="act2", seat_id="seat_begemot", prompt_text="Check"))
+        executor(SeatTurnRequestV1(scene_id="act2", seat_id="seat_gauge_breaker", prompt_text="Check"))
     assert failure.value.refusal.code == "LEGACY_SEAT_TRANSPORT_RETIRED"
 
 

@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from omega_engine_operads.frontend.cli.python_dev_cli import main as run_cli
+from operads.frontend.cli.python_dev_cli import main as run_cli
 
 
 class TestCLI(unittest.TestCase):
@@ -26,7 +26,7 @@ class TestCLI(unittest.TestCase):
             output_str = stdout_capture.getvalue()
             data = json.loads(output_str)
 
-            self.assertEqual(data["schema"], "omega.python_development_office.v1")
+            self.assertEqual(data["schema"], "core.python_development_office.v1")
             self.assertEqual(data["total_findings"], 1)
             self.assertEqual(data["findings"][0]["rule_code"], "MUTABLE_DEFAULT_ARG")
 

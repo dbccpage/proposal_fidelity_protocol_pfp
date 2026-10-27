@@ -5,7 +5,7 @@ Wires the use case in
 
 - the Symbol Game's 24 dual pharmacy controls and packaged fixture replies;
 - the OEEIS screen wiring in `infrastructure/immune_demo_screens.py`;
-- the native pharmacy (`omega_prompt_civilization` through the Symbol Game
+- the native pharmacy (`core_prompt_civilization` through the Symbol Game
   host); without a built host a control refuses with
   `NATIVE_PHARMACY_UNAVAILABLE`;
 - a quarantine store scoped to the run's output directory.
@@ -21,27 +21,27 @@ from importlib.resources import files
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from omega_engine_epistemic_immune_system.use_cases.demos.demo_4e_cogsci_autopoiesis.policy import (
+from eis.use_cases.demos.demo_4e_cogsci_autopoiesis.policy import (
     DemoRefusal,
 )
-from omega_engine_epistemic_immune_system.infrastructure.immune_demo_screens import (
+from eis.infrastructure.immune_demo_screens import (
     screen_pharmacy_control,
     screen_reply,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import RunQuarantineSink
-from omega_engine_epistemic_immune_system.infrastructure.native_pharmacy import (
+from eis.infrastructure.mssn_ports import RunQuarantineSink
+from eis.infrastructure.native_pharmacy import (
     NativePharmacy,
     NativePharmacyUnavailable,
 )
-from omega_engine_epistemic_immune_system.use_cases.demos.demo_4e_cogsci_autopoiesis import (
+from eis.use_cases.demos.demo_4e_cogsci_autopoiesis import (
     run_packaged_immune as use_case,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_scenarios.immune_fixtures import (
+from pfp.infrastructure.adapters.mssn_scenarios.immune_fixtures import (
     NEGATIVE_FIXTURES,
     POSITIVE_FIXTURES,
 )
 
-_FIXTURE_PACKAGE = "omega_engine_pfp.infrastructure.adapters.mssn_research"
+_FIXTURE_PACKAGE = "pfp.infrastructure.adapters.mssn_research"
 
 
 def packaged_replies() -> tuple[str, str]:

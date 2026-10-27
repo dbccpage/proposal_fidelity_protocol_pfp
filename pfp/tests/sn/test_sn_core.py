@@ -5,7 +5,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_pfp.domain.sn_tower.sn_core import (
+from pfp.domain.sn_tower.sn_core import (
     S0Ground,
     S1Supply,
     S2Collapse,

@@ -14,22 +14,22 @@ import json
 from hashlib import sha256
 from typing import Any
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import EpistemicQuarantineLedger
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.entities import EpistemicQuarantineLedger
+from pfp.domain.mssn_research.grammar.errors import (
     GrammarDomainError,
     LedgerIntegrityError,
     LedgerSerializationError,
     LedgerTruncationError,
     ScopeBoundaryViolationError,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     HostFenceAudit,
     PontryaginKillFlags,
     QuarantinedShadowPacket,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.domain.mssn_research.packets.value_objects import RefusalCode
+from pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
 
 
 def canonical_json_bytes(obj: Any) -> bytes:

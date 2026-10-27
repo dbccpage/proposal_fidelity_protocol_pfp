@@ -11,15 +11,15 @@ from __future__ import annotations
 
 from fractions import Fraction
 
-from omega_engine_pfp.domain.entities import PacketEnvelopeV2
-from omega_engine_pfp.domain.entities.cochain import CochainCarrier, CochainState
-from omega_engine_pfp.domain.entities.cochain_projector import CochainProjector
-from omega_engine_pfp.domain.entities.problem import (
+from pfp.domain.entities import PacketEnvelopeV2
+from pfp.domain.entities.cochain import CochainCarrier, CochainState
+from pfp.domain.entities.cochain_projector import CochainProjector
+from pfp.domain.entities.problem import (
     DetectorCase,
     IdentityAdapter,
     RuntimeProblem,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
 
 MUB6_CARRIER_ID = "mub6-deltoid-cusp-6cycle-v1"
 MUB6_PACKET_FAMILY = "mub6_cusp_obstruction"
@@ -125,15 +125,15 @@ def build_mub6_deltoid_cusp_problem(
         "cycle_circulation_reference": CYCLE_CIRCULATION_REFERENCE,
         "functional_status": "RUST_FUNCTIONAL_REQUIRED",
         "level2_wire_grammar": wire_level2,
-        "canonical_rust_owner": "omega_mub::omega_native::mub6_g1_variety",
+        "canonical_rust_owner": "core_mub::core_native::mub6_g1_variety",
         "authority_effect": "None",
         "firewall": "NOT MUB(6)=3, NOT MUB(6)<=3; stated region only; mints no authority",
     }
     if research_parent_event_id is not None:
         payload["research_parent_event_id"] = research_parent_event_id
 
-    source_digest = domain_digest("omega.mub6.deltoid-cusp-fixture.v1", payload)
-    initial_state_hash = domain_digest("omega.oesos.native-state.v1", initial)
+    source_digest = domain_digest("core.mub6.deltoid-cusp-fixture.v1", payload)
+    initial_state_hash = domain_digest("core.oesos.native-state.v1", initial)
 
     envelope = PacketEnvelopeV2(
         task_id=task_id,

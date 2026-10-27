@@ -1,4 +1,4 @@
-"""Landau Class 1 & Class 2: Higher Operad Laws and Arbitrary N-Node Cyclic Graph Rejection.
+"""Examiner Class 1 & Class 2: Higher Operad Laws and Arbitrary N-Node Cyclic Graph Rejection.
 
 Theoretical Minimum:
 1. INVARIANT: Kahn's DAG scheduler and Operad Adapter must strictly reject all cyclic dependencies
@@ -13,19 +13,19 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_operads.application.dtos.query_dtos import (
+from operads.application.dtos.query_dtos import (
     ValidateWorkflowsQuery,
     WorkflowEdgeDTO,
     WorkflowNodeDTO,
 )
-from omega_engine_operads.application.queries.validate_workflows import (
+from operads.application.queries.validate_workflows import (
     ValidateWorkflowsHandler,
 )
-from omega_engine_operads.domain.entities.operation_v3 import (
+from operads.domain.entities.operation_v3 import (
     OperationV3,
     PortSpecV3,
 )
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.value_objects import (
     AdmissionFacet,
     AuthorityEffect,
     ColourId,
@@ -38,7 +38,7 @@ from omega_engine_operads.domain.value_objects import (
     SkillLifecycleV3,
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.operad.higher_operad_adapter import (
+from operads.infrastructure.operad.higher_operad_adapter import (
     HigherOperadAdapter,
 )
 

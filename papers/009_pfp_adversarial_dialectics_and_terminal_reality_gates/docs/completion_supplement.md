@@ -64,7 +64,7 @@ automated open-obligation harvester or universal receipt directory is asserted
 to exist. The protocol's report template is manually applicable and remains
 distinct from an observed execution receipt.
 
-## Landau companion and current checks
+## Examiner companion and current checks
 
 `code/review_counts.py` tallies the two recorded statuses and two adversary
 verdicts. It rejects Boolean substitutes, unknown verdicts, and label/status

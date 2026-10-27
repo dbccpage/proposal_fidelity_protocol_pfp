@@ -4,10 +4,10 @@ from typing import Any
 
 import pytest
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     ContextRefusal,
 )
-from omega_engine_pfp.infrastructure.tower_research.level_engine.context import LevelEngineContext
+from pfp.infrastructure.tower_research.level_engine.context import LevelEngineContext
 
 
 def test_namespaces_keep_historical_evidence_separate(tmp_path: Path) -> None:
@@ -46,11 +46,11 @@ def test_vendor_pin_refuses_mismatched_or_dirty_source(tmp_path: Path, monkeypat
 
 
 def test_research_adapter_runs_through_domain_port() -> None:
-    from omega_engine_operations.domain.level_engine_context import (
+    from operations.domain.level_engine_context import (
         current_context,
     )
-    from omega_engine_pfp.domain.tower.level_engine import LevelEngineOutcome, LevelEngineRunner
-    from omega_engine_pfp.infrastructure.tower_research.level_engine import (
+    from pfp.domain.tower.level_engine import LevelEngineOutcome, LevelEngineRunner
+    from pfp.infrastructure.tower_research.level_engine import (
         ResearchLevelEngineRunner,
     )
     runner: LevelEngineRunner = ResearchLevelEngineRunner(current_context())
@@ -59,12 +59,12 @@ def test_research_adapter_runs_through_domain_port() -> None:
 
 
 def test_research_adapter_does_not_hide_fixture_mismatch(monkeypatch: pytest.MonkeyPatch) -> None:
-    from omega_engine_operations.domain.level_engine_context import (
+    from operations.domain.level_engine_context import (
         current_context,
     )
-    from omega_engine_operations.use_cases.level_engine.research_engine import level
-    from omega_engine_pfp.domain.tower.level_engine import LevelEngineRunner
-    from omega_engine_pfp.infrastructure.tower_research.level_engine import (
+    from operations.use_cases.level_engine.research_engine import level
+    from pfp.domain.tower.level_engine import LevelEngineRunner
+    from pfp.infrastructure.tower_research.level_engine import (
         ResearchLevelEngineRunner,
     )
     monkeypatch.setattr(level, "check_expectations", lambda cid, verdicts: ("EXPECTATION_MISMATCH:positive",))

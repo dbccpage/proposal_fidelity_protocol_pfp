@@ -1,4 +1,4 @@
-schema_version: omega.immune.antibody-spec.v1
+schema_version: core.immune.antibody-spec.v1
 constraint_type: Restrain
 operatorizability: repairable
 action: repair
@@ -25,11 +25,11 @@ repaired_invariant_fixture: "pub fn canonical_sha256(domain: &str, payload: &Val
 benign_control_fixture: "pub fn presentation_bytes(payload: &Value) -> Result<String, Error> {\n\
   \ serde_json::to_string(payload)\n}\n// Intentional source-order display is not a canonical\
   \ identity boundary."
-implementation_binding: omega_engine/crates_rs/omega_homology/src/cochain_realization.rs
+implementation_binding: engine/crates_rs/core_homology/src/cochain_realization.rs
 additional_implementation_bindings:
-- omega_engine/crates_rs/omega_solvers/src/router_plan_grammar.rs
-- omega_engine/crates_rs/omega_solvers/src/router_structure_extension.rs
-native_test_binding: omega_engine/crates_rs/omega_homology/src/cochain_realization.rs
+- engine/crates_rs/core_solvers/src/router_plan_grammar.rs
+- engine/crates_rs/core_solvers/src/router_structure_extension.rs
+native_test_binding: engine/crates_rs/core_homology/src/cochain_realization.rs
 harmful_control_tests:
 - canonical_sha256_sorts_nested_maps_without_reordering_arrays
 benign_control_tests:

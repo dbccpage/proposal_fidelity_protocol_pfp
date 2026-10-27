@@ -4,9 +4,9 @@ AuthorityEffect: None.
 
 Start with the actual files:
 
-- [prompt_template.yaml](../../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml)
-- [workflow.yaml](../../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
-- [mode.yaml](../../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml)
+- [prompt_template.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml)
+- [workflow.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
+- [mode.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml)
 
 The [copyable system prompt](finite_qm_pfp_system_prompt.md) contains instructions
 for doing a derivation. The source catalog is a separate lookup asset and is

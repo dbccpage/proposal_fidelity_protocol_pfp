@@ -2,7 +2,7 @@
 
 `EPIC-OE-SYMGAM-010` asks for an autopoietic replay engine and a mutual
 verification harness whose layers fail *independently*. The harness under test
-is `omega_engine_pfp/infrastructure/release_gate.py`; this module is the
+is `pfp/infrastructure/release_gate.py`; this module is the
 second witness for it.
 
 Each criterion below is paired with the mutation the epic names as decisive. A
@@ -25,7 +25,7 @@ import pathlib
 
 import pytest
 
-from omega_engine_pfp.infrastructure.release_gate import (
+from pfp.infrastructure.release_gate import (
     ALL_LAYERS,
     GOLDEN_CORPUS_PATH,
     LAYER_EPIC_MANIFEST,
@@ -53,14 +53,14 @@ from omega_engine_pfp.infrastructure.release_gate import (
 # `test_*` as a test case, and `test_names_in` is a helper taking a path. Under
 # its own name it would be collected, called with no arguments, and reported as
 # an error in this file rather than as the utility it is.
-from omega_engine_pfp.infrastructure.release_gate import (  # noqa: E402
+from pfp.infrastructure.release_gate import (  # noqa: E402
     test_names_in as collect_test_names,
 )
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 CORPUS_PATH = REPO_ROOT / GOLDEN_CORPUS_PATH
 DOSSIER_PATH = (
-    REPO_ROOT / "omega_engine_pfp" / "infrastructure" / "release_dossier.json"
+    REPO_ROOT / "pfp" / "infrastructure" / "release_dossier.json"
 )
 
 
@@ -343,10 +343,10 @@ def test_epic_count_is_checked_against_the_shared_constant():
     A restated literal is a second place to update, and the two drift apart in
     exactly the situation the count exists to detect.
     """
-    from omega_engine_product_planning_office.domain.manifest_models import (
+    from product_planning_office.domain.manifest_models import (
         EXPECTED_EPIC_COUNT,
     )
-    from omega_engine_product_planning_office.use_cases.epic_manifest_audit import (
+    from product_planning_office.use_cases.epic_manifest_audit import (
         _direct_epic_inventory,
     )
 
@@ -365,7 +365,7 @@ def test_an_unregistered_plan_file_makes_the_audit_refuse():
     manifest. The audit must refuse; the file is removed again whatever the
     assertion does.
     """
-    epics_dir = REPO_ROOT / "omega_engine_product_planning_office" / "plans" / "epics"
+    epics_dir = REPO_ROOT / "product_planning_office" / "plans" / "epics"
     intruder = epics_dir / "epic_oe_zzz_999_release_gate_mutation_probe_plan.md"
     assert not intruder.exists(), "probe file already present; refusing to clobber"
     intruder.write_text("# Unregistered probe\n", encoding="utf-8")
@@ -481,7 +481,7 @@ def test_empty_dossier_is_refused():
 
 def test_a_claim_naming_a_missing_test_is_reported():
     """Epic's decisive mutation for criterion 5."""
-    here = "omega_engine_pfp/tests/test_symbol_game_release_gate.py"
+    here = "pfp/tests/test_symbol_game_release_gate.py"
     problems = unbacked_claims(
         {
             "CLAIM-REAL": f"{here}::test_empty_dossier_is_refused",

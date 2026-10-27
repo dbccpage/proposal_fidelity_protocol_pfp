@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/use_cases/provisional_promotion.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/use_cases/provisional_promotion.py
 ---
 
 # EIS Level 06: Provisional Custody & Review Queue: Diagnostic Bridging
 
 **AuthorityEffect:** None.  
 **Level:** Level 06 (Provisional Bridging, Diagnostic Scope & Human Queue Fencing)  
-**Python Use Case Seam:** [`omega_engine_epistemic_immune_system.use_cases.provisional_promotion`](../../../../omega_engine_epistemic_immune_system/use_cases/provisional_promotion.py)  
+**Python Use Case Seam:** [`eis.use_cases.provisional_promotion`](../../../../eis/use_cases/provisional_promotion.py)  
 **Primary Artifacts:** `review_queue.jsonl`, `ProvisionalPromotionRecordV1`  
 **Core Falsifiers:** `F-CUSTODY-01`, `F-SCOPE-01`
 
@@ -77,7 +77,7 @@ Level 06 establishes the **Provisional Custody Bridge**:
    $$\operatorname{enforcing\_eligible}(ref, \text{target}, \dots) \iff \operatorname{custody}(ref) = \text{HumanAdmitted} \land \dots$$
    Under no circumstances can `custody = Provisional` satisfy $\operatorname{enforcing\_eligible}$. Any attempt by a provisional detector to halt execution or emit `REFUSE` is blocked by runtime assertion.
 3. **Immutable Promotion Record:**
-   [`ProvisionalPromotionRecordV1`](../../../../omega_engine_epistemic_immune_system/use_cases/provisional_promotion.py) binds:
+   [`ProvisionalPromotionRecordV1`](../../../../eis/use_cases/provisional_promotion.py) binds:
    - `policy_digest`: Hash of the governing `ObservationSupportPolicyV1`.
    - `supporting_observations`: Hashes of the $\ge 3$ uncorrelated witness receipts.
    - `diagnostic_scope`: Explicit package or domain identifier where diagnostic telemetry is authorized.
@@ -90,7 +90,7 @@ Level 06 establishes the **Provisional Custody Bridge**:
 ## 3. Python Use Case Seam
 
 ```python
-# omega_engine_epistemic_immune_system.use_cases.provisional_promotion
+# eis.use_cases.provisional_promotion
 class ProvisionalPromotionUseCase:
     def promote_candidate(
         self,

@@ -5,7 +5,7 @@ from __future__ import annotations
 import ast
 import re
 
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.python_development_office import (
     ImportedSymbol,
 )
 

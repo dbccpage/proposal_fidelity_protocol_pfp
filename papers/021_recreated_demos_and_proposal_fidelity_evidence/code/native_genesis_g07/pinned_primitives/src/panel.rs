@@ -14,7 +14,7 @@
 //! reaches the panel's joint quotient and nothing beyond it.
 //!
 //! This is the *third* sense of evaluation (crosstab §3) and the one an
-//! engine most wants to skip: All-Green is not All-Correct (E2).  The Omega
+//! engine most wants to skip: All-Green is not All-Correct (E2).  The Core
 //! engine reports its panel's blind spot on demand for that reason, and the
 //! `ObserverIncomplete` terminal exists for the case where the panel cannot
 //! see what the metatheory sees.

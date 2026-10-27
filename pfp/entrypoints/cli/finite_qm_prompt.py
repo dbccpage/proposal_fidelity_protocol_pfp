@@ -10,12 +10,12 @@ import json
 from hashlib import sha256
 from pathlib import Path
 
-from omega_engine_pfp.domain.pfp_ingress import strict_json
-from omega_engine_pfp.infrastructure.finite_qm_prompt import (
+from pfp.domain.pfp_ingress import strict_json
+from pfp.infrastructure.finite_qm_prompt import (
     prepare_finite_qm_turn,
     render_system_prompt,
 )
-from omega_engine_pfp.infrastructure.yaml_loading import strict_yaml_load
+from pfp.infrastructure.yaml_loading import strict_yaml_load
 
 
 def verify_source_pins(work_unit: dict, source_root: Path):
@@ -85,13 +85,13 @@ def main(argv=None):
             )
             return 0
         judges, native = (), None
-        from omega_engine_pfp.infrastructure.finite_qm_cochain_judge import (
+        from pfp.infrastructure.finite_qm_cochain_judge import (
             CHECKER_ID,
             NativeCochainJudge,
         )
 
         if unit["checker_id"] == CHECKER_ID:
-            from omega_engine_pfp.ffi import RustSymbolGameHost
+            from pfp.ffi import RustSymbolGameHost
 
             native = NativeCochainJudge(RustSymbolGameHost())
             judges = ((CHECKER_ID, native),)

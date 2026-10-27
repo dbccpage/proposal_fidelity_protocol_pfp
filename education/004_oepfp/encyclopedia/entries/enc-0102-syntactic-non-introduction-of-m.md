@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IX.2"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IX.1 'Proposition IX.2'"
+  - "canonical_core_math_spine.md v1.5.2 §IX.1 'Proposition IX.2'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -54,7 +54,7 @@ Thm IV.12 un-witnessed rules are refused, not applied. $\square$
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IX.1
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IX.1
   (statement and proof copied verbatim; the *Proof.* is inline in the source
   paragraph). Original header line:
   `**Proposition IX.2 (Syntactic Non-Introduction of $M$).** [PROVED — syntactic] No admitted`

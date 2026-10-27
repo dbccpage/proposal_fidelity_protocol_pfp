@@ -28,7 +28,7 @@ When triggered or when receiving a **PFP Swarm Self-Review Handoff**, execute th
 ```text
 [Stage 0] Process PFP GTLA Swarm Self-Review Receipt (AuthorityEffect: None)
           │ Extract HIGH-confidence corrections & GTLA compliance findings
-          │ Accept schema omega.swarm_self_review.v1 under RUN_OE_* support
+          │ Accept schema core.swarm_self_review.v1 under RUN_OE_* support
           │ (applied:true HIGH process landings = already on disk; do not re-apply)
           ▼
 [Stage 1] /auto-skill + /auto-anti-skill + every anti-pattern skill + /auto-anti-skill-search + /governance-wdp
@@ -45,18 +45,18 @@ When triggered or when receiving a **PFP Swarm Self-Review Handoff**, execute th
           ▼
 [Stage 2] /auto-symmetry-hunter
           │ Packaging parity (all active host roots) AND knowledge_parity semantic check
-          │ (python omega_engine_operations/skill_operad/skill_compiler/knowledge_parity.py)
+          │ (python operations/skill_operad/skill_compiler/knowledge_parity.py)
           │ In single-seat workspace trees (where only .agents/ is present), cross-host
           │ packaging mirrors are verified as SKIPPED rather than conjuring untracked trees.
           ▼
-[Stage 3] /auto-improve-autoskill + /auto-obstruction-hunter (with /woland)
+[Stage 3] /auto-improve-autoskill + /auto-obstruction-hunter (with /adversary)
           │ Capture-rate / compressive audit; MUST run budget_gate.py
           │ Scan structural, schema & mathematical non-fit via auto-obstruction-hunter (Levels 0-9)
           │ [DEADLOCK ESCALATION]: If cycle obstructions or gauge deadlocks occur (Phi_1 > 0),
-          │ trigger Act IV 9-Dot Gauge Break via /woland to unfreeze assumptions
+          │ trigger Act IV 9-Dot Gauge Break via /adversary to unfreeze assumptions
           ▼
 [Stage 4] /auto-review-agents
-          │ Audit agent retinue, council ownership & model tier assignments
+          │ Audit agent panel, council ownership & model tier assignments
           ▼
 [Stage 5] /auto-review-skills
           │ Audit skill garden & meta infrastructure (_shared, _templates, .agents/registry);
@@ -80,7 +80,7 @@ When triggered or when receiving a **PFP Swarm Self-Review Handoff**, execute th
           ▼
 [Stage 8] digest-governance, then apply-governance-proposals
           │ Farm documentation, anti_pattern, teamwork, harvest, omc_dags,
-          │ omega_paper_reviews, and symbol_game/runs (absent is a finding)
+          │ core_paper_reviews, and symbol_game/runs (absent is a finding)
           │ Apply only checked-in repairs whose pre-edit file hash still matches
           │ Mirror the canon bytes of those files to .claude, .codex, and .grok
 ```
@@ -131,7 +131,7 @@ python .agents/skills/auto-oe-autop/scripts/orchestrate_autop.py [--receipt <pat
 
 ### Swarm Integration & Handoff
 
-`auto-oe-autop` is automatically invoked at the conclusion of `omega-paper-review-swarm` (`orchestrate_paper_review.py run-all`).
+`auto-oe-autop` is automatically invoked at the conclusion of `core-paper-review-swarm` (`orchestrate_paper_review.py run-all`).
 
 - The swarm passes `--receipt <swarm_receipt.json>` as input to Stage 0.
 - AutoP verifies knowledge parity, 4-host mirroring, the skill budget gate, compiler non-regression evals, and logs episodes for any observed failures.
@@ -140,8 +140,8 @@ python .agents/skills/auto-oe-autop/scripts/orchestrate_autop.py [--receipt <pat
 ### Execution Protocol & Async Reactive Handling
 
 1. **Process Execution:** Execute `py -3.12 .agents/skills/auto-oe-autop/scripts/orchestrate_autop.py --verbose` on Windows (or `python3` on Unix) to ensure `sys.executable` invokes Python 3.12 across all stage subprocesses. If dispatched as a background task, await completion via reactive wakeup; do not poll manually.
-2. **Worktree & Architecture Path Discovery:** Candidate resolution paths automatically discover compiler scripts under both canonical clean architecture (`omega_engine_operations/`) and worktree staging roots (`omega_engine_operads/`).
-3. **Graceful Runtime Degradation:** In environments where legacy runtimes (e.g. `omega_engine.crates.prompt_civilization.cli`) are absent, `auto-anti-skill segment-dialogue` records a non-fatal warning under `warnings` without failing Stage 1.
+2. **Worktree & Architecture Path Discovery:** Candidate resolution paths automatically discover compiler scripts under both canonical clean architecture (`operations/`) and worktree staging roots (`operads/`).
+3. **Graceful Runtime Degradation:** In environments where legacy runtimes (e.g. `engine.crates.prompt_civilization.cli`) are absent, `auto-anti-skill segment-dialogue` records a non-fatal warning under `warnings` without failing Stage 1.
 4. **Mandatory 9-Stage Receipt Audit:** Upon completion, inspect `runs/autop_receipt.json` ensuring all 9 stages (0 through 8) report `status: "PASS"` and summarize findings according to Claim Hygiene invariants (supports, does not support, narrowest defensible claim, next test needed).
 
 ---

@@ -59,7 +59,7 @@ When invoked as `/auto-obstruction-hunter <target_path | scope | all> [--level 0
 ## 2. Constituent Domain Skills
 
 - [`panep-math-and-physics-prof`](../panep-math-and-physics-prof/SKILL.md) — Chair of Projection Obstruction Theory.
-- [`governance-wdp`](../governance-wdp/SKILL.md) — Governance coverage for the existing Rust reconciliation engine `omega_atlas_reconciliation`.
+- [`governance-wdp`](../governance-wdp/SKILL.md) — Governance coverage for the existing Rust reconciliation engine `core_atlas_reconciliation`.
 - [`auto-symmetry-hunter`](../auto-symmetry-hunter/SKILL.md) — Cross-skill & cross-agent invariant detector.
 - [`lib-master-librarian`](../lib-master-librarian/SKILL.md) — O(1) FTS5 research library search engine.
 

@@ -1,9 +1,9 @@
-# Bounded mechanism sessions through Woland and PFP
+# Bounded mechanism sessions through Adversary and PFP
 
 AuthorityEffect: None. This implements C006's session rules and C004's integer-slot
 component. Their original scientific experiments remain open.
 
-> **Source and evidence check (2026-10-20, pin `c419cc6beb`).** Sections up to "Actual bounded runs, 2026-10-12" and the 2026-10-13 paid repair section name modules, commands and flags that exist at the pin (`mechanism_sessions`, `mechanism_panels`, `mechanism start|next|submit|replay|run|baseline` with `--board`, `--state`, `--arm` in `omega_engine_woland/infrastructure/mechanism_play.py`). The 2026-10-16 and 2026-10-17 sections do not: see the evidence-status note before "C004 integer-slot component". No test or replay was run for this check.
+> **Source and evidence check (2026-10-20, pin `c419cc6beb`).** Sections up to "Actual bounded runs, 2026-10-12" and the 2026-10-13 paid repair section name modules, commands and flags that exist at the pin (`mechanism_sessions`, `mechanism_panels`, `mechanism start|next|submit|replay|run|baseline` with `--board`, `--state`, `--arm` in `adversary/infrastructure/mechanism_play.py`). The 2026-10-16 and 2026-10-17 sections do not: see the evidence-status note before "C004 integer-slot component". No test or replay was run for this check.
 
 ## Explicit corrected C006 panel
 
@@ -13,7 +13,7 @@ two each at ranks 3, 4, 5 and 6, and four at rank 7. The original source and
 Round-5 diagnostic remain unchanged. Select the corrected version explicitly:
 
 ```python
-from omega_engine_woland.tests.pilots.challenge_suite.mechanism_panels import build_panels
+from adversary.tests.pilots.challenge_suite.mechanism_panels import build_panels
 panels = build_panels(version="c006.panels.v2")
 public_board = panels["public"][0]["board"]
 ```
@@ -46,15 +46,15 @@ diagnostic board; using it does not constitute a hidden-case evaluation:
 Save this as `board.json`, then use a fresh state path:
 
 ```powershell
-python -m omega_engine_woland.entrypoints.cli mechanism start --board board.json --state "$env:TEMP/c006-ide.json" --run-id c006-ide --arm ledger
-python -m omega_engine_woland.entrypoints.cli mechanism next --state "$env:TEMP/c006-ide.json"
-python -m omega_engine_woland.entrypoints.cli mechanism submit --state "$env:TEMP/c006-ide.json" --raw-reply reply.json
-python -m omega_engine_woland.entrypoints.cli mechanism replay --state "$env:TEMP/c006-ide.json"
+python -m adversary.entrypoints.cli mechanism start --board board.json --state "$env:TEMP/c006-ide.json" --run-id c006-ide --arm ledger
+python -m adversary.entrypoints.cli mechanism next --state "$env:TEMP/c006-ide.json"
+python -m adversary.entrypoints.cli mechanism submit --state "$env:TEMP/c006-ide.json" --raw-reply reply.json
+python -m adversary.entrypoints.cli mechanism replay --state "$env:TEMP/c006-ide.json"
 ```
 
 Read the prepared `pfp_turn`, answer its actual schema and binding in this IDE,
 and save the actual response bytes to `reply.json`. Repeat next/submit until a
-session terminal. `/woland` uses these same commands and backend; it does not
+session terminal. `/adversary` uses these same commands and backend; it does not
 ask a shell to impersonate an IDE assistant.
 
 The move grammar is a typed union:
@@ -75,9 +75,9 @@ malformed one, spends exactly one of `|E| + 3*b1` turns. An admitted move's PFP
 ## Play through OpenRouter
 
 ```powershell
-python -m omega_engine_woland.entrypoints.cli mechanism run --board board.json --state "$env:TEMP/c006-ledger.json" --run-id c006-ledger --arm ledger --model qwen/qwen-2.5-7b-instruct --max-provider-calls 15 --max-output-tokens 1024 --max-estimated-cost-microusd 50000
-python -m omega_engine_woland.entrypoints.cli mechanism replay --state "$env:TEMP/c006-ledger.json"
-python -m omega_engine_woland.entrypoints.cli mechanism baseline --board board.json
+python -m adversary.entrypoints.cli mechanism run --board board.json --state "$env:TEMP/c006-ledger.json" --run-id c006-ledger --arm ledger --model qwen/qwen-2.5-7b-instruct --max-provider-calls 15 --max-output-tokens 1024 --max-estimated-cost-microusd 50000
+python -m adversary.entrypoints.cli mechanism replay --state "$env:TEMP/c006-ledger.json"
+python -m adversary.entrypoints.cli mechanism baseline --board board.json
 ```
 
 Use `--arm history` or `--arm prose` for the implemented B/C representations.
@@ -103,7 +103,7 @@ binary bytes refuse continuation/replay rather than repinning history.
 
 ## Python owners
 
-`omega_engine_pfp.infrastructure.mechanism_sessions` provides `start_session`,
+`pfp.infrastructure.mechanism_sessions` provides `start_session`,
 `prepare_session_turn`, `submit_session_turn`, `replay_session`, `session_result`
 and `exact_baseline`. Pass actual raw reply bytes to submit. `native=` accepts
 the existing `RustCohomologySolverAdapter`; no new solver is introduced.
@@ -183,15 +183,15 @@ retains its previous limit. A 40-call control checks exhaustion and restart.
 
 > **Evidence status of the 2026-10-16 and 2026-10-17 sections below (checked 2026-10-20, pin `c419cc6beb`).**
 >
-> 1. **Benchmark scripts and receipts are not in the repository.** The 11 scripts and 13 receipts these sections say were "executed via" or "committed at" `omega_engine_pfp/tests/demo_004/a_mechanism/` and `.../b_cohomology/` (for example `c004_paired_mask_benchmark.py`, `c004_paired_benchmark_receipt.json`, `c006_60board_hidden_p_star_receipt.json`, `b_cohomology_p_star_receipt.json`) are not tracked at the pin, and `git log --all` over those paths returns no commit. The test files `test_c004_paired_mask_benchmark.py`, `test_c004_pfp_mechanism_boundary.py` and `test_operad_cochain_ablation.py`, and `extended_checkers.py`, are also absent.
-> 2. **Several named functions are absent.** `integer_slots_prefix_state`, `extract_integer_slot_vocab_candidates`, `allowed_integer_slot_tokens`, `C004_CARRIER_CHARS` and a `gbnf_slots` parameter are not defined anywhere in tracked code. `integer_slots_gbnf`, `integer_slots_control` and `parse_integer_slots` do exist in [carrier_decoding.py](../../../../omega_engine_pfp/domain/carrier_decoding.py), and `HfLocalRunner` and `LocalHfMechanismAdapter` exist in `decode_controls/local_hf_mechanism.py`.
-> 3. **Paper 027 depends on the same files.** [`replay.py`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/027_pfp_proposal_channels_and_internal_interventions/code/replay.py) (lines 475-511) reads these 13 receipts, and the checked-in [`replay_receipt.json`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/027_pfp_proposal_channels_and_internal_interventions/replay_receipt.json) reports `PASS` with `REPLAYED_FROM_COMMITTED_RECEIPTS`. At the pin the files it reads are absent, so that receipt cannot be reproduced from this checkout.
+> 1. **Benchmark scripts and receipts are not in the repository.** The 11 scripts and 13 receipts these sections say were "executed via" or "committed at" `pfp/tests/demo_004/a_mechanism/` and `.../b_cohomology/` (for example `c004_paired_mask_benchmark.py`, `c004_paired_benchmark_receipt.json`, `c006_60board_hidden_p_star_receipt.json`, `b_cohomology_p_star_receipt.json`) are not tracked at the pin, and `git log --all` over those paths returns no commit. The test files `test_c004_paired_mask_benchmark.py`, `test_c004_pfp_mechanism_boundary.py` and `test_operad_cochain_ablation.py`, and `extended_checkers.py`, are also absent.
+> 2. **Several named functions are absent.** `integer_slots_prefix_state`, `extract_integer_slot_vocab_candidates`, `allowed_integer_slot_tokens`, `C004_CARRIER_CHARS` and a `gbnf_slots` parameter are not defined anywhere in tracked code. `integer_slots_gbnf`, `integer_slots_control` and `parse_integer_slots` do exist in [carrier_decoding.py](../../../../pfp/domain/carrier_decoding.py), and `HfLocalRunner` and `LocalHfMechanismAdapter` exist in `decode_controls/local_hf_mechanism.py`.
+> 3. **Paper 027 depends on the same files.** [`replay.py`](../../../../atlas/coda_atlas/F004_papers/015_pfp/027_pfp_proposal_channels_and_internal_interventions/code/replay.py) (lines 475-511) reads these 13 receipts, and the checked-in [`replay_receipt.json`](../../../../atlas/coda_atlas/F004_papers/015_pfp/027_pfp_proposal_channels_and_internal_interventions/replay_receipt.json) reports `PASS` with `REPLAYED_FROM_COMMITTED_RECEIPTS`. At the pin the files it reads are absent, so that receipt cannot be reproduced from this checkout.
 > 4. **Reading rule.** Treat every ratio, call count and cost in the 2026-10-16/17 sections (for example 0/8 to 8/8 parseability, 12/12, 60/60, 8/60, 10/10) as an unverified historical statement. Several are conditional ratios on small denominators after abstention (2/2, 5/5, 6/6, 8/8); they are counts, not rates. The 3-Gate rubric's "Already Tested? Yes" dispositions below rest on these absent receipts and should be read as "recorded in prose only" until the files are restored and replayed.
 
 ## C004 integer-slot component and BPE prefix-automaton GBNF sampler hook
 
 ```python
-from omega_engine_pfp.domain.carrier_decoding import (
+from pfp.domain.carrier_decoding import (
     allowed_integer_slot_tokens,
     extract_integer_slot_vocab_candidates,
     integer_slots_control,
@@ -213,7 +213,7 @@ sum or $\ell_1$ optimality.
 
 To enforce `integer_slots_gbnf(k)` at the token level on real BPE tokenizers (where a
 single token piece can span a space-sign boundary such as `' -'` or `' 12'`),
-`omega_engine_pfp.domain.carrier_decoding` provides an exact prefix-state DFA:
+`pfp.domain.carrier_decoding` provides an exact prefix-state DFA:
 
 - `integer_slots_prefix_state(text, k)` classifies any decoded prefix as valid/invalid,
   tracks `slots_seen`, `in_number`, `after_minus`, and `after_zero`, and determines
@@ -229,8 +229,8 @@ single token piece can span a space-sign boundary such as `' -'` or `' 12'`),
 
 ### Paired C004 local-mask vs. unmasked and OpenRouter benchmark, 2026-10-16
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/c004_paired_mask_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/c004_paired_benchmark_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/c004_paired_mask_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/c004_paired_benchmark_receipt.json`
 across $N = 8$ deterministic C004 cycle-holonomy cases ($k \in \{3, 4, 5, 6\}$, two cases per slot count):
 
 **Panel 1 — Pinned local checkpoint (`Qwen/Qwen2.5-0.5B-Instruct`, rev `7ae557604adf67be50417f59c2c2f167def9a775`, 0 provider calls, `$0`):**
@@ -258,8 +258,8 @@ repairs (`0/8` optimal on both models).
 
 ### Paired Coloured Operad slot-grafting ($\circ_i$) + Layer-2 grammar projection vs. plain-prompt grammar projection ablation on $\Phi_1 / \Gamma_2$ cochain repair, 2026-10-16
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/operad_cochain_ablation_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/operad_cochain_ablation_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/operad_cochain_ablation_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/operad_cochain_ablation_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`) across the same $N = 8$ deterministic C004
 cycle-holonomy cases ($k \in \{3, 4, 5, 6\}$). Both model arms used identical Layer-2
 $k$-slot integer grammar projection (`gbnf_slots=k` locally; strict regex `^-?[0-9]+( -?[0-9]+){k-1}$`
@@ -307,8 +307,8 @@ rather than single-turn zero-scratchpad integer emission.
 
 ### Multi-turn `P*` staged operad slot materialization vs. single-turn `plain_grammar_projection` ablation on $\Phi_1 / \Gamma_2$ cochain repair, 2026-10-16
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/p_star_operad_materialization_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/p_star_operad_materialization_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/p_star_operad_materialization_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/p_star_operad_materialization_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`) across the same $N = 8$ deterministic C004 cases:
 
 - **Stage 1 (`op_materialize_invariants`, `gbnf_slots=3`):** Model emits 3 space-separated integers `(s_hat, i_star_hat, c_prime_hat)` in causal order: cycle sum $s = \sum_i c_i$, first lightest-edge index $i^* = \arg\min_i w_i$, and repaired edge value $c'_{i^*} = c_{i^*} - s$.
@@ -338,8 +338,8 @@ under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`) across the same $N = 8$ deterministic C
 
 ### Paired 4-slot Stage-1 index-value binding (`(s, i*, c_{i*}, c'_{i*})`) `P*` operad ablation on $\Phi_1 / \Gamma_2$ cochain repair, 2026-10-16
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/p_star_4slot_binding_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/p_star_4slot_binding_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/p_star_4slot_binding_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/p_star_4slot_binding_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`, `ADMIT_BOUNDED_TRIAL`) across the same $N = 8$
 deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
@@ -380,10 +380,10 @@ deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
 ### Paired evaluator-verified Stage-1 slot retry / guard filtering (`C004-S5`) vs. unverified 2-turn 4-slot `P*` grafting and `claude-fable-5-1` theorem derivation, 2026-10-16
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/p_star_verified_guard_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/p_star_verified_guard_receipt.json`
-and theorem derivation executed via `omega_engine_pfp/tests/demo_004/a_mechanism/fable_5_1_guard_theorem_derivation.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/fable_5_1_guard_theorem_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/p_star_verified_guard_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/p_star_verified_guard_receipt.json`
+and theorem derivation executed via `pfp/tests/demo_004/a_mechanism/fable_5_1_guard_theorem_derivation.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/fable_5_1_guard_theorem_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`, `ADMIT_BOUNDED_TRIAL`) across the same $N = 8$
 deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
@@ -430,8 +430,8 @@ deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
 ### Paired C006 multi-cycle overlap-basis cochain repair (`C006-S6`, $\dim H_1(K_4) = 3 \ge 2$) comparing `P*` staged guarded overlap materialization against un-staged action generation, 2026-10-17
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/c006_overlap_basis_p_star_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/c006_overlap_basis_p_star_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/c006_overlap_basis_p_star_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/c006_overlap_basis_p_star_receipt.json`
 under `EPIC-OE-PFP-010` (`M4`/`M5`, `ADMIT_BOUNDED_TRIAL`) across $N = 4$ deterministic $K_4$
 multi-cycle overlap boards (`round5-K4-diagnostic` at $\Phi_1 = 6$, `C006-v2-r3-s6030` at $\Phi_1 = 16$,
 `C006-v2-r3-s6031` at $\Phi_1 = 9$, and weighted board `C006-v2-r3-s6032-weighted` at $\Phi_1 = 12$
@@ -485,8 +485,8 @@ and an explicit non-star spanning tree $T$ containing a shared tree edge travers
 
 ### Paired C006 higher-Betti ($b_1 \in \{4, 5, 6, 7\}$) two-stage tree-then-chord `P*` factorization (`C006-S7`) vs. un-staged action generation across $K_{3,3}, Q_3, K_5, \text{Petersen}, W_7$, 2026-10-17
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/c006_higher_betti_p_star_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/c006_higher_betti_p_star_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/c006_higher_betti_p_star_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/c006_higher_betti_p_star_receipt.json`
 under `EPIC-OE-PFP-010` (`M4`/`M5`, `ADMIT_BOUNDED_TRIAL`) across $N = 5$ deterministic higher-Betti
 boards from `c006.panels.v2`:
 - `C006-v2-r4-s6040` ($K_{3,3}$ utility graph, $|V|=6, |E|=9, b_1=4$, initial $\Phi_1 = 14$)
@@ -519,8 +519,8 @@ boards from `c006.panels.v2`:
 
 ### Paired C005 dichotomic exactness-vs-holonomy `P*` guarded separation (`C005-S1`) vs. un-staged consistency verdict across 8 public difference boards, 2026-10-17
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/c005_dichotomic_fredholm_p_star_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/c005_dichotomic_fredholm_p_star_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/c005_dichotomic_fredholm_p_star_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/c005_dichotomic_fredholm_p_star_receipt.json`
 under `EPIC-OE-PFP-010` (`M4`/`M5`, `ADMIT_BOUNDED_TRIAL`) across all $N = 8$ public `C005`
 relational difference boards (`pub_cons_01`..`pub_cons_08`, `4` `CONSISTENT` and `4` `INCONSISTENT`,
 $|V| \in \{4, 5, 6\}, b_1 \in \{1, 2\}$):
@@ -553,8 +553,8 @@ $|V| \in \{4, 5, 6\}, b_1 \in \{1, 2\}$):
 
 ### Paired C001 distractor-filtered cochain & cohomological syndrome `P*` factorization (`C001-S1`) vs. un-staged witness generation across 12 public and poisoned cases (`verdict`, `repair`, `audit`), 2026-10-17
 
-Executed via `omega_engine_pfp/tests/demo_004/a_mechanism/c001_distractor_cochain_p_star_benchmark.py`
-with receipt committed at `omega_engine_pfp/tests/demo_004/a_mechanism/c001_distractor_cochain_p_star_receipt.json`
+Executed via `pfp/tests/demo_004/a_mechanism/c001_distractor_cochain_p_star_benchmark.py`
+with receipt committed at `pfp/tests/demo_004/a_mechanism/c001_distractor_cochain_p_star_receipt.json`
 under `EPIC-OE-PFP-010` (`M4`/`M5`, `ADMIT_BOUNDED_TRIAL`) across $N = 12$ deterministic `C001`
 4-digit integer rank-difference cases ($|V| \in \{8, 9, 10, 11\}$, $|E| \in \{12, \dots, 16\}$,
 $b_1 \in \{5, 7\}$, $c_{u,v} \in [-5000, 5000]$, with 4–6 bracketed `[Note ...]` distractors per prompt):
@@ -591,14 +591,14 @@ $b_1 \in \{5, 7\}$, $c_{u,v} \in [-5000, 5000]$, with 4–6 bracketed `[Note ...
 
 ### Held-out 40-case `C004` (`C004-S6`, $k \in \{3, \dots, 12\}$), 60-board `C006` (`C006-S8`, $b_1 \in \{3, \dots, 8\}$), and `C011`–`C020` (`B-COH-S1`) multi-stage `P*` campaigns on `qwen/qwen-2.5-7b-instruct`, 2026-10-17
 
-1. **Independent Exact Certificate Checker (`C011`–`C020`) & `B-COH-S1` Multi-Stage `P*` Trial (`omega_engine_pfp/tests/demo_004/b_cohomology/b_cohomology_p_star_receipt.json`):**
-   - `omega_engine_pfp.domain.cohomology.certificate_checker` (`check_certificate`) and `extended_checkers` verify both `SOLVED` and `OUT_OF_SCOPE` certificates independently across all 10 cohomology challenges (`C011`–`C020`) using pure Python stdlib (`fractions.Fraction`, `int`), validated across all 328 JSON cases (`278/278` `SOLVED`, `36/36` `OUT_OF_SCOPE`, `14/14` `UNKNOWN` rejected) and 75 pytest tests.
+1. **Independent Exact Certificate Checker (`C011`–`C020`) & `B-COH-S1` Multi-Stage `P*` Trial (`pfp/tests/demo_004/b_cohomology/b_cohomology_p_star_receipt.json`):**
+   - `pfp.domain.cohomology.certificate_checker` (`check_certificate`) and `extended_checkers` verify both `SOLVED` and `OUT_OF_SCOPE` certificates independently across all 10 cohomology challenges (`C011`–`C020`) using pure Python stdlib (`fractions.Fraction`, `int`), validated across all 328 JSON cases (`278/278` `SOLVED`, `36/36` `OUT_OF_SCOPE`, `14/14` `UNKNOWN` rejected) and 75 pytest tests.
    - On `B-COH-S1` (`C011`–`C020` ordinal-0 development slice), `NO_LLM` verified `10/10` `SOLVED` and `10/10` `OUT_OF_SCOPE`. On Panel 2 (`qwen/qwen-2.5-7b-instruct`, `30` calls reserved at `20,035` micro-USD), Attempt 1 emitted `"status": "SOLVED"` on **`10/10` (`100.0%`)** challenges, every one of which violated exact algebraic identities (`c011` primal feasibility, `c012` $\ker(\delta_0)$, `c013` homology rank, `c014` Hodge decomposition, `c015` $D V = R \pmod 2$, `c016` cup-product index, `c017` elementary plaquette, `c018` frustration parity, `c019` cycle closure $\partial_1 Z = 0$, `c020` $E_2$ column rank). `check_certificate` caught all `10/10` false `SOLVED` claims, triggered 1 diagnostic retry, and projected all 10 persistent failures to `NullTree` (`admitted_false_solved_count = 0`, `conditional_stage2_precision = 1.0`).
-2. **Held-Out 40-Case `C004` (`C004-S6`, $k \in \{3, \dots, 12\}$, 4 cases per $k$, `omega_engine_pfp/tests/demo_004/a_mechanism/c004_40case_hidden_p_star_receipt.json`):**
+2. **Held-Out 40-Case `C004` (`C004-S6`, $k \in \{3, \dots, 12\}$, 4 cases per $k$, `pfp/tests/demo_004/a_mechanism/c004_40case_hidden_p_star_receipt.json`):**
    - `NO_LLM` exact baseline achieved `40/40` (`100.0%`) `ExactCoboundary` and $\ell_1$-optimality.
    - Local `Qwen/Qwen2.5-0.5B-Instruct` (`gbnf_slots`) admitted `39/40` non-optimal repairs un-staged (`1/40` optimal) vs. `0` non-optimal admissions (`40/40` `NullTree` abstentions) under $G_{\text{complete}}$.
    - Accounted OpenRouter `qwen/qwen-2.5-7b-instruct` (`121` calls reserved at `18,452` micro-USD) achieved `9/40` (`22.5%`) `ExactCoboundary` and **`0/40` (`0.0%`) $\ell_1$-optimal** un-staged (`40/40` non-optimal admitted). Under the 4-slot verified guard $G_{\text{complete}}$, Attempt 1 produced `4` partial-guard passes ($G_{\text{partial}} = 1$), of which **`3` were Local Green / Global Red witnesses** ($\hat{s} \ne \sum_j c_j$) caught only by $G_{\text{complete}}$. After 1 retry, `2/40` cases passed $G_{\text{complete}}$ and were admitted to Stage 2, and **both (`2/2 = 100.0%` conditional Stage-2 precision)** achieved `ExactCoboundary` and $\ell_1$-optimality (`38/40` `NullTree` abstentions, `0` non-optimal admissions).
-3. **Held-Out 60-Board `C006` (`C006-S8`, `c006.panels.v2["hidden"]`, $b_1 \in \{3, \dots, 8\}$, 10 boards per rank across 7 graph families, `omega_engine_pfp/tests/demo_004/a_mechanism/c006_60board_hidden_p_star_receipt.json`):**
+3. **Held-Out 60-Board `C006` (`C006-S8`, `c006.panels.v2["hidden"]`, $b_1 \in \{3, \dots, 8\}$, 10 boards per rank across 7 graph families, `pfp/tests/demo_004/a_mechanism/c006_60board_hidden_p_star_receipt.json`):**
    - `NO_LLM` exact baseline achieved `60/60` (`100.0%`) `ACCEPTED_ZERO_DEFECT` ($\Phi_1 = 0$) and zero-send replay verification across all 60 hidden boards.
    - Local `Qwen/Qwen2.5-0.5B-Instruct` on the 6 stratified anchor boards ($b_1 \in \{3..8\}$) solved `0/6` un-staged and abstained via `NullTree` at Stage 1a on `6/6` (`24` downstream turns saved, `0` false `SOLVED` admitted).
    - Accounted OpenRouter `qwen/qwen-2.5-7b-instruct` (`301` calls reserved at `97,765` micro-USD / `$0.097765` under `240,000` micro-USD cap) solved **`0/60` (`0.0%`)** un-staged vs. **`8/60` (`13.3%` unconditional; `8/8 = 100.0%` conditional Stage-2 precision)** under Two-Stage Tree-Then-Chord `P*` (`4/10` on $K_4$ at $b_1=3$, `1/10` on `wheel-7-rim` at $b_1=7$, `3/10` on `wheel-8-rim` at $b_1=8$), while `NullTree` abstention at Stage 1a (`52/60`) prevented **`208` wasted downstream turns (`52 x 4`)** with `0` false `SOLVED` admissions.
@@ -608,8 +608,8 @@ $b_1 \in \{5, 7\}$, $c_{u,v} \in [-5000, 5000]$, with 4–6 bracketed `[Note ...
 Every proposed mechanism test or model trial must pass three explicit admission gates
 before any local or paid execution:
 
-1. **Gate 1 — Applicable to Omega Engine PFP (`OEPFP`)?**
-   Does the test exercise an active `omega_engine_pfp` contract (`prepare_task_turn` /
+1. **Gate 1 — Applicable to Engine PFP (`OEPFP`)?**
+   Does the test exercise an active `pfp` contract (`prepare_task_turn` /
    `check_completion`, Layer-2 `carrier_decoding.py` / `TokenFrontier`, Coloured Operad
    slot-grafting $\circ_i$, Prompt-to-Cochain $\Phi_1/\Gamma_2$ verification, or shared
    provider budget mediation)? If no $\to$ **`REJECT_OUT_OF_OEPFP_BOUNDARY`**.
@@ -627,7 +627,7 @@ before any local or paid execution:
    If yes $\to$ **`SKIP_LIVE_REPLAY_ONLY`** (run zero-cost offline replay/regression tests only; do not re-run live model trials).
 3. **Gate 3 — Planned in OEPFP (`EPIC-OE-PFP-010`)?**
    Is the variation tied to an active milestone (`M1`–`M6`) in
-   [`epic_oe_pfp_010_consolidated_residual_plan.md`](../../../../omega_engine_product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md)
+   [`epic_oe_pfp_010_consolidated_residual_plan.md`](../../../../product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md)
    rather than a permanently declined track (`004` 2,500-pilot mass grid) or an
    unscheduled `RESEARCH_HOLD` (`R1`–`R4`)? If no $\to$ **`HOLD_UNPLANNED_RESEARCH`**.
 
@@ -679,15 +679,15 @@ evidence-status note above: their scripts, receipts and several named functions 
 not in the repository at the 2026-10-20 pin);
 multi-seed replications and dedicated >16 GB VRAM local 7B GPU execution remain open.
 
-See [all original challenge attempts](18_woland_original_challenge_play.md) and
-the [live OEPFP epic](../../../../omega_engine_product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md)
-for the full remaining scope. The outer Woland run owns one scoped AutoP →
+See [all original challenge attempts](18_original_challenge_play.md) and
+the [live OEPFP epic](../../../../product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md)
+for the full remaining scope. The outer Adversary run owns one scoped AutoP →
 auto-learn finish, applying the lesson to existing code/guidance and carrying
 unresolved work into the next brief.
 
 ## Bounded paid repair observation, 2026-10-13
 
-The development receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/oev1rc_integration_closure/README.md`; digestion `_ic/woland/oev1rc_integration_closure_digestion.md`)
+The development receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/oev1rc_integration_closure/README.md`; digestion `_ic/adversary/oev1rc_integration_closure_digestion.md`)
 records a five-call `openai/gpt-4.1-nano` run costing $0.001127. Its worker
 proposed wrong cochain potentials/residuals and its model reviewer accepted
 them. Recipe `cochain-certificate-repair-v1.0.0` performs one typed repair under

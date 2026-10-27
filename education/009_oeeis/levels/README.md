@@ -7,21 +7,21 @@ maturity: draft
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/domain/external_admission.py
-  - omega_engine_epistemic_immune_system/domain/danger_gate.py
-  - omega_engine_epistemic_immune_system/domain/thymus.py
-  - omega_engine/crates_rs/omega_epistemic_immune_system/src/lib.rs
-  - omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/domain/external_admission.py
+  - eis/domain/danger_gate.py
+  - eis/domain/thymus.py
+  - engine/crates_rs/core_epistemic_immune_system/src/lib.rs
+  - engine/crates_rs/core_prompt_civilization/src/pharmacy.rs
 ---
 
 # Epistemic Immune System (EIS) Levels Catalog: Level 00 to Level 10
 
 **AuthorityEffect:** None.  
 **System Domain:** Epistemic Defense, Threat Elimination, Anti-Morphisms, and Multi-Agent Immune Surveillance  
-**Canonical Epic Planning Reference:** [`epic_claude_oeeis_oeprmptciv_plan.md`](../../../../omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)  
-**Underlying Python Domain Package:** [`omega_engine_epistemic_immune_system`](../../../../omega_engine_epistemic_immune_system)  
-**Underlying Pure Rust Crates:** [`omega_epistemic_immune_system`](../../../../omega_engine/crates_rs/omega_epistemic_immune_system), [`omega_prompt_civilization::pharmacy`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs)  
+**Canonical Epic Planning Reference:** [`epic_claude_oeeis_oeprmptciv_plan.md`](../../../../product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)  
+**Underlying Python Domain Package:** [`eis`](../../../../eis)  
+**Underlying Pure Rust Crates:** [`core_epistemic_immune_system`](../../../../engine/crates_rs/core_epistemic_immune_system), [`core_prompt_civilization::pharmacy`](../../../../engine/crates_rs/core_prompt_civilization/src/pharmacy.rs)  
 **Total Progressive Levels:** 11 Levels ($N = 0 \dots 10$)
 
 ---
@@ -30,17 +30,17 @@ source_paths:
 
 The **Epistemic Immune System (OEEIS)** provides autonomous, authority-safe immune surveillance across the Symbol Game Proposal Fidelity Protocol (PFP). Modern multi-agent LLM systems are uniquely vulnerable to semantic degradation: hallucinatory self-certification, sycophantic peer collusion, silent failure skips, and unverified authority mimicry. OEEIS neutralizes these failure modes using principles derived from artificial immune systems, structured across rigorous clean architecture boundaries:
 
-1. **The Innate Barrier:** 12 immutable, compile-time verified failure classes implemented in pure Rust ([`omega_prompt_civilization::pharmacy`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs)), detecting model self-certification, fake receipts, conclusion preloading, and theorem name laundering.
+1. **The Innate Barrier:** 12 immutable, compile-time verified failure classes implemented in pure Rust ([`core_prompt_civilization::pharmacy`](../../../../engine/crates_rs/core_prompt_civilization/src/pharmacy.rs)), detecting model self-certification, fake receipts, conclusion preloading, and theorem name laundering.
 2. **Component Role Decoupling:** Seven strictly separated role data types (`Spec`, `FixtureBank`, `EvaluationReceipt`, `ExternalDecision`, `Registry`, `ActivationProfile`, `Hit`), preventing the conflation of detector authoring with operational authority.
-3. **Fixture Polarity Discipline:** Explicit mapping between `must_match` (known triggering defects) and `must_not_match` (valid near-miss controls) under [`FixturePolarityMapV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py), eliminating false positive triggers on valid prompts.
+3. **Fixture Polarity Discipline:** Explicit mapping between `must_match` (known triggering defects) and `must_not_match` (valid near-miss controls) under [`FixturePolarityMapV1`](../../../../eis/domain/external_admission.py), eliminating false positive triggers on valid prompts.
 4. **Central Tolerance (Thymus Gate):** Pinned self-panel screening of candidate detectors against admitted repository prompts, skills, and receipts. Any candidate firing on an admitted self artifact is permanently eliminated before evaluation.
 5. **Learned-Guard Law & Two-Signal Activation:** Learned guards activate if and only if:
    $$\text{externally\_admitted}(g, s) \land \text{detector\_match}(g, \text{subject}) \land \text{independent\_danger\_signal}(\text{subject}, \text{context}) \land \neg \text{suspended}(g, s)$$
    Copying the danger signal from the detector match or the model output is rejected with `TWO_SIGNAL_COLLAPSE`.
-6. **Independent Observation Support Policy:** Candidate antibodies require at least 3 pairwise-uncorrelated observations across distinct causal events, model lineages, scaffolds, and inheritance subtrees under [`ObservationSupportPolicyV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py) before achieving provisional status.
+6. **Independent Observation Support Policy:** Candidate antibodies require at least 3 pairwise-uncorrelated observations across distinct causal events, model lineages, scaffolds, and inheritance subtrees under [`ObservationSupportPolicyV1`](../../../../eis/domain/external_admission.py) before achieving provisional status.
 7. **Provisional Bridge & Review Queue:** Support $\ge 3$ promotes an antibody to `Provisional`. Provisional antibodies arm Signal-1 detectors yielding `FINDING` only; `HOLD` and `REFUSE` strictly require `HumanAdmitted` external authority.
-8. **Regulatory Supervision & Reversible Anergy:** False-positive monitoring ([`TregSupervisor`](../../../../omega_engine_pfp/domain/immune/treg.py)) emits anergy proposals to external epoch queues; detectors never self-suspend.
-9. **External Human Admission Boundary:** Admission authority resides strictly outside autonomous agents in external human decision records ([`HumanAntiSkillAdmissionDecisionV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py)) bound to exact rule bytes and operational scope.
+8. **Regulatory Supervision & Reversible Anergy:** False-positive monitoring ([`TregSupervisor`](../../../../pfp/domain/immune/treg.py)) emits anergy proposals to external epoch queues; detectors never self-suspend.
+9. **External Human Admission Boundary:** Admission authority resides strictly outside autonomous agents in external human decision records ([`HumanAntiSkillAdmissionDecisionV1`](../../../../eis/domain/external_admission.py)) bound to exact rule bytes and operational scope.
 10. **Antimorphisms & Diagnostic-Only Telemetry:** Mathematical anti-morphisms and bounded persistent homology shadow records ($\text{PH}_0/\text{PH}_1$) operate under strict `RESEARCH_HOLD` with `AuthorityEffect: None`.
 
 ---

@@ -36,8 +36,8 @@ from fractions import Fraction
 from types import ModuleType
 from typing import Any, Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_module
+from operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_module
 
 CHALLENGE_ID = "row_margin"
 ANSWER_TYPE = "M"

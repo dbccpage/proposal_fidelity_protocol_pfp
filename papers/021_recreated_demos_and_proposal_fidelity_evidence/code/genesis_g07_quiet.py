@@ -35,7 +35,7 @@ def run(rustc: Path, primitive: Path, json_library: Path, executable: Path) -> d
     source_before = replay.sha(source.read_bytes())
     rustc = rustc.resolve(strict=True)
     argv = [str(rustc), "--edition", "2021", "--crate-name", "paper011_native_genesis_g07_quiet",
-            str(source), "-L", "dependency=" + str(deps), "--extern", "omega_ooutwire_primitives=" + str(primitive),
+            str(source), "-L", "dependency=" + str(deps), "--extern", "core_ooutwire_primitives=" + str(primitive),
             "--extern", "serde_json=" + str(json_library), "-o", str(executable)]
     build = subprocess.run(argv, cwd=PAPER, capture_output=True, check=False, timeout=60)
     (area / "build_stdout.txt").write_bytes(build.stdout)

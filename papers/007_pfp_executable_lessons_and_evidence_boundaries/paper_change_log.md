@@ -11,7 +11,7 @@ Recorded canonical Zenodo record <https://zenodo.org/records/23114712> (DOI: `10
 - Corrected the 21-name selected Lean report versus 64-declaration full package-local census; separated permitted axioms from observed usage and historical evidence from fresh checks.
 - Added a deliberate wrong-sign control that passes cycle-sum checks but fails independently predicted coordinates.
 - Added fresh-process ordinary-Python replay, with an optional explicit-kernel backend, that compares code-cell counts/outputs and preserves deposited bytes. Jupyter kernel sockets were unavailable on the review host.
-- Expanded the Landau materials to 24 graded problems, a worked guide with a standard-library worksheet and first-response record, and a separate 96-point instructor key. Levels and scoring remain proposed instructional choices.
+- Expanded the Examiner materials to 24 graded problems, a worked guide with a standard-library worksheet and first-response record, and a separate 96-point instructor key. Levels and scoring remain proposed instructional choices.
 - Added fresh source-bound validation and publication review. Original validation receipts and Lean sources/reports remain unchanged.
 - Clarified Zenodo mixed-license field scopes and distinguished the combined-deposit metadata draft from a legacy API payload.
 

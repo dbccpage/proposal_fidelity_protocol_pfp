@@ -11,7 +11,7 @@ families: [meta]
 
 # Agents Review Algorithm
 
-Systematically audit the **agent retinue across all declared roots**. Never bypass
+Systematically audit the **agent panel across all declared roots**. Never bypass
 this stage because a single path is missing.
 
 **Canonical roots (run all; empty inventory is valid PASS data):**
@@ -21,10 +21,10 @@ this stage because a single path is missing.
 | `.agents/agents` | Provider-neutral canon (primary today) |
 | `.claude/agents` | Claude host projection (often empty) |
 | `.codex/agents` | Codex host projection |
-| `omega_engine/agents` | Legacy/optional; may be absent |
+| `engine/agents` | Legacy/optional; may be absent |
 
 ```bash
-python omega_engine_operads/skills/auto-review-agents/scripts/agents_audit.py
+python operads/skills/auto-review-agents/scripts/agents_audit.py
 ```
 
 The script parses the canonical manifests and validates required fields,
@@ -32,14 +32,14 @@ name/path identity, authority, tool-list shape, capability-slice presence,
 registered skill references, and color closure. It does not call an agent useful
 merely because frontmatter begins with `---`.
 
-Do **not** conclude "no agents" from `omega_engine/agents` alone when
+Do **not** conclude "no agents" from `engine/agents` alone when
 `.agents/agents` has inventory. Mirror roots are packaging projections; the
 canonical capability verdict comes from `.agents/agents` plus the operad registry.
 
 ## Agent Design Principles
 
 - **No bloat**: Agents should NOT duplicate functionality of other agents
-- **Project-specific only**: Include agents that serve the SDLC workflow and Anomalon-specific needs
+- **Project-specific only**: Include agents that serve the SDLC workflow and Sentinel-specific needs
 - **Consolidate related agents**: Prefer one comprehensive agent over many fragmented ones
 - **Archive, don't delete**: Move unused agents to `_archived/` for reference
 
@@ -121,8 +121,8 @@ After review approval:
 1. **Archive unused agents**:
 
    ```bash
-   mkdir -p omega_engine_operads/agents/_archived
-   mv .agents/agents/{agent-name}.md omega_engine_operads/agents/_archived/
+   mkdir -p operads/agents/_archived
+   mv .agents/agents/{agent-name}.md operads/agents/_archived/
    ```
 
 2. **Document decisions** in sprint retrospective
@@ -131,13 +131,13 @@ After review approval:
 
 ```bash
 # Preferred: four-root inventory (implements AGENT_ROOTS in agents_audit.py)
-python omega_engine_operads/skills/auto-review-agents/scripts/agents_audit.py
+python operads/skills/auto-review-agents/scripts/agents_audit.py
 
 # Canon listing
 ls .agents/agents/*.md 2>/dev/null | xargs -n1 basename | sed 's/.md$//' | sort
 
 # Optional legacy root (may not exist)
-ls omega_engine/agents/*.md 2>/dev/null | wc -l
+ls engine/agents/*.md 2>/dev/null | wc -l
 ```
 
 ## Faculty Discovery Plan
@@ -199,7 +199,7 @@ auto-review-skills:
   audits the skill garden
 
 auto-review-agents:
-  audits the agent retinue
+  audits the agent panel
 
 **Family:** meta (see [family_registry.md](../_shared/family_registry.md))
 

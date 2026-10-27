@@ -10,7 +10,7 @@ under potential adjustments. A deliberate wrong-sign implementation passes a
 weak cycle-sum check but fails the predicted-coordinate check.
 
 This package reports no learner study, measured attention half-life,
-teaching-efficiency estimate, or transfer-effect result. The 24-problem Landau
+teaching-efficiency estimate, or transfer-effect result. The 24-problem Examiner
 quiz and its 96-point rubric are proposed teaching materials.
 
 Source audit baseline: `52cb5457f6c485ba548cfd292f6012a941ed22cf`.
@@ -28,16 +28,16 @@ blockers, rather than a fresh 20/20 execution claim.
 | [paper.md](paper.md), [paper.pdf](paper.pdf), [paper.tex](paper.tex) | Matching manuscript formats |
 | [Claim ledger](paper_claim_ledger.md) | Claims and their evidence limits |
 | [Change log](paper_change_log.md) | Initial preprint corrections and retained internal history |
-| [Study guide](_lev_landau_theoretical_minimum_quiz/study_guide.md) | Worked examples, prediction record, exact worksheet |
-| [Quiz](_lev_landau_theoretical_minimum_quiz/quiz.md) | 24 problems at instructional levels 0–7 |
-| [Instructor key](_lev_landau_theoretical_minimum_quiz/instructor_key.md) | Separate four-point rubrics |
+| [Study guide](_lev_examiner_theoretical_minimum_quiz/study_guide.md) | Worked examples, prediction record, exact worksheet |
+| [Quiz](_lev_examiner_theoretical_minimum_quiz/quiz.md) | 24 problems at instructional levels 0–7 |
+| [Instructor key](_lev_examiner_theoretical_minimum_quiz/instructor_key.md) | Separate four-point rubrics |
 | [Companion notebook](jupyter_notebooks/007_moving_a_discrepancy.ipynb) | Six standard-library code cells, including the wrong-sign control |
 | [Review](docs/first_publication_review.md) | Publication corrections and remaining limits |
 | [Fresh validation](docs/first_publication_validation_2026_10_02.json) | Commands, versions, outcomes, tested source hashes |
 | [Replay scope](docs/completion_supplement.md) | Current and historical evidence distinctions |
 | [Zenodo deposit notes](docs/zenodo_deposit_notes.md) | Record fields and mixed-license declaration |
 
-The Landau preface is fictional examination staging. Read the guide, retain
+The Examiner preface is fictional examination staging. Read the guide, retain
 first predictions, attempt the quiz, and only then consult the instructor key.
 
 ## Standalone setup and checks

@@ -5,7 +5,7 @@ import json
 import pytest
 import yaml
 
-from omega_engine_pfp.infrastructure.pilot_runner import (
+from pfp.infrastructure.pilot_runner import (
     PfpPilotRunner,
     build_p_star_yaml,
     get_ground_truth,

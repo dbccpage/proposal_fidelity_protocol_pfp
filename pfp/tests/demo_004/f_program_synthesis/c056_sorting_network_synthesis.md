@@ -12,7 +12,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Verification is exhaustive and cheap. By the 0-1 principle (Knuth, *The Art of Computer Programming*, vol. 3), a comparator network sorts every input if and only if it sorts all `2ⁿ` binary inputs, which is 4,096 for `n = 12`. Generation near the optimum is search-hard. The optimal sizes for `n = 9` and `n = 10` are 25 and 29 comparators (Codish, Cruz-Filipe, Frank, Schneider-Kamp 2014), and that proof needed a large computation.
 
-Recalled networks are defeated by hidden prefix constraints: a mandated first layer, or forbidden comparators. The generator must search, not recite. This stresses the Symbol Game's synthesis loop on a search-heavy task, with the U23 curriculum ladder climbing `n`. It stresses the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that alternates construction and pruning. It stresses the OEEIS (Omega Engine Epistemic Immune System) against fabricated networks that "look" standard. A pass shows certified construction within bounds. It does not show any new optimality result.
+Recalled networks are defeated by hidden prefix constraints: a mandated first layer, or forbidden comparators. The generator must search, not recite. This stresses the Symbol Game's synthesis loop on a search-heavy task, with the U23 curriculum ladder climbing `n`. It stresses the OEWAS (Engine Workflows, Agents, Skills) workflow that alternates construction and pruning. It stresses the OEEIS (Engine Epistemic Immune System) against fabricated networks that "look" standard. A pass shows certified construction within bounds. It does not show any new optimality result.
 
 ## 3. Formal Problem and Bounds
 
@@ -117,7 +117,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse, and the estate has no sorting-network code. `omega_engine/crates_rs/omega_search` (beam, genetic, simulated annealing) can serve E's local search, and the C042 pipeline supplies the SAT solver.
+- The catalog row lists no estate reuse, and the estate has no sorting-network code. `engine/crates_rs/core_search` (beam, genetic, simulated annealing) can serve E's local search, and the C042 pipeline supplies the SAT solver.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), plus the row extras [U10](../../upgrades/u10_synthesis_loop_v2.md) and [U23](../../upgrades/u23_curriculum_self_play_ladder.md).
 
 ## 14. Claim Hygiene

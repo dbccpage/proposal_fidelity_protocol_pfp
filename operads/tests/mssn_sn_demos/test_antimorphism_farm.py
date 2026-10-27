@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.mssn_sn_demos.antimorphism_farm.judge_suite_export import (
+from operads.application.mssn_sn_demos.antimorphism_farm.judge_suite_export import (
     PINNED_CLASSIFIER_DIGEST,
     HarvestRowV2,
     export_judge_suite,
@@ -29,7 +29,7 @@ def harvest_file_path() -> Path:
     root = Path(__file__).resolve().parents[3]
     candidate = (
         root
-        / "omega_engine_education"
+        / "education"
         / "documentation"
         / "3_the_symbol_game_proposal_fidelity_protocol_pfp"
         / "demos"
@@ -42,7 +42,7 @@ def harvest_file_path() -> Path:
         return candidate
     return (
         root
-        / "omega_engine_education"
+        / "education"
         / "curriculum"
         / "the_symbol_game"
         / "demos"

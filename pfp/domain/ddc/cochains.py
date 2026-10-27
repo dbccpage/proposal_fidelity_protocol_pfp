@@ -42,7 +42,7 @@ def _to_fraction(val: Any) -> Fraction:
     return Fraction(val)
 
 
-FUNCTIONAL_OWNER = "omega_engine/crates_rs/omega_functional/src"
+FUNCTIONAL_OWNER = "engine/crates_rs/core_functional/src"
 
 
 class FunctionalBoundaryUnavailable(RuntimeError):
@@ -94,7 +94,7 @@ class Cochain0:
         return {v for v, val in self.values.items() if val != Fraction(0)}
 
     def l1_norm(self) -> Fraction:
-        """Refuse Python L1 norm calculation; omega_functional is the sole authority."""
+        """Refuse Python L1 norm calculation; core_functional is the sole authority."""
         raise FunctionalBoundaryUnavailable()
 
 
@@ -168,7 +168,7 @@ class Cochain1:
         self,
         weights: Optional[Mapping[Tuple[str, str], NumberLike]] = None,
     ) -> Fraction:
-        """Refuse Python L1 norm calculation; omega_functional is the sole authority."""
+        """Refuse Python L1 norm calculation; core_functional is the sole authority."""
         raise FunctionalBoundaryUnavailable()
 
 
@@ -238,7 +238,7 @@ class Cochain2:
         return {f for f, val in self.values.items() if val != Fraction(0)}
 
     def l1_norm(self) -> Fraction:
-        """Refuse Python L1 norm calculation; omega_functional is the sole authority."""
+        """Refuse Python L1 norm calculation; core_functional is the sole authority."""
         raise FunctionalBoundaryUnavailable()
 
 

@@ -5,14 +5,14 @@
 ## Status at 201dc8d (2026-10-15)
 
 Four anti-skill and anti-op registries exist and are not connected to one another: 87
-`ACTIVE_ANTI_SKILLS` in `omega_engine_operads/domain/anti_skills/research_papers.py`,
+`ACTIVE_ANTI_SKILLS` in `operads/domain/anti_skills/research_papers.py`,
 51 top-level antibody entries under `.agents/antibodies/`, an empty admitted antiskill registry
 (`.agents/antiskills/admitted/registry.json`, `specs: []`), and the 8 anti-ops of the OEWAS op
 inventory. Only the last are read by the OEWAS op resolver, where they act as run-time guard
 predicates on one op slot each and never prune `compose`. The planned direction is one anti-op
 type admitted through OEEIS negative selection, with OEEIS owning admission and OEWAS owning
 composition: workstream I4 of
-[EPIC-OE-OEWAS-012](../../../omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_012_woland_operad_binding_and_management_ladder_pilot_plan.md).
+[EPIC-OE-OEWAS-012](../../../product_planning_office/plans/epics/oewas/epic_oe_oewas_012_adversary_operad_binding_and_management_ladder_pilot_plan.md).
 Details and file:line references are in
 [`oeeis_anti_skills_and_mutation_gaps.md`](oeeis_anti_skills_and_mutation_gaps.md) §5.
 
@@ -36,14 +36,14 @@ Details and file:line references are in
 
 ## Clean Architecture Crosswalk
 
-- **Domain Model:** [`omega_engine_epistemic_immune_system/domain/`](../../../omega_engine_epistemic_immune_system/domain/)
-- **Infrastructure:** `omega_engine_epistemic_immune_system/infrastructure/`
-- **Sovereign Rust Engine:** [`omega_engine/crates_rs/omega_epistemic_immune_system/`](../../../omega_engine/crates_rs/omega_epistemic_immune_system/)
-- **Crate Educational Companion:** none at `201dc8d`. The earlier link to `../crates_rs/omega_epistemic_immune_system/README.md` named a folder that does not exist.
+- **Domain Model:** [`eis/domain/`](../../../eis/domain/)
+- **Infrastructure:** `eis/infrastructure/`
+- **Sovereign Rust Engine:** [`engine/crates_rs/core_epistemic_immune_system/`](../../../engine/crates_rs/core_epistemic_immune_system/)
+- **Crate Educational Companion:** none at `201dc8d`. The earlier link to `../crates_rs/core_epistemic_immune_system/README.md` named a folder that does not exist.
 - **Verification Commands:**
   ```powershell
-  cargo test --manifest-path omega_engine/crates_rs/tests/Cargo.toml -p omega_epistemic_immune_system --lib
-  py -3.12 -m pytest omega_engine_epistemic_immune_system/tests/unit/test_immune_system.py -v -p no:cacheprovider
-  py -3.12 -m pytest omega_engine_epistemic_immune_system/tests/unit/test_immune_admission_use_cases.py -v -p no:cacheprovider
-  py -3.12 -m pytest omega_engine_pfp/tests/immune/test_turn_loop_wiring.py -v -p no:cacheprovider
+  cargo test --manifest-path engine/crates_rs/tests/Cargo.toml -p core_epistemic_immune_system --lib
+  py -3.12 -m pytest eis/tests/unit/test_immune_system.py -v -p no:cacheprovider
+  py -3.12 -m pytest eis/tests/unit/test_immune_admission_use_cases.py -v -p no:cacheprovider
+  py -3.12 -m pytest pfp/tests/immune/test_turn_loop_wiring.py -v -p no:cacheprovider
   ```

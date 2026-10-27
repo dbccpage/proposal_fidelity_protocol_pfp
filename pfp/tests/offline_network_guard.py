@@ -1,6 +1,6 @@
 """Opt-in pytest plugin forbidding socket connections. AuthorityEffect: None.
 
-Load with -p omega_engine_pfp.tests.offline_network_guard.
+Load with -p pfp.tests.offline_network_guard.
 """
 
 import socket

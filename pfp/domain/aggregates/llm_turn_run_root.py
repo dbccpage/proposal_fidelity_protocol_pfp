@@ -11,11 +11,11 @@ import json
 import re
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     domain_digest,
 )
-from omega_engine_pfp.domain.validation import (
+from pfp.domain.validation import (
     MAX_ARRAY_LENGTH,
     MAX_ID_LENGTH,
     MAX_STRING_LENGTH,
@@ -30,18 +30,18 @@ from omega_engine_pfp.domain.validation import (
     _require_string,
 )
 
-LLM_TURN_SCHEMA = "omega.symbol-game.llm-turn.v1"
-LLM_TURN_CONTENT_SCHEMA = "omega.symbol-game.llm-turn-content.v1"
-LLM_TURN_RUN_ROOT_SCHEMA = "omega.symbol-game.llm-turn-run-root.v1"
-LLM_TURN_ATTEMPT_SCHEMA = "omega.symbol-game.llm-turn-attempt.v1"
+LLM_TURN_SCHEMA = "core.symbol-game.llm-turn.v1"
+LLM_TURN_CONTENT_SCHEMA = "core.symbol-game.llm-turn-content.v1"
+LLM_TURN_RUN_ROOT_SCHEMA = "core.symbol-game.llm-turn-run-root.v1"
+LLM_TURN_ATTEMPT_SCHEMA = "core.symbol-game.llm-turn-attempt.v1"
 
 LLM_TURN_PACKET_FAMILY = "llm_turn_v1"
 LLM_TURN_FAMILY = "llm_turn"
 
-PAYLOAD_DOMAIN = "omega.symbol-game.llm-turn-payload.v1"
-CONTENT_DOMAIN = "omega.symbol-game.llm-turn-content.v1"
-RUN_ROOT_DOMAIN = "omega.symbol-game.llm-turn-run-root.v1"
-TURN_MANIFEST_DOMAIN = "omega.symbol-game.llm-turn-manifest.v1"
+PAYLOAD_DOMAIN = "core.symbol-game.llm-turn-payload.v1"
+CONTENT_DOMAIN = "core.symbol-game.llm-turn-content.v1"
+RUN_ROOT_DOMAIN = "core.symbol-game.llm-turn-run-root.v1"
+TURN_MANIFEST_DOMAIN = "core.symbol-game.llm-turn-manifest.v1"
 
 LLM_TURN_TERMINAL_TARGET = "TypedTurnOrProsePromptRefused"
 LLM_TURN_EVIDENCE_CEILING = "ReplayableLabEvidence"
@@ -206,7 +206,7 @@ def _turn_manifest_root(
     )
 
 
-from omega_engine_pfp.domain.value_objects import (
+from pfp.domain.value_objects import (
     LlmPayloadV1,
     LlmTurnPayloadV1,
 )
@@ -602,10 +602,10 @@ class LlmTurnRunRootV1:
 
 
 
-from omega_engine_pfp.domain.shared_kernel.canonical import thaw, freeze, canonical_bytes, canonical_wire, canonical_unwire, domain_digest
-from omega_engine_pfp.domain.entities.candidate_artifact import CandidateArtifactV1
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.aggregates.research_claim import canonical_json_artifact_bytes
+from pfp.domain.shared_kernel.canonical import thaw, freeze, canonical_bytes, canonical_wire, canonical_unwire, domain_digest
+from pfp.domain.entities.candidate_artifact import CandidateArtifactV1
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.aggregates.research_claim import canonical_json_artifact_bytes
 
 
 # Presenter
@@ -906,7 +906,7 @@ def build_llm_turn_envelope(
     payload: LlmTurnPayloadV1,
     *,
     task_id: str,
-    carrier_id: str = "omega-llm-turn-v1",
+    carrier_id: str = "core-llm-turn-v1",
     step_budget: int | None = None,
 ) -> PacketEnvelopeV2:
     """Bind a typed llm-turn payload into the host-owned packet envelope."""

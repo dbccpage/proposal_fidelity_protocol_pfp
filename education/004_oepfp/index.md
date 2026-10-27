@@ -16,7 +16,7 @@ AuthorityEffect: None. Updated 2026-10-12 against application revision
 | Mathematical foundations | [Foundations](levels/meta_00_symbol_game_foundations.md) and [math](math/) |
 | Level taxonomy and curriculum | [Levels](levels/) and [curriculum](curriculum/README.md) |
 | Rewrites and grammar | [Rewriting](rewriting/README.md) and [grammar](grammar/README.md) |
-| Current seed material | [Retained pilots and seeds](../../../omega_engine_woland/tests/pilots/README.md) |
+| Current seed material | [Retained pilots and seeds](../../../adversary/tests/pilots/README.md) |
 | Pilot results, known defects and next stages (dated 2026-10-15) | [Pilot status at `201dc8d`](README.md#pilot-status-at-201dc8d-2026-10-15) |
 
 The primary objective is a simple, affordable and repeatable working procedure.

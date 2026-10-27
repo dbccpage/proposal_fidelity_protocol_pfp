@@ -17,8 +17,8 @@ _repo_root = next((p for p in Path(__file__).resolve().parents if (p / "pyprojec
 if _repo_root is not None and str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.ddc_tracer import LeanProofDdcTracer
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.tactic_portfolio import solve_deterministic
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.ddc_tracer import LeanProofDdcTracer
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.tactic_portfolio import solve_deterministic
 
 
 def solve(case: Dict[str, Any]) -> Dict[str, Any]:

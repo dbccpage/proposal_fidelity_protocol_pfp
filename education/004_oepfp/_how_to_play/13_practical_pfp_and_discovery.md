@@ -7,9 +7,9 @@ status: active
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp/entrypoints/cli/pfp.py
-  - omega_engine_pfp/infrastructure/demo_runners/seed_checks.py
-  - omega_engine_pfp/infrastructure/adapters/pfp_campaign.py
+  - pfp/entrypoints/cli/pfp.py
+  - pfp/infrastructure/demo_runners/seed_checks.py
+  - pfp/infrastructure/adapters/pfp_campaign.py
 source_revision: 45ba3a7dc032631d6697904cb73e20762b56353c
 last_verified: 2026-10-12
 ---
@@ -32,8 +32,8 @@ There is no fixed pilot grid or required number of trials.
 From the repository root, validate the retained seeds or prepare one prompt:
 
 ```powershell
-python -m omega_engine_pfp.infrastructure.pilot_runner --check-seeds
-python -m omega_engine_pfp.infrastructure.pilot_runner --seed-id DEMO_07
+python -m pfp.infrastructure.pilot_runner --check-seeds
+python -m pfp.infrastructure.pilot_runner --seed-id DEMO_07
 ```
 
 Preparation preserves the seed bytes under the existing prompt template. Its
@@ -54,7 +54,7 @@ problem, with fixed gauge `potential[0] = 0`:
   "residual": [0, 0]
 }
 '@ | Set-Content -LiteralPath ./demo07-candidate.json -Encoding ascii
-python -m omega_engine_pfp.entrypoints.cli.pfp check-seed DEMO_07 ./demo07-candidate.json
+python -m pfp.entrypoints.cli.pfp check-seed DEMO_07 ./demo07-candidate.json
 ```
 
 The checker recomputes `original - d0 * potential` using exact arithmetic.
@@ -69,14 +69,14 @@ prompt variation as a new trial.
 
 ## Play with OpenRouter and replay the result
 
-The shared application owner is `omega_engine_pfp`; its entrypoints include
+The shared application owner is `pfp`; its entrypoints include
 `pfp`, `symbol-game` and `level-engine`. This example uses the model from the
 recorded bounded run; availability and pricing are checked again at dispatch.
 Use existing provider credentials and a new output directory:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.pfp run-seed DEMO_07 --stages 8 --modes 2 --model qwen/qwen3.8-flash --timeout 180 --output ./pfp-demo07-new
-python -m omega_engine_pfp.entrypoints.cli.pfp run-seed DEMO_07 --replay ./pfp-demo07-new
+python -m pfp.entrypoints.cli.pfp run-seed DEMO_07 --stages 8 --modes 2 --model qwen/qwen3.8-flash --timeout 180 --output ./pfp-demo07-new
+python -m pfp.entrypoints.cli.pfp run-seed DEMO_07 --replay ./pfp-demo07-new
 ```
 
 The current seed CLI runs a contiguous prefix of stages 1–8. Stage 5 is the
@@ -151,26 +151,26 @@ and transport ambiguity. Prompt/schema identity and safe transport diagnostics
 were repaired; unknown billing was retained as unknown.
 
 These are the recorded results in the
-[consolidation handoff](../../../../omega_engine_pfp/documentation/pfp_consolidation_plan.md#bounded-implementation-handoff--2026-10-12),
+[consolidation handoff](../../../../pfp/documentation/pfp_consolidation_plan.md#bounded-implementation-handoff--2026-10-12),
 not new live trials performed for this page. Successful-run cost is not total
 campaign spending. They demonstrate one working path, not universal reasoning
 improvement or a clean repository-wide suite.
 
-## Ordinary Woland work uses a smaller profile
+## Ordinary Adversary work uses a smaller profile
 
 An ordinary artifact, review or digestion lesson uses one task-bound response
-envelope through the same Woland backend. It does not need eight mathematical
+envelope through the same Adversary backend. It does not need eight mathematical
 stages. Start in the current IDE:
 
 ```text
-/woland create a short guide, review it and apply one supported lesson
-/woland-digests path/to/old-material
+/adversary create a short guide, review it and apply one supported lesson
+/adversary-digests path/to/old-material
 ```
 
 The skill reads the shared `pfp_turn` brief and submits the actual response with
 `teamwork submit --raw-reply`. Python can drive the same prepare/submit handoff,
 or explicitly choose an OpenRouter text-artifact bout. Follow the
-[exact commands and replay example](../../../../omega_engine_pfp/documentation/pfp_task_turn.md#shared-woland-use).
+[exact commands and replay example](../../../../pfp/documentation/pfp_task_turn.md#shared-adversary-use).
 IDE cost is unavailable. Model text cannot execute commands or install guidance.
 
 The bounded compatibility question was whether the ordinary role profile could
@@ -202,8 +202,8 @@ remain UNVERIFIED. Across this release work there were five actual attempts:
 four successful calls reported $0.00092355 in total, plus the earlier failed
 attempt whose actual cost remains unknown. No complete total bill is claimed.
 
-Use `python -m omega_engine_woland.entrypoints.cli`, as shown in the linked guide;
-`python -m omega_engine_woland` has no package entrypoint. The next useful trial
+Use `python -m adversary.entrypoints.cli`, as shown in the linked guide;
+`python -m adversary` has no package entrypoint. The next useful trial
 should answer a new task or failure question, not increase a pilot count.
 
 ## Choose the checker separately from the prompt
@@ -218,9 +218,9 @@ For code changes, `pfp code-change-check-source-bound` binds a patch to selected
 source bytes and a host-pinned native executable. It checks finite syntax,
 ownership and protected-path restrictions. It does not establish that the patch
 applies, fixes the task or has semantic correctness. Saved evidence is not a new
-checker authorization. See the [commands and current limits](../../../../omega_engine_pfp/documentation/pfp_epic_closeout.md#use-the-finite-consumers).
+checker authorization. See the [commands and current limits](../../../../pfp/documentation/pfp_epic_closeout.md#use-the-finite-consumers).
 
-The 2026-10-12 shared Woland bout completed build/review/learning in three actual
+The 2026-10-12 shared Adversary bout completed build/review/learning in three actual
 calls, with 3,833 input/575 output tokens and $0.00091995 reported cost. All three
 actual PFP replies replayed offline; changed task/input/checker/raw-byte controls
 refused. The remote learning turn proposed guidance only. Applying a lesson still

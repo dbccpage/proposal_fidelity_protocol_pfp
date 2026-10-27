@@ -8,14 +8,14 @@ import json
 import httpx
 import pytest
 from fastapi import FastAPI
-from omega_engine_operations.domain.rop.result import Err
+from operations.domain.rop.result import Err
 
-from omega_engine_governance.domain.ingress.limits import MAX_REQUEST_BODY_BYTES
-from omega_engine_operads.application.dtos.api_error_dto import (
+from governance.domain.ingress.limits import MAX_REQUEST_BODY_BYTES
+from operads.application.dtos.api_error_dto import (
     ApiErrorDTO,
 )
-from omega_engine_operads.frontend.api.app import create_app
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
+from operads.frontend.api.app import create_app
+from operads.infrastructure.bootstrap import OeopContainer
 
 WORKFLOWS = "/api/oeop/v3/workflows:validate"
 

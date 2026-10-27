@@ -1,7 +1,7 @@
 """Strict JSON loader for the anti-skill wire boundary.
 
 Pure parsing, no I/O; carried over unchanged from the retired
-`omega_engine/crates/prompt_civilization/infrastructure/json_wire.py`.
+`engine/crates/prompt_civilization/infrastructure/json_wire.py`.
 """
 
 from __future__ import annotations

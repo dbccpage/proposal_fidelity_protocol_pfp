@@ -10,13 +10,13 @@ from pathlib import Path
 # Ensure repository root is on sys.path
 sys.path.append(str(Path(__file__).resolve().parents[6]))
 
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.exact_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.exact_checker import (
     verify_candidate,
 )
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.independent_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.independent_checker import (
     check_candidate_indep,
 )
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.reference_solver import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.reference_solver import (
     solve,
 )
 

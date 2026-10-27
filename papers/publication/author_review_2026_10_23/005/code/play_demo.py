@@ -10,7 +10,7 @@ Run from the package directory:  py -3.12 code/play_demo.py
 
 The proposer (here, scripted) has no verification authority: every Phi_1 value
 printed is recomputed by the host, not asserted by the proposer. The governor
-uses the native graph calculator when OMEGA_FUNCTIONAL_GRAPH_BIN is set and
+uses the native graph calculator when CORE_FUNCTIONAL_GRAPH_BIN is set and
 propagates its errors. Otherwise it computes by exact Python enumeration.
 The returned session record names the selected path; it is not a native receipt.
 """
@@ -35,7 +35,7 @@ def run_session(verbose: bool = True) -> dict:
         if verbose:
             print(*args)
 
-    calculation_path = "native" if os.environ.get("OMEGA_FUNCTIONAL_GRAPH_BIN") else "python-enumeration"
+    calculation_path = "native" if os.environ.get("CORE_FUNCTIONAL_GRAPH_BIN") else "python-enumeration"
     say(f"Calculator: {calculation_path}; weights = (1, 2, 3)")
 
     # --- ASSERT: the proposer's three relational claims; the host records them.

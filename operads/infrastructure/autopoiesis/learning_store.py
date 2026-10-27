@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterator
 
-from omega_engine_operads.domain.autopoiesis.learning import (
+from operads.domain.autopoiesis.learning import (
     LEARNER_VERSION,
     LearningBlocked,
     LearningEpisodeV1,
@@ -107,7 +107,7 @@ class LearningStore:
 
     def finish(self, db: sqlite3.Connection, job_id: str, receipt: dict) -> dict:
         receipt = {
-            "schema": "omega.autop.receipt.v2",
+            "schema": "core.autop.receipt.v2",
             "learner_version": LEARNER_VERSION,
             "job_id": job_id,
             "authority_effect": "None",

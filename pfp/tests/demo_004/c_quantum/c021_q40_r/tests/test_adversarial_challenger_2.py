@@ -21,13 +21,13 @@ import unittest
 from fractions import Fraction
 from typing import Any
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
     verify_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
     verify_spectral_optimality,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
     solve,
 )
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from omega_engine_operations.domain.rop.result import Result
+from operations.domain.rop.result import Result
 from ..application.commands.compile_catalog import CompileCatalogHandler
 from ..application.commands.compile_licensed_term import CompileLicensedTermHandler
 from ..application.commands.compile_projection import CompileProjectionHandler

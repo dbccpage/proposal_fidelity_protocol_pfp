@@ -32,7 +32,7 @@ The **Auto Anti-Skill Search** acts as the interrogative dual operator ($\mathca
 
 ### 2. Truth-Boundary Canary Fixture Evaluation
 
-- Evaluates candidate skills against positive detection fixtures (known defects triggering findings) and negative control fixtures via Rust canary engine `omega_engine/crates_rs/omega_prompt_civilization` and StructureBench contract evaluation (`omega_engine_operads/structurebench/evaluator.py`).
+- Evaluates candidate skills against positive detection fixtures (known defects triggering findings) and negative control fixtures via Rust canary engine `engine/crates_rs/core_prompt_civilization` and StructureBench contract evaluation (`operads/structurebench/evaluator.py`).
 
 ### 3. Obstruction Certificate & Handoff to Dialectics
 

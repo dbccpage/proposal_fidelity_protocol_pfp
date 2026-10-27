@@ -27,5 +27,5 @@ Counts across the 95 entries:
 ## 4. Scope
 
 - `status` and `lean_status` are values written in each entry. They were not re-checked against Lean or code here.
-- The sample entry read (`ENC-0080`) cites `canonical_omega_math_spine.md` as its source; whether that file is present was not checked.
+- The sample entry read (`ENC-0080`) cites `canonical_core_math_spine.md` as its source; whether that file is present was not checked.
 - Entries are extracted statements, not new claims.

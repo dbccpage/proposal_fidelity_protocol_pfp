@@ -9,15 +9,15 @@ import urllib.error
 from pathlib import Path
 from uuid import uuid4
 
-from omega_engine_pfp.domain.demos import DemoRefusal
-from omega_engine_pfp.infrastructure.adapters.mssn_research import loader
-from omega_engine_pfp.use_cases.mssn_demo import evaluate_cases
+from pfp.domain.demos import DemoRefusal
+from pfp.infrastructure.adapters.mssn_research import loader
+from pfp.use_cases.mssn_demo import evaluate_cases
 
 from .canonical import canonical, digest, load
 from .catalog import implementation_digest, lookup, scenario_fixture_bytes
 from .named import run_named
 
-SCHEMA = "omega.symbol-game.demo-receipt.v1"
+SCHEMA = "core.symbol-game.demo-receipt.v1"
 FIXTURE_KEY = b"mssn-demo-public-fixture-custody-key-v1"
 
 
@@ -32,11 +32,11 @@ def fresh_output(path: Path) -> Path:
 
 
 def artifact_store(output: Path, live: bool):
-    from omega_engine_operating_system.adapters.security.key_protectors import (
+    from operating_system.adapters.security.key_protectors import (
         FixtureOnlyAeadProtector,
         WindowsDpapiKeyProtector,
     )
-    from omega_engine_operating_system.infrastructure.encrypted_artifact_cas import (
+    from operating_system.infrastructure.encrypted_artifact_cas import (
         EncryptedArtifactCas,
     )
 
@@ -58,17 +58,17 @@ class Proposals:
         self.stopped_reason = None
 
     def propose(self, prompt, scripted_reply):
-        from omega_engine_woland.domain.providers.types import CandidateRequest
+        from adversary.domain.providers.types import CandidateRequest
 
         if self.live:
-            from omega_engine_pfp.infrastructure.pilot_matrix import complete_pilot_turn
-            from omega_engine_woland.domain.providers.types import DecodingParamsV1, Provider
+            from pfp.infrastructure.pilot_matrix import complete_pilot_turn
+            from adversary.domain.providers.types import DecodingParamsV1, Provider
             if self.stopped_reason:
                 raise DemoRefusal(self.stopped_reason)
             if len(self.turns) >= self.max_provider_calls:
                 self.stopped_reason = "CALL_ALLOWANCE_EXHAUSTED"
                 if self.trace is not None:
-                    from omega_engine_pfp.infrastructure.trace.provider_dispatch import record_preflight_refusal
+                    from pfp.infrastructure.trace.provider_dispatch import record_preflight_refusal
                     record_preflight_refusal(self.trace, provider=Provider.OPENROUTER, model=self.model,
                         exc=DemoRefusal(self.stopped_reason))
                 raise DemoRefusal(self.stopped_reason)
@@ -102,7 +102,7 @@ class Proposals:
             if not turn["ok"] or turn["stop"]:
                 self.stopped_reason = error or "PFP_TURN_REFUSED"
                 if not turn["attempted"] and self.trace is not None:
-                    from omega_engine_pfp.infrastructure.trace.provider_dispatch import record_preflight_refusal
+                    from pfp.infrastructure.trace.provider_dispatch import record_preflight_refusal
                     record_preflight_refusal(self.trace, provider=Provider.OPENROUTER, model=self.model,
                         exc=DemoRefusal(self.stopped_reason))
                 raise DemoRefusal(self.stopped_reason)
@@ -133,8 +133,8 @@ def _scrub(text: str, *secrets: str) -> str:
 
 def _file_sourced_secrets(env_file: Path | str | None) -> tuple[str, ...]:
     """Resolve a file key for this call only. Nothing is written to ``os.environ``."""
-    from omega_engine_operations.domain.rop.result import Ok
-    from omega_engine_woland.infrastructure.providers.openrouter_transport import resolve_openrouter_key
+    from operations.domain.rop.result import Ok
+    from adversary.infrastructure.providers.openrouter_transport import resolve_openrouter_key
 
     found = resolve_openrouter_key(env_file)
     if isinstance(found, Ok) and found.value:
@@ -191,7 +191,7 @@ def run(
     max_estimated_cost_microusd: int | None = None, max_cost_microusd: int | None = None,
     env_file: Path | str | None = None,
 ) -> dict:
-    from omega_engine_woland.domain.providers.types import ProviderError
+    from adversary.domain.providers.types import ProviderError
 
     row = lookup(scenario_id)
     fixture_bytes = scenario_fixture_bytes(row)
@@ -215,19 +215,19 @@ def run(
     secrets = _file_sourced_secrets(env_file) if live else ()
     output = fresh_output(Path(output_dir))
     (output / "fixture.json").write_bytes(fixture_bytes)
-    from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import (
+    from eis.infrastructure.mssn_ports import (
         RunQuarantineSink,
     )
-    from omega_engine_pfp.infrastructure.trace.execution_trace import (
+    from pfp.infrastructure.trace.execution_trace import (
         DURABILITY_BUFFERED_REPLAY,
         DURABILITY_FSYNC_LIVE,
         ExecutionTrace,
         RunMode,
     )
-    from omega_engine_pfp.infrastructure.trace.gateway_factories import (
+    from pfp.infrastructure.trace.gateway_factories import (
         fixture_gateway,
     )
-    from omega_engine_pfp.infrastructure.trace.provider_dispatch import (
+    from pfp.infrastructure.trace.provider_dispatch import (
         scripted_openai_payload,
     )
 
@@ -265,7 +265,7 @@ def run(
     bindings = None
     try:
         if live:
-            from omega_engine_pfp.infrastructure.estimated_gateway import create_accounted_openrouter_gateway
+            from pfp.infrastructure.estimated_gateway import create_accounted_openrouter_gateway
             objective = digest(canonical({"scenario": scenario_id,
                 "fixture_sha256": row["fixture_sha256"], "model": model,
                 "max_output_tokens": max_output_tokens, "max_provider_calls": max_provider_calls}))
@@ -431,8 +431,8 @@ def verify(path: Path) -> dict:
         "integrity_only" if live else "fixture_replay"
     ):
         raise DemoRefusal("TRANSPORT_SCOPE_MISMATCH")
-    from omega_engine_pfp.infrastructure.trace.execution_trace import verify_trace
-    from omega_engine_pfp.infrastructure.trace.provider_dispatch import (
+    from pfp.infrastructure.trace.execution_trace import verify_trace
+    from pfp.infrastructure.trace.provider_dispatch import (
         DISPATCH_COMPLETE,
         derive_dispatch_outcomes,
     )

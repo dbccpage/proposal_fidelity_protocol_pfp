@@ -58,7 +58,7 @@ An intelligence file is **Terminally Digested** if and only if:
 > - **Post-Harvest Archive Pruning:** Once defect patterns are harvested into `.agents/antibodies/` and operational anti-patterns are closed, intermediate manifests (`corpora_archive_manifest.json`, `teamwork_archive_index.json`, `anti_patterns_registry.json`) and raw run snapshots in `_ic/nara/_archive/` must be pruned cleanly to prevent ghost references and dangling diffs.
 
 ### Invariant 3: Producing and Consuming Code Ownership
-Every directory and file in `_ic/` must possess an identified Producing Application Service (e.g., `woland_bout_use_case.py`, `symbol_game_emitter.py`, `repo_wide_coda_lggr_auditor.py`) and an identified Consuming Application Service (e.g., `IntelligenceMiner`, `pharmacy_catalog.json`, `DailyDigestGenerator`). Any intelligence file lacking both a live producer and a live consumer is an unowned orphan and must be audited for immediate digestion or deletion.
+Every directory and file in `_ic/` must possess an identified Producing Application Service (e.g., `adversary_bout_use_case.py`, `symbol_game_emitter.py`, `repo_wide_coda_lggr_auditor.py`) and an identified Consuming Application Service (e.g., `IntelligenceMiner`, `pharmacy_catalog.json`, `DailyDigestGenerator`). Any intelligence file lacking both a live producer and a live consumer is an unowned orphan and must be audited for immediate digestion or deletion.
 
 ### Invariant 4: Read-Only Mining Integrity
 Mining processes (such as `IntelligenceMiner`) must operate strictly read-only on active sources; in-place mutations of active intelligence files are forbidden. Modification occurs exclusively via atomic creation of downstream antibodies, skills, or archive transitions.

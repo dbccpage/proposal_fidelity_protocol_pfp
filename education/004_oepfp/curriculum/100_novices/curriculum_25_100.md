@@ -9,7 +9,7 @@ AuthorityEffect: None.
 | **100.01** | [The Hallucination of Consistency](concepts/lesson_100_01_the_hallucination_of_consistency.md) | Unconstrained models agree with contradictions unless gated | `bench/head_to_head` |
 | **100.02** | [The Prompt as a State Vector](concepts/lesson_100_02_the_prompt_as_a_state_vector.md) | Prompts as formal typed packets with declared carrier sets | `TYPED_PACKETS.md` |
 | **100.03** | [The Three Layers of Control](concepts/lesson_100_03_the_three_layers_of_control.md) | Pre-training, decoding logit masks, and host verification | `Paper 032 §2` |
-| **100.04** | [The Cost of Unpriced Rewrites](concepts/lesson_100_04_the_cost_of_unpriced_rewrites.md) | Token churn vs monotone retraction cost | `Woland Axiom` |
+| **100.04** | [The Cost of Unpriced Rewrites](concepts/lesson_100_04_the_cost_of_unpriced_rewrites.md) | Token churn vs monotone retraction cost | `Adversary Axiom` |
 | **100.05** | [The First Automated Gate](concepts/lesson_100_05_the_first_automated_gate.md) | Wrapping model outputs in a deterministic rejection oracle | `l1_governor.py` |
 | **100.06** | [The 38-Glyph Wire Alphabet](concepts/lesson_100_06_the_38_glyph_wire_alphabet.md) | Canonical codepoint allowlists preventing homoglyph attacks | `wire.py` |
 | **100.07** | [Lossless Wire Codecs](concepts/lesson_100_07_lossless_wire_codecs.md) | Compact canonical, postfix, and tagged JSON roundtrip parity | `checks.py` |
@@ -20,7 +20,7 @@ AuthorityEffect: None.
 | **100.12** | [RFC 8785 Canonical JSON](concepts/lesson_100_12_rfc_8785_canonical_json.md) | Retained standard-topic title; finite selected-Python-encoder examples and explicit number limits | `RFC 8785` |
 | **100.13** | [SHA-256 Envelope Sealing](concepts/lesson_100_13_sha_256_envelope_sealing.md) | Cryptographic digest binding types to exact byte representations | `hashlib` |
 | **100.14** | [Typed Refusal Payloads](concepts/lesson_100_14_typed_refusal_payloads.md) | Replacing generic exceptions with structured refusal codes | `RefusalCode` |
-| **100.15** | [The Four-File Receipt](concepts/lesson_100_15_the_four_file_receipt.md) | receipt.json, novella.md, ddc_actions.jsonl, and summary.json | `Woland Specification` |
+| **100.15** | [The Four-File Receipt](concepts/lesson_100_15_the_four_file_receipt.md) | receipt.json, novella.md, ddc_actions.jsonl, and summary.json | `Adversary Specification` |
 | **100.16** | [The Token Frontier Concept](concepts/lesson_100_16_the_token_frontier_concept.md) | Computing admissible next-token sets from active grammar states | `TokenFrontier` |
 | **100.17** | [Dynamic Logit Masking](concepts/lesson_100_17_dynamic_logit_masking.md) | Setting off-frontier logits to negative infinity at decode time | `CarrierProjection` |
 | **100.18** | [Retained Probability Mass](concepts/lesson_100_18_retained_probability_mass.md) | Bayes conditioning: p_constrained = p_base / M_retained | `Bayes Conditioning` |

@@ -9,12 +9,12 @@ from typing import BinaryIO
 
 import pytest
 
-from omega_engine_operads.structurebench import StructureBenchEvaluator
-from omega_engine_operads.structurebench.path_bundle_reader import (
+from operads.structurebench import StructureBenchEvaluator
+from operads.structurebench.path_bundle_reader import (
     PathBundleReader,
 )
-from omega_engine_operads.structurebench.ports import BundleReader
-from omega_engine_operads.tests.unit import (
+from operads.structurebench.ports import BundleReader
+from operads.tests.unit import (
     test_structurebench_no_vacuous_decisions as fixtures,
 )
 

@@ -24,14 +24,14 @@ from __future__ import annotations
 from typing import Any, List
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_case,
     generate_mutation_cases,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solve import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solve import (
     solve,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
     ConstraintSystem,
     audit_witness,
     format_int,

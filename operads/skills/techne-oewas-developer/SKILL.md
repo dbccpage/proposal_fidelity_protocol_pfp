@@ -20,20 +20,20 @@ Read [auto-learn](../auto-learn/SKILL.md) and task-relevant existing lessons fir
 ## Existing owners
 
 - Typed sources and their instruction/fixture bindings live in
-  `omega_engine_operads/catalog/contracts/v1/`.
+  `operads/catalog/contracts/v1/`.
 - `infrastructure/typed_contract_compiler.py` generates IDE Markdown;
   `infrastructure/capability_catalog_compiler.py` combines typed and legacy carriers.
 - `application/typed_workflow_compiler.py` owns ordered occurrence compilation;
-  `application/woland_instruction_admission.py` checks signed admission.
+  `application/adversary_instruction_admission.py` checks signed admission.
 - `skill_operad/resolver/native_runtime.py` executes the checked native plan.
-  Rust `omega_operad_theory` and the existing workflow boundary are runtime
+  Rust `core_operad_theory` and the existing workflow boundary are runtime
   authorities; Python remains the differential oracle. Do not add another crate.
 - OEEIS owns learned-detector admission and suspension. OEOP compilation,
   catalog labels, successful tests and detector CLEAR cannot confer admission.
-- Woland owns composition and the full Retinue. PFP prepares and checks every
+- Adversary owns composition and the full Panel. PFP prepares and checks every
   model turn; a shell cannot impersonate the current IDE session.
 
-Resolve paths relative to `omega_engine_operads/` above. Preserve
+Resolve paths relative to `operads/` above. Preserve
 existing public APIs, historical readers, frozen experiment versions and bytes.
 
 ## Contract and execution checks
@@ -72,7 +72,7 @@ its worst-case liability and stops dispatch until an explicit authorized
 reconciliation. Never silently reset spending, substitute a model or rerun failures
 to improve a report. Keep unknown usage and experimental uncertainty visible.
 
-Finish the outer Woland run with [auto-oe-autop](../auto-oe-autop/SKILL.md) and
+Finish the outer Adversary run with [auto-oe-autop](../auto-oe-autop/SKILL.md) and
 auto-learn once. Apply a supported correction to code or existing typed guidance,
 recheck the original task and regenerate only affected host packages. Routine
 finish is not a whole-estate sweep. No HoTT, new framework or production custody

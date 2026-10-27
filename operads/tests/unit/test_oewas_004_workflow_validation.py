@@ -12,11 +12,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_operads.domain.planar_substitution import (
+from operads.domain.planar_substitution import (
     OperadOperation,
 )
-from omega_engine_operads.domain.workflow_graph import validate_workflow
-from omega_engine_operads.infrastructure.workflow_loader import load_garden
+from operads.domain.workflow_graph import validate_workflow
+from operads.infrastructure.workflow_loader import load_garden
 
 _REPO = Path(__file__).resolve().parents[3]
 _PAPER_WORKFLOW = _REPO / ".agents" / "workflows" / "paper_proof_release_workflow.json"
@@ -113,7 +113,7 @@ def test_paper_proof_release_names_missing_skills_and_does_not_run() -> None:
     assert unknown == [
         (0, "panepistimion-lean-snippet-export"),
         (1, "paper-build"),
-        (2, "thanatos-old-man-chatgpt-red-team"),
+        (2, "thanatos-chatgpt-red-team"),
     ]
     assert all(name not in garden for _index, name in unknown)
     assert "rip-papers" not in garden

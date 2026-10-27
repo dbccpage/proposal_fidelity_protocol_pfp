@@ -5,16 +5,16 @@ import sqlite3
 
 import pytest
 
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import prompt_container
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_checks import evaluate
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_fixtures import VARIANTS
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_fixtures import check_variant
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
-from omega_engine_pfp.infrastructure.adapters import pfp_derivation as adapter
-from omega_engine_pfp.tests._po035_historical import historical_derivation
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import write_once
-from omega_engine_pfp.use_cases.pfp_derivation_loops import (
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
+from adversary.tests.pilots.relational_spacetime.tasks import prompt_container
+from adversary.tests.pilots.relational_spacetime.finite_checks import evaluate
+from adversary.tests.pilots.relational_spacetime.finite_fixtures import VARIANTS
+from adversary.tests.pilots.relational_spacetime.finite_fixtures import check_variant
+from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from pfp.infrastructure.adapters import pfp_derivation as adapter
+from pfp.tests._po035_historical import historical_derivation
+from pfp.infrastructure.adapters.pfp_evidence import write_once
+from pfp.use_cases.pfp_derivation_loops import (
     DerivationLimits,
     DerivationStop,
     run_derivation_loops,
@@ -229,11 +229,11 @@ def test_worker_timeout_retains_attempt_hold(tmp_path, monkeypatch):
 
 
 def test_negative_controls_are_schema_valid():
-    from omega_engine_woland.tests.pilots.relational_spacetime.finite_checks import negative_control
+    from adversary.tests.pilots.relational_spacetime.finite_checks import negative_control
 
     for pilot in BY_ID:
         payload = fixture_payload(pilot, "fixture")
-        from omega_engine_woland.tests.pilots.relational_spacetime.tasks import proposal_body
+        from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
 
         body = proposal_body(payload)
         body["certificate"] = dict(reversed(list(body["certificate"].items())))
@@ -335,8 +335,8 @@ def test_replay_closes_read_only_database_on_success_and_refusal(tmp_path, monke
 
 
 def test_derivation_keeps_canonical_provider_type_identities():
-    from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
-    from omega_engine_woland.infrastructure.providers.budget_ledger import SqliteBudgetLedger
+    from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
+    from adversary.infrastructure.providers.budget_ledger import SqliteBudgetLedger
 
     prompt = prompt_container(next(iter(BY_ID)), 1, {})
     request = adapter.request_for(prompt)

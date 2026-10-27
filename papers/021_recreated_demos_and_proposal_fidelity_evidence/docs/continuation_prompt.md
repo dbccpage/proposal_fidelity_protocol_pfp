@@ -4,7 +4,7 @@ Complete the unfinished Paper 011 work. Preserve the original requested scope:
 recreate every demonstration represented in the twenty
 `symbol_game_challenge_and_demos_findings` notes, and include faithful copies of
 all tracked PFP demonstrations from
-`omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/demos`.
+`education/documentation/030_pfp_proposal_fidelity_protocol_pfp/demos`.
 Do not replace this with a smaller inventory-only or fixture-only deliverable.
 
 Work in `the_symbol_game`. The existing draft PR is on
@@ -12,7 +12,7 @@ Work in `the_symbol_game`. The existing draft PR is on
 choosing a checkout or branch. The paper directory is:
 
 ```text
-omega_engine_atlas/coda_atlas/omega_engine_pfp/021_recreated_demos_and_proposal_fidelity_evidence
+atlas/coda_atlas/pfp/021_recreated_demos_and_proposal_fidelity_evidence
 ```
 
 Read applicable repository instructions and the explicitly invoked GitHub skill.

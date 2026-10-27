@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-from omega_engine_pfp.domain.finite_gauge import (
+from pfp.domain.finite_gauge import (
     CandidateCheck,
     CheckerIdentity,
     GaugeFrontier,
@@ -14,11 +14,11 @@ from omega_engine_pfp.domain.finite_gauge import (
     RunConfig,
     SearchReceipt,
 )
-from omega_engine_pfp.domain.kernel.result import Result
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.paper002_checker import (
+from pfp.domain.kernel.result import Result
+from pfp.infrastructure.adapters.finite_gauge.paper002_checker import (
     Paper002FiniteGaugeChecker,
 )
-from omega_engine_pfp.use_cases.finite_gauge_workbench import (
+from pfp.use_cases.finite_gauge_workbench import (
     FiniteGaugeRun,
     GaugeRunRuntime,
 )

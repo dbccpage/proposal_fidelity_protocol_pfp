@@ -11,7 +11,7 @@
 //! choice; "no member is dropped because another member also repairs" is
 //! the Lean theorem, and here it is what a filter is.
 //!
-//! The Omega engine prices this family under every declared measure and
+//! The Core engine prices this family under every declared measure and
 //! quotients it into classes.  It never picks.
 
 use crate::candidate::{is_structure_creating, Delta};

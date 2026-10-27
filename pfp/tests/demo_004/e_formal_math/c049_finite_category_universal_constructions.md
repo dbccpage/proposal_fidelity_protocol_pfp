@@ -18,7 +18,7 @@ In a finite category every universal property is a finite check. The checker ver
 
 Producing the construction requires reading a composition table correctly, and tables are where models confuse the order of composition.
 
-This stresses the Symbol Game's commuting-square obstructions in their plainest form: a cone that fails to commute is a non-commuting square. It stresses the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that validates the category before solving, and the OEEIS (Omega Engine Epistemic Immune System) against answers that name a textbook construction instead of checking it in the given table.
+This stresses the Symbol Game's commuting-square obstructions in their plainest form: a cone that fails to commute is a non-commuting square. It stresses the OEWAS (Engine Workflows, Agents, Skills) workflow that validates the category before solving, and the OEEIS (Engine Epistemic Immune System) against answers that name a textbook construction instead of checking it in the given table.
 
 ## 3. Formal Problem and Bounds
 
@@ -76,7 +76,7 @@ In the example `comp` lists only the non-identity composites; identity composite
 - **Hidden base:** 36 cases: 24 limit or colimit (12 existing, 12 not) and 12 adjunction (6 adjoint, 6 not).
 - **Relabel and gauge controls:** 16. Objects and morphisms renamed, morphism lists shuffled, isomorphic categories presented through a relabelling, and duality controls. For duality, the same question is posed as a colimit in the opposite category `C^op`, and the answer must correspond.
 - **Poisoned but schema-valid:** 8. Composition tables with one associativity violation, missing identities, `note` fields claiming "the product is the cartesian product", and functors that preserve objects but break one composite.
-- **Exact checker:** Rust on `omega_engine/crates_rs/omega_category_theory`. It uses `finite_category_validation.rs`, the `validate_product`, `validate_equalizer` and `validate_pullback` routines in `limits.rs`, their duals in `colimits.rs`, and exhaustive cone enumeration added for this challenge.
+- **Exact checker:** Rust on `engine/crates_rs/core_category_theory`. It uses `finite_category_validation.rs`, the `validate_product`, `validate_equalizer` and `validate_pullback` routines in `limits.rs`, their duals in `colimits.rs`, and exhaustive cone enumeration added for this challenge.
 - **Independent second checker:** Python by a different author.
 - **Mutation suite:** the checker must reject:
   - legs that do not commute with the diagram;
@@ -137,7 +137,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_category_theory`, the catalog reuse row: `finite_category.rs`, `finite_category_validation.rs`, `limits.rs`, `colimits.rs`, `hom_adjunction.rs`.
+- `engine/crates_rs/core_category_theory`, the catalog reuse row: `finite_category.rs`, `finite_category_validation.rs`, `limits.rs`, `colimits.rs`, `hom_adjunction.rs`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras; [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended.
 
 ## 14. Claim Hygiene
@@ -145,4 +145,4 @@ Operands to mine:
 - **Supports:** the frozen module settled k of 36 hidden finite universal-construction and adjunction questions, with finite certificates verified exhaustively by two checkers.
 - **Does not support:** results about infinite categories, higher categories or categorical semantics; a finite check is not a general theorem.
 - **Narrowest defensible claim:** in categories with at most 12 objects and 60 morphisms, the module's certified rate was X, with duality-control consistency Y.
-- **Next test:** Kan extensions along finite functors, and 2-cells using `omega_higher_category_theory`.
+- **Next test:** Kan extensions along finite functors, and 2-cells using `core_higher_category_theory`.

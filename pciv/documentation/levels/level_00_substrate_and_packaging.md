@@ -14,16 +14,16 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_prompt_civilization/src/record.rs
-  - omega_engine/crates_rs/omega_symbol_game/src/protocol.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_prompt_civilization/src/record.rs
+  - engine/crates_rs/core_symbol_game/src/protocol.rs
 ---
 
 # Prompt Civ Level 00: Substrate & Packaging: Governed Material vs Occurrence
 
 **AuthorityEffect:** None.  
 **Level:** Level 00 (Prompt Carrier Genesis & Boundary Canalization)  
-**Rust Record Seam:** [`omega_prompt_civilization::record`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/record.rs)  
+**Rust Record Seam:** [`core_prompt_civilization::record`](../../../engine/crates_rs/core_prompt_civilization/src/record.rs)  
 **Primary Types:** `PromptGenomeV1`, `ExecutionOccurrenceV1`, `PromptCustodyEventV1`, `PromptViewV1`  
 **Core Falsifiers:** `F-GENOME-01`, `F-GENOME-02`, `F-GENOME-03`
 
@@ -39,7 +39,7 @@ graph TD
         S3["Stage-3: LLM Turn Output<br/>(Raw Response, Execution Evidence)"]
     end
 
-    S0 --> PG["PromptGenomeV1 (Immutable Sidecar)<br/>• prompt_id = SHA256(omega-sorted-json-no-float-v1)<br/>• Covers: [source_packet_refs, domain_model, parents, birth_custody]<br/>• Excludes: timestamps, occurrences, runtime metrics"]
+    S0 --> PG["PromptGenomeV1 (Immutable Sidecar)<br/>• prompt_id = SHA256(core-sorted-json-no-float-v1)<br/>• Covers: [source_packet_refs, domain_model, parents, birth_custody]<br/>• Excludes: timestamps, occurrences, runtime metrics"]
     S1 --> PG
     
     PG --> CF["Canalized Forge Resolution<br/>• protected_spans: System Framing, Types, Claim Hygiene<br/>• plastic_scaffold: Mutable Instructions"]
@@ -51,21 +51,21 @@ graph TD
 
 In naive prompt evolution systems, every model completion or conversational turn is treated as a new prompt string, causing identity explosion and erasing causal provenance. Level 00 establishes the foundational distinction between **governed prompt material** and **execution occurrences**:
 
-- **Governed Prompt Material:** The canonical text, structural schemas, boundary directives, and parent links that define the prompt. These are packaged into an immutable [`PromptGenomeV1`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/record.rs).
-- **Execution Occurrence:** An execution instance of an existing genome against an input state ([`ExecutionOccurrenceV1`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/record.rs)). Executing an unchanged prompt 1,000 times generates 1,000 occurrences, but exactly **one** genome.
+- **Governed Prompt Material:** The canonical text, structural schemas, boundary directives, and parent links that define the prompt. These are packaged into an immutable [`PromptGenomeV1`](../../../engine/crates_rs/core_prompt_civilization/src/record.rs).
+- **Execution Occurrence:** An execution instance of an existing genome against an input state ([`ExecutionOccurrenceV1`](../../../engine/crates_rs/core_prompt_civilization/src/record.rs)). Executing an unchanged prompt 1,000 times generates 1,000 occurrences, but exactly **one** genome.
 
 ---
 
 ## 2. Invariants & Mathematical Packaging
 
 1. **Genome Identity Envelope:**
-   The `prompt_id` is computed as a domain-separated SHA-256 hash using the canonical profile `omega-sorted-json-no-float-v1`:
+   The `prompt_id` is computed as a domain-separated SHA-256 hash using the canonical profile `core-sorted-json-no-float-v1`:
    $$\text{prompt\_id} = \operatorname{SHA256}(\operatorname{canonical\_json}([\text{source\_packet\_refs}, \text{domain\_model}, \text{parents}, \text{birth\_custody}]))$$
    - Deliberately excludes timestamps, current custody, execution metrics, and child references.
    - Child IDs are derived from the edge ledger, never stored inside the parent genome.
 2. **Canalized Core and Plastic Scaffold:**
    The source packet envelope declares `protected_boundaries` (e.g. system framing, type signatures, claim-hygiene fences, and `AuthorityEffect: None` declarations).
-   - The runtime re-derives `protected_spans: Vec<SpanDigestV1>` from [`BoundaryResolutionPolicyV1`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/record.rs) and the prompt bytes.
+   - The runtime re-derives `protected_spans: Vec<SpanDigestV1>` from [`BoundaryResolutionPolicyV1`](../../../engine/crates_rs/core_prompt_civilization/src/record.rs) and the prompt bytes.
    - Any mutation operator attempting to modify bytes within a protected span is rejected with `PROTECTED_SPAN_MUTATION_REFUSED`.
 3. **Re-derived Fields:**
    `generation` and `protected_spans` sit outside the identity digest tuple. They are deterministically re-derived by checked constructors:
@@ -77,7 +77,7 @@ In naive prompt evolution systems, every model completion or conversational turn
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::record
+// core_prompt_civilization::record
 pub struct PromptGenomeV1 {
     pub prompt_id: PromptId,
     pub source_packet_refs: Vec<PacketRefV1>,

@@ -16,21 +16,21 @@ from fractions import Fraction
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.budget_gate import (
     HARD_CEILING_MICROUSD,
     BudgetCeilingExceededError,
     BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.commit_reveal_runner import (
     CommitRevealRunner,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.governance.adversary_gate import (
     GATE_SCOPE,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
@@ -140,8 +140,8 @@ def test_budget_gate_invariants():
         BudgetGate(ceiling_microusd=HARD_CEILING_MICROUSD + 1)
 
 
-def test_woland_gate_verdict(tmp_path: Path):
-    gate = WolandGate(intelligence_root=tmp_path / "_intelligence")
+def test_adversary_gate_verdict(tmp_path: Path):
+    gate = AdversaryGate(intelligence_root=tmp_path / "_intelligence")
     good_results = [
         {
             "id": "c1",
@@ -166,9 +166,9 @@ def test_woland_gate_verdict(tmp_path: Path):
     assert gate.judge(bad_results) == TERMINAL_REFUSE
 
 
-def test_woland_gate_per_case_defect_values_are_exact(tmp_path: Path):
+def test_adversary_gate_per_case_defect_values_are_exact(tmp_path: Path):
     """Counterexample: per-case phi1=1/10^9 passed because float(phi1) <= 1e-6, and a float phi1 was accepted."""
-    gate = WolandGate(intelligence_root=tmp_path / "_intelligence")
+    gate = AdversaryGate(intelligence_root=tmp_path / "_intelligence")
     assert (
         gate.judge([{"status": "SOLVED", "checker_pass": True, "phi1": Fraction(1, 10**9)}])
         == TERMINAL_REFUSE
@@ -179,19 +179,19 @@ def test_woland_gate_per_case_defect_values_are_exact(tmp_path: Path):
     assert gate.judge([]) == "REFERENCE_SELF_INCONSISTENT"
 
 
-def test_woland_gate_default_root_is_the_intelligence_folder(
+def test_adversary_gate_default_root_is_the_intelligence_folder(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ):
-    """Counterexample: WolandGate() wrote to <repo>/_woland/runs instead of <repo>/_intelligence/_woland/runs."""
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(tmp_path))
-    gate = WolandGate()
-    assert gate.woland_runs_dir == tmp_path.resolve() / "_intelligence" / "_woland" / "runs"
+    """Counterexample: AdversaryGate() wrote to <repo>/_adversary/runs instead of <repo>/_intelligence/_adversary/runs."""
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(tmp_path))
+    gate = AdversaryGate()
+    assert gate.adversary_runs_dir == tmp_path.resolve() / "_intelligence" / "_adversary" / "runs"
 
 
-def test_woland_gate_force_clean_never_deletes_an_existing_run(tmp_path: Path):
+def test_adversary_gate_force_clean_never_deletes_an_existing_run(tmp_path: Path):
     """Counterexample: force_clean=True rmtree'd an existing run folder under _intelligence."""
-    gate = WolandGate(intelligence_root=tmp_path / "_intelligence")
-    existing = gate.woland_runs_dir / "kept_run"
+    gate = AdversaryGate(intelligence_root=tmp_path / "_intelligence")
+    existing = gate.adversary_runs_dir / "kept_run"
     existing.mkdir(parents=True)
     (existing / "sentinel.txt").write_text("earlier run", encoding="utf-8")
     hygiene = {
@@ -233,7 +233,7 @@ def test_commit_reveal_phases(tmp_path: Path):
     assert p3["gate_scope"] == GATE_SCOPE
     assert p3["all_passed"] is True
     assert p3["case_count"] == len(_case_files(challenge_root))
-    runs = tmp_path / "intelligence" / "_intelligence" / "_woland" / "runs" / "c024_test_run"
+    runs = tmp_path / "intelligence" / "_intelligence" / "_adversary" / "runs" / "c024_test_run"
     assert (runs / "receipt.json").is_file()
 
 

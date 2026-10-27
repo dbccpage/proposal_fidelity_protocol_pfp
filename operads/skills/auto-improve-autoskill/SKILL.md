@@ -145,7 +145,7 @@ A "Placebo Residual" is a candidate modification that superficially appears to r
 - **No Self-Acceptance**: Auditor outputs recommendations and receipts; only human authors promote.
 - **No Authority Laundering**: Passing tests, hash integrity, and clean linters NEVER grant mathematical authority.
 - **No Invariant Loosening**: Never weaken an existing test gate, security path check, or size ceiling.
-- **Fail-Closed Budget Gate**: All modifications must pass `python omega_engine_operads/skill_operad/skill_compiler/budget_gate.py`.
+- **Fail-Closed Budget Gate**: All modifications must pass `python operads/skill_operad/skill_compiler/budget_gate.py`.
 
 ---
 

@@ -18,7 +18,7 @@ Register SHA-256: `78045110f8b420f5ea8618e2732e7d79806552872b7902c5882c61ccf8e53
 
 - All formal_obligations fields describe proposed v1.1RC checking duties, not newly implemented verification.
 
-The canonical “all19” test only checks ID substring presence: `tests/fuzzing/test_cross_batch_d1_d20_regression.py:140`. Historical no-detector admission finding: `_ic/woland/worktree_20261012_intelligence_digestion.md:29`. `_ic/woland/runs` is absent in this checkout; historical custody tests are not current replay evidence.
+The canonical “all19” test only checks ID substring presence: `tests/fuzzing/test_cross_batch_d1_d20_regression.py:140`. Historical no-detector admission finding: `_ic/adversary/worktree_20261012_intelligence_digestion.md:29`. `_ic/adversary/runs` is absent in this checkout; historical custody tests are not current replay evidence.
 
 ## AB-001 — Unhedged "proves universal nonextension" in finite corner reduction
 
@@ -48,7 +48,7 @@ Proposed v1.1RC formal obligations:
 
 Repository coverage: **source_fixture_or_owner_located_not_replayed**. Finite replay test source states 29,771 cases; not executed here and not universal beyond legal-probe/horizon premises.
 
-Sources: `omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/tests/python/e2e_tests/test_native_future_compression.py:87`, `omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/derivation_controls/plan_7d_day_4/test_witness.py:33`.
+Sources: `atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/tests/python/e2e_tests/test_native_future_compression.py:87`, `atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/derivation_controls/plan_7d_day_4/test_witness.py:33`.
 
 Activated AB-ID guard equivalence: **not established**. Universal prevention: **not established**.
 
@@ -64,7 +64,7 @@ Proposed v1.1RC formal obligations:
 
 Repository coverage: **source_fixture_or_owner_located_not_replayed**. Native exact completion/checker owner located; no run receipt or AB-id detector/admission binding validated.
 
-Sources: `omega_engine/crates_rs/omega_wdp/src/distinct_image_completion.rs:417`.
+Sources: `engine/crates_rs/core_wdp/src/distinct_image_completion.rs:417`.
 
 Activated AB-ID guard equivalence: **not established**. Universal prevention: **not established**.
 
@@ -80,7 +80,7 @@ Proposed v1.1RC formal obligations:
 
 Repository coverage: **source_fixture_or_owner_located_not_replayed**. Related numeric open-system implementation retains (g+G)^2. Exact stated H/K/state acceleration-10 fixture was not located in this bounded search; register counterexample remains a cited prose claim here.
 
-Sources: `omega_engine_atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/code/open_system_jets.py:334`.
+Sources: `atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/code/open_system_jets.py:334`.
 
 Activated AB-ID guard equivalence: **not established**. Universal prevention: **not established**.
 
@@ -96,7 +96,7 @@ Proposed v1.1RC formal obligations:
 
 Repository coverage: **source_fixture_or_owner_located_not_replayed**. Concrete NumPy/tolerance counterexample source pairs polar witness with tangent giving −2/3. This is numerical regression coverage, not an exact universal theorem or activated detector.
 
-Sources: `omega_engine_atlas/coda_atlas/F004_papers/002_projection_obstruction/034_higher_cell_cochain_projection_and_retraction_dynamics/code/tests/test_defect_bounds.py:50`.
+Sources: `atlas/coda_atlas/F004_papers/002_projection_obstruction/034_higher_cell_cochain_projection_and_retraction_dynamics/code/tests/test_defect_bounds.py:50`.
 
 Activated AB-ID guard equivalence: **not established**. Universal prevention: **not established**.
 
@@ -142,7 +142,7 @@ Proposed v1.1RC formal obligations:
 
 Repository coverage: **source_fixture_or_owner_located_not_replayed**. Deposit verifier and related manifest antibody source located; no manifest/integrity execution performed.
 
-Sources: `omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/verify_deposit.py:198`, `.agents/antibodies/ab_packaging_zip_manifest_digest_divergence.json:14`.
+Sources: `atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/verify_deposit.py:198`, `.agents/antibodies/ab_packaging_zip_manifest_digest_divergence.json:14`.
 
 Activated AB-ID guard equivalence: **not established**. Universal prevention: **not established**.
 
@@ -188,7 +188,7 @@ Proposed v1.1RC formal obligations:
 - Pin RNG seeds, legal action guards, canonical run/task/parent bindings and distinct event identities.
 - Verify canonical custody payload hashes; deterministic fixture replay does not imply all adversarial behaviors are covered.
 
-Repository coverage: **source_fixture_or_owner_located_not_replayed**. Seeded edit regression and custody audit sources exist, but the latter references absent _ic/woland/runs directories. A source assertion is not a current PASS receipt.
+Repository coverage: **source_fixture_or_owner_located_not_replayed**. Seeded edit regression and custody audit sources exist, but the latter references absent _ic/adversary/runs directories. A source assertion is not a current PASS receipt.
 
 Sources: `tests/fuzzing/fuzz_five_edit_large_carriers.py:87`, `tests/fuzzing/test_cross_batch_d1_d20_regression.py:103`.
 
@@ -238,7 +238,7 @@ Proposed v1.1RC formal obligations:
 
 Repository coverage: **source_fixture_or_owner_located_not_replayed**. Exact fixture and joint-support native owner found; same numeral in unrelated types still needs explicit adapter/source binding.
 
-Sources: `tests/fuzzing/test_batch4_derivations.py:80`, `omega_engine/crates_rs/omega_wdp/src/joint_support_recovery.rs:69`.
+Sources: `tests/fuzzing/test_batch4_derivations.py:80`, `engine/crates_rs/core_wdp/src/joint_support_recovery.rs:69`.
 
 Activated AB-ID guard equivalence: **not established**. Universal prevention: **not established**.
 
@@ -302,7 +302,7 @@ Proposed v1.1RC formal obligations:
 
 Repository coverage: **source_fixture_or_owner_located_not_replayed**. Rust exact derivation-control tests located for determinant sign and hinge incidence; not executed here.
 
-Sources: `omega_engine/crates_rs/tests/omega_wdp/derivation_controls/wdp_appm_t2.rs:25`, `omega_engine/crates_rs/tests/omega_wdp/derivation_controls/wdp_appm_t4.rs:28`.
+Sources: `engine/crates_rs/tests/core_wdp/derivation_controls/wdp_appm_t2.rs:25`, `engine/crates_rs/tests/core_wdp/derivation_controls/wdp_appm_t4.rs:28`.
 
 Activated AB-ID guard equivalence: **not established**. Universal prevention: **not established**.
 
@@ -319,6 +319,6 @@ Proposed v1.1RC formal obligations:
 
 Repository coverage: **source_fixture_or_owner_located_not_replayed**. Actual Python exact certificate verify predicates and forged-dual tests found; degree-k owner remains under paper tests/support and uses declared exact rational LP carrier. Generic weighted objective needs declared normalization because base verifier uses |y|≤1.
 
-Sources: `omega_engine_atlas/coda_atlas/F004_papers/009_ms_majorana/code/cochain_presentation.py:90`, `omega_engine_atlas/coda_atlas/F004_papers/009_ms_majorana/code/tests/support/functional/degree_k_phi.py:415`, `tests/fuzzing/test_degree_k_dual_certified_solver.py:255`.
+Sources: `atlas/coda_atlas/F004_papers/009_ms_majorana/code/cochain_presentation.py:90`, `atlas/coda_atlas/F004_papers/009_ms_majorana/code/tests/support/functional/degree_k_phi.py:415`, `tests/fuzzing/test_degree_k_dual_certified_solver.py:255`.
 
 Activated AB-ID guard equivalence: **not established**. Universal prevention: **not established**.

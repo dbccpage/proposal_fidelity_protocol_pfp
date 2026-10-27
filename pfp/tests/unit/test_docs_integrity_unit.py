@@ -3,17 +3,17 @@ from __future__ import annotations
 from argparse import Namespace
 from pathlib import Path
 
-from omega_engine_pfp.domain.documentation_integrity.models import (
+from pfp.domain.documentation_integrity.models import (
     DocumentationCommand,
     ExecutionReceipt,
     IntegrityRequest,
 )
-from omega_engine_pfp.domain.documentation_integrity.policies import (
+from pfp.domain.documentation_integrity.policies import (
     extension_kind,
     is_document_relative_path,
 )
-from omega_engine_pfp.domain.kernel.result import Result
-from omega_engine_pfp.use_cases.documentation_integrity import DocumentationIntegrityService
+from pfp.domain.kernel.result import Result
+from pfp.use_cases.documentation_integrity import DocumentationIntegrityService
 
 
 class FakeClock:

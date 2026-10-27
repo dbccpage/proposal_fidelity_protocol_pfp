@@ -2,7 +2,7 @@
 
 Run from the repository root:
 
-    python -m omega_engine_pfp.use_cases.detector_adequacy.battery \
+    python -m pfp.use_cases.detector_adequacy.battery \
         --lock-commit <sha> --n 300 --out <dir>
 
 The run refuses (exit 1) unless every locked file matches the lock manifest both in the
@@ -25,11 +25,11 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from omega_engine_pfp.use_cases.detector_adequacy import detectors, traces, witness_replay
+from pfp.use_cases.detector_adequacy import detectors, traces, witness_replay
 
 PREREG_ID = "PREREG-DA-001"
-LOCK_MANIFEST = "omega_engine_pfp/documentation/detector_adequacy/lock_da_001.json"
-HELDOUT_MODULE = "omega_engine_pfp.use_cases.detector_adequacy.heldout"
+LOCK_MANIFEST = "pfp/documentation/detector_adequacy/lock_da_001.json"
+HELDOUT_MODULE = "pfp.use_cases.detector_adequacy.heldout"
 
 # Pre-registered thresholds (section 4 of the pre-registration).
 FALSE_GREEN_FAMILY_MAX = 0.02
@@ -225,7 +225,7 @@ def certificate(table: Dict[str, Dict[str, Any]], lock_ok: bool) -> Dict[str, An
 
 def lggr_report(samples: List[Tuple[Dict[str, int], int]], adapter_factory: Callable[[], Any]) -> Dict[str, Any]:
     """Run a gluing adapter over the local vectors. The caller supplies the adapter, so this
-    package does not import Woland (``test_symbol_game_production_code_does_not_import_woland``)."""
+    package does not import Adversary (``test_symbol_game_production_code_does_not_import_adversary``)."""
     usable = [s for s in samples if s[0]]
     keys = sorted({k for s in usable for k in s[0]})
     corpus = [({k: s[0].get(k, 1) for k in keys}, s[1]) for s in usable]

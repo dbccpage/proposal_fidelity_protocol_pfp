@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.scripts import verify_v1_1_rc_specification as integrity
+from pfp.scripts import verify_v1_1_rc_specification as integrity
 
 
 def _write_json(path: Path, value: object) -> None:
@@ -75,7 +75,7 @@ def audit_tree(tmp_path: Path) -> Path:
             for i in range(1, 76)
         ],
         "antibodies": [{"id": f"AB-{i:03}"} for i in range(1, 20)],
-        "woland_modules": [
+        "adversary_modules": [
             {"path": f"tests/test_{i:03}.py", "provenance": "source_only", "executed_now": False}
             for i in range(308)
         ],
@@ -108,7 +108,7 @@ def test_valid_fixture_has_exact_coverage_and_narrow_receipt(audit_tree):
         "curriculum": 13,
         "pilots": 75,
         "antibodies": 19,
-        "woland_modules": 308,
+        "adversary_modules": 308,
     }
     assert receipt["gzip_json_files_checked"] == 1
     assert "no mathematical or runtime certification" in receipt["scope"]
@@ -144,7 +144,7 @@ def test_unsorted_artifact_paths_are_refused(audit_tree):
         integrity.verify(audit_tree)
 
 
-@pytest.mark.parametrize("category", ["curriculum", "pilots", "antibodies", "woland_modules"])
+@pytest.mark.parametrize("category", ["curriculum", "pilots", "antibodies", "adversary_modules"])
 def test_missing_required_census_member_is_refused(audit_tree, category):
     _change_census(audit_tree, lambda census: census[category].pop())
     with pytest.raises(integrity.IntegrityError, match="exact required set|exactly 308"):
@@ -177,7 +177,7 @@ def test_absent_pilot_cannot_be_claimed_empirically_verified(audit_tree):
 
 
 def test_source_only_module_cannot_be_claimed_executed(audit_tree):
-    _change_census(audit_tree, lambda census: census["woland_modules"][0].update(executed_now=True))
+    _change_census(audit_tree, lambda census: census["adversary_modules"][0].update(executed_now=True))
     with pytest.raises(integrity.IntegrityError, match="cannot be labelled executed now"):
         integrity.verify(audit_tree)
 
@@ -215,7 +215,7 @@ def test_census_module_must_be_covered_by_manifest(audit_tree):
     manifest["sources"] = [row for row in manifest["sources"] if row["path"] != "tests/test_000.py"]
     _write_json(path, manifest)
     with pytest.raises(
-        integrity.IntegrityError, match="Woland module omitted from source_manifest"
+        integrity.IntegrityError, match="Adversary module omitted from source_manifest"
     ):
         integrity.verify(audit_tree)
 
@@ -415,7 +415,7 @@ def test_manifest_control_character_cannot_inject_git_batch_request(audit_tree):
         integrity.verify(audit_tree)
 
 
-@pytest.mark.parametrize("category", ["pilots", "woland_modules"])
+@pytest.mark.parametrize("category", ["pilots", "adversary_modules"])
 def test_static_audit_cannot_launder_execution_by_changing_both_flags(audit_tree, category):
     change = {"executed_now": True}
     change["evidence_status" if category == "pilots" else "provenance"] = "executed_now"

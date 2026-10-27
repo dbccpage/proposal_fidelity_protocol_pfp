@@ -21,7 +21,7 @@ from .models import (
     SkillOperationV1,
 )
 
-SCHEMA_ESTATE_CATALOG_V2 = "omega.was.estate_catalog.v2"
+SCHEMA_ESTATE_CATALOG_V2 = "core.was.estate_catalog.v2"
 LIFECYCLE_STATES = frozenset(
     {"DRAFT", "TYPED", "BOUND", "TESTED", "COMPOSABLE", "ADMITTED"}
 )

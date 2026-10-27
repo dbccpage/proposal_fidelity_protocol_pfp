@@ -1,4 +1,4 @@
-"""Unit and integration tests for the Omega Autopoiesis Engine.
+"""Unit and integration tests for the Core Autopoiesis Engine.
 
 AuthorityEffect: None.
 """
@@ -11,20 +11,20 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from omega_engine_operads.application.autopoiesis import AutopoieticHarvester
-from omega_engine_operads.domain.autopoiesis.entities import (
+from operads.application.autopoiesis import AutopoieticHarvester
+from operads.domain.autopoiesis.entities import (
     HarvestRecord,
     HarvestSnapshot,
     MinedAntibody,
     MinedSkillProposal,
 )
-from omega_engine_operads.frontend.cli.harvest_cli import run_harvest_cli
-from omega_engine_operads.infrastructure.autopoiesis import (
+from operads.frontend.cli.harvest_cli import run_harvest_cli
+from operads.infrastructure.autopoiesis import (
     FileHarvestVault,
     JsonPharmacyAdapter,
     MarkdownSkillsAdapter,
 )
-from omega_engine_operads.infrastructure.autopoiesis.harvest_source import (
+from operads.infrastructure.autopoiesis.harvest_source import (
     FilesystemHarvestSource,
 )
 

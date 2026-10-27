@@ -8,10 +8,10 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/domain/operad/evidence.py
-  - omega_engine_operations/skill_operad/json/evidence_trace.json
-  - omega_engine_education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/08_reference_operad_and_skill_compiler.md
-  - omega_engine/crates_rs/omega_wdp/src/ddc/dda_alphabet.rs
+  - operads/domain/operad/evidence.py
+  - operations/skill_operad/json/evidence_trace.json
+  - education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/08_reference_operad_and_skill_compiler.md
+  - engine/crates_rs/core_wdp/src/ddc/dda_alphabet.rs
 last_verified: 2026-10-01
 ---
 
@@ -25,7 +25,7 @@ last_verified: 2026-10-01
 
 A primary vulnerability of LLM-based agent swarms is **semantic churn**: agents repeatedly edit code or rewrite documents, generating pages of plausible prose, while the underlying mathematical or architectural defect remains unchanged (or worsens).
 
-To prevent hollow iterations, the Anomalon Engine embeds all operadic evaluations in a **Residual Geometry**. Every state transition is measured against an explicit defect functional $\Phi$. An operation is admitted only if it provably or empirically contracts this residual:
+To prevent hollow iterations, the Sentinel Engine embeds all operadic evaluations in a **Residual Geometry**. Every state transition is measured against an explicit defect functional $\Phi$. An operation is admitted only if it provably or empirically contracts this residual:
 
 $$\boxed{\Delta \Phi = \Phi(S_{\mathrm{after}}) - \Phi(S_{\mathrm{before}}) \le 0}$$
 
@@ -53,7 +53,7 @@ For an operadic morphism $f: S \to S'$:
 
 ## 3. The `EvidenceReceipt` Value Object: `evidence.py`
 
-In [`omega_engine_operads/domain/operad/evidence.py`](../../../../omega_engine_operads/domain/operad/evidence.py):
+In [`operads/domain/operad/evidence.py`](../../../../operads/domain/operad/evidence.py):
 
 ```python
 class EvidenceType(str, enum.Enum):
@@ -89,7 +89,7 @@ Every compiler check, planar substitution pass, and budget audit emits an `Evide
 
 In empirical agent research, claiming that an agent workflow "works" based on a single successful demo is a violation of claim hygiene.
 
-The OEWAS engine enforces the **Three-Run Empirical Protocol** in [`omega_engine_operations/skill_operad/json/evidence_trace.json`](../../../../omega_engine_operations/skill_operad/json/evidence_trace.json):
+The OEWAS engine enforces the **Three-Run Empirical Protocol** in [`operations/skill_operad/json/evidence_trace.json`](../../../../operations/skill_operad/json/evidence_trace.json):
 
 ```mermaid
 stateDiagram-v2
@@ -118,7 +118,7 @@ $$\boxed{\Sigma_{\mathrm{DDC}} = \{ E,\, R,\, C,\, I,\, \Lambda,\, D,\, M,\, T \
 | DDC Letter | Operation Name | Operadic Mapping | Residual Action |
 | :---: | :--- | :--- | :--- |
 | **`E`** | **Exact Repair** | Contractive skill execution (`residual_effect: "contractive"`) | $\Delta \Phi < 0$ |
-| **`R`** | **Residual Projection** | Diagnostic red-team evaluation (`omega-old-man-red-team`) | Computes $\Phi(S)$ |
+| **`R`** | **Residual Projection** | Diagnostic red-team evaluation (`core-red-team`) | Computes $\Phi(S)$ |
 | **`C`** | **Context Exposure** | Planar substitution $\theta \circ_i \phi$ splicing input colours | Connects ports |
 | **`I`** | **Integration** | Multi-agent deliberation consensus merging wings | Aggregates votes |
 | **`Λ`** | **Structural Lift** | Elevating a raw artifact to an admitted operadic object | Admittance gate |
@@ -126,7 +126,7 @@ $$\boxed{\Sigma_{\mathrm{DDC}} = \{ E,\, R,\, C,\, I,\, \Lambda,\, D,\, M,\, T \
 | **`M`** | **Typed Refusal** | Inadmissible substitution or slice violation (`SubstitutionError`) | Aborts transition |
 | **`T`** | **Terminalization** | Workflow completion and receipt sealing (`EvidenceReceipt`) | Terminalizes run |
 
-By mapping operad transitions to the DDC alphabet, the entire multi-agent deliberation can be formally audited using the sovereign Rust crate [`omega_discrete_deformation_calculus`](../../../../omega_engine/crates_rs/omega_wdp/src/ddc/).
+By mapping operad transitions to the DDC alphabet, the entire multi-agent deliberation can be formally audited using the sovereign Rust crate [`core_discrete_deformation_calculus`](../../../../engine/crates_rs/core_wdp/src/ddc/).
 
 ---
 
@@ -136,10 +136,10 @@ To run the unit tests verifying evidence receipts and DDC alphabet mapping:
 
 ```powershell
 # 1. Verify DDC letter trace and non-authority firewall
-cargo test --package omega_discrete_deformation_calculus --test authority_firewall
+cargo test --package core_discrete_deformation_calculus --test authority_firewall
 
 # 2. Verify evidence trace ledger
-# Retired: OEWAS tests/unit/test_operad_evidence.py has no successor file under omega_engine_operads.
+# Retired: OEWAS tests/unit/test_operad_evidence.py has no successor file under operads.
 ```
 
 ### The Level 06 Governance Invariants

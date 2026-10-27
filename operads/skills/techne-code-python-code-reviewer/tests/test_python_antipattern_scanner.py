@@ -250,8 +250,8 @@ class TestScannerCli(unittest.TestCase):
 
 
 class TestPortedConfig(unittest.TestCase):
-    def test_no_anomalonpy_dependency_exceptions_are_carried(self):
-        """Upstream shipped four debt entries naming omega_engine_operations
+    def test_no_sentinelpy_dependency_exceptions_are_carried(self):
+        """Upstream shipped four debt entries naming operations
         modules that do not exist in CODA. Carrying them would be a debt
         register describing a different repository."""
         self.assertEqual(ArchitectureConfig().dependency_exceptions, ())

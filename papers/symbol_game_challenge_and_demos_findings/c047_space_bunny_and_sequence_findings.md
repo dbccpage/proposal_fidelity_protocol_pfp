@@ -42,7 +42,7 @@ Challenge **C047 (`c047_sequence_law_discovery`)** tests symbolic algebra, linea
 We developed, verified, and sealed the reference solver package under SG-CP v1:
 - **Reference Solver:** Pure Python standard library implementation (`fractions.Fraction`, `math`) providing exact Gaussian elimination, nullspace projection, Bareiss fraction-free determinants, and algebraic root checking.
 - **Judge Packet:** 64 hidden cases (40 base cases across C-finite, hypergeometric, and holonomic laws; 16 relabel and gauge controls; 8 poisoned cases) and 48 hostile mutations.
-- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.774s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c047_eval_1790624985`.
+- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.774s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c047_eval_1790624985`.
 
 ---
 

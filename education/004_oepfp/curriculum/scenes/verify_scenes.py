@@ -14,7 +14,7 @@ _REPO_ROOT = Path(__file__).resolve().parents[4]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from omega_engine_education.education_app.use_cases.media.scene_generator import SceneVerificationUseCase
+from education.education_app.use_cases.media.scene_generator import SceneVerificationUseCase
 
 
 def main() -> int:

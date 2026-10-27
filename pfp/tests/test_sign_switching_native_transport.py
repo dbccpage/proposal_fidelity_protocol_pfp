@@ -4,7 +4,7 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters.mssn_research.sign_switching import (
+from pfp.infrastructure.adapters.mssn_research.sign_switching import (
     SignGaugeNativeUnavailable,
     classify_sign_gauge,
     parse_matrix,
@@ -14,7 +14,7 @@ from omega_engine_pfp.infrastructure.adapters.mssn_research.sign_switching impor
 
 
 def test_missing_host_refuses_instead_of_python_search(monkeypatch):
-    from omega_engine_pfp import ffi
+    from pfp import ffi
 
     def unavailable():
         raise FileNotFoundError("native host missing")
@@ -25,8 +25,8 @@ def test_missing_host_refuses_instead_of_python_search(monkeypatch):
 
 
 def test_false_native_certificate_cannot_become_gauge_result(monkeypatch):
-    from omega_engine_operating_system.adapters.rust_host.ffi import Ok
-    from omega_engine_pfp import ffi
+    from operating_system.adapters.rust_host.ffi import Ok
+    from pfp import ffi
 
     class Host:
         def invoke(self, action, payload):
@@ -52,7 +52,7 @@ def test_false_native_certificate_cannot_become_gauge_result(monkeypatch):
 
 
 def test_invalid_witness_types_refuse_without_native_dispatch(monkeypatch):
-    from omega_engine_pfp import ffi
+    from pfp import ffi
 
     def forbidden():
         raise AssertionError("invalid witness must never dispatch")

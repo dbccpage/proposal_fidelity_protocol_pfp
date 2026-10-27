@@ -8,10 +8,10 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.infrastructure import challenge_live as live
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import ROOT
+from pfp.infrastructure import challenge_live as live
+from adversary.tests.pilots.challenge_suite.catalog import ROOT
 
-EVIDENCE = ROOT / "omega_engine_woland/tests/pilots/evidence/demo004_pfp_learning/live"
+EVIDENCE = ROOT / "adversary/tests/pilots/evidence/demo004_pfp_learning/live"
 
 
 @pytest.mark.parametrize(
@@ -20,7 +20,7 @@ EVIDENCE = ROOT / "omega_engine_woland/tests/pilots/evidence/demo004_pfp_learnin
         pytest.param(
             "c021_dev_baseline_v3",
             marks=pytest.mark.skipif(
-                not os.environ.get("OMEGA_SYMBOL_GAME_HOST"),
+                not os.environ.get("CORE_SYMBOL_GAME_HOST"),
                 reason="Explicit native host binary required",
             ),
         ),
@@ -31,7 +31,7 @@ EVIDENCE = ROOT / "omega_engine_woland/tests/pilots/evidence/demo004_pfp_learnin
 )
 def test_saved_spk_proposals_in_new_synthetic_bound_turns(name, tmp_path, monkeypatch):
     """Old completion text is fixture input; new PFP wires are not old live replay."""
-    from omega_engine_pfp.tests.test_challenge_accounted_boundary import fixture_gateway
+    from pfp.tests.test_challenge_accounted_boundary import fixture_gateway
 
     original = EVIDENCE / name
     config = json.loads((original / "config.json").read_bytes())
@@ -90,7 +90,7 @@ def test_missing_runtime_source_refuses_before_replay(tmp_path, monkeypatch):
 def test_consumed_prompt_inputs_are_captured_and_drift_refuses_before_replay(
     tmp_path, monkeypatch, changed
 ):
-    from omega_engine_woland.tests.pilots.challenge_suite import catalog
+    from adversary.tests.pilots.challenge_suite import catalog
 
     root = tmp_path / "sources"
     challenge = root / "c005_fixture"
@@ -108,8 +108,8 @@ def test_consumed_prompt_inputs_are_captured_and_drift_refuses_before_replay(
     monkeypatch.setattr(live, "ROOT", root)
     monkeypatch.setattr(live, "RUNTIME_SOURCES", ())
     monkeypatch.setattr(live, "source_bindings", lambda challenge: {})
-    from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
-    from omega_engine_woland.domain.providers.types import CandidateRequest
+    from pfp.tests.test_pilot_matrix_pfp import make_gateway
+    from adversary.domain.providers.types import CandidateRequest
 
     gateway, provider = make_gateway(tmp_path, model="fixture", max_output_tokens=256)
     def prepared(row, arm, feedback, config, stage):
@@ -137,7 +137,7 @@ def test_consumed_prompt_inputs_are_captured_and_drift_refuses_before_replay(
 
 
 def test_c005_saved_request_judgments_and_stops_replay_at_recorded_revision(tmp_path):
-    from omega_engine_woland.tests.pilots.challenge_suite.replay_snapshots import replay
+    from adversary.tests.pilots.challenge_suite.replay_snapshots import replay
 
     evidence = EVIDENCE.parent
     record = json.loads((evidence / "frozen_replay_v4.json").read_bytes())

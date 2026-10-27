@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from omega_engine_woland.tests.pilots.judge_packet_audit import semantic
+from adversary.tests.pilots.judge_packet_audit import semantic
 
 # Z2 = {e, a} on a 2x2 open lattice, one plaquette 0,0 -> 1,0 -> 1,1 -> 0,1
 Z2 = {

@@ -113,7 +113,7 @@ archiving them does not adopt their withdrawn interpretations. New review
 receipts replace older runner, teaching and PDF bindings only for the revised
 candidate, without altering historical receipts.
 
-The Landau-style rubric supports self-study. No learner data, calibrated
+The Examiner-style rubric supports self-study. No learner data, calibrated
 grading claim or equivalence to an MSS stage is reported. A future empirical
 comparison needs unassisted prompts, repeated seeds, declared outcomes and
 retained per-case data. An independent fresh Lean replay needs a host on which

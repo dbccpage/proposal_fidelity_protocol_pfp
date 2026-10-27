@@ -1,9 +1,9 @@
-> **HISTORICAL.** This note's location line, `use_cases/` layer, and 57-crate kernel picture are not the live tree. The live Woland entry and owner map are in [chapter 23](23_plan_oewas_consolidation_oeeis_and_demo_integration.md).
+> **HISTORICAL.** This note's location line, `use_cases/` layer, and 57-crate kernel picture are not the live tree. The live Adversary entry and owner map are in [chapter 23](23_plan_oewas_consolidation_oeeis_and_demo_integration.md).
 
 # OEWAS Master Integration Plan: Symbol Game, Swarms, OEOS & 57-Crate Kernel
 
 **Status:** Architectural Analysis & Integration Plan (`mathematical_wip`)  
-**Location:** this chapter. Its former source copy `_docs/05_notes_oewas_integration_plan_and_system_topology.md` in the retired OEWAS package has no successor under `omega_engine_operads`.  
+**Location:** this chapter. Its former source copy `_docs/05_notes_oewas_integration_plan_and_system_topology.md` in the retired OEWAS package has no successor under `operads`.  
 **Governing Standard:** Clean Architecture, 5-Tier Coloured Operads, DDD Aggregates, Railway-Oriented Programming (ROP), RFC 8785 Canonical JSON  
 **AuthorityEffect:** `None` (Zero-authority invariant)  
 **Execution Posture:** Observation, Design & Integration Notes Only (Zero autonomous execution)  
@@ -12,7 +12,7 @@
 
 ## 1. Executive Vision & System Topology
 
-The goal of the Omega Engine architecture is to unify mathematical proof systems, sparse manifold retraction, multi-agent cognitive debate, and operadic workflow compilation into a single, high-throughput, zero-authority execution estate.
+The goal of the engine architecture is to unify mathematical proof systems, sparse manifold retraction, multi-agent cognitive debate, and operadic workflow compilation into a single, high-throughput, zero-authority execution estate.
 
 ```text
                            OMNI-ENGINE ESTATE TOPOLOGY
@@ -21,7 +21,7 @@ The goal of the Omega Engine architecture is to unify mathematical proof systems
  │   - Web UI / CLI Terminal / Interactive Slash Command Runners (/symbol-game, /oeags)   │
  │   - Thin Python API Controllers (Request validation, ROP Result[T, DomainError])      │
  ├────────────────────────────────────────────────────────────────────────────────────────┤
- │ 2. OEOS (Omega Engine Operating System - Host Boundary)                                │
+ │ 2. OEOS (Engine Operating System - Host Boundary)                                │
  │   - Process isolation, sandbox containment, CAS storage, quota & cancellation          │
  │   - 8-stage artifact waist integrity (Zero math/proof authority in host)               │
  ├────────────────────────────────────────────────────────────────────────────────────────┤
@@ -31,7 +31,7 @@ The goal of the Omega Engine architecture is to unify mathematical proof systems
  ├────────────────────────────────────────────────────────────────────────────────────────┤
  │ 4. AGENTIC SWARMS & DIALECTIC BOUTS                                                    │
  │   - Generic Swarms (Base framework: scheduling, typed sinks, and telemetry)            │
- │   - Woland Swarm (7-Act Master & Margarita dialectic, 9-dot gauge break transformations)│
+ │   - Adversary Swarm (7-Act Master & Primal Dual dialectic, 9-dot gauge break transformations)│
  ├────────────────────────────────────────────────────────────────────────────────────────┤
  │ 5. SYMBOL GAME (Prompt Engine & Sparse Manifold Retraction)                            │
  │   - 7 Discrete stages: Intake -> Extract -> Solve -> Classify -> Gate -> Ledger -> Seal│
@@ -82,7 +82,7 @@ To prevent coupling and preserve zero-authority guarantees, the system enforces 
  │ STEP 2: Host Allocation & Sandboxing (OEOS)                                            │
  │   - OEOS allocates sandbox, binds CAS storage paths, and sets execution quotas.        │
  ├────────────────────────────────────────────────────────────────────────────────────────┤
- │ STEP 3: Multi-Agent Dialectic Bout (Woland Swarm)                                      │
+ │ STEP 3: Multi-Agent Dialectic Bout (Adversary Swarm)                                      │
  │   - Swarm scheduler launches characters across the 7-Act dialectic.                     │
  │   - For every character inquiry, the character compiles a Symbol Game prompt packet.    │
  ├────────────────────────────────────────────────────────────────────────────────────────┤
@@ -96,8 +96,8 @@ To prevent coupling and preserve zero-authority guarantees, the system enforces 
  │   - Trace sinks capture all candidate packets in _intelligence/.                       │
  │   - Recurrence miner flags patterns (count ≥ 3) to synthesize new Antibodies.          │
  ├────────────────────────────────────────────────────────────────────────────────────────┤
- │ STEP 6: Terminal Gatekeeping & Sealing (Woland / OEOS)                                  │
- │   - Woland applies terminal reality gate (PASS_TO_MASTER | REFUSE | OPEN_RESIDUAL).     │
+ │ STEP 6: Terminal Gatekeeping & Sealing (Adversary / OEOS)                                  │
+ │   - Adversary applies terminal reality gate (PASS_TO_MASTER | REFUSE | OPEN_RESIDUAL).     │
  │   - OEOS seals the 4 canonical run files (receipt, novella, dda_actions, summary).     │
  └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -132,7 +132,7 @@ By grafting the **Polarized Coloured Operad** $(\mathcal{O}^+, \mathcal{O}^-)$ d
 
 ## 5. Downstream Target: 57-Crate Rust Kernel Architecture
 
-As the Python prototypes mature and stabilize, the entire mathematical and execution core will be compiled into the **57 Rust crates** (`anomalon/omega_engine/crates/`):
+As the Python prototypes mature and stabilize, the entire mathematical and execution core will be compiled into the **57 Rust crates** (`sentinel/engine/crates/`):
 
 ```text
  ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -144,11 +144,11 @@ As the Python prototypes mature and stabilize, the entire mathematical and execu
                                              v
  ┌────────────────────────────────────────────────────────────────────────────────────────┐
  │ COMPILED RUST CRATES KERNEL (57 Crates)                                                │
- │   ├─ omega_symbol_game        : Nanosecond sparse manifold retraction & descent checks │
- │   ├─ omega_category_theory    : Pure operadic multicategories & planar trees           │
- │   ├─ omega_solvers            : Exact rational L1 LP & Gauge-Higgs-SUSY solvers        │
- │   ├─ omega_discrete_deformation_algebra : DDA trajectory engine & coboundary operators│
- │   └─ omega_quantum_physics / omega_majorana / omega_homotopy_type_theory               │
+ │   ├─ core_symbol_game        : Nanosecond sparse manifold retraction & descent checks │
+ │   ├─ core_category_theory    : Pure operadic multicategories & planar trees           │
+ │   ├─ core_solvers            : Exact rational L1 LP & Gauge-Higgs-SUSY solvers        │
+ │   ├─ core_discrete_deformation_algebra : DDA trajectory engine & coboundary operators│
+ │   └─ core_quantum_physics / core_majorana / core_homotopy_type_theory               │
  └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -173,21 +173,21 @@ As the Python prototypes mature and stabilize, the entire mathematical and execu
 ### Phase 2: OEWAS ↔ Symbol Game Bridge Wiring
 
 * [ ] Connect `OEASWorkflowOperad` tree compilation to `SymbolGameRunnerUseCase`.
-* [ ] Implement `AntiSkill` interrogative adapter in `omega_engine_pfp/domain/`.
+* [ ] Implement `AntiSkill` interrogative adapter in `pfp/domain/`.
 * [ ] Wire `Antibody` pharmacy fixtures into `SymbolGameEngine` kill conditions.
 
-### Phase 3: Swarm Dialectic Integration (Woland Swarm & Generic Swarm)
+### Phase 3: Swarm Dialectic Integration (Adversary Swarm & Generic Swarm)
 
-* [ ] Wire Woland Swarm character bouts to dispatch turns through `SymbolGameBridgeSession`.
-* [ ] Direct multi-packet return batches into `_intelligence/_woland/runs/<task_key>/`.
+* [ ] Wire Adversary Swarm character bouts to dispatch turns through `SymbolGameBridgeSession`.
+* [ ] Direct multi-packet return batches into `_intelligence/_adversary/runs/<task_key>/`.
 * [ ] Implement automatic trace mining for antibody synthesis when defect count $\ge 3$.
 
 ### Phase 4: OEOS Host Containment & Sandboxing
 
-* [ ] Map OEOS CAS storage and process isolation to the Symbol Game and Woland runs.
+* [ ] Map OEOS CAS storage and process isolation to the Symbol Game and Adversary runs.
 * [ ] Verify 8-stage artifact waist compliance across all emitted receipts.
 
 ### Phase 5: Rust Kernel Lowering & Thin Controller Finalization
 
-* [ ] Port OEWAS operad compiler logic to `omega_category_theory` and `omega_symbol_game` Rust crates.
+* [ ] Port OEWAS operad compiler logic to `core_category_theory` and `core_symbol_game` Rust crates.
 * [ ] Deploy thin Python API controller and Web UI for interactive prompt dispatch.

@@ -35,7 +35,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     # 3. evaluate-gates
-    gate_p = subparsers.add_parser("evaluate-gates", help="Evaluate Woland Tribunal gates")
+    gate_p = subparsers.add_parser("evaluate-gates", help="Evaluate Adversary Tribunal gates")
     gate_p.add_argument("--candidate-id", default="candidate_cli", help="Candidate identifier")
     gate_p.add_argument("--state-json", help="Path to JSON file containing candidate attestations")
 
@@ -52,7 +52,7 @@ def build_parser() -> argparse.ArgumentParser:
     suite_p = subparsers.add_parser("run-pilot-suite", help="Execute a multi-test pilot suite")
     suite_p.add_argument(
         "--pilot-dir",
-        default="omega_engine_pfp/tests/pilot_0000000",
+        default="pfp/tests/pilot_0000000",
         help="Path to pilot directory",
     )
     suite_p.add_argument(
@@ -152,7 +152,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"REFUSED: {err.code.value}: {err.message}", file=sys.stderr)
             print(
                 "For structural catalog checks only, run: python -m "
-                "omega_engine_pfp.entrypoints.cli.pfp_normal_forms audit-contracts",
+                "pfp.entrypoints.cli.pfp_normal_forms audit-contracts",
                 file=sys.stderr,
             )
             return 1
@@ -268,14 +268,14 @@ def _seed_command(args, parser) -> int:
     from hashlib import sha256
     from uuid import uuid4
 
-    from omega_engine_pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import seed_candidate_schema
+    from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
+    from pfp.infrastructure.pilot_runners.seed_checks import seed_candidate_schema
 
     from ...infrastructure.pilot_runner import load_seed_catalog
     from ...infrastructure.providers import OfflineDeterministicPfpProvider, SeedHostVerifier
     from ...infrastructure.storage import PfpFileSystemStorageAdapter
     from ...use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
-    from omega_engine_woland.domain.providers.types import ProviderConfigError
+    from adversary.domain.providers.types import ProviderConfigError
 
     provider = None
     try:

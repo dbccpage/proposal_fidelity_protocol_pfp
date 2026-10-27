@@ -13,9 +13,9 @@ from __future__ import annotations
 
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Req, Separate
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, Fixture
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Req, Separate
+from operations.use_cases.level_engine.research_engine.level import Compiled, Fixture
 
 CHALLENGE_ID = "edge_endpoints"
 ANSWER_TYPE = "D"

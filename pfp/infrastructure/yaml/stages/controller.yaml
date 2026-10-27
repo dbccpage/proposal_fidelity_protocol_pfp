@@ -81,28 +81,28 @@ stages:
   executor: model
   requires:
   - 1
-  seat: seat_begemot
+  seat: seat_gauge_breaker
 - stage: 3
   name: audit
   executor: model
   requires:
   - 1
   - 2
-  seat: seat_koroviev
+  seat: seat_defect_hunter
 - stage: 4
   name: l2_extraction
   executor: model
   requires:
   - 2
   - 3
-  seat: seat_begemot
+  seat: seat_gauge_breaker
 - stage: 5
   name: evaluation
   executor: host
   requires:
   - 2
   - 4
-  seat: seat_woland
+  seat: seat_adversary
 - stage: 6
   name: adversarial
   executor: model
@@ -110,7 +110,7 @@ stages:
   - 2
   - 4
   - 5
-  seat: seat_margarita
+  seat: seat_primal_dual
 - stage: 7
   name: challenge_replay
   executor: host
@@ -124,7 +124,7 @@ stages:
   requires:
   - 5
   - 7
-  seat: seat_the_master
+  seat: seat_manuscript_truth
 - stage: 9
   name: receipt
   executor: host

@@ -1,11 +1,11 @@
 import json
 import os
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.reference_solver import (
     solve,
 )
 
-out_dir = "omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math/c049_finite_category_universal_constructions/participant_packet/examples"
+out_dir = "projects/mssn_sn_symgam/challenges/e_formal_math/c049_finite_category_universal_constructions/participant_packet/examples"
 os.makedirs(out_dir, exist_ok=True)
 
 examples = [

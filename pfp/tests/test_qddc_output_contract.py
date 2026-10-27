@@ -10,12 +10,12 @@ from itertools import combinations
 import pytest
 from pydantic import ValidationError
 
-from omega_engine_operating_system.adapters.rust_host.majorana_math import (
+from operating_system.adapters.rust_host.majorana_math import (
     NativeMathRefusal,
     call_native,
 )
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.domain.homology.qddc import (
+from operations.domain.rop.result import Ok
+from pfp.domain.homology.qddc import (
     DeformationRequest,
     DensityRequest,
     LindbladRequest,
@@ -25,7 +25,7 @@ from omega_engine_pfp.domain.homology.qddc import (
     RationalMatrix,
     RetractionRequest,
 )
-from omega_engine_pfp.infrastructure.adapters.qddc_rust_adapter import NativeQddc
+from pfp.infrastructure.adapters.qddc_rust_adapter import NativeQddc
 
 
 def operator(rows: list[list[str]]) -> Operator:
@@ -50,7 +50,7 @@ def assert_native_output_refusal(method: str, request) -> None:
     # These inputs fit both the scalar input gate and the runtime wire budget.
     wire = json.dumps(
         {
-            "schema_version": "omega.symbol-game.runtime-request.v1",
+            "schema_version": "core.symbol-game.runtime-request.v1",
             "action": f"qddc_{method}",
             "payload": request.model_dump(mode="json"),
         }
@@ -60,7 +60,7 @@ def assert_native_output_refusal(method: str, request) -> None:
         getattr(NativeQddc(), method)(request)
     refusal = caught.value
     assert refusal.code == "NATIVE_MATH_REFUSED"
-    assert refusal.outcome["schema_version"] == "omega.symbol-game.runtime-outcome.v1"
+    assert refusal.outcome["schema_version"] == "core.symbol-game.runtime-outcome.v1"
     assert refusal.outcome["action"] == f"qddc_{method}"
     assert refusal.outcome["success"] is False
     assert refusal.outcome["result"] is None

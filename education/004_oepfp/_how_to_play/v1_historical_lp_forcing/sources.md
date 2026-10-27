@@ -29,14 +29,14 @@ Player guide, not a second monograph. Does not flatten live YAML under `2_how_to
 | `symbol_game_docs/packetization_algorithms.md` | LP family local (feasibility, gap) vs global (precision, size) |
 | `symbol_game_docs/_audit_yaml_terminal_statuses.yaml` | four host terminals Certificate/Refusal/Repair/OracleNeeded; repair budget 2 |
 | `symbol_game_docs/_audit_yaml_validator_error_catalog.yaml` | LP host error codes matching the failure vocab |
-| `symbol_game_docs/product_omega_symbol_game.md` | do not conflate Rust `lp<...>` crate, Python 8-stage MVP, and research spine |
+| `symbol_game_docs/product_core_symbol_game.md` | do not conflate Rust `lp<...>` crate, Python 8-stage MVP, and research spine |
 | `symbol_game_docs/mss_n_grammar_000.md` | historical genesis `<>` cite only; alphabet cardinality is not live MSS-0 law |
 | `DOCS_CONSOLIDATION_LAW.md` Family 7 / `2_how_to_play` shape | v1 vs v2 split, YAML stays YAML |
 | dest `2_how_to_play/` listing | confirmed no `how_to_play.md`, no `v1_historical_2026-05_lp_forcing/` |
 
 ## Deliberately not copied into this version
 
-- Live `cargo` play recipes against `omega_engine/products/symbol_game`.
+- Live `cargo` play recipes against `engine/products/symbol_game`.
 - Eight-stage YAML as the public/original game (v2 / dest YAML owns stage contracts).
 - Dest filenames `on_how_to_play_the_symbol_game_39c6d877.md` or `on_plain_english_guide_to_the_symbol_game_0021c94b.md`.
 - Flattening `how_to_play_yaml/` into markdown.

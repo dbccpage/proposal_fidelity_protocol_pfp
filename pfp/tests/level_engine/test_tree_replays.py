@@ -13,32 +13,32 @@ from typing import Any
 
 import pytest
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     current_context,
 )
-from omega_engine_operations.infrastructure.level_engine_ports import ports
-from omega_engine_operations.use_cases.level_engine import bind
-from omega_engine_operations.use_cases.level_engine.bind import LEVELS, TREE_REPLAYS, records
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import dumps, load_path
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import (
+from operations.infrastructure.level_engine_ports import ports
+from operations.use_cases.level_engine import bind
+from operations.use_cases.level_engine.bind import LEVELS, TREE_REPLAYS, records
+from operations.use_cases.level_engine.research_engine.canon import dumps, load_path
+from operations.use_cases.level_engine.research_engine.errors import (
     EmbargoRefusal,
     Refusal,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.level import (
+from operations.use_cases.level_engine.research_engine.level import (
     load_spec,
     run_level,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import (
+from operations.use_cases.level_engine.research_engine.replay import (
     Row,
     result,
     tree_json,
     tree_module,
     tree_rel,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed import VENDOR
-from omega_engine_pfp.infrastructure.tower_research.level_engine.outward import bundles as B
-from omega_engine_pfp.infrastructure.tower_research.level_engine.outward import reach as R
-from omega_engine_pfp.infrastructure.tower_research.level_engine.outward.qlevels import (
+from operations.use_cases.level_engine.research_engine.sealed import VENDOR
+from pfp.infrastructure.tower_research.level_engine.outward import bundles as B
+from pfp.infrastructure.tower_research.level_engine.outward import reach as R
+from pfp.infrastructure.tower_research.level_engine.outward.qlevels import (
     REGISTRY,
     registrations,
 )
@@ -160,7 +160,7 @@ def test_a_module_that_fails_to_load_is_not_cached(tmp_path: Path, monkeypatch: 
     for the real reason instead of returning a half-built module."""
     import sys
 
-    from omega_engine_operations.use_cases.level_engine.research_engine import replay
+    from operations.use_cases.level_engine.research_engine import replay
 
     tree = tmp_path / "research" / "broken_tree"
     tree.mkdir(parents=True)

@@ -5,7 +5,7 @@ import sqlite3
 import pytest
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.prompt_representations.relational_prompt_representation import (
+from pfp.domain.prompt_representations.relational_prompt_representation import (
     RelationalPromptRepresentation,
     RelationalSpanRow,
     SqlitePromptRepresentation,

@@ -1,7 +1,7 @@
 """Native Rust exact arithmetic & linear algebra adapter.
 
-Bridges the Symbol Game domain ports to omega_engine/crates_rs native implementations
-(specifically omega_linear_algebra, omega_homology, omega_holonomy, omega_functional),
+Bridges the Symbol Game domain ports to engine/crates_rs native implementations
+(specifically core_linear_algebra, core_homology, core_holonomy, core_functional),
 providing exact rational linear algebra. Digests use the sorted-key compact ASCII JSON
 profile of ``domain/exact/digest.py``, which is not RFC 8785 and refuses floats.
 
@@ -60,7 +60,7 @@ class RustExactEngineAdapter(
     ExactFunctionalPort,
     ExactPharmacyPort,
 ):
-    """Adapter delegating exact mathematical operations to omega_engine/crates_rs."""
+    """Adapter delegating exact mathematical operations to engine/crates_rs."""
 
     def __init__(self, host: Any | None = None) -> None:
         self._host = host
@@ -89,7 +89,7 @@ class RustExactEngineAdapter(
             )
         return self._host
 
-    # -- ExactLinearAlgebraPort (omega_linear_algebra) ------------------------
+    # -- ExactLinearAlgebraPort (core_linear_algebra) ------------------------
     def determinant(self, matrix: Matrix) -> Q:
         host = self._ensure_host()
         wire = _matrix_wire(matrix)
@@ -158,9 +158,9 @@ class RustExactEngineAdapter(
     def digest_of(self, value: object) -> bytes:
         return self.sha256(self.canonical_json(value))
 
-    # -- ExactHomologyPort (omega_homology) -----------------------------------
+    # -- ExactHomologyPort (core_homology) -----------------------------------
     def compute_betti_numbers(self, complex_descriptor: object) -> list[int]:
-        raise NotImplementedError("omega_homology delegation")
+        raise NotImplementedError("core_homology delegation")
 
     def verify_boundary_law(self, complex_descriptor: object) -> bool:
         # Anything but a simplex list used to return True unchecked: a verdict
@@ -195,12 +195,12 @@ class RustExactEngineAdapter(
             raise ExactError("NATIVE_HOMOLOGY_REFUSAL", str(val.get("error")))
         raise ExactError("FFI_CROSSING_FAILED", str(outcome))
 
-    # -- ExactHolonomyPort (omega_holonomy) -----------------------------------
+    # -- ExactHolonomyPort (core_holonomy) -----------------------------------
     def path_holonomy(self, connection: object, path: Sequence[str]) -> object:
-        raise NotImplementedError("omega_holonomy delegation")
+        raise NotImplementedError("core_holonomy delegation")
 
     def loop_curvature(self, connection: object, loop: Sequence[str]) -> object:
-        raise NotImplementedError("omega_holonomy delegation")
+        raise NotImplementedError("core_holonomy delegation")
 
     def ordered_loop_product(
         self,
@@ -233,15 +233,15 @@ class RustExactEngineAdapter(
             raise ExactError("NATIVE_HOLONOMY_REFUSAL", str(val.get("error")))
         raise ExactError("FFI_CROSSING_FAILED", str(outcome))
 
-    # -- ExactFunctionalPort (omega_functional) -------------------------------
+    # -- ExactFunctionalPort (core_functional) -------------------------------
     def evaluate(
         self,
         d0: Sequence[Sequence[Fraction]],
         d1: Sequence[Sequence[Fraction]],
         residual: Sequence[Fraction],
     ) -> FunctionalReceipt:
-        """Phi1, Gamma2 and the class from omega_functional; Python computes none of them."""
-        from omega_engine_operating_system.adapters.rust_host.theory_requests import (
+        """Phi1, Gamma2 and the class from core_functional; Python computes none of them."""
+        from operating_system.adapters.rust_host.theory_requests import (
             exact_wire,
             functional_evaluate_payload,
         )
@@ -279,12 +279,12 @@ class RustExactEngineAdapter(
         )
 
     def verify_phi1_certificate(self, certificate: object) -> bool:
-        raise NotImplementedError("omega_functional delegation")
+        raise NotImplementedError("core_functional delegation")
 
     def verify_gamma2_certificate(self, certificate: object) -> bool:
-        raise NotImplementedError("omega_functional delegation")
+        raise NotImplementedError("core_functional delegation")
 
-    # -- ExactPharmacyPort (omega_prompt_civilization) -----------------------
+    # -- ExactPharmacyPort (core_prompt_civilization) -----------------------
     def pharmacy_detect(
         self, candidate_json: str, context: str = ""
     ) -> Mapping[str, Any]:
@@ -301,7 +301,7 @@ class RustExactEngineAdapter(
             raise ExactError(error.split(":", 1)[0], error)
         return record.get("result", {})
 
-    # -- Retraction Turn Machine & Loop (omega_symbol_game::epics) ------------
+    # -- Retraction Turn Machine & Loop (core_symbol_game::epics) ------------
     def retraction_turn(
         self,
         before: Mapping[str, int],

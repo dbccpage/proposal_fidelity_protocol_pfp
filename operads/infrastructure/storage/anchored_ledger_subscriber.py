@@ -17,8 +17,8 @@ import stat
 import tempfile
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_woland.stage.infrastructure.file_lock import AdvisoryFileLock
+from operations.domain.rop.result import Err, Ok
+from adversary.stage.infrastructure.file_lock import AdvisoryFileLock
 
 from ...domain.errors.domain_errors import DomainInvariantError
 from .receipt_ledger import (
@@ -30,7 +30,7 @@ from .receipt_ledger import (
 )
 from .sqlite_inbox_subscriber import SqliteInboxSubscriber, _envelope
 
-PROFILE = "omega.oewas.authenticated-ledger-tip.v1"
+PROFILE = "core.oewas.authenticated-ledger-tip.v1"
 
 
 def _plain_path(path: Path) -> None:

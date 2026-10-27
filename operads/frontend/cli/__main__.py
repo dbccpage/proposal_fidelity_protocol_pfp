@@ -1,4 +1,4 @@
-"""CLI entry-point when executed with `python -m omega_engine_operads.frontend.cli`."""
+"""CLI entry-point when executed with `python -m operads.frontend.cli`."""
 
 from __future__ import annotations
 

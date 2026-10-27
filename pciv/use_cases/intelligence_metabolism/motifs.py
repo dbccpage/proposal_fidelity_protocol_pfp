@@ -5,12 +5,12 @@ from __future__ import annotations
 from dataclasses import asdict
 from typing import Sequence
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_prompt_civilization.domain.intelligence_metabolism.models import (
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from pciv.domain.intelligence_metabolism.models import (
     MotifRecordV1,
     ObstructionEpisodeV1,
 )
-from omega_engine_prompt_civilization.domain.intelligence_metabolism.ports import (
+from pciv.domain.intelligence_metabolism.ports import (
     MetabolismKernelPort,
 )
 

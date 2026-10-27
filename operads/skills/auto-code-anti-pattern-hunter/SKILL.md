@@ -57,10 +57,10 @@ Execute the integrated pattern hunter scanner:
 
 ```bash
 # Scan modified diff or specific directories
-py -3.12 omega_engine_operads/skills/auto-code-anti-pattern-hunter/scripts/hunt_antipatterns.py <target-paths> --summary
+py -3.12 operads/skills/auto-code-anti-pattern-hunter/scripts/hunt_antipatterns.py <target-paths> --summary
 
 # Generate structured JSON receipt
-py -3.12 omega_engine_operads/skills/auto-code-anti-pattern-hunter/scripts/hunt_antipatterns.py . --output runs/anti_pattern_receipt.json
+py -3.12 operads/skills/auto-code-anti-pattern-hunter/scripts/hunt_antipatterns.py . --output runs/anti_pattern_receipt.json
 ```
 
 ## Integration with `auto-oe-autop`

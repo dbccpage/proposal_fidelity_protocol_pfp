@@ -20,10 +20,10 @@ except (ImportError, ValueError):
         from judge_packet.checkers.circulation_checker import verify_circulation_certificate
         from judge_packet.checkers.potential_checker import verify_potential_certificate
     except (ImportError, ValueError):
-        from omega_engine_pfp.tests.demo_004.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.judge_packet.checkers.circulation_checker import (
+        from pfp.tests.demo_004.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.judge_packet.checkers.circulation_checker import (
             verify_circulation_certificate,
         )
-        from omega_engine_pfp.tests.demo_004.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.judge_packet.checkers.potential_checker import (
+        from pfp.tests.demo_004.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.judge_packet.checkers.potential_checker import (
             verify_potential_certificate,
         )
 

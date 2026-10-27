@@ -13,7 +13,7 @@ import json
 import pytest
 from pathlib import Path
 
-from omega_engine_pfp.entrypoints.cli.parser import build_parser
+from pfp.entrypoints.cli.parser import build_parser
 
 
 @pytest.fixture

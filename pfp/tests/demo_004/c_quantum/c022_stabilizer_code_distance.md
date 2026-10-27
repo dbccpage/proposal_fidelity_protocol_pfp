@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Computing the minimum distance of a stabilizer code is hard in general, but checking a claimed answer splits into two cheap parts: an upper bound (one logical operator of the stated weight) and a lower bound (a certificate that nothing lighter exists). Q40 asked only for an upper-bound style answer; this challenge forces the solver to produce the lower bound too, which is where plausible but wrong answers fail.
 
-The task stresses decomposition in OEWAS (Omega Engine Workflows, Agents, Skills): parse a tableau, build a normalizer, encode a weight-bounded search, and return a proof object. It stresses OEEIS (Omega Engine Epistemic Immune System) on degenerate codes, where the lightest element of the normalizer is a stabilizer and must be excluded. A pass shows the arm can assemble a certified distance pipeline. It does not show a new algorithm: exhaustive and SAT-based distance computation are standard.
+The task stresses decomposition in OEWAS (Engine Workflows, Agents, Skills): parse a tableau, build a normalizer, encode a weight-bounded search, and return a proof object. It stresses OEEIS (Engine Epistemic Immune System) on degenerate codes, where the lightest element of the normalizer is a stabilizer and must be excluded. A pass shows the arm can assemble a certified distance pipeline. It does not show a new algorithm: exhaustive and SAT-based distance computation are standard.
 
 ## 3. Formal Problem and Bounds
 
@@ -102,10 +102,10 @@ Operands expected: (1) span-exclusion constraint via a parity-check matrix; (2) 
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_quantum_physics/src/pauli.rs` (symplectic inner product, commutation) and `binary_field.rs`.
-- `omega_engine/crates_rs/omega_solvers/src/solver_cadical_unsat_core.rs` (CaDiCaL wrapper; LRAT emission may need adding).
-- `omega_engine/crates_rs/omega_linear_algebra` for F2 rank and span tests.
-- `omega_engine/crates_rs/omega_quantum_physics/src/toric.rs` for the 2 × 2 toric code example.
+- `engine/crates_rs/core_quantum_physics/src/pauli.rs` (symplectic inner product, commutation) and `binary_field.rs`.
+- `engine/crates_rs/core_solvers/src/solver_cadical_unsat_core.rs` (CaDiCaL wrapper; LRAT emission may need adding).
+- `engine/crates_rs/core_linear_algebra` for F2 rank and span tests.
+- `engine/crates_rs/core_quantum_physics/src/toric.rs` for the 2 × 2 toric code example.
 - No Rust stabilizer-tableau type exists yet; it is part of [U14](../../upgrades/u14_rust_quantum_stabilizer_port.md).
 - Upgrades: base [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), plus U14. [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended.
 

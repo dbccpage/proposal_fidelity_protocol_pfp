@@ -67,6 +67,6 @@ print('Exercise verified successfully!')
 
 | Anchor Type | Target Link |
 | :--- | :--- |
-| **Curriculum Anchor** | `Woland Axiom` |
+| **Curriculum Anchor** | `Adversary Axiom` |
 | **Authority Effect** | `None` |
 | **Zero-Float Law** | Enforced (`fractions.Fraction` or exact integers) |

@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 400 (Prompt Civ Foundations)  
 **Level Source:** Level 03 ([`level_03_lamarckian_retro_inheritance.md`](../../levels/level_03_lamarckian_retro_inheritance.md))  
-**Rust Seam:** [`omega_prompt_civilization::immunity`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/immunity.rs)
+**Rust Seam:** [`core_prompt_civilization::immunity`](../../../../engine/crates_rs/core_prompt_civilization/src/immunity.rs)
 
 ## 1. Pedagogical Objective
 Understand how typed phenotypic modifications—specifically antibody references derived from falsified execution receipts—propagate forward and backward across the Inheritance DAG with hop-bounded $(1/2)^d$ distance attenuation.

@@ -17,7 +17,7 @@ This rule codifies hermetic paper package verification, code generator authority
 > **Hermetic Paper Package Verification:**
 >
 > 1. **Zero Monorepo Ambient Escapes:** Code and test files residing under research paper packages (e.g., `research/papers/{slug}/code/` or `coda_atlas/{slug}/code/`) must be hermetic and execute cleanly when invoked with `cwd={paper_dir}`. Imports of unpinned, top-level monorepo files (e.g., `import quickstart`) or sibling paper code are strictly prohibited and constitute blocker-level deposit defects.
-> 2. **Standardized Subprocess Replay:** Automated review tools (`omega_engine_research_papers.use_cases.paper_review.cli`) must invoke test runners (`pytest`) within the paper package scope (`cwd={paper_dir}`) to ensure isolation and detect ambient namespace leaks before release bundling.
+> 2. **Standardized Subprocess Replay:** Automated review tools (`research_papers.use_cases.paper_review.cli`) must invoke test runners (`pytest`) within the paper package scope (`cwd={paper_dir}`) to ensure isolation and detect ambient namespace leaks before release bundling.
 
 ---
 

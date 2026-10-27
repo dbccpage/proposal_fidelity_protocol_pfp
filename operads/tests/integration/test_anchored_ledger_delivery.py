@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.infrastructure.storage.anchored_ledger_subscriber import (
+from operads.infrastructure.storage.anchored_ledger_subscriber import (
     AnchoredLedgerSubscriber,
 )
-from omega_engine_operads.infrastructure.storage.receipt_ledger import LedgerError
+from operads.infrastructure.storage.receipt_ledger import LedgerError
 
 KEY = b"development-test-key-only-32-bytes"
 ROOT = Path(__file__).resolve().parents[3]
@@ -80,7 +80,7 @@ def test_real_process_death_after_database_commit_recovers_signed_intent(tmp_pat
     child = '''
 import os, sys
 from pathlib import Path
-from omega_engine_operads.infrastructure.storage.anchored_ledger_subscriber import AnchoredLedgerSubscriber
+from operads.infrastructure.storage.anchored_ledger_subscriber import AnchoredLedgerSubscriber
 class Interrupted(AnchoredLedgerSubscriber):
     def _write(self,path,body):
         if path == self.path and body.get("sequence",0) > 0:
@@ -133,7 +133,7 @@ def test_tip_files_cannot_alias_database_before_any_write(tmp_path, suffix):
 def test_linked_sqlite_sidecar_refuses_before_database_open(tmp_path, suffix):
     import os
 
-    from omega_engine_operads.infrastructure.bootstrap import OeopContainer
+    from operads.infrastructure.bootstrap import OeopContainer
     foreign = tmp_path / "outside"
     foreign.write_bytes(b"outside sentinel")
     db = tmp_path / "events.db"
@@ -147,7 +147,7 @@ def test_linked_sqlite_sidecar_refuses_before_database_open(tmp_path, suffix):
 
 
 def test_public_cli_dispatch_reopen_and_zero_duplicate_receipts(tmp_path):
-    from omega_engine_operads.tests.integration.test_outbox_worker_leases import (
+    from operads.tests.integration.test_outbox_worker_leases import (
         seed,
     )
     db_path = tmp_path / "delivery.db"
@@ -156,7 +156,7 @@ def test_public_cli_dispatch_reopen_and_zero_duplicate_receipts(tmp_path):
         db.execute("UPDATE outbox_v3 SET destination='events.oewas.v3'")
     key_path = tmp_path / "operator.key"
     key_path.write_bytes(KEY)
-    command = [sys.executable, "-m", "omega_engine_operads.frontend.cli",
+    command = [sys.executable, "-m", "operads.frontend.cli",
         "--workspace", str(ROOT), "--db-path", str(db_path), "--json", "dispatch-events",
         "--tip-path", str(tmp_path / "retained/tip.json"), "--tip-key-file", str(key_path),
         "--ledger-id", "development"]
@@ -174,7 +174,7 @@ def test_public_cli_alias_configuration_refuses_without_database_creation(tmp_pa
     key = tmp_path / "operator.key"
     key.write_bytes(KEY)
     database = tmp_path / "tip.pending"
-    command = [sys.executable, "-m", "omega_engine_operads.frontend.cli",
+    command = [sys.executable, "-m", "operads.frontend.cli",
         "--db-path", str(database), "--json", "dispatch-events", "--tip-path", str(tmp_path / "tip"),
         "--tip-key-file", str(key), "--ledger-id", "development"]
     observed = subprocess.run(command, cwd=ROOT, capture_output=True, timeout=30)

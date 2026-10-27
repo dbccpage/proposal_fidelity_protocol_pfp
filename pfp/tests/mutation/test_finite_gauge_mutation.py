@@ -1,7 +1,7 @@
 """Mutation-killing contract for independent replay."""
 
-from omega_engine_pfp.domain.finite_gauge import GaugeRefusalCode, RunConfig
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.paper002_checker import (
+from pfp.domain.finite_gauge import GaugeRefusalCode, RunConfig
+from pfp.infrastructure.adapters.finite_gauge.paper002_checker import (
     Paper002FiniteGaugeChecker,
 )
 

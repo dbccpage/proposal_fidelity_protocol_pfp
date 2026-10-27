@@ -45,9 +45,9 @@ In four-dimensional chiral gauge theories coupled to gravity, quantum consistenc
 ## 2. Directory Layout
 
 ```
-omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/
+projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/
 ├── README.md                                 # This overview and verification guide
-├── TEST_READY.md                             # Test readiness report and Lev Landau falsification matrix
+├── TEST_READY.md                             # Test readiness report and Examiner falsification matrix
 ├── participant_packet/                       # Visible to participant models & solvers
 │   ├── TASK.md                               # Mathematical specification & JSON schemas
 │   ├── runner.py                             # Sandboxed execution runner -> answers.jsonl
@@ -86,18 +86,18 @@ omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_f
 ├── commitments/                              # Cryptographic commit-reveal records (SG-CP v1)
 │   ├── c031_judge_commitment.json            # Phase 1: Judge manifest commitment
 │   ├── c031_freeze_record.json               # Phase 2: Deliverable solver freeze record
-│   └── c031_scoring_receipt.json             # Phase 3: Final scoring receipt & Woland seal
+│   └── c031_scoring_receipt.json             # Phase 3: Final scoring receipt & Adversary seal
 ├── governance/                               # Governance, cost gate, and reality gate
 │   ├── __init__.py
 │   ├── budget_gate.py                        # BudgetController (< $0.05 target, <= $1.00 ceiling, <= 70B, Tier T3)
-│   ├── woland_gate.py                        # Woland reality gate, 4-file bundle, and dual-sink persistence
+│   ├── adversary_gate.py                        # Adversary reality gate, 4-file bundle, and dual-sink persistence
 │   └── commit_reveal_runner.py               # 3-Phase Commit-Reveal runner CLI
 └── tests/                                    # Scoped test suite
     ├── __init__.py
     ├── test_participant_packet.py            # Tests validating schema, examples, and runner
     ├── test_reference_solver.py              # Tests validating solver, math invariants, and DDC trace
     ├── test_dual_checkers.py                 # Tests validating dual checkers and case suite
-    ├── test_governance_and_commit_reveal.py  # Tests validating budget gate, Woland gate, and commit-reveal
+    ├── test_governance_and_commit_reveal.py  # Tests validating budget gate, Adversary gate, and commit-reveal
     └── test_e2e_challenge.py                 # Comprehensive 4-tier E2E test suite (Tiers 1-4)
 ```
 
@@ -192,27 +192,27 @@ In compliance with repository governance rules, **never execute whole-suite swee
 
 ```bash
 # 1. Participant packet tests (4 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_participant_packet.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_participant_packet.py -v
 
 # 2. Reference solver & Diophantine engine tests (9 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_reference_solver.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_reference_solver.py -v
 
 # 3. Dual independent checkers & cases tests (5 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py -v
 
 # 4. Hostile mutation kill suite (37 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_checker_mutations.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_checker_mutations.py -v
 
-# 5. Governance, Tier T3 budget gate, Woland gate, and Commit-Reveal runner (4 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_governance_and_commit_reveal.py -v
+# 5. Governance, Tier T3 budget gate, Adversary gate, and Commit-Reveal runner (4 tests)
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_governance_and_commit_reveal.py -v
 
 # 6. Comprehensive 4-Tier E2E integration test suite (12 tests)
-python -m pytest omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_e2e_challenge.py -v
+python -m pytest projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/tests/test_e2e_challenge.py -v
 ```
 
 ### Commit-Reveal State Machine Execution
 
 ```bash
 # Run full SG-CP v1 3-phase Commit-Reveal state machine:
-python omega_engine_projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/governance/commit_reveal_runner.py all
+python projects/mssn_sn_symgam/challenges/d_physics_mtheory/c031_anomaly_free_u1_charges/governance/commit_reveal_runner.py all
 ```

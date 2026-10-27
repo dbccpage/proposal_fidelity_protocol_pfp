@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 Scores the frozen reference solver against this package's own judge packet and
 checks that the judge's hostile mutations are rejected. It evaluates no model
-and is not a Woland verdict.
+and is not a Adversary verdict.
 
 Custody, stated plainly:
 
@@ -48,22 +48,22 @@ _repo_root = next((p for p in Path(__file__).resolve().parents if (p / "pyprojec
 if _repo_root is not None and str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 for _parent in PKG_ROOT.parents:
-    if (_parent / "omega_engine_pfp").is_dir() and (_parent / "omega_engine_woland").is_dir():
+    if (_parent / "pfp").is_dir() and (_parent / "adversary").is_dir():
         if str(_parent) not in sys.path:
             sys.path.insert(0, str(_parent))
         break
 
 # Absolute imports for the harness and solver; top-level ``governance`` collided across packages.
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.woland_gate import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.adversary_gate import (
     GATE_SCOPE,
     TERMINAL_REFUSE,
-    WolandGateC042,
+    AdversaryGateC042,
     label_with_reason,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import (
     solve,
 )
 
@@ -327,8 +327,8 @@ def _run(
         "warranted_refusal_cases": sum(1 for r in results if r["warranted_refusal"]),
     }
 
-    woland = WolandGateC042(task_key=task_key, intelligence_repo_root=intelligence_repo_root)
-    bundle_dir = woland.emit_structurebench_quad(
+    adversary = AdversaryGateC042(task_key=task_key, intelligence_repo_root=intelligence_repo_root)
+    bundle_dir = adversary.emit_structurebench_quad(
         total_cases=total_cases,
         passed_cases=passed_cases,
         defects=defects,

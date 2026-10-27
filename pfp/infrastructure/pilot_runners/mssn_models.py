@@ -13,7 +13,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
-from omega_engine_woland.infrastructure.providers.openai_compat import OPENROUTER_BASE_URL
+from adversary.infrastructure.providers.openai_compat import OPENROUTER_BASE_URL
 
 # ==============================================================================
 # PFP PROTOCOL ENUMS AND STAGES

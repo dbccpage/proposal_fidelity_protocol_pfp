@@ -11,11 +11,11 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.entrypoints.cli.challenge_commands import (
+from pfp.entrypoints.cli.challenge_commands import (
     cmd_challenge_run_arms,
     mcnemar_exact_rational,
 )
-from omega_engine_pfp.entrypoints.cli.parser import build_parser
+from pfp.entrypoints.cli.parser import build_parser
 
 
 def test_exact_rational_mcnemar_values():

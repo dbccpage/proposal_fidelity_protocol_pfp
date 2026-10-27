@@ -13,14 +13,14 @@ import sys
 from pathlib import Path
 from typing import Any, Mapping
 
-_REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "omega_engine_pfp").is_dir())
+_REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pfp").is_dir())
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 if __package__ in (None, ""):
-    __package__ = "omega_engine_pfp.tests.demo_004.c_quantum"
+    __package__ = "pfp.tests.demo_004.c_quantum"
 
-from omega_engine_pfp.infrastructure.adapters.stabilizer_rust_adapter import (
+from pfp.infrastructure.adapters.stabilizer_rust_adapter import (
     StabilizerRustAdapter,
 )
 

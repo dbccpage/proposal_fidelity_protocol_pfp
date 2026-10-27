@@ -29,7 +29,7 @@ A parser, workflow runner, or ingress boundary silently accepts malformed input 
   ```python
   clean_steps = [s for s in raw_steps if is_valid_step(s)]  # Silent item dropping!
   ```
-- Observed in `woland_epic_implementation_20261010_launch` (Scene 2): "Hella exposes silent schema repair. The untouched parser accepted scalar operation inputs as a nullary operation... dropping non-matching elements from mixed lists without a typed refusal."
+- Observed in `adversary_epic_implementation_20261010_launch` (Scene 2): "Syntax Prefilter exposes silent schema repair. The untouched parser accepted scalar operation inputs as a nullary operation... dropping non-matching elements from mixed lists without a typed refusal."
 
 ## Hazard & Failure Mode
 

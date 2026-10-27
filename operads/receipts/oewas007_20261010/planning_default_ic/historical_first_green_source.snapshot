@@ -10,14 +10,14 @@ from urllib.parse import unquote, urlsplit
 
 import yaml
 
-from omega_engine_product_planning_office.domain.contracts.historical_sources import (
+from product_planning_office.domain.contracts.historical_sources import (
     HistoricalSourceResolver,
 )
 
-MAP_PATH = "omega_engine_product_planning_office/receipts/prior_art_epic_map_20261010_oewas007_default_ic_successor.json"
-PREDECESSOR_PATH = "omega_engine_product_planning_office/receipts/prior_art_epic_map_20261010.json"
+MAP_PATH = "product_planning_office/receipts/prior_art_epic_map_20261010_oewas007_default_ic_successor.json"
+PREDECESSOR_PATH = "product_planning_office/receipts/prior_art_epic_map_20261010.json"
 PREDECESSOR_SHA256 = "992e17ba3a197e726d40d19b38e749c2fabbbbf551c182c51f77068a4756a2f3"
-INDEX_PATH = "omega_engine_product_planning_office/plans/epics/README.md"
+INDEX_PATH = "product_planning_office/plans/epics/README.md"
 _LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 _CONTRACT_MARKERS = ("INVARIANT", "BREAK", "WITNESS", "MUTATION")
 
@@ -99,11 +99,11 @@ def audit(root: Path, map_path: Path | None = None, *, historical_source_resolve
         raise ValueError("Registry digest mismatch")
     registry = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
     files = registry["files"]
-    assignments = Counter(row["omega_engine_folder"] for row in files)
-    paths = {row["file_location"]: row["omega_engine_folder"] for row in files}
+    assignments = Counter(row["folder"] for row in files)
+    paths = {row["file_location"]: row["folder"] for row in files}
     for path in paths:
         _path(root, path, historical_source_resolver)
-    declared_list = registry["summary"]["omega_engine_folders_covered"]
+    declared_list = registry["summary"]["folders_covered"]
     declared = set(declared_list)
     if (mapping["registry_file_rows"] != len(files)
             or mapping["direct_system_count"] != len(assignments)

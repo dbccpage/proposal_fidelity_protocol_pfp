@@ -71,7 +71,7 @@ class DecodeControlSpec:
     max_tokens: int = 64
 
 
-DECODE_RECEIPT_SCHEMA = "omega.symbol_game.decode_receipt.v1"
+DECODE_RECEIPT_SCHEMA = "core.symbol_game.decode_receipt.v1"
 
 
 @dataclass(frozen=True)
@@ -162,7 +162,7 @@ class DecodeControlReceiptV2:
             return "sha256:" + hashlib.sha256(raw).hexdigest()
 
         return {
-            "schema_version": "omega.symbol_game.decode_receipt.v2",
+            "schema_version": "core.symbol_game.decode_receipt.v2",
             "request_hex": self.request_bytes.hex(),
             "request_sha256": ref(self.request_bytes),
             "output_hex": self.output_bytes.hex(),

@@ -28,5 +28,5 @@ AuthorityEffect: None.
 Run the literature catalog reconciliation check:
 
 ```bash
-python omega_engine_operads/skills/governance-literature-catalog/scripts/check_literature_catalog.py
+python operads/skills/governance-literature-catalog/scripts/check_literature_catalog.py
 ```

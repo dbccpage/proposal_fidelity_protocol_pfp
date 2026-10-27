@@ -51,9 +51,9 @@ from functools import lru_cache
 from types import ModuleType
 from typing import Any, Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_json, tree_module, tree_rel
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed import vendored
+from operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_json, tree_module, tree_rel
+from operations.use_cases.level_engine.research_engine.sealed import vendored
 
 CHALLENGE_ID = "walk_relabels"
 ANSWER_TYPE = "M"

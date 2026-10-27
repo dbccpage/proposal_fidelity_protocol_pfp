@@ -27,20 +27,20 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     CandidateRequest,
     ChatMessage,
     DecodingParamsV1,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.derivation_dag_pfp_staged_benchmark import (
+from pfp.tests.demo_004.a_mechanism.derivation_dag_pfp_staged_benchmark import (
     _AccountedTurnDispatcher,
 )
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.gates.gate_engine import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.gates.gate_engine import (
     FiniteQmGateReceipt,
     verify_dag_prompt_node_reply,
     verify_dag_work_unit_reply,
 )
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.miner import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.miner import (
     DAG_ALL_177_SPECS,
     DAG_REMAINING_142_SPECS,
     DEFAULT_DAG_PATH,
@@ -54,7 +54,7 @@ from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.mine
     initialize_remaining_142_unfilled_dag_prompts,
     populate_mined_operads_into_prompt_yaml,
 )
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.prompts.prompt_compiler import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.prompts.prompt_compiler import (
     compile_dag_work_unit_prompt,
 )
 
@@ -176,7 +176,7 @@ def _update_paper_with_pfp_receipt(
             f"- **Primary Theorem Anchor**: `{exp['lean4_theorem_anchor']}` (zero-axiom, zero-sorry kernel verification in `lean/DerivationDagQMClosure.lean`).\n\n"
             "### Sovereign Rust Certifiers\n"
             f"- **Primary Rust Witness**: `{exp['rust_witness_anchor']}` (`code/rust/src/dag_witnesses.rs`, exact `i64`/`BigRational` arithmetic).\n"
-            f"- **Python PFP Gate Engine**: `omega_engine_pfp/tests/demo_004/finite_qm_derivation_pfp/gates/gate_engine.py::verify_dag_prompt_node_reply` (`G0`..`G6`)."
+            f"- **Python PFP Gate Engine**: `pfp/tests/demo_004/finite_qm_derivation_pfp/gates/gate_engine.py::verify_dag_prompt_node_reply` (`G0`..`G6`)."
         )
         if old_sec3 in original:
             original = original.replace(old_sec3, new_sec3)
@@ -283,7 +283,7 @@ def execute_single_dag_prompt_pipeline(
                 updated_papers.append(pref)
 
     full_receipt = {
-        "schema": "omega.pfp.finite_qm.dag_prompt_execution_receipt.v1",
+        "schema": "core.pfp.finite_qm.dag_prompt_execution_receipt.v1",
         "authority_effect": "None",
         "policy_id": "SPK-001",
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
@@ -424,7 +424,7 @@ def execute_paired_m3_ablation_for_node(
                 updated_papers.append(pref)
 
     ablation_record = {
-        "schema": "omega.pfp.finite_qm.m3_decoy_ablation_receipt.v1",
+        "schema": "core.pfp.finite_qm.m3_decoy_ablation_receipt.v1",
         "authority_effect": "None",
         "prompt_index": idx,
         "node_id": mined.node_id,
@@ -470,7 +470,7 @@ def execute_paired_m3_ablation_for_node(
     ablation_path.write_text(json.dumps(ablation_record, indent=2), encoding="utf-8")
 
     full_receipt = {
-        "schema": "omega.pfp.finite_qm.dag_prompt_execution_receipt.v1",
+        "schema": "core.pfp.finite_qm.dag_prompt_execution_receipt.v1",
         "authority_effect": "None",
         "policy_id": "SPK-001",
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
@@ -603,7 +603,7 @@ def write_m3_ablation_dossier(
             b["with_m3_final_pass"] += 1
 
     summary_json = {
-        "schema": "omega.pfp.finite_qm.m3_ablation_campaign_summary.v1",
+        "schema": "core.pfp.finite_qm.m3_ablation_campaign_summary.v1",
         "authority_effect": "None",
         "nodes_evaluated": total,
         "without_m3_attempt1_pass_count": no_m3_pass,
@@ -707,7 +707,7 @@ def run_benchmark_1000(output_receipt_path: Path | None = None) -> dict[str, Any
             passed += 1
     elapsed_s = round(time.perf_counter() - t0, 4)
     summary = {
-        "schema": "omega.pfp.finite_qm.benchmark_1000_receipt.v1",
+        "schema": "core.pfp.finite_qm.benchmark_1000_receipt.v1",
         "authority_effect": "None",
         "operad_families_mined": len(rules),
         "work_units_generated": len(units),

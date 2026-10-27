@@ -12,12 +12,12 @@ from __future__ import annotations
 import pytest
 import yaml
 
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_signals import (
     FORBIDDEN_DANGER_OBSERVERS,
     HOST_DANGER_SIGNAL_KINDS,
     INDEPENDENCE_REFUSAL_CODES,
 )
-from omega_engine_epistemic_immune_system.domain.definitions_loader import (
+from eis.domain.definitions_loader import (
     load_antibody_templates,
     load_danger_signals,
     load_failure_classes,
@@ -25,28 +25,28 @@ from omega_engine_epistemic_immune_system.domain.definitions_loader import (
     load_probing_domains,
     load_screening_vocabulary,
 )
-from omega_engine_epistemic_immune_system.infrastructure.definitions_store import (
+from eis.infrastructure.definitions_store import (
     definitions_dir,
     read_definition,
 )
-from omega_engine_epistemic_immune_system.domain.host_checks import (
+from eis.domain.host_checks import (
     PROTECTED_FIELD_KEYS,
     UNAUTHORIZED_PERSONA_MARKERS,
 )
-from omega_engine_epistemic_immune_system.domain.pharmacy_templates import (
+from eis.domain.pharmacy_templates import (
     ANTIBODY_TEMPLATES,
 )
-from omega_engine_epistemic_immune_system.domain.safe_pattern import (
+from eis.domain.safe_pattern import (
     MAX_CHOICE_PRODUCT,
     MAX_PATTERN_LENGTH,
     MAX_REPEAT_BOUND,
     UNSAFE_PATTERN_CODES,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_domains import (
+from eis.infrastructure.mssn_domains import (
     DOMAIN_ALIASES,
     DOMAINS,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     COMPLEXITY_MARKERS,
     HOST_ONLY_KEYS,
     PRIVATE_COT_MARKERS,
@@ -54,7 +54,7 @@ from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
     SUPERLATIVES,
     FailureClass,
 )
-from omega_engine_epistemic_immune_system.infrastructure.native_pharmacy import (
+from eis.infrastructure.native_pharmacy import (
     NATIVE_CLASS_CODES,
     NATIVE_DISPOSITIONS,
     NATIVE_REFUSAL_CODES,
@@ -81,7 +81,7 @@ class TestOEEISDefinitionsYAMLFiles:
         assert isinstance(data, dict), f"{filename} did not parse to a dictionary"
         assert data.get("authority_effect") == "None", f"{filename} missing AuthorityEffect: None"
         assert "schema_version" in data, f"{filename} missing schema_version"
-        assert data["schema_version"].startswith("omega.immune.definitions.")
+        assert data["schema_version"].startswith("core.immune.definitions.")
 
 
 class TestNativePharmacyDefinitionsConfluence:

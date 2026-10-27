@@ -16,8 +16,8 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Protocol, Sequence
 
-from omega_engine_governance.domain.intelligence_community import canonical_intelligence_route
-from omega_engine_pfp.domain.ports.run_artifact_port import (
+from governance.domain.intelligence_community import canonical_intelligence_route
+from pfp.domain.ports.run_artifact_port import (
     RunArtifactSinkPort,
     create_filesystem_artifact_sink,
 )
@@ -46,7 +46,7 @@ class UnifiedOETraceStore:
         sbe_analyzer: Optional[SBEAnalyzerPort] = None,
     ):
         if artifact_sink is None:
-            from omega_engine_operating_system.adapters.intelligence_custody.intelligence_root import (
+            from operating_system.adapters.intelligence_custody.intelligence_root import (
                 resolve_intelligence_repo_root,
             )
 

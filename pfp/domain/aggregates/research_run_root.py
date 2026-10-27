@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Mapping
 
-from omega_engine_governance.contracts.ddc_packets import (
+from governance.contracts.ddc_packets import (
     DDATapeDFA,
     DDATapeValidationError,
 )
@@ -26,15 +26,15 @@ from omega_engine_governance.contracts.ddc_packets import (
 from .research_claim import ResearchClaimPayloadV1 as ResearchClaimPayloadV1
 from .research_claim import ResearchClaimV1 as ResearchClaimV1
 
-RUN_ROOT_SCHEMA = "omega.symbol-game.research-run-root.v1"
+RUN_ROOT_SCHEMA = "core.symbol-game.research-run-root.v1"
 RESEARCH_RUN_ROOT_SCHEMA = RUN_ROOT_SCHEMA
 RESEARCH_CLAIM_FAMILY = "research_claim_v1"
-RESEARCH_CLAIM_SCHEMA = "omega.symbol-game.research-claim.v1"
-SEMANTIC_STEP_SCHEMA = "omega.symbol-game.semantic-dda-step.v1"
-RESEARCH_PACKET_MEDIA_TYPE = "application/vnd.omega.research-packet+json"
-SOURCE_INTAKE_MEDIA_TYPE = "application/vnd.omega.source-intake+json"
-DDA_TRACE_MEDIA_TYPE = "application/x-omega-dda-trace+jsonl"
-OESOS_EVIDENCE_BUNDLE_MEDIA_TYPE = "application/vnd.omega.oesos-evidence+json"
+RESEARCH_CLAIM_SCHEMA = "core.symbol-game.research-claim.v1"
+SEMANTIC_STEP_SCHEMA = "core.symbol-game.semantic-dda-step.v1"
+RESEARCH_PACKET_MEDIA_TYPE = "application/vnd.core.research-packet+json"
+SOURCE_INTAKE_MEDIA_TYPE = "application/vnd.core.source-intake+json"
+DDA_TRACE_MEDIA_TYPE = "application/x-core-dda-trace+jsonl"
+OESOS_EVIDENCE_BUNDLE_MEDIA_TYPE = "application/vnd.core.oesos-evidence+json"
 
 MAX_TRACE_BYTES = 16 * 1024 * 1024
 MAX_TRACE_LINE_BYTES = 1024 * 1024
@@ -137,8 +137,8 @@ _TRACE_REQUIRED_FIELDS = frozenset(
 )
 _TRACE_OPTIONAL_OCCURRENCE_FIELDS = OCCURRENCE_ONLY_KEYS - _TRACE_REQUIRED_FIELDS
 _TRACE_PROFILES = {
-    "omega.dda.trace.v2": ("dda_dialect", "DDA_STEP_"),
-    "omega.ddc.trace.v2": ("ddc_dialect", "DDC_STEP_"),
+    "core.dda.trace.v2": ("dda_dialect", "DDA_STEP_"),
+    "core.ddc.trace.v2": ("ddc_dialect", "DDC_STEP_"),
 }
 _DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 
@@ -543,7 +543,7 @@ def _semantic_step_from_record(record: Any, line_number: int) -> SemanticDdaStep
     }
     sanitized_evidence = _sanitize_semantic_value(evidence_payload)
     evidence_root = _domain_digest(
-        "omega.symbol-game.semantic-dda-evidence.v1", sanitized_evidence
+        "core.symbol-game.semantic-dda-evidence.v1", sanitized_evidence
     )
 
     def semantic_text(key: str) -> str:
@@ -577,16 +577,16 @@ def semantic_dda_root(steps: tuple[SemanticDdaStepV1, ...]) -> str:
     if any(type(step) is not SemanticDdaStepV1 for step in steps):
         raise ResearchRunRootError("semantic DDA trace contains an invalid step")
     head = _domain_digest(
-        "omega.symbol-game.semantic-dda-chain.seed.v1",
+        "core.symbol-game.semantic-dda-chain.seed.v1",
         {"schema_version": SEMANTIC_STEP_SCHEMA},
     )
     for index, step in enumerate(steps):
         head = _domain_digest(
-            "omega.symbol-game.semantic-dda-chain.step.v1",
+            "core.symbol-game.semantic-dda-chain.step.v1",
             {"index": index, "previous": head, "step": step.to_dict()},
         )
     return _domain_digest(
-        "omega.symbol-game.semantic-dda-chain.terminal.v1",
+        "core.symbol-game.semantic-dda-chain.terminal.v1",
         {"step_count": len(steps), "head": head},
     )
 
@@ -825,7 +825,7 @@ class ResearchRunRootV1:
         if len(trace_refs) != 1:
             raise ResearchRunRootError(
                 "semantic_trace_label must name exactly one required AVAILABLE "
-                "application/x-omega-dda-trace+jsonl artifact"
+                "application/x-core-dda-trace+jsonl artifact"
             )
         for media_type, label in (
             (RESEARCH_PACKET_MEDIA_TYPE, "research packet"),
@@ -884,7 +884,7 @@ class ResearchRunRootV1:
     @property
     def root_id(self) -> str:
         return _domain_digest(
-            "omega.symbol-game.research-run-root.identity.v1", self.identity_dict()
+            "core.symbol-game.research-run-root.identity.v1", self.identity_dict()
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -1037,7 +1037,7 @@ def build_research_run_root(
     if len(matching_trace_refs) != 1:
         raise ResearchRunRootError(
             "trace_path bytes must match exactly one required AVAILABLE "
-            "application/x-omega-dda-trace+jsonl artifact"
+            "application/x-core-dda-trace+jsonl artifact"
         )
     return ResearchRunRootV1(
         claim_packet_id=claim_packet_id,
@@ -1224,7 +1224,7 @@ def verify_research_run_root(
     packet_path = root.joinpath(*PurePosixPath(packet_ref.label).parts)
     intake_path = root.joinpath(*PurePosixPath(intake_ref.label).parts)
     try:
-        from omega_engine_pfp.domain import PacketEnvelopeV2
+        from pfp.domain import PacketEnvelopeV2
 
         from .research_claim import (
             SourceIntakeBundleV1,
@@ -1297,7 +1297,7 @@ def verify_research_run_root(
         )
         bundle_path = root.joinpath(*PurePosixPath(bundle_ref.label).parts)
         try:
-            from omega_engine_pfp.domain.entities.oesos_evidence_bundle import (
+            from pfp.domain.entities.oesos_evidence_bundle import (
                 read_oesos_evidence_bundle,
                 verify_oesos_evidence_bundle,
             )

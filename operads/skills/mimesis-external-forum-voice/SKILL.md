@@ -30,7 +30,7 @@ After Glossa + Thanatos ACCEPT; before RGB Blue check and human post.
 ## Voice rules
 
 1. Professional display name energy; no cultish handles in body.  
-2. No CTA (“follow my programme”, “join Anomalon”).  
+2. No CTA (“follow my programme”, “join Sentinel”).  
 3. Offer snippet only if asked; no monorepo dump.  
 4. DOI optional one-liner, never payload.  
 5. Thanks brief; no sycophancy walls.

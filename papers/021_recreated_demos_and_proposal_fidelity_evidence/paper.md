@@ -536,7 +536,7 @@ historical response summaries do not contain the absent proof bytes.
 | G22 | H3V7N5QF: Lower Bounds for A-Perform Changes |
 | G23 | H3V7N5QF: Choice-Free Reproofs |
 | G24 | Seed-Edit Ablation Bench for the Four Holes |
-| G25 | Genesis as Omega Engine Foundation: A Checked Crosswalk |
+| G25 | Genesis as Engine Foundation: A Checked Crosswalk |
 
 ### Executable dispatcher surface
 
@@ -578,7 +578,7 @@ or an explicitly retained execution gap in the companion coverage records.
 | `demo_system_coverage` |
 | `demo_token_frontier` |
 | `demo_tower_lift` |
-| `demo_woland_tribunal` |
+| `demo_adversary_tribunal` |
 
 ### Higher-dimensional meron cluster demonstrations and empirical receipts
 

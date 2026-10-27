@@ -10,11 +10,11 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+from operads.infrastructure.capability_catalog_compiler import (
     compile_capability_catalog,
 )
-from omega_engine_operads.skill_operad.skill_compiler import skill_listing
-from omega_engine_operads.skill_operad.skill_compiler.skill_listing import (
+from operads.skill_operad.skill_compiler import skill_listing
+from operads.skill_operad.skill_compiler.skill_listing import (
     DESCRIPTION_CAP_BYTES,
     ListedSkill,
     listing_problems,

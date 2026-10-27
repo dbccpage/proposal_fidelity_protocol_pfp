@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IX.1"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IX.1 'Definition IX.1'"
+  - "canonical_core_math_spine.md v1.5.2 §IX.1 'Definition IX.1'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -56,7 +56,7 @@ non-composable complement.
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IX.1
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IX.1
   (statement copied verbatim; the source header carries no status bracket).
   Original header line:
   `**Definition IX.1 (Fixed-Layer Operator Algebra).** Fix a layer $n$ with carrier`

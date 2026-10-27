@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from omega_engine_operads.infrastructure.autopoiesis.learning_runtime import LearningCompletion
+from operads.infrastructure.autopoiesis.learning_runtime import LearningCompletion
 
 
 @pytest.mark.parametrize("reports", [("uns.md", "uts.jsonl", "ddc.jsonl"),
@@ -19,4 +19,4 @@ def test_learning_completion_imports_present_report_files(tmp_path, reports):
     runtime.completed(str(tmp_path), outcome="OPEN_RESIDUAL")
     assert len(calls) == 1
     assert {path.name for path in calls[0][0]} == {"receipt.json", "summary.json", *reports}
-    assert calls[0][1]["host"] == "woland"
+    assert calls[0][1]["host"] == "adversary"

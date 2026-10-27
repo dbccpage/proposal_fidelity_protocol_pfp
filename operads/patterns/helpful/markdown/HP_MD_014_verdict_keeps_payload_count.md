@@ -36,7 +36,7 @@ The witness in [AP_MD_014_pass_to_master_with_zero_payload](../../anti/markdown/
 
 `AP_PY_012` still forbids borrowing another task's `PASS_TO_MASTER`. `HP_PY_012` still rejects a hermetic run whose `passed_count` is 0. This landing's strand pass count is not that zero. The zero is the demo count in the same note.
 
-`/woland-proof-scope-rule` still bounds the single Lean module in this folder. `/adversarial-receipt-audit` still requires a green build claim to match the artifact. The stale WDP PDF, blocked release reviews, and unrefreshed checksums stay with that audit. They are not this pattern.
+`/adversary-proof-scope-rule` still bounds the single Lean module in this folder. `/adversarial-receipt-audit` still requires a green build claim to match the artifact. The stale WDP PDF, blocked release reviews, and unrefreshed checksums stay with that audit. They are not this pattern.
 
 ## Dual Anti-Pattern
 

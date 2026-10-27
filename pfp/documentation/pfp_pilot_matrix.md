@@ -4,7 +4,7 @@ AuthorityEffect: None. These helpers retain their original cases and judges;
 this is a provider-route repair, not completion of their scientific protocols.
 
 The formal-math and program-synthesis matrix helpers use
-`omega_engine_pfp.infrastructure.pilot_matrix` for every model turn:
+`pfp.infrastructure.pilot_matrix` for every model turn:
 
 1. Prepare the existing PFP task/attempt/input binding with public inputs.
 2. Reserve through the existing Providers ledger before sending.
@@ -30,7 +30,7 @@ From the repository root, with the existing runtime dependencies and configured
 OpenRouter credential, run:
 
 ```powershell
-python -m omega_engine_pfp.tests.pilots.c052_maxflow_mincut_certificates.run_c052_matrix --output-dir pilot-c052-one --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-output-tokens 2048 --max-provider-calls 1 --max-estimated-cost-microusd 10000
+python -m pfp.tests.pilots.c052_maxflow_mincut_certificates.run_c052_matrix --output-dir pilot-c052-one --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-output-tokens 2048 --max-provider-calls 1 --max-estimated-cost-microusd 10000
 ```
 
 `--output-dir` must be new. Optional `--env-file` selects an explicit existing
@@ -58,7 +58,7 @@ output settings must match their gateway before any selected model is sent.
 
 Historical dossier plans retain their original `pilot_.../tests/test_...` identities.
 The replay reader resolves pilots 0000000 through 0000005 under
-`omega_engine_pfp/tests`; other pilots stay under the Woland tests owner. It verifies
+`pfp/tests`; other pilots stay under the Adversary tests owner. It verifies
 the input against the plan's original digest after selecting that owner. Missing
 or changed canonical bytes refuse; an old duplicate does not provide a fallback.
 This reads retained data without regenerating plans or rewriting responses.
@@ -66,8 +66,8 @@ This reads retained data without regenerating plans or rewriting responses.
 For one retained capsule, from the repository root:
 
 ```python
-from omega_engine_woland.tests.pilots.replay_runners.dossier_capsules.prepare import historical_plan
-from omega_engine_woland.tests.pilots.replay_runners.dossier_capsules.run import load_case
+from adversary.tests.pilots.replay_runners.dossier_capsules.prepare import historical_plan
+from adversary.tests.pilots.replay_runners.dossier_capsules.run import load_case
 
 row = historical_plan("_free")["cases"][0]
 folder, case = load_case(row)
@@ -90,17 +90,17 @@ Dossier `live()` and `--live` refuse before creating authorization or budget
 files, loading historical plans, looking up pricing or calling a provider.
 The old fixed 25/250-case campaigns are not recreated by the current interface.
 
-For a new current-IDE task, use the existing shared Woland/PFP backend:
+For a new current-IDE task, use the existing shared Adversary/PFP backend:
 
 ```powershell
-python -m omega_engine_woland.entrypoints.cli teamwork start --objective "Your task" --state new-task.json
+python -m adversary.entrypoints.cli teamwork start --objective "Your task" --state new-task.json
 ```
 
 Read the returned `pfp_turn`, do the requested work, and submit the actual bound
-reply through `teamwork submit`. `/woland` drives this same path in the IDE.
+reply through `teamwork submit`. `/adversary` drives this same path in the IDE.
 For one explicit task file, the PFP CLI also exposes `prepare-task TASK.json
 --attempt ID` and `check-task TASK.json REPLY.json --attempt ID` under
-`python -m omega_engine_pfp.entrypoints.cli.pfp`. Both are offline boundaries;
+`python -m pfp.entrypoints.cli.pfp`. Both are offline boundaries;
 new hosted work uses an explicitly configured existing accounted gateway.
 
 Retained campaign snapshots and pinned Git metadata are read-only. A historical
@@ -114,7 +114,7 @@ The existing `run-pilot-suite` command uses the same PFP/accounted boundary.
 Start with two original prompts and a fresh output directory:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.pfp run-pilot-suite --pilot-dir omega_engine_pfp/tests/pilot_0000000 --dry-run --max-cases 2 --output-dir "$env:TEMP/pfp-suite-fixture"
+python -m pfp.entrypoints.cli.pfp run-pilot-suite --pilot-dir pfp/tests/pilot_0000000 --dry-run --max-cases 2 --output-dir "$env:TEMP/pfp-suite-fixture"
 ```
 
 This dry run uses host-reference answers and makes no provider calls. Its results
@@ -173,6 +173,6 @@ These controls use synthetic vendor replies and make zero external sends.
 Other old experimental entry points may still need canonical namespace repairs;
 a passing import under pytest is insufficient because its compatibility finder
 can redirect retired namespaces. Check each actual command in a fresh process.
-Full session/neural protocols, installed-package closure and Woland/PFP admission
+Full session/neural protocols, installed-package closure and Adversary/PFP admission
 remain separate acceptance work under OEPFP-009. No new framework or concurrency
 mechanism was added.

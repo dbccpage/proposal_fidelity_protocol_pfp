@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.judge_packet.checkers.h2_obstruction_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.judge_packet.checkers.h2_obstruction_checker import (
     check_h2_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.judge_packet.checkers.independent_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.judge_packet.checkers.independent_checker import (
     check_independent_h2,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.reference_solver.solver import (
     solve,
 )
 

@@ -20,10 +20,10 @@ families: [governance, wdp, coda, ddc, prime-algos, atlas, mathematical-solvers]
 
 ## 1. Core Mathematical Foundations of WDP
 
-The **Witnessed Difference Programme (WDP)** establishes the continuum-free, relational mathematics governing discrete complexes, coboundary defects, and exact quotient repairs across the Omega Engine:
+The **Witnessed Difference Programme (WDP)** establishes the continuum-free, relational mathematics governing discrete complexes, coboundary defects, and exact quotient repairs across the engine:
 
 1. **Zero-Authority Substrate:**  
-   Markdown specifications carry `AuthorityEffect: None`. Truth resides strictly in verified executable code (compiled Rust in `omega_engine/crates_rs/omega_wdp/` and formal Lean 4 kernels in `coda_atlas`).
+   Markdown specifications carry `AuthorityEffect: None`. Truth resides strictly in verified executable code (compiled Rust in `engine/crates_rs/core_wdp/` and formal Lean 4 kernels in `coda_atlas`).
 2. **Tripartite Semantic Separation:**  
    Agents must never conflate the three fundamental difference primitives:
    - **Difference ($\Delta$):** The raw algebraic or combinatorial disagreement between two cochain states.
@@ -44,13 +44,13 @@ Layer 2: MUR   (Meta & Universal Re-Presentation)
 Layer 3: CS    (Continuum Shadow)
 Layer 4: CS-Q  (Continuum Shadow to Continuum Bridge)
 Layer 5: Q     (The Continuum)
-Layer 6: A     (Anomalon)
+Layer 6: A     (Sentinel)
 Layer 7: OR    (Omniversal Re-Presentation)
 Layer 8: FDA   (Finite Descent Authority)
 Layer 9: GTLA  (General Theory of Layered Authority)
 ```
 
-The names and application order above follow `omega_engine_operads/rules/coda/rl_coda_and_prime_algorithms_discipline.md` and `omega_engine/crates_rs/omega_wdp/src/coda/pipeline.rs`. Names identify components; the actual layer functions and their declared premises determine executable scope. A layer record does not establish external authorization.
+The names and application order above follow `operads/rules/coda/rl_coda_and_prime_algorithms_discipline.md` and `engine/crates_rs/core_wdp/src/coda/pipeline.rs`. Names identify components; the actual layer functions and their declared premises determine executable scope. A layer record does not establish external authorization.
 
 ### Key Invariants:
 - **Layer 5 Identity:** Layer 5 is strictly named **"The Continuum"** (`Q`). Hallucinated legacy names such as "Quantum Enclosure" are rejected by automated gates.
@@ -75,7 +75,7 @@ Each DDC step uses one of these eight operation labels and carries an execution 
 - **`M` (Refusal):** Emits a typed refusal reason without mutating the diagnostic state.
 - **`T` (Terminalization):** Records terminalization without mutating the diagnostic state or minting authority.
 
-These meanings follow `omega_engine/crates_rs/omega_wdp/src/ddc/ddc_alphabet.rs` (`DdcOp`) and the host checks in `omega_engine/crates_rs/omega_symbol_game/src/ddc.rs` (`step_violations`). The host consumes declared diagnostics and witness booleans; this conditional verification does not independently establish a supplied receipt, loss ledger, lift licence, or detector adequacy.
+These meanings follow `engine/crates_rs/core_wdp/src/ddc/ddc_alphabet.rs` (`DdcOp`) and the host checks in `engine/crates_rs/core_symbol_game/src/ddc.rs` (`step_violations`). The host consumes declared diagnostics and witness booleans; this conditional verification does not independently establish a supplied receipt, loss ledger, lift licence, or detector adequacy.
 
 ### Action Tape Protocol (`ddc.jsonl`):
 - The inspected host action enumerates the submitted steps in order and constructs a SHA-256 receipt chain over their canonical payloads.
@@ -97,13 +97,13 @@ Algorithm Prime governs protocol execution, preventing infinite loops, stalling,
 4. **Anti-Cheat Halting Bounds:**  
    Every iterative run is capped by a strict fuel parameter. Exhausted fuel yields an explicit `BudgetExhausted` refusal, never an unverified partial solution.
 5. **Protocol vs. Domain Type Discipline:**  
-   Prime stages are behavioral protocol operations. Domain types live in `omega_wdp` and `omega_types`; stage wrappers must never re-declare parallel domain structs.
+   Prime stages are behavioral protocol operations. Domain types live in `core_wdp` and `core_types`; stage wrappers must never re-declare parallel domain structs.
 
 ---
 
 ## 5. CODA Research Atlas, Lake Totality & Spine Search
 
-The **CODA Research Atlas** (`omega_engine_atlas/coda_atlas/`) stores the canonical repository research monographs, claim ledgers, and formal proofs.
+The **CODA Research Atlas** (`atlas/coda_atlas/`) stores the canonical repository research monographs, claim ledgers, and formal proofs.
 
 1. **EADC Decimal Classification (`EA:FFF.SSS.BBB`):**  
    All chapters and monographs follow the EADC addressing schema:
@@ -125,12 +125,12 @@ To run the consolidated source checks and fixed examples across WDP, CODA, DDC, 
 
 ```bash
 # Run the consolidated WDP checks:
-python omega_engine_operads/skills/governance-wdp/scripts/check_wdp.py
+python operads/skills/governance-wdp/scripts/check_wdp.py
 
 # Run individual component checks:
-python omega_engine_operads/skills/governance-wdp/scripts/check_coda.py
-python omega_engine_operads/skills/governance-wdp/scripts/check_ddc.py
-python omega_engine_operads/skills/governance-wdp/scripts/check_prime_algos.py
+python operads/skills/governance-wdp/scripts/check_coda.py
+python operads/skills/governance-wdp/scripts/check_ddc.py
+python operads/skills/governance-wdp/scripts/check_prime_algos.py
 ```
 
 A passing run confirms only the checks implemented by these scripts, including selected source checks and fixed arithmetic examples. It is not a Rust build, Lean replay, proof of paper/runtime equivalence, or independent verification of supplied witness declarations.

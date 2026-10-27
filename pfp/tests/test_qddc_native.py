@@ -8,12 +8,12 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operating_system.adapters.rust_host.majorana_math import (
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operating_system.adapters.rust_host.majorana_math import (
     NativeMathRefusal,
     call_native,
 )
-from omega_engine_pfp.domain.homology.qddc import (
+from pfp.domain.homology.qddc import (
     DeformationRequest,
     DensityRequest,
     LindbladRequest,
@@ -23,7 +23,7 @@ from omega_engine_pfp.domain.homology.qddc import (
     RationalMatrix,
     RetractionRequest,
 )
-from omega_engine_pfp.infrastructure.adapters.qddc_rust_adapter import NativeQddc
+from pfp.infrastructure.adapters.qddc_rust_adapter import NativeQddc
 
 
 def matrix(rows: list[list[str]], cols: int | None = None) -> dict:

@@ -8,13 +8,13 @@ Parent: [Genesis Primitives & Relational Substrate](../../../../../rules/genesis
 
 **AuthorityEffect:** None.
 
-This rule enforces dual-implementation parity (executable Python and formal Lean 4) across the 19 canonical Genesis foundational primitives extracted from `19L57G1` under `omega_engine_education/documentation/001_oegen/primitives/`, along with strict relational grounding. Full procedural workflows and formal proofs reside in [`governance-pfp`](../../../../governance-pfp/SKILL.md) and [`governance-wdp`](../../../../governance-wdp/SKILL.md).
+This rule enforces dual-implementation parity (executable Python and formal Lean 4) across the 19 canonical Genesis foundational primitives extracted from `19L57G1` under `education/documentation/001_oegen/primitives/`, along with strict relational grounding. Full procedural workflows and formal proofs reside in [`governance-pfp`](../../../../governance-pfp/SKILL.md) and [`governance-wdp`](../../../../governance-wdp/SKILL.md).
 
 ---
 
 ## 1. Dual-Implementation Parity Standard
 
-- **Dual-Implementation Parity**: Every foundational primitive extracted from `19L57G1` into `omega_engine_education/documentation/001_oegen/primitives/` must be dually maintained in executable Python (`*.py`) and formal Lean 4 (`*.lean`) with identical algebraic semantics.
+- **Dual-Implementation Parity**: Every foundational primitive extracted from `19L57G1` into `education/documentation/001_oegen/primitives/` must be dually maintained in executable Python (`*.py`) and formal Lean 4 (`*.lean`) with identical algebraic semantics.
 - **Algebraic & Type Parity Invariant**: Changes to primitive transition tables, active obstruction gates, or refusal disciplines in Python must have an identical, verified formulation in Lean 4 proof kernels with zero axiom drift.
 
 ---

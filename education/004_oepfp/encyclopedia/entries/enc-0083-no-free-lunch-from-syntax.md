@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.4"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.1 'Theorem IV.4'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.1 'Theorem IV.4'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -79,7 +79,7 @@ semantic predicate. $\qquad\blacksquare$
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.1
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.1
   (statement copied verbatim, including the parenthetical). Original header
   line:
   `**Theorem IV.4 (No-Free-Lunch from Syntax).** [PROVED] Finite packet grammar alone does not make semantic truth decidable. (Reduction to the halting problem.)`
@@ -87,7 +87,7 @@ semantic predicate. $\qquad\blacksquare$
 ## Changelog
 
 - 2026-06-09: ENC-0083 created (M2 E1 extraction).
-- 2026-06-19: SKETCH→CONDITIONAL (omega-math-dev, tier T2). Wrote out the
+- 2026-06-19: SKETCH→CONDITIONAL (core-math-dev, tier T2). Wrote out the
   halting-problem reduction (the source's parenthetical method): decidability of
   semantic truth over $L(G)$ would decide $H$ via $(M,w)\mapsto P_{M,w}\mapsto
   \mathsf{True}_G(P_{M,w})$. Added `## Hypotheses` (grammar expressiveness +

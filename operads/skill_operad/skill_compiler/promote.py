@@ -25,7 +25,7 @@ from resolve import ResolveResult, resolve_text, repo_root_from  # noqa: E402
 from episode import append_episode, load_episode_input, make_episode  # noqa: E402
 
 
-REGISTER_REL = Path("omega_engine_operads") / "skills" / "ooutwire" / "proposed_skills_register.md"
+REGISTER_REL = Path("operads") / "skills" / "ooutwire" / "proposed_skills_register.md"
 
 
 def _next_entry_id(register_text: str) -> int:
@@ -94,7 +94,7 @@ def write_receipt(
     eid = episode.get("id") or "no-id"
     path = out_dir / f"{eid}.json"
     payload = {
-        "schema": "omega.skill_compiler.promote_receipt.v1",
+        "schema": "core.skill_compiler.promote_receipt.v1",
         "episode": episode,
         "disposition": disposition.to_dict(),
         "ooutwire": ooutwire,

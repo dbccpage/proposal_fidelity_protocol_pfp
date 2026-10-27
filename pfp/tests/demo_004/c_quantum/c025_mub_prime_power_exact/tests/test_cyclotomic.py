@@ -3,7 +3,7 @@
 
 from fractions import Fraction
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.reference_solver.cyclotomic import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.reference_solver.cyclotomic import (
     CyclotomicElement,
     format_fraction,
     get_cyclotomic_polynomial,

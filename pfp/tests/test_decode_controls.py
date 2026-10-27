@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.ports.decode_control_port import (
+from pfp.domain.ports.decode_control_port import (
     CarrierMask,
     ControlKind,
     DecodeControlReceipt,
@@ -25,8 +25,8 @@ from omega_engine_pfp.domain.ports.decode_control_port import (
     GrammarMask,
     LogitBias,
 )
-from omega_engine_pfp.ffi import RustSymbolGameHost
-from omega_engine_pfp.infrastructure.adapters.decode_controls import (
+from pfp.ffi import RustSymbolGameHost
+from pfp.infrastructure.adapters.decode_controls import (
     LocalHfMechanismAdapter,
     VllmDecodeAdapter,
 )
@@ -112,7 +112,7 @@ def test_native_rust_verify_decode_receipt():
     """Verify host FFI seam directly executes native Rust verify_decode_receipt."""
     host = RustSymbolGameHost()
     receipt_data = {
-        "schema_version": "omega.symbol_game.decode_receipt.v1",
+        "schema_version": "core.symbol_game.decode_receipt.v1",
         "receipt_id": "r_ffi_01",
         "case_id": "c001_ffi",
         "control_kind": "LOGIT_BIAS",
@@ -145,7 +145,7 @@ def test_decode_verifier_exception_never_passes(monkeypatch, adapter_class, modu
     import importlib
 
     adapter_module = importlib.import_module(
-        "omega_engine_pfp.infrastructure.adapters.decode_controls." + module
+        "pfp.infrastructure.adapters.decode_controls." + module
     )
 
     def unavailable():

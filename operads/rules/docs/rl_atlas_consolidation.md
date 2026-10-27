@@ -1,6 +1,6 @@
 ---
 paths:
-  - "omega_engine_atlas/**"
+  - "atlas/**"
 ---
 
 # Rule: Atlas Consolidation & EADC Addressing

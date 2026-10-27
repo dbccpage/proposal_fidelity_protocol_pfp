@@ -21,7 +21,7 @@ from knowledge_parity import scan_file  # noqa: E402
 from resolve import repo_root_from, resolve_text  # noqa: E402
 
 DEFAULT_CASES = Path(
-    "omega_engine_operads/skill_operad/skill_compiler/eval_bank/cases.json"
+    "operads/skill_operad/skill_compiler/eval_bank/cases.json"
 )
 
 
@@ -91,13 +91,13 @@ def _structure_ok(text: str, expect: dict[str, Any]) -> str | None:
 
 def _check_skill_structure(repo_root: Path, case: dict[str, Any]) -> str | None:
     skill = case.get("skill") or ""
-    path = repo_root / "omega_engine_operads" / "skills" / skill / "SKILL.md"
+    path = repo_root / "operads" / "skills" / skill / "SKILL.md"
     if not path.is_file() and skill == "autoskill":
-        alt_path = repo_root / "omega_engine_operads" / "skills" / "auto-skill" / "SKILL.md"
+        alt_path = repo_root / "operads" / "skills" / "auto-skill" / "SKILL.md"
         if alt_path.is_file():
             path = alt_path
     elif not path.is_file() and skill == "auto-skill":
-        alt_path = repo_root / "omega_engine_operads" / "skills" / "autoskill" / "SKILL.md"
+        alt_path = repo_root / "operads" / "skills" / "autoskill" / "SKILL.md"
         if alt_path.is_file():
             path = alt_path
     if not path.is_file():
@@ -156,7 +156,7 @@ def run_bank(
             }
         )
     return {
-        "schema": "omega.skill_compiler.eval_receipt.v1",
+        "schema": "core.skill_compiler.eval_receipt.v1",
         "cases_path": str(path.relative_to(repo_root)).replace("\\", "/"),
         "total": len(cases),
         "passed": len(cases) - failed,

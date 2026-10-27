@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Protocol
 
-from omega_engine_pfp.domain.kernel.result import Result
+from pfp.domain.kernel.result import Result
 
 from .models import ExecutionReceipt, FindingLedger, IntegrityRefusal, IntegrityRequest
 

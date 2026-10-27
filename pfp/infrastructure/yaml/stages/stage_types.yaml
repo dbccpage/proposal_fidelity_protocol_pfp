@@ -23,11 +23,11 @@ types:
   SeatId:
     kind: enum
     values:
-    - seat_begemot
-    - seat_koroviev
-    - seat_woland
-    - seat_margarita
-    - seat_the_master
+    - seat_gauge_breaker
+    - seat_defect_hunter
+    - seat_adversary
+    - seat_primal_dual
+    - seat_manuscript_truth
   Executor:
     kind: enum
     values:
@@ -49,7 +49,7 @@ types:
     kind: record
     doc: One stage definition (stages/stage_N_*.yaml). response_schema is a JSON Schema
       object for a model turn (stage 1 uses it only for the declaration repair turn).
-      seat names the core retinue seat that owns the stage.
+      seat names the core panel seat that owns the stage.
     constraints:
     - if_field: executor
       equals: model
@@ -141,7 +141,7 @@ types:
               const: &id002
               - 1
             seat:
-              const: seat_begemot
+              const: seat_gauge_breaker
           required:
           - response_schema
           not:
@@ -165,7 +165,7 @@ types:
               - 1
               - 2
             seat:
-              const: seat_koroviev
+              const: seat_defect_hunter
           required:
           - response_schema
           not:
@@ -189,7 +189,7 @@ types:
               - 2
               - 3
             seat:
-              const: seat_begemot
+              const: seat_gauge_breaker
           required:
           - response_schema
           not:
@@ -213,7 +213,7 @@ types:
               - 2
               - 4
             seat:
-              const: seat_woland
+              const: seat_adversary
           required:
           - input_contract
           not:
@@ -238,7 +238,7 @@ types:
               - 4
               - 5
             seat:
-              const: seat_margarita
+              const: seat_primal_dual
           required:
           - response_schema
           not:
@@ -286,7 +286,7 @@ types:
               - 5
               - 7
             seat:
-              const: seat_the_master
+              const: seat_manuscript_truth
           required: []
           not:
             anyOf:
@@ -410,7 +410,7 @@ types:
             requires:
               const: *id002
             seat:
-              const: seat_begemot
+              const: seat_gauge_breaker
       - if:
           properties:
             stage:
@@ -426,7 +426,7 @@ types:
             requires:
               const: *id003
             seat:
-              const: seat_koroviev
+              const: seat_defect_hunter
       - if:
           properties:
             stage:
@@ -442,7 +442,7 @@ types:
             requires:
               const: *id004
             seat:
-              const: seat_begemot
+              const: seat_gauge_breaker
       - if:
           properties:
             stage:
@@ -458,7 +458,7 @@ types:
             requires:
               const: *id005
             seat:
-              const: seat_woland
+              const: seat_adversary
       - if:
           properties:
             stage:
@@ -474,7 +474,7 @@ types:
             requires:
               const: *id006
             seat:
-              const: seat_margarita
+              const: seat_primal_dual
       - if:
           properties:
             stage:
@@ -504,7 +504,7 @@ types:
             requires:
               const: *id008
             seat:
-              const: seat_the_master
+              const: seat_manuscript_truth
       - if:
           properties:
             stage:

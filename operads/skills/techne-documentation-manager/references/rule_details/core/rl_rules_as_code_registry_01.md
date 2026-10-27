@@ -9,8 +9,8 @@ Parent: [Rules-as-Code Registry & Rule Gate](../../../../../rules/core/rl_rules_
 **AuthorityEffect:** None.
 
 Rule files are specifications. The machine-readable rule register is
-`omega_engine_operads/skill_operad/yaml/rules_registry.yaml`, and the
-executable gate is `omega_engine_operads/skill_operad/skill_compiler/rule_gate.py`.
+`operads/skill_operad/yaml/rules_registry.yaml`, and the
+executable gate is `operads/skill_operad/skill_compiler/rule_gate.py`.
 A rule takes effect as a gate only where a named check enforces it.
 
 ---
@@ -54,7 +54,7 @@ or fixture that turns it red), not only to pass on the current tree.
 ## 5. Operation
 
 ```
-py -3.12 -m omega_engine_operads.skill_operad.skill_compiler.rule_gate --repo-root .
+py -3.12 -m operads.skill_operad.skill_compiler.rule_gate --repo-root .
 ```
 
 Exit status 0 means every check in sections 1–3 passed. The gate prints the per-status invariant
@@ -68,5 +68,5 @@ When a rule approaches 12,000 bytes (`size_ceiling_bytes: 12000`), agents must f
 3. **Cross-References:** Repoint relative markdown links to the new canonical rule path.
 4. **Registry:** Update `rules_registry.yaml` with the new rule entry, invariant ownership, and summary.
 5. **Four-Host Parity:** Sync all modified/new rule files across `.agents/`, `.claude/`, `.codex/`, and `.grok/`.
-6. **Register Sync:** Run `py -3.12 -m omega_engine_operads.skill_operad.skill_compiler.rule_gate --write-register --write-scope` and confirm 0 findings.
+6. **Register Sync:** Run `py -3.12 -m operads.skill_operad.skill_compiler.rule_gate --write-register --write-scope` and confirm 0 findings.
 7. **Invariant Ownership:** Declare new invariant IDs in `rules_registry.yaml` simultaneously to prevent `R6_UNOWNED`.

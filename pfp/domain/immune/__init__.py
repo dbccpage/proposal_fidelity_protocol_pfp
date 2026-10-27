@@ -1,8 +1,8 @@
 """Legacy Symbol Game copy of the epistemic immune domain.
 
 LEGACY COPY (notice added 2026-09-29). The owner of immune logic is the
-Epistemic Immune System package, `omega_engine_epistemic_immune_system`
-(OEEIS); new code must use it (Woland and OEWAS consume it through ports).
+Epistemic Immune System package, `eis`
+(OEEIS); new code must use it (Adversary and OEWAS consume it through ports).
 This package is a second, diverged copy kept only because existing callers
 import it (Symbol Game tests and the c001 attention-mask challenge). It is not
 reconciled with OEEIS. Known differences:
@@ -11,7 +11,7 @@ reconciled with OEEIS. Known differences:
   `("agent", "researcher")` in OEEIS, and the persona marker lists differ, so
   PERSONA_AUTHORITY_LEAK fires on different inputs;
 - the pharmacy here is a Python re-implementation; OEEIS runs the eleven
-  native classes of `omega_prompt_civilization` and keeps only the persona
+  native classes of `core_prompt_civilization` and keeps only the persona
   check in Python;
 - the danger gate here puts a HIGH or CRITICAL Signal 2 alone into
   DEFENSIVE_LOCKDOWN; OEEIS requires both signals to suppress and refuses a

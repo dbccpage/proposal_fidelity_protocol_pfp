@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_pfp.domain.kernel.result import (
+from pfp.domain.kernel.result import (
     DomainError,
     EvaluationVerdict,
     GenesisCycleVerdict,

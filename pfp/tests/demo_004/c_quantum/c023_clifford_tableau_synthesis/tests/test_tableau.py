@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c023_clifford_tableau_synthesis.reference_solver.tableau import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c023_clifford_tableau_synthesis.reference_solver.tableau import (
     Tableau,
 )
 

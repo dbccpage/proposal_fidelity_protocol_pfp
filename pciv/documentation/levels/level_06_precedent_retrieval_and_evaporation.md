@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_prompt_civilization/src/matching.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_prompt_civilization/src/matching.rs
 ---
 
 # Prompt Civ Level 06: Precedent Retrieval & Evaporation: Lexicographic Matching
 
 **AuthorityEffect:** None.  
 **Level:** Level 06 (Precedent Retrieval, Lexicographic Sorting & Usage Decay)  
-**Rust Matching Seam:** [`omega_prompt_civilization::matching`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/matching.rs)  
+**Rust Matching Seam:** [`core_prompt_civilization::matching`](../../../engine/crates_rs/core_prompt_civilization/src/matching.rs)  
 **Primary Types:** `PrecedentMatchReceiptV1`, `ReferencePolicyV1`  
 **Core Falsifiers:** `F-BIO-04`, `F-DOMAIN-01`
 
@@ -91,7 +91,7 @@ Level 06 establishes the **7-Key Lexicographic Matching Engine with Epoch-Based 
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::matching
+// core_prompt_civilization::matching
 pub struct ReferencePolicyV1 {
     pub epoch_half_life: u64, // e.g. H = 10 epochs
     pub policy_digest: [u8; 32],

@@ -15,12 +15,12 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Sequence
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.immune.danger_gate import (
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from pfp.domain.immune.danger_gate import (
     Signal1AstMatch,
     Signal2DangerState,
 )
-from omega_engine_pfp.domain.immune.turn_loop_wiring import (
+from pfp.domain.immune.turn_loop_wiring import (
     TurnLoopImmuneCoordinator,
 )
 
@@ -86,7 +86,7 @@ class TurnDriverController:
             self.host = host
         else:
             import importlib
-            _ffi = importlib.import_module("omega_engine_pfp.ffi")
+            _ffi = importlib.import_module("pfp.ffi")
             self.host = _ffi.get_default_host()
         self.immune_coordinator = immune_coordinator or TurnLoopImmuneCoordinator()
         self.ddc_trace_path = self.trace_dir / "ddc_trace.jsonl"

@@ -20,7 +20,7 @@ import threading
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (
     _has_integer_root_at_or_after,
 )
 
@@ -31,9 +31,9 @@ PER_CASE_SECONDS = 20.0
 
 WORKER = r"""
 import json, sys, time
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.reference_solver.solver import solve
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.exact_checker import check_solution
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import independent_check
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.reference_solver.solver import solve
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.exact_checker import check_solution
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import independent_check
 print(json.dumps({"ready": True}), flush=True)
 for line in sys.stdin:
     path = line.strip()
@@ -50,7 +50,7 @@ for line in sys.stdin:
 
 
 def test_every_judge_case_finishes_in_bounded_time_and_both_checkers_accept() -> None:
-    assert (REPO_ROOT / "omega_engine_projects").is_dir()
+    assert (REPO_ROOT / "projects").is_dir()
     assert len(CASES) == 64
     env = dict(os.environ, PYTHONPATH=str(REPO_ROOT), PYTHONDONTWRITEBYTECODE="1")
     proc = subprocess.Popen(
@@ -90,7 +90,7 @@ def test_every_judge_case_finishes_in_bounded_time_and_both_checkers_accept() ->
 
 
 LARGE_ROOT_CHECKS = r"""
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (
     _has_integer_root_at_or_after as has_root,
 )
 big = 1180591620717411303424

@@ -1,7 +1,7 @@
 """PFP packet and receipt JSON Schemas.
 
 These are not stages. The staged pipeline is
-`omega_engine_pfp/infrastructure/yaml/stages/`. Each file here is the JSON
+`pfp/infrastructure/yaml/stages/`. Each file here is the JSON
 Schema twin of a YAML schema in `infrastructure/yaml/schemas/` with the same
 stem.
 

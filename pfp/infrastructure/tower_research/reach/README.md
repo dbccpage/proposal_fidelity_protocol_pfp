@@ -4,7 +4,7 @@
 activates, promotes, or admits anything.
 
 This directory holds the reach ledger that `research/mssn_sn_tower/_archive/source_inputs_2026_09_25/19L57G1_H3V7N5QF_direct/08_governance_and_framing.md` §4
-specifies. Its code is in `omega_engine_pfp/infrastructure/tower_research/reach/`, following the
+specifies. Its code is in `pfp/infrastructure/tower_research/reach/`, following the
 layout in W2-C05 §4.1.
 
 ## Today's numbers (computed, not typed)
@@ -38,7 +38,7 @@ resolves here. Level 000 is apparatus (A), never C. Levels 000, 001, 006, 009, 0
 (`repo_content`); the other twelve are harness computation
 (`19L57G1+harness`). Levels 012 and 020 are blocked by the embargo; 022,
 023, 027, 041 and 044 are blocked because their named witness is not sealed
-or has nothing to replay it (`omega_engine_pfp/infrastructure/tower_research/level_engine/bindings/qlevels.json`). C is counted per key and never
+or has nothing to replay it (`pfp/infrastructure/tower_research/level_engine/bindings/qlevels.json`). C is counted per key and never
 summed.
 
 ## Files
@@ -137,7 +137,7 @@ are:
   ascent row.
 
 An entry can instead be stated not applicable, with a reason. The runtime type
-`omega.symgam.transport-certificate.v1` is unchanged, and submitting it as V2 is
+`core.symgam.transport-certificate.v1` is unchanged, and submitting it as V2 is
 refused.
 
 ## Not done in this round (open)

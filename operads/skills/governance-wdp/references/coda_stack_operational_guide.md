@@ -15,7 +15,7 @@ The canonical 9-layer CODA application pipeline executes in strict dependency or
 3. **Layer 3: CS (Continuum Shadow):** Coarse-graining and finite shadow projections.
 4. **Layer 4: CS-Q (Continuum Shadow / Continuum Bridge):** Discrete-to-continuum transition interfaces.
 5. **Layer 5: Q (The Continuum):** Continuum representations via convex interval enclosures $[lo, hi]$ with $|x - \text{mid}| \le \text{width}/2$ and Cauchy completions. *Calling Layer 5 "Quantum Enclosure" is prohibited.*
-6. **Layer 6: A (Anomalon):** Anomalous holonomy and discrete curvature metrics.
+6. **Layer 6: A (Sentinel):** Anomalous holonomy and discrete curvature metrics.
 7. **Layer 7: OR (Omniversal Re-Presentation):** Universal factor uniqueness and quotient embeddings.
 8. **Layer 8: FDA (Finite Descent Authority):** Descent verification, role split (proposer != authorizer), and dual witness certificates.
 9. **Layer 9: GTLA (General Theory of Layered Authority):** Master normal forms, cryptographic authority gates (`AuthorityEffect: None`), and verified promotion.

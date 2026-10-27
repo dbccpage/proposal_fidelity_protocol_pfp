@@ -76,7 +76,7 @@ def _check_impl(case: Any, cert: Any) -> Dict[str, Any]:
             return {"verdict": "REJECT", "code": "SCHEMA", "index": None}
 
     raw_d0 = case["d0"]
-    raw_omega = case["omega"]
+    raw_core = case["omega"]
     raw_w = case["w"]
     raw_alpha = cert["alpha"]
     raw_r = cert["r"]
@@ -85,7 +85,7 @@ def _check_impl(case: Any, cert: Any) -> Dict[str, Any]:
 
     if (
         not isinstance(raw_d0, list)
-        or not isinstance(raw_omega, list)
+        or not isinstance(raw_core, list)
         or not isinstance(raw_w, list)
     ):
         return {"verdict": "REJECT", "code": "SCHEMA", "index": None}
@@ -109,12 +109,12 @@ def _check_impl(case: Any, cert: Any) -> Dict[str, Any]:
         return {"verdict": "REJECT", "code": "NONCANONICAL_RATIONAL", "index": None}
 
     # omega
-    omega_fracs: List[Fraction] = []
-    for item in raw_omega:
+    core_fracs: List[Fraction] = []
+    for item in raw_core:
         ok, fr = parse_canonical_rational(item)
         if not ok or fr is None:
             return {"verdict": "REJECT", "code": "NONCANONICAL_RATIONAL", "index": None}
-        omega_fracs.append(fr)
+        core_fracs.append(fr)
 
     # w
     w_fracs: List[Fraction] = []
@@ -160,7 +160,7 @@ def _check_impl(case: Any, cert: Any) -> Dict[str, Any]:
         d0_fracs.append(row_fracs)
 
     # 3. DIMENSION VALIDATION
-    m = len(omega_fracs)
+    m = len(core_fracs)
     if m == 0:
         return {"verdict": "REJECT", "code": "DIMENSION", "index": None}
     if len(w_fracs) != m or len(r_fracs) != m or len(y_fracs) != m:
@@ -181,7 +181,7 @@ def _check_impl(case: Any, cert: Any) -> Dict[str, Any]:
     # 5. RESIDUAL_MISMATCH: r = omega - d0 * alpha
     for e in range(m):
         repair_e = sum((d0_fracs[e][j] * alpha_fracs[j] for j in range(k)), Fraction(0, 1))
-        expected_r_e = omega_fracs[e] - repair_e
+        expected_r_e = core_fracs[e] - repair_e
         if r_fracs[e] != expected_r_e:
             return {"verdict": "REJECT", "code": "RESIDUAL_MISMATCH", "index": e}
 
@@ -202,7 +202,7 @@ def _check_impl(case: Any, cert: Any) -> Dict[str, Any]:
             return {"verdict": "REJECT", "code": "DUAL_BOUND_VIOLATED", "index": e}
 
     # 9. DUAL_VALUE_MISMATCH: y^T * omega == value
-    dual_val = sum((y_fracs[e] * omega_fracs[e] for e in range(m)), Fraction(0, 1))
+    dual_val = sum((y_fracs[e] * core_fracs[e] for e in range(m)), Fraction(0, 1))
     if dual_val != val_frac:
         return {"verdict": "REJECT", "code": "DUAL_VALUE_MISMATCH", "index": None}
 

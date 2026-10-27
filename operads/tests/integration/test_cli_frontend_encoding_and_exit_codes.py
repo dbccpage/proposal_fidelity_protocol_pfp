@@ -10,7 +10,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from omega_engine_operads.frontend.cli.main import main
+from operads.frontend.cli.main import main
 
 
 class TestCliFrontendEncodingAndExitCodes(unittest.TestCase):

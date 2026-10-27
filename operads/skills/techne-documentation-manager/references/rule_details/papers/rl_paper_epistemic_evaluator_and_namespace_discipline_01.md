@@ -17,7 +17,7 @@ This rule codifies preprint namespace de-slop, categorical functorial purity, me
 > **Canonical Example & Harness De-Slop:**
 >
 > 1. **No Transient Paper Prefixes in Engine Code:**
->    When test fixtures, example binaries, or benchmarking suites graduate from research preprints into canonical Rust crates (`omega_engine/crates_rs/`) or engine operations packages (`omega_engine_operations/`), transient paper identifiers (e.g., `paper070_`, `paperer008_`, `paper012_`) must be eliminated from:
+>    When test fixtures, example binaries, or benchmarking suites graduate from research preprints into canonical Rust crates (`engine/crates_rs/`) or engine operations packages (`operations/`), transient paper identifiers (e.g., `paper070_`, `paperer008_`, `paper012_`) must be eliminated from:
 >    - Filenames (e.g., `benchmarks.rs`, `replays.rs` instead of `paper070_benchmarks.rs`).
 >    - Example directory names (e.g., `examples/replays/` instead of `examples/paper070_replays/`).
 >    - Module path attributes (e.g., `#[path = "replays/cases.rs"]` and `#[path = "../examples/replays/cases.rs"]`).
@@ -53,7 +53,7 @@ This rule codifies preprint namespace de-slop, categorical functorial purity, me
 > **Preflight Packaging Fences & Envelope Hygiene:**
 >
 > 1. **Mandatory Mechanism Inventory Slots:** Every monograph containing a mechanism inventory table MUST include the `AuthorityEffect` slot explicitly declared as `None` (`| **AuthorityEffect** | None |`).
-> 2. **Zero Raw Monorepo Path Escapes:** Publish-facing monographs and documentation must never contain raw repository file paths (e.g. `omega_engine/...`). Pointers must resolve via public DOIs or URLs.
+> 2. **Zero Raw Monorepo Path Escapes:** Publish-facing monographs and documentation must never contain raw repository file paths (e.g. `engine/...`). Pointers must resolve via public DOIs or URLs.
 > 3. **Retirement of Claim Ledgers:** Claim ledgers (`<slug>_claim_ledger.md`, `claim_ir.yaml`, `claim_code_map.yaml`, `lean_claim_map.md`) are retired from papers' release suites and must not be generated or required.
 
 ---

@@ -2,7 +2,7 @@
 
 **AuthorityEffect:** None.
 
-This reference documents the procedural workflow and structural standards for consolidating materials within `omega_engine_atlas/coda_atlas/`.
+This reference documents the procedural workflow and structural standards for consolidating materials within `atlas/coda_atlas/`.
 
 ---
 

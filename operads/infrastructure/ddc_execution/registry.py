@@ -4,15 +4,15 @@ import json
 import re
 from pathlib import Path
 
-from omega_engine_operads.domain.ddc_execution.constants import (
+from operads.domain.ddc_execution.constants import (
     ADMITTED_FINITE_COLOURS,
 )
-from omega_engine_operads.domain.ddc_execution.errors import (
+from operads.domain.ddc_execution.errors import (
     PermissionDeniedError,
     Refusal,
     UnknownMorphismError,
 )
-from omega_engine_operads.domain.ddc_execution.value_objects import (
+from operads.domain.ddc_execution.value_objects import (
     ColourSignature,
     OperadOperation,
 )
@@ -38,7 +38,7 @@ def read_object(path: Path) -> dict:
 
 class FileOperadRegistry:
     def __init__(self, repo_root: Path) -> None:
-        canonical = repo_root / "omega_engine_operads"
+        canonical = repo_root / "operads"
         self.directory = canonical / "skill_operad/json" if (
             (canonical / "skills").is_dir() or (canonical / "skill_operad").is_dir()
         ) else repo_root / ".agents/skill_operads"

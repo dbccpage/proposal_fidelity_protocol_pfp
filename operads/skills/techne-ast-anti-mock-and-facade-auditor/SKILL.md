@@ -56,7 +56,7 @@ py -3.12 -c "
 import ast, sys
 from pathlib import Path
 
-target = Path('omega_engine_operations/tests')
+target = Path('operations/tests')
 for p in target.glob('**/*.py'):
     tree = ast.parse(p.read_text(encoding='utf-8', errors='replace'))
     for node in ast.walk(tree):

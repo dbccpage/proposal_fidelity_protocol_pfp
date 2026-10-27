@@ -30,12 +30,12 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 try:
-    from omega_engine_woland.stage.domain.cochain import (
+    from adversary.stage.domain.cochain import (
         DEFAULT_CLEAN_ARCH_LAYERS,
         ASTDependencyComplex,
     )
 except ImportError:
-    print("[WARNING] Could not import omega_engine_woland.stage.domain.cochain; check sys.path.")
+    print("[WARNING] Could not import adversary.stage.domain.cochain; check sys.path.")
     DEFAULT_CLEAN_ARCH_LAYERS = {
         "domain": 0,
         "use_cases": 1,
@@ -184,7 +184,7 @@ def main() -> None:
     parser.add_argument(
         "targets",
         nargs="*",
-        default=["omega_engine_pfp", "omega_engine_governance"],
+        default=["pfp", "governance"],
         help="Target directories or packages to scan (relative to repo root)",
     )
     parser.add_argument("--json", action="store_true", help="Output raw JSON results")

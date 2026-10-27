@@ -9,9 +9,9 @@ unchanged; only its location moved.
 ## Example Session
 
 ```text
-User: Can you audit our Omega Engine agents and tell me which ones we should keep vs. archive?
+User: Can you audit our Engine agents and tell me which ones we should keep vs. archive?
 
-Omega: I'll run a full agents audit across the four agent roots (`.agents/agents` primary). Let me inventory
+Core: I'll run a full agents audit across the four agent roots (`.agents/agents` primary). Let me inventory
 everything first...
 
 # Agents Audit Report - 2026-02-13
@@ -40,7 +40,7 @@ everything first...
 
 ### High Priority
 - [ ] Evaluate 26 faculty agents for council ownership
-- [ ] Archive 6 duplicate agents to omega_engine/agents/_archived/
+- [ ] Archive 6 duplicate agents to engine/agents/_archived/
 - [ ] Update database records for archived agents
 
 ### Improve These Agents

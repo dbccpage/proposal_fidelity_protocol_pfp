@@ -11,18 +11,18 @@ from __future__ import annotations
 
 from typing import Any, Dict, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import (
     compute_sha256,
     verify_drat_certificate,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.family_solvers import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.family_solvers import (
     encode_coloring,
     encode_latin_square,
     encode_php,
     encode_tiling,
     encode_tseitin,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import (
     format_dimacs_cnf,
 )
 

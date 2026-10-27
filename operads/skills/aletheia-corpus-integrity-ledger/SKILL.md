@@ -20,9 +20,9 @@ a gate. The corpora are 21,466 lines that no skill has ever read.
 
 ## Inputs
 
-- `omega_engine_cognitive_operations/ooutwire/_docs/basis_*.jsonl` (22 files)
+- `cognitive_operations/ooutwire/_docs/basis_*.jsonl` (22 files)
 - `.../cognitive_warfare_defense_registry.json`
-- helpers in `omega_engine_governance/frontend/cli/basis_corpus_wave_cli.py`
+- helpers in `governance/frontend/cli/basis_corpus_wave_cli.py`
 
 ## Protocol
 

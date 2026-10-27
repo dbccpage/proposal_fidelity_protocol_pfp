@@ -16,14 +16,14 @@ from typing import Any, Dict, Mapping, Optional, Tuple, Union
 from jsonschema import Draft202012Validator, validators
 from jsonschema.exceptions import SchemaError
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import (
+from pfp.domain.contracts.pfp_runtime import (
     PfpPipelineFailure,
     PfpPipelineRunnerPort,
     PfpPipelineStep,
     PfpStagePromptInput,
 )
-from omega_engine_pfp.use_cases.pfp_prompt import AssemblePfpStagePromptUseCase
-from omega_engine_pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
+from pfp.use_cases.pfp_prompt import AssemblePfpStagePromptUseCase
+from pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
 
 from ..domain.aggregates.pilot_aggregate import PilotAggregate
 from ..domain.kernel.ports import (

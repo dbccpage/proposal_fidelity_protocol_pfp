@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     canonical_unwire,
     canonical_wire,
@@ -30,9 +30,9 @@ from .candidate_artifact import CandidateArtifactV1
 from .packet_envelope import EvaluationReceiptV1, PacketEnvelopeV2
 
 
-OESOS_EVIDENCE_BUNDLE_SCHEMA = "omega.oesos.evidence-bundle.v1"
-RUNTIME_IDENTITY_SCHEMA = "omega.oesos.runtime-problem-identity.v1"
-OESOS_EVIDENCE_BUNDLE_MEDIA_TYPE = "application/vnd.omega.oesos-evidence+json"
+OESOS_EVIDENCE_BUNDLE_SCHEMA = "core.oesos.evidence-bundle.v1"
+RUNTIME_IDENTITY_SCHEMA = "core.oesos.runtime-problem-identity.v1"
+OESOS_EVIDENCE_BUNDLE_MEDIA_TYPE = "application/vnd.core.oesos-evidence+json"
 MAX_CANDIDATES = 4096
 MAX_PROCESS_EVENTS = 65536
 
@@ -252,7 +252,7 @@ class RuntimeProblemIdentityV1:
 
     @property
     def runtime_id(self) -> str:
-        return domain_digest("omega.oesos.runtime-problem.v1", self.runtime_fields())
+        return domain_digest("core.oesos.runtime-problem.v1", self.runtime_fields())
 
     @classmethod
     def from_problem(cls, problem: RuntimeProblem) -> "RuntimeProblemIdentityV1":

@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 Governing schema: pfp.dimension-register.v1
-Canonical path: omega_engine_woland/tests/pilots/dimensions/dimension_register.yaml
+Canonical path: adversary/tests/pilots/dimensions/dimension_register.yaml
 """
 
 from __future__ import annotations

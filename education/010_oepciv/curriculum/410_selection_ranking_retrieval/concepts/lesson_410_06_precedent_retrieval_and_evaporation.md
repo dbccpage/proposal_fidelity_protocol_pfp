@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 410 (Selection, Ranking & Retrieval)  
 **Level Source:** Level 06 ([`level_06_precedent_retrieval_and_evaporation.md`](../../levels/level_06_precedent_retrieval_and_evaporation.md))  
-**Rust Seam:** [`omega_prompt_civilization::matching`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/matching.rs)
+**Rust Seam:** [`core_prompt_civilization::matching`](../../../../engine/crates_rs/core_prompt_civilization/src/matching.rs)
 
 ## 1. Pedagogical Objective
 Examine how precedent precedents are retrieved via lexicographic domain matching and decayed over epoch half-lives $H$.

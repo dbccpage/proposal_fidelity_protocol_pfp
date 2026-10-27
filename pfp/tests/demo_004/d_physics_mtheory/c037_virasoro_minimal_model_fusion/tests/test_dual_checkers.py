@@ -15,16 +15,16 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.combinatorial_fusion_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.combinatorial_fusion_checker import (
     verify_combinatorial_fusion_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.dual_evaluator import (
     CheckerDisagreementError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.verlinde_cyclotomic_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.verlinde_cyclotomic_checker import (
     verify_verlinde_cyclotomic_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.reference_solver.solver import (
     solve,
 )
 
@@ -76,7 +76,7 @@ def test_checker_disagreement_raises_error():
     case = {"case_id": "test_div", "model": "minimal", "p": 4, "p_prime": 3}
     ans = solve(case)
 
-    import omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.dual_evaluator as de
+    import projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.judge_packet.checkers.dual_evaluator as de
 
     orig_c1 = de.verify_verlinde_cyclotomic_certificate
     try:

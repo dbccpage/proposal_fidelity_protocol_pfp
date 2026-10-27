@@ -3,7 +3,7 @@
 The domain names artifacts by repository-relative POSIX paths such as
 ``_intelligence/unified_oe_trace.jsonl``; it never holds a filesystem root and
 never opens a file. The composition root binds this port to an explicit output
-root (for a Woland run, the root that ``resolve_intelligence_repo_root``
+root (for a Adversary run, the root that ``resolve_intelligence_repo_root``
 returns). There is no default root: an unbound sink is a refusal, not a write
 into whichever checkout the code happens to live in.
 
@@ -41,7 +41,7 @@ def create_filesystem_artifact_sink(root: object) -> RunArtifactSinkPort:
     import importlib
 
     mod = importlib.import_module(
-        "omega_engine_pfp.infrastructure.persistence.run_artifact_sink"
+        "pfp.infrastructure.persistence.run_artifact_sink"
     )
     sink = mod.FilesystemRunArtifactSink(str(root))
     return sink

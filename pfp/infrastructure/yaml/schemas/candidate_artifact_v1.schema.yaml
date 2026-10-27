@@ -1,5 +1,5 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: omega.symbol-game.candidate-artifact.v1
+$id: core.symbol-game.candidate-artifact.v1
 title: Symbol Game CandidateArtifactV1
 type: object
 additionalProperties: false
@@ -16,7 +16,7 @@ required:
 - authority_effect
 properties:
   schema_version:
-    const: omega.symbol-game.candidate-artifact.v1
+    const: core.symbol-game.candidate-artifact.v1
   candidate_id:
     type: string
     pattern: ^[0-9a-f]{64}$
@@ -47,7 +47,7 @@ $defs:
   canonicalStringNode:
     type: array
     prefixItems:
-    - const: omega-canonical-v1
+    - const: core-canonical-v1
     - const: string
     - type: string
     items: false
@@ -56,7 +56,7 @@ $defs:
   canonicalNonEmptyStringNode:
     type: array
     prefixItems:
-    - const: omega-canonical-v1
+    - const: core-canonical-v1
     - const: string
     - type: string
       minLength: 1
@@ -66,7 +66,7 @@ $defs:
   canonicalIntegerNode:
     type: array
     prefixItems:
-    - const: omega-canonical-v1
+    - const: core-canonical-v1
     - const: int
     - type: string
       pattern: ^(0|-?[1-9][0-9]*)$
@@ -76,7 +76,7 @@ $defs:
   canonicalPositiveIntegerNode:
     type: array
     prefixItems:
-    - const: omega-canonical-v1
+    - const: core-canonical-v1
     - const: int
     - type: string
       pattern: ^[1-9][0-9]*$
@@ -86,7 +86,7 @@ $defs:
   canonicalFloatHexNode:
     type: array
     prefixItems:
-    - const: omega-canonical-v1
+    - const: core-canonical-v1
     - const: string
     - type: string
       pattern: ^-?(0x0\.0p\+0|0x0\.(?!0{13}p)[0-9a-f]{13}p-1022|0x1\.[0-9a-f]{13}p(\+(0|[1-9][0-9]{0,2}|10[01][0-9]|102[0-3])|-([1-9]|[1-9][0-9]{1,2}|10[01][0-9]|102[0-2])))$
@@ -96,7 +96,7 @@ $defs:
   canonicalBytesHexNode:
     type: array
     prefixItems:
-    - const: omega-canonical-v1
+    - const: core-canonical-v1
     - const: string
     - type: string
       pattern: ^([0-9a-f]{2})*$
@@ -106,7 +106,7 @@ $defs:
   canonicalFieldNode:
     type: array
     prefixItems:
-    - const: omega-canonical-v1
+    - const: core-canonical-v1
     - const: field
     - type: array
       prefixItems:
@@ -121,7 +121,7 @@ $defs:
   canonicalEntryNode:
     type: array
     prefixItems:
-    - const: omega-canonical-v1
+    - const: core-canonical-v1
     - const: entry
     - type: array
       prefixItems:
@@ -139,7 +139,7 @@ $defs:
     oneOf:
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - const: 'null'
       - type: 'null'
       items: false
@@ -147,7 +147,7 @@ $defs:
       maxItems: 3
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - const: bool
       - type: boolean
       items: false
@@ -157,7 +157,7 @@ $defs:
     - $ref: '#/$defs/canonicalStringNode'
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - const: float
       - type: array
         prefixItems:
@@ -170,7 +170,7 @@ $defs:
       maxItems: 3
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - const: fraction
       - type: array
         prefixItems:
@@ -184,7 +184,7 @@ $defs:
       maxItems: 3
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - const: bytes
       - type: array
         prefixItems:
@@ -197,7 +197,7 @@ $defs:
       maxItems: 3
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - const: enum
       - type: array
         prefixItems:
@@ -215,7 +215,7 @@ $defs:
     - $ref: '#/$defs/canonicalEntryNode'
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - const: dataclass
       - type: array
         prefixItems:
@@ -230,13 +230,13 @@ $defs:
       maxItems: 3
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - const: mapping
       - type: array
         prefixItems:
         - type: array
           prefixItems:
-          - const: omega-canonical-v1
+          - const: core-canonical-v1
           - const: string
           - const: builtins
           items: false
@@ -244,7 +244,7 @@ $defs:
           maxItems: 3
         - type: array
           prefixItems:
-          - const: omega-canonical-v1
+          - const: core-canonical-v1
           - const: string
           - const: dict
           items: false
@@ -259,7 +259,7 @@ $defs:
       maxItems: 3
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - enum:
         - list
         - tuple
@@ -271,7 +271,7 @@ $defs:
       maxItems: 3
     - type: array
       prefixItems:
-      - const: omega-canonical-v1
+      - const: core-canonical-v1
       - enum:
         - set
         - frozenset

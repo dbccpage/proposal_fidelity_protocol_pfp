@@ -13,8 +13,8 @@ INFRA_ERROR. Lean is replaced by a stub here; no Lean process runs.
 from __future__ import annotations
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.exact_checker import verify_exact
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import lean_compiler, tactic_portfolio
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.exact_checker import verify_exact
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import lean_compiler, tactic_portfolio
 
 
 def _ok() -> lean_compiler.LeanCompilationResult:

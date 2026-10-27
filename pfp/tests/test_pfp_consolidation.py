@@ -21,14 +21,14 @@ REPOSITORY = next(p for p in APPLICATION.parents if (p / ".git").exists())
 
 
 def test_one_final_application_owner_without_legacy_shadows():
-    assert NAMESPACE == "omega_engine_pfp"
-    old_application = "omega_engine_" + "symbol_game"
+    assert NAMESPACE == "pfp"
+    old_application = "" + "symbol_game"
     assert not (REPOSITORY / old_application).exists()
-    assert not list((REPOSITORY / "omega_engine_education" / "pfp").rglob("*.py"))
-    pilot_tasks = REPOSITORY / "omega_engine_woland/tests/pilots/challenge_suite"
-    assert not (REPOSITORY / "omega_engine_education/pilots").exists()
+    assert not list((REPOSITORY / "education" / "pfp").rglob("*.py"))
+    pilot_tasks = REPOSITORY / "adversary/tests/pilots/challenge_suite"
+    assert not (REPOSITORY / "education/pilots").exists()
     assert all(not (pilot_tasks / name).exists()
-               for name in ("execution.py", "live.py", "woland.py", "mechanism.py"))
+               for name in ("execution.py", "live.py", "adversary.py", "mechanism.py"))
     assert all((pilot_tasks / name).is_file()
                for name in ("catalog.py", "c001.py", "replay_snapshots.py"))
 

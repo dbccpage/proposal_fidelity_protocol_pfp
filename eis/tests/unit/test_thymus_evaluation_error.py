@@ -5,7 +5,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_epistemic_immune_system.domain.thymus import CandidateDetector, ThymusGate
+from eis.domain.thymus import CandidateDetector, ThymusGate
 
 
 def test_invalid_pattern_surfaces_evaluation_error() -> None:

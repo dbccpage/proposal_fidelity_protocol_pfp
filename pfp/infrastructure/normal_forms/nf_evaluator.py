@@ -8,8 +8,8 @@ import sqlite3
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from omega_engine_governance.infrastructure.storage.schema_totality import install_totality_fences
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
+from governance.infrastructure.storage.schema_totality import install_totality_fences
+from pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
 
 
 class NormalFormsEvaluator:

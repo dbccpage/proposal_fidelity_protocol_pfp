@@ -7,8 +7,8 @@ Zero-Float Law: Uses exact rational arithmetic (fractions.Fraction).
 import json
 from fractions import Fraction
 
-from omega_engine_prompt_civilization.domain.causal_witness import seal_causal_witness
-from omega_engine_prompt_civilization.use_cases.fitness import (
+from pciv.domain.causal_witness import seal_causal_witness
+from pciv.use_cases.fitness import (
     PromptFitnessCalculatorV1,
     is_valid_sealed_digest,
 )
@@ -75,9 +75,9 @@ def test_f2_authentic_sealed_digest_validation() -> None:
 
 
 def test_fitness_uses_actual_bound_checker_and_rejects_changed_candidate():
-    from omega_engine_woland.domain.evidence import CheckerVerdict
-    from omega_engine_woland.domain.models import SymbolGameRequestV1
-    from omega_engine_woland.infrastructure.symbol_game_checker import SymbolGameCandidateChecker
+    from adversary.domain.evidence import CheckerVerdict
+    from adversary.domain.models import SymbolGameRequestV1
+    from adversary.infrastructure.symbol_game_checker import SymbolGameCandidateChecker
 
     case = {"challenge": "c011", "nodes": ["a", "b"], "edges": [["a", "b"]], "claims": {"a->b": "1/10"}}
     solution = {"status": "SOLVED", "phi1": "0", "potential": {"a": "0", "b": "1/10"}, "repair": {}, "dual": {}}
@@ -99,7 +99,7 @@ def test_fitness_uses_actual_bound_checker_and_rejects_changed_candidate():
 
     class ReplayedChecker:
         def check_candidate(self, **kwargs):
-            from omega_engine_operations.domain.rop.result import Ok
+            from operations.domain.rop.result import Ok
             return Ok(check)
 
     stale = PromptFitnessCalculatorV1(candidate_checker=ReplayedChecker())

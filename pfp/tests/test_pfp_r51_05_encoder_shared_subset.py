@@ -7,14 +7,14 @@ from types import MappingProxyType
 
 import pytest
 
-from omega_engine_pfp.domain.canonical import (
+from pfp.domain.canonical import (
     JcsError,
     canonicalize_json_str,
     format_es_string,
     rfc8785_canonical_bytes,
     rfc8785_canonical_json,
 )
-from omega_engine_pfp.infrastructure.serialization.rfc8785 import rfc8785_canonicalize
+from pfp.infrastructure.serialization.rfc8785 import rfc8785_canonicalize
 
 
 class _IntSubclass(int):

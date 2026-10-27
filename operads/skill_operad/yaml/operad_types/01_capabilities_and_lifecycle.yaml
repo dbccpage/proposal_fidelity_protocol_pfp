@@ -3,7 +3,7 @@
 # operad_type_registry.py fails when a source drifts from what is recorded here.
 # Roles: declares (must equal canonical), uses (subset), part (union of parts must equal it).
 # AuthorityEffect: None.
-schema_version: omega.oeop.operad-types.v1
+schema_version: core.oeop.operad-types.v1
 family: capabilities_and_lifecycle
 authority_effect: None
 types:
@@ -11,7 +11,7 @@ types:
     description: The kind discriminator of a typed capability.
     canonical: {status: SETTLED, closed: true, values: [skill, anti_skill, rule, helpful_pattern, anti_pattern, antibody]}
     sources:
-      - data: omega_engine_operads/catalog/contracts/v1/typed_capability.schema.json
+      - data: operads/catalog/contracts/v1/typed_capability.schema.json
         select: discriminator.mapping
         mode: keys
         values: [anti_pattern, anti_skill, antibody, helpful_pattern, rule, skill]
@@ -19,7 +19,7 @@ types:
     description: How a catalogued skill is invoked.
     canonical: {status: SETTLED, closed: true, values: [discipline, entry, on-demand]}
     sources:
-      - data: omega_engine_operads/skill_operad/json/capability_catalog.v1.json
+      - data: operads/skill_operad/json/capability_catalog.v1.json
         select: skills.*.invocation
         mode: distinct
         role: uses
@@ -28,39 +28,39 @@ types:
     description: Lifecycle facet 1 of 5, how an operation came to exist.
     canonical: {status: SETTLED, closed: true, values: [Declared, Abstract, Synthesized]}
     sources:
-      - python: omega_engine_operads.domain.value_objects.lifecycle_facets:DeclarationFacet
+      - python: operads.domain.value_objects.lifecycle_facets:DeclarationFacet
         values: [Declared, Abstract, Synthesized]
   - id: lifecycle_schema_binding
     description: Lifecycle facet 2 of 5, whether a schema is bound.
     canonical: {status: SETTLED, closed: true, values: [Unbound, Bound, AnySchema]}
     sources:
-      - python: omega_engine_operads.domain.value_objects.lifecycle_facets:SchemaBindingFacet
+      - python: operads.domain.value_objects.lifecycle_facets:SchemaBindingFacet
         values: [Unbound, Bound, AnySchema]
   - id: lifecycle_executor_binding
     description: Lifecycle facet 3 of 5, whether an executor is bound.
     canonical: {status: SETTLED, closed: true, values: [Unbound, Bound, ExternalService]}
     sources:
-      - python: omega_engine_operads.domain.value_objects.lifecycle_facets:ExecutorBindingFacet
+      - python: operads.domain.value_objects.lifecycle_facets:ExecutorBindingFacet
         values: [Unbound, Bound, ExternalService]
   - id: lifecycle_validation
     description: Lifecycle facet 4 of 5, the validation result.
     canonical: {status: SETTLED, closed: true, values: [Unchecked, Validated, Failed]}
     sources:
-      - python: omega_engine_operads.domain.value_objects.lifecycle_facets:ValidationFacet
+      - python: operads.domain.value_objects.lifecycle_facets:ValidationFacet
         values: [Unchecked, Validated, Failed]
   - id: lifecycle_admission
     description: Lifecycle facet 5 of 5, the admission state.
     canonical: {status: SETTLED, closed: true, values: [Unadmitted, Admitted, Retired]}
     sources:
-      - python: omega_engine_operads.domain.value_objects.lifecycle_facets:AdmissionFacet
+      - python: operads.domain.value_objects.lifecycle_facets:AdmissionFacet
         values: [Unadmitted, Admitted, Retired]
   - id: lifecycle_stage_legacy
     description: The older single-axis lifecycle stage of a skill package, superseded by the five facets.
     canonical: {status: SETTLED, closed: true, values: [DRAFT, TYPED, BOUND, TESTED, COMPOSABLE, ADMITTED]}
     sources:
-      - python: omega_engine_operads.infrastructure.legacy.catalog_v2:LIFECYCLE_STATES
+      - python: operads.infrastructure.legacy.catalog_v2:LIFECYCLE_STATES
         values: [ADMITTED, BOUND, COMPOSABLE, DRAFT, TESTED, TYPED]
-      - data: omega_engine_operads/registry/lifecycle.yaml
+      - data: operads/registry/lifecycle.yaml
         select: packages.*.stage
         mode: distinct
         role: uses

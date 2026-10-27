@@ -1,4 +1,4 @@
-schema_version: omega.oewas.rules_registry.v1
+schema_version: core.oewas.rules_registry.v1
 authority_effect: None
 rules_root: rules
 host_roots:
@@ -9,7 +9,7 @@ host_roots:
 size_ceiling_bytes: 12000
 always_loaded_ceiling_bytes: 21000
 register_documents:
-- omega_engine_operads/documentation/host_instructions.md
+- operads/documentation/host_instructions.md
 - GEMINI.md
 - .agents/AGENTS.md
 - .claude/AGENTS.md
@@ -52,7 +52,7 @@ rules:
   invariants:
   - id: RULE_RULES_AS_CODE_REGISTRY_001
     status: ENFORCED
-    enforced_by: omega_engine_operads/skill_operad/skill_compiler/rule_gate.py::run_gate
+    enforced_by: operads/skill_operad/skill_compiler/rule_gate.py::run_gate
 - path: authority/rl_gtla_rules_rubric.md
   topic: GTLA Rules Rubric
   skills:
@@ -71,7 +71,7 @@ rules:
   topic: Review Evidence Reproducibility
   skills:
   - techne-qa-pr-reviewer
-  - techne-code-soviet-inspector
+  - techne-code-inspector
   summary: Command, tool version, exit status and scope on every verdict, plus fail-closed
     receipts with no fallback digests.
   invariants:
@@ -120,12 +120,12 @@ rules:
   - governance-clean-arch
   - governance-host-parity
   - techne-*
-  summary: the city swarm decoupling & generic runtime, Woland base swarm specialization,
+  summary: the city swarm decoupling & generic runtime, Adversary base swarm specialization,
     zero-facade direct canonical imports, no duplicate module shadowing, and domain
     bridge isolation.
   load_paths:
-  - omega_engine*/**/*.py
-  - omega_simplex*/**/*.py
+  - engine*/**/*.py
+  - core_simplex*/**/*.py
   invariants:
   - id: RULE_CLEAN_ARCH_NO_SHIMS_001
     status: ENFORCED
@@ -142,10 +142,10 @@ rules:
     catalog atomicity, semantic field filter discipline, and governance skill self-verification
     script standards (`RULE_GOVERNANCE_SKILL_SELF_CHECK_001`).
   load_paths:
-  - omega_engine_epistemic_immune_system/**
-  - omega_engine_woland/stage/**
-  - omega_engine_prompt_civilization/**
-  - omega_engine_operads/**
+  - eis/**
+  - adversary/stage/**
+  - pciv/**
+  - operads/**
   - _ic/**
   - '**/*antibod*'
   invariants:
@@ -155,7 +155,7 @@ rules:
     status: CANDIDATE
   - id: RULE_IMMUNE_NO_SELF_ACTIVATION_001
     status: PARTIAL
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/stage/file_adapters.rs::sightings_never_activate_an_antibody
+    enforced_by: engine/crates_rs/tests/core_adversary/stage/file_adapters.rs::sightings_never_activate_an_antibody
     scope: Rust the city FileFailureHistory. The Python the city and Prompt Civilization
       stores and the OEEIS seeder have their own tests (test_cemetery_and_genealogy.py
       in each estate, test_admitted_antibody_query.py), which the register does not
@@ -178,8 +178,8 @@ rules:
     status: CANDIDATE
   - id: RULE_PERMANENT_RECORDS_CUSTODY_001
     status: PARTIAL
-    enforced_by: omega_engine/crates_rs/tests/omega_symbol_game/woland_ic_routing.rs::ic_routing_permanent_records_custody_is_admitted_under_nara
-    scope: Rust Woland IC custody admits _ic/nara/permanent_records. Journal and genealogy
+    enforced_by: engine/crates_rs/tests/core_symbol_game/adversary_ic_routing.rs::ic_routing_permanent_records_custody_is_admitted_under_nara
+    scope: Rust Adversary IC custody admits _ic/nara/permanent_records. Journal and genealogy
       integrity tests in Python verify bout totality and linear hash chaining.
   - id: RULE_SCRATCH_TO_SKILL_DIGESTION_001
     status: CANDIDATE
@@ -193,9 +193,9 @@ rules:
     shadow prototype retirement (`RULE_SHADOW_PROTOTYPE_RETIREMENT_001`), and canonical
     ROP placement (`RULE_ROP_CANONICAL_PLACEMENT_AND_LEGACY_KERNEL_RETIREMENT_001`).
   load_paths:
-  - omega_engine_operations/**
-  - omega_engine_education/**
-  - omega_engine_cognitive_operations/**
+  - operations/**
+  - education/**
+  - cognitive_operations/**
   - .github/**
   - pytest.ini
   invariants:
@@ -222,13 +222,13 @@ rules:
   - .claude/**
   - .codex/**
   - .grok/**
-  - omega_engine_governance/**
-  - omega_engine_product_planning_office/**
+  - governance/**
+  - product_planning_office/**
   - '**/plans/**'
   invariants:
   - id: RULE_PLANNING_EPIC_MANIFEST_001
     status: PARTIAL
-    enforced_by: omega_engine_product_planning_office/use_cases/epic_manifest_audit.py::_direct_epic_inventory
+    enforced_by: product_planning_office/use_cases/epic_manifest_audit.py::_direct_epic_inventory
     scope: 'Inventory and count pin. Text drift: the rule says EXPECTED_EPIC_COUNT
       = 2, but domain/manifest_models.py pins 1 and no oewas/ epic folder exists.'
 - path: governance/rl_operad_architecture_and_swarm_nomenclature.md
@@ -244,15 +244,15 @@ rules:
   - .claude/**
   - .codex/**
   - .grok/**
-  - omega_engine_operads/**
-  - omega_engine_operations/**/cicd/**
-  - omega_engine_pfp/**
+  - operads/**
+  - operations/**/cicd/**
+  - pfp/**
   invariants:
   - id: RULE_OPERAD_DIR_LAYOUT_001
     status: CANDIDATE
   - id: RULE_SHARED_CROSS_HOST_SYNC_001
     status: PARTIAL
-    enforced_by: omega_engine_operations/use_cases/packaging/host_root_parity.py::check
+    enforced_by: operations/use_cases/packaging/host_root_parity.py::check
     scope: Detects host drift; does not verify that the sync script was invoked.
   - id: RULE_SWARM_NOMENCLATURE_PURITY_001
     status: CANDIDATE
@@ -325,7 +325,7 @@ rules:
   - id: RULE_CARGO_WORKSPACE_ROOT_001
     status: ENFORCED
     enforced_by: .agents/skills/governance-test-isolation/scripts/check_test_isolation.py::check_cargo_workspace_root
-  - id: RULE_OMEGA_ENGINE_TESTS_RUST_EXCLUSIVE_001
+  - id: RULE_TESTS_RUST_EXCLUSIVE_001
     status: ENFORCED
     enforced_by: .agents/skills/governance-test-isolation/scripts/check_test_isolation.py::check_rust_tests_exclusivity
   - id: RULE_RUST_CORE_CRATE_TEST_HERMETICITY_001
@@ -352,8 +352,8 @@ rules:
     absorption, zero data-loss asset relocation, and single-manager specialist triad
     consolidation.
   load_paths:
-  - omega_engine/**
-  - omega_engine_woland/infrastructure/providers/**
+  - engine/**
+  - adversary/infrastructure/providers/**
   - '**/adapters/**'
   invariants:
   - id: RULE_AGENT_SPECIALIST_TRIAD_ABSORPTION_001
@@ -372,10 +372,10 @@ rules:
   summary: Value object exact-type equality, fail-closed authorization boundaries, zero-mutation
     witness auditing, and typed inverse composition directionality.
   load_paths:
-  - omega_engine/**
-  - omega_engine_pfp/**
-  - omega_engine_governance/**
-  - omega_engine_atlas/**/code/**
+  - engine/**
+  - pfp/**
+  - governance/**
+  - atlas/**/code/**
   - '**/*.lean'
   - '**/exact/**'
   - '**/solvers/**'
@@ -391,10 +391,10 @@ rules:
   summary: Problem-bound terminal routing, zero-residual dual circulation feasibility,
     four-stage authority gating pipelines, and curved constrained witness coupled annihilators.
   load_paths:
-  - omega_engine/**
-  - omega_engine_pfp/**
-  - omega_engine_governance/**
-  - omega_engine_atlas/**/code/**
+  - engine/**
+  - pfp/**
+  - governance/**
+  - atlas/**/code/**
   - '**/*.lean'
   - '**/exact/**'
   - '**/solvers/**'
@@ -411,8 +411,8 @@ rules:
     dominance, constructive guard factorization, typed cochain bridges, and observer
     bundle joint detector adequacy.
   load_paths:
-  - omega_engine/**
-  - omega_engine_atlas/**/code/**
+  - engine/**
+  - atlas/**/code/**
   - '**/*.lean'
   - '**/exact/**'
   - '**/solvers/**'
@@ -425,8 +425,8 @@ rules:
   summary: External tip pinning for hash chains, candidate fixture isolation, and
     formal axiom package solvency across test harnesses and formal proof kernels.
   load_paths:
-  - omega_engine/**
-  - omega_engine_atlas/**/code/**
+  - engine/**
+  - atlas/**/code/**
   - '**/*.lean'
   - '**/tests/**'
   invariants: []
@@ -438,10 +438,10 @@ rules:
   summary: Sovereign Rust math delegation, zero-allocation contractions, projector
     endomorphism purity, matrix/vector shape purity, and native solver fallback integrity.
   load_paths:
-  - omega_engine/**
-  - omega_engine_pfp/**
-  - omega_engine_governance/**
-  - omega_engine_atlas/**/code/**
+  - engine/**
+  - pfp/**
+  - governance/**
+  - atlas/**/code/**
   - '**/*.lean'
   - '**/exact/**'
   - '**/solvers/**'
@@ -459,10 +459,10 @@ rules:
     standards directory purity & Pydantic meta-schemas, filesystem re-indexing and
     link portability.
   load_paths:
-  - omega_engine/**
-  - omega_engine_pfp/**
-  - omega_engine_governance/**
-  - omega_engine_atlas/**/code/**
+  - engine/**
+  - pfp/**
+  - governance/**
+  - atlas/**/code/**
   - '**/*.lean'
   - '**/exact/**'
   - '**/solvers/**'
@@ -481,8 +481,8 @@ rules:
   summary: Nine-Layer CODA Stack identities, autonomous difference primitives, canonical
     nomenclature anti-hallucination, and normal form chase confluence.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine/crates_rs/**
+  - atlas/**
+  - engine/crates_rs/**
   - '**/*coda*/**'
   - '**/*prime*/**'
   - '**/normal_forms/**'
@@ -504,7 +504,7 @@ rules:
       coda_q.md.'
   - id: RULE_NORMAL_FORMS_CHASE_001
     status: PARTIAL
-    enforced_by: omega_engine_pfp/tests/normal_forms/test_pjnf_5nf_join_dependency_chase.py::test_09_early_exit_vs_full_fixpoint_partition_equivalence
+    enforced_by: pfp/tests/normal_forms/test_pjnf_5nf_join_dependency_chase.py::test_09_early_exit_vs_full_fixpoint_partition_equivalence
     scope: Clause 3 (early_exit=False full fixpoint) only.
 - path: coda/rl_prime_algorithms_and_dialectical_discipline.md
   topic: Prime Algorithms & Dialectical Discipline
@@ -515,10 +515,10 @@ rules:
     boundaries.
   load_paths:
   - '**/*prime*/**'
-  - omega_engine/crates_rs/omega_wdp/**
-  - omega_engine/crates_rs/omega_types/**
-  - omega_engine_woland/**
-  - omega_engine_pfp/**
+  - engine/crates_rs/core_wdp/**
+  - engine/crates_rs/core_types/**
+  - adversary/**
+  - pfp/**
   invariants:
   - id: RULE_19L57G1_GROUNDING_001
     status: CANDIDATE
@@ -531,11 +531,11 @@ rules:
     realization provenance, binary germ delta-support separation, and core derivation
     boundaries.
   load_paths:
-  - omega_engine_education/documentation/**
+  - education/documentation/**
   - '**/*genesis*/**'
   - '**/002_oesn/**'
   - '**/*mssn*/**'
-  - omega_engine_pfp/domain/tower/**
+  - pfp/domain/tower/**
   invariants: []
 - path: genesis/rl_genesis_primitive_categories_and_relational_substrate.md
   topic: Genesis Primitives & Relational Substrate
@@ -546,11 +546,11 @@ rules:
     table algebraic purity, zero axiom drift, and continuum-free relational substrate
     grounding.
   load_paths:
-  - omega_engine_education/documentation/**
+  - education/documentation/**
   - '**/*genesis*/**'
   - '**/002_oesn/**'
   - '**/*mssn*/**'
-  - omega_engine_pfp/domain/tower/**
+  - pfp/domain/tower/**
   invariants: []
 - path: genesis/rl_sn_presentation_and_mathematical_hygiene.md
   topic: S(n) Presentation & Mathematical Hygiene
@@ -560,23 +560,23 @@ rules:
   summary: Active obstruction registers vs persistent history ledgers, discrete 4D
     Bianchi identities, spectral laws, retraction down-maps, and normal form validation.
   load_paths:
-  - omega_engine_education/documentation/**
+  - education/documentation/**
   - '**/*genesis*/**'
   - '**/002_oesn/**'
   - '**/*mssn*/**'
-  - omega_engine_pfp/domain/tower/**
+  - pfp/domain/tower/**
   invariants: []
 - path: papers/rl_coda_publication_and_monograph_specifications.md
   topic: CODA Publication & Monograph Specifications
   skills:
   - governance-research-paper-edit-publish
-  - omega-paper-review-swarm
+  - core-paper-review-swarm
   summary: Research Program naming (`NNN_<slug>`), paper quartet layout, proof triad
     tie-out, four-line centered header, Single-Version Unicode Word standard
     for `descriptions.md`, and deposit boundary fences.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants:
@@ -600,12 +600,12 @@ rules:
   topic: Paper Harmonization & Provenance Discipline
   skills:
   - governance-research-paper-edit-publish
-  - omega-paper-review-swarm
+  - core-paper-review-swarm
   summary: Canonical paper template harmonization, companion notebook determinism,
     demo failure propagation, native CLI input strictness, and custody manifest reconciliation.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants: []
@@ -613,13 +613,13 @@ rules:
   topic: Publication Review Remediation & Package Re-certification
   skills:
   - governance-research-paper-edit-publish
-  - omega-paper-review-swarm
+  - core-paper-review-swarm
   summary: 5-layer atomic remediation synchronization, mechanization-manuscript scope
     parity, diagnostic parameter strictness, XeLaTeX log preservation, and 5-step
     package re-certification sequence.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants: []
@@ -627,12 +627,12 @@ rules:
   topic: Publication Evidence Closure & Release Integrity
   skills:
   - governance-research-paper-edit-publish
-  - omega-paper-review-swarm
+  - core-paper-review-swarm
   summary: Evidence dependency closure, transport and theorem scope, exact release bytes,
     claim-pointer quarantine, supplement review codification, and hermetic release integrity.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants:
@@ -660,8 +660,8 @@ rules:
   summary: Hermetic paper package verification, code generator authority, Lean 4
     proof kernel census standards, exact mathematical solvers, and claim-code mapping.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants:
@@ -680,25 +680,25 @@ rules:
     census, line-ending checksum stability, Zenodo related identifiers, non-vacuous
     docs bundles, and multi-component license declarations.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants:
   - id: RULE_ATOMIC_SOURCE_BOUND_RELEASE_EXPORT_001
     status: ENFORCED
-    enforced_by: omega_engine_research_papers/domain/rules/packaging_rules.py::ManifestBijectionRule
+    enforced_by: research_papers/domain/rules/packaging_rules.py::ManifestBijectionRule
   - id: RULE_DECLARATION_SET_BOUND_AXIOM_CENSUS_001
     status: ENFORCED
-    enforced_by: omega_engine_research_papers/domain/rules/lean_rules.py::LeanAxiomReportRule
+    enforced_by: research_papers/domain/rules/lean_rules.py::LeanAxiomReportRule
   - id: RULE_DEPOSIT_CODE_LICENSE_AND_AXIOM_REPORT_001
     status: ENFORCED
-    enforced_by: omega_engine_research_papers/domain/rules/deposit_consistency_rules.py::LicenseDeclarationConsistencyRule
+    enforced_by: research_papers/domain/rules/deposit_consistency_rules.py::LicenseDeclarationConsistencyRule
   - id: RULE_DEPOSIT_LINE_ENDING_CHECKSUM_STABILITY_001
     status: CANDIDATE
   - id: RULE_PAPER_DOCS_BUNDLE_NON_VACUOUS_001
     status: PARTIAL
-    enforced_by: omega_engine_research_papers/domain/rules/deposit_consistency_rules.py::OpenGapResolutionProseRule
+    enforced_by: research_papers/domain/rules/deposit_consistency_rules.py::OpenGapResolutionProseRule
     scope: Verifies non-vacuous gap resolution prose and documentation bundles.
   - id: RULE_ZENODO_RELATED_IDENTIFIER_INTEGRITY_001
     status: CANDIDATE
@@ -712,8 +712,8 @@ rules:
     custody counts, packaged receipt path sanitization, Win32 MAX_PATH depth fences,
     and deposit verifier attestation honesty.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants:
@@ -721,10 +721,10 @@ rules:
     status: CANDIDATE
   - id: RULE_WIN32_MAX_PATH_AND_SHORT_SLUG_DISCIPLINE_001
     status: ENFORCED
-    enforced_by: omega_engine_research_papers/domain/rules/packaging_rules.py::WindowsMaxPathRule
+    enforced_by: research_papers/domain/rules/packaging_rules.py::WindowsMaxPathRule
   - id: RULE_PAPER_VERIFIER_ATTESTATION_HONESTY_001
     status: PARTIAL
-    enforced_by: omega_engine_research_papers/domain/rules/deposit_consistency_rules.py::VerifierNoFailOpenRule
+    enforced_by: research_papers/domain/rules/deposit_consistency_rules.py::VerifierNoFailOpenRule
     scope: Verifies fail-closed deposit verifier execution and no silent exception swallowing.
 - path: papers/rl_paper_epistemic_evaluator_and_namespace_discipline.md
   topic: Paper Epistemic Evaluator & Namespace Discipline
@@ -734,17 +734,17 @@ rules:
   summary: Preprint namespace de-slop, categorical functorial purity, mechanism inventory
     discipline, and evaluator supremacy across papers and monographs.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants:
   - id: RULE_CATEGORICAL_NO_MAP_FALLACY_PROHIBITION_001
     status: ENFORCED
-    enforced_by: omega_engine_research_papers/domain/rules/math_claim_rules.py::CategoricalNoMapFallacyRule
+    enforced_by: research_papers/domain/rules/math_claim_rules.py::CategoricalNoMapFallacyRule
   - id: RULE_EVALUATOR_SUPREMACY_AUTHORITY_SEPARATION_001
     status: PARTIAL
-    enforced_by: omega_engine_research_papers/domain/rules/math_claim_rules.py::EvaluatorAuthoritySeparationRule
+    enforced_by: research_papers/domain/rules/math_claim_rules.py::EvaluatorAuthoritySeparationRule
     scope: Evaluator supremacy, formula hygiene (zero literal '##' LaTeX typos), license
       parity, and refusal of checklist-to-authority promotion across paper packages.
   - id: RULE_CLAIM_LEDGER_TEST_NAME_SYNTAX_001
@@ -759,19 +759,19 @@ rules:
   topic: Paper Template & Harmonization Discipline
   skills:
   - governance-research-paper-edit-publish
-  - omega-paper-review-swarm
+  - core-paper-review-swarm
   summary: Canonical paper template kit (`_kits/paper_template/`), dynamic deposit
     discovery, 6-step harmonization pipeline, deterministic zip bundling, Lean 4 axiom
     totality.
   load_paths:
-  - omega_engine_atlas/**
-  - omega_engine_research_papers/**
+  - atlas/**
+  - research_papers/**
   - '**/papers/**'
   - '**/*.tex'
   invariants:
   - id: RULE_PANDOC_TEX_BUILD_HYGIENE_001
     status: PARTIAL
-    enforced_by: omega_engine_research_papers/domain/rules/pandoc_build_rules.py::PandocSingleBackslashMathRule
+    enforced_by: research_papers/domain/rules/pandoc_build_rules.py::PandocSingleBackslashMathRule
     scope: All three clauses have checks in pandoc_build_rules.py. Clause 1 reads
       only package-local build scripts, so a package built by an external script is
       not checked. Clause 3 needs a retained log or the fresh log of rebuild/Stage
@@ -785,7 +785,7 @@ rules:
   summary: EADC decimal classification (`EA:FFF.SSS.BBB`), 6-section chapter structure,
     source retention, companion notebook naming.
   load_paths:
-  - omega_engine_atlas/**
+  - atlas/**
   invariants: []
 - path: docs/rl_documentation_estate_and_submodule_layout.md
   topic: Documentation Estate & Submodule Layout
@@ -796,7 +796,7 @@ rules:
     education docs submodule layout (`RULE_EDUCATION_DOCS_SUBMODULE_LAYOUT_001`),
     dynamic test root resolution, and relative Markdown link discipline.
   load_paths:
-  - omega_engine_education/**
+  - education/**
   - '**/_docs/**'
   invariants:
   - id: RULE_BOUNDED_CONTEXT_DOCS_001
@@ -809,7 +809,7 @@ rules:
     status: CANDIDATE
   - id: RULE_INTERNAL_MARKDOWN_LINK_RELATIVITY_001
     status: PARTIAL
-    enforced_by: omega_engine_operads/skill_operad/skill_compiler/rule_gate.py::check_links
+    enforced_by: operads/skill_operad/skill_compiler/rule_gate.py::check_links
     scope: Rule files under rules/ only; other repository markdown is not scanned.
   - id: RULE_DOCS_SINGLE_REVISION_SNAPSHOT_001
     status: CANDIDATE
@@ -820,7 +820,7 @@ rules:
   summary: Snake-case filenames, numbered PFP content directories, the four-directory
     lesson layout, and package rename synchronization.
   load_paths:
-  - omega_engine_education/**
+  - education/**
   invariants:
   - id: RULE_CURRICULUM_4DIR_001
     status: CANDIDATE
@@ -830,7 +830,7 @@ rules:
     status: CANDIDATE
   - id: RULE_NOTEBOOK_MARKDOWN_DUAL_TEXT_PARITY_001
     status: ENFORCED
-    enforced_by: omega_engine_education/scripts/verify_dual_text_parity.py::verify_dual_text_parity
+    enforced_by: education/scripts/verify_dual_text_parity.py::verify_dual_text_parity
 - path: docs/rl_pilot_estate_decoupling.md
   topic: Pilot Estate Decoupling & Semiotic Carrier Quad-Axis Separation
   skills:
@@ -842,7 +842,7 @@ rules:
   load_paths:
   - '**/pilots/**'
   - '**/matrix/**'
-  - omega_engine_pfp/**
+  - pfp/**
   invariants:
   - id: RULE_PILOT_ESTATE_DECOUPLING_001
     status: CANDIDATE
@@ -857,8 +857,8 @@ rules:
   summary: Only genuine provider dispatches in live_runs/, the mandatory P* round
     anatomy, and methodical round-by-round execution.
   load_paths:
-  - omega_engine_education/**
-  - omega_engine_pfp/**
+  - education/**
+  - pfp/**
   invariants:
   - id: RULE_PFP_DEMO_ROUND_ANATOMY_AND_RECEIPT_INTEGRITY_001
     status: CANDIDATE
@@ -869,69 +869,69 @@ rules:
 - path: swarms/rl_researcher_loop_discipline.md
   topic: Research Loop Discipline (WF_RESEARCH_PFP)
   skills:
-  - woland
+  - adversary
   summary: The Rust research-loop controller decides every disposition, keeps one
     never-reset budget with paid dispatch off at zero cost, binds reviews to frozen
     candidate bytes, requires evidence for PASS, ends stalls, keeps every raw reply,
     and matches the workflow contract.
   load_paths:
-  - omega_engine_woland/**
-  - omega_engine/crates_rs/omega_woland/**
+  - adversary/**
+  - engine/crates_rs/core_adversary/**
   invariants:
   - id: RULE_RESEARCH_LOOP_BUDGET_CEILING_001
     status: ENFORCED
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/research_loop_replay.rs::zero_paid_budget_blocks_paid_call
+    enforced_by: engine/crates_rs/tests/core_adversary/research_loop_replay.rs::zero_paid_budget_blocks_paid_call
   - id: RULE_RESEARCH_LOOP_EVIDENCE_001
     status: ENFORCED
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/research_loop_replay.rs::pass_without_evidence_rejected
+    enforced_by: engine/crates_rs/tests/core_adversary/research_loop_replay.rs::pass_without_evidence_rejected
   - id: RULE_RESEARCH_LOOP_HOST_DECISION_001
     status: ENFORCED
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/research_loop_replay.rs::model_stage_5_forgery_rejected
+    enforced_by: engine/crates_rs/tests/core_adversary/research_loop_replay.rs::model_stage_5_forgery_rejected
   - id: RULE_RESEARCH_LOOP_PACK_PARITY_001
     status: ENFORCED
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/research_pack.rs::drift_in_the_pack_is_refused
+    enforced_by: engine/crates_rs/tests/core_adversary/research_pack.rs::drift_in_the_pack_is_refused
   - id: RULE_RESEARCH_LOOP_RAW_CUSTODY_001
     status: ENFORCED
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/providers/anthropic_fixture.rs::an_error_reply_is_persisted_and_typed
+    enforced_by: engine/crates_rs/tests/core_adversary/providers/anthropic_fixture.rs::an_error_reply_is_persisted_and_typed
   - id: RULE_RESEARCH_LOOP_REVIEW_BINDING_001
     status: ENFORCED
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/research_loop_replay.rs::critic_of_different_candidate_rejected
+    enforced_by: engine/crates_rs/tests/core_adversary/research_loop_replay.rs::critic_of_different_candidate_rejected
   - id: RULE_RESEARCH_LOOP_STALL_001
     status: ENFORCED
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/research_loop_replay.rs::semantic_stall_stops_cosmetic_revisions
+    enforced_by: engine/crates_rs/tests/core_adversary/research_loop_replay.rs::semantic_stall_stops_cosmetic_revisions
   - id: RULE_RESEARCH_LOOP_HERMETIC_TASK_EVIDENCE_001
     status: CANDIDATE
-- path: swarms/rl_woland_base_swarm_specialization.md
-  topic: Woland Base Swarm Specialization & Estate Connections
+- path: swarms/rl_adversary_base_swarm_specialization.md
+  topic: Adversary Base Swarm Specialization & Estate Connections
   skills:
-  - woland
+  - adversary
   - governance-clean-arch
-  summary: One OmegaEngineWolandSwarm base with declared, narrowing-only specialisations
+  summary: One AdversarySwarm base with declared, narrowing-only specialisations
     checked in Rust, estate connections reported only from observed effects, and model
     access only through Symbol Game.
   load_paths:
-  - omega_engine_woland/**
-  - omega_engine/crates_rs/omega_woland/**
-  - omega_engine_pfp/**
+  - adversary/**
+  - engine/crates_rs/core_adversary/**
+  - pfp/**
   - '**/*swarm*'
   - '**/*orchestrator*'
   invariants:
-  - id: RULE_WOLAND_BASE_SWARM_SPECIALIZATION_001
+  - id: RULE_ADVERSARY_BASE_SWARM_SPECIALIZATION_001
     status: ENFORCED
-    enforced_by: omega_engine_woland/tests/spine/test_swarm_specialization_gate.py::test_every_swarm_in_the_repository_is_a_woland_specialisation
-  - id: RULE_WOLAND_ESTATE_PROBE_HONESTY_001
+    enforced_by: adversary/tests/spine/test_swarm_specialization_gate.py::test_every_swarm_in_the_repository_is_a_adversary_specialisation
+  - id: RULE_ADVERSARY_ESTATE_PROBE_HONESTY_001
     status: ENFORCED
-    enforced_by: omega_engine_woland/tests/spine/test_connection_matrix.py::test_the_matrix_reports_each_estate_from_an_observed_effect
-  - id: RULE_WOLAND_LLM_MEDIATION_001
+    enforced_by: adversary/tests/spine/test_connection_matrix.py::test_the_matrix_reports_each_estate_from_an_observed_effect
+  - id: RULE_ADVERSARY_LLM_MEDIATION_001
     status: ENFORCED
-    enforced_by: omega_engine_woland/tests/spine/test_llm_mediation.py::test_runtime_refuses_unmediated_transports
-  - id: RULE_WOLAND_SPECIALIZATION_NARROWING_001
+    enforced_by: adversary/tests/spine/test_llm_mediation.py::test_runtime_refuses_unmediated_transports
+  - id: RULE_ADVERSARY_SPECIALIZATION_NARROWING_001
     status: ENFORCED
-    enforced_by: omega_engine/crates_rs/tests/omega_woland/specialization.rs::widening_and_broken_ancestry_are_refused
-  - id: RULE_WOLAND_ORCHESTRATOR_DISCIPLINE_001
+    enforced_by: engine/crates_rs/tests/core_adversary/specialization.rs::widening_and_broken_ancestry_are_refused
+  - id: RULE_ADVERSARY_ORCHESTRATOR_DISCIPLINE_001
     status: ENFORCED
-    enforced_by: omega_engine_woland/tests/test_teamwork_schedule.py::test_quorum_skips_clean_reviewers_and_reports_each_skip
-  - id: RULE_WOLAND_LEGACY_SWARM_RETIREMENT_001
+    enforced_by: adversary/tests/test_teamwork_schedule.py::test_quorum_skips_clean_reviewers_and_reports_each_skip
+  - id: RULE_ADVERSARY_LEGACY_SWARM_RETIREMENT_001
     status: CANDIDATE
 - path: architecture/rl_multi_source_intelligence_metabolism.md
   topic: Multi-Source Intelligence Metabolism
@@ -957,7 +957,7 @@ rules:
   - governance-clean-arch
   summary: Atomic Catalog Persistence invariants.
   load_paths:
-  - omega_engine_epistemic_immune_system/**
+  - eis/**
   invariants: []
 - path: engineering/rl_fail_closed_epistemic_oracle_verification.md
   topic: Fail-Closed Epistemic Verification
@@ -965,16 +965,16 @@ rules:
   - governance-clean-arch
   summary: Fail-Closed Epistemic Verification invariants.
   load_paths:
-  - omega_engine_atlas/**
+  - atlas/**
   invariants:
   - id: RULE_FAIL_CLOSED_FORMAL_TOOLCHAIN_001
     status: CANDIDATE
   - id: RULE_CICD_AUDITOR_CENSUS_AND_STANDBY_GATE_001
     status: ENFORCED
-    enforced_by: omega_engine_operations/use_cases/verification/stopping_point.py::reconcile
+    enforced_by: operations/use_cases/verification/stopping_point.py::reconcile
   - id: RULE_CROSS_LANGUAGE_COMPLEXITY_AND_INTEGRITY_001
     status: ENFORCED
-    enforced_by: omega_engine_operations/use_cases/cicd/code_scoring_evaluator.py::evaluate_scoring_rubric
+    enforced_by: operations/use_cases/cicd/code_scoring_evaluator.py::evaluate_scoring_rubric
 - path: architecture/rl_domain_driven_design_and_package_purity.md
   topic: Domain-Driven Design & Package Standards
   skills:
@@ -985,8 +985,8 @@ rules:
     anti-primitive-obsession, professional DDD entity/aggregate/value-object standards,
     PFP educational architecture, and module-to-package confluence preservation.
   load_paths:
-  - omega_engine*/**/*.py
-  - omega_simplex*/**/*.py
+  - engine*/**/*.py
+  - core_simplex*/**/*.py
   invariants:
   - id: RULE_DDD_PROFESSIONAL_STANDARDS_001
     status: ENFORCED
@@ -1003,7 +1003,7 @@ rules:
   summary: Epic estate separation, implementation-gated planning, and consolidation
     completeness.
   load_paths:
-  - omega_engine_product_planning_office/**
+  - product_planning_office/**
   invariants:
   - id: RULE_EPIC_CONSOLIDATION_COMPLETENESS_001
     status: CANDIDATE

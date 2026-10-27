@@ -31,7 +31,7 @@ def simplex():
                 squared_volume="3/16",holonomy=[[[0,-1],[1,0]],[[0,1],[-1,0]]])
 
 
-def woland():
+def adversary():
     case=dict(challenge="c011",nodes=["a","b"],edges=[["a","b"]],claims={"a->b":1})
     valid=dict(status="SOLVED",phi1=0,potential={"a":0,"b":1},repair={"a->b":0},dual={"a->b":0})
     invalid=deepcopy(valid); invalid["potential"]["b"]=2
@@ -39,7 +39,7 @@ def woland():
 
 
 def cemetery():
-    from omega_engine_woland.stage.domain import CandidateProposalV1, CemeteryHeadstoneV1
+    from adversary.stage.domain import CandidateProposalV1, CemeteryHeadstoneV1
     raw=checks._json({})
     payload_digest="sha256:"+sha256(raw.encode("ascii")).hexdigest()
     proposal=CandidateProposalV1("proposer","sha256:"+"1"*64,(payload_digest,),
@@ -68,7 +68,7 @@ def consensus():
 
 
 def mub():
-    owner=importlib.import_module("omega_engine_atlas.coda_atlas.F004_papers.010_mub6.code.mub_verify.mub_triples")
+    owner=importlib.import_module("atlas.coda_atlas.F004_papers.010_mub6.code.mub_verify.mub_triples")
     columns=owner.dita_seed_triple_columns(0,8)
     return dict(field="Q(zeta24)",bases=[[[[str(v) for v in entry.coeffs] for entry in column]
                                          for column in columns[offset:offset+6]] for offset in (0,6,12)])
@@ -79,7 +79,7 @@ def debate():
                 challenges=[dict(witness=candidate(1),expected_accept=True),dict(witness={},expected_accept=False)])
 
 
-@pytest.mark.parametrize("mode,factory",[(10,cemetery),(11,woland),(12,simplex),(16,perturb),(17,consensus),(18,mub),(20,debate)])
+@pytest.mark.parametrize("mode,factory",[(10,cemetery),(11,adversary),(12,simplex),(16,perturb),(17,consensus),(18,mub),(20,debate)])
 def test_concrete_additional_mode_witnesses(mode,factory):
     data=factory(); original=deepcopy(data)
     artifact=checks.execute_additional_mode_check(mode,data)
@@ -115,8 +115,8 @@ def test_cemetery_requires_content_binding_and_current_reproduced_failure(mutati
     with pytest.raises(ValueError,match=error): checks.execute_additional_mode_check(10,data)
 
 
-def test_woland_negative_control_must_actually_fail():
-    data=woland(); data["negative_control"]=data["candidate"]
+def test_adversary_negative_control_must_actually_fail():
+    data=adversary(); data["negative_control"]=data["candidate"]
     with pytest.raises(ValueError,match="NEGATIVE_CONTROL_FAILED"):
         checks.execute_additional_mode_check(11,data)
 

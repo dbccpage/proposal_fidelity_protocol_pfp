@@ -2,18 +2,18 @@
 
 from pathlib import Path
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import PharmacyCatalogRepository
-from omega_engine_epistemic_immune_system.infrastructure import definitions_store
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import filesystem_catalog_bytes
-from omega_engine_operations.infrastructure.intelligence_digestion.routed_pharmacy import routed_catalog_path
+from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
+from eis.infrastructure import definitions_store
+from eis.infrastructure.pharmacy_writer import filesystem_catalog_bytes
+from operations.infrastructure.intelligence_digestion.routed_pharmacy import routed_catalog_path
 
 
-SOURCE = "omega_engine_epistemic_immune_system/antibodies"
+SOURCE = "eis/antibodies"
 
 
 def test_definitions_do_not_read_the_host_view(tmp_path, monkeypatch):
     (tmp_path / ".agents").mkdir()
-    fake_module = tmp_path / "omega_engine_epistemic_immune_system/infrastructure/definitions_store.py"
+    fake_module = tmp_path / "eis/infrastructure/definitions_store.py"
     monkeypatch.setattr(definitions_store, "__file__", str(fake_module))
     monkeypatch.delenv("OEEIS_DEFINITIONS_DIR", raising=False)
     source = tmp_path / SOURCE / "definitions"

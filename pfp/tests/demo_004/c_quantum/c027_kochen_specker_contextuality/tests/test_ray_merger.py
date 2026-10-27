@@ -1,10 +1,10 @@
 # AuthorityEffect: None.
 """Tests for ray parsing and canonical merging in C027."""
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.quad_field import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.quad_field import (
     QuadRat,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.ray_merger import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.ray_merger import (
     normalize_ray,
     parse_and_merge_rays,
 )

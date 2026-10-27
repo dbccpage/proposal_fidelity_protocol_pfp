@@ -6,10 +6,10 @@ import json
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal
-from omega_engine_operating_system.adapters.rust_host import ffi
-from omega_engine_pfp.entrypoints.api.router import SymbolGameApiRouter
-from omega_engine_pfp.entrypoints.cli import host_cli
+from operations.domain.rop.result import Err, Ok, Refusal
+from operating_system.adapters.rust_host import ffi
+from pfp.entrypoints.api.router import SymbolGameApiRouter
+from pfp.entrypoints.cli import host_cli
 
 
 def test_detector_request_preserves_raw_bytes_and_full_context(monkeypatch):
@@ -18,7 +18,7 @@ def test_detector_request_preserves_raw_bytes_and_full_context(monkeypatch):
 
     def run(self, args, stdin_bytes):
         seen.append((args, stdin_bytes, self.BINARY_NAME))
-        return Ok({"schema_version": "omega.symgam.detect-report.v1", "authority_effect": "None"})
+        return Ok({"schema_version": "core.symgam.detect-report.v1", "authority_effect": "None"})
 
     monkeypatch.setattr(ffi.SymgamHost, "_run", run)
     result = host_cli.run_host(["detect"], stdin=raw)

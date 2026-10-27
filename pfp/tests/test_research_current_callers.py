@@ -4,10 +4,10 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters import pfp_derivation, pfp_experiment
-from omega_engine_pfp.use_cases.pfp_derivation_loops import DerivationLimits
-from omega_engine_woland.tests.pilots.relational_spacetime import baseline, compact_trials
-from omega_engine_woland.tests.pilots.relational_spacetime import parameter_trials, typed_signals
+from pfp.infrastructure.adapters import pfp_derivation, pfp_experiment
+from pfp.use_cases.pfp_derivation_loops import DerivationLimits
+from adversary.tests.pilots.relational_spacetime import baseline, compact_trials
+from adversary.tests.pilots.relational_spacetime import parameter_trials, typed_signals
 
 
 @pytest.mark.parametrize("kind", ["baseline", "typed", "temperature", "compact"])

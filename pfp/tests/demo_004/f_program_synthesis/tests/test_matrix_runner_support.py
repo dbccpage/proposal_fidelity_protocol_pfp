@@ -16,7 +16,7 @@ import json
 import urllib.error
 
 import pytest
-from omega_engine_pfp.infrastructure import synthesis_matrix as mrs
+from pfp.infrastructure import synthesis_matrix as mrs
 
 
 def _ok_body(content: str, **extra) -> str:

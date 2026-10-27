@@ -1,7 +1,7 @@
 """`operad_structure_v1` must not print SUCCESS over a refused composition.
 
 `.agents/operad/validate_operad.py` is a live local-CI gate
-(`omega_engine_operations/use_cases/cicd/local_ci.py:67`). It registers every
+(`operations/use_cases/cicd/local_ci.py:67`). It registers every
 entry in `composition_matrix.json` and, when the operad refuses one, printed
 the refusal and carried on -- reaching `[SUCCESS] Structural registry
 validation PASS` and exit 0.
@@ -29,7 +29,7 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-OPERAD_DIR = REPO_ROOT / "omega_engine_operads" / "skill_operad"
+OPERAD_DIR = REPO_ROOT / "operads" / "skill_operad"
 VALIDATOR = OPERAD_DIR / "validate_operad.py"
 HOSTS = (".agents", ".claude", ".codex", ".grok")
 
@@ -56,7 +56,7 @@ def operad_copy(tmp_path: Path) -> Path:
     (repo / ".git").mkdir(parents=True)
     shutil.copytree(REPO_ROOT / ".agents" / "skills", repo / ".agents" / "skills")
     shutil.copytree(REPO_ROOT / ".agents" / "registry", repo / ".agents" / "registry")
-    dest = repo / "omega_engine_operads" / "skill_operad"
+    dest = repo / "operads" / "skill_operad"
     shutil.copytree(OPERAD_DIR, dest)
     return dest
 
@@ -129,7 +129,7 @@ def test_every_error_path_in_the_validator_exits(operad_copy: Path) -> None:
 
 
 def test_the_four_hosts_do_not_carry_stale_operad() -> None:
-    """Operad was relocated to omega_engine_operads/skill_operad.
+    """Operad was relocated to operads/skill_operad.
     None of the four hosts should carry a stale operad directory."""
     stale = [host for host in HOSTS if (REPO_ROOT / host / "operad").exists()]
     assert stale == [], f"stale operad tree found on hosts: {stale}"

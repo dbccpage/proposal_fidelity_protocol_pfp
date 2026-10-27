@@ -22,7 +22,7 @@ comes to be obeyed by nobody and questioned by no one.
 ## Inputs
 
 - all `.agents/skills/*/SKILL.md`
-- `omega_engine_operads/skills/_shared/**` and its `_manifest.json`
+- `operads/skills/_shared/**` and its `_manifest.json`
 - `.agents/operad/skill_compiler/routes.yaml` in all four hosts
 - `.../ooutwire/_docs/basis_registry.{md,json,yaml}`
 
@@ -45,8 +45,8 @@ comes to be obeyed by nobody and questioned by no one.
   not exist, and nothing gated on the observation.
 - `_shared/security_refs.md` is advertised by `_shared/README.md`. Absent.
 - `basis_registry.md` points all 27 declared domains at
-  `.anomalon/cognition/universal_basis/`, a directory that does not exist; the
-  real corpora live under `omega_engine_cognitive_operations/ooutwire/_docs/`.
+  `.sentinel/cognition/universal_basis/`, a directory that does not exist; the
+  real corpora live under `cognitive_operations/ooutwire/_docs/`.
 
 ## Terminals
 

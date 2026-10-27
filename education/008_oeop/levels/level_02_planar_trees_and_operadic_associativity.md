@@ -8,10 +8,10 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/domain/planar_substitution.py
-  - omega_engine_operads/domain/operad/planar.py
-  - omega_engine_operads/domain/operad/operad.py
-  - omega_engine_operads/domain/operad/errors.py
+  - operads/domain/planar_substitution.py
+  - operads/domain/operad/planar.py
+  - operads/domain/operad/operad.py
+  - operads/domain/operad/errors.py
 last_verified: 2026-10-01
 ---
 
@@ -105,7 +105,7 @@ $$\boxed{(\theta \circ_i \phi) \circ_{j + m - 1} \psi \equiv (\theta \circ_j \ps
 
 ## 4. Code Implementation Walkthrough
 
-The planar composition algorithms live in [`omega_engine_operads/domain/planar_substitution.py`](../../../../omega_engine_operads/domain/planar_substitution.py) and [`domain/operad/planar.py`](../../../../omega_engine_operads/domain/operad/planar.py):
+The planar composition algorithms live in [`operads/domain/planar_substitution.py`](../../../../operads/domain/planar_substitution.py) and [`domain/operad/planar.py`](../../../../operads/domain/operad/planar.py):
 
 ### 4.1 The `substitute` Function
 
@@ -141,7 +141,7 @@ def substitute(theta: OperadOperation, index: int, phi: OperadOperation) -> Oper
 
 ### 4.2 The Associativity Witness: `TreeCompositionWitness`
 
-In [`domain/operad/planar.py`](../../../../omega_engine_operads/domain/operad/planar.py#L84-L138):
+In [`domain/operad/planar.py`](../../../../operads/domain/operad/planar.py#L84-L138):
 
 ```python
 @dataclass(frozen=True)
@@ -229,7 +229,7 @@ $$\begin{aligned}
 To run the unit tests verifying planar substitution and operadic associativity:
 
 ```powershell
-# Retired: OEWAS tests/unit/test_planar_substitution.py has no successor file under omega_engine_operads.
+# Retired: OEWAS tests/unit/test_planar_substitution.py has no successor file under operads.
 ```
 
 ### The Level 02 Governance Invariants

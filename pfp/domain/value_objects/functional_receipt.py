@@ -1,7 +1,7 @@
 """A Rust-issued functional receipt, as the Symbol Game domain holds it.
 
 The domain computes none of these values. Phi1, Gamma2 and the diagnostic
-class come from ``omega_functional`` through the native host; this type holds
+class come from ``core_functional`` through the native host; this type holds
 them in exact form together with the digest that binds them to the request
 that asked. AuthorityEffect: None.
 """

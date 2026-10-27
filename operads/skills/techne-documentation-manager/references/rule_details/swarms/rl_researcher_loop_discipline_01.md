@@ -8,10 +8,10 @@ Parent: [Research Loop Discipline (WF_RESEARCH_PFP)](../../../../../rules/swarms
 
 **AuthorityEffect:** None.
 
-The research loop is controlled by the Rust module `omega_woland::research_loop`
-and invoked via Woland swarm specialization (`/woland --specialization research` or `/woland`).
+The research loop is controlled by the Rust module `core_adversary::research_loop`
+and invoked via Adversary swarm specialization (`/adversary --specialization research` or `/adversary`).
 The workflow contract is
-`omega_engine_education/documentation/004_oepfp/workflows/research/researcher_workflow.pfp.yaml`.
+`education/documentation/004_oepfp/workflows/research/researcher_workflow.pfp.yaml`.
 Each invariant below names the test that fails when it is broken; the rules-as-code register
 records those tests.
 
@@ -23,7 +23,7 @@ records those tests.
    recorded for it.
 2. The disposition is computed from host facts: check records, review bindings, the stall
    key and the ledger. A stage 8 recommendation is advisory and is never read as a terminal.
-3. Every disposition projects onto `omega_types::routing::RoutingTerminal`, and the
+3. Every disposition projects onto `core_types::routing::RoutingTerminal`, and the
    projection is recorded because it loses the disposition's name.
 
 ## 2. One Budget, Never Reset (`RULE_RESEARCH_LOOP_BUDGET_CEILING_001`)
@@ -77,6 +77,6 @@ records those tests.
 
 ## Cross-References
 
-- Base swarm and model mediation: [`rl_woland_base_swarm_specialization.md`](../../../../../rules/swarms/rl_woland_base_swarm_specialization.md).
+- Base swarm and model mediation: [`rl_adversary_base_swarm_specialization.md`](../../../../../rules/swarms/rl_adversary_base_swarm_specialization.md).
 - Routing and authority axes: [`../authority/rl_gtla_rules_rubric.md`](../../../../../rules/authority/rl_gtla_rules_rubric.md).
 - Antibody admission: [`../architecture/rl_immune_antibody_and_verification_hygiene.md`](../../../../../rules/architecture/rl_immune_antibody_and_verification_hygiene.md).

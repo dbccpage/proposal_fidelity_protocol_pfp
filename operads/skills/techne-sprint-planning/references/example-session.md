@@ -11,7 +11,7 @@ unchanged; only its location moved.
 ``` ext
 User: /sprint-planning 055
 
-Omega: I'll kick off sprint planning for Sprint 055.
+Core: I'll kick off sprint planning for Sprint 055.
 
 **Step 1:** Sprint number: 055
 
@@ -30,13 +30,13 @@ Omega: I'll kick off sprint planning for Sprint 055.
 
 Reading backlog from coda_project_planning/sprints/055/backlog.md...
 
-Sprint Goal: "Harden quality gates and add Techne Code Soviet Inspector to pre-DONE workflow"
+Sprint Goal: "Harden quality gates and add Techne Code Inspector to pre-DONE workflow"
 
 Proposed stories:
 
 | Story | Points | Description |
 |-------|--------|-------------|
-| STORY-055-001 | 3 | Add Techne Code Soviet Inspector pre-DONE gate |
+| STORY-055-001 | 3 | Add Techne Code Inspector pre-DONE gate |
 | STORY-055-002 | 5 | Implement test quality inspector script |
 | STORY-055-003 | 2 | Update sprint-execution skill with inspector step |
 
@@ -44,7 +44,7 @@ Total: 10 points. Proceed? [y/n]
 
 User: y
 
-Omega: Creating artifacts...
+Core: Creating artifacts...
 - coda_project_planning/sprints/055/sprint_055_plan.md
 - coda_project_planning/sprints/055/kickoff.md
 - coda_project_planning/sprints/055/quality_gates.md

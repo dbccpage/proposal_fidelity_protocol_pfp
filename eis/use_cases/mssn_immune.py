@@ -24,22 +24,22 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from omega_engine_epistemic_immune_system.domain.clonal_selection import (
+from eis.domain.clonal_selection import (
     ClonalSelectionEngine,
 )
-from omega_engine_epistemic_immune_system.domain.danger_gate import TwoSignalDangerGate
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_gate import TwoSignalDangerGate
+from eis.domain.danger_signals import (
     assert_signals_independent,
 )
-from omega_engine_epistemic_immune_system.domain.ports import (
+from eis.domain.ports import (
     AntigenMatcher,
     DangerSensor,
     ImmuneQuarantineSink,
     MatcherBindingRefusal,
     SelfPanelStore,
 )
-from omega_engine_epistemic_immune_system.domain.thymus import ThymusGate
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.thymus import ThymusGate
+from eis.domain.value_objects import (
     DangerDecision,
     DetectorRule,
 )

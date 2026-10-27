@@ -11,11 +11,11 @@
 > behind these notices is recorded in the collection's `verification/residuals.md`,
 > section 8.
 
-> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy of the note of the same name, without the `level_` prefix, in [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_woland/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. No package directory for this challenge exists under [`f_program_synthesis/`](../../../../omega_engine_pfp/tests/demo_004/f_program_synthesis/) at the pin, so no solver, checker, receipt or model record backs the figures below; they are an unverified working record.
+> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. No package directory for this challenge exists under [`f_program_synthesis/`](../../../../pfp/tests/demo_004/f_program_synthesis/) at the pin, so no solver, checker, receipt or model record backs the figures below; they are an unverified working record.
 
 **Challenge:** C059: SQL Synthesis under Three-Valued-Logic Fences  
 **Domain:** `f_program_synthesis` (Domain F)  
-**Tier:** T2 | **Protocol:** SG-CP v1 (Woland Terminal Reality Gate & Dual Checkers)  
+**Tier:** T2 | **Protocol:** SG-CP v1 (Adversary Terminal Reality Gate & Dual Checkers)  
 **Date:** September 2026  
 **Reality Gate Run ID:** `c059_eval_1790651964`  
 **Solver SHA-256 Digest:** `020fd7bb1fa503f0147860006946a207d96aa3bf5cdbf2d8d3eaee4ab28ae23b`  
@@ -26,11 +26,11 @@
 
 Challenge C059 evaluates whether autonomous models can synthesize a frozen compiler from JSON relational-algebra specifications to dialect-neutral SQL adhering strictly to Kleene Three-Valued Logic (3VL), totality preflights on protected columns, and exact multiset bag preservation across hidden null-adversarial databases.
 
-Under the Woland Terminal Reality Gate commit-reveal protocol:
+Under the Adversary Terminal Reality Gate commit-reveal protocol:
 - **Solver Commitment:** Committed SHA-256 digest `020fd7bb1fa503f0147860006946a207d96aa3bf5cdbf2d8d3eaee4ab28ae23b` before revealing the judge packet.
 - **Hidden Test Evaluation:** **64 / 64 (100.0%)** hidden evaluation cases passed across dual checkers (SQLite runtime exact checker vs. pure Python in-memory relational algebra engine).
 - **Mutation Stress Testing:** **48 / 48 (100.0%)** hostile mutations killed by both checkers with **0 escapes**.
-- **Woland Gate Verdict:** `PASS_TO_MASTER`.
+- **Adversary Gate Verdict:** `PASS_TO_MASTER`.
 
 In the empirical benchmark sweep across 10 diverse relational problem instances:
 - **LLaMA 3.3 70B Instruct:** **8 / 10 passed (80.0%)**

@@ -10,14 +10,14 @@ from typing import Any, Literal
 
 from pydantic import Field, model_validator
 
-from omega_engine_pfp.domain.value_objects.numerics import BoundedTemperature
-from omega_engine_pfp.domain.value_objects.identifiers import CheckerIdVO
-from omega_engine_pfp.domain.value_objects.numerics import DifficultyRung
-from omega_engine_pfp.domain.value_objects.numerics import MicroUsdSpend
-from omega_engine_pfp.domain.value_objects.identifiers import PilotId
-from omega_engine_pfp.domain.value_objects.identifiers import PromptId
-from omega_engine_pfp.domain.value_objects.identifiers import RequestId
-from omega_engine_pfp.domain.value_objects.taxonomy import TaskFamilyVO
+from pfp.domain.value_objects.numerics import BoundedTemperature
+from pfp.domain.value_objects.identifiers import CheckerIdVO
+from pfp.domain.value_objects.numerics import DifficultyRung
+from pfp.domain.value_objects.numerics import MicroUsdSpend
+from pfp.domain.value_objects.identifiers import PilotId
+from pfp.domain.value_objects.identifiers import PromptId
+from pfp.domain.value_objects.identifiers import RequestId
+from pfp.domain.value_objects.taxonomy import TaskFamilyVO
 from .base import (
     ArmTemplate,
     AuthorityEffect,

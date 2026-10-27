@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 420 (Reserves, Security & Ecology)  
 **Level Source:** Level 08 ([`level_08_lineage_taint_and_custody_invalidation.md`](../../levels/level_08_lineage_taint_and_custody_invalidation.md))  
-**Rust Seam:** [`omega_prompt_civilization::immunity`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/immunity.rs)
+**Rust Seam:** [`core_prompt_civilization::immunity`](../../../../engine/crates_rs/core_prompt_civilization/src/immunity.rs)
 
 ## 1. Pedagogical Objective
 Distinguish between forward causal lineage taint (propagating quarantine forward along descendant subtrees) and global rule custody disarming (disarming broken system directives across all nodes).

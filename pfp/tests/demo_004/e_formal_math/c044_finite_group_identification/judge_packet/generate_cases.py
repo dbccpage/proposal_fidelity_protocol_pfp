@@ -8,7 +8,7 @@ import json
 import random
 from pathlib import Path
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.catalog.build_catalog import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.catalog.build_catalog import (
     build_catalog_database,
 )
 

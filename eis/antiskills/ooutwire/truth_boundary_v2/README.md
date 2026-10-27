@@ -13,7 +13,7 @@ The approval reference is SHA-256 of the exact UTF-8 operator response
 `approved` with no newline. It records the decision supplied in the supervising
 conversation; it is not a cryptographic signature or an authenticated identity
 claim. Admission is activated only by the committed
-`woland-engineering-v1.activation-profile.json` and does not imply global
+`adversary-engineering-v1.activation-profile.json` and does not imply global
 activation.
 
 AuthorityEffect: None.

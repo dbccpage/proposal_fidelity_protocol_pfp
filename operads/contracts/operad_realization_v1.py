@@ -11,9 +11,9 @@ from dataclasses import dataclass, replace
 import hashlib
 import json
 
-PROFILE = "omega.oewas.native-model.v1"
-PLANAR = "omega.oewas.operation-term.normal.v1"
-REINDEXED = "omega.oewas.operation-term.reindexed.v1"
+PROFILE = "core.oewas.native-model.v1"
+PLANAR = "core.oewas.operation-term.normal.v1"
+REINDEXED = "core.oewas.operation-term.reindexed.v1"
 
 
 class ModelBindingError(ValueError):
@@ -101,7 +101,7 @@ def _request_model(inventory, wire, input_order):
         ordinal = len(plan)
         plan.append({"op_id": spec["op_id"], "args": refs, "guards": selected_guards(spec["op_id"])})
         occurrences.append({"ordinal": ordinal, "path": list(path), "op_id": spec["op_id"],
-            "operation_id": canonical_id("omega.oewas.operation-spec.v1", operation),
+            "operation_id": canonical_id("core.oewas.operation-spec.v1", operation),
             "operation": spec, "arg_refs": refs})
         return {"operation": operation, "children": children}, inputs, operation["output_port"], {"step": ordinal}
 
@@ -183,7 +183,7 @@ class NativeModelBinding:
             "operation_id": row["operation_id"], "arg_refs": row["arg_refs"], "output_ref": {"step": ordinal}}
 
     def verify_receipt(self, receipt):
-        from omega_engine_operads.skill_operad.resolver.resolver import wire_json
+        from operads.skill_operad.resolver.resolver import wire_json
         value = self.to_json()
         for actual, expected, label in (
             (wire_json(receipt.wire), value["wire"], "receipt wire"),
@@ -210,7 +210,7 @@ class NativeModelBinding:
 
 def realize_native_result(inventory, wire, result, *, input_order=None, values=None):
     """Validate the complete actual response before any external executor runs."""
-    from omega_engine_operads.skill_operad.resolver.resolver import wire_json
+    from operads.skill_operad.resolver.resolver import wire_json
     raw_wire = wire_json(wire)
     try:
         raw, normal, term_id, plan, output_ref, occurrences, used, leaves, order, inverse = _request_model(inventory, raw_wire, input_order)
@@ -228,8 +228,8 @@ def realize_native_result(inventory, wire, result, *, input_order=None, values=N
         elif "input_order" in result or "request_binding" in result:
             raise ModelBindingError("unsolicited reindexing")
         payload = {"schema_version": PROFILE, "normal_form": normal, "native_term_id": term_id,
-            "interpreter_version": "omega.oewas.native-plan-host.v1" if input_order is None
-                else "omega.oewas.native-plan-host.reindexed.v1",
+            "interpreter_version": "core.oewas.native-plan-host.v1" if input_order is None
+                else "core.oewas.native-plan-host.reindexed.v1",
             "inventory_digest": sha(raw), "wire": raw_wire,
             "wire_digest": sha({"wire": raw_wire, "input_order": input_order}),
             "input_order": input_order, "external_to_planar": order, "planar_to_external": inverse,

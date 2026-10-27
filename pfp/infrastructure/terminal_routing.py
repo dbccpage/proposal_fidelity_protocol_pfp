@@ -1,7 +1,7 @@
 """Map each PFP terminal status onto the routing axis.
 
 The map is data in `infrastructure/yaml/stages/terminal_routing.json`. The Rust
-owner is `omega_types::routing::PfpTerminal`, whose test reads the same file.
+owner is `core_types::routing::PfpTerminal`, whose test reads the same file.
 
 AuthorityEffect: None.
 """
@@ -12,7 +12,7 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-from omega_engine_pfp.domain.kernel.result import TerminalStatus
+from pfp.domain.kernel.result import TerminalStatus
 
 TERMINAL_ROUTING_PATH = Path(__file__).resolve().parent / "yaml" / "stages" / "terminal_routing.json"
 

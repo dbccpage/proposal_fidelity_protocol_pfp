@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.task_turn import (
+from pfp.infrastructure.task_turn import (
     PfpTurnRefusal,
     complete_task_turn,
     prepare_task_turn,
@@ -62,7 +62,7 @@ def test_malformed_and_wrong_task_keep_exact_bytes():
 
 
 def test_complete_facade_actually_prepares_and_checks_around_existing_gateway():
-    from omega_engine_woland.domain.providers.types import (
+    from adversary.domain.providers.types import (
         CandidateRequest,
         CandidateResponse,
         DecodingParamsV1,
@@ -97,7 +97,7 @@ def test_complete_facade_actually_prepares_and_checks_around_existing_gateway():
 def test_unsettled_estimated_reply_is_retained_and_not_sent_again():
     from types import SimpleNamespace
 
-    from omega_engine_woland.domain.providers.types import (
+    from adversary.domain.providers.types import (
         CandidateRequest,
         CandidateResponse,
         ProviderConfigError,
@@ -132,7 +132,7 @@ def test_unsettled_estimated_reply_is_retained_and_not_sent_again():
 
 
 def test_pre_dispatch_provider_refusal_has_no_reply_to_retain():
-    from omega_engine_woland.domain.providers.types import CandidateRequest, ProviderConfigError
+    from adversary.domain.providers.types import CandidateRequest, ProviderConfigError
 
     class Gateway:
         def complete(self, request, **options):
@@ -145,9 +145,9 @@ def test_pre_dispatch_provider_refusal_has_no_reply_to_retain():
 
 @pytest.mark.parametrize("invalid_unicode", [False, True])
 def test_unknown_cost_checks_actual_completion_and_retains_distinct_provider_wire(tmp_path, invalid_unicode):
-    from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
-    from omega_engine_woland.domain.providers.types import CandidateRequest, Provider, ProviderConfigError
-    from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+    from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
+    from adversary.domain.providers.types import CandidateRequest, Provider, ProviderConfigError
+    from adversary.infrastructure.providers.gateway import unbudgeted_gateway
 
     sent = []
 
@@ -200,8 +200,8 @@ def test_unknown_cost_checks_actual_completion_and_retains_distinct_provider_wir
 
 
 def test_actual_provider_parser_lone_surrogate_becomes_typed_task_refusal():
-    from omega_engine_woland.domain.providers.types import CandidateRequest, Provider
-    from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+    from adversary.domain.providers.types import CandidateRequest, Provider
+    from adversary.infrastructure.providers.gateway import unbudgeted_gateway
 
     sends = []
 

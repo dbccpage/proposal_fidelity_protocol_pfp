@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 from ..dtos.api_error_dto import ApiErrorDTO
 from ..dtos.command_dtos import CompileProjectionCommand
 from ..dtos.success_dtos import ProjectionResultDTO

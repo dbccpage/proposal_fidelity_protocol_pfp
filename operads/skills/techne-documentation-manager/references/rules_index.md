@@ -109,4 +109,4 @@ Detailed predicates and procedures were moved without dropping clauses; this ind
 ## swarms
 
 - [Research Loop Discipline (WF_RESEARCH_PFP)](../../../rules/swarms/rl_researcher_loop_discipline.md)
-- [Woland Base Swarm Specialization & Estate Connections](../../../rules/swarms/rl_woland_base_swarm_specialization.md)
+- [Adversary Base Swarm Specialization & Estate Connections](../../../rules/swarms/rl_adversary_base_swarm_specialization.md)

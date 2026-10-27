@@ -207,13 +207,13 @@ def __dir__() -> list[str]:
 
 
 # Inject the maintained catalog without making domain imports perform file I/O.
-from omega_engine_pfp.domain.value_objects.taxonomy import register_task_family_provider
+from pfp.domain.value_objects.taxonomy import register_task_family_provider
 
 register_task_family_provider(lambda: __getattr__("TaskFamilyRegistry").get_instance().all_ids())
 
 # Wire checker providers into Domain Identifiers
 try:
-    from omega_engine_pfp.domain.value_objects.identifiers import (
+    from pfp.domain.value_objects.identifiers import (
         register_checker_id_provider,
     )
 

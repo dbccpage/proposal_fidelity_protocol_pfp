@@ -1,4 +1,4 @@
-"""Canonical and exact-type helpers for the pure OEWOLAND kernel."""
+"""Canonical and exact-type helpers for the pure OEADVERSARY kernel."""
 
 from __future__ import annotations
 
@@ -153,7 +153,7 @@ def _canonical_value(value: Any) -> Any:
 def semantic_id(schema: str, payload: Mapping[str, Any]) -> str:
     """Digest `payload` under `schema` as the retired kernel's `canonical_id` did.
 
-    Byte-identical to `omega_engine.kernel.higher_operad.canonical.canonical_id`
+    Byte-identical to `engine.kernel.higher_operad.canonical.canonical_id`
     (removed in f4c6fcf3), so identifiers already recorded in transcripts keep
     verifying: the domain is stripped and NFC-normalized, then must match
     IDENTIFIER.

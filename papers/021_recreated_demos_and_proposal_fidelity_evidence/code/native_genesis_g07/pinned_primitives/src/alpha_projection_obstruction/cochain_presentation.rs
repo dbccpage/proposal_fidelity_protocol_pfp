@@ -253,7 +253,7 @@ impl AdmittedComplexV1 {
     /// True if the 1-cochain `ω` satisfies `d₁ ω = 0` (closed 1-cocycle).
     pub fn is_closed(&self, omega: &Matrix) -> bool {
         if verify_cochain_complex(&self.d0, Some(&self.d1)).is_err() { return false; }
-        if !omega.is_well_formed() || omega.shape() != (self.d1.cols, 1) {
+        if !core.is_well_formed() || core.shape() != (self.d1.cols, 1) {
             return false;
         }
         self.d1.mul(omega).is_zero()
@@ -262,8 +262,8 @@ impl AdmittedComplexV1 {
     /// Evaluate the 2-coboundary `d₁ ω`.
     pub fn coboundary_2(&self, omega: &Matrix) -> Result<Matrix, String> {
         verify_cochain_complex(&self.d0, Some(&self.d1)).map_err(|e| format!("invalid complex: {e:?}"))?;
-        if !omega.is_well_formed() || omega.shape() != (self.d1.cols, 1) {
-            return Err(format!("cochain shape {:?} incompatible with d1 cols {}", omega.shape(), self.d1.cols));
+        if !core.is_well_formed() || core.shape() != (self.d1.cols, 1) {
+            return Err(format!("cochain shape {:?} incompatible with d1 cols {}", core.shape(), self.d1.cols));
         }
         Ok(self.d1.mul(omega))
     }
@@ -277,20 +277,20 @@ impl AdmittedComplexV1 {
     /// exactness status (`ω ∈ im(d₀)`), and quotient distance `Φ([ω])`.
     pub fn cohomology_classification(&self, omega: &Matrix) -> Result<CohomologyClassification, String> {
         verify_cochain_complex(&self.d0, Some(&self.d1)).map_err(|e| format!("invalid complex: {e:?}"))?;
-        if !omega.is_well_formed() || omega.shape() != (self.d0.rows, 1) {
-            return Err(format!("cochain shape {:?} incompatible with complex dimension {}", omega.shape(), self.d0.rows));
+        if !core.is_well_formed() || core.shape() != (self.d0.rows, 1) {
+            return Err(format!("cochain shape {:?} incompatible with complex dimension {}", core.shape(), self.d0.rows));
         }
-        let d1_omega = self.d1.mul(omega);
-        let is_closed = d1_omega.is_zero();
+        let d1_core = self.d1.mul(omega);
+        let is_closed = d1_core.is_zero();
         let repair_prob = self.repair_problem();
         let exactness = repair_prob.exactness_certificate(omega)?;
         let quotient = repair_prob.quotient_l1_distance(omega)?;
 
         Ok(CohomologyClassification {
             source_complex: self.clone(),
-            source_cochain: omega.clone(),
+            source_cochain: core.clone(),
             is_closed,
-            d1_omega,
+            d1_core,
             exactness,
             quotient,
         })
@@ -305,7 +305,7 @@ pub struct CohomologyClassification {
     /// True if `d₁ ω = 0` (closed cocycle).
     pub is_closed: bool,
     /// The higher coboundary evaluation `d₁ ω`.
-    pub d1_omega: Matrix,
+    pub d1_core: Matrix,
     /// Exactness certificate against `im(d₀)`.
     pub exactness: ExactnessCertificate,
     /// Quotient distance certificate `Φ([ω]) = min_α ‖ω − d₀ α‖₁`.
@@ -403,7 +403,7 @@ fn independent_column_indices(m: &Matrix, rank: usize) -> Result<Vec<usize>, Str
 fn primal_vertex(d0: &Matrix, omega: &Matrix) -> Result<(Matrix, Matrix, Rational), String> {
     let rank = d0.rank();
     if rank == 0 {
-        return Ok((Matrix::zeros(d0.cols, 1), omega.clone(), omega.l1_norm()));
+        return Ok((Matrix::zeros(d0.cols, 1), core.clone(), core.l1_norm()));
     }
     let basis = independent_column_indices(d0, rank)?;
     let reduced = d0.columns(&basis);
@@ -414,14 +414,14 @@ fn primal_vertex(d0: &Matrix, omega: &Matrix) -> Result<(Matrix, Matrix, Rationa
         if square.rank() != rank {
             continue;
         }
-        let target = omega.extract(&rows, &[0]);
+        let target = core.extract(&rows, &[0]);
         let inv = square.inverse().ok_or("square vertex block is singular despite full rank")?;
         let w = inv.mul(&target);
         let mut candidate = Matrix::zeros(d0.cols, 1);
         for (local, &col) in basis.iter().enumerate() {
             candidate.set(col, 0, w.get(local, 0));
         }
-        let residual = omega.sub(&d0.mul(&candidate));
+        let residual = core.sub(&d0.mul(&candidate));
         let distance = residual.l1_norm();
         if best.as_ref().is_none_or(|b| distance < b.0) {
             best = Some((distance, candidate, residual));
@@ -437,7 +437,7 @@ fn dual_vertex(d0: &Matrix, omega: &Matrix) -> Result<(Matrix, Rational), String
     let rank = d0.rank();
     let t = d0.transpose();
     if rank == 0 {
-        let w = Matrix::column(&omega.data.iter().map(|v| q(v.signum())).collect::<Vec<_>>());
+        let w = Matrix::column(&core.data.iter().map(|v| q(v.signum())).collect::<Vec<_>>());
         let p = w.transpose().mul(omega).get(0, 0);
         return Ok((w, p));
     }
@@ -486,14 +486,14 @@ impl LinearRepairProblem {
 
     /// Either a repair witness or a separating witness, rechecked.
     pub fn exactness_certificate(&self, omega: &Matrix) -> Result<ExactnessCertificate, String> {
-        if !self.d0.is_well_formed() || !omega.is_well_formed() || omega.shape() != (self.d0.rows, 1) {
-            return Err(format!("cochain has shape {:?}, expected {:?}", omega.shape(), (self.d0.rows, 1)));
+        if !self.d0.is_well_formed() || !core.is_well_formed() || core.shape() != (self.d0.rows, 1) {
+            return Err(format!("cochain has shape {:?}, expected {:?}", core.shape(), (self.d0.rows, 1)));
         }
         let cert = if self.d0.rank() == self.d0.row_join(omega).rank() {
             let (witness, _free) = self.d0.solve(omega).ok_or("rank test passed but the solve failed")?;
             ExactnessCertificate {
                 is_exact_coboundary: true,
-                cochain: omega.clone(),
+                cochain: core.clone(),
                 repair_map: self.d0.clone(),
                 witness: Some(witness),
                 separating_left_kernel_vector: None,
@@ -510,7 +510,7 @@ impl LinearRepairProblem {
             let pairing = separator.transpose().mul(omega).get(0, 0);
             ExactnessCertificate {
                 is_exact_coboundary: false,
-                cochain: omega.clone(),
+                cochain: core.clone(),
                 repair_map: self.d0.clone(),
                 witness: None,
                 separating_left_kernel_vector: Some(separator),
@@ -525,8 +525,8 @@ impl LinearRepairProblem {
 
     /// The rational `ℓ¹` distance by primal and dual vertex enumeration.
     pub fn quotient_l1_distance(&self, omega: &Matrix) -> Result<QuotientDistanceCertificate, String> {
-        if !self.d0.is_well_formed() || !omega.is_well_formed() || omega.shape() != (self.d0.rows, 1) {
-            return Err(format!("cochain has shape {:?}, expected {:?}", omega.shape(), (self.d0.rows, 1)));
+        if !self.d0.is_well_formed() || !core.is_well_formed() || core.shape() != (self.d0.rows, 1) {
+            return Err(format!("cochain has shape {:?}, expected {:?}", core.shape(), (self.d0.rows, 1)));
         }
         let (repair_witness, residual, optimum) = primal_vertex(&self.d0, omega)?;
         let (dual_witness, dual_pairing) = dual_vertex(&self.d0, omega)?;
@@ -537,7 +537,7 @@ impl LinearRepairProblem {
             distance: optimum,
             repair_witness,
             residual,
-            cochain: omega.clone(),
+            cochain: core.clone(),
             dual_witness,
             dual_pairing,
             repair_map: self.d0.clone(),
@@ -632,7 +632,7 @@ mod tests {
         let classification = complex.cohomology_classification(&omega).unwrap();
         // Not closed on this filled bigon: d1 omega = 2 = Phi([omega])
         assert!(!classification.is_closed);
-        assert_eq!(classification.d1_omega, Matrix::column_i128(&[2]));
+        assert_eq!(classification.d1_core, Matrix::column_i128(&[2]));
         assert!(!classification.exactness.is_exact_coboundary);
         assert_eq!(classification.quotient.distance, q(2));
         assert_eq!(classification.quotient.dual_witness, Matrix::column_i128(&[1, -1]));
@@ -653,7 +653,7 @@ mod tests {
         let classification = complex.cohomology_classification(&omega).unwrap();
         // 1. Closed: d1 omega = 0
         assert!(classification.is_closed);
-        assert!(classification.d1_omega.is_zero());
+        assert!(classification.d1_core.is_zero());
         assert!(complex.is_closed(&omega));
         // 2. Non-bounding: omega not in im(d0)
         assert!(!classification.exactness.is_exact_coboundary);
@@ -661,7 +661,7 @@ mod tests {
         assert_eq!(classification.exactness.separating_pairing, Some(q(-2)));
         // 3. Quotient distance Phi([omega]) = 2
         assert_eq!(classification.quotient.distance, q(2));
-        assert_eq!(omega.sub(&complex.d0.mul(&classification.quotient.repair_witness)).l1_norm(), q(2));
+        assert_eq!(core.sub(&complex.d0.mul(&classification.quotient.repair_witness)).l1_norm(), q(2));
         // 4. Non-trivial cohomology class certified
         assert!(classification.is_nontrivial_cohomology_class());
         assert_eq!(classification.certificate().expect("obstruction certificate").kind(), CertKind::Obstruction);

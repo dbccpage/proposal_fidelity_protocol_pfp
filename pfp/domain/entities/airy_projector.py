@@ -9,10 +9,10 @@ import math
 from dataclasses import dataclass
 from typing import Any
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
-from omega_engine_pfp.domain.entities.projection_receipt import Obstruction, ProjectionReceipt
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.entities.airy import (
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.entities.projection_receipt import Obstruction, ProjectionReceipt
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.entities.airy import (
     AiryCriticalCarrierV1,
     AiryCriticalStateV1,
     evaluate_airy_critical_residuals,
@@ -22,7 +22,7 @@ AIRY_PACKET_FAMILY = "witten_airy_critical"
 AIRY_CARRIER_ID = "witten-airy-critical-five-slot-v1"
 AIRY_OBSTRUCTION_ID = "WITTEN_AIRY_CRITICAL_EQUATION"
 AIRY_SOLVER_ID = "witten-airy-bounded-newton-proposal-v1"
-AIRY_PAYLOAD_SCHEMA = "omega.symbol-game.witten-airy-critical-payload.v1"
+AIRY_PAYLOAD_SCHEMA = "core.symbol-game.witten-airy-critical-payload.v1"
 
 
 def _payload(
@@ -47,7 +47,7 @@ class AiryCriticalProjector:
     @property
     def config_digest(self) -> str:
         return domain_digest(
-            "omega.oesos.projector-config.v1",
+            "core.oesos.projector-config.v1",
             {
                 "projector_id": self.projector_id,
                 "carrier": self.carrier,
@@ -103,7 +103,7 @@ class AiryCriticalProjector:
             )
         return ProjectionReceipt(
             projector_id=self.projector_id,
-            state_hash=domain_digest("omega.oesos.state.v1", normalized),
+            state_hash=domain_digest("core.oesos.state.v1", normalized),
             obstructions=obstructions,
             witness="witten-airy-critical-independent-replay-v1",
             representative_l1_mass=maximum,

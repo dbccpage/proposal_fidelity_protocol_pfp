@@ -5,22 +5,22 @@ from __future__ import annotations
 from dataclasses import replace
 from pathlib import Path
 
-from omega_engine_operads.application.python_development_office.quality_inventory import (
+from operads.application.python_development_office.quality_inventory import (
     PythonQualityInventoryGate,
     QualityInventoryDependencies,
 )
-from omega_engine_operads.application.python_development_office.test_receipt_verification import (
+from operads.application.python_development_office.test_receipt_verification import (
     ReceiptVerificationRequest,
     verify_test_execution_receipts,
 )
-from omega_engine_operads.domain.operad.errors import Err
-from omega_engine_operads.domain.python_development_office.quality_inventory import (
+from operads.domain.operad.errors import Err
+from operads.domain.python_development_office.quality_inventory import (
     TestTierRule as TierRule,
 )
-from omega_engine_operads.infrastructure.python_development_office.quality_adapters import (
+from operads.infrastructure.python_development_office.quality_adapters import (
     FileSystemPythonInventoryRepository,
 )
-from omega_engine_operads.tests.python_development_office.quality_test_support import (
+from operads.tests.python_development_office.quality_test_support import (
     FixedUtcClock,
     StubComplexityAnalyzer,
     StubExecutionReceiptRepository,

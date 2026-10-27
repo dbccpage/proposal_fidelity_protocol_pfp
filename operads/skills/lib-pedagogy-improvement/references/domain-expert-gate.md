@@ -29,7 +29,7 @@ The pedagogy skill now coordinates with **domain expert agents** (physics-prof, 
 Before you evaluate pedagogical quality, the **domain taxonomy** auto-detects the primary domain:
 
 ```python
-from omega_engine.domain.domain_taxonomy import detect_domains
+from engine.domain.domain_taxonomy import detect_domains
 
 assignment = detect_domains(content)
 print(assignment.primary_domain)      # e.g., QUANTUM_FIELD_THEORY
@@ -43,7 +43,7 @@ print(assignment.cross_domain_flags)   # e.g., "QFT + topos: verify functorialit
 Initialize the gate before pedagogical review:
 
 ```python
-from omega_engine.application.gates.domain_expert_gate import (
+from engine.application.gates.domain_expert_gate import (
     create_domain_expert_gate,
     route_to_expert_agent,
 )
@@ -175,7 +175,7 @@ When content spans multiple domains (e.g., **mathematical physics** or **quantum
    - "QFT section uses renormalization language; verify mathematical rigor with math-prof"
    - "Category-theoretic framing of gauge groups; verify with physics-prof for physical coherence"
 4. **Both experts approve OR CONDITIONAL_PASS** → content advances
-5. **Disagreement or either FAIL** → escalate to Woland (Blue Team) architecture audit
+5. **Disagreement or either FAIL** → escalate to Adversary (Blue Team) architecture audit
 
 ### Rejection Protocol
 

@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.python_development_office import (
     AntipatternFinding,
     ArchitectureConfig,
     ModuleInfo,

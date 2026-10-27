@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c023_clifford_tableau_synthesis.reference_solver.synthesis import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c023_clifford_tableau_synthesis.reference_solver.synthesis import (
     simplify_circuit,
     solve,
     synthesize_clifford_circuit,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c023_clifford_tableau_synthesis.reference_solver.tableau import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c023_clifford_tableau_synthesis.reference_solver.tableau import (
     Tableau,
 )
 

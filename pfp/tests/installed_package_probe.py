@@ -2,7 +2,7 @@
 
 This is an offline distribution probe, not a source-checkout pytest substitute.
 Third-party dependencies come from the invoking environment. Every imported
-Omega production module must come from the installed target.
+Core production module must come from the installed target.
 """
 
 import base64
@@ -19,9 +19,9 @@ from tempfile import TemporaryDirectory
 
 def public_pfp_api_probe():
     """Resolve public names and exercise the runner's existing refusal contract."""
-    from omega_engine_pfp import DemoCatalog, DemoRunReceipt, DemoSpec
-    from omega_engine_pfp.infrastructure import UnifiedPfpDemoRunner
-    from omega_engine_pfp.infrastructure.pilot_runners.pilot_dispatch import (
+    from pfp import DemoCatalog, DemoRunReceipt, DemoSpec
+    from pfp.infrastructure import UnifiedPfpDemoRunner
+    from pfp.infrastructure.pilot_runners.pilot_dispatch import (
         UnifiedPfpDemoRunner as CanonicalRunner,
     )
 
@@ -44,12 +44,12 @@ def current_profile_probe(installed):
         "Mutation controls require a disposable installed copy outside a checkout")
     import yaml
 
-    from omega_engine_pfp.infrastructure import numbered_prompts as prompts
-    from omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay import read_frozen_prompt_source
-    from omega_engine_woland.tests.pilots.relational_spacetime import tasks, trial_prompts
+    from pfp.infrastructure import numbered_prompts as prompts
+    from pfp.infrastructure.adapters.pfp_frozen_replay import read_frozen_prompt_source
+    from adversary.tests.pilots.relational_spacetime import tasks, trial_prompts
 
     assert prompts.VERSION == "1.0.4"
-    assert Path(prompts.__file__).resolve().is_relative_to(installed / "omega_engine_pfp")
+    assert Path(prompts.__file__).resolve().is_relative_to(installed / "pfp")
     registry = prompts._registry()
     for relative, expected in registry["file_sha256"].items():
         assert sha256((installed / relative).read_bytes()).hexdigest() == expected
@@ -60,14 +60,14 @@ def current_profile_probe(installed):
             wire = yaml.safe_load(prompt["user_prompt"])
             assert prompt["recipe"] == "PFP-R0001-v1.0.4"
             assert prompt["provider_dispatches"] == 0 and prompt["analytical_status"] == "UNVERIFIED"
-            assert prompt["construction_path"] == "omega_engine_pfp/infrastructure/numbered_prompts.py"
+            assert prompt["construction_path"] == "pfp/infrastructure/numbered_prompts.py"
             assert prompt["construction_sha256"] == sha256(Path(prompts.__file__).read_bytes()).hexdigest()
             assert wire["original_seed"] == tasks.BY_ID[pilot]["text"]
             if pilot == "pilot_0000201":
                 assert sha256(wire["source_context"]["section_5"].encode()).hexdigest() == trial_prompts.SECTION_5_SHA256
             rendered += 1
     assert rendered == 15
-    prefix = "omega_engine_education/pfp/infrastructure/yaml/prompts/versioned/"
+    prefix = "education/pfp/infrastructure/yaml/prompts/versioned/"
     frozen = ("PFP-prompt-role-registry-v1.0.0.yaml", "PFP-R0001-v1.0.0.yaml",
         "PFP-T0001-v1.0.0.yaml", "PFP-T0002-v1.0.0.yaml", "PFP-T0003-v1.0.0.yaml", "README.md")
     # Main retired these files to pinned Git history. A wheel without those
@@ -89,7 +89,7 @@ def current_profile_probe(installed):
         assert str(exc) == "UNKNOWN_FROZEN_PROMPT_SOURCE"
     else:
         raise AssertionError("current prompt was accepted under a historical identity")
-    from omega_engine_woland.tests.pilots.relational_spacetime import (
+    from adversary.tests.pilots.relational_spacetime import (
         baseline,
         compact_trials,
         parameter_trials,
@@ -132,7 +132,7 @@ def _probe_envelope(prepared, answer):
 
 def public_task_cli_probe():
     """Exercise host-free task parsers and exact raw binding/refusal controls."""
-    from omega_engine_pfp.entrypoints.cli.pfp import main as pfp_main
+    from pfp.entrypoints.cli.pfp import main as pfp_main
 
     with TemporaryDirectory(dir=Path.cwd()) as temporary:
         folder = Path(temporary)
@@ -181,13 +181,13 @@ def current_ide_cli_probe(native=None):
     native = Path(native).absolute()
     if not native.is_file() or native.is_symlink():
         raise ValueError("INSTALLED_NATIVE_HOST_REQUIRED")
-    from omega_engine_woland.entrypoints.teamwork_cli import main as teamwork_main
+    from adversary.entrypoints.teamwork_cli import main as teamwork_main
 
     with TemporaryDirectory(dir=Path.cwd()) as temporary:
         folder = Path(temporary)
         reply = folder / "reply.json"
-        # Current public IDE handoff: Hella and applicable host gates precede
-        # a prepared Retinue turn. This is plumbing, not an actual model run.
+        # Current public IDE handoff: Syntax Prefilter and applicable host gates precede
+        # a prepared Panel turn. This is plumbing, not an actual model run.
         state = folder / "ide.json"
         scope = folder / "intake-scope.json"
         scope.write_text(json.dumps({
@@ -231,21 +231,21 @@ def current_ide_cli_probe(native=None):
                 "--raw-reply", str(reply), "--worker", "synthetic negative control"], 2)
             assert report["work_status"] == "blocked"
 
-    return ["current-IDE Woland CLI: applicable intake gate, prepared/raw handoff, explicitly partial"]
+    return ["current-IDE Adversary CLI: applicable intake gate, prepared/raw handoff, explicitly partial"]
 
 
 def public_cli_probe(native=None):
     """Retain the full composite and legacy ambient binding; main passes native."""
     task_controls = public_task_cli_probe()
-    ide_controls = current_ide_cli_probe(native if native is not None else os.environ.get("OMEGA_SYMBOL_GAME_HOST"))
+    ide_controls = current_ide_cli_probe(native if native is not None else os.environ.get("CORE_SYMBOL_GAME_HOST"))
     return [task_controls[0], ide_controls[0], task_controls[1]]
 
 
 def installed_challenge_probe(installed):
     """Require installed tasks/cases/checkers to prepare real source-bound briefs."""
-    from omega_engine_pfp.infrastructure.challenge_live import choose_case
-    from omega_engine_woland.infrastructure import challenge_play
-    from omega_engine_woland.tests.pilots.challenge_suite.catalog import (
+    from pfp.infrastructure.challenge_live import choose_case
+    from adversary.infrastructure import challenge_play
+    from adversary.tests.pilots.challenge_suite.catalog import (
         ROOT,
         canonical,
         digest,
@@ -274,7 +274,7 @@ def installed_challenge_probe(installed):
             )
         report = challenge_play.report(state)
         assert report["work_status"] == "pending_host" and report["executor"] == "ide"
-        assert report["next_action"]["role_id"] == "azazello" and report["task_check"] is None
+        assert report["next_action"]["role_id"] == "scope_guard" and report["task_check"] is None
         assert report["provider_replies"] == report["ide_submissions"] == 0
         prompt = report["pfp_turn"]
         public = json.loads(prompt["user"])
@@ -284,14 +284,14 @@ def installed_challenge_probe(installed):
             public[key] == properties[key]["const"]
             for key in ("task_id", "attempt_id", "input_sha256")
         )
-    return ["ten installed historical-v3 challenge starts: full-Retinue intake/source bindings, zero model calls"]
+    return ["ten installed historical-v3 challenge starts: full-Panel intake/source bindings, zero model calls"]
 
 
 def installed_host_fixture_probe(installed):
     """One original C054 host fixture and falsifier; no model experiment."""
-    from omega_engine_pfp.infrastructure.challenge_execution import isolated
-    from omega_engine_pfp.infrastructure.challenge_live import choose_case
-    from omega_engine_woland.tests.pilots.challenge_suite.catalog import ROOT
+    from pfp.infrastructure.challenge_execution import isolated
+    from pfp.infrastructure.challenge_live import choose_case
+    from adversary.tests.pilots.challenge_suite.catalog import ROOT
 
     assert ROOT.resolve() == installed.resolve()
     row = choose_case("C054", "development", 0)
@@ -312,7 +312,7 @@ def installed_matrix_cli_probe(installed):
     try:
         for number in (*range(43, 51), 56, 57, 58, 60):
             family = "e_formal_math" if number < 51 else "f_program_synthesis"
-            base = installed / "omega_engine_pfp/tests/demo_004" / family
+            base = installed / "pfp/tests/demo_004" / family
             paths = list(base.glob(f"c{number:03d}_*/run_c{number:03d}_matrix.py"))
             assert len(paths) == 1, (number, paths)
             for direct in (False, True):
@@ -341,29 +341,29 @@ def civilization_custody_probe(native):
     import hmac
     from dataclasses import replace
 
-    from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-    from omega_engine_prompt_civilization.controllers.prompt_civ_controller import (
+    from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+    from pciv.controllers.prompt_civ_controller import (
         PromptCivilizationController,
     )
-    from omega_engine_prompt_civilization.domain.models import (
+    from pciv.domain.models import (
         CustodyTier,
         PromptGenomeV1,
         UnauthorizedAdmissionError,
     )
-    from omega_engine_prompt_civilization.use_cases.custody import (
+    from pciv.use_cases.custody import (
         PromptCustodyLedgerV1,
         PromptReviewReceiptV1,
     )
-    from omega_engine_prompt_civilization.use_cases.fitness import PromptFitnessCalculatorV1
-    from omega_engine_woland.domain.evidence import CheckerVerdict
-    from omega_engine_woland.domain.models import SymbolGameRequestV1
-    from omega_engine_woland.infrastructure.symbol_game_checker import SymbolGameCandidateChecker
+    from pciv.use_cases.fitness import PromptFitnessCalculatorV1
+    from adversary.domain.evidence import CheckerVerdict
+    from adversary.domain.models import SymbolGameRequestV1
+    from adversary.infrastructure.symbol_game_checker import SymbolGameCandidateChecker
 
     for leaf in ("custody", "fitness", "operator_custody", "record"):
-        alias = import_module("omega_engine_operating_system.adapters.prompt_civ." + leaf)
+        alias = import_module("operating_system.adapters.prompt_civ." + leaf)
         owner = import_module(
-            "omega_engine_prompt_civilization.domain.models" if leaf == "record"
-            else "omega_engine_prompt_civilization.use_cases." + leaf
+            "pciv.domain.models" if leaf == "record"
+            else "pciv.use_cases." + leaf
         )
         for name in alias.__all__:
             assert getattr(alias, name) is getattr(owner, name), (leaf, name)
@@ -430,8 +430,8 @@ def receipt_delivery_probe():
     """Use the installed public composition root, real SQLite and a signed retained tip."""
     import sqlite3
 
-    from omega_engine_operads.infrastructure.bootstrap import OeopContainer
-    from omega_engine_operads.infrastructure.storage.receipt_ledger import (
+    from operads.infrastructure.bootstrap import OeopContainer
+    from operads.infrastructure.storage.receipt_ledger import (
         LedgerError,
     )
 
@@ -487,28 +487,28 @@ def main():
     # An editable .pth must not contribute production namespace portions.
     sys.path[:] = [entry for entry in sys.path if not (Path(entry) / "pyproject.toml").is_file()]
     sys.path.insert(0, str(installed))
-    os.environ["OMEGA_SYMBOL_GAME_HOST"] = str(native)
+    os.environ["CORE_SYMBOL_GAME_HOST"] = str(native)
     probes = []
     for name in (
-        "omega_engine_pfp.entrypoints.cli.pfp",
-        "omega_engine_pfp.entrypoints.cli.symbol_game",
-        "omega_engine_pfp.infrastructure.task_turn",
-        "omega_engine_pfp.infrastructure.estimated_gateway",
-        "omega_engine_pfp.infrastructure.formal_matrix",
-        "omega_engine_pfp.infrastructure.synthesis_matrix",
-        "omega_engine_woland.entrypoints.teamwork_cli",
-        "omega_engine_woland.infrastructure.teamwork_openrouter",
-        "omega_engine_operads.domain.prompt_hierarchy.evaluator",
-        "omega_engine_pfp.infrastructure.challenge_execution",
-        "omega_engine_pfp.infrastructure.challenge_live",
-        "omega_engine_woland.infrastructure.challenge_play",
-        "omega_engine_woland.infrastructure.mechanism_play",
-        "omega_engine_pfp.infrastructure.numbered_prompts",
+        "pfp.entrypoints.cli.pfp",
+        "pfp.entrypoints.cli.symbol_game",
+        "pfp.infrastructure.task_turn",
+        "pfp.infrastructure.estimated_gateway",
+        "pfp.infrastructure.formal_matrix",
+        "pfp.infrastructure.synthesis_matrix",
+        "adversary.entrypoints.teamwork_cli",
+        "adversary.infrastructure.teamwork_openrouter",
+        "operads.domain.prompt_hierarchy.evaluator",
+        "pfp.infrastructure.challenge_execution",
+        "pfp.infrastructure.challenge_live",
+        "adversary.infrastructure.challenge_play",
+        "adversary.infrastructure.mechanism_play",
+        "pfp.infrastructure.numbered_prompts",
     ):
         import_module(name)
         probes.append(name)
 
-    for name in ("omega_engine_woland", "omega_engine_woland.controllers"):
+    for name in ("adversary", "adversary.controllers"):
         surface = import_module(name)
         for exported in surface.__all__:
             module_name, attribute = surface._EXPORTS[exported]
@@ -516,7 +516,7 @@ def main():
             assert getattr(surface, exported) is implementation
         probes.append(f"{name}: {len(surface.__all__)} public exports")
 
-    from omega_engine_pfp.entrypoints.cli.pfp import main as pfp_main
+    from pfp.entrypoints.cli.pfp import main as pfp_main
     with contextlib.redirect_stdout(io.StringIO()):
         try:
             pfp_main(["--help"])
@@ -524,7 +524,7 @@ def main():
             assert exc.code == 0
     probes.append("pfp CLI help")
 
-    root = resources.files("omega_engine_pfp")
+    root = resources.files("pfp")
     import yaml
     assert isinstance(yaml.safe_load(root.joinpath(
         "infrastructure/yaml/prompts/templates/template_role_registry.yaml").read_bytes()), dict)
@@ -538,24 +538,24 @@ def main():
     probes.extend(installed_host_fixture_probe(installed))
     probes.extend(installed_matrix_cli_probe(installed))
     from importlib.util import find_spec
-    for old in ("omega_engine_education.pfp", "omega_engine_education.pilots",
-        "omega_engine_education.pilots.relational_spacetime.compact_prompts",
-        "omega_engine_education.pilots.challenge_suite.execution",
-        "omega_engine_education.pilots.challenge_suite.live",
-        "omega_engine_education.pilots.challenge_suite.woland",
-        "omega_engine_education.pilots.challenge_suite.mechanism"):
+    for old in ("education.pfp", "education.pilots",
+        "education.pilots.relational_spacetime.compact_prompts",
+        "education.pilots.challenge_suite.execution",
+        "education.pilots.challenge_suite.live",
+        "education.pilots.challenge_suite.adversary",
+        "education.pilots.challenge_suite.mechanism"):
         try:
             spec = find_spec(old)
         except ModuleNotFoundError:
             spec = None
         assert spec is None, old
-    assert not (installed / "omega_engine_education/pilots").exists()
-    assert not (installed / "omega_engine_education/pfp").exists()
-    assert not (installed / "omega_engine_woland/tests/pilots/evidence").exists()
-    assert not (installed / "omega_engine_woland/tests/pilots/results").exists()
+    assert not (installed / "education/pilots").exists()
+    assert not (installed / "education/pfp").exists()
+    assert not (installed / "adversary/tests/pilots/evidence").exists()
+    assert not (installed / "adversary/tests/pilots/results").exists()
     probes.append("retired active runtime paths absent; no forwarding modules")
 
-    from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
+    from pfp.infrastructure.task_turn import prepare_task_turn
     turn = prepare_task_turn(system="Return the integer product.", user="17 * -9",
         task_id="installed-product", attempt_id="one", answer_schema={"type": "integer"})
     reply = {key: value for key, value in turn.binding.items() if key != "checker_id"}
@@ -566,7 +566,7 @@ def main():
     assert not turn.check(json.dumps({**reply, "input_sha256": "wrong", "answer": -153}).encode())["schema_valid"]
     probes.extend(("finite typed answer", "offline replay", "changed binding refusal"))
 
-    from omega_engine_pfp.use_cases.pfp_mode_checks import execute_mode_check
+    from pfp.use_cases.pfp_mode_checks import execute_mode_check
     guard = dict(prompt_uri="prompt://pfp/installed/task/stage1/candidate",
         anti_op="pfp.refuse_unlicensed_multiplication", payload="add marks",
         harmful_control="multiply marks", benign_control="add marks")
@@ -579,9 +579,9 @@ def main():
         raise AssertionError("OEWAS negative control passed")
     probes.extend(("PFP to OEWAS procedural gate", "OEWAS harmful control"))
 
-    from omega_engine_woland.domain.providers.types import Provider
-    from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
-    from omega_engine_woland.infrastructure.teamwork_openrouter import OpenRouterTeamworkExecutor
+    from adversary.domain.providers.types import Provider
+    from adversary.infrastructure.providers.gateway import unbudgeted_gateway
+    from adversary.infrastructure.teamwork_openrouter import OpenRouterTeamworkExecutor
     calls = []
     def wire(provider, model, request):
         calls.append(request)
@@ -594,44 +594,44 @@ def main():
     model = "fixture/installed"
     gateway = unbudgeted_gateway(provider=Provider.OPENROUTER, model=model,
         transport=wire, max_output_tokens=256)
-    # A direct raw gateway is deliberately insufficient for Woland dispatch.
+    # A direct raw gateway is deliberately insufficient for Adversary dispatch.
     # Use a real prepared action and assert refusal before synthetic transport.
-    from omega_engine_woland.infrastructure.teamwork_intelligence_host import (
+    from adversary.infrastructure.teamwork_intelligence_host import (
         bind_acceptance,
         bind_episode_admission,
     )
-    from omega_engine_woland.infrastructure.teamwork_retinue import (
+    from adversary.infrastructure.teamwork_panel import (
         create_teamwork_run,
-        run_hella_check,
+        run_syntax_prefilter_check,
     )
-    from omega_engine_woland.use_cases.teamwork import next_action, observe
+    from adversary.use_cases.teamwork import next_action, observe
     with TemporaryDirectory(dir=Path.cwd()) as temporary:
         run = create_teamwork_run("Installed budget refusal control", historical_v3=True,
             acceptance_check=bind_acceptance("installed.fixture.v1", (sys.executable, "-c", "raise SystemExit(0)")))
         run = run.model_copy(update={"episode_binding": bind_episode_admission(run, Path(temporary)/"episodes.sqlite3")})
-        run = observe(run, run_hella_check(next_action(run)))
+        run = observe(run, run_syntax_prefilter_check(next_action(run)))
         try:
             OpenRouterTeamworkExecutor(gateway, model)(next_action(run))
         except ValueError as exc:
-            assert "WOLAND_RUN_BUDGET_REQUIRED" in str(exc)
+            assert "ADVERSARY_RUN_BUDGET_REQUIRED" in str(exc)
         else:
-            raise AssertionError("unaccounted installed Woland dispatch was accepted")
+            raise AssertionError("unaccounted installed Adversary dispatch was accepted")
         assert not calls
-    probes.append("installed Woland rejects unaccounted dispatch before transport")
+    probes.append("installed Adversary rejects unaccounted dispatch before transport")
 
     # Native arithmetic is supplied explicitly, never inferred from wheel imports.
-    from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-    from omega_engine_pfp.infrastructure.estimated_gateway import DurableRunGateway
-    from omega_engine_woland.domain.providers.allowlist import ModelAllowlist
-    from omega_engine_woland.domain.providers.budget import (
+    from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+    from pfp.infrastructure.estimated_gateway import DurableRunGateway
+    from adversary.domain.providers.allowlist import ModelAllowlist
+    from adversary.domain.providers.budget import (
         BudgetController,
         GatewayPolicy,
         PriceTable,
     )
-    from omega_engine_woland.domain.providers.ports import configure_budget_runtime
-    from omega_engine_woland.domain.providers.types import CandidateRequest
-    from omega_engine_woland.infrastructure.providers.gateway import OearsLlmGateway
-    from omega_engine_woland.infrastructure.providers.rust_budget import RustBudgetRuntime
+    from adversary.domain.providers.ports import configure_budget_runtime
+    from adversary.domain.providers.types import CandidateRequest
+    from adversary.infrastructure.providers.gateway import OearsLlmGateway
+    from adversary.infrastructure.providers.rust_budget import RustBudgetRuntime
     native = Path(sys.argv[2]).resolve()
     configure_budget_runtime(RustBudgetRuntime(RustSymbolGameHost(binary=native)))
     billed_calls = []
@@ -682,10 +682,10 @@ def main():
     origins = {}
     namespace_paths = {}
     for name, module in tuple(sys.modules.items()):
-        assert name != "omega_engine_education" and not name.startswith(
-            "omega_engine_education."
+        assert name != "education" and not name.startswith(
+            "education."
         ), name
-        if name == "omega_engine" or name.startswith(("omega_engine.", "omega_engine_")):
+        if name == "engine" or name.startswith(("engine.", "")):
             if getattr(module, "__file__", None):
                 origin = Path(module.__file__).resolve()
                 assert origin.is_relative_to(installed), (name, str(origin))

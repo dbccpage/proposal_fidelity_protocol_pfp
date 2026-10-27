@@ -5,10 +5,10 @@ kind: architecture-reference
 status: IMPLEMENTED
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/skill_operad/yaml/op_inventory.yaml
-  - omega_engine_operads/skill_operad/skill_compiler/op_inventory.py
-  - omega_engine_operads/skill_operad/domain/planar.py
-  - omega_engine_operations/use_cases/cicd/pr_fast_gate.py
+  - operads/skill_operad/yaml/op_inventory.yaml
+  - operads/skill_operad/skill_compiler/op_inventory.py
+  - operads/skill_operad/domain/planar.py
+  - operations/use_cases/cicd/pr_fast_gate.py
 last_verified: 2026-10-07
 ---
 
@@ -26,12 +26,12 @@ the steps exist only as prose in `SKILL.md`, and an LLM picks and composes them 
 
 Operad v2 refines a skill into small ops with typed ports, wired as a planar tree, plus anti-ops
 that guard one input slot of one op. This is the data a run-time resolver needs (reform 6 of
-[chapter 25](25_review_agent_setup.md)): Woland seats and `/research` can then ask which ops take
+[chapter 25](25_review_agent_setup.md)): Adversary seats and `/research` can then ask which ops take
 a given port, and compose them with a type check instead of a guess.
 
 ## 2. The inventory
 
-`skill_operad/yaml/op_inventory.yaml`, schema `omega.oewas.op_inventory.v2`, typed by the
+`skill_operad/yaml/op_inventory.yaml`, schema `core.oewas.op_inventory.v2`, typed by the
 Pydantic models in `skill_compiler/op_inventory.py` (`OpInventory`, `SkillDecomposition`,
 `OpSpec`, `AntiOpSpec`, `Wire`; all frozen, unknown keys refused).
 
@@ -56,7 +56,7 @@ wiring: {op: sfh.report, args: [{op: sfh.scan, args: [Code]}]}
 
 ## 3. Checks
 
-`python -m omega_engine_operads.skill_operad.skill_compiler.op_inventory --repo-root .`
+`python -m operads.skill_operad.skill_compiler.op_inventory --repo-root .`
 
 | Code | Fails when |
 |---|---|
@@ -94,22 +94,22 @@ the work left before these skills can run without an LLM reading their text.
 ## 5. What the decomposition found
 
 - **Hype-word scanning has no single owner.** At least five modules keep their own
-  `FORBIDDEN_HYPE_WORDS` list (`omega_engine_operations/domain/claim_hygiene/constants.py`,
-  `omega_engine_education/infrastructure/pfp/gate_evaluators.py`,
-  `omega_engine_education/use_cases/media/scene_generator.py`,
-  `omega_engine_governance/.../blackrod_active_interceptor.py`, and a paper verifier). The
+  `FORBIDDEN_HYPE_WORDS` list (`operations/domain/claim_hygiene/constants.py`,
+  `education/infrastructure/pfp/gate_evaluators.py`,
+  `education/use_cases/media/scene_generator.py`,
+  `governance/.../blackrod_active_interceptor.py`, and a paper verifier). The
   `glossa.scan_hype_*` ops stay PROSE until one scanner is chosen and the others call it.
 - **`techne-silent-failure-hunter` is fully bound.** Its five rules already live in
-  `omega_engine_operations/use_cases/verification/silent_failure_hunter.py`; the skill text can
+  `operations/use_cases/verification/silent_failure_hunter.py`; the skill text can
   shrink to a pointer once a resolver runs the ops.
 - **`governance-test-isolation`'s script has a side effect.** `scripts/check_test_isolation.py`
   creates `scratch/` while checking for it, so `gti.layout_check` is left PROSE rather than bound
   to it.
 - **`adversarial-receipt-audit` is all prose.** Its two refusals exist as catalogue entries in
-  `omega_engine_research_papers/domain/models/anti_skills.py`, not as detectors.
+  `research_papers/domain/models/anti_skills.py`, not as detectors.
 - **The skill_operad test suite is red on `main` for reasons outside this slice:**
   `test_nonzero_obstruction_operad_refusal.py` needs `networkx`; three `test_operad_compression.py`
-  tests need a Woland run directory that is not in the tree; `test_honesty.py` finds eight
+  tests need a Adversary run directory that is not in the tree; `test_honesty.py` finds eight
   signature rows claiming `residual_effect: contractive` without a certificate. At `201dc8d`
   (2026-10-15) the same check reports 26 residual-honesty errors: 13 signature rows and 13 SKILL.md
   frontmatter fields that claim `contractive` without an independently verified certificate.

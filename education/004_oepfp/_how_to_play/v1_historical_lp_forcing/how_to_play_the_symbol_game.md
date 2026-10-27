@@ -1,10 +1,10 @@
 # how to play the symbol game
 
 > **provenance (2026-07-24):** mined from the official archive snapshot
-> `omega_engine/.omega_engine_official_archive/the_symbol_game.zip`
+> `engine/.official_archive/the_symbol_game.zip`
 > (`the symbol game/how_to_play_the_symbol_game.md`). historical product cli paths
 > (`products/symbol_game`, legacy binaries) may be stale; live prod is
-> `crates/omega_symbol_game` and python orchestrator under `omega_engine_py/omega_symbol_game/`.
+> `crates/core_symbol_game` and python orchestrator under `engine_py/core_symbol_game/`.
 >
 > **live theory navigation:** `007_the_symbol_game_monograph.md` +
 > `007_the_symbol_game_proof_ledger.md` (paper 043 / er007). research terminal
@@ -148,7 +148,7 @@ evidencepromotionattempt
 ## build
 
 ```bash
-cd omega_engine/products/symbol_game
+cd engine/products/symbol_game
 cargo build --all-targets --all-features
 ```
 

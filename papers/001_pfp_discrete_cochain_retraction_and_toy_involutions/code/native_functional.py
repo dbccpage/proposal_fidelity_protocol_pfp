@@ -56,11 +56,11 @@ def _exact(value: int | Fraction) -> str:
 
 def _find_binary() -> Optional[Path]:
     """Return an explicitly configured or package-local compiled executable."""
-    env_bin = os.environ.get("OMEGA_FUNCTIONAL_GRAPH_BIN")
+    env_bin = os.environ.get("CORE_FUNCTIONAL_GRAPH_BIN")
     if env_bin:
         configured = Path(env_bin)
         if not configured.is_file():
-            raise NativeFunctionalUnavailable(f"OMEGA_FUNCTIONAL_GRAPH_BIN is not a file: {configured}")
+            raise NativeFunctionalUnavailable(f"CORE_FUNCTIONAL_GRAPH_BIN is not a file: {configured}")
         return configured
 
     candidates = [

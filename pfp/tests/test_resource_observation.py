@@ -1,11 +1,11 @@
 """Opt-in resource wire preserves measurements without relabelling commit as RSS."""
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSandboxHost
-from omega_engine_pfp.infrastructure.sandbox.local_process_sandbox import LocalProcessSandbox
+from operations.domain.rop.result import Ok
+from operating_system.adapters.rust_host.ffi import RustSandboxHost
+from pfp.infrastructure.sandbox.local_process_sandbox import LocalProcessSandbox
 
 
 def wire():
-    return {"schema_version": "omega.sandbox.resource-observation.v1",
+    return {"schema_version": "core.sandbox.resource-observation.v1",
         "outcome": {"outcome": "Completed", "detail": {"exit_code": 0, "stdout": "ok",
             "stderr": "", "duration_ms": 7, "peak_memory_bytes": 4096}},
         "observation": {"task_pid": 123, "elapsed_ms": 7,
@@ -30,7 +30,7 @@ def test_opt_in_resource_wire_retains_actual_pid_metric_and_raw_bytes(monkeypatc
 
 
 def test_missing_measurement_stays_unavailable_and_legacy_profile_cannot_fallback(monkeypatch):
-    from omega_engine_pfp.domain.ports.process_sandbox import SandboxOutcomeKind
+    from pfp.domain.ports.process_sandbox import SandboxOutcomeKind
     raw = wire()
     raw["observation"]["memory_bytes"] = None
     raw["observation"]["measurement_error"] = "JOB_MEMORY_QUERY_FAILED"

@@ -23,7 +23,7 @@ for its initial parser/map examples and eight K4 trace inspections.
 | `lean4/` | Five discussed formal files, ExactRat, 39-theorem and 576-declaration reports |
 | `docs/challenge_census.md` | Historical 40/2/8 categories and receipt limits |
 | `docs/historical_census_inventory.json` | File identities from the five untruncated historical category trees |
-| `_lev_landau_theoretical_minimum_quiz/` | [16-question quiz](_lev_landau_theoretical_minimum_quiz/quiz.md) and [worked study guide](_lev_landau_theoretical_minimum_quiz/study_guide.md) |
+| `_lev_examiner_theoretical_minimum_quiz/` | [16-question quiz](_lev_examiner_theoretical_minimum_quiz/quiz.md) and [worked study guide](_lev_examiner_theoretical_minimum_quiz/study_guide.md) |
 | `docs/review_validation_2026_10_02.json` | Fresh review checks, inputs and explicit replay limits |
 | `verify_deposit.py`, `tools/`, `scripts/` | Deposit and replay tooling |
 

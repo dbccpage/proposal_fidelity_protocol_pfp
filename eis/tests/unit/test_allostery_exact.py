@@ -15,12 +15,12 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.allostery import (
+from eis.domain.allostery import (
     DEFAULT_PARAMETERS,
     AllostericConsensusGate,
     minimal_quorum,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     AllosteryRefusal,
     HillParameters,
 )

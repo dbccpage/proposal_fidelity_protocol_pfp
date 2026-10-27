@@ -8,7 +8,7 @@ import os
 
 import pytest
 
-from omega_engine_woland.tests.pilots.challenge_suite.local_mechanism_trials import (
+from adversary.tests.pilots.challenge_suite.local_mechanism_trials import (
     cases,
     expected,
     finite_language,
@@ -48,7 +48,7 @@ def test_original_case_mutations_are_rejected_and_exact_restore_recovers():
 
 
 def test_blind_residual_capture_never_reads_target_expected_certificate(monkeypatch):
-    from omega_engine_woland.tests.pilots.challenge_suite import local_mechanism_trials as trials
+    from adversary.tests.pilots.challenge_suite import local_mechanism_trials as trials
     class StopAfterCapture(Exception):
         pass
     class Vector:
@@ -72,7 +72,7 @@ def test_blind_residual_capture_never_reads_target_expected_certificate(monkeypa
 def test_local_model_declared_revision_cannot_override_manifest_or_changed_bytes(tmp_path):
     from hashlib import sha256
 
-    from omega_engine_woland.tests.pilots.challenge_suite.local_mechanism_trials import (
+    from adversary.tests.pilots.challenge_suite.local_mechanism_trials import (
         checkpoint_binding,
     )
     model = tmp_path / "checkpoint"
@@ -104,7 +104,7 @@ def test_local_model_declared_revision_cannot_override_manifest_or_changed_bytes
     dict(heads=dict(layer=0, heads=[0], alpha=float("nan"))),
     dict(residual=dict(layer=0, vector=None, alpha=float("inf")))])
 def test_invalid_hook_selection_refuses_before_registering_any_handle(spec):
-    from omega_engine_pfp.infrastructure.adapters.decode_controls.local_hf_mechanism import (
+    from pfp.infrastructure.adapters.decode_controls.local_hf_mechanism import (
         HfLocalRunner,
     )
     runner = HfLocalRunner.__new__(HfLocalRunner)
@@ -115,7 +115,7 @@ def test_invalid_hook_selection_refuses_before_registering_any_handle(spec):
 
 
 def test_secondary_pauli_sites_reject_same_parity_primary_oracle_mutation(monkeypatch):
-    from omega_engine_woland.tests.pilots.challenge_suite import local_mechanism_trials as trials
+    from adversary.tests.pilots.challenge_suite import local_mechanism_trials as trials
     case = cases()[6]
     original = expected(case)
     changed = dict(original, anticommuting_sites=["1"])
@@ -132,7 +132,7 @@ def test_local_collation_ignores_forged_success_and_refuses_raw_tamper():
     from copy import deepcopy
     from hashlib import sha256
 
-    from omega_engine_woland.tests.pilots.challenge_suite.protocol_collation import recheck_local_trial
+    from adversary.tests.pilots.challenge_suite.protocol_collation import recheck_local_trial
     case = cases()[2]
     turn = turn_for(case, attempt_id="collation-mutation")
     answer = expected(case) | {"negative_count": "0"}
@@ -153,8 +153,8 @@ def test_local_collation_ignores_forged_success_and_refuses_raw_tamper():
 
 @pytest.mark.parametrize("missing", range(4))
 def test_moved_protocol_sources_refuse_missing_member_before_inference(missing, tmp_path, monkeypatch):
-    from omega_engine_woland.tests.pilots.challenge_suite import local_mechanism_trials as trials
-    from omega_engine_woland.tests.pilots.challenge_suite.catalog import SOURCE
+    from adversary.tests.pilots.challenge_suite import local_mechanism_trials as trials
+    from adversary.tests.pilots.challenge_suite.catalog import SOURCE
     assert trials.SOURCE == SOURCE / "a_mechanism"
     original = trials.protocol_sources()
     assert set(original) == set(trials.PROTOCOL_FILES)

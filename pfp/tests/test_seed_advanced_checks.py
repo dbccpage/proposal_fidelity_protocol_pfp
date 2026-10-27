@@ -7,10 +7,10 @@ from hashlib import sha256
 import pytest
 import sympy as sp
 
-from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import advanced_check
-from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import advanced_expected
-from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
-from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import wire
+from pfp.infrastructure.pilot_runners.seed_advanced_checks import advanced_check
+from pfp.infrastructure.pilot_runners.seed_advanced_checks import advanced_expected
+from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+from pfp.infrastructure.pilot_runners.seed_checks import wire
 
 
 FINITE_SEEDS = [27, 28, 31, 32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
@@ -169,7 +169,7 @@ def test_composite_keeps_named_profiles_and_full_quantum_obligations():
 
 
 def test_cross_polytope_submitted_coefficients_decide_boundary_not_summary_counts():
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import _check_cross_polytope_coefficients
+    from pfp.infrastructure.pilot_runners.seed_advanced_checks import _check_cross_polytope_coefficients
 
     candidate = advanced_expected(48)
     last = candidate["dimensions"][-1]
@@ -185,7 +185,7 @@ def test_cross_polytope_submitted_coefficients_decide_boundary_not_summary_count
 
 
 def test_higher_qubit_forms_use_original_coordinate_order_and_exact_products():
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import _check_bilinear_forms
+    from pfp.infrastructure.pilot_runners.seed_advanced_checks import _check_bilinear_forms
 
     candidate = advanced_expected(49)
     for data in candidate["dimensions"]:
@@ -206,8 +206,8 @@ def test_higher_qubit_forms_use_original_coordinate_order_and_exact_products():
 
 @pytest.mark.parametrize("modulus", [None, 2])
 def test_executed_shears_agree_with_exact_matrices_for_columns_and_duals(modulus):
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import _shear
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import _shear_values
+    from pfp.infrastructure.pilot_runners.seed_advanced_checks import _shear
+    from pfp.infrastructure.pilot_runners.seed_advanced_checks import _shear_values
 
     for n in range(2, 9):
         values, matrix = list(range(n)), _shear(n)
@@ -221,8 +221,8 @@ def test_executed_shears_agree_with_exact_matrices_for_columns_and_duals(modulus
 
 
 def test_composite_candidate_chosen_controls_are_executed_and_stale_coordinates_fail():
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import _css_phase_control
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import _tensor_transport
+    from pfp.infrastructure.pilot_runners.seed_advanced_checks import _css_phase_control
+    from pfp.infrastructure.pilot_runners.seed_advanced_checks import _tensor_transport
 
     candidate = advanced_expected(50)
     top = candidate["topological"]
@@ -297,9 +297,9 @@ def test_lean_fixed_target_and_source_digest_are_checked_before_tool_execution()
 
 
 def test_lean_uses_existing_adapter_and_rejects_audit_without_bound_declaration(monkeypatch):
-    from omega_engine_operating_system.adapters.rust_host.ffi import Ok
-    from omega_engine_pfp.domain.lean_bridge.models import LeanVerificationReceipt
-    from omega_engine_pfp.infrastructure.adapters.lake_sandbox_adapter import LakeSandboxAdapter
+    from operating_system.adapters.rust_host.ffi import Ok
+    from pfp.domain.lean_bridge.models import LeanVerificationReceipt
+    from pfp.infrastructure.adapters.lake_sandbox_adapter import LakeSandboxAdapter
 
     observed = []
     def verify(self, request, package):
@@ -318,7 +318,7 @@ def test_lean_uses_existing_adapter_and_rejects_audit_without_bound_declaration(
 
 
 def test_actual_missing_lean_native_dependency_is_unavailable_not_success(monkeypatch):
-    from omega_engine_pfp.infrastructure.adapters.lake_sandbox_adapter import LakeSandboxAdapter
+    from pfp.infrastructure.adapters.lake_sandbox_adapter import LakeSandboxAdapter
 
     def missing(*args, **kwargs):
         raise RuntimeError("native Lean auditor is unavailable")

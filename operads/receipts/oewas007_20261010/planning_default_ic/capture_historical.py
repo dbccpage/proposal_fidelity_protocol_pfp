@@ -16,20 +16,20 @@ prefix = ["C:/Users/a343o/.local/bin/uv.exe", "run", "--offline", "--no-project"
     "C:/Users/a343o/AppData/Roaming/uv/python/cpython-3.13.11-windows-x86_64-none/python.exe",
     "--with", "pytest==9.1.1", "--with", "pyyaml==6.0.3", "--with", "pydantic==2.13.5", "python", "-X", "utf8"]
 if label == "historical_cli":
-    argv = prefix + ["-m", "omega_engine_product_planning_office.infrastructure.prior_art_sources"]
+    argv = prefix + ["-m", "product_planning_office.infrastructure.prior_art_sources"]
 else:
     argv = prefix + ["-m", "pytest", "-o", "addopts=", "-o", "filterwarnings=", *sys.argv[2:],
         "--basetemp", str(Path(os.environ["TEMP"]) / (label + "-" + uuid.uuid4().hex)), "-q"]
 paths = [
-    "omega_engine_product_planning_office/domain/contracts/historical_sources.py",
-    "omega_engine_product_planning_office/infrastructure/prior_art_sources.py",
-    "omega_engine_product_planning_office/use_cases/prior_art_epic_audit.py",
-    "omega_engine_product_planning_office/tests/test_prior_art_historical_sources.py",
-    "omega_engine_product_planning_office/tests/test_prior_art_epic_audit.py",
-    "omega_engine_operating_system/adapters/intelligence_custody/ic_routing.py",
-    "omega_engine_operating_system/adapters/intelligence_custody/ic_migration.py",
-    "omega_engine_governance/domain/intelligence_community.py",
-    "omega_engine_governance/_types/ic_casefold_v15_1.json",
+    "product_planning_office/domain/contracts/historical_sources.py",
+    "product_planning_office/infrastructure/prior_art_sources.py",
+    "product_planning_office/use_cases/prior_art_epic_audit.py",
+    "product_planning_office/tests/test_prior_art_historical_sources.py",
+    "product_planning_office/tests/test_prior_art_epic_audit.py",
+    "operating_system/adapters/intelligence_custody/ic_routing.py",
+    "operating_system/adapters/intelligence_custody/ic_migration.py",
+    "governance/domain/intelligence_community.py",
+    "governance/_types/ic_casefold_v15_1.json",
 ]
 def pins():
     return {rel: {"sha256": hashlib.sha256((ROOT / rel).read_bytes()).hexdigest(), "size_bytes": (ROOT / rel).stat().st_size} for rel in paths}

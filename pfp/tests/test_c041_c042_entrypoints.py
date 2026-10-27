@@ -9,7 +9,7 @@ import pytest
 
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pyproject.toml").is_file())
-OWNER = "omega_engine_pfp.tests.demo_004.e_formal_math"
+OWNER = "pfp.tests.demo_004.e_formal_math"
 TASKS = ("c041_lean4_finite_lemma_proofs", "c042_sat_with_drat_certificates")
 GUARD = """
 import importlib.abc
@@ -18,7 +18,7 @@ import sys
 
 class CurrentOwnersOnly(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
-        if fullname.split('.')[0] in {'reference_solver', 'judge_packet', 'governance', 'omega_engine_projects'}:
+        if fullname.split('.')[0] in {'reference_solver', 'judge_packet', 'governance', 'projects'}:
             raise ModuleNotFoundError('Ambiguous or retired owner: ' + fullname)
 
 def no_network(*args, **kwargs):
@@ -55,7 +55,7 @@ for package in sys.argv[2:]:
 
 @pytest.mark.parametrize("cost,expected", ((None, "UNKNOWN (known subtotal $0.01000)"), (0, "$0.00000")))
 def test_existing_report_preserves_unknown_vs_zero_cost(tmp_path, cost, expected):
-    from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.synthesize_matrix_report import synthesize_report
+    from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.synthesize_matrix_report import synthesize_report
 
     record = dict(model="vendor/model", method="M3_RETRACTION", passed_cases=1,
         total_cases=1, total_cost_usd=cost, total_cost_known_subtotal_usd=0.01 if cost is None else 0,

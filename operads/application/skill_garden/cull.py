@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from omega_engine_operations.domain.rop.result import Refusal, Result
-from omega_engine_operads.domain.skill_garden.cull import (
+from operations.domain.rop.result import Refusal, Result
+from operads.domain.skill_garden.cull import (
     CullPolicy,
     CullReport,
     GardenSnapshot,

@@ -15,7 +15,7 @@ The other two -- typed native failures across the full panic/abort/truncation
 matrix, and a measured sub-15us dispatch overhead -- describe a **PyO3 extension
 that does not exist**, and cannot be built without infrastructure this
 repository deliberately lacks. The measurements are in the sprint's discovery
-witness; the short version is that `omega_symbol_game_runtime` declares no
+witness; the short version is that `core_symbol_game_runtime` declares no
 `[lib]` section, so it produces no `cdylib`, and there is no `pyproject.toml`,
 `setup.py` or `setup.cfg` anywhere in the tree.
 
@@ -39,7 +39,7 @@ each entry with its reason, shrink-only.
 # What is deliberately not checked
 
 Doc comments. An earlier grep for the native module's name matched two `domain/`
-modules that merely *mention* `omega_symbol_game_runtime` in prose describing
+modules that merely *mention* `core_symbol_game_runtime` in prose describing
 what they mirror. Import analysis is done over the AST, so a module is an
 offender only when it actually imports something.
 
@@ -54,9 +54,9 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-BASELINE_SCHEMA = "omega.symgam.architecture_baseline.v1"
+BASELINE_SCHEMA = "core.symgam.architecture_baseline.v1"
 
-PACKAGE = Path("omega_engine_pfp")
+PACKAGE = Path("pfp")
 DOMAIN = PACKAGE / "domain"
 SEAM_MODULE = PACKAGE / "ffi.py"
 PACKET_SCHEMAS = PACKAGE / "packet_schemas"
@@ -87,75 +87,75 @@ FORBIDDEN_IN_DOMAIN = frozenset(
 )
 
 # Names that would indicate the native extension itself.
-NATIVE_MARKERS = ("omega_symbol_game_runtime", "_omega_symbol_game")
+NATIVE_MARKERS = ("core_symbol_game_runtime", "_core_symbol_game")
 
 # Non-test modules other than `ffi.py` that import the seam, each with the reason
 # it is tolerated. Shrink-only: a new importer fails `seam_violations`, and a
 # listed module that stops importing the seam fails until its entry is removed.
 SEAM_IMPORT_ALLOWLIST: dict[str, str] = {
-    "omega_engine_pfp/infrastructure/challenge_execution.py": (
+    "pfp/infrastructure/challenge_execution.py": (
         "existing finite campaign consumer binds Q40 verifier evidence and binary "
         "digest through the canonical application host; no process spawning is duplicated"
     ),
-    "omega_engine_pfp/infrastructure/code_change_checker.py": (
+    "pfp/infrastructure/code_change_checker.py": (
         "existing source/candidate-bound code-change adapter checks the host-pinned "
         "binary and delegates proposal, submission and gate operations to the PFP "
         "host; OEOS owns process launch and transport"
     ),
-    "omega_engine_pfp/infrastructure/normal_forms/qm_classical.py": (
+    "pfp/infrastructure/normal_forms/qm_classical.py": (
         "existing QM/classical adapter delegates experiment and certificate checks "
         "to the canonical OEOS invoke_runtime seam, retaining complete outcomes "
         "without a Python solver or process-launch fallback"
     ),
-    "omega_engine_pfp/infrastructure/seat_transport/anthropic_messages.py": (
+    "pfp/infrastructure/seat_transport/anthropic_messages.py": (
         "existing provider transport adapter forwards bounded Messages dispatch to "
         "the OEOS native host, which owns budget refusal, execution and raw output custody"
     ),
-    "omega_engine_pfp/infrastructure/seat_transport/routing.py": (
+    "pfp/infrastructure/seat_transport/routing.py": (
         "existing seat-routing adapter invokes exact native routing/accounting "
         "operations through OEOS; it does not implement another process launcher"
     ),
-    "omega_engine_pfp/infrastructure/adapters/reply_control_adapter.py": (
+    "pfp/infrastructure/adapters/reply_control_adapter.py": (
         "infrastructure implementation of ReplyControlPort; forwards the complete "
         "native parser/residual outcome through the canonical OEOS process seam"
     ),
-    "omega_engine_pfp/entrypoints/cli/host_cli.py": (
+    "pfp/entrypoints/cli/host_cli.py": (
         "presentation composition root replacing former raw symgam process spawn; "
         "preserves classifier/detector bytes while OEOS owns process control"
     ),
-    "omega_engine_pfp/infrastructure/sandbox/local_process_sandbox.py": (
+    "pfp/infrastructure/sandbox/local_process_sandbox.py": (
         "infrastructure adapter behind ProcessSandboxPort; uses the canonical "
         "OEOS RustSandboxHost transport and never launches submitted code in Python"
     ),
-    "omega_engine_pfp/infrastructure/adapters/decode_controls/local_hf_mechanism.py": (
+    "pfp/infrastructure/adapters/decode_controls/local_hf_mechanism.py": (
         "infrastructure adapter behind DecodeControlPort; simulates attention distractor "
         "key masking and token intervention via native host"
     ),
-    "omega_engine_pfp/infrastructure/adapters/decode_controls/vllm_decode_adapter.py": (
+    "pfp/infrastructure/adapters/decode_controls/vllm_decode_adapter.py": (
         "infrastructure adapter behind DecodeControlPort; formats structured JSON schema, "
         "GBNF grammar, and logit bias controls via native host"
     ),
-    "omega_engine_pfp/infrastructure/adapters/exact_rust_adapter.py": (
+    "pfp/infrastructure/adapters/exact_rust_adapter.py": (
         "infrastructure adapter behind the exact linear-algebra, homology and "
         "holonomy ports; it is the port implementation, so it may hold the host"
     ),
-    "omega_engine_pfp/infrastructure/adapters/lake_sandbox_adapter.py": (
+    "pfp/infrastructure/adapters/lake_sandbox_adapter.py": (
         "infrastructure adapter behind LeanVerifierPort; executes sandboxed Lean 4 "
         "builds and axiom audits via host invoke"
     ),
-    "omega_engine_pfp/infrastructure/adapters/rust_cohomology_adapter.py": (
+    "pfp/infrastructure/adapters/rust_cohomology_adapter.py": (
         "infrastructure adapter behind CohomologySolverPort; it is the port "
         "implementation, so it may hold the host"
     ),
-    "omega_engine_pfp/infrastructure/adapters/scoring_rust.py": (
+    "pfp/infrastructure/adapters/scoring_rust.py": (
         "infrastructure adapter behind ScoringPort; delegates scoring "
         "and prompt-frontier execution to the canonical native host"
     ),
-    "omega_engine_pfp/infrastructure/adapters/mssn_research/sign_switching.py": (
+    "pfp/infrastructure/adapters/mssn_research/sign_switching.py": (
         "native sign-gauge transport adapter; delegates complete coefficient "
         "and cycle-witness verification to the holonomy owner"
     ),
-    "omega_engine_pfp/infrastructure/adapters/stabilizer_rust_adapter.py": (
+    "pfp/infrastructure/adapters/stabilizer_rust_adapter.py": (
         "infrastructure adapter behind StabilizerPort; delegates finite quantum "
         "stabilizer solving to native Rust host"
     ),
@@ -163,10 +163,10 @@ SEAM_IMPORT_ALLOWLIST: dict[str, str] = {
 
 # Modules permitted to call raw exec() or eval(). Shrink-only ratchet.
 EXEC_CALLER_ALLOWLIST: dict[str, str] = {
-    "omega_engine_pfp/infrastructure/adapters/mssn_research/loader.py": (
+    "pfp/infrastructure/adapters/mssn_research/loader.py": (
         "loads internally pinned research checker modules from SHA-256 authenticated resources"
     ),
-    "omega_engine_pfp/infrastructure/tower_research/reach/targets.py": (
+    "pfp/infrastructure/tower_research/reach/targets.py": (
         "loads internally pinned tower checker modules from SHA-256 authenticated resources"
     ),
 }
@@ -174,8 +174,8 @@ EXEC_CALLER_ALLOWLIST: dict[str, str] = {
 # Exact existing composition sites, not whole-module constructor exemptions.
 # Trace factories own fixture confinement. The accounted factory owns explicit
 # OpenRouter financial policy and continuing run budgets; it is not a fixture API.
-GATEWAY_FACTORY_MODULE = "omega_engine_pfp/infrastructure/trace/gateway_factories.py"
-ACCOUNTED_GATEWAY_FACTORY_MODULE = "omega_engine_pfp/infrastructure/estimated_gateway.py"
+GATEWAY_FACTORY_MODULE = "pfp/infrastructure/trace/gateway_factories.py"
+ACCOUNTED_GATEWAY_FACTORY_MODULE = "pfp/infrastructure/estimated_gateway.py"
 GATEWAY_CONSTRUCTION_SITES = {
     GATEWAY_FACTORY_MODULE: (("_confined_gateway", "OearsLlmGateway"),),
     ACCOUNTED_GATEWAY_FACTORY_MODULE: (
@@ -185,8 +185,8 @@ GATEWAY_CONSTRUCTION_SITES = {
 }
 RAW_GATEWAY_NAME = "OearsLlmGateway"
 RAW_GATEWAY_MODULES = (
-    "omega_engine_woland.infrastructure.providers.gateway",
-    "omega_engine_woland.infrastructure.providers.gateway",
+    "adversary.infrastructure.providers.gateway",
+    "adversary.infrastructure.providers.gateway",
 )
 
 
@@ -302,7 +302,7 @@ def seam_importers(repo_root: Path) -> tuple[str, ...]:
             continue
         names = imported_names(path.read_text(encoding="utf-8"))
         if any(
-            name.endswith("omega_engine_pfp.ffi")
+            name.endswith("pfp.ffi")
             or name == "ffi"
             or name.endswith(".ffi")
             or any(marker in name for marker in NATIVE_MARKERS)
@@ -455,77 +455,77 @@ def sanctioned_gateway_factory_builds_one(repo_root: Path) -> bool:
 
 
 # Current dispatch owners, not a second operation registry. These source checks
-# complement actual prepare/send/check/replay controls in Woland's owning tests.
-WOLAND_PFP_ROUTES = {
-    'omega_engine_woland/infrastructure/providers/adapters/graph_task_adapter.py': {
+# complement actual prepare/send/check/replay controls in Adversary's owning tests.
+ADVERSARY_PFP_ROUTES = {
+    'adversary/infrastructure/providers/adapters/graph_task_adapter.py': {
         'GraphProviderAdapter._turn': {'complete_pilot_turn'},
     },
-    'omega_engine_woland/infrastructure/providers/operad_pre_miner.py': {
+    'adversary/infrastructure/providers/operad_pre_miner.py': {
         'call_openrouter_miner': {'_mine_turn'},
         'run_operad_pre_miner_swarm': {'_mine_turn'},
         '_mine_turn': {'complete_pilot_turn'},
     },
-    'omega_engine_woland/use_cases/teamwork_pfp.py': {
+    'adversary/use_cases/teamwork_pfp.py': {
         'prepare_teamwork_turn': {'prepare_task_turn'},
         'validate_teamwork_observation': {'prepare_teamwork_turn', 'check_teamwork_reply'},
     },
-    'omega_engine_woland/infrastructure/teamwork_remote.py': {
+    'adversary/infrastructure/teamwork_remote.py': {
         'RemoteTeamworkExecutor._attempt': {'prepare_teamwork_turn', 'check_teamwork_reply'},
     },
-    'omega_engine_woland/infrastructure/providers/llm_gateway.py': {
+    'adversary/infrastructure/providers/llm_gateway.py': {
         'LlmGateway.complete': {'prepare_task_turn', 'check_completion'},
     },
-    'omega_engine_woland/infrastructure/providers/adapters/model_backends.py': {
+    'adversary/infrastructure/providers/adapters/model_backends.py': {
         'OpenRouterBackend.complete_with_receipt': {'complete_pilot_turn'},
     },
-    'omega_engine_woland/infrastructure/dialogue/providers.py': {
+    'adversary/infrastructure/dialogue/providers.py': {
         'CallableDialogueProvider.generate': {'prepare_task_turn', 'check_completion'},
         'OpenRouterDialogueProvider.generate': {'complete_task_turn'},
     },
-    'omega_engine_woland/infrastructure/researcher/symbol_game_dispatch.py': {
+    'adversary/infrastructure/researcher/symbol_game_dispatch.py': {
         'SymbolGameModelDispatch.send': {'prepare_task_turn', 'check_completion'},
     },
-    'omega_engine_woland/infrastructure/research/stage_routes.py': {
+    'adversary/infrastructure/research/stage_routes.py': {
         'run_propose_for_route': {'complete_task_turn'},
     },
-    'omega_engine_woland/entrypoints/research/http_api.py': {
+    'adversary/entrypoints/research/http_api.py': {
         'create_research_router.propose': {'complete_task_turn'},
         'create_research_router.candidate': {'complete_task_turn'},
     },
-    'omega_engine_woland/infrastructure/typed_operad.py': {
-        'TypedWolandOperad._prepare': {'prepare_task_turn'},
-        'TypedWolandOperad._begemot': {'_prepare', 'check_completion'},
-        'TypedWolandOperad._koroviev': {'replay'},
+    'adversary/infrastructure/typed_operad.py': {
+        'TypedAdversaryOperad._prepare': {'prepare_task_turn'},
+        'TypedAdversaryOperad._gauge_breaker': {'_prepare', 'check_completion'},
+        'TypedAdversaryOperad._defect_hunter': {'replay'},
     },
-    'omega_engine_woland/use_cases/multi_round_critique_service.py': {
+    'adversary/use_cases/multi_round_critique_service.py': {
         'MultiRoundCritiqueService.execute_critique_loop': {
             'PreparePfpTaskTurnUseCase', 'CheckPfpTaskTurnUseCase'},
     },
-    'omega_engine_woland/infrastructure/live_openrouter_transport.py': {
+    'adversary/infrastructure/live_openrouter_transport.py': {
         'LiveOpenRouterSymbolGameTransport.complete': {'task_input_sha256', 'CheckPfpTaskTurnUseCase'},
     },
-    'omega_engine_pfp/infrastructure/pilot_matrix.py': {
+    'pfp/infrastructure/pilot_matrix.py': {
         'complete_pilot_turn': {'prepare_task_turn', 'check_completion'},
     },
-    'omega_engine_pfp/infrastructure/formal_matrix.py': {'call_openrouter': {'complete_pilot_turn'}},
-    'omega_engine_pfp/infrastructure/synthesis_matrix.py': {'call_model': {'complete_pilot_turn'}},
+    'pfp/infrastructure/formal_matrix.py': {'call_openrouter': {'complete_pilot_turn'}},
+    'pfp/infrastructure/synthesis_matrix.py': {'call_model': {'complete_pilot_turn'}},
 }
 
-_WOLAND_IO_OWNERS = {
-    ('omega_engine_woland/infrastructure/providers/anthropic_messages.py', 'AnthropicTransport.dispatch'),
-    ('omega_engine_woland/infrastructure/providers/openrouter_transport.py', '_post'),
-    ('omega_engine_woland/infrastructure/providers/http.py', 'post_json'),
-    ('omega_engine_woland/infrastructure/providers/openrouter_deadline.py', 'main'),
-    ('omega_engine_woland/infrastructure/providers/openrouter_experiment_deadline.py', 'main'),
-    ('omega_engine_woland/infrastructure/providers/openai_compat.py', 'OpenAiCompatTransport._send'),
+_ADVERSARY_IO_OWNERS = {
+    ('adversary/infrastructure/providers/anthropic_messages.py', 'AnthropicTransport.dispatch'),
+    ('adversary/infrastructure/providers/openrouter_transport.py', '_post'),
+    ('adversary/infrastructure/providers/http.py', 'post_json'),
+    ('adversary/infrastructure/providers/openrouter_deadline.py', 'main'),
+    ('adversary/infrastructure/providers/openrouter_experiment_deadline.py', 'main'),
+    ('adversary/infrastructure/providers/openai_compat.py', 'OpenAiCompatTransport._send'),
     # These GETs observe catalog, local availability or an existing generation's bill.
-    ('omega_engine_woland/infrastructure/providers/ollama_local.py', '_http_get_json'),
-    ('omega_engine_woland/infrastructure/providers/openrouter_catalog.py', 'fetch_openrouter_catalog'),
-    ('omega_engine_woland/infrastructure/providers/adapters/model_backends.py', 'OpenRouterBackend.fetch_generation_cost'),
+    ('adversary/infrastructure/providers/ollama_local.py', '_http_get_json'),
+    ('adversary/infrastructure/providers/openrouter_catalog.py', 'fetch_openrouter_catalog'),
+    ('adversary/infrastructure/providers/adapters/model_backends.py', 'OpenRouterBackend.fetch_generation_cost'),
 }
 
 
-def woland_pfp_route_violations(repo_root: Path) -> tuple[str, ...]:
+def adversary_pfp_route_violations(repo_root: Path) -> tuple[str, ...]:
     """Detect drift in supported routes and direct model I/O outside its owners.
 
     This is a bounded source gate, not arbitrary Python/Rust data-flow analysis
@@ -535,8 +535,8 @@ def woland_pfp_route_violations(repo_root: Path) -> tuple[str, ...]:
     problems: set[str] = set()
     sources = {path.relative_to(repo_root).as_posix(): path for name in
         ('domain', 'use_cases', 'infrastructure', 'entrypoints', 'controllers')
-        for path in (repo_root / 'omega_engine_woland' / name).rglob('*.py')}
-    sources.update({name: repo_root / name for name in WOLAND_PFP_ROUTES})
+        for path in (repo_root / 'adversary' / name).rglob('*.py')}
+    sources.update({name: repo_root / name for name in ADVERSARY_PFP_ROUTES})
     for relative, path in sorted(sources.items()):
         if not path.is_file():
             problems.add(f'{relative}: required PFP route owner missing')
@@ -554,7 +554,7 @@ def woland_pfp_route_violations(repo_root: Path) -> tuple[str, ...]:
                 prefix = '.'.join(module[:-node.level]) + '.' if node.level else ''
                 for alias in node.names:
                     bind(alias.asname or alias.name, prefix + (node.module or '') + '.' + alias.name)
-        if relative.startswith('omega_engine_woland/') and any(
+        if relative.startswith('adversary/') and any(
                 name.split('.')[0] in {'openai', 'anthropic', 'requests', 'httpx'} for names in aliases.values() for name in names):
             problems.add(f'{relative}: direct SDK/HTTP client import bypasses PFP provider composition')
         if any(name.endswith('.*') and '.providers.' in name for names in aliases.values() for name in names):
@@ -575,28 +575,28 @@ def woland_pfp_route_violations(repo_root: Path) -> tuple[str, ...]:
                 leaves = {name.rsplit('.', 1)[-1] for name in qualified}
                 calls.setdefault('.'.join(owner), set()).update(leaves)
                 direct = bool(qualified & {'urllib.request.urlopen', 'urllib.request.urlretrieve',
-                    'omega_engine_woland.infrastructure.providers.http.post_json',
-                    'omega_engine_woland.infrastructure.providers.openrouter_transport.openrouter_transport',
-                    'omega_engine_woland.infrastructure.providers.openai_compat.OpenAiCompatTransport',
-                    'omega_engine_woland.infrastructure.providers.anthropic_messages.AnthropicTransport'})
-                if relative.startswith('omega_engine_woland/') and direct and (
-                        relative, '.'.join(owner)) not in _WOLAND_IO_OWNERS:
+                    'adversary.infrastructure.providers.http.post_json',
+                    'adversary.infrastructure.providers.openrouter_transport.openrouter_transport',
+                    'adversary.infrastructure.providers.openai_compat.OpenAiCompatTransport',
+                    'adversary.infrastructure.providers.anthropic_messages.AnthropicTransport'})
+                if relative.startswith('adversary/') and direct and (
+                        relative, '.'.join(owner)) not in _ADVERSARY_IO_OWNERS:
                     problems.add(f'{relative}:{".".join(owner)}: direct I/O outside the reviewed transport/metadata owner')
             children = node.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) else ast.iter_child_nodes(node)
             for child in children:
                 visit(child, owner)
 
         visit(tree)
-        for owner, required in WOLAND_PFP_ROUTES.get(relative, {}).items():
+        for owner, required in ADVERSARY_PFP_ROUTES.get(relative, {}).items():
             missing = required - calls.get(owner, set())
             if missing:
                 problems.add(f'{relative}:{owner}: missing PFP hooks {sorted(missing)}')
-    native = repo_root / 'omega_engine/crates_rs/omega_symbol_game/src/woland_host.rs'
+    native = repo_root / 'engine/crates_rs/core_symbol_game/src/adversary_host.rs'
     import re
     if not native.is_file() or re.search(
-            r'let\s+mut\s+live_seats\s*=\s*omega_woland::pfp_gateway::PfpSeatExecutor\s*\{',
+            r'let\s+mut\s+live_seats\s*=\s*core_adversary::pfp_gateway::PfpSeatExecutor\s*\{',
             native.read_text(encoding='utf-8')) is None:
-        problems.add('omega_symbol_game/woland_host.rs: native live seats must use PfpSeatExecutor')
+        problems.add('core_symbol_game/adversary_host.rs: native live seats must use PfpSeatExecutor')
     return tuple(sorted(problems))
 
 
@@ -814,8 +814,8 @@ __all__ = [
     "imported_names",
     "load_baseline",
     "ratchet_violations",
-    "WOLAND_PFP_ROUTES",
-    "woland_pfp_route_violations",
+    "ADVERSARY_PFP_ROUTES",
+    "adversary_pfp_route_violations",
     "raw_gateway_constructors",
     "sanctioned_gateway_factory_builds_one",
     "render_baseline",

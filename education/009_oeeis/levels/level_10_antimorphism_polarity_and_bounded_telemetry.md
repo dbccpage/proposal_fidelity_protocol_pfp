@@ -14,16 +14,16 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_epistemic_immune_system/src/anti_skill.rs
-  - omega_engine/crates_rs/omega_homology/src/persistent_homology.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_epistemic_immune_system/src/anti_skill.rs
+  - engine/crates_rs/core_homology/src/persistent_homology.rs
 ---
 
 # EIS Level 10: Antimorphism Polarity & Bounded Telemetry Fences
 
 **AuthorityEffect:** None.  
 **Level:** Level 10 (Opposite Polarity Algebra, Persistent Homology & Research Holds)  
-**Rust Anti-Skill Seam:** [`omega_epistemic_immune_system::anti_skill`](../../../../omega_engine/crates_rs/omega_epistemic_immune_system/src/anti_skill.rs)  
+**Rust Anti-Skill Seam:** [`core_epistemic_immune_system::anti_skill`](../../../../engine/crates_rs/core_epistemic_immune_system/src/anti_skill.rs)  
 **Research Status Reference:** `SPEC-OE-IMMUNE-003` (`RESEARCH_HOLD`)  
 **Primary Invariant:** Polarity Factorization & Telemetry Ceiling
 
@@ -68,7 +68,7 @@ Level 10 establishes the **Antimorphism Polarity Principle** and defines the **T
 2. **Bounded Topological Telemetry Fences (`IMMUNE-003`):**
    Topological telemetry is evaluated under an explicit, permanent `RESEARCH_HOLD`:
    - **Evidence Ceiling:** All emitted telemetry records carry `evidence_ceiling = DiagnosticOnly` and `authority_effect = "None"`.
-   - **Non-Equivalence Law:** A persistent $\text{PH}_1$ cycle barcode over an embedding graph is an entirely different mathematical object from `GLOBAL_H1_OBSTRUCTION` (which is an exact finite board obstruction in [`omega_symbol_game_runtime::f2`](../../../../omega_engine/crates_rs/omega_symbol_game_runtime/src/f2.rs)). Conflating the two is forbidden.
+   - **Non-Equivalence Law:** A persistent $\text{PH}_1$ cycle barcode over an embedding graph is an entirely different mathematical object from `GLOBAL_H1_OBSTRUCTION` (which is an exact finite board obstruction in [`core_symbol_game_runtime::f2`](../../../../engine/crates_rs/core_symbol_game_runtime/src/f2.rs)). Conflating the two is forbidden.
    - **Float Shell Firewall:** Any floating-point (`f64`) reduction in `persistent_homology.rs` or `bottleneck_distance.rs` is recognized as an unverified float approximation, barred from serving as an authoritative proof certificate.
    - **Higher Dimensions Barred:** Telemetry in dimensions $\ge \text{PH}_2$ is strictly excluded from implementation.
 3. **No Automated Lockdown from Barcodes:**
@@ -79,7 +79,7 @@ Level 10 establishes the **Antimorphism Polarity Principle** and defines the **T
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_epistemic_immune_system::anti_skill
+// core_epistemic_immune_system::anti_skill
 pub enum AntiMorphismPolarity {
     NegativeConstraint,
     ObstructionWitness,
@@ -109,7 +109,7 @@ pub struct DiagnosticHomologyBarcodeV1 {
 ## 4. Verification Obligations & Falsifiers
 
 - **Telemetry Ceiling Assertion:** Any module emitting `DiagnosticHomologyBarcodeV1` must be verified to contain `evidence_ceiling == EvidenceCeiling::DiagnosticOnly` and `authority_effect == "None"`.
-- **Zero Gate Interception:** Inspecting runtime gate dispatchers must assert that no production gate (`WolandSevenActCircuit`, `TwoSignalDangerGate`, `WolandGate`) contains branch conditions evaluating persistent homology barcodes.
+- **Zero Gate Interception:** Inspecting runtime gate dispatchers must assert that no production gate (`AdversarySevenActCircuit`, `TwoSignalDangerGate`, `AdversaryGate`) contains branch conditions evaluating persistent homology barcodes.
 
 ---
 
@@ -123,4 +123,4 @@ pub struct DiagnosticHomologyBarcodeV1 {
 3. **The narrowest defensible claim:**
    - Anti-skills provide formal algebraic duals to constructive skills, and persistent homology telemetry is strictly quarantined as non-authoritative diagnostic data.
 4. **The next test needed:**
-   - AST audit asserting that `omega_homology` is never imported by any operational decision controller.
+   - AST audit asserting that `core_homology` is never imported by any operational decision controller.

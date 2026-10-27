@@ -1,8 +1,8 @@
 # 12. Current outputs, troubleshooting and seed to P*
 
 AuthorityEffect: None. Source inspected 2026-10-12:
-[seed CLI](../../../../omega_engine_pfp/entrypoints/cli/pfp.py) and
-[campaign adapter](../../../../omega_engine_pfp/infrastructure/adapters/pfp_campaign.py).
+[seed CLI](../../../../pfp/entrypoints/cli/pfp.py) and
+[campaign adapter](../../../../pfp/infrastructure/adapters/pfp_campaign.py).
 
 ## Seed-run capture
 
@@ -57,10 +57,10 @@ bounded result, remaining error and useful lesson, then move on.
 prompt template without a provider call:
 
 ```powershell
-python -m omega_engine_pfp.infrastructure.pilot_runner --seed-id DEMO_07
+python -m pfp.infrastructure.pilot_runner --seed-id DEMO_07
 ```
 
-The [template](../../../../omega_engine_pfp/infrastructure/yaml/prompts/prompt_template.yaml)
+The [template](../../../../pfp/infrastructure/yaml/prompts/prompt_template.yaml)
 and [seed catalog](../../../pilots/matrix/seeds.yaml) are the current sources.
 `PromptTemplate`, `PromptPacket` and `PfpStagePromptInput` provide the existing
 programmatic contracts for variable prompt/response experiments. The seed CLI

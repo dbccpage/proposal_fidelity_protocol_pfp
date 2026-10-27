@@ -6,7 +6,7 @@
 
 ## Spine
 
-The Symbol Game is the finite packet boundary between untrusted generation and Omega authority. A model may propose, emit structured material, and emit certificate-shaped material. It is not the certifier.
+The Symbol Game is the finite packet boundary between untrusted generation and Core authority. A model may propose, emit structured material, and emit certificate-shaped material. It is not the certifier.
 
 $$\mathsf{finite\ packet\ grammar} + \mathsf{total\ verifier} + \mathsf{packet\ fidelity} + \mathsf{family\ soundness} \Rightarrow \mathsf{failure\ is\ mechanically\ enumerable,\ repairable,\ and\ terminalizable.}$$
 
@@ -14,7 +14,7 @@ This reads as a design target stated under its declared assumptions. This page d
 
 ## Authority boundary
 
-- The game emits verifier evidence and terminal statuses. It does not mint Omega authority.
+- The game emits verifier evidence and terminal statuses. It does not mint Core authority.
 - A completed run is not automatically a proof. Evidence upgrades are owned by validators, mechanical evaluators, or external proof/empirical oracles.
 - It is an audit-grade reasoning workflow, not an entertainment game: candidate claims pass through finite symbolic containers, typed outputs, mechanical checks, and explicit authority ceilings.
 

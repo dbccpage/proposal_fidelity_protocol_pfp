@@ -6,21 +6,21 @@ import json
 
 import pytest
 
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnReplyV1
-from omega_engine_woland.domain.providers.types import BudgetExceeded
-from omega_engine_woland.stage.domain import SceneGraphV1, SceneSpecV1, SceneTransitionV1
-from omega_engine_operads.domain.autopoiesis.learning import (
+from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1
+from adversary.domain.providers.types import BudgetExceeded
+from adversary.stage.domain import SceneGraphV1, SceneSpecV1, SceneTransitionV1
+from operads.domain.autopoiesis.learning import (
     CallerContext,
     LearningBlocked,
     artifact_text_digest,
 )
-from omega_engine_operads.infrastructure.autopoiesis.agent_learning import (
+from operads.infrastructure.autopoiesis.agent_learning import (
     ArtifactRuntime,
     call_parent,
     compile_workflow_graph,
 )
-from omega_engine_operads.infrastructure.autopoiesis.git_learning import command
-from omega_engine_operads.infrastructure.autopoiesis.learning_runtime import (
+from operads.infrastructure.autopoiesis.git_learning import command
+from operads.infrastructure.autopoiesis.learning_runtime import (
     build_learning_completion,
 )
 
@@ -58,9 +58,9 @@ def write(root, name, value):
 
 @pytest.fixture
 def artifacts(tmp_path):
-    skill = "omega_engine_operads/skills/manifest/SKILL.md"
-    agent = "omega_engine_operads/agents/manifest.md"
-    rule = "omega_engine_operads/rules/manifest.md"
+    skill = "operads/skills/manifest/SKILL.md"
+    agent = "operads/agents/manifest.md"
+    rule = "operads/rules/manifest.md"
     text = "Check the manifest before passing"
     write(tmp_path, skill, "---\nname: manifest\ndescription: Verify manifests\n---\n" + text)
     write(tmp_path, rule, text)
@@ -78,7 +78,7 @@ def artifacts(tmp_path):
         ),
         (SceneTransitionV1("next", "check", "report", ("PASS",), (), 0),),
     )
-    workflow = "omega_engine_operads/domain/autopoiesis/profiles/manifest.json"
+    workflow = "operads/domain/autopoiesis/profiles/manifest.json"
     write(
         tmp_path,
         workflow,
@@ -168,7 +168,7 @@ def test_merged_retrieval_runs_and_records_actual_usage(tmp_path, artifacts):
             for name in (artifact, artifacts["SKILL"])
         },
     }
-    registry = "omega_engine_operads/registry/autop_artifacts.json"
+    registry = "operads/registry/autop_artifacts.json"
     write(tmp_path, registry, json.dumps([entry]))
     command(tmp_path, "git", "add", "--", *artifacts.values(), registry)
     command(tmp_path, "git", "commit", "-m", "reviewed artifacts")
@@ -206,7 +206,7 @@ def test_unmerged_registry_is_not_retrieved(tmp_path, artifacts):
     command(tmp_path, "git", "add", "--", *artifacts.values())
     command(tmp_path, "git", "commit", "-m", "base")
     command(tmp_path, "git", "update-ref", "refs/remotes/origin/main", "HEAD")
-    write(tmp_path, "omega_engine_operads/registry/autop_artifacts.json", "[]")
+    write(tmp_path, "operads/registry/autop_artifacts.json", "[]")
     budget = Budget()
     executor = FixtureExecutor(budget)
     completion = build_learning_completion(

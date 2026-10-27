@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_operads.skill_operad.application.use_cases import (
+from operads.skill_operad.application.use_cases import (
     validate_operad_use_case as operad_grading,
 )
 
@@ -21,11 +21,11 @@ validate_composition_grading = operad_grading.validate_composition_grading
 
 _REPO = Path(__file__).resolve().parents[3]
 _MATRIX_DEFAULT = (
-    _REPO / "omega_engine_operads" / "skill_operad" / "json" / "composition_matrix.json"
+    _REPO / "operads" / "skill_operad" / "json" / "composition_matrix.json"
 )
 _MATRIX = _MATRIX_DEFAULT if _MATRIX_DEFAULT.is_file() else (_REPO / ".agents" / "skill_operads" / "composition_matrix.json")
 _TRACE_DEFAULT = (
-    _REPO / "omega_engine_operads" / "skill_operad" / "json" / "evidence_trace.json"
+    _REPO / "operads" / "skill_operad" / "json" / "evidence_trace.json"
 )
 _TRACE = _TRACE_DEFAULT if _TRACE_DEFAULT.is_file() else (_REPO / ".agents" / "skill_operads" / "evidence_trace.json")
 _SKILLS = _REPO / ".agents" / "skills"

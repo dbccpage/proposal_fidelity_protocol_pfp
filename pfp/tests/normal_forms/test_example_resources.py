@@ -5,7 +5,7 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
+from pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
 
 
 @pytest.mark.parametrize(
@@ -19,14 +19,14 @@ from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_F
 )
 def test_example_data_is_readable_from_declared_resource_home(module_name):
     module = importlib.import_module(
-        "omega_engine_pfp.infrastructure.normal_forms." + module_name
+        "pfp.infrastructure.normal_forms." + module_name
     )
     assert module.DATA_PATH.parent == NORMAL_FORMS_DIR / "data"
     assert json.loads(module.DATA_PATH.read_text(encoding="utf-8"))
 
 
 def test_retained_evaluator_loads_contracts_from_current_resources(tmp_path):
-    from omega_engine_pfp.infrastructure.normal_forms.nf_evaluator import NormalFormsEvaluator
+    from pfp.infrastructure.normal_forms.nf_evaluator import NormalFormsEvaluator
 
     contract = NormalFormsEvaluator._resolve_contract("nf.derivation.pdnf")
     assert contract["identity"]["id"] == "nf.derivation.pdnf"
@@ -38,7 +38,7 @@ def test_retained_evaluator_loads_contracts_from_current_resources(tmp_path):
 
 
 def test_parser_defaults_share_the_declared_resource_catalog():
-    from omega_engine_pfp.infrastructure.normal_forms import contract_paths, nf_contract_parser
+    from pfp.infrastructure.normal_forms import contract_paths, nf_contract_parser
 
     for name in ("CONTRACTS_DIR", "INDEX_PATH", "STANDARD_PATH", "SCHEMA_V1_PATH"):
         path = getattr(nf_contract_parser, name)

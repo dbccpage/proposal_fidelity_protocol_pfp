@@ -12,9 +12,9 @@ stable links.
 - [Manuscript](paper.md), [PDF](paper.pdf), and [claim ledger](paper_claim_ledger.md).
 - [Change log](paper_change_log.md), [implementation scope](docs/completion_supplement.md),
   [description](docs/descriptions.md), and [references](docs/references.md).
-- [Landau quiz](_lev_landau_theoretical_minimum_quiz/quiz.md): 24 questions in eight levels.
-- [Study guide](_lev_landau_theoretical_minimum_quiz/study_guide.md) and
-  [separate instructor key](_lev_landau_theoretical_minimum_quiz/answer_key.md).
+- [Examiner quiz](_lev_examiner_theoretical_minimum_quiz/quiz.md): 24 questions in eight levels.
+- [Study guide](_lev_examiner_theoretical_minimum_quiz/study_guide.md) and
+  [separate instructor key](_lev_examiner_theoretical_minimum_quiz/answer_key.md).
 - [Historical evidence](docs/historical_evidence/README.md): three byte-identical
   records, with provenance; standalone recount tests require no sibling package.
 - `code/`: exact triangle arithmetic, recount module, and focused tests.
@@ -22,8 +22,8 @@ stable links.
   with assertions and retained display outputs.
 - `lean4/`: four source modules plus retained named and full axiom reports.
 
-Related [practitioner guide](https://github.com/dbccpage/the_symbol_game/blob/593230f7daba7aa04d7c41dd456dfbd00a39bcbd/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/paper.md)
-and [curriculum guide](https://github.com/dbccpage/the_symbol_game/blob/593230f7daba7aa04d7c41dd456dfbd00a39bcbd/omega_engine_atlas/coda_atlas/omega_engine_pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md).
+Related [practitioner guide](https://github.com/dbccpage/the_symbol_game/blob/593230f7daba7aa04d7c41dd456dfbd00a39bcbd/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/paper.md)
+and [curriculum guide](https://github.com/dbccpage/the_symbol_game/blob/593230f7daba7aa04d7c41dd456dfbd00a39bcbd/atlas/coda_atlas/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md).
 
 ## Reproduce the package checks
 
@@ -81,7 +81,7 @@ supports custody, not the correctness of manuscript claims.
 commands, actual versions, hashes, and unexecuted dependencies. The earlier
 `docs/release_validation_2026_10_01.json` and `docs/release_validation_2026_10_02.json`
 remain unchanged historical records. The current review does not freshly
-compile Lean 4.34.0 or replay the model, native checker, or Woland gate.
+compile Lean 4.34.0 or replay the model, native checker, or Adversary gate.
 Development dependency ranges are specified in `pyproject.toml`; they are not
 exact lock pins. Notebook imports use only the package's own triangle module.
 

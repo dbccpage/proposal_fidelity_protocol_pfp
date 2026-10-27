@@ -13,10 +13,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.reference_solver.solver import (
     solve,
 )
 

@@ -8,8 +8,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from omega_engine_pfp.infrastructure.serialization import CanonicalizationError
-from omega_engine_pfp.domain import (
+from pfp.infrastructure.serialization import CanonicalizationError
+from pfp.domain import (
     CandidateArtifactV1,
     LlmTurnContentArtifactV1,
     LlmTurnPayloadV1,
@@ -24,7 +24,7 @@ from omega_engine_pfp.domain import (
     verify_markdown_does_not_mutate_claims as verify_llm_markdown_claims,
     verify_llm_turn_run_root,
 )
-from omega_engine_pfp.infrastructure.serialization import (
+from pfp.infrastructure.serialization import (
     write_content_addressed_json,
 )
 from .io_utils import _read_json, _write_json, _write_text
