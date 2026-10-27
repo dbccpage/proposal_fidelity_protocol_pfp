@@ -1,0 +1,167 @@
+The Authority Gap: Claims, Verification, and Accountable Use in Agentic AI
+Jeremy H. Carroll
+2026-10-16
+Version 2.1.0
+
+## Abstract
+
+A generated claim, a record of its evaluation, and permission to act on it are different objects. Confusing them allows an output to appear verified without the supporting process. We call this failure *counterfeit descent*: a claimed evaluation status unsupported by the declared checks and evidence. This paper proposes a contract for recording proposals, provenance, evaluators, unresolved obligations, and authorization decisions. Its mathematical content is narrower: finite counterexamples to composition of local acceptance, a characterization of zero conditional failure rate, and elementary verification-backlog accounting. In particular, zero local-pass/global-fail rate requires acceptance soundness on the accepted population; it does not require a boundary representation to retain every distinction relevant elsewhere. We apply these distinctions to research-paper ingestion, where file integrity, equation fidelity, proof validity, and empirical support require separate records. The reference software checks finite examples and packet consistency. It does not establish the truth of arbitrary claims, authenticate institutional authority, or measure deployment safety.
+
+**Why a researcher should care.** A readable paper and a reproducible release need a trace from each assertion to its assumptions and evidence. A format conversion can change an equation even when the source was correct; a byte-perfect copy can preserve an incorrect equation. Both defects need identifiable locations and different remedies.
+
+## 1. Introduction and Related Work
+
+Generative systems can produce assertions together with citations, reports, and descriptions of checks. Those descriptions may be useful, but they are not evidence that the checks occurred. The relevant question is concrete: which procedure evaluated which version of which object, under which assumptions, and what did it establish?
+
+Separation of privilege provides a related security principle \[1\]. Software provenance systems such as in-toto bind artifacts to recorded supply-chain steps \[2\]. Risk-management frameworks require contextual assessment and accountable use \[3\]. These approaches motivate explicit evidence and decision boundaries; they do not make a cryptographic digest a truth certificate. Work on agent evaluation also distinguishes benchmark results from reliable performance in deployed workflows \[4,5\].
+
+The contribution here is a small vocabulary and a set of finite checks for that boundary. The seven responsibilities below are a proposed design, not a theorem that every trustworthy system must have seven components. A system may combine responsibilities, use other designs, or refuse every action. Its guarantees depend on the actual contract and implementation.
+
+## 2. Mathematical Foundation and Evaluation Types
+
+### 2.1 Claims and evidence packets
+
+Let $c$ be a claim with a specified scope and assumptions. An evaluation packet is
+
+$$P_c=(c,E,D,R,V,\tau,\Lambda),$$
+
+where $E$ names the evaluator and version, $D$ records the executed procedure, $R$ identifies representations and their provenance, $V$ contains evidence, $\tau$ is the reported outcome, and $\Lambda$ lists unresolved obligations and known losses. The outcome may be supported, refuted, unresolved, refused, or unreviewed. Authorization to use the result is a separate contract decision.
+
+**Definition 2.1 (Unsupported evaluation status).** A packet has an unsupported status when its claimed outcome is not justified by the declared procedure and evidence. This definition covers an unsupported claim of success as well as a fabricated claim that a review or refusal occurred. It does not establish intent to deceive.
+
+A hash binds recorded bytes under a collision-resistance assumption. It does not show that an experiment occurred, a cited source supports a sentence, a verifier is sound, or the recorder is independent. Those are separate obligations. A proof checked against a formal statement also requires an explicit correspondence between that statement and the manuscript claim.
+
+### 2.2 Finite obstruction checks
+
+Suppose a claim has a justified encoding as a defect vector $\delta\in\mathbb R^m$ with allowed linear repairs $d_0\alpha$, where $d_0:\mathbb R^n\to\mathbb R^m$. Define
+
+$$\Phi_1(\delta)=\inf_{\alpha\in\mathbb R^n}\|\delta-d_0\alpha\|_1.$$
+
+In finite dimension the image of $d_0$ is closed. Therefore $\Phi_1(\delta)=0$ exactly when $\delta\in\operatorname{im}d_0$. This concerns the encoded vector and repair space; it does not make a prose claim true. A positive value refutes a claim of zero residual in that same encoding.
+
+A directly checkable lower bound uses $y\in\mathbb R^m$ satisfying
+
+$$d_0^\top y=0,\qquad \|y\|_\infty\le1.$$
+
+For every repair,
+
+$$\langle y,\delta\rangle=\langle y,\delta-d_0\alpha\rangle
+\le\|\delta-d_0\alpha\|_1,$$
+
+so $\langle y,\delta\rangle>0$ certifies a nonzero residual. Rational input and witness values allow exact finite checking. This weak-duality argument does not require claiming that the supplied witness attains the optimum.
+
+An observation map need not preserve this conclusion about a different source system. To transport a positive observed residual into a source-level refutation, one must establish, for example, that the observation sends every admissible source repair to an admissible observed repair. Without a preservation hypothesis, even the direction of a transported verdict is unproved. A zero observed residual may hide distinctions erased by the observation.
+
+### 2.3 Mathematical status and computational status
+
+For a declared complex $C^0\xrightarrow{d_0}C^1\xrightarrow{d_1}C^2$ with $d_1d_0=0$, distinguish zero defect, nonzero exact defect, closed non-exact defect, and non-closed defect. An unavailable encoding or an exhausted computation is a different kind of outcome. It must not be called a positive obstruction, a refutation, or a proof of exactness.
+
+For finite real vectors, the infimum above is finite because the zero repair is allowed. Thus "unbounded or unknown" is not an additional mathematical class of that norm. Unknown describes the state of a computation or missing information. The software's packet statuses are operational labels and must be interpreted under their documented contract.
+
+## 3. Composition and Verification Capacity
+
+### 3.1 Local acceptance and global acceptance
+
+Let $(\Omega,\Pr)$ be a finite probability space. Let $E_A,E_B,E_G:\Omega\to\{0,1\}$ denote two local evaluators and a global evaluator on the same composed trials. Write $L=\{E_AE_B=1\}$. The gluing diagnostic is
+
+$$\Delta_E=E_G-E_AE_B\in\{-1,0,1\}.$$
+
+The event $\Delta_E=-1$ means both local checks passed and the global check failed. When $\Pr(L)>0$, define
+
+$$\mathrm{NGD}=\Pr(E_G=0\mid L).$$
+
+If no trial is locally accepted, the conditional rate is undefined. Reporting zero would conceal the absence of an evaluated population.
+
+### Proposition 3.1 (Zero conditional failure) {#claim-zero-ngd}
+
+If $\Pr(L)>0$, then $\mathrm{NGD}=0$ if and only if local acceptance implies global acceptance almost surely:
+
+$$\Pr\bigl(L\cap\{E_G=0\}\bigr)=0.$$
+
+**Proof.** The conditional probability is the displayed numerator divided by the positive number $\Pr(L)$. It vanishes exactly when its numerator vanishes. On a finite space with positive probability at every point, this is equivalent to the pointwise implication $E_AE_B=1\Rightarrow E_G=1$. With zero-probability points it only constrains the support. $\square$
+
+This corrects the earlier two-condition equivalence. Information preservation is useful for implementing a global evaluator from a boundary message, but is not necessary for zero NGD on a restricted accepted population.
+
+### 3.2 Three different sufficiency conditions
+
+Write $\gamma_A$ for the first trace, $b=\pi(\gamma_A)$ for its boundary message, and $\gamma_B$ for the continuation. Three questions must be kept separate:
+
+1.  Does the continuation law depend on the first trace only through $b$?
+
+2.  Can global evaluation be recovered from $(b,\gamma_B)$?
+
+3.  Do the local acceptance predicates imply global acceptance on the evaluated support?
+
+The second question is a function-factorization question for deterministic evaluators. It holds exactly when $E_G$ is constant on each fiber of $(\gamma_A,\gamma_B)\mapsto(b,\gamma_B)$. It is neither implied by the first question nor required by the third.
+
+**Example 3.2 (Lost hidden bit).** Let $H$ and $B$ be independent fair bits, let $\gamma_A=H$, $b=\star$, and $\gamma_B=B$. Both local evaluators always accept; the global evaluator accepts exactly when $H=B$. The continuation law depends only on the constant boundary, but two of four trials fail globally, giving $\mathrm{NGD}=1/2$.
+
+**Example 3.3 (Information factorization without soundness).** Let both local evaluators always accept and let $E_G=0$ everywhere. Global evaluation factors through every boundary map, but $\mathrm{NGD}=1$.
+
+**Example 3.4 (Zero NGD without information factorization).** Let $H$ be a fair bit, let $b=\star$, and fix the continuation. Set $E_A=1-H$, $E_B=1$, and $E_G=1-H$. Local acceptance occurs only at $H=0$, where the global check also passes. Thus $\Pr(L)=1/2$ and $\mathrm{NGD}=0$. Nevertheless, global evaluation differs between the two traces sharing the same boundary and continuation. It cannot factor through that boundary.
+
+If an implementation must decide global acceptance from boundary data alone for every input, factorization is the relevant additional requirement. That implementation requirement must not be substituted for the weaker statistical statement in Proposition 3.1.
+
+### 3.3 A conditional backlog model
+
+Let $U(t)$ count unresolved arrivals and $V(t)$ completed evaluations. Assume constant arrival rate $r_G$ and actual completion rate $r_V$, no deletion or duplication, and enough queued work to sustain completions. Then
+
+$$U(t)=U(0)+(r_G-r_V)t,\qquad V(t)=V(0)+r_Vt.$$
+
+For $r_G>r_V\ge0$, the unresolved backlog grows. For zero initial stock and $t>0$,
+
+$$\frac{V(t)}{U(t)+V(t)}=\frac{r_V}{r_G}.$$
+
+With $r_G=10$ and $r_V=3$, one unit of time yields seven unresolved and three completed evaluations. The completed share is $3/10$. Completed evaluations include supported, refuted, and other terminal outcomes; the completed share is not the fraction of correct claims.
+
+When $r_V>r_G$, this linear model is valid only until the queue empties. Capacity must not be confused with actual throughput. With nonzero initial stock, the share is
+
+$$s(t)=\frac{V(0)+r_Vt}{U(0)+V(0)+r_Gt}.$$
+
+Its derivative has the sign of $r_VU(0)-(r_G-r_V)V(0)$. For a positive arrival rate, the share decreases only when the initial completed share exceeds the limiting ratio $r_V/r_G$. Neither monotone decline nor a universal empirical rate gap follows without these conditions.
+
+A cohort fraction counts completed evaluations of a fixed cohort. A window ratio divides completions during a time window by arrivals during that window. The latter may exceed one while older work is cleared. Zero denominators are undefined. Reporting the counting frame, observation interval, backlog, and outcome counts is necessary to interpret either statistic.
+
+## 4. Worked Example: A Typed Research Paper
+
+Consider a manuscript containing a theorem, its assumptions, a proof, a numerical example, and an empirical interpretation. Give the paper a persistent identity and each edition a content-bound identity. Markdown, TeX, PDF, and text are representations of that edition, each with its own file digest.
+
+Each equation has an expression identity and each occurrence has a location. Repeated occurrences must remain distinguishable: one may be correct in the source while a particular rendered occurrence gains a minus sign. Claim identity must also include the declared domain and assumptions. Equal formula text in two contexts does not establish equal meaning.
+
+A review record should name the reviewed claim version, evaluator, method, evidence, result, and unresolved scope. Useful failure reasons include sign drift, missing hypothesis, invalid inference, incorrect arithmetic, unsupported citation, empirical mismatch, missing proof correspondence, and extraction failure. Each finding should link to the affected occurrence and its proposed correction.
+
+**Example 4.1 (A transparent review fraction).** Suppose a declared inventory contains 100 equally weighted claims, of which 85 have supporting reviews and 15 have counterexamples. The report may say "85 of 100 inventoried claims supported under the recorded methods; 15 refuted," with links to every review. It may not infer an 85% probability that the paper is true. If the other 15 are unreviewed, the report must say so; absence of review is not refutation. If the inventory omitted assertions, the fraction describes only the inventory.
+
+Multiple file formats do not increase this denominator. Ten copies of a theorem are one claim with ten occurrences. Nor should splitting one easy claim into many sentences inflate a quality score. Fix and version the claim inventory and weighting policy before comparing editions, and report critical unresolved dependencies separately from aggregate counts.
+
+## 5. Implementation and Verification Scope
+
+The proposed workflow records seven responsibilities: proposal intake, trace custody, evaluator declaration, unresolved obligations, terminal decision, evidence attestation, and accountable ownership. These are separable responsibilities rather than a mandated service topology.
+
+The Python reference implementation checks packet structure, canonical proposal/context bindings, declared residual tolerances, finite gluing counts, and rational backlog calculations. Its local receipt protocol is a model of consistency checking. Caller-provided identity fields and a digest do not establish institutional legitimacy or an independent source of truth. A returned failure of the exactness-fraud rule is a contract diagnostic, not a legal finding of fraud.
+
+The shipped Lean module proves finite hidden-bit counts, an unconditional-rejection count, natural-number backlog positivity, a cleared-denominator share identity, and Boolean cases of the exactness-fraud rule. It does not formalize arbitrary real probability spaces, empirical generation rates, source authenticity, or the complete packet-to-world correspondence. Proposition 3.1 has the written proof above. Example 3.4 is exercised by a regression test against the shipped gluing-rate function and by two Lean theorems: the accepted population has zero defect, and no Boolean evaluator factors its varying global acceptance through the constant boundary.
+
+The companion typing tooling inventories parsed document elements and formula occurrences and compares source formulas across text formats. A matching hash establishes the defined representation comparison, not mathematical validity. Fresh rendering, PDF-byte binding, and page inspection address separate parts of publication fidelity. PDF extraction that cannot recover a symbolic equation must remain explicitly unresolved.
+
+## 6. Discussion and Non-Claims
+
+This framework supports a practical question: what evidence justifies this particular status for this particular object? Its usefulness should be evaluated through measured detection of incorrect transformations, unsupported assertions, stale reviews, and composition failures, alongside the cost of review and false alarms.
+
+It does not imply that large models cannot improve self-evaluation, that every self-critique is incorrect, or that institutional affiliation establishes truth. A model can propose a valid proof; an independently specified checker can verify it. Human reviewers and institutions can also make errors. The relevant distinctions concern procedure, evidence, scope, and accountable decisions.
+
+The obstruction calculation applies only after a defensible encoding is supplied. The backlog model is conditional accounting, not a measured law of scientific publishing. A high supported-claim fraction does not compensate for a refuted central theorem. No result here authorizes action, establishes unconstrained AI safety, or certifies an arbitrary external paper as fully understood.
+
+## References
+
+1.  Saltzer, J. H., and Schroeder, M. D. (1975). The protection of information in computer systems. *Proceedings of the IEEE* 63(9), 1278--1308.
+
+2.  Torres-Arias, S., Afzali, H., Kuppusamy, T. K., Curtmola, R., and Cappos, J. (2019). in-toto: Providing farm-to-table guarantees for bits and bytes. *28th USENIX Security Symposium*, 1393--1410.
+
+3.  Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0).* NIST AI 100-1. DOI: 10.6028/NIST.AI.100-1.
+
+4.  Kapoor, S., Stroebl, B., Siegel, Z. S., Nadgir, N., and Narayanan, A. (2024). *AI Agents That Matter.* arXiv:2407.01502.
+
+5.  Liu, X., Yu, H., Zhang, H., et al. (2023). *AgentBench: Evaluating LLMs as Agents.* arXiv:2308.03688.
+
+6.  Carroll, J. H. (2026). *Role Non-Impersonation and Authority Preservation in Agentic AI.* Companion manuscript and finite reference implementation, edition 1.3.0. Prior record identifier: 10.5281/zenodo.20710065.
