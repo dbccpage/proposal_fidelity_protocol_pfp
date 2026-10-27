@@ -121,10 +121,18 @@ def _inspect_file(path: Path, content: bytes) -> tuple[int, int, int, int] | Non
     return _identity(after)
 
 
+def _roots(repo_root: Path) -> tuple[str, ...]:
+    """Every host root, or, in an estate that owns operads/skills, that root and the hosts present."""
+    if not (repo_root / CANONICAL_SKILL_ROOT).is_dir():
+        return HOST_SKILL_ROOTS
+    present = tuple(host for host in HOST_SKILL_ROOTS if (repo_root / Path(host).parts[0]).is_dir())
+    return (CANONICAL_SKILL_ROOT, *present)
+
+
 def _preflight(repo_root: Path, packages: tuple[tuple[str, bytes], ...]) -> list[_Destination]:
     _check_ancestors(repo_root)
     _require_directory(repo_root)
-    for host in HOST_SKILL_ROOTS:
+    for host in _roots(repo_root):
         _require_directory(repo_root / Path(host).parts[0])
         _require_directory(repo_root / host)
     destinations = []
@@ -135,10 +143,7 @@ def _preflight(repo_root: Path, packages: tuple[tuple[str, bytes], ...]) -> list
 
 def _package_destinations(repo_root: Path, skill_id: str, content: bytes) -> list[_Destination]:
     destinations = []
-    roots = HOST_SKILL_ROOTS
-    if (repo_root / CANONICAL_SKILL_ROOT).is_dir():
-        roots = (CANONICAL_SKILL_ROOT, *roots)
-    for host in roots:
+    for host in _roots(repo_root):
         directory = repo_root / host / skill_id
         _require_directory(directory, required=False)
         path = directory / "SKILL.md"

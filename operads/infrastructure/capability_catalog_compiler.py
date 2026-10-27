@@ -22,6 +22,7 @@ import yaml
 
 from operads.canon import COLOUR_MEANINGS
 from operads.domain.capability_catalog_v1 import (
+    BOUND_EXECUTOR_V1,
     OPERAD_COLOURS_V1,
     AgentCapabilityV1,
     CapabilityCatalogRefusal,
@@ -39,6 +40,9 @@ HOST_NAMES = (".agents", ".claude", ".codex", ".grok")
 CATALOG_FILENAME = "capability_catalog.v1.json"
 SIGNATURE_FILENAME = "operad_signature.json"
 SLICES_FILENAME = "agent_capability_slices.json"
+INVENTORY_PATH = Path("operads/skill_operad/yaml/op_inventory.yaml")
+SCRIPT_EXECUTORS_PATH = Path("operads/skill_operad/yaml/script_executors.yaml")
+ROLES_PATH = Path("operads/registry/roles.yaml")
 
 COLOUR_DESCRIPTIONS = COLOUR_MEANINGS
 
@@ -362,6 +366,154 @@ def _agent_from_source(*, repo_root: Path, path: str) -> AgentCapabilityV1:
     )
 
 
+def executor_bindings(repo_root: Path) -> dict[str, ExecutorBindingV1]:
+    """BOUND bindings for every op-inventory skill whose ops all have host executors.
+
+    The digest covers each op's host target and the bytes of the file that defines it,
+    so editing an executor changes the catalogue. A skill with any op lacking a
+    registered executor, or a target whose file or symbol is gone, stays UNBOUND.
+    """
+    inventory_path = repo_root / INVENTORY_PATH
+    if not inventory_path.is_file():
+        return {}
+    from operads.skill_operad.resolver.executors import executable_coverage
+    from operads.skill_operad.skill_compiler.op_inventory import load_inventory
+
+    inventory = load_inventory(inventory_path)
+    covered = executable_coverage(inventory)
+    bindings: dict[str, ExecutorBindingV1] = {}
+    for skill in inventory.skills:
+        if not covered.get(skill.skill_id):
+            continue
+        targets = [
+            (op.op_id, op.binding if type(op.binding) is str else getattr(op.binding, "target", None))
+            for op in (*skill.ops, *skill.anti_ops)
+        ]
+        rows = []
+        for op_id, target in sorted(targets, key=lambda row: row[0]):
+            if type(target) is not str or "::" not in target:
+                break
+            file_part, _, symbol = target.partition("::")
+            source = repo_root / Path(*file_part.split("/"))
+            if not source.is_file() or f"def {symbol}(" not in source.read_text(encoding="utf-8"):
+                break
+            rows.append([op_id, target, hashlib.sha256(source.read_bytes()).hexdigest()])
+        else:
+            payload = json.dumps(rows, separators=(",", ":"), ensure_ascii=True).encode("ascii")
+            bindings[skill.skill_id] = ExecutorBindingV1(
+                state=BOUND_EXECUTOR_V1,
+                host_executor_id=f"op_inventory:{skill.skill_id}",
+                implementation_digest=hashlib.sha256(payload).hexdigest(),
+            )
+    return bindings
+
+
+def script_bindings(repo_root: Path) -> dict[str, ExecutorBindingV1]:
+    """BOUND bindings for the skill scripts listed in ``script_executors.yaml``.
+
+    A listed script must sit in its own skill package and have a ``__main__`` guard;
+    ``test_script_executors.py`` checks that each one starts.
+    """
+    path = repo_root / SCRIPT_EXECUTORS_PATH
+    if not path.is_file():
+        return {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if type(data) is not dict or data.get("schema_version") != "core.oewas.script_executors.v1":
+        _refuse("SCRIPT_EXECUTORS_REFUSED", SCRIPT_EXECUTORS_PATH.as_posix(), "unknown schema")
+    bindings: dict[str, ExecutorBindingV1] = {}
+    for row in data.get("skills") or []:
+        skill_id, script = row.get("skill_id"), row.get("script")
+        locus = f"{SCRIPT_EXECUTORS_PATH.as_posix()}:{skill_id}"
+        if type(skill_id) is not str or type(script) is not str or skill_id in bindings:
+            _refuse("SCRIPT_EXECUTOR_REFUSED", locus, "skill_id and script must be unique strings")
+        if not script.startswith(f"operads/skills/{skill_id}/scripts/"):
+            _refuse("SCRIPT_EXECUTOR_REFUSED", locus, "script must be in the skill's own package")
+        raw = _read_tracked(repo_root, script)
+        if b'__name__ == "__main__"' not in raw:
+            _refuse("SCRIPT_EXECUTOR_REFUSED", locus, "script has no __main__ guard")
+        payload = json.dumps(
+            [[skill_id, script, hashlib.sha256(raw).hexdigest()]], separators=(",", ":")
+        ).encode("ascii")
+        bindings[skill_id] = ExecutorBindingV1(
+            state=BOUND_EXECUTOR_V1,
+            host_executor_id=f"script:{script}",
+            implementation_digest=hashlib.sha256(payload).hexdigest(),
+        )
+    return bindings
+
+
+def _bind_executors(
+    repo_root: Path, skills: tuple[SkillCapabilityV1, ...]
+) -> tuple[SkillCapabilityV1, ...]:
+    host = executor_bindings(repo_root)
+    scripts = script_bindings(repo_root)
+    for skill_id in sorted(set(host) & set(scripts)):
+        _refuse("EXECUTOR_DOUBLE_BINDING", skill_id, "bound by the op inventory and a script")
+    bindings = {**host, **scripts}
+    known = {skill.skill_id for skill in skills}
+    for skill_id in sorted(set(bindings) - known):
+        _refuse("EXECUTOR_SKILL_UNKNOWN", INVENTORY_PATH.as_posix(), skill_id)
+    return tuple(
+        replace(skill, executor=bindings[skill.skill_id]) if skill.skill_id in bindings else skill
+        for skill in skills
+    )
+
+
+def _agents_from_roles(
+    repo_root: Path, skills: tuple[SkillCapabilityV1, ...]
+) -> tuple[AgentCapabilityV1, ...]:
+    """One agent per role in ``registry/roles.yaml``, licensed by its colours.
+
+    A role may use exactly the skills whose every source and target colour is in its
+    licence (the sub-operad its colours generate), less any skill whose ``agent_scope``
+    names other agents. The catalogue seal re-checks each licence against the skills.
+    """
+    raw = _read_tracked(repo_root, ROLES_PATH.as_posix())
+    data = yaml.load(raw.decode("utf-8"), Loader=_DuplicateRefusingLoader)
+    if type(data) is not dict or data.get("schema") != "core.registry.roles.v1":
+        _refuse("ROLES_SCHEMA_REFUSED", ROLES_PATH.as_posix(), "expected core.registry.roles.v1")
+    if data.get("authority_effect") != "None" or type(data.get("agents")) is not dict:
+        _refuse("ROLES_SCHEMA_REFUSED", ROLES_PATH.as_posix(), "authority_effect None and agents map")
+    digest = _canonical_source_digest(raw, ROLES_PATH.as_posix())
+    agents = []
+    for agent_id, row in sorted(data["agents"].items()):
+        locus = f"{ROLES_PATH.as_posix()}:{agent_id}"
+        if type(row) is not dict or set(row) != {"licence"}:
+            _refuse("ROLE_FIELDS_REFUSED", locus, "a role has exactly one field, licence")
+        colours = _string_list(row, "licence", locus, required=True)
+        allowed = set(colours)
+        licensed = tuple(
+            skill.skill_id
+            for skill in skills
+            if {*skill.source_colours, skill.target_colour} <= allowed
+            and (not skill.agent_scope or "all" in skill.agent_scope or agent_id in skill.agent_scope)
+        )
+        if not licensed:
+            _refuse("ROLE_LICENCE_EMPTY", locus, "the licence admits no skill")
+        agents.append(
+            AgentCapabilityV1(
+                agent_id=agent_id,
+                name=agent_id,
+                description=f"Role {agent_id}: may use skills typed in {', '.join(colours)}.",
+                model="inherit",
+                source_path=_neutral_path(ROLES_PATH.as_posix()),
+                source_digest=digest,
+                license_digest=compute_agent_license_digest(
+                    agent_id=agent_id,
+                    licensed_skill_ids=licensed,
+                    licensed_colour_ids=colours,
+                    tools=(),
+                    standalone=False,
+                ),
+                licensed_skill_ids=licensed,
+                licensed_colour_ids=colours,
+                tools=(),
+                standalone=False,
+            )
+        )
+    return tuple(agents)
+
+
 def compile_capability_catalog(
     repo_root: Path,
     *,
@@ -423,10 +575,13 @@ def compile_capability_catalog(
         )
         for path in skill_paths
     ), key=lambda item: item.skill_id))
+    skills = _bind_executors(repo_root, skills)
     agents = tuple(sorted(
         (_agent_from_source(repo_root=repo_root, path=path) for path in agent_paths),
         key=lambda item: item.agent_id,
     ))
+    if not agents and ROLES_PATH.as_posix() in inventory.paths:
+        agents = _agents_from_roles(repo_root, skills)
     try:
         return seal_capability_catalog(skills=skills, agents=agents)
     except CapabilityCatalogRefusal as error:

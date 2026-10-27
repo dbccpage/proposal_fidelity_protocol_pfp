@@ -165,6 +165,14 @@ pub const ENTRIES: &[Entry] = &[
         wiki: "Operads-Rewriting-and-Packetization",
     },
     Entry {
+        code: "UNLICENSED_SKILL",
+        short: "a role uses a skill outside its licence",
+        what: "The skill's input or output colours are not all in the role's licensed colours.",
+        why: "A role's licence is the colours it may consume and produce. A skill outside it handles material the role was not given.",
+        instead: "Give the work to a role whose licence covers those colours, or widen the role in operads/registry/roles.yaml and recompile.",
+        wiki: "Operads-Skills-and-Catalog",
+    },
+    Entry {
         code: "DUPLICATE_PATH",
         short: "a file named twice",
         what: "The same file was named twice.",

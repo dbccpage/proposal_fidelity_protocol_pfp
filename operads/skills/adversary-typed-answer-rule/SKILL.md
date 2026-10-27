@@ -4,7 +4,7 @@ description: "Review exact task bindings, full typed answers and nested result s
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-typed-answer-rule.json"
-  core-contracts-digest: "sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f"
+  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "rule"
   core-residual: "unknown"
@@ -24,7 +24,7 @@ Read the retained Hodge candidate controls when relevant. Report the current sou
 
 ## Digested lesson
 
-Source: `operads/rules/engineering/rl_python_contracts_and_runtime_invariants.md` @ `rule-factorization-v1-20261023` (sha256:cab311ef450208649020ff744361885b57c08d87b59dbbf7f2f865198f4918a2).
+Source: `operads/rules/engineering/rl_python_contracts_and_runtime_invariants.md` @ `rule-factorization-v1-20261023` (sha256:10b4d8f3830bacb2ed24a4fbee69ad472c5cc2be66711a0352e18c62711611f2).
 
 Source excerpt (evidence to inspect):
 
@@ -57,7 +57,7 @@ complete task binding, then snapshot nested result data.
 
 Ordered signature: `(code: Code) -> findings: Audit`.
 
-Contracts: `sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f`.
+Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

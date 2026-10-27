@@ -5,7 +5,7 @@ status: canonical
 operad_source_colours: ["Code", "Audit"]
 operad_target_colour: "Code"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: contractive
 families: [meta, operad]
 ---
 

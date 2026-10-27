@@ -1,0 +1,172 @@
+{
+  "derived_under_policy": "SPK-001",
+  "summary": {
+    "narrowest_defensible_thesis": "On 0<=theta<=1/192 the periodic Meron row-sum covariance has a unique volume limit with eps_L<=4 M_1 L (128 theta)^L, uniformly summable kernels and nonnegative modes; nonzero modes are strictly positive only on 0<theta<=2537/100281465600.",
+    "evidence_scope": "Written cluster-expansion proofs importing the Kotecky-Preiss criterion; exact Fraction CAR series on L=4,6,8 rings and open chains with mutations; arithmetic-only Lean module compiled standalone (no axioms).",
+    "next_concrete_test": "An L-uniform bound sup_u|g_L(u)-1/2|<=c theta with c of order 1, plus a sharper lower bound on F, giving 2 theta F - theta^2|ghat(m)|>0 on theta_*<theta<=1/192."
+  },
+  "process_integrity": {
+    "seed_allows_theory_refutation": true,
+    "should_continue": true,
+    "detected_prompt_biases": [
+      "The request names a target list (unique limit, positivity window); a window may be empty or a step may fail, and that must be reported rather than forced.",
+      "Exact finite series and agreeing float values are not a proof of the infinite-volume estimates."
+    ]
+  },
+  "sections": [
+    {
+      "name": "audit_findings",
+      "rows": [
+        {
+          "finding_id": "F_ERASED_SIGN_TEST",
+          "claim_id": "LIFT_C",
+          "issue": "First version of the erased-sign mutation compared only the lift, which cannot see the sign below order L, so the mutation could not fail.",
+          "status": "REPAIRED",
+          "repair_kind": "Mutation now compares the exact row-sum series; it differs exactly at order L (L=4: [4], L=6: [6]).",
+          "affected_ids": [
+            "EXACT_C",
+            "LIFT_C"
+          ]
+        },
+        {
+          "finding_id": "F_DOC_CHECK_SCOPE",
+          "claim_id": "EXACT_C",
+          "issue": "Draft derivation overstated the orders and sizes checked (lift, IBP, float diagnostic).",
+          "status": "REPAIRED",
+          "repair_kind": "Text now matches checks.json: lift L=6,8 through order 4, L=4 through 3 differing at 4; IBP L=4 order 5, L=6 order 4, modes 1-3; floats L=4..10.",
+          "affected_ids": [
+            "EXACT_C",
+            "WINDOW_C"
+          ]
+        },
+        {
+          "finding_id": "F_KP_IMPORT",
+          "claim_id": "TWO_POINT_DECAY_C",
+          "issue": "The Kotecky-Preiss criterion is imported from outside the repository and was not re-derived or fetched in this session.",
+          "status": "OPEN",
+          "repair_kind": "Stated as an imported criterion in TL-1 and in the Boundary; no claim of independent proof.",
+          "affected_ids": [
+            "TWO_POINT_DECAY_C",
+            "LIFT_C",
+            "LIMIT_C",
+            "WINDOW_C"
+          ]
+        },
+        {
+          "finding_id": "F_LEAN_UNCOMPILED",
+          "claim_id": "LEAN_C",
+          "issue": "Lean file was not compiled in rounds 1-2.",
+          "status": "REPAIRED",
+          "repair_kind": "Compiled standalone with Lean 4.33.1, exit 0, no axioms; full lake build still not run (Mathlib cache host unreachable), stated in docstring and Boundary.",
+          "affected_ids": [
+            "LEAN_C"
+          ]
+        },
+        {
+          "finding_id": "F_WINDOW_GAP",
+          "claim_id": "WINDOW_C",
+          "issue": "Window theta_* is about 2.5e-8, far below 1/192; strict positivity on theta_*<theta<=1/192 is not proved.",
+          "status": "OPEN",
+          "repair_kind": "Reported as the single next estimate; nonnegativity kept separate.",
+          "affected_ids": [
+            "WINDOW_C",
+            "NONNEG_C"
+          ]
+        },
+        {
+          "finding_id": "F_R1_TL3_TRANSLATION",
+          "claim_id": "LIMIT_C",
+          "issue": "Round-1 critic OBJ-03: TL-3 did not prove exhaustion independence or translation invariance of C^infty.",
+          "status": "REPAIRED",
+          "repair_kind": "TL-3 adds |C^I-C^J|<=2M_1(96|theta|)^{R+1} for intervals containing [-R,R], exhaustion independence and translation invariance.",
+          "affected_ids": [
+            "LIMIT_C"
+          ]
+        },
+        {
+          "finding_id": "F_R1_TL4_WRAPSIGN",
+          "claim_id": "LIFT_C",
+          "issue": "Round-1 critic OBJ-04: 'either wrap sign' was unsupported; erased sign is not a CAR system on the ring.",
+          "status": "REPAIRED",
+          "repair_kind": "TL-4 restricted to the physical fermion-periodic sign via CAR-support locality; erased model labelled a mutation; L=6 zero modes recorded through order 6 (first difference at 6).",
+          "affected_ids": [
+            "LIFT_C",
+            "EXACT_C"
+          ]
+        },
+        {
+          "finding_id": "F_R1_TL7_CONSTANT",
+          "claim_id": "LIMIT_C",
+          "issue": "Round-1 critic OBJ-06: embedding bound 7L+2/(1-q) stated without proof.",
+          "status": "REPAIRED",
+          "repair_kind": "Replaced by M_1 q^{L/2}(4L+4/(1-q)) with three-part proof (window lift factor 8/9, wrapped images, tail); test test_embedding_parts_add_up; mutation 4L->3L fails.",
+          "affected_ids": [
+            "LIMIT_C"
+          ]
+        },
+        {
+          "finding_id": "F_R1_CHECK_SCOPE",
+          "claim_id": "EXACT_C",
+          "issue": "Round-1 counterexample critic CM-g: particle-hole scope misstated; 3259/2580480 only in a test; doc used an unsupported ghat<=0 route.",
+          "status": "REPAIRED",
+          "repair_kind": "Scope now L=4 order 5 and L=6 order 6, recorded in the round-2 checks file; ghat<=0 route removed (L=6 diagnostics show ghat(m)>0).",
+          "affected_ids": [
+            "EXACT_C",
+            "WINDOW_C"
+          ]
+        },
+        {
+          "finding_id": "F_R1_DIGEST",
+          "claim_id": "EXACT_C",
+          "issue": "Round-1 critics compared the raw stage-4 file sha with the controller frozen sha.",
+          "status": "REPAIRED",
+          "repair_kind": "The frozen sha is the controller's canonical digest of the parsed stage-4 response, not the file bytes; critics are bound to the controller value.",
+          "affected_ids": [
+            "EXACT_C"
+          ]
+        },
+        {
+          "finding_id": "F_R2_TL7_MU",
+          "claim_id": "LIMIT_C",
+          "issue": "Round-2 critic R2-OBJ-03: TL-7 needs mu>=0 (the (8/9) window factor and wrapped-image count use e^mu>=1).",
+          "status": "REPAIRED",
+          "repair_kind": "Embedding stated for 0<=theta<=1/192, mu>=0, q<1; reason recorded; test rejects e^mu<1.",
+          "affected_ids": [
+            "LIMIT_C"
+          ]
+        },
+        {
+          "finding_id": "F_R2_ERASED_FRAMING",
+          "claim_id": "LIFT_C",
+          "issue": "Round-2 critic R2-OBJ-02: calling the erased-sign model non-CAR-local was wrong; it is the spin-periodic chain, local in spin language.",
+          "status": "REPAIRED",
+          "repair_kind": "TL-4 now says the lift covers the erased ring too; exact per-site comparison added (erased_sign_site_differences: L=4 -> [4], L=6 -> [6]) with a test.",
+          "affected_ids": [
+            "LIFT_C",
+            "EXACT_C"
+          ]
+        },
+        {
+          "finding_id": "F_R2_CHECK_SCOPE",
+          "claim_id": "EXACT_C",
+          "issue": "Round-2 critic R2-OBJ-08: particle-hole scope and test count stale in the record.",
+          "status": "REPAIRED",
+          "repair_kind": "Checks file round 3 records particle_hole_scope [L4 o5, L6 o6]; record states 24 tests.",
+          "affected_ids": [
+            "EXACT_C"
+          ]
+        },
+        {
+          "finding_id": "F_R2_TL2_CHAIN",
+          "claim_id": "TWO_POINT_DECAY_C",
+          "issue": "Round-2 counterexample critic CX7R2-09: TL-2 named the wrong chain for the L=6 check.",
+          "status": "REPAIRED",
+          "repair_kind": "TL-2 now says L=6 with chain [-4,4].",
+          "affected_ids": [
+            "TWO_POINT_DECAY_C"
+          ]
+        }
+      ]
+    }
+  ]
+}

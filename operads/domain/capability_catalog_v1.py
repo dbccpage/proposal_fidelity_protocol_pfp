@@ -23,6 +23,8 @@ AUTHORITY_EFFECT_NONE = "none"
 TRACKED_INVENTORY_V1 = "GIT_TRACKED_CANONICAL_ENTRYPOINTS"
 TRACKED_ENTRYPOINT_V1 = "TRACKED_CANONICAL"
 UNBOUND_EXECUTOR_V1 = "UNBOUND"
+BOUND_EXECUTOR_V1 = "BOUND"
+EXECUTOR_STATES_V1 = frozenset({UNBOUND_EXECUTOR_V1, BOUND_EXECUTOR_V1})
 OPERAD_COLOURS_V1 = frozenset(ADMITTED_FINITE_COLOURS)
 
 _ID_RE = re.compile(r"[a-z0-9][a-z0-9_-]{0,127}")
@@ -127,23 +129,30 @@ class ResourceRefV1:
 
 @dataclass(frozen=True, slots=True)
 class ExecutorBindingV1:
+    """UNBOUND, or BOUND to host code the compiler found and digested.
+
+    Source frontmatter can never declare a binding; only the compiler sets BOUND, from
+    the op inventory, after checking every op of the skill has a registered host executor.
+    BOUND says the code exists at these bytes, not that it is correct or authorized.
+    """
+
     state: str = UNBOUND_EXECUTOR_V1
     host_executor_id: str | None = None
     implementation_digest: str | None = None
 
     def __post_init__(self) -> None:
-        if self.state != UNBOUND_EXECUTOR_V1:
-            _refuse(
-                "EXECUTOR_STATE_REFUSED",
-                "executor.state",
-                "v1 catalog declarations are unbound",
-            )
-        if self.host_executor_id is not None or self.implementation_digest is not None:
-            _refuse(
-                "EXECUTOR_BINDING_REFUSED",
-                "executor",
-                "unbound declarations cannot claim an executor",
-            )
+        if self.state not in EXECUTOR_STATES_V1:
+            _refuse("EXECUTOR_STATE_REFUSED", "executor.state", f"{self.state!r}")
+        if self.state == UNBOUND_EXECUTOR_V1:
+            if self.host_executor_id is not None or self.implementation_digest is not None:
+                _refuse(
+                    "EXECUTOR_BINDING_REFUSED",
+                    "executor",
+                    "unbound declarations cannot claim an executor",
+                )
+            return
+        _text(self.host_executor_id, "executor.host_executor_id")
+        _digest(self.implementation_digest, "executor.implementation_digest")
 
     def to_wire(self) -> dict[str, object]:
         return {
@@ -681,6 +690,7 @@ def decode_capability_catalog(data: bytes) -> CapabilityCatalogV1:
 
 
 __all__ = [
+    "BOUND_EXECUTOR_V1",
     "OPERAD_COLOURS_V1",
     "AgentCapabilityV1",
     "CapabilityCatalogRefusal",

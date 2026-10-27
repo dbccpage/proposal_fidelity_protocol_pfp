@@ -4,7 +4,7 @@ description: "A seat blocked by PROVIDER_HTTP_400 is followed by native gates th
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-provider-http-400-then-native-gates-fail.json"
-  core-contracts-digest: "sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f"
+  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "anti_pattern"
   core-residual: "unknown"
@@ -24,7 +24,7 @@ Seats: scope_guard, scar_chronicler, adversary. Admitted by host replay of recor
 
 ## Digested lesson
 
-Source: `_ic/darpa/adversary/self_digestion/witnesses/adversary-provider-http-400-then-native-gates-fail.json` @ `corpus-sha256:76258a14132224dfe2e1b3d5bf0f641dc333def62f75d93bb4dc792f98467c89` (sha256:37a29c2b4222514198178ade4d4f7be8a6e14490a0534729d02b01b89f43c113).
+Source: `_ic/darpa/adversary/self_digestion/witnesses/adversary-provider-http-400-then-native-gates-fail.json` @ `corpus-sha256:76258a14132224dfe2e1b3d5bf0f641dc333def62f75d93bb4dc792f98467c89` (sha256:12282a83811e340950e44497942fb2cb5ed3e30d9d981439cd23e408e6e2591c).
 
 Source excerpt (evidence to inspect):
 
@@ -56,7 +56,7 @@ detector {'blocked': true, 'failure_code': 'PROVIDER_HTTP_400'} then {'kind': 'N
 
 Ordered signature: `(candidate: Code) -> result: Audit`.
 
-Contracts: `sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f`.
+Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

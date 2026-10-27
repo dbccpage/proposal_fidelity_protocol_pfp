@@ -4,7 +4,7 @@ description: "Syntax Prefilter blocked by FIXTURE_TRANSPORT_UNAVAILABLE predicts
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-fixture-transport-block-then-later-seat-blocked.json"
-  core-contracts-digest: "sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f"
+  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "rule"
   core-residual: "unknown"
@@ -24,7 +24,7 @@ Seats: syntax_prefilter, scar_chronicler, adversary. Admitted by host replay of 
 
 ## Digested lesson
 
-Source: `_ic/darpa/adversary/self_digestion/witnesses/adversary-fixture-transport-block-then-later-seat-blocked.json` @ `corpus-sha256:76258a14132224dfe2e1b3d5bf0f641dc333def62f75d93bb4dc792f98467c89` (sha256:ad1c21d030390e9551ccfc745688e03e27cf4acb8a7963888e02f0d58c2beb56).
+Source: `_ic/darpa/adversary/self_digestion/witnesses/adversary-fixture-transport-block-then-later-seat-blocked.json` @ `corpus-sha256:76258a14132224dfe2e1b3d5bf0f641dc333def62f75d93bb4dc792f98467c89` (sha256:f976ec92c4bcba4b35d906eeaf6558766498ea64801867e5f8e8c8b0ef12f307).
 
 Source excerpt (evidence to inspect):
 
@@ -56,7 +56,7 @@ detector {'blocked': true, 'failure_code': 'FIXTURE_TRANSPORT_UNAVAILABLE', 'rol
 
 Ordered signature: `(candidate: Code) -> result: Audit`.
 
-Contracts: `sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f`.
+Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

@@ -4,7 +4,7 @@ description: "Audit Lean 4 sources for sorry claims, unconstrained Lake rebuilds
 operad_source_colours: ["Code"]
 operad_target_colour: "Audit"
 operad_arity: 1
-operad_residual: "unknown"
+operad_residual: neutral
 families: [techne, quality, lean4]
 ---
 

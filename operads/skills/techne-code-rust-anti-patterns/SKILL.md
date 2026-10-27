@@ -4,7 +4,7 @@ description: "Find Rust failure mechanisms with bounded scans, concrete witnesse
 operad_source_colours: ["Code"]
 operad_target_colour: "Audit"
 operad_arity: 1
-operad_residual: "unknown"
+operad_residual: neutral
 families: [techne, quality, rust]
 ---
 

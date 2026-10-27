@@ -10,6 +10,7 @@
 pub mod catalog;
 pub mod check;
 pub mod packet;
+pub mod skills;
 
 pub use check::{
     builtin_checks, read_doc, run_checks, Check, Doc, Finding, Input, Report, Severity, Text,

@@ -15,10 +15,12 @@
 //! AuthorityEffect: None. This crate names values; it admits, executes and certifies nothing.
 
 pub mod render;
+pub mod subcolour;
 pub mod types;
 
 use serde::{Deserialize, Serialize};
 
+pub use subcolour::{schema_of, SUBCOLOUR_SCHEMAS};
 pub use types::{type_by_id, OPERAD_TYPES, PYTHON_ENUMS};
 
 /// The registry family a type belongs to; one YAML file per family.

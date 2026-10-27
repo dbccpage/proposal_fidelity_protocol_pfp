@@ -67,7 +67,7 @@ def test_live_catalog_is_exact_replayable_and_byte_identical_across_hosts() -> N
     catalog = compile_capability_catalog(REPO_ROOT)
 
     assert len(catalog.skills) >= 133
-    assert len(catalog.agents) == 0
+    assert len(catalog.agents) == 12  # one agent per role in registry/roles.yaml
     assert decode_capability_catalog(encode_capability_catalog(catalog)) == catalog
     if all((REPO_ROOT / host / "operad").is_dir() for host in HOST_NAMES):
         verify_host_projections(REPO_ROOT, catalog)

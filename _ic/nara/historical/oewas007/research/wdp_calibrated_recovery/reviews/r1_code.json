@@ -1,0 +1,169 @@
+{
+  "reviewer_role": "read-only code and claim critic",
+  "round": 1,
+  "candidate_sha256": "sha256:17f573146cb9de2c1f83cfcc4bedc5c59a93b224c357f7270840eee312a7ec10",
+  "source_snapshot_sha256": "8430418d14d1bab502b565277c773f91210d622aeb528e403718f2fdea793579",
+  "authority_effect": "None",
+  "verdict": "REPAIR_REQUIRED",
+  "summary": "The finite reduction, answer checker and reused cost certificates match the stated conditional scope in the reviewed cases. Both rational parsers nevertheless perform unbounded exponent arithmetic on short malformed inputs before lexical rejection. Repair this input-admission defect and the separately recorded release metadata issues before approval.",
+  "findings": [
+    {
+      "id": "CAL-CODE-001",
+      "priority": "P2",
+      "title": "Reject exponent notation before constructing Fraction in both verifier entry points",
+      "locations": [
+        {
+          "path": "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/calibrated_recovery/bridge.py",
+          "lines": [
+            96,
+            103
+          ],
+          "entry": "evaluate -> _compatible -> _parse_fraction"
+        },
+        {
+          "path": "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/finite_observation/solver.py",
+          "lines": [
+            170,
+            178
+          ],
+          "entry": "verify_cost -> solver.verify -> _rational"
+        }
+      ],
+      "problem": "Both parsers call Fraction(value) before checking canonical rational syntax. Python Fraction accepts decimal exponent notation and computes 10**exponent first. The short string 1e1000000000 passes the new report parser's 160-character guard, then consumes resources rather than immediately returning INVALID_REPORT. The same string in a certificate cost field reaches the inherited cost parser. A later bit-size or canonical-string check cannot bound this earlier computation.",
+      "reproduction": {
+        "python": "3.12.14",
+        "command": "/workspace/wdp-audit-python/bin/python /tmp/wdp_calibrated_parser_resource_probe.py",
+        "probe_source": "import json\nimport subprocess\nimport sys\n\nprefix='''\nimport json, resource, sys\nsys.path.insert(0, '/workspace/republication-corrections/omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code')\nfrom calibrated_recovery.bridge import evaluate, model_hash, propose_cost, verify_cost\nfrom calibrated_recovery.examples import separated\nmodel=separated()\n'''\ncaps='''\nresource.setrlimit(resource.RLIMIT_AS,(64*1024*1024,64*1024*1024))\nresource.setrlimit(resource.RLIMIT_CPU,(1,1))\ntry:\n print(json.dumps({'returned': ACTION}))\nexcept BaseException as error:\n print(json.dumps({'uncaught_exception':type(error).__name__}))\n'''\nresults=[]\nfor name, setup, action in [\n ('raw_reading', \"report={'model_sha256':model_hash(model),'visible':'*','readings':[{'channel':'A','raw_unit':'raw','value':'1e1000000000'}]}\\n\", \"evaluate(model,report,'00').status\"),\n ('cost_certificate', \"certificate=propose_cost(model)\\ncertificate['finite_certificate']['fixed']['table'][0]['cost']='1e1000000000'\\n\", \"verify_cost(model,certificate).accepted\")]:\n try:\n  out=subprocess.run([sys.executable,'-c',prefix+setup+caps.replace('ACTION',action)],capture_output=True,text=True,timeout=2)\n  results.append({'entry':name,'exit_code':out.returncode,'stdout':out.stdout.strip(),'stderr':out.stderr.strip()})\n except subprocess.TimeoutExpired:\n  results.append({'entry':name,'timed_out_after_seconds':2})\nprint(json.dumps({'input':'1e1000000000','expected':'reject lexical form before arithmetic parsing','cpu_seconds':1,'address_space_mib':64,'results':results},indent=2))\n",
+        "input": "1e1000000000",
+        "limits": {
+          "child_cpu_seconds": 1,
+          "child_address_space_mib": 64,
+          "parent_timeout_seconds": 2
+        },
+        "observed": [
+          {
+            "entry": "raw_reading",
+            "child_exit_code": -9,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "entry": "cost_certificate",
+            "child_exit_code": -9,
+            "stdout": "",
+            "stderr": ""
+          }
+        ],
+        "expected": "Reject lexical form before arithmetic parsing; return INVALID_REPORT or an unaccepted cost certificate without doing exponent arithmetic."
+      },
+      "repair": "Validate bounded canonical integer-or-ratio lexical form before Fraction construction. Preserve the reduced-form, sign and exact bit-size checks afterward. Give the cost parser a pre-construction string-size bound large enough for every admitted sum of up to twelve 256-bit rational instrument prices; do not silently reject legitimate large certificates.",
+      "repair_tests": [
+        "Both public verifier paths reject 1e1000000000 and 1e-1000000000 promptly without arithmetic construction.",
+        "A lexical-parser unit test can monkeypatch the constructor to fail if exponent, decimal, whitespace, underscore, non-ASCII-digit, or overlength input reaches it.",
+        "Canonical integer and reduced rational inputs remain accepted; noncanonical reduced-equivalent strings remain rejected.",
+        "A certificate with legitimate maximum-size admitted rational prices still verifies, including summed cost values that need more than 256 bits.",
+        "Rerun the 45 focused calibration and finite-observation tests, stored certificate replay, installed-wheel smoke and frozen source hash check."
+      ]
+    }
+  ],
+  "known_separate_repairs": [
+    "The parent already recorded verify_deposit.py RELEASE_DATE=2026-10-08 versus new 2026-10-09 metadata. This review did not rediscover or independently gate that packaging issue.",
+    "The parent already recorded generated .aux trailing-space attribute treatment. No generated candidate bytes were changed during this review."
+  ],
+  "read_scope": [
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/calibrated_recovery/__init__.py",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/calibrated_recovery/bridge.py",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/calibrated_recovery/examples.py",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/calibrated_recovery/replay.py",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/calibrated_recovery/README.md",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/calibrated_recovery/TransferLaws.lean",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/unit_tests/test_calibrated_recovery.py",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/finite_observation/solver.py",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/pyproject.toml including its complete diff",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md Appendix X.1-X.7",
+    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/calibrated_recovery/certificates.json: full JSON and every table row replayed by the checker",
+    "_intelligence/research/wdp_calibrated_recovery/inputs/r1_stage4.json",
+    "_intelligence/research/wdp_calibrated_recovery/receipts/r1_proof_replay.json",
+    "_intelligence/research/wdp_calibrated_recovery/receipts/r1_installed_smoke.json"
+  ],
+  "verification": [
+    {
+      "command": "/workspace/wdp-audit-python/bin/python -m pytest -o addopts='' code/unit_tests/test_calibrated_recovery.py code/unit_tests/test_finite_observation.py",
+      "cwd": "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme",
+      "python": "3.12.14",
+      "pytest": "9.1.1",
+      "exit_code": 0,
+      "result": "45 passed"
+    },
+    {
+      "command": "PYTHONPATH=code /workspace/wdp-audit-python/bin/python -m calibrated_recovery.replay --verify code/calibrated_recovery/certificates.json",
+      "cwd": "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme",
+      "exit_code": 0,
+      "result": {
+        "separated": {
+          "fixed": "7",
+          "adaptive": "4"
+        },
+        "touching": {
+          "fixed": null,
+          "adaptive": null
+        },
+        "correlated_enclosure": {
+          "fixed": null,
+          "adaptive": null
+        }
+      }
+    },
+    {
+      "command": "/workspace/.toolchains/lean-4.33.1-linux/bin/lean code/calibrated_recovery/TransferLaws.lean",
+      "cwd": "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme",
+      "lean": "4.33.1",
+      "exit_code": 0,
+      "result": "All six declarations compile. First three depend on propext, Classical.choice, Quot.sound; last three have no axiom dependencies."
+    },
+    {
+      "command": "/workspace/wdp-audit-python/bin/python /tmp/wdp_calibrated_code_critic.py",
+      "exit_code": 0,
+      "result": {
+        "exhaustive_two_state_two_instrument_models": 1296,
+        "independent_signature_checks": 2592,
+        "malformed_report_controls": 25,
+        "mutable_alias_rejections": 6,
+        "certificate_and_model_mutations_rejected": 30,
+        "frozen_source_files_verified": 1704
+      },
+      "probe_source": "import hashlib\nimport json\nimport sys\nfrom copy import deepcopy\nfrom dataclasses import replace\nfrom fractions import Fraction as F\nfrom itertools import product\nfrom pathlib import Path\n\nroot = Path('/workspace/republication-corrections')\npaper = root / 'omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme'\nsys.path.insert(0, str(paper / 'code'))\nfrom calibrated_recovery.bridge import Channel, Model, alphabet, evaluate, finite_lift, model_hash, propose_cost, validate, verify_cost\nfrom calibrated_recovery.examples import separated, touching\n\nintervals = tuple((F(a), F(b)) for a in (-1, 0, 1) for b in (-1, 0, 1) if a <= b)\nmodels_checked = 0\nsignature_checks = 0\nfor first0, first1, second0, second1 in product(intervals, repeat=4):\n    channels = tuple(Channel(name, 'raw', 'u', F(1), F(0), bounds, price)\n        for name, bounds, price in (('first', (first0, first1), F(1)), ('second', (second0, second1), F(3, 2))))\n    model = Model(('x', 'y'), ('*', '*'), ('0', '1'), channels)\n    for c in channels:\n        (a,b),(d,e) = c.intervals\n        expected = set()\n        if a < d or b > e:\n            expected.add((0,))\n        if d < a or e > b:\n            expected.add((1,))\n        if max(a,d) <= min(b,e):\n            expected.add((0,1))\n        assert set(alphabet(c)) == expected\n        signature_checks += 1\n    separating = [c.price for c in channels if max(c.intervals[0][0],c.intervals[1][0]) > min(c.intervals[0][1],c.intervals[1][1])]\n    expected_cost = str(min(separating)) if separating else None\n    cert = propose_cost(model)\n    assert verify_cost(model, cert).accepted\n    assert cert['finite_certificate']['fixed']['value'] == expected_cost\n    assert cert['finite_certificate']['adaptive']['value'] == expected_cost\n    assert len(finite_lift(model).states) <= 8\n    models_checked += 1\n\nmodel = separated()\nreport = {'model_sha256': model_hash(model), 'visible': '*', 'readings': [{'channel':'A', 'raw_unit':'raw', 'value':'-1/2'}, {'channel':'B', 'raw_unit':'raw', 'value':'-1/2'}]}\nassert evaluate(model, report, '00').status == 'VERIFIED'\nmalformed_checks = 0\nfor bad in [None, False, F(1), 1.0, '', ' 1', '1 ', '+1', '0/1', '2/2', '01', '1e0', '1.0', '1/0', 'nan', 'inf', '-0', str(2**256), '1/' + str(2**256), '1'*161]:\n    altered=deepcopy(report)\n    altered['readings'][0]['value']=bad\n    assert evaluate(model, altered, '00').status == 'INVALID_REPORT', repr(bad)\n    malformed_checks += 1\nfor bad in [None, (), '', True, {'visible':'*'}]:\n    assert evaluate(model, bad, '00').status == 'INVALID_REPORT'\n    malformed_checks += 1\n\nalias_checks=0\nfor bad in [replace(model,states=list(model.states)),replace(model,visible=list(model.visible)),replace(model,answers=list(model.answers)),replace(model,channels=list(model.channels)),replace(model,channels=(replace(model.channels[0],intervals=list(model.channels[0].intervals)),)+model.channels[1:]),replace(model,channels=(replace(model.channels[0],intervals=(list(model.channels[0].intervals[0]),)+model.channels[0].intervals[1:]),)+model.channels[1:])]:\n    try:\n        validate(bad)\n    except (ValueError,TypeError):\n        alias_checks+=1\n    else:\n        raise AssertionError('mutable alias admitted')\n\ncertificate = propose_cost(model)\nmutation_checks = 0\nfor section,field in [('fixed','cost'),('adaptive','value')]:\n    for index,row in enumerate(certificate['finite_certificate'][section]['table']):\n        changed=deepcopy(certificate)\n        changed['finite_certificate'][section]['table'][index][field] = '1' if row[field] is None else str(F(row[field])+1)\n        assert not verify_cost(model, changed).accepted\n        mutation_checks += 1\nfor changes in [replace(model,states=('changed',)+model.states[1:]),replace(model,visible=('changed',)+model.visible[1:]),replace(model,answers=('changed',)+model.answers[1:]),replace(model,channels=(replace(model.channels[0],unit='cm'),)+model.channels[1:]),replace(model,channels=(replace(model.channels[0],offset=F(2)),)+model.channels[1:]),replace(model,channels=(replace(model.channels[0],price=F(2)),)+model.channels[1:])]:\n    assert not verify_cost(changes,certificate).accepted\n    assert evaluate(changes,report,'00').status == 'INVALID_REPORT'\n    mutation_checks += 1\n\nsnapshot=root / '_intelligence/research/wdp_calibrated_recovery/sources_round1.json'\nrows=json.loads(snapshot.read_text())\nchanged=[]\nfor row in rows:\n    if hashlib.sha256((root/row['path']).read_bytes()).hexdigest()!=row['sha256']:\n        changed.append(row['path'])\nassert not changed, changed\nresult={'status':'PASS','python':sys.version.split()[0],'exhaustive_two_state_two_instrument_models':models_checked,'independent_signature_checks':signature_checks,'malformed_report_controls':malformed_checks,'mutable_alias_rejections':alias_checks,'certificate_and_model_mutations_rejected':mutation_checks,'frozen_snapshot_verified_files':len(rows),'snapshot_sha256':hashlib.sha256(snapshot.read_bytes()).hexdigest(),'scope':'All intervals with endpoints in {-1,0,1}; two distinct answers, two prices; compare bridge cost to direct strict-disjointness criterion. No physical or asymptotic inference.'}\nprint(json.dumps(result,indent=2))\n",
+      "scope": "For all closed intervals with endpoints in {-1,0,1}, two states with distinct answers, and two instruments: compare signatures to interval containment/intersection and both costs to the direct strict-disjointness criterion."
+    },
+    {
+      "command": "/workspace/wdp-clean-wheel-env/bin/python; import calibrated_recovery.bridge and finite_observation.solver; propose and verify the separated example",
+      "cwd": "/tmp",
+      "exit_code": 0,
+      "result": {
+        "bridge_path": "/workspace/wdp-clean-wheel-env/lib/python3.12/site-packages/calibrated_recovery/bridge.py",
+        "bridge_sha256": "376924aa8ec85953326c143e93e7bb433d74846071fcdb5b629233e9692aed87",
+        "solver_path": "/workspace/wdp-clean-wheel-env/lib/python3.12/site-packages/finite_observation/solver.py",
+        "solver_sha256": "08c46e16d97f5a00d5163ccd7b68d30bd5070ffe4a4e4dcbf5ddf57e39c53e0f",
+        "verified": true,
+        "fixed": "7",
+        "adaptive": "4"
+      }
+    }
+  ],
+  "assessed_boundaries": {
+    "trusted_model": "Model is supplied separately, hashed over all relevant fields, validates exact types and immutable nested tuples; no mutable-alias admission was found.",
+    "answer_check": "Nonempty compatible set and unanimous protected answer are required; empty reports do not pass by vacuous truth. Invalid proposed answer, inconsistent model report and ambiguous answers are distinct statuses.",
+    "units_and_calibration": "Raw tags and model digest bind the declared affine conversion and interval model. They do not authenticate a sensor, prove dimensional interpretation or infer calibration validity; the prose states those limits.",
+    "finite_lift": "Endpoint cells are retained, identical membership signatures merged, and full Cartesian choices constructed within a checked ten-state cap. The implementation refused cap overflow rather than calling it infeasible.",
+    "cost_checker": "Verification reconstructs the model-bound lift and replays complete supplied tables; no proposal-solver fallback was found.",
+    "scope": "Exact costs are for the full interval product model. Under valid outer bounds only, answer soundness and conservative upper costs survive; the code and prose keep this distinction.",
+    "formal_scope": "The six core Lean statements are logical transfer lemmas, not real interval, physical calibration or optimal-cost proofs."
+  },
+  "limits": [
+    "The bounded exhaustive checks do not prove correctness for all possible rational models.",
+    "This is a code and claim review of the new derivation, not a fresh audit of the full historical WDP package.",
+    "No physical instrument, external calibration standard or source authenticity was checked.",
+    "The sole newly reproduced blocking code issue is parser resource consumption, not a counterexample to the written recovery theorem."
+  ],
+  "candidate_modified": false
+}

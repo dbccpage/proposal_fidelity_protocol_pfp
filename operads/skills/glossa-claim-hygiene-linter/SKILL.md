@@ -5,7 +5,7 @@ families: [oecog, text_audit]
 operad_source_colours: ["Paper", "Code"]
 operad_target_colour: "Audit"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: neutral
 ---
 
 # glossa-claim-hygiene-linter
