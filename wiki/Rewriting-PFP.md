@@ -1,6 +1,6 @@
 # PFP rewriting: overview
 
-Part of [Rewriting](Rewriting.md). Next: [Residual repair](Rewriting-PFP-Residual-Repair.md) · [Dialects and pilot](Rewriting-PFP-Dialects.md)
+Part of [Rewriting](Rewriting.md). Next: [Residual repair](Rewriting-PFP-Residual-Repair.md) · [Dialects and pilot](Rewriting-PFP-Dialects.md) · [Prompts as graphs](Rewriting-PFP-Graph-Prompts.md) · [Shells](Rewriting-Shells.md)
 
 PFP is where all the earlier layers meet a real task. A proposal arrives, is
 rewritten into some representation, is checked by the host, and may be
