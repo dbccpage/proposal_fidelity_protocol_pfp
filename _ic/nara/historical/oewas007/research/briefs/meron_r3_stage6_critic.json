@@ -1,0 +1,139 @@
+{
+  "derived_under_policy": "SPK-001",
+  "summary": {
+    "narrowest_defensible_thesis": "Round-2 repairs (a)-(e) hold up under independent recomputation. The written TL-1..TL-7 proofs are sound, conditional on the imported Kotecky-Preiss criterion. Uniform-in-L strict positivity of nonzero modes is proved only on 0<theta<=theta* (about 2.53e-8) and is open on (theta*,1/192]. The defects left are local record and wording issues: the theta range missing from the UNIQUE_LIMIT_RATE claim, the CAR-language gas applied to the erased ring, the positivity wording, and the Lean receipt record.",
+    "evidence_scope": "Exact Fraction recomputation of all constants. 24 pytest tests and ruff on a scratch copy. Full run_all reproduction of the round-3 checks JSON. Standalone Lean 4.33.1 compile with #print axioms for 16 theorems. Hand re-derivation of TL-1..TL-7. Not checked: a full lake build, and the L=6 order-5 lift against chain [-5,5] (stopped at the time limit).",
+    "next_concrete_test": "Prove an L-uniform bound sup|g-1/2| <= c*theta with a sharper lower bound on F, to widen the positivity window. Add the spin-language TL-1 sentence for the erased ring, and run exact erased/physical L=6 against chain [-5,5] through order 5."
+  },
+  "process_integrity": {
+    "seed_allows_theory_refutation": true,
+    "should_continue": true,
+    "detected_prompt_biases": [
+      "Exact finite-L checks can be read as evidence for infinite-volume statements; they are only consistency checks.",
+      "The target-list framing invites confirming each claim instead of looking for new failure modes.",
+      "Float diagnostics in the docs are not evidence and must not be cited as such.",
+      "Agreement with earlier critics' NO_GAP rows does not verify anything; each row here was recomputed."
+    ]
+  },
+  "sections": [
+    {
+      "name": "objections",
+      "rows": [
+        {
+          "objection_id": "R3-OBJ-01-TL1-KP-IMPORT",
+          "claim_id": "TWO_POINT_DECAY",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "Re-derived TL-1/TL-2 constants exactly: Delta=7 (5 bonds + 2 sources), S1=3/43, (Delta+1)S1=24/43<1, M1=24576/43; the hybrid two-segment word expansion, the bound 2*S1 from two brackets, and C = d_z d_w log Xi (means vanish) are valid. The Schwarz order-d decay is correct. The Kotecky-Preiss criterion and rooted count (4*Delta)^{k-1} are imported from the AR note and not re-derived here beyond degree, norm and count.",
+          "evidence_refs": [
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/meron_euclidean_thermodynamic_limit.md TL-1..TL-3",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs (AR note section 4)",
+            "/tmp/claude-0/critic6_r3/runall_out.json"
+          ],
+          "result": "NO_GAP_FOUND",
+          "repair_test": "None needed for this round. A future audit could cite the polymer-gas theorem with its exact hypotheses beside the AR import."
+        },
+        {
+          "objection_id": "R3-OBJ-02-TL2-CHAIN-RANGE",
+          "claim_id": "TWO_POINT_DECAY",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "Repair (d): the TL-2 chain check uses [-4,4] in checks.run_all and reproduces the round-3 checks JSON exactly. The test file uses chain [-3,3]. The doc sentence names only L=6, while the checks cover rings 4, 6 and 8. This understates the scope; it does not overstate it.",
+          "evidence_refs": [
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/meron_thermodynamic_limit/checks.py",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/tests/test_meron_thermodynamic_limit.py",
+            "/tmp/claude-0/critic6_r3/runall_out.json"
+          ],
+          "result": "NO_GAP_FOUND",
+          "repair_test": "Optional: name rings 4, 6 and 8 in the TL-2 doc sentence, and note that the test file uses [-3,3]."
+        },
+        {
+          "objection_id": "R3-OBJ-03-TL4-ERASED-RING-LANGUAGE",
+          "claim_id": "LIFT_COMPARISON",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "Repair (b): vanishing below order L holds for the physical ring and for the sign-erased ring. The per-site record {4:[4],6:[6]} reproduced, and the L=4 order-4 coefficients of D_y are nonzero for every y. The erased ring is the spin-periodic chain, so the arc-relabeling lift is valid in spin language. Gap: the claim also asserts |D_y| <= 4*M1*(128 theta)^L for the erased ring. TL-1 builds its polymer gas in CAR language ('even CAR operators commute, also across the wrapping bond'), and that fails for the erased wrap term because of its parity string. The bound for the erased kernel needs TL-1..TL-3 restated in spin tensor-product language, where local even terms commute and the same constants hold.",
+          "evidence_refs": [
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/meron_euclidean_thermodynamic_limit.md TL-1, TL-4",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/meron_thermodynamic_limit/car.py",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/meron_thermodynamic_limit/checks.py (erased_sign_site_differences)"
+          ],
+          "result": "GAP_REPAIRABLE",
+          "repair_test": "Add one sentence to TL-4: TL-1..TL-3 hold for the spin-periodic ring in spin language with the same Delta, S1 and M1. Optional exact check (not completed by this critic: the L=6 order-5 run against chain [-5,5] was stopped at the time limit, so it is UNCHECKED here): erased and physical L=6 against chain [-5,5] through order 5."
+        },
+        {
+          "objection_id": "R3-OBJ-04-TL7-THETA-RANGE-IN-CLAIM",
+          "claim_id": "UNIQUE_LIMIT_RATE",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "Repair (a): the doc's TL-7 states mu>=0 and 0<=theta<=1/192. The mu<0 explanation is correct: at L=4, n=0 the window term's order-4 coefficient is u/384 - u^3/192 + u^4/384, which is nonzero (5/6144 at u=1/2). The total M1 q^{L/2}(4L+4/(1-q)) is re-derived and needs (128^2 theta/96) <= 8/9, i.e. theta <= 1/192. However, the stage-4 claim text states the rate 'for mu>=0, q<1' without 0<=theta<=1/192. The round-2 B1 acceptance required both. For theta near 1/128 the bound fails through a (4/3)^{L/2} factor.",
+          "evidence_refs": [
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/meron_euclidean_thermodynamic_limit.md TL-7",
+            "_intelligence/research/briefs/meron_r3_stage4.json (UNIQUE_LIMIT_RATE statement)",
+            "round-2 stage8 plan B1 acceptance"
+          ],
+          "result": "GAP_REPAIRABLE",
+          "repair_test": "Add '0<=theta<=1/192' to the UNIQUE_LIMIT_RATE claim statement, word for word as in the doc's TL-7, and add a record check that the claim text names both mu>=0 and the theta range."
+        },
+        {
+          "objection_id": "R3-OBJ-05-ZERO-MODE",
+          "claim_id": "ZERO_MODE",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "Re-derived the Schwarz radius for the zero mode: 43/56631360. The chi identification is imported from EP-7a/EP-13 and was not re-attacked there.",
+          "evidence_refs": [
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/meron_euclidean_thermodynamic_limit.md TL-5",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs (EP-7a, EP-13)"
+          ],
+          "result": "NO_GAP_FOUND",
+          "repair_test": "None."
+        },
+        {
+          "objection_id": "R3-OBJ-06-NONNEG",
+          "claim_id": "NONNEGATIVITY",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "The IBP identity omega^2 k_hat = 2 theta F - theta^2 g_hat was checked, including the jump [k'] = (theta/L) Tr rho [A,[K,A]] = 2 theta F. The signs are correct and nonnegativity follows as written.",
+          "evidence_refs": [
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/meron_euclidean_thermodynamic_limit.md TL-6"
+          ],
+          "result": "NO_GAP_FOUND",
+          "repair_test": "None."
+        },
+        {
+          "objection_id": "R3-OBJ-07-POSITIVITY-WINDOW-WORDING",
+          "claim_id": "POSITIVITY_WINDOW",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "Proof checked: the bounds on F and g, the B0 certificate (psd_exact is a correct LDL test; 4*B0 scaling) and theta* = 2537/100281465600 satisfy the inequality. Wording defect: the summary thesis says nonzero modes 'are strictly positive only on 0<theta<=theta*'. Read plainly, that says positivity fails outside the window. The document proves positivity only inside the window, and EP-8 gives finite-L strict positivity for every theta>0.",
+          "evidence_refs": [
+            "_intelligence/research/briefs/meron_r3_stage4.json (summary)",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/meron_euclidean_thermodynamic_limit.md TL-6",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs (EP-8)"
+          ],
+          "result": "GAP_REPAIRABLE",
+          "repair_test": "Reword to 'proved strictly positive (uniformly in L) only on 0<theta<=theta*; open on (theta*,1/192]'."
+        },
+        {
+          "objection_id": "R3-OBJ-08-EXACT-CHECKS",
+          "claim_id": "EXACT_CHECKS",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "Repair (c): 24 tests pass (pytest 9.1.1, exit 0, about 31 s, on a scratch copy). ruff 0.16.8 under the repo pyproject: 'All checks passed!'. A fresh checks.run_all() reproduces every key of the round-3 checks JSON except 'command'. particle_hole_scope is a hard-coded literal that matches the calls actually made. It is a record, not a computed fact.",
+          "evidence_refs": [
+            "/tmp/claude-0/critic6_r3/runall_out.json",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/tests/test_meron_thermodynamic_limit.py",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/meron_thermodynamic_limit/checks.py"
+          ],
+          "result": "NO_GAP_FOUND",
+          "repair_test": "Optional: derive particle_hole_scope from the call list instead of a literal."
+        },
+        {
+          "objection_id": "R3-OBJ-09-LEAN-RECEIPT",
+          "claim_id": "LEAN_SCOPE",
+          "candidate_sha256": "sha256:d1b71e8ba4a01d7b45c15c1f571acfdbdcb74364fa1af3b5062a9bdbb94044a1",
+          "attack": "Repair (e): MeronThermoLimitConstants.lean compiles standalone under Lean 4.33.1 (exit 0). An appended '#print axioms' over all 16 theorems reports that none depends on any axioms. The module is not imported by the build roots (WitnessedDifference, WitnessedDifference.AxiomReport). Record defect: the claim's premise_ids say 'No compilation receipt', which contradicts the statement's compile claim, and no stored receipt was found in briefs/. A full lake build of the package was not run.",
+          "evidence_refs": [
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/lean4/WitnessedDifference/MeronThermoLimitConstants.lean",
+            "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/lean4/lakefile (roots)",
+            "/tmp/claude-0/critic6_r3/lean"
+          ],
+          "result": "GAP_REPAIRABLE",
+          "repair_test": "Store a compile receipt (command, toolchain version, exit code, axiom report) and update the premise_ids, or drop the compile claim from the statement. Full lake build: UNCHECKED."
+        }
+      ]
+    }
+  ]
+}

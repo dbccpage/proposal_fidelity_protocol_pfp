@@ -1,0 +1,161 @@
+{
+  "critic": "calibrated_math_critic",
+  "round": 1,
+  "candidate_sha256": "sha256:17f573146cb9de2c1f83cfcc4bedc5c59a93b224c357f7270840eee312a7ec10",
+  "source_snapshot_sha256": "sha256:8430418d14d1bab502b565277c773f91210d622aeb528e403718f2fdea793579",
+  "status": "CORE_ARGUMENTS_SUPPORTED_WITH_ONE_MINOR_EXAMPLE_PREMISE_TO_STATE",
+  "authority_effect": "None",
+  "active_findings": [
+    {
+      "finding_id": "CAL-MATH-R1-01",
+      "candidate_sha256": "sha256:17f573146cb9de2c1f83cfcc4bedc5c59a93b224c357f7270840eee312a7ec10",
+      "severity": "low",
+      "claim_id": "ROBUST_COST",
+      "path": "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md",
+      "line_start": 14518,
+      "line_end": 14530,
+      "statement": "The two-state correlated-noise example restarts the candidate set but does not explicitly state that its free observation is constant. The exact costs infinity for the box and 2 for the correlated model require that premise.",
+      "countermodel": "Take the stated two-state report model, but let the free observation be p(x)=x. All stated instrument and noise equations remain true; the free observation already answers the question, so both fixed and adaptive costs are zero in both models. The reference correlated_enclosure correctly uses visible=(\"*\",\"*\").",
+      "repair": "Add \"with one constant free report\" to the two-state example. No change to the theorem or reference model is needed.",
+      "falsifiable_repair_test": "The manuscript explicitly declares p constant for this example; the unchanged reference model has visible=(\"*\",\"*\") and checked box costs infinity. Replacing only visible by (\"0\",\"1\") must give checked fixed and adaptive costs zero.",
+      "control_result": {
+        "constant_visible": {
+          "fixed": null,
+          "adaptive": null
+        },
+        "revealing_visible": {
+          "fixed": "0",
+          "adaptive": "0"
+        }
+      }
+    }
+  ],
+  "supported_arguments": [
+    {
+      "claim": "X.1",
+      "basis": "The calibrated enclosure follows by adding a_i(r_i-t_i) and a_i t_i+b_i-f_i(x), applying the triangle inequality, and checking that both contributions have the same calibrated units. No product or independence premise enters this upper bound."
+    },
+    {
+      "claim": "X.2",
+      "basis": "The true candidate is included under outer-bound validity; nonempty unanimity gives sound answers. Product realizability supplies every compatible candidate extension, so mixed answers force abstention for a uniformly correct report-only answer. Empty compatible sets are not accepted by vacuous truth."
+    },
+    {
+      "claim": "X.3",
+      "basis": "Closed-interval endpoint singletons and intervening open cells exhaust all nonempty membership signatures. Equal signatures can be merged because later coordinates remain conditionally unconstrained under the product premise. Representative simulation transfers any continuous strategy to the finite model and preserves an admissible complete vector after adaptive choices. The reverse simulation transfers finite strategies to actual numeric reports. Both cost infima agree; finite feasible optima are attained."
+    },
+    {
+      "claim": "X.4",
+      "basis": "For a fixed pair of candidates, overlap at every queried coordinate yields a common observed tuple under full report realizability. Disjoint closed intervals are equivalent to strict center separation by the sum of radii. This yields the exact weighted hitting-set condition. The adaptive recursion tracks both candidate set and remaining instruments, so no invalid strict-shrink premise is used."
+    },
+    {
+      "claim": "X.5",
+      "basis": "Nominal reports lie in every centered support, so restricting robust strategies gives nominal lower bounds. Nested supports give monotonicity. If distinct nominal-value groups remain disjoint, every report decodes a unique group, giving matching upper bounds. Correlated actual supports inherit robust upper bounds but not the product lower bounds."
+    },
+    {
+      "claim": "X.6",
+      "basis": "An invertible affine coordinate change preserves interval membership and maps radii by absolute gain. Both sides of each strict separation test scale equally. The finite signatures and cost tables remain the same when instrument prices retain their declared cost unit."
+    },
+    {
+      "claim": "X.6 examples",
+      "basis": "The 7-versus-4 example has the stated forced pairs and optimal adaptive policy. The common endpoint tuple at radius 5 blocks all uniform recovery. In the shared-noise example, z1-z2=2x identically; each one-channel support overlaps, so exact cost 2 follows once the constant free report is explicit."
+    },
+    {
+      "claim": "X.7 and TransferLaws.lean",
+      "basis": "The six declarations prove the stated logical transfer claims only. Fresh Lean core compilation succeeds. The first three use propext, Classical.choice, and Quot.sound; the other three use no axioms. No real interval or cost formalization is claimed."
+    }
+  ],
+  "fresh_checks": [
+    {
+      "kind": "frozen_source_binding",
+      "result": "Snapshot file SHA-256 matches the supplied hash; the reviewed manuscript, Lean source, bridge, examples, replay, tests and finite cost proof all match their recorded source hashes."
+    },
+    {
+      "kind": "lean_core",
+      "command": "/workspace/.toolchains/lean-4.33.1-linux/bin/lean <paper>/code/calibrated_recovery/TransferLaws.lean",
+      "result": "PASS; all six declarations compile with the axiom dependencies stated above."
+    },
+    {
+      "kind": "finite_control_census",
+      "description": "For all 1296 assignments of two closed intervals per instrument to two states and two instruments, with endpoints from {-1,0,1}, constant free report, different answers, and prices 1 and 2, compare existing finite-lift certificates with direct interval-separation fixed cost and the written (C,R) adaptive recurrence.",
+      "result": {
+        "checked": 1296,
+        "resource_refusals": 0,
+        "mismatches": 0
+      }
+    },
+    {
+      "kind": "finite_control_census",
+      "description": "For 500 seeded three-state/two-instrument instances, endpoints from {-1,0,1,2}, two possible free reports and answers, prices 1 and 2, seed 71927, compare existing finite-lift certificates with direct interval-separation fixed cost and the written (C,R) recurrence.",
+      "result": {
+        "checked": 403,
+        "resource_refusals": 97,
+        "mismatches": 0
+      }
+    },
+    {
+      "kind": "missing_premise_control",
+      "description": "Use correlated_enclosure, then replace only visible=(\"*\",\"*\") by visible=(\"0\",\"1\").",
+      "result": "The product-model costs change from infinity to zero, as required by CAL-MATH-R1-01."
+    }
+  ],
+  "exact_read_scope": [
+    {
+      "path": "<paper>/witnessed_difference_programme.md",
+      "ranges": [
+        [
+          14216,
+          14559
+        ],
+        [
+          8037,
+          8068
+        ],
+        [
+          3803,
+          3862
+        ]
+      ],
+      "scope": "All of Appendix X, the existing sequential calibration proof in I.4, and the existing Section 14.6 finite observation-cost theorem."
+    },
+    {
+      "path": "<paper>/code/calibrated_recovery/TransferLaws.lean",
+      "scope": "Entire file; all definitions, proofs, and printed axiom reports."
+    },
+    {
+      "path": "<paper>/docs/minimum_cost_sufficient_observation.md",
+      "scope": "Entire document; fixed hitting-set proof, adaptive finite recursion, completeness/attainment arguments, examples, and scope restrictions."
+    },
+    {
+      "path": "<paper>/code/calibrated_recovery/bridge.py",
+      "scope": "Entire file read to compare the mathematical reduction, strict parser, compatible-set check, and complete-table cost reuse."
+    },
+    {
+      "path": "<paper>/code/calibrated_recovery/examples.py",
+      "scope": "Entire file."
+    },
+    {
+      "path": "<paper>/code/calibrated_recovery/replay.py",
+      "scope": "Entire file."
+    },
+    {
+      "path": "<paper>/code/unit_tests/test_calibrated_recovery.py",
+      "scope": "Entire file."
+    },
+    {
+      "path": "_intelligence/research/wdp_calibrated_recovery/inputs/r1_stage4.json",
+      "scope": "Entire frozen candidate packet."
+    },
+    {
+      "path": "_intelligence/research/wdp_calibrated_recovery/sources_round1.json",
+      "scope": "Snapshot hash and source digests checked programmatically; no claim that every inventoried source received a semantic read."
+    }
+  ],
+  "paper_root": "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme",
+  "limits": [
+    "Read-only mathematical review: no candidate source, theorem, example, or test was changed.",
+    "The finite controls can refute a mismatch but are not proofs of the continuous reduction or general cost claims.",
+    "Physical calibration, error-bound validity, provenance, product realizability, and authorization remain supplied obligations.",
+    "No fresh Mathlib build or review of the whole historical WDP package is claimed.",
+    "The known pre-existing RELEASE_DATE discrepancy is not treated as a mathematical objection."
+  ]
+}

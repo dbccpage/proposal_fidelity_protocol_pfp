@@ -1,0 +1,118 @@
+[
+  {
+    "check_id": "two_point_decay_written",
+    "status": "PASS",
+    "evidence_refs": [
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-1, TL-2 (written proof; imported KP criterion)",
+      "briefs/meron_thermo_checks_20261007.json chain_vanishing_order_equals_distance=true",
+      "briefs/meron_thermo_checks_20261007.json constants s1=3/43 m1=24576/43",
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-2 (round 3: L=6 with chain [-4,4])"
+    ]
+  },
+  {
+    "check_id": "lift_comparison_written",
+    "status": "PASS",
+    "evidence_refs": [
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-4",
+      "briefs/meron_thermo_checks_20261007.json rings.4 lift_agrees_through_order=3 differs=[4]; rings.6/8 agrees through 4",
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-4 (round 2: CAR-support locality, physical sign only)",
+      "briefs/meron_thermo_checks_round2_20261007.json wrap_sign_zero_modes_L6 first_difference_order=6",
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-4 (round 3: lift covers the sign-erased spin-periodic ring)",
+      "briefs/meron_thermo_checks_round3_20261007.json erased_sign_site_differences {4:[4],6:[6]}",
+      "code/tests/test_meron_thermodynamic_limit.py::test_erased_ring_agrees_site_by_site_below_order_L",
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-1 premise paragraph (round 4: spin-language premise for both rings)",
+      "briefs/meron_thermo_checks_round4_20261007.json bond_locality physical_L6=true erased_L6=true",
+      "code/tests/test_meron_thermodynamic_limit.py::test_bond_locality_holds_for_both_rings (L=4,6, both rings)",
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-1 premise paragraph (round 5: premises (i)-(iv), CAR for physical ring, spin for erased)",
+      "briefs/meron_thermo_checks_round5_20261007.json bond_locality physical_L6=true erased_L6=true nonlocal_mutation_L6=false",
+      "code/tests/test_meron_thermodynamic_limit.py::test_bond_locality_rejects_a_nonlocal_bond_term (pytest 9.1.1 -o addopts=, exit 0, 26 passed)"
+    ]
+  },
+  {
+    "check_id": "unique_limit_rate_written",
+    "status": "PASS",
+    "evidence_refs": [
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-3, TL-4 (TL-5, TL-6, TL-7)",
+      "code/tests/test_meron_thermodynamic_limit.py::test_rate_and_embedding_bounds (pytest 9.1.1, exit 0, 21 passed (round 1))",
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-3 (exhaustion, translation) and TL-7 (round 2: 4L+4/(1-q) three-part proof)",
+      "code/tests/test_meron_thermodynamic_limit.py::test_embedding_parts_add_up; pytest 9.1.1 -o addopts= code/tests/test_meron_thermodynamic_limit.py: exit 0, 23 passed (round 2); ruff 0.16.10 check: exit 0",
+      "briefs/meron_thermo_checks_round2_20261007.json embedding_lift_factor=8/9",
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-7 (round 3: stated for mu>=0, reason recorded)",
+      "pytest 9.1.1 -o addopts= code/tests/test_meron_thermodynamic_limit.py: exit 0, 24 passed (round 3); ruff 0.16.8 check: exit 0",
+      "briefs/meron_r4_stage4.json LIMIT_C states ranges per bound (round 4)",
+      "pytest 9.1.1 -o addopts= code/tests/test_meron_thermodynamic_limit.py: exit 0, 25 passed (round 4); ruff 0.16.8 check: exit 0"
+    ]
+  },
+  {
+    "check_id": "zero_mode_recovered",
+    "status": "PASS",
+    "evidence_refs": [
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-5",
+      "briefs/meron_thermo_checks_20261007.json rings zero_mode [1/4,1/8,1/48,-1/96,...], symmetric_u_to_1_minus_u=true, theta0_delta_quarter=true"
+    ]
+  },
+  {
+    "check_id": "nonnegativity_separated",
+    "status": "PASS",
+    "evidence_refs": [
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-5 Nonnegativity bullet and Boundary section"
+    ]
+  },
+  {
+    "check_id": "positivity_window_written",
+    "status": "PASS",
+    "evidence_refs": [
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-6 (TL-8, TL-9)",
+      "briefs/meron_thermo_checks_20261007.json ibp.4/ibp.6 identity=true, b0_norm_certificate all true, constants theta_star=2537/100281465600",
+      "W/docs/meron_euclidean_thermodynamic_limit.md Boundary (round 2: ghat<=0 route removed)",
+      "W/docs/meron_euclidean_thermodynamic_limit.md status line (round 4: open, neither proved nor refuted, on theta_*<theta<=1/192)",
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-6 after TL-9 and status line (round 5: window 0<theta<2theta_*, open on [2theta_*,1/192])",
+      "briefs/meron_thermo_lean_receipt_20261007.json positivity_window_double, 17 theorems, no axioms"
+    ]
+  },
+  {
+    "check_id": "exact_car_checks_replayed",
+    "status": "PASS",
+    "evidence_refs": [
+      "briefs/meron_thermo_checks_20261007.json (python3 -m meron_thermodynamic_limit.checks, exit 0, 5m50s)",
+      "python3 -m pytest -q -o addopts= code/tests/test_meron_thermodynamic_limit.py: pytest 9.1.1, exit 0, 21 passed (round 1)",
+      "briefs/meron_thermo_checks_round2_20261007.json particle_hole_scope L4 order 5, L6 order 6",
+      "pytest 9.1.1 -o addopts= code/tests/test_meron_thermodynamic_limit.py: exit 0, 23 passed (round 2); ruff 0.16.10 check: exit 0",
+      "briefs/meron_thermo_checks_round3_20261007.json (checks.run_all, exit 0; particle_hole_scope [L4 o5, L6 o6], particle_hole_mean_zero=true)",
+      "pytest 9.1.1: 24 passed, exit 0 (round 3)",
+      "briefs/meron_thermo_checks_round4_20261007.json (run_all, exit 0, 335s); all values equal round 3 except integer serialization ('0/1'->'0') and the new bond_locality key",
+      "python3 -m pytest -q -o addopts= code/tests/test_meron_thermodynamic_limit.py: pytest 9.1.1, exit 0, 25 passed (round 4)",
+      "briefs/meron_thermo_checks_round5_20261007.json is the stdout of `cd W && PYTHONPATH=code python3 -m meron_thermodynamic_limit.checks` (5m38s), committed _fmt prints integers without slash",
+      "pytest 9.1.1 -o addopts= code/tests/test_meron_thermodynamic_limit.py: exit 0, 26 passed; ruff 0.16.8 check meron_thermodynamic_limit tests/test_meron_thermodynamic_limit.py: exit 0"
+    ]
+  },
+  {
+    "check_id": "mutations_fail",
+    "status": "PASS",
+    "evidence_refs": [
+      "briefs/meron_thermo_checks_20261007.json mutations: doubled P, erased wrap sign (orders [4,5] and [6,7] on raw series), normalise-by-2^L differs at order 2, unnormalised 16, unstaggered -1/8",
+      "code/tests/test_meron_thermodynamic_limit.py::test_mutations_move_exact_values, ::test_erased_wrap_sign_changes_kernel_exactly_at_order_L",
+      "round 2 mutation: embedding_bound 4*length -> 3*length makes test_embedding_parts_add_up fail"
+    ]
+  },
+  {
+    "check_id": "lean_scope_stated",
+    "status": "PASS",
+    "evidence_refs": [
+      "W/lean4/WitnessedDifference/MeronThermoLimitConstants.lean module docstring: arithmetic only, not compiled",
+      "W/docs/meron_euclidean_thermodynamic_limit.md Boundary section",
+      "lean 4.33.1 (commit 819816b2) MeronThermoLimitConstants.lean: exit 0 (round 3)",
+      "#print axioms theta_star_window: does not depend on any axioms; 16 theorems, all by decide",
+      "Full lake build not run: Mathlib cache host unreachable (403); module not in a build root",
+      "briefs/meron_thermo_lean_receipt_20261007.json (round 4: stored receipt, compile exit 0, axioms exit 0, 16 no-axiom lines, file sha256 bound)",
+      "briefs/meron_thermo_lean_receipt_20261007.json (round 5 revision: file sha256 14ce6a92..., Lean 4.33.1 standalone exit 0, 17 '#print axioms' lines, no axioms)"
+    ]
+  },
+  {
+    "check_id": "audit_table_present",
+    "status": "PASS",
+    "evidence_refs": [
+      "W/docs/meron_euclidean_thermodynamic_limit.md TL-7 audit table"
+    ]
+  }
+]

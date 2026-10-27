@@ -16,6 +16,12 @@ SCORING.md text eol=lf
 # code/ mirrors the internal tree, which pins every text file to LF; its digest pins
 # and contract hashes are over those LF bytes.
 code/** text eol=lf
+# operads/ digests its contracts, skills and rules over their LF bytes (catalogue
+# compiler, typed contracts, rule gate), so a CRLF checkout fails to compile.
+operads/** text eol=lf
+eis/antibodies/** text eol=lf
+# Lesson sources the typed contracts pin by SHA-256.
+_ic/** text eol=lf
 
 # Images stay binary even under code/, which is pinned to LF text above.
 *.gif binary
