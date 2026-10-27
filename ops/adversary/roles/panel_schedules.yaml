@@ -1,0 +1,36 @@
+# Declared schedules for the neutral role roster.
+# AuthorityEffect: None.
+#
+# A schedule keeps all 22 roles and says when each contributes. The required seats
+# (syntax prefilter, scope guard, builder, defect hunter, terminal judge, chronicler)
+# always run with chain view. Activations: always | until_quorum | on_findings | off.
+# Views: chain | blind. With no schedule, every role runs in order.
+version: "1"
+schedules:
+  quorum3:
+    description: >-
+      Reviewers after the build stop after three consecutive clean reviews. After a
+      repair only the required seats and the seats that raised findings review again.
+    quorum_clean_reviews: 3
+    repair_cohort: always_and_finders
+    intake_activation: always
+    review_activation: until_quorum
+  quorum3_blind:
+    description: As quorum3, but reviewers do not see each other's reviews.
+    quorum_clean_reviews: 3
+    repair_cohort: always_and_finders
+    intake_activation: always
+    review_activation: until_quorum
+    review_view: blind
+  full_blind:
+    description: Every role runs, but reviewers after the build review independently.
+    review_activation: always
+    review_view: blind
+  core:
+    description: >-
+      The smallest run: only the required seats; other reviewers join only when
+      findings already exist.
+    quorum_clean_reviews: 1
+    repair_cohort: always_and_finders
+    intake_activation: "off"
+    review_activation: on_findings

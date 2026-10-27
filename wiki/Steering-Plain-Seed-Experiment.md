@@ -44,7 +44,9 @@ and storage of the reusable procedure.
 
 ## Replicate it here
 
-The multi-role run is not runnable here yet. The lesson replicates with
+The local swarm now runs (see [running the local swarm](Steering.md#running-the-local-swarm)), and its
+`teamwork start` refuses to begin without a bound acceptance check, which is
+the repair this experiment led to. The lesson also replicates with
 [PFP Lab](PFP-Lab.md): a scenario's moves are what the "roles" propose, and the
 Lab's recomputation is the bound acceptance. Run any pack twice, once reading
 only the proposals and once reading the receipt:

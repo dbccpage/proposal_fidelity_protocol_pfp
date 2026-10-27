@@ -26,12 +26,57 @@ the output afterwards.
 | --- | --- | --- |
 | [PFP Lab](PFP-Lab.md) | The host side: claims checked by recomputation, refusals kept in the receipt, retraction | `python -m pfp_lab.cli.main run --pack refusal-gallery` |
 | Pure Python modules in `pfp/`, `eis/` and `ops/adversary/` | Single checks such as clarification, two-signal admission and pressure screens | Set `$env:PYTHONPATH = "ops;."` in PowerShell, then import them |
-| The local swarm in `ops/adversary/` | The full multi-role run (prompt preparation, turns, checks, reports) | The command line starts: from the `ops` folder, set `$env:PYTHONPATH = ".;.."` and run `python -m adversary.entrypoints.cli --help`. A run also needs `CORE_SYMBOL_GAME_HOST` pointing at the built `pfp` binary and a role roster, which is not published, so `teamwork start` stops at the roster for now |
+| The local swarm in `ops/adversary/` | The full multi-role run (prompt preparation, turns, checks, reports) | See [Running the local swarm](#running-the-local-swarm) below |
 | `HfLocalRunner` in `pfp/infrastructure/adapters/decode_controls/` | Decode masks, attention edits and activation steering on a local model | Needs PyTorch, `transformers` and a locally cached small model |
-| Native host in `code/rust/` | Prompt geometry, the immune-fence renderer and critique parsing | `cargo build --manifest-path code/rust/Cargo.toml -p pfp` (wiring the built host into the Python adapters is not finished) |
+| Native host in `code/rust/` | Prompt geometry, the immune-fence renderer and critique parsing | `cargo build --manifest-path code/rust/Cargo.toml -p pfp`; the local swarm finds it through `CORE_SYMBOL_GAME_HOST` |
 
 Every page marks which of these it needs. Snippets marked "checked" were run on
 Windows with Python 3.14 on 2026-10-27.
+
+## Running the local swarm
+
+The swarm in `ops/adversary/` runs one task through a panel of 22 roles. Each
+role is one PFP turn: the host prepares a bound prompt, a model (by default you,
+in your own IDE session) writes the reply, and the host checks it. The role
+roster in `ops/adversary/roles/adversary_panel.yaml` was written for this
+repository: neutral names and a one-line duty per role. A role name never
+authenticates a worker, and one worker playing all roles is not 22 independent
+reviewers.
+
+It needs the `pfp` binary from `code/rust` (`cargo build --manifest-path code/rust/Cargo.toml -p pfp`).
+Run it from the `ops` folder; the repository root has its own `governance`
+package that would otherwise shadow the one in `ops`. In PowerShell:
+
+```powershell
+cd ops
+$env:PYTHONPATH = ".;.."
+$env:CORE_SYMBOL_GAME_HOST = "<path to>\pfp.exe"
+$tw = "python -B -m adversary.entrypoints.cli teamwork"
+
+# Start: a task must come with its own acceptance check, or start refuses.
+iex "$tw start --state .scratch/run/state.json --objective 'Add two integers 2 and 3' --checker-id my-check-v1 --checker-source .scratch/run/checker.py --check-command python .scratch/run/checker.py"
+iex "$tw check --state .scratch/run/state.json"         # run the bound checker once
+iex "$tw next --state .scratch/run/state.json"          # first action: native checks
+iex "$tw native-gates --state .scratch/run/state.json"
+iex "$tw next --state .scratch/run/state.json"          # first model turn
+```
+
+The `next` output holds `pfp_turn.system`, `pfp_turn.user` and
+`pfp_turn.response_schema`. Write a reply that copies `task_id`, `attempt_id` and
+`input_sha256` from `pfp_turn.binding` and puts the role's answer under `answer`,
+save it, then:
+
+```powershell
+iex "$tw submit --state .scratch/run/state.json --raw-reply .scratch/run/reply.json"
+iex "$tw next --state .scratch/run/state.json"
+```
+
+Repeat until `work_status` is terminal; `next` tells you when a host step
+(`check`, `native-gates`, `ddc-store` and so on) is due instead of a model turn.
+Checked on 2026-10-27 as far as the second role's turn. `teamwork --help` lists
+the other commands, including `run` for a routed provider, `resume` and
+`persist`. Optional schedules are in `ops/adversary/roles/panel_schedules.yaml`
+(`--schedule quorum3` and others); with none, every role runs in order.
 
 ## Examples
 

@@ -46,8 +46,10 @@ python -m pytest demos/yardstick -q
 ```
 
 The accounting rules are in `ops/adversary/use_cases/yardstick.py` (`Trial`,
-`ArmStats`, `seat_value`) and `ops/adversary/use_cases/teamwork.py`; the full
-run that produces the roster record is not runnable here yet.
+`ArmStats`, `seat_value`) and `ops/adversary/use_cases/teamwork.py`; every
+`teamwork` command prints the roster record as `panel_coverage` (declared,
+scheduled, contributed, missing, reproduced failures, false alarms); see
+[running the local swarm](Steering.md#running-the-local-swarm).
 
 [PFP Lab](PFP-Lab.md) has the same asymmetry in miniature: an admitted `ASSERT`
 or `CUT` is not a verification, and the only move that establishes zero

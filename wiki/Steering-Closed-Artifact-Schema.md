@@ -40,7 +40,8 @@ before anything runs (`python -m pfp_lab.cli.main schema` writes the closed
 schemas). Feed a model's proposed moves to the Lab as a scenario and the Lab's
 refusal is the schema check, while its recomputation is the task check.
 
-The `--artifact-schema` option of the local swarm is not runnable here yet.
+The local swarm accepts `teamwork start --artifact-schema <file>` (see
+[running the local swarm](Steering.md#running-the-local-swarm)); that option was not exercised for this page.
 
 ## How it relates to PFP, EIS and PCIV
 
