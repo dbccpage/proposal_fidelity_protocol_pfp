@@ -1,12 +1,12 @@
 Symbol Game kernel axiom census
 Date: 2026-10-27
 Lean: Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
-Build: lake build exited 0.
+Build: lake build exited 0 (clean .lake).
 Census: lake env lean AxiomCensus.lean exited 0.
-Scope: every theorem constant the compiled environment assigns to the ten library roots, including generated lemmas (inj, injEq, sizeOf_spec, eq_N, ofNat_ctorIdx).
-Allowed axioms: propext, Classical.choice, Quot.sound.
+Scope: every constant the compiled environment assigns to the nine library roots (theorems, definitions, instances, generated lemmas, internal auxiliary proofs); each non-internal theorem is listed with its axioms.
+Fails on: an axiom declared in a module, or any constant depending on an axiom outside {propext, Classical.choice, Quot.sound}.
 
-PrimitiveDifference: 70 theorems
+PrimitiveDifference: 139 constants checked, 70 non-internal theorems
   OmegaCore.PointedPrimitiveDifference.mk.inj: []
   OmegaCore.PointedPrimitiveDifference.mk.injEq: [propext]
   OmegaCore.PointedPrimitiveDifference.mk.sizeOf_spec: []
@@ -77,7 +77,7 @@ PrimitiveDifference: 70 theorems
   OmegaCore.QuotientCompatiblePrimitiveDifference.mk.inj: []
   OmegaCore.QuotientCompatiblePrimitiveDifference.mk.injEq: [propext]
   OmegaCore.QuotientCompatiblePrimitiveDifference.mk.sizeOf_spec: []
-SLevel: 28 theorems
+SLevel: 156 constants checked, 28 non-internal theorems
   SnSymbolGameAndPackets.AuthorityEffect.claimed.sizeOf_spec: []
   SnSymbolGameAndPackets.AuthorityEffect.none.sizeOf_spec: []
   SnSymbolGameAndPackets.AuthorityEffect.ofNat_ctorIdx: []
@@ -106,7 +106,7 @@ SLevel: 28 theorems
   SnSymbolGameAndPackets.packet_shape_forgets_semantic_truth: []
   SnSymbolGameAndPackets.packetization_contract_no_authority: []
   SnSymbolGameAndPackets.packetization_contract_preserves_fidelity: []
-Sweeper: 45 theorems
+Sweeper: 222 constants checked, 45 non-internal theorems
   SnSymbolGameAndPackets.ExtendedColor.authority.sizeOf_spec: []
   SnSymbolGameAndPackets.ExtendedColor.symbol.inj: []
   SnSymbolGameAndPackets.ExtendedColor.symbol.injEq: [propext]
@@ -152,7 +152,7 @@ Sweeper: 45 theorems
   SnSymbolGameAndPackets.no_certificate_without_witness: []
   SnSymbolGameAndPackets.operation_output_not_authority: []
   SnSymbolGameAndPackets.operation_tree_output_not_authority: []
-TowerZeta: 78 theorems
+TowerZeta: 255 constants checked, 78 non-internal theorems
   SnSymbolGameAndPackets.ContinuumSourceClaim.mk.inj: []
   SnSymbolGameAndPackets.ContinuumSourceClaim.mk.injEq: [propext]
   SnSymbolGameAndPackets.ContinuumSourceClaim.mk.sizeOf_spec: []
@@ -231,7 +231,7 @@ TowerZeta: 78 theorems
   SnSymbolGameAndPackets.tower_family_bridge_same_first_coordinate_forces_same_delta: []
   SnSymbolGameAndPackets.tower_family_bridge_zeta_no_authority: []
   SnSymbolGameAndPackets.tower_step_law: []
-ShadowBoundary: 70 theorems
+ShadowBoundary: 106 constants checked, 70 non-internal theorems
   SnSymbolGameAndPackets.LocalShadowWorld.allGreen.sizeOf_spec: []
   SnSymbolGameAndPackets.LocalShadowWorld.localGreenGlobalRed.sizeOf_spec: []
   SnSymbolGameAndPackets.LocalShadowWorld.ofNat_ctorIdx: []
@@ -302,7 +302,7 @@ ShadowBoundary: 70 theorems
   SnSymbolGameAndPackets.target_image_injective_shadow_invariant_iff: []
   SnSymbolGameAndPackets.unsafe_first_stage_blocks_composed_target_image_injective: []
   SnSymbolGameAndPackets.unsafe_second_stage_blocks_composed_target_image_injective: []
-TypedPacketShadow: 7 theorems
+TypedPacketShadow: 31 constants checked, 7 non-internal theorems
   PaperER007.FinitePacketSource.ofNat_ctorIdx: []
   PaperER007.FinitePacketSource.targetFalse.sizeOf_spec: []
   PaperER007.FinitePacketSource.targetTrue.sizeOf_spec: []
@@ -310,7 +310,7 @@ TypedPacketShadow: 7 theorems
   PaperER007.finite_typed_packet_projection_collides: []
   PaperER007.finite_typed_packet_targets_differ: []
   PaperER007.no_typed_packet_decoder_of_collision: []
-FidelityAdequacy: 52 theorems
+FidelityAdequacy: 151 constants checked, 52 non-internal theorems
   PaperER007.DetectorAdequacy.knownBlindSpotsRecorded: []
   PaperER007.DetectorAdequacy.mk.inj: []
   PaperER007.DetectorAdequacy.mk.injEq: [propext]
@@ -363,7 +363,7 @@ FidelityAdequacy: 52 theorems
   PaperER007.replayFidelityClause.eq_8: []
   PaperER007.replay_all_eight_fidelity_iff: [propext]
   PaperER007.replay_fidelity_clause_iff: [propext]
-LiftPatchSemantics: 11 theorems
+LiftPatchSemantics: 32 constants checked, 11 non-internal theorems
   PaperER007.LiftPatch.cost_positive: []
   PaperER007.LiftPatch.mk.inj: []
   PaperER007.LiftPatch.mk.injEq: [propext]
@@ -375,7 +375,7 @@ LiftPatchSemantics: 11 theorems
   PaperER007.applyLift_is_licensed: [propext, Quot.sound]
   PaperER007.applyLift_strictly_decreases_budget: [propext, Quot.sound]
   SnSymbolGameAndPackets.SLevel.declaredMass.eq_1: []
-OperationTreeFold: 14 theorems
+OperationTreeFold: 52 constants checked, 14 non-internal theorems
   PaperER007.OperationFold.mk.inj: []
   PaperER007.OperationFold.mk.injEq: [propext]
   PaperER007.OperationFold.mk.sizeOf_spec: []
@@ -390,33 +390,4 @@ OperationTreeFold: 14 theorems
   PaperER007.internal_operation_tree_outputs_not_authority: [propext]
   PaperER007.recursive_fold_composes_child_effect: [propext]
   PaperER007.recursive_fold_retains_child_outputs: [propext]
-Demo3ProtocolInvariants: 28 theorems
-  MSSN.Demo3Protocol.ExecutionState.mk.inj: []
-  MSSN.Demo3Protocol.ExecutionState.mk.injEq: [propext]
-  MSSN.Demo3Protocol.ExecutionState.mk.sizeOf_spec: []
-  MSSN.Demo3Protocol.ExitStatus.fuelExhausted.sizeOf_spec: []
-  MSSN.Demo3Protocol.ExitStatus.needsEvidence.sizeOf_spec: []
-  MSSN.Demo3Protocol.ExitStatus.ofNat_ctorIdx: []
-  MSSN.Demo3Protocol.ExitStatus.rejectLocal.sizeOf_spec: []
-  MSSN.Demo3Protocol.ExitStatus.scopedCertificate.sizeOf_spec: []
-  MSSN.Demo3Protocol.ExitStatus.unknownNotCertified.sizeOf_spec: []
-  MSSN.Demo3Protocol.HostCertificate.h_valid: []
-  MSSN.Demo3Protocol.HostCertificate.mk.inj: []
-  MSSN.Demo3Protocol.HostCertificate.mk.injEq: [propext]
-  MSSN.Demo3Protocol.HostCertificate.mk.sizeOf_spec: []
-  MSSN.Demo3Protocol.Phase.coverage.sizeOf_spec: []
-  MSSN.Demo3Protocol.Phase.intake.sizeOf_spec: []
-  MSSN.Demo3Protocol.Phase.ofNat_ctorIdx: []
-  MSSN.Demo3Protocol.Phase.terminal.sizeOf_spec: []
-  MSSN.Demo3Protocol.Phase.verify.sizeOf_spec: []
-  MSSN.Demo3Protocol.Phase.witness.sizeOf_spec: []
-  MSSN.Demo3Protocol.ValidTrace.brecOn: []
-  MSSN.Demo3Protocol.execution_bounded_by_fuel: [propext, Quot.sound]
-  MSSN.Demo3Protocol.fuel_strictly_decreases: []
-  MSSN.Demo3Protocol.hash_chain_step_injective: []
-  MSSN.Demo3Protocol.model_self_claim_insufficient: []
-  MSSN.Demo3Protocol.no_step_from_zero_fuel: [propext, Quot.sound]
-  MSSN.Demo3Protocol.toy_hash_has_collision: []
-  MSSN.Demo3Protocol.trace_fuel_accounting: [propext, Quot.sound]
-  MSSN.Demo3Protocol.valid_trace_step_index: [propext, Quot.sound]
-Theorems: 403; with no axioms: 303; distinct axioms: [Quot.sound, propext]
+Constants checked: 1144; non-internal theorems: 375; of those with no axioms: 281; distinct axioms over all constants: [Quot.sound, propext]

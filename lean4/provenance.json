@@ -9,9 +9,14 @@
   "grading": "Re-homing review of 2026-10-27: one reviewer and one adversary pass per file. The report is held outside this repository.",
   "maintainer_decisions": [
     "2026-10-27: the Symbol Game kernel goes to a new top-level lean4/ in this repository.",
-    "2026-10-27: only files at L2D or better move; the_symbol_game keeps working copies of files its own code still imports."
+    "2026-10-27: only files at L2D or better move; the_symbol_game keeps working copies of files its own code still imports. Pre-Genesis, Genesis, S(n) and MSS-N go to theory_of_finite_quantum_mechanics; the S(n)-labelled kernel files go here by the maintainer's ruling of the same day."
   ],
   "not_moved": [
+    {
+      "path": "lean4/Demo3ProtocolInvariants.lean",
+      "score_token": "L2D (contested: L2E)",
+      "reason": "MSS-N, not Symbol Game: namespace MSSN.Demo3Protocol, and theory_of_finite_quantum_mechanics imported it on 2026-10-23 as lean4/Imported/LegacyTopLevel/Demo3ProtocolInvariants.lean with 'Reason: MSS-N'. MSS-N's home is that repository, which already holds the code. The adversary pass also scores it G1=E: hash_chain_step_injective is (A -> B) -> A -> B under a name that claims injectivity. papers/completion_receipt.json still pins lean4/Demo3ProtocolInvariants.lean; that receipt was made in a the_symbol_game checkout."
+    },
     {
       "path": "lean4/Family.lean",
       "score_token": "L2D",
@@ -78,8 +83,8 @@
         "G4": "C",
         "G5": "C"
       },
-      "pfp_binding": null,
-      "pfp_binding_evidence": null,
+      "pfp_binding": "code/rust/core_homotopy_type_theory/src/primitive_difference.rs",
+      "pfp_binding_evidence": "Line 14 names `lean4/PrimitiveDifference.lean` as the crate's Lean anchor, and code/rust/governance/contracts/contract_canonical_definitions/rust/primitive_difference.yaml line 31 names the same file. That YAML (line 33) still describes the source build (lib MssnSnTower, Lean v4.34.0); here the lib is SymbolGameKernel on v4.35.0. The module also holds localGreenGlobalRed_* theorems; it is copied as the import of ShadowBoundary, not as an LGGR home.",
       "source_status": "kept in the_symbol_game as a working copy: MssnSnTower root; imported by ShadowBoundary; theorem names bound by the TSG Rust contract PD-L0..PD-L3"
     },
     {
@@ -87,7 +92,7 @@
       "sha256": "4fededd39a87ef2d5a38db30305fcdb7f86e56c45269cbbeec0ed2f68eb3db88",
       "source_path": "lean4/SLevel.lean",
       "byte_identical_to_source": true,
-      "role": "import of Sweeper, TowerZeta, TypedPacketShadow, FidelityAdequacy, LiftPatchSemantics",
+      "role": "import of Sweeper, TowerZeta, TypedPacketShadow, FidelityAdequacy and LiftPatchSemantics",
       "score_token": "L2D",
       "gates": {
         "G1": "D",
@@ -96,8 +101,8 @@
         "G4": "C",
         "G5": "A"
       },
-      "pfp_binding": "papers/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md",
-      "pfp_binding_evidence": "completion_supplement.md line 52 cites [SLevel](../lean4/SLevel.lean) as the module TriggerNotLicense imports; paper_change_log line 63; ENC-0887/0888/0925/0929 cite 007_er007_s_level.lean.",
+      "pfp_binding": null,
+      "pfp_binding_evidence": "Imported by five modules here. PFP's own SLevel citations (papers/009 docs/completion_supplement.md line 52, paper_change_log.md line 63) bind that paper's separate copy, papers/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/SLevel.lean, which is this code plus a two-line provenance header. Four of its six theorems are structure-field projections; the L2 level rests on the other two.",
       "source_status": "kept in the_symbol_game as a working copy: MssnSnTower root; imported by FidelityAdequacy, LiftPatchSemantics, RuntimeLimits, SnSymbolGameAndPackets, Sweeper, TowerZeta, TypedPacketShadow"
     },
     {
@@ -115,7 +120,7 @@
         "G5": "B"
       },
       "pfp_binding": "education/004_oepfp/encyclopedia/entries/enc-0890-sweeper-terminal-gate-and-symbol-game-non-authority.md",
-      "pfp_binding_evidence": "Lines 21 and 47 cite the predecessor path engine/lean4/research_programs/008_engine_runtime/007_er007_sweeper.lean with the same theorem names. A TSG twin of the entry exists in omega_engine_library/coda_library.",
+      "pfp_binding_evidence": "Lines 21 and 47 cite the predecessor path engine/lean4/research_programs/008_engine_runtime/007_er007_sweeper.lean with the same theorem names. Line 59 also lists formal_replay_remains_non_authority, which Sweeper.lean line 162 says is not declared.",
       "source_status": "kept in the_symbol_game as a working copy: imported by OperationTreeFold and SnSymbolGameAndPackets"
     },
     {
@@ -151,7 +156,7 @@
         "G5": "D"
       },
       "pfp_binding": "education/004_oepfp/encyclopedia/entries/enc-0897-shadow-collision-nonfactorization.md",
-      "pfp_binding_evidence": "Lines 19 and 44 cite 007_er007_shadow_boundary.lean with SnSymbolGameAndPackets theorem names; 45 references across ENC-0897..0917.",
+      "pfp_binding_evidence": "Lines 19 and 44 cite 007_er007_shadow_boundary.lean with SnSymbolGameAndPackets theorem names; entries ENC-0897 to ENC-0917 cite it further.",
       "source_status": "kept in the_symbol_game as a working copy: MssnSnTower root; imported by ShadowFactorization and SnSymbolGameAndPackets"
     },
     {
@@ -169,7 +174,7 @@
         "G5": "A"
       },
       "pfp_binding": "education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md",
-      "pfp_binding_evidence": "meta_03 line 42 (L043_03) and line 93; PFP education/004_oepfp/levels/meta_02_symbol_game_pfp.md line 54.",
+      "pfp_binding_evidence": "meta_03 line 42 (L043_03) binds `lean4/TypedPacketShadow.lean`. Caveats: meta_02 line 54 and meta_03 line 36 link `../../../../lean4/…`, which resolves one level above this repository's root; meta_03 marks FidelityAdequacy and OperationTreeFold 'not a library root', which describes the_symbol_game's lakefile, while here every module is a root.",
       "source_status": "kept in the_symbol_game as a working copy: MssnSnTower root; imported by Core.lean"
     },
     {
@@ -187,7 +192,7 @@
         "G5": "B"
       },
       "pfp_binding": "education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md",
-      "pfp_binding_evidence": "meta_03 line 44 (L043_05 Fidelity -> lean4/FidelityAdequacy.lean) and line 95.",
+      "pfp_binding_evidence": "meta_03 line 44 (L043_05) binds `lean4/FidelityAdequacy.lean`. Caveats: meta_02 line 54 and meta_03 line 36 link `../../../../lean4/…`, which resolves one level above this repository's root; meta_03 marks FidelityAdequacy and OperationTreeFold 'not a library root', which describes the_symbol_game's lakefile, while here every module is a root.",
       "source_status": "kept in the_symbol_game as a working copy: imported by Core.lean"
     },
     {
@@ -205,7 +210,7 @@
         "G5": "A"
       },
       "pfp_binding": "education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md",
-      "pfp_binding_evidence": "meta_03 line 49 (L043_10 Lift patch -> lean4/LiftPatchSemantics.lean, default library root).",
+      "pfp_binding_evidence": "meta_03 line 49 (L043_10) binds `lean4/LiftPatchSemantics.lean`. Caveats: meta_02 line 54 and meta_03 line 36 link `../../../../lean4/…`, which resolves one level above this repository's root; meta_03 marks FidelityAdequacy and OperationTreeFold 'not a library root', which describes the_symbol_game's lakefile, while here every module is a root.",
       "source_status": "kept in the_symbol_game as a working copy: MssnSnTower root; imported by Core.lean"
     },
     {
@@ -223,26 +228,8 @@
         "G5": "A"
       },
       "pfp_binding": "education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md",
-      "pfp_binding_evidence": "meta_03 line 48 (L043_09 Operation fold -> lean4/OperationTreeFold.lean, 'not a library root') and line 99.",
+      "pfp_binding_evidence": "meta_03 line 48 (L043_09) binds `lean4/OperationTreeFold.lean`. Caveats: meta_02 line 54 and meta_03 line 36 link `../../../../lean4/…`, which resolves one level above this repository's root; meta_03 marks FidelityAdequacy and OperationTreeFold 'not a library root', which describes the_symbol_game's lakefile, while here every module is a root.",
       "source_status": "kept in the_symbol_game as a working copy: imported by Core.lean"
-    },
-    {
-      "path": "lean4/Demo3ProtocolInvariants.lean",
-      "sha256": "47f9674935d46d567d3ccc5b760f2f25fe775fe6a57f2ff64efae9de32d301d2",
-      "source_path": "lean4/Demo3ProtocolInvariants.lean",
-      "byte_identical_to_source": true,
-      "role": "Symbol Game kernel module",
-      "score_token": "L2D",
-      "gates": {
-        "G1": "D",
-        "G2": "C",
-        "G3": "C",
-        "G4": "C",
-        "G5": "A"
-      },
-      "pfp_binding": "papers/completion_receipt.json",
-      "pfp_binding_evidence": "c041 l.113 mentions the file only as 'for example' of #print axioms practice. PFP papers/completion_receipt.json sources['lean4/Demo3ProtocolInvariants.lean'] = 47f9674935d4..., equal to the current TSG sha256 47f9674935d4, and the same receipt records the Demo 3 runner tests (test_mutation_6_fuel_budget_exhaustion and others). Home PFP is confirmed; the expected path is PFP/lean4/Demo3ProtocolInvariants.lean (test_lean4_kernel_bridge.py l.22-24, 140; that check is existence-guarded, l.144). Copy the TSG bytes; the FQM copy 239623bd52cf would break the pin.",
-      "source_status": "kept in the_symbol_game as a working copy: MssnSnTower root; read by omega_engine_pfp/tests/mssn_contracts/test_lean4_kernel_bridge.py"
     }
   ]
 }
