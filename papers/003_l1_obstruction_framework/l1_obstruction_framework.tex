@@ -1,0 +1,1451 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{255,255,255}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{\textbf{\colorbox[rgb]{0.97,0.90,0.90}{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.79,0.38,0.79}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.00,0.34,0.68}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.69,0.50,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.39,0.29,0.61}{\textbf{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.57,0.30,0.62}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.54,0.53,0.53}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.00,0.58,1.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.67,0.33,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.12,0.11,0.11}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.00,0.34,0.68}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.69,0.50,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.38,0.47,0.50}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{\underline{#1}}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.58,1.00}{\textbf{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.69,0.50,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.39,0.29,0.61}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{1.00,0.33,0.00}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.69,0.50,0.00}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.12,0.11,0.11}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.12,0.11,0.11}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.12,0.11,0.11}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.43,0.16}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.00,0.43,0.16}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.34,0.68}{\colorbox[rgb]{0.88,0.91,0.97}{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.24,0.68,0.91}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{1.00,0.33,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.34,0.68}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{#1}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+% House preamble for the l1-obstruction-framework paper.
+%
+% Typesetting is not evidence for any claim.
+%
+% Built 2026-09-30.
+%
+% xelatex, not pdflatex: the manuscript uses unicode characters that pdflatex
+% cannot set without per-character declarations.
+
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Latin Modern Roman}
+\setmonofont{Latin Modern Mono}[Scale=0.85]
+\setmathfont{Latin Modern Math}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{microtype}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.4em}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=RoyalBlue,urlcolor=RoyalBlue,
+            citecolor=RoyalBlue,breaklinks=true]{hyperref}
+\usepackage{fvextra}
+\usepackage{framed}
+\fvset{breaklines=true,breakanywhere=true,fontsize=\small}
+
+\AtBeginEnvironment{longtable}{\small}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\definecolor{quoterule}{gray}{0.75}
+\renewenvironment{quote}
+  {\begin{leftbar}\small}
+  {\end{leftbar}}
+
+\usepackage[htt]{hyphenat}
+\usepackage{xurl}
+\emergencystretch=3em
+\sloppy
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  colorlinks=true,
+  linkcolor={RoyalBlue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Finite $\ell^1$ Coboundary Obstructions: Primal--Dual Certificates, Operator-Valued Extensions, and Spectral Comparisons \par}
+\vspace{0.8em}
+{\large Jeremy H. Carroll \par}
+\vspace{0.3em}
+{\large 2026-10-15 \par}
+\vspace{0.3em}
+{\large Version 5.5.3 \par}
+\end{center}
+
+\subsection{Abstract}\label{abstract}
+
+This monograph develops a finite \(\ell^1\) obstruction framework for coboundary defects on discrete and presheaf structures. Its executable core is an exact rational checker for supplied \(\ell^1\) primal--dual KKT certificates on finite graphs, supported by the mechanized integer-list lower-bound inequality \texttt{general\_finite\_certificate\_optimality} in Lean 4. Several central mathematical results are established as rigorous deductive proofs in the text (Theorem 2.1 on commuting contractive aggregation, Theorem 4.2 on the finite scalar KKT certificate, Theorem 5.1 on the contractive-path endpoint bound, and Proposition E.7e on the comparison-operator secular root), separate from the scoped formalization. The general \(L^p\) and Schatten-\(p\) discussions provide mathematical context and numerical diagnostics; unrestricted matrix Schatten-1 trace norms are convex but nonpolyhedral. A formerly proposed three-step local update is withdrawn: it admits non-optimal fixed points and provides neither a descent theorem nor an operational solver.
+
+\textbf{Why this matters.} Optimization over discrete cochain complexes provides computable certificates for inconsistency and topological obstruction in distributed systems, applied topology, and evaluation networks. When defect fields are observed through contractive measurements, local consistency does not imply global exactness unless watcher kernels intersect the coboundary image trivially. This framework supplies exact finite primal and dual certificates that characterize minimal quotient representatives and quantify topological obstruction mass without relying on ungrounded asymptotic or continuous assumptions.
+
+\subsection{Mathematical Primitives and Cochain Structures}\label{mathematical-primitives-and-cochain-structures}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Object
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mathematical Formalization
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Underlying Complex} & A finite directed graph \(G = (V, E)\) or finite partially ordered set \((P, \le)\) with covering relations \(E_{\mathrm{cov}}\). \\
+\textbf{Cochain Spaces} & \(C^0 = \prod_{v \in V} F(v)\) and \(C^1 = \bigoplus_{e=(u,v) \in E} F(u)\), where \(F\) is a presheaf of real/complex Banach spaces. \\
+\textbf{Coboundary Operator} & \((d_0 s)(u,v) = r_{v,u}(s(v)) - s(u)\) on edges, with \(r_{v,u}\) contractive restriction maps (\(r_{v,u} = \mathrm{id}\) on graphs). \\
+\textbf{Nilpotency} & \(d_1 \circ d_0 = 0\) when the presheaf is flat and 2-cells are present; trivial on 1-dimensional graph complexes where \(C^2 = \{0\}\). \\
+\textbf{Exact Cochains} & \(\omega \in \mathrm{im}(d_0)\), representing gauge-equivalent or zero-defect configurations. \\
+\textbf{Licensed Gauge Repairs} & Gauge transformation \(\omega \mapsto \omega + d_0 f\) for \(f \in C^0\). \\
+\textbf{Quotient Space} & \(Q^1 = C^1 / \mathrm{im}(d_0)\), measuring irreducible topological and combinatorial obstructions. \\
+\textbf{Quotient Norm} & \(\Phi_p([\omega]) = \inf_{f \in C^0} \|\omega + d_0 f\|_{p,\mathbf{w}}\) for \(p \in [1, \infty]\), with scalar \(p=1\) the polyhedral base case (unrestricted matrix Schatten-1 is nonpolyhedral). \\
+\textbf{Dual Certificates} & A primal minimizer \(f_p^*\) and a dual circulation \(z_q^* \in \ker(d_0^*)\) satisfying Fenchel-Rockafellar duality and complementary slackness. \\
+\textbf{Operator Stalks} & Stalks \(F(v) = \mathcal{S}_p(\mathcal{H}_v)\) equipped with the Schatten-\(p\) norm \(\|A\|_{S_p} = (\mathrm{Tr}|A|^p)^{1/p}\). \\
+\textbf{Persistent Defect Classes} & Nonzero quotient classes \([\omega] \in Q^1\), partitioned into closed cycle defects (\(d_1 \omega = 0\)) and curvature defects (\(d_1 \omega \ne 0\)). \\
+\textbf{Decider / Optimality} & Exact rational two-phase simplex with Bland's rule at \(p \in \{1, \infty\}\); exact Moore-Penrose Laplacian at \(p=2\); high-precision convex descent for \(p \in (1, \infty)\). \\
+\end{longtable}
+
+\subsection{Classification of Results}\label{classification-of-results}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Category
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Epistemic Status
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Contents
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Rigorous Theorems (Text Proofs)} & Proved in finite mathematics (unmechanized in Lean 4 unless noted) & Functorial aggregation monotonicity under stated contraction hypotheses (Theorem 2.1); exact finite scalar \(\ell^1\) primal--dual KKT certificate (Theorem 4.2, with Lean 4 lower-bound inequality \texttt{general\_finite\_certificate\_optimality}); contractive-path distinguishability endpoint bound (Theorem 5.1); exact rank-one comparison-operator secular root characterization and Loewner bound transfer (Proposition E.7e); and graph-Laplacian \(p=2\) harmonic decomposition. \\
+\textbf{Structural Observations \& Extensions} & Conditional models \& classical theory & Presheaf flatness as composition without curvature; non-commutative Hölder duality (Theorem 3.0); Kadison-Sourour isometry classification under complete positivity (Proposition 3.1); operator-valued Schatten-1 classification (Theorem 3.1); and finite subgradient conservation condition (Proposition 4.15). \\
+\textbf{Quarantined Conjectures \& Refutations} & Open research questions \& refuted heuristics & Continuum total variation \(\Gamma\)-limits; geometry emergence and candidate emergent pseudometrics; physical gauge field / Yang-Mills analogies; fermion sign problem connections; Born rule reconstructions. (The candidate three-step update is refuted and withdrawn; former cycle interaction divergence heuristics are corrected to capacity constraints). \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. Introduction}\label{introduction}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{1.1 Foundations and Preceding Results}\label{foundations-and-preceding-results}
+
+The study of coboundary defects on discrete and presheaf structures addresses a foundational question: when local consistency conditions fail to glue into a global section, how can the resulting obstruction be quantified, certified, and minimized? Preceding work establishes that under natural observer axioms, the \(\ell^1\) norm emerges as the canonical diagnostic metric at four levels of structure:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Combinatorial:} On finite graph cochains, edge locality, coordinate additivity over disjoint supports, coordinate permutation symmetry, and graph isomorphism invariance uniquely select an \(\ell^1\) diagnostic geometry; non-uniform edge weights remain unless edge-uniformity is explicitly hypothesized.
+\item
+  \textbf{Functional-analytic:} On presheaves of Banach spaces, edge-wise additivity, faithfulness, functoriality under bounded linear endomorphisms, and isomorphism invariance select a weighted \(\ell^1\) coboundary norm, with scalar uniqueness established once edge weights are normalized.
+\item
+  \textbf{Dynamical:} Projection of linear state evolutions onto nonlinear constraint manifolds produces coboundary defects that obstruct affine linearity of the projected flow, are measured by the \(\ell^1\) observer diagnostic, and persist at non-vanishing density over finite time intervals independent of system size.
+\item
+  \textbf{Cohomological:} The \(\ell^1\) geometry on 1-cochains induces the standard quotient norm \(\Phi\) on cohomology \(H^1\) and the defect quotient \(Q^1 = C^1 / \mathrm{im}(d_0)\). In contrast to the \(\ell^2\) Hodge decomposition---which can inflate the sum of the \(\ell^1\)-costs of its components by a factor approaching 3 on cycle graphs---the \(\ell^1\) quotient norm attains the exact minimal obstruction mass.
+\end{enumerate}
+
+This monograph synthesizes these perspectives into a unified categorical and variational framework, extending the theory to operator-valued presheaves, contractive aggregation functors, and primal-dual algorithms.
+
+\subsubsection{1.2 Contributions of This Work}\label{contributions-of-this-work}
+
+This monograph establishes a core of proved mathematical theorems and exact computational checkers, while explicitly separating mechanized results from unmechanized text proofs and refuted heuristics:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Mechanized finite certificate inequality (Lean 4):} Theorem \texttt{general\_finite\_certificate\_optimality} establishes the integer-list certificate lower-bound inequality. Under equal lengths, coboundary image length, circulation, capacity, and zero duality gap, it establishes \(\|r\|_{1,w} \le \|\omega + Dp'\|_{1,w}\) for every alternative potential \(p'\). Python \texttt{LocalPrimalDualIterator.certificate\_dominates} evaluates that comparison on a finite graph after \texttt{is\_kkt\_fixed\_point} accepts the witness. As noted in the claim ledger, this mechanized inequality establishes that any candidate achieving the zero duality gap dominates all coboundary shifts; it is complemented in text by Theorem 4.2 which supplies an explicit feasible residual witness \(r^* = \omega - d_0 s^*\) on a finite graph.
+\item
+  \textbf{Proved mathematical theorems in text (unmechanized in Lean 4):} Four core results possess complete deductive proofs established in this monograph:
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    \emph{Functorial aggregation monotonicity (Theorem 2.1):} Defect contraction under commuting cochain pushforward and global \(\ell^1\) contractivity.
+  \item
+    \emph{Finite scalar KKT certificate (Theorem 4.2):} Exact optimality of a feasible residual admitting a divergence-free norming dual circulation, established via weak linear programming duality.
+  \item
+    \emph{Contractive-path distinguishability bound (Theorem 5.1):} Telescoping endpoint bound bounding operational distinguishability across Schatten-\(p\) spaces.
+  \item
+    \emph{Exact comparison-operator secular root (Proposition E.7e):} Unambiguous secular-equation root characterization and its transfer via the Loewner bound to lower-bound the represented spectral defect.
+  \end{enumerate}
+\item
+  \textbf{Operator-valued extensions and classical background:} Classical non-commutative Hölder duality (Theorem 3.0), Kadison-Sourour unitary gauge invariance (Proposition 3.1), operator-valued Schatten-1 classification (Theorem 3.1), and finite-dimensional subgradient conservation (Proposition 4.15).
+\item
+  \textbf{Refuted candidate update and negative boundaries:}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    The former three-step local primal-dual update (historical Definition 4.1) is \textbf{refuted and withdrawn}; it admits non-optimal fixed points (such as on a single edge with \(\omega=1, s=0, \phi=0, \sigma=1, \tau=1/2\)) and supplies no descent or convergence theorem.
+  \item
+    The identification of a coboundary defect with a bipartite product defect is refuted by the maximally entangled Bell-state counterexample (§3.6).
+  \item
+    The conflation of primal residual divergence with dual circulation divergence is refuted by the oriented triangle counterexample (§4.3).
+  \item
+    The unweighted sum of absolute cycle holonomies as a general lower bound on overlapping cycles is refuted by the two-triangle counterexample (§4.10).
+  \end{enumerate}
+\end{itemize}
+
+\subsubsection{1.3 Scope and Scientific Context}\label{scope-and-scientific-context}
+
+The framework focuses on computable, finite-dimensional, and discrete obstruction calculus. The proved finite certificate is checked by exact rational Python and by Lean 4. The surrounding continuous and operator discussion is not that certificate. The paper does not claim to derive quantum mechanics, spacetime geometry, or the Standard Model; rather, it provides rigorous tools for analyzing how local defects behave under optimization, aggregation, and observation.
+
+\subsubsection{1.4 Computational Artifacts and Exact Solvers}\label{computational-artifacts-and-exact-solvers}
+
+All algorithmic claims are implemented in a standalone, hermetic Python reference module (\texttt{mod\_004\_l1\_obstruction\_framework\_core.py}):
+1. \textbf{Zero-Float Exact Rational Solvers (\(p \in \{1, 2, \infty\}\)):}
+* \(p=1\): Exact two-phase simplex linear programming solver with Bland's anti-cycling rule, computing the primal quotient norm, dual circulation, and zero duality gap over \texttt{fractions.Fraction}.
+* \(p=2\): Exact rational Moore--Penrose graph Laplacian solver (\(L_0 = d_0^* d_0\)) yielding orthogonal Hodge-Helmholtz decompositions and harmonic residual circulations.
+* \(p=\infty\): Exact Chebyshev linear programming solver over rational numbers.
+2. \textbf{High-Precision Convex Solvers (\(p \in (1, \infty)\)):} Iteratively Reweighted Least Squares (IRLS) and proximal Bregman gradient algorithms with numerical tolerance checks (evaluating duality gaps and divergence norms to float64 tolerances; \texttt{is\_certified=False} in implementation receipts, reserving exact certification for the rational solvers).
+3. \textbf{Operator Schatten-\(p\) Module:} Exact matrix coboundaries, singular value decompositions, non-commutative Hölder pairings, and Kadison unitary invariance checks.
+
+\subsubsection{1.5 Conventions and Notation}\label{conventions-and-notation}
+
+Norms are denoted \(\|\cdot\|\) with appropriate subscripts. For an operator \(A\) on a finite-dimensional Hilbert space \(\mathcal{H}\), the Schatten-\(p\) norm is \(\|A\|_{S_p} = (\mathrm{Tr}|A|^p)^{1/p}\) for \(1 \le p < \infty\) with \(|A| = (A^* A)^{1/2}\), and \(\|A\|_{S_\infty} = \|A\|_{\mathrm{op}} = \sup_{\|v\|=1} \|Av\|\). In particular, \(\|A\|_{S_1} = \mathrm{Tr}|A|\) denotes the trace norm and \(\|A\|_{S_2} = \sqrt{\mathrm{Tr}(A^* A)}\) denotes the Frobenius norm.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2. Functorial Defect Aggregation}\label{functorial-defect-aggregation}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{2.1 Cochain Complexes, Presheaves, and Defect Operators}\label{cochain-complexes-presheaves-and-defect-operators}
+
+Let \((P, \le)\) be a finite partially ordered set with covering relation \(E_{\mathrm{cov}} = \{(a, b) \in P \times P : a \lessdot b\}\). Let \(F: P^{\mathrm{op}} \to \mathbf{Ban}_1\) be a presheaf of real or complex Banach spaces assigning:
+* To each node \(x \in P\), a Banach stalk \(F(x)\);
+* To each covering relation \(e = (a, b) \in E_{\mathrm{cov}}\), a contractive linear restriction map \(r_{b,a}: F(b) \to F(a)\) satisfying \(\|r_{b,a}(v)\|_{F(a)} \le \|v\|_{F(b)}\) for all \(v \in F(b)\).
+
+The space of global 0-cochains (stalk assignments or sections) is
+\[C^0(P; F) = \prod_{x \in P} F(x),\]
+and the space of 1-cochains (interface defect fields) is
+\[C^1(P; F) = \bigoplus_{e=(a,b) \in E_{\mathrm{cov}}} F(a).\]
+
+The degree-0 coboundary operator \(d_0: C^0(P; F) \to C^1(P; F)\) is defined componentwise on each covering edge \(e = (a, b)\) by
+\[(d_0 s)_e = r_{b,a}(s(b)) - s(a).\]
+A section \(s \in C^0(P; F)\) is \emph{exact} if \((d_0 s)_e = 0\) for all \(e \in E_{\mathrm{cov}}\). The coboundary operator \(d_0\) formalizes interface defect evaluation: \((d_0 s)_e\) measures the discrepancy between what site \(b\) asserts (transported to \(a\) via \(r_{b,a}\)) and what site \(a\) holds.
+
+The quotient space of coboundary defects is
+\[Q^1(P; F) = C^1(P; F) / \mathrm{im}(d_0).\]
+When the presheaf \(F\) is flat (chain-composable, satisfying \(r_{b,a} \circ r_{c,b} = r_{c,a}\) for all \(a \lessdot b \lessdot c\)) and 2-simplices are present, the composition curvature \(K_{c,b,a} = r_{b,a} \circ r_{c,b} - r_{c,a}\) vanishes, ensuring the nilpotency identity \(d_1 \circ d_0 = 0\). For a 1-dimensional graph complex, \(C^2 = \{0\}\), so \(Q^1(G) = H^1(G)\) identically.
+
+\textbf{Mathematical boundary: Section defects versus quotient obstructions.}
+We distinguish between a section's coboundary defect and an irreducible quotient obstruction:
+1. \emph{Section defect:} For any section \(s \in C^0(P; F)\), its defect is defined by \(\delta(s) := d_0 s \in C^1(P; F)\). Because \(\delta(s) \in \mathrm{im}(d_0)\) by construction, its equivalence class in the quotient space \(Q^1(P; F)\) is identically zero: \([\delta(s)] = [d_0 s] = 0 \in Q^1(P; F)\). Consequently, its quotient norm vanishes identically: \(\Phi_p([\delta(s)]) = \inf_{f \in C^0} \|d_0 s - d_0 f\|_p = 0\) (achieved by choosing \(f = s\)), regardless of how large the total section defect \(\|\delta(s)\|_1\) may be along edges. A section defect measures the non-constancy of section \(s\) across covering relations, but it represents an exact cochain and contains zero quotient obstruction.
+2. \emph{Quotient obstruction:} A nonzero quotient obstruction requires an independently specified 1-cochain (edge field) \(\omega \in C^1(P; F)\), representing an externally prescribed connection, edge assignment, or boundary condition. Given \(\omega\), any candidate section \(s \in C^0(P; F)\) forms a repair residual \(r(s) = \omega - d_0 s\). The quotient class \([\omega] \in Q^1(P; F)\) is invariant under licensed gauge transformations \(\omega \mapsto \omega + d_0 f\). When \(\omega \notin \mathrm{im}(d_0)\), the quotient class \([\omega]\) is nonzero. For finite-dimensional stalks (or more generally whenever \(\mathrm{im}(d_0)\) is closed in \(C^1\)), the quotient norm \(\Phi_p([\omega]) = \inf_{s \in C^0} \|\omega - d_0 s\|_p > 0\) is strictly positive and attained by an optimal section. Over infinite-dimensional Banach stalks, however, quotient faithfulness requires an explicit closed-range assumption on \(d_0\): if \(\mathrm{im}(d_0)\) is dense but not closed (for instance, on a three-point poset with restriction given by a compact operator with dense range such as \((Tx)_n = x_n/n\) on \(\ell^2\)), a nonzero algebraic quotient class may have zero quotient infimum \(\Phi([\omega]) = 0\). The finite scalar and finite matrix results in this monograph operate strictly within finite-dimensional stalks, where closed range and norm attainment are guaranteed.
+
+Let \(\pi: P \to Q\) be a surjective order-preserving map to a smaller poset \(Q\), together with a family of linear aggregation maps combining stalks over fibers: \(G(q) = \bigoplus_{x \in \pi^{-1}(q)} F(x)\) with restriction maps induced from \(F\). The \textbf{pushforward} of a section \(s \in C^0(P; F)\) is the section \(\pi_* s \in C^0(Q; G)\) defined by \((\pi_* s)(q) = (s(x))_{x \in \pi^{-1}(q)}\).
+
+\subsubsection{2.2 Monotonicity Under Coarse-Graining}\label{monotonicity-under-coarse-graining}
+
+\textbf{Theorem 2.1 (Functorial Aggregation Monotonicity).} Let \((C^*(P; F), d_0^P)\) and \((C^*(Q; G), d_0^Q)\) be finite cochain complexes over posets \(P\) and \(Q\). Let \(\pi_*: C^0(P; F) \to C^0(Q; G)\) be a section pushforward, and let \(A: C^1(P; F) \to C^1(Q; G)\) be a global 1-cochain aggregation map satisfying:
+1. \textbf{Coboundary commutation:} \(A(d_0^P s) = d_0^Q(\pi_* s)\) for every section \(s \in C^0(P; F)\);
+2. \textbf{Global \(\ell^1\) contractivity:} \(\|A\|_{\ell^1 \to \ell^1} \le 1\), meaning that \(\sum_{e' \in E(Q)} \|(A \omega)_{e'}\|_{G(a_{e'})} \le \sum_{e \in E(P)} \|\omega_e\|_{F(a_e)}\) for all \(\omega \in C^1(P; F)\).
+
+Then
+\[I_Q(\pi_* s) \le I_P(s)\]
+for every section \(s \in C^0(P; F)\), where \(I_P(s) = \|d_0^P s\|_{\ell^1} = \sum_{e \in E(P)} \|(d_0^P s)_e\|_{F(a_e)}\) and \(I_Q(\pi_* s) = \|d_0^Q(\pi_* s)\|_{\ell^1} = \sum_{e' \in E(Q)} \|(d_0^Q \pi_* s)_{e'}\|_{G(a_{e'})}\).
+
+\emph{Proof.} By the coboundary commutation hypothesis (1), the coarse defect 1-cochain is the global aggregate of the fine coboundary defect:
+\[d_0^Q(\pi_* s) = A(d_0^P s).\]
+Applying the global \(\ell^1 \to \ell^1\) operator norm bound from hypothesis (2):
+\[I_Q(\pi_* s) = \|d_0^Q(\pi_* s)\|_{\ell^1} = \|A(d_0^P s)\|_{\ell^1} \le \|A\|_{\ell^1 \to \ell^1} \|d_0^P s\|_{\ell^1} \le \|d_0^P s\|_{\ell^1} = I_P(s).\]
+Equality holds if and only if \(\|A(d_0^P s)\|_{\ell^1} = \|d_0^P s\|_{\ell^1}\). \(\blacksquare\)
+
+\textbf{Remark 2.1 (Coarse-Graining and Detector Sensitivity).} Theorem 2.1 demonstrates that contractive coarse-graining cannot increase the measured defect mass. In the extreme case where \(\pi\) collapses the entire poset to a single vertex, \(I_Q(\pi_* s) = 0\) for all sections \(s\), even when \(I_P(s) > 0\). Thus, a zero defect reading under a coarse observer does not certify that the underlying fine system is defect-free unless the observation map is proved faithful on the subspace of realizable defects.
+
+\textbf{Remark 2.1a (Incidence Caveats on Combinatorial Poset Maps).} An arbitrary order-preserving surjective map \(\pi: P \to Q\) on combinatorial posets does not automatically induce an \(\ell^1\)-contractive cochain map without explicit hypotheses. First, an order-preserving map does not necessarily preserve covering relations: a fine covering relation \(a \lessdot b\) with distinct images \(\pi(a) \ne \pi(b)\) may map to a non-covering chain \(\pi(a) < z < \pi(b)\) in \(Q\). Second, contractivity on individual coarse edges alone does not preclude a single fine edge defect from being aggregated into multiple coarse edges, which would inflate the coarse \(\ell^1\) sum. The global operator bound \(\|A\|_{\ell^1 \to \ell^1} \le 1\) with \(A \circ d_0^P = d_0^Q \circ \pi_*\) is the exact hypothesis that ensures monotonicity under the declared assumptions.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3. Operator-Valued Presheaves and the Schatten-1 Norm}\label{operator-valued-presheaves-and-the-schatten-1-norm}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{3.1 From Scalars to Operators}\label{from-scalars-to-operators}
+
+\begin{quote}
+\textbf{Remark 3.0 (Declared Operator-Algebraic Antecedents).} This section formulates operator-valued obstruction by specifying finite-dimensional Hilbert spaces \(\mathcal{H}_x\) and their Schatten-\(p\) operator algebras as declared mathematical stalks on the presheaf. These operator algebras, partial traces, and trace pairings are explicit structural inputs; they are not derived from combinatorial poset data alone. The analysis establishes how quotient-norm duality and contractive restriction maps generalize to non-commutative operator stalks when such spaces are specified.
+\end{quote}
+
+Prior gauge classification results {[}5, 6{]} classify the \(\ell^1\) norm on presheaves with scalar or vector-valued stalks. In quantum many-body systems and operator-algebraic presheaves, the natural stalks are spaces of density operators or bounded operators on local Hilbert spaces. This section extends the analysis to the complete Schatten-\(p\) family (\(p \in [1, \infty]\)).
+
+\emph{Geometric distinction (polyhedral scalar \(\ell^1\) vs.~nonpolyhedral matrix Schatten-1):} Scalar weighted \(\ell^1\) optimization is polyhedral, admitting exact rational linear programming certificates for rational inputs. In contrast, unrestricted finite matrix trace-norm (Schatten-1) repair is convex but generally \textbf{nonpolyhedral}. For instance, consider the Hermitian two-dimensional subspace of \(2 \times 2\) matrices parametrized by \(A(x,y) = \begin{pmatrix} x & y \\ y & -x \end{pmatrix}\). Its eigenvalues are \(\pm\sqrt{x^2+y^2}\), yielding \(\|A(x,y)\|_{S_1} = 2\sqrt{x^2+y^2}\). The trace-norm unit ball intersects this plane in the Euclidean disk \(x^2+y^2 \le 1/4\), whose smooth circular boundary cannot be formed by polyhedral faces. Only when matrix repair is restricted to diagonal matrices in a fixed common basis does it reduce to polyhedral scalar \(\ell^1\). The computational module uses NumPy singular-value computations for Schatten norms in float64 arithmetic, rather than exact rational LP certification.
+
+Let \((P, \leq)\) be a finite poset. An \textbf{operator-valued presheaf} \(F\) over \(P\) assigns:
+
+\begin{itemize}
+\tightlist
+\item
+  To each \(x \in P\), a finite-dimensional Hilbert space \(\mathcal{H}_x\) and the Banach space \(F(x) = \mathcal{S}_p(\mathcal{H}_x)\) of operators equipped with the Schatten-\(p\) norm:
+  \[\|A\|_{S_p} = \Big(\mathrm{Tr}|A|^p\Big)^{1/p} \quad (1 \le p < \infty), \qquad \|A\|_{S_\infty} = \|A\|_{\mathrm{op}} = \sup_{\|v\|=1} \|Av\|\]
+  where \(|A| = (A^*A)^{1/2}\) is the operator absolute value. The case \(p=1\) corresponds to the trace-class operators with \(\|A\|_{S_1} = \mathrm{Tr}|A|\), \(p=2\) corresponds to the Hilbert--Schmidt (Frobenius) norm \(\|A\|_{S_2} = \sqrt{\mathrm{Tr}(A^*A)}\), and \(p=\infty\) corresponds to the operator (spectral) norm.
+\item
+  To each covering edge \(e = (a, b)\), a Schatten-\(p\) contractive restriction map \(r_{b,a}: F(b) \to F(a)\) satisfying \(\|r_{b,a}(B)\|_{S_p} \le \|B\|_{S_p}\) (for \(p=1\), this includes completely positive trace-preserving or trace-non-increasing maps such as the partial trace or conditional expectation).
+\end{itemize}
+
+The coboundary defect at edge \(e = (a, b)\) for an operator-valued section \(\rho = (\rho_x)_{x \in P}\) (where \(\rho_x \in F(x)\)) is:
+\[\delta_e(\rho) = r_{b,a}(\rho_b) - \rho_a \in F(a)\]
+
+This models the failure of the local state \(\rho_a\) to match the transported or restricted state from \(\rho_b\). In quantum-state realizations (\(p=1\)), this represents local marginal incompatibility across the restriction morphism \(r_{b,a}\), rather than the bipartite product defect or correlation of a joint quantum state.
+
+\subsubsection{3.2 Non-Commutative Hölder Duality and Polar Alignment}\label{non-commutative-huxf6lder-duality-and-polar-alignment}
+
+Let \(p, q \in [1, \infty]\) be conjugate Hölder exponents satisfying \(1/p + 1/q = 1\). The non-commutative matrix pairing is given by the Hilbert--Schmidt trace inner product:
+\[\langle X, Y \rangle = \mathrm{Tr}(X^* Y)\]
+
+We recall the classical non-commutative Hölder duality on finite-dimensional Schatten spaces:
+
+\textbf{Theorem 3.0 (Non-Commutative Hölder Duality).} For any operators \(X \in \mathcal{S}_q(\mathcal{H})\) and \(Y \in \mathcal{S}_p(\mathcal{H})\) on a finite-dimensional Hilbert space \(\mathcal{H}\), the trace pairing satisfies:
+\[|\mathrm{Tr}(X^* Y)| \le \|X\|_{S_q} \|Y\|_{S_p}\]
+Furthermore, for any nonzero \(Y \in \mathcal{S}_p(\mathcal{H})\) with polar decomposition \(Y = U |Y|\) (where \(U\) is a partial isometry), an isometric dual witness \(X \in \mathcal{S}_q(\mathcal{H})\) satisfying
+\[\|X\|_{S_q} = 1 \quad \text{and} \quad \mathrm{Tr}(X^* Y) = \|Y\|_{S_p}\]
+is constructed according to the conjugate exponent regime:
+* \textbf{Finite intermediate regime (\(1 < p < \infty\), \(1 < q < \infty\)):}
+\[X = U \frac{|Y|^{p-1}}{\|Y\|_{S_p}^{p-1}}\]
+* \textbf{Trace-norm base case (\(p = 1\), \(q = \infty\)):} With polar decomposition \(Y = U |Y|\), set \(X = U\) (completed to a unitary if \(Y\) is rank-deficient), yielding \(\|X\|_{S_\infty} = 1\) and \(\mathrm{Tr}(X^* Y) = \mathrm{Tr}|Y| = \|Y\|_{S_1}\).
+* \textbf{Operator-norm dual case (\(p = \infty\), \(q = 1\)):} Let \(\|Y\|_{S_\infty} = \sigma_1 > 0\) be the peak singular value of \(Y\), and let \(v \in \mathcal{H}\) be a unit right singular vector satisfying \(|Y| v = \sigma_1 v\) with \(\|v\| = 1\). The rank-one operator:
+\[X = U |v\rangle\langle v|\]
+satisfies \(\|X\|_{S_1} = 1\) and achieves exact trace alignment:
+\[\mathrm{Tr}(X^* Y) = \mathrm{Tr}(|v\rangle\langle v| U^* U |Y|) = \langle v, |Y| v \rangle = \sigma_1 = \|Y\|_{S_\infty}.\]
+
+This establishes that the Banach dual of the Schatten-\(p\) space is isometrically isomorphic to the Schatten-\(q\) space: \(\mathcal{S}_p(\mathcal{H})^* \cong \mathcal{S}_q(\mathcal{H})\) for all \(p \in [1, \infty]\) in finite dimensions.
+
+\subsubsection{3.3 Kadison-Isometry Unitary Gauge Invariance}\label{kadison-isometry-unitary-gauge-invariance}
+
+Unitary gauge invariance across the Schatten family is governed by the Kadison isometry theorem:
+
+\textbf{Proposition 3.1 (Kadison Unitary Invariance).} For any \(p \in [1, \infty]\), the Schatten-\(p\) norm is invariant under arbitrary unitary transformations \(U, V \in \mathcal{U}(\mathcal{H})\):
+\[\|U A V^*\|_{S_p} = \|A\|_{S_p}\]
+Moreover, by the Kadison--Sourour isometry theorem, for every \(p \in [1, \infty]\) with \(p \neq 2\), every surjective linear isometry of \(\mathcal{S}_p(\mathcal{H})\) has the form \(A \mapsto U A V\) or \(A \mapsto U A^T V\) for unitaries \(U, V\). Requiring complete positivity excludes the transpose \(A^T\) for \(\dim \mathcal{H} \ge 2\), and preserving the cone of positive operators forces \(V = U^*\) (since \(U I V = I \implies V = U^*\) under unitality of Jordan *-isomorphisms), restricting admissible local frame automorphisms uniquely to unitary conjugation \(A \mapsto U_x A U_x^*\).
+
+\subsubsection{3.4 The M-Compatible Transformation Monoid}\label{the-m-compatible-transformation-monoid}
+
+When mapping functoriality onto structured spaces (Banach presheaves), requiring invariance under \emph{all} bounded linear maps uniquely drives the unweighted \(L^1\) norm. However, physical state operators restrict the mapping monoid.
+
+Let the allowable measurement transformations form an admissible monoid \(M_e \subset \text{End}(F(a_e))\).
+When \(M\) is restricted to CPTP maps, one obtains a physically motivated monotonicity class, but this restriction alone does not uniquely select the trace norm. Trace/Schatten-1 geometry must be supplied by additional operational distinguishability assumptions.
+
+\subsubsection{3.5 Trace-Norm Classification Extension}\label{trace-norm-classification-extension}
+
+\begin{quote}
+\textbf{Theorem 3.1 (Operator-Valued Schatten-1 Classification).} Let \(\nu\) be a seminorm on the operator-valued 1-cochain space \(C^1(P, F) = \bigoplus_{e \in E_{\mathrm{cov}}} \mathcal{B}_1(\mathcal{H}_{a_e})\) satisfying:
+
+(P1) Edge-wise additivity: \(\nu((\delta_e)_e) = \sum_e \nu_e(\delta_e)\)
+
+(P2) Faithfulness: \(\nu_e(\delta) = 0 \iff \delta = 0\)
+
+(P3) Functoriality: \(\nu_e(\Phi(\delta)) \leq \|\Phi\|_{\mathrm{op}} \cdot \nu_e(\delta)\) for every bounded linear map \(\Phi: \mathcal{B}_1(\mathcal{H}) \to \mathcal{B}_1(\mathcal{H})\)
+
+(P4) Automorphism invariance: \(\nu(\sigma \cdot \delta) = \nu(\delta)\) for every presheaf automorphism \(\sigma \in \mathrm{Aut}(P, F)\)
+
+Then \(\nu_e(\delta) = w_e \cdot \|\delta\|_1\) for some \(w_e > 0\), where \(\|\cdot\|_1\) is the Schatten-1 (trace) norm. Under (P4), \(w_e\) is constant on each edge orbit of \(\mathrm{Aut}(P, F)\). If the edge action of \(\mathrm{Aut}(P, F)\) is transitive, or if (P4) is strengthened to cross-edge calibration invariance (invariance under stalk-isometry identifications across arbitrary edges), then \(w_e = \alpha\) for all \(e\).
+\end{quote}
+
+\emph{Proof sketch.} The argument follows the structure of the Banach presheaf gauge classification {[}5, Theorem 2.2{]}. The key step is the direction-independence lemma: for any two operators \(A, B \in \mathcal{B}_1(\mathcal{H})\) with \(\|A\|_1 = \|B\|_1 \neq 0\), we must show \(\nu_e(A) = \nu_e(B)\).
+
+By the operator-valued Hahn--Banach theorem (a consequence of the duality \(\mathcal{B}_1(\mathcal{H})^* = \mathcal{B}(\mathcal{H})\)), for any \(A\) with \(\|A\|_1 = 1\), there exists \(X \in \mathcal{B}(\mathcal{H})\) with \(\|X\|_{\mathrm{op}} = 1\) and \(\mathrm{Tr}(X^* A) = 1\). Define the rank-one map \(\Phi: \mathcal{B}_1(\mathcal{H}) \to \mathcal{B}_1(\mathcal{H})\) by \(\Phi(C) = \mathrm{Tr}(X^* C) \cdot B / \|B\|_1\), which is bounded with operator norm \(\leq 1\). The theorem uses bounded linear functoriality on the trace-class Banach space. Complete boundedness or CPTP admissibility is not part of this maximal-linear classification unless separately declared. Then \(\Phi(A) = B\), and (P3) gives \(\nu_e(B) \leq \nu_e(A)\). By symmetry, equality follows.
+
+Direction independence plus homogeneity forces \(\nu_e(\delta) = w_e \|\delta\|_1\) on each edge \(e\). For a general complex, automorphism invariance (P4) forces \(w_{\sigma(e)} = w_e\), so weights are constant on edge orbits of \(\mathrm{Aut}(P, F)\). On an edge-transitive complex (such as a cycle graph or complete graph), there is a single edge orbit, yielding uniform weights \(w_e = \alpha\). On a general complex, however, ordinary automorphism invariance does not force uniform weights across distinct orbits: for instance, on a path graph of three edges \(e_1 - e_2 - e_3\), the automorphism group is \(\mathbb{Z}_2\) (exchanging \(e_1 \leftrightarrow e_3\) and fixing \(e_2\)), so weights \((w_1, w_2, w_3) = (1, 2, 1)\) are strictly invariant under all graph automorphisms but are non-uniform. To obtain uniform weights on general complexes, one requires either an edge-transitive symmetry group or a cross-edge calibration axiom asserting invariance under isometric stalk identifications across distinct edges. \(\square\)
+
+\textbf{Remark 3.1 (Physical interpretation).} Theorem 3.1 is a maximal bounded-linear classification on the trace-class Banach space. It should not be read as saying CPTP monotonicity alone forces the trace norm. In quantum applications, trace distance is selected only after adding operational distinguishability assumptions such as classical total-variation reduction and binary discrimination duality.
+
+\subsubsection{3.6 Structural Consequences}\label{structural-consequences}
+
+\textbf{Quantum marginal incompatibility vs.~state correlation.} Let \(\rho_a \in \mathcal{S}_1(\mathcal{H}_a)\) and \(\rho_b \in \mathcal{S}_1(\mathcal{H}_b)\) be local states assigned to vertices \(a\) and \(b\), and let \(r_{b,a}\) be a trace-preserving restriction. The coboundary defect \(\delta_e(\rho) = r_{b,a}(\rho_b) - \rho_a\) measures local marginal incompatibility under the restriction map \(r_{b,a}\).
+
+It is critical to distinguish this local cochain defect from bipartite state correlation. Specifically, \(\delta_e\) cannot be identified with the two-site product defect \(\|\rho - \rho_A \otimes \rho_B\|_1\) of a bipartite quantum state \(\rho\) on \(\mathcal{H}_A \otimes \mathcal{H}_B\). For example, consider the maximally entangled Bell state \(\rho = |\Phi^+\rangle\langle\Phi^+|\) on two qubits \(\mathcal{H}_A \otimes \mathcal{H}_B\). The local one-qubit marginals are \(\rho_A = \mathrm{Tr}_B(\rho) = \tfrac{1}{2} I_2\) and \(\rho_B = \mathrm{Tr}_A(\rho) = \tfrac{1}{2} I_2\). If an edge \(e\) connects two single-qubit stalks under identity restriction, the local difference vanishes: \(\delta_e = \rho_B - \rho_A = 0\). Yet the true bipartite state correlation is strictly nonzero:
+\[\|\rho - \rho_A \otimes \rho_B\|_1 = \left\| |\Phi^+\rangle\langle\Phi^+| - \tfrac{1}{4} I_4 \right\|_1 = \tfrac{3}{2}.\]
+Thus, local marginal compatibility across 1-site stalks does not detect bipartite state correlation. Measuring pair correlations within this cochain framework requires either defining a separate pair-state residual on a composite edge/vertex stalk or evaluating higher-order nerve obstructions; it is not captured by \(\delta_e\) on single-site stalks.
+
+\textbf{Local defect bounds.} The edge-wise additivity (P1) combined with the trace norm structure places strict bounds on the total local coboundary defect across all edges sharing a vertex. Because this bound applies to local marginal discrepancies rather than joint bipartite state correlations, it is not a quantum correlation or entanglement monogamy statement. Any resemblance to monogamy-type bounds is purely structural at the level of linear cochain sums.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4. Primal--Dual Optimality Certificates and Variational Structure}\label{primaldual-optimality-certificates-and-variational-structure}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{\texorpdfstring{4.1 Discarding the \(\ell^2\) Laplacian}{4.1 Discarding the \textbackslash ell\^{}2 Laplacian}}\label{discarding-the-ell2-laplacian}
+
+Classical formulations utilize the \(\ell^2\) Sheaf Laplacian (\(\Delta_{\mathcal{F}} = d^*d\)) as an analytically convenient smoothing operator to define local dynamics. Companion cohomology results {[}7{]} show that \(\ell^2\) Hodge representatives can inflate \(\ell^1\) cost in a specific cycle-graph construction. If the observer has selected the \(\ell^1\) quotient norm as the acceptance geometry, an \(\ell^2\) Laplacian flow is therefore an auxiliary algorithmic choice, not the native variational geometry.
+
+\subsubsection{\texorpdfstring{4.2 The Local \(\ell^1\) Primal--Dual Iterator (Discrete Form)}{4.2 The Local \textbackslash ell\^{}1 Primal--Dual Iterator (Discrete Form)}}\label{the-local-ell1-primaldual-iterator-discrete-form}
+
+\begin{quote}
+\textbf{Correction and Formal Withdrawal (2026-10-08).} The three-step map below is retained only as a \textbf{withdrawn and refuted candidate update}. On one oriented edge, consider \(\omega=1\), initial section \(s=0\), dual variable \(\phi=0\), and step sizes \(\sigma=1\), \(\tau=1/2\). Step (1) gives \(\phi^{1/2}=1\), while \(d_0d_0^*\phi^{1/2}=2\), so Step (2) gives \(\phi^1 = 1 - (1/2)(2) = 0\), and Step (3) leaves \(s\) unchanged (\(s^1 = 0\)). This configuration is a non-optimal fixed point because a potential with \(d_0 s = \omega\) achieves zero residual. The divergence correction can also exit the dual unit ball for other step sizes. Consequently, the three-step scheme is neither an implemented solver nor evidence for descent, convergence, or fixed-point optimality. All claims of defect reduction, convergence, or fixed-point characterization for this scheme are withdrawn. The executable code and retained mathematical theory verify only independently supplied finite \(\ell^1\) KKT certificates via linear programming duality.
+\end{quote}
+
+The differential inclusion associated with minimizing \(\|\omega-d_0s\|_1\) provides a formal characterization of \(\ell^1\) residual repair, but does not by itself define a constructive or local dynamical system.
+
+\textbf{Withdrawn candidate update (historical Definition 4.1).} The displayed rule is not a defined solver or a certification procedure. For vector- or operator-valued defects, it would additionally require projection onto the declared dual unit ball.
+Let \((P, F)\) be a finite presheaf over a poset with covering edges \(E_{\mathrm{cov}}\). Fix an observed edge field \(\omega \in C^1(P,F)\) and let \(s^k \in C^0(P, F)\) be a section at iteration \(k\). Define the repair residual:
+\[ \delta^k = \omega - d_0 s^k \in C^1(P, F). \]
+The special case \(\omega=0\) is a section-consistency energy, not a nontrivial cohomology quotient.
+
+Introduce dual variables \(\phi^k \in C^1(P, F)\), initialized arbitrarily with \(\|\phi^0\|_\infty \le 1\).
+
+For step sizes \(\sigma, \tau, \eta > 0\), define:
+
+\textbf{(1) Dual ascent (edge-local)}
+\[ \phi^{k+\frac{1}{2}}(e) = \operatorname{clip}_{[-1,1]} \Big( \phi^k(e) + \sigma \cdot \delta^k(e) \Big) \]
+
+\textbf{(2) Divergence correction (vertex-local)}
+\[ \phi^{k+1} = \phi^{k+\frac{1}{2}} - \tau \cdot d_0 (d_0^* \phi^{k+\frac{1}{2}}) \]
+
+\textbf{(3) Primal update (vertex-local)}
+\[ s^{k+1} = s^k + \eta \cdot d_0^* \phi^{k+1} \]
+
+\textbf{Historical Interpretation:}
+* Step (1) was intended to align dual variables with the local defect (sign selection).
+* Step (2) was intended to enforce the approximate divergence-free constraint \(d_0^* \phi \approx 0\).
+* Step (3) was intended to update the section to reduce the repair residual.
+
+\textbf{Historical Proposition 4.1 (Withdrawn / Refuted).}
+\emph{(Withdrawn / Refuted).} The historical claim that this three-step interaction reduces defects or converges to minimizers is refuted by the one-edge counterexample above. No convergence, descent, or fixed-point optimality is asserted. This proposition is retained solely for historical audit context.
+
+\textbf{Theorem 4.2 (Finite \(\ell^1\) KKT Certificate in Scalar Graph Complexes --- Retained Independent Result).} Let \(G = (V, E)\) be a finite directed graph with strictly positive edge weights \(\mathbf{w} = (w_e)_{e \in E} \in \mathbb{R}_{>0}^E\), scalar cochain spaces \(C^0 = \mathbb{R}^V\) and \(C^1 = \mathbb{R}^E\), coboundary operator \((d_0 s)_e = s(v) - s(u)\) for \(e = (u,v) \in E\), and weighted \(\ell^1\) norm \(\|r\|_{1,\mathbf{w}} = \sum_{e \in E} w_e |r_e|\). Let \(\omega \in \mathbb{R}^E\) be an observed edge field. Let \(s^* \in \mathbb{R}^V\) be a candidate potential with residual \(r^* = \omega - d_0 s^* \in \mathbb{R}^E\), and let \(\phi^* \in \mathbb{R}^E\) be an independently supplied dual cochain paired via the canonical Euclidean pairing \(\langle \phi, r \rangle = \sum_{e \in E} \phi_e r_e\), satisfying:
+1. \textbf{Divergence-free circulation:} \((d_0^* \phi^*)_v = \sum_{e: \operatorname{head}(e)=v} \phi_e^* - \sum_{e: \operatorname{tail}(e)=v} \phi_e^* = 0\) for all \(v \in V\);
+2. \textbf{Weighted dual capacity bound:} \(|\phi_e^*| \le w_e\) for all \(e \in E\) (in the unweighted case \(\mathbf{w}=\mathbf{1}\), \(\|\phi^*\|_\infty \le 1\));
+3. \textbf{Exact polar / sign alignment:} \(\langle \phi^*, r^* \rangle = \|r^*\|_{1,\mathbf{w}}\), meaning \(\phi_e^* = w_e \operatorname{sgn}(r_e^*)\) whenever \(r_e^* \ne 0\), and \(|\phi_e^*| \le w_e\) whenever \(r_e^* = 0\).
+
+Then \(r^*\) is an exact weighted \(\ell^1\) norm-minimal representative in the quotient class \([\omega] \in \mathbb{R}^E / \mathrm{im}(d_0)\):
+\[\|r^*\|_{1,\mathbf{w}} = \min_{s \in \mathbb{R}^V} \|\omega - d_0 s\|_{1,\mathbf{w}}.\]
+
+\emph{Proof.} For any candidate potential \(s \in \mathbb{R}^V\), Cauchy--Schwarz / Hölder weak duality under the capacity bound \(|\phi_e^*| \le w_e\) gives:
+\[\langle \phi^*, \omega - d_0 s \rangle = \sum_{e \in E} \phi_e^* (\omega - d_0 s)_e \le \sum_{e \in E} |\phi_e^*| |(\omega - d_0 s)_e| \le \sum_{e \in E} w_e |(\omega - d_0 s)_e| = \|\omega - d_0 s\|_{1,\mathbf{w}}.\]
+By the adjointness of the incidence matrix and divergence operator:
+\[\langle \phi^*, \omega - d_0 s \rangle = \langle \phi^*, \omega \rangle - \langle d_0^* \phi^*, s \rangle = \langle \phi^*, \omega \rangle,\]
+where we used the divergence-free circulation condition \(d_0^* \phi^* = 0\). Hence \(\langle \phi^*, \omega \rangle \le \|\omega - d_0 s\|_{1,\mathbf{w}}\) for all \(s \in \mathbb{R}^V\). Evaluating at \(s^*\) with residual \(r^* = \omega - d_0 s^*\):
+\[\langle \phi^*, \omega \rangle = \langle \phi^*, \omega - d_0 s^* \rangle = \langle \phi^*, r^* \rangle = \|r^*\|_{1,\mathbf{w}},\]
+by polar alignment (3). Therefore \(\|r^*\|_{1,\mathbf{w}} \le \|\omega - d_0 s\|_{1,\mathbf{w}}\) for all \(s \in \mathbb{R}^V\), establishing exact minimality under the declared assumptions. This certificate is an exact linear programming duality result; it does not require, define, or characterize a fixed point of the withdrawn candidate update. \(\blacksquare\)
+
+\textbf{Corollary 4.2 (Feasible Residual Witness and Lean Lower Bound).} The Lean 4 theorem \texttt{general\_finite\_certificate\_optimality} establishes the general lower-bound inequality \(\|r\|_{1,w} \le \|\omega + Dp'\|_{1,w}\) for arbitrary candidate list \(r\) under the premises of capacity, circulation, and zero duality gap \(\langle z, \omega \rangle = \|r\|_{1,w}\). When combined with an explicit potential witness \(s^* \in C^0\) satisfying \(r = \omega - d_0 s^*\), this shows that \(r\) is an attained, feasible \(\ell^1\)-minimal representative of the quotient class \([\omega]\).
+
+\textbf{Remark 4.2a (Dual Spaces for General Banach Presheaves).} In Theorem 4.2, the cochains are scalar (\(\mathbb{R}^V\) and \(\mathbb{R}^E\)), where the continuous dual space \((C^1)^*\) is identified with \(C^1 = \mathbb{R}^E\) via the standard dot product. For a general presheaf \(F: P^{\mathrm{op}} \to \mathbf{Ban}_1\), the space of 1-cochains is \(C^1(P; F) = \bigoplus_{e \in E_{\mathrm{cov}}} F(a_e)\) equipped with the direct sum norm \(\|r\|_{1,\mathbf{w}} = \sum_e w_e \|r_e\|_{F(a_e)}\). The continuous dual space is \((C^1(P; F))^* \cong \prod_{e \in E_{\mathrm{cov}}} F(a_e)^*\). A dual certificate is not a section of \(C^1\), but a dual cochain \(\phi^* = (\phi_e^*)_{e \in E_{\mathrm{cov}}} \in (C^1)^*\), where each \(\phi_e^* \in F(a_e)^*\) is a bounded linear functional on the stalk \(F(a_e)\). The canonical pairing is \(\langle \phi^*, r \rangle = \sum_{e} \phi_e^*(r_e)\). The dual coboundary \(d_0^*: (C^1)^* \to (C^0)^*\) is the Banach space adjoint \((d_0^* \phi^*)(s) = \phi^*(d_0 s)\). The dual capacity condition is \(\|\phi_e^*\|_{F(a_e)^*} \le w_e\) for all \(e\), divergence-free circulation requires \(d_0^* \phi^* = 0 \in (C^0)^*\), and polar alignment requires \(\phi_e^*(r_e^*) = w_e \|r_e^*\|_{F(a_e)}\) for all \(e\). The software module and exact rational certificates in this package implement the scalar graph model of Theorem 4.2.
+
+\textbf{Variational regimes across \(L^p\) and Schatten-\(p\) (\(p \in [1, \infty]\)).} Beyond the finite scalar \(\ell^1\) certificate of Theorem 4.2, the surrounding \(L^p\) and Schatten-\(p\) regimes behave as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Polyhedral \(L^1\) Base Case (\(p = 1\)):} There exists a divergence-free dual circulation \(\phi^*\) such that:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\phi^* \in \partial \|\delta_{\mathrm{irr}}\|_1\), i.e., \(\|\phi^*\|_\infty \le 1\) and \(\phi^*(e) = \operatorname{sgn}(\delta_{\mathrm{irr}}(e))\) on \(\operatorname{supp}(\delta_{\mathrm{irr}})\),
+  \item
+    \(d_0^* \phi^* = 0\),
+  \item
+    \(\langle \phi^*, \delta_{\mathrm{irr}} \rangle = \|\delta_{\mathrm{irr}}\|_1\).
+  \end{itemize}
+\item
+  \textbf{Strictly Convex \(L^p\) Regime (\(p \in (1, \infty)\)):} The quotient minimizer \(s_p^*\) is strictly unique (modulo \(\ker d_0\)) and satisfies the Euler--Lagrange discrete graph \(p\)-Laplacian optimality condition:
+  \[ d_0^* \Big( |\omega - d_0 s^*|^{p-1} \operatorname{sgn}(\omega - d_0 s^*) \Big) = 0 \]
+  The unique normalized dual circulation witness \(\phi^* = |\delta_{\mathrm{irr}}|^{p-1} \operatorname{sgn}(\delta_{\mathrm{irr}}) / \|\delta_{\mathrm{irr}}\|_p^{p-1}\) satisfies \(d_0^* \phi^* = 0\), \(\|\phi^*\|_q = 1\) (with \(1/p + 1/q = 1\)), and \(\langle \phi^*, \delta_{\mathrm{irr}} \rangle = \|\delta_{\mathrm{irr}}\|_p\).
+\item
+  \textbf{Hilbertian \(L^2\) Case (\(p = 2\)):} The condition reduces to the linear Moore--Penrose graph Laplacian solution \(s_2^* = L_0^+ d_0^* \omega\), with harmonic residual \(\delta_{\mathrm{harm}} = \omega - d_0 s_2^*\) satisfying \(d_0^* \delta_{\mathrm{harm}} = 0\) and self-dual circulation witness \(W_2 = \delta_{\mathrm{harm}} / \|\delta_{\mathrm{harm}}\|_2\).
+\item
+  \textbf{Chebyshev \(L^\infty\) Case (\(p = \infty\)):} The minimizer minimizes the peak edge defect \(\max_e |(\omega - d_0 s)_e|\), certified by a dual circulation \(z\) with \(d_0^* z = 0\), \(\|z\|_1 \le 1\), and \(\langle z, \delta_{\mathrm{irr}} \rangle = \|\delta_{\mathrm{irr}}\|_\infty\), with \(z\) supported entirely on peak edges.
+\item
+  \textbf{Operator-Valued Schatten-\(p\) Extension:} When stalks are operator algebras \(\mathcal{S}_p(\mathcal{H})\), the optimal operator potential \(S^*\) and dual field \(\Phi^*\) satisfy the non-commutative zero-divergence law:
+  \[ (d_0^* \Phi^*)(v) = \sum_{e: \operatorname{head}(e)=v} \Phi^*(e) - \sum_{e: \operatorname{tail}(e)=v} \Phi^*(e) = 0 \]
+  with \(\|\Phi^*\|_{S_q} \le 1\) and non-commutative polar alignment \(\operatorname{Tr}(\Phi^*(e)^* \delta_{\mathrm{irr}}(e)) = \|\delta_{\mathrm{irr}}(e)\|_{S_p}\).
+\end{enumerate}
+
+For the retained finite \(\ell^1\) result, optimality follows from weak duality and the stated zero-gap equality. No claim about fixed points or convergence follows from that certificate.
+
+\textbf{Refuted former Conjecture 4.3 (Local \(\ell^1\) Defect Descent).} The one-edge calculation supplies a non-optimal fixed point, so strict decrease unless fixed is false. Monotonicity and convergence claims for the candidate update are formally refuted and withdrawn.
+
+\begin{quote}
+\textbf{Historical note.} The following former descent sketch and edge-wise heuristics are withdrawn with the candidate update. The shipped module does not execute the three steps. No subgradient-iteration, convergence, or fixed-point claim is made here.
+\end{quote}
+
+\emph{Historical Proof Sketch (Non-viable).}
+1. \textbf{Dual alignment:} From Step (1), \(\phi^{k+\frac{1}{2}} \approx \operatorname{sign}(\delta^k)\), implying \(\langle \phi^{k+\frac{1}{2}}, \delta^k \rangle \approx \|\delta^k\|_1\).
+2. \textbf{Divergence correction:} Step (2) modifies \(\phi\), but can exit the dual ball or cancel defect alignment.
+3. \textbf{Primal update:} Step (3) fails to decrease defect in the presence of non-optimal fixed points. As shown by the one-edge counterexample, the update stalls at non-optimal configurations. \(\square\)
+
+\textbf{Historical Context on Defect Heuristics.} The historical conceptual intuition was that cycle-supported defects would persist as stable features under optimization. However, local three-step iterations do not guarantee descent or convergence to such configurations. Rigorous characterization of cycle-supported minimizers is provided solely by the static KKT dual circulation conditions of Theorem 4.2.
+
+\textbf{Conjecture 4.4 (Local Edge-Wise Descent Heuristic).} Let \(s^k\) evolve under the Local \(\ell^1\) Primal--Dual Iterator. For each edge \(e = (a,b)\), define the local defect \(\delta^k(e) = r_{b,a}(s^k(b)) - s^k(a)\). For sufficiently small step sizes one expects:
+\[ |\delta^{k+1}(e)| \le |\delta^k(e)| + \sum_{e' \sim e} \epsilon_{e,e'} \]
+where \(e' \sim e\) are edges sharing a vertex with \(e\), and \(\epsilon_{e,e'}\) are higher-order coupling terms bounded at \(O(\eta^2)\).
+
+\emph{Interpretation.} Each edge attempts to reduce its own defect using only local information, experiencing bounded interference from neighboring edges. This motivates the system as a distributed local descent scheme, but a rigorous monotonic descent theorem requires a Lyapunov or operator-splitting proof and is not established here.
+
+\emph{Heuristic.} The update at a vertex depends only on adjacent edges. For an edge \(e=(a,b)\), the defect evolves as \(\delta^{k+1}(e) = \delta^k(e) - \eta \big(\sum_{e' \ni b} \phi(e') - \sum_{e' \ni a} \phi(e')\big)\). This decomposes into a self-contribution from \(e\) and cross-contributions from neighboring edges. The clipping bound controls the size of those terms, but it does not by itself prove monotonic local decrease.
+
+\textbf{Heuristic 4.2 (Cycle Concentration Mechanism).}
+When the quotient class is nonzero and an optimization process minimizes the \(\ell^1\) quotient problem, residual defects concentrate on representatives compatible with the cycle-space constraints. This is a variational property of the static problem, not a dynamical convergence theorem for the withdrawn three-step update.
+
+\subsubsection{4.3 Topologically Stable Defect Configurations and Cycle Invariance}\label{topologically-stable-defect-configurations-and-cycle-invariance}
+
+We now formalize the conditions under which topological defects persist as minimal features in the quotient space.
+
+\textbf{Definition 4.2 (\(\ell^1\)-Minimal Residual and Dual Circulation).} A residual \(r \in C^1\) is \(\ell^1\)-minimal in its quotient class \([r] \in Q^1\) precisely when it admits a norming dual circulation \(\phi \in \partial \|r\|_{1,\mathbf{w}}\) in the coboundary annihilator:
+\[d_0^* \phi = 0 \quad \text{and} \quad \langle \phi, r \rangle = \|r\|_{1,\mathbf{w}},\]
+under the finite scalar problem's assumptions.
+
+\emph{Primal divergence vs.~dual circulation distinction:} Neither the divergence nor the support of that dual certificate is generally the divergence or support of the residual. The divergence-free object in the KKT theorem is the \textbf{dual certificate} \(\phi\), not generally the primal residual \(r\).
+
+\emph{Exact counterexample (certified optimum with nonzero primal divergence):} On the cyclically oriented triangle \(0 \to 1 \to 2 \to 0\) with unit edge weights \(\mathbf{w}=\mathbf{1}\), take
+\[r = (2, 1, 1), \qquad \phi = (1, 1, 1).\]
+Then
+\[d_0^* \phi = 0, \qquad \|\phi\|_\infty = 1, \qquad \langle \phi, r \rangle = 4 = \|r\|_1.\]
+Therefore \(r\) is an \(\ell^1\)-minimal representative of its quotient class. Nevertheless, the primal divergence is strictly nonzero:
+\[d_0^* r = (-1, 1, 0) \ne 0.\]
+This is an exactly certified optimum whose primal divergence does not vanish.
+
+Furthermore, the same dual certificate \(\phi = (1, 1, 1)\) certifies the residual \(r' = (3, 0, 0)\) as optimal (since \(\langle \phi, r' \rangle = 3 = \|r'\|_1\)). Here \(\phi_e \ne 0\) on edges where \(r'_e = 0\). Subgradient alignment \(\phi \in \partial \|r\|_1\) requires \(\phi_e = \operatorname{sgn}(r_e)\) only on \(\operatorname{supp}(r)\); at zero-residual coordinates, the dual may take any value within its capacity interval \([-w_e, w_e]\) to achieve divergence-free circulation.
+
+\textbf{Proposition 4.5 (Certified Divergence-Free Cycle Minimizers).}
+Let \(r \in C^1\) be a candidate residual on a finite graph admitting a dual certificate \(\phi\) such that \(\phi \in \partial \|r\|_{1,\mathbf{w}}\) and \(d_0^* \phi = 0\). Then \(r\) is an \(\ell^1\)-minimal representative in its quotient class \([r] \in Q^1\).
+
+\emph{Proof.} Follows directly from Theorem 4.2 via weak linear programming duality: for any alternative potential \(s \in C^0\), \(\langle \phi, r - d_0 s \rangle = \langle \phi, r \rangle = \|r\|_{1,\mathbf{w}}\) while \(\langle \phi, r - d_0 s \rangle \le \|\phi\|_\infty \|r - d_0 s\|_{1,\mathbf{w}} \le \|r - d_0 s\|_{1,\mathbf{w}}\). \(\blacksquare\)
+
+\textbf{Interpretation.} Unresolvable topological obstructions are certified on cycle circulations, which form the kernel of the dual coboundary \(d_0^*\). This is a static variational characterization; the withdrawn candidate update is not required.
+
+\textbf{Definition 4.3 (Topologically Certified Defect Configuration).} A defect configuration \(\delta \in C^1(G)\) is a \emph{topologically certified defect configuration} if:
+1. \(\delta\) is an \(\ell^1\)-minimal representative in its quotient class \([\delta] \in Q^1(G)\), certified by a dual circulation \(\phi \in \ker(d_0^*) \cap \partial \|\delta\|_{1,\mathbf{w}}\);
+2. \(\mathrm{supp}(\delta)\) forms a non-bounding topological cycle (or collection of cycles).
+
+\textbf{Corollary 4.1 (Tree Exactness).} On a tree, every edge defect is exact at the quotient level:
+\(C^1/\operatorname{im}(d_0)=0\). Therefore no non-trivial cohomological obstruction exists.
+
+\subsubsection{\texorpdfstring{4.4 Cycle Interaction and the \(\ell^1\) Potential}{4.4 Cycle Interaction and the \textbackslash ell\^{}1 Potential}}\label{cycle-interaction-and-the-ell1-potential}
+
+Once certified cycle-supported configurations are present, their combined quotient class may interact through shared constraints across edges.
+
+\textbf{Proposition 4.6 (Cycle Interaction and Additivity Criterion).} Let \(\omega^{(1)}, \omega^{(2)} \in C^1\) be two edge cochains on a finite scalar complex with edge weights \(\mathbf{w} \in \mathbb{R}_{>0}^E\). Let \(Z_{\mathbf{w}} = \{z \in C^1 : d_0^* z = 0, \, |z_e| \le w_e\}\) denote the dual-feasible set of circulations.
+By linear programming duality (Theorem 4.2), \(\Phi_{\mathbf{w}}(\omega) = \max_{z \in Z_{\mathbf{w}}} \langle z, \omega \rangle\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Divergence vs.~Capacity under Addition:} On the same declared cochain complex, the sum of two divergence-free dual circulations is always divergence-free by linearity:
+  \[d_0^*(\phi^{(1)} + \phi^{(2)}) = d_0^*\phi^{(1)} + d_0^*\phi^{(2)} = 0.\]
+  Dual divergence cannot fail solely because cycles or circulations overlap. What can fail under addition is the \textbf{capacity constraint}: \(|\phi^{(1)}_e + \phi^{(2)}_e|\) may exceed \(w_e\) on shared edges.
+\item
+  \textbf{Exact Additivity Criterion:} The quotient norm is additive on two cochains,
+  \[\Phi_{\mathbf{w}}(\omega^{(1)} + \omega^{(2)}) = \Phi_{\mathbf{w}}(\omega^{(1)}) + \Phi_{\mathbf{w}}(\omega^{(2)}),\]
+  \textbf{if and only if} \(\omega^{(1)}\) and \(\omega^{(2)}\) share a common maximizing dual certificate \(z^* \in Z_{\mathbf{w}}\).
+\end{enumerate}
+
+\emph{Proof.} If a common maximizer \(z^* \in Z_{\mathbf{w}}\) exists, then \(\langle z^*, \omega^{(1)} \rangle = \Phi_{\mathbf{w}}(\omega^{(1)})\) and \(\langle z^*, \omega^{(2)} \rangle = \Phi_{\mathbf{w}}(\omega^{(2)})\). By linearity, \(\langle z^*, \omega^{(1)} + \omega^{(2)} \rangle = \Phi_{\mathbf{w}}(\omega^{(1)}) + \Phi_{\mathbf{w}}(\omega^{(2)})\). Since \(z^* \in Z_{\mathbf{w}}\) is feasible for the sum, \(\Phi_{\mathbf{w}}(\omega^{(1)} + \omega^{(2)}) \ge \langle z^*, \omega^{(1)} + \omega^{(2)} \rangle = \Phi_{\mathbf{w}}(\omega^{(1)}) + \Phi_{\mathbf{w}}(\omega^{(2)})\). The reverse inequality holds by the triangle inequality for norms, establishing additivity.
+Conversely, suppose equality holds, and let \(z \in Z_{\mathbf{w}}\) be any optimal dual certificate for the sum \(\omega^{(1)} + \omega^{(2)}\). Then
+\[(\Phi_{\mathbf{w}}(\omega^{(1)}) - \langle z, \omega^{(1)} \rangle) + (\Phi_{\mathbf{w}}(\omega^{(2)}) - \langle z, \omega^{(2)} \rangle) = \Phi_{\mathbf{w}}(\omega^{(1)}) + \Phi_{\mathbf{w}}(\omega^{(2)}) - \Phi_{\mathbf{w}}(\omega^{(1)} + \omega^{(2)}) = 0.\]
+Because \(z \in Z_{\mathbf{w}}\) is feasible for both individual problems, weak duality ensures that each gap term is nonnegative under the declared assumptions: \(\Phi_{\mathbf{w}}(\omega^{(i)}) - \langle z, \omega^{(i)} \rangle \ge 0\). The sum of two nonnegative terms vanishes if and only if each term vanishes, forcing \(\langle z, \omega^{(1)} \rangle = \Phi_{\mathbf{w}}(\omega^{(1)})\) and \(\langle z, \omega^{(2)} \rangle = \Phi_{\mathbf{w}}(\omega^{(2)})\). Thus \(z\) is a common maximizing dual certificate for both individual cochains. \(\blacksquare\)
+
+\textbf{Definition 4.4 (\(\ell^1\) Interaction Functional).} We define the interaction functional between two edge cochains on quotient classes:
+\[ \mathcal{I}([\omega^{(1)}], [\omega^{(2)}]) = \Phi([\omega^{(1)} + \omega^{(2)}]) - \big(\Phi([\omega^{(1)}]) + \Phi([\omega^{(2)}])\big) \]
+where \(\Phi([\omega]) = \min_f \|\omega - d_0 f\|_{1,\mathbf{w}}\) is the weighted \(\ell^1\) quotient norm. By the triangle inequality for \(\Phi\),
+\[
+\mathcal{I}([\omega^{(1)}],[\omega^{(2)}]) \le 0.
+\]
+Therefore this functional measures subadditive synergy and cancellation. It cannot produce a repulsive or superadditive interaction without additional boundary constraints. By Proposition 4.6, \(\mathcal{I} = 0\) if and only if the two cochains admit a common maximizing dual certificate in \(Z_{\mathbf{w}}\); otherwise, \(\mathcal{I} < 0\).
+
+This interaction functional exhibits three structural regimes:
+* \textbf{Subadditive regime (\(\mathcal{I} < 0\)):} Joint gauge optimization achieves greater cancellation than separate optimizations (no common dual maximizer exists in \(Z_{\mathbf{w}}\)).
+* \textbf{Fusion:} Two overlapping cycles merge into an extended defect cycle if \(\Phi([\omega_{\text{merged}}]) < \Phi([\omega^{(1)}]) + \Phi([\omega^{(2)}])\).
+* \textbf{Annihilation:} If \([\omega^{(1)}] = -[\omega^{(2)}]\), complete cancellation occurs: \([\omega] \to 0\).
+
+\textbf{Remark 4.2 (Classification vs.~Dynamic Intervention).} The framework presented here classifies defect configurations and establishes their static variational properties. Quantifying an \(\ell^1\) minimal representative or identifying an invariant cycle classifies the mathematical structure; it does not prescribe physical intervention. Interaction functionals quantify subadditive synergy without postulating ungrounded physical dynamics.
+
+\subsubsection{4.5 Support Locality and Graph-Local Coupling}\label{support-locality-and-graph-local-coupling}
+
+The word ``locality'' here refers strictly to graph neighborhood support under discrete matrix-vector operations on finite graphs. It does not imply physical causality, invariant signal speed, Lorentz symmetry, or observer-independent spacetime structure.
+
+Because the three-step candidate update of historical Definition 4.1 is withdrawn and refuted, the observations in this section serve as \textbf{conditional algebraic remarks} concerning graph-local operator sparsity, not an operational dynamic solver or a proof of physical propagation.
+
+\textbf{Definition 4.5 (Local Disturbance).} Let \(s \in C^0\) be a configuration with residual \(\delta = \omega - d_0 s\). A \emph{local perturbation} at vertex \(x\) is a shift \(s(x) \mapsto s(x) + \epsilon\), inducing a residual change \(\delta \mapsto \delta + \Delta \delta\) supported on edges incident to \(x\).
+
+\textbf{Proposition 4.7 (One-Step Residual Update Identity of Candidate Map).} If the primal state were updated according to step (3) of Definition 4.1 (\(s^{k+1} = s^k + \eta \, d_0^* \phi^{k+1}\)), the residual would satisfy the algebraic identity:
+\[ \delta^{k+1} = \delta^k - \eta \, d_0 d_0^* \phi^{k+1} \]
+This is a one-line algebraic consequence of linearity (\(d_0 s^{k+1} = d_0 s^k + \eta \, d_0 d_0^* \phi^{k+1}\)). It is not a descent theorem, not a proof of stable signal behavior, and not evidence for physical propagation.
+
+\textbf{Locality observation (Graph Dependency Radius).} The operator \(d_0 d_0^*\) acts on 1-cochains by mapping an edge \(e\) to edges sharing a common vertex. Thus, a single application reaches graph distance at most 2. After \(k\) formal applications of an operator with sparsity pattern \(d_0 d_0^*\), the direct dependency radius on the graph is at most \(2k\). This graph-theoretic sparsity bound reflects finite matrix bandwidth; it is not a physical speed claim or a causal lightcone.
+
+\textbf{Remark 4.3 (Pseudometric Property of Path Residual Cost).} For an edge residual field \(\delta \in \mathbb{R}^E\), one may define a path-induced cost functional on vertices:
+\[ d_\delta(x, y) = \inf_{\gamma: x \to y} \sum_{e \in \gamma} |\delta(e)| \]
+where the infimum is taken over directed paths \(\gamma\) connecting vertex \(x\) to vertex \(y\).
+\emph{Important boundary:} On a directed graph, path costs are generally non-symmetric (\(d_\delta(x,y) \ne d_\delta(y,x)\)), defining a \textbf{quasi-pseudometric} unless paths are taken in the undirected sense or costs are symmetrized. Furthermore, \(d_\delta(x, y)\) is generally a pseudometric (or quasi-pseudometric), not a metric. If there exists any path \(\gamma\) connecting distinct vertices \(x \ne y\) whose edges all carry zero residual (\(\delta(e) = 0\) for all \(e \in \gamma\), as in any gauge-exact region), then \(d_\delta(x, y) = 0\). The functional separates distinct points (\(d_\delta(x, y) > 0\) for all \(x \ne y\)) only under the strict hypothesis that every path between distinct vertices traverses at least one edge with nonzero residual.
+Furthermore, because the candidate three-step update is withdrawn and provides no convergent descent, no causal ordering, metric spacetime structure, or dynamical lightcone is derived from this functional. Causal and metric emergence remain unproved conjectures that require a verified descent update and explicit continuum hypotheses (see Section 6.4).
+
+\subsubsection{4.6 The Continuum Limit: Total Variation Flow}\label{the-continuum-limit-total-variation-flow}
+
+The discrete \(\ell^1\) rules suggest a formal continuum scaling.
+This section records the expected TV-flow limit under standard assumptions
+from graph-to-continuum variational convergence. No new \(\Gamma\)-convergence
+or minimizing-movement theorem is proved here. The logical chain is: \(\ell^1\) can favor sparse or measure-concentrated representatives under appropriate compactness and scaling hypotheses; measure-valued gradients live in the space of functions of bounded variation (BV); and the natural variational functional on BV is total variation. The \(\ell^1\) coboundary structure therefore is consistent with total variation--type continuum functionals under standard scaling limits. The precise isotropy of the limiting functional depends on the symmetry of the underlying discretization: anisotropic or crystalline graph sequences yield anisotropic TV, while isotropic refinement yields the standard (Euclidean) total variation. The continuum geometric structure is inherited from the embedding of the graph sequence; the \(\ell^1\) framework determines the variational form, while the ambient geometry determines its metric structure.
+
+\textbf{Schema 4.8 (Continuum TV Limit Analogy).} Let \(G_h\) be a sequence of graphs with uniformly bounded degree admitting a consistent geometric embedding in a domain \(\Omega \subset \mathbb{R}^d\), with appropriately scaled edge weights and mesh spacing \(h \to 0\). Under isotropic refinement, the rescaling \(I_h(s_h) = \sum_e |\delta_h(e)| \to \int_\Omega |\nabla s(x)| \, dx\) admits total variation flow as the canonical local continuum limit:
+\[ \partial_t s(x,t) \in -\partial \int_\Omega |\nabla s(x,t)| \, dx \]
+
+Where the field is smooth, this reduces to:
+\[ \partial_t s = \nabla \cdot \left( \frac{\nabla s}{|\nabla s|} \right) \]
+
+\textbf{Interpretation (Formal Continuum Comparison).} In formal continuum scaling, the limiting variational energy is consistent with total variation, whose formal \(L^2\) gradient descent PDE in the smooth regime is total-variation flow:
+1. \textbf{Classical \(\ell^2\) Dirichlet Energy:} Minimizing \(\int |\nabla s|^2 dx\) induces linear diffusion \(\partial_t s = \Delta s\), which smooths gradients isotropically.
+2. \textbf{Formal \(\ell^1\) Total Variation Energy:} Minimizing \(\int |\nabla s| dx\) formally induces 1-Laplacian curvature flow \(\partial_t s = \nabla \cdot (\nabla s / |\nabla s|)\), which preserves jump interfaces.
+
+\emph{Operational disclaimer:} The candidate discrete three-step iterator is refuted and withdrawn; it does not define an operational descent flow or a convergent minimizing-movement scheme. Variational minimizers of the static \(\ell^1\) quotient problem concentrate defects onto cycle supports, which formally correspond in the continuum to codimension-1 boundaries enclosing persistent domains, consistent with known graph-to-TV \(\Gamma\)-convergence results in the variational literature (cf.~Chambolle 2004, van Gennip--Bertozzi 2012). In the operator-valued case, the Schatten-1 functional \(\int_\Omega \|\nabla \rho(x)\|_1 \, dx\) suggests a formally analogous structure, though a rigorous continuum theory for operator-valued total variation remains open and constitutes a nontrivial extension beyond the scalar setting.
+
+\subsubsection{\texorpdfstring{4.7 Fiber-Wise Symmetry and \(U(n)\) Gauge Fields}{4.7 Fiber-Wise Symmetry and U(n) Gauge Fields}}\label{fiber-wise-symmetry-and-un-gauge-fields}
+
+Because the \(\ell^1\) variational problem minimizes defect mass modulo coboundaries, the structure of admissible quotient minimizers enforces constraints on admissible local frame symmetries. We impose a natural invariance constraint ensuring that evaluation remains invariant across equivalent local observers:
+
+\textbf{Axiom (Local Compositional Invariance).} The absolute \(\ell^1\) defect magnitude must remain invariant under local relabelings of internal states. Let \(s(x) \mapsto g_x s(x)\). Preserving the coboundary norm requires:
+\[ \|\delta_e(g \cdot s)\|_1 = \|\delta_e(s)\|_1 \]
+
+This invariance immediately forces the naturality constraint \(r_{b,a} \circ g_b = g_a \circ r_{b,a}\).
+
+\textbf{Lemma 4.9 (Trace-Norm Automorphisms).} Any surjective trace-norm preserving, completely positive, compositional automorphism of \(\mathcal{B}_1(\mathcal{H})\) is unitary conjugation.
+\emph{Proof Sketch.} By the Kadison isometry theorem {[}9{]} and its extension to Schatten ideals by Sourour {[}10{]}, every surjective linear isometry of \(\mathcal{B}_1(\mathbb{C}^n)\) has the form \(A \mapsto UAV\) or \(A \mapsto UA^T V\) for unitaries \(U, V\). The requirement of complete positivity excludes the transpose (which is positive but not completely positive for \(n \ge 2\), as its Choi matrix has a negative eigenvalue). Preserving the cone of positive semidefinite operators forces \(V = U^*\) (since \(U I V = I \implies V = U^*\) under unitality of Jordan *-isomorphisms), while compositional naturality across presheaf restrictions (\(r_{b,a} \circ g_b = g_a \circ r_{b,a}\)) aligns local unitaries across stalks. The admissible transformations reduce to unitary conjugation \(A \mapsto UAU^*\). \(\square\)
+
+\textbf{Theorem 4.10 (Unitary Gauge Structure).} When stalks are finite-dimensional operator algebras \(F(x) = \mathcal{B}_1(\mathbb{C}^n)\) evaluated under the Schatten-1 trace norm (Theorem 3.1), the local transformations satisfying compositional invariance restrict admissible local automorphisms to unitary conjugation, yielding a conditional \(U(n)/PU(n)\)-type local frame symmetry for the operator-valued realization.
+
+This is a symmetry-of-admissible-frame-changes statement. It does not derive a physical gauge field, Yang--Mills action, Standard Model gauge group, or spacetime gauge dynamics.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  By Lemma 4.9, the automorphisms \(g_x\) must be trace-norm isometries acting via unitary conjugation: \(g_x(A) = U_x A U_x^*\).
+\item
+  The presheaf restriction maps \(r_{b,a}\) behave as \textbf{discrete parallel transport}, defining geometric paths across the tensor network.
+\item
+  The optimal terminal defect \(\delta_{\text{irr}}\) acts as the unresolved quotient defect, formally analogous to curvature/holonomy constrained within the graph.
+\end{enumerate}
+
+Under these additional operator-valued assumptions, the admissible local
+frame changes are unitary conjugations.
+
+\textbf{Remark (U(n) vs.~PU(n)).} The gauge group acts by conjugation \(A \mapsto UAU^*\), under which the center \(U(1) \subset U(n)\) acts trivially (scalar phase cancels). The group that acts faithfully on the stalks is therefore \(PU(n) = U(n)/U(1)\). We write \(U(n)\) to denote the group of local frame changes (the assignment \(x \mapsto U_x\)), which is the standard convention in lattice gauge theory where the \(U(1)\) phase carries physical meaning as the global gauge choice. Complete positivity is an additional physical axiom motivated by quantum mechanics (quantum channels must be CP); it is not forced by the \(\ell^1\) structure alone.
+
+Establishing subgroups \(SU(3) \times SU(2) \times U(1)\) requires explicit constraints (rank, phase, symmetry breaking) that descend from specific bounded dual topologies during combinatorial lattice scaling.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{quote}
+\textbf{Remark 4.9 (Scope and Interpretive Status).} The remainder of this section develops formal analogies and continuous-limit interpretations of the discrete quotient theory. Proved finite-dimensional identities on discrete cochain complexes do not imply continuum dynamics, spacetime metrics, or physical gauge field behavior. These interpretations serve as mathematical analogies and geometric heuristics.
+\end{quote}
+
+\subsubsection{4.8 Geometry Emergence: Manifolds from Defects}\label{geometry-emergence-manifolds-from-defects}
+
+The formal continuum analogy suggests a geometric consequence of \(\ell^1\) structure.
+
+\textbf{Schema 4.11 (Interface Emergence Analogy and BV Regularity Boundary).} In formal continuum analogies of the \(\ell^1\) defect functional \(E(s) = \int_\Omega |\nabla s(x)| \, dx\), total variation admits functions of bounded variation (\(s \in BV(\Omega)\)) whose distributional gradients \(Ds\) are Radon measures. The gradient measures decompose into absolutely continuous, jump, and Cantor parts: \(Ds = \nabla s \, dx + D^j s + D^c s\).
+
+\emph{Mathematical boundary on BV gradients:} Total variation alone does \emph{not} imply that a field is constant almost everywhere, nor that all structure is concentrated on moving interfaces. For example, the linear field \(s(x) = x\) has finite total variation with a diffuse, non-vanishing gradient \(\nabla s = 1\) almost everywhere and an empty jump set (\(D^j s = 0\)). The concentration of gradients onto rectifiable codimension-1 interfaces \(\Sigma\) is a characteristic of specialized pure-jump or piecewise-constant variational settings (such as functions in \(SBV\) with vanishing diffuse part, or perimeter-minimizing partitions \(\chi_E\)), rather than an automatic consequence of finite total variation.
+
+\emph{Formal analogy sketch.} When piecewise-constant or pure-jump configurations are favored (e.g.~in discrete partition problems or level-set formulations), the jump set of \(s\) concentrates on rectifiable sets of codimension 1. Under formal continuous gradient flow of perimeter-type functionals, these interfaces evolve by mean curvature motion (in the sense of geometric measure theory). \(\square\)
+
+\textbf{Interpretation.} In specialized piecewise-constant continuum limits, the variational preference for sparse gradient support concentrates defects onto codimension-1 boundaries \(\Sigma\), which separate regions where the field is locally constant. However, as noted above, generic BV functions include diffuse gradient profiles. Within this continuum analogy, interfaces serve as formal models for cycle-like boundaries. Note that Theorem 4.14 and Proposition 4.15 are finite, discrete algebraic statements on finite graphs; they do not prove existence of smooth continuum interfaces \(\Sigma\), nor do they prove that general \(\ell^1\) flows converge to interface evolutions. The discrete-to-continuum correspondence is formal:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Discrete
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Continuum
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Stable cycles & Codimension-1 interfaces \(\Sigma\) \\
+Cycle stability (Prop 4.5) & Interface persistence under curvature flow \\
+Cycle interaction (Heuristic 4.6) & Interface merging, splitting, annihilation \\
+Tree instability (Cor 4.1) & Smooth regions carry no structure \\
+\end{longtable}
+
+\subsubsection{4.9 Emergent Connection--Curvature--Holonomy Structure}\label{emergent-connectioncurvatureholonomy-structure}
+
+The dual variables and cycle defects of the \(\ell^1\) framework naturally organize into a connection-like geometric structure.
+
+\textbf{Definition 4.6 (\(\ell^1\) Holonomy).} For a cycle \(C\) in the graph, define the \(\ell^1\) holonomy:
+\[ \mathrm{Hol}(C) := \sum_{e \in C} \delta_{\mathrm{irr}}(e) \]
+
+Since exact parts cancel around any cycle (\(\sum_{e \in C} d_0 f = 0\)), holonomy depends only on the cohomology class \([\delta]\).
+
+\textbf{Definition 4.7 (\(\ell^1\) Connection).} Edge restriction maps \(r_{b,a}\) define local transport rules. The defect \(\delta_e = r_{b,a}(s(b)) - s(a)\) measures transport failure. The connection is the collection of local transport operators; the defect is its curvature.
+
+\textbf{Definition 4.8 (\(\ell^1\) Curvature).} For a cycle \(C\), define \(F(C) := \mathrm{Hol}(C)\). Curvature is the failure of consistent transport around a closed loop---structurally identical to gauge curvature.
+
+\textbf{Fact 4.12 (Dual Feasibility Constraints --- restatement).} For the finite graph dual problem (Theorem 4.2), the feasible dual variable \(\phi\) satisfies by definition:
+\[ \|\phi\|_\infty \le 1, \quad d_0^* \phi = 0 \]
+(This restates the dual feasible set; it asserts nothing new beyond the definition. The substantive content is Theorem 4.2's fixed-point characterization.)
+
+\textbf{Schema 4.12 (Continuum Flux Analogy).} In the formal continuum analogy, this corresponds to a divergence-free unit flux field:
+\[ |\phi(x)| \le 1, \quad \nabla \cdot \phi = 0 \]
+aligned with defect gradients and supported on the emergent interfaces \(\Sigma\).
+
+\emph{Formal analogy sketch.} The dual optimality condition \(d_0^* \phi = 0\) becomes \(\nabla \cdot \phi = 0\) in the continuum. The constraint \(\|\phi\|_\infty \le 1\) persists under scaling. Since \(\nabla s\) concentrates on \(\Sigma\), the alignment condition \(\phi \in \partial |\nabla s|\) forces \(\phi\) to be supported on \(\Sigma\) with \(\phi\) parallel to the normal direction. \(\square\)
+
+\textbf{Schema 4.13 (Connection--Curvature--Holonomy Analogy).} In the \(\ell^1\) formal schema:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Edge defects define a \emph{connection} via local transport inconsistency.
+\item
+  Cycle defects define \emph{holonomy} as irreducible accumulated mismatch.
+\item
+  Holonomy defines \emph{curvature}.
+\item
+  Dual variables define \emph{conserved flux fields} compatible with this structure.
+\end{enumerate}
+
+We emphasize that this construction does not assume a Lie group-valued connection or a principal bundle; rather, the connection--curvature--holonomy structure arises abstractly from defect transport on presheaf stalks. The parallel to standard gauge theory is structural, not definitional. Combined with the \(U(n)\) result (Theorem 4.10), in the operator-valued setting the connection acts on trace-class stalks with unitary gauge symmetry, and holonomy measures the accumulated Schatten-1 mismatch around closed loops.
+
+\subsubsection{\texorpdfstring{4.10 The \(\ell^1\) Gauge Action and Variational Principle}{4.10 The \textbackslash ell\^{}1 Gauge Action and Variational Principle}}\label{the-ell1-gauge-action-and-variational-principle}
+
+We now promote the defect functional to a gauge-invariant action.
+
+\textbf{Definition 4.9 (\(\ell^1\) Gauge Action).} Fix an observed edge field \(\omega\in C^1\). Define the \textbf{section-level residual action}:
+\[ \mathcal{S}(s;\omega) := \|\omega-d_0 s\|_1 \]
+
+This is not gauge-invariant as a function of a chosen section. The \textbf{gauge-invariant action} is the quotient norm of the observed field:
+\[ \bar{\mathcal{S}}([\omega]) := \Phi([\omega]) = \min_f \|\omega - d_0 f\|_1 \]
+
+which depends only on the quotient class \([\omega]\in C^1/\operatorname{im}(d_0)\). Distinguished representatives in this variational schema minimize \(\bar{\mathcal{S}}\); the section-level action \(\mathcal{S}(s;\omega)\) is an upper bound for \(\bar{\mathcal{S}}([\omega])\).
+
+\textbf{Theorem 4.14 (\(\ell^1\) Variational Principle).} For a fixed observed field \(\omega\), distinguished quotient representatives are the residuals of minimizing potentials of the gauge-invariant action within the quotient class:
+\[ \delta_{\mathrm{irr}} = \omega - d_0 f^*, \qquad f^* \in \arg\min_{f} \|\omega-d_0 f\|_1. \]
+
+For a minimizing representative \(\delta=\omega-d_0s\), the KKT condition is:
+\[ d_0^* \phi = 0, \quad \phi \in \partial \|\delta\|_1 \]
+
+That is: the field equation \emph{is} the divergence-free dual condition. The divergence-free dual condition is the finite-dimensional analogue of a conservation equation.
+
+\textbf{Curvature Formulation and Overlapping Cycles.} When the irreducible defect \(\delta_{\mathrm{irr}}\) is supported on edge-disjoint cycles \(\{C_i\}\), the gauge-invariant action equals the sum of absolute cycle holonomies:
+\[ \bar{\mathcal{S}}([\omega]) = \sum_i |\mathrm{Hol}(C_i)| \]
+
+\emph{Failure of unweighted holonomy sums on overlapping cycles:} For general defect configurations on overlapping cycles, summing individual absolute holonomies does \textbf{not} provide a lower bound, because shared edges can be counted repeatedly.
+
+\emph{Exact counterexample (claimed lower bound 2, actual optimum 1):}
+Order the edges on a 4-vertex graph as \(e = (01, 12, 02, 23, 03)\) with unit edge weights \(\mathbf{w}=\mathbf{1}\). Take the observed field \(\omega = (0, 0, 1, 0, 0)\) (supported on the shared edge \((0,2)\) with value 1). The two oriented triangle circulations are
+\[c_1 = (1, 1, -1, 0, 0), \qquad c_2 = (0, 0, 1, 1, -1).\]
+Their holonomies satisfy
+\[\langle c_1, \omega \rangle = -1, \qquad \langle c_2, \omega \rangle = 1,\]
+so the sum of individual absolute holonomies is:
+\[|\mathrm{Hol}(C_1)| + |\mathrm{Hol}(C_2)| = |-1| + |1| = 2.\]
+However, setting potential \(f = 0\) gives a primal cost of \(\|\omega - d_0(0)\|_1 = 1\), and \(c_2\) is a feasible dual circulation pairing to \(\langle c_2, \omega \rangle = 1\). Therefore the true quotient optimum is:
+\[\Phi([\omega]) = 1 < 2.\]
+Summing individual holonomies without checking edge overlap counts the shared edge multiple times and strictly overestimates the true obstruction cost.
+
+\emph{Capacity-normalized cycle combination bound:}
+For any linear combination of cycle circulations \(z = \sum_i a_i c_i\), define the maximum capacity load ratio:
+\[M(z) := \max_{e \in E} \frac{|z_e|}{w_e}.\]
+Whenever \(M(z) > 0\), the normalized field \(z / M(z)\) satisfies dual capacity and divergence-free constraints (\(z / M(z) \in Z_{\mathbf{w}}\)), yielding by weak duality the rigorous lower bound:
+\[\Phi_{\mathbf{w}}([\omega]) \ge \frac{|\langle z, \omega \rangle|}{M(z)}.\]
+This incorporates the cost of loading a shared edge more than once. Summing individual holonomies without normalizing by their combined capacity load \(M(z)\) is not a valid certificate. The cycle-basis representation remains the structural \(\ell^1\) analogue of the Yang--Mills action \(\sum \|F\|^2\), with \(\ell^1\) replacing \(\ell^2\).
+
+\textbf{Dual Formulation.} By LP duality:
+\[ \bar{\mathcal{S}}([\omega]) = \max_{\phi:\, d_0^* \phi = 0,\, \|\phi\|_\infty \le 1} \langle \phi, \omega \rangle \]
+
+The action equals the maximum flux compatible with divergence-free and boundedness constraints. This primal--dual identity---action equals flux capacity---is the structural core of the framework.
+
+\textbf{Continuum Action.} Under the formal scaling of \textbf{Schema 4.8} (stated as a formal analogy, not a proved \(\Gamma\)-limit):
+\[ \mathcal{S}(s;\omega) = \int_\Omega |\omega-\nabla s| \, dx \]
+whose variation is formally consistent with TV flow.
+
+\subsubsection{\texorpdfstring{4.11 Symmetry and Conservation: \(\ell^1\) Noether Correspondence}{4.11 Symmetry and Conservation: \textbackslash ell\^{}1 Noether Correspondence}}\label{symmetry-and-conservation-ell1-noether-correspondence}
+
+\textbf{Definition 4.10 (Symmetry of the \(\ell^1\) Action).} A transformation \(T\) acting on sections and observed fields is a \emph{symmetry} if \(\|\omega'-d_0(Ts)\|_1 = \|\omega-d_0s\|_1\) for the induced transformed field \(\omega'\). Examples include compatible additive gauge shifts, unitary conjugation (operator-valued case, Theorem 4.10), and graph automorphisms.
+
+\textbf{Proposition 4.15 (Finite-Dimensional Subgradient Conservation Condition).} Let \(T_\epsilon\) be a continuous one-parameter family of symmetries of the \(\ell^1\) action. Then along any solution of the \(\ell^1\) variational principle, there exists a dual field \(\phi\) such that:
+\[ d_0^* \phi = 0 \quad \text{and} \quad \left.\frac{d}{d\epsilon}\right|_{\epsilon=0} \|\omega_\epsilon-d_0(T_\epsilon s)\|_1 = 0 \]
+
+\emph{Proof Sketch.} Action invariance gives \(\frac{d}{d\epsilon} \mathcal{S}(T_\epsilon s;\omega_\epsilon) = 0\). By the subgradient structure, \(\delta \mathcal{S} = \langle \phi, \delta(\omega-d_0s) \rangle\) for \(\phi \in \partial \|\delta\|_1\). For section variations with fixed \(\omega\), stationarity gives a KKT-compatible selection satisfying \(d_0^*\phi=0\). \textbf{Regularity caveat:} at zero residual coordinates the subdifferential is multi-valued. The argument establishes existence of a compatible selection, not the condition for every selection. \(\square\)
+
+\textbf{Interpretation.} At a minimizer of the quotient action, KKT dual feasibility gives
+\(d_0^*\phi=0\). This is formally analogous to a conservation law. Symmetries of the \(\ell^1\) action generate divergence-free dual fields---conserved flux. The correspondence is structural.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Classical Field Theory & \(\ell^1\) Cohomological Framework \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Action \(\mathcal{S}\) & \(\|\omega-d_0 s\|_1\) \\
+Field & Section \(s\) \\
+Curvature & Holonomy \(\mathrm{Hol}(C)\) \\
+Gauge invariance & \(s \sim s + f\) (quotient structure) \\
+Field equation & \(d_0^* \phi = 0\) \\
+Conserved current & Divergence-free \(\phi\) \\
+\end{longtable}
+
+\textbf{Continuum Version.} Under scaling, the conservation law becomes \(\nabla \cdot \phi = 0\) with \(\phi\) the continuum dual flux. This is the classical conservation equation structure.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{5. Operator-Valued Distinguishability Bounds and Spectral Comparisons}\label{operator-valued-distinguishability-bounds-and-spectral-comparisons}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{5.1 The Distinguishability Bound Theorem}\label{the-distinguishability-bound-theorem}
+
+Preceding gauge classification and cohomology results {[}4, 5, 6, 7{]} establish conditional \(\ell^1\) rigidity for additive defect diagnostics under the stated observer assumptions, and show how the framework extends to the complete Schatten-\(p\) geometry (\(p \in [1, \infty]\)) once the operator-valued local gauge is selected. This permits a structural comparison with standard distance metrics in information theory; it is not an unconditional derivation of quantum distinguishability.
+
+\begin{quote}
+\textbf{Theorem 5.1 (Operator-Valued Distinguishability Bound across Schatten-\(p\)).} Let \((\rho_x)_{x \in P}\) be an operator-valued presheaf section over a path graph connecting nodes \(a\) and \(b\), with uniform local Hilbert spaces \(\mathcal{H}_x = \mathcal{H}\) for all \(x\). For any exponent \(p \in [1, \infty]\), let \(I_p(s) = \sum_{e \in \operatorname{path}(a,b)} \|\delta_e(s)\|_{S_p}\) denote the total Schatten-\(p\) coboundary defect along the path. Let \(R_{b,a} = r_{1,0} \circ r_{2,1} \circ \cdots \circ r_{m,m-1}\) denote the composed restriction (parallel transport) from \(b\) to \(a\). Assume \(R_{b,a}(\rho_b)\) and \(\rho_a\) are operators in \(\mathcal{S}_p(\mathcal{H})\), and each restriction map along the path is Schatten-\(p\) contractive (\(\|r_{i+1,i}(X)\|_{S_p} \le \|X\|_{S_p}\)).
+
+Then the transported endpoint difference satisfies the telescoping bound:
+\[ \|\rho_a - R_{b,a}(\rho_b)\|_{S_p} \le I_p(s) \]
+In particular, defining the normalized distinguishability quantity \(T_p(A, B) := \frac{1}{2} \|A - B\|_{S_p}\):
+\[ T_p(\rho_a, R_{b,a}(\rho_b)) \le \frac{1}{2} I_p(s) \]
+For \(p = 1\), when \(\rho_a\) and \(\rho_b\) are normalized density operators (positive semidefinite with \(\operatorname{Tr}(\rho)=1\)) and the restriction maps are state-preserving channels (positive and trace-preserving), \(R_{b,a}(\rho_b)\) remains a valid density operator, and \(T_1\) coincides with the operational quantum trace distance: \(T(\rho_a, R_{b,a}(\rho_b)) \le \frac{1}{2} I_1(s)\). (Schatten-1 contractivity alone permits maps that take density operators to non-states; state preservation is an explicit hypothesis required for quantum state interpretation.)
+For \(p = 2\), this bounds the normalized Hilbert--Schmidt (Frobenius) distance: \(T_2(\rho_a, R_{b,a}(\rho_b)) \le \frac{1}{2} I_2(s)\).
+For \(p = \infty\), this bounds the normalized operator spectral distance: \(T_\infty(\rho_a, R_{b,a}(\rho_b)) \le \frac{1}{2} I_\infty(s)\).
+By Schatten norm monotonicity (\(\|X\|_{S_\infty} \le \|X\|_{S_p} \le \|X\|_{S_1}\) for any \(p \ge 1\)), the distinguishability bounds obey the canonical chain:
+\[ T_\infty(\rho_a, R_{b,a}(\rho_b)) \le T_p(\rho_a, R_{b,a}(\rho_b)) \le T_1(\rho_a, R_{b,a}(\rho_b)) \le \frac{1}{2} I_1(s) \]
+\end{quote}
+
+\emph{Proof Sketch.} By telescoping the path differences along \(e_i = (v_i, v_{i+1})\):
+\[ R_{b,a}(\rho_b) - \rho_a = \sum_{i=0}^{m-1} \Big( R_{v_i, a}(r_{v_{i+1}, v_i}(\rho_{v_{i+1}})) - R_{v_i, a}(\rho_{v_i}) \Big) = \sum_{i=0}^{m-1} R_{v_i, a} \Big( \delta_{(v_i, v_{i+1})}(s) \Big) \]
+Applying the triangle inequality and the Schatten-\(p\) contractivity of the restriction maps:
+\[ \|R_{b,a}(\rho_b) - \rho_a\|_{S_p} \le \sum_{i=0}^{m-1} \|R_{v_i, a}(\delta_{e_i}(s))\|_{S_p} \le \sum_{e \in \text{path}(a,b)} \|\delta_e(s)\|_{S_p} = I_p(s) \]
+Dividing by 2 yields \(T_p \le \frac{1}{2} I_p(s)\). For identical Hilbert spaces and identity restrictions, this reduces to the classical metric triangle inequality. \(\square\)
+
+\textbf{Worked Replay (Theorem 5.1 across Schatten-\(p\) on a two-edge path).} Take the path \(a - m - b\) with identity restriction maps and qubit states \(\rho_a = \operatorname{diag}(1,0)\), \(\rho_m = \operatorname{diag}(\tfrac12,\tfrac12)\), \(\rho_b = \operatorname{diag}(0,1)\). The edge defects are \(\delta_{(a,m)} = \rho_m - \rho_a = \operatorname{diag}(-\tfrac12, \tfrac12)\) and \(\delta_{(m,b)} = \rho_b - \rho_m = \operatorname{diag}(-\tfrac12, \tfrac12)\).
+For \(p = 1\): \(\|\delta_e\|_{S_1} = 1.0 \implies I_1 = 2.0\), \(T_1 = \frac{1}{2}\|\rho_a - \rho_b\|_{S_1} = 1.0 \le \frac{1}{2} I_1 = 1.0\) (taut equality).
+For \(p = 2\): \(\|\delta_e\|_{S_2} = \sqrt{0.5} \approx 0.7071 \implies I_2 = \sqrt{2} \approx 1.4142\), \(T_2 = \frac{1}{2} \sqrt{2} \approx 0.7071 \le \frac{1}{2} I_2 \approx 0.7071\) (taut equality).
+For \(p = \infty\): \(\|\delta_e\|_{S_\infty} = 0.5 \implies I_\infty = 1.0\), \(T_\infty = \frac{1}{2}(1.0) = 0.5 \le \frac{1}{2} I_\infty = 0.5\) (taut equality).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\NormalTok{rho\_a }\OperatorTok{=}\NormalTok{ np.diag([}\FloatTok{1.0}\NormalTok{, }\FloatTok{0.0}\NormalTok{])}
+\NormalTok{rho\_m }\OperatorTok{=}\NormalTok{ np.diag([}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{])}
+\NormalTok{rho\_b }\OperatorTok{=}\NormalTok{ np.diag([}\FloatTok{0.0}\NormalTok{, }\FloatTok{1.0}\NormalTok{])}
+
+\KeywordTok{def}\NormalTok{ schatten\_p\_norm(A, p):}
+\NormalTok{    sv }\OperatorTok{=}\NormalTok{ np.linalg.svd(A, compute\_uv}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+    \ControlFlowTok{if}\NormalTok{ p }\OperatorTok{==} \DecValTok{1}\NormalTok{: }\ControlFlowTok{return} \BuiltInTok{float}\NormalTok{(np.}\BuiltInTok{sum}\NormalTok{(sv))}
+    \ControlFlowTok{elif}\NormalTok{ p }\OperatorTok{==} \DecValTok{2}\NormalTok{: }\ControlFlowTok{return} \BuiltInTok{float}\NormalTok{(np.sqrt(np.}\BuiltInTok{sum}\NormalTok{(sv}\OperatorTok{**}\DecValTok{2}\NormalTok{)))}
+    \ControlFlowTok{elif}\NormalTok{ np.isinf(p): }\ControlFlowTok{return} \BuiltInTok{float}\NormalTok{(np.}\BuiltInTok{max}\NormalTok{(sv))}
+    \ControlFlowTok{return} \BuiltInTok{float}\NormalTok{(np.}\BuiltInTok{sum}\NormalTok{(sv}\OperatorTok{**}\NormalTok{p)}\OperatorTok{**}\NormalTok{(}\FloatTok{1.0}\OperatorTok{/}\NormalTok{p))}
+
+\ControlFlowTok{for}\NormalTok{ p, name }\KeywordTok{in}\NormalTok{ [(}\DecValTok{1}\NormalTok{, }\StringTok{"Schatten{-}1 (Trace)"}\NormalTok{), (}\DecValTok{2}\NormalTok{, }\StringTok{"Schatten{-}2 (Frobenius)"}\NormalTok{), (np.inf, }\StringTok{"Schatten{-}inf (Spectral)"}\NormalTok{)]:}
+\NormalTok{    d1 }\OperatorTok{=}\NormalTok{ rho\_m }\OperatorTok{{-}}\NormalTok{ rho\_a}\OperatorTok{;}\NormalTok{ d2 }\OperatorTok{=}\NormalTok{ rho\_b }\OperatorTok{{-}}\NormalTok{ rho\_m}
+\NormalTok{    I\_p }\OperatorTok{=}\NormalTok{ schatten\_p\_norm(d1, p) }\OperatorTok{+}\NormalTok{ schatten\_p\_norm(d2, p)}
+\NormalTok{    T\_p }\OperatorTok{=} \FloatTok{0.5} \OperatorTok{*}\NormalTok{ schatten\_p\_norm(rho\_a }\OperatorTok{{-}}\NormalTok{ rho\_b, p)}
+    \ControlFlowTok{assert}\NormalTok{ T\_p }\OperatorTok{\textless{}=} \FloatTok{0.5} \OperatorTok{*}\NormalTok{ I\_p }\OperatorTok{+} \FloatTok{1e{-}12}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{name}\SpecialCharTok{\}}\SpecialStringTok{: I\_p = }\SpecialCharTok{\{}\NormalTok{I\_p}\SpecialCharTok{:.4f\}}\SpecialStringTok{, T\_p = }\SpecialCharTok{\{}\NormalTok{T\_p}\SpecialCharTok{:.4f\}}\SpecialStringTok{, Bound Holds: }\SpecialCharTok{\{}\NormalTok{T\_p }\OperatorTok{\textless{}=} \FloatTok{0.5} \OperatorTok{*}\NormalTok{ I\_p }\OperatorTok{+} \FloatTok{1e{-}12}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This replay numerically checks finite instances of the inequality.
+
+This theorem provides a structural link between the framework and operational distinguishability in quantum information and operator theory, contingent on identifying presheaf sections with physical states and restriction maps with state-preserving channels. Under the operator-valued presheaf interpretation, the path defect sum bounds the distinguishability between endpoint states after transport along that path. Furthermore, returning to the quotient calculus, when an independently specified edge field \(\omega \in C^1\) is present (such as an external connection or boundary flux), the quotient obstruction \(\Phi_p([\omega]) = \inf_{s \in C^0} \|\omega - d_0 s\|_{S_p}\) quantifies the \emph{minimal residual Schatten-\(p\) defect modulo coboundaries} that cannot be eliminated by any choice of section \(s\). For a section defect alone (\(\delta(s) = d_0 s\)), its quotient class \([\delta(s)]\) is identically zero in \(Q^1\), so \(\Phi_p([\delta(s)]) = 0\) regardless of how large the total path defect is.
+
+\subsubsection{5.2 Connection to the Fermion Sign Problem (Heuristic / Open)}\label{connection-to-the-fermion-sign-problem-heuristic-open}
+
+The Schatten-1 extension (Theorem 3.1) suggests a structural connection to the fermion sign problem. When the presheaf stalks carry fermionic statistics, the restriction maps \(r_{b,a}\) involve antisymmetrization, and the coboundary defect \(\delta_e\) would measure the failure of local fermionic states to glue consistently. Whether the trace norm of this defect can be rigorously identified with sign frustration requires formal development beyond this paper's scope {[}11{]}.
+
+If this connection holds, it would provide a structural interpretation: the fermion sign problem would be a manifestation of \(\ell^1\) gauge frustration on operator-valued presheaves, rather than an artifact of computational representation. However, this remains conjectural and requires explicit construction of the fermionic presheaf and verification that the coboundary defect captures the relevant sign structure.
+
+\subsubsection{5.3 Connection to Coupling Constraints and POVM Equivalence (Heuristic Boundary)}\label{connection-to-coupling-constraints-and-povm-equivalence-heuristic-boundary}
+
+Subsequent physics work frequently maps structural edge diagnostics to POVM limit measurements operating over continuous phase-symmetric state spaces (\(L^2_{RMS}\)). This mapping is subject to Conditional Minimality. The \(L^2\) Hilbert phase envelope is selected only when supplementary assumptions (complex amplitudes, bilinear cross terms, reversible unitary evolutions) are explicitly injected over tracking limits. The formal equivalence between presheaf topological mapping gaps and explicit Positive Operator-Valued Measure behavior remains open. The structural engine does \emph{not} prove quantum mechanics universally; it gives a trace/Schatten-1 obstruction geometry only after the operator-valued observer has selected the trace-distance gauge.
+
+Whether the structural emergence of wave mechanics, the Born rule, and subsequent gauge coupling constants formally descends entirely autonomously from these trace constraints remains speculative.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{\texorpdfstring{5.4 From Discrete \(\ell^1\) Coboundary Defects to Hilbert Cochain Truncations}{5.4 From Discrete \textbackslash ell\^{}1 Coboundary Defects to Hilbert Cochain Truncations}}\label{from-discrete-ell1-coboundary-defects-to-hilbert-cochain-truncations}
+
+This subsection establishes finite-dimensional norm comparisons and ground-state eigenvalue bounds for the discrete obstruction operator \(H_{\mathrm{obstr}} = L_0 + V_{\mathrm{defect}}\). In particular, Proposition E.7e provides an exact secular-root characterization of the rank-one comparison operator and transfers its ground-state floor via the Loewner bound under the stated hypotheses.
+
+\begin{quote}
+\textbf{Remark 5.2 (Finite-Dimensional Truncations).} In this section, all operators, spectra, and semigroups are defined strictly on finite-dimensional graphs (\(H_Q^{(n)} \cong \mathbb{C}^n\)). No infinite-dimensional continuum completions or physical spacetime manifolds are assumed or asserted.
+\end{quote}
+
+\paragraph{5.4.0 Standing assumptions}\label{standing-assumptions}
+
+\begin{itemize}
+\item
+  \textbf{(A1) Carrier.} \(G = (P, E_{\mathrm{cov}})\) is a finite connected graph with \(n = |P|\) vertices and \(m = |E_{\mathrm{cov}}|\) edges, each edge having two distinct endpoints; scalar stalks \(F(x) = \mathbb{R}\); identity restriction maps \(r_{b,a} = \mathrm{id}\). This is the §4 scalar graph specialization of the paper (Definition 4.1's declared scope). Then \(C^0 \cong \mathbb{R}^n\), \(C^1 \cong \mathbb{R}^m\), and \(d_0(s)_e = s(b) - s(a)\) for \(e = (a,b)\).
+\item
+  \textbf{(A2) Observed field and minimal representative.} \(\omega \in C^1\) is fixed. Per Theorem 4.14, \(\delta_{\mathrm{irr}} = \omega - d_0 f^*\) with \(f^* \in \arg\min_f \|\omega - d_0 f\|_1\), so \(\|\delta_{\mathrm{irr}}\|_1 = \Phi([\omega])\). Minimal representatives need not be unique; a deterministic selection rule \textbf{(D-SEL)} is a declared input of this section (see Remark E.12). Every statement below that depends on the choice says so.
+\item
+  \textbf{(A3) Inner product.} \(\langle u, w \rangle_2 = \sum_i u_i \overline{w_i}\) on the carrier, in the standard vertex and edge coordinate bases. The adjoint \(d_0^*\) is taken with respect to this \textbf{declared} inner product; it coincides with the matrix transpose of \(d_0\) in these bases. (The paper's \(d_0^*\) in Theorem 4.2 is this same discrete transpose; cf.~the integration-by-parts step in Proposition 4.15.)
+\item
+  \textbf{(A4) Truncated Hilbert cochain space.} \(H_Q^{(n)} := C^0 \otimes_{\mathbb{R}} \mathbb{C} \cong \mathbb{C}^n\) with the Hermitian extension of \(\langle\cdot,\cdot\rangle_2\). In finite dimension the \(\ell^2\) completion adds no vectors: the "completion" step is a \textbf{change of gauge} (of norm) plus complexification, not a change of underlying set. This is stated explicitly so that no silent passage from \(\ell^1\) data to an \(\ell^2\) Hilbert object occurs anywhere below.
+\item
+  \textbf{(A5) Defect potential.} \(V_{\mathrm{defect}}\) is the multiplication operator \((V_{\mathrm{defect}}\psi)(x) = v(x)\,\psi(x)\) with
+  \[v(x) := \sum_{e \in E_{\mathrm{cov}},\, x \in e} |\delta_{\mathrm{irr}}(e)| \;\ge\; 0 .\]
+  \(V_{\mathrm{defect}}\) is diagonal with real nonnegative entries, hence self-adjoint and positive semidefinite by inspection of the declared inner product (this is a declared construction, not an additional assumption).
+\item
+  \textbf{(A6) Mathematical scope.} All quantities below are mathematical properties of discrete graph operators and do not assert continuous physical dynamics.
+\end{itemize}
+
+\paragraph{\texorpdfstring{5.4.1 The \(\ell^1 \to \ell^2\) change of gauge, made explicit}{5.4.1 The \textbackslash ell\^{}1 \textbackslash to \textbackslash ell\^{}2 change of gauge, made explicit}}\label{the-ell1-to-ell2-change-of-gauge-made-explicit}
+
+\textbf{Definition E.1 (Change-of-gauge embedding).} For \(k \in \{0,1\}\) let \(\iota_k : (C^k, \|\cdot\|_1) \to (C^k, \|\cdot\|_2)\) be the identity map on the underlying finite-dimensional real vector space, read as a map between differently gauged normed spaces.
+
+\textbf{Proposition E.2 (Finite-Dimensional Norm Equivalence, Exact Constants).} For \(x \in \mathbb{R}^d\),
+\[\|x\|_2 \;\le\; \|x\|_1 \;\le\; \sqrt{d}\,\|x\|_2 ,\]
+and both constants are sharp: the left inequality is an equality exactly on the coordinate axes, and the right is an equality exactly on vectors with all coordinates of equal modulus. Hence \(\iota_k\) and \(\iota_k^{-1}\) are bounded with \(\|\iota_k\| = 1\) and \(\|\iota_k^{-1}\| = \sqrt{\dim C^k}\); on \(C^1\) under (A1) the constant is \(\sqrt{m}\) and on \(C^0\) it is \(\sqrt{n}\).
+
+\emph{Proof.} \(\|x\|_1^2 = \big(\sum_i |x_i|\big)^2 = \sum_i x_i^2 + \sum_{i \neq j} |x_i||x_j| \ge \|x\|_2^2\), with equality iff all cross terms vanish, i.e.~at most one coordinate is nonzero. By Cauchy--Schwarz, \(\|x\|_1 = \sum_i |x_i| \cdot 1 \le \sqrt{d}\,\|x\|_2\), with equality iff \((|x_1|, \dots, |x_d|)\) is proportional to \((1,\dots,1)\). \(\square\)
+
+\textbf{Proposition E.3 (Two-Sided Quotient Comparison).} Define the \(\ell^2\)-gauged quotient value
+\[\Phi_2([\omega]) := \min_f \|\omega - d_0 f\|_2 .\]
+Then under (A1)--(A3),
+\[\Phi_2([\omega]) \;\le\; \Phi([\omega]) \;\le\; \sqrt{m}\;\Phi_2([\omega]) .\]
+
+\emph{Proof.} Let \(f_1^*\) attain \(\Phi\) and \(f_2^*\) attain \(\Phi_2\) (both exist: each value is the distance from \(\omega\) to the closed subspace \(\operatorname{im}(d_0)\) in a finite-dimensional normed space, which is attained; equivalently the minimization is coercive on the quotient \(C^0/\ker d_0\), and any preimage of an attaining \(g \in \operatorname{im}(d_0)\) serves as \(f^*\)). Then
+\(\Phi_2([\omega]) \le \|\omega - d_0 f_1^*\|_2 \le \|\omega - d_0 f_1^*\|_1 = \Phi([\omega])\) by Proposition E.2 (left inequality on \(C^1\)), and
+\(\Phi([\omega]) \le \|\omega - d_0 f_2^*\|_1 \le \sqrt{m}\,\|\omega - d_0 f_2^*\|_2 = \sqrt{m}\,\Phi_2([\omega])\) by Proposition E.2 (right inequality on \(C^1\)). \(\square\)
+
+\textbf{Remark E.3a (this is not the Hodge-inflation statement).} §1.1 item 4 of the paper records that the \(\ell^2\) Hodge decomposition can inflate the sum of the \(\ell^1\)-costs of its bookkeeping \emph{components} by a factor approaching \(3\) on cycle graphs. Proposition E.3 compares the \emph{optimal values} of the two gauged quotient problems, not the \(\ell^1\) cost of \(\ell^2\)-selected representatives. The two statements are consistent and answer different questions; neither replaces the other.
+
+\textbf{Fence restated.} Propositions E.2--E.3 are the entire content of the embedding step: an explicit, assumption-carrying change of gauge with disclosed constants. Nothing below treats an \(\ell^1\) quantity and an \(\ell^2\) quantity as the same object.
+
+\paragraph{5.4.2 The obstruction operator of the truncation}\label{the-obstruction-operator-of-the-truncation}
+
+\textbf{Definition E.4 (Obstruction operator).} On \(H_Q^{(n)}\) define
+\[L_0 := d_0^*\, d_0 , \qquad H_{\mathrm{obstr}} := L_0 + V_{\mathrm{defect}} .\]
+
+\textbf{Notation guard.} \(L_0\) is what the imported literature calls the (degree-0, down-up) sheaf Laplacian, written \(\Delta_{\mathcal{F}} = d^*d\) in §4.1 of the paper and in Hansen--Ghrist {[}3{]}. The symbol \(\Delta_0\) is \textbf{not} used for it here, because \(\Delta_0\) denotes the primitive distinction operator elsewhere in this corpus; the two must never share a symbol. Under (A1), \(L_0\) is the standard graph Laplacian of \(G\) in the vertex basis.
+
+\textbf{Lemma E.5 (Self-Adjointness and Positivity).} Under (A1)--(A5), \(H_{\mathrm{obstr}}\) is self-adjoint and positive semidefinite on \(H_Q^{(n)}\), and its spectrum equals the spectrum of the real-symmetric matrix \(L_0 + \mathrm{diag}(v)\) on \(\mathbb{R}^n\).
+
+\emph{Proof.} \(L_0 = d_0^* d_0\) is a Gram-form operator: \(\langle \psi, L_0 \psi \rangle_2 = \|d_0 \psi\|_2^2 \ge 0\), and \(L_0^* = (d_0^* d_0)^* = d_0^* d_0\). \(V_{\mathrm{defect}}\) is diagonal with real nonnegative entries (A5), hence self-adjoint and positive semidefinite. Sums of self-adjoint positive-semidefinite operators are self-adjoint and positive semidefinite. Both matrices are real in the declared bases, so \(H_{\mathrm{obstr}}\) is the complexification of a real-symmetric matrix; complexification of a real-symmetric matrix leaves the spectrum unchanged (its eigenvalues are real and its real eigenvectors remain eigenvectors). \(\square\)
+
+The last sentence is why the computational conformance model (§5.4.6) may be real-symmetric without loss for spectral statements: the complex structure of \(H_Q^{(n)}\) adds no spectral content for this operator class.
+
+\paragraph{5.4.3 The ground-state eigenvalue of the truncation}\label{the-ground-state-eigenvalue-of-the-truncation}
+
+\textbf{Definition E.6 (Represented spectral defect of the truncation).}
+\[\lambda_0 \;:=\; \min_{\substack{\psi \in H_Q^{(n)} \\ \|\psi\|_2 = 1}} \langle \psi,\, H_{\mathrm{obstr}}\, \psi \rangle_2 .\]
+The minimum exists (continuous function on a compact sphere in finite dimension) and equals the smallest eigenvalue of \(H_{\mathrm{obstr}}\) by the spectral theorem for Hermitian matrices (imported, not reproved). \(\lambda_0\) is the \textbf{irreducible represented spectral defect of the truncation} --- a reading of the pair (carrier geometry, selected representative) by the declared \(\ell^2\) gauge. It is not a cohomology class, not an agreement-hardness measure, and not a physical energy.
+
+\textbf{Proposition E.7 (Upper Bound by the \(\ell^1\) Quotient Norm).} Under (A1)--(A5),
+\[\lambda_0 \;\le\; \frac{2}{n}\, \Phi([\omega]) .\]
+
+\emph{Proof.} Test with the normalized constant vector \(\psi_c := n^{-1/2}(1, \dots, 1)\). Under (A1), \((d_0 \psi_c)_e = \psi_c(b) - \psi_c(a) = 0\) for every edge, so \(\langle \psi_c, L_0 \psi_c \rangle_2 = \|d_0\psi_c\|_2^2 = 0\). Since each covering edge has exactly two distinct endpoints (A1),
+\[\sum_{x \in P} v(x) = \sum_{e \in E_{\mathrm{cov}}} \sum_{x \in e} |\delta_{\mathrm{irr}}(e)| = 2\,\|\delta_{\mathrm{irr}}\|_1 = 2\,\Phi([\omega]),\]
+so \(\langle \psi_c, V_{\mathrm{defect}}\, \psi_c \rangle_2 = \tfrac{1}{n} \sum_x v(x) = \tfrac{2}{n}\Phi([\omega])\). The Rayleigh value at \(\psi_c\) upper-bounds \(\lambda_0\). \(\square\)
+
+\textbf{Proposition E.8 (Vanishing Equivalence on Connected Carriers).} Under (A1)--(A5), with \(G\) connected:
+\[\lambda_0 = 0 \iff \Phi([\omega]) = 0 ,\]
+and this biconditional is independent of the (D-SEL) choice of minimal representative.
+
+\emph{Proof.} (\(\Leftarrow\)) If \(\Phi([\omega]) = 0\) then every minimal representative satisfies \(\|\delta_{\mathrm{irr}}\|_1 = 0\), hence \(\delta_{\mathrm{irr}} = 0\), hence \(v \equiv 0\) and \(H_{\mathrm{obstr}} = L_0\); then \(\psi_c\) from the proof of E.7 gives Rayleigh value \(0\), and \(\lambda_0 \ge 0\) by Lemma E.5, so \(\lambda_0 = 0\).
+(\(\Rightarrow\)) If \(\lambda_0 = 0\), take a unit minimizer \(\psi\). Then \(\|d_0\psi\|_2^2 + \sum_x v(x)|\psi(x)|^2 = 0\) with both terms nonnegative, so both vanish. \(d_0 \psi = 0\) with \(G\) connected and identity restrictions forces \(\psi = c \cdot (1,\dots,1)\) with \(c \neq 0\) (kernel of the connected graph Laplacian is the constants). Then \(v(x)|c|^2 = 0\) for all \(x\) forces \(v \equiv 0\), hence \(\delta_{\mathrm{irr}} = 0\), hence \(\Phi([\omega]) = \|\delta_{\mathrm{irr}}\|_1 = 0\). \(\square\)
+
+\textbf{Proposition E.7a (Quantitative Lower Bound by the \(\ell^1\) Quotient Norm).} Under (A1)--(A5) with \(G\) connected and \(n \ge 2\), write
+\[\lambda_2 := \lambda_2(L_0) > 0, \qquad \mu := \frac{1}{n}\sum_{x \in P} v(x) = \frac{2}{n}\,\Phi([\omega]), \qquad v_{\max} := \max_{x \in P} v(x)\]
+for the smallest nonzero eigenvalue of \(L_0\) (the Fiedler value of the carrier), the mean defect load, and the peak defect load. Then
+\[\lambda_0 \;\ge\; \frac{\lambda_2\,\mu}{\lambda_2 + \mu + v_{\max}} \;=\; \frac{2\,\lambda_2\,\Phi([\omega])}{n\,\lambda_2 \;+\; 2\,\Phi([\omega]) \;+\; n\,v_{\max}} .\]
+In particular \(\lambda_0 > 0\) whenever \(\Phi([\omega]) > 0\).
+
+\emph{Proof.} If \(\Phi([\omega]) = 0\) then \(\mu = 0\), the right-hand side is \(0\), and \(\lambda_0 \ge 0\) by Lemma E.5; so assume \(\Phi([\omega]) > 0\), hence \(\mu > 0\) and \(v_{\max} \ge \mu > 0\).
+
+Let \(\Pi\) be the orthogonal projection of \(H_Q^{(n)}\) onto \(\ker L_0\). With \(G\) connected and identity restrictions (A1), \(\ker L_0 = \mathbb{C}\,\psi_c\) with \(\psi_c = n^{-1/2}(1,\dots,1)\) (kernel of the connected graph Laplacian is the constants, as already used in Proposition E.8), so \(\Pi\) has rank one, and the spectral theorem gives \(L_0 \succeq \lambda_2\,(I - \Pi)\) with \(\lambda_2 > 0\) for \(n \ge 2\).
+
+Fix a unit \(\psi \in H_Q^{(n)}\) and split \(\psi = u + w\) with \(u := \Pi\psi\), \(w := \psi - u\); put \(s := \|w\|_2^2 \in [0,1]\), so \(\|u\|_2^2 = 1 - s\).
+
+\emph{(i) Laplacian part.} \(L_0 u = 0\) and \(L_0\) is self-adjoint, so \(\langle u, L_0 w\rangle_2 = \langle L_0 u, w\rangle_2 = 0\) and therefore
+\[\langle \psi, L_0 \psi\rangle_2 = \langle w, L_0 w\rangle_2 \;\ge\; \lambda_2\,\|w\|_2^2 = \lambda_2\, s .\]
+
+\emph{(ii) Potential part.} \(V_{\mathrm{defect}} \succeq 0\) is diagonal (A5), so \(V_{\mathrm{defect}}^{1/2}\) is defined and diagonal, and \(\langle\psi, V_{\mathrm{defect}}\psi\rangle_2 = \|V_{\mathrm{defect}}^{1/2}u + V_{\mathrm{defect}}^{1/2}w\|_2^2\). Because \(\ker L_0\) is spanned by the \emph{constant} vector, \(u = c\,\psi_c\) with \(|c|^2 = 1-s\), and hence --- an \textbf{equality}, not an estimate ---
+\[\|V_{\mathrm{defect}}^{1/2}u\|_2^2 = |c|^2\,\langle \psi_c, V_{\mathrm{defect}}\,\psi_c\rangle_2 = \mu\,(1-s),\]
+using \(\langle \psi_c, V_{\mathrm{defect}}\psi_c\rangle_2 = \tfrac1n\sum_x v(x) = \mu\) exactly as computed in the proof of Proposition E.7. On the complement, \(V_{\mathrm{defect}}\) diagonal with entries at most \(v_{\max}\) gives \(\|V_{\mathrm{defect}}^{1/2}w\|_2^2 = \langle w, V_{\mathrm{defect}}w\rangle_2 \le v_{\max}\,s\).
+For real \(\alpha, \beta\) and any \(\theta \in (0,1)\) the algebraic identity
+\[(\alpha-\beta)^2 - (1-\theta)\,\alpha^2 + \left(\tfrac1\theta - 1\right)\beta^2 \;=\; \left(\sqrt{\theta}\,\alpha - \tfrac{\beta}{\sqrt\theta}\right)^{2} \;\ge\; 0\]
+yields \((\alpha-\beta)^2 \ge (1-\theta)\alpha^2 - (\tfrac1\theta - 1)\beta^2\). Apply it to \(\alpha := \|V_{\mathrm{defect}}^{1/2}u\|_2\), \(\beta := \|V_{\mathrm{defect}}^{1/2}w\|_2\) after the reverse triangle inequality \(\|X + Y\|_2^2 \ge (\|X\|_2 - \|Y\|_2)^2\). Since \(1-\theta > 0\) and \(-(\tfrac1\theta-1) < 0\), the bounds on \(\alpha^2\) and \(\beta^2\) substitute monotonically:
+\[\langle\psi, V_{\mathrm{defect}}\psi\rangle_2 \;\ge\; (1-\theta)\,\mu\,(1-s) \;-\; \left(\tfrac1\theta - 1\right) v_{\max}\, s .\]
+
+\emph{(iii) Choice of \(\theta\).} Take
+\[\theta := \frac{\mu + v_{\max}}{\lambda_2 + \mu + v_{\max}} \in (0,1), \qquad 1-\theta = \frac{\lambda_2}{\lambda_2+\mu+v_{\max}}, \qquad \tfrac1\theta - 1 = \frac{\lambda_2}{\mu+v_{\max}} .\]
+Adding (i) and (ii),
+\[\langle\psi, H_{\mathrm{obstr}}\psi\rangle_2 \;\ge\; (1-\theta)\,\mu \;+\; s\Big[\lambda_2 - (1-\theta)\mu - \big(\tfrac1\theta-1\big)v_{\max}\Big],\]
+and the bracket equals
+\[\lambda_2\left[1 - \frac{\mu}{\lambda_2+\mu+v_{\max}} - \frac{v_{\max}}{\mu+v_{\max}}\right] \;\ge\; \lambda_2\left[1 - \frac{\mu}{\mu+v_{\max}} - \frac{v_{\max}}{\mu+v_{\max}}\right] \;=\; 0,\]
+where the inequality drops \(\lambda_2 \ge 0\) from the first denominator. The coefficient of \(s\) is therefore nonnegative, so the right-hand side is minimized at \(s = 0\):
+\[\langle\psi, H_{\mathrm{obstr}}\psi\rangle_2 \;\ge\; (1-\theta)\,\mu \;=\; \frac{\lambda_2\,\mu}{\lambda_2+\mu+v_{\max}} .\]
+Minimizing over unit \(\psi\) (Definition E.6) gives the first form; substituting \(\mu = \tfrac{2}{n}\Phi([\omega])\) (proof of E.7) gives the second. Strict positivity for \(\Phi([\omega]) > 0\) follows from \(\lambda_2 > 0\) and \(\mu > 0\). \(\square\)
+
+\textbf{Scope note (what the proof actually consumes).} Only two facts are used: \(G\) is connected with \(n \ge 2\) (so that \(\ker L_0\) is exactly the constants), and \(V_{\mathrm{defect}}\) is diagonal with \(v \ge 0\). Minimality of \(\delta_{\mathrm{irr}}\) enters \emph{only} through \(\|\delta_{\mathrm{irr}}\|_1 = \Phi([\omega])\) in the identification \(\mu = 2\Phi([\omega])/n\). Consequently the bound holds for \textbf{every} minimal representative; \(\mu\) is the same for all of them, while \(v_{\max}\) is selection-dependent, so different selections give differently tight instances of the same inequality (cf.~Remark E.12).
+
+\textbf{Corollary E.7b (Two-Sided Sandwich and Its Width).} Under the hypotheses of E.7a with \(\Phi([\omega]) > 0\), Propositions E.7 and E.7a combine to
+\[\frac{\lambda_2}{\lambda_2+\mu+v_{\max}}\;\mu \;\;\le\;\; \lambda_0 \;\;\le\;\; \mu, \qquad \mu = \frac{2\,\Phi([\omega])}{n},\]
+so \(\lambda_0\) is confined to a multiplicative window whose width is exactly
+\[\frac{\text{upper}}{\text{lower}} \;=\; 1 + \frac{\mu + v_{\max}}{\lambda_2}.\]
+\emph{Proof.} Immediate from E.7 (\(\lambda_0 \le \mu\)) and E.7a; the width is the quotient of the two displayed bounds. \(\square\)
+
+\textbf{Remark E.7c (strictness, sharpness, and which hypotheses are load-bearing).}
+
+\emph{(a) The inequality is strict, hence never attained.} The bracket in step (iii) of the proof is not just nonnegative but strictly positive; clearing denominators gives the identity
+\[\lambda_2 - (1-\theta)\mu - \left(\tfrac1\theta-1\right)v_{\max} \;=\; \frac{\lambda_2^{\,2}\,\mu}{(\mu+v_{\max})\,(\lambda_2+\mu+v_{\max})} \;>\; 0 \qquad (\mu > 0).\]
+So the estimate is strictly decreasing in \(s\) away from \(s=0\), and at \(s=0\) the test vector is \(\psi_c\) itself, whose true Rayleigh value is \(\mu > (1-\theta)\mu\). Hence \(\lambda_0 > \lambda_2\mu/(\lambda_2+\mu+v_{\max})\) strictly whenever \(\Phi([\omega])>0\): ``sharp'' below can only mean \emph{asymptotically approached}, never \emph{attained}.
+
+\emph{(b) The infimum of the ratio is exactly \(1\), approached along flat potentials.} For a \textbf{flat} load \(v \equiv c\) the operator is \(L_0 + cI\), so \(\lambda_0 = c = \mu\) exactly (E.7's upper bound is attained), and the ratio of true value to E.7a bound is exactly
+\[\frac{\lambda_0}{\text{E.7a bound}} \;=\; 1 + \frac{2\mu}{\lambda_2} \qquad (v \equiv \mu = v_{\max}),\]
+which tends to \(1\) as \(\mu/\lambda_2 \to 0\). Consequently \textbf{no constant \(c > 1\) may be inserted} in front of E.7a's right-hand side. Checked numerically on \(K_3\) (\(\lambda_2 = 3\)): ratio \(2.3\overline{3}\) at \(\mu = 2\), and \(1.00000067\) at \(\mu = 10^{-6}\), matching \(1 + 2\mu/3\) to the digits shown.
+The gap is therefore driven by the ratio \(\mu/\lambda_2\) --- defect load against carrier connectivity --- and not by flatness: the uniform \(C_4\) selection of Remark E.12 sits at \(\mu/\lambda_2 = 1\) and so reads \(\lambda_0 \ge 2/3\) against the true \(\lambda_0 = 2\), the factor \(3 = 1 + 2\cdot 2/2\). Concentrated heavy loads are far looser still.
+
+\emph{(c) Both hypotheses are load-bearing; neither is decoration.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Connectivity.} Without it \(\ker L_0\) has dimension \(>1\), the rank-one step fails, and so does the conclusion: on the disconnected carrier \(K_2 \sqcup K_2\) with \(v = (1,1,0,0)\) one has \(\lambda_0 = 0\) while the right-hand side (formed with the smallest \emph{positive} Laplacian eigenvalue \(2\)) is \(2/7 \approx 0.2857\). The bound is false there, as it must be, since \(\Phi>0\) with \(\lambda_0=0\) also contradicts E.8.
+\item
+  \textbf{The peak \(v_{\max}\), not just the mean.} Replacing \(v_{\max}\) by \(\mu\) (a ``peak-free'' surrogate \(\lambda_2\mu/(\lambda_2+2\mu)\)) yields a \textbf{false} statement: on the path \(P_6\) with \(v = (A,0,\dots,0)\), as \(A \to \infty\) the true \(\lambda_0 \to 0.08101405\) (the Dirichlet eigenvalue of the carrier with the loaded vertex removed) while the surrogate \(\to \lambda_2/2 = 0.13397460\). Checked at \(A = 10^{8}\): \(\lambda_0 = 0.08101405 < 0.13397460\). E.7a itself holds comfortably at \(0.03827846\).
+\end{itemize}
+
+\emph{(d) Still not an identification.} E.7a consumes \(\lambda_2\) and \(v_{\max}\), neither of which \(\Phi([\omega])\) carries, and the sandwich width \(1+(\mu+v_{\max})/\lambda_2\) is unbounded as \(\lambda_2 \to 0\). All three separations of Remark E.9 stand unchanged; a two-sided bound is not a dictionary between the \(\ell^1\) and \(\ell^2\) gauges.
+
+We now consider refinements of this bound. Proposition E.7d incorporates the second moment of the vertex defect distribution, and Proposition E.7e provides an exact full-distribution secular equation characterization for the rank-one comparison operator.
+
+\textbf{Proposition E.7d (Size-Biased Moment Ground-State Refinement).} Under the hypotheses of E.7a, put
+\[S:=\sum_xv(x),\qquad \mu:=S/n,\qquad
+m_2:=\begin{cases}0,&S=0,\\[1mm]\displaystyle\frac{\sum_xv(x)^2}{S},&S>0.\end{cases}\]
+Then, with \(\alpha:=\lambda_2(L_0)>0\),
+\[\lambda_0\ge\frac{\alpha\mu}{\alpha+\mu+m_2}.\]
+For \(S>0\), \(m_2\le v_{\max}\), so this weakly improves E.7a. The
+improvement of the lower-bound constant is strict exactly when the positive
+loads are not all equal to \(v_{\max}\); equality with E.7a holds exactly when
+every load is either \(0\) or \(v_{\max}\).
+
+\emph{Proof.} If \(S=0\), nonnegativity forces \(v\equiv0\), so
+\(H_{\mathrm{obstr}}=L_0\), \(\lambda_0=0\), and the displayed right-hand side is
+zero. Assume \(S>0\) and set
+\[t:=\frac{\alpha\mu}{\alpha+\mu+m_2},\qquad c:=\alpha-t>0.\]
+On the positive support of \(v\), the Engel form of Cauchy--Schwarz gives
+\[\sum_x\frac{v(x)}{c+v(x)}
+=\sum_{v(x)>0}\frac{v(x)^2}{v(x)(c+v(x))}
+\ge\frac{S^2}{cS+\sum_xv(x)^2}
+=\frac{S}{c+m_2}.\]
+The identity \(1/(c+v)=1/c-v/[c(c+v)]\) therefore yields
+\[R:=\frac1n\sum_x\frac1{c+v(x)}
+\le\frac{c+m_2-\mu}{c(c+m_2)}.\]
+Since
+\[t(c+m_2)
+=\alpha\mu\,\frac{c+m_2}{\alpha+\mu+m_2}<\alpha\mu,\]
+substitution of \(c=\alpha-t\) gives \(\alpha R<1\).
+
+For every state \(\psi\), the graph spectral-gap inequality and weighted
+Cauchy--Schwarz give
+\[\langle\psi,L_0\psi\rangle
+\ge\alpha\left(\|\psi\|_2^2-\frac{|\sum_x\psi(x)|^2}{n}\right),\qquad
+\frac{|\sum_x\psi(x)|^2}{n}
+\le R\sum_x(c+v(x))|\psi(x)|^2.\]
+Writing \(W:=\sum_x(c+v(x))|\psi(x)|^2
+=c\|\psi\|_2^2+\sum_xv(x)|\psi(x)|^2\) and using \(\alpha R\le1\),
+\[\begin{aligned}
+\langle\psi,H_{\mathrm{obstr}}\psi\rangle
+&\ge\alpha\|\psi\|_2^2-\alpha RW+\sum_xv(x)|\psi(x)|^2\\
+&\ge(\alpha-\alpha Rc)\|\psi\|_2^2\\
+&\ge(\alpha-c)\|\psi\|_2^2=t\|\psi\|_2^2.
+\end{aligned}\]
+Rayleigh minimization yields the bound. Finally,
+\[v_{\max}S-\sum_xv(x)^2=\sum_xv(x)(v_{\max}-v(x))\ge0,\]
+and equality holds exactly when each positive load equals \(v_{\max}\).
+This establishes the comparison and strictness criterion. \(\square\)
+
+\textbf{Remark E.7d (Scope and Refinement).} Proposition E.7d sharpens the lower bound of Proposition E.7a by incorporating the second moment \(m_2\) of the vertex load distribution, providing a strictly larger lower bound whenever positive vertex loads are non-uniform. The inequality holds for finite graphs with scalar stalks and does not assert physical or continuum dynamics.
+
+\textbf{Proposition E.7e (Exact Comparison Operator Characterization).} Put \(P=n^{-1}\mathbf1\mathbf1^{\mathsf T}\),
+\(d_i:=\alpha+v_i\), and, for \(t<d_{\min}:=\min_i d_i\),
+\[F(t):=\frac{\alpha}{n}\sum_i\frac1{d_i-t}.\]
+There is a unique \(\tau\in[0,d_{\min})\) with \(F(\tau)=1\). Moreover
+\[\lambda_{\min}\!\left(\alpha(I-P)+\operatorname{diag}(v)\right)=\tau,
+\qquad
+\lambda_0=\lambda_{\min}(L_0+\operatorname{diag}(v))\ge\tau.\]
+The zero-load branch has \(\tau=0\). For positive load, the E.7d constant
+\(t_{m_2}\) obeys \(0<t_{m_2}<\tau\le\mu\).
+
+\emph{Proof.} The gap premise is the Loewner inequality
+\(L_0\succeq\alpha(I-P)\). For \(t<d_{\min}\), weighted Cauchy gives
+\[\left(\sum_i x_i\right)^2\le
+\left(\sum_i(d_i-t)x_i^2\right)\left(\sum_i\frac1{d_i-t}\right),\]
+and hence
+\[\langle x,(\alpha(I-P)+\operatorname{diag}(v)-tI)x\rangle
+\ge(1-F(t))\sum_i(d_i-t)x_i^2.\]
+Thus \(F(t)\le1\) implies the comparison operator is at least \(tI\).
+The function \(F\) is continuous and strictly increasing below its first pole.
+It satisfies \(F(0)\le1\), with equality exactly for zero load. For positive
+load, \(F(0)<1\), while at
+\(u=d_{\min}-\alpha/n\) one minimum-load summand contributes exactly \(1\)
+and the remaining positive summands give \(F(u)>1\). Hence there is a unique
+root \(\tau\). At that root, \(x_i=(d_i-\tau)^{-1}\) is nonzero and satisfies
+\[d_i x_i-\frac{\alpha}{n}\sum_jx_j=\tau x_i,\]
+so it attains the comparison floor. The Loewner inequality transfers that
+floor to \(H_{\mathrm{obstr}}\). The E.7d reciprocal gate is strict at
+\(t_{m_2}\), giving \(t_{m_2}<\tau\), and the constant-vector Rayleigh quotient
+gives \(\tau\le\mu\). \(\square\)
+
+\textbf{Remark E.7e (Comparison Operator Characterization).} Proposition E.7e establishes an exact secular-equation root \(\tau\) for the ground state of the rank-one comparison operator \(\alpha(I - P) + \operatorname{diag}(v)\). Because the connected graph Laplacian satisfies the Loewner inequality \(L_0 \succeq \alpha(I - P)\), \(\tau\) is a rigorous lower bound for \(\lambda_0(H_{\mathrm{obstr}})\).
+
+\textbf{Remark E.9 (relation, not identification; and what \(\lambda_0\) is blind to).} Propositions E.7--E.8 relate \(\lambda_0\) to \(\Phi([\omega])\) by an inequality and a vanishing equivalence. \textbf{They do not identify the two, and no identification is available at this degree.} Three separations are on record:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(\lambda_0\) mixes the spectral conditioning of the carrier (through \(L_0\)) with the represented defect load (through \(V_{\mathrm{defect}}\)); \(\Phi([\omega])\) reads neither the spectrum of \(L_0\) nor the vertex distribution of the load, only the total \(\ell^1\) mass of the class.
+\item
+  The smallest \textbf{nonzero} eigenvalue of \(L_0\) alone (the spectral gap \(\lambda_2\), cf.~the Fiedler value) measures spectral conditioning / connectivity of the carrier. It does \textbf{not} measure semantic agreement hardness, and neither does \(\lambda_0\); both are \(\ell^2\) readings of a truncation, distinct in kind from the \(\ell^1\) LP structure of Theorem 4.2.
+\item
+  \(H_{\mathrm{obstr}}\) depends on the choice when minimal representatives are non-unique, while \(\Phi([\omega])\) does not; Remark E.12 exhibits two selections on \(C_4\) with different \(\lambda_0\).
+  These propositions establish rigorous quantitative lower bounds relating the \(\ell^1\) quotient norm to the \(\ell^2\) ground-state defect. The three separations above are \textbf{unaffected}: every bound still consumes carrier data (\(\lambda_2\)) and selection-dependent load-distribution data that \(\Phi([\omega])\) does not carry, so the results relate the two gauges without translating between them. E.7e is not an exact fixed-graph eigenvalue formula. Asserting any such bound \emph{without} its proof would have been exactly the silent \(\ell^1\)/\(\ell^2\) conflation this section exists to prevent.
+\end{enumerate}
+
+\textbf{Remark E.9a (represented defect norm, not a cohomology class).} \(\|\omega - d_0 s\|_1\) and \(\Phi([\omega])\) are \textbf{represented compatibility defect norms}. A statement about a nonzero class in \(Q^1\) additionally requires the quotient construction (present: \(Q^1 = C^1/\operatorname{im}(d_0)\), §2.1) \emph{and} a nontriviality witness. The witness mechanism is the paper's own §4.10 Dual Formulation: a feasible dual \(\phi\) with \(d_0^*\phi = 0\), \(\|\phi\|_\infty \le 1\), and \(\langle \phi, \omega \rangle > 0\) certifies \(\Phi([\omega]) > 0\), hence \([\omega] \neq 0\) in \(Q^1\). Remark E.12 constructs such a witness explicitly for \(C_4\). Per §2.1 ("Consequence for the word `cohomology'\,"), \(Q^1\) coincides with \(H^1\) under the graph truncation \(C^2 := 0\); where they could differ, read \(Q^1\).
+
+\paragraph{5.4.4 Worked examples (exact spectra)}\label{worked-examples-exact-spectra}
+
+Both primary examples are trees, so Corollary 4.1 (Tree Exactness) applies: \(Q^1 = 0\), \(\Phi([\omega]) = 0\) for every \(\omega\), hence \(\delta_{\mathrm{irr}} = 0\), \(V_{\mathrm{defect}} = 0\), and \(H_{\mathrm{obstr}} = L_0\). The path-graph Laplacian spectrum is the closed form \(\{\,2 - 2\cos(k\pi/n) : k = 0, \dots, n-1\,\}\).
+
+\textbf{Example E.10 (2-vertex / 1-edge carrier, \(P_2\)).} \(P = \{a, b\}\), one edge \(e = (a,b)\). In the declared bases \(d_0 = \begin{pmatrix} -1 & 1 \end{pmatrix}\), so
+\[L_0 = d_0^* d_0 = \begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}, \qquad \operatorname{spec}(L_0) = \{0,\, 2\} = \{2 - 2\cos(k\pi/2)\}_{k=0,1}.\]
+Tree exactness gives \(\Phi([\omega]) = 0\) for every \(\omega\), so \(H_{\mathrm{obstr}} = L_0\) and \(\lambda_0 = 0\), matching Proposition E.8. The nonzero eigenvalue \(2\) (eigenvector \((1,-1)/\sqrt{2}\)) is pure conditioning data of the carrier; it reads no defect, because there is none to read.
+
+\textbf{Example E.11 (path graph \(P_4\)).} \(P = \{x_1, x_2, x_3, x_4\}\), edges \((x_1,x_2), (x_2,x_3), (x_3,x_4)\). Then
+\[L_0 = \begin{pmatrix} 1 & -1 & 0 & 0 \\ -1 & 2 & -1 & 0 \\ 0 & -1 & 2 & -1 \\ 0 & 0 & -1 & 1 \end{pmatrix}, \qquad \operatorname{spec}(L_0) = \{2 - 2\cos(k\pi/4)\}_{k=0}^{3} = \{\,0,\; 2 - \sqrt{2},\; 2,\; 2 + \sqrt{2}\,\}.\]
+Again \(\Phi \equiv 0\) (tree), \(\lambda_0 = 0\). The spectral gap \(2 - \sqrt{2} \approx 0.5858\) is the carrier's conditioning number; per Remark E.9 it carries connectivity information and no defect or agreement-hardness content. These two spectra are the conformance fixtures of §5.4.6.
+
+\textbf{Remark E.12 (a nonzero class: \(C_4\), dual witness, tightness, and selection-dependence).} Take the oriented 4-cycle \(x_1 \to x_2 \to x_3 \to x_4 \to x_1\) with \(\omega = (1,1,1,1)\). The dual \(\phi = (1,1,1,1)\) is feasible (\(d_0^*\phi = 0\) at every vertex: one incoming minus one outgoing unit; \(\|\phi\|_\infty = 1\)) with \(\langle \phi, \omega \rangle = 4\), so by the §4.10 Dual Formulation \(\Phi([\omega]) \ge 4\); since \(\|\omega - d_0 \cdot 0\|_1 = 4\), in fact \(\Phi([\omega]) = 4\) and \([\omega] \neq 0\) in \(Q^1\) --- the explicit nontriviality witness of Remark E.9a.
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Uniform selection} \(\delta_{\mathrm{irr}} = (1,1,1,1)\): \(v \equiv 2\), so \(H_{\mathrm{obstr}} = L_0 + 2I\) and \(\lambda_0 = 0 + 2 = 2\). The bound of Proposition E.7 reads \(\lambda_0 \le (2/4)\cdot 4 = 2\): attained.
+\item
+  \emph{Concentrated selection} \(\delta' = (4,0,0,0)\) (also minimal: \(\|\delta'\|_1 = 4\), and \(\omega - \delta' = (-3,1,1,1) = d_0 f\) for \(f = (0,-3,-2,-1)\)): here \(v' = (4,4,0,0)\), and the unit test vector \(\psi = (0,0,1,1)/\sqrt{2}\) gives \(\langle \psi, V'\psi \rangle = 0\) and \(\|d_0\psi\|_2^2 = (1/\sqrt2)^2 + (-1/\sqrt2)^2 = 1\), so \(\lambda_0 \le 1 < 2\).
+  Both selections give \(\lambda_0 > 0\), as Proposition E.8 requires (\(\Phi > 0\)), and they give different \(\lambda_0\): the operator is selection-dependent even though the vanishing equivalence is not.
+\end{itemize}
+
+\emph{The same two selections read through Proposition E.7a.} Here \(\lambda_2(L_0) = 2\) for \(C_4\) (Laplacian spectrum \(\{0,2,2,4\}\)) and \(\mu = 2\Phi/n = 2\) for both selections --- \(\mu\) depends only on \(\|\delta_{\mathrm{irr}}\|_1 = \Phi\), so it cannot separate them --- while \(v_{\max}\) does separate them:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+selection
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(v\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(v_{\max}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+E.7a lower bound
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+true \(\lambda_0\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+E.7 upper bound \(\mu\)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+uniform & \((2,2,2,2)\) & \(2\) & \(\tfrac{2\cdot 2}{2+2+2} = \tfrac23\) & \(2\) & \(2\) \\
+concentrated & \((4,4,0,0)\) & \(4\) & \(\tfrac{2\cdot 2}{2+2+4} = \tfrac12\) & \(3-\sqrt5 \approx 0.7639\) & \(2\) \\
+\end{longtable}
+
+Both instances satisfy the sandwich of Corollary E.7b. The uniform row is the flat-potential case of Remark E.7c, where the bound is loose by exactly the width factor \(1 + (2+2)/2 = 3\); the concentrated row shows the peak load \(v_{\max}\), not the total mass, is what degrades the bound. That \(v_{\max}\) is selection-dependent while \(\mu\) is not highlights the significance of the representative selection rule.
+
+\paragraph{5.4.5 The decay semigroup: analogy only, with domain restriction}\label{the-decay-semigroup-analogy-only-with-domain-restriction}
+
+For \(t \ge 0\), \(e^{-tH_{\mathrm{obstr}}}\psi = \sum_k e^{-t\lambda_k} P_k \psi\) on \(H_Q^{(n)}\), where \(P_k\) is the orthogonal spectral projection onto the \(\lambda_k\)-eigenspace; for states with \(P_0\psi \neq 0\) the normalized state \(e^{-tH_{\mathrm{obstr}}}\psi / \|e^{-tH_{\mathrm{obstr}}}\psi\|_2\) converges to the \(\lambda_0\)-eigenspace, the excited-to-ground amplitude ratio decaying as \(e^{-(\lambda_1 - \lambda_0)t}\); when \(\lambda_0 > 0\) the unnormalized semigroup contracts every state to \(0\), and states with \(P_0\psi = 0\) never acquire a ground component (finite-dimensional spectral calculus, imported). Within the declared model this gives a continuous-parameter \emph{diagnostic relaxation} whose terminal reading, for states with nonzero ground overlap, is the normalized \(\lambda_0\)-eigenspace direction. \textbf{Domain restriction, stated explicitly:} this is a mathematical analogy inside the declared finite truncation. It is not physical quantum mechanics, not quantum gravity, not a dynamics of any physical system, and not a replacement for independent KKT certificate solvers --- the candidate update of historical Definition 4.1 is withdrawn and neither used nor advanced here. The parameter \(t\) is not physical time, exactly as the iteration index \(k\) of Corollary 4.2 is not an external clock.
+
+\paragraph{5.4.6 External Exploratory Computations and Software Scope}\label{external-exploratory-computations-and-software-scope}
+
+The finite spectral obstruction model \(H_{\mathrm{obstr}} = L_0 + V_{\mathrm{defect}}\) and its spectral bounds were investigated numerically in external exploratory scripts. Those external computations evaluated the eigendecomposition of \(H_{\mathrm{obstr}}\) using a deterministic cyclic Jacobi method with disclosed eigenpair residuals \(\max_k \|H v_k - \lambda_k v_k\|_\infty\).
+
+Key external test fixtures examined in that exploratory work included:
+1. Exact Laplacian spectra on trees and path graphs (Examples E.10 and E.11), checking \(\lambda_0 = 0\) when \(\Phi([\omega]) = 0\).
+2. The 4-cycle \(C_4\) configuration (Remark E.12), examining \(\lambda_0 = 2\) under uniform selection and \(\lambda_0 = 3 - \sqrt{5} \approx 0.7639\) under concentrated selection.
+3. The two-sided sandwich bound of Corollary E.7b across cyclic graphs (\(C_3, C_4, C_6\)) and trees, checking that \(c(\lambda_2, v) \le \lambda_0 \le \frac{2}{n}\Phi([\omega])\).
+
+\textbf{Software boundary note:} The cyclic-Jacobi implementation and spectral test fixtures described above are external research diagnostics and are \textbf{unshipped} in this deposit. They are not part of this package's shipped Python module (\texttt{mod\_004\_l1\_obstruction\_framework\_core.py}) or its automated pytest test suite. The shipped executable code provides exact rational \(L^1, L^2, L^\infty\) solvers, float64 interior-\(p\) solvers, and Schatten-\(p\) operator presheaf modules.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{6. Discussion}\label{discussion}
+
+\subsubsection{6.1 Results of This Deposit}\label{results-of-this-deposit}
+
+This monograph records:
+1. \textbf{Mechanized lower-bound inequality:} The Lean 4 theorem \texttt{general\_finite\_certificate\_optimality}, checked on finite graphs by Python \texttt{certificate\_dominates}.
+2. \textbf{Proved mathematical theorems in text (unmechanized in Lean 4):}
+- Theorem 2.1 (Functorial aggregation monotonicity under commuting contractive cochain maps);
+- Theorem 4.2 (Finite scalar KKT optimality certificate via linear programming duality);
+- Theorem 5.1 (Contractive-path distinguishability endpoint bound);
+- Proposition E.7e (Exact comparison-operator secular root and Loewner transfer).
+3. \textbf{Classical background and extensions:} Non-commutative Hölder duality (Theorem 3.0), Kadison-Sourour unitary gauge invariance (Proposition 3.1), operator-valued Schatten-1 classification (Theorem 3.1), and finite subgradient conservation (Proposition 4.15).
+4. \textbf{Refuted and withdrawn candidate update:} The candidate three-step iterator (historical Definition 4.1) is refuted by the single-edge counterexample and stays withdrawn.
+5. \textbf{Negative boundaries:} The identification of coboundary defects with bipartite product defects is refuted by the Bell state (§3.6); the conflation of primal residual divergence with dual circulation divergence is refuted by the triangle counterexample (§4.3); and the unweighted sum of cycle holonomies on overlapping cycles is refuted by the two-triangle counterexample (§4.10). Schemas in §4.6--§4.9 stay formal analogies. Conjectures in §5.2--§5.3 and the open problems in §6.5 stay open. \(d_1\circ d_0=0\) stays a declared axiom of this paper.
+
+\subsubsection{6.2 What This Paper Does Not Prove}\label{what-this-paper-does-not-prove}
+
+The open conjectures, continuum limits, and structural analogies are explicitly demarcated:
+
+\begin{itemize}
+\tightlist
+\item
+  The continuum limit (Schema 4.8) is stated as a formal scaling limit; full \(\Gamma\)-convergence is not proved.
+\item
+  The geometry emergence result (Schema 4.11) invokes established results from geometric measure theory under standard BV regularity assumptions but does not re-derive them.
+\item
+  The connections to the Standard Model gauge groups remain structural observations pending explicit derivation.
+\item
+  The derivation chain to quantum mechanics (Section 5.1) contains both established and open steps.
+\item
+  Monotonic descent of the candidate three-step update (former Conjecture 4.3) is refuted and withdrawn; the iteration admits non-optimal fixed points and does not implement a convergent solver.
+\item
+  The graph-bandwidth locality observation (§4.5) does not imply Lorentz invariance, an invariant propagation speed, or relativistic frame equivalence. Whether additional symmetry constraints on the \(\ell^1\) action can force an invariant speed remains open.
+\end{itemize}
+
+The conditionality of all claims is preserved. The \(\ell^1\) framework is selected within the axiom class of preceding gauge classification works {[}5, 6{]}. The extensions proved here hold given that \(\ell^1\) framework and their additional local-gauge assumptions. The conjectural elements indicate where the program requires further formal development.
+
+\subsubsection{6.3 Position in the Program}\label{position-in-the-program}
+
+Preceding works in this series {[}4, 5, 6, 7{]} address: \emph{What defect metric is selected under the stated additive observer axioms?} (weighted \(\ell^1\), with uniform \(\ell^1\) only under edge-uniformity.)
+
+This paper addresses: \emph{What is its static and variational structure?} (contractive under aggregation, conditionally extended to operators, governed by a quotient action whose symmetries generate conserved flux, with emergent connection-curvature-holonomy structure and a formal continuum limit recovering total variation flow.)
+
+Downstream monographs investigate: \emph{How does local dynamics realize this action?} (The algorithmic engine driving causal poset construction, propagation, and structural emergence.)
+
+The program is falsifiable at every joint: if any proved theorem is incorrect, or if any conjectured step fails, the downstream structure requires revision at that point. The separation of established discrete results from open conjectures and continuum limits is maintained to make this falsification structure transparent.
+
+\subsubsection{6.4 Epistemic Boundaries and Geometric Scope}\label{epistemic-boundaries-and-geometric-scope}
+
+The \(\ell^1\) framework does not prescribe the ambient geometric substrate---the topology, dimensionality, or embedding of the underlying graph or poset are inputs, not outputs. The framework characterizes the static variational structure governing defect minimization on declared discrete complexes. In formal continuum analogies, this variational structure is consistent with codimension-1 interfaces.
+
+Concretely, within declared finite models, the framework characterizes:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Static variational obstruction:} exact rational KKT certificates for norm-minimal representatives in quotient classes \([\omega] \in C^1 / \mathrm{im}(d_0)\).
+\item
+  \textbf{Quotient obstruction mass:} gauge-invariant cohomological norm \(\Phi([\omega]) = \min_{s} \|\omega - d_0 s\|_{1,\mathbf{w}}\) for an independently specified edge field \(\omega\).
+\item
+  \textbf{Coarse-graining monotonicity:} contractive pushforward bounds under stated commutation and norm hypotheses.
+\end{itemize}
+
+The framework does not derive:
+
+\begin{itemize}
+\tightlist
+\item
+  Physical propagation dynamics or invariant signal speed (the candidate three-step iterator is refuted and withdrawn).
+\item
+  Causal structure, lightcones, or causal ordering from variational descent.
+\item
+  A metric spacetime manifold or Riemannian metric from field configurations (the path cost \(d_\delta\) is generally a pseudometric on vertices).
+\item
+  The ambient dimension, topology, or embedding of the discrete substrate.
+\end{itemize}
+
+This distinction positions the framework as an exact calculus of \textbf{discrete cochain defect certificates} rather than an operational theory of physics, spacetime emergence, or dynamical evolution.
+
+\subsubsection{6.5 Open Problems: Emergent Metric and Homogenization}\label{open-problems-emergent-metric-and-homogenization}
+
+The cone structure identified in Remark 4.3 and the defect-induced path cost \(d_\delta(x,y) = \inf_\gamma \sum_{e \in \gamma} |\delta(e)|\) define a candidate emergent metric. Three open questions determine whether this candidate can bridge to physical geometry:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Homogenization under aggregation.} While the defect-induced metric is generically anisotropic at microscopic scales, the combination of \(\ell^1\) minimization (which penalizes redundant directional concentration) and functorial aggregation (Theorem 2.1, which preserves total defect under coarse-graining) suggests a homogenization mechanism. \emph{Open problem:} Does repeated coarse-graining of generic \(\ell^1\) defect configurations converge to an approximately isotropic metric in distribution, for sufficiently symmetric or ergodic graph ensembles?
+\item
+  \textbf{Invariant speed.} The dual feasibility constraint \(\|\phi\|_\infty \le 1\) imposes a uniform flux bound, yielding a maximal propagation rate. \emph{Open problem:} Under what symmetry conditions on the \(\ell^1\) action does this maximal rate become invariant under admissible transformations?
+\item
+  \textbf{Metric--dynamics coupling.} The defect-induced metric \(d_\delta\) depends on the field configuration, so geometry and dynamics are coupled. \emph{Open problem:} Does this coupling admit a consistent continuum limit in which the emergent metric satisfies a geometric evolution equation (analogous to Ricci flow or Einstein equations)?
+\end{enumerate}
+
+A positive answer to (1) would establish a serious bridge between the \(\ell^1\) framework and spacetime structure. A counterexample---a stable, strongly anisotropic defect configuration resistant to aggregation---would bound the geometric ambitions of the program. This constitutes the critical falsification test for the physics-level extension of the framework.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{6.6 Scope Boundaries, Evaluator Soundness, and Non-Claims}\label{scope-boundaries-evaluator-soundness-and-non-claims}
+
+This monograph records a core of proved finite certificates and text theorems, together with classical background arguments, negative boundaries, definitions, and open questions. The boundary between mechanized code, text proofs, and open questions is maintained in the companion claim ledger.
+
+\subsubsection{Evaluator Soundness and the Local-Green / Global-Red Boundary}\label{evaluator-soundness-and-the-local-green-global-red-boundary}
+
+In distributed evaluation frameworks, multi-agent networks, and sensor complexes, defect fields are observed via a collection of contractive linear measurements. Let \(\{q_e^\alpha\}_{\alpha \in A}\) be a family of contractive measurements watching a subset of edges \(E\). The evaluator score for watcher \(\alpha\) on a section \(s \in C^0(P; F)\) is
+\[J^\alpha(s) = \sum_{e \in E^\alpha} \|q_e^\alpha((d_0 s)_e)\|.\]
+The joint blind spot of edge \(e\) is the kernel intersection \(K_e = \bigcap_{\alpha} \ker(q_e^\alpha)\), with ambient blind spot \(K = \prod_{e \in E} K_e\).
+
+As established in Carroll (2026) (\emph{Local Green, Global Red}), monitoring is strictly one-way: \(J^\alpha(s) \le I(s)\), so global exactness (\(I(s) = 0\)) implies that every evaluator reports green (\(J^\alpha(s) = 0\)). However, the converse---that local green scores certify global exactness---holds \textbf{if and only if} the coboundary image intersects the joint watcher kernels trivially:
+\[\operatorname{im}(d_0) \cap K = \{0\}.\]
+
+If \(\operatorname{im}(d_0) \cap K \ne \{0\}\), there exist configurations with an identically zero score vector (\(J^\alpha(s) = 0\) for all \(\alpha\)) whose true defect mass \(I(s) = R > 0\) can be arbitrarily large. Consequently, no finite-valued function of local evaluator scores can uniformly bound the true defect on such a system. The \(\ell^1\) quotient norm \(\Phi_1([\omega])\) and its dual circulation certificate \(z^* \in \ker(d_0^*)\) provide the exact topological invariant quantifying irreducible defect mass, which cannot be replaced by unverified local scoreboards.
+
+\subsubsection{Standing Non-Claims}\label{standing-non-claims}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{No Physical Derivations:} This work does not derive quantum mechanics, the Born rule, spacetime geometry, Lorentz invariance, Yang--Mills field dynamics, or the Standard Model gauge group.
+\item
+  \textbf{Discrete vs.~Continuum:} The rigorous results of this paper hold for finite graphs, finite posets, and finite-dimensional operator algebras. Continuum limits (such as total-variation flows and mean-curvature motion) and geometric emergence are formal analogies and remain open mathematical problems.
+\item
+  \textbf{Withdrawn Primal-Dual Candidate Update:} The discrete three-step primal--dual candidate update (historical Definition 4.1 and Proposition 4.1) is refuted and withdrawn; it admits non-optimal fixed points (e.g.~on a single edge with \(\omega=1, \sigma=1, \tau=1/2\)) and is not a valid descent or minimization algorithm. No descent, convergence, or fixed-point characterization is claimed for it. The only optimality result retained in this paper is the independent finite \(\ell^1\) KKT certificate verification (Theorem 4.2), which checks independently supplied primal-dual pairs via exact linear programming duality.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Acknowledgments}\label{acknowledgments}
+
+No external funding. No conflicts of interest.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{References}\label{references}
+
+{[}1{]} S. Mac Lane, \emph{Categories for the Working Mathematician}, Springer, 1971.
+
+{[}2{]} B. Eckmann, ``Harmonische Funktionen und Randwertaufgaben in einem Komplex,'' \emph{Commentarii Mathematici Helvetici} \textbf{17} (1944/45), 240--255.
+
+{[}3{]} J. A. Hansen and R. Ghrist, ``Toward a spectral theory of cellular sheaves,'' \emph{Journal of Applied and Computational Topology} \textbf{3} (2019), 315--358.
+
+{[}4{]} J. H. Carroll, ``Projection Obstruction for Factorized States: Nonlinear Dynamics, Conditional \(\ell^1\) Diagnostics, and Finite-Time Defect Bounds,'' Zenodo, 2026. \url{https://doi.org/10.5281/zenodo.19151803}
+
+{[}5{]} J. H. Carroll, ``M-Compatible Gauge Classification for Banach Presheaf Coboundaries: The \(\ell^1\) Maximal-Symmetry Endpoint,'' Zenodo, 2026. \url{https://doi.org/10.5281/zenodo.19152115} \emph{(cited in earlier drafts under the working title ``The Free \(\ell^1\) Seminorm on Banach Presheaf Coboundaries'')}
+
+{[}6{]} J. H. Carroll, ``Coordinate-Wise Additivity and the L1 Norm on Finite Graph Cochains,'' Zenodo, 2026. \url{https://doi.org/10.5281/zenodo.19152599}
+
+{[}7{]} J. H. Carroll, ``L1-Native Cohomology of Defect Fields: Quotient Norms, Dual Circulations, and Hodge Inflation,'' Zenodo, 2026. {[}DOI pending{]}
+
+{[}8{]} R. T. Rockafellar, \emph{Convex Analysis}, Princeton University Press, 1970.
+
+{[}9{]} R. V. Kadison, ``Isometries of operator algebras,'' \emph{Annals of Mathematics} \textbf{54} (1951), 325--338.
+
+{[}10{]} A. R. Sourour, ``Isometries of norm ideals of compact operators,'' \emph{Journal of Functional Analysis} \textbf{43} (1981), 69--77.
+
+{[}11{]} M. Troyer and U.-J. Wiese, ``Computational complexity and fundamental limitations to fermionic quantum Monte Carlo simulations,'' \emph{Physical Review Letters} \textbf{94} (2005), 170201.
+
+{[}12{]} J. H. Carroll, ``Emergent Gauge Symmetry from \(\ell^1\) Defect Flow,'' Zenodo, 2026.
+
+{[}13{]} J. H. Carroll, ``Primitive Axiomatics of Finite Obstruction Calculus,'' Zenodo, 2026. \url{https://zenodo.org/records/20651224}
+
+{[}14{]} A. Chambolle and T. Pock, ``A first-order primal-dual algorithm for convex problems with applications to imaging,'' \emph{J. Math. Imaging Vision} \textbf{40} (2011), 120--145.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Version history and provenance records are maintained in the companion change log.
+
+\end{document}
