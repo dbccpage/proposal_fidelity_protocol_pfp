@@ -1,7 +1,7 @@
 ---
 paths:
-  - "engine*/**/*.py"
-  - "core_simplex*/**/*.py"
+  - "ops/engine/**/*.py"
+  - "ops/**/*.py"
 ---
 
 # Rule: Clean Architecture & Subsystem Governance

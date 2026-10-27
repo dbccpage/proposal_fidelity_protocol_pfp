@@ -2,7 +2,6 @@
 paths:
   - "**/*.py"
   - "**/pyproject.toml"
-  - "pytest.ini"
 ---
 
 # Rule: Python Contracts & Runtime Invariants

@@ -1,7 +1,6 @@
 ---
 paths:
-  - "engine/**"
-  - "atlas/**/code/**"
+  - "code/rust/**"
   - "**/*.lean"
   - "**/exact/**"
   - "**/solvers/**"

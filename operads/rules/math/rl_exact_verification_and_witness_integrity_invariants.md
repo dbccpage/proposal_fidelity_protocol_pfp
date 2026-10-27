@@ -1,9 +1,8 @@
 ---
 paths:
-  - "engine/**"
+  - "code/rust/**"
   - "pfp/**"
   - "governance/**"
-  - "atlas/**/code/**"
   - "**/*.lean"
   - "**/exact/**"
   - "**/solvers/**"

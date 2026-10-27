@@ -1,6 +1,6 @@
 ---
 paths:
-  - "product_planning_office/**"
+  - "ops/product_planning_office/**"
 ---
 
 # Rule: Product Planning Epic Hygiene

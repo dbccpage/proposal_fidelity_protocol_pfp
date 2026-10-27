@@ -23,7 +23,7 @@ from pathlib import Path, PurePosixPath
 
 import yaml
 
-from operads.skill_operad.skill_compiler import rule_scope
+from operads.skill_operad.skill_compiler import hook_compiler, rule_scope
 
 DEFAULT_REGISTRY = Path(__file__).resolve().parents[1] / "yaml" / "rules_registry.yaml"
 REGISTER_HEADING = "## Progressive Disclosure & Domain Invariant Rule Register"
@@ -41,6 +41,11 @@ SKIPPED_LINK_PREFIXES = ("http://", "https://", "mailto:", "#")
 
 #: Relative POSIX path of a rule file -> its raw bytes, read once per gate run.
 RuleTree = dict[str, bytes]
+
+
+def _lf(raw: bytes) -> bytes:
+    """Bytes as committed: a Windows checkout with core.autocrlf adds CR before LF."""
+    return raw.replace(b"\r\n", b"\n")
 
 
 class RegistryError(ValueError):
@@ -102,7 +107,6 @@ def load_registry(path: Path) -> dict:
         ("external_sources", list),
     ):
         _require(type(data.get(key)) is kind, f"register field {key!r} must be {kind.__name__}")
-    _require(len(data["host_roots"]) >= 1, "register needs at least one host root")
     for key in ("host_roots", "register_documents", "taxonomy"):
         _require(all(type(item) is str for item in data[key]), f"{key} entries must be strings")
     paths: list[str] = []
@@ -141,7 +145,7 @@ def read_rule_tree(root: Path) -> RuleTree:
     if not root.is_dir():
         return {}
     return {
-        path.relative_to(root).as_posix(): path.read_bytes()
+        path.relative_to(root).as_posix(): _lf(path.read_bytes())
         for path in sorted(root.rglob("*.md"))
         if path.is_file()
     }
@@ -432,7 +436,7 @@ def check_register_documents(repo_root: Path, registry: dict) -> list[Finding]:
         if not path.is_file():
             findings.append(Finding("R8_REGISTER_MISSING", document, "register document missing"))
             continue
-        payloads[document] = path.read_bytes()
+        payloads[document] = _lf(path.read_bytes())
     if len(set(payloads.values())) > 1:
         findings.append(
             Finding("R8_REGISTER_DRIFT", ", ".join(documents), "register documents are not byte-identical")
@@ -474,6 +478,8 @@ def run_gate(repo_root: Path, registry_path: Path = DEFAULT_REGISTRY) -> GateRep
     hosts = registry["host_roots"]
     owned_estate = (repo_root / "operads").is_dir()
     source = repo_root / "operads" / registry["rules_root"]
+    if not owned_estate and not hosts:
+        raise RegistryError("register needs a host root when the repository has no operads/ estate")
     rules_dir = source if owned_estate else repo_root / hosts[0] / registry["rules_root"]
     canon = read_rule_tree(rules_dir)
     compared_hosts = hosts if owned_estate else hosts[1:]
@@ -487,6 +493,8 @@ def run_gate(repo_root: Path, registry_path: Path = DEFAULT_REGISTRY) -> GateRep
     findings += check_ownership(repo_root, canon, registry)
     findings += check_host_parity(canon, mirrors)
     findings += check_register_documents(repo_root, registry)
+    if "hooks" in registry:
+        findings += [Finding(f.code, f.path, f.message) for f in hook_compiler.check_hooks(repo_root, registry)]
     scope_findings, always_loaded = rule_scope.check_load_scope(repo_root, _decoded(canon), registry)
     findings += [Finding(f.code, f.path, f.message) for f in scope_findings]
     counts = Counter(invariant["status"] for _, invariant in _invariants(registry["rules"]))
@@ -503,9 +511,11 @@ def run_gate(repo_root: Path, registry_path: Path = DEFAULT_REGISTRY) -> GateRep
 def repo_root_from(start: Path | None = None) -> Path:
     here = (start or Path.cwd()).resolve()
     for candidate in (here, *here.parents):
-        if (candidate / ".git").exists() and (candidate / ".agents").is_dir():
+        if (candidate / ".git").exists() and any(
+            (candidate / estate).is_dir() for estate in ("operads", ".agents")
+        ):
             return candidate
-    raise RegistryError(f"no repository root with .git and .agents above {here}")
+    raise RegistryError(f"no repository root with .git and operads/ or .agents above {here}")
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -1,6 +1,6 @@
 ---
 paths:
-  - "_ic/**"
+  - "ops/_ic/**"
 ---
 
 # Rule: Intelligence Digestion & Archiving Discipline
