@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_galois_quantum_positivity:v0.1.0
+title: Exact Galois-Embedding Quantum Positivity
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_galois_quantum_positivity
+  symbol: exact_galois_quantum_positivity
+  ascii_symbol: exact_galois_quantum_positivity
+  notation: Exact Galois-Embedding Quantum Positivity
+  domain:
+  - Hermitian exact cyclotomic operators with square dimension 1..=10
+  - Every real Galois embedding class is enumerated by canonical NT RealEmbeddings
+  codomain:
+    description: Declared finite results of core_quantum_physics::embedding_relativity; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Positive semidefiniteness in each embedding is decided by nonnegativity of every principal minor
+- Born weights commute with declared Galois automorphisms
+- Rank-one amplitude outer products remain positive in every embedding
+- Conductor-five/eight unit-trace diagonal witnesses are positive canonically and indefinite in another embedding
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: embedding_relativity
+  symbols:
+  - PositivityError
+  - positivity_under_embeddings
+  - born_weights
+  - galois_born_weights
+  - conductor_5_witness
+  - conductor_8_witness
+  required_tests:
+  - born_rank_one_positivity_survives_every_galois_embedding_while_declared_diagonals_need_not
+negative_tests:
+- Nonnegative diagonal entries alone do not certify PSD
+- Wrong shape, non-Hermitian matrices and unsupported embedding data are refused
+doctrine:
+  summary: Positive semidefiniteness in each embedding is decided by nonnegativity of every principal minor;
+    Born weights commute with declared Galois automorphisms; Rank-one amplitude outer products remain positive
+    in every embedding; Conductor-five/eight unit-trace diagonal witnesses are positive canonically and indefinite
+    in another embedding.
+  non_role:
+  - No positivity independent of an embedding for an arbitrary algebraic diagonal
+  - No campaign receipt/census is part of the physical API
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

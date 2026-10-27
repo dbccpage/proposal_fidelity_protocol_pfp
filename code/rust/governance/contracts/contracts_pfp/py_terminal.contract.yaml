@@ -1,0 +1,63 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# pfp/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_terminal:v1.0.0"
+title: "Receipt Terminal (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    The verdict a receipt licenses.
+  invariants:
+    - "An empty receipt does not PASS: nothing checked is not everything checked."
+    - "PASS requires a HOST-authored carrier. A receipt whose rows all
+       re-derived against a carrier the PACKET declared terminates at
+       SELF_CONSISTENT_ONLY: the rows agree with the carrier and the carrier
+       agrees with the rows, and a producer wanting that outcome need only
+       widen its own carrier."
+    - "OPEN_RESIDUAL is NOT downgraded by carrier authorship. It already
+       establishes nothing, so calling it self-consistent would claim more
+       than the truth over rows the host never checked."
+    - "SELF_CONSISTENT_ONLY is not an objection and exits 0. The refusal
+       terminals are unchanged by authorship: knowing something is wrong
+       outranks knowing only that it is consistent."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.calculus_receipt
+  python_type: "Terminal"
+  form: enum
+  variants:
+    - PASS
+    - SELF_CONSISTENT_ONLY
+    - OPEN_RESIDUAL
+    - REFUSE

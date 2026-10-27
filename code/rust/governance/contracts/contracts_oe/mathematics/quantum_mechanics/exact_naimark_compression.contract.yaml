@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_naimark_compression:v0.1.0
+title: Exact finite Naimark projective dilation
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_naimark_compression
+  symbol: exact_naimark_compression
+  ascii_symbol: exact_naimark_compression
+  notation: Exact finite Naimark projective dilation
+  domain:
+  - Checked Q(i) POVMs with<=8 dimensions/outcomes, <=256 dilation rows, exact factorization budget
+  codomain:
+    description: Declared finite results of core_quantum_physics::operational_axiom_selection; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The measurement-channel Choi blocks are E_k transposed
+- Checked Choi factorization and four-square splitting yield an ordinary isometry
+- Orthogonal register projections resolve identity
+- V*P_kV=E_k replays every effect
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: operational_axiom_selection
+  symbols:
+  - NaimarkCertificate
+  - naimark_projective_dilation
+  - verify_naimark_certificate
+  required_tests:
+  - measurement_exact_laws::naimark_compression_replays_a_nonprojective_povm_without_rational_square_roots
+negative_tests:
+- measurement_exact_laws::naimark_compression_replays_a_nonprojective_povm_without_rational_square_roots
+doctrine:
+  summary: The measurement-channel Choi blocks are E_k transposed; Checked Choi factorization and four-square
+    splitting yield an ordinary isometry; Orthogonal register projections resolve identity; V*P_kV=E_k replays
+    every effect.
+  non_role:
+  - Naimark compression is an operator identity, not a derivation of Born probabilities
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,65 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:certificate_boundary:v1.0.0
+title: CertificateBoundary
+kind: evidence_contract
+status: active
+layer: 02_evidence
+role: CertificateKernel
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - CheckedPacket
+    - ReplayKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies:
+    - CheckedPacket
+    - ReplayKernel
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+    - packet_replay_hash
+  constraints:
+    checker_boundary_required: true
+    mutation_forbidden: true
+    typed_output_required: true
+doctrine:
+  summary: 'CertificateBoundary seals packet-bound verification evidence with AuthorityEffect::None.
+    ExactRepair eligibility, DescentWitness, and IsAuth remain evidence inputs; none can authorize a
+    result without the separate authenticated host promotion contract.'
+  non_role:
+  - authority_promotion
+  - terminalization
+  - human_decision
+  - receipt_dag_verification
+  authority_ladder:
+    sequence:
+    - Checked
+    - EvidenceCertificate
+    law: 'Certification never changes authority effect from none.'
+  required_tests:
+  - certify_checked_packet_seals_none_effect_evidence
+  - authority_verdict_transcribes_certificate_without_promoting
+rust_binding:
+  crate: core_certifiers
+  module: certificate_boundary
+  symbols:
+  - certify_checked_packet
+  - AuthorityVerdict
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

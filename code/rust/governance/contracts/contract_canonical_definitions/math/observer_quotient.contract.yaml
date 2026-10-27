@@ -1,0 +1,297 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:observer_quotient:v1.0.0
+title: Observer-visible quotient
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:quotient_space:v1.0.0
+    - urn:core:math:hashes:v1.0.0
+    - urn:core:math:observer:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: observer_quotient
+  ascii_symbol: observer_quotient
+  symbol: observer_quotient
+  notation: observer_quotient
+  domain:
+  - 'carrier: instance of observer_quotient'
+  codomain:
+    description: Mathematical object declared by Observer-visible quotient (structural shell).
+requirements:
+  required_structures:
+  - Carrier for observer_quotient must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- Observer-visible quotient is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+rust_binding:
+  crate: core_types
+  module: observer_quotient
+  symbols:
+  - ObserverQuotient
+  - ObserverQuotientError
+  required_tests:
+  - test_observer_quotient_requires_observer_map_hash
+  - test_observer_quotient_requires_equivalence_relation_hash
+  - test_observer_quotient_requires_source_quotient_hash
+  - test_observer_quotient_requires_carrier_hash
+  - test_observer_quotient_requires_replay_hash
+  - test_observer_quotient_rejects_empty_observer_ref
+  - test_observer_quotient_visible_dim_cannot_exceed_source_dim
+  - test_observer_quotient_carrier_matches_source_quotient
+  - test_observer_quotient_try_new_with_observer_rejects_zero_replay
+negative_tests:
+- Artifact claiming Observer-visible quotient without required structures must be rejected
+- Empty or ill-typed carrier for observer_quotient must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: 'Observer-visible quotient of Q¹. Nonclaim: this contract does not claim HoTT/Univalence discharge, PROVED
+    status, or GlobalGreen.'
+  symbol: Q¹_O
+  ascii_symbol: Q1_O
+  formula: Q¹_O = Q¹ / ~_O
+  1. Contract metadata:
+    title: Observer-visible quotient
+    version: 0.1.0
+    object_type: observer_quotient
+  2. Mathematical object / functional role:
+    role: Observer-visible quotient of Q¹.
+    purpose: Records distinctions visible through a declared observer map without making observer-independent claims.
+    non_role:
+    - Does not equal Q¹.
+    - Does not recover hidden distinctions collapsed by the observer.
+    - Does not imply observer-independent truth.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: source quotient Q¹ with observer map O
+    codomain: observer quotient Q¹_O
+    observer_mode:
+      allowed:
+      - linear_quotient
+      - nonlinear_feature_map
+      - probabilistic_observer
+      - context_induced
+  4. Required structures:
+    required:
+    - source quotient Q¹
+    - observer map O
+    - observer codomain
+    - observer codomain equality relation
+    - observer-induced equivalence relation ~_O
+    - carrier hash
+    - source Q¹ hash
+    - observer map hash
+    - visible quotient basis or representative policy if materialized
+  5. Definition:
+    observer_equivalence: '[x] ~_O [y] iff O([x]) = O([y]) under the declared observer codomain equality.'
+    quotient: Q¹_O = Q¹ / ~_O.
+    visible_dimension_linear_mode: In finite linear quotient mode, dim(Q¹_O) ≤ dim(Q¹).
+    nonlinear_mode_warning: For nonlinear, probabilistic, or feature-expansion observer modes, visible dimension
+      semantics require a declared convention.
+    distinction_rule: Observer quotient may collapse source distinctions; it does not create observer-independent
+      distinctions in Q¹.
+  6. Laws and invariants:
+    bound_to_observer: Q¹_O is undefined without O.
+    bound_to_codomain_equality: Q¹_O is undefined without observer codomain equality.
+    distinction_hiding: Observer quotient can hide distinctions.
+    no_observer_independent_claim: Properties of Q¹_O do not imply observer-independent properties of Q¹.
+    replayable_equivalence: ~_O must be replayable from O and codomain equality.
+    source_dependency: Q¹_O depends on the source Q¹ and cannot be compared across different source quotients without
+      transport.
+  7. Equality / equivalence rules:
+    quotient_equality: Observer classes are equal iff related by ~_O.
+    observer_map_equality: Observer quotients compare only when observer map hashes match or are transported by
+      declared equivalence.
+    codomain_equality: Observer equality depends on the declared observer codomain equality relation.
+    source_transport: Comparison across source Q¹ objects requires declared quotient transport.
+  8. Replay / determinism requirements:
+    requirements:
+    - O replay.
+    - ~_O replay.
+    - observer codomain equality replay.
+    - visible basis/representative policy deterministic if materialized.
+    - source Q¹ hash fixed.
+    - carrier hash fixed.
+    - observer map hash fixed.
+    - observer mode declared.
+  9. Relationship to other Core primitives:
+    relationships:
+      Q1: Observer quotient is not Q¹.
+      observer_boundary: Binds visible distinctions to observer map O.
+      C: Context embeddings may induce observer quotients.
+      M: Silent observer-boundary change is M.
+      Phi1: Φ₁ on Q¹_O requires a separately declared observer-level norm; it is not inherited automatically.
+      EvaluationHierarchy: Observer-level diagnostics cannot be compared to source-level diagnostics without transport.
+  10. Rust descriptor shape:
+    sketch: "pub struct ObserverQuotientDescriptor {\n    pub source_q1_hash: String,\n    pub carrier_hash: String,\n\
+      \    pub observer_mode: ObserverMode,\n    pub observer_map_hash: String,\n    pub observer_codomain_hash:\
+      \ String,\n    pub observer_codomain_equality_hash: String,\n    pub equivalence_relation_hash: String,\n\
+      \    pub visible_basis_hash: Option<String>,\n    pub representative_policy_hash: Option<String>,\n    pub\
+      \ source_transport_hash: Option<String>,\n}\n\npub enum ObserverMode {\n    LinearQuotient,\n    NonlinearFeatureMap,\n\
+      \    ProbabilisticObserver,\n    ContextInduced,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - Observer quotient claimed without observer map.
+    - Observer quotient claimed without observer codomain equality.
+    - Visible dimension exceeds source quotient dimension in finite linear quotient mode.
+    - Observer-independent claim emitted.
+    - Equivalence relation not replayable.
+    - Same observer_id treated as same observer despite different observer_map_hash.
+    - Q¹_O treated as Q¹.
+    - Φ₁ inherited automatically from Q¹ without observer-level norm declaration.
+    - Observer boundary changed silently.
+  12. Open questions / WIP status:
+    wip:
+    - Observer map categories.
+    - Nonlinear observer quotient dimension conventions.
+    - Probabilistic observer equivalence semantics.
+    - Observer-level norm inheritance or transport rules.
+    - Visible basis policy.
+  compact_yaml:
+    OBSERVER_QUOTIENT_CONTRACT:
+      symbol: Q¹_O
+      ascii_symbol: Q1_O
+      formula: Q¹_O=Q¹/~_O
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: Q¹ plus observer map O
+      codomain: observer-visible quotient
+      required_structures:
+      - Q¹
+      - O
+      - observer codomain
+      - codomain equality
+      - ~_O
+      - carrier hash
+      - observer map hash
+      - visible basis/policy if materialized
+      definition: '[x]~_O[y] iff O[x]=O[y] under declared codomain equality'
+      laws:
+      - not Q¹
+      - can hide distinctions
+      - no observer-independent claim
+      - ~_O replayable from O
+      - linear quotient dimension bound only in linear mode
+      forbidden_interpretations:
+      - observer-independent truth
+      - unbound visible quotient
+      - Q¹_O equals Q¹
+      - same observer_id means same observer
+      - automatic Φ₁ inheritance
+      relationships:
+      - observer quotient of Q¹
+      - context/observer boundary
+      - silent observer-boundary change is M
+      - observer diagnostics need transport
+      negative_tests:
+      - missing observer
+      - missing codomain equality
+      - dimension too large in linear mode
+      - observer-independent claim
+      - unreplayable equivalence
+      - observer hash mismatch
+      open_questions:
+      - nonlinear observer dimensions
+      - probabilistic observer equivalence
+      - observer-level norm transport
+  non_role:
+  - Authority minting or GlobalGreen discharge
+  - Customer-facing claims or product assurances
+  - Full encyclopedia mechanization of observer_quotient (deferred)
+  - HoTT/Univalence theorem discharge from this contract alone
+  - Runtime enforcement as proof of mathematical truth
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced as obligations; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_MATH_BLOCK
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_LAWS_OR_REQUIREMENTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: required_structures missing or empty'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: negative_tests missing or empty'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NON_ROLE
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: doctrine.non_role missing'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false;
+      create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures;
+      set laws; set negative_tests; set doctrine.non_role (anti-theater); add overclaim nonclaim fence to doctrine.summary.
+      Not PROVED; not GlobalGreen; human re-review still required for math depth.'
+    recommendation: Continue meth re-review for object-specific laws; code follows YAML (ADR-007a).
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: STAGE2_BINDING_PRESENT
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: 'rust_binding → core_types::observer_quotient. ObserverQuotient is a hash-witnessed visible-quotient
+      record (observer_ref, map hash, source quotient hash, visible_dim, equivalence hash, carrier, replay). Validates
+      dim/hash nonzero/carrier match. Carrier structural MATCH to Q^1_O documentation; does not compute the quotient
+      map. Not PROVED.
+
+      '
+    file: engine/crates_rs/core_types/src/observer_quotient.rs
+    yaml_law: observer-visible quotient space
+    code_behavior: sealed hash-carrier with constructor refusals
+    delta: MATCH

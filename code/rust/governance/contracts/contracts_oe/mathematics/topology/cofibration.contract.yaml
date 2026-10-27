@@ -1,0 +1,102 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cofibration:v0.1.0
+title: Cofibration Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cofibration
+  symbol: 'i: A >-> X, cofiber X/A, Puppe sequence A -> X -> X/A -> SA -> ...'
+  ascii_symbol: cofibration
+  notation: 'i: A >-> X, cofiber X/A, Puppe sequence A -> X -> X/A -> SA -> ...'
+  domain:
+  - 'domain: topological space A (the subspace or source)'
+  - 'codomain: topological space X (the ambient space or target)'
+  - 'morphism: continuous map i: A -> X'
+  - 'cofiber: X/A = X cup_i CA (mapping cone, derived)'
+  - 'ndr_data: optional NDR pair (u, h) where u: X -> I, h: X x I -> X'
+  codomain:
+    description: 'A cofibration consists of a continuous map i: A -> X between topological spaces (or objects of a model category) satisfying the homotopy extension property. The domain A, codomain X, and the morphism i are the primary data. The cofiber X/A = X cup_i CA (the mapping cone) is a derived construction.
+
+      '
+requirements:
+  required_structures:
+  - Domain A and codomain X must be valid topological spaces (or model category objects)
+  - 'The map i: A -> X must be a well-defined continuous map'
+  - The homotopy extension property must hold for the pair (X, A) with respect to i
+  - For Hurewicz cofibrations in Top, i must be injective (closed embedding)
+  - All cofibration and cofiber sequence computations must be deterministic
+laws:
+- 'For any space Y, any map f: X -> Y, and any homotopy H: A x I -> Y with H(a, 0) = f(i(a)) for all a in A, there exists a homotopy H~: X x I -> Y such that H~(x, 0) = f(x) for all x in X and H~(i(a), t) = H(a, t) for all a in A and t in I.
+
+  '
+- 'The map i: A -> X is well-defined, meaning i maps every element of A to an element of X. Domain and codomain must be valid topological spaces (or model category objects).
+
+  '
+- 'For classical cofibrations in Top (Hurewicz cofibrations), the map i is necessarily injective (a closed embedding). In model categories, this constraint may be relaxed.
+
+  '
+- 'If i: A -> X and j: X -> Y are cofibrations, then j . i: A -> Y is a cofibration.
+
+  '
+- 'If i: A -> X is a cofibration and f: A -> B is any map, then the pushout map B -> X cup_A B is a cofibration.
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+  - Computation functions are content-addressed
+relationships:
+- urn:math:contract:TopologicalSpace:v0.1.0 serves as Domain A and codomain X as topological spaces
+- 'urn:math:contract:ContinuousMap:v0.1.0 serves as The morphism i: A -> X'
+- urn:math:contract:ModelCategory:v0.1.0 serves as Ambient model category structure (optional)
+- urn:math:contract:CellComplex:v0.1.0 serves as CW-inclusions as primary examples of cofibrations
+negative_tests:
+- Invalid domain space must be rejected
+- Invalid codomain space must be rejected
+- Morphism not mapping A to X must be rejected
+- Map failing HEP (extension does not exist) must be rejected
+- Non-injective map for Hurewicz cofibration must be rejected
+- NDR pair data violating u^{-1}(0) = i(A) must be rejected
+- Composition where codomain != other.domain must be rejected
+- Non-canonical serialization must be rejected
+doctrine:
+  summary: 'A Cofibration is a morphism i: A -> X in a model category (or concretely, a map of topological spaces) satisfying the homotopy extension property (HEP). Given a homotopy H: A x I -> Y and a map f: X -> Y extending H(-, 0) along i, the homotopy H extends to a homotopy H~: X x I -> Y. Cofibrations are dual to fibrations: where fibrations satisfy the homotopy lifting property (HLP), cofibrations satisfy HEP. The cofiber (mapping cone) X/A completes the cofiber sequence A -> X -> X/A. Examples include CW-inclusions, NDR (neighbourhood deformation retract) pairs, and closed inclusions of sub-CW-complexes.'
+  non_role:
+  - Full model category axiom verification (see ModelCategory contract)
+  - Geometric realisation or coordinate embeddings
+  - Homotopy group computation (provided as ComputationWitness)
+  - Infinite-dimensional CW-complex constructions
+  - Equivariant cofibrations
+wip:
+- Full HEP verification is undecidable in general; contract uses sample-based or NDR-pair-based verification
+- 'Hurewicz vs Serre cofibrations: Serre cofibrations (HEP for CW pairs only) are not yet distinguished structurally'
+- Relative CW complexes (X, A) as canonical cofibrations - tighter integration with CellComplex contract
+- 'Cofiber sequences and Puppe sequences: how far to extend (suspension, loop, Core-Sigma adjunction)'
+- Cofibrant replacement functors in model categories
+- Equivariant cofibrations for G-spaces
+- CW-inclusions are the primary concrete examples of cofibrations in v0.1.0
+- NDR pair characterisation (u, h) provides constructive HEP verification
+- 'Duality with Fibration contract: cofibration HEP is dual to fibration HLP'
+- Mapping cone X/A = X cup_i CA is the cofiber, dual to the homotopy fiber
+- Acyclic cofibrations (cofibration + weak equivalence) have LLP w.r.t. all fibrations
+- Closed under composition, pushout, retract, and transfinite composition

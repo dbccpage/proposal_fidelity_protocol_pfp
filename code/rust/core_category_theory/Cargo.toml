@@ -1,0 +1,95 @@
+[package]
+autotests = false
+name = "core_category_theory"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+
+[lib]
+# Canonical entry: hierarchical shells + legacy finite records (legacy_adjunction / legacy_monad).
+# `src/mod.rs` is a stale dual entry and does not declare legacy modules — do not point here.
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+num-rational = "0.4"
+num-traits = "0.2"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_category_theory`.
+
+[[test]]
+name = "bounded_counter"
+path = "../tests/core_category_theory/bounded_counter.rs"
+
+[[test]]
+name = "context_reflection"
+path = "../tests/core_category_theory/context_reflection.rs"
+
+[[test]]
+name = "finite_continuation"
+path = "../tests/core_category_theory/finite_continuation.rs"
+
+[[test]]
+name = "finite_fd_decomposition"
+path = "../tests/core_category_theory/finite_fd_decomposition.rs"
+
+[[test]]
+name = "finite_functional_classification"
+path = "../tests/core_category_theory/finite_functional_classification.rs"
+
+[[test]]
+name = "finite_history_context"
+path = "../tests/core_category_theory/finite_history_context.rs"
+
+[[test]]
+name = "finite_independence"
+path = "../tests/core_category_theory/finite_independence.rs"
+
+[[test]]
+name = "finite_joint_carrier"
+path = "../tests/core_category_theory/finite_joint_carrier.rs"
+
+[[test]]
+name = "finite_joint_dynamics"
+path = "../tests/core_category_theory/finite_joint_dynamics.rs"
+
+[[test]]
+name = "finite_nerve"
+path = "../tests/core_category_theory/finite_nerve.rs"
+
+[[test]]
+name = "finite_path"
+path = "../tests/core_category_theory/finite_path.rs"
+
+[[test]]
+name = "finite_preorder"
+path = "../tests/core_category_theory/finite_preorder.rs"
+
+[[test]]
+name = "finite_question_family"
+path = "../tests/core_category_theory/finite_question_family.rs"
+
+[[test]]
+name = "finite_report_query"
+path = "../tests/core_category_theory/finite_report_query.rs"
+
+[[test]]
+name = "finite_report_repair"
+path = "../tests/core_category_theory/finite_report_repair.rs"
+
+[[test]]
+name = "finite_section_separation"
+path = "../tests/core_category_theory/finite_section_separation.rs"
+
+[[test]]
+name = "finite_self_reference"
+path = "../tests/core_category_theory/finite_self_reference.rs"
+
+[[test]]
+name = "finite_simulation"
+path = "../tests/core_category_theory/finite_simulation.rs"
+
+[[test]]
+name = "finite_trace"
+path = "../tests/core_category_theory/finite_trace.rs"

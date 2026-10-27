@@ -1,0 +1,96 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:dg_category:v0.1.0
+title: Differential Graded Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: dg_category
+  symbol: C = (Ob, Hom^\bullet, d, \circ, id)
+  ascii_symbol: dg_category
+  notation: C = (Obj, Hom^\bullet, d, comp, id) with d^2 = 0 and graded Leibniz rule
+  domain:
+  - 'objects: (Obj : Type u) collection of 0-cells'
+  - 'graded_homs: (Hom^\bullet : Obj -> Obj -> GradedModule) graded morphism spaces \bigoplus_n Hom^n(X, Y)'
+  - 'differentials: (d : Hom^n(X, Y) -> Hom^{n+1}(X, Y)) cochain differential satisfying d \circ d = 0'
+  - 'graded_composition: (\circ : Hom^m(Y, Z) \times Hom^n(X, Y) -> Hom^{m+n}(X, Z))'
+  - 'identities: id_X \in Hom^0(X, X) satisfying d(id_X) = 0'
+  - 'graded_leibniz_rule: d(g \circ f) = d(g) \circ f + (-1)^{|g|} g \circ d(f)'
+  - 'cohomology_category: H^0(C) where morphisms are degree 0 cocycles modulo coboundaries'
+  codomain:
+    description: A Differential Graded (DG) category is a category enriched over chain complexes of modules. Morphism spaces Hom^\bullet(X, Y) are cochain complexes with differentials d satisfying d^2 = 0. Morphism composition satisfies the graded Leibniz product rule with sign factor (-1)^{|g|}, and identities are closed degree-0 cocycles.
+requirements:
+  required_structures:
+  - Differential satisfies d^2 = 0 on all graded morphism spaces.
+  - Graded composition strictly satisfies the graded Leibniz rule d(g \circ f) = d(g) \circ f + (-1)^{|g|} g \circ d(f).
+  - Identity elements id_X are degree 0 cocycles with d(id_X) = 0.
+  - Composition is strictly associative: (h \circ g) \circ f = h \circ (g \circ f).
+  - Left and right unit laws hold: id_Y \circ f = f = f \circ id_X.
+  - Cohomology category H^0(C) is well-defined on closed degree-0 cocycles modulo boundaries.
+  - Structure hash is deterministically content-addressed.
+laws:
+  - 'Differential nilpotence: d \circ d = 0 for all degrees'
+  - 'Graded Leibniz rule: d(g \circ f) = d(g) \circ f + (-1)^{|g|} g \circ d(f)'
+  - 'Identity closedness: d(id_X) = 0 for all objects X'
+  - 'Graded associativity: (h \circ g) \circ f = h \circ (g \circ f)'
+  - 'Graded units: id_Y \circ f = f = f \circ id_X'
+  - 'Homotopy invariance: chain homotopic morphisms f ~ g induce equal morphisms in H^0(C)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Graded bases and differentials serialized in canonical order
+  - Exact discrete integer degree and sign arithmetic
+  - Deterministic evaluation produces identical artifact hash
+relationships:
+- urn:core:math:enriched_category:v0.1.0 serves as DG category is a category enriched over the category of chain complexes
+- urn:core:math:triangulated_category:v0.1.0 serves as Pretriangulated DG categories generate triangulated categories via H^0
+- urn:core:math:derived_category:v0.1.0 serves as DG categories provide DG enhancements of derived categories
+rust_binding:
+  crate: core_higher_category_theory
+  module: dg_category
+  symbols:
+  - DgCategory
+  - GradedHomComplex
+  - DifferentialMap
+  - ChainDifferential
+  - LeibnizSignValidator
+  - CohomologyCategoryH0
+  required_tests:
+  - test_dg_category_basic_lifecycle
+  - test_dg_graded_leibniz_even_and_odd
+  - test_kill_mut_p2_01_broken_differential
+  - test_kill_mut_p2_02_violated_leibniz_sign
+negative_tests:
+- Differential fails nilpotence d^2 != 0 (BrokenDifferential / MUT-P2-01)
+- Graded Leibniz rule violated with incorrect sign (+1 instead of (-1)^|g|) (ViolatedLeibnizSign / MUT-P2-02)
+- Identity morphism not closed under differential d(id_X) != 0
+- Graded composition degree mismatch |g \circ f| != |g| + |f|
+- Composition fails associativity (h \circ g) \circ f != h \circ (g \circ f)
+doctrine:
+  summary: A DG-category (differential graded category) is a category enriched over chain complexes of modules. Morphism spaces are cochain complexes with differentials d satisfying d^2 = 0, and composition satisfies the graded Leibniz rule with sign factor (-1)^{|g|}. DG categories provide algebraic enhancements for triangulated and derived categories, eliminating non-functorial cone cones.
+  non_role:
+  - A-infinity categories with higher homotopies m_k for k >= 3
+  - Model category structures on DG-categories
+  - Non-linear or differential geometric manifolds
+wip:
+  - Pretriangulated DG structures with twisted complexes and shift functors
+  - DG enhancement of bounded derived category D^b(A)
+  - Exact rational discrete verification of Leibniz sign in Rust

@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:pro_object_envelope:v0.1.0
+title: ProObjectEnvelope Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: pro-object
+  symbol: '"lim"_{i in I} X_i'
+  ascii_symbol: pro_object_envelope
+  notation: '"lim"_{i in I} X_i'
+  domain:
+  - 'index_category: A small cofiltered category I'
+  - 'objects: A family {X_i}_{i in I} of objects in C'
+  - 'transition_maps: Morphisms f_{ij}: X_j -> X_i for i <= j satisfying functoriality'
+  codomain:
+    description: A tuple (index_category, objects, transition_maps)
+requirements:
+  required_structures:
+  - index_category_hash must resolve to a cofiltered category
+  - All object hashes {X_i} must resolve to valid objects in C
+  - All transition maps f_{ij} must be valid morphisms X_j -> X_i
+  - f_{ii} = id_{X_i} for all i
+  - f_{ij} . f_{jk} = f_{ik} for all composable triples
+laws:
+- 'The index category I is cofiltered: every finite diagram in I has a cone'
+- f_{ii} = id_{X_i} for all i in I
+- f_{ij} . f_{jk} = f_{ik} for all i <= j <= k
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Objects and transitions serialized in canonical index order
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Ambient category C and index category
+  I
+- urn:math:contract:FiniteShadow:v0.1.0 serves as Finite-level approximations of the
+  pro-object
+negative_tests:
+- Index category is not cofiltered
+- Some object hash does not resolve
+- Some transition map is not a valid morphism
+- f_{ii} != id_{X_i} for some i
+- f_{ij} . f_{jk} != f_{ik} for some composable triple
+doctrine:
+  summary: 'A ProObjectEnvelope records a pro-object as a formal cofiltered limit
+    "lim"_{i in I} X_i together with its index category I, the objects X_i, and the
+    transition morphisms f_{ij}: X_j -> X_i for i <= j. The envelope provides access
+    to finite-level approximations and validates the cofiltering condition, transition
+    compatibility, and functoriality of the diagram.'
+  non_role:
+  - Ind-objects (cofiltered colimits, the dual notion)
+  - Actual limit computation (only formal/envelope)
+  - Authority classification or policy decisions
+wip:
+- 'Morphisms of pro-objects: Hom_{Pro(C)}(X, Y) = lim_j colim_i Hom_C(X_i, Y_j)'
+- Relationship to FiniteShadow and CofinalShadowAuthority contracts
+- Pro-etale topology and pro-objects in algebraic geometry
+- Essentially constant pro-objects (those isomorphic to objects of C)
+- Currently models pro-objects as inverse systems with explicit transitions
+- Morphisms between pro-objects not yet formalized (requires colimit computation)
+- Integration with the continuum-finite-shadow tower pending
+- Does not classify admissibility or emit authority decisions
+rust_binding:
+  crate: core_higher_category_theory
+  module: compactly_generated
+  symbols:
+  - CompactlyGeneratedCategory
+  required_tests:
+  - test_compactly_generated_category_positive_verification

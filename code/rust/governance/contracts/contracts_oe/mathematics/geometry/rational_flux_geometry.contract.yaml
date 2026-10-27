@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:rational_flux_geometry:v0.1.0
+title: Exact tetrahedral flux and simplex volume
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: rational_flux_geometry
+  symbol: rational_flux_geometry
+  ascii_symbol: rational_flux_geometry
+  notation: Exact tetrahedral flux and simplex volume
+  domain:
+  - Nondegenerate rational3D tetrahedron or4D simplex; fixed finite vertex carrier.
+  codomain:
+    description: Declared finite results of core_general_relativity::loop_quantum_gravity; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Oriented tetrahedral face fluxes close.
+- Face area squared is the rational squared norm of the flux.
+- Volume squared is det(edge matrix)^2/36 or /576.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_general_relativity
+  module: loop_quantum_gravity
+  symbols:
+  - FluxTetrahedron
+  - ExactFourSimplex
+  required_tests:
+  - geometric_flux_closure_area_and_volume_are_exact
+  - simplex_boundary_bianchi_is_oriented_boundary_nilpotency
+negative_tests:
+- geometric_flux_closure_area_and_volume_are_exact
+doctrine:
+  summary: Oriented tetrahedral face fluxes close.; Face area squared is the rational squared norm of the flux.;
+    Volume squared is det(edge matrix)^2/36 or /576..
+  non_role:
+  - These classical finite flux geometries do not quantize the gravitational constraint algebra.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

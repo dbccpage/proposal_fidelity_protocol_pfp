@@ -1,0 +1,58 @@
+# CODA-MUR Rules Specification
+# Certified Representation Transport
+paper_identity: CODA-MUR
+legacy_file_identity: 002_gtmur.md
+canonical_version: v1.0
+authority_effect: None
+layer: Layer 2 (MUR — Multiscale Update Representation)
+
+primitives:
+  bicategory: "Reg_chi = (regimes, certified typed morphisms, certified comparisons)"
+  morphism_record: "(F_rep, kind(F), F_bar, chi_F, Loss(F))"
+  morphism_kinds:
+    - embed
+    - quotient
+    - forget
+    - project
+    - approx
+    - lift
+    - refine
+    - reinterpret
+  loss_ledger_shape: "Loss(F) = (erased, identified, approximated, unresolved)"
+
+equations:
+  descent_compatibility_certificate:
+    latex: "\\chi_F : D_B F \\Rightarrow \\bar{F} D_A"
+    description: "2-cell certifying that representation map F commutes with finite descent up to explicit comparison"
+  transport_discrepancy:
+    latex: "q_F = D_B F - \\bar{F} D_A"
+    description: "Primitive difference 1-cell representing transport defect"
+  certificate_pasting_law:
+    latex: "\\chi_{GF} = (\\bar{G} \\chi_F) \\circ (\\chi_G F) : D_C GF \\Rightarrow \\overline{GF} D_A"
+    description: "Composite certificate pasting formula for composable morphisms A -> F -> B -> G -> C"
+  loss_accumulation:
+    latex: "\\mathsf{Loss}(GF) = G_* \\mathsf{Loss}(F) \\oplus \\mathsf{Loss}(G)"
+    description: "Componentwise accumulation and pushforward of loss ledgers across composition"
+  vertical_horizontal_transport_square:
+    latex: "\\chi_\\square : h_{\\mathsf{target}} \\circ v_{\\mathsf{source}} \\Rightarrow v_{\\mathsf{target}} \\circ h_{\\mathsf{source}}"
+    description: "2-cell compatibility for 2-axis vertical/horizontal transport square"
+
+enforcement_rules:
+  - id: MUR-RULE-001
+    name: "No Anonymous Representation Shift"
+    statement: "Authority-bearing transport must be typed (kind declared), certified (chi_F present), and loss-ledgered where applicable."
+  - id: MUR-RULE-002
+    name: "Loss Ledger Necessity"
+    statement: "Lossy morphism kinds (quotient, forget, project, approx) without a declared Loss(F) force refusal of AuthorityPres(F)."
+  - id: MUR-RULE-003
+    name: "Terminal Non-Bypass"
+    statement: "chi_F is necessary for authority transport but insufficient for target authority. Target terminalization tau_B is mandatory."
+  - id: MUR-RULE-004
+    name: "Diagonal Transport Refusal"
+    statement: "Undecomposed mixed-axis maps that perform vertical and horizontal transport simultaneously without explicit square decomposition raise DiagonalTransportRefusal."
+
+claim_discipline:
+  supports: "Supports certified transport of representation across regimes under explicit 2-cell certificates and loss accounting."
+  does_not_support: "Does not support representation laundering, automatic target authority, or unledgered information erasure."
+  narrowest_defensible_claim: "Verifies 2-cell certificate commuting squares and loss ledger composition for declared transport morphisms."
+  next_test_needed: "Mechanized verification of loss ledger composition associativity across multi-stage compilation pipelines."

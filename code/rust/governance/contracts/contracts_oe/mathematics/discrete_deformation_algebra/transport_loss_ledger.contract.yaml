@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:transport_loss_ledger:v1.0.0
+title: Transport Loss Ledger Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:quotient_transport:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+
+math:
+  object_kind: transport_loss_ledger
+  symbol: "L_adapter in Ledger(Q^1_rich -> Q^1_coarse)"
+  ascii_symbol: LossLedger
+  notation: "L_adapter = (source_carrier, target_carrier, dropped_coords, lost_mass, phase_loss, digest)"
+  domain:
+    - "source_carrier: rich carrier identifier"
+    - "target_carrier: coarse carrier identifier"
+    - "dropped_coordinates: coordinates / edges eliminated by descent"
+    - "lost_mass: exact rational sum of absolute dropped values"
+    - "phase_loss: list of lost phase distinctions or null"
+  codomain:
+    description: "Cryptographically bound ledger certifying exact loss during scale descent D."
+
+requirements:
+  required_structures:
+    - source_carrier must be a nonempty string
+    - target_carrier must be a nonempty string distinct from source_carrier
+    - dropped_coordinates must be a valid sequence of coordinates
+    - lost_mass must be an exact non-negative rational Fraction >= 0
+    - entry_count must equal len(dropped_coordinates)
+    - digest must be the canonical SHA-256 hash of the JSON-serialized ledger record
+
+laws:
+  - "DDC-D-01 (Non-negative Loss): The lost mass L is strictly non-negative: L >= 0."
+  - "DDC-D-02 (Lossless Descent Criterion): A descent is lossless iff the dropped tail is exactly zero: L = 0 <=> x_dropped = 0 (Ddc.D_lossless_iff)."
+  - "DDC-D-03 (Idempotent Projection): Projecting twice is projecting once: D(D(x)) = D(x) (Ddc.D_projection_idempotent)."
+  - "DDC-D-04 (Loss Classification): Non-zero lost mass (L > 0) never yields LOSSLESS_DESCENT; a lawful D step strictly books its ledger (Ddc.D_needs_ledger)."
+  - "Law 6 (Descent Requires Loss Ledger): Scale descent D without an explicit, verified LossLedger is refused as REFUSED_MISSING_LOSS_LEDGER."
+  - "Cryptographic Custody: Replay validates entry count and SHA-256 digest; mutated, truncated, or rehashed ledgers fail closed."
+
+negative_tests:
+  - "Descent D executed without LossLedger must be rejected (MissingLossLedger, REFUSED_MISSING_LOSS_LEDGER)."
+  - "Negative lost mass must be rejected (L < 0)."
+  - "Lossless classification claimed when lost mass > 0 must be rejected."
+  - "Truncated or altered ledger failing SHA-256 verification must be rejected."
+
+doctrine:
+  summary: "A LossLedger records the coordinates dropped, mass lost, and phase distinctions forgotten when descending from a rich to a coarse carrier. It prevents degree laundering and unledgered information destruction."
+  symbol: L_adapter
+  ascii_symbol: LossLedger
+  operator_class_symbol: D
+  non_role:
+    - authority_minting
+    - policy_decision
+    - self_certification
+  canonical_invariant: >-
+    Descent lowers carrier resolution with an explicit receipt of loss. Hiding an
+    obstruction by coarsening without a LossLedger is strictly prohibited.
+

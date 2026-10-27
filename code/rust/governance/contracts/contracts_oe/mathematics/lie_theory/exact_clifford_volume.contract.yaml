@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_clifford_volume:v0.1.0
+title: Exact Clifford Families and Graded Volume
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_clifford_volume
+  symbol: exact_clifford_volume
+  ascii_symbol: exact_clifford_volume
+  notation: Exact Clifford Families and Graded Volume
+  domain:
+  - Declared exact Clifford matrices with metric signs plus/minus one
+  - Dense admission at matrix dimension <=64 and at most 128 generators; standard constructor n<=12; ordered-product
+    rank n<=8
+  codomain:
+    description: Declared finite results of core_lie_theory::clifford; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every anticommutator equals 2 eta_mu delta_mu_nu I
+- Volume square is (-1)^(n(n-1)/2) times the metric-sign product
+- Even families have a normalized chirality involution anticommuting with every gamma
+- Standard minimal complex representations span the complete matrix algebra
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: clifford
+  symbols:
+  - CliffordFamily
+  - CliffordFamily::admit
+  - CliffordFamily::euclidean
+  - CliffordFamily::minkowski
+  - CliffordFamily::volume_square
+  - CliffordFamily::chirality
+  - CliffordFamily::product_span_rank
+  - jordan_wigner_operator
+  required_tests:
+  - exact_clifford_families_have_the_declared_volume_square_chirality_and_full_matrix_span
+negative_tests:
+- Exact perturbations break admission; empty/mismatched families, odd chirality and oversized standard constructions
+  are refused
+doctrine:
+  summary: Every anticommutator equals 2 eta_mu delta_mu_nu I; Volume square is (-1)^(n(n-1)/2) times the metric-sign
+    product; Even families have a normalized chirality involution anticommuting with every gamma; Standard
+    minimal complex representations span the complete matrix algebra.
+  non_role:
+  - No floating spin representation or symbolic classification of every Clifford module
+  - Dense operation bounds remain part of the domain
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

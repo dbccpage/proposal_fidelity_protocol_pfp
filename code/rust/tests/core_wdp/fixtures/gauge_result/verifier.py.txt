@@ -1,0 +1,229 @@
+"""Replay original source-23 gauge observations, raw raising and alignment.
+
+Every mathematical operation below calls the pinned original source. The
+finite input enumeration and receipt encoding do not substitute algorithms.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib
+import itertools
+import json
+import stat
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+INPUTS = ROOT / "manifests" / "gauge_result_inputs.json"
+
+
+def regular(path: Path) -> bytes:
+    info = path.lstat()
+    if not stat.S_ISREG(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+        raise ValueError(f"not a regular source/control file: {path}")
+    for parent in path.parents:
+        info = parent.lstat()
+        if not stat.S_ISDIR(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            raise ValueError(f"source/control parent is not a regular directory: {parent}")
+    return path.read_bytes()
+
+
+def require(condition: bool, detail: str) -> None:
+    if not condition:
+        raise ValueError(detail)
+
+
+def verify_unchanged(snapshot: dict[Path, str]) -> None:
+    for path, digest in snapshot.items():
+        require(
+            hashlib.sha256(regular(path)).hexdigest() == digest, f"replay input changed: {path}"
+        )
+
+
+def stream(digest, data) -> None:
+    digest.update(json.dumps(data, ensure_ascii=False, separators=(",", ":")).encode() + b"\n")
+
+
+def wire(state) -> list:
+    return [state.n, list(map(str, state.r)), list(map(str, state.s))]
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source-root", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    require(not args.output.exists() and not args.output.is_symlink(), "refusing existing output")
+    verifier_path = Path(__file__).absolute()
+    verifier, control = regular(verifier_path), regular(INPUTS)
+    manifest = json.loads(control)
+    require(manifest["schema"] == "wdp-gauge-result-inputs-v1", "unknown input schema")
+    snapshot = {
+        verifier_path: hashlib.sha256(verifier).hexdigest(),
+        INPUTS: hashlib.sha256(control).hexdigest(),
+    }
+    source_paths = set()
+    for row in manifest["files"]:
+        path = args.source_root / row["repository"] / row["path"]
+        body = regular(path)
+        require(len(body) == row["bytes"], f"source size drift: {path}")
+        require(hashlib.sha256(body).hexdigest() == row["sha256"], f"source hash drift: {path}")
+        require(
+            hashlib.sha1(f"blob {len(body)}\0".encode() + body).hexdigest() == row["git_blob"],
+            f"source blob drift: {path}",
+        )
+        snapshot[path] = row["sha256"]
+        source_paths.add(path.resolve())
+    sys.dont_write_bytecode = True
+    sys.path.insert(0, str(args.source_root / "H3V7N5QF" / "code"))
+    modules_before = set(sys.modules)
+    source = importlib.import_module("twentythird.state")
+
+    def module_closure():
+        imported = set()
+        for name, module in list(sys.modules.items()):
+            if name in modules_before:
+                continue
+            path = getattr(module, "__file__", None)
+            if path and name.split(".")[0] not in sys.stdlib_module_names:
+                resolved = Path(path).resolve()
+                require(resolved in source_paths, f"unbound imported source: {name}")
+                imported.add(resolved)
+        require(imported == source_paths, "declared source closure differs from actual imports")
+
+    module_closure()
+
+    def state(v):
+        return source.DState(v[0], tuple(map(int, v[1])), tuple(map(int, v[2])))
+
+    def normal(s):
+        return list(map(str, source.normal_table(s.n, source.excess_table(s))))
+
+    def key(s):
+        n, table = source.result_key(s)
+        return [n, list(map(str, table))]
+
+    def profile(s):
+        loops, pairs, rounds, total = source.sum_profile(s)
+        return [list(map(str, loops)), list(map(str, pairs)), list(map(str, rounds)), str(total)]
+
+    def observations(s):
+        certificate = source.nothing_certificate(s)
+        if certificate is not None:
+            certificate = [certificate[0], list(certificate[1]), str(certificate[2])]
+        return [
+            list(map(str, source.excess_table(s))),
+            normal(s),
+            key(s),
+            certificate,
+            profile(s),
+            wire(source.plain(s)),
+            str(source.plain_cost(s)),
+        ]
+
+    digest = hashlib.sha256()
+    states = raisings = rewritings = alignments = 0
+    corpus = manifest["corpus"]
+
+    def record(s):
+        nonlocal states, raisings, rewritings, alignments
+        raised, renamed = [], []
+        radix = corpus["small_raising_radix"] if s.n <= 3 else corpus["larger_raising_radix"]
+        for counts in itertools.product(range(radix), repeat=s.n):
+            after = source.raise_terms(s, counts)
+            raised.append(
+                [list(map(str, counts)), wire(after), normal(after), str(source.plain_cost(after))]
+            )
+            raisings += 1
+        for p in itertools.permutations(range(s.n)):
+            after = source.rewrite(s, p)
+            renamed.append([list(p), wire(after), normal(after)])
+            rewritings += 1
+        moved = source.rewrite(s, tuple(reversed(range(s.n))))
+        target = source.raise_terms(moved, tuple(x % 3 for x in range(s.n)))
+        alignment = [wire(target), wire(source.align(s, target))]
+        alignments += 1
+        stream(digest, [wire(s), observations(s), raised, renamed, alignment])
+        states += 1
+
+    for n in range(corpus["binary_r_and_s_max_n"] + 1):
+        for cells in itertools.product(range(2), repeat=2 * n * n):
+            record(source.DState(n, cells[: n * n], cells[n * n :]))
+    n = corpus["binary_r_zero_s_n"]
+    for r in itertools.product(range(2), repeat=n * n):
+        record(source.DState(n, r, (0,) * (n * n)))
+    for v in corpus["extra_inputs"]:
+        record(state(v))
+
+    a, b = (state(v) for v in corpus["extra_inputs"][:2])
+    require(
+        profile(a) == profile(b) and not source.same(a, b), "profile countermodel not reproduced"
+    )
+    empty_two = source.DState(2, (0,) * 4, (0,) * 4)
+    paid = source.raise_term(empty_two, 0)
+    require(source.same(empty_two, paid), "raising result equality failed")
+    require(source.plain_cost(empty_two) != source.plain_cost(paid), "raw cost boundary failed")
+    root_loop = source.DState(2, (7, 4, 0, 9), (0, 0, 2, 0))
+    image = (1, 0)
+    wrong_order = source.rewrite_table(
+        2, source.normal_table(2, source.excess_table(root_loop)), image
+    )
+    right_order = normal(source.rewrite(root_loop, image))
+    require(list(map(str, wrong_order)) != right_order, "normalization order countermodel failed")
+    histories = []
+    for n, word in ((0, ()), (1, (0, 0)), (2, (0, 1, 0)), (3, (2, 0, 2, 1))):
+        current = source.DState(n, (0,) * (n * n), (0,) * (n * n))
+        intermediates = [wire(current)]
+        for x in word:
+            current = source.raise_term(current, x)
+            intermediates.append(wire(current))
+        histories.append({"raised_terms": list(word), "states": intermediates})
+    module_closure()
+    verify_unchanged(snapshot)
+    result = {
+        "schema": "wdp-gauge-result-receipt-v1",
+        "authority_effect": "None",
+        "inputs_sha256": hashlib.sha256(control).hexdigest(),
+        "verifier_sha256": hashlib.sha256(verifier).hexdigest(),
+        "bound_inputs": len(manifest["files"]),
+        "post_execution_rehash": "unchanged",
+        "scope": "finite original-function oracle, separate from universal table proofs and full programme obligations",
+        "corpus": {
+            "states": states,
+            "bulk_raisings": raisings,
+            "rewritings": rewritings,
+            "alignments": alignments,
+            "stream_sha256": digest.hexdigest(),
+        },
+        "profile_countermodel": {
+            "a": wire(a),
+            "b": wire(b),
+            "common_profile": profile(a),
+            "keys": [key(a), key(b)],
+        },
+        "cost_countermodel": {
+            "before": wire(empty_two),
+            "after": wire(paid),
+            "costs": [str(source.plain_cost(empty_two)), str(source.plain_cost(paid))],
+            "common_key": key(paid),
+        },
+        "normalization_order_countermodel": {
+            "state": wire(root_loop),
+            "image": list(image),
+            "rewrite_only_after_normal": list(map(str, wrong_order)),
+            "normal_after_rewrite": right_order,
+        },
+        "histories": histories,
+    }
+    args.output.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(json.dumps(result["corpus"]))
+
+
+if __name__ == "__main__":
+    main()

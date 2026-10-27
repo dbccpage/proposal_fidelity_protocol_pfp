@@ -1,0 +1,180 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:combinatorial_chain_functor:v0.1.0
+title: Combinatorial Chain Functor Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: construction_functor
+  symbol: 'F: FinGraph -> Ch_*(R)'
+  ascii_symbol: combinatorial_chain_functor
+  notation: 'F: FinGraph -> Ch_*(R)'
+  domain:
+  - 'finite_directed_graph: {''vertices'': ''finite_set V'', ''edges'': ''finite_set E'', ''source_map'': ''s: E -> V'', ''target_map'': ''t: E -> V'', ''orientation'': ''canonical_ordering on V and E''}'
+  - 'carrier: {''coefficient_ring'': ''R (commutative ring with unity)'', ''free_module_construction'': ''Set -> R-Mod (free R-module functor)''}'
+  - 'graph_carrier: {''chain_groups'': {''C_0'': ''R^V (free R-module on vertices)'', ''C_1'': ''R^E (free R-module on edges)'', ''C_n'': ''0 for n >= 2 and n < 0''}, ''boundary_maps'': {''d_1'': ''d_1(e) = t(e) - s(e) for each edge e in E'', ''d_n'': ''zero map for n != 1''}, ''basis_correspondence'': ''canonical bijection between graph elements and module generators''}'
+  codomain:
+    description: "The carrier consists of three interlinked components: (1) finite_directed_graph: A finite directed graph G = (V, E, s, t)\n    where V is a finite set of vertices, E is a finite set of directed\n    edges, and s, t: E -> V are the source and target maps respectively.\n(2) carrier: The free R-module construction that maps finite sets to\n    free modules over the coefficient ring R.\n(3) graph_carrier: The composite carrier that binds the graph structure\n    to its chain complex representation, tracking the canonical basis\n    correspondence between graph elements and module generators.\n"
+requirements:
+  required_structures:
+  - d_n . d_{n+1} = 0 for all adjacent degree pairs in the output complex
+  - Graph orientation (vertex/edge ordering) must be fixed and canonical before construction
+  - Input graph must have finite vertex and edge sets
+  - d_1(e) = t(e) - s(e) must be computed solely from the source/target maps
+  - Graph morphisms must map to chain maps that commute with boundary operators
+  - Each chain group must be a free R-module with basis elements corresponding to graph cells
+  - Coefficient ring R must be a commutative ring with unity
+  - 'For graph morphism f: G -> H, the induced chain map must have compatible dimensions'
+laws:
+- d_n . d_{n+1} = 0 for all n (boundary-of-a-boundary is zero)
+- F(id_G) = id_{F(G)} for every graph G
+- F(g . f) = F(g) . F(f) for composable graph morphisms f, g
+- d_1(e) = t(e) - s(e) is uniquely determined by the graph orientation
+- C_n(G; R) is the free R-module on the n-dimensional cells of G
+- 'For graph morphism f: G -> H, F(f) . d^G = d^H . F(f)'
+- C_n(G; R) = 0 for n >= 2 and n < 0 (graph complex is 2-term)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Graph serialization must use canonical vertex/edge ordering
+  - Boundary map construction must be deterministic from orientation
+  - Same graph with same orientation and same ring must produce identical complex hash
+  - Chain map construction must be deterministic from graph morphism
+  - Rechecking must reproduce all witness hashes identically
+relationships:
+- urn:math:contract:ChainComplex:v0.1.0 serves as target_category_object
+- urn:math:contract:BoundaryMap:v0.1.0 serves as differential_maps_in_output_complex
+- urn:math:contract:Functor:v0.1.0 serves as functor_axiom_framework
+- urn:math:contract:LinearMap:v1.0.0 serves as structure_of_boundary_and_chain_maps
+- urn:math:contract:Category:v0.1.0 serves as source_category_FinGraph_and_target_category_Ch
+- urn:math:contract:ChainGroup:v0.1.0 serves as chain_group_construction_from_free_modules
+rust_binding:
+  crate: core_homology
+  module: finite_directed_graph
+  realization_scope: partial_carrier
+  symbols:
+  - FiniteDirectedGraph
+  # Graph carrier only; not F: FinGraph -> Ch_*(R). This test discharges only
+  # the endpoint-membership negative_test. Every other obligation stays named
+  # below as an OPEN_OBLIGATION and the gate keeps this partial binding in the
+  # baseline worklist.
+  required_tests:
+  - new_rejects_edge_endpoint_outside_vertex_set
+negative_tests:
+- 'A graph submitted without a canonical vertex/edge ordering must be rejected. The boundary map cannot be constructed without a fixed orientation determining the signs.
+
+  '
+- 'A purported chain complex where d_0 . d_1 != 0 must be rejected. This violates the fundamental chain complex law.
+
+  '
+- 'A graph with an unbounded or infinite vertex or edge set must be rejected. This contract covers only finite directed graphs.
+
+  '
+- 'A graph morphism that does not preserve source/target maps (f(s(e)) != s(f(e)) or f(t(e)) != t(f(e))) must be rejected. The induced chain map would not commute with boundary operators.
+
+  '
+- 'A coefficient ring that is not commutative or lacks a multiplicative identity must be rejected. Free module construction requires commutativity for well-defined scalar action.
+
+  '
+- 'Any artifact claiming authority, admissibility, trust, or certification must be rejected. This contract is purely mathematical.
+
+  '
+- 'A chain map whose matrix dimensions do not match the ranks of the source and target chain groups must be rejected.
+
+  '
+- 'A boundary map where d_1(e) != t(e) - s(e) for some edge e must be rejected. The boundary must be canonically determined by orientation.
+
+  '
+- 'A graph where the source or target map references a vertex not in V must be rejected. Source and target maps must be well-defined functions s, t: E -> V.
+
+  '
+- 'A construction where the provided vertex_basis_hash or edge_basis_hash does not match the canonical basis derived from the graph orientation must be rejected.
+
+  '
+doctrine:
+  summary: 'Formally defines the construction functor F: FinGraph -> Ch_*(R) over a coefficient ring R. Given a finite directed graph G = (V, E, s, t) where s, t: E -> V are the source and target maps, the functor produces a chain complex C_*(G; R) with C_0 = R^V (free R-module on vertices), C_1 = R^E (free R-module on edges), and boundary map d_1(e) = t(e) - s(e). The differential boundary maps d_n must be canonically generated from the orientations of the graph''s vertices, edges, and directed cycles. Graph morphisms are mapped to chain maps, preserving the chain complex structure. This contract covers the carriers finite_directed_graph, carrier, and graph_carrier.'
+  non_role:
+  - Simplicial complex chain functors (separate contract)
+  - CW complex chain functors (separate contract)
+  - Infinite graphs or graphs with infinite vertex/edge sets
+  - Weighted or labeled graph homology (separate extension)
+  - Persistent homology filtrations (separate contract)
+  - Cohomology or cochain complex construction (dual contract)
+  - Spectral sequences arising from graph filtrations
+wip:
+- "OPEN_OBLIGATION canonical_ordering: reject graphs without canonical vertex and edge orderings; owner: core_homology functor implementer; disposition: add a dedicated functor-level validator and paired required_test."
+- "OPEN_OBLIGATION boundary_squared_zero: reject outputs where adjacent boundary maps do not compose to zero; owner: core_homology functor implementer; disposition: add chain-complex construction and paired required_test."
+- "OPEN_OBLIGATION finite_input: reject unbounded or infinite graph carriers; owner: core_homology functor implementer; disposition: specify the finite input API and pair it with a required_test."
+- "OPEN_OBLIGATION graph_morphism: reject maps that do not preserve source and target; owner: core_homology functor implementer; disposition: implement induced chain maps and a paired required_test."
+- "OPEN_OBLIGATION coefficient_ring: reject noncommutative or nonunital coefficient structures; owner: core_homology functor implementer; disposition: implement the coefficient-ring boundary and a paired required_test."
+- "OPEN_OBLIGATION authority_claim_fence: reject authority, admissibility, trust, or certification claims; owner: Council Nomos and human authority review; disposition: no mechanical unit-test discharge at the ShapeOnly layer; AuthorityEffect: None."
+- "OPEN_OBLIGATION chain_map_dimensions: reject induced chain maps with incompatible source and target ranks; owner: core_homology functor implementer; disposition: implement dimension validation and a paired required_test."
+- "OPEN_OBLIGATION boundary_formula: reject any d_1(e) other than t(e)-s(e); owner: core_homology functor implementer; disposition: implement boundary construction and a paired required_test."
+- "OPEN_OBLIGATION canonical_basis_hash: reject vertex or edge basis hashes that disagree with canonical graph order; owner: core_homology functor implementer; disposition: implement canonical hashing and a paired required_test."
+- 'How should the functor extend to simplicial complexes? The clique complex or flag complex of a graph provides a natural simplicial structure with higher-dimensional cells (triangles, tetrahedra, etc.), yielding nontrivial C_n for n >= 2. Should this be a separate contract or a parameterized extension?
+
+  '
+- 'CW complex generalization: Can the functor be extended to CW complexes attached to graphs, where higher cells are glued along boundary maps? What additional orientation data is needed for attaching maps?
+
+  '
+- 'Higher cells from directed paths: Should directed paths of length k generate k-chains? This would give a path-homology theory distinct from simplicial homology. What is the correct boundary formula?
+
+  '
+- 'Coefficient ring generality: Should we support non-commutative rings (e.g., group rings) for equivariant graph homology? This would require distinguishing left and right modules.
+
+  '
+- 'Relationship to persistent homology: When a graph comes with a filtration (e.g., by edge weight), the functor should compose with persistence to yield a persistence module. Should this composition be part of this contract or a separate persistence contract?
+
+  '
+- 'Signed graphs and orientations: For undirected graphs, an orientation must be chosen. Different orientations yield isomorphic homology but different chain complexes. Should we canonicalize the choice or track orientation equivalence classes?
+
+  '
+- Currently targets finite directed graphs only; undirected graphs require orientation choice
+- Higher-dimensional extensions (simplicial, CW) deferred to future contracts
+- Validators referenced but not yet implemented in core-homological crate
+- Chain map construction for graph morphisms needs concrete matrix algorithm specification
+- Homology computation method included for completeness but may belong in a separate HomologyGroup contract
+- Performance bounds for large graphs (|V| + |E| > 10^6) not yet characterized
+- Sparse matrix representation for boundary maps not yet specified (dense assumed)
+
+# === CANONICAL CONTRACT ABOVE ===
+# Debate below is NON-CANONICAL. AuthorityEffect: none. Not contract law.
+
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none; do not read as certification."
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects: []
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: PARTIAL_REALIZATION_ONLY
+    severity: info
+    claim_class: "[SCOPE FENCE]"
+    detail: >
+      rust_binding.module finite_directed_graph exists and the binding is explicitly
+      marked partial_carrier. FiniteDirectedGraph is a graph carrier only — not the
+      functor F: FinGraph → Ch_*(R) / boundary construction this YAML defines.
+    recommendation: >
+      Land dedicated combinatorial_chain_functor realization (or rebind to a true functor
+      module under ADR-007a); graph carrier alone is not sufficient.
+    file: engine/crates_rs/core_homology/src/finite_directed_graph.rs
+    delta: YAML_AHEAD_OF_CODE

@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:kraus_population_shadow:v0.1.0
+title: Exact population shadows and their composition defect
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: kraus_population_shadow
+  symbol: kraus_population_shadow
+  ascii_symbol: kraus_population_shadow
+  notation: Exact population shadows and their composition defect
+  domain:
+  - Checked weighted CPTP channels over Q(i), input and output dimensions1..64; canonical BasicMatrix<Q> input-row
+    convention
+  codomain:
+    description: Declared finite results of core_quantum_physics::population_shadow; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every entry is the actual weighted sum of squared Kraus matrix entries
+- Every row is nonnegative and sums to one
+- Stochastic kernels compose by shared exact matrix multiplication
+- A rational rotation followed by itself has a computed nonzero shadow composition defect
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: population_shadow
+  symbols:
+  - population_shadow
+  - compose_kernels
+  - compose_channels
+  - composition_defect
+  required_tests:
+  - measurement_exact_laws::population_shadows_compute_stochastic_rows_and_a_nonzero_composition_defect
+negative_tests:
+- measurement_exact_laws::population_shadows_compute_stochastic_rows_and_a_nonzero_composition_defect
+doctrine:
+  summary: Every entry is the actual weighted sum of squared Kraus matrix entries; Every row is nonnegative
+    and sums to one; Stochastic kernels compose by shared exact matrix multiplication; A rational rotation
+    followed by itself has a computed nonzero shadow composition defect.
+  non_role:
+  - The shadow neither determines the coherent channel nor defines a monoid homomorphism on arbitrary channels
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:holonomy_interference:v0.1.0
+title: Coherent path interference
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: holonomy_interference
+  symbol: holonomy_interference
+  ascii_symbol: holonomy_interference
+  notation: Coherent path interference
+  domain:
+  - Finite checked oriented walks, exact unit phases, nonnegative coherent weights with exact square-root admission.
+  codomain:
+    description: Declared finite results of core_quantum_physics::holonomy_interference; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The cross term is2 Re(conjugate(a)b).
+- Relative holonomy is invariant under vertex gauge.
+- Face holonomies distinguish curvature from nontrivial flat-cycle transport.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: holonomy_interference
+  symbols:
+  - TreeGaugeFixing
+  - CoherentPathFamily
+  - gauge_equivalence
+  - holonomy_verdict
+  required_tests:
+  - two_path_interference_is_twice_the_real_part_of_the_loop_holonomy
+negative_tests: []
+doctrine:
+  summary: The cross term is2 Re(conjugate(a)b).; Relative holonomy is invariant under vertex gauge.; Face
+    holonomies distinguish curvature from nontrivial flat-cycle transport..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

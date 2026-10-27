@@ -1,0 +1,44 @@
+# engines/src/quantum/ Contracts
+
+name: quantum_engines
+description: Diagnostic density engine boundaries (Phase 0.5 strictness)
+modules:
+  - name: density_from_h1.rs
+    type: functional_diagnostic
+    rules:
+      - rule: QM-D1
+        description: Constructors are split. Raw L1 density is distinguished from L2 amplitude and phase-witness lifts.
+      - rule: QM-D2
+        description: Diagnostic outputs explicitly forbid canonical authority and must never certify AuthorityEffect::Certified.
+      - rule: QM-D3
+        description: Represents masses as raw_l1_mass rather than phi1 to avoid ambiguity with verified Phi1 certificates.
+
+  - name: residual_density_bridge.rs
+    type: functional_diagnostic
+    rules:
+      - rule: QM-D4
+        description: Wraps H1 sector decomposition and attaches explicit AuthorityEffect::None.
+      - rule: QM-D5
+        description: Does not rank, accept, reward, certify, or provide physical quantum authority.
+      - rule: QM-D6
+        description: Branch ranking and candidate evaluation are purely stochastic diagnostics.
+
+  - name: gomc_diagnostics.rs
+    type: reporting
+    rules:
+      - rule: QM-D7
+        description: Provides Monte Carlo summary heuristics over density distributions. Uses raw_l1_mass instead of phi1.
+
+  - name: quantum_density_engine.rs
+    type: facade
+    rules:
+      - rule: QM-D8
+        description: Orchestrates diagnostic queries without leaking internal structures or asserting canonical rank bounds.
+      - rule: QM-D9
+        description: Entropy and mixture queries return Results indicating potential rank/density violations.
+
+  - name: reasoning_density.rs
+    type: functional_diagnostic
+    rules:
+      - rule: QM-D10
+        description: Exposes reasoning state covariances purely as heuristics.

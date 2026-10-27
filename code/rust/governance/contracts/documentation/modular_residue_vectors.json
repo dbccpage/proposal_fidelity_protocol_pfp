@@ -1,0 +1,138 @@
+{
+  "schema": "core.modular_residue_vectors.v1",
+  "authority_effect": "None",
+  "doctrine": [
+    "Golden vectors pinning what `mod` means on BOTH sides of the FFI seam.",
+    "",
+    "`least_non_negative_residue` is the value this estate means by `mod`. It",
+    "is what a cyclic group of order n means, and what Python's `%` computes.",
+    "",
+    "`truncated_remainder` is what Rust, C, C++, Java and Go compute with `%`:",
+    "the sign follows the dividend, not the divisor. It is recorded here NOT",
+    "as an alternative but as the wrong answer a re-implementation produces by",
+    "default -- so a test can assert against it, not merely for the right one.",
+    "A test that only checks the correct value passes on a host that has",
+    "never been asked the question.",
+    "",
+    "The hazard this closes: a Rust re-derivation of a row Python already",
+    "re-derived would disagree, and the disagreement surfaces as a",
+    "CONTRADICTED row -- the PRODUCER blamed for a difference between two",
+    "hosts.",
+    "",
+    "Both sides read this file. Neither side transcribes the numbers. The",
+    "values were computed, not written by hand: a hand-written fixture in",
+    "this module already claimed 10^30 mod 7 = 6 (it is 1) and was caught by",
+    "the implementation it was meant to check.",
+    "",
+    "Cases where the two conventions AGREE are kept deliberately. A vector",
+    "set containing only disagreements would pass a host that returned the",
+    "least non-negative residue for negatives and garbage for positives."
+  ],
+  "cases": [
+    {
+      "lhs": "17",
+      "modulus": "5",
+      "least_non_negative_residue": "2",
+      "truncated_remainder": "2",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "0",
+      "modulus": "5",
+      "least_non_negative_residue": "0",
+      "truncated_remainder": "0",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "5",
+      "modulus": "5",
+      "least_non_negative_residue": "0",
+      "truncated_remainder": "0",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "4",
+      "modulus": "5",
+      "least_non_negative_residue": "4",
+      "truncated_remainder": "4",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "-17",
+      "modulus": "5",
+      "least_non_negative_residue": "3",
+      "truncated_remainder": "-2",
+      "conventions_agree": false
+    },
+    {
+      "lhs": "-1",
+      "modulus": "5",
+      "least_non_negative_residue": "4",
+      "truncated_remainder": "-1",
+      "conventions_agree": false
+    },
+    {
+      "lhs": "-5",
+      "modulus": "5",
+      "least_non_negative_residue": "0",
+      "truncated_remainder": "0",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "-6",
+      "modulus": "5",
+      "least_non_negative_residue": "4",
+      "truncated_remainder": "-1",
+      "conventions_agree": false
+    },
+    {
+      "lhs": "1",
+      "modulus": "1",
+      "least_non_negative_residue": "0",
+      "truncated_remainder": "0",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "7",
+      "modulus": "3",
+      "least_non_negative_residue": "1",
+      "truncated_remainder": "1",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "-7",
+      "modulus": "3",
+      "least_non_negative_residue": "2",
+      "truncated_remainder": "-1",
+      "conventions_agree": false
+    },
+    {
+      "lhs": "1000000000000000000000000000000",
+      "modulus": "7",
+      "least_non_negative_residue": "1",
+      "truncated_remainder": "1",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "-1000000000000000000000000000000",
+      "modulus": "7",
+      "least_non_negative_residue": "6",
+      "truncated_remainder": "-1",
+      "conventions_agree": false
+    },
+    {
+      "lhs": "9223372036854775808",
+      "modulus": "5",
+      "least_non_negative_residue": "3",
+      "truncated_remainder": "3",
+      "conventions_agree": true
+    },
+    {
+      "lhs": "-9223372036854775808",
+      "modulus": "5",
+      "least_non_negative_residue": "2",
+      "truncated_remainder": "-3",
+      "conventions_agree": false
+    }
+  ]
+}

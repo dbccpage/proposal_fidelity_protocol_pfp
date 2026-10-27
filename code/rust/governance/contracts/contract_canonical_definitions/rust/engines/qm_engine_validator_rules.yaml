@@ -1,0 +1,90 @@
+schema_version: core.validator_rules.v1
+rules:
+  - id: qm_contracts_use_file_schema
+    severity: P0
+    applies_to:
+      contracts:
+        - "contracts/rust/engines/quantum/*.contract.yaml"
+    require_fields:
+      - schema_version
+      - contract_id
+      - crate
+      - file
+      - role
+      - authority_effect
+      - owns
+      - does_not_own
+      - must_not
+      - forbidden_substrings
+      - required_tests
+  - id: no_qm_diagnostic_phi1
+    severity: P0
+    applies_to:
+      roles:
+        - diagnostic_residual_density_bridge
+        - diagnostic_cycle_space_projector
+        - process_matrix_diagnostic_engine
+    forbidden_substrings:
+      - "pub phi1:"
+      - " phi1: f64"
+      - "let phi1 ="
+    required_substrings_when_file_contains:
+      raw_l1_mass:
+        - "raw_l1_mass"
+  - id: no_authority_symbols_in_qm_diagnostics
+    severity: P0
+    applies_to:
+      authority_effect: none
+    forbidden_substrings:
+      - "CertifiedAuthority"
+      - "authority_from_outcome_f13"
+      - "AuthorityEffect::Authorize"
+      - "ExactRepair"
+      - "terminalize("
+  - id: no_canonical_raw_l2_density
+    severity: P0
+    applies_to:
+      files:
+        - "engine/crates_rs/engines/src/quantum/density_from_h1.rs"
+    forbidden_substrings:
+      - "CANONICAL density construction"
+      - "ONLY density allowed"
+      - "only density allowed"
+    required_substrings:
+      - "H1DensityConstruction"
+      - "L1DiagonalDiagnostic"
+      - "L1PhaseWitnessLift"
+      - "L2RawAmplitudeDiagnostic"
+  - id: cycle_basis_edge_kernel
+    severity: P0
+    applies_to:
+      files:
+        - "engine/crates_rs/engines/src/quantum/cycle_space_projector.rs"
+    required_tests:
+      - cycle_basis_vectors_have_edge_dimension
+      - cycle_basis_satisfies_incidence_kernel
+      - rectangular_incidence_no_panic
+    forbidden_substrings:
+      - "panic!"
+  - id: checked_qm_paths_do_not_panic
+    severity: P1
+    applies_to:
+      files:
+        - "engine/crates_rs/engines/src/quantum/quantum_channel.rs"
+        - "engine/crates_rs/engines/src/quantum/packed_density_operator.rs"
+        - "engine/crates_rs/engines/src/quantum/harmonic_density.rs"
+    forbidden_substrings_outside_tests:
+      - "unwrap()"
+      - "expect("
+      - "assert_eq!"
+      - "panic!"
+  - id: process_matrix_diagnostic_only
+    severity: P1
+    applies_to:
+      files:
+        - "engine/crates_rs/engines/src/quantum/process_matrix_engine.rs"
+    required_substrings:
+      - "AuthorityEffect::None"
+    forbidden_substrings:
+      - "certifies noncausal"
+      - "full causal-separability solver"

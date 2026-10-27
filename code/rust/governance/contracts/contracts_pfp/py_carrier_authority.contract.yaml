@@ -1,0 +1,68 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# pfp/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_carrier_authority:v1.0.0"
+title: "Carrier Authority (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-CARRIER-MISMATCH"]
+
+doctrine:
+  summary: >-
+    Who authored the carrier a receipt's rows were checked against. The
+    distinction the receipt terminal turns on: rows measured against an
+    allowlist the same producer wrote establish consistency, not verification.
+  invariants:
+    - "There is NO packet field for this, and there must not be one. A packet
+       that could declare its carrier host-authored would be the claim
+       vouching for itself. PACKET_FIELDS does not list it and
+       check_no_unknown_fields refuses what it does not list, so the host's
+       carrier reaches verify_glyph_reply as an argument or not at all. This
+       mirrors PresentationPins on the Rust side, which derives no Deserialize
+       for the same reason."
+    - "It defaults DOWN to PRODUCER, exactly as the decode tier does. A caller
+       that says nothing has said nothing."
+    - "HOST is set only after the host's own carrier digest is compared with
+       the packet's. A disagreement is FW-CARRIER-MISMATCH -- a refusal, and a
+       different one from FW-CARRIER-CODEPOINT: every glyph may be legal under
+       the carrier the packet supplied, and the objection is that the packet
+       supplied it."
+    - "CalculusReceipt.over takes it as a REQUIRED keyword. HOST as a default
+       would hand every caller a PASS it did not earn; PRODUCER as a default is
+       safe but silently caps a host that really did pin its carrier."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.calculus_receipt
+  python_type: "CarrierAuthority"
+  form: enum
+  variants:
+    - HOST
+    - PRODUCER

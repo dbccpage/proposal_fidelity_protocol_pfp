@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:semiring_basic_matrix:v0.1.0
+title: Canonical checked semiring matrix operations
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: semiring_basic_matrix
+  symbol: semiring_basic_matrix
+  ascii_symbol: semiring_basic_matrix
+  notation: Canonical checked semiring matrix operations
+  domain:
+  - BasicMatrix<S:Semiring>; entries<=2^20, scalar work<=2^24; complete Boolean root search dimension<=3.
+  codomain:
+    description: Declared finite results of linear_algebra::semiring_matrix; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Matrix products sum weighted edge-distinct walks.
+- No subtraction or hidden field operation is required.
+- Boolean root sets are complete within the declared exhaustive budget.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_linear_algebra
+  module: semiring_matrix
+  symbols:
+  - from_rows
+  - identity
+  - multiply
+  - power
+  - Boolean
+  - boolean_square_roots
+  required_tests:
+  - boolean_roots_are_complete_and_swaps_have_no_root
+  - semiring_products_count_edge_distinct_walks_without_subtraction
+negative_tests:
+- boolean_roots_are_complete_and_swaps_have_no_root
+doctrine:
+  summary: Matrix products sum weighted edge-distinct walks.; No subtraction or hidden field operation is required.;
+    Boolean root sets are complete within the declared exhaustive budget..
+  non_role:
+  - This extends BasicMatrix operations and does not create a second matrix carrier.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

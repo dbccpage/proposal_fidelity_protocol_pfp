@@ -1,0 +1,51 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:replay_trace_redirect:v1.0.0
+title: ReplayTraceRedirect
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: RepresentationBoundary
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: ''
+  redirect:
+    merged_into:
+    - trace_artifact
+    - replay_kernel
+    import_law: MUST NOT be imported by validators, build scripts, contract generators, or implementation
+      crates as doctrine.
+    conflict_law: Replacement contracts control.
+  legacy_metadata:
+    name: ReplayTraceRedirect
+    source_file: non-math/02_evidence/replay_trace_contract.md
+    active: false
+    machine_authority: false
+    role: Redirect for split trace/replay contracts
+    version: '2.0'
+    classification: redirect
+    effect_class: none
+    primary_output_family: Record
+    referenced_output_families:
+    - EvidenceEnvelope
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"
+  coalescence_mode: "specializes"
+  coalesces_with:
+    - "urn:core:evidence:replay_kernel:v1.0.0"

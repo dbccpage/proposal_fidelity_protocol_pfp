@@ -1,0 +1,101 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:square_lattice_complex:v0.1.0
+title: Square Lattice Cell Complex Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cell_complex_of_a_square_lattice
+  symbol: 'l1 x l2 plaquettes with periodic, open or mixed boundary: vertices, horizontal and vertical edges, plaquettes'
+  ascii_symbol: square_lattice_complex
+  notation: 'periodic_square_complex(l1, l2) is a cell complex of the torus with l1 l2 vertices, 2 l1 l2 edges and l1 l2 plaquettes; boundary of plaquette (pr, pc) is h(pr, pc) + v(pr, pc+1) - h(pr+1, pc) - v(pr, pc)'
+  domain:
+  - 'rows and cols: plaquette counts, at least 1, with rows * cols at most 4096'
+  - 'a periodic direction needs at least 2 sites; an open direction has one more vertex row or column than plaquettes'
+  codomain:
+    description: 'An IntegralChainComplex over Z (and its mod-2 reduction) with a fixed cell numbering, the endpoints of every edge, the boundary walk of every plaquette, and explicit non-contractible loops on periodic directions.
+
+      '
+requirements:
+  required_structures:
+  - 'Vertex (r, c) has index r * Cv + c; horizontal edges h(r, c) come first at r * cols + c; vertical edges v(r, c) follow at Rv * cols + r * Cv + c; plaquette (pr, pc) has index pr * cols + pc'
+  - 'Indices wrap modulo the site count in a periodic direction'
+  - 'd_1 d_2 = 0 over Z, checked on construction'
+  - 'A periodic direction with fewer than 2 sites, a zero plaquette count, or more than 4096 plaquettes is refused with a typed error'
+laws:
+- 'Periodic lattice: l1 l2 vertices, 2 l1 l2 edges, l1 l2 plaquettes, Euler characteristic 0; open lattice: (l1+1)(l2+1) vertices, Euler characteristic 1; cylinder: Euler characteristic 0'
+- 'Every plaquette boundary is a closed walk of edges'
+- 'Torus: H_1(T; Z) = Z^2 without torsion and dim H_1(T; F_2) = 2, so 2^dim H_1 = 4; dim Z^1 = N + 1 and dim B^1 = N - 1 for N = l1 l2 vertices, hence |H^1| = 4'
+- 'Disk: H^*(F_2) = (1, 0, 0); cylinder: (1, 1, 0)'
+- 'The horizontal loop (the horizontal edges of one row) and the vertical loop (the vertical edges of one column) are cycles that are not boundaries, independent modulo boundaries; loops in different rows or columns are homologous'
+- 'The pairing of a cycle with a cocycle vanishes on boundaries and coboundaries, and the 2 x 2 pairing matrix of the two loops with a basis of H^1 is invertible'
+- 'The mod-2 matrices equal core_majorana::complexes::surface_grid entry by entry, periodic and open'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Cell order is fixed by the numbering above
+relationships:
+- urn:core:math:f2_cohomology:v0.1.0 serves as H_1 representatives are the logical operators of a code on the lattice
+- urn:core:math:integral_chain_complex:v0.1.0 serves as The lattice is built as an integral chain complex
+- urn:core:math:cell_complex:v0.1.0 serves as The lattice is a finite CW complex
+rust_binding:
+  crate: core_homology
+  module: square_lattice
+  symbols:
+  - SquareLattice
+  - LatticeError
+  - Boundary
+  - periodic_square_complex
+  - open_square_complex
+  - cylinder_square_complex
+  - MAX_LATTICE_PLAQUETTES
+  required_tests:
+  - lattice_constructors_refuse_too_small_and_too_large_sizes
+  - lattice_queries_refuse_out_of_range_indices_and_open_directions
+  - a_periodic_lattice_has_l1_l2_vertices_twice_as_many_edges_and_l1_l2_faces
+  - open_and_cylinder_lattices_have_the_expected_cell_counts
+  - the_numbering_places_edges_and_plaquette_boundaries_as_documented
+  - each_plaquette_boundary_is_a_closed_walk_over_z
+  - the_torus_has_h1_of_dimension_two_over_f2_and_the_counts_match
+  - the_two_by_two_torus_counts_agree_with_brute_force_over_all_256_cochains
+  - integral_homology_of_the_torus_is_z_z_squared_z_with_no_torsion
+  - the_existing_exact_betti_code_agrees_on_the_lattice_carrier
+  - disks_and_cylinders_have_the_expected_f2_cohomology
+  - the_periodic_lattice_matches_surface_grid_entry_by_entry
+  - the_open_lattice_matches_surface_grid_entry_by_entry
+  - an_independent_h1_computation_finds_the_same_dimension
+  - the_two_noncontractible_loops_are_a_basis_of_h1
+  - the_pairing_of_loops_with_cohomology_classes_is_nondegenerate
+negative_tests:
+- A periodic direction with fewer than 2 sites (l1 or l2 equal to 0 or 1) must be refused
+- An open direction with no plaquette must be refused
+- A lattice with more than 4096 plaquettes, or whose plaquette count overflows, must be refused
+- A vertex, edge, plaquette or loop index outside the lattice must be refused
+- A non-contractible loop along an open direction must be refused
+doctrine:
+  summary: 'Bounded cell complexes of square lattices with boundary maps over Z and GF(2), for codes and lattice models whose logical operators are homology classes: on the torus H_1 has dimension 2 over F_2, so a code with logical operators given by H_1 has ground state degeneracy 4. The construction is compared entry by entry with an independent construction (core_majorana surface_grid), its homology with an independent GF(2) computation (core_majorana h1_basis) and with the existing Smith normal form code, and the smallest torus with brute-force enumeration of every cochain.'
+  non_role:
+  - Toric code dynamics, syndromes or decoding
+  - Lattices other than the square lattice
+  - Geometric embeddings of the cells
+wip:
+- 'A torus with 2 sites in a direction has two distinct edges joining the same two vertices in opposite directions; that is a legal cell complex but not a simplicial complex, so the lattice is exposed as integral and GF(2) chain complexes, not as a SimplicialComplex'
+- 'The maximum size is 4096 plaquettes; dense GF(2) elimination on larger lattices would be slow'

@@ -1,0 +1,121 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:log_linear_entropy_form:v0.1.0
+title: Log-Linear Entropy Form Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: rational_combination_of_logarithms_of_primes
+  symbol: 'L = ∑_q γ_q ln q over primes q with γ_q ∈ ℚ, γ_q ≠ 0'
+  ascii_symbol: log_form
+  notation: 'S(p) = -∑ p_i ln p_i = ∑_q γ_q ln q with γ_q = -∑_i p_i v_q(p_i); D(p||q) = ∑ p_i ln(p_i/q_i); H_α = ln(∑ p_i^α) / (1 - α)'
+  domain:
+  - 'coefficients: exact rationals keyed by prime, zero coefficients dropped'
+  - 'arguments: positive rationals, factored by trial division up to a declared bound'
+  codomain:
+    description: 'An exact canonical form of the entropies of a distribution with rational masses. Logarithms of distinct primes are linearly independent over the rationals, so two forms have equal values exactly when they are equal, and the Shannon entropy is zero exactly when the distribution is deterministic. Real values are given as exact rational enclosures of a declared width, and forms are ordered by the sign of their difference decided from enclosures.
+
+      '
+requirements:
+  required_structures:
+  - 'Forms are closed under addition, negation and rational scaling, and keep only nonzero coefficients'
+  - 'Factorisation is by trial division up to a declared bound; a cofactor is accepted as prime only below the bound squared or by the deterministic Miller-Rabin test on 64 bits, and otherwise the factorisation is refused'
+  - 'The logarithm of a non-positive number, a relative entropy with q_i = 0 < p_i, and distributions of different sizes are refused'
+  - 'An enclosure is at most 2^-bits wide, contains the value, and more than the declared maximum precision is refused'
+  - 'The sign of a nonzero difference is decided from enclosures or refused at the declared precision; it is never guessed'
+laws:
+- 'S({3/4, 1/4}) = 2 ln 2 - (3/4) ln 3, the ladder (8, 4, 2, 1)/15 has γ over (2, 3, 5) equal to (-34/15, 1, 1), (4, 2, 1)/7 has γ over (2, 7) equal to (-10/7, 1), and the uniform distribution on n points has S = ln n'
+- 'The entropy form is zero exactly when the distribution has one positive mass, and is invariant under permutation of the masses'
+- 'Enclosures of ln 2, ln 3, ln 5, ln 7, ln 11, ln 13 agree with correctly rounded 70-digit reference values, and ln n enclosed by range reduction of n agrees with the sum of the logarithms of its prime factors for n up to 200'
+- 'Entropy is strictly Schur-concave: p majorizing q and p not a permutation of q gives S(p) < S(q), certified by enclosures'
+- 'The mutual information H(A) + H(B) - H(A, B) equals D(P_AB || P_A ⊗ P_B) as forms, is zero exactly when the table factors, and does not increase under local stochastic maps'
+- 'D(p||q) ≥ 0 with equality exactly for p = q, D(p||q) ≥ 2 TV(p, q)^2 (Pinsker), and D(pM||qM) ≤ D(p||q) for stochastic maps M'
+- 'Renyi entropies satisfy H_0 ≥ H_1 ≥ H_2 ≥ ... ≥ H_infinity with equality exactly on distributions uniform on their support'
+- 'H(B|A) equals the expectation of the entropies of the conditional rows, H(A, B) = H(A) + H(B|A), and H(B|A) = 0 exactly when B is a function of A'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All coefficients and interval endpoints are exact rationals
+  - Factorisation and enclosure precision are declared parameters, never ambient settings
+relationships:
+- urn:core:math:finite_probability_simplex:v0.1.0 serves as The distributions whose entropies are formed
+- urn:core:math:joint_table:v0.1.0 serves as Joint, conditional and mutual entropies of tables
+- urn:core:math:majorization:v0.1.0 serves as Schur-concavity is certified against this order
+rust_binding:
+  crate: core_finite_probability
+  module: log_form
+  symbols:
+  - LogForm
+  - LogFormError
+  - shannon_entropy_form
+  - relative_entropy_form
+  - renyi_entropy_form
+  - min_entropy_form
+  - joint_entropy_form
+  - conditional_entropy_form
+  - total_correlation_form
+  - LogForm::enclosure
+  - LogForm::compare
+  - DEFAULT_FACTOR_BOUND
+  - MAX_ENCLOSURE_BITS
+  required_tests:
+  - a_non_prime_or_non_positive_argument_is_refused
+  - an_undecidable_cofactor_is_refused_and_a_larger_bound_decides_it
+  - zero_has_no_factorisation_and_an_excessive_bound_is_refused
+  - the_zero_form_encloses_zero_and_precision_above_the_limit_is_refused
+  - compare_orders_forms_by_value_and_refuses_when_precision_cannot_separate_them
+  - relative_entropy_has_its_hand_value_vanishes_on_equal_distributions_and_refuses_infinity
+  - the_factorisation_bound_is_a_typed_refusal_not_a_wrong_entropy
+  - the_shannon_entropy_forms_of_the_documented_distributions_are_pinned
+  - the_entropy_form_is_zero_exactly_for_deterministic_distributions
+  - the_logarithms_of_small_primes_are_enclosed_to_the_requested_width
+  - the_enclosure_of_a_composite_by_range_reduction_agrees_with_the_sum_of_its_prime_logarithms
+  - the_entropy_form_agrees_with_an_enclosure_built_without_valuation_bookkeeping
+  - entropy_is_strictly_schur_concave_on_every_grid_pair
+  - mutual_information_is_the_relative_entropy_to_the_product_of_marginals
+  - total_correlation_vanishes_exactly_when_the_table_factors
+  - relative_entropy_is_nonnegative_zero_only_on_equal_distributions_and_above_pinsker
+  - relative_entropy_does_not_increase_under_a_stochastic_map
+  - renyi_entropies_decrease_with_the_order_and_are_constant_exactly_on_uniform_supports
+  - local_stochastic_maps_do_not_increase_the_mutual_information
+  - the_conditional_entropy_vanishes_exactly_when_b_is_a_function_of_a
+
+negative_tests:
+- The logarithm of zero or of a negative rational must be refused
+- A value declared prime that is not prime must be refused
+- A cofactor that trial division cannot certify must be refused as undecided, and a larger declared bound must decide it
+- Zero has no factorisation, and a trial-division bound above the maximum must be refused
+- An enclosure precision above the maximum must be refused
+- A sign that the declared precision does not separate from zero must be refused, not guessed
+- A relative entropy with q_i = 0 and p_i > 0, or between distributions of different sizes, must be refused
+doctrine:
+  binding_review_20261014: "Integer factorization delegates to core_number_theory::integer_factorization::factor_natural; factor_integer is not an export of this module."
+  summary: 'Entropies of rational distributions are exact rational combinations of logarithms of primes, so equality, cancellation and the vanishing of an entropy are decided by comparing coefficient maps. Real values are certified by exact rational enclosures and forms are ordered by certified sign, with typed refusals where the declared bound or precision is insufficient. The enclosure series is a stand-in for the certified logarithm of core_kernel and is isolated in one private function.'
+  non_role:
+  - Transcendence of entropies (the Baker-type statement that a nonzero form has transcendental value is a cited theorem, not computed here)
+  - Von Neumann entropy of a quantum state
+  - Floating-point entropy or numerical optimisation
+  - Differential entropy
+wip:
+- 'ln_integer_bounds is a private atanh series with range reduction by a power of two; it is to be replaced by the certified logarithm enclosure of core_kernel when that exists'
+- 'Only trial division with Miller-Rabin on 64 bits is provided; Pollard rho or ECM for larger cofactors is not implemented and such cofactors are refused'
+- 'Renyi entropies of non-integer order are not forms (the power sum is irrational) and are not provided'
+- 'The density-matrix (quantum) entropy is not here; the spectrum of a rational Hermitian matrix would feed shannon_entropy_form from core_quantum_physics'

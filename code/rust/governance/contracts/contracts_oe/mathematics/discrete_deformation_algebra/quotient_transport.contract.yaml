@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quotient_transport:v1.0.0
+title: Quotient Transport Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:quotient_space:v1.0.0
+    - urn:core:math:transport_loss_ledger:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+
+math:
+  object_kind: quotient_transport_morphism
+  symbol: "pi_D: Q^1_rich -> Q^1_coarse,  iota_Lambda: Q^1_coarse -> Q^1_rich"
+  ascii_symbol: QuotientTransport
+  notation: "Transport between quotient spaces under scale descent D or structural lift Lambda"
+  domain:
+    - "source_quotient: Q^1_source = C^1_source / B^1_source"
+    - "carrier_transition: declared transition map between source and target carriers"
+  codomain:
+    description: "Target quotient space Q^1_target under strict DDC preservation or ledgered loss."
+
+requirements:
+  required_structures:
+    - Source and target cochain complexes with d_1 d_0 = 0
+    - For descent D: explicit LossLedger recording dropped dimensions and lost mass
+    - For lift Lambda: explicit license certificate and Law 4 trigger (ClosedResidual or DetectorInadequate)
+
+laws:
+  - "Theorem 11.6 (No Free Decrease): If a lawful step lowers Phi_1 or Gamma_2, its letter is strictly D or Lambda (Ddc.no_free_decrease). Unpriced decrease is mathematically impossible."
+  - "Theorem 11.7 (Open Obstructions Need a Priced Move): From Gamma_2 > 0 and a non-terminal control, a lawful tape without D and without Lambda keeps Gamma_2 > 0 and never terminalizes (Ddc.open_needs_priced_move)."
+  - "DDC-L-01 (Norm Preservation Under Lift): Zero-padding lifts preserve l1 norms and old inner products (Ddc.L_pad_preserves_l1)."
+  - "DDC-L-03 (Orthogonality of Lift Coordinates): Adjoined coordinates in a structural lift are orthogonal to the image of the lift."
+  - "DDC-TAPE-09 (Lift Non-Exactification): If restriction along a complex extension commutes with d_0, exactness of the lifted residual implies exactness before the lift (Ddc.L_cannot_exactify). Extending lifts cannot dissolve non-exact residuals for free."
+  - "DDC-D-01..04 (Descent with Loss): Descent is lossless iff dropped tail is zero; positive loss requires explicit LossLedger and never yields LOSSLESS_DESCENT."
+
+negative_tests:
+  - "Step lowering Phi_1 or Gamma_2 under letters other than D or Lambda must be rejected."
+  - "Open obstruction (Gamma_2 > 0) terminalized without D or Lambda must be rejected."
+  - "Structural lift Lambda executed without license or Law 4 trigger must be rejected."
+  - "Descent D executed without LossLedger must be rejected."
+  - "Lift claiming to exactify a non-exact residual must be rejected."
+
+doctrine:
+  summary: "QuotientTransport governs all cross-carrier morphisms between quotient spaces. Under DDC, information destruction must be booked in a LossLedger, and carrier capacity extension requires an explicit licensed trigger."
+  symbol: QuotientTransport
+  ascii_symbol: QuotientTransport
+  operator_class_symbol: D_Lambda
+  non_role:
+    - authority_minting
+    - policy_decision
+    - self_certification
+  canonical_invariant: >-
+    Obstructions cannot be hidden by changing carriers without cost. All quotient
+    transport is strictly conservative or priced.
+

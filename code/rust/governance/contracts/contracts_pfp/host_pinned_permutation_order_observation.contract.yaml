@@ -1,0 +1,50 @@
+# Native packet shape; semantic laws require the named finite tests.
+# AuthorityEffect: None. New URN; existing frozen contracts are unchanged.
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:host_pinned_permutation_order_observation:v1.0.0"
+title: "Pinned permutation order observation (native runtime result)"
+kind: packet_contract
+layer: 40_packets
+role: PacketSpecification
+status: active
+council_owner: L3_logos_techne
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit: [FW-UNKNOWN-FIELD]
+
+doctrine:
+  summary: "The versioned observation returned by verify_pinned_permutation_order. It retains the admitted typed request alongside a distinct evaluation and remains inside the complete six-field native runtime outcome."
+  invariants:
+    - "This struct's JSON representation must be an object; positional arrays, undeclared fields and wrongly typed fields are refused by typed deserialization."
+    - "The schema is core.symbol-game.pinned-permutation-order-observation.v1 and emitted authority_effect is always None."
+    - "The exact admitted presentation reference and claimed decimal spelling are retained; the dispatcher resolves actual rules only from its compiled governance catalogue."
+    - "No producer field can replace the compiled catalogue. Unambiguous catalogue names are validated before lookup; malformed compiled catalogue configuration does not silently fall back to an empty catalogue."
+    - "Field presence and enum alternatives are compile-time shape checks. Request binding, exact calculation, semantic status and unknown-field refusal are separately exercised by finite tests."
+    - "This record is unsigned and does not authenticate an actor, bind raw stdin bytes, prove full-source custody, license execution or complete the original M2-M5 campaign."
+  non_roles: [authority_source, promotion_granter]
+  required_negative_capabilities: [no_self_certification, no_implicit_authority_upgrade]
+
+structure:
+  language: rust
+  rust_crate: pfp
+  rust_module: pinned_permutation
+  rust_type: PinnedPermutationOrderObservationV1
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: schema_version
+      rust_type: "String"
+    - name: submitted_presentation_ref
+      rust_type: "String"
+    - name: submitted_claimed_order
+      rust_type: "String"
+    - name: evaluation
+      rust_type: "PinnedPermutationEvaluationV1"
+    - name: authority_effect
+      rust_type: "String"

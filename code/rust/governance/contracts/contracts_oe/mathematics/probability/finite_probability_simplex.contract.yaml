@@ -1,0 +1,112 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_probability_simplex:v0.1.0
+title: Finite Probability Simplex Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_probability_distribution
+  symbol: 'p ∈ Δ(Fin n) = {p ∈ ℚ^n : p_i ≥ 0, ∑_i p_i = 1}'
+  ascii_symbol: probability_simplex
+  notation: 'p ∈ Δ_n over Fin n = {0, ..., n-1}; P(A) = ∑_(i∈A) p_i; E[f] = ∑_i p_i f_i; TV(p, q) = (1/2) ∑_i |p_i - q_i|'
+  domain:
+  - 'carrier: Fin n with n ≥ 1'
+  - 'masses: n exact rationals (BigRational), each ≥ 0, summing to exactly 1'
+  codomain:
+    description: 'A validated probability vector on a finite carrier, with exact events, expectations, total variation distance, product distributions on Fin n x Fin m (index i*m + j), convex mixtures and rational power sums ∑ p_i^α. Equality is equality of the mass vectors; the label is provenance only.
+
+      '
+requirements:
+  required_structures:
+  - 'Every mass is a nonnegative exact rational and the masses sum to exactly one; there is no tolerance'
+  - 'The fields are private: a value comes from a validating constructor (try_from_probs, try_new, try_from_weights, dirac, uniform)'
+  - 'The carrier Fin n has n ≥ 1, and a size product that overflows usize is refused, not wrapped'
+  - 'Events and expectations name points and values of the carrier, and a point outside it is refused'
+laws:
+- 'Total variation is a metric on Δ_n (symmetric, zero exactly on equal vectors, triangle inequality) with values in [0, 1]'
+- 'TV(p, q) = (1/2) ∑_i |p_i - q_i| = max over events A of |p(A) - q(A)|, two independent computations of one number'
+- 'Probability is additive over disjoint events, and expectation is linear in the function'
+- 'The product distribution p ⊗ q has mass p_i q_j at index i*m + j and has p and q as marginals'
+- 'A convex combination of simplices with nonnegative weights summing to one is a simplex'
+- 'The power sum ∑_(p_i>0) p_i^α is rational; α = 0 is the support size, α = 1 is 1, α = 2 is the purity, and the uniform distribution on n points has purity 1/n'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All arithmetic is exact in BigRational
+  - Support lists and events are reported in increasing order
+relationships:
+- urn:core:math:stochastic_map:v0.1.0 serves as Stochastic maps act on these distributions by pushforward
+- urn:core:math:joint_table:v0.1.0 serves as A joint table is a distribution on a product carrier
+- urn:core:math:log_linear_entropy_form:v0.1.0 serves as Entropies of simplices are exact rational combinations of logarithms of primes
+- urn:core:math:majorization:v0.1.0 serves as Simplices are compared by majorization of their sorted masses
+rust_binding:
+  crate: core_finite_probability
+  module: simplex
+  symbols:
+  - ProbabilitySimplex
+  - ProbabilitySimplex::try_from_probs
+  - ProbabilitySimplex::try_new
+  - ProbabilitySimplex::try_from_weights
+  - ProbabilitySimplex::total_variation
+  - ProbabilitySimplex::probability_of
+  - ProbabilitySimplex::expectation
+  - ProbabilitySimplex::product
+  - ProbabilitySimplex::convex_combination
+  - ProbabilitySimplex::power_sum
+  required_tests:
+  - a_vector_not_summing_to_one_is_refused_with_its_exact_sum
+  - a_negative_mass_is_refused_at_its_index
+  - empty_and_wrongly_sized_masses_are_refused
+  - a_dirac_point_outside_the_carrier_is_refused
+  - weights_are_normalised_exactly_and_a_zero_total_is_refused
+  - events_are_additive_over_disjoint_events_and_count_repeats_once
+  - total_variation_of_disjoint_supports_is_one_and_sizes_must_agree
+  - a_convex_combination_is_a_simplex_and_bad_weights_are_refused
+  - expectation_is_linear_and_matches_a_hand_value
+  - a_carrier_needs_a_point
+  - a_product_that_overflows_usize_is_refused_not_wrapped
+  - total_variation_is_a_metric_on_the_three_point_grid
+  - total_variation_is_the_largest_event_gap_on_every_grid_pair
+  - a_product_distribution_multiplies_masses_and_has_the_factors_as_marginals
+  - power_sums_are_the_rational_moments_and_purity_is_the_second
+
+negative_tests:
+- Masses that do not sum to exactly one must be refused, reporting the exact sum
+- A negative mass must be refused, reporting its index
+- An empty vector, or one whose length differs from the carrier, must be refused
+- A Dirac point outside the carrier must be refused
+- Weights that sum to zero, or a negative weight, must not be normalised
+- An event naming a point outside the carrier must be refused
+- Total variation between simplices of different sizes must be refused
+- A mixture with a negative weight, weights not summing to one, or parts of different sizes must be refused
+- An expectation whose value list has the wrong length must be refused
+- A carrier with no points must be refused
+- A carrier product that overflows usize must be refused
+doctrine:
+  summary: 'A finite probability simplex is a vector of exact rationals that sums to one, so a value of the type is a distribution and consumers never re-validate it. Its derived quantities (events, expectations, total variation, products, mixtures, power sums) are exact, and the total variation is checked against an independent maximum over events. This is classical finite probability; it makes no claim about a quantum Born rule.'
+  non_role:
+  - Continuous or infinite distributions
+  - Floating-point probabilities or tolerances
+  - Any quantum state or Born-rule claim
+  - Measure-theoretic structure beyond a finite carrier
+wip:
+- 'FinN lives in the sibling module finite_set and is bound by the test a_carrier_needs_a_point; this contract binds the module simplex only'
+- 'Entropy is not a method of the simplex: it is the LogForm of the log_linear_entropy_form contract'

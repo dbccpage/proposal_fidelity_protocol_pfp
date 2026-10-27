@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:identity_morphism:v0.1.0
+title: Identity Morphism Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: morphism
+  symbol: 'id_A: A → A'
+  ascii_symbol: identity_morphism
+  notation: 'id_A: A → A'
+  domain:
+  - 'morphism: underlying morphism reference'
+  - 'object: object this is the identity of'
+  codomain:
+    description: 'Identity arrow id_A: A → A for an object A'
+requirements:
+  required_structures:
+  - The morphism_id must resolve to a valid Morphism artifact
+  - The object_id must resolve to a valid Object artifact
+  - 'The morphism must be an endomorphism: domain = codomain = object_id'
+  - The morphism must satisfy identity laws for composition
+laws:
+- 'id_A ∘ f = f for all f: X → A'
+- 'g ∘ id_A = g for all g: A → Y'
+- domain = codomain = A
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Given same morphism and object, must produce identical artifact hash
+  - Validators are content-addressed
+relationships:
+- urn:math:contract:Morphism:v0.1.0 serves as Underlying morphism structure
+- urn:math:contract:Object:v0.1.0 serves as Object that this is the identity of
+- urn:math:contract:Category:v0.1.0 serves as Category context for composition and identity laws
+negative_tests:
+- morphism_id does not resolve to a Morphism artifact
+- object_id does not resolve to an Object artifact
+- domain ≠ codomain, not an endomorphism
+- exists f such that id_A ∘ f ≠ f
+doctrine:
+  summary: 'An IdentityMorphism is the identity arrow on an object in a category.  For each object A, the identity id_A: A → A is the neutral element for composition.  The contract validates that the morphism satisfies the identity law.'
+  non_role:
+  - Does not enforce uniqueness structurally (uniqueness is a theorem)
+  - Does not manage category structure directly
+  - Does not handle composite morphisms
+wip:
+- The contract wraps a Morphism with the identity property
+- Uniqueness of identity is a theorem, not enforced structurally
+- 'The relationship with Category: identities are specified in the Category structure'
+- Migrated from markdown format on 2026-05-25
+- All 11 sections mapped to YAML structure
+- Ready for implementation in core-category crate
+rust_binding:
+  crate: core_category_theory
+  module: finite_category
+  symbols:
+  - DeclaredFiniteCategory
+  - ValidatedFiniteCategory
+  required_tests:
+  - try_new_refuses_object_without_identity

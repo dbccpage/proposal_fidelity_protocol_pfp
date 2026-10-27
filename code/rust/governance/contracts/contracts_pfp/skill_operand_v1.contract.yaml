@@ -1,0 +1,65 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:skill_operand_v1:v1.0.0"
+title: "Skill Operand v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit:
+      - "OPERAND_TOO_LARGE"
+      - "COLOUR_MISMATCH"
+      - "UNPROMOTED_OPERAND_REFUSED"
+      - "PRECONDITION_UNMET"
+
+doctrine:
+  summary: >-
+    SkillOperandV1 represents a learned, modular operadic rewrite or prompt
+    composition block that can be injected into candidate generation prompts.
+    Operands must satisfy size constraints (<= 400 tokens, <= 1600 bytes)
+    and must be promoted via the admission pipeline before injection.
+  invariants:
+    - "Operands are injected if and only if status is 'promoted', colours match under partial_compose, and preconditions hold."
+    - "Candidate or suppressed operands are strictly prohibited from prompt injection."
+    - "Total size of a single operand must not exceed 1600 bytes and 400 estimated tokens."
+    - "At most 3 promoted operands (<= 1200 tokens) may be injected into a single prompt."
+  non_roles:
+    - "authority_source"
+    - "truth_oracle"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: pfp_runtime
+  rust_module: operand
+  rust_type: "SkillOperandV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: operand_id
+    - name: title
+    - name: description
+    - name: source_colour
+    - name: target_colour
+    - name: ddc_motif
+    - name: content_bytes_len
+    - name: token_estimate
+    - name: status
+    - name: prompt_injection_text
+    - name: replay_evidence_hash
+    - name: authority_effect

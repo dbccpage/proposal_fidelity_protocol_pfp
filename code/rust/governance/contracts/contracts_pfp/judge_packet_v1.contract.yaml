@@ -1,0 +1,59 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:judge_packet_v1:v1.0.0"
+title: "Judge Packet v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit:
+      - "INVALID_JUDGE_PACKET"
+      - "COMMITMENT_MISMATCH"
+      - "FREEZE_NOT_FOUND"
+      - "CHECKER_DEFECT_PAUSE"
+
+doctrine:
+  summary: >-
+    JudgePacketV1 contains the hidden test suite, dual verification oracles, and
+    commitment timestamp. Evaluated against candidate solutions only after solver freeze.
+  invariants:
+    - "Hidden test cases remain sealed until after freeze commitment is recorded."
+    - "Scoring requires dual independent checkers agreeing on verdicts."
+    - "Checker exceptions or disagreements trigger CheckerDefectPause and are never scored as Wrong."
+  non_roles:
+    - "authority_source"
+    - "truth_oracle"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: pfp
+  rust_module: challenge
+  rust_type: "JudgePacketV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: challenge_id
+    - name: commitment_hash
+    - name: committed_at_utc
+    - name: operator
+    - name: version
+    - name: hidden_cases
+    - name: checker_a_id
+    - name: checker_b_id
+    - name: authority_effect

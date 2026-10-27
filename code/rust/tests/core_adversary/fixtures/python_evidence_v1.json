@@ -1,0 +1,1502 @@
+{
+  "timing": "pre-implementation",
+  "vectors": [
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": "0",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "ok": {
+          "active_obstructions": [],
+          "backend": "exact.host",
+          "certificate_verified": true,
+          "defect_count": 0,
+          "dual_witness": [],
+          "gamma2": "0",
+          "phi1": "0",
+          "reason": "",
+          "status": "MEASURED"
+        },
+        "is_measured": true,
+        "is_exact_joint_zero": true,
+        "has_open_obstruction": false
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "NOT_MEASURED",
+        "backend": "null.host",
+        "phi1": null,
+        "gamma2": null,
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": false,
+        "dual_witness": [],
+        "reason": "no scorer"
+      },
+      "expected": {
+        "ok": {
+          "active_obstructions": [],
+          "backend": "null.host",
+          "certificate_verified": false,
+          "defect_count": 0,
+          "dual_witness": [],
+          "gamma2": null,
+          "phi1": null,
+          "reason": "no scorer",
+          "status": "NOT_MEASURED"
+        },
+        "is_measured": false,
+        "is_exact_joint_zero": false,
+        "has_open_obstruction": false
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "1/3",
+        "gamma2": "0",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "ok": {
+          "active_obstructions": [],
+          "backend": "exact.host",
+          "certificate_verified": true,
+          "defect_count": 0,
+          "dual_witness": [],
+          "gamma2": "0",
+          "phi1": "1/3",
+          "reason": "",
+          "status": "MEASURED"
+        },
+        "is_measured": true,
+        "is_exact_joint_zero": false,
+        "has_open_obstruction": true
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": "1/1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "ok": {
+          "active_obstructions": [],
+          "backend": "exact.host",
+          "certificate_verified": true,
+          "defect_count": 0,
+          "dual_witness": [],
+          "gamma2": "1/1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "phi1": "0",
+          "reason": "",
+          "status": "MEASURED"
+        },
+        "is_measured": true,
+        "is_exact_joint_zero": false,
+        "has_open_obstruction": true
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000/7",
+        "gamma2": "2/3",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "ok": {
+          "active_obstructions": [],
+          "backend": "exact.host",
+          "certificate_verified": true,
+          "defect_count": 0,
+          "dual_witness": [],
+          "gamma2": "2/3",
+          "phi1": "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000/7",
+          "reason": "",
+          "status": "MEASURED"
+        },
+        "is_measured": true,
+        "is_exact_joint_zero": false,
+        "has_open_obstruction": true
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "-1",
+        "gamma2": "0",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "a MEASURED phi1 must be a non-negative Fraction",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": "-1",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "a MEASURED gamma2 must be a non-negative Fraction",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": "0",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": false,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a measurement without a verified certificate is NOT_MEASURED, not MEASURED",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": " \u001f",
+        "phi1": "0",
+        "gamma2": "0",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "backend must be a nonempty string",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": null,
+        "gamma2": "0",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "a MEASURED phi1 must be a non-negative Fraction",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": null,
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "a MEASURED gamma2 must be a non-negative Fraction",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": "0",
+        "defect_count": -1,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "defect_count must be a non-negative exact int",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": "0",
+        "defect_count": 1,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "defect_count must equal the number of active obstructions",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": "0",
+        "defect_count": 2,
+        "active_obstructions": [
+          "x",
+          "x"
+        ],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "ok": {
+          "active_obstructions": [
+            "x",
+            "x"
+          ],
+          "backend": "exact.host",
+          "certificate_verified": true,
+          "defect_count": 2,
+          "dual_witness": [],
+          "gamma2": "0",
+          "phi1": "0",
+          "reason": "",
+          "status": "MEASURED"
+        },
+        "is_measured": true,
+        "is_exact_joint_zero": true,
+        "has_open_obstruction": false
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "MEASURED",
+        "backend": "exact.host",
+        "phi1": "0",
+        "gamma2": "0",
+        "defect_count": 1,
+        "active_obstructions": [
+          "Φ1"
+        ],
+        "certificate_verified": true,
+        "dual_witness": [
+          [
+            "(0, 1)",
+            "-2/3"
+          ]
+        ],
+        "reason": ""
+      },
+      "expected": {
+        "ok": {
+          "active_obstructions": [
+            "Φ1"
+          ],
+          "backend": "exact.host",
+          "certificate_verified": true,
+          "defect_count": 1,
+          "dual_witness": [
+            [
+              "(0, 1)",
+              "-2/3"
+            ]
+          ],
+          "gamma2": "0",
+          "phi1": "0",
+          "reason": "",
+          "status": "MEASURED"
+        },
+        "is_measured": true,
+        "is_exact_joint_zero": true,
+        "has_open_obstruction": false
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "NOT_MEASURED",
+        "backend": "null.host",
+        "phi1": null,
+        "gamma2": null,
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": false,
+        "dual_witness": [],
+        "reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a NOT_MEASURED result must state why",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "NOT_MEASURED",
+        "backend": "null.host",
+        "phi1": "0",
+        "gamma2": null,
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": false,
+        "dual_witness": [],
+        "reason": "no scorer"
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a NOT_MEASURED result carries no Phi1 or Gamma2 value",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "NOT_MEASURED",
+        "backend": "null.host",
+        "phi1": null,
+        "gamma2": "0",
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": false,
+        "dual_witness": [],
+        "reason": "no scorer"
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a NOT_MEASURED result carries no Phi1 or Gamma2 value",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "NOT_MEASURED",
+        "backend": "null.host",
+        "phi1": null,
+        "gamma2": null,
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": true,
+        "dual_witness": [],
+        "reason": "no scorer"
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a NOT_MEASURED result carries no certificate",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "NOT_MEASURED",
+        "backend": "null.host",
+        "phi1": null,
+        "gamma2": null,
+        "defect_count": 0,
+        "active_obstructions": [],
+        "certificate_verified": false,
+        "dual_witness": [
+          [
+            "e",
+            "0"
+          ]
+        ],
+        "reason": "no scorer"
+      },
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a NOT_MEASURED result carries no certificate",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "measurement",
+      "input": {
+        "status": "NOT_MEASURED",
+        "backend": "null.host",
+        "phi1": null,
+        "gamma2": null,
+        "defect_count": 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+        "active_obstructions": [
+          "diagnostic"
+        ],
+        "certificate_verified": false,
+        "dual_witness": [],
+        "reason": "no scorer"
+      },
+      "expected": {
+        "ok": {
+          "active_obstructions": [
+            "diagnostic"
+          ],
+          "backend": "null.host",
+          "certificate_verified": false,
+          "defect_count": 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "dual_witness": [],
+          "gamma2": null,
+          "phi1": null,
+          "reason": "no scorer",
+          "status": "NOT_MEASURED"
+        },
+        "is_measured": false,
+        "is_exact_joint_zero": false,
+        "has_open_obstruction": false
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "ok": {
+          "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+          "candidate_id": "candidate",
+          "checker_id": "host.check",
+          "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d",
+          "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+          "reason": "",
+          "verdict": "ACCEPTED"
+        },
+        "can_authorize": true,
+        "bindings": [
+          true,
+          false,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "NOT_MEASURED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": null,
+        "reason": "no checker",
+        "checker_receipt_hex": ""
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "ok": {
+          "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+          "candidate_id": "candidate",
+          "checker_id": "host.check",
+          "checker_receipt_hex": "",
+          "checker_receipt_sha256": null,
+          "reason": "no checker",
+          "verdict": "NOT_MEASURED"
+        },
+        "can_authorize": false,
+        "bindings": [
+          true,
+          false,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "REJECTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "ok": {
+          "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+          "candidate_id": "candidate",
+          "checker_id": "host.check",
+          "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d",
+          "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+          "reason": "",
+          "verdict": "REJECTED"
+        },
+        "can_authorize": false,
+        "bindings": [
+          true,
+          false,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "candidate_id must be a nonempty string",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "\u001e",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "checker_id must be a nonempty string",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "candidate_content_sha256 must be a sha256:<hex> reference",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:short",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "candidate_content_sha256 must be a sha256:<hex> reference",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "",
+        "checker_receipt_hex": ""
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a ACCEPTED check requires the checker receipt bytes",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "checker_receipt_sha256 is not the digest of the receipt bytes",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": null,
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "checker_receipt_sha256 is not the digest of the receipt bytes",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:06eb7d6a69ee19e5fbdf749018d3d2abfa04bcbd1365db312eb86dc7169389b8",
+        "reason": "",
+        "checker_receipt_hex": "00ff"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "ok": {
+          "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+          "candidate_id": "candidate",
+          "checker_id": "host.check",
+          "checker_receipt_hex": "00ff",
+          "checker_receipt_sha256": "sha256:06eb7d6a69ee19e5fbdf749018d3d2abfa04bcbd1365db312eb86dc7169389b8",
+          "reason": "",
+          "verdict": "ACCEPTED"
+        },
+        "can_authorize": true,
+        "bindings": [
+          true,
+          false,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "NOT_MEASURED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": null,
+        "reason": " \t",
+        "checker_receipt_hex": ""
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a NOT_MEASURED check must state why",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "NOT_MEASURED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "no checker",
+        "checker_receipt_hex": ""
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a NOT_MEASURED check carries no checker receipt",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "NOT_MEASURED",
+        "candidate_id": "candidate",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host.check",
+        "checker_receipt_sha256": null,
+        "reason": "no checker",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "a NOT_MEASURED check carries no checker receipt",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "candidate_check",
+      "input": {
+        "verdict": "ACCEPTED",
+        "candidate_id": "核🙂",
+        "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+        "checker_id": "host é",
+        "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+        "reason": "",
+        "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d"
+      },
+      "bindings": [
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "other",
+          "artifact_refs": [
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": []
+        },
+        {
+          "candidate_id": "candidate",
+          "artifact_refs": [
+            "sha256:d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+            "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9"
+          ]
+        }
+      ],
+      "expected": {
+        "ok": {
+          "candidate_content_sha256": "sha256:0db52f4076c082518412afd3dd3576e2cb0c63703fd7fed5e23ade60efef31d9",
+          "candidate_id": "核🙂",
+          "checker_id": "host é",
+          "checker_receipt_hex": "7b2276657264696374223a224143434550544544222c22636865636b65725f6964223a22686f73742e636865636b222c2263616e6469646174655f636f6e74656e745f736861323536223a227368613235363a30646235326634303736633038323531383431326166643364643335373665326362306336333730336664376665643565323361646536306566656633316439227d",
+          "checker_receipt_sha256": "sha256:ad5e1018cae10c008b042b434ea99ef6c5514f8f71b60f63d1c942429dd710ae",
+          "reason": "",
+          "verdict": "ACCEPTED"
+        },
+        "can_authorize": true,
+        "bindings": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "op": "rational",
+      "input": 0,
+      "expected": {
+        "ok": "0"
+      }
+    },
+    {
+      "op": "rational",
+      "input": -1,
+      "expected": {
+        "ok": "-1"
+      }
+    },
+    {
+      "op": "rational",
+      "input": 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+      "expected": {
+        "ok": "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "op": "rational",
+      "input": "0",
+      "expected": {
+        "ok": "0"
+      }
+    },
+    {
+      "op": "rational",
+      "input": "-0",
+      "expected": {
+        "ok": "0"
+      }
+    },
+    {
+      "op": "rational",
+      "input": "2/4",
+      "expected": {
+        "ok": "1/2"
+      }
+    },
+    {
+      "op": "rational",
+      "input": " -3/9 \u001f",
+      "expected": {
+        "ok": "-1/3"
+      }
+    },
+    {
+      "op": "rational",
+      "input": "01",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "not an exact rational literal: '01'",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": "+1",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "not an exact rational literal: '+1'",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": "1/0",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "not an exact rational literal: '1/0'",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": "1/01",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "not an exact rational literal: '1/01'",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": "1/-2",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "not an exact rational literal: '1/-2'",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": "1.0",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "not an exact rational literal: '1.0'",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": "1e2",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "not an exact rational literal: '1e2'",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": "",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_VALUE_ERROR",
+          "message": "not an exact rational literal: ''",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": true,
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "exact rational required (int, Fraction or 'p/q' text), got bool",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": false,
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "exact rational required (int, Fraction or 'p/q' text), got bool",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": null,
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "exact rational required (int, Fraction or 'p/q' text), got NoneType",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": 1.25,
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "exact rational required (int, Fraction or 'p/q' text), got float",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": [],
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "exact rational required (int, Fraction or 'p/q' text), got list",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "rational",
+      "input": {},
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_EVIDENCE_TYPE_ERROR",
+          "message": "exact rational required (int, Fraction or 'p/q' text), got dict",
+          "locus": "adversary.domain.evidence",
+          "details": {}
+        }
+      }
+    }
+  ]
+}

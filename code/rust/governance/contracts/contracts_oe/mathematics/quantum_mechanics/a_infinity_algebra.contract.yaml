@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:a_infinity_algebra:v0.1.0
+title: A-Infinity Algebra Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: a_infinity_algebra
+  symbol: (A, {m_n}_{n≥1})
+  ascii_symbol: a_infinity_algebra
+  notation: (A, {m_n}_{n≥1})
+  domain:
+  - 'graded_module: graded_k_module'
+  - 'operations: sequence_of_multilinear_maps'
+  - 'max_arity: natural_number_or_infinity'
+  - 'coefficient_field: field'
+  codomain:
+    description: Graded module with higher operations
+requirements:
+  required_structures:
+  - A is properly graded and each m_n has degree 2-n
+  - A_∞ relations hold for each arity k
+  - If strictly unital, verify unit conditions for m_2 and higher
+  - StructureArtifact hash is deterministic from inputs
+laws:
+- 'm_1: A → A is a differential (m_1² = 0)'
+- 'm_n: A^⊗n → A has degree 2-n'
+- Σ_{i+j=k+1} Σ_s (-1)^ε m_i(a_1,...,m_j(a_s,...),...)= 0
+- A is a graded module over coefficient field k
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Operations serialized in arity order
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:GradedModule:v1.0.0 serves as underlying_graded_module_structure
+- urn:math:contract:LinearMap:v1.0.0 serves as multilinear_operations
+- urn:math:contract:Field:v0.1.0 serves as coefficient_field
+negative_tests:
+- m_n doesn't have degree 2-n. grading_validator fails.
+- A_∞ relation fails at some arity. a_infinity_relation_validator fails.
+- If claimed unital, unit conditions fail. unitality_validator fails.
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: 'An A_∞-algebra is a graded vector space A with a sequence of operations m_n: A^⊗n → A of degree 2-n satisfying the A_∞ relations (generalizing associativity up to coherent homotopy). The contract validates the A_∞ structure equations. A_∞-algebras up to quasi-isomorphism are equivalent to DG-algebras up to quasi-isomorphism. This contract is purely structural and does not confer authority.'
+  non_role:
+  - A_∞-morphisms (separate contract)
+  - Homotopy transfer theorem (separate contract)
+  - Bar-cobar duality (separate contract)
+  - Specific computations of Massey products (computation contract)
+wip:
+- Minimal A_∞ structures (m_1 = 0) exist on cohomology
+- A_∞-morphisms and homotopy transfer theorem
+- 'Bar-cobar duality: BA is a DG-coalgebra'
+- Currently targets finite-arity A_∞-algebras
+- Infinite-arity structures deferred to future versions
+- A_∞-morphisms will be separate contract
+- Homotopy transfer theorem will be separate contract
+- Bar-cobar duality will be separate contract

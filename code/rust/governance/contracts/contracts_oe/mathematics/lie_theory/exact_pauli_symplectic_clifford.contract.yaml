@@ -1,0 +1,85 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_pauli_symplectic_clifford:v0.1.0
+title: Exact Pauli and Binary Symplectic Clifford Action
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_pauli_symplectic_clifford
+  symbol: exact_pauli_symplectic_clifford
+  ascii_symbol: exact_pauli_symplectic_clifford
+  notation: Exact Pauli and Binary Symplectic Clifford Action
+  domain:
+  - Exact fields containing the declared Pauli/gate constants
+  - Checked binary symplectic maps with at most 64 qubits; dense Clifford extraction at dimension at most 64
+  - BigUint order formulas accept n<=4096
+  codomain:
+    description: Declared finite results of core_lie_theory::pauli_symplectic; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every admitted binary matrix preserves the canonical symplectic form
+- Exact Clifford conjugation yields the binary image of every X/Z generator
+- Generated Sp(2,F2) and Sp(4,F2) have orders 6 and 720
+- The one-qubit H/S group has 192 elements with six symplectic images and fibres of 32; large group orders
+  do not overflow u64
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: pauli_symplectic
+  symbols:
+  - Pauli
+  - pauli
+  - pauli_word
+  - hadamard
+  - phase_gate
+  - SymplecticF2
+  - symplectic_order
+  - clifford_to_symplectic
+  - generate_sp2_f2
+  - generate_sp4_f2
+  required_tests:
+  - test_symplectic_group_orders
+  - binary_symplectic_generation_is_deterministic_and_has_the_exact_orders
+  - test_clifford_unitary_generators_and_conjugation
+  - the_one_qubit_clifford_cover_has_192_elements_and_32_element_symplectic_fibres
+negative_tests:
+- Nonunitary/non-Clifford maps, invalid binary shapes and fields missing required constants are refused
+doctrine:
+  summary: Every admitted binary matrix preserves the canonical symplectic form; Exact Clifford conjugation
+    yields the binary image of every X/Z generator; Generated Sp(2,F2) and Sp(4,F2) have orders 6 and 720;
+    The one-qubit H/S group has 192 elements with six symplectic images and fibres of 32; large group orders
+    do not overflow u64.
+  non_role:
+  - No full dense enumeration of large Clifford groups
+  - A scalar phase is intentionally forgotten by the symplectic image
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,50 @@
+{
+  "schema": "core.gtlanf_parity_fixture.v1",
+  "authority_effect": "None",
+  "description": "Shared F7 golden fixture consumed by BOTH languages: engine_py/core_pipelines/tests/test_gtlanf_parity.py (Python) and engine/crates/core_pipelines/tests/gtlanf_parity.rs (Rust). One Tags payload family (canonical form = sorted + deduped) plus the DECLARED terminal mapping between the Python str spellings and the Rust Outcome arms. The mapping is the parity contract the Inspector found unwitnessed (M10): the Python suite pinned (CheckPassed, NoRule, Refused) while the Rust tests used Outcome arms, with no shared artifact binding them.",
+  "laws": [
+    "T(T(x)) == T(x) (idempotent completion)",
+    "is_fixed(T(x)) for every x",
+    "T preserves the terminal class unchanged (no authority minted)",
+    "normalize(raw) == normalized_expected[raw] exactly",
+    "x is T-fixed iff its payload is already normal"
+  ],
+  "tags_payloads": {
+    "raw": [3, 1, 2, 1],
+    "already_normal": [1, 2, 3],
+    "empty": []
+  },
+  "normalized_expected": {
+    "raw": [1, 2, 3],
+    "already_normal": [1, 2, 3],
+    "empty": []
+  },
+  "fixed_expected": {
+    "raw": false,
+    "already_normal": true,
+    "empty": true
+  },
+  "terminal_mapping": [
+    {
+      "python_str": "CheckPassed",
+      "rust_outcome": "Terminal(ExactRuleDerived)"
+    },
+    {
+      "python_str": "NoRule",
+      "rust_outcome": "ScopedNegative(NoRule)"
+    },
+    {
+      "python_str": "Refused",
+      "rust_outcome": "Refused(Repair)"
+    }
+  ],
+  "golden_f1_packet": {
+    "paper_sha256": "541a24e49c97ec678db613d09aa06dda12497853d79975db3dc46cca5e7cb18e",
+    "proposal_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "gate_receipt_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "loop_pass": 1,
+    "step_index": 1,
+    "status": "CheckPassed"
+  },
+  "golden_f1_replay_hash": "00d4f4499db810b77f6a16320e6ea2ff7ce13065532d0aaec140bc1e81b89351"
+}

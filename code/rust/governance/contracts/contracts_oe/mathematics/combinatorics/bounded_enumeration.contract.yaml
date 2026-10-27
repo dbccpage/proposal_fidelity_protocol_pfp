@@ -1,0 +1,66 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bounded_enumeration:v0.1.0
+title: Bounded Exact Combinatorial Enumeration
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: bounded_enumeration
+  symbol: bounded_enumeration
+  ascii_symbol: bounded_enumeration
+  notation: Bounded Exact Combinatorial Enumeration
+  domain:
+  - Natural carrier sizes and explicit enumeration limits
+  codomain:
+    description: Exact finite constructions implemented by core_combinatorics::enumeration; results remain scoped
+      to the declared carrier and budgets.
+requirements:
+  required_structures:
+  - Exact arithmetic and explicit finite carrier validation
+  - A typed refusal for unsupported or exhausted computations
+laws:
+- Permutation count is n! and subset count is binomial(n,k)
+- Enumeration is deterministic, complete, unique and lexicographic
+- Output size is checked exactly before enumeration begins
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact independent witness replay where a witness is returned
+relationships: []
+rust_binding:
+  crate: core_combinatorics
+  module: enumeration
+  symbols:
+  - CombinatoricsError
+  - permutations
+  - combinations
+  - weak_compositions
+  required_tests:
+  - finite_enumerations_match_independent_counting_laws_and_limits
+negative_tests:
+- Refuse requested counts above the caller limit and arguments above declared bounds
+doctrine:
+  summary: Bounded Exact Combinatorial Enumeration on a declared finite carrier.
+  non_role:
+  - PROVED, GlobalGreen, or operational authority
+  - Continuum or infinite-carrier completion claims
+wip:
+- Executable finite checks are local evidence; no theorem-prover discharge is asserted.

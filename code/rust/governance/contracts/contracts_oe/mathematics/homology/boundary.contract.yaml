@@ -1,0 +1,80 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:boundary:v0.1.0
+title: Boundary Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: boundary
+  symbol: b = d_{n+1}(c), b ∈ B_n(C) ⊆ Z_n(C) ⊆ C_n
+  ascii_symbol: boundary
+  notation: b = d_{n+1}(c), b ∈ B_n(C) ⊆ Z_n(C) ⊆ C_n
+  domain:
+  - 'chain_complex: C_•'
+  - 'source_chain_group: C_{n+1}'
+  - 'target_chain_group: C_n'
+  - 'boundary_map: d_{n+1}: C_{n+1} → C_n'
+  - 'preimage_chain: c ∈ C_{n+1}'
+  - 'boundary_chain: b = d_{n+1}(c) ∈ C_n'
+  codomain:
+    description: Chain b in C_n that is the image of boundary map d_{n+1}
+requirements:
+  required_structures:
+  - Preimage chain c must be valid member of C_{n+1}
+  - Boundary map must have degree -1 (maps C_{n+1} to C_n)
+  - Boundary chain b must equal d_{n+1}(c)
+  - Boundary chain b must be valid member of C_n
+  - Boundary b must satisfy d_n(b) = 0
+laws:
+- b = d_{n+1}(c) for some c ∈ C_{n+1}
+- d_n(b) = 0 (follows from d² = 0)
+- Preimage chain c is valid member of C_{n+1}
+- Boundary chain b is valid member of C_n
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Boundary computation is deterministic
+  - Chain representations are canonical
+  - Boundary map is content-addressed
+relationships:
+- urn:math:contract:ChainComplex:v0.1.0 serves as defines_chain_complex_structure
+- urn:math:contract:BoundaryMap:v0.1.0 serves as defines_boundary_map_d
+- urn:math:contract:ChainGroup:v0.1.0 serves as defines_source_and_target_chain_groups
+negative_tests:
+- Preimage c not in C_{n+1} must be rejected
+- Boundary b not in C_n must be rejected
+- d(c) != declared boundary b must be rejected
+- Boundary map with wrong degree must be rejected
+- Boundary artifact claiming authority must be rejected
+- Boundary artifact claiming admissibility must be rejected
+doctrine:
+  summary: A Boundary is a chain b in C_n that is the image b = d_{n+1}(c) of a chain c in C_{n+1}, where d is the boundary map of a chain complex. Boundaries are exact cycles and form the quotient denominator for homology classes. This contract defines the structure, validation, and deterministic operations for boundaries, ensuring that they are properly witnessed as images of boundary maps.
+  non_role:
+  - Cycle classification (separate Cycle contract)
+  - Homology class computation (separate HomologyClass contract)
+  - Boundary representative selection (deferred)
+wip:
+- Should we define canonical boundary representatives?
+- How to handle boundary computation for infinite chain complexes?
+- Should we cache boundary computations for efficiency?
+- Currently assumes finite chain complexes
+- Boundary representative selection is not yet specified
+- Relationship to Cycle contract needs clarification

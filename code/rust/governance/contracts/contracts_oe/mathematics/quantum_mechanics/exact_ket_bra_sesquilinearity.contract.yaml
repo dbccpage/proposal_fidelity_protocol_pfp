@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_ket_bra_sesquilinearity:v0.1.0
+title: Finite exact ket and bra evaluation
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_ket_bra_sesquilinearity
+  symbol: exact_ket_bra_sesquilinearity
+  ascii_symbol: exact_ket_bra_sesquilinearity
+  notation: Finite exact ket and bra evaluation
+  domain:
+  - Nonzero bounded finite Q(i) vectors in a fixed ordered basis
+  codomain:
+    description: Declared finite results of core_quantum_physics::quantum_state; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Inner product is conjugate symmetric
+- Bra evaluation is conjugate linear in the left argument and linear in the right
+- Every admitted ket has strictly positive real squared norm
+- Zero and incompatible lengths return typed errors
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_state
+  symbols:
+  - RayVector::try_new
+  - RayVector::inner
+  - RayVector::norm_sq
+  required_tests:
+  - quantum_state::tests::exact_ket_bra_sesquilinear_positive_norm_and_typed_refusals
+negative_tests:
+- quantum_state::tests::exact_ket_bra_sesquilinear_positive_norm_and_typed_refusals
+doctrine:
+  summary: Inner product is conjugate symmetric; Bra evaluation is conjugate linear in the left argument and
+    linear in the right; Every admitted ket has strictly positive real squared norm; Zero and incompatible
+    lengths return typed errors.
+  non_role:
+  - Does not represent abstract artifact hash protocols or an infinite-dimensional ket space
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

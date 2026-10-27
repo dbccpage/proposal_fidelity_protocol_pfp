@@ -1,0 +1,259 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_qm:v1.0.0
+title: FiniteQMContractV1
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:finite_set:v0.1.0
+    - urn:core:math:finite_presentation:v0.1.0
+    - urn:core:math:hilbert_space:v0.1.0
+    - urn:core:math:canonical_hash_domain:v0.1.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_qm_contract
+  ascii_symbol: FiniteQMContractV1
+  symbol: FiniteQMContractV1
+  notation: 'FiniteQMContractV1 = (carrier, dim, cert, continuum_debt, import_ledger)'
+  domain:
+  - 'schema_version: literal "FiniteQMContractV1" (JSON schema tag; URN alias urn:core:math:finite_qm:v1.0.0)'
+  - 'finite_carrier: FiniteCarrier — finite set of states / discrete support (fence FINITE_CARRIER)'
+  - 'finite_dimension: FiniteDimension — finite-dim vector/Hilbert rank (fence FINITE_DIMENSION)'
+  - 'finite_certificate: FiniteCertificate — finite evidence/receipt/audit artifact (fence FINITE_CERTIFICATE)'
+  - 'continuum_debt: ContinuumDebt — FiniteDimContinuumScalars debt (fence FINITE_DIM_CONTINUUM_SCALARS); NOT core_q admission ContinuumDebt'
+  - 'import_ledger: ordered list of ImportSlot rows with status OPEN|DECLARED|WITNESSED'
+  - 'canonical_hash: SHA-256 (lowercase hex) of core.canonical_json.v1 serialization of the instance'
+  codomain:
+    description: >
+      Versioned Finite QM contract instance with four non-collapsing fence types
+      (FiniteCarrier, FiniteDimension, FiniteCertificate, ContinuumDebt/FiniteDimContinuumScalars),
+      an import ledger of declared external slots, and a deterministic content-addressed hash.
+      AuthorityEffect is always None; never GlobalGreen.
+requirements:
+  required_structures:
+  - schema_version must equal "FiniteQMContractV1"
+  - FiniteCarrier, FiniteDimension, FiniteCertificate, and ContinuumDebt are distinct newtypes (no type alias collapse)
+  - Non-inference fence (mandatory): FiniteCarrier does not imply FiniteDimension; FiniteDimension does not imply FiniteCertificate; FiniteCertificate does not imply ContinuumDebt / FiniteDimContinuumScalars; ContinuumDebt does not imply FiniteCarrier
+  - continuum scalars (FiniteDimContinuumScalars) does not imply finite certificate; finite certificate does not imply finite-dim Hilbert; finite carrier does not imply continuum object is finite as a set
+  - Import ledger slots use status enum OPEN | DECLARED | WITNESSED only
+  - authority_effect must be None; customer claims and GlobalGreen are forbidden
+  - Canonical hash is SHA-256 of the deterministic compact key-sorted JSON serialization
+laws:
+- 'FiniteQMContractV1 is a pure structural schema (AuthorityEffect none)'
+- 'Four fence types never collapse by alias or automatic coercion'
+- 'Import slots may only advance OPEN -> DECLARED -> WITNESSED; no silent discharge'
+- 'Canonical hash is deterministic: no external state, no randomness, no wall-clock'
+- 'This contract does not mint customer claims, certificates of authority, or GlobalGreen'
+- 'Full QM math (rungs, channels, path-sum, interference) is out of scope for this schema shell'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Import ledger slot order is sorted by slot_id before hashing
+  - Same instance bytes always produce the same SHA-256 digest
+relationships:
+- urn:core:math:finite_set:v0.1.0 serves as discrete support for FiniteCarrier
+- urn:core:math:finite_presentation:v0.1.0 is a distinct fence sense (FINITE_PRESENTATION) not collapsed into this schema
+- urn:core:math:hilbert_space:v0.1.0 may witness FiniteDimension when rank and inner product are supplied
+- urn:core:math:canonical_hash_domain:v0.1.0 defines hash domain parameters for canonical_hash
+- urn:core:rust:core_q:finite_qm_types:v1.0.0 is the Rust realization of the schema types
+- finite_vocabulary_fence.md (CODA-CS–Q bridge) is the authoritative non-inference fence
+- qm_121_the_finite_qm_ingredient_ladder supplies the imported-ceiling inventory for default import slots
+negative_tests:
+- Alias-collapsing FiniteCarrier into FiniteDimension must be rejected
+- Artifact with authority_effect other than None must be rejected
+- Artifact claiming GlobalGreen or PROVED from this contract alone must be rejected
+- Import slot with status outside OPEN|DECLARED|WITNESSED must be rejected
+- Missing required fence field (carrier, dimension, certificate, continuum_debt) must be rejected
+- Non-deterministic or external-state-dependent hash construction must be rejected
+- Treating continuum scalars as a finite certificate must be rejected
+rust_binding:
+  crate: core_wdp
+  module: coda::q::finite_qm_types
+  symbols:
+  - FiniteCarrier
+  - FiniteDimension
+  - FiniteCertificate
+  - FiniteDimContinuumScalars
+  - ContinuumDebt
+  - ImportSlotStatus
+  - ImportSlot
+  - ImportLedger
+  - FiniteQmContractV1
+  - SCHEMA_VERSION
+  - CONTRACT_URN
+  # One test per mechanically-checkable negative_test, in declaration order.
+  # The GlobalGreen/PROVED-from-this-contract-alone negative_test is doctrinal
+  # and has no unit test.
+  required_tests:
+  - rejects_alias_collapse_of_fence_types
+  - rejects_authority_effect_other_than_none
+  - rejects_import_slot_status_outside_vocabulary
+  - rejects_missing_required_fence_field
+  - canonical_hash_is_independent_of_slot_insert_order
+  - rejects_continuum_scalars_as_finite_certificate
+doctrine:
+  summary: >
+    FiniteQMContractV1 is the versioned JSON schema shell for the finite QM ingredient
+    ladder boundary (qm_121). It binds four non-collapsing fence types from the CODA-CS–Q
+    finite vocabulary fence, records imported external slots (spectral, monoidal, tomography,
+    U(1), Born uniqueness, continuum, unitarity, interference) with OPEN|DECLARED|WITNESSED
+    status, and content-addresses instances via SHA-256 of canonical JSON. Nonclaim fence:
+    does not claim PROVED; does not claim GlobalGreen; does not derive full QM; does not
+    mint authority; does not collapse continuum scalars into certificates.
+  non_role:
+  - Authority minting or GlobalGreen discharge
+  - Customer-facing claims or product guarantees
+  - Full QM math implementation (channels, path-sum, interference solvers — other targets)
+  - Automatic inference across FINITE_* fence senses
+  - Q-admission ContinuumDebt enforcement (that is core_q::continuum::ContinuumDebt)
+  - HoTT/Univalence theorem discharge from this contract alone
+wip:
+  notes:
+  - Witness binding for ImportSlotStatus::WITNESSED (external certificate refs)
+  - Coordination with spectral_membrane ConvergenceCertificate digests
+  - Optional FinitePresentation fence field if presentation debt is promoted into the shell
+  - Lean mirror of non-inference fence (CodaCsQBridge)
+  # Nested under wip: top-level json_schema / canonical_hash are not core.contract.v1 fields.
+  json_schema:
+    schema_version: FiniteQMContractV1
+    contract_urn: urn:core:math:finite_qm:v1.0.0
+    fields:
+      schema_version:
+        type: string
+        const: FiniteQMContractV1
+      contract_urn:
+        type: string
+        const: urn:core:math:finite_qm:v1.0.0
+      authority_effect:
+        type: string
+        const: None
+      carrier:
+        type: FiniteCarrier
+        fields:
+          carrier_id: string
+          support_cardinality: non_negative_integer
+      dimension:
+        type: FiniteDimension
+        fields:
+          dimension_id: string
+          rank: non_negative_integer
+      certificate:
+        type: FiniteCertificate
+        fields:
+          certificate_id: string
+          kind: string
+          payload_digest_sha256: string
+      continuum_debt:
+        type: ContinuumDebt
+        note: Finite-QM continuum-debt sense (FiniteDimContinuumScalars); not core_q::continuum::ContinuumDebt
+        fields:
+          scalars:
+            type: FiniteDimContinuumScalars
+            fields:
+              declaration_id: string
+              matrix_algebra_note: string
+              scalar_field: string
+          notes:
+            type: array
+            items: string
+      import_ledger:
+        type: ImportLedger
+        fields:
+          slots:
+            type: array
+            items:
+              type: ImportSlot
+              fields:
+                slot_id: string
+                label: string
+                status:
+                  enum:
+                  - OPEN
+                  - DECLARED
+                  - WITNESSED
+                witness_ref:
+                  type: string
+                  optional: true
+    non_inferences:
+    - FiniteCarrier =/=> FiniteDimension
+    - FiniteDimension =/=> FiniteCertificate
+    - FiniteCertificate =/=> ContinuumDebt
+    - ContinuumDebt =/=> FiniteCarrier
+    - FiniteDimContinuumScalars =/=> FiniteCertificate
+    - FiniteCertificate =/=> FiniteDimension
+    - FiniteCarrier =/=> continuum object is finite as a set
+    default_import_slots:
+    - slot_id: spectral
+      label: finite-dimensional spectral theorem / spectral membrane
+      status: OPEN
+    - slot_id: monoidal
+      label: monoidal / tensor composition rule
+      status: OPEN
+    - slot_id: tomography
+      label: local tomography / state reconstruction
+      status: OPEN
+    - slot_id: u1_phase_carrier
+      label: C/U(1) phase carrier (conditionally forced only under declared assumptions)
+      status: OPEN
+    - slot_id: born_uniqueness
+      label: Born-quadratic uniqueness (Gleason-type import)
+      status: OPEN
+    - slot_id: continuum_limit
+      label: continuum path-integral / continuum limit authorization
+      status: OPEN
+    - slot_id: unitarity
+      label: unitary dynamics import
+      status: OPEN
+    - slot_id: interference_resource
+      label: non-L1 interference cross-term resource (qm_121 rung 6)
+      status: OPEN
+  canonical_hash:
+    algorithm: SHA-256
+    encoding: core.canonical_json.v1
+    digest_format: lowercase_hex
+    fixture:
+      id: finite_qm_contract_v1_smoke_fixture
+      path_hint: engine/crates_rs/core_wdp/src/coda/q/finite_qm_types.rs
+      sha256: 6bb78de524b10eb32ae23f3b5aa277b632e0490ca888ab554340202d8a3a10f0
+      note: Fixed digest asserted by unit test fixture_canonical_hash_is_stable (SMOKE_FIXTURE_SHA256)
+
+# === CANONICAL CONTRACT ABOVE ===
+# Stage-2 realization (Target 3, 2026-08-01). AuthorityEffect: None.
+
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects: []
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: STAGE2_FINITE_QM_CONTRACT_V1
+    severity: info
+    claim_class: "[CODE_DEMO_RUST]"
+    file: engine/crates_rs/core_wdp/src/coda/q/finite_qm_types.rs
+    yaml_law: Distinct fence newtypes + import ledger + canonical SHA-256 of FiniteQMContractV1
+    code_behavior: >
+      Newtypes FiniteCarrier/FiniteDimension/FiniteCertificate/FiniteDimContinuumScalars
+      and schema ContinuumDebt; ImportLedger with OPEN|DECLARED|WITNESSED; deterministic
+      canonical JSON + SHA-256 fixture test. No QM solvers; AuthorityEffect None.
+    detail: >
+      rust_binding module and listed symbols are realized under core_q::finite_qm_types.
+      Shape-only schema shell — not full QM derivation.
+    delta: MATCH_SHAPE_ONLY

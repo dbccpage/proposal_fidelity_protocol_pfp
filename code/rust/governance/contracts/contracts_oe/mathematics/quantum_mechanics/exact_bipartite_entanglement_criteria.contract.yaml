@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_bipartite_entanglement_criteria:v0.1.0
+title: PPT, realignment and unextendible-product-basis witnesses
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_bipartite_entanglement_criteria
+  symbol: exact_bipartite_entanglement_criteria
+  ascii_symbol: exact_bipartite_entanglement_criteria
+  notation: PPT, realignment and unextendible-product-basis witnesses
+  domain:
+  - Bounded finite bipartite exact density operators; declared orthogonal product families; explicit subset
+    replay bound
+  codomain:
+    description: Declared finite results of core_quantum_physics::bipartite_operator; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- UPB unextendibility replays every factor-span subset obstruction
+- Reduction, separable purity ball and realignment act on full operators
+- Negativity and CCNR use exact algebraic singular-value bounds
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: bipartite_operator
+  symbols:
+  - UnextendibleProductBasis::try_new
+  - UnextendibleProductBasis::complement_state
+  - in_separable_ball
+  - operator_schmidt_rank
+  - reduction_criterion
+  - realignment_norm_enclosure
+  - negativity_enclosure
+  required_tests:
+  - states_channels_exact_tests::tiles_bound_entanglement_and_local_separability_criteria_are_replayed
+  - states_channels_exact_tests::uhlmann_fidelity_and_trace_norm_intervals_agree_on_pure_and_mixed_routes
+negative_tests:
+- states_channels_exact_tests::tiles_bound_entanglement_and_local_separability_criteria_are_replayed
+doctrine:
+  summary: UPB unextendibility replays every factor-span subset obstruction; Reduction, separable purity ball
+    and realignment act on full operators; Negativity and CCNR use exact algebraic singular-value bounds.
+  non_role:
+  - PPT alone is not sufficient for separability beyond 2x2 and 2x3
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

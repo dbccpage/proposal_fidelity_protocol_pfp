@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:object:v0.1.0
+title: Object Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: categorical-object
+  symbol: A ∈ Ob(C)
+  ascii_symbol: object
+  notation: A ∈ Ob(C)
+  domain:
+  - 'object_id: unique identifier string'
+  - 'category_id: reference to parent category'
+  codomain:
+    description: An object identifier within a category
+requirements:
+  required_structures:
+  - The referenced category must exist
+  - The object_id must be listed in the category's object list
+  - Artifact hash must be deterministic from inputs
+laws:
+- Every object must belong to a category
+- Each object has a unique identity morphism
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Category:v0.1.0 serves as Objects are defined as members of categories
+negative_tests:
+- category_id does not resolve to existing Category artifact
+- object_id is not in the category's object list
+doctrine:
+  summary: 'An Object is an element of a category. In a category C, objects are the nodes of the categorical graph. The contract defines an object by its identifier and its membership in a category. Objects in a category are abstract entities that serve as domains and codomains for morphisms. The internal structure of an object is not visible categorically; objects are only understood through their morphisms. Examples: sets, groups, topological spaces, types.'
+  non_role:
+  - Does not expose internal structure of objects
+  - Does not define morphisms between objects (see Morphism contract)
+  - Does not handle category-wide properties (see Category contract)
+wip:
+- The contract is minimal; objects are primarily defined by their role in the category
+- Internal structure of objects (e.g., elements of a set) is not part of this contract
+- 'The relationship with Category: Objects are listed in the Category artifact'
+- Contract defines objects purely categorically, without internal structure
+- Objects are understood only through their morphisms
+- Future versions may need to handle enriched categories or internal homs
+rust_binding:
+  crate: core_category_theory
+  module: finite_category
+  symbols:
+  - DeclaredFiniteCategory
+  - ValidatedFiniteCategory
+  required_tests:
+  - try_new_refuses_object_without_identity

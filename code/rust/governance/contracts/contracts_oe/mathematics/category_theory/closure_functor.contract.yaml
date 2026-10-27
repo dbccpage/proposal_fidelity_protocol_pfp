@@ -1,0 +1,102 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:closure_functor:v0.1.0
+title: ClosureFunctor Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: functor
+  symbol: 'Cl: Res -> Cl(Res), r |-> (r'', charge(r), witness)'
+  ascii_symbol: closure_functor
+  notation: 'Cl: Res -> Cl(Res), r |-> (r'', charge(r), witness)'
+  domain:
+  - 'source_category_hash: SHA-256 hash of the residual object category schema'
+  - 'target_category_hash: SHA-256 hash of the closure result category schema'
+  - 'closure_algorithm_hash: SHA-256 hash of the closure algorithm'
+  - 'discipline_hash: SHA-256 hash of the governing ClosureDiscipline'
+  - 'functor_hash: SHA-256 hash of entire functor specification'
+  codomain:
+    description: 'A functor Cl: Res -> Cl(Res) mapping residual objects to closure
+      results, with closure charge computation and computation witness production.
+
+      '
+requirements:
+  required_structures:
+  - Source category (residual objects) schema hash must be present
+  - Target category (closure results) schema hash must be present
+  - Closure algorithm hash must be present
+  - Functor must preserve identity morphisms
+  - Functor must preserve composition of morphisms
+  - Functor hash must match canonical hash of the specification
+laws:
+- Cl(id_r) = id_{Cl(r)} for all residual objects r
+- Cl(g . f) = Cl(g) . Cl(f) for composable morphisms f, g
+- The closure charge produced by Cl is always non-negative
+- Every application of Cl produces a computation witness
+- Cl(r) is deterministic for a given residual r and algorithm
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Closure result must depend only on residual and algorithm
+relationships:
+- urn:math:contract:ClosureCharge:v0.1.0 serves as Charge values produced by closure
+  computation
+- urn:math:contract:ClosureDiscipline:v0.1.0 serves as Rules governing closure application
+- urn:math:contract:CanonicalBytes:v0.1.0 serves as Deterministic serialization of
+  functor data
+negative_tests:
+- Reject functor with missing source category hash
+- Reject functor with missing target category hash
+- Reject functor with missing closure algorithm hash
+- Reject functor that does not preserve identity morphisms
+- Reject functor that does not preserve composition
+- Reject functor whose hash does not match canonical computation
+doctrine:
+  summary: 'ClosureFunctor is a functor Cl: Res -> Cl(Res) from the category of residual
+    objects to the category of closure results. It maps each residual object to its
+    closure attempt result, and each morphism between residuals to the corresponding
+    morphism between closure results. The functor preserves identity morphisms and
+    composition, and produces a ClosureCharge for each object measuring the residual
+    obstruction after closure. ClosureFunctor is the operational core of the typed
+    residual closure layer, governed by a ClosureDiscipline.'
+  non_role:
+  - Does not classify admissibility or emit policy decisions
+  - Does not emit certificates or terminalize
+  - Does not produce customer-facing claims
+  - Does not decide what to do with closure results
+  - Does not enforce closure discipline (governed by ClosureDiscipline)
+wip:
+- Define exact closure algorithm interface (what input data, what output structure)
+- Decide whether ClosureFunctor is always idempotent or only when discipline requires
+  it
+- Clarify interaction with horn-filling and lift resolution operations
+- Contract is WIP pending residual object category definition
+- Integration with ClosureDiscipline, ClosureCharge, and ResidualObject contracts
+  pending
+- Functor law verification may require test fixtures with known residuals
+rust_binding:
+  crate: core_category_theory
+  module: cat_functor
+  symbols:
+  - CatFunctor
+  required_tests:
+  - test_functor_preserves_identities
+  - test_functor_preserves_composition

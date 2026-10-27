@@ -1,0 +1,304 @@
+schema_version: core.contract.v1
+contract_id: urn:core:governance:terminal_mapper:v1.0.0
+title: TerminalMapper
+kind: governance_contract
+status: mathematical_wip
+layer: 05_governance
+role: TerminalMapper
+descriptor:
+  authority_effect: requests_decision
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ContractConstitution
+    - GlobalContractTaxonomy
+    - KernelAuthorityMatrix
+    - Evaluator
+    - Policy
+    - CertificateKernel
+    - Replay
+    - Trace
+    - Engine
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: DecisionEnvelope
+    authority_layer: Judgment
+    replay_certificates:
+    - schema_hash
+  constraints:
+    typed_output_required: true
+  capabilities:
+    forbidden:
+    - ExecuteStateTransition
+    - ActionLicensing
+    - MeasurementComputation
+    - CertificateSigning
+    - RuntimeMutation
+    - ComputePhi
+    - ComputeGamma
+    required: []
+doctrine:
+  summary: 'This contract defines the TerminalMapper boundary.
+
+
+    TerminalMapper is NOT an operator in the five-effect-class algebra (E, I, C, R, M).
+
+    It is a record finalization gate that maps completed execution states to typed terminal
+
+    envelopes.
+
+
+    TerminalMappers declare terminal outcomes or terminal reports only. They do not declare
+
+    actions, execute actions, or mutate state.
+
+    '
+  non_role: &id002
+  - certification
+  - execution
+  - evaluation
+  - mutation
+  - policy_definition
+  - measurement_computation
+  - solver_invocation
+  - search
+  - trace_mutation
+  - certificate_creation
+  - evidence_fabrication
+  - state_transition
+  - policy_reinterpretation
+  - action_licensing
+  - transition_authorization
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+
+      terminalize, authorize transitions, execute transitions, assign terminal categories,
+
+      create terminal envelopes, or upgrade evidence authority.
+
+
+      LLM output may propose terminal category definitions, report text, mapping rules,
+
+      or tests, but those proposals are EvidenceOnly until checked by the declared
+
+      TerminalMapper, Policy, Replay, Certificate, and Contract boundaries.
+
+      '
+  core_definition: 'Terminal Mapper maps final states to typed terminal envelopes. It does not certify,
+
+    evaluate, mutate, or execute.
+
+
+    A TerminalMapper is a deterministic factory component that converts a finalized execution
+
+    trace or carrier state into a typed terminal envelope.
+
+
+    Final State + Trace -> TerminalMapper -> TerminalEnvelope
+
+
+    A TerminalMapper must declare the termination condition and category.
+
+    '
+  trait_shape:
+    rust: "pub trait TerminalMapper<State, Trace> {\n    type Envelope;\n\n    fn map_terminal(\n    \
+      \    &self,\n        state_ref: StateRef,\n        trace_ref: TraceRef,\n        evidence_refs:\
+      \ Vec<EvidenceRef>,\n    ) -> Result<Self::Envelope, TerminalMappingError>;\n\n    fn authority_effect(&self)\
+      \ -> AuthorityEffect {\n        AuthorityEffect::RequestsDecision\n    }\n}\n"
+  structural_representation:
+    terminal_envelope:
+      struct_name: TerminalEnvelope
+      fields:
+      - name: terminal_id
+        type: TerminalEnvelopeId
+      - name: terminal_category
+        type: TerminalCategory
+      - name: state_ref
+        type: StateRef
+      - name: trace_ref
+        type: TraceRef
+      - name: evaluator_decision_refs
+        type: Vec<DecisionEnvelopeRef>
+      - name: policy_decision_refs
+        type: Vec<DecisionEnvelopeRef>
+      - name: evidence_refs
+        type: Vec<EvidenceRef>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: clauses_fired
+        type: Vec<ClauseId>
+      - name: envelope_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: RequestsDecision
+    checked_terminal_envelope:
+      struct_name: CheckedTerminalEnvelope
+      fields:
+      - name: envelope_ref
+        type: TerminalEnvelopeId
+      - name: replay_ref
+        type: ReplayRef
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: checked_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: TerminalCategory
+      variants:
+      - VerifiedComplete
+      - Refused
+      - Fallback
+      - UnverifiedComplete
+      - Indeterminate
+    - name: TerminalMappingError
+      variants:
+      - name: MissingEvidence
+        fields:
+          detail: String
+      - name: MissingClauses
+        fields:
+          detail: String
+      - name: InvalidTerminalCategory
+        fields:
+          detail: String
+      - name: EmptyPayload
+        fields:
+          detail: String
+  terminal_categories:
+    VerifiedComplete: Execution completed with full certificate chain. Required verified certificate/replay/evidence
+      references are present. It does not mean TerminalMapper created or verified certificates.
+    Refused: Execution completed with an explicit Reject verdict. Records a refusal outcome. It is not
+      the fixed-layer operator class M by itself.
+    Fallback: Execution completed under degraded conditions (e.g., budget exhaustion, solver timeout).
+      Records degraded completion. It is not a repair instruction.
+    UnverifiedComplete: Execution completed but without sufficient certificate chain for full verification.
+      It is not FactOnly by default.
+    Indeterminate: State or trace analysis is inconclusive or indeterminate.
+  architectural_mandates:
+  - name: Terminal Outcomes Only
+    text: A TerminalMapper MUST NOT execute transitions or apply state changes. It solely declares the
+      terminal mapping and packs the evidence into a terminal report.
+  - name: Mandatory Evidence and Clauses
+    text: A TerminalMapper MUST NOT synthesize or assume evidence. It requires explicit records of evidence
+      used and policy clauses fired to build the terminal report.
+  - name: Terminal Decision Authority
+    text: A TerminalEnvelope uses RequestsDecision by default. A CheckedTerminalEnvelope may support FactOnly
+      claims only about the recorded terminal report after replay, evidence, and certificate references
+      are checked. TerminalMapper does not emit StateTransition.
+  - name: No Certification Authority
+    text: A TerminalMapper packages evidence references into envelopes. It does not sign, create, or verify
+      certificates.
+  - name: No Evaluation Authority
+    text: A TerminalMapper does not judge whether evidence is admissible. That is the Evaluator's role.
+  record_integration: 'TerminalEnvelope is a terminal report artifact. Trace records TerminalEnvelope
+    references
+
+    through the Trace boundary.
+
+
+    TerminalMapper MUST NOT write Trace directly unless explicitly invoked through the
+
+    Trace boundary.
+
+
+    TerminalMapper MUST NOT emit ActionLicense. LicensingBoundary consumes TerminalEnvelope
+
+    references and emits ActionLicense when permitted.
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - EngineResult
+    - PolicyDecision
+    - ActionLicense
+    - StateTransition
+    - sign_certificate
+    - save_certificate
+    - create_certificate
+    - execute(
+    - mutate_state
+    - mutate_runtime
+    - evaluate_admissibility
+    - certify(
+    - compute_phi
+    - compute_gamma
+    - compute_xi
+    - run_solver
+    - search_for
+    - write_trace_directly
+    - authorize_transition
+    - license_transition
+  required_tests:
+  - terminal_mapper_authority_effect_is_requests_decision
+  - checked_terminal_envelope_may_be_factonly_after_replay_and_evidence_checks
+  - terminal_mapper_does_not_create_certificates
+  - terminal_mapper_does_not_emit_state_transition
+  - terminal_mapper_does_not_emit_action_license_unless_explicitly_licensed_boundary
+  - terminal_envelope_is_not_action_license
+  - terminal_envelope_is_not_trace_record_by_itself
+  - terminal_mapper_does_not_write_trace_directly
+  - terminal_mapper_consumes_refs_not_mutable_engine_state
+  - terminal_category_verified_complete_does_not_create_certificate
+  - fallback_terminal_status_is_not_repair_instruction
+  - refused_terminal_status_is_not_operator_m
+  - terminalizer_name_is_migration_alias_only
+  python_poc_shape: "@dataclass(frozen=True)\nclass TerminalEnvelope:\n    row_id: str\n    terminal_category:\
+    \ str  # VerifiedComplete, Refused, Fallback, UnverifiedComplete, Indeterminate\n    state_ref: str\n\
+    \    trace_ref: str\n    evidence_used: Sequence[str]\n    clauses_fired: Sequence[str]\n    authority_effect:\
+    \ str = \"RequestsDecision\"\n"
+  canonical_invariant: 'TerminalMapper is a terminal outcome mapping boundary. It maps finalized state
+    and trace
+
+    references plus evidence references into a typed TerminalEnvelope. It does not certify,
+
+    evaluate admissibility, define policy, compute measurements, mutate, write Trace directly,
+
+    authorize transitions, or execute. TerminalEnvelope is not an ActionLicense, Action,
+
+    EngineResult, or Trace record by itself. Checked terminal report facts require
+
+    replay/evidence/certificate checking.
+
+    '
+  legacy_metadata:
+    name: TerminalMapper
+    role: Maps finalized execution states to typed terminal envelopes
+    version: '1.0'
+    classification: governance
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: DecisionEnvelope
+    domain_output_kind: TerminalEnvelope
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+    - Record
+    supports_downstream:
+    - LicensingBoundary
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+    migration_note: The filename terminalizer_contract.md is retained only for migration compatibility.
+      New code should use TerminalMapper.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_governance_contract:v1.0.0"

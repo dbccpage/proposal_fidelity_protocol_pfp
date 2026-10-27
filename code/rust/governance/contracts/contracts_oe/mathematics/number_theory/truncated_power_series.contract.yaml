@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:truncated_power_series:v0.1.0
+title: Bounded Exact Formal Power Series
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: truncated_power_series
+  symbol: truncated_power_series
+  ascii_symbol: truncated_power_series
+  notation: Bounded Exact Formal Power Series
+  domain:
+  - Formal series modulo x^(N+1) over a canonical exact field, N at most 1024.
+  codomain:
+    description: Declared finite results of core_number_theory::power_series; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Truncated multiplication is convolution modulo x^(N+1).
+- Inverse, log and exp use exact recurrences and obey exp(log(1+x))=1+x through retained order.
+- Composition requires zero inner constant and integer division requires an invertible characteristic element.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: power_series
+  symbols:
+  - TruncatedSeries
+  - SeriesError
+  - MAX_SERIES_ORDER
+  required_tests:
+  - formal_series_inverse_log_exp_and_composition_are_exact
+negative_tests:
+- Noninvertible constant, wrong log/exp constants, order mismatch, characteristic obstruction and exponent
+  excess are typed refusals.
+doctrine:
+  summary: Truncated multiplication is convolution modulo x^(N+1).; Inverse, log and exp use exact recurrences
+    and obey exp(log(1+x))=1+x through retained order.; Composition requires zero inner constant and integer
+    division requires an invertible characteristic element..
+  non_role:
+  - No analytic convergence assertion for formal series.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

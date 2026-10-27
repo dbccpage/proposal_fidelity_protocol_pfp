@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:gaussian_rational:v0.1.0
+title: Gaussian Rational Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_number_field
+  symbol: 'Q(i) = { a + b i : a, b in Q }'
+  ascii_symbol: gaussian_rational
+  notation: 'Q(i) = { a + b i : a, b in Q }'
+  domain:
+  - 're: exact rational'
+  - 'im: exact rational'
+  codomain:
+    description: Elements a + b i of the field Q(i), with i^2 = -1, in canonical (re, im) form.
+requirements:
+  required_structures:
+  - Equality is mathematical equality of the pair (re, im)
+  - Every nonzero element is invertible with inverse conj(z) / N(z)
+  - No floating point appears in any operation
+laws:
+- i * i = -1
+- z * conj(z) = N(z) = re^2 + im^2
+- z * z^-1 = 1 for every nonzero z
+- The scalar-tower field axioms hold (commutative ring, every nonzero element invertible)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- cyclotomic_field serves as the general Q(zeta_n), of which Q(i) is n = 4
+- quadratic_field serves as the compile-time form Quadratic<-1>
+- exact_number_scalar_bridge serves as the scalar-tower implementation
+rust_binding:
+  crate: core_number_theory
+  module: cyclotomic
+  symbols:
+  - GaussianRat
+  required_tests:
+  - test_gaussian_rationals
+  - test_gaussian_rational_field_element
+  - gaussian_rationals_form_a_field
+  - quadratic_minus_one_agrees_with_the_gaussian_rationals
+negative_tests:
+- Inversion of zero must be refused by the scalar-tower try_inv (None)
+- An element must never be compared through a floating-point approximation
+doctrine:
+  summary: The Gaussian rationals Q(i) as an exact field, cross-validated against the compile-time quadratic
+    field Quadratic<-1> and the generic cyclotomic field of conductor 4.
+  non_role:
+  - Gaussian integers as a Euclidean domain (factorisation, primes)
+  - Floating-point complex numbers
+wip:
+- Inherent zero inversion is outside its nonzero precondition; data paths use the canonical scalar-tower Field::try_inv
+  refusal.

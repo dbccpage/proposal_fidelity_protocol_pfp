@@ -1,0 +1,107 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_repair:v1.0.0
+title: Exact repair (α reducing residual mass)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_repair
+  symbol: α ∈ C⁰
+  ascii_symbol: ExactRepair
+  notation: h' = ω − d₀α  (repair of representative ω)
+  domain:
+  - representative residual ω ∈ C¹
+  - 'repair map d₀ : C⁰ → C¹'
+  - repair element α ∈ C⁰
+  codomain:
+    description: A cochain α that adjusts ω by an exact coboundary/image term d₀α. Exact repair of a class means
+      Φ₁([ω]) = 0 (some α achieves residual 0).
+requirements:
+  required_structures:
+  - C⁰, C¹, d₀
+  - α ∈ C⁰
+  - Residual transform h' = ω − d₀α well-typed in C¹
+  - Optional optimality witness when α is claimed Φ₁-minimizing
+laws:
+- 'Repair law: applying α yields h'' = ω − d₀α ∈ C¹.'
+- 'Exact-class law: a class is exactly repairable iff ∃α with h'' = 0 (equivalently Φ₁=0).'
+- 'Mass non-increase: for Φ₁ metric, Φ₁([h'']) ≤ Φ₁([ω]) with equality of class in Q¹.'
+- 'Object fence: ExactRepair is a cochain α (or repair certificate), not Φ₁ itself.'
+- 'Authority law: repair success is not ActionLicense / GlobalGreen / PROVED.'
+replay:
+  requirements:
+  - Deterministic d₀α evaluation
+  - Certificate replay when optimality claimed
+relationships:
+- urn:core:math:phi1:v1.0.0 — mass reduced by repairs
+- urn:core:math:phi1_obstruction_mass:v1.0.0 — mass scalar package
+- urn:core:math:finite_obstruction_trichotomy:v0.2.0 — ExactRepair class when Φ₁=0
+- urn:core:math:cochain_complex:v1.0.0 — ambient data
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_repair
+  symbols:
+  - ExactRepair
+  required_tests:
+  - alpha_not_in_c0_must_be_rejected
+  - repair_map_shape_mismatch_must_be_rejected
+  - nonzero_residual_cannot_claim_exact_class
+negative_tests:
+- α not in C⁰ must be rejected
+- Repair map degree/type mismatch must be rejected
+- Claiming exact class repair with nonzero residual must be rejected
+- Repair used as authority mint must be rejected
+- Claiming PROVED / GlobalGreen / HoTT from this contract alone must be rejected
+doctrine:
+  summary: 'Exact repair is an α ∈ C⁰ adjusting residuals by d₀α. Exact class repair means Φ₁=0. Nonclaim: not authority;
+    not PROVED; not GlobalGreen.'
+  non_role:
+  - Computing Γ₂
+  - Policy admissibility
+  - Authority / PROVED / GlobalGreen / HoTT
+wip:
+- Canonical optimal-repair certificates
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B4_FOC_RESIDUAL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth B4: exact repair as α-object; link to Φ₁=0 class.'
+    recommendation: Stage-2 symbol surface audit.
+    pass: meth_b4_foc_residual
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: HAS_RS_BINDING
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: exact_repair module present.
+    file: engine/crates_rs/core_linear_algebra/src/exact_repair.rs
+    delta: MATCH
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: '[SCOPE FENCE]'
+    detail: Not PROVED.

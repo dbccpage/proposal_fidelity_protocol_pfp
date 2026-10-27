@@ -1,0 +1,91 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:homology_class:v0.1.0
+title: HomologyClass
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quotient_space_element
+  symbol: '[z] ∈ H_n(C)'
+  ascii_symbol: homology_class
+  notation: '[z] ∈ H_n(C)'
+  domain:
+  - 'cycle: element of ker(d_n)'
+  - 'representative: chosen normal form representative'
+  - 'boundary_subspace: im(d_{n+1})'
+  - 'quotient_space: H_n = ker(d_n) / im(d_{n+1})'
+  codomain:
+    description: 'Equivalence class in the quotient vector space H_n = ker(d_n) / im(d_{n+1}) where d_n is the boundary operator of degree n in a chain complex.
+
+      '
+requirements:
+  required_structures:
+  - Representative must be in ker(d_n)
+  - Boundary subspace must match degree n-1
+  - Quotient space must be ker(d_n) / im(d_{n+1})
+  - Representative must be in deterministic normal form
+  - Class hash must be deterministic and reproducible
+laws:
+- d_n(z) = 0 (representative is a cycle)
+- '[z] = [z''] iff z - z'' ∈ im(d_{n+1})'
+- '[z] + [w] = [z + w]'
+- λ[z] = [λz] for scalar λ
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Quotient algorithm must be deterministic
+  - Normal form computation must be deterministic
+relationships:
+- urn:math:contract:ChainComplex:v0.1.0 serves as Provides the chain complex structure and boundary operators
+- urn:math:contract:Chain:v0.1.0 serves as Represents the cycle representative
+- urn:math:contract:BoundaryOperator:v0.1.0 serves as Defines the boundary map d_n used in quotient construction
+rust_binding:
+  crate: core_homology
+  module: homology_class
+  symbols:
+  - HomologyClass
+  # Constructor refuses ComplexMismatch and DomainMismatch.
+  # Cycle d_n≠0, wrong-degree B_n, equality-without-B_n, class-hash,
+  # d²=0, and PROVED/GlobalGreen stay unnamed (no differential, hash
+  # policy, or authority seam on this type).
+  required_tests:
+  - test_homology_class_complex_mismatch_rejected
+  - test_homology_class_domain_mismatch_rejected
+negative_tests:
+- Reject representative that is not a cycle (d_n(z) ≠ 0)
+- Reject boundary subspace from wrong degree
+- Reject quotient basis mismatch
+- Reject class hash mismatch under normal form
+- Reject artifact claiming authority or admissibility
+doctrine:
+  summary: Equivalence class [z] in H_n = ker(d_n) / im(d_{n+1}) represented by a cycle modulo boundaries. Homology classes represent closed chains up to boundary equivalence and are core finite obstruction/residual objects.
+  non_role:
+  - Does not compute homology groups directly (only individual classes)
+  - Does not handle persistent or relative homology variants (see open questions)
+  - Does not provide cohomology class representation
+wip:
+- Define persistent homology class variants separately
+- Define relative homology class variants separately
+- Specify how to handle infinite-dimensional homology groups
+- Clarify coefficient ring flexibility (Z, Q, F_p, etc.)
+- Current implementation focuses on finite-dimensional chain complexes
+- Normal form computation assumes choice of basis for quotient space
+- 'Future work: extend to persistent and relative homology'

@@ -1,0 +1,134 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:domain_worker:v1.0.0
+title: DomainWorker
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: DomainWorker
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - SolverKernel
+      - FunctionalKernel
+      - SearchKernel
+      - Trace
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+      - StateTransition
+      - ActionLicensing
+      - CertificateSigning
+      - PolicyInterpretation
+      - Terminalization
+    required: []
+doctrine:
+  summary: >
+    DomainWorker is an EvidenceOnly compute orchestrator for domain tasks
+    (linear algebra, homology, QM diagnostics, residual repair staging).
+    It may call SolverKernel stages, SearchKernel frontiers, and FunctionalKernel
+    residual geometry. It must not claim Engine v1 StateTransition authority,
+    mint ActionLicense, terminalize, certify, or reimplement Φ₁/Γ₂/Ξ outside
+    core_functional / playpen functional.
+  non_role:
+    - state_transition
+    - action_license_mint
+    - engine_role_impersonation
+    - residual_geometry_reimplementation
+    - phi_gamma_xi_body_definition
+    - policy_definition
+    - terminal_mapping
+    - certificate_signing
+  authority_defaults:
+    domain_worker_output: EvidenceOnly
+    checked_output: FactOnly only after independent checker/replay/certificate boundary
+  must_delegate_math_to:
+    - core_linear_algebra
+    - core_functional
+    - core_homology
+    - core_solvers
+    - playpen dual-home packages under engine.crates
+  relation_to_engine_contract: not_engine
+  relation_to_pipeline_contract: may_be_recorded_by_pipeline_must_not_be_invoked_as_pipeline
+  relation_to_solver_kernel: may_sequence_solver_kernel_evidence_only
+  relation_to_functional_kernel: must_call_not_reimplement
+  structural_representation:
+    input:
+      struct_name: DomainWorkerInput
+      fields:
+        - name: task_id
+          type: TaskId
+        - name: task_kind
+          type: TaskKind
+        - name: payload_ref
+          type: EvidenceRef
+        - name: math_surface_refs
+          type: Vec<MathSurfaceRef>
+    output:
+      struct_name: DomainWorkerOutput
+      fields:
+        - name: task_id
+          type: TaskId
+        - name: status
+          type: WorkerStatus
+        - name: result_ref
+          type: EvidenceRef
+        - name: residual_ref
+          type: Option<EvidenceRef>
+        - name: math_path
+          type: Vec<String>
+        - name: output_hash
+          type: Hash256
+        - name: authority_effect
+          type: AuthorityEffect
+          default: EvidenceOnly
+  flow: >
+    DomainWorkerInput
+    -> math crate / playpen PROTO
+    -> FunctionalKernel residual (if needed)
+    -> DomainWorkerOutput (EvidenceOnly)
+    -> optional Checker / Replay / Certificate
+    -> Evaluator only if policy judgment required
+    -> Engine only if ActionLicense already present
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+      - authorize_transition
+      - license_transition
+      - self_certify
+      - terminalize(
+      - redefine_phi1
+      - redefine_gamma2
+      - redefine_xi
+  required_tests:
+    - domain_worker_authority_effect_is_evidence_only
+    - domain_worker_does_not_emit_state_transition
+    - domain_worker_does_not_reimplement_phi1_body
+    - domain_worker_records_math_path
+    - linear_algebra_domain_worker_matmul
+    - linear_algebra_domain_worker_gram_schmidt
+  canonical_invariant: >
+    DomainWorker orchestrates EvidenceOnly domain computation and must delegate
+    higher math to declared math crates and functionals. It is never Engine v1.
+  legacy_metadata:
+    name: DomainWorker
+    active: true
+    classification: execution
+    effect_class: evidence_only
+    version: "1.0.0"
+    note: Extension role; does not mutate urn:core:execution:engine:v1.0.0
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_execution_contract:v1.0.0"

@@ -1,0 +1,43 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:fiber:v0.1.0
+title: Fiber
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: A Fiber is the representation of the vector space attached to a point of a base space (e.g., the fiber of a vector bundle).  It is a finite‑dimensional vector space V_p over a field K, equipped with an ordered basis.  The contract captures the structure of V_p together with the base‑point identifier, guaranteeing dimension, field consistency, and basis integrity.  It does not prescribe connections, transition maps, or bundle topology; those belong to separate contracts.
+wip:
+- wip_status: true
+  items:
+  - 'The exact format of base_point_id is not yet standardised; for smooth manifolds it could be a tuple of coordinates and a chart name, but a general bundle base might be a topological space. Currently the contract accepts any non‑empty byte string with a hash, leaving the interpretation to higher‑level contexts.
+
+    '
+  - 'The relationship between a Fiber and a Vector residing in it is not formalised here; it is expected that a Vector contract will reference the Fiber''s codomain_basis_hash as its own codomain.
+
+    '
+  - 'No fiber‑wise inner product or norm is included; those would be separate structure contracts (e.g., InnerProduct on a Fiber).
+
+    '
+  - The contract does not address infinite‑dimensional fibers.
+  - 'The list of allowed FactEnvelope types (e.g., "is_trivial_bundle", "has_constant_rank") is deferred to a future sub‑contract.
+
+    '
+  - 'The validation of linear independence of the basis is optional and may be performed by an external verifier; the contract only guarantees hash consistency by default.
+
+    '

@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_convex_geometry:v0.1.0
+title: Exact Finite Convex Geometry
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_convex_geometry
+  symbol: exact_convex_geometry
+  ascii_symbol: exact_convex_geometry
+  notation: Exact Finite Convex Geometry
+  domain:
+  - Finite points and a target over Q, or an H-representation Ex=e and Ax<=b
+  - A declared complete support or active-set enumeration budget
+  - Valid rational entries retain every existing finite dimension/row/candidate policy; malformed zero-denominator
+    inputs and certificates return InvalidRational before arithmetic, after bounded structural/shape admission
+  codomain:
+    description: Exact finite constructions implemented by core_solvers::convex_geometry; results remain scoped
+      to the declared carrier and budgets.
+requirements:
+  required_structures:
+  - Exact arithmetic and explicit finite carrier validation
+  - A typed refusal for unsupported or exhausted computations
+laws:
+- Convex witnesses have nonnegative weights summing to one and reproduce the target
+- A negative hull decision exhausts affinely independent supports of size at most d+1
+- Every returned vertex satisfies all original constraints and a full-rank active system
+- An empty vertex list does not certify emptiness of an unbounded polyhedron
+- All public coordinate, matrix, RHS/bound and certificate scalar routes reject zero denominators before sign/elimination/objective
+  arithmetic
+- Public convex/packing witness lengths are validated before any unbounded entry scan
+- Independent valid interval-hull, square-vertex and diagonal-packing controls retain their exact results
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact independent witness replay where a witness is returned
+relationships: []
+rust_binding:
+  crate: core_solvers
+  module: solver_convex_vertex_enum
+  symbols:
+  - ConvexWitness
+  - convex_membership
+  - verify_convex_witness
+  - vertex_enumeration
+  required_tests:
+  - convex_membership_replays_weights_and_kills_tampering
+  - active_sets_find_square_and_affine_line_vertices
+  - unbounded_and_vertex_free_carriers_do_not_get_false_emptiness_claims
+  - convex_geometry_denominators::all_malformed_rational_routes_refuse_without_panicking
+  - convex_geometry_denominators::every_malformed_route_reports_invalid_rational
+  - convex_geometry_denominators::valid_geometry_controls_replay_independent_normal_hull_square_and_packing
+  - convex_geometry_denominators::witness_shape_refusal_precedes_malformed_scalar_scans
+negative_tests:
+- Reject ragged dimensions, size-limit excess, budget exhaustion and mutated affine witnesses
+- convex_geometry_denominators::all_malformed_rational_routes_refuse_without_panicking
+- convex_geometry_denominators::every_malformed_route_reports_invalid_rational
+- convex_geometry_denominators::witness_shape_refusal_precedes_malformed_scalar_scans
+doctrine:
+  summary: Exact Finite Convex Geometry on a declared finite carrier.
+  non_role:
+  - PROVED, GlobalGreen, or operational authority
+  - Continuum or infinite-carrier completion claims
+wip:
+- Executable finite checks are local evidence; no theorem-prover discharge is asserted.

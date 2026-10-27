@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:checked_hermitian_eigen_diagnostics:v0.1.0
+title: Checked complex Hermitian numerical eigenpairs
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: checked_hermitian_eigen_diagnostics
+  symbol: checked_hermitian_eigen_diagnostics
+  ascii_symbol: checked_hermitian_eigen_diagnostics
+  notation: Checked complex Hermitian numerical eigenpairs
+  domain:
+  - Finite f64 Hermitian matrices with checked dimension, iteration and residual policy ceilings
+  codomain:
+    description: Declared finite results of core_linear_algebra::hermitian_eigen; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Signed levels are computed by Hermitian eigensolver, not singular values
+- Every triangle is checked without silently projecting Hermitian input
+- Every eigenpair and orthonormality relation independently replay
+- Scaling underflow, nonfinite arithmetic and exhausted budgets refuse
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_linear_algebra
+  module: hermitian_eigen
+  symbols:
+  - SpectrumPolicy::new
+  - hermitian_eigen_checked
+  - validate_eigenpairs
+  - HermitianSpectrum
+  required_tests:
+  - hermitian_eigen::tests::sorted_eigenvectors_remain_bound_to_their_original_matrix
+  - hermitian_eigen::tests::every_triangle_and_imaginary_diagonal_is_checked_without_projection
+  - hermitian_eigen::tests::wrong_eigenvalues_fail_independent_residual_validation
+  - hermitian_eigen::tests::exhausted_solver_budget_is_a_typed_refusal_not_partial_success
+negative_tests:
+- hermitian_eigen::tests::zero_or_repeated_eigenvectors_fail_even_when_the_residual_is_zero
+- hermitian_eigen::tests::scaling_must_not_erase_a_nonzero_input_or_unrepresentable_level
+doctrine:
+  summary: Signed levels are computed by Hermitian eigensolver, not singular values; Every triangle is checked
+    without silently projecting Hermitian input; Every eigenpair and orthonormality relation independently
+    replay; Scaling underflow, nonfinite arithmetic and exhausted budgets refuse.
+  non_role:
+  - Numerical residual evidence remains Diagnostic, never exact spectral authority
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

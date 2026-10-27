@@ -1,0 +1,95 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_phased_pauli_words:v0.1.0
+title: Exact Bounded Phased Pauli Words
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_phased_pauli_words
+  symbol: exact_phased_pauli_words
+  ascii_symbol: exact_phased_pauli_words
+  notation: Exact Bounded Phased Pauli Words
+  domain:
+  - Exact symbolic phased Pauli words on 1..=4096 qubits with phase in Z/4
+  - Dense operator queries obey the independently declared Hilbert and exact operator dimension limits
+  codomain:
+    description: Declared finite results of core_quantum_physics::pauli; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Single-letter XY=iZ, YZ=iX, ZX=iY and reversed products retain their full Z/4 phases
+- The factorized product returns its entire input-plus-product phase separately and a phase-zero word; all
+  256 phased one-letter pairs replay exact matrix multiplication
+- Symplectic coordinates determine commutation and round-trip every admitted phase-zero word
+- The 4096-qubit boundary remains admitted, while constructor allocation requests above the cap are refused
+  before allocation
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: pauli
+  symbols:
+  - MAX_PAULI_STRING_QUBITS
+  - PauliError
+  - PhaseZ4
+  - Pauli
+  - PauliString
+  - Pauli::product
+  - Pauli::mul_phased
+  - PauliString::with_phase
+  - PauliString::identity
+  - PauliString::multiply
+  - PauliString::mul_phased
+  - PauliString::from_symplectic_coords
+  - PauliString::commutes_with
+  - PauliString::to_operator
+  required_tests:
+  - test_single_qubit_phase_table
+  - test_pauli_string_parse_and_word
+  - test_pauli_string_mul_phased
+  - test_pauli_string_symplectic
+  - test_commutation_properties
+  - phased_adapter_replays_nonzero_input_phases_and_returns_unphased_word
+  - symbolic_word_admission_refuses_oversized_allocations_and_preserves_the_boundary
+negative_tests:
+- Empty words and unequal coordinate or multiplication lengths are refused
+- identity(usize::MAX), with_phase with 4097 letters, oversized text and coordinate admissions return StringBudget
+- A symbolically valid boundary word returns a typed carrier refusal for its dense matrix
+doctrine:
+  summary: Single-letter XY=iZ, YZ=iX, ZX=iY and reversed products retain their full Z/4 phases; The factorized
+    product returns its entire input-plus-product phase separately and a phase-zero word; all 256 phased one-letter
+    pairs replay exact matrix multiplication; Symplectic coordinates determine commutation and round-trip every
+    admitted phase-zero word; The 4096-qubit boundary remains admitted, while constructor allocation requests
+    above the cap are refused before allocation.
+  non_role:
+  - No unbounded dense matrix admission or quantum state positivity inference
+  - The phase-free symplectic view does not retain the full phased Pauli element
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

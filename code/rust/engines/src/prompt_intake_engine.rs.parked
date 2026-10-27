@@ -1,0 +1,342 @@
+use core_prompt_packets::{CarrierKind, PromptPacketCore};
+
+// Stubbed to replace missing engine::quip::prompt_geometry module
+#[derive(Debug, Clone, Default)]
+pub struct PromptGeometry {
+    pub prompt_class: String,
+    pub morphism_type: String,
+    pub entropy: f64,
+    pub coherence: f64,
+    pub decidability: f64,
+    pub hostility: f64,
+    pub fingerprint: String,
+}
+impl PromptGeometry {
+    pub fn status(&self) -> &'static str {
+        "stubbed"
+    }
+}
+pub fn perceive(_text: &str) -> PromptGeometry {
+    PromptGeometry::default()
+}
+use serde_json::Value;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
+
+#[derive(Debug, Clone)]
+pub struct PromptRecord {
+    pub id: String,
+    pub raw_prompt: String,
+    pub expected_answer: Option<String>,
+    pub geometry: PromptGeometry,
+}
+
+#[derive(Debug, Clone)]
+pub struct CotRecord {
+    pub id: String,
+    pub obstructed_prompt: String,
+    pub cot_steps: Vec<String>,
+    pub final_answer: String,
+    pub geometry: PromptGeometry,
+}
+
+#[derive(Debug, Clone)]
+pub struct PacketizedPromptRecord {
+    pub id: String,
+    pub prompt: PromptPacketCore,
+    pub expected_answer: Option<PromptPacketCore>,
+    pub geometry: PromptGeometry,
+}
+
+#[derive(Debug, Clone)]
+pub struct PacketizedCotRecord {
+    pub id: String,
+    pub obstructed_prompt: PromptPacketCore,
+    pub cot_steps: Vec<PromptPacketCore>,
+    pub final_answer: Option<PromptPacketCore>,
+    pub geometry: PromptGeometry,
+}
+
+impl From<PromptRecord> for PacketizedPromptRecord {
+    fn from(record: PromptRecord) -> Self {
+        Self {
+            id: record.id,
+            prompt: PromptPacketCore::from_raw(&record.raw_prompt, CarrierKind::UserPrompt),
+            expected_answer: record
+                .expected_answer
+                .as_deref()
+                .map(|answer| PromptPacketCore::from_raw(answer, CarrierKind::LlmResponse)),
+            geometry: record.geometry,
+        }
+    }
+}
+
+impl From<CotRecord> for PacketizedCotRecord {
+    fn from(record: CotRecord) -> Self {
+        Self {
+            id: record.id,
+            obstructed_prompt: PromptPacketCore::from_raw(
+                &record.obstructed_prompt,
+                CarrierKind::UserPrompt,
+            ),
+            cot_steps: record
+                .cot_steps
+                .iter()
+                .map(|step| PromptPacketCore::from_raw(step, CarrierKind::LlmResponse))
+                .collect(),
+            final_answer: (!record.final_answer.is_empty()).then(|| {
+                PromptPacketCore::from_raw(&record.final_answer, CarrierKind::LlmResponse)
+            }),
+            geometry: record.geometry,
+        }
+    }
+}
+
+pub struct PromptIntakeEngine;
+
+impl PromptIntakeEngine {
+    /// Parse and immediately replace raw prompt and answer text with shape-addressed packets.
+    pub fn packetize_jsonl_record(line: &str) -> Result<PacketizedPromptRecord, String> {
+        Self::parse_jsonl_record(line).map(Into::into)
+    }
+
+    /// Parse CSV intake and immediately replace raw text with shape-addressed packets.
+    pub fn packetize_csv_record(line: &str) -> Result<PacketizedPromptRecord, String> {
+        Self::parse_csv_record(line).map(Into::into)
+    }
+
+    /// Parse a CoT row and packetize the prompt, every step, and the final answer.
+    pub fn packetize_cot_record(line: &str) -> Result<PacketizedCotRecord, String> {
+        Self::parse_cot_record(line).map(Into::into)
+    }
+    pub fn parse_jsonl_record(line: &str) -> Result<PromptRecord, String> {
+        let v: Value = serde_json::from_str(line).map_err(|e| format!("Invalid JSON: {}", e))?;
+
+        let prompt = normalize_text(
+            v.get("prompt")
+                .and_then(|p| p.as_str())
+                .or_else(|| v.get("question").and_then(|q| q.as_str()))
+                .unwrap_or(""),
+        );
+        if prompt.is_empty() {
+            return Err("Invalid JSONL record: empty prompt".into());
+        }
+
+        let id = v
+            .get("id")
+            .and_then(|i| i.as_str())
+            .or_else(|| v.get("QuestionId").and_then(|i| i.as_str()))
+            .map(normalize_text)
+            .filter(|id| !id.is_empty())
+            .unwrap_or_else(|| fallback_id_for(&prompt));
+
+        let expected_answer = v
+            .get("solution")
+            .and_then(|s| s.as_str())
+            .or_else(|| v.get("answer").and_then(|a| a.as_str()))
+            .map(normalize_text)
+            .filter(|s| !s.is_empty());
+
+        let geometry = perceive(&prompt);
+
+        Ok(PromptRecord {
+            id,
+            raw_prompt: prompt,
+            expected_answer,
+            geometry,
+        })
+    }
+
+    pub fn parse_csv_record(line: &str) -> Result<PromptRecord, String> {
+        let fields = parse_csv_fields(line)?;
+        if fields.len() < 2 {
+            return Err("Invalid CSV format: expected at least id,prompt".into());
+        }
+
+        let prompt = normalize_text(&fields[1]);
+        if prompt.is_empty() {
+            return Err("Invalid CSV record: empty prompt".into());
+        }
+
+        let id = normalize_text(&fields[0]);
+        let id = if id.is_empty() {
+            fallback_id_for(&prompt)
+        } else {
+            id
+        };
+
+        let expected_answer = fields
+            .get(2)
+            .map(|value| normalize_text(value))
+            .filter(|value| !value.is_empty());
+
+        let geometry = perceive(&prompt);
+
+        Ok(PromptRecord {
+            id,
+            raw_prompt: prompt,
+            expected_answer,
+            geometry,
+        })
+    }
+
+    pub fn parse_cot_record(line: &str) -> Result<CotRecord, String> {
+        let v: Value = serde_json::from_str(line).map_err(|e| format!("Invalid JSON: {}", e))?;
+
+        let obstructed_prompt = normalize_text(
+            v.get("obstructed_prompt")
+                .and_then(|p| p.as_str())
+                .or_else(|| v.get("prompt").and_then(|q| q.as_str()))
+                .unwrap_or(""),
+        );
+
+        if obstructed_prompt.is_empty() {
+            return Err("Invalid CoT JSONL record: empty obstructed_prompt".into());
+        }
+
+        let id = format!("cot_{}", fallback_id_for(&obstructed_prompt));
+
+        let mut cot_steps = Vec::new();
+        if let Some(steps) = v.get("cot_steps").and_then(|s| s.as_array()) {
+            for step in steps {
+                if let Some(s) = step.as_str() {
+                    let cleaned = normalize_text(s);
+                    if !cleaned.is_empty() {
+                        cot_steps.push(cleaned);
+                    }
+                }
+            }
+        }
+
+        let final_answer = normalize_text(
+            v.get("final_answer")
+                .and_then(|a| a.as_str())
+                .or_else(|| v.get("solution").and_then(|s| s.as_str()))
+                .unwrap_or(""),
+        );
+
+        let geometry = perceive(&obstructed_prompt);
+
+        Ok(CotRecord {
+            id,
+            obstructed_prompt,
+            cot_steps,
+            final_answer,
+            geometry,
+        })
+    }
+}
+
+fn normalize_text(value: &str) -> String {
+    value
+        .trim()
+        .trim_start_matches('\u{feff}')
+        .replace("\r\n", "\n")
+        .replace('\r', "\n")
+}
+
+fn fallback_id_for(prompt: &str) -> String {
+    let mut hasher = DefaultHasher::new();
+    prompt.hash(&mut hasher);
+    format!("prompt_{:016x}", hasher.finish())
+}
+
+fn parse_csv_fields(line: &str) -> Result<Vec<String>, String> {
+    let mut fields = Vec::new();
+    let mut current = String::new();
+    let mut chars = line.chars().peekable();
+    let mut in_quotes = false;
+
+    while let Some(ch) = chars.next() {
+        match ch {
+            '"' => {
+                if in_quotes && matches!(chars.peek(), Some('"')) {
+                    current.push('"');
+                    chars.next();
+                } else {
+                    in_quotes = !in_quotes;
+                }
+            }
+            ',' if !in_quotes => {
+                fields.push(current);
+                current = String::new();
+            }
+            _ => current.push(ch),
+        }
+    }
+
+    if in_quotes {
+        return Err("Invalid CSV format: unclosed quote".into());
+    }
+
+    fields.push(current);
+    Ok(fields)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::PromptIntakeEngine;
+
+    #[test]
+    fn jsonl_record_normalizes_and_rejects_empty_prompt() {
+        let line = r#"{"id":"  test_01  ","prompt":"  hello\r\nworld  ","solution":"  ok  "}"#;
+        let record = PromptIntakeEngine::parse_jsonl_record(line).unwrap();
+
+        assert_eq!(record.id, "test_01");
+        assert_eq!(record.raw_prompt, "hello\nworld");
+        assert_eq!(record.expected_answer.as_deref(), Some("ok"));
+
+        let bad = r#"{"id":"x","prompt":"   "}"#;
+        assert!(PromptIntakeEngine::parse_jsonl_record(bad).is_err());
+    }
+
+    #[test]
+    fn csv_record_handles_quoted_commas() {
+        let line = r#"row_1,"What, exactly, is this?","answer, here""#;
+        let record = PromptIntakeEngine::parse_csv_record(line).unwrap();
+
+        assert_eq!(record.id, "row_1");
+        assert_eq!(record.raw_prompt, "What, exactly, is this?");
+        assert_eq!(record.expected_answer.as_deref(), Some("answer, here"));
+    }
+
+    #[test]
+    fn csv_record_synthesizes_id_for_blank_id() {
+        let line = r#","prompt only","42""#;
+        let record = PromptIntakeEngine::parse_csv_record(line).unwrap();
+
+        assert!(record.id.starts_with("prompt_"));
+        assert_eq!(record.raw_prompt, "prompt only");
+        assert_eq!(record.expected_answer.as_deref(), Some("42"));
+    }
+    #[test]
+    fn protected_jsonl_boundary_hashes_and_drops_all_raw_text() {
+        const PROMPT: &str = "S16_004_PROMPT_CANARY_83721";
+        const ANSWER: &str = "S16_004_ANSWER_CANARY_83721";
+        let line = format!(r#"{{"id":"protected","prompt":"{PROMPT}","answer":"{ANSWER}"}}"#);
+        let record = PromptIntakeEngine::packetize_jsonl_record(&line).unwrap();
+
+        let rendered = format!("{record:?}");
+        assert!(!rendered.contains(PROMPT));
+        assert!(!rendered.contains(ANSWER));
+        let evaluation = core_prompt_packets::gtoc_adapter::evaluate_prompt_packets(&[
+            record.prompt.clone(),
+            record.expected_answer.clone().unwrap(),
+        ])
+        .unwrap();
+        assert_eq!(evaluation.phi1().value().to_string(), "0");
+        assert_eq!(evaluation.gamma2().value().to_string(), "0");
+    }
+
+    #[test]
+    fn protected_cot_boundary_hashes_prompt_steps_and_answer() {
+        const CANARY: &str = "S16_004_COT_CANARY_48391";
+        let line = format!(
+            r#"{{"obstructed_prompt":"{CANARY} prompt","cot_steps":["{CANARY} step"],"final_answer":"{CANARY} answer"}}"#
+        );
+        let record = PromptIntakeEngine::packetize_cot_record(&line).unwrap();
+        assert_eq!(record.cot_steps.len(), 1);
+        assert!(record.final_answer.is_some());
+        assert!(!format!("{record:?}").contains(CANARY));
+    }
+}

@@ -1,0 +1,133 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:measurement_access_control:v1.0.0
+title: MeasurementAccessControl
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: Boundary
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - FunctionalMeasurementAuthority
+    - MeasurementKernel
+    - Functional
+    - Search
+    - Solver
+    - Evaluator
+    - Policy
+    - TerminalMapper
+    - LicensingBoundary
+    - Engine
+    - GlobalContractTaxonomy
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'MeasurementAccessControl prevents raw cohomological semantics from leaking into Search,
+
+    Solver, Evaluator, Policy, TerminalMapper, LicensingBoundary, or Engine. Canonical
+
+    cohomological measurement artifacts require admitted Functional emission and Measurement
+
+    boundary checking.
+
+    '
+  non_role: &id002
+  - search_access_to_raw_cohomological_semantics
+  - solver_emission_of_canonical_cohomological_values
+  - evaluator_recomputation
+  - evaluator_canonical_measurement_emission
+  - policy_reinterpretation
+  - terminal_mapper_recomputation
+  - engine_recomputation
+  - engine_reinterpretation
+  - measurement_authority_promotion_without_checking
+  - cohomological_scalarization_outside_functional_boundary
+  authority_defaults:
+    access_report: EvidenceOnly
+    checked_access_fact: FactOnly only for checked access-boundary claims.
+  access_rules:
+    search: May consume opaque non-semantic hints only; does not rank or score candidates from raw measurements.
+    solver: Computes only; solver artifacts are not canonical measurements.
+    evaluator: May consume checked measurement references; must not recompute measurements.
+    policy: May consume checked references only under schema permission.
+    terminal_mapper: Maps terminal outcomes; must not recompute or reinterpret measurements.
+    licensing_boundary: May consume checked decision/evidence refs; emits ActionLicense only under its
+      own contract.
+    engine: Executes licensed transitions only; must not branch on raw cohomological values.
+  flow: 'Functional / Observable / Solver / Analysis
+
+    -> MeasurementKernel checked reference
+
+    -> Evaluator / Policy
+
+    -> TerminalMapper
+
+    -> LicensingBoundary
+
+    -> Engine executes licensed transition
+
+    -> Trace
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - search_has_no_raw_cohomological_measurement_access
+  - solver_output_is_not_canonical_measurement
+  - evaluator_consumes_checked_measurement_refs_only
+  - policy_cannot_reinterpret_measurements
+  - terminal_mapper_cannot_recompute_measurements
+  - licensing_boundary_precedes_engine
+  - engine_does_not_branch_on_raw_measurements
+  canonical_invariant: 'Canonical measurements are boundary-controlled evidence. Downstream governance
+    consumes
+
+    checked references only and cannot recompute, reinterpret, scalarize, authorize, or execute
+
+    from raw cohomological values.
+
+    '
+  legacy_metadata:
+    name: MeasurementAccessControl
+    source_file: non-math/02_evidence/measurement_access_control_contract.md
+    active: true
+    machine_authority: true
+    role: Cohomological measurement boundary enforcement
+    version: '2.0'
+    classification: evidence
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: MeasurementAccessReport
+    referenced_output_families:
+    - FactEnvelope
+    - Record
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"
+  coalescence_mode: "specializes"
+  coalesces_with:
+    - "urn:core:evidence:measurement_kernel:v1.0.0"

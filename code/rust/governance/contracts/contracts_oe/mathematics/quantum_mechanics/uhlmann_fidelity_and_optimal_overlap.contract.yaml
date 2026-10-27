@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:uhlmann_fidelity_and_optimal_overlap:v0.1.0
+title: Exact Uhlmann fidelity and supplied-root maximizer
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: uhlmann_fidelity_and_optimal_overlap
+  symbol: uhlmann_fidelity_and_optimal_overlap
+  ascii_symbol: uhlmann_fidelity_and_optimal_overlap
+  notation: Exact Uhlmann fidelity and supplied-root maximizer
+  domain:
+  - Finite exact density matrices; rational or isolated algebraic spectra; bounded splitting; checked same-field
+    positive polar root
+  codomain:
+    description: Declared finite results of core_quantum_physics::purification; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Squared fidelity is (Tr sqrt(C* D D* C))^2
+- Exact rank-one route handles irrational square roots without representing them
+- Root/polar isometry yields independently replayed optimal overlap
+- Interval fidelity retains certified endpoints
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: purification
+  symbols:
+  - Purification::fidelity_exact
+  - Purification::fidelity_enclosure
+  - UhlmannMaximizer::from_positive_root
+  required_tests:
+  - states_channels_exact_tests::uhlmann_fidelity_and_trace_norm_intervals_agree_on_pure_and_mixed_routes
+  - states_channels_exact_tests::declared_uhlmann_polar_root_constructs_optimal_environmental_overlap
+negative_tests:
+- states_channels_exact_tests::declared_uhlmann_polar_root_constructs_optimal_environmental_overlap
+doctrine:
+  summary: Squared fidelity is (Tr sqrt(C* D D* C))^2; Exact rank-one route handles irrational square roots
+    without representing them; Root/polar isometry yields independently replayed optimal overlap; Interval
+    fidelity retains certified endpoints.
+  non_role:
+  - Same-field exact maximizing map requires a replayed positive root; numerical approximations do not certify
+    it
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

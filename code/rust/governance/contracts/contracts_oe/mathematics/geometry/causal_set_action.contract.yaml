@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:causal_set_action:v0.1.0
+title: Finite causal-set intervals and action
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: causal_set_action
+  symbol: causal_set_action
+  ascii_symbol: causal_set_action
+  notation: Finite causal-set intervals and action
+  domain:
+  - Admitted finite poset with declared label; finite interval enumeration.
+  codomain:
+    description: Declared finite results of core_general_relativity::causal_set; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Past/future/spacelike sets derive from the actual order.
+- Alexandrov intervals include the declared endpoints.
+- The dimension2 interval-polynomial action is computed from interval abundances.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_general_relativity
+  module: causal_set
+  symbols:
+  - CausalSet
+  required_tests:
+  - causal_intervals_and_dimension_two_action_are_computed_from_the_order
+negative_tests:
+- causal_intervals_and_dimension_two_action_are_computed_from_the_order
+doctrine:
+  summary: Past/future/spacelike sets derive from the actual order.; Alexandrov intervals include the declared
+    endpoints.; The dimension2 interval-polynomial action is computed from interval abundances..
+  non_role:
+  - An exact finite causal-set action does not prove Lorentzian continuum convergence or determine spacetime
+    dimension.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

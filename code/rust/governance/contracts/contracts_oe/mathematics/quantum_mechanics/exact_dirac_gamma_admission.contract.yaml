@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_dirac_gamma_admission:v0.1.0
+title: Exact Finite Dirac and Mass-Shell Admission
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_dirac_gamma_admission
+  symbol: exact_dirac_gamma_admission
+  ascii_symbol: exact_dirac_gamma_admission
+  notation: Exact Finite Dirac and Mass-Shell Admission
+  domain:
+  - Declared exact finite gamma family and signed rational metric
+  - Physical ordered-product enumeration is capped at six gammas; energy projectors require nonzero mass and
+    the declared mass shell
+  codomain:
+    description: Declared finite results of core_quantum_physics::dirac_gamma_admission; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Slash(p)^2=(p.p)I and exact kernel rank determines plane-wave solution dimension
+- The four-gamma trace is dimension times (eta_mu_nu eta_rho_sigma-eta_mu_rho eta_nu_sigma+eta_mu_sigma eta_nu_rho)
+- On-shell projectors are complementary idempotents
+- The spin vector action is a real BasicMatrix computed through the canonical Clifford normalizer
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: dirac_gamma_admission
+  symbols:
+  - CliffordFamily
+  - DiracError
+  - CliffordFamily::slash
+  - CliffordFamily::solution_dimension
+  - CliffordFamily::vector_action
+  - CliffordFamily::four_gamma_trace
+  - CliffordFamily::energy_projectors
+  - boost_half_parameters
+  required_tests:
+  - the_dirac_operator_squares_to_the_klein_gordon_operator
+  - plane_wave_solutions_exist_exactly_on_the_mass_shell
+  - spin_elements_carry_solutions_at_p_to_solutions_at_l_p
+  - four_gamma_traces_and_on_shell_energy_projectors_replay_the_metric
+negative_tests:
+- Singular/non-normalizing spin elements, off-mass-shell and zero-mass projector requests are refused
+- Rational half-rapidity obstruction returns its exact square class
+doctrine:
+  summary: Slash(p)^2=(p.p)I and exact kernel rank determines plane-wave solution dimension; The four-gamma
+    trace is dimension times (eta_mu_nu eta_rho_sigma-eta_mu_rho eta_nu_sigma+eta_mu_sigma eta_nu_rho); On-shell
+    projectors are complementary idempotents; The spin vector action is a real BasicMatrix computed through
+    the canonical Clifford normalizer.
+  non_role:
+  - No PDE solution, continuum dynamics or approximate irrational spin lift
+  - Covariant slash projectors do not by themselves select a vacuum
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

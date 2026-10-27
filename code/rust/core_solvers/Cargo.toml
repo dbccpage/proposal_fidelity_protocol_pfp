@@ -1,0 +1,153 @@
+[package]
+autotests = false
+name = "core_solvers"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+description = "Canonical solver/certifier set for the engine"
+
+[dependencies]
+core_category_theory = { path = "../core_category_theory" }
+core_policy = { path = "../core_policy" }
+
+core_types = { path = "../core_types" }
+linear_algebra = { path = "../core_linear_algebra" }
+core_homology = { path = "../core_homology" }
+core_functional = { path = "../core_functional" }
+core_kernel = { path = "../core_kernel" }
+core_combinatorics = { path = "../core_combinatorics" }
+core_holonomy = { path = "../core_holonomy" }
+core_number_theory = { path = "../core_number_theory" }
+core_homotopy_type_theory = { path = "../core_homotopy_type_theory" }
+# hodge_global_evaluator implements core_epk::v2::GlobalEvaluatorReplay in the lib
+# target. core_epk must never depend on core_solvers (that WOULD cycle).
+core_epk = { path = "../core_local_green_global_red_lggr" }
+nalgebra = "0.33"
+num-bigint = "0.4"
+num-rational = "0.4"
+num-traits = "0.2"
+thiserror = "2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+rand = "0.8"
+blake3 = "1.5"
+num-complex = { version = "0.4.6", features = ["serde"] }
+sprs = "0.11"
+rand_distr = "0.4"
+hex = "0.4"
+
+[dev-dependencies]
+core_replay = { path = "../core_replay" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_solvers`.
+
+[[test]]
+name = "blind_spot_capacity_conformance"
+path = "../tests/core_solvers/blind_spot_capacity_conformance.rs"
+
+[[test]]
+name = "bounded_l1_allocation"
+path = "../tests/core_solvers/bounded_l1_allocation.rs"
+
+[[test]]
+name = "conformance_phi1"
+path = "../tests/core_solvers/conformance_phi1.rs"
+
+[[test]]
+name = "convex_geometry_denominators"
+path = "../tests/core_solvers/convex_geometry_denominators.rs"
+
+[[test]]
+name = "dead_module_audit"
+path = "../tests/core_solvers/dead_module_audit.rs"
+
+[[test]]
+name = "finite_belief_game"
+path = "../tests/core_solvers/finite_belief_game.rs"
+
+[[test]]
+name = "finite_computation_extension"
+path = "../tests/core_solvers/finite_computation_extension.rs"
+
+[[test]]
+name = "finite_stream_interpreter"
+path = "../tests/core_solvers/finite_stream_interpreter.rs"
+
+[[test]]
+name = "hodge_false_green_kill"
+path = "../tests/core_solvers/hodge_false_green_kill.rs"
+
+[[test]]
+name = "hodge_packet_binding"
+path = "../tests/core_solvers/hodge_packet_binding.rs"
+
+[[test]]
+name = "lggr_soundness_conformance"
+path = "../tests/core_solvers/lggr_soundness_conformance.rs"
+
+[[test]]
+name = "network_simplex_basic"
+path = "../tests/core_solvers/network_simplex_basic.rs"
+
+[[test]]
+name = "network_simplex_hardening"
+path = "../tests/core_solvers/network_simplex_hardening.rs"
+
+[[test]]
+name = "obl1a_distribution_bound_conformance"
+path = "../tests/core_solvers/obl1a_distribution_bound_conformance.rs"
+
+[[test]]
+name = "obl1a_sharp_distribution_bound_conformance"
+path = "../tests/core_solvers/obl1a_sharp_distribution_bound_conformance.rs"
+
+[[test]]
+name = "periodic_refinement_spectrum_conformance"
+path = "../tests/core_solvers/periodic_refinement_spectrum_conformance.rs"
+
+[[test]]
+name = "phi1_boundary"
+path = "../tests/core_solvers/phi1_boundary.rs"
+
+[[test]]
+name = "phi1_carrier_validation"
+path = "../tests/core_solvers/phi1_carrier_validation.rs"
+
+[[test]]
+name = "plan_grammar_tests"
+path = "../tests/core_solvers/plan_grammar_tests.rs"
+
+[[test]]
+name = "q_solver_conformance"
+path = "../tests/core_solvers/q_solver_conformance.rs"
+
+[[test]]
+name = "rational_cut_tree"
+path = "../tests/core_solvers/rational_cut_tree.rs"
+
+[[test]]
+name = "reaction_network"
+path = "../tests/core_solvers/reaction_network.rs"
+
+[[test]]
+name = "refinement_spectrum_conformance"
+path = "../tests/core_solvers/refinement_spectrum_conformance.rs"
+
+[[test]]
+name = "reverse_search_vertices"
+path = "../tests/core_solvers/reverse_search_vertices.rs"
+
+[[test]]
+name = "solver_integration"
+path = "../tests/core_solvers/solver_integration.rs"
+
+[[test]]
+name = "solver_parity"
+path = "../tests/core_solvers/solver_parity.rs"
+
+[[test]]
+name = "test_neville_aitken_enclosure"
+path = "../tests/core_solvers/test_neville_aitken_enclosure.rs"

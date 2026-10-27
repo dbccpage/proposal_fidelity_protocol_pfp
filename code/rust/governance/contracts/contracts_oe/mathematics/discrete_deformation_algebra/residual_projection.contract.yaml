@@ -1,0 +1,297 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:residual_projection:v1.0.0
+title: Residual projection
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1_obstruction_mass:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: residual_projection
+  ascii_symbol: residual_projection
+  symbol: residual_projection
+  notation: residual_projection
+  domain:
+  - 'carrier: instance of residual_projection'
+  codomain:
+    description: Mathematical object declared by Residual projection (structural shell).
+requirements:
+  required_structures:
+  - Carrier for residual_projection must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- Residual projection is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+negative_tests:
+- Artifact claiming Residual projection without required structures must be rejected
+- Empty or ill-typed carrier for residual_projection must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: 'Selects a canonical minimal-norm representative of a Q¹ class. Nonclaim fence: does not claim PROVED; does not
+    claim GlobalGreen; does not claim HoTT/Univalence discharge from this contract alone.'
+  symbol: R
+  ascii_symbol: ResidualProjection
+  formula: R(x) = x - d₀α*
+  operator_class_symbol: R
+  1. Contract metadata:
+    title: Residual projection
+    version: 0.1.0
+    object_type: canonical_representative_operator
+  2. Mathematical object / functional role:
+    role: Selects a canonical minimal-norm representative of a Q¹ class.
+    purpose: Turns a relation-valued optimization into a replayable operator only when a deterministic tie policy is declared.
+    non_role:
+    - Does not change the Q¹ class.
+    - Does not repair by itself.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: x ∈ C¹ with B¹ and Φ₁ optimization problem
+    codomain: canonical residual representative in the same Q¹ class
+    representative_selector: R is a section-like representative selector for Q¹ classes when TieR is deterministic.
+  4. Required structures:
+    required:
+    - valid cochain layer
+    - B¹ exact repair space
+    - Φ₁ optimization problem
+    - weighted norm profile
+    - deterministic TieR
+    - quotient class preservation witness
+    optional:
+    - α* witness
+    - primal optimization transcript
+    - dual witness
+    - saturation witness
+  5. Definition:
+    formula: R(x)=x-d₀α* where α* solves min_α ||x-d₀α||_{1,w}.
+    sign_convention: Minus convention for minimization; compatible with E plus convention via α↦-α.
+    relation_without_tie: Without TieR, R is relation-valued over all optimal residuals.
+    deterministic_operator: With TieR, R is a function.
+    canonical_residual: R(x) is the selected Φ₁-minimizing representative of [x].
+  6. Laws and invariants:
+    class_preservation: '[R(x)] = [x] in Q¹.'
+    minimality: '||R(x)||_{1,w}=Φ₁([x]).'
+    gamma2_preservation: 'Γ₂(R(x)) = Γ₂(x) since d₁d₀ = 0; coboundary moves leave d₁x strictly invariant (DDC-R-02).'
+    diagnostic_class_preservation: 'R preserves the three-way diagnostic class: ExactRepair, ClosedResidual, or ActiveClosureFailure.'
+    carrier_unchanged: 'R leaves the carrier strictly unchanged.'
+    adequate_detector_required: 'R requires an adequate detector witness.'
+    cycle_coordinate_registration: 'R retains b₁ = |E| - |V| + c coordinates outside the spanning forest, one per independent cycle (DDC-R-06).'
+    exact_dual_certification: 'Phi_1 is certified by a spanning-forest potential phi and a dual circulation flow y (d₀^T y = 0, |y_e| <= w_e) closing the duality gap exactly: <y, x> = Phi_1([x]).'
+    idempotence: R(R(x))=R(x) when TieR is deterministic.
+    exact_absorption: R ∘ E_β = R for every exact repair action E_β under the same layer and deterministic TieR.
+    non_commutation_warning: E_β ∘ R need not equal R unless E_β is trivial on representatives.
+    relation_warning: Without TieR, laws hold for the optimal residual set, not for a single deterministic output.
+  7. Equality / equivalence rules:
+    representative_equality: R outputs compare as C¹ vectors under fixed basis.
+    relation_equality: Without TieR, equality is equality of optimal residual sets.
+    tie_policy_equality: Different TieR policies may select different canonical representatives with the same Φ₁ value.
+    quotient_equality: All R outputs remain in the original Q¹ class.
+  8. Replay / determinism requirements:
+    requirements:
+    - TieR hash.
+    - Optimization replay or exact solve artifact.
+    - α* witness if exported.
+    - Dual circulation witness y closing duality gap.
+    - Quotient class witness.
+    - Layer hash.
+    - B¹ hash.
+    - Weight profile hash.
+    - Tolerance profile if approximate.
+    - Dual feasibility/saturation replay if dual witness is claimed.
+  9. Relationship to other Core primitives:
+    relationships:
+      operator_class: R belongs to operator class R.
+      not_M: R is not M when it preserves quotient class, minimality, and Γ₂.
+      E: 'R absorbs prior exact repair: R∘E=R.'
+      Q1: R selects a representative of a Q¹ class; it is not itself a quotient class.
+      Phi1: R realizes the Φ₁ minimal norm.
+      Gamma2: R strictly preserves Γ₂.
+      Xi: Ξ depends on deterministic h₁*=R(x) when used.
+      TieR: TieR is required to make R replayable as an operator.
+  10. Rust descriptor shape:
+    sketch: "pub struct ResidualProjectionDescriptor {\n    pub layer_hash: String,\n    pub b1_hash: String,\n    pub phi1_problem_hash: String,\n    pub weight_profile_hash: String,\n    pub tie_policy_hash: String,\n    pub alpha_witness_hash: Option<String>,\n    pub optimization_artifact_hash: Option<String>,\n    pub dual_witness_hash: Option<String>,\n    pub tolerance_profile_hash: Option<String>,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - R claimed without tie policy.
+    - R changes quotient class.
+    - R changes Γ₂ or diagnostic class (ResidualProjectionChangedClosure).
+    - R changes carrier (FixedCarrierOpChangedCarrier).
+    - R output not minimal.
+    - R used as deterministic when multiple optima exist.
+    - R claimed without Φ₁ optimization problem.
+    - Different TieR policies silently mixed.
+    - E∘R incorrectly assumed equal to R.
+    - Approximate optimization treated as exact without tolerance profile.
+    - R mislabeled as M despite quotient preservation and minimality.
+    - R admitted despite missing minimality witness or missing dual certificate.
+  12. Open questions / WIP status:
+    wip:
+    - Canonical TieR registry.
+    - Exact LP certificate interface.
+    - TieR equivalence and versioning.
+    - Approximate optimization admissibility boundaries.
+  compact_yaml:
+    RESIDUAL_PROJECTION_CONTRACT:
+      symbol: R
+      ascii_symbol: ResidualProjection
+      operator_class_symbol: R
+      formula: R(x)=x-d₀α*
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: x∈C¹ with B¹/Φ₁ problem
+      codomain: canonical representative in [x]
+      required_structures:
+      - valid layer
+      - Φ₁ problem
+      - B¹
+      - weighted norm
+      - TieR
+      - quotient preservation
+      definition: minimal-norm representative selected by deterministic tie policy
+      laws:
+      - class preserving
+      - minimal (realizes Φ₁)
+      - preserves Γ₂ and three-way diagnostic class (DDC-R-02)
+      - carrier unchanged
+      - requires adequate detector
+      - idempotent with TieR
+      - R∘E=R
+      - E∘R not generally R
+      forbidden_interpretations:
+      - deterministic without TieR
+      - mutation
+      - changing Γ₂ or diagnostic class
+      - policy decision
+      - quotient class itself
+      - repair by itself
+      relationships:
+      - operator class R
+      - not M when class-preserving, minimal, and Γ₂-preserving
+      - realizes Φ₁
+      - preserves Γ₂
+      - feeds Ξ as h₁*
+      negative_tests:
+      - missing TieR
+      - class changed
+      - Γ₂ changed (ResidualProjectionChangedClosure)
+      - carrier changed (FixedCarrierOpChangedCarrier)
+      - not minimal
+      - multiple optima unhandled
+      - TieR policies mixed
+      - approximate treated as exact
+      open_questions:
+      - TieR registry
+      - exact LP certificate interface
+      - TieR versioning
+  non_role:
+  - Authority minting or GlobalGreen discharge
+  - Customer-facing claims or product guarantees
+  - Full encyclopedia mechanization of residual_projection (deferred)
+  - HoTT/Univalence theorem discharge from this contract alone
+  - Runtime enforcement as proof of mathematical truth
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; not enforced as obligations; AuthorityEffect None"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: "Missing or not detected field gate G_MATH_BLOCK"
+    recommendation: "Repair under meth-level math re-review (ADR-007); not GlobalGreen."
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: "Missing or not detected field gate G_LAWS_OR_REQUIREMENTS"
+    recommendation: "Repair under meth-level math re-review (ADR-007); not GlobalGreen."
+
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: "DEEP Stage-1: required_structures missing or empty"
+    recommendation: "Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen."
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: "DEEP Stage-1: negative_tests missing or empty"
+    recommendation: "Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen."
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NON_ROLE
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: "DEEP Stage-1: doctrine.non_role missing"
+    recommendation: "Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen."
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: "Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false; create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures; set laws; set negative_tests; set doctrine.non_role (anti-theater); add overclaim nonclaim fence to doctrine.summary. Not PROVED; not GlobalGreen; human re-review still required for math depth."
+    recommendation: "Continue meth re-review for object-specific laws; code follows YAML (ADR-007a)."
+    pass: stage1_meth_repair_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: MATH-OVERCLAIM
+    severity: high
+    claim_class: "[STANDARD]"
+    detail: "DEEP Stage-1: PROVED/GlobalGreen language without nearby nonclaim"
+    recommendation: "Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen."
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_OVERCLAIM_FENCE
+    severity: info
+    claim_class: "[SCOPE FENCE]"
+    detail: "Explicit nonclaim fence: does not claim PROVED/GlobalGreen/HoTT discharge."
+    recommendation: "Vocabulary may remain; never mint proof status from YAML alone."
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: STAGE2_EXACT_PATH
+    severity: high
+    claim_class: "[SCOPE FENCE]"
+    file: engine/crates/core_operator_algebra/src/residual_projection.rs
+    detail: >
+      Chunk-07 Stage-2 (unambiguous exact stem.rs): ResidualProjectionAction is
+      residual_label + certified_residual f64 + TiePolicy — classifier carrier, not
+      R(x)=x-d0α* solver. YAML doctrine states full minimal-norm representative
+      operator laws. Stage-2 YAML_AHEAD_OF_CODE; no silent YAML downgrade. Not
+      PROVED; not GlobalGreen; AuthorityEffect None.
+    delta: YAML_AHEAD_OF_CODE

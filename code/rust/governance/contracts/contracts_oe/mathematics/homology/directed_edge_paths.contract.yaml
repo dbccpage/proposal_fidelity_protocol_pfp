@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:directed_edge_paths:v0.1.0
+title: Bounded directed multigraph paths
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: directed_edge_paths
+  symbol: directed_edge_paths
+  ascii_symbol: directed_edge_paths
+  notation: Bounded directed multigraph paths
+  domain:
+  - Vertices<=4096, edges<=16384, paths<=65536; directed acyclic enumeration.
+  codomain:
+    description: Declared finite results of core_homology::directed_multigraph; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Parallel edges are distinct paths.
+- Identity path is included at equal endpoints.
+- Cycles, invalid vertices and exceeded budgets refuse without a partial hom-set.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_homology
+  module: directed_multigraph
+  symbols:
+  - DirectedMultigraph
+  - DirectedMultigraph::shortest_distances
+  required_tests:
+  - parallel_paths_have_distinct_edges_and_composition_is_complete
+  - directed_cycles_and_invalid_vertices_are_refusals
+negative_tests:
+- directed_cycles_and_invalid_vertices_are_refusals
+doctrine:
+  summary: Parallel edges are distinct paths.; Identity path is included at equal endpoints.; Cycles, invalid
+    vertices and exceeded budgets refuse without a partial hom-set..
+  non_role:
+  - No stochastic, quantum or spacetime interpretation is built into the graph.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

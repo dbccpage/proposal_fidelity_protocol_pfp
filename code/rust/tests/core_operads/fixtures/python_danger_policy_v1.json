@@ -1,0 +1,521 @@
+{
+  "vectors": [
+    {
+      "input": {},
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "1",
+            "denominator": "2"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": false
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": false,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "1",
+            "denominator": "2"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "quarantine_on_critical": false
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": false,
+          "allosteric_quorum_threshold": {
+            "numerator": "1",
+            "denominator": "2"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": false,
+        "quarantine_on_critical": false
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": false,
+          "quarantine_on_critical": false,
+          "allosteric_quorum_threshold": {
+            "numerator": "1",
+            "denominator": "2"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": 0
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: enforce_danger_gate must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": 1
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: enforce_danger_gate must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": "True"
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: enforce_danger_gate must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": null
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: enforce_danger_gate must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": []
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: enforce_danger_gate must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": {}
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: enforce_danger_gate must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "quarantine_on_critical": 0
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: quarantine_on_critical must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "quarantine_on_critical": 1
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: quarantine_on_critical must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "quarantine_on_critical": "True"
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: quarantine_on_critical must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "quarantine_on_critical": null
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: quarantine_on_critical must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "quarantine_on_critical": []
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: quarantine_on_critical must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "quarantine_on_critical": {}
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: quarantine_on_critical must be boolean"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "1",
+          "denominator": "2"
+        }
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "1",
+            "denominator": "2"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "1",
+          "denominator": "3"
+        }
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "1",
+            "denominator": "3"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "2",
+          "denominator": "3"
+        }
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "2",
+            "denominator": "3"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "2",
+          "denominator": "3"
+        }
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "2",
+            "denominator": "3"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "1",
+          "denominator": "2"
+        }
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "1",
+            "denominator": "2"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "denominator": "100000000000000000000000000000000000000000000000000000000000000000000000000000001"
+        }
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "denominator": "100000000000000000000000000000000000000000000000000000000000000000000000000000001"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "1",
+          "denominator": "100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "expected": {
+        "ok": {
+          "enforce_danger_gate": true,
+          "quarantine_on_critical": true,
+          "allosteric_quorum_threshold": {
+            "numerator": "1",
+            "denominator": "100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "-1",
+          "denominator": "2"
+        }
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "3",
+          "denominator": "2"
+        }
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "0",
+          "denominator": "1"
+        }
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {
+          "numerator": "1",
+          "denominator": "1"
+        }
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": -1
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": 0
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": 1
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": 2
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": 100000000000000000000000000000000000000000000000000000000000000000000000000000000
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_VALUE_ERROR",
+          "message": "DANGER_POLICY_VALUE_ERROR: allosteric_quorum_threshold must be in (0, 1)"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": true
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: allosteric_quorum_threshold must be an exact int or Fraction"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": false
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: allosteric_quorum_threshold must be an exact int or Fraction"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": 0.5
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: allosteric_quorum_threshold must be an exact int or Fraction"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": "1/2"
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: allosteric_quorum_threshold must be an exact int or Fraction"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": null
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: allosteric_quorum_threshold must be an exact int or Fraction"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": []
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: allosteric_quorum_threshold must be an exact int or Fraction"
+        }
+      }
+    },
+    {
+      "input": {
+        "allosteric_quorum_threshold": {}
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: allosteric_quorum_threshold must be an exact int or Fraction"
+        }
+      }
+    },
+    {
+      "input": {
+        "enforce_danger_gate": 1,
+        "allosteric_quorum_threshold": "bad"
+      },
+      "expected": {
+        "error": {
+          "code": "DANGER_POLICY_TYPE_ERROR",
+          "message": "DANGER_POLICY_TYPE_ERROR: enforce_danger_gate must be boolean"
+        }
+      }
+    }
+  ]
+}

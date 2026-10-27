@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_energy_spacing_diagnostics:v0.1.0
+title: Finite energy gaps from checked numerical eigenpairs
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_energy_spacing_diagnostics
+  symbol: finite_energy_spacing_diagnostics
+  ascii_symbol: finite_energy_spacing_diagnostics
+  notation: Finite energy gaps from checked numerical eigenpairs
+  domain:
+  - Checked bounded shared HermitianSpectrum carriers
+  codomain:
+    description: Declared finite results of core_functional::quantum_gaps; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Multiplicity and zero gaps remain explicit
+- Singleton spectra have no spacing
+- Authority effect remains None in serialization
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_functional
+  module: quantum_gaps
+  symbols:
+  - QuantumGapFunctional::evaluate
+  - QuantumGaps::adjacent_spacings
+  - QuantumGaps::lowest_adjacent_spacing
+  required_tests:
+  - quantum_gaps::tests::independent_integer_fixtures_match_every_level_and_spacing
+  - quantum_gaps::tests::diagonal_levels_are_sorted_without_dropping_degeneracy
+  - quantum_gaps::tests::serialized_gaps_keep_none_authority_and_no_verdict
+negative_tests:
+- quantum_gaps::tests::diagonal_levels_are_sorted_without_dropping_degeneracy
+doctrine:
+  summary: Multiplicity and zero gaps remain explicit; Singleton spectra have no spacing; Authority effect
+    remains None in serialization.
+  non_role:
+  - Adjacent energy-gap interpretation does not own the underlying numerical eigensolver
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

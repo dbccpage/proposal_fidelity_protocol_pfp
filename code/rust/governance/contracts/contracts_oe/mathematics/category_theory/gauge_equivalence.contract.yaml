@@ -1,0 +1,35 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:gauge_equivalence:v0.1.0
+title: Gauge Equivalence Contract
+kind: math_contract
+status: deprecated
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:math:contract:DifferentialGradedLieAlgebra:v1.0.0
+      - urn:math:contract:MaurerCartanEquation:v1.0.0
+
+math:
+  object_kind: gauge_equivalence
+  symbol: "mu ~_gauge nu"
+  ascii_symbol: GaugeEquivalence
+  notation: "orbit relation under gauge action; not cochain equality"
+laws:
+  - "Infinitesimal gauge action is declared with truncation order"
+  - "Equivalence is an orbit witness, not equality of coordinates"
+  - "Normalization may refuse when exponentiation unavailable"
+negative_tests:
+  - "Equal cochains without gauge relation must not be sold as gauge theorem alone"
+  - "Missing truncation order Refused"
+doctrine:
+  summary: Gauge equivalence is separate from equality. Certificates must name the relation.
+wip:
+- "Legacy owner block named promotion target core_deformation_theory::gauge.rs; no crate of that name exists under engine/crates_rs, so no rust_binding is declared."
+- "Conventions reference (legacy): sentinel/engine/MATHEMATICAL_CONVENTIONS.md"
+- "Last audited (legacy record): 2026-08-06"
+- "Legacy status `superseded` named no successor contract; it is mapped to `deprecated`, the nearest status the v1 schema admits."

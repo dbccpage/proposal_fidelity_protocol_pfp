@@ -1,0 +1,55 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:finite_cyclic_transport_amplitude:file:v1.0.0
+title: Bounded exact finite cyclic transport amplitude
+status: active_provisional
+crate: core_functional
+file: crates_rs/core_functional/src/transport_amplitude.rs
+layer: functional
+role: immutable_exact_finite_cyclic_transport_amplitude
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - dimension_and_step_bounded_exact_rational_weighted_cyclic_transport
+  - explicitly_oriented_column_vector_shift_matrix
+  - exact_path_product_for_declared_finite_cycles
+  - typed_refusal_of_empty_or_oversized_cycles_and_paths
+  - exact_zero_for_an_unreachable_declared_endpoint
+  - no_authority_promotion
+does_not_own:
+  - arbitrary_path_network_or_cochain_boundary_transport
+  - physical_transport_or_quantum_state_interpretation
+  - optimization_or_certificate_generation
+  - legacy_float_API_compatibility_or_python_migration
+  - actor_authority_or_task_completion
+may_call: []
+must_not:
+  - treat_a_nilpotent_shift_as_a_cyclic_shift
+  - silently_change_endpoint_or_cycle_orientation
+  - accept_zero_denominator_rationals
+  - promote_a_path_value_to_authority_or_acceptance
+exactness:
+  mode: exact_dimension_and_step_bounded_rational_finite_cycle
+  exact_constructor_required: true
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+  - "pub struct MinimalCyclicTransport"
+  - "pub struct TransportAmplitude"
+  - "pub fn shift_operator("
+  - "pub fn amplitude("
+  - "TransportAmplitudeError::ZeroDenominator"
+required_tests:
+  - "transport_amplitude::tests::weighted_cycle_multiplies_exact_edges"
+  - "transport_amplitude::tests::cyclic_shift_wraps_instead_of_nilpotently_ending"
+  - "transport_amplitude::tests::weighted_shift_operator_matches_path_amplitude"
+  - "transport_amplitude::tests::unreachable_endpoint_is_exact_zero"
+  - "transport_amplitude::tests::zero_steps_is_identity"
+  - "transport_amplitude::tests::invalid_inputs_are_typed_refusals"
+  - "transport_amplitude::tests::unreduced_rationals_are_canonicalized_before_arithmetic"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

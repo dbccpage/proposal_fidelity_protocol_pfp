@@ -1,0 +1,84 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_mass_phase_embedding:v0.1.0
+title: Exact Declared Mass-Phase Embedding
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_mass_phase_embedding
+  symbol: exact_mass_phase_embedding
+  ascii_symbol: exact_mass_phase_embedding
+  notation: Exact Declared Mass-Phase Embedding
+  domain:
+  - Nonnegative rational masses with positive total and one declared unit Gaussian phase per coordinate
+  - Rational overlap APIs require rational coordinate square roots; algebraic APIs use the canonical compositum
+    with conductor<=1024
+  codomain:
+    description: Declared finite results of core_quantum_physics::mass_phase_embedding; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Born weights recover normalized masses and total squared norm is one
+- Normalized Surd amplitude square classes are retained instead of discarded
+- Algebraic overlap/fidelity preserve every field coefficient and exact phase cancellation
+- Equal Born weights can have zero mutual fidelity under different declared phases
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: mass_phase_embedding
+  symbols:
+  - EmbeddingError
+  - MassPhaseEmbedding
+  - MassPhaseEmbedding::born_weights
+  - MassPhaseEmbedding::amplitude_surds
+  - MassPhaseEmbedding::overlap
+  - MassPhaseEmbedding::algebraic_overlap
+  - MassPhaseEmbedding::algebraic_fidelity
+  - MassPhaseEmbedding::hellinger_squared
+  required_tests:
+  - mass_phase_embedding_is_unit_norm_and_many_to_one
+  - exact_amplitudes_exist_only_for_square_probabilities
+  - the_embedding_refuses_implicit_phases_and_invalid_masses
+  - mass_phase_overlaps_preserve_algebraic_coefficients_and_distinguish_phases
+negative_tests:
+- Implicit/nonunit phases, negative/zero-total masses and dimension mismatch are refused
+- Irrational rational-query results are typed refusals
+- A square class requiring conductor 1201 exceeds the declared 1024 field bound
+doctrine:
+  summary: Born weights recover normalized masses and total squared norm is one; Normalized Surd amplitude
+    square classes are retained instead of discarded; Algebraic overlap/fidelity preserve every field coefficient
+    and exact phase cancellation; Equal Born weights can have zero mutual fidelity under different declared
+    phases.
+  non_role:
+  - No derivation of the Born rule or default phase convention
+  - No promise to represent arbitrary algebraic composita in the bounded field owner
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

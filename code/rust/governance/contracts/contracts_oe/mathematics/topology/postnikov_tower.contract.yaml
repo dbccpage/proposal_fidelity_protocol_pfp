@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:postnikov_tower:v0.1.0
+title: Postnikov Tower Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: tower
+  symbol: '... -> X_n -> X_{n-1} -> ... -> X_1 -> X_0 = *, with X = holim X_n'
+  ascii_symbol: postnikov_tower
+  notation: '... -> X_n -> X_{n-1} -> ... -> X_1 -> X_0 = *, with X = holim X_n'
+  domain:
+  - 'base_space: connected space X'
+  - 'postnikov_sections: sequence {X_n}_{n >= 0} with X_0 = *'
+  - 'fibration_maps: p_n: X_n -> X_{n-1} for each n >= 1'
+  - 'fibers: fib(p_n) = K(pi_n(X), n)'
+  - 'k_invariants: k_n in H^{n+1}(X_{n-1}; pi_n(X))'
+  - 'section_maps: i_n: X -> X_n (canonical maps from X)'
+  codomain:
+    description: 'A sequence of fibrations ... -> X_n -> X_{n-1} -> ... -> X_1 -> X_0 = * where each X_n is the n-th Postnikov section of a connected space X, with fibers given by Eilenberg-MacLane spaces and fibrations classified by k-invariants.
+
+      '
+requirements:
+  required_structures:
+  - X is a connected space
+  - Each X_n satisfies pi_k(X_n) = pi_k(X) for k <= n and pi_k(X_n) = 0 for k > n
+  - fib(X_n -> X_{n-1}) = K(pi_n(X), n) for each n >= 1
+  - k_n in H^{n+1}(X_{n-1}; pi_n(X)) classifies the fibration X_n -> X_{n-1}
+  - X = holim X_n for CW complexes
+  - Artifact hash uniquely identifies tower data
+laws:
+- pi_k(X_n) = pi_k(X) for k <= n and pi_k(X_n) = 0 for k > n
+- fib(X_n -> X_{n-1}) = K(pi_n(X), n) for each n >= 1
+- The fibration X_n -> X_{n-1} is classified by k_n in H^{n+1}(X_{n-1}; pi_n(X))
+- X = holim X_n for CW complexes
+- X_0 = * (contractible)
+- 'Maps f: X -> Y induce compatible maps of Postnikov towers'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Given same data, any conforming implementation produces identical artifact hash
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:EilenbergMacLaneSpectrum:v0.1.0 serves as Fibers K(pi_n(X), n) of the tower fibrations
+- urn:math:contract:Fibration:v0.1.0 serves as Each map X_n -> X_{n-1} is a fibration
+- urn:math:contract:HomotopyGroup:v0.1.0 serves as Homotopy groups pi_n(X) determine the tower layers
+- 'urn:math:contract:HomotopyLimit:v0.1.0 serves as Tower convergence: X = holim X_n'
+negative_tests:
+- Disconnected base space must be rejected
+- Postnikov section violating homotopy group truncation must be rejected
+- Fiber not equal to K(pi_n(X), n) must be rejected
+- k-invariant not classifying the fibration must be rejected
+- Tower failing to converge must be rejected
+- Incompatible homotopy groups and k-invariants must be rejected
+doctrine:
+  summary: A Postnikov tower is a sequence of fibrations that decomposes a connected space X into layers determined by its homotopy groups.  The n-th Postnikov section X_n satisfies pi_k(X_n) = pi_k(X) for k <= n and pi_k(X_n) = 0 for k > n.  Together with k-invariants and obstruction theory, Postnikov towers provide a systematic way to reconstruct spaces from algebraic data.
+  non_role:
+  - Not a general model category framework
+  - Does not implement CW complex cell decomposition (dual construction)
+  - Not responsible for Whitehead tower (separate contract)
+  - Does not compute cohomology operations beyond k-invariants
+wip:
+- Postnikov towers in infinity-category setting
+- Equivariant Postnikov towers for G-spaces
+- Relationship to Whitehead tower (dual construction)
+- Effective computation of k-invariants for general spaces
+- Current implementation focuses on simply-connected spaces
+- EilenbergMacLaneSpectrum contract dependency requires coordination
+- Fibration contract needed for full tower validation
+- HomotopyGroup contract integration pending
+- k-invariant computation uses cohomology with local coefficients

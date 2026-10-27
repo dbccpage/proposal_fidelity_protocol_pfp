@@ -1,0 +1,173 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:contract_descriptors:v1.0.0
+title: ContractDescriptors
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: contract_descriptors
+  ascii_symbol: contract_descriptors
+  symbol: contract_descriptors
+  notation: contract_descriptors
+  domain:
+  - 'carrier: instance of contract_descriptors'
+  codomain:
+    description: Mathematical object declared by ContractDescriptors (structural shell).
+requirements:
+  required_structures:
+  - Carrier for contract_descriptors must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- ContractDescriptors is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+rust_binding:
+  crate: core_contracts
+  module: contract_descriptors
+  symbols:
+  - ContractDescriptors
+  - PrimitiveContractDescriptor
+  - PrimitiveContractBinding
+  - FunctionalContractBinding
+  - CORE_PRIMITIVE_CONTRACTS
+  - CORE_PRIMITIVE_CONTRACT_BINDINGS
+  - FUNCTIONAL_CONTRACT_BINDINGS
+  - contract_by_id
+  - binding_by_descriptor_id
+  - primitive_binding_by_contract_urn
+  - primitive_binding_by_canonical_file
+  - primitive_dependency_contract_urns
+  - functional_boundary_dependency_contract_urns
+  - functional_dependency_contract_urns
+  - functional_binding_by_contract_urn
+  - functional_binding_by_canonical_file
+  - functional_binding_by_rust_surface
+  required_tests:
+  - primitive_descriptors_have_complete_doctrine_fields
+  - contract_by_id_rejects_unknown_and_empty_ids
+  - all_contracts_are_inert_wip_definitions
+negative_tests:
+- Artifact claiming ContractDescriptors without required structures must be rejected
+- Empty or ill-typed carrier for contract_descriptors must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: "Mathematical description of primitive contract descriptor fields and their explicit bindings to canonical\
+    \ YAML contract artifacts, plus the module-level contract registry for the core_functional crate. This metadata\
+    \ is inert: it records the contract surface and does not execute functionals, terminalize results, certify authority,\
+    \ or permit customer-facing claims.\n Nonclaim: this contract does not claim HoTT/Univalence discharge, PROVED\
+    \ status, or GlobalGreen."
+  non_role:
+  - functional_execution
+  - terminal_authority_minting
+  - customer_claim
+  - runtime_enforcement
+  registry_invariants:
+  - primitive descriptor_id values are unique
+  - primitive canonical_contract_urn values are unique
+  - primitive canonical_file values are unique
+  - primitive binding order mirrors primitive descriptor order
+  - primitive canonical_contract_urn and canonical_file lookups round-trip to registered bindings
+  - primitive dependency descriptor IDs resolve to canonical contract URNs
+  - primitive descriptors are topologically ordered by dependency
+  - functional boundary dependency closure emits primitive and non-self functional contract URNs
+  - functional boundary dependency closure preserves primitive then topological functional registry order
+  - functional contract_urn values are unique
+  - functional canonical_file values are unique
+  - functional rust_binding symbols are unique within each contract
+  - functional rust module plus symbol pairs are globally unique
+  - functional rust module plus symbol lookups round-trip to registered contracts
+  - functional rust modules name existing core_functional source files
+  - every public core_functional module has a functional contract binding
+  - functional contract descriptor dependencies include production core_functional module imports
+  - functional binding dependency_contract_urns mirror canonical descriptor dependencies
+  - functional contract descriptor dependencies resolve to primitive or functional registry entries
+  - functional contract descriptor dependencies are non-self and duplicate-free
+  - functional contract bindings are topologically ordered by functional descriptor dependency
+  - functional rust_binding symbols resolve through their declared public module paths
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none; do not read as certification.
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_MATH_BLOCK
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_REQUIRED_STRUCTURES
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_LAWS_OR_REQUIREMENTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_NEGATIVE_TESTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STATUS_VS_CONTENT
+    severity: low
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: status=''active'' while structural residuals remain'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false;
+      create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures;
+      set laws; set negative_tests; demote status active -> mathematical_wip (structural repair); add overclaim
+      nonclaim fence to doctrine.summary. Not PROVED; not GlobalGreen; human re-review still required for math depth.'
+    recommendation: Continue meth re-review for object-specific laws; code follows YAML (ADR-007a).
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: INERT_DESCRIPTOR_REGISTRY_MATCH
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: 'rust_binding resolves; declared symbols exist. Diagnostic-only, no authority.
+
+      '
+    file: engine/crates_rs/core_contracts/src/contract_descriptors.rs
+    yaml_law: Inert descriptor/binding registry surface; rust_binding symbol list.
+    code_behavior: PrimitiveContractDescriptor/Binding, FunctionalContractBinding, CORE_* tables, lookups, and ContractDescriptors
+      marker present.
+    delta: MATCH

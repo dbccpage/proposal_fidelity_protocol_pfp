@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:category:v0.1.0
+title: Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: category
+  symbol: C = (Ob(C), Hom(C), id, ∘)
+  ascii_symbol: category
+  notation: C = (Ob(C), Hom(C), id, ∘)
+  domain:
+  - 'objects: collection of object identifiers'
+  - 'morphisms: collection of morphism descriptors with domain and codomain'
+  - 'identities: mapping from objects to identity morphisms'
+  - 'composition: binary operation on composable morphisms'
+  codomain:
+    description: Collection of objects and morphisms with domain/codomain structure
+requirements:
+  required_structures:
+  - A category must have at least one object
+  - Every morphism must have valid domain and codomain in the object collection
+  - Composition of morphisms must be deterministic and reproducible
+laws:
+- 'For f: A → B, id_B ∘ f = f'
+- 'For f: A → B, f ∘ id_A = f'
+- 'For f: A → B, g: B → C, h: C → D: (h ∘ g) ∘ f = h ∘ (g ∘ f)'
+- For composable morphisms f, g, the composite g ∘ f exists
+- 'Each object A has exactly one identity morphism id_A: A → A'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Objects and morphisms sorted canonically
+  - Composition function is content-addressed
+relationships:
+- urn:math:contract:Object:v1.0.0 serves as Category objects are instances of the Object contract
+- urn:math:contract:Morphism:v1.0.0 serves as Category morphisms are instances of the Morphism contract
+negative_tests:
+- objects = [] must be rejected
+- Morphism with non-existent domain object must be rejected
+- Object without identity morphism must be rejected
+- 'Composable morphisms f: A → B, g: B → C with undefined g ∘ f must be rejected'
+- Category where id_B ∘ f ≠ f must be rejected
+- Category where (h ∘ g) ∘ f ≠ h ∘ (g ∘ f) must be rejected
+doctrine:
+  summary: A Category consists of a collection of objects, a collection of morphisms between objects, identity morphisms for each object, and a composition law satisfying associativity and identity laws. The contract validates the category axioms for finite categories.
+  non_role:
+  - Large categories with proper classes (requires different representation)
+  - Small vs. locally small distinction (not formalized)
+  - Enriched categories (separate contract)
+  - 2-categories and higher categories (separate contracts)
+  - Infinite categories with generators and relations
+wip:
+- How to represent large categories with proper classes?
+- Should small vs. locally small distinction be formalized?
+- How to efficiently encode generators and relations for infinite categories?
+- What FactEnvelope types should be standardized (is_groupoid, is_poset, etc.)?
+- Currently handles finite categories only
+- Composition can be specified as table or function reference
+- Enriched categories deferred to separate contract
+- 2-categories and higher categories deferred to separate contracts
+- Object and Morphism contracts are components of Category
+rust_binding:
+  crate: core_category_theory
+  module: finite_category
+  symbols:
+  - DeclaredFiniteCategory
+  - ValidatedFiniteCategory
+  required_tests:
+  - validated_category_implements_category_trait
+  - try_new_refuses_object_without_identity

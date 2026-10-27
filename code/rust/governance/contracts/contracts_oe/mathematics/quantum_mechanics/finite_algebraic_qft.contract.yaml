@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_algebraic_qft:v0.1.0
+title: Exact Finite Local Operator Nets
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_algebraic_qft
+  symbol: finite_algebraic_qft
+  ascii_symbol: finite_algebraic_qft
+  notation: Exact Finite Local Operator Nets
+  domain:
+  - A complete finite subset-indexed family of local star algebras on one common exact Hilbert carrier, with
+    at most four parties.
+  codomain:
+    description: Declared finite results of core_quantum_physics::algebraic_qft; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every region inclusion is checked for isotony.
+- Every disjoint pair is checked for operator locality.
+- Optional complement duality compares each local commutant with the complementary-region algebra.
+- Finite tensor-product qubit nets satisfy all three laws; overlapping site assignments yield an actual locality
+  defect.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: algebraic_qft
+  symbols:
+  - AlgebraicQft
+  required_tests:
+  - finite_tensor_net_obeys_isotony_locality_and_complement_duality
+negative_tests:
+- Incomplete region families, mismatched carriers, region budget excess and real locality defects are not accepted.
+doctrine:
+  summary: Every region inclusion is checked for isotony.; Every disjoint pair is checked for operator locality.;
+    Optional complement duality compares each local commutant with the complementary-region algebra.; Finite
+    tensor-product qubit nets satisfy all three laws; overlapping site assignments yield an actual locality
+    defect..
+  non_role:
+  - No continuum Haag-Kastler or relativistic quantum field construction.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

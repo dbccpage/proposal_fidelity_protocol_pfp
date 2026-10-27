@@ -1,0 +1,107 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:loss_accounted_colimit:v0.1.0
+title: LossAccountedColimit Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: annotated-colimit
+  symbol: colim_L D
+  ascii_symbol: loss_accounted_colimit
+  notation: colim_L D
+  domain:
+  - 'colimit_hash: SHA-256 hash of the colimit construction (Colimit contract)'
+  - 'diagram_hash: SHA-256 hash of the diagram D: J -> C'
+  - 'loss_ledger_hash: SHA-256 hash of the associated LossLedger'
+  - 'coprojection_count: non-negative integer |Ob(J)|'
+  - 'total_loss: non-negative real number (sum of per-coprojection losses)'
+  - 'artifact_hash: SHA-256 hash of the entire loss-accounted colimit'
+  codomain:
+    description: 'A pair (colim D, L) where colim D is a colimit of a diagram D: J
+      -> C and L is a LossLedger with entries indexed by the objects of J.
+
+      '
+requirements:
+  required_structures:
+  - colimit_hash must reference a valid Colimit construction
+  - loss_ledger_hash must reference a valid LossLedger
+  - coprojection_count must match the number of objects in the diagram index category
+  - The loss ledger must have exactly coprojection_count entries
+  - total_loss must be non-negative and consistent with per-entry losses
+  - artifact_hash must match canonical hash of the loss-accounted colimit
+laws:
+- The loss ledger must have exactly one entry per coprojection in the cocone
+- Each per-coprojection loss must be non-negative
+- total_loss must equal the aggregation of per-coprojection losses under the chosen
+  norm
+- artifact_hash is deterministically computed from canonical serialization
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - No random numbers
+  - No wall-clock data
+  - No network calls
+  - No thread scheduling dependencies
+  - Floating-point loss values use canonical representation
+relationships:
+- urn:math:contract:Colimit:v0.1.0 serves as Defines the underlying colimit construction
+- urn:math:contract:LossLedger:v0.1.0 serves as Defines the loss ledger structure
+- 'urn:math:contract:Functor:v1.0.0 serves as Defines the diagram D: J -> C'
+negative_tests:
+- Reject construction with missing colimit_hash
+- Reject construction with missing loss_ledger_hash
+- Reject construction where coprojection_count does not match ledger entries
+- Reject construction with negative per-coprojection loss
+- Reject construction where total_loss does not match per-entry sum
+- Reject construction that attempts to claim authority
+doctrine:
+  summary: 'A LossAccountedColimit extends the categorical colimit construction by
+    tracking information loss at each coprojection. Given a diagram D: J -> C, the
+    loss-accounted colimit pairs the colimit object L with a LossLedger that records,
+    for each coprojection iota_j: D(j) -> L, a quantified measure of information lost
+    in the mapping. This is relevant in representation transport, certified comparison,
+    and any setting where colimits involve quotients or identifications that discard
+    structure. The construction is purely mathematical and does not make authority
+    or policy claims.'
+  non_role:
+  - Does not classify admissibility
+  - Does not emit policy decisions
+  - Does not emit certificates
+  - Does not terminalize operations
+  - Does not produce customer-facing claims
+  - Does not define the colimit itself (see Colimit contract)
+  - Does not define the loss ledger (see LossLedger contract)
+wip:
+- Which norm to use for aggregating per-coprojection losses (sum, sup, weighted sum)?
+- How to handle floating-point determinism for loss values?
+- Should lossless colimits be a separate optimized type?
+- Pairs a standard Colimit with a LossLedger for per-coprojection loss tracking
+- Total loss of zero indicates a lossless construction
+- Loss measures may be extended to support different norms in future versions
+- Used in CODA-MUR transport for tracking representation transport losses
+rust_binding:
+  crate: core_higher_category_theory
+  module: compactly_generated
+  symbols:
+  - FilteredDiagram
+  - DiagramStage
+  required_tests:
+  - test_compactly_generated_category_positive_verification

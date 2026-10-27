@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cyclotomic_root_conductor_witness:v0.1.0
+title: Primitive phase-root conductor and polygon witnesses
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: cyclotomic_root_conductor_witness
+  symbol: cyclotomic_root_conductor_witness
+  ascii_symbol: cyclotomic_root_conductor_witness
+  notation: Primitive phase-root conductor and polygon witnesses
+  domain:
+  - Declared root orders1..128 and explicit field/factorization budgets
+  codomain:
+    description: Declared finite results of core_number_theory::vanishing_sums; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The root has exact declared primitive order in its canonical field
+- Earlier conductors are excluded by their complete root-of-unity group order
+- The least odd prime polygon is selected from exact conductor factors
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: vanishing_sums
+  symbols:
+  - minimal_unpairable_polygon
+  - RootConductorWitness
+  - RootConductorWitness::verify
+  - minimal_root_conductor
+  required_tests:
+  - vanishing_sums::conductor_witness_laws::primitive_root_conductor_witnesses_replay_and_refuse_mutation
+negative_tests:
+- vanishing_sums::conductor_witness_laws::primitive_root_conductor_witnesses_replay_and_refuse_mutation
+doctrine:
+  summary: The root has exact declared primitive order in its canonical field; Earlier conductors are excluded
+    by their complete root-of-unity group order; The least odd prime polygon is selected from exact conductor
+    factors.
+  non_role:
+  - No fake bounded search exhaustion or all-sum classification
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

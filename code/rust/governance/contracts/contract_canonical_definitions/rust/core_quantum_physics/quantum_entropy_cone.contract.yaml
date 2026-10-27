@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:rust:core_quantum_physics:quantum_entropy_cone:v0.1.0
+title: Quantum Entropy Cone (core_quantum_physics)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quantum_entropy_cone
+  symbol: quantum_entropy_cone
+  ascii_symbol: quantum_entropy_cone
+  notation: Declared finite quantum entropy cone with executable operator laws
+  domain:
+  - Declared finite carrier and exact coefficient field for the exact face
+  - Checked shape and resource admission; any f64 face is diagnostic
+  codomain:
+    description: Declared entropy vectors satisfy checked necessary quantum inequalities; Monogamy is optional and GHZ supplies a counterexample; no complete arbitrary-party cone is claimed; Stabilizer region entropies are exact ranks
+requirements:
+  required_structures:
+  - Canonical scalar and matrix owners
+  - Declared finite physical inputs with independently replayed invariants
+  - AuthorityEffect none; no CertifiedAuthority construction
+laws:
+- Declared entropy vectors satisfy checked necessary quantum inequalities
+- Monogamy is optional and GHZ supplies a counterexample; no complete arbitrary-party cone is claimed
+- Stabilizer region entropies are exact ranks
+- Executable finite checks do not confer theorem, host or workload authority
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+relationships: []
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_entropy_cone
+  symbols:
+  - QuantumEntropyCone
+  required_tests:
+  - ghz_four_obeys_quantum_inequalities_but_violates_monogamy
+  - six_qubit_perfect_tensor_has_maximal_entropy_through_three_parties
+  - bell_and_product_entropy_vectors_are_exact
+  - no_carrier_in_this_crate_can_reach_certified_authority
+negative_tests:
+- Malformed carriers, unsupported fields or exhausted admitted operations must fail with their declared refusal
+- Changing an operator relation must leave a replayable nonzero residual
+- No result may self-assign CertifiedAuthority, PROVED or GlobalGreen
+doctrine:
+  summary: Declared entropy vectors satisfy checked necessary quantum inequalities; Monogamy is optional and GHZ supplies a counterexample; no complete arbitrary-party cone is claimed; Stabilizer region entropies are exact ranks. This declaration remains mathematical_wip pending mathematics review.
+  non_role:
+  - Human mathematics acceptance or mechanized proof
+  - Continuum limits, experimental realization or workload authority
+wip:
+- Human mathematics review remains required; executable law bindings are implementation evidence
+- No theorem or lifecycle acceptance is inferred from passing Rust checks
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: LLM_BEST_EFFORT_SLOP
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: 'AUTHORING_QUALITY: human_llm_best_effort_slop (best-effort dual-face scaffold; not human-canon math; not PROVED; not GlobalGreen). module core_quantum_physics::quantum_entropy_cone'
+    recommendation: Keep AuthorityEffect None; deepen only with human review.
+    pass: domain_face_batch_gr_qm_ml_20260801

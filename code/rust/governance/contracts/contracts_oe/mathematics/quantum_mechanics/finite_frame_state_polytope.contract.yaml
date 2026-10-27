@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_frame_state_polytope:v0.1.0
+title: Finite ray frame functions and state polytope
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_frame_state_polytope
+  symbol: finite_frame_state_polytope
+  ascii_symbol: finite_frame_state_polytope
+  notation: Finite ray frame functions and state polytope
+  domain:
+  - Integer rays dimension1..16, at most512 rays and frames, incidence<=65536 entries; support enumeration
+    budget
+  codomain:
+    description: Declared finite results of core_quantum_physics::frame_function_polytope; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Integer orthogonality and projector coefficients use arbitrary precision
+- Exact projector span permits unique symmetric trace-state recovery
+- Spectral margins replay shared ordered inertia
+- Degree-two full-row-rank enumeration checks basic solutions and singular cycle kernels
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: frame_function_polytope
+  symbols:
+  - FrameSystem
+  - FrameSystem::incidence
+  - FrameSystem::state_of
+  - FrameSystem::frame_function_of
+  - FrameSystem::vertices_with_budget
+  - eigenvalues_at_least
+  - eigenvalues_above
+  required_tests:
+  - measurement_exact_laws::finite_frames_recover_trace_states_and_replay_exact_spectral_margins
+negative_tests:
+- measurement_exact_laws::finite_frames_recover_trace_states_and_replay_exact_spectral_margins
+doctrine:
+  summary: Integer orthogonality and projector coefficients use arbitrary precision; Exact projector span permits
+    unique symmetric trace-state recovery; Spectral margins replay shared ordered inertia; Degree-two full-row-rank
+    enumeration checks basic solutions and singular cycle kernels.
+  non_role:
+  - Frame-function feasibility does not imply density positivity; no unbounded vertex search
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

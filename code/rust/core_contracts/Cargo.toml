@@ -1,0 +1,146 @@
+[package]
+autotests = false
+name = "core_contracts"
+version.workspace = true
+edition = "2021"
+description = "Law/contract traits and generated bindings for the engine workspace"
+authors = ["Sentinel Contributors"]
+license.workspace = true
+# Build-time contract gate: validates the v1 corpus firewall/identity before compiling.
+build = "build.rs"
+
+[dependencies]
+syn = { version = "2.0.119", features = ["full"] }
+core_types = { path = "../core_types" }
+# NOTE (SG-LAYER-001 / PO-LAYER): core_contracts MUST NOT depend on
+# core_replay. Contracts are governance law; replay is verification machinery.
+# Shared trace vocabulary (TraceArtifact, VoidTrace) lives in the foundation
+# crate core_types::trace_artifact. Re-adding an core_replay edge here
+# re-inverts the layer order and must be refused.
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+serde_json = "1.0"
+sha2 = "0.10"
+blake3 = { version = "1.8.3", features = ["serde"] }
+erased-serde = "0.4"
+thiserror = "2"
+
+[build-dependencies]
+syn = { version = "2.0.119", features = ["full"] }
+core_types = { path = "../core_types" }
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+serde_json = "1.0"
+sha2 = "0.10"
+thiserror = "2"
+
+
+[dev-dependencies]
+num-rational = "0.4"
+num-bigint = "0.4"
+linear_algebra = { path = "../core_linear_algebra" }
+core_solvers = { path = "../core_solvers" }
+core_policy = { path = "../core_policy" }
+core_kernel = { path = "../core_kernel" }
+core_functional = { path = "../core_functional" }
+# Parse declared module items; comments/strings are not Rust bindings.
+# This already-locked parser is used offline, not installed as a tool.
+syn = { version = "2.0.119", features = ["full"] }
+
+[[bin]]
+name = "core_contract_binding_audit"
+path = "src/core_contract_binding_audit.rs"
+
+[[bin]]
+name = "validate_architecture"
+path = "src/validate_architecture.rs"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_contracts`.
+
+[[test]]
+name = "artifact_policy"
+path = "../tests/core_contracts/artifact_policy.rs"
+
+[[test]]
+name = "binding_audit"
+path = "../tests/core_contracts/binding_audit.rs"
+
+[[test]]
+name = "certificate_promotion_firewall"
+path = "../tests/core_contracts/certificate_promotion_firewall.rs"
+
+[[test]]
+name = "contract_projections"
+path = "../tests/core_contracts/contract_projections.rs"
+
+[[test]]
+name = "ddc_file_contract_gate"
+path = "../tests/core_contracts/ddc_file_contract_gate.rs"
+
+[[test]]
+name = "ddc_v1_12_subset_of_v1_13"
+path = "../tests/core_contracts/ddc_v1_12_subset_of_v1_13.rs"
+
+[[test]]
+name = "functional_boundary"
+path = "../tests/core_contracts/functional_boundary.rs"
+
+[[test]]
+name = "governance_math_corpus"
+path = "../tests/core_contracts/governance_math_corpus.rs"
+
+[[test]]
+name = "governance_validator"
+path = "../tests/core_contracts/governance_validator.rs"
+
+[[test]]
+name = "invariant_atlas_schema_gate"
+path = "../tests/core_contracts/invariant_atlas_schema_gate.rs"
+
+[[test]]
+name = "math_contract_gate"
+path = "../tests/core_contracts/math_contract_gate.rs"
+
+[[test]]
+name = "authority_gates"
+path = "../tests/core_contracts/authority_gates.rs"
+
+[[test]]
+name = "rust_file_contract_gate"
+path = "../tests/core_contracts/rust_file_contract_gate.rs"
+
+[[test]]
+name = "source_binding_command"
+path = "../tests/core_contracts/source_binding_command.rs"
+
+[[test]]
+name = "source_bindings"
+path = "../tests/core_contracts/source_bindings.rs"
+
+[[test]]
+name = "v1_contract_firewalls"
+path = "../tests/core_contracts/v1_contract_firewalls.rs"
+
+[[test]]
+name = "v1_core_layers"
+path = "../tests/core_contracts/v1_core_layers.rs"
+
+[[test]]
+name = "v1_corpus_gate"
+path = "../tests/core_contracts/v1_corpus_gate.rs"
+
+[[test]]
+name = "v1_fixtures"
+path = "../tests/core_contracts/v1_fixtures.rs"
+
+[[test]]
+name = "v1_image_descriptor_conformance"
+path = "../tests/core_contracts/v1_image_descriptor_conformance.rs"
+
+[[test]]
+name = "v1_math_recent"
+path = "../tests/core_contracts/v1_math_recent.rs"
+
+[[test]]
+name = "v1_rust_binding_conformance"
+path = "../tests/core_contracts/v1_rust_binding_conformance.rs"

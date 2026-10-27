@@ -1,0 +1,255 @@
+schema_version: core.contract.v1
+contract_id: urn:core:products:sentinel_certificate:v1.0.0
+title: SentinelCertificate
+kind: product_contract
+status: mathematical_wip
+layer: 07_products
+role: Certificate
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - CertificateKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  constraints:
+    certificate_hash_required: true
+    immutable_after_emit: true
+    mutation_forbidden: true
+    policy_hash_required: true
+    policy_version_required: true
+    replay_required: true
+    request_hash_required: true
+    signature_required: true
+    typed_output_required: true
+  replay:
+    required:
+    - certificate replay manifest
+    - request hash replay
+  witnesses:
+    required:
+    - evidence envelope
+    - diagnostic report
+  capabilities:
+    forbidden:
+    - Terminalization
+    - SolverExecution
+    - PolicyInterpretation
+    required: []
+doctrine:
+  summary: 'This contract defines the Sentinel Certificate product boundary.
+
+
+    An Sentinel Certificate is a sealed diagnostic and evidence packet for a prompt, response,
+
+    reasoning trace, solver run, or system session.
+
+
+    It does not by itself prove mathematical truth, algebraic correctness, empirical correctness,
+
+    or product safety.
+
+
+    It binds claims to evidence for only the claims explicitly supported by attached sub-certificates,
+
+    replay traces, validators, witnesses, solver results, or declared external oracles.
+
+    '
+  non_role: &id002
+  - proving mathematical truth
+  - upgrading evidence authority beyond attached sub-certificates
+  - execution
+  - evaluation
+  - mutation
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. An LLM may produce content that is packaged into a
+
+      certificate, but the certificate''s authority derives exclusively from the attached evidence,
+
+      not from the LLM. LLM output carries no authority.
+
+      '
+  certificate_authority_bound:
+    doctrine: 6
+    text: 'Certificate authority MUST NOT exceed the authority of the attached evidence. A
+
+      DiagnosticCertificate with only diagnostic evidence cannot be upgraded to a ProofCertificate
+
+      without proof evidence.
+
+      '
+  classification:
+    subsystem: Product Layer
+    role: Sealed diagnostic and evidence packet.
+    classification: Product layer -- certificate envelope for traces and evidence.
+  authority_levels:
+    default: DiagnosticCertificate
+    allowed_levels:
+    - DiagnosticCertificate
+    - ReplayCertificate
+    - SolverCertificate
+    - ProofCertificate
+    - ExternalOracleCertificate
+    - CompositeEvidenceCertificate
+    note: 'The terminal_status describes what happened.
+
+      The authority_level describes what kind of evidence supports the claim.
+
+      '
+  terminal_statuses:
+    allowed_statuses:
+    - Certificate
+    - DiagnosticOnly
+    - RepairRecommended
+    - Refusal
+    - OracleNeeded
+    - ReplayUnavailable
+    - EvidenceDiverged
+    - AuthorityDowngraded
+    note: 'Terminal statuses describe diagnostic outcomes of the certificate compilation/analysis.
+
+      They must not imply action, repair instructions, policy decisions, or execution authority.
+
+      For example, RepairRecommended indicates a diagnostic assessment that a repair candidate
+
+      could be generated; it is not a repair instruction or execution authorization.
+
+      '
+  required_fields:
+  - certificate_id
+  - certificate_version
+  - subject_type
+  - subject_hash
+  - created_at
+  - terminal_status
+  - authority_level
+  - obstruction_summary
+  - validator_results
+  - replay_metadata
+  - issuer
+  - signature_or_hash
+  admissibility_checklist:
+  - Certificate contains all required fields
+  - Subject hash matches claimed subject
+  - Terminal status is declared
+  - Authority level is declared and supported by evidence
+  - Validator results are attached when required
+  - Sub-certificates are attached when authority level requires them
+  - Replay trace is available when authority level requires it
+  - Signature or hash is valid
+  refusal_conditions:
+  - required field missing
+  - subject hash mismatch
+  - validator result missing
+  - sub-certificate missing
+  - sub-certificate invalid
+  - replay trace unavailable
+  - terminal status diverged
+  - authority level exceeds evidence
+  - external oracle unavailable
+  - signature/hash invalid
+  replay_obligation: 'A certificate must be externally inspectable. At minimum, a verifier must be able
+    to check:
+
+    - certificate schema validity
+
+    - subject hash
+
+    - terminal status
+
+    - authority level
+
+    - validator results
+
+    - attached sub-certificate references
+
+    - issuer/signature/hash
+
+
+    A certificate is self-verifiable only for its envelope and attached evidence references. It is
+
+    not self-verifying for mathematical truth unless the relevant proof, solver, replay, or oracle
+
+    certificate is included.
+
+    '
+  core_rule: 'Declared certificate authority must never exceed attached evidence authority.
+
+    '
+  product_kernel_reconciliation: 'The product CertificateKind enum (DiagnosticCertificate, ReplayCertificate,
+    SolverCertificate,
+
+    ProofCertificate, ExternalOracleCertificate, CompositeEvidenceCertificate) is the product-facing
+
+    projection of the kernel''s CertificateKind. The product MUST NOT define certificate kinds that do
+
+    not exist in the kernel. Any new certificate kind must be added to the kernel first, then
+
+    projected to the product.
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - evaluate(
+    - mutate(
+    - terminalize(
+    - authority_upgrade
+    - sign_certificate
+    - prove(
+  required_tests:
+  - certificate_authority_does_not_exceed_evidence
+  - certificate_rejects_missing_required_fields
+  - certificate_downgrades_on_missing_sub_certificate
+  - certificate_envelope_is_externally_inspectable
+  - certificate_kind_matches_kernel_certificate_kind
+  - certificate_llm_output_carries_no_authority
+  canonical_invariant: 'Sentinel Certificates are sealed diagnostic and evidence packets. They bind claims
+    to evidence
+
+    only for claims explicitly supported by attached sub-certificates, replay traces, validators,
+
+    witnesses, solver results, or declared external oracles. Certificate authority never exceeds
+
+    attached evidence authority.
+
+    '
+  legacy_metadata:
+    name: SentinelCertificate
+    role: Sealed diagnostic and evidence packet for prompts, responses, traces, solver runs, or sessions
+    classification: product
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: SentinelCertificate
+    referenced_output_families:
+    - FactEnvelope
+    - EvidenceEnvelope
+    - Record
+    referenced_domain_kinds:
+    - CertificateEnvelope
+    - ReplayReport
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_product_contract:v1.0.0"

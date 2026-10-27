@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:vector_space:v0.1.0
+title: VectorSpace Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: vector_space
+  symbol: V ∈ Vect_K^n
+  ascii_symbol: vector_space
+  notation: V ∈ Vect_K^n
+  domain:
+  - 'field: Field artifact K'
+  - 'dimension: Positive integer n'
+  - 'basis: Ordered list of n basis vectors'
+  codomain:
+    description: Finite-dimensional vector space V over field K with ordered basis
+requirements:
+  required_structures:
+  - The dimension must be a positive integer
+  - The length of ordered_basis must equal dimension n
+  - The basis_hash must match SHA-256 of the canonical ordered basis list
+  - The field_id must resolve to a valid Field artifact
+  - If verifier provided, basis must be linearly independent
+laws:
+- dim(V) = n where n ≥ 1
+- The ordered basis spans V
+- The ordered basis vectors are linearly independent
+- The field K is a valid Field artifact
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Ordered basis serialized as NFKC-normalized UTF-8 strings
+  - Basis list joined with U+000A delimiter
+  - Validator and computation functions are content-addressed
+relationships:
+- urn:math:contract:Field:v1.0.0 serves as Defines the scalar field K for the vector space
+negative_tests:
+- Dimension = 0 must be rejected
+- Basis length != dimension must be rejected
+- Mismatched basis_hash must be rejected
+- Dependent basis must be rejected when verifier is used
+- Invalid field_id must be rejected
+- Different basis order must produce different hash
+- Vector with mismatched codomain_basis_hash must be rejected
+doctrine:
+  summary: A VectorSpace is a finite-dimensional vector space V over a field K, equipped with an ordered basis. It defines the carrier for vectors and the domain/codomain for linear maps. The contract guarantees that the space has a positive dimension, a valid field, and a basis that is consistent (spanning and linearly independent) according to a deterministic verifier. No topological or additional structures (inner product, norm) are included; those are separate structure contracts.
+  non_role:
+  - Topological structures (norm, metric, topology)
+  - Inner product structures (use separate InnerProduct contract)
+  - Infinite-dimensional spaces
+  - Abstract spaces without explicit basis
+wip:
+- Linear independence verification is computationally heavy for large spaces and may be deferred to a deterministic external validator. The contract allows the basis to be accepted solely by hash consistency, leaving the verification to higher-level contexts.
+- The contract does not distinguish between abstract vector spaces and coordinate spaces (K^n). The basis is an explicit part of the specification; two spaces with different bases are distinct even if they are isomorphic.
+- The relationship with the Fiber contract (which also describes a vector space at a point) is that a Fiber adds a base point; a VectorSpace without a base point serves as a typical fiber. Future work may unify them.
+- Infinite-dimensional spaces are not supported; the contract is limited to finite dimension.
+- The dual space, tensor product, and direct sum operations will be defined in separate ComputationWitness specifications, referencing this contract.
+- This descriptor is embedded in every StructureArtifact and serves as the primary key for all related vectors, matrices, and inner products that use this space.

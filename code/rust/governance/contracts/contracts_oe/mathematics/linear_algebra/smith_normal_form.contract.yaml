@@ -1,0 +1,98 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:smith_normal_form:v0.1.0
+title: Smith Normal Form Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: smith_decomposition_triple
+  symbol: '(U, S, V): U·A·V = S, U ∈ GL(m,Z), V ∈ GL(n,Z), S diagonal'
+  ascii_symbol: smith_normal_form
+  notation: '(U, S, V): U·A·V = S, U ∈ GL(m,Z), V ∈ GL(n,Z), S diagonal'
+  domain:
+  - 'matrix_A: M_{m×n}(Z), m≥1, n≥1, exact integer entries'
+  - 'matrix_U: GL(m,Z), det(U) = ±1'
+  - 'matrix_S: M_{m×n}(Z), diagonal, invariant factors with divisibility chain'
+  - 'matrix_V: GL(n,Z), det(V) = ±1'
+  - 'ring: Z (exact integer arithmetic, no floating point)'
+  codomain:
+    description: 'A triple (U, S, V) together with the original matrix A, all over Z with exact arithmetic. U is m×m unimodular, S is m×n diagonal with divisibility chain, V is n×n unimodular.
+
+      '
+requirements:
+  required_structures:
+  - m ≥ 1 and n ≥ 1
+  - det(U) ∈ {1, -1} and U is m×m
+  - det(V) ∈ {1, -1} and V is n×n
+  - S_{i,j} = 0 for all i ≠ j; no tolerance
+  - 'For k=1 to min(m,n)-1: (S_{k,k}=0 → S_{k+1,k+1}=0); (S_{k,k}≠0 → S_{k+1,k+1} mod S_{k,k} = 0)
+
+    '
+  - U · A · V = S entrywise over Z
+  - 'Re-running validators on canonical serialization of (A, U, S, V) produces a byte-identical ValidationWitness.
+
+    '
+laws:
+- det(U) ∈ {1, -1}; U is m×m
+- det(V) ∈ {1, -1}; V is n×n
+- S_{i,j} = 0 for all i ≠ j
+- 'For k=1 to min(m,n)-1: if S_{k,k}=0 then S_{k+1,k+1}=0; if S_{k,k}≠0 then S_{k+1,k+1} mod S_{k,k} = 0.
+
+  '
+- U · A · V = S (exact, entrywise over Z)
+- All entries are exact integers; floating-point is disallowed
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - 'Canonical serialization: row-major decimal strings, no whitespace'
+  - Dimensions (m, n) serialized as u64 before matrix entries
+  - ComputationWitness operation trace must be fully deterministic
+relationships:
+- urn:math:contract:BasicMatrix:v0.1.0 serves as Defines matrix structure for A, U, S, V
+- urn:math:contract:Determinant:v0.1.0 serves as Provides determinant computation for unimodularity checks
+negative_tests:
+- A=[[2]], U=[[2]], S=[[2]], V=[[1]]; det(U)=2 ≠ ±1
+- V provided as non-square matrix; fails before determinant
+- S=[[1,1],[0,1]]; off-diagonal entry nonzero
+- S=diag(2,3); 2 does not divide 3
+- A=[[1]], U=[[1]], V=[[1]], S=[[2]]; U·A·V=[[1]] ≠ [[2]]
+- S=diag(0,5); zero entry must force all later diagonals to zero
+- Entries with decimal point rejected by schema before math checks
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: 'Computation of the Smith normal form of an integer matrix A ∈ M_{m×n}(Z), returning a triple (U, S, V) where U ∈ GL(m,Z), V ∈ GL(n,Z), S is diagonal with the divisibility chain on nonzero invariant factors, and U · A · V = S exactly over Z. Validity is determined solely by mathematical verification: unimodularity, diagonality, divisibility, and exact matrix equality.'
+  non_role:
+  - Does not enforce a unique choice of U or V
+  - Does not extract or assert rank as a separate verified claim
+  - 'Does not handle zero-dimensional matrices (m=0 or n=0): WIP'
+  - Does not define performance requirements or algorithm selection
+  - No policy decisions or authority claims
+wip:
+- Zero-dimensional matrices (m=0 or n=0) are out of scope; edge case handling deferred
+- Canonical serialization format for big integers must be finalized (decimal string recommended)
+- 'Divisibility convention when S_{k,k}=0: adopted rule is zero forces all later diagonals to zero; cross-reference with standard definition needed'
+- Compact trace format for ComputationWitness on large matrices is unspecified; WIP
+- 'Uniqueness: U and V are not unique; downstream consumers must not assume a canonical choice'
+- The contract verifies any valid Smith triple (U, S, V); it does not assert uniqueness of U or V
+- Invariant factors are the unique invariant of the decomposition, but the contract verifies only that the provided triple satisfies the defining equations
+- Exact integer arithmetic is mandatory; no floating-point representations allowed
+- Schema hash algorithm is SHA-256; canonical serialization is row-major decimal strings, no whitespace
+- authority_effect is fixed to 'none'; no policy or admissibility claims

@@ -1,0 +1,80 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_number_scalar_bridge:v0.1.0
+title: Exact Number Scalar Bridge Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: trait_implementation_bridge
+  symbol: (+, *, -, 0, 1) with Semiring < Ring < Field < ExactRing on every exact number type
+  ascii_symbol: exact_number_scalar_bridge
+  notation: (+, *, -, 0, 1) with Semiring < Ring < Field < ExactRing on every exact number type
+  domain:
+  - 'fixed-conductor exact types: GaussianRat, EisensteinRat, Cyc5, Cyc8, Cyc12, Cyc24, Cyc28, Cyc44, Cyc52,
+    Cyc120'
+  - the linear_algebra scalar tower traits and std::ops
+  codomain:
+    description: The std::ops operators, num_traits Zero and One, and the linear_algebra Semiring, Ring, Field
+      and ExactRing implementations for every fixed-conductor exact type, sharing one arithmetic per type.
+requirements:
+  required_structures:
+  - Every canonical scalar-tower implementation delegates to the type's single inherent exact arithmetic; ExactFieldElement
+    is retired.
+  - Field::try_inv refuses zero and inverts every nonzero element through one shared solver
+  - Equality is mathematical equality (canonical reduced form)
+laws:
+- Commutative ring axioms and distributivity hold through the tower
+- a * a^-1 = 1 for every nonzero a, and try_inv(0) is None
+- The std::ops operators agree with the inherent methods
+- BasicMatrix over these types multiplies as expected (the Hadamard-like matrix squares to the identity)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- exact_scalar_tower (linear_algebra) serves as the trait tower these types implement
+- exact_rational serves as the field Q, whose tower implementation lives in linear_algebra
+- gaussian_rational serves as one of the bridged types
+- cyclotomic_field serves as the generic field cross-validated against the bridged fixed types
+rust_binding:
+  crate: core_number_theory
+  module: scalar
+  required_tests:
+  - gaussian_rationals_form_a_field
+  - eisenstein_rationals_form_a_field
+  - cyclotomic_fields_form_fields
+  - large_conductor_fields_invert_through_the_shared_solver
+  - operators_agree_with_the_inherent_methods
+  - cyclotomic_matrices_use_the_linear_algebra_matrix_type
+  symbols:
+  - RationalEmbedding
+negative_tests:
+- Inversion of zero through the tower must be refused (None)
+- A canonical scalar must not carry a second arithmetic implementation beside its inherent number-field arithmetic.
+doctrine:
+  summary: 'The bridge that states every fixed-conductor exact type in the vocabulary of the estate: std::ops,
+    num_traits and the linear_algebra scalar tower, so the generic exact matrix algorithms apply.'
+  non_role:
+  - Fixed-width or floating-point scalars
+  - Implementations for types outside this crate
+wip:
+- All fixed exact scalars use the canonical scalar tower and Involution; generic scalar algorithms remain scoped
+  by their explicit field contracts and budgets.

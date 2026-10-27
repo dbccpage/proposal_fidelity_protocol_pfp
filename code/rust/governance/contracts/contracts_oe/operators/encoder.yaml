@@ -1,0 +1,99 @@
+schema_version: "1.0.0"
+contract_id: "os:encoder"
+name: "Encoder Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "enforced"
+
+description: >
+  An Encoder is a deterministic, stateless representation boundary operator
+  that embeds an admitted high-dimensional or structured State/Carrier into a
+  constrained target representation space (e.g. latent vector, token sequence,
+  sparse cochain basis). It computes an explicit structural encoding and emits
+  an EncodingEvidenceEnvelope without claiming losslessness or minting authority.
+  An Encoder does not evaluate functionals, search, rank, decode, certify,
+  authorize transitions, or mutate runtime state.
+
+layer: "OS"
+module_path: "operators::encoder"
+
+governs:
+  - "operators/encoders/**"
+  - "operators/encoder/**"
+
+does_not_govern:
+  - "operators/decoders/**"
+  - "constructors/**"
+  - "generators/**"
+  - "operators/lambdas/**"
+  - "operators/reducers/**"
+  - "operators/transforms/**"
+  - "core_functional/**"
+  - "core_homological/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipeline/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-ENC-001"
+    description: "Encoder determinism theorem: identical input state and parameters yield bit-identical encoded representations."
+    status: "active"
+    provenance: "Encoder OS Doctrine"
+
+  - id: "OP-ENC-002"
+    description: "Encoder domain containment: encoding operates only over admitted carrier structures and emits typed representation artifacts."
+    status: "active"
+    provenance: "Encoder OS Doctrine"
+
+  - id: "OP-ENC-003"
+    description: "Encoder evidence ceiling: encoding produces EvidenceOnly artifacts; encoding cannot emit validation or truth certificates."
+    status: "active"
+    provenance: "Encoder OS Doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  carrier_enlargement: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  deterministic: true
+  stateless: true
+  unary: true
+  typed_failure_required: true
+  encoding_evidence_allowed: true
+  encoding_certificate_forbidden: true
+
+allowed:
+  - "read admitted immutable state"
+  - "map structured state into declared target representation space"
+  - "attach encoding metadata and dimension bounds"
+  - "emit EncodingEvidenceEnvelope"
+  - "return typed encoding failure"
+
+forbidden:
+  - "compute Φ₁"
+  - "compute Γ₂"
+  - "compute R_cl"
+  - "compute Ξ"
+  - "mint CertifiedAuthority"
+  - "emit ActionLicense"
+  - "claim exact losslessness without external isometric proof witness"
+  - "decode or reconstruct pre-state"
+  - "perform candidate search"
+  - "mutate runtime state"
+
+relationships:
+  extends:
+    - "os:operator"

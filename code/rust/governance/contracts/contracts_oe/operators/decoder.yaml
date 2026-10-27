@@ -1,0 +1,97 @@
+schema_version: "1.0.0"
+contract_id: "os:decoder"
+name: "Decoder Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "enforced"
+
+description: >
+  A Decoder is a deterministic, stateless representation boundary operator
+  that reconstructs a structured State/Carrier from a constrained representation space
+  strictly within the bounds permitted by attached EncodingEvidence. It maps
+  a representation back to an admitted target schema, verifying representation invariants
+  and emitting typed decoding failures upon out-of-distribution, truncated, or invalid inputs.
+  A Decoder does not fabricate missing data, evaluate functionals, search, rank, certify,
+  authorize transitions, or mutate runtime state.
+
+layer: "OS"
+module_path: "operators::decoder"
+
+governs:
+  - "operators/decoders/**"
+  - "operators/decoder/**"
+
+does_not_govern:
+  - "operators/encoders/**"
+  - "constructors/**"
+  - "generators/**"
+  - "operators/lambdas/**"
+  - "operators/reducers/**"
+  - "operators/transforms/**"
+  - "core_functional/**"
+  - "core_homological/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipeline/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-DEC-001"
+    description: "Decoder bounded reconstruction theorem: reconstruction is strictly constrained by provided representation evidence."
+    status: "active"
+    provenance: "Decoder OS Doctrine"
+
+  - id: "OP-DEC-002"
+    description: "Decoder determinism: decoding identical representation tokens under identical parameters yields identical reconstructed carrier state."
+    status: "active"
+    provenance: "Decoder OS Doctrine"
+
+  - id: "OP-DEC-003"
+    description: "Decoder fail-closed law: unrepresentable, corrupt, or unsupported encodings fail closed with typed DecodingFailure."
+    status: "active"
+    provenance: "Decoder OS Doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  fabrication_forbidden: true
+  carrier_enlargement: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  deterministic: true
+  stateless: true
+  unary: true
+  typed_failure_required: true
+
+allowed:
+  - "read constrained representation bytes / tensors / tokens"
+  - "verify encoding evidence headers and schema compatibility"
+  - "reconstruct structured target state within declared bounds"
+  - "return typed reconstruction output"
+  - "return typed decoding failure"
+
+forbidden:
+  - "compute Φ₁"
+  - "compute Γ₂"
+  - "compute R_cl"
+  - "compute Ξ"
+  - "mint CertifiedAuthority"
+  - "emit ActionLicense"
+  - "hallucinate or fabricate ungrounded invariants"
+  - "upgrade evidence authority to fact or certificate"
+  - "mutate runtime state"
+
+relationships:
+  extends:
+    - "os:operator"

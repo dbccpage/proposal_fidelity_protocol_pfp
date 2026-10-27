@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_yang_baxter_equation:v0.1.0
+title: Exact Constant and Spectral Yang-Baxter Residuals
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_yang_baxter_equation
+  symbol: finite_yang_baxter_equation
+  ascii_symbol: finite_yang_baxter_equation
+  notation: Exact Constant and Spectral Yang-Baxter Residuals
+  domain:
+  - Finite exact-field R matrices with conformable tensor carriers.
+  - Additive spectral arguments (u-v,u,v) or multiplicative arguments (u/v,u,v).
+  codomain:
+    description: Declared finite results of core_quantum_physics::yang_baxter_equation; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The returned residual is the exact difference between the two Yang-Baxter products.
+- The Yang and six-vertex constructions satisfy their declared spectral equations.
+- Perturbing the middle spectral relation produces a nonzero residual.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: yang_baxter_equation
+  symbols:
+  - YangBaxterEquation
+  required_tests:
+  - yang_and_six_vertex_satisfy_the_spectral_equations
+  - wrong_spectral_argument_has_a_nonzero_residual
+negative_tests:
+- Zero divisors in multiplicative parameters and matrix size mismatches are refused.
+- The first failing entry is retained as an exact negative witness.
+doctrine:
+  summary: The returned residual is the exact difference between the two Yang-Baxter products.; The Yang and
+    six-vertex constructions satisfy their declared spectral equations.; Perturbing the middle spectral relation
+    produces a nonzero residual..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

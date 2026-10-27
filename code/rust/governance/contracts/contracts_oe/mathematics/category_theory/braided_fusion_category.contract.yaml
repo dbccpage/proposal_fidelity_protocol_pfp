@@ -1,0 +1,92 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:braided_fusion_category:v0.1.0
+title: Braided Fusion Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: braided_fusion_category
+  symbol: 'R^{ab}_c and theta_a on a multiplicity-free fusion category'
+  ascii_symbol: braided_fusion_category
+  notation: 'R^{ab}_c in K^*, theta_a = (1/d_a) sum_c N_{aa}^c d_c R^{aa}_c'
+  domain:
+  - 'fusion_category: a multiplicity-free fusion category over an exact field K with commutative ring'
+  - 'r_symbols: a nonzero R^{ab}_c for every vertex N_{ab}^c = 1'
+  - 'dimensions: quantum dimensions d_a in K (ribbon structure)'
+  codomain:
+    description: 'R-symbols satisfying both hexagon equations; with dimensions, the twists theta_a satisfy the balancing relation. The fusion space Hom(total, a_1 x ... x a_n) carries an exact braid-group representation.'
+requirements:
+  required_structures:
+  - The fusion ring is commutative
+  - One nonzero R-symbol at exactly each vertex
+  - Both hexagon equations hold exactly in the field
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact field arithmetic only; no floating point and no tolerance
+laws:
+- 'hexagon: R^{ec}_d [(F^{cab}_d)^-1]_{eg} = sum_f [F^{abc}_d]_{ef} R^{bc}_f [(F^{acb}_d)^-1]_{fg} R^{ac}_g'
+- 'mirror hexagon: the same with R^{xy}_z replaced by (R^{yx}_z)^-1'
+- 'twist: theta_a = (1/d_a) sum_c N_{aa}^c d_c R^{aa}_c'
+- 'balancing: R^{ab}_c R^{ba}_c = theta_c / (theta_a theta_b), theta_{a*} = theta_a, theta_0 = 1'
+- 'gauge: u^{ab}_c acts by F -> u^{ab}_e u^{ec}_d / (u^{bc}_f u^{af}_d) F and R^{ab}_c -> (u^{ab}_c / u^{ba}_c) R^{ab}_c, preserving both hexagons, the twists and the modular data'
+- 'braid representation: the generators on a fusion space satisfy sigma_i sigma_{i+1} sigma_i = sigma_{i+1} sigma_i sigma_{i+1} and sigma_i sigma_j = sigma_j sigma_i for |i - j| >= 2, and the full twist (sigma_1 ... sigma_{n-1})^n is the scalar theta_total / theta_a^n'
+- 'the two hexagon equations are different: a perturbed R can satisfy one and violate the other'
+relationships:
+- urn:core:math:fusion_category:v0.1.0 serves as Provides the F-symbols and the pentagon equation
+- urn:core:math:braided_monoidal_category:v0.1.0 serves as The categorical braiding axioms that the hexagon equations express on a skeleton
+- urn:core:math:ribbon_category:v0.1.0 serves as The twist and balancing relation
+- urn:core:math:modular_data:v0.1.0 serves as S and T built from the twists and dimensions
+negative_tests:
+- A non-commutative fusion ring must be refused
+- A missing, unexpected or zero R-symbol must be refused
+- A perturbed R-symbol must fail the direct hexagon, the mirror hexagon, or both, at exactly the affected index tuples
+- A dimension vector that is a ring character but disagrees with the F-symbols must be refused
+- A twist or monodromy violating the balancing relation must be refused
+rust_binding:
+  crate: core_fusion_categories
+  module: braided
+  symbols:
+  - RSymbols
+  - BraidedFusionCategory
+  - RibbonFusionCategory
+  - HexagonForm
+  - HexagonDefect
+  - BraidedDefect
+  - FusionSpace
+  required_tests:
+  - fibonacci_perturbed_r_symbols_fail_both_hexagons_at_exactly_the_independent_tuples
+  - the_toric_code_with_a_wrong_mutual_braiding_fails_both_hexagons_at_the_independent_tuples
+  - perturbed_ising_r_symbols_fail_the_hexagons_at_the_independent_tuples
+  - fibonacci_braid_generators_obey_the_relations_the_full_twist_and_the_hecke_quadratic
+  - ising_braid_relations_hold_on_mixed_words_with_psi_and_the_unit
+  - fibonacci_gauge_changes_f_but_not_the_modular_data
+  - the_majorana_algebra_is_an_independent_witness_for_the_anyon_braid_generators
+doctrine:
+  summary: 'R-symbols, both hexagon equations, twists, the balancing relation and exact braid-group representations on fusion spaces, for multiplicity-free commutative fusion categories over exact number fields. The catalog (Ising, Fibonacci, semion, toric code, three-fermion, quantum doubles D(Z_n), cyclic pointed) is validated exactly.'
+  non_role:
+  - Says nothing about density of a braid image: a bounded closure that exceeds its bound is not a certificate of density
+  - Does not handle fusion multiplicity N > 1
+  - Makes no statement about any material or device
+wip:
+- Fibonacci is given in the algebraic gauge; its unitary gauge needs phi^(-1/2), which lies in no cyclotomic field
+- SU(2)_k and other higher-rank categories have rings but no F- or R-symbols yet
+- Lean counterparts are not written

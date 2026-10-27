@@ -1,0 +1,138 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:xi_diagnostic:v1.0.0
+title: XiDiagnostic
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:hashes:v1.0.0
+    - urn:core:math:phi1:v1.0.0
+    - urn:core:math:xi_tie_breaker:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: xi_diagnostic
+  ascii_symbol: xi_diagnostic
+  symbol: xi_diagnostic
+  notation: xi_diagnostic
+  domain:
+  - 'carrier: instance of xi_diagnostic'
+  codomain:
+    description: Mathematical object declared by XiDiagnostic (structural shell).
+requirements:
+  required_structures:
+  - Carrier for xi_diagnostic must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- XiDiagnostic is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+rust_binding:
+  crate: core_types
+  module: xi_diagnostic
+  symbols:
+  - XiDiagnostic
+  required_tests:
+  - xi_diagnostic_rejects_invalid_computation
+  - xi_diagnostic_rejects_non_finite_display_value
+  - xi_diagnostic_rejects_negative_display_value
+negative_tests:
+- Artifact claiming XiDiagnostic without required structures must be rejected
+- Empty or ill-typed carrier for xi_diagnostic must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: 'Tie-breaker diagnostic tracking structure. Nonclaim: this contract does not claim HoTT/Univalence discharge,
+    PROVED status, or GlobalGreen.'
+  non_role:
+  - Authority minting or GlobalGreen discharge
+  - Customer-facing claims or product assurances
+  - Full encyclopedia mechanization of xi_diagnostic (deferred)
+  - HoTT/Univalence theorem discharge from this contract alone
+  - Runtime enforcement as proof of mathematical truth
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_MATH_BLOCK
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_REQUIRED_STRUCTURES
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_LAWS_OR_REQUIREMENTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_NEGATIVE_TESTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: DEV-THEATER
+    severity: high
+    claim_class: '[STANDARD]'
+    detail: non_role is empty list
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STATUS_VS_CONTENT
+    severity: low
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: status=''active'' while structural residuals remain'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false;
+      create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures;
+      set laws; set negative_tests; set doctrine.non_role (anti-theater); demote status active -> mathematical_wip
+      (structural repair); add overclaim nonclaim fence to doctrine.summary. Not PROVED; not GlobalGreen; human
+      re-review still required for math depth.'
+    recommendation: Continue meth re-review for object-specific laws; code follows YAML (ADR-007a).
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: STAGE2_BINDING_RESOLVED
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates_rs/core_types/src/xi_diagnostic.rs
+    detail: rust_binding resolves to XiDiagnostic; structural MATCH diagnostic fence; thin YAML doctrine. Not PROVED.
+    delta: MATCH

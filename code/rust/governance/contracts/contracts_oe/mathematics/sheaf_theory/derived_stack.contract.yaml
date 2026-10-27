@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:derived_stack:v0.1.0
+title: DerivedStack Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: derived_stack
+  symbol: 'X: (cdga_k)^op → S'
+  ascii_symbol: derived_stack
+  notation: 'X: (cdga_k)^op → S'
+  domain:
+  - 'functor: X: (Aff)^op → S'
+  - 'base_category: ∞-category of affines (cdga, E_∞-rings, etc.)'
+  - 'target_category: simplicial sets or ∞-groupoids'
+  - 'topology: étale, smooth, or other Grothendieck topology'
+  - 'descent_data: verification of descent for specified topology'
+  codomain:
+    description: Functor from derived affines to simplicial sets with descent
+requirements:
+  required_structures:
+  - Base category is appropriate (cdga, E_∞-rings, etc.)
+  - X is a well-defined functor to spaces
+  - X satisfies descent for the specified topology
+  - StructureArtifact hash is deterministic from functor data
+laws:
+- X is a well-defined functor to spaces
+- X satisfies descent for the specified topology
+- t_0(X) is an ordinary stack
+- L_X exists and captures deformation theory
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All functor data is content-addressed
+  - Validators are content-addressed
+relationships:
+- urn:math:contract:Functor:v1.0.0 serves as underlying_functor
+- urn:math:contract:SimplicialSet:v1.0.0 serves as target_category
+- urn:math:contract:InfinityCategory:v1.0.0 serves as base_category_structure
+- urn:math:contract:CotangentComplex:v1.0.0 serves as deformation_theory
+negative_tests:
+- Invalid base category must be rejected
+- Functor not well-defined must be rejected
+- X not satisfying étale/smooth descent must be rejected
+doctrine:
+  summary: 'A derived stack is a stack valued in derived/spectral rings or simplicial rings, encoding "derived" moduli problems where the cotangent complex is non-trivial. Derived stacks capture virtual structures and obstruction theory intrinsically. The contract defines functors X: (cdga_k)^op → S (simplicial sets) satisfying descent for étale/smooth topology, with classical truncation t_0(X) as an ordinary stack. The cotangent complex L_X captures deformation theory. Derived stacks handle derived intersections, virtual fundamental classes, and perfect obstruction theories.'
+  non_role:
+  - Classical stacks (use ordinary Stack contract)
+  - Non-derived moduli problems (use ordinary moduli stack)
+  - Specific derived moduli schemes (separate FactEnvelopes)
+wip:
+- Quasi-smooth derived stacks have virtual fundamental classes
+- Derived algebraic geometry (DAG) vs spectral algebraic geometry (SAG)
+- Derived moduli of sheaves, derived Quot schemes
+- How to encode specific derived moduli problems as FactEnvelopes?
+- What validation is needed for perfect obstruction theories?
+- Contract is in WIP status - derived stack theory is active research area
+- Descent verification may require sophisticated ∞-categorical machinery
+- Cotangent complex computation is highly non-trivial
+- Virtual fundamental classes require perfect obstruction theory
+- Classical truncation t_0(X) should be verified to be an ordinary stack

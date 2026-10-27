@@ -1,0 +1,101 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phi2_quotient_obstruction:v1.0.0
+title: Φ₂ degree-2 quotient obstruction certificate replay
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: phi2_certificate_replay
+  symbol: Φ₂
+  ascii_symbol: Phi2
+  notation: "Φ₂([B]) = min_{A ∈ C¹} ‖B − d₁A‖_{1,w}"
+  domain:
+  - "caller-supplied rational matrix d₁ : C¹ → C² (|F| rows, |E| columns)"
+  - "optional caller-supplied rational matrix d₀ : C⁰ → C¹"
+  - "flux B ∈ C², face weights w, gauge potential A ∈ C¹, residual r, dual y, reported value"
+  codomain:
+    description: >-
+      VerifiedExactPhi2, a sealed wrapper around the replayed certificate, or a typed
+      ExactPhi2CertificateError. The module checks a submitted witness; it does not search
+      for a minimizer and does not construct one.
+  definition:
+    formula: "Φ₂([B]) = min_A ‖B − d₁A‖_{1,w}"
+    dual: "max ⟨B, y⟩ subject to d₁ᵀy = 0 and |y_f| ≤ w_f"
+    acceptance: "r = B − d₁A, d₁ᵀy = 0, |y_f| ≤ w_f, w_f > 0, reported ≥ 0, Σ w_f|r_f| = reported = ⟨B, y⟩"
+requirements:
+  required_structures:
+  - Finite rational d₁ with one row per face and one column per edge
+  - Strictly positive rational face weights w
+  - Flux B, residual r and dual y of face length; potential A of edge length
+  - Optional d₀ with one row per edge, used only to check d₁d₀ = 0
+laws:
+- "Weak-duality law: for every A and every y with d₁ᵀy = 0 and |y_f| ≤ w_f, ⟨B, y⟩ ≤ ‖B − d₁A‖_{1,w}. A replayed certificate whose primal and dual values are equal therefore reports the minimum of this LP for the supplied d₁, w and B."
+- "Primal replay law: every residual entry must equal (B − d₁A)_f in exact rational arithmetic."
+- "Dual replay law: y must satisfy d₁ᵀy = 0 on every edge and |y_f| ≤ w_f on every face."
+- "Weight law: every face weight must be strictly positive."
+- "Chain-law scope: d₁d₀ = 0 is checked only when d₀ is supplied. Without d₀ no chain law is checked."
+- "Carrier fence: the verifier checks the supplied matrices. It does not check that they are the coboundaries of a declared cell complex, and it computes no Betti number."
+- "Exactness law: all arithmetic is BigRational. The string wire form refuses unparseable rationals; there is no floating-point path."
+- "Separation fence: Φ₂ is a degree-2 quotient distance. It is not Φ₁, Γ₂ or Ξ."
+- "Authority law: a replayed certificate mints no AuthorityEffect, PROVED, GlobalGreen or ActionLicense."
+replay:
+  requirements:
+  - No external state, randomness or wall-clock
+  - Exact rational arithmetic only
+  - Deterministic replay of the submitted primal and dual witness
+relationships:
+- "urn:core:math:phi1:v1.0.0 — degree-1 quotient obstruction; same weak-duality shape, distinct object"
+- "urn:core:math:phi3_quotient_obstruction:v1.0.0 — degree-3 analogue"
+- "urn:core:math:phi4_quotient_obstruction:v1.0.0 — degree-4 analogue"
+- "urn:core:math:gamma2_closure_defect:v1.0.0 — closure defect; not identified with Φ₂"
+rust_binding:
+  crate: core_functional
+  module: phi2
+  symbols:
+  - ExactPhi2CertificateWire
+  - ExactPhi2Certificate
+  - VerifiedExactPhi2
+  - ExactPhi2CertificateError
+  - Phi2Functional
+  # The first three tests discharge the three negative_tests in order. The last
+  # is the acceptance path on the hollow tetrahedron (d₁d₀ = 0 checked). Other
+  # implemented refusals have no dedicated test and are listed under wip.
+  required_tests:
+  - test_tetrahedron_rejects_non_closed_2_chain
+  - test_tetrahedron_rejects_dual_norm_violation
+  - test_tetrahedron_rejects_duality_gap
+  - test_tetrahedron_chain_law_and_valid_b2_certificate
+negative_tests:
+- A dual witness that is not a closed 2-cycle (d₁ᵀy ≠ 0) must be rejected
+- A dual witness with |y_f| greater than w_f must be rejected
+- A reported value that differs from the dual pairing ⟨B, y⟩ must be rejected
+doctrine:
+  summary: >-
+    Phi2Functional replays a submitted exact rational primal-dual witness for the degree-2
+    weighted ℓ¹ quotient distance min_A ‖B − d₁A‖_{1,w}. Acceptance means the reported value
+    is the LP minimum for the supplied matrices and weights, by weak duality. Nonclaim: it
+    does not certify that the matrices come from a given cell complex, compute cohomology,
+    or search for a minimizer; not authority; not PROVED; not GlobalGreen.
+  non_role:
+  - Minimizer search or LP solving
+  - Cell-complex or Betti-number certification
+  - Φ₁, Γ₂ or Ξ
+  - Authority minting, ActionLicense, PROVED or GlobalGreen
+wip:
+- "OPEN_OBLIGATION untested_refusals: NonPositiveWeight, PrimalResidualMismatch, ChainLawViolation, D1RowMismatch, D1ColumnMismatch, D0DimensionMismatch, FaceDimensionMismatch, NegativeReportedValue and PrimalValueMismatch are implemented refusals with no dedicated unit test; AuthorityEffect: None."

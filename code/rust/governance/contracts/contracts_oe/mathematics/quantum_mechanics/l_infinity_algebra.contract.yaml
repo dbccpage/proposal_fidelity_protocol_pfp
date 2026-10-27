@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:l_infinity_algebra:v0.1.0
+title: L-Infinity Algebra Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: graded_algebraic_structure
+  symbol: (g, {l_n})
+  ascii_symbol: l_infinity_algebra
+  notation: (g, {l_n})
+  domain:
+  - 'graded_module: ⊕_{i∈ℤ} g_i'
+  - 'brackets: {l_n : Sym^n(g) → g | n ≥ 1}'
+  - 'max_arity: N (possibly ∞)'
+  codomain:
+    description: 'A graded k-module g = ⊕_{i∈ℤ} g_i with multilinear brackets l_n: Sym^n(g) → g for n = 1, 2, ..., N (possibly infinite).
+
+      '
+requirements:
+  required_structures:
+  - Each bracket l_n must have degree 2-n
+  - l_n is graded symmetric with sign conventions
+  - Generalized Jacobi identities hold at each arity
+  - Structure must be content-addressed via SHA-256
+laws:
+- g is a graded k-module and l_n has degree 2-n
+- l_n is graded symmetric with appropriate signs
+- 'Generalized Jacobi identities: For all n, the sum over all ways to partition n elements and apply brackets vanishes. Specifically: Σ_{i+j=n+1} Σ_{σ} (-1)^ε l_j(l_i(x_{σ(1)},...),...)=0
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Brackets serialized in arity order
+  - Identical input produces identical artifact hash
+relationships:
+- urn:math:contract:GradedModule:v1.0.0 serves as Underlying graded vector space structure
+- urn:math:contract:SymmetricPower:v1.0.0 serves as Domain of multilinear brackets
+negative_tests:
+- l_n doesn't have degree 2-n
+- Bracket violates graded symmetry
+- L_∞ relations fail at some arity
+doctrine:
+  summary: An L_∞-algebra (strong homotopy Lie algebra) is a graded vector space with multilinear brackets [-, ..., -]_n satisfying generalized Jacobi identities up to coherent homotopy. The contract validates the L_∞ structure equations.
+  non_role:
+  - L_∞-morphisms (separate contract)
+  - Quasi-isomorphisms between L_∞-algebras
+  - Complete deformation theory apparatus
+  - Integration to L_∞-groups
+wip:
+- Maurer-Cartan elements and deformation theory integration
+- L_∞-morphisms and quasi-isomorphisms
+- 'Koszul duality: L_∞ dual to cocommutative coalgebras'
+- Homotopy transfer theorem implementation
+- Minimal model construction
+- Currently focusing on core structure validation
+- Deformation theory integration planned for v0.2.0
+- L_∞-morphisms will be separate contract
+- Consider finite vs infinite arity implementations

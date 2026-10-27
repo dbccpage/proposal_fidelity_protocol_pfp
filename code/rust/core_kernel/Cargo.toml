@@ -1,0 +1,28 @@
+[package]
+autotests = false
+name = "core_kernel"
+version.workspace = true
+edition = "2021"
+description = "Tier 0 substrate: the exact rational scalar, the canonical digest, and observer identity"
+authors = ["Sentinel Contributors"]
+license.workspace = true
+
+[dependencies]
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+hex = "0.4"
+thiserror = "2"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_kernel`.
+
+[[test]]
+name = "digest_domain_contract"
+path = "../tests/core_kernel/digest_domain_contract.rs"
+
+[[test]]
+name = "exact_enclosures"
+path = "../tests/core_kernel/exact_enclosures.rs"

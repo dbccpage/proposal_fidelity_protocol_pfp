@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_perturbation_theory:v0.1.0
+title: Exact Finite Perturbative Eigenseries
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_perturbation_theory
+  symbol: finite_perturbation_theory
+  ascii_symbol: finite_perturbation_theory
+  notation: Exact Finite Perturbative Eigenseries
+  domain:
+  - A finite Gaussian-rational Hermitian perturbation around a declared diagonal rational Hamiltonian.
+  - A simple selected unperturbed eigenvalue, dimension at most eight and series order at most sixty-four.
+  codomain:
+    description: Declared finite results of core_quantum_physics::perturbation_theory; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Rayleigh-Schrodinger recursion uses intermediate normalization and exact spectral gaps.
+- Independent characteristic-polynomial substitution has zero coefficients through the retained order.
+- Hellmann-Feynman coefficients agree through the highest derivative order available.
+- The two-level energy coefficients are the signed Catalan sequence; a degenerate first-order block uses its
+  actual compressed spectrum.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: perturbation_theory
+  symbols:
+  - PerturbationTheory
+  required_tests:
+  - two_level_energy_series_is_the_signed_catalan_sequence
+  - three_level_series_matches_the_independent_determinant_and_degenerate_block
+negative_tests:
+- Degenerate simple-state input, unavailable rational compressed spectra, shape mismatch and order excess are
+  refused.
+doctrine:
+  summary: Rayleigh-Schrodinger recursion uses intermediate normalization and exact spectral gaps.; Independent
+    characteristic-polynomial substitution has zero coefficients through the retained order.; Hellmann-Feynman
+    coefficients agree through the highest derivative order available.; The two-level energy coefficients are
+    the signed Catalan sequence; a degenerate first-order block uses its actual compressed spectrum..
+  non_role:
+  - A truncated formal series is not an unconditional analytic convergence proof.
+  - The Gershgorin radius is sufficient and conservative.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

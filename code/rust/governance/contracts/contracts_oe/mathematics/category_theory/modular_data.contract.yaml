@@ -1,0 +1,86 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:modular_data:v0.1.0
+title: Modular Data Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: modular_data
+  symbol: '(S~, T) with S~ = D S, T = diag(theta)'
+  ascii_symbol: modular_data
+  notation: 'S~_{ab} = sum_c N_{a b*}^c d_c theta_c / (theta_a theta_b), p_+ = sum_a d_a^2 theta_a, D^2 = sum_a d_a^2'
+  domain:
+  - 'ribbon_category: a validated ribbon fusion category over an exact field K'
+  - 'dimensions: d_a in K'
+  - 'twists: theta_a in K'
+  codomain:
+    description: 'The unnormalised S-matrix S~, the T-matrix, D^2 and the Gauss sum p_+, all elements of K, checked against the relations below exactly.'
+requirements:
+  required_structures:
+  - S~ has full rank (a degenerate braiding is refused)
+  - Every relation is checked by exact equality in K
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact field arithmetic only; no floating point and no tolerance
+laws:
+- 'S~ is symmetric'
+- 'S~^2 = D^2 C, with C_{ab} = delta_{b,a*} the charge conjugation'
+- 'S~ conj(S~)^T = D^2 I'
+- '(S~ T)^3 = p_+ S~^2 (the exact in-field form; the familiar (ST)^3 = S^2 holds only for the c-normalised T e^{-2 pi i c/24} and the normalised S, which need D and e^{2 pi i c/24} that are not in general in the field)'
+- 'Verlinde: N_{ab}^c = (1/D^2) sum_x S~_{ax} S~_{bx} conj(S~_{cx}) / S~_{0x}'
+- 'Gauss-Milgram: p_+ / D = exp(2 pi i c / 8); in the field, p_+^2 / D^2 = exp(2 pi i c / 4) is a root of unity that fixes c modulo 4, and when D lies in the field and is positive, p_+ / D fixes c modulo 8'
+- 'Frobenius-Schur indicator (Bantay): nu_a = (1/D^2) sum_{b,c} N_{bc}^a d_b d_c (theta_b / theta_c)^2, equal to +1 or -1 for a self-dual object and 0 otherwise'
+- 'ground-state degeneracy on a closed surface of genus g: sum_a (D^2 / d_a^2)^(g-1), a non-negative integer'
+- 'topological entanglement entropy gamma = ln D is reported as the algebraic D^2; no logarithm is computed'
+relationships:
+- urn:core:math:braided_fusion_category:v0.1.0 serves as Provides the twists and dimensions
+- urn:core:math:fusion_ring:v0.1.0 serves as The Verlinde formula reproduces its structure constants
+- urn:core:math:modular_tensor_category:v0.1.0 serves as A modular tensor category is a ribbon category whose modular data pass these relations
+negative_tests:
+- A symmetric braiding (trivial monodromy) must be refused as degenerate
+- A perturbed S~ entry must fail the Verlinde formula
+- A supplied D whose square is not D^2, or that is not positive, must be refused by the mod-8 central charge
+- A ground-state degeneracy that is not a non-negative integer must be reported, not rounded
+rust_binding:
+  crate: core_fusion_categories
+  module: modular
+  symbols:
+  - ModularData
+  - ModularDefect
+  required_tests:
+  - a_symmetric_braiding_gives_a_degenerate_s_matrix_and_is_refused
+  - the_verlinde_formula_fails_on_a_perturbed_s_matrix
+  - fibonacci_modular_data_and_central_charge_are_exact
+  - the_toric_code_is_modular_with_the_pinned_s_matrix_and_four_to_the_g_ground_states
+  - the_three_fermion_model_has_central_charge_four_modulo_eight
+  - cyclic_pointed_models_have_quadratic_gauss_sums_and_the_right_central_charges
+  - ising_modular_data_central_charge_and_ground_states_are_exact
+doctrine:
+  summary: 'Exact modular data of a ribbon fusion category: S~ and T, the modular relations in their in-field form, Verlinde, Gauss-Milgram for the central charge, Bantay Frobenius-Schur indicators and genus-g ground-state counts, verified for Ising, Fibonacci, semion, toric code, three-fermion, quantum doubles D(Z_n) and cyclic pointed categories (cross-checked against the quadratic Gauss sums of core_number_theory).'
+  non_role:
+  - Does not assert a material hosts any of these categories
+  - Does not compute the topological entanglement entropy (only D^2)
+  - Does not compute an SL_2(Z) representation beyond the stated relations
+wip:
+- The central charge modulo 8 needs D in the field; for Fibonacci D lies in Q(zeta_20), not in Q(zeta_5)
+- Higher-genus mapping class group representations are not computed
+- Lean counterparts are not written

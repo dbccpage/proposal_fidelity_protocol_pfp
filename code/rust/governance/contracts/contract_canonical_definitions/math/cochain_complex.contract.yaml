@@ -1,0 +1,142 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cochain_complex:v1.0.0
+title: Cochain complex (finite graded)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cochain_complex
+  symbol: C^•
+  ascii_symbol: CochainComplex
+  notation: "… → C^{n−1} --δ_{n−1}→ C^n --δ_n→ C^{n+1} → …"
+  domain:
+  - "coefficient domain R (ring or field)"
+  - "finite degree index set I ⊂ ℤ (or ℕ)"
+  - "for each n ∈ I: finite R-module C^n with finite presentation/basis"
+  - "for each adjacent pair: coboundary map δ_n : C^n → C^{n+1}"
+  codomain:
+    description: >-
+      A finite graded cochain complex over R with degree-raising coboundaries
+      satisfying δ² = 0. Structural only; does not mint cohomology classes or FOC authority.
+  definition:
+    cochain_complex: "Graded object C^• with maps δ_n of degree +1 and δ_{n+1} ∘ δ_n = 0."
+    cocycles: "Z^n = ker(δ_n)"
+    coboundaries: "B^n = im(δ_{n−1})"
+    cohomology: "H^n = Z^n / B^n when B^n ⊆ Z^n (follows from δ² = 0)"
+    finite_scope: "This contract version covers finite declared degree sets only."
+requirements:
+  required_structures:
+  - Coefficient domain R declared and shared by all C^n
+  - Finite degree index set I
+  - Finite C^n for each n ∈ I (presentation or ordered basis)
+  - Coboundary map δ_n for each adjacent degree pair present in I
+  - Complex-law witness / check that δ_{n+1} ∘ δ_n = 0 on all adjacent pairs
+  - Degree shift +1 (source degree n, target degree n+1)
+laws:
+- "Complex law: δ_{n+1} ∘ δ_n = 0 for every adjacent declared pair."
+- "Degree-shift law: each δ_n raises degree by exactly one."
+- "Coefficient uniformity: every C^n is an R-module for the same declared R."
+- "Presentation compatibility: each δ_n has source/target matching declared C^n presentations."
+- "Cohomology well-definedness: B^n ⊆ Z^n follows from the complex law."
+- "Finite-scope law: only finitely many degrees and finite C^n ranks are in-scope for this version."
+- "Authority law: no PROVED / GlobalGreen / HoTT discharge from this contract alone."
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Coboundary application and δ∘δ checks are deterministic
+  - Basis/presentation serialization is canonical when hashed
+relationships:
+- "urn:core:math:coboundary:v0.1.0 — element of B^n = im(δ_{n−1})"
+- "urn:core:math:cohomology:v1.0.0 — H^n = Z^n/B^n (estate often specializes H¹)"
+- "urn:core:math:coboundary_map:v0.1.0 — single δ_n morphism object"
+- "urn:core:math:chain_complex:v1.0.0 — dual degree-lowering complex (distinct object)"
+- "urn:core:math:basic_matrix:v1.0.0 — optional storage for matrix of δ_n"
+rust_binding:
+  crate: core_homology
+  module: cochain_complex
+  symbols:
+  - CochainComplex
+  # δ²=0, missing declared C^n (matrix dim), and finite degree support are
+  # constructor/query refusals. Degree-shift is hard-coded on construction
+  # (not an input). Coefficient domain is always Q. Cochain/chain dualization
+  # and H^n claims are not APIs here. PROVED/GlobalGreen/HoTT is doctrinal.
+  required_tests:
+  - test_coboundary_law_violation_rejected
+  - test_dimension_mismatch_d0
+  - dim_rejects_degree_outside_finite_support
+negative_tests:
+- Coboundary map with wrong degree shift (not n → n+1) must be rejected
+- δ_{n+1} ∘ δ_n ≠ 0 must be rejected
+- Missing C^n for a declared coboundary source or target must be rejected
+- Coefficient domain mismatch across degrees must be rejected
+- Infinite/unbounded degree family without explicit finite I must be rejected under this version
+- Confusing this object with a chain complex (degree-lowering) without dualization must be rejected
+- Claiming H^n without δ² = 0 must be rejected
+- Claiming PROVED / GlobalGreen / HoTT / legal authority from this contract alone must be rejected
+doctrine:
+  summary: >-
+    Finite graded cochain complex C^• over R with δ² = 0. Base for cocycles, coboundaries,
+    and cohomology / obstruction classes. Nonclaim: does not claim PROVED; does not claim
+    GlobalGreen; does not claim HoTT discharge; structural only.
+  non_role:
+  - Computing full cohomology algorithm catalogs
+  - Čech / de Rham specializations (separate contracts)
+  - Double complexes / spectral sequences
+  - Certificates, terminalization, customer claims
+  - Authority minting / PROVED / GlobalGreen / HoTT discharge
+wip:
+- Čech and de Rham specializations as separate contracts
+- Filtered complexes and bicomplexes out of v1 scope
+- Unbounded complexes deferred
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B2_HOMOLOGY
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: >-
+      Meth B2 pass: canonical laws list (not theater); dual fence vs chain_complex;
+      finite scope explicit. Not PROVED.
+    recommendation: "Stage-2 realization align under ADR-007a."
+    pass: meth_b2_homology
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: BOUNDED_THREE_TERM_ONLY
+    severity: medium
+    claim_class: "[CODE_DEMO_RUST]"
+    detail: >-
+      CochainComplex realization is finite 3-term C0--d0-->C1--d1-->C2 with d1∘d0=0
+      enforcement (MATCH for supported shape). General graded I is YAML_AHEAD_OF_CODE.
+    file: engine/crates/core_homology/src/cochain_complex.rs
+    yaml_law: "Finite graded C^• with δ²=0 on all adjacent pairs in I."
+    code_behavior: "Fixed three-term complex with complex-law verification."
+    delta: YAML_AHEAD_OF_CODE
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: "[SCOPE FENCE]"
+    detail: "Consistent bounded realization fence; not PROVED; not GlobalGreen."

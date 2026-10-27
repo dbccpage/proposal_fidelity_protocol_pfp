@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:pasting_certificate:v0.1.0
+title: PastingCertificate Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: pasting-witness
+  symbol: Paste(c_1, ..., c_k; w)
+  ascii_symbol: pasting_certificate
+  notation: Paste(c_1, ..., c_k; w)
+  domain:
+  - 'pasting_diagram: A labeled directed graph of n-cells with boundary data'
+  - 'composite_cell: The resulting n-cell from pasting all cells in the diagram'
+  - 'boundary_witnesses: For each adjacent pair, a witness that target(c_i) = source(c_{i+1})'
+  - 'coherence_data: Associator/unitor witnesses when operating in a weak setting'
+  codomain:
+    description: A tuple (pasting_diagram, composite_cell, boundary_witnesses)
+requirements:
+  required_structures:
+  - All cell hashes in the pasting diagram must resolve to valid cells
+  - For each adjacent pair, target(c_i) = source(c_{i+1})
+  - Cell dimensions are compatible with the pasting pattern
+  - The composite cell has correct source and target boundaries
+laws:
+- For each adjacent pair (c_i, c_{i+1}) in the diagram, target(c_i) = source(c_{i+1})
+- All cells being pasted have compatible dimensions for the pasting pattern
+- source(composite) = source(c_1) and target(composite) = target(c_k) for a linear pasting
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Cells serialized in canonical diagram order
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:HigherCell:v0.1.0 serves as Individual cells being pasted
+- urn:math:contract:BicategoricalPastingLaw:v0.1.0 serves as Pasting laws for bicategorical settings
+negative_tests:
+- Some cell hash does not resolve
+- target(c_i) != source(c_{i+1}) for some adjacent pair
+- Cell dimensions incompatible with pasting pattern
+- Composite cell has wrong source or target
+doctrine:
+  summary: A PastingCertificate witnesses that a collection of higher-dimensional cells in a (strict or weak) n-category can be validly pasted together. Given cells c_1, ..., c_k with compatible boundaries (source/target matching), the certificate records the pasting diagram, the resulting composite cell, and a witness that all boundary identifications hold. This contract does NOT confer authority; it merely records a mathematical fact about diagram composition.
+  non_role:
+  - Authority decisions or admissibility classification
+  - Uniqueness of pasting in weak settings (only existence is witnessed)
+  - Policy emission or terminal status assignment
+wip:
+- Coherence data representation for weak pasting (associators, unitors)
+- Non-linear pasting diagrams (2D and higher pasting schemes)
+- Uniqueness witness in the strict case vs existence-only in the weak case
+- Relationship to the pasting theorem for core-categories
+- Currently models linear pasting diagrams (sequential composition)
+- 2D pasting schemes (whiskering, horizontal composition) pending
+- Coherence data for weak settings not yet fully specified
+- Does not classify admissibility or emit authority decisions
+rust_binding:
+  crate: core_higher_category_theory
+  module: two_category
+  symbols:
+    - Strict2Category
+    - TwoCategory
+  required_tests:
+    - test_challenge_reserve_exact_boundary_safety
+    - test_challenge_deterministic_hash_morphisms_and_compositions

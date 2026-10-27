@@ -1,0 +1,36 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_solvers:yang_mills_solver:v1.0.0
+title: Yang-Mills, Gauge Cooling, and Lefschetz Thimble Solver Contract
+status: active
+crate: core_solvers
+file: crates_rs/core_solvers/src/solver_yang_mills.rs
+role: gauge_theory_and_complex_langevin_solver
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - su_n_yang_mills_lattice_action
+  - gauge_cooling_stabilization
+  - complex_langevin_evolution
+  - lefschetz_thimble_gradient_flow
+does_not_own:
+  - continuum_mass_gap_theorem
+  - physical_vacuum_uniqueness
+  - authority_promotion
+may_call:
+  - core_linear_algebra
+must_not:
+  - claim_continuum_yang_mills_proof
+  - return_unstable_gauge_cooling_without_flag
+exactness:
+  numeric_mode: f64_lattice_gauge_simulation
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "YangMills"
+required_tests:
+  - test_yang_mills_gauge_cooling
+lean_obligations: []

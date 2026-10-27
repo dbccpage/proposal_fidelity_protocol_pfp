@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:k_invariant:v0.1.0
+title: KInvariant Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cohomology_class
+  symbol: k_n in H^{n+1}(X_n; pi_n(X))
+  ascii_symbol: k_invariant
+  notation: k_n in H^{n+1}(X_n; pi_n(X))
+  domain:
+  - 'postnikov_section: The n-th Postnikov section X_n of X'
+  - 'fiber_group: The homotopy group pi_n(X) serving as coefficient group'
+  - 'cohomology_degree: Degree n+1 in H^{n+1}(X_n; pi_n(X))'
+  - 'classifying_class: The cohomology class k_n itself'
+  codomain:
+    description: 'A cohomology class k_n in H^{n+1}(X_n; pi_n(X)) where X_n is the n-th Postnikov section of a space X. The class k_n classifies the fibration X_{n+1} -> X_n with fiber K(pi_{n+1}(X), n+1). The cohomology is taken with local coefficients in the homotopy group pi_n(X), which may carry a pi_1(X)-module structure.
+
+      '
+requirements:
+  required_structures:
+  - k_n must be a valid cocycle representative in H^{n+1}(X_n; pi_n(X))
+  - X_n must satisfy pi_i(X_n) = pi_i(X) for i <= n and pi_i(X_n) = 0 for i > n
+  - The coefficient group pi_n(X) must be abelian (automatic for n >= 2)
+  - Cohomology degree must equal n+1 where n is the Postnikov section level
+  - Artifact hash is SHA-256 over all structure data
+laws:
+- k_n must be a well-defined element of H^{n+1}(X_n; pi_n(X))
+- X_n must have pi_i(X_n) = pi_i(X) for i <= n and pi_i(X_n) = 0 for i > n
+- k_n classifies the fibration K(pi_{n+1}(X), n+1) -> X_{n+1} -> X_n
+- k_n = 0 implies X_{n+1} = X_n x K(pi_{n+1}(X), n+1)
+- 'A map f: X -> Y induces f*(k_n^Y) compatible with k_n^X under the induced map on Postnikov sections'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+  - Same input data produces identical artifact hash
+  - Same cocycle representative and Postnikov section produce identical k-invariant hash
+relationships:
+- urn:math:contract:EilenbergMacLaneSpectrum:v0.1.0 serves as Fiber K(pi_{n+1}(X), n+1) is an Eilenberg-MacLane space
+- urn:math:contract:CechCohomology:v0.1.0 serves as Cohomology theory in which k_n lives as a class in H^{n+1}
+- urn:math:contract:CohomologyClass:v0.1.0 serves as k_n is a cohomology class; inherits cocycle/coboundary structure
+- urn:math:contract:HomotopyGroup:v1.0.0 serves as Homotopy groups pi_n(X) serve as coefficient groups
+- urn:math:contract:Bundle:v0.1.0 serves as Fibration X_{n+1} -> X_n classified by k_n
+negative_tests:
+- Cocycle representative with delta(cocycle) != 0 must be rejected
+- Postnikov section with incorrect homotopy groups must be rejected
+- Non-abelian coefficient group (n >= 2) must be rejected
+- Cohomology degree not equal to n+1 must be rejected
+- Artifact with inconsistent hash must be rejected
+- Artifact attempting to claim authority or admissibility must be rejected
+doctrine:
+  summary: A k-invariant (Postnikov invariant) is a cohomology class k_n in H^{n+1}(X_n; pi_n(X)) that classifies the fibration X_{n+1} -> X_n in the Postnikov tower of a space X. Here X_n is the n-th Postnikov section obtained by killing all homotopy groups above dimension n. The k-invariant determines the twist in attaching the next Eilenberg-MacLane space K(pi_{n+1}(X), n+1) as a fiber. If k_n = 0 the fibration is trivial (a product). The sequence {k_n} together with {pi_n(X)} completely determines the homotopy type of X (for simply connected spaces, or more generally with the action of pi_1 on higher groups). k-invariants are fundamental in obstruction theory and Postnikov tower reconstruction.
+  non_role:
+  - Does not compute full Postnikov tower (covered by PostnikovTower contract)
+  - Does not implement spectral sequences (covered by separate contract)
+  - Does not compute homotopy groups (assumes they are given)
+  - Does not classify admissibility or emit policy decisions
+  - Does not emit certificates or produce customer-facing claims
+wip:
+- Local coefficient systems and pi_1-action on higher homotopy groups
+- Secondary k-invariants and higher-order obstruction data
+- Computational methods for k-invariants via spectral sequences
+- Relationship to Postnikov towers in model categories and infinity-categories
+- Initial implementation covers k-invariants for simply connected spaces
+- Local coefficient system support deferred to future version
+- PostnikovTower contract does not yet exist; dependency is forward-declared
+- Naturality under maps implemented via pullback operation
+- Validation infrastructure matches template requirements

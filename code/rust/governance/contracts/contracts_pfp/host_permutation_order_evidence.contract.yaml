@@ -1,0 +1,45 @@
+# Native packet shape; semantic laws require the named finite tests.
+# AuthorityEffect: None. New URN; existing frozen contracts are unchanged.
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:host_permutation_order_evidence:v1.0.0"
+title: "Exact permutation order evidence (native runtime)"
+kind: packet_contract
+layer: 40_packets
+role: PacketSpecification
+status: active
+council_owner: L3_logos_techne
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit: [FW-UNKNOWN-FIELD]
+
+doctrine:
+  summary: "Carries the exact result of decomposing one host-selected finite total permutation. The presentation digest identifies the selected rewriting data, not approval or a cryptographic attestation."
+  invariants:
+    - "This struct's JSON representation must be an object; positional arrays, undeclared fields and wrongly typed fields are refused by typed deserialization."
+    - "derived_order is the arbitrary-precision LCM of the cycle lengths, serialized as unsigned decimal text; it is not signature cardinality or a fixed-width truncated integer."
+    - "Cycle traversal follows the validated successor mapping. Each cycle begins at its smallest Unicode scalar and cycles are ordered by their starting scalar."
+    - "The mathematical operation checks a nonempty unique single-scalar signature, single-scalar rule sides, membership, unique sources, totality and onto. Rule names affect presentation identity but do not affect permutation order."
+    - "This evidence establishes only the finite permutation calculation; it is not confluence, a general research claim, actor licensing, or release authority."
+  non_roles: [authority_source, promotion_granter]
+  required_negative_capabilities: [no_self_certification, no_implicit_authority_upgrade]
+
+structure:
+  language: rust
+  rust_crate: pfp
+  rust_module: pinned_permutation
+  rust_type: PermutationOrderEvidenceV1
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: presentation_digest
+      rust_type: "String"
+    - name: derived_order
+      rust_type: "String"
+    - name: cycles
+      rust_type: "Vec<Vec<String>>"

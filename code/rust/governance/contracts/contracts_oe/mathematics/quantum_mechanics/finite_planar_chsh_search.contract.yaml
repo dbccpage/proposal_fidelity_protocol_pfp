@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_planar_chsh_search:v0.1.0
+title: Complete exact CHSH search over a declared finite planar class
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_planar_chsh_search
+  symbol: finite_planar_chsh_search
+  ascii_symbol: finite_planar_chsh_search
+  notation: Complete exact CHSH search over a declared finite planar class
+  domain:
+  - Real unit directions over an exact HermitianOrdered field; at most1024 directions; candidate-budget admission;
+    factory height1..128 and declared cyclotomic embedding controls
+  codomain:
+    description: Declared finite results of core_quantum_physics::quantum_correlation; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every direction is real of unit squared norm
+- CHSH is evaluated exactly and every allowed strategy is enumerated
+- The returned finite maximum has a replayable strategy and actual candidate count
+- Axes attain2 and conductor8 quadratic controls attain2sqrt2
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_correlation
+  symbols:
+  - PlanarObservable::new
+  - PlanarObservable::validate
+  - evaluate_planar_chsh
+  - finite_planar_chsh_max
+  - generate_unit_vectors
+  - FinitePlanarMaximum
+  required_tests:
+  - measurement_exact_laws::finite_planar_search_replays_its_declared_class_and_refuses_incomplete_search
+negative_tests:
+- measurement_exact_laws::finite_planar_search_replays_its_declared_class_and_refuses_incomplete_search
+doctrine:
+  summary: Every direction is real of unit squared norm; CHSH is evaluated exactly and every allowed strategy
+    is enumerated; The returned finite maximum has a replayable strategy and actual candidate count; Axes attain2
+    and conductor8 quadratic controls attain2sqrt2.
+  non_role:
+  - A finite maximum is not an unrestricted supremum; factory controls do not enumerate all observables in
+    a number field
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

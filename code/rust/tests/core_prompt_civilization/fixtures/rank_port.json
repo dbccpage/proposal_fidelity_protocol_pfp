@@ -1,0 +1,246 @@
+[
+  {
+    "name": "ancestral_1/10",
+    "request": {
+      "operation": "inverse",
+      "child_pass_fraction": "1/10"
+    },
+    "outcome": "47/200",
+    "refusal": null
+  },
+  {
+    "name": "ancestral_4/5",
+    "request": {
+      "operation": "inverse",
+      "child_pass_fraction": "4/5"
+    },
+    "outcome": "83/100",
+    "refusal": null
+  },
+  {
+    "name": "clone_collapse",
+    "request": {
+      "operation": "community",
+      "graph_edges": [
+        [
+          "parent",
+          "child_a"
+        ],
+        [
+          "parent",
+          "child_b"
+        ]
+      ],
+      "root": "parent",
+      "genome_action_digests": {
+        "child_a": "same",
+        "child_b": "same"
+      }
+    },
+    "outcome": "23/40",
+    "refusal": null
+  },
+  {
+    "name": "transition",
+    "request": {
+      "operation": "matrix",
+      "nodes": [
+        "parent",
+        "child"
+      ],
+      "edges": [
+        [
+          "parent",
+          "child"
+        ]
+      ],
+      "evidence": {
+        "child": {
+          "passes": 9,
+          "failures": 1
+        }
+      }
+    },
+    "outcome": [
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "19/20",
+        "1/20"
+      ]
+    ],
+    "refusal": null
+  },
+  {
+    "name": "solve",
+    "request": {
+      "operation": "solve",
+      "num_nodes": 2,
+      "nodes": [
+        "parent",
+        "child"
+      ],
+      "edges": [
+        [
+          "parent",
+          "child"
+        ]
+      ],
+      "evidence": {
+        "child": {
+          "passes": 9,
+          "failures": 1
+        }
+      }
+    },
+    "outcome": [
+      "353/553",
+      "200/553"
+    ],
+    "refusal": null
+  },
+  {
+    "name": "valid_certificate",
+    "request": {
+      "operation": "verify",
+      "nodes": [
+        "parent",
+        "child"
+      ],
+      "edges": [
+        [
+          "parent",
+          "child"
+        ]
+      ],
+      "evidence": {
+        "child": {
+          "passes": 9,
+          "failures": 1
+        }
+      },
+      "declared_transition_matrix": [
+        [
+          "1/2",
+          "1/2"
+        ],
+        [
+          "19/20",
+          "1/20"
+        ]
+      ],
+      "candidate_rank": [
+        "353/553",
+        "200/553"
+      ]
+    },
+    "outcome": true,
+    "refusal": null
+  },
+  {
+    "name": "forged_certificate",
+    "request": {
+      "operation": "verify",
+      "nodes": [
+        "parent",
+        "child"
+      ],
+      "edges": [
+        [
+          "parent",
+          "child"
+        ]
+      ],
+      "evidence": {
+        "child": {
+          "passes": 9,
+          "failures": 1
+        }
+      },
+      "declared_transition_matrix": [
+        [
+          "1/2",
+          "1/2"
+        ],
+        [
+          "1/2",
+          "1/2"
+        ]
+      ],
+      "candidate_rank": [
+        "353/553",
+        "200/553"
+      ]
+    },
+    "outcome": null,
+    "refusal": {
+      "code": "TRANSITION_MATRIX_RECONSTRUCTION_MISMATCH",
+      "message": "TRANSITION_MATRIX_RECONSTRUCTION_MISMATCH: entry [1][0] declared 1/2 != reconstructed 19/20"
+    }
+  },
+  {
+    "name": "node_budget",
+    "request": {
+      "operation": "solve",
+      "num_nodes": 2,
+      "nodes": [
+        "parent",
+        "child"
+      ],
+      "edges": [
+        [
+          "parent",
+          "child"
+        ]
+      ],
+      "max_nodes": 1
+    },
+    "outcome": null,
+    "refusal": {
+      "code": "BUDGET_EXHAUSTED",
+      "message": "BUDGET_EXHAUSTED: Solver limits exceeded (nodes=2/1, edges=1/5000)"
+    }
+  },
+  {
+    "name": "empty",
+    "request": {
+      "operation": "solve",
+      "num_nodes": 0,
+      "nodes": [],
+      "edges": []
+    },
+    "outcome": [],
+    "refusal": null
+  },
+  {
+    "name": "coefficient_budget",
+    "request": {
+      "operation": "solve",
+      "num_nodes": 2,
+      "nodes": [
+        "parent",
+        "child"
+      ],
+      "edges": [
+        [
+          "parent",
+          "child"
+        ]
+      ],
+      "evidence": {
+        "child": {
+          "passes": 9,
+          "failures": 1
+        }
+      },
+      "max_bit_length": 1
+    },
+    "outcome": null,
+    "refusal": {
+      "code": "BUDGET_EXHAUSTED",
+      "message": "BUDGET_EXHAUSTED: Coefficient bit-length exceeded"
+    }
+  }
+]

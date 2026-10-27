@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_repair_quotient:v0.1.0
+title: Certified Finite Weighted Repair Quotients
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_repair_quotient
+  symbol: finite_repair_quotient
+  ascii_symbol: finite_repair_quotient
+  notation: Certified Finite Weighted Repair Quotients
+  domain:
+  - A bounded rational map d0:Q^c0 to Q^m, including zero-axis cases, with strictly positive rational weights.
+  codomain:
+    description: Declared finite results of core_solvers::repair_quotient_bridge; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The certified quotient norm is min_a ||x-d0 a||_(1,w), accepted only after primal-dual replay.
+- An exact native preimage decides whether a cochain is a repair independently of the optimizer.
+- The quotient norm vanishes on repairs and is invariant under adding a repair.
+- The cokernel dimension is m-rank(d0), and equal scalar norms do not determine the quotient object.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_solvers
+  module: data_repair_packet
+  symbols:
+  - RepairPacket
+  - RepairPacketError
+  - MAX_REPAIR_DIMENSION
+  required_tests:
+  - repair_preimages_and_weighted_quotients_replay_independently
+  - zero_axis_packets_are_valid_but_unbounded_witnesses_are_refused
+negative_tests:
+- Ragged maps, wrong or nonpositive weights, cochain length mismatch and oversized witness or matrix work are
+  typed refusals.
+doctrine:
+  summary: The certified quotient norm is min_a ||x-d0 a||_(1,w), accepted only after primal-dual replay.;
+    An exact native preimage decides whether a cochain is a repair independently of the optimizer.; The quotient
+    norm vanishes on repairs and is invariant under adding a repair.; The cokernel dimension is m-rank(d0),
+    and equal scalar norms do not determine the quotient object..
+  non_role:
+  - A scalar quotient norm does not identify a repair cofiber object.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

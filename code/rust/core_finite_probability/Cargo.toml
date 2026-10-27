@@ -1,0 +1,49 @@
+[package]
+autotests = false
+name = "core_finite_probability"
+version.workspace = true
+edition = "2021"
+description = "Foundational exact finite probability: Fin n carriers, rational simplices, stochastic maps and Markov chains, joint tables, majorization, and entropies as rational combinations of logarithms of primes (AuthorityEffect None)"
+license.workspace = true
+
+[dependencies]
+# Exact rational scalar (`Rational = BigRational`) is owned by number theory.
+core_number_theory = { path = "../core_number_theory" }
+# Exact elimination (rank, kernel, `solve_in_image`) and `BasicMatrix` are owned by linear algebra;
+# the stationary distribution, absorption probabilities and the rank-one independence test are
+# linear solves and use them rather than a private elimination.
+linear_algebra = { path = "../core_linear_algebra" }
+# Tier 0: the exact rational `Interval` returned by certified enclosures.
+core_kernel = { path = "../core_kernel" }
+num-rational = "0.4"
+num-bigint = "0.4"
+num-traits = "0.2"
+num-integer = "0.1"
+thiserror = "2"
+serde = { version = "1.0", features = ["derive"] }
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_finite_probability`.
+
+[[test]]
+name = "entropy_form_laws"
+path = "../tests/core_finite_probability/entropy_form_laws.rs"
+
+[[test]]
+name = "finite_local_vertices"
+path = "../tests/core_finite_probability/finite_local_vertices.rs"
+
+[[test]]
+name = "finite_valuation"
+path = "../tests/core_finite_probability/finite_valuation.rs"
+
+[[test]]
+name = "markov_chain_laws"
+path = "../tests/core_finite_probability/markov_chain_laws.rs"
+
+[[test]]
+name = "signed_representation_classification"
+path = "../tests/core_finite_probability/signed_representation_classification.rs"
+
+[[test]]
+name = "exact_mcnemar_test"
+path = "../tests/core_finite_probability/exact_mcnemar_test.rs"

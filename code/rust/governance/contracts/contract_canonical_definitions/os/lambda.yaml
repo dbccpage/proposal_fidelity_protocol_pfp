@@ -1,0 +1,235 @@
+schema_version: "1.0.0"
+contract_id: "os:lambda"
+name: "Lambda Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "partially_enforced"
+
+description: >
+  A LambdaOp is a deterministic, stateless, unary internal-descent morphism over
+  admitted BaseType states. It maps S -> T without carrier enlargement, preserves
+  declared invariants, and may carry a non-authoritative witness that externally
+  measured Φ_after <= Φ_before. A Lambda does not compute canonical functionals,
+  search, rank, repair, lift, terminalize, authorize, orchestrate, or mutate state.
+
+layer: "OS"
+module_path: "operators::lambda"
+
+governs:
+  - "operators/lambdas/**"
+  - "operators/lambda/**"
+  - "core_*/*lambda*.rs"
+
+does_not_govern:
+  - "constructors/**"
+  - "generators/**"
+  - "operators/reducers/**"
+  - "operators/transforms/**"
+  - "core_functional/**"
+  - "core_homology/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipelines/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-L1"
+    description: "Lambda no-hidden-lift theorem: same carrier family; carrier growth implies MetaLift or explicit Lift, not Lambda."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L1"
+
+  - id: "OP-L2"
+    description: "Lambda Φ non-increase theorem: if LambdaWitness is valid, externally measured Φ_after <= Φ_before."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L2"
+
+  - id: "OP-L7"
+    description: "Engine-only loop theorem: operators/reducers/lambdas are single-step; repeated execution belongs to Engine trace."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L7"
+
+  - id: "OP-LAMBDA-NO-AUTH"
+    description: "Lambda execution and Lambda composition cannot mint authority."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  carrier_enlargement: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  deterministic: true
+  stateless: true
+  unary: true
+  single_step: true
+  typed_failure_required: true
+  admitted_input_required: true
+
+allowed:
+  - "read one admitted immutable input"
+  - "perform one deterministic internal-descent transformation"
+  - "return typed output on same carrier family"
+  - "return typed LambdaFailure"
+  - "preserve declared invariants"
+  - "carry MeasurementRef values produced by canonical functional/replay layer"
+  - "carry non-authoritative LambdaWitness"
+  - "expose local non-authoritative metadata"
+
+forbidden:
+  - "compute Φ₁"
+  - "compute Γ₂"
+  - "compute R_cl"
+  - "compute Ξ"
+  - "call Phi1Functional"
+  - "call Gamma2Functional"
+  - "call XiFunctional"
+  - "classify trichotomy"
+  - "mint CertifiedAuthority"
+  - "call CertifiedAuthority::certify"
+  - "call authority_from_outcome_f13"
+  - "call terminalize"
+  - "emit AuthorityEffect::Authorize"
+  - "generate lift candidates"
+  - "perform carrier growth"
+  - "reinterpret carrier to make the transformation executable"
+  - "search candidate space"
+  - "rank alternatives"
+  - "iterate until convergence"
+  - "perform MCTS"
+  - "mutate global state"
+  - "perform IO"
+  - "return opaque string-only failure"
+  - "return None as failure"
+
+carrier_law:
+  same_carrier_family_required: true
+  representation_bridge_allowed_only_if_declared: true
+  carrier_rank_change: "forbidden"
+  carrier_universe_change: "forbidden"
+  admissible_geometry_change: "forbidden"
+  if_carrier_growth_required: "MetaLiftOrExplicitLift"
+
+phi_law:
+  lambda_may_compute_phi: false
+  witness_required_for_phi_claim: true
+  witness_source: "canonical_functional_or_replay_layer"
+  accepted_comparisons:
+    - "NonIncreasing"
+    - "StrictDecrease"
+    - "DiagnosticOnly"
+    - "NoPhiClaim"
+  canonical_numeric_type: "MeasurementRef"
+  f64_phi_witness_status: "diagnostic_only"
+
+witness_shape:
+  preferred: "LambdaWitness"
+  fields:
+    - "phi_functional_id"
+    - "before_measurement_ref"
+    - "after_measurement_ref"
+    - "comparison"
+    - "certificate_refs"
+    - "invariant_refs"
+  notes:
+    - "Witness references external measurements; it does not certify authority."
+    - "A Lambda without a LambdaWitness may still be valid, but it cannot claim Φ non-increase."
+
+failure_shape:
+  enum: "LambdaFailure"
+  required_variants:
+    - "OutsideAdmissibleDomain"
+    - "InvariantViolation"
+    - "UndefinedTransformation"
+    - "CarrierMismatch"
+    - "CarrierGrowthRequired"
+    - "MeasurementWitnessMissing"
+    - "NonFiniteInput"
+
+composition:
+  allowed_only_when:
+    - "codomain of first Lambda exactly matches domain of second"
+    - "or an explicit Adapter bridges representation types"
+  forbidden_when:
+    - "composition would enlarge carrier"
+    - "composition would require hidden lift"
+    - "composition would require runtime search"
+  authority_effect: "none"
+  notes:
+    - "Lambda composition is still non-authoritative."
+    - "Repeated Lambda application until fixed point is Engine orchestration, not Lambda semantics."
+
+validator_requirements:
+  forbidden_substrings:
+    - "CertifiedAuthority"
+    - "authority_from_outcome_f13"
+    - "terminalize"
+    - "mint_authority"
+    - "Phi1Functional"
+    - "Gamma2Functional"
+    - "XiFunctional"
+    - "classify_exact"
+    - "ExactRepair"
+    - "AuthorityEffect::Authorize"
+    - "generate_lift"
+    - "LiftCandidate"
+    - "rank_candidates"
+    - "score_candidates"
+    - "while "
+    - "loop "
+    - "thread_rng"
+    - "rand::"
+    - "std::fs"
+    - "File::"
+    - "unwrap()"
+    - "expect("
+  required_patterns:
+    - "Result<"
+    - "LambdaFailure"
+  required_tests:
+    - "lambda_is_deterministic"
+    - "lambda_is_single_step"
+    - "lambda_preserves_declared_invariants"
+    - "lambda_rejects_carrier_growth"
+    - "lambda_does_not_compute_functionals"
+    - "lambda_does_not_mint_authority"
+    - "lambda_phi_witness_references_external_measurements"
+
+lean_obligations:
+  - id: "OP-L1"
+    theorem: "Same-carrier Lambda cannot perform hidden lift; carrier growth requires MetaLift or explicit Lift."
+    status: "needed"
+
+  - id: "OP-L2"
+    theorem: "Valid LambdaWitness implies measured Φ_after <= Φ_before."
+    status: "needed"
+
+  - id: "OP-L7"
+    theorem: "Lambda is single-step; repeated execution belongs to Engine trace."
+    status: "needed"
+
+  - id: "LAM-L0"
+    theorem: "Lambda preserves its declared invariants over admitted domain."
+    status: "needed"
+
+  - id: "LAM-L1"
+    theorem: "Lambda composition preserves no-authority property."
+    status: "needed"
+
+notes:
+  - "Lambda is an internal-descent operator, not an Engine."
+  - "Lambda is not a Reducer unless it is endomorphic and idempotent under a declared reducer law."
+  - "Lambda is not a Transform unless it drops the Φ non-increase claim."
+  - "Lambda is not a Lift; hidden carrier growth is a contract violation."
+  - "Φ non-increase is externally witnessed, not internally computed."

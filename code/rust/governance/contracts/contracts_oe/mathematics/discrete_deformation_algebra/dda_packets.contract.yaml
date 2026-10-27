@@ -1,0 +1,44 @@
+schema_version: core.file_contract.v1
+contract_id: urn:core:contracts:dda_packets:v1.0.0
+title: Core DDA / DDC Packet Contracts
+status: operational
+layer: 09_packets
+role: dda_packet_taxonomy
+authority_effect: fact_only
+owns:
+  - CandidatePacket
+  - DeclarationPacket
+  - AdmissionDecision
+  - LossEntry
+  - LossLedger
+  - StepReceipt
+  - TerminalReceipt
+  - CanContinueInput
+  - CanContinueResult
+  - IntakeTraceRecord
+  - ProposalEnvelope
+  - CochainComplexData
+  - ObstructionDescentPacket
+  - FidelityPacket
+  - assert_packet_type_separation
+  - four_axis_separation_gate
+does_not_own:
+  - authority_minting
+  - global_convergence_claims
+  - policy_authorization
+
+invariants:
+  four_axis_separation:
+    rule: "DiagnosticClass != RoutingTerminal != ExtensionStatus != AuthorityStatus"
+    diagnostic_classes: ["ExactRepair", "ClosedResidual", "ActiveClosureFailure"]
+    routing_terminals: ["CheckPassed", "ResidualTerminal", "RequiresLift", "Refusal"]
+    authority_effects: ["None"]
+  strict_boolean_typing:
+    rule: "All packet decision and validity fields must satisfy type(val) is bool (rejecting ints 0 and 1)."
+  receipt_determinism:
+    rule: "StepReceipt and TerminalReceipt must be deterministically hashable under canonical RFC 8785 JSON. This requirement is not a verified implementation claim."
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_file_contract:file:v1.0.0"
+

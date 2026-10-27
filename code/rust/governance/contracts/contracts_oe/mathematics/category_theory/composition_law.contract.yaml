@@ -1,0 +1,84 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:composition_law:v0.1.0
+title: Composition Law Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: binary_operation
+  symbol: g ∘ f
+  ascii_symbol: composition_law
+  notation: g ∘ f
+  domain:
+  - 'morphisms: set of morphisms in the category'
+  - 'composition_function: partial function Mor × Mor → Mor'
+  codomain:
+    description: 'The composition law is defined on the set of morphisms in a category. For morphisms f: A → B and g: B → C where cod(f) = dom(g), the composition g ∘ f: A → C exists.
+
+      '
+requirements:
+  required_structures:
+  - Composition must be defined for all composable pairs of morphisms
+  - Composition must satisfy (h ∘ g) ∘ f = h ∘ (g ∘ f) for all composable triples
+  - g ∘ f is only defined when cod(f) = dom(g)
+  - 'Composition must be deterministic: same inputs always produce same output'
+laws:
+- 'For all composable triples f, g, h: (h ∘ g) ∘ f = h ∘ (g ∘ f)'
+- 'For f: A → B and g: B → C: dom(g ∘ f) = dom(f) = A'
+- 'For f: A → B and g: B → C: cod(g ∘ f) = cod(g) = C'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Composition triples sorted canonically
+  - Validators and composition functions are content-addressed
+relationships:
+- urn:math:contract:Category:v0.1.0 serves as Provides the morphisms, objects, domain and codomain structure
+- urn:math:contract:Morphism:v0.1.0 serves as Defines the morphisms being composed
+negative_tests:
+- category_id does not resolve to a valid Category
+- Composable pair (f, g) has no defined composite
+- g ∘ f has domain ≠ domain(f)
+- g ∘ f has codomain ≠ codomain(g)
+- (h ∘ g) ∘ f ≠ h ∘ (g ∘ f) for some composable triple
+doctrine:
+  summary: 'A CompositionLaw defines how morphisms compose in a category. Given f: A → B and g: B → C, the composition g ∘ f: A → C is defined. The law must satisfy associativity. The contract validates the composition table or function.'
+  non_role:
+  - This contract does not handle horizontal composition in 2-categories
+  - This contract does not provide composition in bicategories or weak categories
+  - This contract does not handle monoidal composition (tensor products)
+wip:
+- Should this contract be merged with Category or kept separate for modularity?
+- How to handle large categories where table representation is impractical?
+- What is the contract structure for higher composition in 2-categories?
+- Contract is closely tied to Category; modularity vs. integration trade-off
+- Function representation needed for large/infinite categories
+- Higher composition (2-categories, bicategories) requires separate contract
+rust_binding:
+  crate: core_category_theory
+  module: finite_category_validation
+  symbols:
+  - check_composition_totality
+  - check_composition_closure
+  - check_composition_boundaries
+  - check_associativity
+  required_tests:
+  - associativity_failure_is_detected
+  - noncomposable_composition_fails

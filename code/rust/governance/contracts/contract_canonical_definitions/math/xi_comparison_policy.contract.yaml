@@ -1,0 +1,58 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:xi_comparison_policy:v1.0.0
+title: xi_gate
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1:v1.0.0
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    - urn:core:math:xi_tie_breaker:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: xi_gate
+  symbol: xi_gate
+  ascii_symbol: xi_gate
+  notation: xi_gate
+  domain:
+  - Declared finite input carrier
+  codomain:
+    description: Policy may use a computed Xi only after exact Phi1 and Gamma2 tie. The guard computes no functional
+      and grants no action license.
+  definition:
+    evaluation: Policy may use a computed Xi only after exact Phi1 and Gamma2 tie. The guard computes no functional
+      and grants no action license.
+laws:
+- Policy may use a computed Xi only after exact Phi1 and Gamma2 tie. The guard computes no functional and grants
+  no action license.
+- Evaluation evidence does not authorize a state transition.
+rust_binding:
+  crate: core_policy
+  module: xi_gate
+  symbols:
+  - firewall_allows_candidate
+  - xi_may_decide_tie
+  required_tests:
+  - test_xi_cannot_decide_when_phi_worsens
+  - test_xi_cannot_decide_when_gamma_worsens
+negative_tests:
+- Malformed input or an impermissible comparison is refused.
+doctrine:
+  summary: Policy may use a computed Xi only after exact Phi1 and Gamma2 tie. The guard computes no functional and
+    grants no action license.
+  non_role:
+  - Authorization

@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:sheaf_on_site:v0.1.0
+title: Sheaf on Site Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: sheaf
+  symbol: F ∈ Sh(C, J)
+  ascii_symbol: sheaf_on_site
+  notation: F ∈ Sh(C, J)
+  domain:
+  - 'site: (C, J) where C is a category and J is a Grothendieck topology'
+  - 'presheaf: F: C^op → Set'
+  - 'sheaf_condition: F(U) ≅ lim_{V → U ∈ S} F(V) for all S ∈ J(U)'
+  codomain:
+    description: 'A presheaf F: C^op → Set together with a site (C, J) such that the sheaf condition holds for all covering sieves.
+
+      '
+requirements:
+  required_structures:
+  - The site (C, J) must exist and be valid
+  - The presheaf F must exist and be defined on C
+  - 'For all U and all S ∈ J(U), the map F(U) → lim_{V → U ∈ S} F(V) must be an isomorphism
+
+    '
+laws:
+- 'For every object U and every covering sieve S ∈ J(U), the natural map F(U) → lim_{(f: V → U) ∈ S} F(V) is an isomorphism.
+
+  '
+- 'For every covering family {f_i: U_i → U}, if sections s_i ∈ F(U_i) agree on all overlaps (i.e., s_i|_{U_i ×_U U_j} = s_j|_{U_i ×_U U_j}), then there exists a unique section s ∈ F(U) such that s|_{U_i} = s_i.
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+relationships:
+- urn:math:contract:Site:v0.1.0 serves as Provides the site (C, J) with Grothendieck topology
+- 'urn:math:contract:Presheaf:v0.1.0 serves as Provides the underlying presheaf F: C^op → Set'
+- urn:math:contract:Category:v0.1.0 serves as Provides the underlying category C
+negative_tests:
+- site_id does not resolve
+- presheaf_id does not resolve
+- Presheaf not defined on site category C
+- F(U) → lim F(V) is not an isomorphism for some covering sieve
+doctrine:
+  summary: 'A SheafOnSite is a presheaf F: C^op → Set on a site (C, J) that satisfies the sheaf condition with respect to the Grothendieck topology J. The contract validates the descent/gluing property.'
+  non_role:
+  - Sheafification (associating a sheaf to any presheaf)
+  - Topos structure on Sh(C, J)
+  - Geometric morphisms
+wip:
+- 'Sheafification: associates a sheaf to any presheaf'
+- For subcanonical topologies, all representables are sheaves
+- Sh(C, J) is a topos with geometric morphism to Set
+- Current implementation focuses on validation of sheaf condition
+- Gluing algorithm is deterministic and content-addressed
+- 'Future work: topos structure and geometric morphisms'

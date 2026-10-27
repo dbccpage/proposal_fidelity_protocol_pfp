@@ -1,0 +1,158 @@
+schema_version: core.contract.v1
+contract_id: urn:core:governance:auth_interface:v1.0.0
+title: AuthInterface
+kind: governance_contract
+status: mathematical_wip
+layer: 05_governance
+role: AuthInterface
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - PolicyContract
+    - BoundaryContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - Terminalization
+    required: []
+doctrine:
+  summary: 'This contract defines the authentication and authorization boundary for the system.
+
+
+    AuthInterface is NOT an operator in the five-effect-class algebra (E, I, C, R, M).
+
+    It is an access-gating boundary. Auth is orthogonal to the effect-class algebra -- it
+
+    gates access to resources, not computation. Auth must not be confused with Evaluator,
+
+    which judges admissibility of evidence. Auth judges identity and permission.
+
+    '
+  non_role: &id002
+  - certification
+  - evaluation
+  - terminalization
+  - execution
+  - mutation
+  - evidence authority creation
+  - admissibility judgment
+  - operator classification
+  llm_boundary_law:
+    doctrine: 5
+    text: 'LLM-generated content carries zero authority at this interface. LLM output is candidate
+
+      material only. No LLM output may influence identity verification, role assignment,
+
+      permission grants, or access decisions. Auth decisions are deterministic functions of
+
+      verified identity, declared roles, and permission grants.
+
+      '
+  core_definition: 'The AuthInterface verifies identity, resolves declared roles, and checks permission
+    scope
+
+    against grants. It gates access to system resources. It does not judge the admissibility
+
+    of evidence (that is the Evaluator''s role), does not classify candidates (that is
+
+    governance), and does not execute state transitions (that is the Engine''s role).
+
+
+    Auth answers: "Is this requester allowed to access this resource?"
+
+    Evaluator answers: "Is this evidence admissible under policy?"
+
+
+    These are distinct questions. Auth must not absorb Evaluator responsibilities or vice versa.
+
+    '
+  certificate_authority_bound:
+    doctrine: 6
+    text: 'Auth does not create certificate authority. Auth decisions confirm identity and permission
+
+      scope. Any downstream certificate that references an auth decision inherits no additional
+
+      authority from the auth gate itself. Auth is a precondition for access, not a source of
+
+      evidence authority.
+
+      '
+  admissibility_checklist:
+  - Identity is verified (token, credential, or certificate-based)
+  - Role is declared (not inferred or assumed)
+  - Permission scope is bounded (specific resource or resource class)
+  - Request schema validates
+  - Auth policy is declared and versioned
+  refusal_conditions:
+  - Unverified identity (missing, expired, or invalid credential)
+  - Undeclared role (role not present in identity claims)
+  - Permission scope exceeds grant (requested access beyond what role allows)
+  - Missing auth policy
+  - Malformed auth request
+  - Expired session or token
+  - Identity spoofing detected
+  - Role escalation attempt
+  auth_vs_evaluator_boundary: "Auth:      gates access by identity and permission\nEvaluator: judges admissibility\
+    \ of evidence under policy\n\nAuth does NOT:\n  - judge evidence quality\n  - classify candidates\n\
+    \  - apply evaluation policy\n  - make admissibility verdicts\n\nEvaluator does NOT:\n  - verify identity\n\
+    \  - check permissions\n  - resolve roles\n  - gate resource access\n"
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - certify
+    - evaluate
+    - terminalize
+    - execute
+    - mutate
+    - authority_upgrade
+    - sign_certificate
+    - create_authority
+    - admissibility_verdict
+  required_tests:
+  - auth_rejects_unverified_identity
+  - auth_rejects_undeclared_role
+  - auth_rejects_scope_exceeding_grant
+  - auth_does_not_judge_evidence_admissibility
+  - auth_does_not_create_certificate_authority
+  - auth_is_orthogonal_to_effect_class_algebra
+  - auth_decision_does_not_carry_evidence_authority
+  - auth_llm_output_carries_no_authority
+  canonical_invariant: 'Auth gates access by identity and permission. It is orthogonal to the effect-class
+
+    algebra and does not judge evidence admissibility, create certificate authority, or
+
+    execute state transitions.
+
+    '
+  legacy_metadata:
+    name: AuthInterface
+    role: Authentication and authorization boundary gating access to system resources
+    version: '1.0'
+    classification: governance
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: DecisionEnvelope
+    domain_output_kind: AuthDecision
+    referenced_output_families:
+    - EvidenceEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+  migration_note: authority_effect set to none per validate_auth_interface (legacy YAML declared RequestsDecision;
+    that was YAML->Rust drift, resolved in favor of the validator).
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_governance_contract:v1.0.0"

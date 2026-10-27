@@ -1,0 +1,55 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:finite_hermitian_spectrum:file:v1.0.0
+title: Finite energy-spacing diagnostics from canonical checked Hermitian eigenpairs
+status: active_provisional
+crate: core_functional
+file: crates_rs/core_functional/src/quantum_gaps.rs
+layer: functional
+role: finite_energy_spacing_diagnostic
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- all_adjacent_spacings_with_retained_level_multiplicity
+- explicit_absent_singleton_spacing
+- refusal_of_unrepresentable_spacings
+- delegation_to_canonical_checked_hermitian_eigenpairs
+- none_authority_effect
+does_not_own:
+- generic_Hermitian_eigendecomposition_or_eigenpair_validation
+- exact_algebraic_spectral_certification
+- Hamiltonian_or_state_admission
+- operational_authority
+may_call:
+- linear_algebra::hermitian_eigen::hermitian_eigen_checked
+must_not:
+- send_zero_iterations_to_the_unbounded_solver_mode
+- silently_symmetrize_or_truncate_the_submitted_matrix
+- accept_nonfinite_or_unrepresentable_diagnostics_as_zero
+- skip_repeated_levels_to_manufacture_a_positive_gap
+- accept_zero_or_nonorthogonal_eigenvectors_merely_because_residual_is_zero
+- expose_unchecked_result_construction_or_deserialization
+exactness:
+  mode: checked_bounded_floating_representation_diagnostic
+  exact_constructor_required: false
+  approximate_modes_allowed: true
+forbidden_substrings: []
+required_substrings:
+- pub struct QuantumGapFunctional
+- pub struct QuantumGaps
+- hermitian_eigen_checked(matrix, self.policy)?
+- SpectrumError::UnrepresentableSpacing
+- self.adjacent_spacings.first().copied()
+required_tests:
+- quantum_gaps::tests::independent_integer_fixtures_match_every_level_and_spacing
+- quantum_gaps::tests::diagonal_levels_are_sorted_without_dropping_degeneracy
+- quantum_gaps::tests::genuinely_complex_off_diagonals_determine_the_spectrum
+- quantum_gaps::tests::serialized_gaps_keep_none_authority_and_no_verdict
+- quantum_gaps::tests::singleton_zero_and_subnormal_spectra_do_not_invent_missing_spacings
+- quantum_gaps::tests::finite_input_does_not_authorize_overflowed_levels_or_spacings
+lean_obligations: []
+relationships:
+  extends:
+  - urn:core:constitution:base_file_contract:file:v1.0.0

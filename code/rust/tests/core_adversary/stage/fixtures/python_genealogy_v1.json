@@ -1,0 +1,3903 @@
+{
+  "vectors": [
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "ok": {
+          "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+          "candidate_id": "candidate_1",
+          "run_key": "run_1",
+          "scene_id": "scene_1",
+          "cause_of_death": "counterexample é",
+          "killing_seat_id": "seat_critic",
+          "evidence_refs": [
+            "evidence"
+          ],
+          "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "round_index": 0
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "candidate_id must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": " trim ",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "candidate_id must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "bad id!",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "candidate_id must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "run_key must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": " trim ",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "run_key must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "bad id!",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "run_key must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "scene_id must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": " trim ",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "scene_id must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "bad id!",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "scene_id must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cause_of_death must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": " trim ",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cause_of_death must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cause_of_death exceeds the text limit",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "killing_seat_id must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": " trim ",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "killing_seat_id must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "bad id!",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "killing_seat_id must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "ok": {
+          "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+          "candidate_id": "candidate_1",
+          "run_key": "run_1",
+          "scene_id": "scene_1",
+          "cause_of_death": "counterexample é",
+          "killing_seat_id": "seat_critic",
+          "evidence_refs": [],
+          "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "round_index": 0
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "x",
+          "x"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "evidence_refs must not contain duplicates",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          ""
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "ok": {
+          "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+          "candidate_id": "candidate_1",
+          "run_key": "run_1",
+          "scene_id": "scene_1",
+          "cause_of_death": "counterexample é",
+          "killing_seat_id": "seat_critic",
+          "evidence_refs": [
+            ""
+          ],
+          "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "round_index": 0
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "x0",
+          "x1",
+          "x2",
+          "x3",
+          "x4",
+          "x5",
+          "x6",
+          "x7",
+          "x8",
+          "x9",
+          "x10",
+          "x11",
+          "x12",
+          "x13",
+          "x14",
+          "x15",
+          "x16",
+          "x17",
+          "x18",
+          "x19",
+          "x20",
+          "x21",
+          "x22",
+          "x23",
+          "x24",
+          "x25",
+          "x26",
+          "x27",
+          "x28",
+          "x29",
+          "x30",
+          "x31",
+          "x32",
+          "x33",
+          "x34",
+          "x35",
+          "x36",
+          "x37",
+          "x38",
+          "x39",
+          "x40",
+          "x41",
+          "x42",
+          "x43",
+          "x44",
+          "x45",
+          "x46",
+          "x47",
+          "x48",
+          "x49",
+          "x50",
+          "x51",
+          "x52",
+          "x53",
+          "x54",
+          "x55",
+          "x56",
+          "x57",
+          "x58",
+          "x59",
+          "x60",
+          "x61",
+          "x62",
+          "x63",
+          "x64",
+          "x65",
+          "x66",
+          "x67",
+          "x68",
+          "x69",
+          "x70",
+          "x71",
+          "x72",
+          "x73",
+          "x74",
+          "x75",
+          "x76",
+          "x77",
+          "x78",
+          "x79",
+          "x80",
+          "x81",
+          "x82",
+          "x83",
+          "x84",
+          "x85",
+          "x86",
+          "x87",
+          "x88",
+          "x89",
+          "x90",
+          "x91",
+          "x92",
+          "x93",
+          "x94",
+          "x95",
+          "x96",
+          "x97",
+          "x98",
+          "x99",
+          "x100",
+          "x101",
+          "x102",
+          "x103",
+          "x104",
+          "x105",
+          "x106",
+          "x107",
+          "x108",
+          "x109",
+          "x110",
+          "x111",
+          "x112",
+          "x113",
+          "x114",
+          "x115",
+          "x116",
+          "x117",
+          "x118",
+          "x119",
+          "x120",
+          "x121",
+          "x122",
+          "x123",
+          "x124",
+          "x125",
+          "x126",
+          "x127",
+          "x128",
+          "x129",
+          "x130",
+          "x131",
+          "x132",
+          "x133",
+          "x134",
+          "x135",
+          "x136",
+          "x137",
+          "x138",
+          "x139",
+          "x140",
+          "x141",
+          "x142",
+          "x143",
+          "x144",
+          "x145",
+          "x146",
+          "x147",
+          "x148",
+          "x149",
+          "x150",
+          "x151",
+          "x152",
+          "x153",
+          "x154",
+          "x155",
+          "x156",
+          "x157",
+          "x158",
+          "x159",
+          "x160",
+          "x161",
+          "x162",
+          "x163",
+          "x164",
+          "x165",
+          "x166",
+          "x167",
+          "x168",
+          "x169",
+          "x170",
+          "x171",
+          "x172",
+          "x173",
+          "x174",
+          "x175",
+          "x176",
+          "x177",
+          "x178",
+          "x179",
+          "x180",
+          "x181",
+          "x182",
+          "x183",
+          "x184",
+          "x185",
+          "x186",
+          "x187",
+          "x188",
+          "x189",
+          "x190",
+          "x191",
+          "x192",
+          "x193",
+          "x194",
+          "x195",
+          "x196",
+          "x197",
+          "x198",
+          "x199",
+          "x200",
+          "x201",
+          "x202",
+          "x203",
+          "x204",
+          "x205",
+          "x206",
+          "x207",
+          "x208",
+          "x209",
+          "x210",
+          "x211",
+          "x212",
+          "x213",
+          "x214",
+          "x215",
+          "x216",
+          "x217",
+          "x218",
+          "x219",
+          "x220",
+          "x221",
+          "x222",
+          "x223",
+          "x224",
+          "x225",
+          "x226",
+          "x227",
+          "x228",
+          "x229",
+          "x230",
+          "x231",
+          "x232",
+          "x233",
+          "x234",
+          "x235",
+          "x236",
+          "x237",
+          "x238",
+          "x239",
+          "x240",
+          "x241",
+          "x242",
+          "x243",
+          "x244",
+          "x245",
+          "x246",
+          "x247",
+          "x248",
+          "x249",
+          "x250",
+          "x251",
+          "x252",
+          "x253",
+          "x254",
+          "x255",
+          "x256"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "evidence_refs exceeds the item limit",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "candidate_payload_sha256 must be a lowercase sha256 digest",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": " trim ",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "candidate_payload_sha256 must be a lowercase sha256 digest",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "candidate_payload_sha256 must be a lowercase sha256 digest",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 1000000
+      },
+      "expected": {
+        "ok": {
+          "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+          "candidate_id": "candidate_1",
+          "run_key": "run_1",
+          "scene_id": "scene_1",
+          "cause_of_death": "counterexample é",
+          "killing_seat_id": "seat_critic",
+          "evidence_refs": [
+            "evidence"
+          ],
+          "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "round_index": 1000000
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 1000001
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "round_index must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "ok": {
+          "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+          "candidate_id": "candidate_1",
+          "run_key": "run_1",
+          "scene_id": "scene_1",
+          "cause_of_death": "counterexample é",
+          "killing_seat_id": "seat_critic",
+          "evidence_refs": [
+            "evidence"
+          ],
+          "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "round_index": 0
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "",
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "ok": {
+          "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+          "candidate_id": "candidate_1",
+          "run_key": "run_1",
+          "scene_id": "scene_1",
+          "cause_of_death": "counterexample é",
+          "killing_seat_id": "seat_critic",
+          "evidence_refs": [
+            "",
+            "evidence"
+          ],
+          "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "round_index": 0
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "construct",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_other",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 3
+      },
+      "expected": {
+        "ok": {
+          "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+          "candidate_id": "candidate_1",
+          "run_key": "run_1",
+          "scene_id": "scene_1",
+          "cause_of_death": "counterexample é",
+          "killing_seat_id": "seat_other",
+          "evidence_refs": [
+            "evidence"
+          ],
+          "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "round_index": 3
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "ok": {
+          "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+          "candidate_id": "candidate_1",
+          "run_key": "run_1",
+          "scene_id": "scene_1",
+          "cause_of_death": "counterexample é",
+          "killing_seat_id": "seat_critic",
+          "evidence_refs": [
+            "evidence"
+          ],
+          "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "round_index": 0
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: headstone_id",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: candidate_id",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: run_key",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: scene_id",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: cause_of_death",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: killing_seat_id",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: evidence_refs",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: candidate_payload_sha256",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: round_index",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0,
+        "unknown": true
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone unknown fields: unknown",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "unknown": true
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone missing fields: candidate_id, candidate_payload_sha256, cause_of_death, evidence_refs, headstone_id, killing_seat_id, round_index, run_key, scene_id",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone identity does not match its payload",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "bad-digest",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "headstone_id must be a lowercase sha256 digest",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": null,
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "candidate_id must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": null,
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "run_key must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": null,
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "scene_id must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": null,
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cause_of_death must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": null,
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "killing_seat_id must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "",
+          "x"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "evidence_refs[0] must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": "not an array",
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "evidence_refs must be an exact JSON array",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "x",
+          "x"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "evidence_refs must not contain duplicates",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": null,
+        "round_index": 0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "candidate_payload_sha256 must be a lowercase sha256 digest",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": -1
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "round_index must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": true
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "round_index must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 1.0
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "round_index must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": {
+        "headstone_id": "sha256:df109d5f0dc12564cd1a2cae838b4d4945e58227b3d7c8aa8eb9330eb0db13d1",
+        "candidate_id": "candidate_1",
+        "run_key": "run_1",
+        "scene_id": "scene_1",
+        "cause_of_death": "counterexample é",
+        "killing_seat_id": "seat_critic",
+        "evidence_refs": [
+          "evidence"
+        ],
+        "candidate_payload_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "round_index": 1000001
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "round_index must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "headstone",
+      "op": "load",
+      "input": [],
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "cemetery headstone must be an exact string-keyed object",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "ok": {
+          "antibody_id": "ab:pattern",
+          "failure_pattern": "repeated é defect",
+          "occurrences": 1,
+          "constraint_rule": "Disallow the reproduced pattern",
+          "status": "ACTIVE"
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody_id must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": " trim ",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody_id must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "bad id!",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody_id must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "failure_pattern must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": " trim ",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "failure_pattern must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "failure_pattern exceeds the text limit",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1000000,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "ok": {
+          "antibody_id": "ab:pattern",
+          "failure_pattern": "repeated é defect",
+          "occurrences": 1000000,
+          "constraint_rule": "Disallow the reproduced pattern",
+          "status": "ACTIVE"
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1000001,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "occurrences must be an exact integer in [1, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 0,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "occurrences must be an exact integer in [1, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "constraint_rule must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": " trim ",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "constraint_rule must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "constraint_rule exceeds the text limit",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": ""
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "status must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": " trim "
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "status must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "bad id!"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "status must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "construct",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "PROPOSED"
+      },
+      "expected": {
+        "ok": {
+          "antibody_id": "ab:pattern",
+          "failure_pattern": "repeated é defect",
+          "occurrences": 1,
+          "constraint_rule": "Disallow the reproduced pattern",
+          "status": "PROPOSED"
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "ok": {
+          "antibody_id": "ab:pattern",
+          "failure_pattern": "repeated é defect",
+          "occurrences": 1,
+          "constraint_rule": "Disallow the reproduced pattern",
+          "status": "ACTIVE"
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody entry missing fields: antibody_id",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody entry missing fields: failure_pattern",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody entry missing fields: occurrences",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody entry missing fields: constraint_rule",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody entry missing fields: status",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE",
+        "unknown": true
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody entry unknown fields: unknown",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "unknown": true
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody entry missing fields: antibody_id, constraint_rule, failure_pattern, occurrences, status",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": null,
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody_id must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": null,
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "failure_pattern must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": -1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "occurrences must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": true,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "occurrences must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1.0,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "occurrences must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1000001,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "occurrences must be an exact integer in [0, 1000000]",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": null,
+        "status": "ACTIVE"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "constraint_rule must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": {
+        "antibody_id": "ab:pattern",
+        "failure_pattern": "repeated é defect",
+        "occurrences": 1,
+        "constraint_rule": "Disallow the reproduced pattern",
+        "status": null
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "status must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "antibody",
+      "op": "load",
+      "input": [],
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "antibody entry must be an exact string-keyed object",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "ok": {
+          "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+          "parent_run_key": "run_parent",
+          "child_run_key": "run_child",
+          "structural_deficiencies": [
+            "missing witness"
+          ],
+          "concrete_fixes": [
+            "pin receipt"
+          ],
+          "next_run_guidance": "recheck é",
+          "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "parent_run_key must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": " trim ",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "parent_run_key must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "bad id!",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "parent_run_key must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "child_run_key must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": " trim ",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "child_run_key must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "bad id!",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "child_run_key must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "ok": {
+          "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+          "parent_run_key": "run_parent",
+          "child_run_key": "run_child",
+          "structural_deficiencies": [],
+          "concrete_fixes": [
+            "pin receipt"
+          ],
+          "next_run_guidance": "recheck é",
+          "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "x",
+          "x"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "structural_deficiencies must not contain duplicates",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          ""
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "structural_deficiencies[0] must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "x0",
+          "x1",
+          "x2",
+          "x3",
+          "x4",
+          "x5",
+          "x6",
+          "x7",
+          "x8",
+          "x9",
+          "x10",
+          "x11",
+          "x12",
+          "x13",
+          "x14",
+          "x15",
+          "x16",
+          "x17",
+          "x18",
+          "x19",
+          "x20",
+          "x21",
+          "x22",
+          "x23",
+          "x24",
+          "x25",
+          "x26",
+          "x27",
+          "x28",
+          "x29",
+          "x30",
+          "x31",
+          "x32",
+          "x33",
+          "x34",
+          "x35",
+          "x36",
+          "x37",
+          "x38",
+          "x39",
+          "x40",
+          "x41",
+          "x42",
+          "x43",
+          "x44",
+          "x45",
+          "x46",
+          "x47",
+          "x48",
+          "x49",
+          "x50",
+          "x51",
+          "x52",
+          "x53",
+          "x54",
+          "x55",
+          "x56",
+          "x57",
+          "x58",
+          "x59",
+          "x60",
+          "x61",
+          "x62",
+          "x63",
+          "x64",
+          "x65",
+          "x66",
+          "x67",
+          "x68",
+          "x69",
+          "x70",
+          "x71",
+          "x72",
+          "x73",
+          "x74",
+          "x75",
+          "x76",
+          "x77",
+          "x78",
+          "x79",
+          "x80",
+          "x81",
+          "x82",
+          "x83",
+          "x84",
+          "x85",
+          "x86",
+          "x87",
+          "x88",
+          "x89",
+          "x90",
+          "x91",
+          "x92",
+          "x93",
+          "x94",
+          "x95",
+          "x96",
+          "x97",
+          "x98",
+          "x99",
+          "x100",
+          "x101",
+          "x102",
+          "x103",
+          "x104",
+          "x105",
+          "x106",
+          "x107",
+          "x108",
+          "x109",
+          "x110",
+          "x111",
+          "x112",
+          "x113",
+          "x114",
+          "x115",
+          "x116",
+          "x117",
+          "x118",
+          "x119",
+          "x120",
+          "x121",
+          "x122",
+          "x123",
+          "x124",
+          "x125",
+          "x126",
+          "x127",
+          "x128",
+          "x129",
+          "x130",
+          "x131",
+          "x132",
+          "x133",
+          "x134",
+          "x135",
+          "x136",
+          "x137",
+          "x138",
+          "x139",
+          "x140",
+          "x141",
+          "x142",
+          "x143",
+          "x144",
+          "x145",
+          "x146",
+          "x147",
+          "x148",
+          "x149",
+          "x150",
+          "x151",
+          "x152",
+          "x153",
+          "x154",
+          "x155",
+          "x156",
+          "x157",
+          "x158",
+          "x159",
+          "x160",
+          "x161",
+          "x162",
+          "x163",
+          "x164",
+          "x165",
+          "x166",
+          "x167",
+          "x168",
+          "x169",
+          "x170",
+          "x171",
+          "x172",
+          "x173",
+          "x174",
+          "x175",
+          "x176",
+          "x177",
+          "x178",
+          "x179",
+          "x180",
+          "x181",
+          "x182",
+          "x183",
+          "x184",
+          "x185",
+          "x186",
+          "x187",
+          "x188",
+          "x189",
+          "x190",
+          "x191",
+          "x192",
+          "x193",
+          "x194",
+          "x195",
+          "x196",
+          "x197",
+          "x198",
+          "x199",
+          "x200",
+          "x201",
+          "x202",
+          "x203",
+          "x204",
+          "x205",
+          "x206",
+          "x207",
+          "x208",
+          "x209",
+          "x210",
+          "x211",
+          "x212",
+          "x213",
+          "x214",
+          "x215",
+          "x216",
+          "x217",
+          "x218",
+          "x219",
+          "x220",
+          "x221",
+          "x222",
+          "x223",
+          "x224",
+          "x225",
+          "x226",
+          "x227",
+          "x228",
+          "x229",
+          "x230",
+          "x231",
+          "x232",
+          "x233",
+          "x234",
+          "x235",
+          "x236",
+          "x237",
+          "x238",
+          "x239",
+          "x240",
+          "x241",
+          "x242",
+          "x243",
+          "x244",
+          "x245",
+          "x246",
+          "x247",
+          "x248",
+          "x249",
+          "x250",
+          "x251",
+          "x252",
+          "x253",
+          "x254",
+          "x255",
+          "x256"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "structural_deficiencies exceeds the item limit",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "ok": {
+          "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+          "parent_run_key": "run_parent",
+          "child_run_key": "run_child",
+          "structural_deficiencies": [
+            "missing witness"
+          ],
+          "concrete_fixes": [],
+          "next_run_guidance": "recheck é",
+          "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "x",
+          "x"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "concrete_fixes must not contain duplicates",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          ""
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "concrete_fixes[0] must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "x0",
+          "x1",
+          "x2",
+          "x3",
+          "x4",
+          "x5",
+          "x6",
+          "x7",
+          "x8",
+          "x9",
+          "x10",
+          "x11",
+          "x12",
+          "x13",
+          "x14",
+          "x15",
+          "x16",
+          "x17",
+          "x18",
+          "x19",
+          "x20",
+          "x21",
+          "x22",
+          "x23",
+          "x24",
+          "x25",
+          "x26",
+          "x27",
+          "x28",
+          "x29",
+          "x30",
+          "x31",
+          "x32",
+          "x33",
+          "x34",
+          "x35",
+          "x36",
+          "x37",
+          "x38",
+          "x39",
+          "x40",
+          "x41",
+          "x42",
+          "x43",
+          "x44",
+          "x45",
+          "x46",
+          "x47",
+          "x48",
+          "x49",
+          "x50",
+          "x51",
+          "x52",
+          "x53",
+          "x54",
+          "x55",
+          "x56",
+          "x57",
+          "x58",
+          "x59",
+          "x60",
+          "x61",
+          "x62",
+          "x63",
+          "x64",
+          "x65",
+          "x66",
+          "x67",
+          "x68",
+          "x69",
+          "x70",
+          "x71",
+          "x72",
+          "x73",
+          "x74",
+          "x75",
+          "x76",
+          "x77",
+          "x78",
+          "x79",
+          "x80",
+          "x81",
+          "x82",
+          "x83",
+          "x84",
+          "x85",
+          "x86",
+          "x87",
+          "x88",
+          "x89",
+          "x90",
+          "x91",
+          "x92",
+          "x93",
+          "x94",
+          "x95",
+          "x96",
+          "x97",
+          "x98",
+          "x99",
+          "x100",
+          "x101",
+          "x102",
+          "x103",
+          "x104",
+          "x105",
+          "x106",
+          "x107",
+          "x108",
+          "x109",
+          "x110",
+          "x111",
+          "x112",
+          "x113",
+          "x114",
+          "x115",
+          "x116",
+          "x117",
+          "x118",
+          "x119",
+          "x120",
+          "x121",
+          "x122",
+          "x123",
+          "x124",
+          "x125",
+          "x126",
+          "x127",
+          "x128",
+          "x129",
+          "x130",
+          "x131",
+          "x132",
+          "x133",
+          "x134",
+          "x135",
+          "x136",
+          "x137",
+          "x138",
+          "x139",
+          "x140",
+          "x141",
+          "x142",
+          "x143",
+          "x144",
+          "x145",
+          "x146",
+          "x147",
+          "x148",
+          "x149",
+          "x150",
+          "x151",
+          "x152",
+          "x153",
+          "x154",
+          "x155",
+          "x156",
+          "x157",
+          "x158",
+          "x159",
+          "x160",
+          "x161",
+          "x162",
+          "x163",
+          "x164",
+          "x165",
+          "x166",
+          "x167",
+          "x168",
+          "x169",
+          "x170",
+          "x171",
+          "x172",
+          "x173",
+          "x174",
+          "x175",
+          "x176",
+          "x177",
+          "x178",
+          "x179",
+          "x180",
+          "x181",
+          "x182",
+          "x183",
+          "x184",
+          "x185",
+          "x186",
+          "x187",
+          "x188",
+          "x189",
+          "x190",
+          "x191",
+          "x192",
+          "x193",
+          "x194",
+          "x195",
+          "x196",
+          "x197",
+          "x198",
+          "x199",
+          "x200",
+          "x201",
+          "x202",
+          "x203",
+          "x204",
+          "x205",
+          "x206",
+          "x207",
+          "x208",
+          "x209",
+          "x210",
+          "x211",
+          "x212",
+          "x213",
+          "x214",
+          "x215",
+          "x216",
+          "x217",
+          "x218",
+          "x219",
+          "x220",
+          "x221",
+          "x222",
+          "x223",
+          "x224",
+          "x225",
+          "x226",
+          "x227",
+          "x228",
+          "x229",
+          "x230",
+          "x231",
+          "x232",
+          "x233",
+          "x234",
+          "x235",
+          "x236",
+          "x237",
+          "x238",
+          "x239",
+          "x240",
+          "x241",
+          "x242",
+          "x243",
+          "x244",
+          "x245",
+          "x246",
+          "x247",
+          "x248",
+          "x249",
+          "x250",
+          "x251",
+          "x252",
+          "x253",
+          "x254",
+          "x255",
+          "x256"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "concrete_fixes exceeds the item limit",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "next_run_guidance must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": " trim ",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "next_run_guidance must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "next_run_guidance exceeds the text limit",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": ""
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "re_entry_reason must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": " trim "
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "re_entry_reason must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "bad id!"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "re_entry_reason must be a canonical identifier",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "construct",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "other fix"
+        ],
+        "next_run_guidance": "other guidance",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "ok": {
+          "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+          "parent_run_key": "run_parent",
+          "child_run_key": "run_child",
+          "structural_deficiencies": [
+            "missing witness"
+          ],
+          "concrete_fixes": [
+            "other fix"
+          ],
+          "next_run_guidance": "other guidance",
+          "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "ok": {
+          "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+          "parent_run_key": "run_parent",
+          "child_run_key": "run_child",
+          "structural_deficiencies": [
+            "missing witness"
+          ],
+          "concrete_fixes": [
+            "pin receipt"
+          ],
+          "next_run_guidance": "recheck é",
+          "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry missing fields: lineage_id",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry missing fields: parent_run_key",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry missing fields: child_run_key",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry missing fields: structural_deficiencies",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry missing fields: concrete_fixes",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry missing fields: next_run_guidance",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry missing fields: re_entry_reason",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION",
+        "unknown": true
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry unknown fields: unknown",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "unknown": true
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry missing fields: child_run_key, concrete_fixes, lineage_id, next_run_guidance, parent_run_key, re_entry_reason, structural_deficiencies",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy identity does not match its payload",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "bad-digest",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "lineage_id must be a lowercase sha256 digest",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": null,
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "parent_run_key must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": null,
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "child_run_key must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "",
+          "x"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "structural_deficiencies[0] must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": "not an array",
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "structural_deficiencies must be an exact JSON array",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "x",
+          "x"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "structural_deficiencies must not contain duplicates",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "",
+          "x"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "concrete_fixes[0] must be normalized and nonempty",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": "not an array",
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "concrete_fixes must be an exact JSON array",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "x",
+          "x"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "concrete_fixes must not contain duplicates",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": null,
+        "re_entry_reason": "COMPOST_GUIDED_MUTATION"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "next_run_guidance must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": {
+        "lineage_id": "sha256:94042cc1789583dbde605e1182b1917f59e02bdc847511c41387e62912a77800",
+        "parent_run_key": "run_parent",
+        "child_run_key": "run_child",
+        "structural_deficiencies": [
+          "missing witness"
+        ],
+        "concrete_fixes": [
+          "pin receipt"
+        ],
+        "next_run_guidance": "recheck é",
+        "re_entry_reason": null
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "re_entry_reason must be an exact string",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    },
+    {
+      "kind": "genealogy",
+      "op": "load",
+      "input": [],
+      "expected": {
+        "error": {
+          "code": "OEAS_GENEALOGY_REFUSED",
+          "message": "genealogy entry must be an exact string-keyed object",
+          "locus": "adversary.stage.domain.genealogy",
+          "details": {}
+        }
+      }
+    }
+  ]
+}

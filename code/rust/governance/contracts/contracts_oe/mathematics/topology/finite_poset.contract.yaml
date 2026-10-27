@@ -1,0 +1,123 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_poset:v0.1.0
+title: Finite Poset Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_strict_partial_order
+  symbol: '(P, <) with P = {0, ..., n-1} and < irreflexive, asymmetric and transitive'
+  ascii_symbol: finite_poset
+  notation: '(P, <); u <= v iff u = v or u < v; v covers u iff u < v and no w has u < w < v'
+  domain:
+  - 'size: n with 0 <= n <= 256 (MAX_POSET_ELEMENTS)'
+  - 'strict_relations: a set of pairs (u, v) with u, v in 0..n, read as u < v'
+  codomain:
+    description: 'A validated strict partial order on {0, ..., n-1} held as predecessor and successor bit rows, with exact order-theoretic queries: relations, covers (the Hasse diagram), incomparable pairs, up-sets, down-sets, open and closed intervals, chains and antichains, height, width with a Dilworth certificate, linear extensions, the dual order, induced sub-orders and the bounded completion. poset_census adds bounded enumeration of labelled posets, the unlabelled census, canonical forms, isomorphism and automorphism counts.
+
+      '
+requirements:
+  required_structures:
+  - 'Irreflexive: no pair (u, u) is present'
+  - 'Asymmetric: (u, v) and (v, u) are never both present'
+  - 'Transitive: (u, v) and (v, w) present imply (u, w) present'
+  - 'Every relation names elements of 0..n, and no relation is listed twice'
+  - 'The fields are private: a value comes from a validating constructor or from validated deserialization'
+  - 'Every query and enumeration states its bound, and exceeding it is a typed error'
+laws:
+- 'Irreflexivity, asymmetry and transitivity of the stored relation'
+- 'v covers u exactly when u < v and the open interval (u, v) is empty'
+- 'The strict order is the transitive closure of its covers: closing the Hasse diagram transitively returns the order'
+- 'Dilworth: the width (size of a largest antichain) equals the smallest number of chains that partition the set; an antichain and a chain partition of equal size certify the width'
+- 'Height is the size of a largest chain'
+- 'Linear extensions: e(D) = sum over the maximal elements x of D of e(D without x), e(empty) = 1; n pairwise incomparable elements have n! of them'
+- 'The dual poset reverses every relation, and dualizing twice returns the poset'
+- 'Orbit-stabilizer: the number of labelled posets on n elements isomorphic to P equals n! divided by the number of automorphisms of P'
+- 'The numbers of labelled posets on 0..6 elements are 1, 1, 3, 19, 219, 4231, 130023, and the numbers of isomorphism classes are 1, 1, 2, 5, 16, 63, 318'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Relations, covers, chains and linear extensions are listed in lexicographic order
+  - Enumeration order is fixed by the recursion, never by hash order
+  - Every count that can exceed 64 bits is exact (BigUint or BigInt)
+relationships:
+- urn:core:math:mobius_function:v0.1.0 serves as The zeta and Mobius functions, and the order complex, are computed on this carrier
+- urn:core:math:cell_complex:v0.1.0 serves as The order complex of a poset is a simplicial complex of the existing core_homology types
+rust_binding:
+  crate: core_homology
+  module: finite_poset
+  symbols:
+  - FinitePoset
+  - PosetError
+  - WidthCertificate
+  - BoundedCompletion
+  - MAX_POSET_ELEMENTS
+  - MAX_LINEAR_EXTENSION_ELEMENTS
+  required_tests:
+  - a_reflexive_relation_is_refused
+  - a_relation_outside_the_element_range_is_refused
+  - a_repeated_relation_is_refused_rather_than_absorbed
+  - both_directions_of_one_pair_violate_asymmetry
+  - a_missing_composite_violates_transitivity_and_is_named
+  - more_than_the_element_limit_is_refused
+  - generating_relations_close_transitively_and_refuse_cycles
+  - deserialization_revalidates_the_order
+  - queries_refuse_elements_outside_the_poset
+  - a_tampered_width_certificate_is_not_accepted
+  - linear_extension_work_is_budgeted_with_typed_refusals
+  - maximal_chain_enumeration_is_bounded_with_a_typed_refusal
+  - the_census_refuses_sizes_above_its_bound
+  - a_cover_has_no_element_strictly_between
+  - the_strict_order_is_the_transitive_closure_of_its_covers
+  - every_width_certificate_is_a_valid_dilworth_pair
+  - width_and_height_agree_with_subset_enumeration_on_every_small_poset
+  - counting_enumerating_and_brute_force_agree_on_every_small_poset
+  - dual_reverses_every_relation_and_is_an_involution
+  - labelled_counts_match_the_known_sequence
+  - the_bounded_recursion_enumerates_exactly_the_posets_found_by_brute_force
+  - unlabelled_counts_match_the_known_sequence
+  - orbit_stabilizer_ties_class_sizes_to_automorphism_groups
+negative_tests:
+- A reflexive relation (u, u) must be refused
+- A relation naming an element outside 0..n must be refused
+- A relation listed twice must be refused rather than absorbed
+- Both (u, v) and (v, u) must be refused as an asymmetry violation
+- (u, v) and (v, w) without (u, w) must be refused, naming the first missing pair
+- More than 256 elements must be refused
+- Generating relations that contain a cycle must be refused when closed
+- Deserializing a relation set that is not a strict order must be refused
+- A query naming an element outside the poset, or a repeated element in a chain test, must be refused
+- A width certificate with a non-antichain, an uncovered element, an element covered twice or unequal counts must not verify
+- Linear-extension, chain, maximal-chain and order-complex enumeration beyond the stated budget must be refused with a typed error
+- Census, canonical-form, isomorphism and automorphism requests above the stated size bounds (6 and 8 elements) must be refused
+doctrine:
+  summary: 'A finite poset on {0, ..., n-1} is a strict order whose three laws are checked at every way of making one, so a value of the type is an order. The order-theoretic quantities built on it are cross-checked against independent routes: subset enumeration for width and height, permutation enumeration for linear extensions, relation-subset enumeration for the labelled census, and orbit-stabilizer for the unlabelled one. Enumeration never loops over all 2^(n(n-1)) relation sets: labelled posets are generated by adding one element at a time with a down-set and an up-set, and sizes above the stated bounds are refused.'
+  non_role:
+  - Infinite or continuous orders
+  - Lattice-specific structure (meets, joins, distributivity)
+  - Physical interpretation of an order, for example causal structure
+  - Isomorphism testing beyond 8 elements
+wip:
+- 'FiniteDirectedGraph::covering_edges returns every edge of the graph, which is the set of covers only for a graph that is already a Hasse diagram; that existing module is unchanged and FinitePoset::covers computes the covers'
+- 'Canonical forms try every relabelling that respects the pair (number of predecessors, number of successors); there is no refinement, which is why the bound is 8 elements'
+- 'The width certificate is checked by WidthCertificate::verified_width; no separate proof object is emitted'
+- 'Only the zeta and Mobius functions of the incidence algebra are provided, no general convolution product'
+- 'Callers with a private poset type, for example core_quantum_physics::causal_order, have not yet been repointed to this module'

@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_finite_flux_holonomy:v0.1.0
+title: Exact Finite-Group Flux and Holonomy Algebra
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_finite_flux_holonomy
+  symbol: exact_finite_flux_holonomy
+  ascii_symbol: exact_finite_flux_holonomy
+  notation: Exact Finite-Group Flux and Holonomy Algebra
+  domain:
+  - Declared exact finite matrix group and rational functions on that group
+  - Pure group construction/conjugacy and regular action are delegated to Lie; connections use sovereign holonomy
+  codomain:
+    description: Declared finite results of core_quantum_physics::quaternion_gauge_shadow; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Flux is the exact right translation and holonomy is multiplication by the declared function
+- Their commutator vanishes exactly for functions constant on the relevant right cosets
+- Q8 has eight elements and forty commuting pairs; the exact quaternion commutator plaquette has trace -2
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: quaternion_gauge_shadow
+  symbols:
+  - FiniteGroupAlgebra
+  - GroupAlgebraError
+  - FiniteGroupAlgebra::flux
+  - FiniteGroupAlgebra::holonomy
+  - FiniteGroupAlgebra::flux_holonomy_commutator
+  - FiniteGroupAlgebra::translated_difference
+  required_tests:
+  - the_quaternion_group_is_a_finite_subgroup_of_su2
+  - malformed_groups_are_refused
+  - flux_and_holonomy_do_not_commute_on_the_quaternion_group
+  - the_quaternion_plaquette_has_wilson_loop_minus_one
+negative_tests:
+- Empty/repeated/nonclosed/no-inverse carriers, wrong shapes and out-of-range function/group indices are refused
+- Nonconstant right-coset indicators give a nonzero flux-holonomy commutator
+doctrine:
+  summary: Flux is the exact right translation and holonomy is multiplication by the declared function; Their
+    commutator vanishes exactly for functions constant on the relevant right cosets; Q8 has eight elements
+    and forty commuting pairs; the exact quaternion commutator plaquette has trace -2.
+  non_role:
+  - No continuum holonomy-flux representation or physical gravitational dynamics
+  - No second finite-group implementation in the physics context
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

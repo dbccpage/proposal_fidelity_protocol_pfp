@@ -1,0 +1,69 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:qm:density_from_h1:file:v1.1.0
+crate: engines
+file: crates_rs/engines/src/quantum/density_from_h1.rs
+role: diagnostic_residual_density_bridge
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - l1_sector_decomposition
+  - diagonal_residual_density_diagnostic
+  - conditional_phase_witness_lift
+  - l2_raw_amplitude_diagnostic
+does_not_own:
+  - phi1
+  - gamma2
+  - r_cl
+  - xi
+  - authority
+  - born_theorem
+  - quantum_derivation
+may_call:
+  - engines::quantum::density_matrix
+  - engines::quantum::density_config
+  - engines::quantum::density_error
+must_not:
+  - call raw L1 mass phi1
+  - claim raw L2 amplitudes are canonical residual density
+  - mark raw L2 amplitude density as the only Xi/evaluator density
+  - feed authority or terminalization
+  - derive QM
+  - certify Born
+  - rank or accept candidates
+  - compute quotient Phi1
+exactness:
+  numeric_mode: f64_diagnostic_only
+  exact_certificate_allowed: false
+  must_distinguish_raw_l1_from_phi1: true
+forbidden_substrings:
+  - "pub phi1:"
+  - " phi1: f64"
+  - "let phi1 ="
+  - "CANONICAL density construction"
+  - "ONLY density allowed"
+  - "only density allowed"
+  - "CertifiedAuthority"
+  - "ExactRepair"
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "raw_l1_mass"
+  - "H1DensityConstruction"
+  - "L1DiagonalDiagnostic"
+  - "L1PhaseWitnessLift"
+  - "L2RawAmplitudeDiagnostic"
+  - "AuthorityEffect::None"
+required_tests:
+  - l1_sector_probabilities_sum_to_one
+  - l1_density_scale_invariant
+  - raw_l2_density_not_marked_canonical
+  - raw_l1_mass_is_not_phi1
+  - phase_witness_lift_trace_one
+lean_obligations:
+  - QM-D1 L1 sector probabilities sum to one
+  - QM-D2 diagonal residual density is PSD trace one
+  - QM-D3 phase witness lift is PSD trace one
+  - QM-D4 raw_l1_mass equals Phi1 only under certified quotient-minimal witness
+  - QM-D5 L1 density is scale-invariant under positive scaling

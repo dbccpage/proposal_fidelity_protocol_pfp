@@ -1,0 +1,84 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:natural_transformation:v0.1.0
+title: Natural Transformation Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: natural_transformation
+  symbol: 'η: F ⇒ G'
+  ascii_symbol: natural_transformation
+  notation: 'η: F ⇒ G'
+  domain:
+  - 'source_functor: functor F: C → D'
+  - 'target_functor: functor G: C → D'
+  - 'components: family {η_A | A ∈ Ob(C)}'
+  codomain:
+    description: 'Family of morphisms η_A: F(A) → G(A) indexed by objects A in source category C'
+requirements:
+  required_structures:
+  - Source and target functors exist and have compatible domains/codomains
+  - Each component η_A is a valid morphism with correct domain and codomain
+  - Naturality squares commute for all morphisms in source category
+  - StructureArtifact hash is deterministic from functors and components
+laws:
+- F and G have the same source and target categories
+- For each object A in C, η_A is a morphism in D with dom(η_A) = F(A) and cod(η_A) = G(A)
+- 'For all morphisms f: A → B in C, G(f) ∘ η_A = η_B ∘ F(f) in D'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Components indexed by source objects in canonical order
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as source_and_target_categories
+- urn:math:contract:Functor:v1.0.0 serves as source_and_target_functors
+- urn:math:contract:Morphism:v1.0.0 serves as component_morphisms
+negative_tests:
+- source_functor_id does not resolve must be rejected
+- F and G with different source categories must be rejected
+- Object A with no component η_A must be rejected
+- Component with dom(η_A) ≠ F(A) must be rejected
+- G(f) ∘ η_A ≠ η_B ∘ F(f) must be rejected
+doctrine:
+  summary: 'A NaturalTransformation η: F ⇒ G between functors F, G: C → D is a family of morphisms η_A: F(A) → G(A) for each object A in C, satisfying the naturality condition: G(f) ∘ η_A = η_B ∘ F(f) for all f: A → B. The contract validates the component morphisms and naturality squares. Natural transformations are the 2-morphisms of Cat, the 2-category of categories, and form the functor category [C, D] with vertical composition.'
+  non_role:
+  - Modifications (3-morphisms between natural transformations) - handled by higher category contracts
+  - Natural isomorphism verification (separate FactEnvelope)
+  - Yoneda lemma implementation (separate contract)
+  - Extranatural transformations or dinatural transformations
+wip:
+- How to handle natural isomorphisms (all η_A are isomorphisms) - via FactEnvelope or separate contract?
+- Should modifications (3-morphisms between natural transformations) be in this contract or separate?
+- How does the Yoneda lemma integration work (natural transformations as elements)?
+- What is the representation for natural transformations in infinite categories?
+- Currently targets finite natural transformations with explicit component lists
+- Natural isomorphisms are important but verification mechanism not yet specified
+- Modifications (3-morphisms) deferred to higher category contract
+- Yoneda lemma (expressing natural transformations as elements) in separate contract
+- Middle four interchange law for horizontal composition requires careful testing
+rust_binding:
+  crate: core_category_theory
+  module: natural_trans
+  symbols:
+    - NaturalTransformation
+  required_tests:
+    - trivial_nat_trans_passes_naturality

@@ -1,0 +1,31 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:engine:prompt_intake_engine:file:v1.0.0
+crate: engines
+file: engine/crates/engines/src/prompt_intake_engine.rs
+role: prompt_intake_and_parsing_engine
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - prompt_parsing_and_tokenization
+  - prompt_packet_intake_validation
+does_not_own:
+  - semantic_truth_evaluator
+  - authority
+may_call:
+  - core_prompt_packets
+must_not:
+  - claim prompt semantic truth guarantee
+  - mint authority
+exactness:
+  numeric_mode: text_parsing_and_validation
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "CertifiedAuthority"
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "AuthorityEffect::None"
+required_tests:
+  - test_prompt_intake_parsing

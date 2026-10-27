@@ -1,0 +1,157 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_repair_space:v1.0.0
+title: Exact repair space
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:cochain_layer:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: B¹ is the space of exact repairs and coboundary shifts inside C¹.
+  symbol: B¹
+  ascii_symbol: B1
+  formula: B¹ = im(d₀)
+  1. Contract metadata:
+    title: Exact repair space
+    version: 0.1.0
+    object_type: subspace_or_submodule_of_C1
+  2. Mathematical object / functional role:
+    role: B¹ is the space of exact repairs and coboundary shifts inside C¹.
+    purpose: Defines the denominator of Q¹ = C¹ / B¹.
+    non_role:
+    - Does not by itself select a repaired representative.
+    - Does not imply an arbitrary x ∈ C¹ is exact.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: C⁰ with ordered basis and d₀:C⁰→C¹
+    codomain: subspace/submodule B¹ ⊆ C¹
+  4. Required structures:
+    required:
+    - valid cochain layer
+    - d₀:C⁰→C¹
+    - C⁰ basis
+    - C¹ basis
+    - coefficient domain R
+    optional_materialization:
+    - image basis for B¹
+    - membership solver for B¹
+    - kernel basis for ker(d₀)
+  5. Definition:
+    image: B¹ = { d₀α | α ∈ C⁰ }
+    exact_repair_action: For α ∈ C⁰, E_α(x) = x + d₀α.
+    equality_mod_B1: x ~ y iff y - x ∈ B¹ iff ∃α ∈ C⁰ such that y = x + d₀α.
+    sign_convention: Uses plus convention y = x + d₀α; equivalent minus conventions must be declared explicitly.
+    coset_warning: B¹ is linear/submodule data; x + B¹ is the affine coset of representatives equivalent
+      to x.
+  6. Laws and invariants:
+    subspace: B¹ is an R-submodule/subspace of C¹.
+    contained_in_closed_sector: If d₁d₀ = 0, then B¹ ⊆ Z¹.
+    quotient_kernel: B¹ is the kernel of the projection π:C¹→Q¹.
+    exact_repair_identity: Adding an element of B¹ does not change the Q¹ class.
+    zero_class: x represents the zero class in Q¹ iff x ∈ B¹.
+  7. Equality / equivalence rules:
+    equal_repairs: d₀α = d₀β iff α-β ∈ ker(d₀).
+    alpha_equivalence: α values differing by ker(d₀) produce the same exact repair vector.
+    quotient_equality: x and y are equal in Q¹ iff y-x has a witness α with y-x=d₀α.
+    membership: b ∈ B¹ iff ∃α ∈ C⁰ such that b=d₀α.
+  8. Replay / determinism requirements:
+    requirements:
+    - Image basis construction must be deterministic if materialized.
+    - α witnesses must be replayable.
+    - Membership in B¹ must use exact linear solve or declared tolerance profile.
+    - C⁰/C¹ basis ordering must be fixed.
+    - d₀ hash must be fixed.
+    - Layer hash must be fixed.
+  9. Relationship to other Core primitives:
+    relationships:
+      CochainLayer: B¹ depends on d₀ from the valid cochain layer.
+      Z1: B¹ ⊆ Z¹ when d₁d₀ = 0.
+      Q1: B¹ is the denominator of Q¹.
+      H1: B¹ is the quotient denominator inside Z¹.
+      E: Exact repair operators act by adding elements of B¹.
+      Phi1: Φ₁ is zero exactly when the represented class lies in B¹.
+      R: Residual projection minimizes distance to B¹.
+  10. Rust descriptor shape:
+    sketch: "pub struct ExactRepairSpaceDescriptor {\n    pub layer_hash: String,\n    pub d0_hash: String,\n\
+      \    pub c0_basis_hash: String,\n    pub c1_basis_hash: String,\n    pub coefficient_domain_hash:\
+      \ String,\n    pub image_basis_hash: Option<String>,\n    pub kernel_d0_basis_hash: Option<String>,\n\
+      \    pub membership_mode: MembershipMode,\n    pub tolerance_profile_hash: Option<String>,\n}\n\n\
+      pub enum MembershipMode {\n    ExactLinearSolve,\n    ToleranceBounded,\n    SymbolicWitness,\n\
+      }\n"
+  11. Negative definition tests:
+    tests:
+    - Exact repair claimed without α witness.
+    - Exact repair changes quotient class.
+    - d₀ dimension mismatch.
+    - B¹ constructed without valid cochain layer.
+    - Membership in B¹ claimed without solve or witness.
+    - B¹ treated as affine repair target x+B¹.
+    - α values treated as distinct repairs despite α-β∈ker(d₀).
+    - Approximate membership used without tolerance profile.
+  12. Open questions / WIP status:
+    wip:
+    - Canonical image basis policy.
+    - Approximate B¹ membership requires tolerance profile.
+    - Submodule/image representation over non-field coefficient domains.
+    - Normal form for α modulo ker(d₀).
+  compact_yaml:
+    EXACT_REPAIR_SPACE_CONTRACT:
+      symbol: B¹
+      ascii_symbol: B1
+      formula: B¹=im(d₀)
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: C⁰,C¹,d₀
+      codomain: B¹⊆C¹
+      required_structures:
+      - valid layer
+      - d₀
+      - C⁰ basis
+      - C¹ basis
+      - coefficient domain R
+      definition: B¹={d₀α | α∈C⁰}; x~y iff y-x∈B¹
+      laws:
+      - B¹⊆Z¹ when d₁d₀=0
+      - B¹=ker(π:C¹→Q¹)
+      - adding B¹ preserves Q¹ class
+      - x is zero in Q¹ iff x∈B¹
+      forbidden_interpretations:
+      - affine repair target for arbitrary defect
+      - repair without α witness
+      - policy decision
+      - B¹ alone selects canonical representative
+      relationships:
+      - denominator of Q¹
+      - denominator inside H¹
+      - exact repair action E_α
+      - Φ₁=0 iff class lies in B¹
+      - R minimizes distance to B¹
+      negative_tests:
+      - missing α
+      - quotient class changed
+      - d₀ dimension mismatch
+      - membership without witness
+      - approximate membership without tolerance
+      open_questions:
+      - canonical image basis policy
+      - non-field image representation
+      - α modulo ker(d₀) normal form

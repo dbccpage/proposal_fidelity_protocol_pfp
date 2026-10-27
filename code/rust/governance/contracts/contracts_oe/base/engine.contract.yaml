@@ -1,0 +1,290 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:engine:v1.0.0
+title: Engine
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: Engine
+descriptor:
+  authority_effect: state_transition
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    proof_obligations: []
+    contracts:
+    - Evaluator
+    - Policy
+    - TerminalMapper
+    - LicensingBoundary
+    - ActionLicense
+    - Trace
+    - CarrierStore
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies:
+    - Evaluator
+    - Policy
+    - TerminalMapper
+    - LicensingBoundary
+    - ActionLicense
+    - Trace
+    emits: Action
+    authority_layer: Action
+    replay_certificates:
+    - schema_hash
+  constraints:
+    action_license_required: true
+  runtime_state_type: Carrier
+  capabilities:
+    forbidden:
+    - ComputePhi
+    - ComputeGamma
+    - PolicyInterpretation
+    - Evaluation
+    - CertificateSigning
+    - EmitCertificate
+    required: []
+  laws:
+    effect: Stateful
+doctrine:
+  summary: 'Engine is the uniquely authorized execution-layer mechanism by which an already licensed transition
+    happens. Engine does not derive post-state. It validates and commits an already-computed detached
+    transition artifact bound by a valid ActionLicense against the validated version of the licensed target
+    carrier. '
+  non_role:
+  - measurement
+  - solution_computation
+  - candidate_generation
+  - domain_inference
+  - certification
+  - evaluation
+  - policy_definition
+  - solver_reimplementation
+  - license_creation
+  - terminal_mapping
+  - evidence_authority_upgrade
+  authority_defaults:
+    engine_input_license: AuthorizesTransition
+    engine_action: StateTransition
+    engine_trace: Record
+  structural_representation:
+    input:
+      struct_name: LicensedTransitionInput
+      fields:
+      - name: license_ref
+        type: ActionLicenseId
+      - name: decision_ref
+        type: DecisionEnvelopeRef
+      - name: target_state_ref
+        type: StateRef
+      - name: expected_state_version
+        type: StateVersion
+      - name: expected_pre_state_hash
+        type: Hash256
+      - name: operator_ref
+        type: OperatorRef
+      - name: proposed_state_ref
+        type: ArtifactRef
+      - name: expected_post_state_hash
+        type: Hash256
+      - name: precondition_refs
+        type: Vec<FactEnvelopeRef>
+      - name: trace_parent_refs
+        type: Vec<TraceId>
+    output:
+      struct_name: EngineAction
+      fields:
+      - name: action_id
+        type: ActionId
+      - name: license_ref
+        type: ActionLicenseId
+      - name: pre_state_hash
+        type: Hash256
+      - name: post_state_hash
+        type: Hash256
+      - name: emitted_trace_ref
+        type: TraceId
+      - name: action_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: StateTransition
+  flow: 'EvidenceEnvelope / FactEnvelope -> Evaluator / Policy -> TerminalMapper -> LicensingBoundary
+    emits ActionLicense -> Engine executes licensed transition -> EngineAction -> TraceArtifact / Record '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - mutate_without_action_license
+    - mutate_outside_licensed_target
+    - bypass_execution_envelope
+    - terminalize(
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+    - apply_operator
+  required_tests:
+  - engine_requires_action_license
+  - engine_executes_only_licensed_transitions
+  - engine_output_authority_effect_is_state_transition
+  - engine_does_not_create_action_license
+  - engine_does_not_evaluate_policy_internally
+  - engine_does_not_compute_phi
+  - engine_does_not_sign_certificate
+  - engine_records_trace_for_each_transition
+  - engine_license_binds_exact_transition
+  - engine_idempotent_replay
+  - engine_atomic_carrier_trace_commit
+  - engine_state_version_cas_coupling
+  - engine_does_not_derive_post_state
+  canonical_invariant: 'Engine executes licensed transitions only. StateTransition authority appears only
+    on EngineAction artifacts produced from valid ActionLicense inputs. '
+  legacy_metadata:
+    normative: false
+    name: Engine
+    source_file: non_math/06_execution/engine_contract.md
+    active: true
+    machine_authority: true
+    role: Licensed transition executor
+    version: 1.0.0
+    classification: execution
+    effect_class: StateTransition
+    depends_on: &id001
+    - Evaluator
+    - Policy
+    - TerminalMapper
+    - LicensingBoundary
+    forbidden_authority:
+    - measurement
+    - solution_computation
+    - candidate_generation
+    - domain_inference
+    - certification
+    - evaluation
+    - policy_definition
+    - solver_reimplementation
+    - license_creation
+    - terminal_mapping
+    - evidence_authority_upgrade
+    primary_output_family: Action
+    referenced_output_families:
+    - ActionLicense
+    - DecisionEnvelope
+    - EvidenceEnvelope
+    - FactEnvelope
+    - Record
+  enforcement_scope: This general doctrine is not enforced across all engines. The finite Genesis report
+    profile has an executable license-bound committer and host CAS tests.
+  operator_boundary:
+    engine_may_implement_operator_semantics: false
+    engine_may_select_operator: false
+    engine_may_apply_operator: false
+    engine_may_recompute_transition: false
+    engine_may_commit_licensed_operator_result: true
+    committed_result_must_match_license: true
+  hashing:
+    digest: SHA-256
+    canonical_encoding: JSON-NFC
+    domain_separation: required
+    domains:
+      action_hash: core.engine.action.v1
+      descriptor_hash: core.engine.descriptor.v1
+  declared_authority_effect: StateTransition
+  declared_capabilities:
+    forbidden:
+    - mutate_without_action_license
+    - mutate_outside_licensed_target
+    - bypass_execution_envelope
+    - ComputePhi
+    - ComputeGamma
+    - OperatorImplementation
+    - OperatorSelection
+    - OperatorApplication
+    - CandidateGeneration
+    - CandidateRanking
+    - PolicyInterpretation
+    - Evaluation
+    - CertificateSigning
+    - EmitCertificate
+    required: []
+  declared_constitution:
+    contract_dependencies: *id001
+    emits: Action
+    authority_layer: Action
+    replay_certificates:
+    - contract_hash
+    - descriptor_hash
+  declared_constraints:
+    action_license_required: true
+  declared_laws:
+    effect: Stateful
+  declared_runtime_state_type: Carrier
+  proof_obligations:
+  - id: ENG-INV-001
+    statement: No transition occurs without a valid ActionLicense.
+  - id: ENG-INV-002
+    statement: The ActionLicense binds the executed decision and target carrier.
+  - id: ENG-INV-003
+    statement: A refused execution produces no durable carrier mutation.
+  - id: ENG-INV-004
+    statement: Every durable transition has exactly one authoritative EngineAction.
+  - id: ENG-INV-005
+    statement: Every durable transition has a durable trace record.
+  - id: ENG-INV-006
+    statement: Pre-state and post-state hashes bind canonical carrier states.
+  - id: ENG-INV-007
+    statement: Engine cannot mint, modify, widen, or reinterpret ActionLicense authority.
+  - id: ENG-INV-008
+    statement: Engine cannot evaluate candidate merit or policy.
+  - id: ENG-INV-009
+    statement: Subclasses cannot bypass the constitutional execution envelope.
+  - id: ENG-INV-010
+    statement: Engine identity and governing contract identity are immutable during lifetime.
+  - id: ENG-INV-011
+    statement: State version conflicts fail closed before commit.
+  - id: ENG-INV-012
+    statement: Trace ancestry is preserved from input through emitted trace.
+  - id: ENG-INV-013
+    statement: The ActionLicense binds the exact transition specification executed by the Engine; no unlicensed
+      operation or payload may influence carrier mutation.
+  - id: ENG-INV-014
+    statement: Replaying an already committed ActionLicense cannot produce a second durable StateTransition.
+  - id: ENG-INV-015
+    statement: Durable carrier mutation and authoritative transition recording are atomic or recoverably
+      coupled; EngineRefusal implies that no carrier mutation became durable.
+  - id: ENG-INV-016
+    statement: License bindings, preconditions, and transition execution are based on the same pre-state
+      version whose version is conditionally committed.
+  - id: ENG-OP-001
+    statement: Engine never implements or invokes Operator transformation semantics.
+  - id: ENG-OP-002
+    statement: Engine commits only a detached transition artifact exactly bound by a valid ActionLicense.
+  - id: ENG-OP-003
+    statement: Engine never computes, estimates, compares, or interprets Phi.
+  - id: ENG-OP-004
+    statement: Engine never selects, ranks, composes, or repeats Operators.
+  - id: ENG-OP-005
+    statement: Engine does not derive post-state; it validates and commits an already licensed post-state
+      artifact.
+  declared_refusals:
+  - MissingActionLicense
+  - InvalidActionLicense
+  - LicenseTargetMismatch
+  - LicenseExpired
+  - PreconditionsUnsatisfied
+  - StateVersionMismatch
+  - TransitionExecutionFailure
+  - InvalidInputFormat
+relationships:
+  extends:
+  - urn:core:constitution:base_execution_contract:v1.0.0

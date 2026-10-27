@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:right_kan_extension:v0.1.0
+title: Right Kan Extension Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: functor_extension
+  symbol: 'Ran_K(F): C'' → D with ε: Ran_K(F) ∘ K → F'
+  ascii_symbol: right_kan_extension
+  notation: 'Ran_K(F): C'' → D with ε: Ran_K(F) ∘ K → F'
+  domain:
+  - 'F: functor C → D (to be extended)'
+  - 'K: functor C → C'' (along which to extend)'
+  - 'extension: functor Ran_K(F): C'' → D'
+  - 'counit: natural transformation ε: Ran_K(F) ∘ K → F'
+  codomain:
+    description: "Given functors F: C → D and K: C → C', the right Kan extension consists of: - A functor Ran_K(F): C' → D - A natural transformation ε: Ran_K(F) ∘ K → F (counit) - Universal property: for any G: C' → D and α: G ∘ K → F,\n  there exists unique β: G → Ran_K(F) with ε ∘ (β * 1_K) = α\n"
+requirements:
+  required_structures:
+  - F, K, and Ran_K(F) preserve composition and identities
+  - 'ε: Ran_K(F) ∘ K → F is natural'
+  - Ran_K(F) satisfies the universal property of right Kan extension
+  - Content hash is deterministically computed via SHA-256
+laws:
+- F, K, and Ran_K(F) are functors
+- ε is a natural transformation
+- 'For any G: C'' → D and α: G ∘ K → F, there exists unique β: G → Ran_K(F) such that ε ∘ (β * 1_K) = α
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validator functions are content-addressed
+  - Given identical inputs, must produce identical artifact hash
+relationships:
+- urn:math:contract:Functor:v1.0.0 serves as F, K, and Ran_K(F) must be valid functors
+- urn:math:contract:NaturalTransformation:v1.0.0 serves as Counit ε must be a natural transformation
+- urn:math:contract:Category:v1.0.0 serves as Source and target categories C, C', D
+negative_tests:
+- Invalid functor F must be rejected
+- Invalid functor K must be rejected
+- Non-natural counit must be rejected
+- Extension not satisfying universal property must be rejected
+- Counit with incorrect source must be rejected
+- Counit with incorrect target must be rejected
+doctrine:
+  summary: 'A right Kan extension is a universal construction extending a functor F: C → D along K: C → C'' to a functor Ran_K(F): C'' → D. Right Kan extensions provide limits, ends, and general universal constructions in category theory. Given functors F: C → D and K: C → C'', the right Kan extension Ran_K(F): C'' → D is characterized by a universal natural transformation ε: Ran_K(F) ∘ K → F.'
+  non_role:
+  - Left Kan extensions (separate contract)
+  - Specific limit constructions (use dedicated limit contracts)
+  - ∞-categorical Kan extensions (future work)
+wip:
+- 'Pointwise Kan extensions: characterization and verification'
+- 'Absolute Kan extensions: definition and properties'
+- '∞-categorical Kan extensions: higher coherence structures'
+- Efficient computation of limits over comma categories
+- Integration with end/coend calculus
+- Universal property validator requires proof search mechanism
+- Pointwise formula implementation depends on limit infrastructure
+- End formula requires enriched category theory support
+- Connection to adjunctions needs explicit formalization
+- 'Future: parametricity for polymorphic Kan extensions'
+rust_binding:
+  crate: core_category_theory
+  module: limits_colimits
+  symbols:
+    - KanExtension
+  required_tests:
+    - ran_validate_ok

@@ -1,0 +1,169 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:measurement_kernel:v1.0.0
+title: MeasurementKernel
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: Measurement
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - Observable
+    - Solver
+    - CertificateKernel
+    - ReplayKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  constraints:
+    mutation_forbidden: true
+    operator_execution_forbidden: true
+    runtime_orchestration_forbidden: true
+    typed_output_required: true
+  subject_type: MeasuredQuantity
+doctrine:
+  summary: 'MeasurementKernel wraps exact, symbolic, interval, or certificate-backed value evidence.
+
+    Raw values do not become facts until source identity, method, tolerance semantics, input
+
+    hash, measurement hash, witness refs, certificate refs, and replay refs are checked.
+
+    '
+  non_role: &id002
+  - evaluator_judgment
+  - policy_interpretation
+  - terminal_mapping
+  - state_mutation
+  - execution
+  - governance_scalarization_without_explicit_conversion
+  authority_defaults:
+    measurement_value: EvidenceOnly
+    measurement_envelope: EvidenceOnly
+    checked_measurement_fact: FactOnly only after MeasurementKernel / CertificateKernel / Replay checks.
+  structural_representation:
+    raw:
+      struct_name: MeasurementEnvelope
+      fields:
+      - name: measurement_id
+        type: MeasurementId
+      - name: source_ref
+        type: ArtifactRef
+      - name: method_ref
+        type: MeasurementMethodRef
+      - name: value
+        type: MeasurementValue
+      - name: tolerance_ref
+        type: Option<ToleranceProfileRef>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: measurement_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedMeasurement
+      fields:
+      - name: measurement_ref
+        type: MeasurementId
+      - name: checker_ref
+        type: CheckerRef
+      - name: checked_value_hash
+        type: Hash256
+      - name: checked_source_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: MeasurementValue
+      variants:
+      - ExactRational
+      - Integer
+      - Interval
+      - CertificateBackedApproximation
+      - DiagnosticFloat
+  flow: 'Raw value / Observable / Functional / Solver / Analysis
+
+    -> MeasurementEnvelope
+
+    -> MeasurementKernel / CertificateKernel / ReplayVerifier
+
+    -> FactEnvelope or verified evidence reference
+
+    -> Evaluator / Policy
+
+    -> TerminalMapper
+
+    -> LicensingBoundary
+
+    -> Engine
+
+    -> Trace / Ledger
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - measurement_envelope_defaults_to_evidence_only
+  - checked_measurement_requires_source_method_tolerance_and_hashes
+  - measurement_value_does_not_self_certify
+  - diagnostic_float_not_used_for_governance
+  - measurement_does_not_emit_action_license
+  - measurement_does_not_authorize_transition
+  - measurement_does_not_execute
+  canonical_invariant: 'Measurement carries value evidence. It does not judge, rank, scalarize governance,
+
+    terminalize, license, mutate, authorize, or execute.
+
+    '
+  legacy_metadata:
+    name: MeasurementKernel
+    source_file: non-math/02_evidence/measurement_contract.md
+    active: true
+    machine_authority: true
+    role: Exact or certified numerical/symbolic value envelope
+    version: '2.0'
+    classification: evidence
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: MeasurementEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - EvidenceEnvelope
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

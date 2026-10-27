@@ -1,0 +1,100 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quotient_projection:v0.1.0
+title: Quotient Projection Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: surjective_module_homomorphism
+  symbol: 'pi: Z_n -> Z_n / B_n = H_n'
+  ascii_symbol: quotient_projection
+  notation: 'pi: Z_n -> Z_n / B_n = H_n'
+  domain:
+  - 'domain: Z_n = ker(d_n) (n-cycle module)'
+  - 'codomain: H_n = Z_n / B_n (n-th homology module)'
+  - 'boundary_submodule: B_n = im(d_{n+1}) (n-boundary submodule of Z_n)'
+  - 'projection_map: pi: Z_n -> H_n, z |-> [z] = z + B_n'
+  - 'coefficient_ring: R (commutative ring with unity)'
+  codomain:
+    description: 'Surjective R-module homomorphism pi: Z_n -> H_n = Z_n / B_n, where Z_n is the module of n-cycles (ker d_n), B_n is the submodule of n-boundaries (im d_{n+1}), and H_n is the n-th homology module. The map sends each cycle z to its equivalence class [z] = z + B_n.
+
+      '
+requirements:
+  required_structures:
+  - 'Input z must be a verified n-cycle: z in Z_n = ker(d_n), so d_n(z) = 0'
+  - B_n must be a verified submodule of Z_n (all boundaries are cycles)
+  - 'ker(pi) = B_n exactly: pi(z) = 0 iff z in B_n'
+  - For every class [z] in H_n, there exists a cycle z in Z_n with pi(z) = [z]
+  - If z_1 - z_2 in B_n then pi(z_1) = pi(z_2)
+  - pi(a*z_1 + b*z_2) = a*pi(z_1) + b*pi(z_2) for all scalars a,b and cycles z_1,z_2
+  - Projection operates at a fixed degree n; domain Z_n and codomain H_n share degree
+laws:
+- 'ker(pi) = B_n: an n-cycle z satisfies pi(z) = 0 in H_n if and only if z is an n-boundary'
+- 'pi is surjective: for every homology class [z] in H_n, there exists z in Z_n with pi(z) = [z]'
+- 'If z_1 - z_2 in B_n then pi(z_1) = pi(z_2): equivalent cycle representatives yield the same homology class'
+- pi(a*z_1 + b*z_2) = a*pi(z_1) + b*pi(z_2) for all a,b in R and z_1,z_2 in Z_n
+- Domain of pi is exactly Z_n = ker(d_n); inputs must be verified cycles
+- Codomain of pi is H_n = Z_n / B_n; output is a well-defined equivalence class
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Projection computation is deterministic
+  - Cycle and boundary representations are canonical
+  - Quotient class representatives are content-addressed
+  - All module hashes computed from canonical serialization
+relationships:
+- urn:math:contract:Cycle:v0.1.0 serves as defines_domain_Z_n_as_kernel_of_boundary_map
+- urn:math:contract:Boundary:v0.1.0 serves as defines_kernel_submodule_B_n_as_image_of_boundary_map
+- urn:math:contract:ChainComplex:v0.1.0 serves as provides_chain_complex_structure_with_boundary_maps
+- urn:math:contract:BoundaryMap:v0.1.0 serves as defines_boundary_operators_d_n_and_d_{n+1}
+- urn:math:contract:ChainGroup:v0.1.0 serves as defines_chain_groups_containing_cycles_and_boundaries
+negative_tests:
+- Input z with d_n(z) != 0 (not a cycle) must be rejected
+- If a verified boundary b in B_n maps to pi(b) != 0, the projection is invalid
+- A projection that fails to cover some homology class must be rejected
+- If z_1 - z_2 in B_n but pi(z_1) != pi(z_2), the projection is ill-defined
+- If pi(a*z_1 + b*z_2) != a*pi(z_1) + b*pi(z_2), the projection is not a homomorphism
+- Cycle at degree m != n for a degree-n projection must be rejected
+- Cycle from a different chain complex must be rejected
+- Quotient projection artifact claiming authority must be rejected
+- Quotient projection artifact claiming admissibility must be rejected
+doctrine:
+  summary: 'Defines the quotient projection operator pi: Z_n -> Z_n / B_n = H_n and its kernel. The projection maps n-cycles to their homology classes by quotienting out the n-boundaries. This is a surjective R-module homomorphism whose kernel is exactly the boundary submodule B_n. The contract ensures well-definedness (equivalent cycle representatives map to the same homology class), surjectivity (every homology class has at least one representative cycle), linearity (pi respects the module structure), and the fundamental kernel axiom ker(pi) = B_n which guarantees that any element mapped to zero in the quotient is mathematically verified to be a boundary.'
+  non_role:
+  - Cycle classification (separate Cycle contract)
+  - Boundary verification (separate Boundary contract)
+  - Homology class arithmetic (separate HomologyClass contract)
+  - Chain homotopy equivalence (separate ChainHomotopy contract)
+  - Relative homology projections (deferred to relative homology contract)
+  - Spectral sequence differentials (separate SpectralSequence contract)
+wip:
+- How to extend the projection to relative homology H_n(X, A) = Z_n(X, A) / B_n(X, A)?
+- How does the projection interact with long exact sequences of pairs (X, A)?
+- Should canonical representatives be chosen algorithmically (e.g., Smith normal form, reduced row echelon)?
+- 'How to handle the connecting homomorphism delta: H_n(A) -> H_{n-1}(X/A) in terms of quotient projections?'
+- Should the projection carry metadata about torsion elements in H_n?
+- 'How to define the induced map pi_*: H_n(C) -> H_n(D) for a chain map f: C -> D?'
+- Currently assumes finite chain complexes with finitely generated modules over a PID
+- Relative homology projections deferred to a future RelativeQuotientProjection contract
+- Long exact sequence integration deferred to ExactSequence contract
+- Canonical representative selection strategy not yet specified
+- Naturality of the projection (functoriality with respect to chain maps) not yet formalized
+- Cohomological dual (quotient projection for cocycles/coboundaries) handled separately

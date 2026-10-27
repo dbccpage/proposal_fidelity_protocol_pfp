@@ -1,0 +1,277 @@
+schema_version: core.contract.v1
+contract_id: urn:core:governance:evaluator:v1.0.0
+title: Evaluator
+kind: governance_contract
+status: mathematical_wip
+layer: 05_governance
+role: Evaluator
+descriptor:
+  authority_effect: requests_decision
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - PolicyContract
+    - CertificateContract
+    - DiagnosticContract
+    - AnalysisUnit
+    - HealthModelKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: DecisionEnvelope
+    authority_layer: Judgment
+    replay_certificates:
+    - schema_hash
+  constraints:
+    mutation_forbidden: true
+    runtime_orchestration_forbidden: true
+    typed_output_required: true
+  subject_type: EvaluationInput
+  capabilities:
+    forbidden:
+    - ComputePhi
+    - ComputeGamma
+    required: []
+doctrine:
+  summary: 'This contract defines the Evaluator boundary.
+
+
+    Evaluator applies declared evaluation policy to already-computed facts.
+
+    Evaluator does not measure, discover, mutate, terminalize, or execute.
+
+    '
+  non_role: &id002
+  - measurement
+  - computation
+  - certification
+  - terminalization
+  - execution
+  - mutation
+  - structural discovery
+  - operator execution
+  - state mutation
+  llm_boundary_law:
+    doctrine: 5
+    text: 'LLM-generated content carries zero authority in the Evaluator boundary. LLM output is
+
+      candidate material only. All evaluation decisions are deterministic functions of typed
+
+      evidence and declared policy. No LLM output may influence verdict derivation, policy
+
+      interpretation, or evidence weighting.
+
+      '
+  core_definition: 'An Evaluator is a deterministic, read-only decision layer that consumes FactEnvelopes
+
+    (from Analysis) and DiagnosticReports (from Diagnostics), applies explicit EvaluationPolicy,
+
+    and returns a typed EvaluationResult. It is the critical semantic bridge where factual
+
+    observations are classified as admissibility judgments.
+
+
+    An Evaluator is a deterministic judgment function over already-computed facts.
+
+    It does not measure. It does not search. It does not execute.
+
+    It does not discover obstruction structure.
+
+    It applies declared admissibility policy to evidence.
+
+    '
+  trait_shape:
+    rust: "pub trait Evaluator<C> {\n    fn evaluator_id(&self) -> EvaluatorId;\n    fn evaluator_version(&self)\
+      \ -> EvaluatorVersion;\n\n    fn evaluate(\n        &self,\n        input: &EvaluationInput<C>,\n\
+      \        policy: &EvaluationPolicy,\n    ) -> Result<EvaluationResult, EvaluationError>;\n}\n"
+    properties:
+    - '&self: No mutation of evaluator.'
+    - '&EvaluationInput<C>: Read-only input containing candidates and pre-computed fact envelopes.'
+    - '&EvaluationPolicy: Explicit thresholds using ToleranceSpec or MeasurementValue.'
+  structural_representation:
+    evaluation_input:
+      struct_name: EvaluationInput
+      type_params:
+      - C
+      fields:
+      - name: parent
+        type: C
+      - name: candidate
+        type: C
+      - name: facts
+        type: Vec<FactEnvelope>
+      - name: health
+        type: DiagnosticReport
+      - name: input_hash
+        type: Hash256
+      - name: fact_refs
+        type: Vec<FactId>
+    evaluation_policy:
+      struct_name: EvaluationPolicy
+      fields:
+      - name: policy_id
+        type: PolicyId
+      - name: clauses
+        type: Vec<EvaluationClause>
+      - name: precedence
+        type: ClausePrecedence
+      - name: evidence_requirements
+        type: EvidenceRequirements
+    evaluation_result:
+      struct_name: EvaluationResult
+      fields:
+      - name: verdict
+        type: EvaluationVerdict
+      - name: policy_id
+        type: PolicyId
+      - name: clauses_fired
+        type: Vec<ClauseId>
+      - name: evidence_used
+        type: Vec<EvidenceRef>
+      - name: evaluator_id
+        type: EvaluatorId
+      - name: evaluator_version
+        type: EvaluatorVersion
+      - name: input_hash
+        type: Hash256
+      - name: output_hash
+        type: Hash256
+      - name: policy_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: RequiresEvaluator
+    enums:
+    - name: EvaluationVerdict
+      variants:
+      - name: Accept
+        fields:
+          evidence: EvidenceRef
+      - name: Reject
+        fields:
+          reason: RejectionReason
+          evidence: EvidenceRef
+      - name: Escalate
+        fields:
+          route: EscalationRoute
+          witness: WitnessId
+  escalation_mechanics: 'Escalation is a Verdict, not an Action and not a StateTransition.
+
+
+    1. Evaluator returns Escalate.
+
+    2. Engine receives the verdict and decides whether to trigger a Lift or a Solver change.
+
+    3. Evaluator remains pure and read-only.
+
+    '
+  evaluator_vs_policy_boundary: 'Policy defines admissibility clauses.
+
+    Evaluator applies those clauses to evidence.
+
+    Evaluator MUST NOT create, edit, or reinterpret policy.
+
+    '
+  evaluator_vs_terminalizer_boundary:
+    evaluator_may_emit:
+    - Accept
+    - Reject
+    - Escalate
+    evaluator_must_not_emit:
+    - Exact
+    - Refused
+    - Survivor
+    - Open
+    - AllowOutput
+    - BlockOutput
+  separation_from_discovery:
+    must_not:
+    - Discover new critical pairs
+    - Propose structural repairs
+    - Invoke MetaLift
+    - Call Adapters
+    - Terminalize state
+    - Create certificates
+    - Sign certificates
+    - Mutate storage
+    - Emit Engine actions
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - EngineResult
+    - TerminalEnvelope
+    - DecisionCertificate
+    - sign_certificate
+    - save_certificate
+    - terminalize
+    - ALLOW_OUTPUT
+    - BLOCK_OUTPUT
+    - mutate
+    - execute
+  target_architecture:
+    evaluator_kernel:
+    - VerdictDeriver
+    - EvidenceChecker
+    - PolicyApplier
+    policy_kernel:
+    - PolicyManifest
+    - ClauseEvaluator
+    - ToleranceSemantics
+    - EvidenceRequirements
+  required_tests:
+    purity_and_separation:
+    - evaluator_cannot_compute_phi
+    - evaluator_cannot_call_solver
+    - evaluator_cannot_call_adapter
+    - evaluator_cannot_emit_lift
+    - evaluator_does_not_terminalize
+    - evaluator_does_not_create_certificate
+    - evaluator_does_not_mutate_storage
+    determinism_and_traceability:
+    - same_facts_same_policy_same_verdict
+    - reject_requires_evidence_ref
+    - escalate_requires_witness
+    - raw_f64_threshold_rejected
+    - policy_hash_recorded_in_verdict
+    - evaluation_result_records_policy_hash
+    - evaluation_result_records_authority_effect
+  integration_tests:
+    pipeline: Analysis -> Diagnostic -> Evaluator -> Engine
+    invariants:
+    - Analysis computes facts.
+    - Diagnostic reports health.
+    - Evaluator emits verdict.
+    - Engine executes consequence.
+    - The Evaluator must never mutate state or trigger control flow directly.
+  canonical_invariant: 'Evaluator applies declared evaluation policy to evidence; it does not measure,
+    certify,
+
+    terminalize, mutate, or execute.
+
+    '
+  legacy_metadata:
+    name: Evaluator
+    role: Deterministic admissibility judgment gate over evidence and policy
+    version: '1.0'
+    classification: governance
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: DecisionEnvelope
+    domain_output_kind: EvaluationResult
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+    referenced_domain_kinds:
+    - EvaluationVerdict
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.

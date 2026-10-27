@@ -1,0 +1,109 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phi4_quotient_obstruction:v1.0.0
+title: Φ₄ degree-4 quotient obstruction certificate replay and degree-4 evaluators
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: phi4_certificate_replay
+  symbol: Φ₄
+  ascii_symbol: Phi4
+  notation: "Φ₄([G]) = min_{C ∈ C³} ‖G − d₃C‖_{1,μ};  Γ₄(C) = ‖d₃C‖_{1,μ};  ⟨P, v⟩"
+  domain:
+  - "caller-supplied rational matrices d₃ : C³ → C⁴ and d₂ : C² → C³"
+  - "optional caller-supplied d₁ : C¹ → C² and d₀ : C⁰ → C¹ (d₀ requires d₁)"
+  - "flux G ∈ C⁴, 4-cell weights μ, potential C ∈ C³, residual r, dual v, reported value"
+  codomain:
+    description: >-
+      verify_exact_certificate returns VerifiedExactPhi4 (value, residual, dual and
+      potential) or a typed ExactPhi4CertificateError. evaluate_curvature_defect returns the
+      exact rational ‖d₃C‖_{1,μ}. evaluate_pontryagin_pairing returns the exact rational
+      dot product Σ P_σ v_σ. None of them searches for a minimizer.
+  definition:
+    formula: "Φ₄([G]) = min_C ‖G − d₃C‖_{1,μ}"
+    dual: "max ⟨G, v⟩ subject to d₃ᵀv = 0 and |v_σ| ≤ μ_σ"
+    acceptance: "d₃d₂ = 0, r = G − d₃C, d₃ᵀv = 0, |v_σ| ≤ μ_σ, μ_σ > 0, Σ μ_σ|r_σ| = ⟨G, v⟩ = reported"
+    closure_defect: "Γ₄(C) = Σ_σ μ_σ |(d₃C)_σ|, with μ ≡ 1 when no weights are supplied"
+    pairing: "⟨P, v⟩ = Σ_σ P_σ v_σ over equal-length vectors"
+requirements:
+  required_structures:
+  - Nonempty finite rational d₃ with one row per 4-cell and one column per 3-cell
+  - Finite rational d₂ with one row per 3-cell; d₃d₂ = 0 is always checked
+  - Strictly positive rational 4-cell weights μ
+  - Flux G, residual r and dual v of 4-cell length; potential C of 3-cell length
+  - Optional d₁ (checks d₂d₁ = 0) and optional d₀, which is refused without d₁
+laws:
+- "Weak-duality law: for every C and every v with d₃ᵀv = 0 and |v_σ| ≤ μ_σ, ⟨G, v⟩ ≤ ‖G − d₃C‖_{1,μ}. A replayed certificate with zero duality gap reports the LP minimum for the supplied d₃, μ and G."
+- "Primal replay law: every residual entry must equal (G − d₃C)_σ in exact rational arithmetic."
+- "Dual replay law: v must satisfy d₃ᵀv = 0 on every 3-cell and |v_σ| ≤ μ_σ on every 4-cell."
+- "Gap law: a nonzero primal-minus-dual gap is refused (PositiveDualityGap), and the reported value must equal the replayed primal value (ReportedValueMismatch)."
+- "Weight law: every supplied 4-cell weight must be strictly positive, in the verifier and in evaluate_curvature_defect."
+- "Chain-law scope: d₃d₂ = 0 is always checked; d₂d₁ = 0 only when d₁ is supplied; d₁d₀ = 0 only when both are supplied; d₀ without d₁ is refused (MissingD1ForD0)."
+- "Malformed-input law: ragged or short matrices and an empty 4-cell carrier are refused with typed errors, not panics."
+- "Pairing fence: evaluate_pontryagin_pairing checks only equal length. It does not check that v is closed, that it is a fundamental cycle, or that P represents a Pontryagin or Chern class; the result is a pairing value, not a characteristic-class computation."
+- "Carrier fence: the verifier checks the supplied matrices. It does not check that they are the coboundaries of a declared 4-dimensional cell complex, and it computes no Betti number."
+- "Exactness law: all arithmetic is BigRational; the string wire form refuses unparseable rationals; there is no floating-point path."
+- "Separation fence: Φ₄ and Γ₄ are degree-4 quantities. Neither is Φ₁, Γ₂ or Ξ."
+- "Authority law: a replayed certificate, defect or pairing mints no AuthorityEffect, PROVED, GlobalGreen or ActionLicense."
+replay:
+  requirements:
+  - No external state, randomness or wall-clock
+  - Exact rational arithmetic only
+  - Deterministic replay of the submitted primal and dual witness
+relationships:
+- "urn:core:math:phi3_quotient_obstruction:v1.0.0 — degree-3 analogue"
+- "urn:core:math:phi2_quotient_obstruction:v1.0.0 — degree-2 analogue"
+- "urn:core:math:phi1:v1.0.0 — degree-1 quotient obstruction; distinct object"
+rust_binding:
+  crate: core_functional
+  module: phi4
+  symbols:
+  - ExactPhi4CertificateWire
+  - ExactPhi4Certificate
+  - VerifiedExactPhi4
+  - ExactPhi4CertificateError
+  - Phi4Functional
+  # The first three tests discharge the three negative_tests in order. The last
+  # is the only acceptance test; see the wip entry on what it does not cover.
+  required_tests:
+  - test_rejects_non_positive_weights_even_for_zero_flux
+  - test_rejects_malformed_matrices_without_panicking
+  - test_evaluators_refuse_invalid_dimensions_and_weights
+  - test_exact_phi4_zero_gap_certification
+negative_tests:
+- A zero or negative 4-cell weight must be rejected, including for a zero flux
+- A ragged d₃, a d₂ with the wrong row count, or a d₀ without d₁ must be rejected with a typed error, not a panic
+- Γ₄ evaluation with bad weights or dimensions, and a pairing of unequal-length vectors, must be rejected
+doctrine:
+  summary: >-
+    Phi4Functional replays a submitted exact rational primal-dual witness for the degree-4
+    weighted ℓ¹ quotient distance min_C ‖G − d₃C‖_{1,μ}, and evaluates the degree-4 closure
+    mass ‖d₃C‖_{1,μ} and an unchecked rational pairing ⟨P, v⟩. Acceptance means the reported
+    value is the LP minimum for the supplied matrices and weights, by weak duality.
+    Nonclaim: no cell-complex, cohomology or characteristic-class certification; no
+    minimizer search; not authority; not PROVED; not GlobalGreen.
+  non_role:
+  - Minimizer search or LP solving
+  - Cell-complex, Betti-number or 4-manifold certification
+  - Pontryagin, Chern or other characteristic-class computation
+  - Φ₁, Γ₂ or Ξ
+  - Authority minting, ActionLicense, PROVED or GlobalGreen
+wip:
+- "OPEN_OBLIGATION acceptance_coverage: test_exact_phi4_zero_gap_certification replays a zero flux on a synthetic d₃ with an all-zero d₂. No test replays a nonzero Φ₄ value, a genuine b₄ ≥ 1 cavity, or the simplicial coboundaries of ∂Δ⁵; AuthorityEffect: None."
+- "OPEN_OBLIGATION untested_refusals: CurvatureNilpotenceViolated, BianchiIdentityViolated, ChainLawViolated, PrimalResidualMismatch, DualCycleConditionViolated, DualNormBoundViolated, PositiveDualityGap, ReportedValueMismatch and InvalidRationalString are implemented refusals with no dedicated unit test; AuthorityEffect: None."

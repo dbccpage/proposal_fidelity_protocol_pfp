@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bounded_real_power_outcomes:v0.1.0
+title: Exact power outcome rules on declared real contexts
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: bounded_real_power_outcomes
+  symbol: bounded_real_power_outcomes
+  ascii_symbol: bounded_real_power_outcomes
+  notation: Exact power outcome rules on declared real contexts
+  domain:
+  - Finite rational real orthonormal contexts and nonzero states; integer powers1..1024
+  codomain:
+    description: Declared finite results of core_quantum_physics::power_rule_outcomes; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every admitted power rule gives nonnegative normalized probabilities
+- Power2 normalizer equals squared state norm by Parseval
+- Context dependence is searched only within the declared context list
+- Oversized powers refuse before conversion or exponentiation
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: power_rule_outcomes
+  symbols:
+  - Context::new
+  - power_rule
+  - normalizer
+  - find_context_dependence
+  required_tests:
+  - measurement_exact_laws::exact_power_readouts_refuse_wrapped_exponents_before_arithmetic
+negative_tests:
+- measurement_exact_laws::exact_power_readouts_refuse_wrapped_exponents_before_arithmetic
+doctrine:
+  summary: Every admitted power rule gives nonnegative normalized probabilities; Power2 normalizer equals squared
+    state norm by Parseval; Context dependence is searched only within the declared context list; Oversized
+    powers refuse before conversion or exponentiation.
+  non_role:
+  - A finite contextuality search is not Gleason theorem or an unrestricted uniqueness proof
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

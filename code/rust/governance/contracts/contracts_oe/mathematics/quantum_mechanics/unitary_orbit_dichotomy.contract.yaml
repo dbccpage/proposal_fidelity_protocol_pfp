@@ -1,0 +1,66 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:unitary_orbit_dichotomy:v0.1.0
+title: Exact Gaussian unitary torsion decision
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: unitary_orbit_dichotomy
+  symbol: unitary_orbit_dichotomy
+  ascii_symbol: unitary_orbit_dichotomy
+  notation: Exact Gaussian unitary torsion decision
+  domain:
+  - Square Gaussian-rational unitary matrix of dimension1..8.
+  codomain:
+    description: Declared finite results of core_quantum_physics::dynamics_dichotomy; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Faithful rational realification reduces finite order to the algebraic Lie decision.
+- An aperiodic decision uses the minimal-polynomial criterion, not a sampled orbit cutoff.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: dynamics_dichotomy
+  symbols:
+  - classify_unitary_orbit
+  - UnitaryOrbit
+  required_tests:
+  - unitary_dichotomy_distinguishes_torsion_from_an_exact_aperiodic_rotation
+negative_tests:
+- unitary_dichotomy_distinguishes_torsion_from_an_exact_aperiodic_rotation
+doctrine:
+  summary: Faithful rational realification reduces finite order to the algebraic Lie decision.; An aperiodic
+    decision uses the minimal-polynomial criterion, not a sampled orbit cutoff..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

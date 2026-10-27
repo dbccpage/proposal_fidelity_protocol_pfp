@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bra:v0.1.0
+title: Bra Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: bra
+  symbol: bra
+  ascii_symbol: bra
+  notation: Exact Finite Bra Evaluation
+  domain:
+  - Conjugate-dual evaluation associated with an admitted finite Q(i) ket
+  - Equal-length finite vectors with the convention conjugate-linear in the first argument
+  codomain:
+    description: Declared finite results of core_quantum_physics::quantum_state; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Bra evaluation is sum conjugate(psi_i) phi_i and is linear in phi
+- The ket-to-bra map is conjugate-linear and the pairing is conjugate symmetric
+- Self-pairing is positive exact norm squared for every admitted nonzero ket
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+relationships:
+- urn:math:contract:Field:v0.1.0 serves as defines_base_field_K
+- urn:math:contract:HilbertSpace:v0.1.0 serves as defines_hilbert_space_H
+- urn:math:contract:Ket:v0.1.0 serves as optional_source_ket
+negative_tests:
+- Reject unequal coordinate lengths and zero-vector state admission
+- A non-Hermitian operator cannot acquire a real expectation by dropping its imaginary part
+doctrine:
+  summary: Bra evaluation is sum conjugate(psi_i) phi_i and is linear in phi; The ket-to-bra map is conjugate-linear
+    and the pairing is conjugate symmetric; Self-pairing is positive exact norm squared for every admitted
+    nonzero ket.
+  non_role:
+  - This binding is the dual-evaluation operation; it does not realize an abstract covector artifact registry
+  - Other inner-product conventions, arbitrary coefficient fields and infinite-dimensional duals
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted
+- The former generic metadata scaffold remains outside this explicitly declared finite executable domain; its
+  unsupported hash obligations are not claimed discharged.
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_state
+  symbols:
+  - RayVector
+  - RayVector::inner
+  - RayVector::expectation
+  required_tests:
+  - exact_ket_bra_sesquilinear_positive_norm_and_typed_refusals
+  - a_non_hermitian_operator_has_no_real_expectation

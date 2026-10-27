@@ -1,0 +1,66 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_ccr_obstruction:v0.1.0
+title: Finite trace obstruction to CCR
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_ccr_obstruction
+  symbol: finite_ccr_obstruction
+  ascii_symbol: finite_ccr_obstruction
+  notation: Finite trace obstruction to CCR
+  domain:
+  - Nonempty equal-dimensional exact square matrices over Q(i), within1M entries and2^24 scalar operations;
+    resource exhaustion is a typed matrix error.
+  codomain:
+    description: Declared finite results of core_quantum_physics::continuum; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- tr[A,B]=0 while tr(cI)=d c.
+- For c!=0 and d>0 a characteristic-zero finite matrix CCR is obstructed.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: continuum
+  symbols:
+  - canonical_commutator_obstruction
+  - CanonicalCommutatorObstruction
+  required_tests:
+  - finite_trace_obstruction_replays_the_supplied_operators
+negative_tests: []
+doctrine:
+  summary: tr[A,B]=0 while tr(cI)=d c.; For c!=0 and d>0 a characteristic-zero finite matrix CCR is obstructed..
+  non_role:
+  - This finite trace argument is not the bounded-operator Wintner theorem. In characteristic p dividing d
+    the trace obstruction does not apply.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

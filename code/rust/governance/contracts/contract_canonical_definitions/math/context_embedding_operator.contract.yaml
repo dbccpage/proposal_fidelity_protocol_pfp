@@ -1,0 +1,166 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:context_embedding_operator:v1.0.0
+title: Context embedding operator class C
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Declared context embedding used for diagnostic exposure.
+  symbol: C_c = ρ_c
+  ascii_symbol: ContextEmbedding
+  operator_class_symbol: C
+  1. Contract metadata:
+    title: Context embedding operator class C
+    version: 0.1.0
+    object_type: operator_class
+  2. Mathematical object / functional role:
+    role: Declared context embedding used for diagnostic exposure.
+    purpose: Exposes congruence failures under a declared context; it is not repair.
+    non_role:
+    - Does not perform exact repair.
+    - Does not prove source equivalence.
+    - Does not automatically authorize a lift.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: source carrier, cochain object, quotient object, or layer object under declared embedding
+      level
+    codomain: declared target/context carrier, cochain object, quotient object, or layer object
+    embedding_level:
+      allowed:
+      - carrier
+      - cochain
+      - quotient
+      - layer
+  4. Required structures:
+    required:
+    - context c
+    - embedding map ρ_c
+    - source carrier or source layer
+    - target/context carrier or target layer
+    - embedding level
+    - declared possible effect on Φ₁ and Γ₂
+    optional:
+    - witness pair x,y with x~y in source
+    - context congruence-failure witness
+    - target equivalence relation
+  5. Definition:
+    action: C_c(x) = ρ_c(x)
+    exposure: C exposes congruence failure when x ~ y in source but ρ_c(x) and ρ_c(y) are not equivalent
+      in context.
+    diagnostic_role: The purpose of C is to test stability of equivalence under context.
+  6. Laws and invariants:
+    declared_context: Context and target carrier/layer must be explicit.
+    role_priority: C is classified as C by role even if sample Φ₁ is preserved.
+    not_repair: C is not exact repair; C changes the carrier and must never lower Φ₁ or Γ₂ (Law 8, DDC-C-06).
+    no_silent_mutation: A context embedding must not silently mutate the source carrier.
+    target_validity: Any target-side Φ₁ or Γ₂ claim requires target-side structures sufficient to define
+      those functionals.
+    law_8_non_decrease: If Φ₁ or Γ₂ decreases, the move is not a lawful C; lowering must be priced as D (descent with LossLedger) or Λ (structural lift with license and trigger).
+  7. Equality / equivalence rules:
+    operator_equality: Same context id, same source/target carriers, same embedding level, and same embedding
+      map under fixed hashes.
+    context_id_warning: Same context id alone does not imply same operator.
+    congruence_failure: Requires replayable source-equivalent pair and target inequivalence witness.
+  8. Replay / determinism requirements:
+    requirements:
+    - ρ_c replay.
+    - source carrier/layer hash.
+    - target carrier/layer hash.
+    - embedding-level declaration.
+    - context witness replay if congruence failure is claimed.
+    - target equivalence replay if target inequivalence is claimed.
+  9. Relationship to other Core primitives:
+    relationships:
+      priority: Context embeddings come before I in classification priority.
+      I: C is not I merely because Φ₁ is preserved on a sample.
+      M: Silent source mutation is M, not C.
+      Phi1: C changes carrier and must never lower Φ₁ (Law 8). Any reduction requires D or Λ.
+      Gamma2: C changes carrier and must never lower Γ₂ (Law 8).
+      Q1: Context may test whether Q¹ equivalence survives embedding.
+      lift: C may expose a lift requirement if equivalence fails under context, but does not authorize
+        lift by itself.
+  10. Rust descriptor shape:
+    sketch: "pub struct ContextEmbeddingOperatorDescriptor {\n    pub context_id: String,\n    pub operator_class_symbol: OperatorClassSymbol, // C\n    pub embedding_level: EmbeddingLevel,\n    pub source_carrier_hash: String,\n    pub target_carrier_hash: String,\n    pub source_layer_hash: Option<String>,\n    pub target_layer_hash: Option<String>,\n    pub embedding_hash: String,\n    pub effect_declaration_hash: Option<String>,\n    pub target_equivalence_hash: Option<String>,\n}\n\npub enum EmbeddingLevel {\n    Carrier,\n    Cochain,\n    Quotient,\n    Layer,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - C classified as I because sample Φ₁ is preserved.
+    - Context carrier missing.
+    - Context embedding mutates source silently.
+    - Context exposure lowering Φ₁ or Γ₂ (violates Law 8; ContextExposureLoweredObstruction).
+    - Same context id treated as same operator despite different embedding hash.
+    - Target Γ₂ claimed without target C²/d₁.
+    - Congruence failure claimed without replayable x,y,context witness.
+    - Context embedding treated as repair.
+    - Context embedding treated as automatic lift authorization.
+  12. Open questions / WIP status:
+    wip:
+    - Context witness schema.
+    - Lift handoff descriptor.
+    - Target equivalence witness schema.
+    - Embedding-level normalization policy.
+  compact_yaml:
+    CONTEXT_EMBEDDING_OPERATOR_CONTRACT:
+      symbol: C_c=ρ_c
+      ascii_symbol: ContextEmbedding
+      operator_class_symbol: C
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: source carrier/cochain/quotient/layer
+      codomain: context carrier/cochain/quotient/layer
+      required_structures:
+      - context c
+      - ρ_c
+      - source carrier or layer
+      - target carrier or layer
+      - embedding level
+      - effect declaration
+      definition: declared context embedding for diagnostic exposure
+      laws:
+      - classified as C by role
+      - not repair
+      - changes carrier
+      - never lowers Φ₁ or Γ₂ (Law 8)
+      - must not silently mutate source
+      forbidden_interpretations:
+      - I because sample mass preserved
+      - silent source mutation
+      - repair
+      - automatic lift authorization
+      - lowering obstruction under C without priced move D or Λ
+      - same context id implies same operator
+      relationships:
+      - before I in priority
+      - may expose lift requirement
+      - silent mutation is M
+      - target Γ₂ requires target C²/d₁
+      negative_tests:
+      - mislabeled as I
+      - missing context carrier
+      - silent source mutation
+      - lowering Φ₁ or Γ₂ under C
+      - target Γ₂ without target degree-2 structure
+      - congruence failure without witness
+      open_questions:
+      - context witness schema
+      - lift handoff descriptor
+      - target equivalence witness schema

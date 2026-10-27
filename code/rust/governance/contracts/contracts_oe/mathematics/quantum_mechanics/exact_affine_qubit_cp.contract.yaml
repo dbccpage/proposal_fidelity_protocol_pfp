@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_affine_qubit_cp:v0.1.0
+title: Exact Affine Qubit Complete Positivity
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_affine_qubit_cp
+  symbol: exact_affine_qubit_cp
+  ascii_symbol: exact_affine_qubit_cp
+  notation: Exact Affine Qubit Complete Positivity
+  domain:
+  - Rational affine maps r->Tr+t on declared qubit Bloch vectors
+  - Exact 2x2 Gaussian-rational Kraus operators
+  codomain:
+    description: Declared finite results of core_quantum_physics::qubit_bloch_map; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Complete positivity is exact Choi positivity via rational realification
+- Kraus extraction agrees with the affine map and checks sum K^dagger K=I
+- Composition retains the translation term
+- Fujiwara-Algoet comparisons retain both unsquared nonnegative left sides
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: qubit_bloch_map
+  symbols:
+  - QubitBlochMap
+  - BlochMapError
+  - QubitBlochMap::from_affine
+  - QubitBlochMap::from_kraus
+  - QubitBlochMap::choi_matrix
+  - QubitBlochMap::compose
+  - QubitBlochMap::unital_diagonal_is_cp
+  required_tests:
+  - choi_positivity_matches_kraus_damping_and_keeps_fujiwara_left_sides
+negative_tests:
+- A perturbation of size 2^-128 below the depolarizing CP boundary is refused
+- A squared-only Fujiwara comparison is excluded by lambda=(0,0,3)
+- Empty/nonqubit/non-TP Kraus families are refused
+doctrine:
+  summary: Complete positivity is exact Choi positivity via rational realification; Kraus extraction agrees
+    with the affine map and checks sum K^dagger K=I; Composition retains the translation term; Fujiwara-Algoet
+    comparisons retain both unsquared nonnegative left sides.
+  non_role:
+  - Bloch contraction alone does not certify complete positivity
+  - No floating or approximate Choi eigenvalue test
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

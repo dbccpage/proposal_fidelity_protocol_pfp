@@ -1,0 +1,95 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:relative_homology:v0.1.0
+title: RelativeHomology Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: relative_homology_group
+  symbol: H_n(X, A) = ker(d_n) / im(d_{n+1}) in C_*(X)/C_*(A)
+  ascii_symbol: relative_homology
+  notation: H_n(X, A) = ker(d_n) / im(d_{n+1}) in C_*(X)/C_*(A)
+  domain:
+  - 'total_chain_complex: chain_complex_of_X'
+  - 'subspace_chain_complex: chain_complex_of_A'
+  - 'quotient_chain_complex: chain_complex_X_mod_A'
+  - 'relative_cycles: ker(d_n) in C_n(X)/C_n(A)'
+  - 'relative_boundaries: im(d_{n+1}) in C_n(X)/C_n(A)'
+  - 'connecting_homomorphism: boundary_map_H_n(X,A)_to_H_{n-1}(A)'
+  - 'coefficient_domain: ring_or_field'
+  - 'degree: integer_index'
+  codomain:
+    description: 'Quotient module H_n(X,A) = ker(d_n)/im(d_{n+1}) computed from the quotient chain complex C_*(X)/C_*(A) for a topological pair (X,A) with A a subspace of X.
+
+      '
+requirements:
+  required_structures:
+  - 'C_*(A) is a subcomplex of C_*(X): inclusion maps commute with boundary operators'
+  - d^2 = 0 in the quotient chain complex C_*(X)/C_*(A)
+  - The long exact sequence of the pair is exact at every term
+  - 'The connecting homomorphism d: H_n(X,A) -> H_{n-1}(A) is well-defined on equivalence classes'
+  - For good pairs, the quotient map induces H_n(X,A) -> H_n(X/A, *) isomorphism
+  - Relative homology class hash is deterministic and reproducible
+laws:
+- 'C_*(X)/C_*(A) is a well-defined chain complex: A is a subcomplex of X and the induced boundary maps satisfy d^2 = 0'
+- The sequence ... -> H_n(A) -> H_n(X) -> H_n(X,A) -> H_{n-1}(A) -> ... is exact at every term
+- For good pairs, H_n(X,A) is isomorphic to H_n(X/A, *) via the quotient map
+- 'The connecting homomorphism d: H_n(X,A) -> H_{n-1}(A) is natural with respect to maps of pairs'
+- d_{n-1} . d_n = 0 in the quotient chain complex C_*(X)/C_*(A)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All quotient chain complex data from canonical matrices
+  - Connecting homomorphism computation is deterministic
+  - Rechecking must reproduce artifact_hash
+relationships:
+- urn:math:contract:ChainComplex:v0.1.0 serves as total_space_and_subspace_chain_complexes
+- urn:math:contract:HomologyClass:v0.1.0 serves as homology_classes_in_quotient_complex
+- urn:math:contract:ExactSequence:v0.1.0 serves as long_exact_sequence_of_pair
+- urn:math:contract:QuotientModule:v0.1.0 serves as quotient_chain_group_construction
+- urn:math:contract:BoundaryMap:v1.0.0 serves as boundary_operators_and_connecting_homomorphism
+negative_tests:
+- Reject when C_*(A) is not a subcomplex of C_*(X) (inclusion does not commute with boundary)
+- Reject when d^2 != 0 in the quotient chain complex C_*(X)/C_*(A)
+- Reject when the long exact sequence of the pair fails exactness
+- Reject when connecting homomorphism is not well-defined on equivalence classes
+- Reject excision claim for a pair that does not satisfy good pair conditions
+- Reject when coefficient domains of C_*(X) and C_*(A) differ
+- Reject artifact claiming authority or admissibility
+doctrine:
+  summary: Relative homology H_n(X,A) for a topological pair (X,A) with A a subspace of X. Defined as the homology of the quotient chain complex C_*(X)/C_*(A), it measures cycles in X modulo those in A. Relative homology fits into the long exact sequence of a pair, satisfies excision for good pairs, and is fundamental for Mayer-Vietoris sequences, cellular homology, and Poincare-Lefschetz duality.
+  non_role:
+  - Persistent homology or filtered variants (separate contracts)
+  - Cohomology or relative cohomology (separate contracts)
+  - Spectral sequences derived from relative filtrations (separate contracts)
+  - Infinite CW-complex pairs (currently finite pairs only)
+wip:
+- How to handle relative homology for non-good pairs where excision fails?
+- Should Mayer-Vietoris be a separate contract or integrated here?
+- How to support relative cohomology as a dual contract?
+- What is the interface for cellular homology construction from CW-pair relative groups?
+- How to represent Poincare-Lefschetz duality pairings with relative homology?
+- Currently targets finite CW-pair chain complexes only
+- Infinite-dimensional relative chain groups deferred to future versions
+- Cellular homology via relative groups H_n(X^n, X^{n-1}) is a primary use case
+- Mayer-Vietoris sequence construction deferred to separate contract
+- Poincare-Lefschetz duality pairing deferred to separate contract
+- Reduced relative homology (via quotient X/A) handled through excision axiom

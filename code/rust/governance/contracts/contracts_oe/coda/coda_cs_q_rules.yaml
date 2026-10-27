@@ -1,0 +1,54 @@
+# CODA-CS to Q Bridge Rules Specification
+# Bridge Factorization & Generator Semigroups
+paper_identity: CODA-CS-Q-BRIDGE
+legacy_file_identity: 005_coda_cs_q_bridge.md
+canonical_version: v0.9
+authority_effect: None
+layer: Layer 4 (CS-Q — Continuum Shadow to Continuum Bridge)
+
+primitives:
+  bridge_packet_14: "B_q = (Lambda, A_lambda, F_{lambda mu}, chi_{lambda mu}, L, eta, X, pi_lambda, q, Prof, q_bar, D, V, tau)"
+  admission_8_step:
+    - FinitePacketValidity
+    - TowerCoherence
+    - CompletionWitness
+    - QHeldDebts
+    - profile_factorization
+    - RouteIndependence
+    - ReflectionDescent
+    - TerminalAgreement
+  profile_map: "Prof_{Lambda_0}: X -> { (a_lambda) | F_{lambda mu}(a_lambda) = a_mu }"
+
+equations:
+  forward_factorization_theorem:
+    latex: "q = \\bar{q} \\circ \\operatorname{Prof} \\implies \\bigl( \\operatorname{Prof}(x) = \\operatorname{Prof}(y) \\implies q(x) = q(y) \\bigr)"
+    description: "Forward direction: query factorization implies profile fiber constancy"
+  image_reverse_iff_theorem:
+    latex: "\\text{fiber constancy} \\iff \\text{well-defined factor on ImagePoint carrier}"
+    description: "Constructive reverse on bundled image carrier (ImagePoint: value + witness + equality)"
+  admission_packet_schema:
+    latex: "\\mathcal{B}_q := \\bigl(\\Lambda, A_\\lambda, F_{\\lambda\\mu}, \\chi_{\\lambda\\mu}, \\mathcal{L}, \\eta, X, \\pi_\\lambda, q, \\operatorname{Prof}, \\bar{q}, D, V, \\tau\\bigr)"
+    description: "14-slot bridge packet schema anchoring finite shadow parameters and verifier components"
+  named_terminalizer_agreement:
+    latex: "\\tau_Q(q(x)) = \\tau_{\\mathrm{CODA\\text{-}CS}}(\\bar{q}(\\operatorname{Prof}(x)))"
+    description: "Pointwise agreement of named terminalizer functions for factored queries"
+
+enforcement_rules:
+  - id: CS-Q-RULE-001
+    name: "Image Reverse Scope Fence"
+    statement: "Image reverse is valid only on ImagePoint carrier. Total reverse on all of beta without a section or choice is OPEN."
+  - id: CS-Q-RULE-002
+    name: "8-Step Admission Obligation"
+    statement: "Paper B_q 8-step admission is a typed obligation schema; continuum semantic soundness of all 8 steps is OPEN."
+  - id: CS-Q-RULE-003
+    name: "Named Terminalizer Boundary"
+    statement: "Named terminalizer agreement is mechanized for explicit map pairs only; general authority terminalizers remain OPEN."
+  - id: CS-Q-RULE-004
+    name: "Non-Authority Effect"
+    statement: "The CS-Q bridge types admission obligations; it does not mint continuum authority (AuthorityEffect: None)."
+
+claim_discipline:
+  supports: "Supports forward factorization proof and constructive image-restricted reverse on ImagePoint carriers."
+  does_not_support: "Does not support total-beta reverse without choice, continuum-self-proving admission steps, or GlobalGreen promotion."
+  narrowest_defensible_claim: "Proves profile fiber constancy from factorization and constructs image-restricted factor maps."
+  next_test_needed: "Automated checking of 14-slot BridgePacket14 schema completeness against Python BridgePacketCore."

@@ -1,0 +1,94 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:delta_object:v0.1.0
+title: DeltaObject Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: simplicial_object
+  symbol: 'X: Delta^op -> C, X_n with d_i and s_j'
+  ascii_symbol: delta_object
+  notation: 'X: Delta^op -> C, X_n with d_i and s_j'
+  domain:
+  - 'objects: {X_n}_{n >= 0}, the objects at each simplicial degree'
+  - 'face_maps: {d_i: X_n -> X_{n-1}}_{0 <= i <= n}, the face maps'
+  - 'degeneracy_maps: {s_j: X_n -> X_{n+1}}_{0 <= j <= n}, the degeneracy maps'
+  - 'max_degree: N, the maximum degree for which data is provided'
+  codomain:
+    description: A functor Delta^op -> C given by objects, face maps, and degeneracy
+      maps
+requirements:
+  required_structures:
+  - Each X_n must be a valid object in the target category
+  - Each face map d_i must be a valid morphism X_n -> X_{n-1}
+  - Each degeneracy map s_j must be a valid morphism X_n -> X_{n+1}
+  - All five simplicial identity families must hold
+  - Artifact hash must be SHA-256 over all component hashes
+laws:
+- d_i . d_j = d_{j-1} . d_i for i < j
+- s_i . s_j = s_{j+1} . s_i for i <= j
+- d_i . s_j = s_{j-1} . d_i for i < j
+- d_j . s_j = id = d_{j+1} . s_j
+- d_i . s_j = s_j . d_{i-1} for i > j+1
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All validators content-addressed
+  - Given same inputs, must produce identical artifact hash
+negative_tests:
+- Invalid objects at some degree must be rejected
+- Face map with wrong domain/codomain must be rejected
+- Degeneracy map with wrong domain/codomain must be rejected
+- Violation of d_i . d_j = d_{j-1} . d_i must be rejected
+- Violation of mixed face-degeneracy identity must be rejected
+- Artifact claiming authority must be rejected
+doctrine:
+  summary: 'A DeltaObject (simplicial object) is a functor X: Delta^op -> C, where
+    Delta is the simplex category of finite ordinals and order-preserving maps. Concretely,
+    a DeltaObject consists of a sequence of objects {X_n}_{n >= 0} in C together with
+    face maps d_i: X_n -> X_{n-1} (for 0 <= i <= n) and degeneracy maps s_j: X_n ->
+    X_{n+1} (for 0 <= j <= n) satisfying the simplicial identities. This contract
+    validates the data of a simplicial object, including the objects at each degree,
+    the face and degeneracy maps, and the simplicial identity relations.'
+  non_role:
+  - Does not determine if the simplicial set is a Kan complex
+  - Does not compute homotopy groups
+  - Does not compute homology groups
+  - Does not classify admissibility
+  - Does not emit policy decisions
+wip:
+- Whether to support semi-simplicial objects (face maps only, no degeneracies)
+- Whether to support augmented simplicial objects (with X_{-1})
+- 'Truncation: how to handle n-truncated simplicial objects'
+- Relationship to nerve of categories and Kan complexes
+- Currently in WIP status - full implementation pending
+- Simplicial identity verification needs efficient implementation
+- Integration with homological algebra pipeline needs design
+- 'Finite presentation: only data up to max_degree is stored'
+rust_binding:
+  crate: core_higher_category_theory
+  module: simplicial_set
+  symbols:
+  - SimplicialSet
+  - Simplex
+  required_tests:
+  - test_simplicial_set_and_quasi_category_positive_verification
+  - test_kill_mut_p3_03_simplicial_identity_violation

@@ -1,0 +1,92 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_rational:v0.1.0
+title: 'Exact Rational Contract'
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_number_field
+  symbol: 'Q, with exact square roots and the squarefree part n = f s^2'
+  ascii_symbol: exact_rational
+  notation: 'Q, with exact square roots and the squarefree part n = f s^2'
+  domain:
+  - 'numerator: arbitrary-precision integer'
+  - 'denominator: nonzero arbitrary-precision integer'
+  - 'radicand: arbitrary-precision integer, for the squarefree part'
+  codomain:
+    description: 'Rationals in lowest terms; exact square roots of rational squares; the unique pair (f, s) with n = f s^2, f squarefree, s >= 1.'
+requirements:
+  required_structures:
+  - 'Rationals are kept in lowest terms with a positive denominator; unreduced spellings are reduced before any decision'
+  - 'A square root is returned only when the value is the exact square of a rational'
+  - 'The squarefree part is decided exactly or refused with a typed error; it is never guessed'
+  - 'No floating point appears in any operation'
+laws:
+- 'sqrt_exact(q)^2 = q whenever it returns a value, and it returns the nonnegative root'
+- 'integer_sqrt(n) = max r >= 0 with r^2 <= n < (r+1)^2 for n >= 0'
+- 'n = f * s^2 with f squarefree (carrying the sign of n) and s >= 1; 0 = 0 * 1^2'
+- 'An unreduced rational and its reduction have the same square-root decision'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- 'urn:math:contract:Field:v0.1.0 serves as the field Q'
+- 'exact_scalar_tower (linear_algebra) serves as the scalar tower implemented for BigRational'
+rust_binding:
+  crate: core_number_theory
+  module: rational
+  symbols:
+  - 'Rational'
+  - 'sqrt_exact'
+  - 'is_rational_square'
+  - 'integer_sqrt'
+  - 'checked_integer_sqrt'
+  - 'exact_integer_sqrt'
+  - 'is_perfect_square'
+  - 'squarefree_part'
+  - 'squarefree_part_with_limit'
+  - 'ArithmeticError'
+  - 'checked_ratio'
+  required_tests:
+  - 'integer_sqrt_is_the_floor_square_root_on_every_small_input'
+  - 'integer_sqrt_of_a_negative_is_zero_and_the_checked_form_refuses'
+  - 'perfect_squares_are_recognised_and_non_squares_and_negatives_are_not'
+  - 'sqrt_exact_decides_squares_of_reduced_and_unreduced_spellings'
+  - 'squarefree_part_satisfies_its_defining_identity_on_every_small_integer'
+  - 'squarefree_part_refuses_rather_than_guesses_beyond_the_limit'
+  - 'squarefree_part_limit_above_the_maximum_is_refused'
+  - 'checked_ratio_refuses_a_zero_denominator_and_reduces_otherwise'
+negative_tests:
+- 'A square root of a negative rational must be refused (None)'
+- 'A square root of a rational that is not a square must be refused (None), never approximated'
+- 'A squarefree part that needs factoring beyond the trial-division limit must be refused with SquarefreePartUndecided'
+- 'A trial-division limit above the declared maximum must be refused'
+- 'A zero denominator must be refused by the checked constructor'
+doctrine:
+  summary: 'Exact rational arithmetic and the integer routines that number fields rest on: floor and exact square roots, perfect-square tests, and the squarefree part of an integer by bounded trial division with a typed refusal beyond the limit.'
+  non_role:
+  - 'Factorisation of large integers'
+  - 'Floating-point approximation of roots'
+  - 'Any operational authority'
+wip:
+- 'rq() still panics on a zero denominator by design (literal helper); data paths use checked_ratio'
+- 'No Lean counterpart exists for the squarefree decomposition'

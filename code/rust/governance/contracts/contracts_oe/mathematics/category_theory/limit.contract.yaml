@@ -1,0 +1,86 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:limit:v0.1.0
+title: Limit Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: universal_construction
+  symbol: 'lim D = (L, {π_j: L → D(j)}_{j ∈ Ob(J)})'
+  ascii_symbol: limit
+  notation: 'lim D = (L, {π_j: L → D(j)}_{j ∈ Ob(J)})'
+  domain:
+  - 'diagram: Functor D: J → C'
+  - 'limit_object: Object L in C'
+  - 'projections: Morphisms π_j: L → D(j) for each j ∈ Ob(J)'
+  codomain:
+    description: 'A limit consists of: (1) a diagram D: J → C (functor from index category J to category C), (2) an object L in C (the limit object), (3) projection morphisms π_j: L → D(j) for each object j in J, satisfying the cone commutativity condition and universal property.
+
+      '
+requirements:
+  required_structures:
+  - 'The diagram D: J → C must exist and be a valid functor'
+  - The limit object L must be an object in category C
+  - Each projection π_j must be a morphism L → D(j) in C
+  - 'For each f: j → k in J, D(f) ∘ π_j = π_k must hold'
+  - Every cone must factor uniquely through the limit
+laws:
+- 'For each morphism f: j → k in J, D(f) ∘ π_j = π_k'
+- 'For any cone (M, {μ_j: M → D(j)}), there exists a unique morphism u: M → L such that π_j ∘ u = μ_j for all j ∈ Ob(J)
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Projections indexed by J's objects in canonical order
+  - Validators and computation functions are content-addressed
+relationships:
+- 'urn:math:contract:Functor:v0.1.0 serves as Diagram D: J → C is a functor'
+- urn:math:contract:Category:v0.1.0 serves as Categories J and C define the context
+- urn:math:contract:Morphism:v0.1.0 serves as Projection morphisms and factorization morphisms
+- urn:math:contract:Object:v0.1.0 serves as Limit object and diagram objects
+negative_tests:
+- diagram_id does not resolve
+- limit_object_id does not resolve
+- π_j does not have domain L
+- D(f) ∘ π_j ≠ π_k for some morphism f
+- Another cone cannot factor through L uniquely
+doctrine:
+  summary: 'A Limit of a diagram D: J → C is a universal cone over D. It consists of an object L (the limit) and morphisms π_j: L → D(j) (the projections) such that any other cone factors uniquely through L. The contract validates the cone and universality.'
+  non_role:
+  - This contract does not handle colimits (dual construction)
+  - This contract does not compute limits automatically
+  - This contract does not verify completeness of categories
+wip:
+- Verifying the universal property requires checking all cones, which is infinite in general. For finite categories, exhaustive check is possible.
+- How to efficiently verify universal property for infinite categories?
+- Limits are unique up to unique isomorphism - should we auto-generate isomorphism witnesses?
+- Products, terminal objects, equalizers, pullbacks are special cases of limits
+- Consider implementing a finite category checker for exhaustive universal property verification
+- May need to add optional 'proof_term' field for constructive proofs of universal property
+rust_binding:
+  crate: core_category_theory
+  module: limits_colimits
+  symbols:
+    - Limit
+  required_tests:
+    - validate_ok
+    - validate_rejects_bad_cone

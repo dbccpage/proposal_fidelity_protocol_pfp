@@ -1,0 +1,98 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phi1_exact_certificate_solver:v1.0.0
+title: Φ₁ primal-dual certificate construction by exact two-phase simplex
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1:v1.0.0
+    - urn:core:math:l1_seminorm:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: phi1_exact_certificate_solver
+  symbol: Φ₁
+  ascii_symbol: Phi1Solve
+  notation: "Φ₁([ω]) = min_α ‖ω − Bα‖_{1,w} = max { ⟨ω, y⟩ : Bᵀy = 0, |y_i| ≤ w_i }"
+  domain:
+  - "an L1Seminorm presentation (B, w): a rectangular rational matrix B and strictly positive rational weights w, admitted by L1Seminorm::new"
+  - "a representative ω ∈ ℚ^m with one coordinate per weight"
+  codomain:
+    description: >-
+      VerifiedExactPhi1, produced only by L1Seminorm::evaluate replaying the solved
+      primal-dual pair, or a typed Phi1SolveError.
+  definition:
+    primal: "min Σ_i w_i (r⁺_i + r⁻_i) subject to B(α⁺ − α⁻) + r⁺ − r⁻ = ω, all variables ≥ 0"
+    dual: "min −⟨ω, y⁺⟩ + ⟨ω, y⁻⟩ subject to Bᵀ(y⁺ − y⁻) = 0, y⁺ + s⁺ = w, y⁻ + s⁻ = w, all variables ≥ 0"
+    method: >-
+      Each program is solved independently by exact two-phase simplex with Bland's
+      rule. The primal optimum, α = α⁺ − α⁻, the residual ω − Bα and the dual
+      y = y⁺ − y⁻ form an ExactPhi1Certificate that is submitted to
+      L1Seminorm::evaluate.
+requirements:
+  required_structures:
+  - A presentation admitted by L1Seminorm::new
+  - Exact rational representative coordinates with nonzero denominators
+laws:
+- "Replay law: the solver never constructs VerifiedExactPhi1; every result passes the shared primal-dual verifier and its boundary and weight binding, so a solver defect is a typed refusal, not a sealed value."
+- "Duality law: a returned value equals the weighted primal residual mass and the dual pairing ⟨ω, y⟩ with Bᵀy = 0 and |y_i| ≤ w_i, so the duality gap is zero by construction of the sealed type."
+- "Termination law: Bland's least-index rule prevents cycling on degenerate and rank-deficient presentations."
+- "Refusal law: a representative of the wrong dimension, a zero denominator, an infeasible or unbounded program, and a certificate the verifier refuses are distinct typed errors. There is no fallback solver."
+- "Exactness law: all arithmetic is BigRational; there is no floating-point path and no tolerance."
+- "Separation fence: this constructs degree-1 Φ₁ only. It computes no Γ₂ and no trichotomy class."
+- "Authority law: the result mints no AuthorityEffect, PROVED, GlobalGreen or ActionLicense."
+replay:
+  requirements:
+  - No external state, randomness or wall-clock
+  - Exact rational arithmetic only
+  - Deterministic pivoting order
+relationships:
+- "urn:core:math:phi1:v1.0.0 — the certificate verifier every solved result is replayed through"
+- "urn:core:math:l1_seminorm:v1.0.0 — the checked presentation whose boundary and weights bind the result"
+- "urn:core:math:graph_phi1_quotient_distance:v1.0.0 — an independent spanning-forest enumeration the solver is cross-checked against"
+rust_binding:
+  crate: core_solvers
+  module: solver_lp_phi1_quotient
+  symbols:
+  - Phi1LinearProgram
+  - SimplexRefusal
+  - Phi1SolveError
+  - solve_exact_phi1
+  # The first test discharges the negative_test. The rest are value checks:
+  # replayed triangle certificates, parity with the spanning-forest enumeration,
+  # values beyond i64, and termination on degenerate and empty presentations.
+  required_tests:
+  - malformed_representatives_are_typed_refusals
+  - solved_triangle_certificates_replay_with_zero_duality_gap
+  - solver_agrees_with_independent_spanning_forest_enumeration
+  - values_beyond_i64_stay_exact
+  - degenerate_and_empty_presentations_terminate
+negative_tests:
+- A representative with the wrong dimension or a zero denominator must be refused
+doctrine:
+  summary: >-
+    solve_exact_phi1 constructs the primal-dual witness for the weighted ℓ¹ quotient
+    distance on a checked presentation and returns it only after the shared Φ₁
+    verifier has replayed it. Nonclaim: not Γ₂; not a trichotomy class; not
+    authority; not PROVED; not GlobalGreen.
+  non_role:
+  - Certificate verification without construction (see urn:core:math:phi1:v1.0.0)
+  - Γ₂ or any 2-cell closure defect
+  - Floating-point or tolerance-based optimisation
+  - Authority minting, ActionLicense, PROVED or GlobalGreen
+wip:
+- "OPEN_OBLIGATION complexity: two-phase simplex over BigRational is exponential in the worst case; no size bound is declared; AuthorityEffect: None."
+- "OPEN_OBLIGATION untested_refusals: the Infeasible and Unbounded LP refusals are unreachable for admitted presentations and have no dedicated unit test; AuthorityEffect: None."

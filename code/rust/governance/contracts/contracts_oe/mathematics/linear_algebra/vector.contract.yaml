@@ -1,0 +1,87 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:vector:v0.1.0
+title: Vector Contract (coordinate vector)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: coordinate_vector
+  symbol: v ∈ V ≅ K^n (column)
+  ascii_symbol: vector
+  notation: v = (v_1,…,v_n)^T relative to ordered basis of V
+  domain:
+  - field K
+  - codomain space V over K with dim n ≥ 0 and ordered basis
+  - 'components: length-n sequence of elements of K'
+  codomain:
+    description: Element of finite-dimensional vector space V over K as a column of coordinates in a fixed
+      ordered basis. n=0 is the unique zero vector of the zero space.
+requirements:
+  required_structures:
+  - n = dim(V) ∈ ℕ₀
+  - len(components) = n
+  - each component ∈ K
+  - basis identity of V is recorded (hash or explicit list)
+  - column convention (map K→V) unless a separate row-vector object is introduced
+laws:
+- 'Length law: number of components equals dim(V).'
+- 'Field law: every component is an element of K.'
+- 'Zero-space law: if n=0 then components is empty and v is the unique zero vector.'
+- 'Addition law: u+v defined only for equal V (same field, dim, basis identity).'
+- 'Scalar law: α·v stays in V; α ∈ K.'
+- 'Authority law: no PROVED/GlobalGreen/HoTT from this contract alone.'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Component order is basis order
+relationships:
+- urn:core:math:vector_space:v0.1.0 — ambient space V
+- urn:core:math:scalar:v0.1.0 — scalar multiplication
+- urn:core:math:field:v0.1.0 — field K
+- urn:core:math:matrix:v0.1.0 — linear action
+- urn:core:math:basic_matrix:v1.0.0 — optional n×1 storage view (not identity of objects)
+rust_binding:
+  crate: core_linear_algebra
+  module: vector::vector
+  symbols:
+  - CoordinateVector
+  required_tests:
+  - test_new_dimension_mismatch
+  - test_checked_add_basis_mismatch
+negative_tests:
+- components.len() ≠ dim(V) must be rejected
+- Component not in K must be rejected
+- Adding vectors with different space/basis identity must be rejected
+- Scalar from a different field must be rejected
+- Row-vector claims under column-only convention without a row object must be rejected
+- Artifact claiming PROVED/GlobalGreen/HoTT from this contract alone must be rejected
+doctrine:
+  summary: 'Vector is a coordinate representation of an element of finite-dim V over K in an ordered basis
+    (column convention). Zero-dimensional V allowed. Nonclaim: does not claim PROVED; does not claim GlobalGreen;
+    does not claim HoTT discharge.'
+  non_role:
+  - Norm/inner-product geometry (separate contracts)
+  - Row vectors as maps V→K (separate object if needed)
+  - Infinite-dimensional vectors
+  - Authority / PROVED / GlobalGreen / HoTT discharge
+wip:
+- Canonical '1_K' domain basis encoding for the K→V column view.
+- Parity between CoordinateVector RS and full field/hash artifact layer.

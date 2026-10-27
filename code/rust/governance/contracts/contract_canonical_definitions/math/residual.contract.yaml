@@ -1,0 +1,50 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:residual:v1.0.0
+title: residual
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: residual
+  symbol: residual
+  ascii_symbol: residual
+  notation: residual
+  domain:
+  - Declared finite input carrier
+  codomain:
+    description: An exact residual with canonical Phi1 representative mass and replayed wire data.
+  definition:
+    evaluation: An exact residual with canonical Phi1 representative mass and replayed wire data.
+laws:
+- An exact residual with canonical Phi1 representative mass and replayed wire data.
+- Evaluation evidence does not authorize a state transition.
+rust_binding:
+  crate: core_functional
+  module: residual
+  symbols:
+  - Residual
+  - ResidualError
+  required_tests: []
+negative_tests:
+- Malformed input or an impermissible comparison is refused.
+doctrine:
+  summary: An exact residual with canonical Phi1 representative mass and replayed wire data.
+  non_role:
+  - Authorization

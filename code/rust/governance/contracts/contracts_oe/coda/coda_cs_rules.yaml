@@ -1,0 +1,51 @@
+# CODA-CS Rules Specification
+# Continuum Finite-Shadow Tower
+paper_identity: CODA-CS
+legacy_file_identity: 004_gttc.md
+canonical_version: v1.0
+authority_effect: None
+layer: Layer 3 (CS — Continuum Shadow)
+
+primitives:
+  shadow_tower: "Cofinal finite shadow tower (Lambda_0, A_lambda)"
+  shadow_projection: "pi_lambda : X -> A_lambda with F_{lambda mu} o pi_lambda = pi_mu"
+  query_projection: "q_lambda(X) = q o pi_lambda"
+  query_relative_authority: "Auth_kappa(X; q)"
+  certificate_compatibility: "Compat_chi(X, Lambda_0)"
+
+equations:
+  shadow_projection_compatibility:
+    latex: "F_{\\lambda\\mu} \\circ \\pi_\\lambda = \\pi_\\mu \\quad (\\forall \\lambda \\le \\mu)"
+    description: "Compatibility condition for shadow projections across cofiltered transitions"
+  query_relative_authority_definition:
+    latex: "\\mathsf{Auth}_{\\kappa}(X;\\, q) := \\Sigma(\\Lambda_0:\\mathsf{CofinalSubcat}(\\Lambda)) \\left[ \\prod_{\\lambda\\in\\Lambda_0}\\mathsf{Auth}_\\lambda(q_\\lambda(X)) \\times \\mathsf{Compat}_\\chi(X,\\Lambda_0) \\right]"
+    description: "Dependent pair type defining authority for a continuum query over a cofinal shadow family"
+  certificate_compatibility_definition:
+    latex: "\\mathsf{Compat}_\\chi(X, \\Lambda_0) := \\prod_{\\lambda \\le \\mu} \\Sigma(\\chi_{\\lambda\\mu}) \\times \\prod_{\\lambda \\le \\mu \\le \\nu} \\mathsf{Paste}_\\chi(\\lambda, \\mu, \\nu, \\chi_{\\lambda\\mu}, \\chi_{\\mu\\nu}, \\chi_{\\lambda\\nu})"
+    description: "Pairwise certificates and triple pasting coherence across shadow tower"
+  renormalized_shadow_transport_law:
+    latex: "\\tau_\\mu V_\\mu D_\\mu(q_\\mu(R_{\\lambda\\mu}A_\\lambda)) = \\rho_{\\lambda\\mu} \\left( \\tau_\\lambda V_\\lambda D_\\lambda(q_\\lambda(A_\\lambda)) \\right)"
+    description: "GTTC-R1 terminal-refinement equivariance condition across scale transitions"
+  continuum_residual_interface:
+    latex: "\\operatorname{Resid}_\\Lambda([\\delta]) := \\tau_{\\mathrm{res}}(\\operatorname{cofib}(c_{\\Lambda, [\\delta]}))"
+    description: "Handoff mapping non-absorbed shadow coherence defects into CODA-A cofiber terminals"
+
+enforcement_rules:
+  - id: CS-RULE-001
+    name: "Finite-Shadow Discipline"
+    statement: "Continuum limits or tower coherence alone do not construct authority: X in Core_kappa does not imply Auth_kappa(X; q)."
+  - id: CS-RULE-002
+    name: "Query-Relative Authority Scoping"
+    statement: "Authority is strictly query-relative. Authorizing query q does not grant object-level authority over X."
+  - id: CS-RULE-003
+    name: "Cofinal Authorized Support Requirement"
+    statement: "Every admitted continuum query must factor through a cofinal family of authorized finite shadows."
+  - id: CS-RULE-004
+    name: "Typed Refusal Protocol"
+    statement: "Tower failure must return typed refusal (NoFiniteShadow, NoCofinalAuthorizedShadow, ShadowCoherenceFailure, UnreflectedContinuumClaim, TransportViolation, BudgetUnknown, NoTerminal)."
+
+claim_discipline:
+  supports: "Supports query-relative authorization of continuum models through cofinal finite shadow profiles."
+  does_not_support: "Does not support unreflected continuum claims, infinite-horizon authority without finite shadows, or global green status."
+  narrowest_defensible_claim: "Verifies profile factorization and cofinal shadow certificate pasting for specific declared queries."
+  next_test_needed: "Automated verification of cofinal shadow profile factorization for multi-scale grid queries."

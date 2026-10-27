@@ -1,0 +1,48 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_certifiers:authority_minting:v1.2.0
+title: AuthorityMintingCompatibility
+status: deprecated_adapter
+crate: core_certifiers
+file: crates_rs/core_certifiers/src/authority_minting.rs
+layer: 02_evidence
+role: deprecated_evidence_adapter
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns: []
+does_not_own:
+- authority minting
+- terminalization
+- packet verification
+- replay witness creation
+may_call:
+- core_certifiers::certificate_boundary
+must_not:
+- mint from seed_name
+- mint from exact_status string
+- mint from certificate_hash string
+- call CertifiedAuthority::certify directly
+- call authority_from_outcome_f13 directly
+- call promote_authorized_local_result_v1 directly
+- expose public free mint_authority
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+forbidden_substrings:
+- 'exact_status: &str'
+- 'seed_name: &str'
+- 'certificate_hash: &str'
+- CertifiedAuthority::certify
+- authority_from_outcome_f13
+- promote_authorized_local_result_v1
+- pub fn mint_authority
+- fn mint_authority
+required_substrings:
+- certificate_boundary
+- pub use
+required_tests:
+- certify_checked_packet_seals_none_effect_evidence
+lean_obligations: []

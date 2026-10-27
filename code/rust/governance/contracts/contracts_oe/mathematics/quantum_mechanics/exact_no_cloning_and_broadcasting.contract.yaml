@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_no_cloning_and_broadcasting:v0.1.0
+title: Phase-independent finite cloning and broadcasting obstructions
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_no_cloning_and_broadcasting
+  symbol: exact_no_cloning_and_broadcasting
+  ascii_symbol: exact_no_cloning_and_broadcasting
+  notation: Phase-independent finite cloning and broadcasting obstructions
+  domain:
+  - Nonempty finite ray/density families; positive finite copy counts; dimension at least two for universal
+    fidelity
+  codomain:
+    description: Declared finite results of core_quantum_physics::no_cloning; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Cloning obstruction is t(1-t), invariant under global phase
+- A family has no obstructing pair exactly when distinct rays are orthogonal
+- Broadcastability is decided by exact pairwise commutation
+- Universal N-to-M single-copy bound uses arbitrary-precision rational arithmetic
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: no_cloning
+  symbols:
+  - NoCloning::exact_obstruction
+  - NoCloning::cloning_witness
+  - NoCloning::broadcasting_witness
+  - NoCloning::universal_cloning_fidelity
+  required_tests:
+  - states_channels_exact_tests::no_cloning_obstruction_and_broadcasting_are_phase_independent
+negative_tests:
+- states_channels_exact_tests::no_cloning_obstruction_and_broadcasting_are_phase_independent
+doctrine:
+  summary: Cloning obstruction is t(1-t), invariant under global phase; A family has no obstructing pair exactly
+    when distinct rays are orthogonal; Broadcastability is decided by exact pairwise commutation; Universal
+    N-to-M single-copy bound uses arbitrary-precision rational arithmetic.
+  non_role:
+  - Universal fidelity formula does not certify a caller-supplied physical cloner
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,85 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_trace_distance_quotient:v0.1.0
+title: Exact trace-distance quotient witnesses and bounded diagonal lift
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_trace_distance_quotient
+  symbol: finite_trace_distance_quotient
+  ascii_symbol: finite_trace_distance_quotient
+  notation: Exact trace-distance quotient witnesses and bounded diagonal lift
+  domain:
+  - Finite oriented graph with exact positive edge weights and Hermitian trace-zero defects; operator families
+    preflight aggregate storage/work; diagonal optimization admits each flattened C0/C1 axis at most 256
+  codomain:
+    description: Declared finite results of core_quantum_physics::trace_distance_quotient; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Exact primal upper and dual lower bounds certify only when their gap is zero
+- Trace-zero and all-Hermitian repair spaces retain their distinct dual divergence constraints
+- Diagonal lifts replay the shared exact quotient-L1 witnesses in full operator coordinates
+- Unsupported flattened axes refuse before map allocation; actual empty graph/cochain carriers retain zero
+  value
+- General witness replay bounds combined dense family storage before materializing residuals/divergence; cycle
+  builders replay the walk on the actual receiving packet
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: trace_distance_quotient
+  symbols:
+  - TraceDefectPacket
+  - TraceDefectPacket::diagonal_certificates
+  - TraceDefectPacket::certify
+  - RepairSpace
+  - TraceQuotientError
+  required_tests:
+  - cptp_trace_norm_geometry::trace_zero_repairs_need_uncentred_witnesses_on_two_cycles_of_qutrit_defects
+  - cptp_trace_norm_geometry::the_certified_value_is_a_class_invariant_while_the_raw_mass_is_not
+  - cptp_trace_norm_geometry::diagonal_quotient_refuses_oversized_flattening_and_preserves_empty_carriers
+  - cptp_trace_norm_geometry::general_quotient_refuses_aggregate_storage_and_foreign_walks_before_materialization
+negative_tests:
+- cptp_trace_norm_geometry::malformed_packets_and_certificates_are_refused
+- cptp_trace_norm_geometry::diagonal_quotient_refuses_oversized_flattening_and_preserves_empty_carriers
+- cptp_trace_norm_geometry::general_quotient_refuses_aggregate_storage_and_foreign_walks_before_materialization
+doctrine:
+  summary: Exact primal upper and dual lower bounds certify only when their gap is zero; Trace-zero and all-Hermitian
+    repair spaces retain their distinct dual divergence constraints; Diagonal lifts replay the shared exact
+    quotient-L1 witnesses in full operator coordinates; Unsupported flattened axes refuse before map allocation;
+    actual empty graph/cochain carriers retain zero value; General witness replay bounds combined dense family
+    storage before materializing residuals/divergence; cycle builders replay the walk on the actual receiving
+    packet.
+  non_role:
+  - No general matrix trace-norm optimization from diagonal-only data; bounded simplex exhaustion is a refusal
+    rather than a zero obstruction
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

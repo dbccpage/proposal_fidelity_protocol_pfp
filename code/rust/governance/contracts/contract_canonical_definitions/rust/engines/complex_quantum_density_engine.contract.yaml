@@ -1,0 +1,31 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:qm:complex_quantum_density_engine:file:v1.0.0
+crate: engines
+file: crates_rs/engines/src/quantum/complex_quantum_density_engine.rs
+role: complex_quantum_density_computation_engine
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - complex_density_matrix_diagnostics
+  - hermitian_spectral_decomposition
+does_not_own:
+  - born_rule_uniqueness
+  - authority
+may_call:
+  - engines::quantum::density_matrix
+must_not:
+  - claim born rule uniqueness
+  - mint authority
+exactness:
+  numeric_mode: complex_f64_diagnostics
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "CertifiedAuthority"
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "AuthorityEffect::None"
+required_tests:
+  - test_complex_quantum_density_diagnostics

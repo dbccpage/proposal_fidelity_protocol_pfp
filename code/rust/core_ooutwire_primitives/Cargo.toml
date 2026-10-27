@@ -1,0 +1,54 @@
+[package]
+autotests = false
+name = "core_ooutwire_primitives"
+version.workspace = true
+edition = "2021"
+description = "Rust readings of 19L57G1 primitives and a declared Core engine. AuthorityEffect: None."
+license.workspace = true
+publish = false
+
+# Zero dependencies on purpose. Every number this crate reports is
+# recomputed from the primitives in src/, by code you can read in one
+# sitting, with nothing pulled from a registry.
+[dependencies]
+
+[[bin]]
+name = "omega"
+path = "src/main.rs"
+
+# The PO-000 replication receipt: `cargo run --bin po000` prints it;
+# `--write` regenerates ppo/rust_crates/RECEIPT.txt.
+[[bin]]
+name = "po000"
+path = "src/alpha_projection_obstruction/main.rs"
+
+# Pinned PO-000 receipt conformance checker: `cargo run --release --bin verify_po000`
+[[bin]]
+name = "verify_po000"
+path = "src/bin/verify_po000.rs"
+
+[lib]
+name = "core_ooutwire_primitives"
+path = "src/lib.rs"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_ooutwire_primitives`.
+
+[[test]]
+name = "genesis_fidelity"
+path = "../tests/core_ooutwire_primitives/genesis_fidelity.rs"
+
+[[test]]
+name = "mechanization_cross_check"
+path = "../tests/core_ooutwire_primitives/mechanization_cross_check.rs"
+
+[[test]]
+name = "review_adversaries"
+path = "../tests/core_ooutwire_primitives/review_adversaries.rs"
+
+[[test]]
+name = "review_gauge_adversaries"
+path = "../tests/core_ooutwire_primitives/review_gauge_adversaries.rs"
+
+[[test]]
+name = "verify_receipt"
+path = "../tests/core_ooutwire_primitives/verify_receipt.rs"

@@ -1,0 +1,65 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:richardson_interpolation:v0.1.0
+title: Exact Richardson evaluation
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: richardson_interpolation
+  symbol: richardson_interpolation
+  ascii_symbol: richardson_interpolation
+  notation: Exact Richardson evaluation
+  domain:
+  - At most256 distinct rational nodes and a rational target.
+  codomain:
+    description: Declared finite results of core_quantum_physics::richardson; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The canonical Lagrange weights reproduce every polynomial of degree below the node count.
+- Values with wrong length and repeated nodes are refused.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: richardson
+  symbols:
+  - RichardsonPlan
+  required_tests:
+  - richardson_interpolates_every_polynomial_below_the_node_count
+negative_tests:
+- richardson_interpolates_every_polynomial_below_the_node_count
+doctrine:
+  summary: The canonical Lagrange weights reproduce every polynomial of degree below the node count.; Values
+    with wrong length and repeated nodes are refused..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

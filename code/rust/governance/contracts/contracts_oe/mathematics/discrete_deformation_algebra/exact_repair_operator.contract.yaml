@@ -1,0 +1,173 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_repair_operator:v1.0.0
+title: Exact repair operator class E
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:exact_repair_space:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Gauge movement inside the same quotient class.
+  symbol: E_α
+  ascii_symbol: E_alpha
+  formula: E_α(x) = x + d₀α
+  operator_class_symbol: E
+  1. Contract metadata:
+    title: Exact repair operator class E
+    version: 0.1.0
+    object_type: operator_class
+  2. Mathematical object / functional role:
+    role: Gauge movement inside the same quotient class discharging exact defects.
+    purpose: Represents exact repair action on representatives; eliminates local tension in im(d₀).
+    non_role:
+    - Does not cross classes: cannot exactify non-exact residuals (DDC-E-03).
+    - Cannot be applied to non-exact states; non-exact states route to REFUSED_NON_ZERO_CURL.
+    - Does not mutate carrier.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: x ∈ C¹ with α ∈ C⁰ in a valid cochain layer with before-class ExactRepair (Φ₁ = 0, Γ₂ = 0)
+    codomain: x + d₀α = 0 ∈ C¹ in the same carrier, leaving after-class ExactRepair (Φ₁ = 0, Γ₂ = 0)
+    representative_action: acts nontrivially on C¹ representatives
+    quotient_action: acts trivially on Q¹
+  4. Required structures:
+    required:
+    - valid cochain layer
+    - α ∈ C⁰
+    - 'd₀: C⁰ → C¹'
+    - x ∈ C¹ with before-class ExactRepair (Φ₁ = 0, Γ₂ = 0)
+    - adequate detector witness
+    - coefficient domain R
+    sign_convention: plus convention; minimization contracts using x-d₀α are equivalent under α↦-α
+  5. Definition:
+    action: E_α(x) = x + d₀α
+    exact_repair_term: d₀α ∈ B¹
+    discharge_condition: for lawful DDC step E, x + d₀α = 0
+    quotient_identity: '[E_α(x)] = [x] in Q¹'
+    projection_identity: π(E_α(x)) = π(x)
+  6. Laws and invariants:
+    law_7_exact_repair_discharges: E requires before-class ExactRepair (Φ₁ = 0, Γ₂ = 0), leaves carrier unchanged, and leaves Φ₁ = Γ₂ = 0 with zero defect after repair (Ddc.E_gauge_repair_discharges).
+    no_class_crossing: Gauge moves preserve d₁x and exactness; E cannot cross classes (Ddc.E_gauge_preserves_closure, Ddc.E_gauge_preserves_exactness).
+    refusal_on_non_exact: An attempted E on a state with Γ₂ > 0 or Φ₁ > 0 is refused as REFUSED_NON_ZERO_CURL (Ddc.E_triangle_open_not_exact).
+    phi1_preserved: Φ₁([E_α(x)]) = Φ₁([x]) = 0
+    quotient_class_identity: π(E_α(x)) = π(x)
+    composition: E_α ∘ E_β = E_{α+β}
+    identity: E_0 = id_C¹
+    inverse: E_α^{-1} = E_{-α} when additive inverse exists in C⁰
+    priority: E is classified before I
+    carrier_unchanged: E leaves carrier strictly unchanged.
+    adequate_detector_required: E requires an adequate detector.
+    no_progress: E changes representative but not quotient obstruction mass.
+  7. Equality / equivalence rules:
+    operator_equality: E_α = E_β on C¹ iff d₀(α-β)=0
+    alpha_equivalence: α and β differing by ker(d₀) define the same E action.
+    action_equality: Outputs equal as C¹ vectors under fixed basis.
+    quotient_equality: Outputs always define the same Q¹ class as input.
+  8. Replay / determinism requirements:
+    requirements:
+    - α serialized under C⁰ basis.
+    - d₀ hash fixed.
+    - x serialized under C¹ basis when action witness is claimed.
+    - addition over R deterministic.
+    - carrier unchanged.
+    - basis ordering fixed.
+  9. Relationship to other Core primitives:
+    relationships:
+      B1: Adds an element of B¹ = im(d₀).
+      Q1: Acts trivially on Q¹.
+      Phi1: Preserves quotient mass.
+      R: R ∘ E = R when R is deterministic over quotient class.
+      I: E is classified before I even when Φ₁ is preserved.
+      M: Carrier mutation or hidden basis change is M, not E.
+  10. Rust descriptor shape:
+    sketch: "pub struct ExactRepairOperatorDescriptor {\n    pub layer_hash: String,\n    pub d0_hash:\
+      \ String,\n    pub alpha_hash: String,\n    pub source_vector_hash: Option<String>,\n    pub sign_convention:\
+      \ ExactRepairSignConvention,\n}\n\npub enum ExactRepairSignConvention {\n    PlusD0Alpha,\n    MinusD0Alpha,\n\
+      }\n"
+  11. Negative definition tests:
+    tests:
+    - E applied to non-exact class (ExactRepairFromNonExactClass, REFUSED_NON_ZERO_CURL).
+    - E leaving non-zero defect or residual (ExactRepairLeftResidual, ExactRepairLeftDefect).
+    - E changes quotient class.
+    - E declared without α.
+    - E changes carrier.
+    - E changes basis silently.
+    - E claimed to reduce Φ₁ from non-exact state.
+    - E treated as structural progress.
+    - E_α and E_β treated as distinct despite d₀(α-β)=0.
+    - Action applied with α from a different layer.
+  12. Open questions / WIP status:
+    wip:
+    - Normal form for compressed E compositions.
+    - Handling ker(d₀) representatives for α.
+    - Sign convention normalization across Φ₁/R contracts.
+  compact_yaml:
+    EXACT_REPAIR_OPERATOR_CONTRACT:
+      symbol: E_α
+      ascii_symbol: E_alpha
+      operator_class_symbol: E
+      formula: E_α(x)=x+d₀α
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: x∈C¹ with α∈C⁰ and before-class ExactRepair (Φ₁ = 0, Γ₂ = 0)
+      codomain: C¹ representative in same Q¹ class leaving x+d₀α = 0
+      required_structures:
+      - valid layer
+      - α
+      - d₀
+      - x with before-class ExactRepair
+      - adequate detector
+      - coefficient domain R
+      definition: exact repair/gauge action discharging exact defect to zero
+      laws:
+      - Law 7: before-class ExactRepair, carrier unchanged, leaves zero defect
+      - cannot cross classes (gauge preserves closure and exactness)
+      - non-exact input routes to REFUSED_NON_ZERO_CURL
+      - Φ₁ preserved (= 0)
+      - quotient class identity
+      - E_α∘E_β=E_{α+β}
+      - E₀=id
+      - classified before I
+      forbidden_interpretations:
+      - structural progress
+      - carrier mutation
+      - class-crossing repair
+      - repair without α
+      - Φ₁ decrease from positive state
+      - policy decision
+      relationships:
+      - B¹ action
+      - trivial on Q¹
+      - R∘E=R when R deterministic
+      - classified before I
+      negative_tests:
+      - E on non-exact class
+      - E leaving non-zero defect
+      - class changed
+      - missing α
+      - carrier changed
+      - basis changed
+      - claimed Φ₁ reduction
+      - wrong layer α
+      open_questions:
+      - composition normal form
+      - ker(d₀) α representatives
+      - sign convention normalization

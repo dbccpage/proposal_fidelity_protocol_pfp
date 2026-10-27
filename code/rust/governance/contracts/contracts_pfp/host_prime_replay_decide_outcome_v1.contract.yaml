@@ -1,0 +1,52 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED by pfp/build.rs via the shared engine at
+# engine/crates_rs/contract_shapes_build.rs. Adding, removing or renaming
+# a field without amending this contract is a COMPILE ERROR.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:host_prime_replay_decide_outcome_v1:v1.0.0"
+title: "Host Prime Replay Decide Outcome v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD"]
+
+doctrine:
+  summary: >-
+    HostPrimeReplayDecideOutcomeV1, result payload emitted from prime replay decision.
+  invariants:
+    - "AuthorityEffect is strictly None."
+  non_roles:
+    - "authority_source"
+  required_negative_capabilities:
+    - no_self_certification
+
+structure:
+  language: rust
+  rust_crate: pfp
+  rust_module: prime
+  rust_type: "HostPrimeReplayDecideOutcomeV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: decision
+    - name: conforms
+    - name: violations
+    - name: unchecked_laws
+    - name: letter_tape
+    - name: authority_effect

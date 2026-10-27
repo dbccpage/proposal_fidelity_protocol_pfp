@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:truncation_level:v0.1.0
+title: TruncationLevel Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: homotopy_type_classification
+  symbol: is-n-type A, where n ∈ {-2, -1, 0, 1, 2, ...}
+  ascii_symbol: truncation_level
+  notation: is-n-type A, where n ∈ {-2, -1, 0, 1, 2, ...}
+  domain:
+  - 'level: integer n ≥ -2'
+  - 'type_ref: type A'
+  - 'proof: proof that A is n-truncated'
+  codomain:
+    description: 'Integer n ≥ -2 representing the truncation level, together with a type A and a proof that A is n-truncated
+
+      '
+requirements:
+  required_structures:
+  - Truncation level n must be ≥ -2
+  - Referenced type A must exist and be resolvable
+  - Truncation proof must correctly establish n-truncation
+  - Artifact hash must be deterministic SHA-256 of inputs
+laws:
+- n ≥ -2
+- 'For all x, y : A and all (n+1)-fold path spaces, the path space is contractible
+
+  '
+- If A is n-truncated, then A is (n+1)-truncated
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:ContractibleType:v0.1.0 serves as Defines contractibility needed for level -2 and path space checks
+- urn:math:contract:IdentityType:v0.1.0 serves as Provides identity/path types needed for n-fold path space iteration
+negative_tests:
+- type_id does not resolve
+- level < -2
+- 'Type claimed to be set (n=0) but has non-trivial path spaces
+
+  '
+- proof_id does not resolve
+- 'Level -2 requires ContractibleType proof, but different proof provided
+
+  '
+doctrine:
+  summary: 'A TruncationLevel classifies types by their homotopical complexity. The levels are: (-2) contractible, (-1) proposition, (0) set, (1) groupoid, (n) n-type. The contract validates that a type is n-truncated by verifying that all (n+1)-fold path spaces are contractible.'
+  non_role:
+  - Does not implement the truncation operation ||A||_n (higher inductive type)
+  - Does not provide lattice operations on truncation levels
+  - Does not handle infinite or unbounded truncation levels
+wip:
+- The n-truncation operation ||A||_n is a higher inductive type - implementation strategy TBD
+- Truncation levels form a lattice; higher types are less truncated - formalize lattice structure
+- 'Relationship with ContractibleType: contractible = (-2)-type - ensure consistency'
+- Univalence compatibility with truncation - verify preservation under equivalence
+- Computation rules for truncation operation - define canonical forms
+- Contract defines classification only, not the truncation operation itself
+- Proof validation requires recursive checking of path spaces
+- Level -2 (contractible) special case handled via ContractibleType contract
+- Levels -1 (prop) and 0 (set) are most common in practice
+- Higher levels (n ≥ 1) require sophisticated path space analysis

@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:coend_calculus:v0.1.0
+title: Coend Calculus Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: categorical_calculus
+  symbol: ∫^c F(c,c)
+  ascii_symbol: coend_calculus
+  notation: ∫^c F(c,c)
+  domain:
+  - 'categories: Set of categories involved'
+  - 'bifunctors: Bifunctors F: C^op × C → D'
+  - 'integration_variables: Variables c ranging over categories'
+  codomain:
+    description: 'Coend expressions are built from bifunctors F: C^op × C → D, with integration variable c ranging over C, producing objects in D via universal cowedges.
+
+      '
+requirements:
+  required_structures:
+  - All bifunctors involved must be well-defined
+  - Cowedge components must satisfy dinaturality conditions
+  - Coend computations must follow correct rules (Yoneda, Fubini, etc.)
+  - Content-addressed hash must be deterministic SHA-256
+laws:
+- 'For coend ∫^c F(c,c), there exists a universal cowedge from F to the coend, such that any other cowedge factors uniquely through it.
+
+  '
+- 'The components of a cowedge satisfy dinaturality: for each morphism f: c → c'', the diagram commutes appropriately.
+
+  '
+- ∫^c F(c) × Hom(c,−) ≃ F
+- ∫^c ∫^d ≃ ∫^{(c,d)}
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validator and computation functions are content-addressed
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Categories and functors are fundamental to coend calculus
+- 'urn:math:contract:Bifunctor:v1.0.0 serves as Coends are defined for bifunctors F: C^op × C → D'
+- urn:math:contract:Profunctor:v1.0.0 serves as Profunctor composition is a key application of coend calculus
+- urn:math:contract:KanExtension:v1.0.0 serves as Left Kan extension formula uses coend calculus
+negative_tests:
+- Invalid bifunctors must be rejected
+- Violations of dinaturality must be rejected
+- Incorrect coend computations must be rejected
+doctrine:
+  summary: Coend calculus is the systematic use of coends and their properties to compute and manipulate categorical constructions. Coend calculus provides computational tools for profunctors, Kan extensions, and representation theory.
+  non_role:
+  - Enriched coend calculus (WIP)
+  - ∞-categorical coend calculus (WIP)
+  - Weighted coends (WIP)
+wip:
+- Enriched coend calculus
+- ∞-categorical coend calculus
+- Weighted coends
+- Current implementation focuses on ordinary (non-enriched) coends
+- Extension to enriched settings requires additional structure
+- ∞-categorical version requires higher categorical machinery
+rust_binding:
+  crate: core_category_theory
+  module: coend
+  symbols:
+    - DeclaredFiniteCoend
+    - DinaturalityWitness
+    - check_dinaturality
+  required_tests:
+    - trivial_coend_single_object
+    - coend_with_identification

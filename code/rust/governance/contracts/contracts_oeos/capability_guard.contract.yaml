@@ -1,0 +1,84 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:capability_guard:v1.0.0
+title: Host Capability Guard
+kind: host_contract
+status: proposed
+layer: 09_host
+role: CapabilityGuard
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations:
+      - id: CAP-INV-001
+        statement: Host capabilities are integrity-bound under an explicitly declared key-custody profile.
+        verification_status: open
+      - id: CAP-INV-002
+        statement: Delegation can only attenuate permissions, resource scope, quota, and lifetime.
+        verification_status: open
+      - id: CAP-INV-003
+        statement: A host capability has no parser, coercion, or constructor path into a kernel ActionLicense.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - CAPABILITY_EXPIRED
+      - CAPABILITY_INTEGRITY_REFUSED
+      - CAPABILITY_SCOPE_REFUSED
+      - CAPABILITY_WIDENING_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: capability_request
+      type: urn:core:oeos:type:host_capability_request:v1.0.0
+      required: true
+  outputs:
+    - name: host_capability
+      type: urn:core:oeos:type:host_capability:v1.0.0
+      required: true
+  typed_refusals:
+    - CAPABILITY_EXPIRED
+    - CAPABILITY_INTEGRITY_REFUSED
+    - CAPABILITY_SCOPE_REFUSED
+    - CAPABILITY_WIDENING_REFUSED
+  platform_requirements:
+    - profile: process_local_hmac_reference
+      requirements:
+        - declared_key_custody_lifetime
+        - constant_time_integrity_comparison
+        - nonce_replay_tracking
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares attenuation-only host permissions for enumerated machine effects under a named integrity profile.
+  non_role:
+    - action_license_issuance
+    - evaluator_decision
+    - semantic_authorization
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - integrity_binding_is_not_claimed_unforgeable
+  invariants:
+    - child_permissions_are_a_subset_of_parent_permissions
+    - capability_and_action_license_are_disjoint_types
+  allowed_operations:
+    - issue_process_local_root_capability
+    - attenuate_host_capability
+    - verify_host_capability_integrity
+  forbidden_operations:
+    - widen_permissions
+    - convert_to_action_license

@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:hypercover:v0.1.0
+title: Hypercover
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: simplicial_object_with_covering_property
+  symbol: U_• → X in site (C, J)
+  ascii_symbol: hypercover
+  notation: U_• → X in site (C, J)
+  domain:
+  - 'base_object: X in category C'
+  - 'simplicial_levels: U_n for n ≥ 0'
+  - 'face_maps: d_i: U_n → U_{n-1}'
+  - 'degeneracy_maps: s_i: U_n → U_{n+1}'
+  - 'covering_maps: U_{n+1} → (cosk_n U_•)_{n+1}'
+  codomain:
+    description: 'Simplicial object U_• in a site (C, J) with U_n objects at each level, face maps d_i: U_n → U_{n-1}, degeneracy maps s_i: U_n → U_{n+1}, and a map U₀ → X to the base object.
+
+      '
+requirements:
+  required_structures:
+  - The map U₀ → X must be a covering in the site J
+  - For all n ≥ 0, U_{n+1} → (cosk_n U_•)_{n+1} is a covering
+  - Face and degeneracy maps satisfy simplicial relations
+  - Artifact hash is SHA-256 over canonical serialized data
+laws:
+- U₀ → X is a covering in J
+- U_• satisfies simplicial identities (face/degeneracy relations)
+- For each n ≥ 0, U_{n+1} → (cosk_n U_•)_{n+1} is a covering
+replay:
+  requirements:
+  - Simplicial data serialized in canonical order
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Site:v1.0.0 serves as Provides the site (C, J) with covering families
+- urn:math:contract:SimplicialObject:v1.0.0 serves as Defines simplicial structure and face/degeneracy maps
+- urn:math:contract:Covering:v1.0.0 serves as Validates covering conditions at each level
+negative_tests:
+- site_id does not resolve to a valid Site
+- base_object_id does not resolve to object in category
+- Face/degeneracy relations fail simplicial identities
+- U₀ → X is not a covering in J(X)
+- U_{n+1} → cosk_n fails to cover at some level n
+doctrine:
+  summary: 'A Hypercover is a simplicial object U_• → X in a site that refines coverings at each level: U₀ → X is a covering, U₁ → U₀ ×_X U₀ is a covering of the intersection, and so on. Hypercovers compute cohomology and provide resolution of sheaves. The contract validates the hypercover axioms. # Section 1: description'
+  non_role:
+  - Not responsible for constructing specific hypercovers for given sites
+  - Does not implement cohomology computation algorithms
+  - Does not provide descent theory beyond validation
+  - Not a general simplicial object validator (only hypercover axioms)
+wip:
+- Hypercovers compute sheaf cohomology via homotopy limit - how to integrate?
+- Verdier's hypercovering theorem relates hypercover cohomology to derived functor cohomology - implementation path?
+- In ∞-topos, hypercovers are colimit diagrams - higher category theory integration?
+- Contract defines validation structure but cohomology computation deferred
+- Bounded vs unbounded hypercovers both supported via truncation_level
+- Coskeleton computation is deterministic and content-addressed
+- May need integration with derived category contract for cohomology

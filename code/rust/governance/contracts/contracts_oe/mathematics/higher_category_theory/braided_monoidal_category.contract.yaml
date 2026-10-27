@@ -1,0 +1,85 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:braided_monoidal_category:v0.1.0
+title: Braided Monoidal Category Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: braided_monoidal_category
+  symbol: (C, tensor, I, alpha, lambda, rho, beta)
+  ascii_symbol: braided_monoidal_category
+  notation: (C, tensorObj, unit, associator, leftUnitor, rightUnitor, braiding)
+  domain:
+  - 'monoidal_category: underlying monoidal category structure (C, tensorObj, unit, associator, leftUnitor, rightUnitor)'
+  - 'tensor_product: bifunctor tensorObj on objects and tensorHom on morphisms'
+  - 'braiding: natural isomorphism beta_{X,Y}: tensorObj X Y -> tensorObj Y X'
+  - 'braiding_inverse: inverse morphism beta^{-1}_{X,Y}: tensorObj Y X -> tensorObj X Y'
+  - 'associator: natural isomorphism alpha_{X,Y,Z}: tensorObj (tensorObj X Y) Z -> tensorObj X (tensorObj Y Z)'
+  - 'left_unitor: natural isomorphism lambda_X: tensorObj unit X -> X'
+  - 'right_unitor: natural isomorphism rho_X: tensorObj X unit -> X'
+  - 'double_braiding: beta_{Y,X} o beta_{X,Y}: tensorObj X Y -> tensorObj X Y'
+  codomain:
+    description: 'A braided monoidal category is a monoidal category equipped with a natural isomorphism braiding beta_{X,Y}: X tensor Y -> Y tensor X satisfying the two Mac Lane hexagon coherence axioms.'
+requirements:
+  required_structures:
+  - 'The underlying monoidal category must satisfy bifunctoriality and all monoidal axioms.'
+  - 'The associator pentagon coherence diagram and unitor triangle diagram commute.'
+  - 'The braiding beta must be a natural isomorphism between tensorObj X Y and tensorObj Y X.'
+  - 'The braiding must satisfy Hexagon Axiom 1 relating beta_{X, tensorObj Y Z} to beta_{X,Y} and beta_{X,Z}.'
+  - 'The braiding must satisfy Hexagon Axiom 2 relating beta_{tensorObj X Y, Z} to beta_{X,Z} and beta_{Y,Z}.'
+  - 'Each component beta_{X,Y} must have a two-sided inverse beta^{-1}_{X,Y}.'
+  - 'Artifact hash is deterministically computed from monoidal and braiding data.'
+laws:
+- 'Braiding naturality: comp (tensorHom f g) (braiding X2 Y2).hom = comp (braiding X1 Y1).hom (tensorHom g f)'
+- 'Hexagon Axiom 1: comp (associator X Y Z).hom (comp (braiding X (tensorObj Y Z)).hom (associator Y Z X).hom) = comp (tensorHom (braiding X Y).hom (cat.id Z)) (comp (associator Y X Z).hom (tensorHom (cat.id Y) (braiding X Z).hom))'
+- 'Hexagon Axiom 2: comp (associator X Y Z).inv (comp (braiding (tensorObj X Y) Z).hom (associator Z X Y).inv) = comp (tensorHom (cat.id X) (braiding Y Z).hom) (comp (associator X Z Y).inv (tensorHom (braiding X Z).hom (cat.id Y)))'
+- 'Braiding isomorphism: comp (braiding X Y).hom (braiding X Y).inv = cat.id (tensorObj X Y) and comp (braiding X Y).inv (braiding X Y).hom = cat.id (tensorObj Y X)'
+- 'Monoidal pentagon: comp (tensorHom (associator W X Y).hom (cat.id Z)) (comp (associator W (tensorObj X Y) Z).hom (tensorHom (cat.id W) (associator X Y Z).hom)) = comp (associator (tensorObj W X) Y Z).hom (associator W X (tensorObj Y Z)).hom'
+- 'Monoidal triangle: comp (associator X unit Y).hom (tensorHom (cat.id X) (leftUnitor Y).hom) = tensorHom (rightUnitor X).hom (cat.id Y)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Braiding data is content-addressed
+  - Hexagon axiom verification is deterministic
+relationships:
+- urn:core:math:bicategory:v0.1.0 serves as Monoidal category deloops to a one-object bicategory via MonoidalCategory.toBicategory
+- urn:core:math:ribbon_category:v0.1.0 serves as Ribbon category extends braided monoidal category with twist and duality
+negative_tests:
+- Invalid underlying monoidal category structure must be rejected (TriangleCoherenceViolation / PentagonCoherenceViolation)
+- Braiding that violates naturality must be rejected
+- Braiding that violates Hexagon Axiom 1 must be rejected
+- Braiding that violates Hexagon Axiom 2 must be rejected
+- Braiding that is not an invertible isomorphism must be rejected
+doctrine:
+  summary: 'A braided monoidal category is a monoidal category equipped with a natural isomorphism (braiding) beta_{X,Y}: X tensor Y -> Y tensor X satisfying the two Mac Lane hexagon coherence axioms. Braided categories encode quantum symmetry and braid group actions.'
+  non_role:
+  - Ribbon and pivotal structures (handled in ribbon_category contract)
+  - Braided infinity-categories (higher categorical setting)
+  - Fusion categories with simple objects and F-matrices (handled in fusion_category contract)
+  - Symmetric monoidal categories (where double braiding is identity)
+wip:
+- General coherence, strictification, and Lean-to-Rust semantic correspondence are not proved.
+- The Lean structure records laws as hypotheses; compilation does not validate arbitrary input data.
+- No native implementation of this complete structure is bound by this contract.
+lean_binding:
+  path: lean4/research_programs/higher_category_theory/Braided.lean
+  symbol: HigherCategoryTheory.BraidedCategory
+  scope: algebraic_structure_with_law_fields

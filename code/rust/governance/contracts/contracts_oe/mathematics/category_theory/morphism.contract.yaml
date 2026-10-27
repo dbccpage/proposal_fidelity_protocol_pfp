@@ -1,0 +1,80 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:morphism:v0.1.0
+title: Morphism Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: morphism
+  symbol: 'f: A → B'
+  ascii_symbol: morphism
+  notation: 'f: A → B'
+  domain:
+  - 'morphism_id: unique identifier'
+  - 'domain: domain object reference'
+  - 'codomain: codomain object reference'
+  - 'category: category membership reference'
+  codomain:
+    description: Structure-preserving map between objects in a category
+requirements:
+  required_structures:
+  - The category must exist and be resolvable
+  - Domain must be a valid object in the category
+  - Codomain must be a valid object in the category
+  - Morphism must be in the category's morphism list with correct domain and codomain
+laws:
+- A morphism must belong to exactly one category
+- Domain must be an object in the category
+- Codomain must be an object in the category
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Given same morphism_id, domain, codomain, and category, must produce identical artifact hash
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Object:v0.1.0 serves as Morphisms require domain and codomain objects
+- urn:math:contract:Category:v0.1.0 serves as Morphisms must belong to a category
+negative_tests:
+- category_id does not resolve
+- domain_id is not in the category
+- codomain_id is not in the category
+- morphism_id not in morphism list
+- morphism's domain in category differs from domain_id
+doctrine:
+  summary: A Morphism (or arrow) is a structure-preserving map between objects in a category. The contract defines a morphism by its identifier, domain, codomain, and category membership. Morphisms compose associatively with identity morphisms as units.
+  non_role:
+  - Composition and axioms are validated at the Category level
+  - Higher morphisms (2-morphisms, etc.) are in higher category contracts
+wip:
+- The contract defines a single morphism; composition and axioms are validated at the Category level
+- 'The relationship with IdentityMorphism: identity morphisms are special morphisms'
+- Higher morphisms (2-morphisms, etc.) are in higher category contracts
+- Contract is fully deterministic with SHA-256 hash algorithm
+- All validators and computation functions are content-addressed
+- StructureArtifact only created if all validators succeed
+rust_binding:
+  crate: core_category_theory
+  module: finite_category
+  symbols:
+  - DeclaredMorphism
+  - ValidatedFiniteCategory
+  required_tests:
+  - validated_category_implements_category_trait

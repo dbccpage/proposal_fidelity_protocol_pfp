@@ -1,0 +1,70 @@
+[package]
+autotests = false
+name = "core_epk"
+version.workspace = true
+edition = "2021"
+description = "Evaluated Path Kernels (LGGR I, II, III, IV, V, and VI: exact path composition, completion reflection, soundness check, Gram probing, and detector adequacy)."
+authors = ["Sentinel Contributors"]
+license.workspace = true
+
+[dependencies]
+blake3 = "1.8"
+core_policy = { path = "../core_policy" }
+core_holonomy = { path = "../core_holonomy" }
+core_homology = { path = "../core_homology" }
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+thiserror = "2"
+core_types = { path = "../core_types" }
+core_functional = { path = "../core_functional" }
+core_replay = { path = "../core_replay" }
+core_linear_algebra = { package = "linear_algebra", path = "../core_linear_algebra" }
+
+[dev-dependencies]
+core_kernel = { path = "../core_kernel" }
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_local_green_global_red_lggr`.
+
+[[test]]
+name = "lggr_prime_seam"
+path = "../tests/core_local_green_global_red_lggr/lggr_prime_seam.rs"
+
+[[test]]
+name = "residual_family_wiring"
+path = "../tests/core_local_green_global_red_lggr/residual_family_wiring.rs"
+
+[[test]]
+name = "v2_field_isolation"
+path = "../tests/core_local_green_global_red_lggr/v2_field_isolation.rs"
+
+[[test]]
+name = "canary_no_raw_payload"
+path = "../tests/core_local_green_global_red_lggr/canary_no_raw_payload.rs"
+
+[[test]]
+name = "cross_instance_stability"
+path = "../tests/core_local_green_global_red_lggr/cross_instance_stability.rs"
+
+[[test]]
+name = "recurrence_accounting"
+path = "../tests/core_local_green_global_red_lggr/recurrence_accounting.rs"
+
+[[test]]
+name = "round_trip_gamma2_zero"
+path = "../tests/core_local_green_global_red_lggr/round_trip_gamma2_zero.rs"
+
+[[test]]
+name = "terminalize_row_seal"
+path = "../tests/core_local_green_global_red_lggr/terminalize_row_seal.rs"
+
+[[test]]
+name = "wire_phi1_gamma2"
+path = "../tests/core_local_green_global_red_lggr/wire_phi1_gamma2.rs"
+
+[[test]]
+name = "lggr_v_allocation_budget"
+path = "../tests/core_local_green_global_red_lggr/lggr_v_allocation_budget.rs"

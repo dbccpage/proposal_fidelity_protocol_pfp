@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:certified_cochain_quotient:v0.1.0
+title: Certified Exact Cochain Quotient
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: certified_cochain_quotient
+  symbol: certified_cochain_quotient
+  ascii_symbol: certified_cochain_quotient
+  notation: Certified Exact Cochain Quotient
+  domain:
+  - Finite rational cochain map d0 and defect x
+  - Strictly positive rational weights and declared pivot budget
+  - Each cochain axis is at most256; the simplex pivot budget remains caller declared. Inputs have nonzero
+    rational denominators.
+  codomain:
+    description: Exact finite constructions implemented by core_solvers::certified_phi1; results remain scoped
+      to the declared carrier and budgets.
+requirements:
+  required_structures:
+  - Exact arithmetic and explicit finite carrier validation
+  - A typed refusal for unsupported or exhausted computations
+laws:
+- The proposed L1 quotient mass is accepted only after independent primal/dual replay
+- Equal local absolute values can have distinct global quotient classes
+- An empty carrier has zero mass with a checked zero-dimensional certificate
+- The shared direct L1 proposer rejects zero-denominator rational data before optimization and its public sparse
+  pairing validates shape and indices before summation.
+- The nalgebra proposer checks default pivot-budget arithmetic before cloning and retains the coefficient width
+  of a zero-row carrier within its declared allocation ceiling.
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact independent witness replay where a witness is returned
+relationships: []
+rust_binding:
+  crate: core_solvers
+  module: solver_cohomology_quotient_phi1
+  symbols:
+  - certified_phi1
+  - lggr_cochain_witness
+  - CertifiedPhi1Error
+  required_tests:
+  - triangle_quotient_mass_and_dual_circulation_are_replayed
+  - local_absolute_values_do_not_determine_the_quotient_class
+  - malformed_weights_and_budget_exhaustion_cannot_be_certified
+  - empty_cochains_keep_zero_value_and_refuse_unbounded_zero_axes
+  - solver_lp_exact_simplex::public_boundary_tests::direct_l1_refuses_invalid_rationals_and_replays_exact_pivot_and_zero_pivot_optima
+  - solver_lp_exact_simplex::public_boundary_tests::public_sparse_pairing_refuses_malformed_carriers_and_replays_the_exact_dot_product
+  - solver_lp_exact_simplex::public_boundary_tests::nalgebra_projection_preserves_empty_width_and_refuses_overflow_before_cloning
+negative_tests:
+- Reject shape mismatch, nonpositive weights, exhausted proposals and failed replay
+- Refuse oversized empty-carrier coefficient axes before allocation, and zero-denominator rational inputs before
+  optimization.
+doctrine:
+  summary: Certified Exact Cochain Quotient on a declared finite carrier.
+  non_role:
+  - PROVED, GlobalGreen, or operational authority
+  - Continuum or infinite-carrier completion claims
+wip:
+- Executable finite checks are local evidence; no theorem-prover discharge is asserted.
+- The direct proposer and sparse pairing have their own public boundaries; they do not replace the independent
+  certified quotient replay or its256-axis admission limit.

@@ -1,0 +1,261 @@
+schema_version: "1.0.0"
+contract_id: "os:core_id_run"
+name: "Core ID Run Runner"
+version: "1.0.0"
+ 
+kind: "runtime_module_contract"
+status: "quarantined"
+enforcement_status: "partially_enforced"
+
+description: >
+  core_id_run::run is a CODA-FOC diagnostic/deposit runner. It wires seed
+  construction, finite cochain realization, canonical functional calls,
+  lift-attempt delegation, checked-packet construction, verifier artifact
+  emission, and deposit output for a single obstruction-discovery run. It does
+  not own canonical mathematics, does not own lift policy, does not mint
+  authority, does not certify authority, and does not prove operad generation.
+
+layer: "OS"
+crate: "core_id_run"
+module_path: "core_id_run::run"
+role: "diagnostic_deposit_runner"
+
+governs:
+  - "engine/crates/core_id_run/src/run.rs"
+
+does_not_govern:
+  - "core_functional/**"
+  - "core_homology/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_pipelines/**"
+  - "engines/**"
+  - "operators/**"
+  - "meta/**"
+
+claims:
+  - id: "OS-RUN-NO-AUTH"
+    description: "The runner never mints authority directly. It emits CheckedPacket/deposit artifacts for core_replay verification and core_certifiers terminalization."
+    status: "active"
+    provenance: "Theorem II.7 / authority firewall doctrine; verify exact source citation"
+
+  - id: "OS-RUN-DIAGNOSTIC"
+    description: "The runner is a diagnostic/deposit orchestration layer, not a canonical functional kernel."
+    status: "active"
+    provenance: "Engine crate boundary doctrine"
+
+  - id: "OS-RUN-DELEGATES-FUNCTIONALS"
+    description: "Φ₁, Γ₂, R_cl, Ξ, and trichotomy are computed only by canonical functional crates."
+    status: "active"
+    provenance: "core_functional boundary"
+
+  - id: "OS-RUN-DELEGATES-LIFTS"
+    description: "Lift candidates, lift verdicts, rollback, and carrier-growth policy are delegated to core_lifts or the explicit lift boundary."
+    status: "active"
+    provenance: "core_lifts boundary"
+
+  - id: "OS-RUN-EMITS-CHECKED-PACKET"
+    description: "The runner may emit CheckedPacket/deposit artifacts for independent replay and certifier verification."
+    status: "active"
+    provenance: "core_certifiers / core_replay boundary"
+
+  - id: "OS-RUN-NO-OPERAD-CLAIM"
+    description: "The runner may record generator/operator traces, but does not prove executable operad closure or generator emergence."
+    status: "active"
+    provenance: "Operator OS quarantine doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "allowed_only_for_local_run_state_and_deposit_assembly"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify_authority: "forbidden"
+  lift_policy_ownership: "forbidden"
+  operad_claims: "forbidden"
+  evaluator_policy_ownership: "forbidden"
+  exactness_required_for_certified_outputs: true
+  checked_packet_output_allowed: true
+  deposit_output_allowed: true
+  replay_output_allowed: false
+
+allowed:
+  - "construct seed-specific run context"
+  - "call core_homology for finite cochain realization and cohomology reports"
+  - "call core_functional for verified Φ₁, Γ₂, R_cl, Ξ, and trichotomy"
+  - "call core_lifts for lift attempt records and rollback requirements"
+  - "call core_certifiers to construct CheckedPacket or closure/counterfeit artifacts"
+  - "emit deposit files"
+  - "emit verifier scripts or verifier inputs"
+  - "emit SHA manifests"
+  - "emit non-authoritative diagnostic traces"
+  - "emit generator/operator shadow tape marked non-executable unless executable operator law exists"
+
+forbidden:
+  - "compute Φ₁ locally"
+  - "compute Γ₂ locally"
+  - "compute R_cl locally"
+  - "compute Ξ locally"
+  - "classify trichotomy locally"
+  - "mint CertifiedAuthority"
+  - "call CertifiedAuthority::certify"
+  - "call authority_from_outcome_f13"
+  - "call terminalize"
+  - "emit AuthorityEffect::Authorize"
+  - "treat raw_residual_l1 as Φ₁"
+  - "treat raw L¹/L² diagnostic mass as quotient obstruction mass"
+  - "execute lift policy locally"
+  - "accept lift candidates locally"
+  - "rank candidates by authority"
+  - "claim ExactRepair from string status"
+  - "claim operad composition from string tape"
+  - "claim QM derivation"
+  - "claim Born derivation"
+  - "hide f64 approximations inside certified exact outputs"
+  - "swallow verifier failure"
+  - "continue after failed d₁d₀ = 0 check"
+
+delegation:
+  cochain_complex:
+    owner: "core_homology"
+    runner_may_call: true
+    runner_must_not_reimplement: true
+
+  functionals:
+    owner: "core_functional"
+    required_calls:
+      - "Phi1Functional or verified Φ₁ certificate replay"
+      - "Gamma2Functional"
+      - "R_cl computation from verified Φ₁ and Γ₂"
+      - "XiFunctional only as tertiary diagnostic"
+      - "CertifiedExactTrichotomy"
+    runner_must_not_reimplement: true
+
+  lifts:
+    owner: "core_lifts"
+    runner_may_record_attempts: true
+    runner_must_not_own_policy: true
+    runner_must_not_execute_hidden_lift: true
+
+  certifiers:
+    owner: "core_certifiers"
+    runner_may_emit_checked_packet: true
+    runner_must_not_terminalize: true
+    runner_must_not_mint_authority: true
+
+  replay:
+    owner: "core_replay"
+    replay_role: "independent_verifier"
+    replay_mints_authority: false
+    notes:
+      - "Replay verifies deposits and packets."
+      - "Replay may return verification verdicts."
+      - "Replay must not be the authority minter."
+
+outputs:
+  allowed:
+    - "RunResult"
+    - "DiagnosticVector"
+    - "CheckedPacket"
+    - "ClosureCertificate"
+    - "CounterfeitReport"
+    - "DepositManifest"
+    - "VerifierInput"
+    - "VerifierScript"
+    - "sha256sums"
+    - "NonAuthoritativeTrace"
+  forbidden:
+    - "CertifiedAuthority"
+    - "AuthorityEffect::Authorize"
+    - "TerminalAuthority"
+    - "ExecutedLift"
+    - "AcceptedCandidate"
+
+exactness:
+  certified_outputs_must_be_exact: true
+  f64_allowed_only_for: "diagnostic_display_or_non_authoritative_qm_diagnostics"
+  raw_mass_fields_must_use_prefix: "raw_"
+  forbidden_field_names_for_raw_mass:
+    - "phi1"
+    - "obstruction_mass"
+    - "quotient_mass"
+  required_checks:
+    - "finite dimensions"
+    - "matrix dimensions"
+    - "d₁d₀ = 0 exactly"
+    - "verified Φ₁ certificate or exact replay"
+    - "verified Γ₂ from canonical functional"
+    - "trichotomy consistency"
+    - "closure certificate consistency"
+    - "SHA manifest integrity"
+
+validator_requirements:
+  forbidden_substrings:
+    - "CertifiedAuthority::certify"
+    - "authority_from_outcome_f13"
+    - "mint_authority"
+    - "terminalize("
+    - "exact_status: &str"
+    - "seed_name: &str"
+    - "classify_residual("
+    - "gamma2_l1"
+    - "let phi1 = h1.iter().map"
+    - "AuthorityEffect::Authorize"
+    - "FullCertifier"
+    - "fn guarded_strictly_improves"
+    - "fn eval_adjoin_repair"
+    - "fn eval_face_fill"
+    - "fn eval_edge_split"
+    - "fn eval_cycle_hub"
+    - "fn lift_gate"
+    - "PHOTON"
+    - "FERMION"
+    - "Higgs"
+    - "operad"
+  required_substrings:
+    - "CheckedPacket"
+    - "Gamma2Functional"
+    - "Phi1Functional"
+  required_tests:
+    - "runner_does_not_mint_authority"
+    - "runner_delegates_phi1_to_functional"
+    - "runner_delegates_gamma2_to_functional"
+    - "runner_rejects_failed_d1d0"
+    - "runner_outputs_checked_packet"
+    - "runner_delegates_lift_policy"
+    - "runner_emits_non_authoritative_deposit"
+    - "runner_does_not_claim_operad_closure"
+    - "runner_does_not_treat_raw_l1_as_phi1"
+
+lean_obligations:
+  - id: "RUN-L0"
+    theorem: "Runner orchestration does not change canonical functional semantics."
+    status: "needed"
+
+  - id: "RUN-L1"
+    theorem: "If runner emits CheckedPacket, packet authority still requires certifier terminalization."
+    status: "needed"
+
+  - id: "RUN-L2"
+    theorem: "Runner cannot mint authority."
+    status: "needed"
+
+  - id: "RUN-L3"
+    theorem: "Runner trace/deposit replay preserves Φ₁, Γ₂, R_cl, Ξ, and trichotomy consistency."
+    status: "needed"
+
+  - id: "RUN-L4"
+    theorem: "Generator/operator tape emitted by runner is not executable composition without typed apply and composition law."
+    status: "needed"
+
+  - id: "RUN-L5"
+    theorem: "Failed d₁d₀ = 0 check prevents certified deposit emission."
+    status: "needed"
+
+notes:
+  - "Do not call core_id_run an Engine under engine.contract.yaml."
+  - "Do not call core_id_run an operad layer."
+  - "core_id_run is a runner/deposit orchestrator over canonical crates."
+  - "core_replay verifies; core_certifiers terminalizes under the sealed authority boundary."
+  - "CheckedPacket emission is not authority minting."
+  - "Deposit emission is not authority minting."

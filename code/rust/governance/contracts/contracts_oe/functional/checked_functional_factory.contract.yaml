@@ -1,0 +1,69 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:checked_functional_factory:file:v1.0.0
+title: Explicit typed dispatch and replay of checked finite functional measurements
+status: active_provisional
+crate: core_functional
+file: crates_rs/core_functional/src/factory.rs
+layer: functional
+role: sealed_stateless_functional_dispatch_and_record_replay
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - explicit_phi1_and_gamma2_names_without_alias_or_fallback
+  - immutable_configured_presentation_and_read_only_checked_result
+  - preservation_of_typed_kernel_refusals
+  - complete_versioned_typed_input_configuration_output_bindings
+  - actual_witness_and_certificate_references_without_fabricated_solver_refs
+  - independent_input_configuration_recomputation_before_record_acceptance
+  - non_promotable_AuthorityEffect_None
+does_not_own:
+  - arbitrary_plugin_registration_or_the_legacy_float_dispatch_API
+  - candidate_ranking_selection_or_workload_terminal_verdicts
+  - actor_licensing_or_native_binary_or_carrier_authentication
+  - original_HTTP_byte_identity_or_ingress_resource_limits
+  - certificate_generation_or_external_solver_invocation
+  - bulk_legacy_caller_migration
+may_call:
+  - core_functional::l1_seminorm::L1Seminorm
+  - core_functional::gamma2::DegreeOneResidualQ
+  - core_functional::gamma2::Gamma2Functional::try_compute_exact_quotient
+  - core_functional::phi1::VerifiedExactPhi1
+must_not:
+  - treat_a_raw_representative_norm_as_a_quotient_optimum
+  - infer_a_kernel_from_the_shape_or_provider_claim
+  - replace_a_typed_refusal_with_an_accepted_measurement
+  - deserialize_or_publicly_construct_a_checked_output
+  - verify_only_an_attacker_recomputable_output_hash
+  - mutate_the_configuration_or_input_during_computation
+exactness:
+  mode: exact_finite_rational_recomputation_with_typed_SHA256_commitments
+  exact_constructor_required: true
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+  - "pub trait BaseFunctionalKernel: sealed::Kernel"
+  - "pub fn evaluate_functional("
+  - "pub fn replay_functional_record("
+  - "FunctionalError::ConfigurationMismatch"
+  - "FunctionalError::RecordMismatch"
+required_tests:
+  - "factory::tests::names_configuration_and_input_kinds_have_distinct_refusals"
+  - "factory::tests::stateless_dispatch_is_immutable_and_uses_real_finite_arithmetic"
+  - "factory::tests::phi1_dispatch_verifies_an_optimum_instead_of_raw_representative_mass"
+  - "factory::tests::phi1_presentation_and_admission_failures_are_not_erased_by_dispatch"
+  - "factory::tests::gamma2_admission_refuses_length_and_zero_denominators_before_hashing"
+  - "factory::tests::full_configuration_binds_even_when_distinct_maps_have_the_same_zero_value"
+  - "factory::tests::hashes_bind_typed_input_encoding_while_valid_configuration_is_canonical"
+  - "factory::tests::emitted_references_are_actual_evidence_not_fabricated_solver_or_authority"
+  - "factory::tests::every_record_field_is_checked_on_replay_even_with_a_rehashed_claim"
+  - "factory::tests::untrusted_record_zero_denominator_is_refused_without_rational_comparison"
+  - "factory::tests::wire_shape_rejects_unknown_duplicate_and_forged_authority_fields"
+  - "factory::tests::domain_separation_and_self_hash_exclusion_are_explicit"
+  - "factory::tests::independent_python_vectors_bind_every_serialized_record_field"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

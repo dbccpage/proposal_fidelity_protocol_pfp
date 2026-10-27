@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:time_sliced_action:v0.1.0
+title: Finite action-phase history sum
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: time_sliced_action
+  symbol: time_sliced_action
+  ascii_symbol: time_sliced_action
+  notation: Finite action-phase history sum
+  domain:
+  - Finite declared time partition and spatial carrier, bounded history replay, rational action phases.
+  codomain:
+    description: Declared finite results of core_quantum_physics::time_sliced_action_shadow; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Action phases accumulate in a formal group algebra.
+- Summed histories equal the ordered transfer product.
+- Refinement residuals are computed and can be nonzero.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: time_sliced_action_shadow
+  symbols:
+  - PhaseSum
+  - FreeParticleShadow
+  - ShadowCertificate
+  - refinement_residual
+  required_tests:
+  - a_three_step_shadow_replays_nine_histories_and_matches_its_transfer_matrices
+  - refining_the_partition_tears_the_free_particle_shadow
+negative_tests:
+- shadow_declarations_are_refused_before_any_replay
+doctrine:
+  summary: Action phases accumulate in a formal group algebra.; Summed histories equal the ordered transfer
+    product.; Refinement residuals are computed and can be nonzero..
+  non_role:
+  - Finite time slicing is not a path-integral measure or continuum convergence proof.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

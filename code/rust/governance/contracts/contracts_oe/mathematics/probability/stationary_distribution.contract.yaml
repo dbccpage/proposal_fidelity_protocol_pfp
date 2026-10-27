@@ -1,0 +1,125 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:stationary_distribution:v0.1.0
+title: Stationary Distribution Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_markov_chain
+  symbol: 'P ∈ ℚ^(n×n) row-stochastic; π with πP = π, ∑π = 1, π ≥ 0'
+  ascii_symbol: markov_chain
+  notation: 'communicating classes are the strongly connected components of the support graph; a class is closed when no edge leaves it; π_C is the unique stationary law of a closed class C'
+  domain:
+  - 'kernel: a square stochastic map on Fin n'
+  - 'bounds: exact step counts are at most MAX_EXACT_STEPS'
+  codomain:
+    description: 'The structure of a finite Markov chain computed exactly: communicating classes with closedness and period, recurrent and transient states, the stationary distribution of every closed class (and of the chain when it has exactly one), absorption probabilities and expected absorption times from the transient states, expected hitting and return times, time reversal and detailed balance, primitivity, and exact mixing diagnostics with no limits.
+
+      '
+requirements:
+  required_structures:
+  - 'The kernel is square; a rectangular kernel is not a chain'
+  - 'The stationary law of a closed class is the unique solution of (P_C^T - I) π = 0, ∑π = 1 by an exact solve, replayed against πP = π and checked to be a probability vector'
+  - 'The stationary distribution of the whole chain is returned only when there is exactly one closed class; with several the count is reported'
+  - 'Hitting times are defined only when every state can reach the target, which is decided by a backward search'
+  - 'Mixing is computed on exact powers up to a declared bound, and exceeding the bound or not reaching epsilon within it is a typed refusal'
+laws:
+- 'Classes agree with the equivalence classes of mutual reachability from a Warshall closure, and periods agree with the gcd of return times from boolean matrix powers, on every 3-state support pattern and every 4-state support with one or two successors per row'
+- 'A chain is primitive exactly when it is irreducible and aperiodic, and then P^k is positive already at (n - 1)^2 + 1 (Wielandt)'
+- 'The dimension of the kernel of P^T - I equals the number of closed classes'
+- 'For an irreducible chain π equals the Markov-chain tree theorem value (the normalised sum over spanning trees directed at i of the product of edge probabilities), and π is strictly positive'
+- 'Every stationary law of a reducible chain is a convex combination of the closed-class laws and carries no mass on transient states'
+- 'Kac: for an irreducible chain the expected return time to i is 1/π_i, computed from hitting-time solves independent of the stationary solve'
+- 'Gambler''s ruin: the absorption probability and expected duration equal i/N and i(N - i) for p = 1/2, and the geometric closed forms for a biased walk'
+- 'Two-state chain: d(k) = |1 - a - b|^k max(π_0, π_1); in general d(k) ≤ δ(P)^k for the Dobrushin coefficient, d is non-increasing, and a periodic chain never mixes'
+- 'A birth-death chain is reversible with the product-formula law, the time reversal of a reversible chain is the chain, and the reversal of a biased cycle swaps its directions and has the same stationary law'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All arithmetic is exact in BigRational
+  - Classes are ordered by smallest state and states are ordered increasingly
+relationships:
+- urn:core:math:stochastic_map:v0.1.0 serves as The kernel of a chain is a square stochastic map
+- urn:core:math:finite_probability_simplex:v0.1.0 serves as Stationary laws and step laws are simplices
+- urn:core:math:basic_matrix:v1.0.0 serves as Exact elimination (rank, kernel, solve_in_image) on dense storage
+rust_binding:
+  crate: core_finite_probability
+  module: markov_chain
+  symbols:
+  - MarkovChain
+  - MarkovChainError
+  - CommunicatingClass
+  - StateKind
+  - ClassStationary
+  - AbsorptionAnalysis
+  - MarkovChain::stationary_distribution
+  - MarkovChain::closed_class_stationary_distributions
+  - MarkovChain::absorption_analysis
+  - MarkovChain::expected_hitting_times
+  - MarkovChain::expected_return_time
+  - MarkovChain::time_reversal
+  - MarkovChain::is_reversible_with
+  - MarkovChain::distance_profile
+  - MarkovChain::mixing_time
+  - MarkovChain::first_positive_power
+  - MAX_EXACT_STEPS
+  required_tests:
+  - a_non_square_kernel_is_not_a_chain
+  - the_stationary_laws_of_the_closed_classes_are_exact_and_the_chain_has_none_unique
+  - hitting_times_are_refused_when_a_state_cannot_reach_the_target
+  - the_time_reversal_needs_a_positive_stationary_law
+  - step_counts_above_the_exact_limit_are_refused
+  - mixing_refuses_a_chain_without_a_unique_stationary_law_and_steps_above_the_limit
+  - classes_closedness_periods_and_state_kinds_have_their_hand_values
+  - a_long_path_does_not_overflow_the_stack_of_the_component_search
+  - absorption_probabilities_and_times_have_their_hand_values
+  - classes_periods_and_primitivity_agree_with_closures_and_boolean_powers_on_every_three_state_support
+  - classes_periods_and_primitivity_agree_with_the_oracles_on_every_four_state_support_with_one_or_two_successors
+  - the_stationary_law_of_every_irreducible_three_and_four_state_chain_is_the_tree_theorem_value
+  - every_stationary_law_of_a_reducible_chain_is_a_mixture_of_its_closed_class_laws
+  - the_expected_return_time_is_the_reciprocal_of_the_stationary_mass_on_every_irreducible_chain
+  - hitting_times_satisfy_the_first_step_equations
+  - the_symmetric_gamblers_ruin_has_probability_i_over_n_and_duration_i_times_n_minus_i
+  - the_biased_gamblers_ruin_has_the_geometric_closed_forms
+  - the_two_state_chain_mixes_geometrically_with_the_closed_form_distance_and_mixing_time
+  - the_distance_to_stationarity_is_non_increasing_and_bounded_by_the_dobrushin_power
+  - a_periodic_chain_has_a_stationary_law_that_the_powers_do_not_converge_to
+  - a_birth_death_chain_is_reversible_with_its_product_formula_law
+  - a_biased_cycle_is_not_reversible_and_its_time_reversal_swaps_the_directions
+
+negative_tests:
+- A non-square kernel must be refused as a chain
+- The stationary distribution of a chain with several closed classes must be refused, reporting their number
+- A hitting time to a target that some state cannot reach must be refused, naming the state
+- A time reversal against a non-stationary law, a zero-mass state or a wrong-sized law must be refused
+- A step count above the exact maximum must be refused
+- A mixing profile for a chain without a unique stationary law must be refused
+doctrine:
+  summary: 'A finite Markov chain is analysed by finite computations only: graph algorithms on the support for classes, recurrence, period and primitivity, and exact linear solves for stationary laws, absorption and hitting times, each replayed or cross-checked by an independent route (boolean closures, the tree theorem, Kac''s formula, closed forms of the gambler''s ruin and of the two-state chain). Questions about infinite time are answered by these finite computations or are not answered; mixing is exact on powers up to a declared bound.'
+  non_role:
+  - Continuous-time or infinite-state chains
+  - Floating-point convergence tests or tolerances
+  - Statistical estimation of a chain from data
+  - Quantum dynamics or decoherence
+wip:
+- 'Sparse or very large chains are not optimised: the solves are dense exact eliminations'
+- 'The spectral gap and relaxation time are not computed; only the exact total variation profile and the Dobrushin coefficient are'
+- 'Coupling-from-the-past and other exact sampling are not implemented'

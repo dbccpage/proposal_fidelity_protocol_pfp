@@ -1,0 +1,84 @@
+# Rust file contracts whose sources have drifted from what they declare.
+#
+# Each line is one finding, verbatim, as rust_file_contract_gate.rs emits it.
+# This file may only shrink. A new violation fails the gate, and so does an
+# entry here that no longer reproduces -- so a fix cannot be silently replaced
+# by a different violation, which a bare count would allow.
+#
+# AuthorityEffect: None.
+
+
+certificate_boundary.contract.yaml: file contract is malformed: required_substrings[2]: invalid type: map, expected a string at line 43 column 3
+urn:core:engine:cycle_aware_engine:file:v1.0.0: missing required substring "AuthorityEffect::None" in crates_rs/engines/src/cycle_aware.rs
+urn:core:engine:cycle_aware_engine:file:v1.0.0: missing required test "test_cycle_aware_traversal" in crates_rs/engines/src/cycle_aware.rs
+urn:core:engine:multipath_iterator_engine:file:v1.0.0: missing required test "test_multipath_iterator_execution" in crates_rs/engines/src/multipath_iterator.rs
+urn:core:engine:obstruction_branch_search_engine:file:v1.0.0: missing required test "test_obstruction_branch_search" in crates_rs/engines/src/obstruction_branch_search.rs
+urn:core:engine:obstruction_runtime_engine:file:v1.0.0: missing required test "test_obstruction_runtime_execution" in crates_rs/engines/src/obstruction_runtime.rs
+urn:core:engine:operator_algebra_engine:file:v1.0.0: missing required substring "AuthorityEffect::None" in crates_rs/engines/src/operator_algebra_engine.rs
+urn:core:engine:operator_algebra_engine:file:v1.0.0: missing required test "test_operator_algebra_engine_computations" in crates_rs/engines/src/operator_algebra_engine.rs
+urn:core:engine:prompt_intake_engine:file:v1.0.0: `file` is "engine/crates/engines/src/prompt_intake_engine.rs"; Rust sources live under crates_rs/
+urn:core:qm:complex_quantum_density_engine:file:v1.0.0: missing required substring "AuthorityEffect::None" in crates_rs/engines/src/quantum/complex_quantum_density_engine.rs
+urn:core:qm:complex_quantum_density_engine:file:v1.0.0: missing required test "test_complex_quantum_density_diagnostics" in crates_rs/engines/src/quantum/complex_quantum_density_engine.rs
+urn:core:qm:cycle_space_projector:file:v1.1.0: forbidden substring "unwrap()" present in crates_rs/engines/src/quantum/cycle_space_projector.rs
+urn:core:qm:cycle_space_projector:file:v1.1.0: missing required substring "B * v" in crates_rs/engines/src/quantum/cycle_space_projector.rs
+urn:core:qm:cycle_space_projector:file:v1.1.0: missing required test "cycle_basis_satisfies_incidence_kernel" in crates_rs/engines/src/quantum/cycle_space_projector.rs
+urn:core:qm:cycle_space_projector:file:v1.1.0: missing required test "cycle_basis_vectors_have_edge_dimension" in crates_rs/engines/src/quantum/cycle_space_projector.rs
+urn:core:qm:cycle_space_projector:file:v1.1.0: missing required test "rectangular_incidence_no_panic" in crates_rs/engines/src/quantum/cycle_space_projector.rs
+urn:core:qm:cycle_space_projector:file:v1.1.0: missing required test "two_triangles_shared_vertex_cycle_rank" in crates_rs/engines/src/quantum/cycle_space_projector.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required substring "AuthorityEffect::None" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required substring "H1DensityConstruction" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required substring "L1DiagonalDiagnostic" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required substring "L1PhaseWitnessLift" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required substring "L2RawAmplitudeDiagnostic" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required test "l1_density_scale_invariant" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required test "l1_sector_probabilities_sum_to_one" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required test "phase_witness_lift_trace_one" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required test "raw_l1_mass_is_not_phi1" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:density_from_h1:file:v1.1.0: missing required test "raw_l2_density_not_marked_canonical" in crates_rs/engines/src/quantum/density_from_h1.rs
+urn:core:qm:process_matrix_engine:file:v1.1.0: missing required substring "AuthorityEffect::None" in crates_rs/engines/src/quantum/process_matrix_engine.rs
+urn:core:qm:process_matrix_engine:file:v1.1.0: missing required substring "diagnostic" in crates_rs/engines/src/quantum/process_matrix_engine.rs
+urn:core:qm:process_matrix_engine:file:v1.1.0: missing required test "no_full_causal_separability_claim" in crates_rs/engines/src/quantum/process_matrix_engine.rs
+urn:core:qm:process_matrix_engine:file:v1.1.0: missing required test "non_psd_process_matrix_rejected" in crates_rs/engines/src/quantum/process_matrix_engine.rs
+urn:core:qm:process_matrix_engine:file:v1.1.0: missing required test "process_matrix_reports_authority_none" in crates_rs/engines/src/quantum/process_matrix_engine.rs
+urn:core:qm:process_matrix_engine:file:v1.1.0: missing required test "scalar_bound_violation_is_diagnostic_only" in crates_rs/engines/src/quantum/process_matrix_engine.rs
+urn:core:qm:quantum_channel:file:v1.1.0: missing required test "apply_checked_preserves_trace_one" in crates_rs/engines/src/quantum/quantum_channel.rs
+urn:core:qm:quantum_channel:file:v1.1.0: missing required test "checked_paths_do_not_panic" in crates_rs/engines/src/quantum/quantum_channel.rs
+urn:core:qm:quantum_channel:file:v1.1.0: missing required test "compose_checked_rejects_dimension_mismatch" in crates_rs/engines/src/quantum/quantum_channel.rs
+urn:core:qm:quantum_channel:file:v1.1.0: missing required test "kraus_channel_checks_trace_preservation" in crates_rs/engines/src/quantum/quantum_channel.rs
+urn:core:qm:quantum_density_engine:file:v1.0.0: missing required substring "AuthorityEffect::None" in crates_rs/engines/src/quantum/quantum_density_engine.rs
+urn:core:qm:quantum_density_engine:file:v1.0.0: missing required test "test_quantum_density_matrix_evaluations" in crates_rs/engines/src/quantum/quantum_density_engine.rs
+urn:core:qm:quantum_information_engine:file:v1.0.0: missing required substring "AuthorityEffect::None" in crates_rs/engines/src/quantum/quantum_information_engine.rs
+urn:core:qm:quantum_information_engine:file:v1.0.0: missing required test "test_quantum_information_entropy_calculations" in crates_rs/engines/src/quantum/quantum_information_engine.rs
+urn:core:qm:reasoning_density_engine:file:v1.0.0: missing required test "test_reasoning_density_projection" in crates_rs/engines/src/quantum/reasoning_density.rs
+urn:core:rust:core_certifiers:authority_minting:v1.2.0: missing required test "certify_checked_packet_seals_none_effect_evidence" in crates_rs/core_certifiers/src/authority_minting.rs
+urn:core:rust:core_certifiers:closure_certificate:v1.1.0: missing required test "closure_certificate_diagnostic_cannot_authorize" in crates_rs/core_certifiers/src/closure_certificate.rs
+urn:core:rust:core_certifiers:closure_certificate:v1.1.0: missing required test "closure_certificate_exact_positive_gamma_is_open" in crates_rs/core_certifiers/src/closure_certificate.rs
+urn:core:rust:core_certifiers:closure_certificate:v1.1.0: missing required test "closure_certificate_exact_zero_gamma_is_closed" in crates_rs/core_certifiers/src/closure_certificate.rs
+urn:core:rust:core_certifiers:closure_certificate:v1.1.0: missing required test "closure_certificate_rejects_unverified_gamma2" in crates_rs/core_certifiers/src/closure_certificate.rs
+urn:core:rust:core_certifiers:counterfeit_detection:v1.1.0: missing required test "approx_counterfeit_cannot_authorize" in crates_rs/core_certifiers/src/counterfeit_detection.rs
+urn:core:rust:core_certifiers:counterfeit_detection:v1.1.0: missing required test "carrier_hash_mismatch_detected" in crates_rs/core_certifiers/src/counterfeit_detection.rs
+urn:core:rust:core_certifiers:counterfeit_detection:v1.1.0: missing required test "exact_counterfeit_rejects_closure_status_mismatch" in crates_rs/core_certifiers/src/counterfeit_detection.rs
+urn:core:rust:core_certifiers:counterfeit_detection:v1.1.0: missing required test "exact_counterfeit_rejects_exact_repair_with_positive_gamma2" in crates_rs/core_certifiers/src/counterfeit_detection.rs
+urn:core:rust:core_certifiers:counterfeit_detection:v1.1.0: missing required test "exact_counterfeit_rejects_exact_repair_with_positive_phi1" in crates_rs/core_certifiers/src/counterfeit_detection.rs
+urn:core:rust:core_certifiers:counterfeit_detection:v1.1.0: missing required test "replay_hash_mismatch_detected" in crates_rs/core_certifiers/src/counterfeit_detection.rs
+urn:core:rust:core_functional:xi_tiebreak:v1.1.0: missing required test "xi_carries_no_authority" in crates_rs/core_functional/src/xi.rs
+urn:core:rust:core_functional:xi_tiebreak:v1.1.0: missing required test "xi_decides_only_when_phi1_and_gamma2_tied" in crates_rs/core_functional/src/xi.rs
+urn:core:rust:core_functional:xi_tiebreak:v1.1.0: missing required test "xi_is_scale_invariant" in crates_rs/core_functional/src/xi.rs
+urn:core:rust:core_functional:xi_tiebreak:v1.1.0: missing required test "xi_never_overrides_gamma2" in crates_rs/core_functional/src/xi.rs
+urn:core:rust:core_functional:xi_tiebreak:v1.1.0: missing required test "xi_never_overrides_phi1" in crates_rs/core_functional/src/xi.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "contract_validator_rejects_runner_authority_symbols" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "contract_validator_rejects_runner_lift_policy" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "contract_validator_rejects_runner_local_functionals" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "generator_tape_is_record_not_operator_algebra" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "runner_delegates_gamma2" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "runner_delegates_lift_policy" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "runner_delegates_phi1" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "runner_does_not_mint_authority" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "runner_emits_checked_packet_not_authority" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_id_run:run:v1.1.0: missing required test "runner_has_no_physics_kernel_seed_names" in crates_rs/core_id_run/src/run.rs
+urn:core:rust:core_q:finite_qm_types:v1.0.0: forbidden substring "GlobalGreen" present in crates_rs/core_wdp/src/coda/q/finite_qm_types.rs
+urn:core:rust:core_solvers:crate:v1.0.0: missing required test "test_solvers_conformance" in crates_rs/core_solvers/src/lib.rs
+urn:core:rust:core_solvers:l1_obstruction_solver:v1.0.0: source missing: crates_rs/core_solvers/src/solver_subgradient_l1.rs
+urn:core:rust:core_solvers:network_simplex_solver:v1.0.0: source missing: crates_rs/core_solvers/src/network_simplex_solver.rs
+urn:core:rust:core_solvers:sheaf_cohomology_solver:v1.0.0: source missing: crates_rs/core_solvers/src/solver_resolution_free_sheaf_cohomology.rs
+urn:core:rust:core_solvers:yang_mills_solver:v1.0.0: source missing: crates_rs/core_solvers/src/solver_yang_mills.rs

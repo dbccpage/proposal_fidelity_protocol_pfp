@@ -1,0 +1,99 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_commutator_obstruction:v0.1.0
+title: Finite Commutator Obstruction and Weyl Irreducibility Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: algebraic_obstruction
+  symbol: Tr[Q, P] = 0 versus Tr(c I_N) = N c; commutant of {X, Z}
+  ascii_symbol: finite_commutator_obstruction
+  notation: '[Q, P] = c I_N forces c = 0 (characteristic 0); Z X = omega X Z; commutant(G) = {M : [M, g] =
+    0 for every g in G}'
+  domain:
+  - 3 x 3 matrices over Q(zeta_24) (BasicMatrix<Cyc24>) for the obstruction checks
+  - n x n matrices over Q(zeta_24) for the commutant dimension
+  codomain:
+    description: Exact booleans for the two sides of the trace argument, and the exact dimension of a commutant,
+      computed as n^2 minus the exact rank of the linear system [M, G] = 0
+requirements:
+  required_structures:
+  - Tr[A, B] = 0 for every pair of matrices of the same size
+  - Tr(c I_3) = 3 c
+  - The commutant system has one block of n^2 equations per generator with coefficient delta_ik G_lj - G_ik
+    delta_jl on the unknown M_kl
+  - The rank is an exact rank over Q(zeta_24); there is no tolerance
+  - A generator that is not n x n is refused
+laws:
+- No pair of 3 x 3 matrices satisfies [A, B] = c I_3 for c != 0, because the traces 0 and 3 c differ
+- The commutant of no generators, or of the identity, is all of M_n (dimension n^2)
+- The commutant of a diagonal matrix with distinct entries is the diagonal matrices (dimension n); with eigenvalue
+  multiplicities m_i it has dimension sum m_i^2
+- 'The shift X and the clock Z each have a commutant of dimension 3, and together only the scalars commute
+  with both (dimension 1): (X, Z) is irreducible, since X and Z are unitary'
+- Z X = omega X Z, and omega I_3 is central
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic over Q(zeta_24) only
+relationships:
+- urn:core:math:unitary:v0.1.0 serves as X and Z are unitary, so commutant equal to the scalars means irreducible
+- urn:core:math:field_elimination:v0.1.0 serves as The commutant dimension is an exact elimination rank
+rust_binding:
+  crate: core_quantum_physics
+  module: commutator
+  symbols:
+  - weyl_commutant_dimension_d3
+  - trace_of_scalar_d3
+  - commutator_equals_scalar_d3
+  - trace_obstructs_scalar_commutator_d3
+  - audit_commutator_obstruction_d3
+  - verify_finite_heisenberg_center_d3
+  - CommutatorObstructionReport
+  required_tests:
+  - no_pair_of_three_by_three_matrices_has_a_nonzero_scalar_commutator
+  - the_trace_of_a_scalar_matrix_is_three_times_the_scalar
+  - the_scalar_commutator_relation_does_hold_with_c_zero_exactly_for_commuting_pairs
+  - the_commutant_of_no_generators_or_of_the_identity_is_every_matrix
+  - the_commutant_of_a_diagonal_matrix_follows_its_eigenvalue_multiplicities
+  - the_shift_and_the_clock_alone_have_three_dimensional_commutants
+  - the_shift_and_clock_pair_has_only_scalars_in_its_commutant
+  - a_generator_of_the_wrong_shape_is_refused
+  - test_audit_commutator_obstruction
+  - test_heisenberg_center
+negative_tests:
+- A generator of the wrong shape must be refused
+- A sign error or an index swap in the commutant system must be caught by the known dimensions (hand mutations
+  of both were killed)
+doctrine:
+  summary: The obstruction to a finite canonical commutation relation is the trace; the finite replacement
+    is the Weyl relation. Irreducibility of the clock-and-shift pair is checked exactly by the dimension of
+    the commutant. The audit reports computed flags and never panics.
+  non_role:
+  - Uniqueness of the irreducible representation of the Weyl relation (Stone-von Neumann uniqueness is not
+    checked)
+  - Dimensions other than 3 for the named constructors
+  - Infinite-dimensional Heisenberg pairs
+wip:
+- Only the d = 3 clock, shift and discrete position and momentum are constructed; the generic commutant_dimension
+  works in any dimension over Q(zeta_24)
+- 'The mutation drop-the-rank-bound survives as an equivalent mutant: the identity always commutes, so the
+  rank is never n^2'

@@ -1,0 +1,53 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# symbol_game/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_calculus_receipt:v1.0.0"
+title: "Calculus Receipt (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    A whole run: the carrier it ran over, and every row's fate.
+  invariants:
+    - "declared_row_count is supplied by the caller, never defaulted to len(rows): a receipt that agrees with itself cannot detect a dropped row."
+    - "Any unaccounted row refuses, whatever the surviving rows say."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.calculus_receipt
+  python_type: "CalculusReceipt"
+  form: dataclass
+  fields:
+    - name: carrier_digest
+    - name: rows
+    - name: declared_row_count
+    - name: carrier_authored_by

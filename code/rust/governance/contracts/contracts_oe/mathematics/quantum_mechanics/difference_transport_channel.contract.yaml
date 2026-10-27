@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:difference_transport_channel:v0.1.0
+title: Exact Trace-Norm Difference Transport
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: difference_transport_channel
+  symbol: difference_transport_channel
+  ascii_symbol: difference_transport_channel
+  notation: Exact Trace-Norm Difference Transport
+  domain:
+  - Finite Gaussian-rational Hermitian trace-zero source and target differences on the declared channel bounds.
+  - Checked exact CPTP Choi data and bounded inclusion/retraction carriers.
+  codomain:
+    description: Declared finite results of core_quantum_physics::difference_transport_channel; exact and
+      diagnostic routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- An emitted Helstrom effect attains the exact positive-part trace.
+- The proposed Choi matrix is independently checked CPTP and its action reproduces the full target difference.
+- The full complex trace must vanish, not only its real part.
+- Inclusion and retraction channels replay the declared subspace embedding.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: difference_transport_channel
+  symbols:
+  - DifferenceTransport
+  - embedding_pair
+  required_tests:
+  - transport_exposes_the_optimal_helstrom_effect_and_replays_the_difference
+negative_tests:
+- Non-Hermitian or nonzero-trace differences, unavailable exact spectra, failed source-to-target replay and
+  oversized embeddings are refused.
+doctrine:
+  summary: An emitted Helstrom effect attains the exact positive-part trace.; The proposed Choi matrix is independently
+    checked CPTP and its action reproduces the full target difference.; The full complex trace must vanish,
+    not only its real part.; Inclusion and retraction channels replay the declared subspace embedding..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

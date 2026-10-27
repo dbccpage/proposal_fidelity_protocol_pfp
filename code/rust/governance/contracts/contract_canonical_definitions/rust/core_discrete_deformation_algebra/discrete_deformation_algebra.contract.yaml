@@ -1,0 +1,243 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_discrete_deformation_algebra:discrete_deformation_algebra:v1.13.0
+title: DiscreteDeformationAlgebra
+status: draft
+crate: core_wdp
+file: crates_rs/core_wdp/src/ddc/mod.rs
+layer: 01_primitives
+role: discrete_algebra
+authority_effect: fact_only
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- lambda_algebraic_operations
+- lambda_boundary_c1_shadow
+- c0_primitive_difference_shadow
+- c1_l1_tension_shadow
+- c2_closure_defect_gamma2_shadow
+- finite_window_c0_c1_c2_scan
+- finite_window_quotient_diagnostic_bridge
+- q1_quotient_irreducibility_certificate
+- born_normalization_redundancy_gate
+- finite_diagnostic_license_shadow
+- finite_lambda_step_preservation_certificate
+- proposal_authority_firewall
+- degree_two_visibility_gate
+- xi_primary_tie_precondition
+- xi_hierarchy_tie_break_gate
+- trace_realization_boundary
+- observer_passivity_shadow_certificate
+- cross_term_involution_obstruction_certificate
+- proof_carrying_ai_proposal_gate
+- claim_packet_authority_boundary
+does_not_own:
+- authority_minting
+- destructive_carrier_mutation
+- evaluator_policy
+- quotient_minimization
+- trace_density_lifts
+- observer_authority_creation
+- primal_dual_quotient_solver
+- born_rule_ontology
+- hilbert_space_derivation
+- quantum_measurement_derivation
+- repeatable_engagement_geometry
+may_call:
+must_not:
+- compute geometry dynamically
+- accept Lambda steps without preservation witness
+- accept final Lambda steps whose after diagnostic remains obstructed
+- accept intermediate Lambda steps that increase Phi1 or Gamma2
+- compute Phi1 quotient minimizers
+- synthesize dual quotient witnesses
+- derive Hilbert space from L1 weights
+- derive Born-rule ontology
+- create obstruction during Born normalization
+- allow observer shadows to increase Phi1 or Gamma2
+- compute Gamma2 from raw carriers
+- scan undeclared finite-window edges or faces as local evidence
+- rank candidates by Xi
+- allow Xi to override Phi1 or Gamma2
+- accept or promote operator proposals
+- promote cross-term evidence without involution, repair-invariance, and non-coboundary witnesses
+- treat cross-term diagnostics as representation-layer, geometry, or authority derivations
+- accept AI lift proposals without proof-carrying finite Lambda certificates
+- grant authority to representation-layer-only claim packets
+- treat typed refusal as positive authority
+exactness:
+  mode: bounded_i64_checked
+  exact_constructor_required: true
+  approximate_modes_allowed: false
+  overflow_behavior: typed_refusal
+forbidden_substrings:
+required_substrings:
+- pub struct FaceLambda
+- pub struct OrientedTriangle
+- pub struct FiniteWindow
+- pub struct FiniteWindowScan
+- pub struct Boundary1
+- pub struct Cochain0
+- pub type Cochain1
+- pub struct FiniteDiagnostic
+- pub struct NonDestructiveExtensionCertificate
+- pub struct FiniteLambdaStepCertificate
+- pub struct QuotientIrreducibilityCertificate
+- pub struct BornNormalizationCertificate
+- pub struct ObserverPassivityCertificate
+- pub struct CrossTermObstructionCertificate
+- pub struct NormalizedL1Weight
+- pub struct OperatorProposal
+- pub struct ProofCarryingAiProposal
+- pub enum DegreeTwoSupport
+- pub struct XiTiePrecondition
+- pub struct XiTieBreakCertificate
+- pub enum RealizationBoundary
+- pub enum TerminalStatus
+- pub struct ClaimPacket
+- pub struct FiniteLambdaLedger
+- impl FiniteLambdaLedger
+- pub fn require_chained
+- PAPER000C_CLAIM_PACKET_EVIDENCE_ID
+- pub fn checked_boundary
+- pub fn checked_primitive_difference
+- pub fn checked_scan
+- pub fn checked_scan_c1
+- pub fn checked_closure_defect
+- pub fn checked_gamma2
+- pub fn checked_l1_tension
+- pub fn require_irreducible
+- pub fn checked_from_quotient_certificate
+- pub fn checked_diagnostic_from_quotient
+- pub fn checked_from_l1_weights
+- pub fn born_probability_from_squared_norm
+- pub fn preserves_diagnostic
+- pub fn require_passive
+- pub fn observed_diagnostic
+- pub fn require_typed_obstruction
+- pub fn diagnostic
+- pub fn require_tie_breaker
+- pub fn require_lambda_license
+- pub fn require_non_destructive
+- pub fn require_chained
+- pub fn require_valid
+- pub fn require_proof_carrying
+- pub fn accepted_diagnostic
+- pub fn after_tension
+- pub fn descends_to_real0
+- pub fn is_terminalized
+- pub fn has_authority
+- pub fn require_terminalized
+- pub fn require_authority
+- std::ops::Add for FaceLambda
+- std::ops::Neg for FaceLambda
+- std::ops::Mul<i64> for FaceLambda
+required_tests:
+- test_capacity_merge_linearity
+- test_capacity_reverse_linearity
+- test_capacity_scale_linearity
+- test_merge_rejects_different_faces
+- test_add_overflow_panics_consistently
+- test_neg_i64_min_panics_consistently
+- test_mul_overflow_panics_consistently
+- test_boundary_of_lambda_is_c1_shadow
+- test_adjacent_lambda_boundaries_merge_shared_edge
+- test_boundary_reverse_and_scale_are_checked
+- test_boundary_i64_min_refuses_typed_overflow
+- test_primitive_difference_builds_c1_from_c0
+- test_exact_primitive_difference_has_zero_triangle_closure
+- test_l1_tension_sums_absolute_edge_magnitudes
+- test_finite_window_scan_builds_local_c0_c1_c2_diagnostic
+- test_finite_window_scan_c1_detects_local_closure_defect
+- test_finite_window_scan_refuses_gauge_only_quotient_diagnostic
+- test_finite_window_scan_refuses_unverified_quotient_phi1
+- test_closure_defect_is_invariant_under_exact_gauge_shift
+- test_primitive_difference_overflow_refuses_typed
+- test_zero_quotient_certificate_is_gauge_artifact_only
+- test_quotient_certificate_requires_dual_saturation
+- test_scalar_quotient_receipt_cannot_mint_phi1_diagnostic
+- test_resolved_diagnostic_refuses_lambda_license
+- test_positive_diagnostic_licenses_lambda_without_authority
+- test_lambda_step_certificate_requires_positive_before_obstruction
+- test_lambda_step_certificate_requires_resolved_after_diagnostic
+- test_lambda_step_certificate_requires_non_destructive_extension
+- test_lambda_step_certificate_zeroes_tension_without_destruction
+- test_observer_passivity_refuses_created_phi1
+- test_observer_passivity_refuses_created_gamma2
+- test_observer_passivity_accepts_componentwise_nonincrease
+- test_cross_term_requires_involution_witness
+- test_cross_term_requires_repair_invariance
+- test_cross_term_requires_nonzero_non_coboundary
+- test_cross_term_observation_cannot_mint_primary_functionals
+- test_born_normalization_refuses_zero_l1_total
+- test_born_probability_redundant_with_l1_normalization
+- test_born_normalization_preserves_obstruction_diagnostic
+- test_operator_proposal_has_external_evaluator_only_authority
+- test_ai_proposal_requires_proof_carrying_certificate
+- test_ai_proposal_delegates_to_finite_lambda_certificate
+- test_ai_proposal_accepts_only_verified_finite_diagnostic
+- test_gamma2_visibility_requires_declared_c2_support
+- test_xi_tie_precondition_requires_primary_diagnostic_tie
+- test_xi_hierarchy_refuses_primary_worsening_even_if_xi_improves
+- test_xi_hierarchy_requires_strict_xi_improvement_under_primary_tie
+- test_xi_hierarchy_accepts_strict_tie_break_only_after_primary_tie
+- test_trace_validation_requires_realized_finite_carrier
+- test_claim_packet_evidence_id_is_stable
+- test_representation_only_claim_has_no_authority
+- test_typed_refusal_terminalizes_without_authority
+- test_authority_requires_descent_and_authoritative_status
+- test_finite_lambda_ledger_new_stores_fields
+- test_finite_lambda_ledger_chains_consecutive_steps
+- test_finite_lambda_ledger_refuses_broken_chain
+- test_finite_lambda_ledger_refuses_head_mismatch
+- test_finite_lambda_ledger_empty_requires_resolved_endpoints_equal
+- test_finite_lambda_ledger_empty_refuses_unresolved_endpoint
+lean_obligations:
+- 'L-DDA-1: boundary_merge boundary(L1 + L2) = boundary(L1) + boundary(L2)'
+- 'L-DDA-2: boundary_reverse boundary(-L) = -boundary(L)'
+- 'L-DDA-3: boundary_scale boundary(n * L) = n * boundary(L)'
+- 'L-DDA-4: Lambda license requires positive FiniteDiagnostic obstruction'
+- 'L-DDA-5: operator proposals carry no acceptance authority'
+- 'L-DDA-6: Gamma2 visibility requires declared C2 support'
+- 'L-DDA-7: Xi is usable only under primary diagnostic equality'
+- 'L-DDA-8: trace/domain validation requires realized finite carrier structure'
+- 'L-DDA-9: primitive difference d0 maps C0 potentials to C1 edge cochains'
+- 'L-DDA-10: exact primitive differences have zero d1 closure defect and Gamma2'
+- 'L-DDA-11: adding an exact d0 gauge shadow preserves C2 closure defect'
+- 'L-DDA-12: Q1 irreducibility requires positive Phi1 residual'
+- 'L-DDA-13: Q1 dual witness must saturate the same Phi1 value'
+- 'L-DDA-14: positive quotient evidence is diagnostic evidence, not authority to solve or promote'
+- 'L-DDA-15: Born normalization requires positive nonzero L1 sector mass'
+- 'L-DDA-16: Born squared-norm probabilities equal direct L1 normalization'
+- 'L-DDA-17: conditional Hilbert/Born re-encoding does not create or modify obstruction diagnostics'
+- 'L-DDA-18: Xi cannot override changed Phi1/Gamma2 primary diagnostics'
+- 'L-DDA-19: Xi tie-break requires strict Xi improvement after primary tie'
+- 'L-DDA-20: finite Lambda step requires positive before obstruction'
+- 'L-DDA-21: finite Lambda step requires resolved after diagnostic'
+- 'L-DDA-22: finite Lambda step requires non-destructive preservation witness'
+- 'L-DDA-23: observer passivity refuses Phi1 creation'
+- 'L-DDA-24: observer passivity refuses Gamma2 creation'
+- 'L-DDA-25: passive observer shadows are componentwise non-increasing diagnostics'
+- 'L-DDA-26: cross-term obstruction evidence requires an involution witness'
+- 'L-DDA-27: cross-term obstruction evidence requires repair invariance'
+- 'L-DDA-28: cross-term obstruction evidence requires non-coboundary positive L1 mass'
+- 'L-DDA-29: typed cross-term evidence yields a CrossTermDiagnostic distinct from Phi1/Gamma2; it cannot mint a FiniteDiagnostic, and is not a representation-layer, geometry, or authority derivation'
+- 'L-DDA-30: AI lift proposals require proof-carrying finite Lambda certificates'
+- 'L-DDA-31: AI proposal acceptance delegates to the finite Lambda certificate validity gate'
+- 'L-DDA-32: accepted AI proposal diagnostics are exactly the certificate after diagnostic'
+- 'L-DDA-33: finite-window scans compute C0 -> C1 primitive differences only over declared local edges'
+- 'L-DDA-34: finite-window scans compute L1 tension and Gamma2 only from declared local C1/C2 support'
+- 'L-DDA-35: finite-window scans report the window Gamma2 total but refuse to mint a FiniteDiagnostic from a scalar quotient receipt (MissingProofCarryingCertificate); this crate has no proof-carrying quotient Phi1 path'
+- 'L-DDA-36: gauge-only quotient certificates cannot produce finite-window obstruction diagnostics'
+- 'L-DDA-37: representation-layer-only claim packets carry no authority'
+- 'L-DDA-38: typed refusals terminalize claim packets without granting positive authority'
+- 'L-DDA-39: claim authority requires descent to primitive difference or structure plus an authoritative terminal status'
+- 'L-DDA-40: primitive terminal packets translate conservatively into ontology claim packets'
+- 'L-DDA-41: repaired primitive packets with descent have ontology claim authority'
+- 'L-DDA-42: primitive refused and budget-unknown packets terminalize as typed refusals'
+- 'L-DDA-43: open no-rule primitive packets do not gain ontology authority'
+- 'L-DDA-44: a chained finite Lambda ledger requires every non-final row to pass require_descent_step and the final row to pass require_valid'
+- 'L-DDA-45: a chained finite Lambda ledger requires step[i].after = step[i+1].before, matching initial / terminal endpoints, and equal resolved endpoints when empty'
+notes:
+- "This contract enforces the Rust exact algebraic shadow of the Lean Lambda surface operations and the finite C0 -> C1 -> C2 diagnostic spine. Lean owns edge-valued boundary theorems, ontology-to-primitive bridge theorems, and FOC proof obligations. This crate owns checked same-face scalar operations, a declared oriented triangle boundary projection into C1, canonical edge-boundary merging, primitive differences from C0 potentials, C2 closure-defect/Gamma2 shadows, finite-window C0 -> C1 -> C2 scans, finite-window quotient diagnostic bridges, L1 edge tension, declared-scalar Q1 irreducibility consistency checks, PaperFOC005 finite Lambda step preservation certificates, observer passivity shadow certificates, PaperQF001 Xi hierarchy certificates, PaperQF002 Born-normalization redundancy certificates, Pub010 cross-term involution obstruction certificates, Paper015 proof-carrying AI proposal gates, PaperFOC000c claim-packet authority boundaries, and a non-authoritative diagnostic license gate. Cross-domain evidence is recorded in paper000c_claim_packet_evidence.md."
+- "PaperFOC003-Paper015 alignment: the crate may accept replayed quotient certificates and typed refusals, but it must not perform evaluator acceptance, quotient minimization, dual-witness synthesis, Xi ranking, observer authority creation, cross-term promotion without witnesses, AI lift acceptance without proof-carrying finite certificates, representation-only claim authority, trace-density representation, Hilbert-space derivation, Born-rule ontology, quantum-measurement derivation, or domain-trace certification."

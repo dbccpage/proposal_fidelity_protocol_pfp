@@ -1,0 +1,95 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_scalar_tower:v0.1.0
+title: Exact Scalar Tower Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: scalar_protocol
+  symbol: 'Semiring ⊂ Ring ⊂ Field, marked ExactRing: a commutative field F with mathematical equality'
+  ascii_symbol: exact_scalar_tower
+  notation: 'F : Field + ExactRing'
+  domain:
+  - 'scalar_type: a Rust type F implementing Semiring, Ring, Field and ExactRing'
+  - 'constants: zero(), one()'
+  - 'operations: add, mul, neg, sub (default: add of the negative), try_inv, try_div (default: multiply by the inverse), is_zero'
+  codomain:
+    description: 'A commutative field (F, +, ·, 0, 1) whose equality is mathematical equality: two values are equal exactly when they denote the same field element, with no tolerance. try_inv returns Some exactly for nonzero elements.
+
+      '
+requirements:
+  required_structures:
+  - 'Semiring: Clone + PartialEq + Debug; addition and multiplication associative and commutative with identities 0 and 1; multiplication distributes over addition; is_zero agrees with equality to zero'
+  - 'Ring: every element has an additive inverse, neg(a) + a = 0'
+  - 'Field: 0 != 1 and every nonzero element has a multiplicative inverse, a * try_inv(a) = 1; try_inv(0) is None'
+  - 'ExactRing is a marker promising mathematical equality; it carries no method and no tolerance'
+  - 'Algorithms generic over the tower use only these methods and never std::ops on the scalar'
+laws:
+- 'a + b = b + a and a · b = b · a'
+- '(a + b) + c = a + (b + c) and (a · b) · c = a · (b · c)'
+- 'a · (b + c) = a · b + a · c'
+- 'a + 0 = a, a · 1 = a and a + (-a) = 0'
+- '0 != 1'
+- 'a != 0 implies a · a⁻¹ = 1, and 0 has no inverse'
+- '(a / b) · b = a for b != 0'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - 'The obligations replay on a finite sample through exact_field::laws::check_field_axioms; a passing sample is evidence, a failing sample names the first violated law'
+  - No tolerance: equality is the scalar type's own equality
+relationships:
+- urn:core:math:basic_matrix:v1.0.0 serves as dense row-major storage whose entries are tower scalars
+- urn:core:math:exact_field_law_checks:v0.1.0 serves as the executable replay of these obligations on a sample
+- urn:core:math:exact_field_matrix:v0.1.0 is served by this tower as the scalar protocol of exact matrix algebra
+rust_binding:
+  crate: core_linear_algebra
+  module: scalars
+  symbols:
+  - Semiring
+  - Ring
+  - Field
+  - ExactRing
+  # One test per mechanically checkable negative_test, in declaration order.
+  required_tests:
+  - a_non_field_scalar_is_refused_not_miscomputed
+  - a_ring_with_zero_divisors_fails_the_field_axioms
+  - a_wrong_inverse_is_caught_and_named
+  - z5_is_exact_field
+  # Positive witnesses of the laws above.
+  # - bigrational_satisfies_the_field_involution_and_order_obligations
+  # - finite_fields_satisfy_the_field_axioms_and_the_identity_is_an_involution
+  # - the_gaussian_rationals_and_q_sqrt2_satisfy_their_obligations
+negative_tests:
+- An algorithm given a scalar with a nonzero element that has no inverse must refuse with a typed ScalarContract error, not return a rank, kernel or determinant computed as if it were a field
+- A sample containing a nonzero element with no inverse, or a try_inv whose answer does not multiply back to 1, must be reported by check_field_axioms as violating the inverse law
+- The zero element must have no inverse
+doctrine:
+  summary: 'The scalar tower is the vocabulary exact linear algebra is written against: Semiring, Ring, Field and the marker ExactRing. This crate implements it for BigRational (an unbounded exact field, so the infallible operations cannot overflow). Rational64 deliberately has no implementation because its arithmetic can overflow; it is reached through the sealed checked protocol CheckedExactField instead. Downstream crates implement the tower for their own exact fields and must prove the axioms, which exact_field::laws can replay on a finite sample.'
+  non_role:
+  - Analytic or floating-point scalars (AnalyticRing is a separate marker for them)
+  - Polynomial or function fields with a symbolic equality
+  - A proof that an implementation satisfies the axioms (a sample check is evidence only)
+  - Overflow semantics of fixed-width integers
+wip:
+- No Lean statement of the field axioms for the tower exists; the YAML to Lean to Rust chain for this contract is open
+- 'i64 implements Semiring, Ring and ExactRing (not Field) with operators that overflow (a panic in debug builds, wrapping in release builds), so its ExactRing marker does not mean mathematical equality beyond the i64 range'
+- The tower has no query for the characteristic; algorithms that need 2 != 0 test one + one against zero
+- Rational64 is intentionally outside the tower; conversions to and from BigRational are exact_field::matrix::widen_rational64 and narrow_to_rational64

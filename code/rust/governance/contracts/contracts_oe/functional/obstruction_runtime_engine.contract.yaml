@@ -1,0 +1,38 @@
+schema_version: core.file_contract.v1
+contract_id: urn:core:engine:obstruction_runtime_engine:file:v1.0.0
+title: "Obstruction Runtime Engine"
+crate: engines
+file: engine/crates/engines/src/obstruction_runtime.rs
+role: obstruction_runtime_environment
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - obstruction_execution_pipeline
+  - defect_accumulation_logging
+does_not_own:
+  - global_proof_verifier
+  - authority
+may_call:
+  - core
+must_not:
+  - claim complete proof resolution
+  - mint authority
+exactness:
+  numeric_mode: runtime_execution_records
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "CertifiedAuthority"
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "AuthorityEffect::None"
+required_tests:
+  - test_obstruction_runtime_execution
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_file_contract:file:v1.0.0"
+  coalescence_mode: "specializes"
+  coalesces_with:
+    - "urn:core:execution:engine:v1.0.0"

@@ -1,0 +1,55 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED. The `structure:` block below is read by
+# pfp/build.rs, which generates an exhaustive destructure
+# of the named Rust type plus a serde conformance test.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:coda_evaluate_request_v1:v1.0.0"
+title: "CODA Evaluate Request v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    CodaEvaluateRequestV1, the request payload for the coda_evaluate runtime action.
+  invariants:
+    - "The shape declared here is the shape in coda.rs, enforced at compile time by an exhaustive destructure."
+    - "Denies unknown fields and rejects floats at the wire."
+  non_roles:
+    - "authority_source"
+  required_negative_capabilities:
+    - no_self_certification
+
+structure:
+  rust_crate: pfp
+  rust_module: coda
+  rust_type: "CodaEvaluateRequestV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: input_id
+    - name: sieve_non_empty
+    - name: refinement_consistent
+    - name: gluing_succeeded
+    - name: phi1_distance
+    - name: gamma2_distance
+    - name: license_granted
+    - name: budget
+    - name: matrices

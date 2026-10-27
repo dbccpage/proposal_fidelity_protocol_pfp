@@ -1,0 +1,110 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:dendroidal_set:v0.1.0
+title: Dendroidal Set and Inner Horn Filler Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: dendroidal_set
+  symbol: 'dSet = PSh(Core)'
+  ascii_symbol: dendroidal_set
+  notation: 'X : Omega^op -> Set, with inner horn fillers Lambda^e(T) -> X extending to Omega[T] -> X'
+  domain:
+  - 'planar_tree_category: category Core of rooted planar trees with corollas, grafting, and edge contractions'
+  - 'inner_edges: internal edges connecting two vertices in a rooted tree'
+  - 'inner_horns: sub-dendroidal sets Lambda^e(T) omitting the inner edge contraction face partial_e T'
+  codomain:
+    description: A dendroidal set is a presheaf on the planar tree category Core. An (infinity, 1)-operad (dendroidal quasi-category) is a dendroidal set where every inner horn Lambda^e(T) admits a filler whose missing face is the operadic composition along the inner edge e.
+requirements:
+  required_structures:
+  - Planar tree representation with explicit vertices, leaf edges, root edge, and inner edges.
+  - Elementary face maps: inner face (edge contraction) and outer faces (vertex removal).
+  - Inner horn structure Lambda^e(T) omitting the inner face partial_e T.
+  - Constructive inner horn filler producing the operadic composite on the missing inner face.
+  - Equivalence theorem demonstrating that for linear trees, dendroidal horn filling coincides with simplicial horn filling Lambda^1_2 -> Delta^2.
+  - Strictly zero floating-point arithmetic in Rust implementation.
+  - Soviet memory allocation bounds enforced via reserve_exact and OperationLimits.
+  - Deterministic content-addressed artifact hash.
+laws:
+- 'Inner horn filling: every inner horn Lambda^e(T_graft) admits a filler matching outer faces'
+- 'Composite realization: the missing inner face partial_e produced by horn filling equals the operadic composite'
+- 'Simplicial reduction: for linear trees with arity 1 vertices, the dendroidal nerve coincides with the simplicial nerve'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Trees serialized in canonical discrete planar order
+  - Given identical input tree and horn, produces identical artifact hash
+relationships:
+- urn:core:math:operadic_nerve:v0.1.0 serves as Operadic nerve spine reduction
+- urn:core:math:quasi_category:v0.1.0 serves as Simplicial quasi-category counterpart
+- urn:core:math:simplicial_set:v0.1.0 serves as Simplicial set foundation
+rust_binding:
+  crate: core_higher_category_theory
+  module: dendroidal_set
+  symbols:
+  - PlanarTree
+  - TreeVertex
+  - TreeEdge
+  - DendroidalSet
+  - TreeInnerHorn
+  - DendroidalSet::fill_dendroidal_inner_horn
+  - DendroidalSet::verify_dendroidal_inner_horn_property
+  required_tests:
+  - test_dendroidal_set_positive_verification
+  - test_kill_mut_ds_01_missing_inner_face_mismatch
+  - test_kill_mut_ds_02_outer_face_top_mismatch
+  - test_kill_mut_ds_03_outer_face_bot_mismatch
+  - test_kill_mut_ds_04_inner_edge_boundary_mismatch
+  - test_kill_mut_ds_05_tree_cycle_violation
+  - test_kill_mut_ds_06_allocation_cap_exceeded
+  - test_register_rejects_composite_with_wrong_input_colours
+  - test_verify_rejects_composite_whose_colours_differ_from_the_tree
+
+lean4_binding:
+  module: HigherCategoryTheory.DendroidalSet
+  symbols:
+  - Corolla
+  - GraftedTree
+  - contractInnerEdge
+  - fillLinearDendroidalInnerHorn
+  - fillLinear_matches_top
+  - fillLinear_matches_bot
+  - fillLinear_inner_face_eq_composite
+  - dendroidal_linear_inner_horn_fills
+  - dendroidal_simplicial_nerve_agreement
+negative_tests:
+- Missing inner face calculation mismatch (MUT-DS-01)
+- Outer face top boundary mismatch on horn filler (MUT-DS-02)
+- Outer face bot boundary mismatch on horn filler (MUT-DS-03)
+- Inner edge boundary colour mismatch (MUT-DS-04)
+- Tree graph contains cycles violating rooted tree condition (MUT-DS-05)
+- Soviet allocation limit exceeded in dendroidal solver (MUT-DS-06)
+- Composite input colours are not the graft substitution
+- Table entry whose colours differ from the contracted tree
+doctrine:
+  summary: A dendroidal set generalizes simplicial sets from linear orders [n] to trees Core. An (infinity, 1)-operad is a dendroidal set satisfying inner horn filling extensions, representing multi-ary operations composing up to coherent higher homotopies.
+  non_role:
+  - Continuous topological operads with non-discrete topology
+  - Infinite-depth non-well-founded trees
+  - Inner horns on trees with more than two vertices
+wip:
+  - Dendroidal complete Segal spaces
+  - Boardman-Vogt tensor product of dendroidal sets

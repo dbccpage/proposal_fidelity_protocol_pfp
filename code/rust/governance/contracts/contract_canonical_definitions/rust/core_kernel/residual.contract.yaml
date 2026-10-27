@@ -1,0 +1,58 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_kernel:residual:v1.0.0
+title: Residual
+status: active
+crate: core_functional
+file: crates_rs/core_functional/src/residual.rs
+role: packet
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: false
+owns:
+- the residual vector and its L1 diagnostic, carried together
+- the exact zero test that separates a repaired residual from an open one
+does_not_own:
+- the obstruction trichotomy, which is core_policy::trichotomy
+- Phi1 and Gamma2, which are functionals over a residual, not fields of one
+- any terminal, verdict, or authority
+may_call: []
+must_not:
+- decide is_zero by tolerance
+- expose a norm that can disagree with its vector
+- collapse the vector into the scalar
+exactness:
+  mode: exact_only
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+laws:
+- 'Vector survival law: the differential acts on the vector, never on the norm, so
+  both are carried and the caller chooses. Collapsing r into ||r||_1 loses the defect.'
+- 'Derived norm law: l1 is computed, never supplied. The fields are private and
+  Deserialize recomputes, so a norm that disagrees with its vector is refused rather
+  than admitted.'
+- 'Exact zero law: is_zero is exact. A residual of 1/1000000000 falls inside any
+  1e-8 tolerance gate, and reporting it closed would downgrade a witnessed open
+  obstruction -- the Witness Dominance violation this file exists to prevent.'
+- 'Authority law: a residual is a measurement. It carries no verdict.'
+forbidden_substrings:
+- 'f64'
+- 'EPSILON'
+- 'tolerance'
+- 'pub vector'
+- 'pub l1'
+required_substrings:
+- 'pub struct Residual'
+- 'serde(try_from = "ResidualWire", into = "ResidualWire")'
+- 'pub fn is_zero'
+required_tests:
+- the_vector_survives_alongside_its_norm
+- an_empty_residual_is_zero
+- a_tiny_nonzero_residual_is_not_zero
+- cancelling_entries_do_not_cancel_in_the_l1_norm
+- a_forged_norm_is_refused_on_deserialize
+- an_honest_norm_round_trips
+- a_float_norm_is_refused_on_the_wire
+- exact_arithmetic_survives_where_a_float_sum_would_drift
+lean_obligations: []

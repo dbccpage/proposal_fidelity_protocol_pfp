@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:parity_cochain_pauli_obstruction:v0.1.0
+title: Pauli sign tables and replayable parity cochain obstruction
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: parity_cochain_pauli_obstruction
+  symbol: parity_cochain_pauli_obstruction
+  ascii_symbol: parity_cochain_pauli_obstruction
+  notation: Pauli sign tables and replayable parity cochain obstruction
+  domain:
+  - Bounded declared finite sign contexts and bit carriers; canonical GF2 elimination
+  codomain:
+    description: Declared finite results of core_quantum_physics::parity_context_packet; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Image preimages and left-nullspace separators replay against actual targets
+- Pauli context products produce the declared sign table independently
+- No assignment decision relies on cached source labels
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: parity_context_packet
+  symbols:
+  - ParityContextPacket
+  - ParityContextPacket::certificate
+  - ParityContextPacket::verify_certificate
+  required_tests:
+  - measurement_exact_laws::parity_cochains_and_pauli_signs_replay_actual_differentials
+negative_tests:
+- measurement_exact_laws::parity_cochains_and_pauli_signs_replay_actual_differentials
+doctrine:
+  summary: Image preimages and left-nullspace separators replay against actual targets; Pauli context products
+    produce the declared sign table independently; No assignment decision relies on cached source labels.
+  non_role:
+  - A finite parity obstruction is not a Bell-locality or arbitrary empirical-model theorem
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

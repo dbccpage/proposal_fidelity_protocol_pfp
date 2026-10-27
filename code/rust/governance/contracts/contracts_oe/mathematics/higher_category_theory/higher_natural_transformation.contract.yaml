@@ -1,0 +1,86 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:higher_natural_transformation:v0.1.0
+title: Higher Natural Transformation Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: higher_natural_transformation
+  symbol: 'sigma: F => G'
+  ascii_symbol: higher_natural_transformation
+  notation: 'sigma = (comp1, comp2, naturality2, comp_coherence)'
+  domain:
+  - 'source_functor: Pseudofunctor F between bicategories B1 and B2'
+  - 'target_functor: Pseudofunctor G between bicategories B1 and B2'
+  - 'component_1_cells: (comp1 : (A : Obj1) -> B2.Hom (F.obj A) (G.obj A)) component 1-morphisms'
+  - 'naturality_2_cells: (comp2 : (f : B1.Hom A B) -> Iso2 (B2.hcomp1 (F.map1 f) (comp1 B)) (B2.hcomp1 (comp1 A) (G.map1 f)))'
+  - 'two_cell_naturality: naturality condition for 2-cells alpha: f => g'
+  - 'composition_coherence: compatibility with compositor 2-isomorphisms'
+  - 'modification: 3-cells mu: sigma => tau with components mu_A: sigma_A => tau_A'
+  codomain:
+    description: 'A higher natural transformation (pseudonatural transformation / 2-natural transformation) sigma: F => G between parallel higher functors consists of 1-cell components sigma_A, invertible 2-cells sigma_f comparing F(f) o sigma_B and sigma_A o G(f), satisfying 2-cell naturality and composition coherence.'
+requirements:
+  required_structures:
+  - 'Source F and target G must be parallel higher functors sharing source bicategory B1 and target bicategory B2.'
+  - 'Component 1-cells comp1 A must be valid 1-morphisms F(A) -> G(A) in B2.'
+  - 'Naturality 2-cells comp2 f must be invertible 2-isomorphisms in B2.'
+  - 'Naturality square must commute strictly for strict 2-natural transformations.'
+  - '2-cell naturality must hold relating whiskerRight and whiskerLeft operations.'
+  - 'Composition coherence must hold relating comp2 (f o g), comp2 f, comp2 g, and functor compositors.'
+  - 'Modifications between pseudonatural transformations must satisfy the modification cylinder axiom.'
+  - 'Artifact hash is deterministically computed from component morphisms and naturality data.'
+laws:
+- 'Strict 2-naturality: for strict transformations, B2.hcomp1 (F.map1 f) (comp1 B) = B2.hcomp1 (comp1 A) (G.map1 f)'
+- 'Pseudonaturality 2-cell: for each 1-cell f: A -> B, invertible 2-cell comp2 f: B2.hcomp1 (F.map1 f) (comp1 B) ≅ B2.hcomp1 (comp1 A) (G.map1 f)'
+- '2-cell naturality: B2.vcomp (B2.whiskerRight (F.map2 alpha) (comp1 B)) (comp2 g).hom = B2.vcomp (comp2 f).hom (B2.whiskerLeft (comp1 A) (G.map2 alpha))'
+- 'Composition coherence: compatibility between comp2 (hcomp1 f g), comp2 f, comp2 g, and compositor 2-cells'
+- 'Modification axiom: B2.vcomp (B2.whiskerLeft (F.map1 f) (mod2 B)) (tau.comp2 f).hom = B2.vcomp (sigma.comp2 f).hom (B2.whiskerRight (mod2 A) (G.map1 f))'
+- 'Modification vertical composition: (vcomp mu nu).mod2 A = B2.vcomp (mu.mod2 A) (nu.mod2 A)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Components serialized in canonical order
+  - Content-addressed deterministic evaluation
+relationships:
+- urn:core:math:higher_functor:v0.1.0 serves as Higher natural transformations are 2-cells between parallel higher functors
+- urn:core:math:bicategory:v0.1.0 serves as Target bicategory B2 provides the hom-categories where naturality 2-cells and modifications compose
+negative_tests:
+- Functors F and G do not share identical source or target bicategories
+- Component 1-cell comp1 A is not a valid morphism F(A) -> G(A)
+- Naturality 2-cell comp2 f is not an invertible 2-isomorphism
+- Naturality square fails to commute in strict 2-natural transformation
+- "2-cell naturality condition fails for 2-morphism alpha: f => g"
+- Composition coherence axiom fails to commute
+- Modification axiom fails for candidate modification 2-cells
+doctrine:
+  summary: 'A HigherNaturalTransformation is a morphism between higher functors, generalizing natural transformations to 2-categories, bicategories, and higher categories. Components are 1-morphisms, equipped with coherent 2-isomorphisms for pseudonatural transformations. Modifications form 3-cells between higher natural transformations.'
+  non_role:
+  - Enriched natural transformations over arbitrary monoidal categories
+  - Automatic modification resolution beyond explicitly provided levels
+  - Oplax transformations without specified directionality
+wip:
+- General coherence, strictification, and Lean-to-Rust semantic correspondence are not proved.
+- The Lean structure records laws as hypotheses; compilation does not validate arbitrary input data.
+- No native implementation of this complete structure is bound by this contract.
+lean_binding:
+  path: lean4/research_programs/higher_category_theory/HigherNaturalTransformation.lean
+  symbol: HigherCategoryTheory.PseudoNatTrans
+  scope: algebraic_structure_with_law_fields

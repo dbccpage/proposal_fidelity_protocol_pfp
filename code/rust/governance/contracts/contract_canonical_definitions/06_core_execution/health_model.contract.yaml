@@ -1,0 +1,131 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:health_model:v1.0.0
+title: HealthModelKernel
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: HealthModel
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - MeasurementKernel
+    - CertificateKernel
+    - EvidenceEnvelope
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'HealthModel reports invariant-relative health state. Raw health reports are EvidenceOnly.
+
+    Checked health reports may support FactOnly claims only after source, invariant family,
+
+    measurement, and certificate references are checked.
+
+    '
+  non_role: &id002
+  - repair
+  - prescription
+  - evaluation
+  - certification
+  - terminal_mapping
+  - action_licensing
+  - execution
+  - mutation
+  structural_representation:
+    raw:
+      struct_name: HealthReport
+      fields:
+      - name: subject_ref
+        type: BoundaryRef
+      - name: invariant_family_ref
+        type: InvariantFamilyRef
+      - name: health_state
+        type: HealthState
+      - name: measurement_refs
+        type: Vec<MeasurementId>
+      - name: evidence_refs
+        type: Vec<EvidenceRef>
+      - name: report_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedHealthReport
+      fields:
+      - name: report_ref
+        type: HealthReportRef
+      - name: checker_ref
+        type: CheckerRef
+      - name: checked_subject_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: HealthState
+      variants:
+      - Healthy
+      - Degraded
+      - InvariantThreat
+      - BoundaryFailure
+      - Unknown
+  flow: 'Diagnostic / Measurement / Certificate refs
+
+    -> HealthReport
+
+    -> CheckedHealthReport when checked
+
+    -> EvidenceEnvelope or FactEnvelope
+
+    -> Evaluator / Policy if decision is needed
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - health_report_defaults_to_evidence_only
+  - checked_health_report_may_be_factonly_after_checks
+  - health_model_does_not_prescribe_action
+  - health_model_does_not_evaluate
+  - health_model_does_not_certify
+  - health_model_does_not_execute
+  canonical_invariant: 'HealthModel reports only. It does not prescribe, decide, certify, license, mutate,
+    or execute.
+
+    '
+  legacy_metadata:
+    name: HealthModelKernel
+    source_file: non-math/06_execution/health_model_contract.md
+    active: true
+    machine_authority: true
+    role: Invariant-relative health reporter
+    version: '2.0'
+    classification: reporting
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - Record

@@ -1,0 +1,135 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:basic_matrix:v1.0.0
+title: Basic Matrix Contract (finite rectangular storage)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_rectangular_storage_matrix
+  symbol: A ∈ T^{m×n}
+  ascii_symbol: basic_matrix
+  notation: A ∈ T^{m×n} (row-major dense storage)
+  domain:
+  - 'rows: finite natural number m ≥ 0 (usize)'
+  - 'cols: finite natural number n ≥ 0 (usize)'
+  - 'entries: length-m*n sequence of scalar type T'
+  codomain:
+    description: Finite rectangular dense array of shape (m, n) with m, n ≥ 0. This is a *storage* object
+      (cochain maps, incidence, numeric backend), not a basis-aware linear map V→W (see matrix.contract.yaml).
+requirements:
+  required_structures:
+  - m, n are finite natural numbers including zero (ℕ₀)
+  - len(entries) = m * n (with 0×n, m×0, 0×0 all length 0)
+  - Indexing get(i,j) is defined only when i < m and j < n
+  - 'Shape is part of identity: operations must not silently coerce shape'
+  - Scalar type T is fixed by the carrier (type parameter); not multi-field runtime tags
+laws:
+- 'Shape law: A has shape (m, n) with m, n ∈ ℕ₀ (including zero dimensions).'
+- 'Length law: len(entries) = m · n always (empty product when m=0 or n=0).'
+- 'Access law: get(i,j) defined ⇔ 0 ≤ i < m ∧ 0 ≤ j < n; OOB is reject, never wrap.'
+- 'Add/sub law: A ± B defined only when shape(A)=shape(B); result has same shape.'
+- 'Matmul law: A·B defined only when cols(A)=rows(B); result shape (rows(A), cols(B)).'
+- 'Object fence: BasicMatrix is storage, not the linear-map object of matrix.contract.yaml.'
+- 'Authority law: this contract confers no authority and mints no GlobalGreen/PROVED.'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Row-major entry order is canonical for serialization
+  - Deterministic pure functions only
+relationships:
+- urn:core:math:scalar:v0.1.0 — entry scalar language (aspirational type story)
+- 'urn:core:math:matrix:v0.1.0 — distinct linear-map object (007a: do not smash)'
+- urn:core:math:field:v0.1.0 — field language deferred to linear-map / field contracts
+rust_binding:
+  crate: core_linear_algebra
+  module: backend::basic_matrix
+  symbols:
+  - BasicMatrix
+  - MatrixError
+  # One test per mechanically-checkable negative_test, in declaration order.
+  # The last two negative_tests are doctrinal and are tracked as OPEN_OBLIGATION
+  # entries under wip. A named gap is honest; silence is invisible debt.
+  required_tests:
+  - test_from_row_major_mismatch
+  - test_out_of_bounds
+  - test_add_sub_mismatch
+  - test_mul_dimension_mismatch
+  - test_shape_preserved
+negative_tests:
+- Data length not equal to m*n must be rejected
+- Access with i ≥ m or j ≥ n must fail (including any access on empty shape)
+- Add/sub of unequal shapes must be rejected
+- Matmul with lhs.cols ≠ rhs.rows must be rejected
+- Implicit shape coercion (e.g. broadcast) must be rejected
+- Artifact claiming to be the linear-map matrix object solely via BasicMatrix storage must be rejected
+- Artifact claiming PROVED/GlobalGreen/HoTT discharge from this contract alone must be rejected
+doctrine:
+  summary: 'BasicMatrix is the canonical finite rectangular *storage* matrix used by numeric backends,
+    cochain maps, and incidence data. Shapes may be zero (empty free modules / zero maps) per ADR-007a
+    meth decision 2026-08-01. Not a basis-aware linear map; not authority. Nonclaim: does not claim PROVED;
+    does not claim GlobalGreen; does not claim HoTT discharge.'
+  non_role:
+  - Linear map V→W with ordered bases (matrix.contract.yaml)
+  - Symbolic tensor algebra
+  - Infinite-dimensional operators
+  - Sparse/compressed storage formats
+  - Authority minting, customer claims, PROVED/GlobalGreen/HoTT discharge
+  - Floating-point numeric stability policy (separate)
+wip:
+- Whether T must be a field vs Numeric/semiring at the storage layer remains open; current RS backend
+  is Numeric. Full field axioms belong on field/matrix objects.
+- Multi-field same-T runtime tags deferred.
+- "OPEN_OBLIGATION linear_map_object_fence: Artifact claiming to be the linear-map matrix object solely via BasicMatrix storage must be rejected; owner: Council Nomos; disposition: no mechanical unit-test discharge at the storage layer; AuthorityEffect: None."
+- "OPEN_OBLIGATION authority_claim_fence: Artifact claiming PROVED/GlobalGreen/HoTT discharge from this contract alone must be rejected; owner: Council Nomos and human authority review; disposition: no mechanical unit-test discharge at the ShapeOnly layer; AuthorityEffect: None."
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B1_LINEAR_ALGEBRA
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'B1 meth: repaired zero-dim law — m,n ∈ ℕ₀ allowed (storage for empty cochain maps). Removed
+      negative_tests that rejected rows=0/cols=0. Object fence vs matrix linear-map preserved (007a).'
+    recommendation: Continue object-specific meth; align code under ADR-007a after YAML settles. Not PROVED;
+      not GlobalGreen; not LEAN4.
+    pass: b1_linear_algebra_meth
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: MATH_ZERO_DIM_STORAGE
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: Zero-dimensional rectangular storage is mathematically legitimate for free modules of rank
+      0 and zero maps. Enforcing m,n>0 was a YAML defect relative to homology consumers (ADR-007a).
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: SHAPE_CORE_MATCH_ZERO_DIM
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates/core_linear_algebra/src/backend/basic_matrix.rs
+    yaml_law: m,n ≥ 0; len = m*n; OOB/add/matmul shape refuse
+    code_behavior: BasicMatrix permits 0-dim; Numeric T; structural shape checks
+    detail: 'After B1 YAML repair, zero-dim is no longer CODE_MORE_PERMISSIVE on shape positivity. Residual:
+      field language vs Numeric T. Not PROVED.'
+    delta: MATCH_ON_SHAPE_WITH_SCALAR_RESIDUAL

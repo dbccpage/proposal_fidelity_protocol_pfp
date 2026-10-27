@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:operad:v0.1.0
+title: Operad
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: operad
+  symbol: P = {P(n), γ, η, Σ}
+  ascii_symbol: operad
+  notation: P = {P(n), γ, η, Σ}
+  domain:
+  - 'operations: sequence P(n) for n ≥ 0'
+  - 'composition: γ: P(k) ⊗ P(n_1) ⊗ ... ⊗ P(n_k) → P(n_1 + ... + n_k)'
+  - 'unit: η: I → P(1)'
+  - 'symmetric_actions: Σ_n action on P(n)'
+  codomain:
+    description: 'A sequence of objects {P(n) | n ≥ 0} in a symmetric monoidal category V, together with composition maps, unit map, and symmetric group actions.
+
+      '
+requirements:
+  required_structures:
+  - Each P(n) is well-defined object in V
+  - Operadic composition is associative
+  - Unit map provides identity for composition
+  - Composition respects symmetric group actions
+laws:
+- 'Nested compositions agree: (γ ∘ (id ⊗ γ)) = (γ ∘ (γ ⊗ id))'
+- η is left and right unit for composition
+- Composition is equivariant under symmetric group actions
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Operations indexed canonically by arity
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:SymmetricMonoidalCategory:v0.1.0 serves as Provides ambient category structure for operad objects
+negative_tests:
+- Some P(n) is ill-formed
+- Nested compositions don't agree
+- Unit does not satisfy identity properties
+- Composition not equivariant under permutations
+doctrine:
+  summary: An operad P is a collection of spaces P(n) parametrizing n-ary operations, with composition maps and symmetric group actions satisfying associativity, unitality, and equivariance. Operads encode types of algebraic structures. The contract validates the operad axioms.
+  non_role:
+  - Does not implement operad algebras in specific categories
+  - Does not compute Koszul duality (marked as WIP)
+  - Does not handle modular, cyclic, or colored operads yet
+wip:
+- 'Koszul duality: P and P^! related via bar construction'
+- Operad algebras in various categories
+- Modular operads, cyclic operads, properads
+- Implementation of colored operads
+- Cofibrant replacement for operads
+- Contract focuses on basic operad axioms validation
+- Free algebra construction marked as ComputationWitness but not fully specified
+- Koszul duality and related constructions deferred to future versions
+- Symmetric monoidal category dependency needs concrete implementation

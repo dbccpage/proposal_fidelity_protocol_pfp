@@ -1,0 +1,84 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_discrete_wigner:v0.1.0
+title: Exact Odd-Prime Discrete Wigner Phase Space
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_discrete_wigner
+  symbol: exact_discrete_wigner
+  ascii_symbol: exact_discrete_wigner
+  notation: Exact Odd-Prime Discrete Wigner Phase Space
+  domain:
+  - Odd proven prime P<=128 over Q(zeta_P), with a declared Hermitian P-by-P operator
+  - D5 serialized carrier geometry is checked at every public query
+  codomain:
+    description: Declared finite results of core_quantum_physics::wigner; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Phase-point operators are displaced parity and W(q,p)=Tr(rho A(q,p))/P
+- Full real cyclotomic coefficients are preserved
+- All P(P+1) stabilizer states at P=3,5,7 have nonnegative exact Wigner values, unit total mass and correct
+  line-projector marginals
+- The exact L1 norm uses the declared real embedding
+- The retained five-level magic-state law evaluates every exact Wigner entry, preserves total mass one and
+  origin -1/5, and explicitly refuses a whole-grid rational projection when entries are nonrational.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: wigner
+  symbols:
+  - DiscreteWigner
+  - DiscreteWignerSystemD5
+  - WignerError
+  - DiscreteWigner::stabilizer_projector
+  - DiscreteWigner::line_marginal
+  - DiscreteWigner::l1_norm
+  - DiscreteWignerSystemD5::evaluate_exact
+  required_tests:
+  - non_rational_real_wigner_values_are_retained_and_rational_projection_is_refused
+  - all_stabilizer_states_at_primes_three_five_and_seven_have_nonnegative_wigner_marginals
+  - test_d5_magic_state_point_negativity
+negative_tests:
+- Nonrational values refuse rational projection instead of retaining only the constant coefficient
+- Malformed serialized grids, wrong operator shape, non-Hermitian inputs and invalid coordinates are refused
+doctrine:
+  summary: Phase-point operators are displaced parity and W(q,p)=Tr(rho A(q,p))/P; Full real cyclotomic coefficients
+    are preserved; All P(P+1) stabilizer states at P=3,5,7 have nonnegative exact Wigner values, unit total
+    mass and correct line-projector marginals; The exact L1 norm uses the declared real embedding; The retained
+    five-level magic-state law evaluates every exact Wigner entry, preserves total mass one and origin -1/5,
+    and explicitly refuses a whole-grid rational projection when entries are nonrational..
+  non_role:
+  - No default density admission for an arbitrary Hermitian operator
+  - No extension to even-dimensional Gross phase space or continuum Wigner theory
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

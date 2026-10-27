@@ -1,0 +1,242 @@
+schema_version: core.contract.v1
+contract_id: urn:core:products:packetization:v1.0.0
+title: Packetization
+kind: product_contract
+status: mathematical_wip
+layer: 07_products
+role: Packetization
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - SymbolGame
+    - PacketContract
+    - BoundaryContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - SemanticTruthClaim
+    required: []
+doctrine:
+  summary: 'This contract defines the Packetization product boundary.
+
+
+    Packetization translates between:
+
+    - external envelope: JSON / markdown / API payload
+
+    - symbol payload: terse Symbol Game grammar
+
+    - internal packet: typed AST / checked packet representation
+
+
+    Packetization does not prove the mathematical claim inside a packet. It emits EvidenceOnly witness
+
+    data that the payload was parsed, normalized, typed, and round-tripped according to the declared
+
+    grammar and schema.
+
+    '
+  non_role: &id002
+  - proving mathematical claims
+  - semantic truth claim
+  - certification
+  - validation of semantic correctness
+  - evaluation
+  - terminalization
+  - execution
+  - mutation
+  - authority upgrade
+  - action licensing
+  - transition authorization
+  - grammar authority creation
+  - schema authority creation
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate, terminalize,
+
+      authorize transitions, execute transitions, define grammar authority, define schema authority,
+
+      or upgrade evidence authority.
+
+
+      An LLM may produce payloads that are packetized, but packetization only emits parse, normalization,
+
+      type, schema, and roundtrip evidence.
+
+
+      LLM output carries no authority; downstream boundaries determine semantic validity, evaluation
+
+      status, certificates, licenses, and actions.
+
+      '
+  classification:
+    subsystem: Product Layer
+    role: Translation between external envelopes, symbol payloads, and internal typed packets.
+    classification: Product layer -- representation and transport boundary.
+  translation_types:
+  - external_envelope: JSON / markdown / API payload
+  - symbol_payload: terse Symbol Game grammar
+  - internal_packet: typed AST / checked packet representation
+  structural_representation:
+    packetization_witness:
+      struct_name: PacketizationWitness
+      fields:
+      - name: packet_id
+        type: PacketId
+      - name: grammar_id
+        type: GrammarId
+      - name: schema_ref
+        type: SchemaRef
+      - name: schema_version
+        type: SchemaVersion
+      - name: raw_payload_hash
+        type: Hash256
+      - name: normalized_payload_hash
+        type: Hash256
+      - name: ast_hash
+        type: Hash256
+      - name: parser_version
+        type: ParserVersion
+      - name: renderer_version
+        type: RendererVersion
+      - name: roundtrip_status
+        type: RoundtripStatus
+      - name: witness_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    packetization_output:
+      struct_name: PacketizationOutput
+      fields:
+      - name: packet_id
+        type: PacketId
+      - name: packet_kind
+        type: PacketKind
+      - name: ast_ref
+        type: AstRef
+      - name: witness_ref
+        type: WitnessId
+      - name: packet_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+  admissibility_checklist:
+  - Grammar ID is declared
+  - Schema version is declared
+  - Payload uses allowed alphabet
+  - Payload parses unambiguously
+  - Parsed AST matches packet kind
+  - Normal form is deterministic
+  - Roundtrip is lossless
+  - Budgets are respected
+  - Packetization witness hash is computed
+  - Packet hash is computed
+  admissibility_note: Admissibility here means admissible for packet intake, not semantically valid, true,
+    accepted, licensed, or executable.
+  refusal_conditions:
+  - invalid character
+  - grammar violation
+  - ambiguous parse
+  - unknown packet kind
+  - schema mismatch
+  - roundtrip mismatch
+  - noncanonical normal form
+  - payload exceeds budget
+  - hidden natural-language escape
+  roundtrip_obligation:
+    description: "Packetization must support deterministic lossless roundtrip:\n  payload -> parse ->\
+      \ AST -> normalize -> render -> parse -> same AST\n"
+    required_witness_fields:
+    - packet_id
+    - grammar_id
+    - schema_version
+    - raw_payload_hash
+    - normalized_payload_hash
+    - ast_hash
+    - parser_version
+    - renderer_version
+    - roundtrip_status
+    note: 'A packetization witness proves grammar and representation integrity only. It does not prove
+
+      semantic correctness. If certification is required, CertificateKernel may seal a certificate
+
+      over the packetization witness. Packetization itself does not create certificates.
+
+      '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - certify(
+    - validate_semantics
+    - evaluate_admissibility
+    - execute_transition
+    - prove_claim
+    - terminalize(
+    - authority_upgrade
+    - sign_certificate
+    - create_certificate
+    - mutate_carrier
+    - authorize_transition
+    - license_transition
+    - create_grammar_authority
+    - create_schema_authority
+  required_tests:
+  - packetization_roundtrip_is_lossless
+  - packetization_rejects_ambiguous_parse
+  - packetization_witness_does_not_certify
+  - packetization_rejects_undeclared_grammar
+  - packetization_rejects_budget_exceeded
+  - packetization_normal_form_is_deterministic
+  - packetization_output_defaults_to_evidence_only
+  - packetization_witness_defaults_to_evidence_only
+  - packetization_does_not_validate_semantic_correctness
+  - packetization_does_not_create_certificates
+  - packetization_does_not_create_grammar_authority
+  - packetization_does_not_create_schema_authority
+  - packetization_does_not_authorize_transition
+  - packetization_does_not_emit_action_license
+  - packetization_witness_hash_is_computed
+  - packetization_packet_hash_is_computed
+  canonical_invariant: 'Packetization is an EvidenceOnly representation/transport boundary. It translates
+    external envelopes,
+
+    symbol payloads, and internal typed packets through declared grammar, schema, parsing, normalization,
+
+    and deterministic roundtrip evidence. It does not prove semantic truth, certify, evaluate, license,
+
+    authorize, mutate, terminalize, or execute.
+
+    '
+  legacy_metadata:
+    name: Packetization
+    role: Translation between external envelopes, symbol payloads, and internal typed packets
+    classification: product
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - StructureArtifact
+    - EvidenceEnvelope
+    - Record
+    referenced_domain_kinds:
+    - WitnessEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_product_contract:v1.0.0"

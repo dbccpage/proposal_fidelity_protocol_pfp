@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:diagnostic_population_validation:v0.1.0
+title: Validated diagnostic population boundaries
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: diagnostic_population_validation
+  symbol: diagnostic_population_validation
+  ascii_symbol: diagnostic_population_validation
+  notation: Validated diagnostic population boundaries
+  domain:
+  - Finite computational-basis population shadows; f64 calculations remain diagnostics with finite nonnegative
+    tolerances, checked storage length and trace
+  codomain:
+    description: Declared finite results of core_quantum_physics::density_matrix; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Fallible calculations validate declared dimensions and public probability storage without renormalization
+- Diagonal fidelity cannot drop malformed entries through zip truncation
+- Nonfinite off-diagonal entries are refused before population-loss extraction
+- Population marginal operations revalidate declared dimensions and public probability storage before allocation
+  or indexing
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: density_matrix
+  symbols:
+  - PopulationShadow::validate
+  - PopulationShadow::try_from_probs
+  - PopulationShadow::fidelity
+  - PopulationShadow::to_linear_algebra_density
+  - PopulationShadow::from_cmatrix_with_loss
+  required_tests:
+  - states_channels_exact_tests::population_entropy_revalidates_storage_and_refuses_spectral_copies_before_allocation
+  - states_channels_exact_tests::population_partial_traces_revalidate_storage_before_marginal_allocation
+negative_tests:
+- states_channels_exact_tests::population_entropy_revalidates_storage_and_refuses_spectral_copies_before_allocation
+- states_channels_exact_tests::population_partial_traces_revalidate_storage_before_marginal_allocation
+doctrine:
+  summary: Fallible calculations validate declared dimensions and public probability storage without renormalization;
+    Diagonal fidelity cannot drop malformed entries through zip truncation; Nonfinite off-diagonal entries
+    are refused before population-loss extraction; Population marginal operations revalidate declared dimensions
+    and public probability storage before allocation or indexing.
+  non_role:
+  - A population shadow does not determine a coherent quantum density operator; no exact certificate is minted
+    from f64 data
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

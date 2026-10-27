@@ -1,0 +1,63 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:lagrange_evaluation:v0.1.0
+title: Canonical exact Lagrange evaluation
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: lagrange_evaluation
+  symbol: lagrange_evaluation
+  ascii_symbol: lagrange_evaluation
+  notation: Canonical exact Lagrange evaluation
+  domain:
+  - 1..256 distinct rational nodes.
+  codomain:
+    description: Declared finite results of core_number_theory::polynomial; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Lagrange weights reproduce all polynomials of degree below node count.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: polynomial
+  symbols:
+  - lagrange_weights_at
+  required_tests:
+  - interpolation_reproduces_polynomial_values_with_arbitrary_denominators
+negative_tests:
+- interpolation_reproduces_polynomial_values_with_arbitrary_denominators
+doctrine:
+  summary: Lagrange weights reproduce all polynomials of degree below node count..
+  non_role:
+  - Pure polynomial evaluation carries no quantum interpretation.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,128 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:search_kernel:v1.0.0
+title: SearchKernel
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: SearchKernel
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ProposalGenerator
+    - CertificateKernel
+    - Trace
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'SearchKernel orders or explores proposal frontiers using opaque traversal rules. It does
+
+    not evaluate admissibility, compute domain facts, invoke solvers, certify, rank semantic
+
+    candidates, schedule transitions, authorize, license, execute, or mutate.
+
+    '
+  non_role: &id002
+  - evaluation
+  - computation
+  - certification
+  - terminal_mapping
+  - execution
+  - mutation
+  - policy_interpretation
+  - solver_invocation
+  - candidate_scoring
+  - candidate_ranking
+  - transition_authorization
+  - action_licensing
+  structural_representation:
+    raw:
+      struct_name: SearchTraceStep
+      fields:
+      - name: search_id
+        type: SearchId
+      - name: frontier_ref
+        type: FrontierRef
+      - name: proposal_refs
+        type: Vec<ProposalRef>
+      - name: traversal_policy_ref
+        type: TraversalPolicyRef
+      - name: step_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedSearchTraceStep
+      fields:
+      - name: step_ref
+        type: SearchTraceStepRef
+      - name: checker_ref
+        type: CheckerRef
+      - name: checked_frontier_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+  flow: 'ProposalGenerator / candidate refs
+
+    -> SearchTraceStep
+
+    -> CheckedSearchTraceStep when checked
+
+    -> Evaluator only after separate checked evidence boundary
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - search_trace_step_defaults_to_evidence_only
+  - checked_search_trace_step_may_be_factonly_for_frontier_claims
+  - search_does_not_rank_candidates
+  - search_does_not_score_candidate
+  - search_does_not_evaluate
+  - search_does_not_invoke_solver
+  - search_does_not_schedule_transition
+  - search_does_not_emit_action_license
+  - search_does_not_execute
+  canonical_invariant: 'Search proposes traversal evidence only. It explores or orders proposals but does
+    not
+
+    evaluate, rank, score, authorize, license, execute, mutate, or certify.
+
+    '
+  legacy_metadata:
+    name: SearchKernel
+    source_file: non-math/06_execution/search_contract.md
+    active: true
+    machine_authority: true
+    role: Semantically opaque proposal frontier traversal
+    version: '2.0'
+    classification: proposal_traversal
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - Record

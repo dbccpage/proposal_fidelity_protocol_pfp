@@ -1,0 +1,89 @@
+schema_version: "1.0.0"
+contract_id: "os:transform"
+name: "Transform Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "enforced"
+
+description: >
+  A TransformOp is a deterministic, stateless, unary, same-carrier structural
+  mapping over admitted BaseType/Obstruction state. It maps S -> S by
+  rearranging, relabeling, transporting, reindexing, or representation-shifting
+  structure while preserving declared invariants. As an admitted Operator under
+  os:operator, every Transform satisfies the inherited Phi non-increase law:
+  Phi(T(s)) <= Phi(s) (or Phi(T(s)) = Phi(s) for structure-preserving relabelings).
+  A Transform does not compute canonical functionals, search, rank, lift, repair,
+  terminalize, certify, authorize, orchestrate, or mutate runtime state.
+
+layer: "OS"
+module_path: "operators::transform"
+
+governs:
+  - "operators/transforms/**"
+  - "operators/transform/**"
+
+does_not_govern:
+  - "constructors/**"
+  - "generators/**"
+  - "operators/lambdas/**"
+  - "operators/reducers/**"
+  - "core_functional/**"
+  - "core_homological/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipeline/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-L0-TRANSFORM"
+    description: "Transform is structure-preserving and Phi-nonincreasing over its admitted domain."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "OP-L2-TRANSFORM"
+    description: "Transform inherited Phi non-increase theorem: externally established Phi(T(s)) <= Phi(s)."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L2"
+
+  - id: "TRANSFORM-SAME-CARRIER"
+    description: "Transform preserves carrier family, carrier rank, carrier universe, and admissible execution geometry."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "OP-L7"
+    description: "Operators are single-step; repeated execution belongs to Pipeline/Runner trace."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L7"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  carrier_enlargement: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  phi_nonincrease_required: true
+  deterministic: true
+  stateless: true
+  unary: true
+  endomorphic: true
+  same_carrier_required: true
+
+phi_law:
+  operator_may_compute_phi: false
+  phi_nonincrease_required: true
+  relation: "Phi(T(s)) <= Phi(s)"
+
+relationships:
+  extends:
+    - "os:operator"

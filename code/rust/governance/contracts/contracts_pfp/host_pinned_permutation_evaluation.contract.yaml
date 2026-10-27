@@ -1,0 +1,39 @@
+# Native packet shape; semantic laws require the named finite tests.
+# AuthorityEffect: None. New URN; existing frozen contracts are unchanged.
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:host_pinned_permutation_evaluation:v1.0.0"
+title: "Pinned permutation evaluation alternatives (native runtime)"
+kind: packet_contract
+layer: 40_packets
+role: PacketSpecification
+status: active
+council_owner: L3_logos_techne
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit: [FW-UNKNOWN-FIELD]
+
+doctrine:
+  summary: "Separates exact agreement, exact contradiction and an unresolved host-presentation obligation. This is an inner evaluation, not subprocess or workload completion."
+  invariants:
+    - "Wire status uses REDERIVED, CONTRADICTED or OPEN_RESIDUAL. Both REDERIVED and CONTRADICTED retain the independently computed evidence; an unresolved branch does not invent a period or cycles."
+    - "An unknown compiled pin emits PRESENTATION_NOT_PINNED. A host-selected presentation outside the finite total-permutation profile emits PINNED_PRESENTATION_NOT_A_TOTAL_PERMUTATION."
+    - "All three alternatives are valid successful native dispatches. Neither CONTRADICTED nor OPEN_RESIDUAL may be promoted to a passed workload merely because the runtime envelope has success=true."
+    - "The shared build engine checks exhaustive enum alternatives. The serde field and mathematical behavior laws require the actual finite tests; the build engine alone is not their proof."
+  non_roles: [authority_source, promotion_granter]
+  required_negative_capabilities: [no_self_certification, no_implicit_authority_upgrade]
+
+structure:
+  language: rust
+  rust_crate: pfp
+  rust_module: pinned_permutation
+  rust_type: PinnedPermutationEvaluationV1
+  form: enum
+  variants:
+    - Rederived
+    - Contradicted
+    - OpenResidual

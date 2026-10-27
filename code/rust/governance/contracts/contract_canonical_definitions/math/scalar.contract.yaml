@@ -1,0 +1,114 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:scalar:v0.1.0
+title: Scalar Contract (field element as K^1)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: field_element_as_1d_vector
+  symbol: s ∈ K ≅ K^1
+  ascii_symbol: scalar
+  notation: s as the unique coordinate of an element of the 1-dimensional space K
+  domain:
+  - field K
+  - dimension 1
+  - canonical basis [1_K]
+  codomain:
+    description: An element of field K, optionally viewed as a 1×1 matrix / 1-dimensional vector over
+      K.
+requirements:
+  required_structures:
+  - Declared dimension is 1 when using the K^1 view
+  - Value is a valid element of K
+  - Field identity is consistent across operations
+  - 0 has no multiplicative inverse
+laws:
+- 'Element law: s ∈ K.'
+- 'One-dim law: as a vector, dim=1 and basis is canonical [1_K].'
+- 'Field ops: + and · are the field operations of K.'
+- 'Inverse law: s^{-1} defined only for s ≠ 0.'
+- 'Authority law: no PROVED/GlobalGreen/HoTT from this contract alone.'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Canonical field element encoding when serialized
+relationships:
+- 'urn:core:math:field:v0.1.0 — ambient field K'
+- 'urn:core:math:vector:v0.1.0 — optional 1-d vector view'
+- 'urn:core:math:basic_matrix:v1.0.0 — entry type language for storage'
+- 'urn:core:math:semiring:v0.1.0 — tower root via Field: Ring: Semiring'
+- 'urn:core:math:ring:v0.1.0 — tower step below Field'
+rust_binding:
+  crate: core_linear_algebra
+  module: scalars
+  symbols:
+  - Semiring
+  - Ring
+  - Field
+  required_tests:
+  - z5_is_exact_field
+
+negative_tests:
+- Dimension ≠ 1 under K^1 view must be rejected
+- Value not in K must be rejected
+- invert(0) must error
+- Operations across different field identities must be rejected
+- Artifact claiming PROVED/GlobalGreen/HoTT from this contract alone must be rejected
+doctrine:
+  binding_review_20261014: "zero, one, add and mul are Semiring requirements; try_inv is a Field requirement. Bind the actual traits, not nonexistent top-level functions. Trait declarations alone do not establish the field laws of every implementation."
+  summary: 'Scalar is an element of a field K, optionally as the unique coordinate of K^1. Atomic value
+    type for products and scaling. Nonclaim: does not claim PROVED; does not claim GlobalGreen; does not
+    claim HoTT discharge.'
+  non_role:
+  - Ordered-field positivity facts (separate)
+  - Floating-point rounding policy
+  - Authority / PROVED / GlobalGreen / HoTT discharge
+wip:
+- Whether a scalar is a special case of Vector(n=1) or a distinct primitive remains open.
+- No Scalar newtype is defined in core_linear_algebra::scalars; dim=1 is not a type-level witness here.
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B1_LINEAR_ALGEBRA
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'B1 meth: clarified K^1 view and inverse law; relationship URNs core-normalized; Agent-1
+      added thin Scalar<K: Field> newtype with DIM=1 and try_inv None at zero.'
+    recommendation: Continue object-specific meth; align code under ADR-007a after YAML settles. Not PROVED;
+      not GlobalGreen; not LEAN4.
+    pass: b1_linear_algebra_meth
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: SHAPE_METHOD_SURFACE_MATCH
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates/core_linear_algebra/src/scalars.rs
+    detail: >
+      rust_binding → core_linear_algebra::scalars::Scalar<K: Field> with DIM=1,
+      field ops, try_inv None at zero. Inverse law MATCH. Ordered-field / float policy ε.
+      AuthorityEffect None; not PROVED / GlobalGreen.
+    delta: MATCH_SHAPE
+    residual_epsilon: "K^1 vs Vector(n=1) object fence open; no runtime field-identity tags"

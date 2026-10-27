@@ -1,0 +1,272 @@
+"""Execute pinned seed-25 changes to provide an independent native-test oracle.
+
+The exhaustive part uses all binary multiplicity tables on zero, one and two
+terms. Larger, marked and unbounded-integer cases are explicitly listed. The
+stream digest binds complete states, enabled-event ordering, outputs and prices;
+it is finite differential evidence, not a theorem about every source run.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib
+import json
+import stat
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+INPUTS = ROOT / "manifests" / "source_replay_inputs.json"
+
+
+def regular(path: Path) -> bytes:
+    info = path.lstat()
+    if not stat.S_ISREG(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+        raise ValueError(f"not a regular source/control file: {path}")
+    for parent in path.parents:
+        info = parent.lstat()
+        if not stat.S_ISDIR(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            raise ValueError(f"source/control parent is not a regular directory: {parent}")
+    return path.read_bytes()
+
+
+def require(condition: bool, detail: str) -> None:
+    if not condition:
+        raise ValueError(detail)
+
+
+def verify_unchanged(snapshot: dict[Path, str]) -> None:
+    for path, digest in snapshot.items():
+        require(
+            hashlib.sha256(regular(path)).hexdigest() == digest, f"replay input changed: {path}"
+        )
+
+
+def wire(fs) -> list:
+    """Array-only encoding avoids object-key order and machine-width integers."""
+    return [
+        fs.n,
+        [str(v) for v in fs.state.r],
+        [str(v) for v in fs.state.s],
+        list(map(list, fs.filled)),
+    ]
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source-root", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    require(not args.output.exists() and not args.output.is_symlink(), "refusing existing output")
+    verifier_path = Path(__file__).absolute()
+    verifier = regular(verifier_path)
+    control = regular(INPUTS)
+    manifest = json.loads(control)
+    require(manifest["schema"] == "wdp-source-replay-inputs-v1", "unknown input schema")
+    snapshot = {
+        verifier_path: hashlib.sha256(verifier).hexdigest(),
+        INPUTS: hashlib.sha256(control).hexdigest(),
+    }
+    source_paths = set()
+    for row in manifest["files"]:
+        path = args.source_root / row["repository"] / row["path"]
+        body = regular(path)
+        require(len(body) == row["bytes"], f"source size drift: {path}")
+        require(hashlib.sha256(body).hexdigest() == row["sha256"], f"source hash drift: {path}")
+        blob = hashlib.sha1(f"blob {len(body)}\0".encode() + body).hexdigest()
+        require(blob == row["git_blob"], f"source Git blob drift: {path}")
+        snapshot[path] = row["sha256"]
+        source_paths.add(path.resolve())
+    sys.dont_write_bytecode = True
+    sys.path.insert(0, str(args.source_root / "H3V7N5QF" / "code"))
+    modules_before = set(sys.modules)
+    s25 = importlib.import_module("twentyfifth.state")
+    s23 = importlib.import_module("twentythird.state")
+    s22 = importlib.import_module("twentysecond.state")
+    for name in set(sys.modules) - modules_before:
+        path = getattr(sys.modules[name], "__file__", None)
+        if path and name.split(".")[0] not in sys.stdlib_module_names:
+            require(Path(path).resolve() in source_paths, f"unbound imported source: {name}")
+
+    def state(n, r=None, s=None, filled=()):
+        return s25.FState(
+            s25.DState(n, tuple(r or [0] * (n * n)), tuple(s or [0] * (n * n))), filled
+        )
+
+    def event(change):
+        if isinstance(change, s25.Filling):
+            return ["fill", change.x, change.y, change.z]
+        kind = change.kind.name.lower()
+        if kind == "add_term":
+            return [kind]
+        if kind == "identify":
+            return [kind, change.x, change.y]
+        return [kind, change.rel, change.x, change.y]
+
+    def price(change):
+        return [0, 0] if isinstance(change, s25.Filling) else list(change.additions)
+
+    def decode(description):
+        kind, *fields = description
+        if kind == "fill":
+            return s25.Filling(*fields)
+        tag = getattr(s25.Kind, kind.upper())
+        if kind == "add_term":
+            return s25.Change(tag)
+        if kind == "identify":
+            return s25.Change(tag, "", *fields)
+        return s25.Change(tag, *fields)
+
+    huge = 1 << 140
+    extra = [
+        state(3),
+        state(3, [1] * 9, [1] * 9, ((0, 1, 2), (0, 2, 1))),
+        state(3, [1, 2, 0, 0, 0, 1, 3, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0, 0], ((0, 1, 2),)),
+        state(3, [huge, 2, 0, 3, 4, 0, 0, 0, 0], [0, 0, 7, 0, 0, 0, 0, 5, 0]),
+        state(
+            4,
+            [huge, 2, 0, 0, 3, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0],
+            ((0, 1, 2), (0, 2, 3), (0, 3, 2), (1, 2, 3), (1, 3, 2)),
+        ),
+    ]
+    digest = hashlib.sha256()
+    state_count = transition_count = 0
+
+    def record(fs):
+        nonlocal state_count, transition_count
+        enabled = s25.changes(fs)
+        outcomes = []
+        for change in enabled:
+            after = s25.perform(fs, change)
+            outcomes.append(
+                [
+                    event(change),
+                    s25.is_addition(change),
+                    price(change),
+                    wire(after),
+                    str(after.state.size),
+                    str(s22.cost(after.state)),
+                ]
+            )
+        data = [wire(fs), outcomes, str(fs.state.size), str(s22.cost(fs.state))]
+        digest.update(json.dumps(data, separators=(",", ":")).encode() + b"\n")
+        state_count += 1
+        transition_count += len(enabled)
+
+    for n in range(3):
+        for mask in range(1 << (2 * n * n)):
+            r = [(mask >> i) & 1 for i in range(n * n)]
+            s = [(mask >> (n * n + i)) & 1 for i in range(n * n)]
+            record(state(n, r, s))
+    for fs in extra:
+        record(fs)
+
+    def history(initial, descriptions):
+        current = initial
+        states = [wire(current)]
+        additions = [0, 0]
+        for description in descriptions:
+            change = decode(description)
+            require(change in s25.changes(current), "history contains a disabled source event")
+            current = s25.perform(current, change)
+            states.append(wire(current))
+            additions = [a + b for a, b in zip(additions, price(change))]
+        return {
+            "states": states,
+            "changes": descriptions,
+            "addition_price": list(map(str, additions)),
+        }
+
+    histories = [
+        history(
+            state(0),
+            [
+                ["add_term"],
+                ["add_term"],
+                ["add_term"],
+                ["add_assertion", "r", 0, 1],
+                ["add_assertion", "s", 2, 0],
+                ["fill", 0, 1, 2],
+                ["remove", "r", 0, 1],
+                ["identify", 0, 2],
+                ["add_term"],
+                ["add_assertion", "r", 2, 1],
+                ["fill", 0, 2, 1],
+            ],
+        ),
+        history(state(2), [["add_assertion", "r", 0, 1], ["remove", "r", 0, 1]]),
+        history(state(2), []),
+    ]
+    require(
+        histories[1]["states"][-1] == histories[2]["states"][-1], "cycle must preserve final state"
+    )
+    require(
+        histories[1]["addition_price"] != histories[2]["addition_price"], "cycle price was lost"
+    )
+    raising = []
+    for before, counts in ((extra[2], [2, 0, 1]), (state(1, [3], [1]), [7])):
+        after = s25.FState(s23.raise_terms(before.state, counts), before.filled)
+        raising.append(
+            {"before": wire(before), "counts": list(map(str, counts)), "after": wire(after)}
+        )
+
+    countermodels = []
+    for potential, description in (([1, 0], ["add_term"]), ([0, 0, 0, 1], ["identify", 0, 1])):
+        n = len(potential)
+        excess = [potential[x] - potential[y] for x in range(n) for y in range(n)]
+        left = state(n)
+        right = state(n, [max(v, 0) for v in excess], [max(-v, 0) for v in excess])
+        change = decode(description)
+        require(
+            change in s25.changes(left) and change in s25.changes(right),
+            "disabled countermodel event",
+        )
+        after_left, after_right = s25.perform(left, change), s25.perform(right, change)
+        require(
+            s25.result_mark(left) == s25.result_mark(right),
+            "countermodel inputs differ in source result",
+        )
+        require(
+            s25.result_mark(after_left) != s25.result_mark(after_right),
+            "countermodel outputs agree",
+        )
+        countermodels.append(
+            {
+                "before": [wire(left), wire(right)],
+                "change": description,
+                "after": [wire(after_left), wire(after_right)],
+            }
+        )
+
+    verify_unchanged(snapshot)
+    receipt = {
+        "schema": "wdp-source-execution-v1",
+        "authority_effect": "None",
+        "verifier_sha256": hashlib.sha256(verifier).hexdigest(),
+        "inputs_sha256": hashlib.sha256(control).hexdigest(),
+        "scope": "All binary r/s tables for n<=2, five listed larger states, three ordered histories, two raising cases and two source-result countermodels. Finite differential execution evidence only.",
+        "corpus": {
+            "binary_max_terms": 2,
+            "binary_order": "n ascending, mask ascending; r row-major low bits, then s",
+            "extra_states": list(map(wire, extra)),
+            "states": state_count,
+            "transitions": transition_count,
+            "record_encoding": "[state, [[event, is_addition, addition_price, after, raw_size, plain_cost], ...], raw_size, plain_cost]; compact JSON plus LF",
+            "sha256": digest.hexdigest(),
+        },
+        "histories": histories,
+        "raising": raising,
+        "quotient_countermodels": countermodels,
+    }
+    args.output.write_text(
+        json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n"
+    )
+    print(
+        f"{state_count} full source states; {transition_count} enabled transitions; ordered histories and prices; source bytes stable"
+    )
+
+
+if __name__ == "__main__":
+    main()

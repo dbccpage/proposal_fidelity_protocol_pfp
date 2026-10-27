@@ -1,0 +1,177 @@
+schema_version: core.contract.v1
+contract_id: urn:core:products:structure_sweep:v1.0.0
+title: StructureSweep
+kind: product_contract
+status: mathematical_wip
+layer: 07_products
+role: StructureSweep
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - PacketContract
+    - Packetization
+    - SymbolGame
+    - LlmSymbolGameInterface
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - Terminalization
+    required: []
+doctrine:
+  summary: 'This contract defines the Core Structure Sweep product boundary.
+
+
+    The Structure Sweep takes a mathematical corpus (a paper or encyclopedia slice), has LLM authors
+
+    propose structure-correspondence packets against known mathematics, gates every claim through an
+
+    author-blind LLM adjudicator, and routes everything through deterministic host code: a schema
+
+    validator, a phase-aware lane router, and a terminalizer. Survivors, kills, obligations, and Lean4
+
+    targets accumulate in append-only lane files; a final synthesis may cite ONLY filtered survivor
+
+    facts.
+
+
+    All authority is host-side and deterministic. The product''s `host_terminal_status: Certificate`
+
+    is a PRODUCT-INTERNAL LANE STAMP at evidence_only / LocalReplay ceiling -- NOT an omega Certificate
+
+    artifact. Its sole minting site is `core_sweep_kernel::terminalize` (Rust rail; the Python rail''s
+
+    `scripts/terminalize_rows.py` is the dual-rail equivalent until cutover). A row is stamped IFF
+
+    strict re-validation is clean AND gated_verdict is ISO|EQUIV|ADJOINT|EMBED AND the witness is
+
+    nonempty AND the host-stamped author_model differs from gate_model. The bridge onto the canonical
+
+    authority surface maps refusal statuses to the core_types refusal coproduct and maps the lane
+
+    stamp to NO canonical claim; lifting to Terminal requires the core_certifiers route (a verified
+
+    replay), which this product does not take.
+
+    '
+  non_role: &id002
+  - proving correctness by itself
+  - certification (core-level)
+  - authority upgrade
+  - evaluating mathematical truth inside the validator
+  llm_boundary_law:
+    doctrine: 5
+    text: 'All LLM output in the sweep is candidate material only (Doctrine 5): authored packets are
+
+      validated deterministically before any lane write; gate adjudications pass through
+
+      normalize_gate_row, which BLANKS every host-owned routing field (status, host_terminal_status,
+
+      output_lane) before ingest; provenance (author_model, gate_model, worker, provider) is
+
+      host-stamped from the dispatch manifest and worker identity -- packet bodies can lie and are
+
+      never trusted for provenance.
+
+      '
+  classification:
+    subsystem: Product Layer
+    role: Corpus-scale structure-correspondence sweep with deterministic authority rail.
+    classification: Product layer -- the Structure Sweep wraps paper-scale claim adjudication.
+  admissibility_checklist:
+  - Pass input bundle is deterministic (fixed file order, sha256 echo contract)
+  - Authors receive ONLY the declared bundle (clean context; citation closure over declared_ids)
+  - Gate is author-blind (manifest-level author_model != gate_model, host-verified)
+  - Lane files are append-only (content-hash dedupe; same id + different content = conflict)
+  - Ingest is idempotent (packet_id@phase index; same-phase re-ingest with new content quarantines)
+  - Pause-before-synthesis gate requires operator approval
+  - Synthesis reads ONLY the four allowed lanes; survived rows without Certificate are filtered
+  refusal_conditions:
+  - ForbiddenAnalogyTerm
+  - UndeclaredSymbol
+  - TypeDrift
+  - OpenPromotedToSurvived
+  - AuthorBlindGateViolation
+  - ModelSelfCertificationAttempt
+  - TerminalStatusMismatch
+  - OracleRequiredButClaimedCertificate
+  - LocalGreenGlobalRed
+  - UndeclaredSourceId
+  - UnterminalizedPostGateRow
+  - RunIdEchoMismatch
+  - BundleHashEchoMismatch
+  replay_obligation:
+    description: 'Every certified row must be replayable from recorded artifacts.
+
+      '
+    required_fields:
+    - packet_id
+    - run_id + bundle_sha256 echo
+    - author_model / gate_model (host-stamped)
+    - gated_verdict + required_witness
+    - host_terminal_status + output_lane + authority_ceiling
+    - ingest index entry (content_sha256, pass_id, lane)
+    note: 'Tier A replay parity (re-terminalize committed survivors) and the hostile fixture suite
+
+      are the standing acceptance evidence; see required_tests.
+
+      '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - certify
+    - terminalize
+    - authority_upgrade
+    - sign_certificate
+  required_tests:
+  - hostile_validator_frozen_fixtures_pass
+  - hostile_terminalizer_tf_fixtures_pass
+  - hostile_router_rt_fixtures_pass
+  - hostile_ingest_ig_fixtures_pass
+  - canon_hash_known_answers
+  - replay_parity_tier_a
+  canonical_invariant: 'The Structure Sweep''s only authority is deterministic host code. The validator
+
+    never emits Certificate or OracleNeeded; gate workers are forbidden to assign routing; the router
+
+    only moves rows whose terminal status is already stamped and fails closed on anything unstamped;
+
+    the terminalizer is the sole Certificate-minting site and certifies only strict-clean, witnessed,
+
+    author-blind survivor verdicts. The Certificate stamp is product-internal evidence at LocalReplay
+
+    ceiling and confers no core-level authority.
+
+    '
+  legacy_metadata:
+    name: StructureSweep
+    role: Corpus-scale structure-correspondence sweep with deterministic authority rail
+    classification: product
+    effect_class: none
+    raw_output_authority_effect: EvidenceOnly
+    checked_output_authority_effect: FactOnly
+    promotion_condition: strict_validation_witness_and_author_blind_checks_pass
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: StructureSweepLanes
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+    - Record
+    referenced_domain_kinds:
+    - Trace
+    - ReplayReport
+    llm_boundary: LLM is candidate generator and candidate adjudicator only. LLM output carries no authority.

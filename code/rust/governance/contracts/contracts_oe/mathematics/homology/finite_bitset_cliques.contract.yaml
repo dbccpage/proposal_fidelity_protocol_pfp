@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_bitset_cliques:v0.1.0
+title: Exact finite bitset graph cliques
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_bitset_cliques
+  symbol: finite_bitset_cliques
+  ascii_symbol: finite_bitset_cliques
+  notation: Exact finite bitset graph cliques
+  domain:
+  - Symmetric loop-free bitset graph with at most128 vertices, at most2^24 recursive branches and65536 output
+    cliques.
+  codomain:
+    description: Declared finite results of core_homology::finite_cliques; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Enumeration returns every clique of the declared size.
+- Exact greedy-color upper bounds prune maximum-clique search without discarding a larger clique.
+- Full128-vertex bitmasks are handled without shifting by128.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_homology
+  module: finite_cliques
+  symbols:
+  - cliques
+  - maximum_clique
+  - CliqueError
+  - validate_graph
+  required_tests:
+  - finite_cliques_agree_with_exhaustive_subsets_and_handle128_vertices
+negative_tests:
+- finite_cliques_agree_with_exhaustive_subsets_and_handle128_vertices
+doctrine:
+  summary: Enumeration returns every clique of the declared size.; Exact greedy-color upper bounds prune maximum-clique
+    search without discarding a larger clique.; Full128-vertex bitmasks are handled without shifting by128..
+  non_role:
+  - Generic clique mathematics contains no ray or quantum interpretation.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

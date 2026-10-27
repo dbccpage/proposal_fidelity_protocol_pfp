@@ -1,0 +1,53 @@
+# =============================================================================
+# ENGINE CRATE COMPONENT BASE CONTRACT
+# Schema Version: core.contract.v1
+# AuthorityEffect: None
+# =============================================================================
+
+schema_version: core.contract.v1
+contract_id: "urn:core:crate:base_component:v1.0.0"
+title: "Base Crate Component Contract"
+kind: constitution_contract
+status: active
+layer: "00_constitution"
+role: Constitution
+
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - "urn:core:constitution:base_contract:v1.0.0"
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - "REFUSAL_INVALID_ARGUMENTS"
+      - "REFUSAL_INVARIANT_BREACH"
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+
+relationships:
+  abstract: true
+  inherits_from:
+    - "urn:core:constitution:base_contract:v1.0.0"
+
+doctrine:
+  summary: >-
+    Abstract base contract defining the shared architectural invariants, fail-closed posture,
+    and AuthorityEffect None floor for all Engine runtime crate components (engines, kernels,
+    pipelines, policies, solvers, validators, packets, and trace artifacts).
+  invariants:
+    - "AuthorityEffect is strictly None across all execution paths unless explicit ActionLicense is verified."
+    - "Inheritance shares structural constraints; it never transfers evidence, truth, or promotion authority."
+    - "All component interactions adhere strictly to Clean Architecture inward dependency boundaries."
+  non_role:
+    - authority_minting
+    - self_certification
+    - undeclared_state_mutation
+    - policy_widening

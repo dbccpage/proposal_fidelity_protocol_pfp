@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:nerve:v0.1.0
+title: Nerve Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: simplicial_complex
+  symbol: N(U) where U = {U_i}_{i ∈ I}
+  ascii_symbol: nerve
+  notation: N(U) where U = {U_i}_{i ∈ I}
+  domain:
+  - 'vertices: Index set I from the cover'
+  - 'simplices: Collection of finite subsets S ⊆ I with non-empty intersection'
+  codomain:
+    description: Abstract simplicial complex with vertex set I (cover index set)
+requirements:
+  required_structures:
+  - Every simplex corresponds to a non-empty intersection
+  - All non-empty intersections are represented as simplices
+  - All faces of simplices are present
+  - Vertices and simplices follow canonical ordering
+laws:
+- S ⊆ I is a simplex iff ∩_{i ∈ S} U_i ≠ ∅
+- If S is a simplex and T ⊆ S, then T is a simplex
+- Vertices of N(U) are in bijection with cover sets
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Vertices ordered as in Cover artifact
+  - Simplices enumerated by cardinality then lexicographically
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Cover:v0.1.0 serves as Source cover providing the index set I and subsets U_i ⊆ X
+- urn:math:contract:SimplicialComplex:v1.0.0 serves as Target structure for the nerve construction
+negative_tests:
+- cover_id does not resolve
+- Cover has no sets (I = ∅)
+- Some U_i = ∅, vertex excluded from nerve
+- Implementations disagree on intersection emptiness
+- '{i,j} claimed as simplex but U_i ∩ U_j = ∅'
+- '{i,j,k} is simplex but {i,j} not recorded'
+doctrine:
+  summary: 'The Nerve of a cover is a simplicial complex whose vertices correspond to the sets in the cover, and whose k-simplices correspond to (k+1)-fold intersections that are non-empty. The contract takes a Cover artifact and produces a SimplicialComplex artifact representing the nerve. It validates that the nerve construction is correct: a simplex {U_0, ..., U_k} exists iff the intersection U_0 ∩ ... ∩ U_k is non-empty.'
+  non_role:
+  - Verifying the Nerve Theorem hypothesis (good cover conditions)
+  - Computing Cech cohomology (separate contract)
+  - Supporting infinite covers (finite index sets only)
+  - Implicit cover definitions (requires explicit point sets)
+wip:
+- Contract does not verify Nerve Theorem hypothesis (good cover, contractible intersections) - these are FactEnvelope claims
+- Infinite covers are not supported (finite index sets only)
+- Cover must provide explicit point sets for each U_i; implicit covers (defined by predicates) cannot be computed without enumeration
+- Refinement of covers and induced maps on nerves could be separate ComputationWitness
+- 'Relationship with Cech cohomology: nerve is indexing complex for Cech cochains - needs separate contract'
+- Vertices ordered according to Cover artifact index ordering
+- Simplices enumerated by cardinality, then lexicographically by sorted vertex indices
+- Intersection computation uses canonical point ID set intersection
+- Empty cover sets (U_i = ∅) result in fewer nerve vertices than cover sets - valid but documented

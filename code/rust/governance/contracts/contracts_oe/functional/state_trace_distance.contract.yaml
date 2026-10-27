@@ -1,0 +1,90 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:state_trace_distance:file:v1.0.0
+title: Bounded numerical density admission and trace distance with retained inputs
+status: active_provisional
+crate: core_functional
+file: crates_rs/core_functional/src/distinguishability.rs
+layer: functional
+role: immutable_approximate_state_trace_distance_diagnostic
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - explicit_spectral_policy_and_state_tolerance_in_EPSILON_through_1e_minus_8
+  - exact_representational_Hermitian_symmetry_via_checked_spectral_kernel
+  - observed_trace_within_selected_tolerance_of_one
+  - computed_eigenvalues_at_least_minus_selected_state_tolerance
+  - recorded_negative_eigenvalue_magnitude_without_modifying_inputs
+  - bounded_finite_pure_vector_admission_before_dense_outer_product_allocation
+  - refusal_of_nonunit_norm_and_unrepresentable_nonzero_outer_products
+  - original_pure_vector_norm_matrix_and_spectral_evidence
+  - matching_selected_policy_and_dimensions_before_difference_allocation
+  - half_absolute_contribution_of_every_difference_eigenvalue
+  - compensated_sum_with_direct_overflow_and_rounding_witnesses
+  - retained_left_right_and_difference_presentations
+  - no_overlapping_vector_truncation_probability_clamp_or_authority_promotion
+does_not_own:
+  - exact_positive_semidefinite_or_physical_state_certificate
+  - spectral_rounding_or_interval_error_certificate
+  - automatic_normalization_symmetrization_or_positivity_repair
+  - primary_obstruction_score_or_candidate_selection
+  - legacy_general_matrix_path_triangle_API_compatibility
+  - Xi_lift_or_saturation_semantics
+  - source_native_binary_request_carrier_or_actor_authentication
+  - workload_completion_release_or_council_decisions
+  - HTTP_provider_ingress_limits_or_arbitrary_code_execution
+may_call:
+  - checked_hermitian_spectrum
+must_not:
+  - use_is_close_with_unbounded_or_nonfinite_tolerance
+  - substitute_a_positive_diagonal_for_eigenvalue_admission
+  - discard_complex_phases_or_eigenvalue_contributions
+  - silently_normalize_vectors_or_clamp_near_density_distance_to_one
+  - replace_a_nonzero_underflowed_contribution_with_zero
+  - accept_other_policy_admissions_or_truncate_mismatched_dimensions
+  - expose_mutable_checked_data_or_unchecked_deserialization
+exactness:
+  mode: bounded_floating_representation_diagnostic_with_explicit_admission_slack
+  exact_constructor_required: false
+  approximate_modes_allowed: true
+forbidden_substrings: []
+required_substrings:
+  - "pub struct DistinguishabilityFunctional"
+  - "pub struct DensityAdmission"
+  - "pub struct TraceDistanceDiagnostic"
+  - "DistinguishabilityError::NegativeEigenvalue"
+  - "DistinguishabilityError::PolicyBinding"
+  - "DistinguishabilityError::ContributionUnderflow"
+  - "let matrix = left.matrix() - right.matrix();"
+  - "checked_trace_contributions(difference.eigenvalues())?"
+  - "let corrected = contribution - compensation;"
+required_tests:
+  - "distinguishability::tests::arithmetic_accumulator_refuses_finite_overflow_and_nonfinite_input"
+  - "distinguishability::tests::compensated_half_sum_preserves_a_three_quarter_ulp_tail"
+  - "distinguishability::tests::finite_spectrum_does_not_authorize_an_overflowed_trace"
+  - "distinguishability::tests::admitted_inputs_do_not_authorize_exceeding_the_difference_solver_budget"
+  - "distinguishability::tests::near_unit_vector_slack_is_recorded_without_renormalizing"
+  - "distinguishability::tests::independent_rational_fixtures_cover_mixed_complex_and_degenerate_states"
+  - "distinguishability::tests::selected_policy_rejects_nonfinite_or_vacuous_state_tolerances"
+  - "distinguishability::tests::matrix_shape_empty_and_dimension_refusals_preserve_the_native_mechanism"
+  - "distinguishability::tests::every_input_triangle_and_imaginary_component_remains_checked"
+  - "distinguishability::tests::trace_mismatch_is_not_normalized_into_an_admitted_state"
+  - "distinguishability::tests::positive_diagonal_does_not_hide_a_negative_eigenvalue"
+  - "distinguishability::tests::approximate_admission_retains_negativity_and_does_not_clamp_distance"
+  - "distinguishability::tests::vector_dimension_limits_precede_dense_allocation_and_nonfinite_admission"
+  - "distinguishability::tests::all_pure_vector_components_are_checked_before_norm_arithmetic"
+  - "distinguishability::tests::finite_overflowing_vector_norm_is_a_typed_arithmetic_refusal"
+  - "distinguishability::tests::zero_and_unnormalized_vectors_are_not_silently_repaired"
+  - "distinguishability::tests::nonzero_outer_products_cannot_disappear_under_floating_underflow"
+  - "distinguishability::tests::original_pure_vectors_norms_and_complex_phases_are_retained"
+  - "distinguishability::tests::both_admissions_must_match_the_selected_numerical_policy"
+  - "distinguishability::tests::mismatched_dimensions_refuse_instead_of_truncating_or_panicking"
+  - "distinguishability::tests::a_nonzero_half_eigenvalue_cannot_be_reported_as_zero_distance"
+  - "distinguishability::tests::result_retains_all_contributions_and_owns_its_original_inputs"
+  - "distinguishability::tests::exhausted_native_spectral_budget_cannot_become_state_admission"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

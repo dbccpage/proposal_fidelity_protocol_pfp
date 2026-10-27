@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:rust:core_general_relativity:field_equation:v0.1.0
+title: "Field Equation (core_general_relativity)"
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: field_equation
+  symbol: "field_equation"
+  ascii_symbol: field_equation
+  notation: "Finite dual-face carrier for core_general_relativity::field_equation"
+  domain:
+  - "degree ∈ ℕ₀"
+  - "finite label string"
+  codomain:
+    description: >
+      Best-effort dual-face for RS `core_general_relativity::field_equation`. AUTHORING_QUALITY: human_llm_best_effort_slop (best-effort dual-face scaffold; not human-canon math; not PROVED; not GlobalGreen).
+requirements:
+  required_structures:
+  - Finite degree proxy
+  - Explicit AuthorityEffect none fence
+laws:
+- "Shape law: degree is a finite natural (including 0)."
+- "Authority law: no PROVED/GlobalGreen/HoTT from this contract alone."
+- "Authoring law: human_llm_best_effort_slop."
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+relationships: []
+rust_binding:
+  crate: core_general_relativity
+  module: field_equation
+  symbols:
+  - ReggeFieldEquationResult
+  - compute_regge_field_equations_4d
+  - ReggeRelaxationResult
+  - solve_regge_field_equations_relaxation
+  # Structural discharge: this crate cannot reach CertifiedAuthority.
+  required_tests:
+  - no_carrier_in_this_crate_can_reach_certified_authority
+negative_tests:
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+doctrine:
+  summary: >
+    Dual-face YAML for `core_general_relativity::field_equation`. AUTHORING_QUALITY: human_llm_best_effort_slop (best-effort dual-face scaffold; not human-canon math; not PROVED; not GlobalGreen).
+  non_role:
+  - PROVED / GlobalGreen / host authority
+  - Full classical theorem discharge
+wip:
+- "AUTHORING_QUALITY: human_llm_best_effort_slop (best-effort dual-face scaffold; not human-canon math; not PROVED; not GlobalGreen)."
+- "Best-effort RS carrier only; deepen with human review."
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: LLM_BEST_EFFORT_SLOP
+    severity: info
+    claim_class: "[CODE_DEMO_RUST]"
+    detail: "AUTHORING_QUALITY: human_llm_best_effort_slop (best-effort dual-face scaffold; not human-canon math; not PROVED; not GlobalGreen). module core_general_relativity::field_equation"
+    recommendation: Keep AuthorityEffect None; deepen only with human review.
+    pass: domain_face_batch_gr_qm_ml_20260801

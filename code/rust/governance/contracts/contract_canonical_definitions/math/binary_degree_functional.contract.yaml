@@ -1,0 +1,90 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:binary_degree_functional:v1.0.0
+title: Binary (F₂) Φ₁ and Γ₂ specializations and integer triangle-face Γ₂
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1:v1.0.0
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: binary_degree_functionals
+  symbol: Φ₁, Γ₂ over F₂
+  ascii_symbol: BinaryDegree
+  notation: "Φ₁(r) = min_{x ∈ F₂^n} |r + d₀x|_H;  Γ₂(r) = |d₁r|_H;  Γ₂(face) = |ab + bc + ca|; BinaryDegreeFunctional only measures chain composites and exposes binary carrier helpers"
+  domain:
+  - "row-major F₂ matrices d₀ (m × n) and d₁, given as Vec<Vec<bool>>"
+  - "binary residual r ∈ F₂^m"
+  - "three orientation-adjusted i64 edge coefficients per triangle face (integer path)"
+  codomain:
+    description: >-
+      Phi1Functional and Gamma2Functional return exact usize Hamming values or a typed
+      BinaryDegreeError. Gamma2Functional returns exact i64/u64 values or
+      IntegerGamma2Error::CapacityOverflow.
+  definition:
+    phi1: "Hamming distance from r to im(d₀) over F₂, by exhaustive search over F₂^n when n ≤ 20"
+    gamma2: "Hamming weight of d₁r over F₂"
+    image_membership: "Gaussian elimination over F₂ on the augmented matrix [d₀ | r]"
+    chain_composite_weight: "number of nonzero entries of a supplied d₁d₀ matrix"
+    integer_face: "closure = ab + bc + ca (checked i64); face Γ₂ = |closure|; total = checked u64 sum"
+laws:
+- "Exhaustive Φ₁ law: for n ≤ 20 (MAX_EXHAUSTIVE_BINARY_DOMAIN_DIM) every x ∈ F₂^n is tried, so the returned value is the exact minimum Hamming distance."
+- "Bounded fallback law: for n > 20, Φ₁ is returned only when r ∈ im(d₀) (value 0) or r has Hamming weight at most 1 (value equal to that weight). Every other input is refused with ExhaustiveSearchTooLarge, never approximated."
+- "Γ₂ law: Γ₂ is the Hamming weight of d₁r on the supplied binary C² carrier. It is a different functional from Φ₁, computed by a separate routine."
+- "Composite fence: chain_composite_weight counts chain-law violations in a supplied d₁d₀. It is not Φ₁ and does not build the composite."
+- "Shape law: ragged matrices and inputs of the wrong length are refused with typed errors."
+- "Integer overflow law: the triangle closure and the face total use checked arithmetic and refuse on overflow instead of wrapping."
+- "Exactness law: F₂ values are bool and integer values are checked i64/u64; there is no floating-point path."
+- "Authority law: no value from this module mints AuthorityEffect, PROVED, GlobalGreen or ActionLicense."
+replay:
+  requirements:
+  - No external state, randomness or wall-clock
+  - Deterministic exhaustive enumeration order over F₂^n
+relationships:
+- "urn:core:math:phi1:v1.0.0 — Φ₁ over a field; this module is the F₂ Hamming specialization"
+- "urn:core:math:gamma2_closure_defect:v1.0.0 — Γ₂; this module is the F₂ and integer-face specialization"
+rust_binding:
+  crate: core_functional
+  module: binary_degree
+  symbols:
+  - MAX_EXHAUSTIVE_BINARY_DOMAIN_DIM
+  - BinaryDegreeError
+  - BinaryDegreeFunctional
+  required_tests:
+  - composite_weight_is_shape_checked_and_separate_from_phi1
+  - integer_face_gamma2_detects_arithmetic_overflow
+  - binary_quotient_and_closure_have_distinct_values
+
+negative_tests:
+- A ragged composite matrix must be rejected, and composite weight is not Φ₁
+- Integer face closure overflow must be refused, not wrapped
+doctrine:
+  binding_review_20261014: "The integer Gamma2 refusal type is declared in core_functional::gamma2, not binary_degree. This binding covers binary_degree only; the Gamma2 dependency remains declared separately."
+  summary: >-
+    Phi1Functional owns the exact F₂ arithmetic for Φ₁ (Hamming distance to im(d₀),
+    exhaustive up to 20 source dimensions, fail-closed beyond). Gamma2Functional owns
+    binary Γ₂ (Hamming weight of d₁r) and checked integer Γ₂ on oriented triangle faces. Callers may
+    build cochains but should not recompute these values elsewhere. Nonclaim: no search
+    beyond the declared bound; not authority; not PROVED; not GlobalGreen.
+  non_role:
+  - Φ₁ over ℚ or ℝ, or a primal-dual certificate
+  - Approximate Φ₁ above the exhaustive bound
+  - Cochain construction or carrier declaration
+  - Authority minting, ActionLicense, PROVED or GlobalGreen
+wip:
+- "OPEN_OBLIGATION untested_paths: the n > 20 fallback, ExhaustiveSearchTooLarge, InputDimensionMismatch, is_in_image and Gamma2Functional::checked_total overflow have no dedicated unit test here; core_discrete_deformation_algebra exercises some of them through its degree tower; AuthorityEffect: None."

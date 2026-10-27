@@ -1,0 +1,298 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:xi_tie_breaker:v1.0.0
+title: Ξ representative-alignment diagnostic
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1:v1.0.0
+    - urn:core:math:phi1_obstruction_mass:v1.0.0
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    - urn:core:math:residual_projection:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: xi_tie_breaker
+  ascii_symbol: xi_tie_breaker
+  symbol: xi_tie_breaker
+  notation: xi_tie_breaker
+  domain:
+  - 'carrier: instance of xi_tie_breaker'
+  codomain:
+    description: Mathematical object declared by Ξ representative-alignment diagnostic (structural shell).
+requirements:
+  required_structures:
+  - Carrier for xi_tie_breaker must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- Ξ representative-alignment diagnostic is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+rust_binding:
+  crate: core_functional
+  module: xi
+  symbols:
+  - DensityLift
+  - XiValidity
+  - XiResult
+  - XiComputation
+  - XiError
+  - XiFunctional
+  required_tests:
+  - test_saturation_failure_blocks_xi_admission
+  - test_density_lift_rejects_zero_mass
+  - test_density_lift_rejects_nan_entries
+  - compute_rejects_primal_dual_length_mismatch
+  - test_xi_cannot_decide_when_phi_worsens
+  - test_xi_cannot_decide_when_gamma_worsens
+negative_tests:
+- Artifact claiming Ξ representative-alignment diagnostic without required structures must be rejected
+- Empty or ill-typed carrier for xi_tie_breaker must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: 'Tertiary representative-alignment diagnostic. Nonclaim: this contract does not claim HoTT/Univalence
+    discharge, PROVED status, or GlobalGreen.'
+  symbol: Ξ
+  ascii_symbol: Xi
+  formula: Ξ = ||ρ(h₁*) - ρ(φ*)||_tr
+  1. Contract metadata:
+    title: Ξ representative-alignment diagnostic
+    version: 0.1.0
+    object_type: tertiary_diagnostic
+  2. Mathematical object / functional role:
+    role: Tertiary representative-alignment diagnostic.
+    purpose: Compares deterministic density lifts of tied optimal primal residual and dual witness.
+    non_role:
+    - Does not measure obstruction magnitude.
+    - Does not replace Φ₁.
+    - Does not replace Γ₂.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: 'Deterministic h₁* and φ* after Φ₁ and Γ₂ have been computed, with Φ₁ and Γ₂ tied under the declared
+      comparison mode if Ξ is used to decide.
+
+      '
+    codomain: nonnegative trace-distance scalar under declared normalization convention
+  4. Required structures:
+    required:
+    - Φ₁ result
+    - Γ₂ result
+    - deterministic TieR for h₁*
+    - deterministic dual tie policy for φ*
+    - 'saturation verification: <φ*, h₁*> = Φ₁'
+    - density lift ρ
+    - trace-distance definition
+    - trace-distance normalization convention
+  5. Definition:
+    formula: Ξ = ||ρ(h₁*) - ρ(φ*)||_tr
+    exact_repair_case: Ξ = 0 when Φ₁ = 0.
+    density_lift: 'ρ(v) is the declared conditional density lift. Zero-mass cases are undefined except through the
+      Φ₁ = 0 rule, where Ξ is forced to 0.
+
+      '
+    replayability_condition: 'Without deterministic TieR for h₁* and deterministic dual tie policy for φ*, Ξ is
+      not a replayable functional value.
+
+      '
+    trace_distance_convention:
+      required: true
+      allowed:
+      - half_normalized_range_0_1
+      - unhalved_range_0_2
+  6. Laws and invariants:
+    scale_invariant: ρ(λv) = ρ(v) for nonzero scalar λ under the declared scalar/sign/phase convention.
+    magnitude_blind: Ξ forgets obstruction magnitude.
+    nonnegativity: Ξ >= 0.
+    boundedness: Bounded according to declared trace-distance convention.
+    hierarchy: Ξ cannot override Φ₁ or Γ₂.
+    tie_only: Ξ may decide only among candidates after Φ₁ and Γ₂ are tied under declared mode.
+    saturation_required: Ξ is admissible as a diagnostic only when primal-dual saturation is replayed.
+  7. Equality / equivalence rules:
+    scalar_equality: Exact/tolerance comparison follows declared comparison mode.
+    density_equality: Depends on declared density-lift and trace-distance convention.
+    phase_equivalence: Global sign/phase changes of state vectors must not change ρ.
+  8. Replay / determinism requirements:
+    requirements:
+    - TieR replay for h₁*.
+    - Dual tie policy replay for φ*.
+    - Saturation replay.
+    - Density lift replay.
+    - Trace-distance replay.
+    - Normalization convention is hash-bound or schema-bound.
+    - Approximate trace distance must be labeled approximate and cannot masquerade as exact.
+  9. Relationship to other Core primitives:
+    relationships:
+      Phi1: Ξ is zero when Φ₁ = 0 and cannot override Φ₁.
+      Gamma2: Ξ cannot override Γ₂.
+      R: Ξ depends on the deterministic residual selected by R/TieR.
+      EvaluationHierarchy: Ξ is the third lexicographic key only.
+      Trichotomy: Ξ does not change ExactRepair / StabilizedSurvivor / OpenObstruction classification.
+  10. Rust descriptor shape:
+    sketch: "pub struct XiDescriptor {\n    pub phi1_result_hash: String,\n    pub gamma2_result_hash: String,\n\
+      \    pub primal_tie_policy_hash: String,\n    pub dual_tie_policy_hash: String,\n    pub density_lift_definition_hash:\
+      \ String,\n    pub trace_distance_definition_hash: String,\n    pub trace_distance_convention: TraceDistanceConvention,\n\
+      \    pub comparison_mode_hash: String,\n}\n\npub enum TraceDistanceConvention {\n    HalfNormalizedRangeZeroToOne,\n\
+      \    UnhalvedRangeZeroToTwo,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - Ξ improves but Φ₁ worsens.
+    - Ξ improves but Γ₂ worsens.
+    - Ξ used when Φ₁ and Γ₂ are not tied.
+    - Ξ computed without deterministic TieR.
+    - Ξ computed without deterministic dual tie policy.
+    - Saturation identity fails.
+    - Trace norm replaced by entrywise matrix norm without declaring approximation.
+    - Zero-mass density lift used outside Φ₁ = 0 rule.
+    - Trace-distance normalization convention omitted.
+    - Ξ interpreted as obstruction magnitude.
+    - Ξ interpreted as observer-independent truth.
+  12. Open questions / WIP status:
+    wip:
+    - Trace norm normalization convention.
+    - Density lift behavior for signed/weighted domains.
+    - Exact scalar field and phase convention for density lift.
+    - Whether approximate numerical trace distance is allowed outside display/debug mode.
+  compact_yaml:
+    XI_TIE_BREAKER_CONTRACT:
+      symbol: Ξ
+      ascii_symbol: Xi
+      formula: Ξ=||ρ(h₁*)-ρ(φ*)||tr
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: deterministic tied optimal h₁*, φ* after Φ₁/Γ₂
+      codomain: nonnegative trace-distance scalar
+      required_structures:
+      - Φ₁
+      - Γ₂
+      - TieR
+      - dual tie policy
+      - saturation
+      - ρ
+      - trace distance
+      - normalization convention
+      definition: tertiary density-lift trace distance; Ξ=0 when Φ₁=0
+      laws:
+      - scale-invariant
+      - magnitude-blind
+      - nonnegative
+      - bounded by convention
+      - cannot override Φ₁/Γ₂
+      - tie-only
+      forbidden_interpretations:
+      - obstruction norm
+      - quantum score
+      - observer-independent truth
+      - authority signal
+      - replacement for Φ₁
+      - replacement for Γ₂
+      relationships:
+      - third evaluation key only
+      - depends on R/TieR
+      - does not alter trichotomy
+      negative_tests:
+      - Φ₁ worsens
+      - Γ₂ worsens
+      - Φ₁/Γ₂ not tied
+      - missing TieR
+      - missing dual tie policy
+      - saturation fails
+      - undeclared norm approximation
+      - zero-mass density misuse
+      - missing normalization convention
+      open_questions:
+      - normalization convention
+      - signed/weighted density lift
+      - phase convention
+      - approximate numerical mode
+  non_role:
+  - Authority minting or GlobalGreen discharge
+  - Customer-facing claims or product assurances
+  - Full encyclopedia mechanization of xi_tie_breaker (deferred)
+  - HoTT/Univalence theorem discharge from this contract alone
+  - Runtime enforcement as proof of mathematical truth
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_MATH_BLOCK
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_LAWS_OR_REQUIREMENTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: required_structures missing or empty'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: negative_tests missing or empty'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NON_ROLE
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: doctrine.non_role missing'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false;
+      create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures;
+      set laws; set negative_tests; set doctrine.non_role (anti-theater); add overclaim nonclaim fence to doctrine.summary.
+      Not PROVED; not GlobalGreen; human re-review still required for math depth.'
+    recommendation: Continue meth re-review for object-specific laws; code follows YAML (ADR-007a).
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: STAGE2_BINDING_RESOLVED
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates_rs/core_functional/src/xi.rs
+    detail: rust_binding module=xi; DensityLift/XiComputation present; density-lift compute not full certifier.
+      Not PROVED.
+    delta: MATCH

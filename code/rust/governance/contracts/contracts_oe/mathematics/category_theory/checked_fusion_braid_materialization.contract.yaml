@@ -1,0 +1,80 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:checked_fusion_braid_materialization:v0.1.0
+title: Resource Checked Fusion Braid Materialization
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: checked_fusion_braid_materialization
+  symbol: checked_fusion_braid_materialization
+  ascii_symbol: checked_fusion_braid_materialization
+  notation: Resource Checked Fusion Braid Materialization
+  domain:
+  - Declared finite fusion words and totals with checked F/R coefficients; explicit strand, path-count, path-label,
+    extension-work and matrix limits.
+  codomain:
+    description: Declared finite results of core_fusion_categories::braided; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Fusion-space paths are actually enumerated, and every extension is admitted before cloning its path.
+- Exchange matrices recompute the source carrier, use the checked F/R data and carry the exchanged target word.
+- All generator storage and coefficient assembly, relation products and full-twist products are bounded before
+  materialization.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_fusion_categories
+  module: braided
+  symbols:
+  - FusionSpace
+  - FusionSpaceLimits
+  - BraidedFusionCategory
+  - RibbonFusionCategory
+  required_tests:
+  - braid_materialization_refuses_oversized_dense_and_path_carriers
+  - empty_sectors_charge_intermediate_paths_across_generator_materialization
+negative_tests:
+- Ising sigma powers with excessive dense exchange/generator entries or path-label storage refuse before those
+  allocations.
+- usize::MAX strands refuse before a repeated-strand vector is built.
+- Empty admissible sectors retain their actual zero-dimensional matrices.
+- A zero-dimensional selected total still charges its nonempty intermediate path carrier across every generator
+  replay.
+doctrine:
+  summary: Fusion-space paths are actually enumerated, and every extension is admitted before cloning its path.;
+    Exchange matrices recompute the source carrier, use the checked F/R data and carry the exchanged target
+    word.; All generator storage and coefficient assembly, relation products and full-twist products are bounded
+    before materialization..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - Resource refusal does not assert failure of a mathematical law or infiniteness of a closure.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

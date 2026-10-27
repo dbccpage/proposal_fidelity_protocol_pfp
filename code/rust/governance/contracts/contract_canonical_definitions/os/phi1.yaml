@@ -1,0 +1,103 @@
+schema_version: "1.0.0"
+contract_id: "rust:core_functional:phi1"
+kind: "rust_file_contract"
+name: "Phi1 — weighted-l1 quotient-distance projection observable"
+version: "1.0.0"
+
+crate: "core_functional"
+file: "engine/crates_rs/core_functional/src/phi1.rs"
+module_path: "core_functional::phi1"
+
+role: "phi1_projection_observable"
+status: "active"
+authority_effect: "EvidenceOnly"
+transition_authority: "none"
+
+description: >
+  Phi1([omega]) = min_alpha ||omega - d0 alpha||_{1,w}: the exact weighted-l1 distance from a C^1
+  cochain omega to the coboundary space im(d0), certified by an LP primal-dual pair
+  (ExactPhi1Certificate: achiever alpha + primal residual + im(d0)-annihilating dual witness, with
+  reported value = weighted primal-residual norm = dual pairing). Phi1 is the quantitative
+  refinement of the cochain Zero predicate: Phi1 = 0 iff omega is a coboundary. Exact over
+  BigRational. Computed in the calculate layer (core_functional); it mints no authority.
+
+lean_anchor:
+  file: "lean4/original_lean_20260809/finite_cochain_complex.lean"
+  repointed_from: "engine/lean4/…/CoreCosmology/Primitives/FiniteCochainComplex.lean (never present in this repository)"
+  in_tree_build: >
+    None. The file is not a root of any Lake package in this repository, and its imports
+    primitive_difference, «lg006_pointed_obstruction_classifier» and
+    «lg006_primitive_obstruction_pipeline» do not resolve here.
+  replay: >
+    2026-09-29 scratch replay, not committed: Lean 4.34.0 + Mathlib v4.34.0, the three imports
+    rewritten to PrimitiveDifference / PointedObstructionClassifier / PrimitiveObstructionPipeline
+    from atlas/coda_atlas/F004_papers/006_finite_qm/lean4/, body unchanged; exit 0. Every CoreCore name
+    below elaborates; PHI1-L0..L3 print axioms [propext, Classical.choice, Quot.sound].
+  modeled_definitions:
+    - "wl1 (weighted l1 objective)"
+    - "phi1Residuals (the achievable-residual family {||omega - d0 alpha||_{1,w} | alpha})"
+    - "IsPhi1 (v in the family AND a lower bound for it = what a primal-dual certificate establishes)"
+  orientation: "Phi1(omega) = min over alpha of wl1 w (omega - d0 alpha), weights w > 0"
+
+owns:
+  - "phi1_weighted_l1_quotient_distance"
+  - "exact_primal_dual_phi1_certificate"
+
+does_not_own:
+  - "gamma2 (closure charge)"
+  - "trichotomy"
+  - "exact_image_membership (core_linear_algebra::image_kernel / the cochain Zero predicate)"
+  - "authority_minting"
+  - "lift_policy"
+  - "operad_generation"
+
+lean_obligations:
+  - id: "PHI1-L0"
+    theorem: "Phi1 is well-defined as the minimum of the achievable weighted-l1 residual family: the value is unique."
+    lean_name: "CoreCore.isPhi1_unique"
+    status: "proved_in_lean"
+    axioms: "[propext, Classical.choice, Quot.sound]"
+  - id: "PHI1-L1"
+    theorem: "Phi1 >= 0 (weights >= 0)."
+    lean_name: "CoreCore.isPhi1_nonneg"
+    status: "proved_in_lean"
+    axioms: "[propext, Classical.choice, Quot.sound]"
+  - id: "PHI1-L2"
+    theorem: "Phi1 descends to the residual quotient C^1/im(d0): the value depends only on the class [omega] (the projection observable descends -- Paper 001), via class-invariance of the residual family."
+    lean_name: "CoreCore.isPhi1_descends"
+    status: "proved_in_lean"
+    axioms: "[propext, Classical.choice, Quot.sound]"
+  - id: "PHI1-L3"
+    theorem: "Phi1 = 0 iff omega is a coboundary (weights > 0), i.e. iff (cochainDifference C).Zero omega -- ties Phi1 to CPD-L1."
+    lean_name: "CoreCore.isPhi1_zero_iff_cochain_zero"
+    status: "proved_in_lean"
+    axioms: "[propext, Classical.choice, Quot.sound]"
+  - id: "PHI1-L4"
+    theorem: "A verified ExactPhi1Certificate's primal-dual data witnesses IsPhi1: the im(d0)-annihilating dual witness gives the weak-duality lower bound, so reported value = min."
+    lean_name: "CoreCore.Phi1Certificate.isMinimum_of_certificate"
+    lean_source: "lean4/original_lean_20260809/phi1_primal_dual_certificate.lean"
+    lean_source_sha256: "f9a23f807e1d71b8e805868b6be2795db51a7d0d8bdb6fc69101cdbc99047223"
+    status: "proved_in_lean_generic"
+    prior_status: "rust_verified (lean_name rust_verified_not_yet_in_lean)"
+    axioms: "[propext, Classical.choice, Quot.sound]"
+    scope: >
+      Certificate => minimum only, stated generically. For any Fintype index E and any map
+      d : A -> (E -> Q): if dualPair phi (d b) = 0 for every b, |phi e| <= w e for every e, and
+      dualPair phi (omega - d alpha) = wl1 w (omega - d alpha), then wl1 w (omega - d alpha) lies in
+      {wl1 w (omega - d b) | b} and is a lower bound for it. The one inequality is dualPair_le_wl1
+      (<phi, r> <= sum_e w_e |r_e| when |phi| <= w). Not attainment; not minimum => certificate.
+    pending: >
+      Instantiating E := Fin C.c1_dim, A := Fin C.c0_dim -> Q, d := C.d0 gives
+      CoreCore.IsPhi1 C w omega (wl1 w (omega - C.d0 alpha)) by definitional unfolding. That
+      corollary (isPhi1_of_certificate) is not committed; the source file records it as an
+      obligation. It was checked only in the 2026-09-29 scratch replay of lean_anchor.file.
+    replay: >
+      2026-09-29: the committed bytes (sha above) compile standalone with Lean 4.34.0 +
+      Mathlib v4.34.0 (lake env lean, exit 0). The file is not a root of any Lake package in
+      this repository.
+    note: "Verified Rust-side (unchanged): the verifier checks primal residual = omega - d0 alpha, dual annihilates im(d0), and value = weighted primal norm = dual pairing (LP strong duality)."
+
+notes:
+  - "Phi1 is the quantitative refinement of image membership: Phi1=0 recovers the cochain Zero predicate (CPD-L1)."
+  - "Exactness in the Rust certificate path is BigRational (theorem-grade); the Lean anchor is generic over the cochain rationals (Fin n -> Q)."
+  - "Do not claim authority, operads, or physics from Phi1 -- it is a diagnostic quotient-distance value."

@@ -1,0 +1,93 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:continuum_limit_authorization:v0.1.0
+title: ContinuumLimitAuthorization Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: continuum_limit_structure
+  symbol: Auth(lim_{-->} F) := (F, cofinal, convergence, consistency)
+  ascii_symbol: continuum_limit_authorization
+  notation: Auth(lim_{-->} F) := (F, cofinal, convergence, consistency)
+  domain:
+  - 'directed_system: A functor F: I -> C from a directed poset I to a category C
+    of finite shadows'
+  - 'cofinal_witness: A proof that the directed system is cofinal in the continuum
+    object'
+  - 'convergence_data: Data showing the colimit lim_{-->} F exists in C'
+  - 'overlap_consistency: Coherence data for agreement on overlapping finite shadows'
+  codomain:
+    description: A directed system of finite shadows with convergence data and cofinal
+      witness
+requirements:
+  required_structures:
+  - 'The directed system F: I -> C must be a valid functor from a directed poset'
+  - The cofinal witness must demonstrate coverage of the continuum object
+  - Convergence data must prove the colimit exists
+  - Transition maps must be coherent on overlaps
+  - Artifact hash must be SHA-256 over all component hashes
+laws:
+- The indexing poset I is directed and F is a valid functor
+- 'The directed system is cofinal: for every finite shadow S, there exists alpha in
+  I with S <= F(alpha)'
+- The colimit lim_{-->} F exists and is unique up to canonical isomorphism
+- For alpha <= beta in I, the transition map F(alpha) -> F(beta) is consistent
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All validators content-addressed
+  - Given same inputs, must produce identical artifact hash
+relationships:
+- urn:math:contract:DeltaObject:v0.1.0 serves as finite_shadow_objects_in_directed_system
+negative_tests:
+- Non-directed poset or invalid functor must be rejected
+- Missing or invalid cofinality proof must be rejected
+- System without convergence data must be rejected
+- Incoherent transition maps must be rejected
+- Artifact claiming operational authority must be rejected
+doctrine:
+  summary: A ContinuumLimitAuthorization encodes the mathematical prerequisites for
+    promoting a finite-shadow (discrete approximation) to a continuum-level object.
+    It bundles a directed system of finite approximations, a cofinal witness demonstrating
+    that the system covers the continuum object, and convergence data showing that
+    the limit exists and is well-defined. This contract validates the mathematical
+    conditions only; it confers no operational authority and makes no policy decisions.
+  non_role:
+  - Does not confer operational authority or permissions
+  - Does not emit policy decisions about system behavior
+  - Does not classify admissibility of any entity
+  - Does not perform the actual limit computation
+wip:
+- Relationship between continuum limit authorization and the CODA-CS continuum finite-shadow
+  tower
+- Whether cofinality should be defined categorically or order-theoretically
+- Interaction with transfinite indexing systems for uncountable directed sets
+- Currently in WIP status - full implementation pending
+- Convergence criteria need formal specification
+- Integration with engine continuum tower needs design
+rust_binding:
+  crate: core_higher_category_theory
+  module: unbounded_derived
+  symbols:
+  - UnboundedDerivedCategory
+  - ResolutionStrategy
+  required_tests:
+  - test_unbounded_derived_category_and_resolutions

@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:shared_resource_limits:v0.1.0
+title: Shared Finite Mathematical Resource Limits
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: shared_resource_limits
+  symbol: shared_resource_limits
+  ascii_symbol: shared_resource_limits
+  notation: Shared Finite Mathematical Resource Limits
+  domain:
+  - Finite declared carrier, operator-family, cell-complex and allocation limits
+  - Explicit quantum and holonomy presets preserving their original respective ceilings
+  codomain:
+    description: Declared finite results of core_kernel::resource_limits; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Dimensions and allocation lengths are checked before allocation
+- Checked products and vector-length extensions refuse integer overflow even under an explicitly unlimited
+  policy
+- The quantum and holonomy presets preserve their distinct memory ceilings
+- A refusal leaves the caller buffer unchanged
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_kernel
+  module: resource_limits
+  symbols:
+  - OperationLimits
+  - ResourceError
+  - check_and_reserve
+  required_tests:
+  - shared_resource_policies_preserve_limits_and_refuse_overflow_even_when_unbounded
+  - hilbert_dimension_is_checked_against_zero_and_the_ceiling
+  - reserve_refuses_length_arithmetic_that_overflows
+  - reserve_refuses_beyond_the_limit_and_allocates_within_it
+negative_tests:
+- Refuse zero dimensions, exceeded ceilings, multiplication overflow and len+additional overflow
+doctrine:
+  summary: Dimensions and allocation lengths are checked before allocation; Checked products and vector-length
+    extensions refuse integer overflow even under an explicitly unlimited policy; The quantum and holonomy
+    presets preserve their distinct memory ceilings; A refusal leaves the caller buffer unchanged.
+  non_role:
+  - Resource admission does not establish mathematical feasibility or physical realization
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:contractible_type:v0.1.0
+title: ContractibleType Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: homotopy_type
+  symbol: isContr(A) := Σ(c:A). Π(x:A). c = x
+  ascii_symbol: contractible_type
+  notation: isContr(A) := Σ(c:A). Π(x:A). c = x
+  domain:
+  - 'type_A: The underlying type'
+  - 'center: A distinguished element c : A'
+  - 'contraction: A proof Π(x:A). c = x'
+  codomain:
+    description: 'A type A with a designated center c : A'
+requirements:
+  required_structures:
+  - The type A must be resolvable
+  - The center c must have type A
+  - The contraction must have type Π(x:A). c = x
+  - Artifact hash must be SHA-256 over contract_id, version, type_id, center_id, contraction_id
+laws:
+- 'There exists a center c : A'
+- 'For all x : A, there exists a path c = x'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All validators content-addressed
+  - Given same inputs, must produce identical artifact hash
+negative_tests:
+- type_id does not resolve
+- center_id does not have type A
+- contraction_id does not have correct dependent function type
+- Type A is not contractible (e.g., Bool)
+doctrine:
+  summary: 'A ContractibleType is a type that is homotopically trivial: it has exactly one element up to paths. Formally, A is contractible if there exists a center c : A and for all x : A, a path c = x. The contract validates the center and the contraction paths. Contractible types are the (-2)-truncated types and serve as the unit of homotopy type theory.'
+  non_role:
+  - This contract does not handle general truncation levels
+  - Does not validate higher homotopy structure beyond contractibility
+  - Does not provide homotopy-theoretic computations
+wip:
+- Contractibility is a property (proposition), not structure; any two contractibility proofs are equal
+- 'The relationship with TruncationLevel: contractible types are (-2)-truncated'
+- Contractibility of path spaces characterizes sets (0-truncation)
+- Currently in WIP status - full implementation pending
+- Integration with truncation level system needs design
+- Path space contractibility checker not yet implemented

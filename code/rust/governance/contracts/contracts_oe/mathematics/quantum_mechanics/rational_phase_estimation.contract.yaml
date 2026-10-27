@@ -1,0 +1,65 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:rational_phase_estimation:v0.1.0
+title: Rational-phase quantum estimation
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: rational_phase_estimation
+  symbol: rational_phase_estimation
+  ascii_symbol: rational_phase_estimation
+  notation: Rational-phase quantum estimation
+  domain:
+  - Register exponent m<=7; dynamic cyclotomic conductor lcm(2^m,phase denominator)<=1024.
+  codomain:
+    description: Declared finite results of core_quantum_physics::phase_estimation; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Fourier probability is computed by exact cyclotomic sums and sums to1.
+- The eigenpair entrypoint checks unitary U, normalized psi and the declared rational eigenphase.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: phase_estimation
+  symbols:
+  - RationalPhaseEstimation
+  required_tests:
+  - rational_qpe_preserves_total_probability_and_rejects_a_false_eigenphase
+negative_tests:
+- rational_qpe_preserves_total_probability_and_rejects_a_false_eigenphase
+doctrine:
+  summary: Fourier probability is computed by exact cyclotomic sums and sums to1.; The eigenpair entrypoint
+    checks unitary U, normalized psi and the declared rational eigenphase..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

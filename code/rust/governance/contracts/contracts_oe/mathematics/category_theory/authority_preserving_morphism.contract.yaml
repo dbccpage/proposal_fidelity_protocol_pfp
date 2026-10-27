@@ -1,0 +1,95 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:authority_preserving_morphism:v0.1.0
+title: AuthorityPreservingMorphism Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: authority_preserving_morphism
+  symbol: 'f: (A, grade_A) -> (B, grade_B) with grade_B(f(a)) <= grade_A(a)'
+  ascii_symbol: authority_preserving_morphism
+  notation: 'f: (A, grade_A) -> (B, grade_B) with grade_B(f(a)) <= grade_A(a)'
+  domain:
+  - 'source: graded_object_A'
+  - 'target: graded_object_B'
+  - 'morphism: structure_preserving_map f: A -> B'
+  - 'grading_poset: partially_ordered_set_P'
+  - 'source_grading: grading_function A -> P'
+  - 'target_grading: grading_function B -> P'
+  codomain:
+    description: 'A morphism f: A -> B in a category C where A and B are equipped
+      with gradings/filtrations, and f respects the grading.
+
+      '
+requirements:
+  required_structures:
+  - f is a valid morphism in the ambient category
+  - grade(f(a)) <= grade(a) for sampled elements
+  - Source and target use the same grading poset
+  - f maps from the declared source to the declared target
+  - Artifact hash is deterministically computed
+laws:
+- f is a morphism in the ambient category C (preserves algebraic structure)
+- grade(f(a)) <= grade(a) for all a in A
+- Source and target gradings use the same partially ordered set P
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Morphism application from canonical structure tables
+  - Rechecking must reproduce non_escalation_witness_hash
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Ambient category for the morphism
+- urn:math:contract:AuthorityType:v0.1.0 serves as Grading/filtration structure on
+  objects
+- urn:math:contract:LinearMap:v1.0.0 serves as When the morphism is a linear map
+negative_tests:
+- Morphism that increases authority level must be rejected
+- Map that does not preserve algebraic structure must be rejected
+- Source and target with different grading posets must be rejected
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: 'An authority-preserving morphism is a map f: A -> B between graded or
+    filtered objects such that f respects the grading: if a has authority level k,
+    then f(a) has authority level at most k. This models the principle that transformations
+    cannot escalate authority. The morphism must also preserve the underlying algebraic
+    structure (e.g., linearity, module homomorphism). This contract validates the
+    mathematical structure only and confers no actual authority.'
+  non_role:
+  - Granting or checking actual system authority (this is purely mathematical)
+  - Authority escalation detection at runtime (separate concern)
+  - Filtration construction (separate contract)
+  - Graded ring or module theory beyond morphism preservation
+wip:
+- Should strict preservation (grade(f(a)) = grade(a)) be a separate FactEnvelope?
+- How to handle morphisms that strictly decrease authority (contractive maps)?
+- Should the contract support multi-graded structures?
+- Currently models single grading by a totally ordered set
+- Multi-graded and multi-filtered extensions deferred
+- Composition of authority-preserving morphisms is automatically authority-preserving
+- The 'authority' in the name refers to a mathematical grading, not system authority
+rust_binding:
+  crate: core_higher_category_theory
+  module: bounded_derived
+  symbols:
+  - BoundedComplex
+  - CohomologyBoundValidator
+  required_tests:
+  - test_bounded_derived_category_and_truncation

@@ -1,0 +1,161 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:chain_complex:v1.0.0
+title: Chain complex
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: A graded family of chain groups/modules C_n with boundary maps d_n:C_n→C_{n-1} satisfying d_{n-1}∘d_n=0.
+  symbol: C_•
+  ascii_symbol: ChainComplex
+  formula: … → C_n --d_n→ C_{n-1} --d_{n-1}→ C_{n-2} → …
+  1. Contract metadata:
+    title: Chain complex
+    version: 0.1.0
+    object_type: mathematical_structure
+    primitive_scope: graded chain groups with degree-lowering boundary maps
+  2. Mathematical object / functional role:
+    role: A graded family of chain groups/modules C_n with boundary maps d_n:C_n→C_{n-1} satisfying d_{n-1}∘d_n=0.
+    purpose: Provides the base structure for cycles, boundaries, homology, exact sequences, and obstruction-theoretic
+      constructions.
+    non_role:
+    - Does not define the Core finite cochain layer directly.
+    - Does not compute Φ₁, Γ₂, or Ξ.
+    - Does not classify admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: graded finite chain groups/modules over a declared coefficient domain R
+    codomain: valid chain complex structure
+    maps:
+      boundary: d_n:C_n→C_{n-1}
+  4. Required structures:
+    required:
+    - coefficient domain R
+    - degree index set
+    - finite chain group/module C_n for each declared degree n
+    - ordered basis or finite presentation for each C_n
+    - boundary map d_n for each declared adjacent degree
+    - boundary law d_{n-1}∘d_n=0
+    optional:
+    - boundedness declaration
+    - filtration
+    - augmentation
+    - grading convention
+  5. Definition:
+    chain_complex: A chain complex is a graded object C_• with degree-lowering maps d_n such that d_{n-1}∘d_n=0
+      for all adjacent declared degrees.
+    cycles: Z_n = ker(d_n).
+    boundaries: B_n = im(d_{n+1}).
+    homology: H_n = Z_n / B_n when B_n⊆Z_n follows from d_n∘d_{n+1}=0.
+    finite_scope: This contract version covers finite declared degree sets only.
+  6. Laws and invariants:
+    boundary_squared_zero: d_{n-1}∘d_n=0 for all adjacent declared degrees.
+    degree_shift: d_n lowers degree by one.
+    coefficient_uniformity: All C_n are modules over the same declared coefficient domain R.
+    dimension_or_presentation_compatibility: Boundary maps have source and target compatible with declared
+      C_n presentations.
+    homology_well_defined: B_n⊆Z_n follows from the boundary law.
+  7. Equality / equivalence rules:
+    strict_equality: Same R, same degree set, same ordered bases/presentations, same boundary maps.
+    chain_isomorphism: Degreewise invertible maps F_n:C_n→C'_n satisfying F_{n-1}d_n=d'_nF_n.
+    chain_homotopy_equivalence: Separate contract; not assumed here.
+  8. Replay / determinism requirements:
+    requirements:
+    - Boundary application is deterministic.
+    - Boundary composition d_{n-1}d_n is replayable.
+    - Basis/presentation serialization is canonical.
+    - Exact arithmetic is used unless a tolerance profile is declared.
+    - No randomness, time, or external state.
+  9. Relationship to other Core primitives:
+    relationships:
+      CochainLayer: Core COCHAIN_LAYER_CONTRACT is a degree-0..2 cochain specialization with degree-raising
+        coboundaries d₀:C⁰→C¹ and d₁:C¹→C².
+      BoundarySpace: B_n = im(d_{n+1}).
+      CycleSpace: Z_n = ker(d_n).
+      Homology: H_n = Z_n/B_n.
+      Phi1: Φ₁ is not defined by this contract; it belongs to the Core cochain quotient layer.
+      Gamma2: Γ₂ is not this chain boundary law; Core Γ₂ uses cochain d₁:C¹→C².
+  10. Rust descriptor shape:
+    sketch: "pub struct ChainComplexDescriptor {\n    pub coefficient_domain_hash: String,\n    pub degree_index_set_hash:\
+      \ String,\n    pub chain_group_hashes: Vec<String>,\n    pub boundary_map_hashes: Vec<String>,\n\
+      \    pub boundary_law_witness_hash: Option<String>,\n    pub arithmetic_mode_hash: String,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - Boundary map has wrong degree shift.
+    - d_{n-1}∘d_n != 0.
+    - Missing chain group for boundary source or target.
+    - Coefficient domain mismatch between chain groups.
+    - Boundary map dimensions/presentations incompatible.
+    - Chain complex confused with Core cochain layer.
+    - Homology claimed without boundary law.
+    - Authority, admissibility, or customer claim emitted.
+  12. Open questions / WIP status:
+    wip:
+    - Bounded, filtered, and augmented specializations.
+    - Double complexes.
+    - Spectral sequence construction interface.
+    - Infinite-dimensional chain groups.
+    - Chain homotopy equivalence contract.
+  compact_yaml:
+    CHAIN_COMPLEX_CONTRACT:
+      symbol: C_•
+      ascii_symbol: ChainComplex
+      formula: d_{n-1}∘d_n=0
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: graded finite chain groups/modules over R
+      codomain: valid chain complex
+      required_structures:
+      - coefficient domain R
+      - degree index set
+      - finite C_n
+      - basis or finite presentation
+      - boundary maps d_n:C_n→C_{n-1}
+      - boundary law d_{n-1}d_n=0
+      definition: graded chain groups with degree-lowering boundary maps squaring to zero
+      laws:
+      - d²=0
+      - degree shift -1
+      - coefficient uniformity
+      - B_n⊆Z_n
+      forbidden_interpretations:
+      - Core cochain layer without dual/specialization
+      - Φ₁/Γ₂/Ξ functional
+      - policy decision
+      - customer claim
+      - certificate authority
+      relationships:
+      - Z_n=ker(d_n)
+      - B_n=im(d_{n+1})
+      - H_n=Z_n/B_n
+      - COCHAIN_LAYER is degree-raising cochain specialization
+      negative_tests:
+      - wrong degree shift
+      - d² nonzero
+      - missing source/target group
+      - coefficient mismatch
+      - chain/cochain confusion
+      open_questions:
+      - filtered/bounded/augmented variants
+      - double complexes
+      - spectral sequences
+      - chain homotopy

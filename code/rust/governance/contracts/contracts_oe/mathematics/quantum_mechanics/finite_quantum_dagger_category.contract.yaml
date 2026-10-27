@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_quantum_dagger_category:v0.1.0
+title: Exact Finite Hilbert Dagger and Compact Structure
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_quantum_dagger_category
+  symbol: finite_quantum_dagger_category
+  ascii_symbol: finite_quantum_dagger_category
+  notation: Exact Finite Hilbert Dagger and Compact Structure
+  domain:
+  - Finite checked rectangular Gaussian-rational matrices and declared tensor/biproduct size bounds.
+  codomain:
+    description: Declared finite results of core_quantum_physics::dagger_category; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Dagger is involutive and reverses composition.
+- Dagger respects tensor products.
+- The exact cup and cap satisfy the snake identity, and the compact trace of identity is the dimension.
+- Biproduct injections and projections reproduce the declared rectangular carrier.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: dagger_category
+  symbols:
+  - DaggerCategory
+  required_tests:
+  - fdhilb_cups_and_caps_satisfy_the_zigzag_and_trace_equals_dimension
+  - rectangular_dagger_respects_composition_tensor_and_biproduct
+negative_tests:
+- Nonconformable compositions and tensor/storage budget excess are typed refusals.
+doctrine:
+  summary: Dagger is involutive and reverses composition.; Dagger respects tensor products.; The exact cup
+    and cap satisfy the snake identity, and the compact trace of identity is the dimension.; Biproduct injections
+    and projections reproduce the declared rectangular carrier..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

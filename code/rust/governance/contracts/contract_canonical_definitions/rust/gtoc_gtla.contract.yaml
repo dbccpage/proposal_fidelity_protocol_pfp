@@ -1,0 +1,42 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:gtoc_gtla:v1.0.0
+title: GTOC GTLA Runtime Composition
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: Pipeline
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - RuntimeMutation
+    required: []
+rust_binding:
+  crate: core_wdp
+  module: coda::coda_gtla
+  symbols:
+  - PrimitiveDifferenceReceipt
+  - PrimitiveDifferenceReceiptError
+  - validate_primitive_difference
+  - DomainEvidenceBindingError
+  - DomainEvidenceBinding
+  - bind_domain_evidence
+  - CodaExactInput
+  - CodaGtlaEvaluationError
+  - CodaGtlaEvaluation
+  - evaluate_exact

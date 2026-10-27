@@ -1,0 +1,144 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:hodge_star_isomorphism:v0.1.0
+title: Hodge Star Isomorphism Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: linear_isomorphism
+  symbol: 'star: C_k -> C^{n-k}'
+  ascii_symbol: hodge_star_isomorphism
+  notation: 'star: C_k -> C^{n-k}'
+  domain:
+  - 'domain: chain_group_C_k'
+  - 'codomain: cochain_group_C_n_minus_k'
+  - 'metric: non_degenerate_inner_product'
+  - 'orientation: orientation_class'
+  - 'ambient_dimension: positive_integer_n'
+  - 'degree: non_negative_integer_k'
+  - 'matrix_representation: invertible_matrix'
+  codomain:
+    description: 'Linear isomorphism from the k-chain group C_k to the (n-k)-cochain
+      group C^{n-k}, parameterized by a non-degenerate inner product (metric) and
+      orientation on the ambient n-dimensional space.
+
+      '
+requirements:
+  required_structures:
+  - (star)(star) = (-1)^{k(n-k)} * id on C_k
+  - star is linear over the coefficient ring
+  - The inner product (metric) must be non-degenerate (invertible Gram matrix)
+  - Degree k must satisfy 0 <= k <= n, and domain has dim C_k, codomain has dim C^{n-k}
+  - The orientation class must be consistently applied across all degrees
+  - The matrix representation of star must be invertible
+  - All hashes (metric, orientation, carrier, basis, matrix) must be valid SHA-256
+laws:
+- (star)(star)c = (-1)^{k(n-k)} * c for all c in C_k
+- star(alpha * a + beta * b) = alpha * star(a) + beta * star(b) for all scalars alpha,
+  beta and chains a, b in C_k
+- The Hodge star requires a non-degenerate inner product (metric); degenerate metrics
+  are rejected
+- 'star is an isomorphism: it has an inverse star^{-1}: C^{n-k} -> C_k'
+- star depends on the choice of orientation; reversing orientation negates star
+- Domain degree k must satisfy 0 <= k <= n where n is the ambient dimension
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Star application computed deterministically from canonical basis coordinates and
+    metric
+  - Involution check must reproduce identical residuals on replay
+  - Matrix entries computed from metric Gram matrix entries only
+  - Rechecking must reproduce artifact_hash
+relationships:
+- urn:math:contract:ChainComplex:v0.1.0 serves as provides_domain_chain_groups_C_k
+- urn:math:contract:CochainComplex:v0.1.0 serves as provides_codomain_cochain_groups_C_n_minus_k
+- urn:math:contract:BilinearForm:v0.1.0 serves as provides_inner_product_metric_structure
+- urn:math:contract:LinearMap:v1.0.0 serves as hodge_star_is_a_linear_map
+- urn:math:contract:BasicMatrix:v1.0.0 serves as matrix_representation_of_hodge_star
+negative_tests:
+- A singular or zero-determinant metric Gram matrix must be rejected
+- Degree k outside range [0, n] must be rejected
+- (star)(star) != (-1)^{k(n-k)} * id must be rejected
+- A singular star matrix must be rejected
+- star(alpha*a + beta*b) != alpha*star(a) + beta*star(b) must be rejected
+- Chain and cochain groups over different coefficient rings must be rejected
+- Construction without an orientation class must be rejected
+- Matrix dimensions not matching dim(C_k) x dim(C^{n-k}) must be rejected
+- HodgeStarIsomorphism claiming authority or admissibility must be rejected
+- Same inputs producing different hashes on replay must be rejected
+doctrine:
+  summary: 'Defines the Hodge star isomorphism (star operator): C_k -> C^{n-k} given
+    a non-degenerate inner product (metric) on the underlying space. The Hodge star
+    canonically maps k-chains to (n-k)-cochains, providing the duality bridge between
+    homological and cohomological data. In the discrete setting, this maps edge currents
+    (chains) to potential differences (cochains). The operator satisfies the involution
+    identity (star)(star) = (-1)^{k(n-k)} * id, is linear over the coefficient ring,
+    and depends explicitly on the chosen metric. This contract covers numerical_dual_witness
+    and matrix representations of the Hodge star. The contract is purely structural
+    and confers no authority.'
+  non_role:
+  - Classification of admissibility or policy decisions
+  - Certificate generation or authority claims
+  - Customer-facing claims or trust markers
+  - Hodge decomposition (separate contract)
+  - Laplacian construction (depends on Hodge star but is a separate contract)
+  - Riemannian metric construction (prerequisite, separate contract)
+  - Continuous differential forms (this contract targets finite/discrete setting)
+wip:
+- 'How to handle discrete Hodge theory on graphs: the combinatorial Hodge star on
+  weighted graphs requires diagonal weight matrices rather than full Gram matrices.
+  Should a separate DiscreteHodgeStar contract be defined, or should this contract
+  parameterize over both continuous and discrete settings?'
+- 'Weighted Laplacians: the graph Laplacian L = delta^T W delta depends on the Hodge
+  star through the weight matrix W. How should the dependency between HodgeStarIsomorphism
+  and a future Laplacian contract be structured?'
+- 'Non-orientable manifolds: the Hodge star is only globally defined on orientable
+  manifolds. For non-orientable manifolds, the Hodge star maps to twisted cochains
+  (sections of the orientation bundle). Should this contract support a twisted_orientation_bundle_hash
+  field for that case?'
+- 'Pseudo-Riemannian metrics: for indefinite metrics (e.g., Lorentzian signature),
+  the involution sign picks up an additional factor from the metric signature. Should
+  the contract include a signature field for Minkowski-type settings?'
+- 'Numerical tolerance for involution checks: what epsilon should be used for the
+  residual norm ||(star)(star)c - (-1)^{k(n-k)} c|| in floating-point settings? Should
+  this be a contract parameter?'
+- 'Relationship to Poincare duality: the Hodge star provides a concrete realization
+  of Poincare duality at the chain level. Should there be a cross-reference to a future
+  PoincareDuality contract?'
+- Currently targets finite-dimensional chain/cochain groups only
+- Infinite-dimensional (e.g., L^2) Hodge theory deferred to future versions
+- Matrix representation assumes ordered bases for C_k and C^{n-k}
+- Numerical dual witness uses residual norm for floating-point verification
+- Involution sign (-1)^{k(n-k)} computed from dimension and degree at construction
+  time
+- The Hodge star matrix is computed as the inverse Gram matrix restricted to degree
+  k
+- No authority, admissibility, or customer-facing claims allowed
+- Discrete (simplicial/graph) and continuous settings may need separate specializations
+rust_binding:
+  crate: core_higher_category_theory
+  module: dg_category
+  symbols:
+  - GradedHomComplex
+  - ChainDifferential
+  required_tests:
+  - test_dg_category_basic_lifecycle
+  - test_chain_complex_and_mapping_cone_construction

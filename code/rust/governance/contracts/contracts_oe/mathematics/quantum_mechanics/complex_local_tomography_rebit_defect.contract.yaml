@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:complex_local_tomography_rebit_defect:v0.1.0
+title: Tensor functor laws and the computed real local-tomography defect
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: complex_local_tomography_rebit_defect
+  symbol: complex_local_tomography_rebit_defect
+  ascii_symbol: complex_local_tomography_rebit_defect
+  notation: Tensor functor laws and the computed real local-tomography defect
+  domain:
+  - Declared finite rational and Q(i) matrix carriers, checked dense entry limits; exact rank/kernel elimination
+  codomain:
+    description: Declared finite results of core_quantum_physics::composition_tomography; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Tensor composition preserves identities, interchange and associativity
+- Complex Hermitian product effects span the joint Hermitian carrier
+- Real rebit product effects miss the computed J tensor J direction
+- I/4 plus or minus J tensor J/8 are positive trace-one states invisible to all local product effects and separated
+  by a joint projector
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: composition_tomography
+  symbols:
+  - tensor_morphisms
+  - identity_is_preserved
+  - interchange_law_holds
+  - associativity_on_morphisms
+  - local_tomography_spanning_complex
+  - local_tomography_spanning_real
+  - real_local_tomography_witness
+  - rebit_state_pair
+  - rebit_separating_projector
+  required_tests:
+  - composition_tomography::tests::w614_functor_satisfies_interchange_law
+  - composition_tomography::w614_complex_tests::complex_local_tomography_spans_at_2x3_and_3x3
+  - composition_tomography::tests::w614op_4_states_are_positive_definite_with_exact_min_eigenvalue_one_eighth
+  - composition_tomography::tests::w614op_6_all_product_effects_assign_equal_probability
+  - composition_tomography::tests::w614op_7_a_joint_projector_separates_them_by_exactly_one_half
+negative_tests:
+- composition_tomography::w614_complex_tests::real_through_complex_pipeline_still_fails
+- composition_tomography::tests::w614_cartesian_and_tensor_laws_differ
+doctrine:
+  summary: Tensor composition preserves identities, interchange and associativity; Complex Hermitian product
+    effects span the joint Hermitian carrier; Real rebit product effects miss the computed J tensor J direction;
+    I/4 plus or minus J tensor J/8 are positive trace-one states invisible to all local product effects and
+    separated by a joint projector.
+  non_role:
+  - Dimension counting alone does not establish state positivity or local tomography in other theories
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

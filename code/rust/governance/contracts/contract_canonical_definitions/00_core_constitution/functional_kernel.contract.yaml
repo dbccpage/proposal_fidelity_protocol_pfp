@@ -1,0 +1,263 @@
+schema_version: core.contract.v1
+contract_id: urn:core:constitution:functional_kernel:v1.0.0
+title: FunctionalKernel
+kind: constitution_contract
+status: mathematical_wip
+layer: 00_constitution
+role: Constitution
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - Observable
+    - Measurement
+    - Solver
+    - CertificateKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'Functional computes typed mathematical values and emits measurement evidence.
+
+    Functional does not judge, rank, search, schedule, terminalize, license, authorize,
+
+    mutate, or execute. Functional output has measurement authority only.
+
+    '
+  non_role: &id002
+  - evaluator judgment
+  - search scheduling
+  - policy interpretation
+  - lift triggering
+  - terminalization
+  - state mutation
+  - execution
+  - acceptance decision
+  - refusal decision
+  - transition authorization
+  - certificate authority creation
+  - evidence authority upgrade
+  - terminal status assignment
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+
+      terminalize, authorize transitions, execute transitions, or upgrade evidence authority.
+
+      LLM output may propose Functional definitions or candidate measurement expressions,
+
+      but those proposals have no Functional authority until parsed, checked, tested, and
+
+      admitted under this contract.
+
+      '
+  core_definition: 'A Functional is a deterministic, stateless mathematical mapping from declared state
+
+    types to typed scalar, vector, or measurement outputs with optional certificate
+
+    references. It may call declared Observables or Solver interfaces to compute those
+
+    values, but it must not mutate state, orchestrate execution, search alternatives,
+
+    rank candidates, terminalize, authorize transitions, or return acceptance/rejection
+
+    decisions.
+
+    '
+  minimal_functional_basis:
+    class_i:
+      name: Primary Obstruction Magnitude (Phi1)
+      definition: Phi1(omega) := min_s || omega - B s ||_1
+      role: Measures irreducible closure failure. Well-founded, lexicographically dominant.
+    class_ii:
+      name: Higher Obstruction / Closure Stress (Gamma2)
+      definition: Gamma2(h1) := || d1 h1 ||_1
+      role: Detects structural failure of repair. Prevents fake descent.
+    class_iii:
+      name: Conditioning / Regime Gate (R_cl)
+      definition: 'R_cl : (Phi1, Gamma2) -> ClosureRegime'
+      role: Classifies operating regimes to prevent silent regime errors.
+      regimes:
+        Normal: Phi1 > epsilon
+        TerminalZero: Phi1 <= epsilon AND Gamma2 <= epsilon
+        PathologicalTear: Phi1 <= epsilon AND Gamma2 > epsilon
+    class_iv:
+      name: Representative Distortion / Tie-Breaking (Xi)
+      definition: Xi := ||rho(omega) - rho(h1*)||_1
+      role: Measures how obstruction is represented. Intentionally powerless.
+  functional_evidence_matrix:
+    Phi1:
+      role: primary obstruction magnitude evidence
+      may_decide_descent: false
+      may_trigger_lift: false
+      may_decide_success: false
+    Gamma2:
+      role: closure stress evidence
+      may_decide_descent: false
+      may_trigger_lift: false
+      may_decide_success: false
+    R_cl:
+      role: closure regime evidence
+      may_decide_descent: false
+      may_trigger_lift: false
+      may_decide_success: false
+    Xi:
+      role: diagnostic / tie-break evidence only
+      may_decide_descent: false
+      may_trigger_lift: false
+      may_decide_success: false
+  triad_functional: 'The Triad functional is not fundamental. It should be named Triad_display and used
+
+    only for dashboards, logging, regression testing, or comparative benchmarking.
+
+    It MUST NEVER be used for acceptance decisions, lift triggering, operator gating,
+
+    or ordering primary descent.
+
+    '
+  forbidden_functionals:
+  - name: l2 norms
+    reason: Allows cancellation, breaks obstruction localization
+  - name: Averaged scores
+    reason: Hides localized failure
+  - name: Learned scalar reward
+    reason: Violates evaluator immutability
+  - name: Entropy as primary
+    reason: Conflates multiplicity with obstruction
+  - name: Softmax / exp
+    reason: Non-monotone under descent
+  - name: Probabilistic confidence as primary obstruction evidence
+    reason: Not structural and not replay-stable unless separately certified
+  pipeline_flow: 'Observable/Solver -> Functional -> MeasurementEnvelope -> MeasurementKernel /
+
+    CertificateKernel -> Evaluator -> Policy / MetaJudgment -> Terminalizer /
+
+    Licensing boundary -> Engine
+
+    '
+  trait_shape:
+    trait_name: Functional<State>
+    methods:
+    - fn functional_id(&self) -> FunctionalId
+    - fn functional_version(&self) -> FunctionalVersion
+    - 'fn compute(&self, state: &State) -> Result<FunctionalOutput, FunctionalError>'
+    output_struct: FunctionalOutput
+    output_fields:
+    - functional_id
+    - functional_version
+    - input_hash
+    - config_hash
+    - output_hash
+    - values
+    - witness_refs
+    - certificate_refs
+    - solver_refs
+    - observable_refs
+    - range_behavior
+    - authority_effect
+  range_behavior:
+    variants:
+    - Bounded { min, max }
+    - UnboundedAllowed
+    - DivergenceIsError
+    - DeclaredClamp { min, max }
+  admissibility_checklist:
+  - Input is typed state reference (&State)
+  - Output is typed measurement, not verdict
+  - Stateless -- no history, no cache affecting result
+  - Configuration is immutable
+  - Range behavior is declared
+  - No silent clamping
+  - No acceptance/rejection logic
+  - No state mutation
+  - No execution orchestration
+  - Deterministic given same inputs
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - accepted = true
+    - rejected = true
+    - verdict
+    - should_descend
+    - should_lift
+    - requires_lift
+    - authorize_transition
+    - license_transition
+    - PolicyDecision
+    - EngineDecision
+    - TerminalStatus
+    - TerminalEnvelope
+    - ActionLicense
+    - ALLOW_OUTPUT
+    - BLOCK_OUTPUT
+    - terminalize(
+    - execute(
+    - mutate_state
+    - rank_candidates
+    - search_alternatives
+    - schedule_search
+    - trigger_lift
+    - grant_authority
+    - upgrade_authority
+  required_tests:
+  - functional_does_not_mutate_state
+  - functional_does_not_emit_verdict
+  - functional_does_not_trigger_lift
+  - functional_does_not_terminalize
+  - functional_does_not_call_engine
+  - functional_has_no_history
+  - functional_records_input_and_output_hash
+  - same_state_same_functional_output
+  - xi_cannot_trigger_lift
+  - triad_display_cannot_drive_evaluator
+  - declared_clamp_required
+  - functional_output_defaults_to_evidence_only
+  - functional_output_requires_checking_for_factonly
+  - functional_does_not_authorize_transition
+  - functional_does_not_emit_terminal_status
+  - functional_does_not_emit_action_license
+  - functional_does_not_promote_evidence_authority
+  - functional_records_config_hash
+  - functional_records_observable_refs
+  - functional_records_solver_refs
+  - functional_cache_does_not_affect_result
+  - functional_metalift_language_does_not_trigger_lift
+  canonical_invariant: 'Functional computes typed mathematical measurement evidence. It does not judge,
+    rank,
+
+    search, schedule, terminalize, license, authorize, mutate, or execute. Functional
+
+    output is EvidenceOnly until promoted by an explicit checked measurement or certificate
+
+    boundary.
+
+    '
+  legacy_metadata:
+    name: FunctionalKernel
+    role: Deterministic mathematical measurement composer
+    version: '2.0'
+    classification: constitution
+    split_from: authority_contract.md (lines 113-589)
+    doctrine_version: 2026-05
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: MeasurementEnvelope
+    referenced_output_families:
+    - EvidenceEnvelope
+    referenced_domain_kinds:
+    - FunctionalOutput
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_constitution_contract:v1.0.0"

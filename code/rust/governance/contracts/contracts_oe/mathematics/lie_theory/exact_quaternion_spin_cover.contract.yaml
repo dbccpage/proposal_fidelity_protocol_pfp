@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_quaternion_spin_cover:v0.1.0
+title: Exact Quaternion Matrix Spin Cover
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_quaternion_spin_cover
+  symbol: exact_quaternion_spin_cover
+  ascii_symbol: exact_quaternion_spin_cover
+  notation: Exact Quaternion Matrix Spin Cover
+  domain:
+  - Declared rational unit quaternions and 2x2 Gaussian-rational unitary matrices
+  - Rational SO(3) inputs to the canonical quaternion spin-lift algorithm
+  codomain:
+    description: Declared finite results of core_lie_theory::su2_matrix; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- U(w,x,y,z)=wI-i(xX+yY+zZ) preserves Hamilton multiplication
+- The Pauli adjoint map equals the quaternion Rodrigues rotation and has kernel plus/minus identity
+- The rational lift exists exactly when the canonical spinor norm square class is one
+- Quaternion matrices retain the fixed unit ordering (1,-1,i,-i,j,-j,k,-k)
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: su2_matrix
+  symbols:
+  - unit_quaternion_matrix
+  - adjoint_su2
+  - matrix_spin_lift
+  - SpinLiftError
+  - quaternion_group_matrices
+  required_tests:
+  - the_pauli_matrix_cover_agrees_with_quaternion_multiplication_and_rodrigues
+  - unit_quaternions_are_the_elements_of_su2
+  - the_spinor_norm_decides_whether_a_rotation_lifts_over_the_rationals
+negative_tests:
+- Nonunit quaternions, nonunitary/wrong-shape matrices and nonrotations are refused
+- Quarter turns carry the exact square-class-two obstruction instead of a rounded lift
+doctrine:
+  summary: U(w,x,y,z)=wI-i(xX+yY+zZ) preserves Hamilton multiplication; The Pauli adjoint map equals the quaternion
+    Rodrigues rotation and has kernel plus/minus identity; The rational lift exists exactly when the canonical
+    spinor norm square class is one; Quaternion matrices retain the fixed unit ordering (1,-1,i,-i,j,-j,k,-k).
+  non_role:
+  - No default irrational lift or global section of the double cover
+  - No spin-structure classification by this matrix adapter alone
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

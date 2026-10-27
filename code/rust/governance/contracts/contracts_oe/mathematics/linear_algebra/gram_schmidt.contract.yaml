@@ -1,0 +1,107 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:gram_schmidt:v0.1.0
+title: Gram-Schmidt Orthogonalization Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: algorithm
+  symbol: GS(v_1, ..., v_n) = (u_1, ..., u_n, certificate)
+  ascii_symbol: gram_schmidt
+  notation: GS(v_1, ..., v_n) = (u_1, ..., u_n, certificate)
+requirements:
+  required_structures:
+  - Input vector family must be non-empty
+  - All input vectors must share same basis ID
+  - All input vectors must have dimension = basis.dimension()
+  - Input vectors must be linearly independent (no zero pivots)
+  - All output vector pairs must have exact zero dot product
+  - All output vectors must be nonzero
+  - Each u_i = v_i - sum_{j < i} c_{ij} u_j must hold exactly
+laws:
+- <u_i, u_j> = 0 for all i ≠ j (exact zero)
+- u_i ≠ 0 for all i (detects linear dependence)
+- span{u_1, ..., u_i} = span{v_1, ..., v_i} for all i
+- u_i = v_i - sum_{j < i} c_{ij} u_j (diagonal = 1)
+- output count = input count
+- All computations over Ratio<BigInt> (no rounding)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - No floating-point arithmetic (exact rationals only)
+  - Input vectors processed in order
+  - Projection coefficients computed deterministically
+relationships:
+- urn:math:contract:Vector:v0.1.0 serves as defines_coordinate_vectors
+- urn:math:contract:Field:v0.1.0 serves as defines_rational_field
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::gram_schmidt
+  symbols:
+  - gram_schmidt_exact_standard
+  - OrthogonalFamily
+  - GramSchmidtCertificate
+  - OrthogonalityWitness
+  - SpanPreservationWitness
+  - GramSchmidtError
+  # One test per mechanically-checkable negative_test, in declaration order.
+  # The last negative_test is doctrinal (PROVED/GlobalGreen/HoTT) and has no
+  # unit test.
+  required_tests:
+  - rejects_dependent_vectors
+  - rejects_empty_input
+  - rejects_dimension_mismatch
+  - rejects_basis_mismatch_specifically
+  - verify_output_family_fails_on_non_orthogonal
+  - verify_span_preservation_fails_on_corruption
+negative_tests:
+- Two linearly dependent vectors (scalar multiples)
+- Empty input vector family
+- Input vector dimension does not match basis
+- Input vector has different basis ID
+- Verification detects corrupted zero vector in output
+- Verification detects non-orthogonal output vectors
+- Verification detects span preservation failure
+doctrine:
+  summary: Exact rational Gram-Schmidt orthogonalization under the standard coordinate dot product. Given a linearly independent family of coordinate vectors over Ratio<BigInt>, produces a pairwise orthogonal family with identical span. Uses exact arithmetic (no floating-point) and verifies orthogonality, nonzero outputs, and span preservation via triangular transformation matrix. Returns orthogonal (not orthonormal) vectors with algebraic certificates.
+  non_role:
+  - Orthonormalization (normalization is separate operation)
+  - Numerical floating-point stability (exact rational arithmetic only)
+  - Arbitrary Gram matrix inner products (standard dot product only)
+  - Complex or Hermitian Gram-Schmidt (real rationals only)
+  - QR factorization (separate contract)
+  - Rank-revealing pivoting (standard order only)
+  - Modified Gram-Schmidt algorithm (classical algorithm only)
+wip:
+- Should we support modified Gram-Schmidt for better numerical behavior?
+- How to extend to arbitrary Gram matrix inner products?
+- Should we support complex/Hermitian Gram-Schmidt?
+- What is the canonical way to normalize output vectors (separate contract)?
+- Should we provide QR factorization as separate operation?
+- Classical Gram-Schmidt only (not modified algorithm)
+- Standard coordinate dot product only (no arbitrary Gram matrix)
+- Exact rational arithmetic only (no floating-point)
+- Orthogonal output (not orthonormal - normalization separate)
+- No rank-revealing pivoting (standard input order preserved)
+- Real rationals only (no complex or quaternion support)
+- 'Full verification: orthogonality, nonzero, span preservation'
+- Algebraic certificates with projection coefficients
+- Linear independence detected via zero pivot errors

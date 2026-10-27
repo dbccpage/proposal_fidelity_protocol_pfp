@@ -1,0 +1,86 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:higher_functor:v0.1.0
+title: Higher Functor Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: higher_functor
+  symbol: 'F: B1 -> B2'
+  ascii_symbol: higher_functor
+  notation: 'F = (obj, map1, map2, compositor, unitor)'
+  domain:
+  - 'source: (B1 : Bicategory Obj1) source higher category'
+  - 'target: (B2 : Bicategory Obj2) target higher category'
+  - 'object_map: (obj : Obj1 -> Obj2) mapping on 0-cells'
+  - 'one_cell_map: (map1 : B1.Hom A B -> B2.Hom (obj A) (obj B)) mapping on 1-cells'
+  - 'two_cell_map: (map2 : B1.Hom2 f g -> B2.Hom2 (map1 f) (map1 g)) preserving vertical composition and identities'
+  - 'compositor: invertible 2-cell phi_{f,g}: hcomp1 (map1 f) (map1 g) ≅ map1 (hcomp1 f g)'
+  - 'unitor: invertible 2-cell phi_A: id1 (obj A) ≅ map1 (id1 A)'
+  codomain:
+    description: 'A higher functor (pseudofunctor / weak 2-functor) F: B1 -> B2 between bicategories consists of an object map F0, a 1-cell map F1, a 2-cell map F2 strictly preserving vertical composition, and coherent compositor and unitor 2-isomorphisms satisfying associator and unitor coherence hexagon/triangle diagrams.'
+requirements:
+  required_structures:
+  - 'Source B1 and target B2 must be valid bicategories.'
+  - 'Functor 1-cell map preserves 0-cell source and target boundaries.'
+  - 'Functor 2-cell map strictly preserves vertical identity id2 and vertical composition vcomp.'
+  - 'Compositor 2-isomorphism phi_{f,g} is natural in f and g.'
+  - 'Compositor and unitor satisfy the associator coherence hexagon diagram.'
+  - 'Compositor and unitor satisfy the left and right unitor coherence triangle diagrams.'
+  - 'Strict 2-functors have identity compositor and unitor 2-cells.'
+  - 'Artifact hash is deterministically computed from functor maps and coherence cells.'
+laws:
+- 'Vertical identity preservation: map2 (B1.id2 f) = B2.id2 (map1 f)'
+- 'Vertical composition preservation: map2 (B1.vcomp alpha beta) = B2.vcomp (map2 alpha) (map2 beta)'
+- 'Compositor naturality: B2.vcomp (B2.hcomp2 (map2 alpha) (map2 beta)) (compositor f2 g2).hom = B2.vcomp (compositor f1 g1).hom (map2 (B1.hcomp2 alpha beta))'
+- 'Associator coherence: B2.vcomp (B2.whiskerRight (compositor f g).hom (map1 h)) (B2.vcomp (compositor (B1.hcomp1 f g) h).hom (map2 (B1.associator f g h).hom)) = B2.vcomp (B2.associator (map1 f) (map1 g) (map1 h)).hom (B2.vcomp (B2.whiskerLeft (map1 f) (compositor g h).hom) (compositor f (B1.hcomp1 g h)).hom)'
+- 'Left unitor coherence: B2.vcomp (B2.whiskerRight (unitor A).hom (map1 f)) (B2.vcomp (compositor (B1.id1 A) f).hom (map2 (B1.leftUnitor f).hom)) = (B2.leftUnitor (map1 f)).hom'
+- 'Right unitor coherence: B2.vcomp (B2.whiskerLeft (map1 f) (unitor B).hom) (B2.vcomp (compositor f (B1.id1 B)).hom (map2 (B1.rightUnitor f).hom)) = (B2.rightUnitor (map1 f)).hom'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Maps and cells serialized in canonical order
+  - Deterministic evaluation produces identical artifact hash
+relationships:
+- urn:core:math:bicategory:v0.1.0 serves as Source and target bicategories
+- urn:core:math:higher_natural_transformation:v0.1.0 serves as Higher natural transformations are morphisms between higher functors
+negative_tests:
+- Source or target higher category references do not resolve
+- Functor 1-cell map violates 0-cell source/target boundaries (OneCellBoundaryMismatch)
+- Functor 2-cell map violates vertical composition or identity preservation
+- Compositor 2-cell is not an invertible 2-isomorphism
+- Compositor naturality condition violated
+- Associator coherence diagram fails to commute
+- Left or right unitor coherence diagram fails to commute
+doctrine:
+  summary: 'A HigherFunctor (pseudofunctor / weak 2-functor) is a morphism between higher categories preserving 0-cells, 1-cells, and 2-cells. Vertical composition is preserved strictly while horizontal composition and identities are preserved up to coherent 2-isomorphisms (compositors and unitors).'
+  non_role:
+  - Enriched functors over general monoidal categories
+  - Monoidal functor tensor structures
+  - Functor categories (which form bicategories themselves)
+wip:
+- General coherence, strictification, and Lean-to-Rust semantic correspondence are not proved.
+- The Lean structure records laws as hypotheses; compilation does not validate arbitrary input data.
+- No native implementation of this complete structure is bound by this contract.
+lean_binding:
+  path: lean4/research_programs/higher_category_theory/HigherFunctor.lean
+  symbol: HigherCategoryTheory.Pseudofunctor
+  scope: algebraic_structure_with_law_fields

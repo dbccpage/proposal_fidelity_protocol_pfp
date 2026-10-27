@@ -1,0 +1,145 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phi1_obstruction_mass:v1.0.0
+title: Φ₁ obstruction mass (scalar package)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:cochain_layer:v1.0.0
+    - urn:core:math:exact_repair_space:v1.0.0
+    - urn:core:math:quotient_space:v1.0.0
+    - urn:core:math:hashes:v1.0.0
+    - urn:core:math:phi1:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: phi1_obstruction_mass
+  symbol: Φ₁([ω])
+  ascii_symbol: Phi1ObstructionMass
+  notation: m = Φ₁([ω]) ∈ ℚ≥0 (exact) or declared diagnostic display
+  domain:
+  - class [ω] ∈ Q¹ with representative ω ∈ C¹
+  - weight profile w
+  - mandatory replayed primal-dual evidence package for certified mass
+  codomain:
+    description: The obstruction mass scalar m = Φ₁([ω]) together with mandatory exact-mode evidence bindings. Distinct
+      from the Γ₂ closure defect scalar.
+requirements:
+  required_structures:
+  - Valid cochain layer enabling Φ₁ evaluation
+  - B¹ = im(d₀) and Q¹ = C¹/B¹
+  - Weight profile w
+  - Nonnegative mass scalar m
+  - For certified mass: primal witness (α*, h*=ω−d₀α*, ‖h*‖) and dual witness
+laws:
+- 'Mass law: certified m equals Φ₁([ω]) under the declared weight profile.'
+- 'Nonnegativity: m ≥ 0.'
+- 'Zero law: m = 0 iff the class is exact (exact repair).'
+- 'Evidence law: certified claims require replayable primal-dual evidence.'
+- 'Separation fence: obstruction mass ≠ closure defect Γ₂.'
+- 'Authority law: mass alone does not mint AuthorityEffect, PROVED, or GlobalGreen.'
+replay:
+  requirements:
+  - Deterministic exact rational evaluation for certified claims
+  - Evidence bindings content-addressed when hashed
+  - No NaN / infinities
+relationships:
+- urn:core:math:phi1:v1.0.0 — underlying functional
+- urn:core:math:gamma2_closure_defect:v1.0.0 — distinct secondary scalar
+- urn:core:math:quotient_mass:v1.0.0 — related packaging
+- urn:core:math:finite_obstruction_trichotomy:v0.2.0 — consumes mass with Γ₂
+rust_binding:
+  crate: core_types
+  module: obstruction_mass
+  symbols:
+  - ObstructionMass
+  - ObstructionMassError
+  - EvidenceBindings
+  required_tests:
+  - negative_mass_cannot_be_certified
+  - certified_mass_requires_both_matching_witnesses
+  - scalar_only_legacy_wire_and_missing_certificate_are_refused
+  - tampered_mass_certificate_is_replayed_and_refused
+  - future_schema_and_forged_authority_are_refused
+  - zero_carrier_is_refused_on_both_construction_paths
+  - huge_exact_mass_is_not_rejected_or_rounded_to_zero_for_display
+negative_tests:
+- Negative mass must be rejected
+- Certified mass without primal-dual evidence must be rejected
+- Mass identified with Γ₂ must be rejected
+- Mass used as ActionLicense / GlobalGreen must be rejected
+- NaN/infinite mass must be rejected
+- Claiming PROVED / HoTT from this contract alone must be rejected
+doctrine:
+  compact_yaml:
+    PHI1_OBSTRUCTION_MASS_CONTRACT:
+      symbol: Φ₁([ω])
+      ascii_symbol: Phi1ObstructionMass
+      formula: Φ₁([ω]) = inf over α of ‖ω − d₀α‖₁
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: '[ω] ∈ Q¹ = C¹/im(d₀)'
+      codomain: m ∈ ℚ≥0 (exact)
+      required_structures:
+      - d₀
+      - C⁰ basis
+      - C¹ basis
+      - weight profile
+      - coefficient domain ℚ
+      definition: the weighted ℓ¹ distance from ω to im(d₀); well defined on Q¹
+      laws:
+      - Φ₁ = 0 iff ω ∈ im(d₀)
+      - Φ₁ is a seminorm on C¹ and a norm on Q¹
+      - Φ₁ is invariant under ω ↦ ω − d₀p
+      - Φ₁ is not Γ₂ and mints no authority
+  summary: 'Packaged Φ₁ obstruction mass scalar on Q¹ with mandatory exact evidence. Nonclaim: not Γ₂; not authority;
+    not PROVED; not GlobalGreen.'
+  non_role:
+  - Computing Γ₂
+  - Trichotomy classification (finite_obstruction_trichotomy)
+  - Authority / PROVED / GlobalGreen / HoTT
+  - Continuum norms without finite bases
+wip:
+- Canonical EvidenceBindings schema versioning
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B4_FOC_RESIDUAL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth B4: mass package distinct from phi1 functional and from Γ₂.'
+    recommendation: Keep dual packaging honest; avoid object smash.
+    pass: meth_b4_foc_residual
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: HAS_RS_BINDING
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: obstruction_mass module binding present.
+    file: engine/crates_rs/core_types/src/obstruction_mass.rs
+    delta: MATCH
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: '[SCOPE FENCE]'
+    detail: Not PROVED; separation from Γ₂ required.

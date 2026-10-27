@@ -1,0 +1,3679 @@
+{
+  "base": {
+    "definition": {
+      "definition_name": "base-oeas-test",
+      "seat_requirements": [
+        {
+          "seat_id": "critic",
+          "trust_domain": "CRITIC",
+          "required_operations": [
+            "attack"
+          ],
+          "required_colours": [
+            "Code",
+            "Audit"
+          ],
+          "independent_from": [
+            "producer"
+          ]
+        },
+        {
+          "seat_id": "producer",
+          "trust_domain": "PRODUCER",
+          "required_operations": [
+            "propose"
+          ],
+          "required_colours": [
+            "State",
+            "Code"
+          ],
+          "independent_from": [
+            "critic"
+          ]
+        },
+        {
+          "seat_id": "selector",
+          "trust_domain": "SELECTOR",
+          "required_operations": [
+            "select"
+          ],
+          "required_colours": [
+            "Audit",
+            "Receipt"
+          ],
+          "independent_from": []
+        }
+      ],
+      "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "max_parallelism": 1,
+      "authority_effect": "None",
+      "schema_version": "core.oeas.swarm-definition.v1",
+      "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+    },
+    "graph": {
+      "entry_scene_id": "entry",
+      "scenes": [
+        {
+          "scene_id": "entry",
+          "purpose": "Produce one candidate.",
+          "required_seat_ids": [
+            "producer"
+          ],
+          "allowed_result_statuses": [
+            "PROPOSED"
+          ],
+          "max_visits": 2,
+          "terminal": false
+        },
+        {
+          "scene_id": "review",
+          "purpose": "Challenge the candidate.",
+          "required_seat_ids": [
+            "critic"
+          ],
+          "allowed_result_statuses": [
+            "FINDING",
+            "PASS"
+          ],
+          "max_visits": 2,
+          "terminal": false
+        },
+        {
+          "scene_id": "terminal",
+          "purpose": "Emit an inert selection proposal.",
+          "required_seat_ids": [
+            "selector"
+          ],
+          "allowed_result_statuses": [
+            "PASS",
+            "HOLD",
+            "REFUSE"
+          ],
+          "max_visits": 1,
+          "terminal": true
+        }
+      ],
+      "transitions": [
+        {
+          "transition_id": "entry-review",
+          "source_scene_id": "entry",
+          "target_scene_id": "review",
+          "trigger_statuses": [
+            "PROPOSED"
+          ],
+          "residual_codes": [],
+          "priority": 0
+        },
+        {
+          "transition_id": "review-entry-repair",
+          "source_scene_id": "review",
+          "target_scene_id": "entry",
+          "trigger_statuses": [
+            "FINDING"
+          ],
+          "residual_codes": [
+            "needs_repair"
+          ],
+          "priority": 1
+        },
+        {
+          "transition_id": "review-terminal",
+          "source_scene_id": "review",
+          "target_scene_id": "terminal",
+          "trigger_statuses": [
+            "PASS"
+          ],
+          "residual_codes": [],
+          "priority": 2
+        }
+      ],
+      "authority_effect": "None",
+      "schema_version": "core.oeas.scene-graph.v1",
+      "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+    },
+    "profile": {
+      "profile_name": "test-profile",
+      "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+      "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+      "skill_ids": [
+        "attack",
+        "propose",
+        "select"
+      ],
+      "anti_skill_profile_digest": "",
+      "authority_effect": "None",
+      "schema_version": "core.oeas.swarm-profile.v1",
+      "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+    },
+    "plan": {
+      "plan_name": "test-plan",
+      "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "assignments": [
+        {
+          "scene_id": "entry",
+          "seat_id": "producer",
+          "agent_id": "dev-agent",
+          "operation_ids": [
+            "propose"
+          ],
+          "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        {
+          "scene_id": "review",
+          "seat_id": "critic",
+          "agent_id": "critic-agent",
+          "operation_ids": [
+            "attack"
+          ],
+          "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        {
+          "scene_id": "terminal",
+          "seat_id": "selector",
+          "agent_id": "adversary-agent",
+          "operation_ids": [
+            "select"
+          ],
+          "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        }
+      ],
+      "normalized_operation_ids": [
+        "propose",
+        "attack",
+        "select"
+      ],
+      "path2_evidence_ids": [],
+      "status": "PROPOSED",
+      "authority_effect": "None",
+      "schema_version": "core.oeas.licensed-workflow-plan.v1",
+      "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+    },
+    "packet": {
+      "task_key": "test-task",
+      "scene_id": "entry",
+      "objective": "Produce and review a candidate.",
+      "input_artifact_refs": [
+        "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      ],
+      "acceptance_criteria": [
+        "One candidate is reviewed."
+      ],
+      "budget_units": 6,
+      "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+      "causal_parent_ids": [],
+      "authority_effect": "None",
+      "schema_version": "core.oeas.work-packet.v1",
+      "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+    },
+    "stop": {
+      "max_scene_steps": 6,
+      "max_dry_rounds": 2,
+      "max_total_budget": 6,
+      "stop_on_statuses": [
+        "REFUSE"
+      ]
+    }
+  },
+  "vectors": [
+    {
+      "op": "semantic_id",
+      "domain": " core.oeas.test.v1 ",
+      "payload": {
+        "é": [
+          1,
+          true,
+          null,
+          "é\r\n"
+        ]
+      },
+      "expected": {
+        "ok": "sha256:18123b56862471776fa2308fc021eef8e6e4298ed909e3a779593b307cdcd6e7"
+      }
+    },
+    {
+      "op": "semantic_id",
+      "domain": "core.oeas.test.v1",
+      "payload": {
+        "a": 1000000000000000000000000000000000000000000000000000000000001
+      },
+      "expected": {
+        "ok": "sha256:8d743489627c64cdd2db2dc12075a8d40e4402af9f9a6ad845d8cbd9391eccfb"
+      }
+    },
+    {
+      "op": "semantic_id",
+      "domain": "",
+      "payload": {},
+      "expected": {
+        "error": "domain must be a non-empty string"
+      }
+    },
+    {
+      "op": "semantic_id",
+      "domain": "bad domain",
+      "payload": {},
+      "expected": {
+        "error": "domain must be a canonical identifier"
+      }
+    },
+    {
+      "op": "semantic_id",
+      "domain": "core.oeas.test.v1",
+      "payload": {
+        "é": 1,
+        "é": 2
+      },
+      "expected": {
+        "error": "canonical key collision: 'é'"
+      }
+    },
+    {
+      "op": "semantic_id",
+      "domain": "core.oeas.test.v1",
+      "payload": {
+        "é'": 1,
+        "é'": 2
+      },
+      "expected": {
+        "error": "canonical key collision: \"é'\""
+      }
+    },
+    {
+      "op": "semantic_id",
+      "domain": "core.oeas.test.v1",
+      "payload": {
+        "é'\"\\\r\n\t\u0001": 1,
+        "é'\"\\\r\n\t\u0001": 2
+      },
+      "expected": {
+        "error": "canonical key collision: 'é\\'\"\\\\\\r\\n\\t\\x01'"
+      }
+    },
+    {
+      "op": "semantic_id",
+      "domain": "core.oeas.test.v1",
+      "payload": {
+        "a": 1.5
+      },
+      "expected": {
+        "error": "unsupported canonical value: float"
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "expected": {
+        "ok": null
+      },
+      "initialized": {
+        "ok": true
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:f023a438732d805c36a7e47c0342a52867d73416e1800df728efe3a046724c4a"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_COMPOSITION_REFUSED",
+          "message": "profile does not compose the supplied base definition",
+          "locus": "oeas-composition",
+          "details": {}
+        }
+      },
+      "initialized": {
+        "error": "profile does not compose the supplied base definition"
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8d1f7b10b7d42525499022fcb7af751e1807f9c59a3aa58ef9d18f65df22b4d9"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_COMPOSITION_REFUSED",
+          "message": "profile does not bind the supplied scene graph",
+          "locus": "oeas-composition",
+          "details": {}
+        }
+      },
+      "initialized": {
+        "error": "profile does not bind the supplied scene graph"
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:d68f0ad67823c98e122fe8ec94e2c17b0ab6de8b7ec715658e1b975d2dc379ac"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_COMPOSITION_REFUSED",
+          "message": "workflow plan does not bind the definition catalog",
+          "locus": "oeas-composition",
+          "details": {}
+        }
+      },
+      "initialized": {
+        "error": "workflow plan does not bind the definition catalog"
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "ghost"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:9289114fa6910f426e5aa2e709ff45a81a7502285b6efa7d77e93935a503cd6a"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:9289114fa6910f426e5aa2e709ff45a81a7502285b6efa7d77e93935a503cd6a",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:d33490ac9d35086042fc700643cf727deb7a3b01d7753d612b92df81b6152698"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_COMPOSITION_REFUSED",
+          "message": "scene entry requires an unknown seat",
+          "locus": "oeas-composition",
+          "details": {}
+        }
+      },
+      "initialized": {
+        "error": "scene entry requires an unknown seat"
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:af00b6af10d7710b092483d6369d9204d7f85ac1d59553a82ba986e70e453a98"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_COMPOSITION_REFUSED",
+          "message": "scene entry skips required seat producer",
+          "locus": "oeas-composition",
+          "details": {}
+        }
+      },
+      "initialized": {
+        "error": "scene entry skips required seat producer"
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "other"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:cb741d7c1aaf64c6ad3cb5d77284ef35e9ef66fb18e073debeeb99c5bc090544"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_COMPOSITION_REFUSED",
+          "message": "seat producer lacks its required operations",
+          "locus": "oeas-composition",
+          "details": {}
+        }
+      },
+      "initialized": {
+        "error": "seat producer lacks its required operations"
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:c6254824635cac3a666e8e920a667baa791b9089456dfdeba5a32246cb15d896"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_COMPOSITION_REFUSED",
+          "message": "independent trust domains critic/producer share an agent across scenes",
+          "locus": "oeas-composition",
+          "details": {}
+        }
+      },
+      "initialized": {
+        "error": "independent trust domains critic/producer share an agent across scenes"
+      }
+    },
+    {
+      "op": "composition",
+      "definition": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 2,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:5e0225cdba00222f3f4761f3bb93b24b0be1c03216633c0965d7ed8e1f0bc1b7"
+      },
+      "graph": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "profile": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:5e0225cdba00222f3f4761f3bb93b24b0be1c03216633c0965d7ed8e1f0bc1b7",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:4b56fcb8cdbcc9d8013e48e409bc603b5d0cb7330357fee5f2b6b0185e1fde77"
+      },
+      "plan": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "expected": {
+        "ok": null
+      },
+      "initialized": {
+        "error": "DeterministicSchedulerV1 requires N=1"
+      }
+    },
+    {
+      "op": "start",
+      "packet": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "run_key": "run-one",
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "entry",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            }
+          ],
+          "result_ids": [],
+          "progress_measure_ids": [],
+          "remaining_budget": 6,
+          "scene_steps": 0,
+          "dry_rounds": 0,
+          "terminal_status": "RUNNING",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+        }
+      }
+    },
+    {
+      "op": "start",
+      "packet": {
+        "task_key": "test-task",
+        "scene_id": "review",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:39f5f7c0cfda531373dcfd3ee132fa8c9d4a1781467b46a422eeade215ff1dbd"
+      },
+      "run_key": "run-one",
+      "expected": {
+        "error": "initial work packet must target the graph entry scene"
+      }
+    },
+    {
+      "op": "start",
+      "packet": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 7,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:44f5893e97916892e303a2e7b3fd3a53d049e014c1b2d05854bf09a894caad2f"
+      },
+      "run_key": "run-one",
+      "expected": {
+        "error": "work packet budget exceeds the stop condition"
+      }
+    },
+    {
+      "op": "start",
+      "packet": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "é é\r\nλ",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:2d0e3ee1c5b2e564b7f0db691a8382e57d27ee71ac039feeaafcc651b0af2c4f"
+      },
+      "run_key": "run-one",
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "entry",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            }
+          ],
+          "result_ids": [],
+          "progress_measure_ids": [],
+          "remaining_budget": 6,
+          "scene_steps": 0,
+          "dry_rounds": 0,
+          "terminal_status": "RUNNING",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "review",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            },
+            {
+              "scene_id": "review",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 5,
+          "scene_steps": 1,
+          "dry_rounds": 0,
+          "terminal_status": "RUNNING",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:35713fbb23444ef7ddae5e4ac2a49477a07c642c2b32ff844e7ddceeab074f94"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "REFUSE",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:4432f21694c02cff83e5d4e3bce85069a79f40a5d1577a544d52cf679eb4d94f"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "entry",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:4432f21694c02cff83e5d4e3bce85069a79f40a5d1577a544d52cf679eb4d94f"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 5,
+          "scene_steps": 1,
+          "dry_rounds": 0,
+          "terminal_status": "REFUSE",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:4a3869e128b9326c3eb930bb7553ac39198c4ea4c318adb094f2dd65b0781f46"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "HOLD",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:038ab6238c408430f6517a90729e3f949bc157f02d91249b438078266b0534bb"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "entry",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:038ab6238c408430f6517a90729e3f949bc157f02d91249b438078266b0534bb"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 5,
+          "scene_steps": 1,
+          "dry_rounds": 0,
+          "terminal_status": "HOLD",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:3a6a6cd61e660fc0ae4df391463f40fae78075a92ec7ab09c66fd1d793a6f32c"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "review",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          },
+          {
+            "scene_id": "review",
+            "count": 1
+          }
+        ],
+        "result_ids": [
+          "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+        ],
+        "progress_measure_ids": [
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        ],
+        "remaining_budget": 5,
+        "scene_steps": 1,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:35713fbb23444ef7ddae5e4ac2a49477a07c642c2b32ff844e7ddceeab074f94"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "review",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "FINDING",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:a6dfcd25ff64bced4b0dbefee6a02b683e2274d6e1fc58da2fd5f8e96cbf46e1"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "review",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            },
+            {
+              "scene_id": "review",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+            "sha256:a6dfcd25ff64bced4b0dbefee6a02b683e2274d6e1fc58da2fd5f8e96cbf46e1"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 4,
+          "scene_steps": 2,
+          "dry_rounds": 0,
+          "terminal_status": "HOLD",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:fa276b34f27dd10d218f543fec1d8adac9554b7f9d9e7a2ccc3e5b179e436814"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "review",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          },
+          {
+            "scene_id": "review",
+            "count": 1
+          }
+        ],
+        "result_ids": [
+          "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+        ],
+        "progress_measure_ids": [
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        ],
+        "remaining_budget": 5,
+        "scene_steps": 1,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:35713fbb23444ef7ddae5e4ac2a49477a07c642c2b32ff844e7ddceeab074f94"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "review",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "FINDING",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [
+          "wrong"
+        ],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:326bcecbb49573130b116d04b6f3d0e80ec2fd173d6ee2f1e2540d0b6de10b03"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "review",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            },
+            {
+              "scene_id": "review",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+            "sha256:326bcecbb49573130b116d04b6f3d0e80ec2fd173d6ee2f1e2540d0b6de10b03"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 4,
+          "scene_steps": 2,
+          "dry_rounds": 0,
+          "terminal_status": "HOLD",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:13e3add2fd5fe0ffa7df866f86890fd77aec27aff42749ccef8a7c7aa88357cd"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "review",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          },
+          {
+            "scene_id": "review",
+            "count": 1
+          }
+        ],
+        "result_ids": [
+          "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+        ],
+        "progress_measure_ids": [
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        ],
+        "remaining_budget": 5,
+        "scene_steps": 1,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:35713fbb23444ef7ddae5e4ac2a49477a07c642c2b32ff844e7ddceeab074f94"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "review",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "FINDING",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [
+          "needs_repair"
+        ],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:7540dcf6e434e0d25cf02c44a3d0f40688d4fbf5167a0f76975ed78720d821eb"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "entry",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 2
+            },
+            {
+              "scene_id": "review",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+            "sha256:7540dcf6e434e0d25cf02c44a3d0f40688d4fbf5167a0f76975ed78720d821eb"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 4,
+          "scene_steps": 2,
+          "dry_rounds": 0,
+          "terminal_status": "RUNNING",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:b2614d9d4ebdc3488b78f15cec7918271bb38433608edb689048944e609878c2"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "terminal",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          },
+          {
+            "scene_id": "review",
+            "count": 1
+          },
+          {
+            "scene_id": "terminal",
+            "count": 1
+          }
+        ],
+        "result_ids": [
+          "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+          "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899"
+        ],
+        "progress_measure_ids": [
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        ],
+        "remaining_budget": 4,
+        "scene_steps": 2,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:84c0543fbd95c7fc9057295e0a1db017007d4aa2ba0716d9694ed8d2557453d2"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "terminal",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PASS",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:8e720e9a03481b1a96c9c4cfb4ab03231b97ea395eb3c68266ed20f0e4184b31"
+      },
+      "progress": {
+        "changed_state": 0,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": false,
+        "measure_id": "sha256:a014452b4c8aeb3bb5398b4cbc68c6eea6a6a5421beb63348d7650094b1b9b7c"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "terminal",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            },
+            {
+              "scene_id": "review",
+              "count": 1
+            },
+            {
+              "scene_id": "terminal",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+            "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899",
+            "sha256:8e720e9a03481b1a96c9c4cfb4ab03231b97ea395eb3c68266ed20f0e4184b31"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:a014452b4c8aeb3bb5398b4cbc68c6eea6a6a5421beb63348d7650094b1b9b7c"
+          ],
+          "remaining_budget": 3,
+          "scene_steps": 3,
+          "dry_rounds": 1,
+          "terminal_status": "COMPLETED",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:8c79fb4653538daa4d470cb851e02470fb953173b9cbc98c30bfe6c517003572"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "terminal",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          },
+          {
+            "scene_id": "review",
+            "count": 1
+          },
+          {
+            "scene_id": "terminal",
+            "count": 1
+          }
+        ],
+        "result_ids": [
+          "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+          "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899"
+        ],
+        "progress_measure_ids": [
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        ],
+        "remaining_budget": 4,
+        "scene_steps": 2,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:84c0543fbd95c7fc9057295e0a1db017007d4aa2ba0716d9694ed8d2557453d2"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "terminal",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "REFUSE",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:2392eaed4b798836f5339824e3989c595c43bcd2d6e39d399ee1f3ecbd70d6f9"
+      },
+      "progress": {
+        "changed_state": 0,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": false,
+        "measure_id": "sha256:a014452b4c8aeb3bb5398b4cbc68c6eea6a6a5421beb63348d7650094b1b9b7c"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "terminal",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            },
+            {
+              "scene_id": "review",
+              "count": 1
+            },
+            {
+              "scene_id": "terminal",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+            "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899",
+            "sha256:2392eaed4b798836f5339824e3989c595c43bcd2d6e39d399ee1f3ecbd70d6f9"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:a014452b4c8aeb3bb5398b4cbc68c6eea6a6a5421beb63348d7650094b1b9b7c"
+          ],
+          "remaining_budget": 3,
+          "scene_steps": 3,
+          "dry_rounds": 1,
+          "terminal_status": "REFUSE",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:0a5ef0fdcaf5f67af54dd0d803f6cb0aa074082db842c18077cd9ca8488d033e"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 1,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:364db891b2dac05f72620b5d1b1751537d3a0908ac9e011efab861b75e48b09e"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "entry",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 0,
+          "scene_steps": 1,
+          "dry_rounds": 0,
+          "terminal_status": "EXHAUSTED",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:5b0e2019ba114c705d7cc0d1043e30eda18ee1434e378a03df6077ddb04e9b46"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 5,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:c81bf646df3e7ada10f345ccc62741c4347022ed46d2db33efe3ffb41988f204"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "entry",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 5,
+          "scene_steps": 6,
+          "dry_rounds": 0,
+          "terminal_status": "EXHAUSTED",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:f607cb6ec61bbc8581a8c5a220d090bbae42ae8f4c7d319f227a76674b2fe9d3"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 1,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:3b7f9e9964c39ebae262011931fbf3aa23a7424d7fee736520fa6ee92c286454"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "progress": {
+        "changed_state": 0,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": false,
+        "measure_id": "sha256:a014452b4c8aeb3bb5398b4cbc68c6eea6a6a5421beb63348d7650094b1b9b7c"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "entry",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+          ],
+          "progress_measure_ids": [
+            "sha256:a014452b4c8aeb3bb5398b4cbc68c6eea6a6a5421beb63348d7650094b1b9b7c"
+          ],
+          "remaining_budget": 5,
+          "scene_steps": 1,
+          "dry_rounds": 2,
+          "terminal_status": "HOLD",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:e2b314566674e268a64d02b09491844f5a87491fad14fb57f34bcb725b037867"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "HOLD",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:6165262450dbb77bbe9eebbcacd6bee90236478357f0568b951e6667b2ddf3e9"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_SCHEDULER_ADVANCE_REFUSED",
+          "message": "a terminal run cannot advance",
+          "locus": "oeas-scheduler-advance",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "review",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PASS",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "error": {
+          "code": "OEAS_SCHEDULER_ADVANCE_REFUSED",
+          "message": "agent result scene differs from current run scene",
+          "locus": "oeas-scheduler-advance",
+          "details": {}
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "state": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "review",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 2
+          },
+          {
+            "scene_id": "review",
+            "count": 2
+          }
+        ],
+        "result_ids": [
+          "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+          "sha256:7540dcf6e434e0d25cf02c44a3d0f40688d4fbf5167a0f76975ed78720d821eb",
+          "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+        ],
+        "progress_measure_ids": [
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+          "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        ],
+        "remaining_budget": 3,
+        "scene_steps": 3,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:65d8ffc430f2beb4bd31ef34f23524e8755d4f4691aa43177808c48dd7c6525f"
+      },
+      "result": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "review",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "FINDING",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [
+          "needs_repair"
+        ],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:7540dcf6e434e0d25cf02c44a3d0f40688d4fbf5167a0f76975ed78720d821eb"
+      },
+      "progress": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "review",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 3
+            },
+            {
+              "scene_id": "review",
+              "count": 2
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+            "sha256:7540dcf6e434e0d25cf02c44a3d0f40688d4fbf5167a0f76975ed78720d821eb",
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+            "sha256:7540dcf6e434e0d25cf02c44a3d0f40688d4fbf5167a0f76975ed78720d821eb"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 2,
+          "scene_steps": 4,
+          "dry_rounds": 0,
+          "terminal_status": "HOLD",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:48ca548d6907401e76d053184a997ad0ed475d0e314ca50212c9cae5bbbd19ae"
+        }
+      }
+    },
+    {
+      "op": "replay",
+      "results": [
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "entry",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PROPOSED",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+        },
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "review",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PASS",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899"
+        },
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "terminal",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PASS",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:8e720e9a03481b1a96c9c4cfb4ab03231b97ea395eb3c68266ed20f0e4184b31"
+        }
+      ],
+      "progress_measures": [
+        {
+          "changed_state": 1,
+          "stronger_certificate": 0,
+          "refined_residual": 0,
+          "expanded_cover": 0,
+          "proposed_lift": 0,
+          "authority_effect": "None",
+          "schema_version": "core.oeas.progress-measure.v1",
+          "progressed": true,
+          "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        },
+        {
+          "changed_state": 1,
+          "stronger_certificate": 0,
+          "refined_residual": 0,
+          "expanded_cover": 0,
+          "proposed_lift": 0,
+          "authority_effect": "None",
+          "schema_version": "core.oeas.progress-measure.v1",
+          "progressed": true,
+          "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        },
+        {
+          "changed_state": 1,
+          "stronger_certificate": 0,
+          "refined_residual": 0,
+          "expanded_cover": 0,
+          "proposed_lift": 0,
+          "authority_effect": "None",
+          "schema_version": "core.oeas.progress-measure.v1",
+          "progressed": true,
+          "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        }
+      ],
+      "expected": {
+        "ok": {
+          "run_key": "run-one",
+          "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+          "current_scene_id": "terminal",
+          "visit_counts": [
+            {
+              "scene_id": "entry",
+              "count": 1
+            },
+            {
+              "scene_id": "review",
+              "count": 1
+            },
+            {
+              "scene_id": "terminal",
+              "count": 1
+            }
+          ],
+          "result_ids": [
+            "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce",
+            "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899",
+            "sha256:8e720e9a03481b1a96c9c4cfb4ab03231b97ea395eb3c68266ed20f0e4184b31"
+          ],
+          "progress_measure_ids": [
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07",
+            "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+          ],
+          "remaining_budget": 3,
+          "scene_steps": 3,
+          "dry_rounds": 0,
+          "terminal_status": "COMPLETED",
+          "authority_effect": "None",
+          "schema_version": "core.oeas.swarm-run-state.v1",
+          "state_id": "sha256:b50a50157d88a0f0418c78ca1e8f92347e321941aa55cb0f7d06031ab48386c1"
+        }
+      }
+    },
+    {
+      "op": "replay",
+      "results": [
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "entry",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PROPOSED",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+        },
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "review",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PASS",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899"
+        },
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "terminal",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PASS",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:8e720e9a03481b1a96c9c4cfb4ab03231b97ea395eb3c68266ed20f0e4184b31"
+        }
+      ],
+      "progress_measures": [
+        {
+          "changed_state": 1,
+          "stronger_certificate": 0,
+          "refined_residual": 0,
+          "expanded_cover": 0,
+          "proposed_lift": 0,
+          "authority_effect": "None",
+          "schema_version": "core.oeas.progress-measure.v1",
+          "progressed": true,
+          "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        }
+      ],
+      "expected": {
+        "error": "replay result/progress arities differ"
+      }
+    },
+    {
+      "op": "replay",
+      "results": [
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "entry",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PROPOSED",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+        },
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "review",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PASS",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:72181980d46f69b7cf507c78da71457a86fca36c439db3a9674ab1a7a427f899"
+        },
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "terminal",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PASS",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:8e720e9a03481b1a96c9c4cfb4ab03231b97ea395eb3c68266ed20f0e4184b31"
+        },
+        {
+          "agent_id": "fixture-agent",
+          "trust_domain": "PRODUCER",
+          "scene_id": "terminal",
+          "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+          "status": "PASS",
+          "candidate_ids": [],
+          "challenge_ids": [],
+          "artifact_refs": [],
+          "residual_codes": [],
+          "causal_parent_ids": [],
+          "authority_effect": "None",
+          "schema_version": "core.oeas.agent-result.v1",
+          "result_id": "sha256:8e720e9a03481b1a96c9c4cfb4ab03231b97ea395eb3c68266ed20f0e4184b31"
+        }
+      ],
+      "progress_measures": [
+        {
+          "changed_state": 1,
+          "stronger_certificate": 0,
+          "refined_residual": 0,
+          "expanded_cover": 0,
+          "proposed_lift": 0,
+          "authority_effect": "None",
+          "schema_version": "core.oeas.progress-measure.v1",
+          "progressed": true,
+          "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        },
+        {
+          "changed_state": 1,
+          "stronger_certificate": 0,
+          "refined_residual": 0,
+          "expanded_cover": 0,
+          "proposed_lift": 0,
+          "authority_effect": "None",
+          "schema_version": "core.oeas.progress-measure.v1",
+          "progressed": true,
+          "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        },
+        {
+          "changed_state": 1,
+          "stronger_certificate": 0,
+          "refined_residual": 0,
+          "expanded_cover": 0,
+          "proposed_lift": 0,
+          "authority_effect": "None",
+          "schema_version": "core.oeas.progress-measure.v1",
+          "progressed": true,
+          "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        },
+        {
+          "changed_state": 1,
+          "stronger_certificate": 0,
+          "refined_residual": 0,
+          "expanded_cover": 0,
+          "proposed_lift": 0,
+          "authority_effect": "None",
+          "schema_version": "core.oeas.progress-measure.v1",
+          "progressed": true,
+          "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+        }
+      ],
+      "expected": {
+        "error": "a terminal run cannot advance"
+      }
+    }
+  ]
+}

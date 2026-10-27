@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:derived_functor:v0.1.0
+title: Derived Functor Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: derived_functor
+  symbol: 'LF or RF for F: A → B; R^i F or L_i F for individual derived functors'
+  ascii_symbol: derived_functor
+  notation: 'LF or RF for F: A → B; R^i F or L_i F for individual derived functors'
+  domain:
+  - 'base_functor: functor F: A → B'
+  - 'source_category: abelian or model category A'
+  - 'target_category: abelian or model category B'
+  - 'derivation_type: left or right'
+  - 'resolution_class: injective/projective/fibrant/cofibrant'
+  codomain:
+    description: 'The carrier consists of the base functor F: A → B together with resolution data (injective/projective/fibrant/cofibrant) and derived functor computation machinery.
+
+      '
+requirements:
+  required_structures:
+  - The base functor F must be a valid functor
+  - The resolution class must contain sufficient resolutions
+  - F must be derivable in the specified direction
+  - The derived functor must be independent of resolution choice
+  - The artifact hash must be deterministically computable
+laws:
+- 'F: A → B is a well-defined functor preserving composition and identities'
+- Sufficient resolutions exist in the resolution class
+- F is left/right derivable with respect to the resolution class
+- The derived functor is independent of resolution choice (up to natural isomorphism)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+  - Computation functions are content-addressed
+  - Given same data, must produce identical artifact hash
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Source and target categories must be valid categories
+- 'urn:math:contract:Functor:v1.0.0 serves as Base functor F: A → B must satisfy functor contract'
+- urn:math:contract:ChainComplex:v1.0.0 serves as Resolutions are represented as chain complexes
+negative_tests:
+- Non-functor must be rejected
+- Category without sufficient resolutions must be rejected
+- Non-derivable functor must be rejected
+- Resolution-dependent result must be rejected
+doctrine:
+  summary: 'A derived functor is the total derived functor of a functor between abelian or model categories. For F: A → B, the derived functor LF or RF is computed using resolutions and captures the "homotopically correct" version of F. This contract defines the structure, validation, and computational requirements for derived functors in the engine.'
+  non_role:
+  - Does not implement ∞-categorical derived functors (WIP)
+  - Does not provide Grothendieck duality or Verdier duality (WIP)
+  - Does not handle non-derivable functors
+  - Does not create or confer authority
+wip:
+- Derived functors in ∞-categories
+- Total derived functors vs individual R^i F
+- Grothendieck duality and Verdier duality
+- Integration with stable ∞-category framework
+- Current implementation focuses on classical abelian category case
+- Model category support is partial
+- ∞-categorical framework planned for future version
+- Duality theory to be added in v0.2.0
+rust_binding:
+  crate: core_category_theory
+  module: abelian
+  symbols:
+    - DerivedCategory
+  required_tests:
+    - validate_ok

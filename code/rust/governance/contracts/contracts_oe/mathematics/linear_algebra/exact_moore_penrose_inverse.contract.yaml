@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_moore_penrose_inverse:v0.1.0
+title: Exact Moore-Penrose Inverse
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_moore_penrose_inverse
+  symbol: exact_moore_penrose_inverse
+  ascii_symbol: exact_moore_penrose_inverse
+  notation: Exact bounded Moore Penrose inverse
+  domain:
+  - Finite exact HermitianOrdered fields with a positive norm and declared storage/scalar budgets
+  codomain:
+    description: Declared finite results of core_linear_algebra::exact_field::pseudoinverse; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- C=A B full rank factorization replays the original matrix
+- C+=B*(BB*)^-1(A*A)^-1 A*
+- All four Penrose identities independently replay
+- Rectangular zero and rank-deficient shapes are canonical
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+relationships: []
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::pseudoinverse
+  symbols:
+  - pseudoinverse_with_limits
+  - verify_penrose
+  required_tests:
+  - pseudoinverse::tests::rectangular_rank_deficient_inverse_replays_all_penrose_laws
+  - pseudoinverse::tests::inverse_and_zero_cases_have_the_canonical_shapes
+negative_tests:
+- pseudoinverse::tests::rectangular_rank_deficient_inverse_replays_all_penrose_laws
+- pseudoinverse::tests::inverse_and_zero_cases_have_the_canonical_shapes
+doctrine:
+  summary: C=A B full rank factorization replays the original matrix; C+=B*(BB*)^-1(A*A)^-1 A*; All four Penrose
+    identities independently replay; Rectangular zero and rank-deficient shapes are canonical.
+  non_role:
+  - No pseudoinverse over an arbitrary field without positive Hermitian norm
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quadratic_sorkin_interference:v0.1.0
+title: Quadratic inclusion-exclusion interference
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: quadratic_sorkin_interference
+  symbol: quadratic_sorkin_interference
+  ascii_symbol: quadratic_sorkin_interference
+  notation: Quadratic inclusion-exclusion interference
+  domain:
+  - Nonempty Q(i) configurations,1..12 disjoint nonempty coordinate blocks, declared subset budget
+  codomain:
+    description: Declared finite results of core_quantum_physics::coherent_interference; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Second-order term is twice the real cross term of block sums
+- Every inclusion-exclusion order above two vanishes for the quadratic readout
+- Overlapping blocks and exhausted subset budgets refuse
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: coherent_interference
+  symbols:
+  - interfered_weight
+  - cross_term
+  - sorkin_interference
+  - diagonal_twin
+  required_tests:
+  - measurement_exact_laws::quadratic_interference_has_second_order_terms_and_no_higher_orders
+negative_tests:
+- measurement_exact_laws::quadratic_interference_has_second_order_terms_and_no_higher_orders
+doctrine:
+  summary: Second-order term is twice the real cross term of block sums; Every inclusion-exclusion order above
+    two vanishes for the quadratic readout; Overlapping blocks and exhausted subset budgets refuse.
+  non_role:
+  - The quadratic readout is declared; no Born rule is derived from normalization
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

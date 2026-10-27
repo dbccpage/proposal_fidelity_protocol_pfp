@@ -1,0 +1,165 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:primitive_difference:v0.1.0
+title: PrimitiveDifference Contract (δ, ZeroRel, finite residual quotient)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: primitive_difference_zero_rel_finite_quotient
+  symbol: "δ : A → A → B,  Zero : B → Prop,  ZeroRel x y := Zero(δ x y)"
+  ascii_symbol: primitive_difference
+  notation: "finite residual quotient of carrier A by ZeroRel"
+  domain:
+  - "carrier type A (presentations / objects being compared)"
+  - "difference codomain B"
+  - "δ : A → A → B (primitive difference)"
+  - "Zero : B → Prop (which differences count as no difference)"
+  - "finite domain list Dom ⊆ A when decidable checks are claimed"
+  codomain:
+    description: >
+      A PrimitiveDifference structure induces ZeroRel on A. On a finite declared
+      domain, ZeroRel must be an equivalence; residual quotient classes are the
+      finite quotient of Dom by ZeroRel. Observables that factor through the
+      residual quotient are the admissible (invariant) maps. This is the CODA
+      PrimDiff / zero-rel / finite-quotient kernel — not a set-diff of “primitive atoms.”
+requirements:
+  required_structures:
+  - δ and Zero are total and deterministic on the declared carrier
+  - ZeroRel x y := Zero(δ x y)
+  - On any finite Dom where laws are claimed decidable, ZeroRel is reflexive, symmetric, transitive
+  - Quotient classes are opaque / branded to a carrier when issued by a validated finite carrier
+  - Observables claimed “admissible” must be invariant on ZeroRel pairs (factor through the residual quotient)
+  - No authority effect is self-assigned by δ, Zero, or the quotient
+laws:
+  - "ZeroRel definition: ZeroRel x y ⇔ Zero(δ x y)."
+  - "Finite equivalence laws (on Dom): refl / symm / trans of ZeroRel, or construction refuses with witness index."
+  - "Delta-congruence (when claimed): if x~x' and y~y' then δ(x,y)=δ(x',y') on Dom."
+  - "Factors-through: observable φ is residual-admissible on Dom iff ∀ ZeroRel pairs, φ(x)=φ(y)."
+  - "Finite only: decidable checks are evidence on Dom, not global theorems over all A."
+  - "Authority law: PrimDiff/quotient never mints host AuthorityEffect, proposal accept, or GlobalGreen."
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Finite Dom order is part of the evidence when classes are computed
+relationships:
+  - "urn:core:math:zero_difference_certificate:v0.1.0 — empty residual / licensed zero"
+  - "urn:core:math:canonical_bytes:v0.1.0 — presentation hashing when used"
+  - "Lean: CoreCore.PrimitiveDifference / FOC 000_primitive_axiomatics / CODA_FOC_EPK_PrimitiveDifference"
+  - "RS theory: core_homotopy_type_theory::primitive_difference"
+  - "RS/PY judgment record: core_types::primitive_difference (PrimitiveDifferenceJudgment)"
+rust_binding:
+  crate: core_homotopy_type_theory
+  module: primitive_difference
+  symbols:
+  - PrimitiveDifference
+  - QuotientClass
+  - FiniteCarrier
+  - ValidatedFiniteCarrier
+  - ZeroLawWitness
+  - DeltaCongruenceWitness
+  - PrimitiveDifferenceError
+  # Reflexive/symmetric/transitive ZeroRel refusals, non-invariant observable,
+  # and branded class mismatch are implemented. Set-diff-of-atoms has no
+  # API. GlobalGreen/PROVED/host auth stay unnamed.
+  required_tests:
+  - zero_rel_not_reflexive_rejected
+  - zero_rel_not_symmetric_rejected
+  - zero_rel_not_transitive_rejected
+  - observable_descends_iff_congruent_on_domain
+  - cross_carrier_quotient_class_rejected
+negative_tests:
+  - "ZeroRel not reflexive on Dom must refuse with index witness"
+  - "ZeroRel not symmetric on Dom must refuse with index witness"
+  - "ZeroRel not transitive on Dom must refuse with index witness"
+  - "Observable that splits a ZeroRel pair must not be marked factors-through"
+  - "Forged quotient class (wrong carrier brand) must not apply under branded apply"
+  - "Artifact claiming GlobalGreen/PROVED/host auth from PrimDiff alone must be rejected"
+  - "Using set-diff of 'atoms' as if it were ZeroRel residual quotient must be rejected for this object"
+doctrine:
+  summary: >
+    PrimitiveDifference is the CODA kernel: δ, Zero, ZeroRel, and (on finite Dom) the residual
+    quotient through which admissible observables factor. Dual-face: theory in
+    core_homotopy_type_theory; serializable judgment rows in core_types. Lean anchors the
+    axiomatics. None of YAML/Lean/RS/PY mint host authority. Nonclaim: does not claim PROVED;
+    does not claim GlobalGreen; does not claim HoTT univalence discharge; finite Dom evidence
+    is not a universal theorem.
+  non_role:
+  - Host AuthorityEffect / proposal accept / GlobalGreen minting
+  - Continuum/universal proofs over all carriers without finite Dom
+  - Semantic “isomorphism detection” beyond ZeroRel as declared
+  - Automatic reconciliation patches (atlas rows propose; host auths)
+  - Set-diff inventory of unrelated “primitive components” (legacy shell object — retired here)
+wip:
+  - Split secondary YAML if set-diff inventory of content-addressed atoms is still needed as a different object
+  - Pair factorization / LGGR pair obstruction full surface parity RS↔PY
+  - PD-L4/L5/L6 finite⇒Lean subtype bridge obligations
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_PRIMDIFF_CODA_REPAIR
+    severity: high
+    claim_class: "[STANDARD]"
+    detail: >
+      W0 library-spine: prior YAML described added/removed/modified primitives (set-diff).
+      That is a different object. Replaced with CODA PrimDiff/zero-rel/finite quotient matching
+      Lean FOC axiomatics and core_homotopy_type_theory::primitive_difference.
+    recommendation: "Keep set-diff inventory as a separate YAML if still needed; do not re-merge."
+    pass: dual_face_w0_primdiff
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: ADR007A_TWO_HOMES
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: >
+      Two RS homes remain: theory (homotopy_type_theory) and judgment record (core_types).
+      Declared primary rust_binding = theory module; judgment row types are dual-face records,
+      not a second math object.
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: THEORY_MATCH
+    severity: info
+    claim_class: "[CODE_DEMO_RUST]"
+    file: engine/crates/core_homotopy_type_theory/src/primitive_difference.rs
+    yaml_law: "δ, Zero, ZeroRel, finite equivalence laws, factors-through"
+    code_behavior: "trait PrimitiveDifference + FiniteCarrier validation + quotient classes"
+    detail: "Primary theory surface MATCH on core kernel. LGGR/pair surfaces partial. Not PROVED."
+    delta: MATCH_CORE
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: JUDGMENT_RECORD
+    severity: info
+    claim_class: "[CODE_DEMO_RUST]"
+    file: engine/crates/core_types/src/primitive_difference.rs
+    detail: "Serializable PrimitiveDifferenceJudgment + thin trait — dual-face record, not full finite checker."
+    delta: MATCH_AS_RECORD
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: PY_DUAL
+    severity: medium
+    claim_class: "[CODE_DEMO_RUST]"
+    file: engine_py/core_homotopy_type_theory/primitive_difference.py
+    detail: "PY theory dual exists; core_types.primitive_difference is thinner judgment record. Parity tests required for W1."
+    delta: PARTIAL_PY_PARITY
