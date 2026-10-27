@@ -3,51 +3,76 @@
 [`eis/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/eis)
 screens proposals for known failure patterns and keeps the evidence of past
 failures. It borrows its vocabulary from immunology, but every mechanism is a
-small, exact rule.
+small, exact rule, and none of them grants authority.
 
-## Main ideas
+## The idea in one picture
 
-**Antibodies.** Detector rules for recurring failures, such as an unsupported
-claim or a silently skipped check. A harvested antibody is only a candidate;
-only human-admitted antibodies may be used (`admitted_antibody_query.py`).
-Retired antibodies are recorded so they are never harvested again.
+```text
+ past failure ──▶ farmed antibody (CANDIDATE)
+                        │  negative selection (thymus), bounded pattern
+                        │  distinct observations, bound fixtures
+                        ▼
+                 human admission decision (signed, scoped)
+                        │
+                        ▼
+ new proposal ──▶ Signal 1: an admitted detector matches
+              ──▶ Signal 2: an independent host check observes damage
+                        │
+                        ▼
+             two-signal gate: TOLERATED / DIAGNOSTIC_ONLY /
+                              DEFENSIVE_LOCKDOWN / QUARANTINED
+                        │
+                        ▼
+          regulation: a detector that blocks valid answers is downgraded
+```
 
-**Two signals.** A detector match alone does not act. A learned guard activates
-only on two independent signals: a detector hit and a separate danger
-observation from the host (`danger_gate.py`, `guard_activation.py`).
+## Pages in this section
 
-**Negative selection.** Before admission, a detector rule is screened against a
-panel of known-good examples, so it does not block valid answers (`thymus.py`).
-Blocking a valid answer is called false suppression, and Paper 003 shows how a
-reasonable-looking detector can do it.
+| Page | Read it to... |
+| --- | --- |
+| [Two-signal gate](EIS-Two-Signal-Gate.md) | See why a detector match alone never blocks, how the second signal is kept independent, and how a quorum of sensors is counted |
+| [Antibody lifecycle](EIS-Antibody-Lifecycle.md) | Follow an antibody from farming to admission or retirement: negative selection, safe patterns, distinct observations and the retirement register |
+| [Regulation and custody](EIS-Regulation-and-Custody.md) | See how detectors that suppress valid answers are downgraded, and how admission decisions are signed and checked |
 
-**Regulation.** A learned detector can be suspended in a stated scope when an
-independent check shows it blocked something benign (`treg.py`,
-`regulate_guard.py`). Detectors that never fire are counted (`clonal_selection.py`).
+## Rules that hold throughout
 
-**Repetition is not evidence.** External proposals are candidates by default,
-and seeing the same one many times does not make it true
-(`external_admission.py`).
-
-**Safe patterns.** Detector rules use a bounded subset of regular expressions so
-a rule cannot run away (`safe_pattern.py`).
+1. **Candidate by default.** Anything farmed starts as `CANDIDATE`, and there is
+   no parameter to start it otherwise.
+2. **Repetition is not evidence.** Replaying one observation ten times counts
+   once.
+3. **Two independent signals.** A detector match acts only together with a
+   separate host observation of damage, and that observation may not be
+   derived from the match.
+4. **Missing is not clear.** A detector that was not run, or a service that was
+   unavailable, is recorded as not measured. It is never read as "no problem".
+5. **Named, not deleted.** A detector that was wrong is retired by name, so the
+   same mistake cannot be farmed again unnoticed.
+6. **AuthorityEffect: None.** Screening, promotion and retirement compute
+   eligibility or remove a guard. They never admit or promote anything by
+   themselves.
 
 ## Layout
 
 | Folder | Role |
 | --- | --- |
-| `domain/` | The rules above, failure classes and canonical receipt ids |
-| `use_cases/` | Admission, guard activation, regulation, screening and the transferable guard library |
+| `domain/` | The rules: danger gate, thymus, regulation, safe patterns, admission criteria, retirement, failure classes |
+| `use_cases/` | Admission assessment, guard activation, regulation, screening, the admitted-antibody query and the transferable guard library |
 | `antibodies/` | Definitions, templates, candidates and admission records |
-| `antiskills/` | Admitted anti-skills and fixtures |
+| `antiskills/` | Admitted anti-skills, mined proposals and fixtures |
+| `infrastructure/` | Pharmacy adapters (the native pharmacy is reached through the host), custody, the immune bench |
 | `receipts/` | Recorded custody and repair receipts |
-| `documentation/` | [Authenticated custody](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/eis/documentation/authenticated_custody.md): signed admission decisions under an explicit trust policy |
+| `documentation/` | [Authenticated custody](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/eis/documentation/authenticated_custody.md) |
 
-## Custody
+## How the EIS connects to the rest
 
-Admission decisions and observations can be signed and checked against an
-operator-supplied trust policy. A verified signature identifies a configured
-key, not a person or a correct measurement. There is no built-in production key
-and no automatic admission.
+- **Operads.** Antibodies and anti-ops are bound to individual prompts through
+  the prompt hierarchy, and anti-skills attach at vertex, edge or tree sites of
+  a prompt tree. See [Prompts as operad trees](Operads-Prompt-Trees.md) and
+  [Rewriting and packetization](Operads-Rewriting-and-Packetization.md).
+- **Prompt Civilization.** Immunity propagates along prompt lineages, with
+  attenuation and scope limits. See [Mutation and inheritance](PCIV-Mutation-and-Inheritance.md).
+- **Bounded repair.** The repair workflow submits its observations to the EIS
+  and records `NOT_MEASURED` honestly. See [Bounded repair](Operads-Bounded-Repair.md).
 
-Related papers: [003](Paper-003.md), [006](Paper-006.md).
+Related papers: [003](Paper-003.md) (admitting detectors and testing their
+effects) and [006](Paper-006.md) (retained failure evidence and controlled reuse).
