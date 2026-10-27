@@ -11,10 +11,21 @@ text or JSON a model produced from it, and it seals files into packets that
 anyone can replay.
 
 ```sh
-# builds from source: clones the repository, a few minutes the first time
+# prebuilt, Linux x86_64 (static); other platforms are on the release page
+curl -sSfL https://github.com/dbccpage/proposal_fidelity_protocol_pfp/releases/download/pfp-cli-v0.1.0/pfp-v0.1.0-x86_64-unknown-linux-musl.tar.gz | tar xz
+cd pfp-v0.1.0-x86_64-unknown-linux-musl
+./pfp demo                                       # see it work on a bundled example
+./pfp check --prompt prompt.md reply.json        # your own files
+```
+
+The [release page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/releases/tag/pfp-cli-v0.1.0) has builds for Linux
+(`x86_64-unknown-linux-musl`), macOS (`aarch64-apple-darwin`,
+`x86_64-apple-darwin`) and Windows (`x86_64-pc-windows-msvc`), with a
+`SHA256SUMS` file. To build from source (clones the repository, a few minutes
+the first time):
+
+```sh
 cargo install --locked --git https://github.com/dbccpage/proposal_fidelity_protocol_pfp pfp-cli
-pfp demo                                         # see it work on a bundled example
-pfp check --prompt prompt.md reply.json          # your own files
 ```
 
 ## Commands
@@ -80,8 +91,8 @@ match proves the bytes are unchanged, not who sealed them.
 ## Use it in CI
 
 ```yaml
-- run: cargo install --locked --git https://github.com/dbccpage/proposal_fidelity_protocol_pfp pfp-cli
-- run: pfp check --prompt prompts/agent.md fixtures/agent_reply.json
+- run: curl -sSfL https://github.com/dbccpage/proposal_fidelity_protocol_pfp/releases/download/pfp-cli-v0.1.0/pfp-v0.1.0-x86_64-unknown-linux-musl.tar.gz | tar xz -C "$RUNNER_TEMP"
+- run: "$RUNNER_TEMP/pfp-v0.1.0-x86_64-unknown-linux-musl/pfp" check --prompt prompts/agent.md fixtures/agent_reply.json
 ```
 
 ## Add a check

@@ -10,13 +10,18 @@ binary: offline, read-only, under a second.
 ![pfp check finding nine problems in a release-agent prompt and its JSON reply](code/rust/pfp_cli/demo/demo.gif)
 
 ```sh
-cargo install --locked --git https://github.com/dbccpage/proposal_fidelity_protocol_pfp pfp-cli
-pfp demo
-pfp check --prompt your_prompt.md model_reply.json
+# Linux x86_64. On a Mac use aarch64-apple-darwin (Apple Silicon) or x86_64-apple-darwin.
+curl -sSfL https://github.com/dbccpage/proposal_fidelity_protocol_pfp/releases/download/pfp-cli-v0.1.0/pfp-v0.1.0-x86_64-unknown-linux-musl.tar.gz | tar xz
+cd pfp-v0.1.0-x86_64-unknown-linux-musl
+./pfp demo
+./pfp check --prompt your_prompt.md model_reply.json
 ```
 
-Building from source clones this repository and takes a few minutes the first
-time; prebuilt binaries will be on the Releases page.
+On Windows, download `pfp-v0.1.0-x86_64-pc-windows-msvc.zip` from the
+[release page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/releases/tag/pfp-cli-v0.1.0), unzip it and run `pfp.exe demo`. Each
+release lists a `SHA256SUMS` file to check downloads against. To build from
+source instead (clones this repository, a few minutes the first time):
+`cargo install --locked --git https://github.com/dbccpage/proposal_fidelity_protocol_pfp pfp-cli`.
 
 More in [`code/rust/pfp_cli`](code/rust/pfp_cli/README.md).
 
