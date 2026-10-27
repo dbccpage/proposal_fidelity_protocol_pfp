@@ -1,7 +1,7 @@
 ---
 paths:
-  - "atlas/**"
-  - "engine/crates_rs/**"
+  - "education/**/atlas/**"
+  - "code/rust/**"
   - "**/*coda*/**"
   - "**/*prime*/**"
   - "**/normal_forms/**"

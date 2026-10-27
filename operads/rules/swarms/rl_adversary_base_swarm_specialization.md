@@ -1,7 +1,7 @@
 ---
 paths:
-  - "adversary/**"
-  - "engine/crates_rs/core_adversary/**"
+  - "ops/adversary/**"
+  - "code/rust/core_adversary/**"
   - "pfp/**"
   - "**/*swarm*"
   - "**/*orchestrator*"

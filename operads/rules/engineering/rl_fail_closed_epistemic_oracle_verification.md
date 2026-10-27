@@ -5,7 +5,7 @@ category: engineering
 subsystem: adversary
 authority_effect: None
 paths:
-  - "atlas/**"
+  - "education/**/atlas/**"
 ---
 
 # Rule: Fail-Closed Epistemic Verification

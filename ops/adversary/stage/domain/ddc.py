@@ -1,7 +1,7 @@
 """Discrete Deformation Calculus (DDC) domain actions and purity validators.
 
-The operational alphabet is extracted dynamically from the DDC crate in crates_rs:
-`engine/crates_rs/core_wdp/src/ddc/ddc_alphabet.rs`.
+The operational alphabet is extracted dynamically from the operad canon:
+`code/rust/core_operad_canon/src/lib.rs` (`DdcOp::letter`).
 Letters and operations are never hardcoded here.
 
 AuthorityEffect: strictly None.

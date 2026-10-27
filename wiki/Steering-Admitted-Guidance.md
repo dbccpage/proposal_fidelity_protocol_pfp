@@ -37,7 +37,7 @@ Needs the native host for rendering. `NativeImmuneFenceRenderer` in
 `immune_fence_render` operation and refuses unless the host's reply carries the
 SHA-256 of exactly the payload that was sent. The binder that decides which
 guidance may be projected is `ops/adversary/infrastructure/prompt_family_binder.py`.
-The multi-role pilot run is not runnable here yet.
+The local swarm now runs (see [running the local swarm](Steering.md#running-the-local-swarm)); its `pilot035` command was not exercised for this page.
 
 The admission rule can be exercised without the host through the two-signal
 gate in `eis/`; see [Self-certification screen](Steering-Self-Certification-Screen.md)

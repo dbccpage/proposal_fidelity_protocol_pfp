@@ -1,19 +1,11 @@
 from __future__ import annotations
 
-from enum import Enum
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
+from operads.canon import DdcLetter
 from pfp.domain.shared_kernel.canonical import domain_digest, freeze
-class DdaLetter(str, Enum):
-    E = "E"
-    R = "R"
-    C = "C"
-    I = "I"  # noqa: E741
-    LAMBDA = "Λ"
-    D = "D"
-    M = "M"
-    T = "T"
+DdaLetter = DdcLetter
 
 
 

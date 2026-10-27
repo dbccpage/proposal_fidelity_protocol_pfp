@@ -13,9 +13,7 @@ use sha2::{Digest, Sha256};
 use super::colour::OperadColour;
 
 /// Admitted finite colours for span operands in the estate.
-pub const ADMITTED_FINITE_COLOURS: &[&str] = &[
-    "State", "Proof", "Receipt", "Audit", "Contract", "Ledger", "Code", "Paper", "Diagram", "Post",
-];
+pub const ADMITTED_FINITE_COLOURS: &[&str] = &core_operad_canon::OPERAD_COLOURS;
 
 /// An exact, content-addressed text span acting as an operand in a coloured multicategory.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]

@@ -7,31 +7,54 @@ code classifies it, how many there are, and where each is declared. It was built
 by reading the code and data on `main` (2026-10-27), not the prose, so where a
 document and the code disagree, this page follows the code.
 
-## Where the classification lives
+## One definition per type
 
-The code already keeps its own catalogue of operad types. It is a machine-read
-registry in six YAML files:
+Every operad type has **one definition**, in the Rust crate
+[`code/rust/core_operad_canon`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/code/rust/core_operad_canon).
+Its table [`types.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/core_operad_canon/src/types.rs) holds each
+type's id, family, status (`SETTLED` or `PROPOSED`, the latter with the decision
+it waits on), whether the set is closed, and its canonical values. The two most
+used vocabularies are also Rust enums there: `OperadColour` and the DDC alphabet
+`DdcOp`.
 
+Everything else reads that crate:
+
+| Consumer | How it gets the values |
+| --- | --- |
+| Rust crates (`core_operads`, `core_operad_theory`, `core_wdp`, `core_adversary`) | depend on `core_operad_canon`; `core_wdp` re-exports its `DdcOp` |
+| Python | `from operads.canon import ...`, a module generated from the crate ([`_generated.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/canon/_generated.py)) |
+| Data and other languages | [`operads/canon/operad_canon.json`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/canon/operad_canon.json), generated alongside |
+| The type registry | reads the JSON; its YAML lists only where each type is used |
+
+The generated files are written by `cargo run -p core_operad_canon -- write`
+(from `code/rust`). `cargo test -p core_operad_canon` and a Python test fail if
+either file differs from what the crate renders, so neither can be edited by
+hand.
+
+**Count: 56 types** (49 settled, 7 proposed) in six families. The tables below
+follow those families, then list the things the registry does not cover.
+
+### The registry check
+
+The registry in
 [`operads/skill_operad/yaml/operad_types/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/operads/skill_operad/yaml/operad_types)
-
-Each entry has an `id`, its canonical values, whether the set is closed, a status
-(`SETTLED` or `PROPOSED`, the latter with a written decision), and every Python
-class, Rust enum or data file that declares or uses the values. The checker
+names every Python class, Rust enum or data file that declares or uses each type.
+The checker
 [`operad_type_registry.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/skill_operad/skill_compiler/operad_type_registry.py)
-compares each source against the canonical values.
+compares each of those sources with the canon. It also fails if the YAML restates
+canonical values, or if a type is missing from either side.
 
-**Count: 56 registered types** (49 settled, 7 proposed) in six families. The
-tables below follow those families, then list the things the registry does not
-cover.
+Run from the repo root, `python -m operads.skill_operad.skill_compiler.operad_type_registry`
+reports `types=56 PROPOSED=7 SETTLED=49 findings=0`.
 
-> **The checker does not pass in this repository.** Run from the repo root,
-> `python -m operads.skill_operad.skill_compiler.operad_type_registry` reports
-> `types=56 PROPOSED=7 SETTLED=49 findings=41`. The registry was copied from the
-> source repository with its paths unchanged: it points at `.agents/skill_operads/`
-> and `engine/crates_rs/`, which do not exist here (the Rust crates live in
-> `code/rust/`), and two `eis.infrastructure.mssn_pharmacy` lookups fail on a
-> missing `operating_system` module. The values below were checked by hand
-> against the files that do exist.
+Ten types are marked `external`: some or all of their sources were not copied
+into this repository, so those sources cannot be checked here. The missing
+sources are the operand registry and data-type schema (`.agents/skill_operads/`),
+the Rust prompt-runtime crate, and one adversary contracts module. The affected
+types are `meta_skill_status`, `operad_colour` (one schema source),
+`operand_colour`, `adversary_wire_type`, `operad_tree`, `residual_effect` (one
+schema source), `registered_operand`, `obstruction_class`,
+`operand_carrier_kind` and `operand_ddc_motif`.
 
 ## 1. Colours and wires
 
@@ -40,29 +63,32 @@ colours and produces one.
 
 | Type | Values | Count | Defined in |
 | --- | --- | --- | --- |
-| Operad colour | State, Proof, Paper, Code, Contract, Receipt, Ledger, Diagram, Audit, Post | 10, closed | [`operads/domain/operad/colours.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/domain/operad/colours.py) `ADMITTED_FINITE_COLOURS` |
+| Operad colour | Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State | 10, closed | [`core_operad_canon`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/core_operad_canon/src/lib.rs) `OperadColour` |
 | Sub-colour | `Audit.hype_hits`, `Audit.lint_diff`, `Audit.sfh_findings`, `Audit.shadow_violations`, `Audit.layout_findings`, `Audit.verdict`, `Code.purged`, `Ledger.source_hashes` | 8 | [`op_inventory.yaml`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/skill_operad/yaml/op_inventory.yaml) `subcolours` |
-| Prompt colour (types the spans inside one prompt) | RawTextSpan, Equation, IsolatedVariable, SubstitutionStep, RationalValue, InvariantWitness, TargetResult | 7 (registry says 8) | [`pfp/domain/operad/prompt.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp/domain/operad/prompt.py) `PromptColour` |
+| Prompt colour (types the spans inside one prompt) | RawTextSpan, Equation, IsolatedVariable, SubstitutionStep, RationalValue, InvariantWitness, TargetResult | 7 | [`pfp/domain/operad/prompt.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp/domain/operad/prompt.py) `PromptColour` |
 | Capability wire type | anti_skill_subject, anti_skill_hits, typed_audit_receipt, code_text | 4 | [`operads/contracts/typed_capabilities_v1.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/contracts/typed_capabilities_v1.py) `WireType` |
 | Adversary port | AdversaryRuntime, NativeBout, SeatTransport, SgtEmission, ImmuneAntibodies, OeopLearning, OeopAntiSkill, PromptGenealogy, CodaEvaluation, LggrGluing, EnvelopeStore | 11 | [`code/rust/core_adversary/src/specialization.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/core_adversary/src/specialization.rs) `PortName` |
 | Adversary wire type | CandidateProposal, CochainDefect, Context, Contract, DualMultiplier, DualityReceipt, FlawAudit, GateWitness, GroundTruth, PrimalResidual, RawPacket, RawSpan, SanitizedPacket, SessionHintRequest, SessionHintResult, TerminalStatus | 16 | [`ops/adversary/infrastructure/typed_operad.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/ops/adversary/infrastructure/typed_operad.py) `_COLOURS` |
 | Operand colour | should be the 10 operad colours; the source data also uses `Open` and `Closed` | proposed | operand registry, not in this repo |
 
-**Duplicates.** The ten operad colours are written out in at least eight places:
-`operads/domain/operad/colours.py`, `operads/skill_operad/domain/colours.py`,
-`operads/infrastructure/legacy/models.py`, `operads/domain/ddc_execution/enums.py`,
-`operads/contracts/typed_capabilities_v1.py`,
-`operads/domain/planar_substitution.py` (`OPERAD_COLOURS`),
-`operads/skill_operad/json/operad_signature.json`, and the Rust constant
-`OPERAD_COLOURS` in
-[`code/rust/core_operads/src/planar.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/core_operads/src/planar.rs).
-They agree today. The Rust kernel type `OperadColour` in `core_operad_theory`
-accepts any non-empty name, which is why the colour type is still `PROPOSED`.
+**One list, many readers.** The ten colours used to be written out by hand in
+about a dozen places across `operads/`, `ops/` and the Rust crates. Each of
+those now reads the canon instead: the Python colour tuples, sets and enums, the
+pydantic `Literal`, the catalogue compiler's colour descriptions, and the Rust
+`OPERAD_COLOURS`, `ADMITTED_FINITE_COLOURS` and workflow-graph checks. The
+module that compared the old copies with one another
+(`colour_vocabulary_ledger.py`) was removed, because there is nothing left to
+compare. The one-line meaning of each colour also lives in the canon.
+
+The colour type is still `PROPOSED` for one reason: the kernel type
+`core_operad_theory::OperadColour` accepts any non-empty name. The open decision
+is whether its constructor should refuse names outside the ten.
 
 The prompt colour and the operad colour are **separate vocabularies** and are not
-meant to be reconciled. The registry's prompt colour list adds an open-ended
-`Custom` member from a Rust crate that is not in this repository; the Python
-enum here has no `Custom`.
+meant to be reconciled. The source repository's Rust prompt runtime also had
+an open-ended `Custom` prompt colour. That crate is not in this repository, so the
+canon lists the seven colours of the Python enum
+`pfp.domain.operad.prompt.PromptColour`.
 
 ## 2. Operations
 
@@ -104,11 +130,19 @@ letter is an operation on a cochain and its residual.
 | M | Refusal | mutation or typed refusal |
 | T | Terminalize | record a terminal status; mints no authority |
 
-**Count: 8.** Defined three times, with the same eight letters:
+**Count: 8.** Defined once, as `DdcOp` in
+[`core_operad_canon`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/core_operad_canon/src/lib.rs), with
+`DdcOp::letter` giving each letter. Everything else reads it:
 
-- Rust `DdcOp` in [`code/rust/core_wdp/src/ddc/ddc_alphabet.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/core_wdp/src/ddc/ddc_alphabet.rs) (the proposed owner);
-- Python `DdcLetter` in [`operads/skill_operad/ddc_trace_logger.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/skill_operad/ddc_trace_logger.py) (the trace twin);
-- Python `DdcRune` in [`operads/domain/ddc_execution/ddc_step.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/domain/ddc_execution/ddc_step.py), in the order C, R, E, I, Λ, D, M, T. `DdcRune` is an **alias** marked for removal.
+- `core_wdp::ddc::DdcOp` is a re-export, and `core_wdp`'s parser and
+  `core_adversary`'s tape evaluator take their alphabet from `DdcOp::LETTERS`;
+- the Python `DdcLetter` enum is generated (`operads.canon.DdcLetter`), and the
+  trace logger, the DDC step shim, the operad parser, the research-papers
+  `DDCRune` and the PFP `DdaLetter` all use the canon;
+- the adversary stage reads the letters from the canon crate's source.
+
+The deprecated `DdcRune` alias was removed, along with a stray copy of the
+alphabet file under `ops/engine/crates_rs/`.
 
 Two subsets are their own types: the **repair stages** C, R, E, I, M, T (6; Λ and
 D are not repair stages) in `operads/contracts/ddc_code_repair_v1.py`, used by
@@ -141,10 +175,16 @@ Rust pair `hp_rs_007` / `ap_rs_007` is spelled in lower case.
 depends on which one you count:
 
 - `eis/antibodies/ab_*.json`: 58 antibody records;
-- `eis/antibodies/anti_*.yaml`: 37 antibody specs. The 15 files in `specs/` are
-  byte-identical copies of 15 of these, so they add no new antibodies;
-- 24 names appear both as `ab_<name>.json` and `anti_<name>.yaml`, so those are
-  the **same antibody in two formats**;
+- `eis/antibodies/anti_*.yaml`: 37 antibody specs. A `specs/` folder used to hold
+  byte-identical copies of 15 of these. It was removed; the pharmacy's lookup
+  finds the same files one folder up;
+- 24 names appear both as `ab_<name>.json` and `anti_<name>.yaml`. These are
+  **not the same record in two formats**. The JSON is the pharmacy's record
+  (times seen, creation time, and fixtures named `negative_fixture` and
+  `positive_fixture`). The YAML is the authored spec (canonical name, governing
+  invariants, and fixtures under other names). They share eight fields, and two
+  of the descriptions disagree. Folding them into one record needs a schema
+  decision, which is open;
 - `eis/antibodies/pharmacy_catalog.json`: 1,069 catalogue entries (mined
   candidates, most not admitted);
 - 2 v2 candidates in `candidates/`.
@@ -242,14 +282,15 @@ Some names that come up in conversation have no counterpart in the code:
 - **Anti-skill records.** The anti-skill type is defined, but no anti-skill
   instance is stored in this repository.
 - **Catalogued agents.** The catalogue schema has an `agents` list; it is empty.
-- **The operand registry and operad data-type schema** (`.agents/skill_operads/`)
-  and the Rust prompt-runtime crate that the registry cites were not copied in.
+- **The operand registry and operad data-type schema** (`.agents/skill_operads/`),
+  the Rust prompt-runtime crate, and `ops/adversary/infrastructure/operad_contracts.py`
+  were not copied in. The registry marks the types they define as `external`.
 
 ## Summary of counts
 
 | Thing | Count |
 | --- | --- |
-| Registered operad types | 56 (49 settled, 7 proposed) |
+| Operad types (one definition each, in `core_operad_canon`) | 56 (49 settled, 7 proposed; 10 with external sources) |
 | Operad colours | 10 (+ 8 sub-colours) |
 | DDC letters | 8 (6 repair stages) |
 | Capability kinds | 6 |
@@ -257,7 +298,7 @@ Some names that come up in conversation have no counterpart in the code:
 | Anti-skill records | 0 |
 | Rules / rule invariants | 50 / 144 |
 | Helpful patterns / anti-patterns | 94 / 93 |
-| Antibody JSON / YAML specs / pharmacy entries | 58 / 37 / 1,069 |
+| Antibody JSON records / YAML specs / pharmacy entries | 58 / 37 / 1,069 |
 | Inventory ops / anti-ops | 15 / 8 |
 | Prompt anti-op detectors | 7 |
 | Agent roles / catalogued agents | 12 / 0 |

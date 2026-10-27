@@ -21,20 +21,11 @@ import sys
 from pathlib import Path
 from typing import Any, List, Optional, Tuple
 
+from operads.canon import OPERAD_COLOUR
+
 WRITE_ENV = "CORE_BULK_OPERAD_INGEST"
 
-VALID_COLOURS = {
-    "State",
-    "Proof",
-    "Paper",
-    "Code",
-    "Contract",
-    "Receipt",
-    "Ledger",
-    "Diagram",
-    "Audit",
-    "Post",
-}
+VALID_COLOURS = set(OPERAD_COLOUR)
 SKILL_ID = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 
 

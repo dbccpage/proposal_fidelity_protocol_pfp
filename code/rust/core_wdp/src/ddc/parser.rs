@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
 
-pub const DDC_CANONICAL_LETTERS: &[&str] = &["E", "R", "C", "I", "Λ", "D", "M", "T"];
+pub const DDC_CANONICAL_LETTERS: &[&str] = core_operad_canon::DdcOp::LETTERS;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DdcParserRefusal {

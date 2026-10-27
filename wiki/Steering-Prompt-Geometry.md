@@ -47,8 +47,9 @@ Needs the native host. The measurement is implemented in Rust in
 `observe_text(text, dimension=..., role_id=..., field=..., trust_level=...)` in
 `ops/adversary/infrastructure/prompt_geometry.py`. Without a built host it
 returns a report with `status: "UNAVAILABLE"` and null metrics rather than an
-invented number. The multi-role run that calls it on every turn is not runnable
-here yet.
+invented number. The local swarm calls it on every prepared turn (see
+[running the local swarm](Steering.md#running-the-local-swarm)); prompt organization runs at `teamwork start` unless
+`--forge-organization off` is given.
 
 What you can do without the host is the organization rule, which is plain
 string discipline: keep the seed as an exact byte prefix, append only declared

@@ -27,7 +27,7 @@ except (ImportError, ValueError):
     from coloured_operad import Colour, ColouredOperad, Operation  # type: ignore[no-redef]
     from coloured_operad import EMPTY, ColoredOp, Residual  # type: ignore[no-redef]
 
-DDC_CANONICAL_LETTERS = ("E", "R", "C", "I", "Λ", "D", "M", "T")
+DDC_CANONICAL_LETTERS = DDC_LETTER
 
 LETTER_SYNONYMS = {
     "L": "Λ",

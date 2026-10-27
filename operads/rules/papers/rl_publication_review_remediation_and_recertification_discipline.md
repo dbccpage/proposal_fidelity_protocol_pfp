@@ -1,7 +1,7 @@
 ---
 paths:
-  - "atlas/**"
-  - "research_papers/**"
+  - "education/**/atlas/**"
+  - "ops/research_papers/**"
   - "**/papers/**"
   - "**/*.tex"
 ---

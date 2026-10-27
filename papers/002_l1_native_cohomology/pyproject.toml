@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=77.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "l1-native-cohomology"
+version = "6.5.2"
+description = "L1-Native Cohomology of Finite Defect Fields: Quotient Norms, Dual Circulations, and Discrete Physics"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "PolyForm-Noncommercial-1.0.0"
+license-files = ["LICENSE-CODE"]
+authors = [
+    { name = "Jeremy H. Carroll" }
+]
+keywords = [
+    "l1-native-cohomology",
+    "quotient-norm",
+    "dual-circulations",
+    "two-phase-simplex",
+    "discrete-physics",
+    "quantum-obstruction",
+    "zero-float-law",
+    "lean4"
+]
+dependencies = [
+    "numpy>=1.24.0",
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.0.0",
+    "jupyter>=1.0.0",
+    "ipywidgets>=8.0.0",
+    "matplotlib>=3.7.0",
+    "networkx>=3.0",
+    "nbclient>=0.7.0",
+    "nbformat>=5.7.0",
+]
+
+
+[tool.setuptools]
+package-dir = {"" = "code"}
+py-modules = ["l1_cohomology", "deposit_paths", "generate_figures"]
+
+[tool.pytest.ini_options]
+testpaths = ["code/tests"]
+pythonpath = ["code", "."]
+addopts = "-p no:debugging -p no:cacheprovider"
+
+[tool.mypy]
+mypy_path = ["code"]
+python_version = "3.12"
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+cache-dir = "~/.cache/ruff"

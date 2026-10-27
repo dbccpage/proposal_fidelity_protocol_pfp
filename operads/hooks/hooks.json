@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "version": "1.0",
-  "description": "Cross-host mechanical hook specifications for Antigravity, Claude Code, and Codex.",
+  "description": "Generated from operads/skill_operad/yaml/rules_registry.yaml by python -m operads.skill_operad.skill_compiler.hook_compiler --write. Do not edit.",
   "hooks": {
     "PreToolUse": [
       {
@@ -10,7 +10,14 @@
           {
             "type": "command",
             "command": "py -3.12 operads/hooks/scripts/pre_tool_git_guard.py",
-            "description": "Mechanically blocks forbidden git commands and whole-suite pytest sweeps."
+            "description": "Mechanically blocks forbidden git commands and whole-suite pytest sweeps.",
+            "enforces": [
+              "RULE_GIT_NO_FORCE_OR_MAIN_PUSH_001",
+              "RULE_GIT_EXPLICIT_STAGING_001",
+              "RULE_GIT_NO_COMMIT_ALL_001",
+              "RULE_PYTEST_TARGETED_RUNS_001",
+              "RULE_SHELL_QUOTED_STASH_REF_001"
+            ]
           }
         ]
       }
@@ -22,7 +29,11 @@
           {
             "type": "command",
             "command": "py -3.12 operads/hooks/scripts/post_tool_bom_linter.py",
-            "description": "Enforces strict UTF-8 validation, BOM detection/stripping, and local Ruff verification."
+            "description": "Enforces strict UTF-8 validation, BOM detection/stripping, and local Ruff verification.",
+            "enforces": [
+              "RULE_FILE_STRICT_UTF8_001",
+              "RULE_PYTHON_LINTER_CLEANLINESS_001"
+            ]
           }
         ]
       }
