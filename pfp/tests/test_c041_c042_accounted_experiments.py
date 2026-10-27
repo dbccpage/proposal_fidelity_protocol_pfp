@@ -5,13 +5,13 @@ import json
 
 import pytest
 
-from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import (
+from c041_lean4_finite_lemma_proofs.reference_solver import (
     symbol_game_experiment as lean,
 )
-from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import (
+from c041_lean4_finite_lemma_proofs.reference_solver import (
     run_symbol_game_matrix as sweep,
 )
-from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver import (
+from c042_sat_with_drat_certificates.reference_solver import (
     symbol_game_routing as sat,
 )
 from pfp.infrastructure.formal_matrix import ArmAntibodyStore

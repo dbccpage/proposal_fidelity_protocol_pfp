@@ -44,8 +44,8 @@
 > **Related Retrospective:** [`challenges_findings_and_updates.md`](level_challenges_findings_and_updates.md)  
 > **Primary Source Suites:**  
 > - [`atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/`](../../../../atlas/coda_atlas/F004_papers/008_fsp/demos/blind_cluster_recovery/)  
-> - [`pfp/tests/demo_004/b_cohomology/c017_nonabelian_lattice_holonomy/`](../../../../pfp/tests/demo_004/b_cohomology/c017_nonabelian_lattice_holonomy/)  
-> - [`pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/`](../../../../pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/)  
+> - [`demos/certified_challenges/c017_nonabelian_lattice_holonomy/`](../../../../demos/certified_challenges/c017_nonabelian_lattice_holonomy/)  
+> - [`pilots/llm_mechanism/c005_hosted_decode_controls/`](../../../../pilots/llm_mechanism/c005_hosted_decode_controls/)  
 > - [`atlas/coda_atlas/F004_papers/setup_and_results.md`](../../../../atlas/coda_atlas/F004_papers/setup_and_results.md)  
 > **Date:** September 28, 2026  
 
@@ -183,7 +183,7 @@ To address the token exhaustion barrier identified on `base_03_s3_periodic_torus
 ## 4. Demonstration 3: Challenge C005 Hosted Decoding Controls
 
 ### 4.1 Benchmark Setup & Methodology
-- **Harness:** [`pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py`](../../../../pfp/tests/demo_004/a_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py)
+- **Harness:** [`pilots/llm_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py`](../../../../pilots/llm_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py)
 - **Model:** `nousresearch/hermes-3-llama-3.1-405b` via OpenRouter.
 - **Task:** 50 hidden consistency cases evaluating potential propagation $\Phi_1(c) = 0$ vs chord loop obstructions $\Gamma_2 > 0$.
 - **Arms Evaluated:**
@@ -295,7 +295,7 @@ We implemented and verified **Challenge C043 (`c043_ramsey_vdw_constructions`)**
 
 ### 7.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen solver module `reference_solver/solver.py` integrating algebraic seeds (Paley $P_{17}$, Greenwood-Gleason $K_{16}$, cyclic Van der Waerden sequences) with vertex-embedding search and CDCL SAT fallback.
-- **Dual Checkers:** Primary Python checker ([`ramsey_vdw_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)) + Independent Matrix/Array Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)).
+- **Dual Checkers:** Primary Python checker ([`ramsey_vdw_checker.py`](../../../../demos/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)) + Independent Matrix/Array Checker ([`independent_checker.py`](../../../../demos/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)).
 - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed)** sealed in `_intelligence/_adversary/runs/c043_eval_1790620716/`.
 
 ### 7.2 Multi-Scale Empirical Matrix (Including Space Bunny Alpha)
@@ -317,7 +317,7 @@ We implemented, verified, and sealed **Challenge C044 (`c044_finite_group_identi
 
 ### 8.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen solver module `reference_solver/solver.py` integrating exact algebraic group closure, Latin square validation, recomputable invariant sieving (element order histograms, center order, derived subgroup order, abelianization factors, conjugacy classes, $x^k = e$ solutions), and structured basis backtracking isomorphism search.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/judge_packet/checkers/exact_checker.py)) + Independent Matrix Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/judge_packet/checkers/independent_checker.py)).
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../demos/certified_challenges/c044_finite_group_identification/judge_packet/checkers/exact_checker.py)) + Independent Matrix Checker ([`independent_checker.py`](../../../../demos/certified_challenges/c044_finite_group_identification/judge_packet/checkers/independent_checker.py)).
 - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 1.458s, 48/48 hostile mutations killed)** sealed into `_intelligence/_adversary/runs/c044_eval_1790622696`.
 
 ### 8.2 Multi-Scale Empirical Matrix
@@ -339,7 +339,7 @@ We implemented, verified, and sealed **Challenge C045 (`c045_knot_polynomials_fr
 
 ### 9.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating combinatorial Euler rotation verification ($V - E + F = 2$), Alexander arc matrix reduction, state-sum Kauffman bracket in $\mathbb{Z}[A, A^{-1}]$, Jones polynomial normalization $V(t) = (-A^3)^{-w} \langle K \rangle |_{A = t^{-1/4}}$, and Rolfsen catalog classification up to 7 crossings.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c045_knot_polynomials_from_pd/judge_packet/checkers/exact_checker.py)) + Independent Structural Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c045_knot_polynomials_from_pd/judge_packet/checkers/independent_checker.py)).
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../demos/certified_challenges/c045_knot_polynomials_from_pd/judge_packet/checkers/exact_checker.py)) + Independent Structural Checker ([`independent_checker.py`](../../../../demos/certified_challenges/c045_knot_polynomials_from_pd/judge_packet/checkers/independent_checker.py)).
 - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.427s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c045_eval_1790623789`.
 
 ### 9.2 Multi-Scale Empirical Matrix
@@ -361,7 +361,7 @@ We implemented, verified, and sealed **Challenge C046 (`c046_knuth_bendix_comple
 
 ### 10.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating Robinson first-order unification, subterm replacement, Lexicographic Path Order (LPO) with symbol precedence, priority agenda saturation, critical pair overlap enumeration, and variable canonicalization.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c046_knuth_bendix_completion/judge_packet/checkers/exact_checker.py)) + Independent Confluence Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c046_knuth_bendix_completion/judge_packet/checkers/independent_checker.py)).
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../demos/certified_challenges/c046_knuth_bendix_completion/judge_packet/checkers/exact_checker.py)) + Independent Confluence Checker ([`independent_checker.py`](../../../../demos/certified_challenges/c046_knuth_bendix_completion/judge_packet/checkers/independent_checker.py)).
 - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.721s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c046_eval_1790624975`.
 
 ### 10.2 Multi-Scale Empirical Matrix
@@ -383,7 +383,7 @@ We implemented, verified, and sealed **Challenge C047 (`c047_sequence_law_discov
 
 ### 11.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` providing exact Gaussian elimination over $\mathbb{Q}$, nullspace projection, Bareiss fraction-free determinants for absence proofs, and algebraic root checking.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c047_sequence_law_discovery/judge_packet/exact_checker.py)) + Independent Recurrence Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c047_sequence_law_discovery/judge_packet/independent_checker.py)).
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../demos/certified_challenges/c047_sequence_law_discovery/judge_packet/exact_checker.py)) + Independent Recurrence Checker ([`independent_checker.py`](../../../../demos/certified_challenges/c047_sequence_law_discovery/judge_packet/independent_checker.py)).
 - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.774s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c047_eval_1790624985`.
 
 ### 11.2 Multi-Scale Empirical Matrix
@@ -405,7 +405,7 @@ We implemented, verified, and sealed **Challenge C048 (`c048_ternary_quadratic_f
 
 ### 12.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating Pollard's rho, Miller-Rabin primality, Holzer bounded rational point search, and Serre Hilbert symbol valuations over $\mathbb{Q}_v$ ($v \in \{\infty, 2, p\}$).
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c048_ternary_quadratic_forms/judge_packet/exact_checker.py)) + Independent Diophantine Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c048_ternary_quadratic_forms/judge_packet/independent_checker.py)).
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../demos/certified_challenges/c048_ternary_quadratic_forms/judge_packet/exact_checker.py)) + Independent Diophantine Checker ([`independent_checker.py`](../../../../demos/certified_challenges/c048_ternary_quadratic_forms/judge_packet/independent_checker.py)).
 - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.066s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c048_eval_1790625286`.
 
 ### 12.2 Multi-Scale Empirical Matrix
@@ -427,7 +427,7 @@ We implemented, verified, and sealed **Challenge C049 (`c049_finite_category_uni
 
 ### 13.1 Deliverables & Verification
 - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating categorical duality ($C^{\mathrm{op}}$) to evaluate limits and colimits via universal arrow factorizations, alongside naturality and triangle identity verification for adjunctions.
-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c049_finite_category_universal_constructions/judge_packet/exact_checker.py)) + Independent Category Checker ([`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c049_finite_category_universal_constructions/judge_packet/independent_checker.py)).
+- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../demos/certified_challenges/c049_finite_category_universal_constructions/judge_packet/exact_checker.py)) + Independent Category Checker ([`independent_checker.py`](../../../../demos/certified_challenges/c049_finite_category_universal_constructions/judge_packet/independent_checker.py)).
 - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.450s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c049_eval_1790625868` (SHA-256: `88b989fd6c50851e0a9ffa799b9d817594508a8678e47636a146b8d51de78702`).
 
 ### 13.2 Multi-Scale Empirical Matrix
@@ -499,7 +499,7 @@ In strict accordance with repository Claim Discipline:
 ## 8. Wave 3 Program Synthesis: Challenge C051 Exact LP Solver with Duals
 
 ### 8.1 Overview & Verification Under Adversary Reality Gate
-- **Challenge Target:** C051 Exact LP Solver with Dual and Farkas Certificates (`pfp/tests/demo_004/f_program_synthesis/c051_exact_lp_solver_with_duals/`)
+- **Challenge Target:** C051 Exact LP Solver with Dual and Farkas Certificates (`demos/certified_challenges/c051_exact_lp_solver_with_duals/`)
 - **Protocol:** SG-CP v1
 - **Reference Solver Digest:** `d91f3cc6549826d3a732d1f7ba8a0a4b1dc3de54b1f4b68038fbf34cd83f0fe8`
 - **Adversary Terminal Verdict:** `PASS_TO_MASTER`
@@ -528,7 +528,7 @@ Across a 10-problem sweep covering standard 2x2 LPs, degenerate vertices, 3D pol
 ## 9. Wave 3 Program Synthesis: Challenge C052 Max-Flow with Min-Cut Certificates
 
 ### 9.1 Overview & Verification Under Adversary Reality Gate
-- **Challenge Target:** C052 Max-Flow with Min-Cut Certificates (`pfp/tests/demo_004/f_program_synthesis/c052_maxflow_mincut_certificates/`)
+- **Challenge Target:** C052 Max-Flow with Min-Cut Certificates (`demos/certified_challenges/c052_maxflow_mincut_certificates/`)
 - **Protocol:** SG-CP v1
 - **Reference Solver Digest:** `8b26c642a1f4dc15c767f298a3f6004e0bd9398660b98d336f9e91ac4d9032d6`
 - **Adversary Terminal Verdict:** `PASS_TO_MASTER`

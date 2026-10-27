@@ -24,7 +24,7 @@ refusals: bad input gets a closed-list UNKNOWN code, not a guess.
 
 ## Setup and inputs
 
-`demos/dual_checker_capsules/c021_q40_r/`
+`demos/certified_challenges/c021_q40_r/`
 
 - `reference_solver/pauli.py` implements Pauli strings with exact phase
   tracking (Y = iXZ); `solver.py` finds the basis, enumerates the 2^k joint
@@ -46,9 +46,9 @@ refusals: bad input gets a closed-list UNKNOWN code, not a guess.
 
 From the repository root:
 
-    python -m pytest demos/dual_checker_capsules/test_c021_reference_cases.py demos/dual_checker_capsules/c021_q40_r -q
+    python -m pytest demos/certified_challenges/test_c021_reference_cases.py demos/certified_challenges/c021_q40_r -q
 
-Expected: `97 passed`. Running `python -m pytest demos/dual_checker_capsules -q` runs all four capsules (`351 passed`).
+Expected: `365 passed`. `python -m pytest demos/certified_challenges -q` runs all fifty challenge packages.
 
 ## What a failure means
 

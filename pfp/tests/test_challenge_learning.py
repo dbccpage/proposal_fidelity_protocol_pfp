@@ -252,7 +252,7 @@ def test_redacted_contract_withholds_status_and_phi1_values(tmp_path):
 @pytest.mark.parametrize("kind", ["consistency", "cycle_repair"])
 def test_exact_c005_schema_survives_example_mining(kind):
     from adversary.tests.pilots.challenge_suite.catalog import load_case
-    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+    from pilots.llm_mechanism.c005_hosted_decode_controls.schemas import (
         CONSISTENCY_JSON_SCHEMA,
         CYCLE_REPAIR_JSON_SCHEMA,
     )

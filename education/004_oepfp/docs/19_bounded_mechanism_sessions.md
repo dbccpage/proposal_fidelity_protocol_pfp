@@ -183,7 +183,7 @@ retains its previous limit. A 40-call control checks exhaustion and restart.
 
 > **Evidence status of the 2026-10-16 and 2026-10-17 sections below (checked 2026-10-20, pin `c419cc6beb`).**
 >
-> 1. **Benchmark scripts and receipts are not in the repository.** The 11 scripts and 13 receipts these sections say were "executed via" or "committed at" `pfp/tests/demo_004/a_mechanism/` and `.../b_cohomology/` (for example `c004_paired_mask_benchmark.py`, `c004_paired_benchmark_receipt.json`, `c006_60board_hidden_p_star_receipt.json`, `b_cohomology_p_star_receipt.json`) are not tracked at the pin, and `git log --all` over those paths returns no commit. The test files `test_c004_paired_mask_benchmark.py`, `test_c004_pfp_mechanism_boundary.py` and `test_operad_cochain_ablation.py`, and `extended_checkers.py`, are also absent.
+> 1. **Benchmark scripts and receipts are not in the repository.** The 11 scripts and 13 receipts these sections say were "executed via" or "committed at" `pilots/llm_mechanism/` and `.../b_cohomology/` (for example `c004_paired_mask_benchmark.py`, `c004_paired_benchmark_receipt.json`, `c006_60board_hidden_p_star_receipt.json`, `b_cohomology_p_star_receipt.json`) are not tracked at the pin, and `git log --all` over those paths returns no commit. The test files `test_c004_paired_mask_benchmark.py`, `test_c004_pfp_mechanism_boundary.py` and `test_operad_cochain_ablation.py`, and `extended_checkers.py`, are also absent.
 > 2. **Several named functions are absent.** `integer_slots_prefix_state`, `extract_integer_slot_vocab_candidates`, `allowed_integer_slot_tokens`, `C004_CARRIER_CHARS` and a `gbnf_slots` parameter are not defined anywhere in tracked code. `integer_slots_gbnf`, `integer_slots_control` and `parse_integer_slots` do exist in [carrier_decoding.py](../../../../pfp/domain/carrier_decoding.py), and `HfLocalRunner` and `LocalHfMechanismAdapter` exist in `decode_controls/local_hf_mechanism.py`.
 > 3. **Paper 027 depends on the same files.** [`replay.py`](../../../../atlas/coda_atlas/F004_papers/015_pfp/027_pfp_proposal_channels_and_internal_interventions/code/replay.py) (lines 475-511) reads these 13 receipts, and the checked-in [`replay_receipt.json`](../../../../atlas/coda_atlas/F004_papers/015_pfp/027_pfp_proposal_channels_and_internal_interventions/replay_receipt.json) reports `PASS` with `REPLAYED_FROM_COMMITTED_RECEIPTS`. At the pin the files it reads are absent, so that receipt cannot be reproduced from this checkout.
 > 4. **Reading rule.** Treat every ratio, call count and cost in the 2026-10-16/17 sections (for example 0/8 to 8/8 parseability, 12/12, 60/60, 8/60, 10/10) as an unverified historical statement. Several are conditional ratios on small denominators after abstention (2/2, 5/5, 6/6, 8/8); they are counts, not rates. The 3-Gate rubric's "Already Tested? Yes" dispositions below rest on these absent receipts and should be read as "recorded in prose only" until the files are restored and replayed.
@@ -229,8 +229,8 @@ single token piece can span a space-sign boundary such as `' -'` or `' 12'`),
 
 ### Paired C004 local-mask vs. unmasked and OpenRouter benchmark, 2026-10-16
 
-Executed via `pfp/tests/demo_004/a_mechanism/c004_paired_mask_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/c004_paired_benchmark_receipt.json`
+Executed via `pilots/llm_mechanism/c004_paired_mask_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/c004_paired_benchmark_receipt.json`
 across $N = 8$ deterministic C004 cycle-holonomy cases ($k \in \{3, 4, 5, 6\}$, two cases per slot count):
 
 **Panel 1 — Pinned local checkpoint (`Qwen/Qwen2.5-0.5B-Instruct`, rev `7ae557604adf67be50417f59c2c2f167def9a775`, 0 provider calls, `$0`):**
@@ -258,8 +258,8 @@ repairs (`0/8` optimal on both models).
 
 ### Paired Coloured Operad slot-grafting ($\circ_i$) + Layer-2 grammar projection vs. plain-prompt grammar projection ablation on $\Phi_1 / \Gamma_2$ cochain repair, 2026-10-16
 
-Executed via `pfp/tests/demo_004/a_mechanism/operad_cochain_ablation_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/operad_cochain_ablation_receipt.json`
+Executed via `pilots/llm_mechanism/operad_cochain_ablation_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/operad_cochain_ablation_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`) across the same $N = 8$ deterministic C004
 cycle-holonomy cases ($k \in \{3, 4, 5, 6\}$). Both model arms used identical Layer-2
 $k$-slot integer grammar projection (`gbnf_slots=k` locally; strict regex `^-?[0-9]+( -?[0-9]+){k-1}$`
@@ -307,8 +307,8 @@ rather than single-turn zero-scratchpad integer emission.
 
 ### Multi-turn `P*` staged operad slot materialization vs. single-turn `plain_grammar_projection` ablation on $\Phi_1 / \Gamma_2$ cochain repair, 2026-10-16
 
-Executed via `pfp/tests/demo_004/a_mechanism/p_star_operad_materialization_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/p_star_operad_materialization_receipt.json`
+Executed via `pilots/llm_mechanism/p_star_operad_materialization_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/p_star_operad_materialization_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`) across the same $N = 8$ deterministic C004 cases:
 
 - **Stage 1 (`op_materialize_invariants`, `gbnf_slots=3`):** Model emits 3 space-separated integers `(s_hat, i_star_hat, c_prime_hat)` in causal order: cycle sum $s = \sum_i c_i$, first lightest-edge index $i^* = \arg\min_i w_i$, and repaired edge value $c'_{i^*} = c_{i^*} - s$.
@@ -338,8 +338,8 @@ under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`) across the same $N = 8$ deterministic C
 
 ### Paired 4-slot Stage-1 index-value binding (`(s, i*, c_{i*}, c'_{i*})`) `P*` operad ablation on $\Phi_1 / \Gamma_2$ cochain repair, 2026-10-16
 
-Executed via `pfp/tests/demo_004/a_mechanism/p_star_4slot_binding_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/p_star_4slot_binding_receipt.json`
+Executed via `pilots/llm_mechanism/p_star_4slot_binding_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/p_star_4slot_binding_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`, `ADMIT_BOUNDED_TRIAL`) across the same $N = 8$
 deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
@@ -380,10 +380,10 @@ deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
 ### Paired evaluator-verified Stage-1 slot retry / guard filtering (`C004-S5`) vs. unverified 2-turn 4-slot `P*` grafting and `claude-fable-5-1` theorem derivation, 2026-10-16
 
-Executed via `pfp/tests/demo_004/a_mechanism/p_star_verified_guard_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/p_star_verified_guard_receipt.json`
-and theorem derivation executed via `pfp/tests/demo_004/a_mechanism/fable_5_1_guard_theorem_derivation.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/fable_5_1_guard_theorem_receipt.json`
+Executed via `pilots/llm_mechanism/p_star_verified_guard_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/p_star_verified_guard_receipt.json`
+and theorem derivation executed via `pilots/llm_mechanism/fable_5_1_guard_theorem_derivation.py`
+with receipt committed at `pilots/llm_mechanism/fable_5_1_guard_theorem_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`, `ADMIT_BOUNDED_TRIAL`) across the same $N = 8$
 deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
@@ -430,8 +430,8 @@ deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
 ### Paired C006 multi-cycle overlap-basis cochain repair (`C006-S6`, $\dim H_1(K_4) = 3 \ge 2$) comparing `P*` staged guarded overlap materialization against un-staged action generation, 2026-10-17
 
-Executed via `pfp/tests/demo_004/a_mechanism/c006_overlap_basis_p_star_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/c006_overlap_basis_p_star_receipt.json`
+Executed via `pilots/llm_mechanism/c006_overlap_basis_p_star_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/c006_overlap_basis_p_star_receipt.json`
 under `EPIC-OE-PFP-010` (`M4`/`M5`, `ADMIT_BOUNDED_TRIAL`) across $N = 4$ deterministic $K_4$
 multi-cycle overlap boards (`round5-K4-diagnostic` at $\Phi_1 = 6$, `C006-v2-r3-s6030` at $\Phi_1 = 16$,
 `C006-v2-r3-s6031` at $\Phi_1 = 9$, and weighted board `C006-v2-r3-s6032-weighted` at $\Phi_1 = 12$
@@ -485,8 +485,8 @@ and an explicit non-star spanning tree $T$ containing a shared tree edge travers
 
 ### Paired C006 higher-Betti ($b_1 \in \{4, 5, 6, 7\}$) two-stage tree-then-chord `P*` factorization (`C006-S7`) vs. un-staged action generation across $K_{3,3}, Q_3, K_5, \text{Petersen}, W_7$, 2026-10-17
 
-Executed via `pfp/tests/demo_004/a_mechanism/c006_higher_betti_p_star_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/c006_higher_betti_p_star_receipt.json`
+Executed via `pilots/llm_mechanism/c006_higher_betti_p_star_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/c006_higher_betti_p_star_receipt.json`
 under `EPIC-OE-PFP-010` (`M4`/`M5`, `ADMIT_BOUNDED_TRIAL`) across $N = 5$ deterministic higher-Betti
 boards from `c006.panels.v2`:
 - `C006-v2-r4-s6040` ($K_{3,3}$ utility graph, $|V|=6, |E|=9, b_1=4$, initial $\Phi_1 = 14$)
@@ -519,8 +519,8 @@ boards from `c006.panels.v2`:
 
 ### Paired C005 dichotomic exactness-vs-holonomy `P*` guarded separation (`C005-S1`) vs. un-staged consistency verdict across 8 public difference boards, 2026-10-17
 
-Executed via `pfp/tests/demo_004/a_mechanism/c005_dichotomic_fredholm_p_star_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/c005_dichotomic_fredholm_p_star_receipt.json`
+Executed via `pilots/llm_mechanism/c005_dichotomic_fredholm_p_star_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/c005_dichotomic_fredholm_p_star_receipt.json`
 under `EPIC-OE-PFP-010` (`M4`/`M5`, `ADMIT_BOUNDED_TRIAL`) across all $N = 8$ public `C005`
 relational difference boards (`pub_cons_01`..`pub_cons_08`, `4` `CONSISTENT` and `4` `INCONSISTENT`,
 $|V| \in \{4, 5, 6\}, b_1 \in \{1, 2\}$):
@@ -553,8 +553,8 @@ $|V| \in \{4, 5, 6\}, b_1 \in \{1, 2\}$):
 
 ### Paired C001 distractor-filtered cochain & cohomological syndrome `P*` factorization (`C001-S1`) vs. un-staged witness generation across 12 public and poisoned cases (`verdict`, `repair`, `audit`), 2026-10-17
 
-Executed via `pfp/tests/demo_004/a_mechanism/c001_distractor_cochain_p_star_benchmark.py`
-with receipt committed at `pfp/tests/demo_004/a_mechanism/c001_distractor_cochain_p_star_receipt.json`
+Executed via `pilots/llm_mechanism/c001_distractor_cochain_p_star_benchmark.py`
+with receipt committed at `pilots/llm_mechanism/c001_distractor_cochain_p_star_receipt.json`
 under `EPIC-OE-PFP-010` (`M4`/`M5`, `ADMIT_BOUNDED_TRIAL`) across $N = 12$ deterministic `C001`
 4-digit integer rank-difference cases ($|V| \in \{8, 9, 10, 11\}$, $|E| \in \{12, \dots, 16\}$,
 $b_1 \in \{5, 7\}$, $c_{u,v} \in [-5000, 5000]$, with 4–6 bracketed `[Note ...]` distractors per prompt):
@@ -594,11 +594,11 @@ $b_1 \in \{5, 7\}$, $c_{u,v} \in [-5000, 5000]$, with 4–6 bracketed `[Note ...
 1. **Independent Exact Certificate Checker (`C011`–`C020`) & `B-COH-S1` Multi-Stage `P*` Trial (`pfp/tests/demo_004/b_cohomology/b_cohomology_p_star_receipt.json`):**
    - `pfp.domain.cohomology.certificate_checker` (`check_certificate`) and `extended_checkers` verify both `SOLVED` and `OUT_OF_SCOPE` certificates independently across all 10 cohomology challenges (`C011`–`C020`) using pure Python stdlib (`fractions.Fraction`, `int`), validated across all 328 JSON cases (`278/278` `SOLVED`, `36/36` `OUT_OF_SCOPE`, `14/14` `UNKNOWN` rejected) and 75 pytest tests.
    - On `B-COH-S1` (`C011`–`C020` ordinal-0 development slice), `NO_LLM` verified `10/10` `SOLVED` and `10/10` `OUT_OF_SCOPE`. On Panel 2 (`qwen/qwen-2.5-7b-instruct`, `30` calls reserved at `20,035` micro-USD), Attempt 1 emitted `"status": "SOLVED"` on **`10/10` (`100.0%`)** challenges, every one of which violated exact algebraic identities (`c011` primal feasibility, `c012` $\ker(\delta_0)$, `c013` homology rank, `c014` Hodge decomposition, `c015` $D V = R \pmod 2$, `c016` cup-product index, `c017` elementary plaquette, `c018` frustration parity, `c019` cycle closure $\partial_1 Z = 0$, `c020` $E_2$ column rank). `check_certificate` caught all `10/10` false `SOLVED` claims, triggered 1 diagnostic retry, and projected all 10 persistent failures to `NullTree` (`admitted_false_solved_count = 0`, `conditional_stage2_precision = 1.0`).
-2. **Held-Out 40-Case `C004` (`C004-S6`, $k \in \{3, \dots, 12\}$, 4 cases per $k$, `pfp/tests/demo_004/a_mechanism/c004_40case_hidden_p_star_receipt.json`):**
+2. **Held-Out 40-Case `C004` (`C004-S6`, $k \in \{3, \dots, 12\}$, 4 cases per $k$, `pilots/llm_mechanism/c004_40case_hidden_p_star_receipt.json`):**
    - `NO_LLM` exact baseline achieved `40/40` (`100.0%`) `ExactCoboundary` and $\ell_1$-optimality.
    - Local `Qwen/Qwen2.5-0.5B-Instruct` (`gbnf_slots`) admitted `39/40` non-optimal repairs un-staged (`1/40` optimal) vs. `0` non-optimal admissions (`40/40` `NullTree` abstentions) under $G_{\text{complete}}$.
    - Accounted OpenRouter `qwen/qwen-2.5-7b-instruct` (`121` calls reserved at `18,452` micro-USD) achieved `9/40` (`22.5%`) `ExactCoboundary` and **`0/40` (`0.0%`) $\ell_1$-optimal** un-staged (`40/40` non-optimal admitted). Under the 4-slot verified guard $G_{\text{complete}}$, Attempt 1 produced `4` partial-guard passes ($G_{\text{partial}} = 1$), of which **`3` were Local Green / Global Red witnesses** ($\hat{s} \ne \sum_j c_j$) caught only by $G_{\text{complete}}$. After 1 retry, `2/40` cases passed $G_{\text{complete}}$ and were admitted to Stage 2, and **both (`2/2 = 100.0%` conditional Stage-2 precision)** achieved `ExactCoboundary` and $\ell_1$-optimality (`38/40` `NullTree` abstentions, `0` non-optimal admissions).
-3. **Held-Out 60-Board `C006` (`C006-S8`, `c006.panels.v2["hidden"]`, $b_1 \in \{3, \dots, 8\}$, 10 boards per rank across 7 graph families, `pfp/tests/demo_004/a_mechanism/c006_60board_hidden_p_star_receipt.json`):**
+3. **Held-Out 60-Board `C006` (`C006-S8`, `c006.panels.v2["hidden"]`, $b_1 \in \{3, \dots, 8\}$, 10 boards per rank across 7 graph families, `pilots/llm_mechanism/c006_60board_hidden_p_star_receipt.json`):**
    - `NO_LLM` exact baseline achieved `60/60` (`100.0%`) `ACCEPTED_ZERO_DEFECT` ($\Phi_1 = 0$) and zero-send replay verification across all 60 hidden boards.
    - Local `Qwen/Qwen2.5-0.5B-Instruct` on the 6 stratified anchor boards ($b_1 \in \{3..8\}$) solved `0/6` un-staged and abstained via `NullTree` at Stage 1a on `6/6` (`24` downstream turns saved, `0` false `SOLVED` admitted).
    - Accounted OpenRouter `qwen/qwen-2.5-7b-instruct` (`301` calls reserved at `97,765` micro-USD / `$0.097765` under `240,000` micro-USD cap) solved **`0/60` (`0.0%`)** un-staged vs. **`8/60` (`13.3%` unconditional; `8/8 = 100.0%` conditional Stage-2 precision)** under Two-Stage Tree-Then-Chord `P*` (`4/10` on $K_4$ at $b_1=3$, `1/10` on `wheel-7-rim` at $b_1=7$, `3/10` on `wheel-8-rim` at $b_1=8$), while `NullTree` abstention at Stage 1a (`52/60`) prevented **`208` wasted downstream turns (`52 x 4`)** with `0` false `SOLVED` admissions.

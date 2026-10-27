@@ -276,7 +276,7 @@ def test_original_public_case_reaches_canonical_role_prompt_without_expected_ans
 
 
 def test_c001_original_distractor_case_reaches_typed_judge_and_replay():
-    from pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.solve import (
+    from pilots.llm_mechanism.c001_attention_distractor_mask.solve import (
         solve,
     )
     from adversary.infrastructure import challenge_play as adversary

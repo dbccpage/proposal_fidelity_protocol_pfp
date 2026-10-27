@@ -179,7 +179,7 @@ def test_provider_decode_and_parse_failures_retain_exact_returned_wire(tmp_path,
 def test_declared_c005_schema_survives_binding_and_rejects_wrong_answer(tmp_path, kind, answer):
     from copy import deepcopy
 
-    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+    from pilots.llm_mechanism.c005_hosted_decode_controls.schemas import (
         CONSISTENCY_JSON_SCHEMA,
         CYCLE_REPAIR_JSON_SCHEMA,
     )

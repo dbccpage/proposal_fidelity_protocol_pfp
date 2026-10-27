@@ -510,7 +510,7 @@ sender inventory or establish a new model-performance result.
 The retained `naked_prompt_launder.py` scene used the deleted
 `bench/head_to_head` directory. Its generator, direct/CoT prompts, verdict parser
 and exact potential-propagation judge now live in the existing task-profile
-estate at `pfp.tests.demo_004.a_mechanism.consistency_teaching`.
+estate at `pilots.llm_mechanism.consistency_teaching`.
 They come from [the original source at bc42aa0](https://github.com/dbccpage/the_symbol_game/tree/bc42aa0a7156fcdf2122f0c8c43a52268e9eac84/bench/head_to_head).
 Only the used judge is recovered: the historical exponential `phi1` minimizer
 and its paper-path bootstrap remain historical. The graph construction, verdict
@@ -519,8 +519,8 @@ logic and original direct/CoT prompt text are retained.
 For a zero-provider exercise, compare the original clean and poisoned instances:
 
 ```python
-from pfp.tests.demo_004.a_mechanism.consistency_teaching.tasks import generate_instance
-from pfp.tests.demo_004.a_mechanism.consistency_teaching.host import host_verdict
+from pilots.llm_mechanism.consistency_teaching.tasks import generate_instance
+from pilots.llm_mechanism.consistency_teaching.host import host_verdict
 
 clean = generate_instance(n_items=3, n_relations=3, poisoned=False, seed=1)
 poisoned = generate_instance(n_items=3, n_relations=3, poisoned=True, seed=1)

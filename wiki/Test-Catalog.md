@@ -1,6 +1,6 @@
 # Runnable tests
 
-Tests and demos that run from this repository with only the Python standard library and pytest. They were reviewed from an internal test suite of roughly 11,000 files; each one below is kept because it is distinct from the others, teaches or checks a real idea, and can be run here. Code lives under `demos/`; each demo folder has a README with its run command.
+Tests and demos that run from this repository with only the Python standard library and pytest. They were reviewed from an internal test suite of roughly 11,000 files; each one below is kept because it is distinct from the others, teaches or checks a real idea, and can be run here. Code lives under `demos/`; each demo folder has a README with its run command. [Demos, pilots and tests](Demos-Pilots-And-Tests.md) lists all fifty certified challenges and the model pilots.
 
 Run everything with `python -m pytest demos -q` from the repository root. Two demos need PyYAML (`paper_run_rules`) or Python 3.12 for one frozen-fixture check (`oracle_fixture_freeze`); the page for each says so.
 

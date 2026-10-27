@@ -6,10 +6,10 @@ import json
 
 import pytest
 
-from pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from pilots.llm_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_public_set,
 )
-from pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.solve import solve
+from pilots.llm_mechanism.c001_attention_distractor_mask.solve import solve
 from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate
 from pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
 from pfp.use_cases.pfp_proposal import task_turn_validator

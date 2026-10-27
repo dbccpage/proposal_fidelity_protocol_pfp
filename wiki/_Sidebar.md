@@ -6,6 +6,7 @@
 - [Papers](Papers.md)
 - [PFP Lab](PFP-Lab.md)
 - [Repository layout](Repository-Layout.md)
+- [Demos, pilots and tests](Demos-Pilots-And-Tests.md) · [Test catalog](Test-Catalog.md)
 
 **Code**
 
