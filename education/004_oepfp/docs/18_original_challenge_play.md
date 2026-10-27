@@ -124,9 +124,9 @@ challenge selector above; they do not extend that selector's scientific coverage
 Inspect the options without credentials or a provider call:
 
 ```powershell
-py -3.12 -m pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.run_c043_matrix --help
-py -3.12 -m pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.run_c056_matrix --help
-py -3.12 -m pfp.tests.demo_004.f_program_synthesis.c060_self_verifying_checker_synthesis.run_c060_matrix --help
+py -3.12 -m c043_ramsey_vdw_constructions.run_c043_matrix --help
+py -3.12 -m c056_dfa_minimization_equivalence.run_c056_matrix --help
+py -3.12 -m c060_self_verifying_checker_synthesis.run_c060_matrix --help
 ```
 
 For an explicitly authorized OpenRouter attempt, select a declared model, a
@@ -136,8 +136,8 @@ case and at most one provider call; the estimated allowance is 10,000 microusd
 not new measured model results:
 
 ```powershell
-py -3.12 -m pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.run_c043_matrix --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048
-py -3.12 -m pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.run_c056_matrix --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048 --output-dir "$env:TEMP/c056-selected-run"
+py -3.12 -m c043_ramsey_vdw_constructions.run_c043_matrix --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048
+py -3.12 -m c056_dfa_minimization_equivalence.run_c056_matrix --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048 --output-dir "$env:TEMP/c056-selected-run"
 ```
 
 Use a new output directory for synthesis. Formal runs print their newly created
@@ -165,7 +165,7 @@ the retained `empirical_results` files are not overwritten.
 For example, after authorizing the provider/model and estimated allowance:
 
 ```powershell
-python -m pfp.tests.demo_004.f_program_synthesis.c060_self_verifying_checker_synthesis.run_c060_matrix --output-dir "$env:TEMP/c060-selected-run" --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048
+python -m c060_self_verifying_checker_synthesis.run_c060_matrix --output-dir "$env:TEMP/c060-selected-run" --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048
 ```
 
 These twelve matrix commands discover the actual package directories, so their
@@ -192,21 +192,21 @@ reported as one worker. One gateway allowance continues across the selected case
 Inspect current commands without importing an SDK, reading credentials or sending:
 
 ```powershell
-python -m pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner --help
-python -m pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_002_runner --help
+python -m pilots.llm_mechanism.c005_hosted_decode_controls.empirical_001_runner --help
+python -m pilots.llm_mechanism.c005_hosted_decode_controls.empirical_002_runner --help
 ```
 
 Exercise two host fixtures without a model call:
 
 ```powershell
-python -m pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-schema-fixture"
+python -m pilots.llm_mechanism.c005_hosted_decode_controls.empirical_001_runner --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-schema-fixture"
 ```
 
 For a separately authorized provider check, use a new output directory and an
 explicit model, call allowance and estimated financial policy:
 
 ```powershell
-python -m pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner --model nousresearch/hermes-3-llama-3.1-405b --max-cases 2 --max-output-tokens 96 --max-provider-calls 2 --max-estimated-cost-microusd 10000 --output-dir "$env:TEMP/c005-schema-live"
+python -m pilots.llm_mechanism.c005_hosted_decode_controls.empirical_001_runner --model nousresearch/hermes-3-llama-3.1-405b --max-cases 2 --max-output-tokens 96 --max-provider-calls 2 --max-estimated-cost-microusd 10000 --output-dir "$env:TEMP/c005-schema-live"
 ```
 
 Live execution requires an accounted gateway or explicit bounded gateway policy.
@@ -235,8 +235,8 @@ original arm prompts, schemas, factorization and certificate/canary judges remai
 Run either with a new explicit output directory:
 
 ```powershell
-python -m pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.benchmark_3arm_scratchpad --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-three-arm-fixture"
-python -m pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.benchmark_arm4_hybrid --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-hybrid-fixture"
+python -m pilots.llm_mechanism.c005_hosted_decode_controls.benchmark_3arm_scratchpad --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-three-arm-fixture"
+python -m pilots.llm_mechanism.c005_hosted_decode_controls.benchmark_arm4_hybrid --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-hybrid-fixture"
 ```
 
 These commands write `master_evaluation_report.json` and `summary.json`. Dry
@@ -273,23 +273,23 @@ stays unknown when appropriate, with the known subtotal shown separately.
 Inspect the commands without credentials or dispatch:
 
 ```powershell
-python -m pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_arm5_hybrid --help
-python -m pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_arm6_hierarchical_decimation --help
-python -m pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer --help
+python -m c017_nonabelian_lattice_holonomy.eval_arm5_hybrid --help
+python -m c017_nonabelian_lattice_holonomy.eval_arm6_hierarchical_decimation --help
+python -m c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer --help
 ```
 
 Use a fresh output directory for each command. A dry run checks host fixtures
 against the original judges and is explicitly labelled as such:
 
 ```powershell
-python -m pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer --dry-run --case base_01 --output-dir "$env:TEMP/c017-host-fixture"
+python -m c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer --dry-run --case base_01 --output-dir "$env:TEMP/c017-host-fixture"
 ```
 
 For a separately authorized bounded provider run, choose the model, output limit,
 call allowance and estimated cost explicitly:
 
 ```powershell
-python -m pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer --model meta-llama/llama-3.3-70b-instruct --case base_01 --max-tokens 2000 --max-provider-calls 2 --max-estimated-cost-microusd 10000 --output-dir "$env:TEMP/c017-paired-run"
+python -m c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer --model meta-llama/llama-3.3-70b-instruct --case base_01 --max-tokens 2000 --max-provider-calls 2 --max-estimated-cost-microusd 10000 --output-dir "$env:TEMP/c017-paired-run"
 ```
 
 The paired runner shares one allowance between baseline and immune arms. Arm 5
@@ -322,8 +322,8 @@ the outer experiment; another method does not receive a fresh budget.
 Inspect either command with `--help` first. For an explicitly authorized attempt:
 
 ```powershell
-py -3.12 -m pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.symbol_game_experiment --model meta-llama/llama-3.1-8b-instruct --method M3_RETRACTION --case-limit 1 --max-provider-calls 3 --max-estimated-cost-microusd 10000 --max-output-tokens 512
-py -3.12 -m pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.symbol_game_routing --model meta-llama/llama-3.1-8b-instruct --method M1_LOGITS --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 512
+py -3.12 -m c041_lean4_finite_lemma_proofs.reference_solver.symbol_game_experiment --model meta-llama/llama-3.1-8b-instruct --method M3_RETRACTION --case-limit 1 --max-provider-calls 3 --max-estimated-cost-microusd 10000 --max-output-tokens 512
+py -3.12 -m c042_sat_with_drat_certificates.reference_solver.symbol_game_routing --model meta-llama/llama-3.1-8b-instruct --method M1_LOGITS --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 512
 ```
 
 C041 keeps M1, M2, M3, M4 and M5; C042 keeps M1 and M3. These are experimental

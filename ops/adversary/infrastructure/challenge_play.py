@@ -98,7 +98,7 @@ def start(row, *, executor="ide", max_repairs=1, learn_after_run=True, max_actio
 
         schema, case = answer_schema(case), public_case(case)
     elif row["challenge"] == "C005":
-        from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+        from pilots.llm_mechanism.c005_hosted_decode_controls.schemas import (
             CONSISTENCY_JSON_SCHEMA,
             CYCLE_REPAIR_JSON_SCHEMA,
         )

@@ -146,7 +146,7 @@ def case_rows(challenge):
 
 
 def mechanism_rows():
-    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import (
+    from pilots.llm_mechanism.c005_hosted_decode_controls.cases import (
         get_hidden_base_cases,
         get_public_examples,
         get_relabel_controls,
@@ -191,7 +191,7 @@ def prompt_for(row, arm="baseline", feedback=None):
     case = load_case(row)
     answer_schema = None
     if row["challenge"] == "C005":
-        from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+        from pilots.llm_mechanism.c005_hosted_decode_controls.schemas import (
             CONSISTENCY_JSON_SCHEMA,
             CYCLE_REPAIR_JSON_SCHEMA,
         )

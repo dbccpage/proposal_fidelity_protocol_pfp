@@ -17,7 +17,7 @@ def test_real_c014_descriptor_uses_current_owner_and_original_checker_contract()
     descriptor = layout.build_descriptor(root, package)
     assert descriptor["rel_path"].startswith("pfp/tests/demo_004/")
     assert descriptor["import_prefix"] == (
-        "pfp.tests.demo_004.b_cohomology.c014_discrete_hodge_decomposition."
+        "c014_discrete_hodge_decomposition."
     )
     assert descriptor["gate"] == dict(kind="function",
         module="judge_packet.checkers.dual_evaluator", function="evaluate_dual")

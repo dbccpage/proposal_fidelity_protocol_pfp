@@ -14,7 +14,7 @@ from pfp.domain.quantum.c029_coset import verify_independent_coset
 from pfp.infrastructure import challenge_execution as execution
 
 CHALLENGE = execution.ROOT / (
-    "pfp/tests/demo_004/c_quantum/c029_surface_code_min_weight_decoding"
+    "demos/certified_challenges/c029_surface_code_min_weight_decoding"
 )
 CURRENT_SOURCE = "pfp/domain/quantum/c029_coset.py"
 CHECKER_ID = "c029:gf2_coset_optimality.v1"
@@ -115,7 +115,7 @@ def test_original_maximum_weighted_cases_reject_nonminimal_generated_errors(name
 
 def test_no_matching_or_primary_checker_dependency_even_when_poisoned(monkeypatch):
     historical = importlib.import_module(
-        "pfp.tests.demo_004.c_quantum.c029_surface_code_min_weight_decoding"
+        "c029_surface_code_min_weight_decoding"
         ".judge_packet.checkers.independent_checker"
     )
     case = case_file()

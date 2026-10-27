@@ -12,7 +12,7 @@
 > so no count in this note can be checked. The audit behind these notices is recorded
 > in the collection's `verification/residuals.md`, section 8.
 
-> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a near copy (only paths differ) of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c043_ramsey_vdw_constructions/`](../../../../pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/). Its scoring receipt [`commit_reveal/c043_l41_scoring_receipt.json`](../../../../pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/commit_reveal/c043_l41_scoring_receipt.json) records 64/64 cases, 48/48 mutations killed, `PASS_TO_MASTER` and 0.2107 s for the reference solver only; its `authority_effect` field is `null`. No model-run record is retained.
+> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a near copy (only paths differ) of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c043_ramsey_vdw_constructions/`](../../../../demos/certified_challenges/c043_ramsey_vdw_constructions/). Its scoring receipt [`commit_reveal/c043_l41_scoring_receipt.json`](../../../../demos/certified_challenges/c043_ramsey_vdw_constructions/commit_reveal/c043_l41_scoring_receipt.json) records 64/64 cases, 48/48 mutations killed, `PASS_TO_MASTER` and 0.2107 s for the reference solver only; its `authority_effect` field is `null`. No model-run record is retained.
 
 > **Correction notice (2026-09-28).** Paper 010 (version 2.0.0) re-derived the model
 > counts for C017 and C045 to C050 from the retained run records; where they differ
@@ -36,8 +36,8 @@
 We evaluated the newly released **Space Bunny Alpha** (`stealth/space-bunny-alpha`) model on OpenRouter against open-weights baselines (LLaMA 3.3 70B and LLaMA 3.1 8B) on **Challenge C043: Ramsey and van der Waerden Lower-Bound Constructions**.
 
 All candidate outputs were judged against dual independent checkers:
-1. Primary Python Checker: [`ramsey_vdw_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)
-2. Independent Matrix/Bitmask Checker: [`independent_checker.py`](../../../../pfp/tests/demo_004/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)
+1. Primary Python Checker: [`ramsey_vdw_checker.py`](../../../../demos/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)
+2. Independent Matrix/Bitmask Checker: [`independent_checker.py`](../../../../demos/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)
 3. Cryptographic Commit-Reveal Scoring Receipt: `PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed) sealed in `_intelligence/_adversary/runs/c043_eval_1790620716/`.
 
 ---

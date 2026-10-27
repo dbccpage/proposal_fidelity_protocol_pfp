@@ -22,7 +22,7 @@ first checker does not automatically pass.
 
 ## Setup and inputs
 
-`demos/dual_checker_capsules/c050_equational_theorem_proving/`
+`demos/certified_challenges/c050_equational_theorem_proving/`
 
 - `reference_solver/terms.py` (terms, positions, substitution, one rewrite
   step), `prover.py` (bounded bidirectional breadth-first rewrite search),
@@ -47,10 +47,10 @@ Terms are JSON: a variable or constant is a string, an application is a list
 
 From the repository root:
 
-    python -m pytest demos/dual_checker_capsules/test_c050_reference_and_mutations.py -q
+    python -m pytest demos/certified_challenges/test_c050_reference_and_mutations.py -q
 
 Expected: `113 passed` (1 inventory test, 64 case tests, 48 mutation tests).
-Running `python -m pytest demos/dual_checker_capsules -q` runs all four capsules (`351 passed`).
+`python -m pytest demos/certified_challenges -q` runs all fifty challenge packages.
 
 ## What a failure means
 

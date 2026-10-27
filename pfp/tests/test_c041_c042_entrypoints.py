@@ -55,7 +55,7 @@ for package in sys.argv[2:]:
 
 @pytest.mark.parametrize("cost,expected", ((None, "UNKNOWN (known subtotal $0.01000)"), (0, "$0.00000")))
 def test_existing_report_preserves_unknown_vs_zero_cost(tmp_path, cost, expected):
-    from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.synthesize_matrix_report import synthesize_report
+    from c041_lean4_finite_lemma_proofs.reference_solver.synthesize_matrix_report import synthesize_report
 
     record = dict(model="vendor/model", method="M3_RETRACTION", passed_cases=1,
         total_cases=1, total_cost_usd=cost, total_cost_known_subtotal_usd=0.01 if cost is None else 0,
