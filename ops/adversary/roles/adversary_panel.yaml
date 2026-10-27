@@ -1,0 +1,186 @@
+# Neutral role roster for the local swarm.
+# Written for this repository: generic duties only, no persona material.
+# The 22 role ids and their order are fixed by PANEL_ROLE_ORDER in
+# adversary/use_cases/teamwork.py. A role name never authenticates a worker.
+# AuthorityEffect: None.
+
+version: "1.0.0"
+authority_effect_ceiling: None
+orchestrator_mode: "NATIVE"
+
+characters:
+  - name: "Syntax prefilter"
+    sketch: adversary_panel/syntax_prefilter.md
+    role: "Checks the action's syntax before any model turn; no model is called"
+    cognitive_operator: "Deterministic syntax check"
+    pipeline_acts: [act_syntax_check]
+    model_tiers: ["no_llm"]
+    default_tier: "no_llm"
+
+  - name: "Scope guard"
+    sketch: adversary_panel/scope_guard.md
+    role: "States what the task asks for and what it does not, and flags scope drift"
+    cognitive_operator: "Scope bounding"
+    pipeline_acts: [act_scope]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_standard"
+
+  - name: "Context transport"
+    sketch: adversary_panel/context_transport.md
+    role: "Carries the declared inputs and prior findings forward without adding to them"
+    cognitive_operator: "Faithful transport"
+    pipeline_acts: [act_transport]
+    model_tiers: ["tier_fast", "tier_standard"]
+    default_tier: "tier_fast"
+
+  - name: "Punch list"
+    sketch: adversary_panel/punchlist.md
+    role: "Turns the task into a checklist of concrete obligations for the builder"
+    cognitive_operator: "Structured decomposition"
+    pipeline_acts: [act_punchlist]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_standard"
+
+  - name: "Gauge breaker"
+    sketch: adversary_panel/gauge_breaker.md
+    role: "Looks for choices of convention or presentation that change the answer"
+    cognitive_operator: "Convention stress test"
+    pipeline_acts: [act_gauge_break]
+    model_tiers: ["tier_frontier", "tier_standard"]
+    default_tier: "tier_frontier"
+
+  - name: "Builder"
+    sketch: adversary_panel/bare_metal_anchor.md
+    role: "Produces the candidate for the task, bound to the task, attempt and inputs"
+    cognitive_operator: "Candidate construction"
+    pipeline_acts: [act_build]
+    model_tiers: ["tier_frontier", "tier_reasoning"]
+    default_tier: "tier_frontier"
+
+  - name: "Defect hunter"
+    sketch: adversary_panel/defect_hunter.md
+    role: "Searches the candidate for a concrete counterexample or defect"
+    cognitive_operator: "Counterexample search"
+    pipeline_acts: [act_critique]
+    model_tiers: ["tier_frontier", "tier_reasoning"]
+    default_tier: "tier_frontier"
+
+  - name: "Boundary fuzzer"
+    sketch: adversary_panel/boundary_fuzzer.md
+    role: "Tries edge and boundary inputs against the candidate"
+    cognitive_operator: "Boundary testing"
+    pipeline_acts: [act_boundary_fuzz]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_standard"
+
+  - name: "Overconfidence probe"
+    sketch: adversary_panel/overconfidence_probe.md
+    role: "Checks whether claims go beyond what the evidence supports"
+    cognitive_operator: "Claim calibration"
+    pipeline_acts: [act_calibrate]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_standard"
+
+  - name: "Claim hygiene"
+    sketch: adversary_panel/anti_hype.md
+    role: "Removes promotional and certainty wording from claims"
+    cognitive_operator: "Claim hygiene"
+    pipeline_acts: [act_claim_hygiene]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_fast"
+
+  - name: "Quarantine"
+    sketch: adversary_panel/quarantine.md
+    role: "Isolates material that should not reach later turns, and says why"
+    cognitive_operator: "Isolation"
+    pipeline_acts: [act_quarantine]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_standard"
+
+  - name: "Resilience"
+    sketch: adversary_panel/resilience.md
+    role: "Checks behaviour under failure: missing tools, partial outputs, retries"
+    cognitive_operator: "Failure-mode review"
+    pipeline_acts: [act_resilience]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_standard"
+
+  - name: "Custody"
+    sketch: adversary_panel/custody.md
+    role: "Checks that every artifact cited is retained and bound by digest"
+    cognitive_operator: "Record custody"
+    pipeline_acts: [act_custody]
+    model_tiers: ["tier_fast", "tier_standard"]
+    default_tier: "tier_fast"
+
+  - name: "Independent verifier"
+    sketch: adversary_panel/covert_verifier.md
+    role: "Re-derives a key result independently instead of rereading the candidate"
+    cognitive_operator: "Independent re-derivation"
+    pipeline_acts: [act_verify]
+    model_tiers: ["tier_frontier", "tier_reasoning"]
+    default_tier: "tier_reasoning"
+
+  - name: "Integrity auditor"
+    sketch: adversary_panel/pontius_integrity_auditor.md
+    role: "Audits whether the run followed its declared process and bindings"
+    cognitive_operator: "Process audit"
+    pipeline_acts: [act_process_audit]
+    model_tiers: ["tier_standard", "tier_frontier"]
+    default_tier: "tier_standard"
+
+  - name: "Resource constraint"
+    sketch: adversary_panel/mark_hardware_constraint.md
+    role: "Checks time, memory and cost limits against the declared budget"
+    cognitive_operator: "Resource review"
+    pipeline_acts: [act_resource_review]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_standard"
+
+  - name: "Repairer"
+    sketch: adversary_panel/truth_repair.md
+    role: "Proposes the smallest repair for a reproduced defect"
+    cognitive_operator: "Minimal repair"
+    pipeline_acts: [act_repair]
+    model_tiers: ["tier_frontier", "tier_reasoning"]
+    default_tier: "tier_frontier"
+
+  - name: "Primal-dual check"
+    sketch: adversary_panel/primal_dual.md
+    role: "Checks an optimisation or certificate claim from both the primal and the dual side"
+    cognitive_operator: "Dual certificate check"
+    pipeline_acts: [act_dual_check]
+    model_tiers: ["tier_frontier", "tier_reasoning"]
+    default_tier: "tier_reasoning"
+
+  - name: "Backdoor auditor"
+    sketch: adversary_panel/backdoor_auditor.md
+    role: "Looks for shortcuts that pass the checker without solving the task"
+    cognitive_operator: "Shortcut audit"
+    pipeline_acts: [act_shortcut_audit]
+    model_tiers: ["tier_frontier", "tier_standard"]
+    default_tier: "tier_standard"
+
+  - name: "Formal mechanizer"
+    sketch: adversary_panel/master.md
+    role: "Proposes how a claim could be checked mechanically, and by which tool"
+    cognitive_operator: "Mechanization plan"
+    pipeline_acts: [act_mechanize]
+    model_tiers: ["tier_frontier", "tier_reasoning"]
+    default_tier: "tier_frontier"
+
+  - name: "Terminal judge"
+    sketch: adversary_panel/adversary.md
+    role: "Reads the bound evidence and states the outcome; a role statement never replaces the host check"
+    cognitive_operator: "Evidence-bound judgement"
+    pipeline_acts: [act_judge]
+    model_tiers: ["tier_frontier", "tier_reasoning"]
+    default_tier: "tier_frontier"
+
+  - name: "Chronicler"
+    sketch: adversary_panel/scar_chronicler.md
+    role: "Records what was learned, including failures, for the next run"
+    cognitive_operator: "Learning record"
+    pipeline_acts: [act_chronicle]
+    model_tiers: ["tier_standard", "tier_fast"]
+    default_tier: "tier_standard"

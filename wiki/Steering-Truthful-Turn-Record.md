@@ -30,7 +30,10 @@ corresponding test fail.
 
 ## Replicate it here
 
-The swarm-side code is not runnable here yet. The receipt side is: a
+In the local swarm (see [running the local swarm](Steering.md#running-the-local-swarm)), `teamwork submit` takes the
+reply file as raw bytes. A reply whose input digest does not match the pending
+turn is not counted as that role's contribution: the command exits with code 2
+and the run is marked `blocked` (checked). The receipt side is shown here too: a
 [PFP Lab](PFP-Lab.md) receipt is content-addressed, and `verify` replays it and
 refuses one whose bytes were altered.
 

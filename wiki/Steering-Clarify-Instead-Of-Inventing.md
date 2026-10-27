@@ -68,7 +68,9 @@ the second `CLARIFICATION_BINDING_MISMATCH`, the third
 
 To use it as steering, put the declared input list and the reply shape in the
 prompt, then route the reply through `check_clarification` before any solver
-check. The full multi-role version in `ops/adversary/` is not runnable here yet.
+check. In the local swarm, select it with
+`teamwork start --clarification-policy strict-query-v1` (see [running the local swarm](Steering.md#running-the-local-swarm); that
+option was not exercised for this page).
 
 ## How it relates to PFP, EIS and PCIV
 

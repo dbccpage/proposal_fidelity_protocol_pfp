@@ -36,7 +36,8 @@ certificate changes the projected digest so an old reply cannot be rebound to it
 
 ## Replicate it here
 
-The profiles live in the local swarm, which is not runnable here yet
+The profiles live in the local swarm, which now runs (see
+[running the local swarm](Steering.md#running-the-local-swarm)); select one with `teamwork start --response-profile compact-v2`
 (`ops/adversary/use_cases/teamwork_pfp.py` and `ops/adversary/use_cases/teamwork.py`,
 selected with `--response-profile` in `ops/adversary/entrypoints/teamwork_cli.py`).
 
