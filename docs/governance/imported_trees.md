@@ -1,7 +1,8 @@
 # Imported trees against the acceptance floor
 
 AuthorityEffect: None. This is a screen of `main` at `6e6d9ed7`, not a score.
-Counts only: the paths still carry names that are being renamed.
+Counts only. The trees joined the governed population with a baseline on
+2026-10-27, so the counts below are what scoring them would find.
 
 None of these files has a completed score, so none of them meets the
 `SCORING.md` section 1.5 floor yet. Once the rename of private names lands,
