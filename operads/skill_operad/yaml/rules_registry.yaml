@@ -78,6 +78,33 @@ rules:
   invariants:
   - id: RULE_GIT_ASYNC_MERGE_PROTOCOL_001
     status: CANDIDATE
+- path: git/rl_hook_command_and_file_fences.md
+  topic: Hook-Enforced Command and File Fences
+  skills:
+  - governance-host-parity
+  summary: Shell commands and file writes that a host hook refuses at run time, each
+    refusal naming its invariant.
+  load_paths:
+  - operads/hooks/**
+  invariants:
+  - id: RULE_GIT_NO_FORCE_OR_MAIN_PUSH_001
+    status: ENFORCED
+    enforced_by: operads/hooks/hook_core/command_guard.py::_inspect_git_push
+  - id: RULE_GIT_EXPLICIT_STAGING_001
+    status: ENFORCED
+    enforced_by: operads/hooks/hook_core/command_guard.py::_inspect_git_add
+  - id: RULE_GIT_NO_COMMIT_ALL_001
+    status: ENFORCED
+    enforced_by: operads/hooks/hook_core/command_guard.py::_inspect_git_commit
+  - id: RULE_PYTEST_TARGETED_RUNS_001
+    status: ENFORCED
+    enforced_by: operads/hooks/hook_core/command_guard.py::_inspect_pytest
+  - id: RULE_SHELL_QUOTED_STASH_REF_001
+    status: ENFORCED
+    enforced_by: operads/hooks/hook_core/command_guard.py::evaluate_command
+  - id: RULE_FILE_STRICT_UTF8_001
+    status: ENFORCED
+    enforced_by: operads/hooks/scripts/post_tool_bom_linter.py::check_and_clean_bom
 - path: paths/rl_python_runtime_and_environment_standards.md
   topic: Python Runtime & Environment Standards
   skills:
@@ -257,7 +284,10 @@ rules:
   - id: RULE_PYTHON_DYNAMIC_DATACLASS_IMPORT_001
     status: CANDIDATE
   - id: RULE_PYTHON_LINTER_CLEANLINESS_001
-    status: CANDIDATE
+    status: PARTIAL
+    enforced_by: operads/hooks/hook_core/linter.py::run_ruff_lint
+    scope: Ruff runs on each Python file an edit tool writes, through the post-write
+      hook; the rest of the tree is not linted.
   - id: RULE_PYTHON_MYPY_IGNORE_SCOPE_001
     status: CANDIDATE
 - path: engineering/rl_python_contracts_and_runtime_invariants.md
@@ -1029,3 +1059,21 @@ external_sources:
     status: CANDIDATE
   - id: AGT-PATH-0005
     status: CANDIDATE
+hooks:
+- event: PreToolUse
+  matcher: run_command|Bash|PowerShell
+  script: operads/hooks/scripts/pre_tool_git_guard.py
+  description: Mechanically blocks forbidden git commands and whole-suite pytest sweeps.
+  enforces:
+  - RULE_GIT_NO_FORCE_OR_MAIN_PUSH_001
+  - RULE_GIT_EXPLICIT_STAGING_001
+  - RULE_GIT_NO_COMMIT_ALL_001
+  - RULE_PYTEST_TARGETED_RUNS_001
+  - RULE_SHELL_QUOTED_STASH_REF_001
+- event: PostToolUse
+  matcher: write_to_file|replace_file_content|multi_replace_file_content|Write|Edit|EditMultipleFiles|apply_patch
+  script: operads/hooks/scripts/post_tool_bom_linter.py
+  description: Enforces strict UTF-8 validation, BOM detection/stripping, and local Ruff verification.
+  enforces:
+  - RULE_FILE_STRICT_UTF8_001
+  - RULE_PYTHON_LINTER_CLEANLINESS_001

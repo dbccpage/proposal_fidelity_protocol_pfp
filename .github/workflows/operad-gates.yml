@@ -23,6 +23,6 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m pip install pyyaml pytest
-      # Rules: every ENFORCED or PARTIAL invariant must name a check that exists.
+      # Rules: every ENFORCED or PARTIAL invariant names a check that exists, and hooks.json is generated from the register.
       - run: python -m operads.skill_operad.skill_compiler.rule_gate --repo-root .
-      - run: python -m pytest -q operads/skill_operad/skill_compiler/tests/test_rule_gate.py
+      - run: python -m pytest -q operads/skill_operad/skill_compiler/tests/test_rule_gate.py operads/skill_operad/skill_compiler/tests/test_hook_compiler.py

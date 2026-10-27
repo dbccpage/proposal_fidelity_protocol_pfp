@@ -23,7 +23,7 @@ from pathlib import Path, PurePosixPath
 
 import yaml
 
-from operads.skill_operad.skill_compiler import rule_scope
+from operads.skill_operad.skill_compiler import hook_compiler, rule_scope
 
 DEFAULT_REGISTRY = Path(__file__).resolve().parents[1] / "yaml" / "rules_registry.yaml"
 REGISTER_HEADING = "## Progressive Disclosure & Domain Invariant Rule Register"
@@ -493,6 +493,8 @@ def run_gate(repo_root: Path, registry_path: Path = DEFAULT_REGISTRY) -> GateRep
     findings += check_ownership(repo_root, canon, registry)
     findings += check_host_parity(canon, mirrors)
     findings += check_register_documents(repo_root, registry)
+    if "hooks" in registry:
+        findings += [Finding(f.code, f.path, f.message) for f in hook_compiler.check_hooks(repo_root, registry)]
     scope_findings, always_loaded = rule_scope.check_load_scope(repo_root, _decoded(canon), registry)
     findings += [Finding(f.code, f.path, f.message) for f in scope_findings]
     counts = Counter(invariant["status"] for _, invariant in _invariants(registry["rules"]))
