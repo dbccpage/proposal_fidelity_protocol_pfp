@@ -1,0 +1,983 @@
+{
+  "schema_version": "pfp.rust-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "tool": "cargo-mutants 27.1.0",
+  "command": "cargo mutants --manifest-path code/rust/pfp_cli/Cargo.toml -j 4 --timeout 60",
+  "run_record": "governance/evidence/pfp-cli-mutants.run.json",
+  "outcome_mapping": {
+    "caught": "killed",
+    "missed": "survived",
+    "timeout": "inconclusive",
+    "unviable (does not compile)": "invalid"
+  },
+  "files": {
+    "code/rust/pfp_cli/src/catalog.rs": {
+      "counts": {
+        "killed": 4,
+        "invalid": 1
+      },
+      "sha256": "99c2736ca280001e24866a35a5b2472b7816048a9e1c43ecd2f22d3528ba6716",
+      "mutants": [
+        {
+          "mutant": "src/catalog.rs:19:5: replace wiki_url -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/catalog.rs:179:5: replace find -> Option<&'static Entry> with Some(Box::leak(Box::new(Default::default())))",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/catalog.rs:19:5: replace wiki_url -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/catalog.rs:179:5: replace find -> Option<&'static Entry> with None",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/catalog.rs:180:36: replace == with != in find",
+          "outcome": "killed"
+        }
+      ]
+    },
+    "code/rust/pfp_cli/src/check.rs": {
+      "counts": {
+        "killed": 73,
+        "invalid": 10,
+        "survived": 1
+      },
+      "sha256": "c59acbe11f67d794343387b615125577d25091e0d556533fe4d8ca33e6d21372",
+      "mutants": [
+        {
+          "mutant": "src/check.rs:97:5: replace builtin_checks -> Vec<Box<dyn Check>> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:97:5: replace builtin_checks -> Vec<Box<dyn Check>> with vec![Box::new(Default::default())]",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:123:5: replace run_checks -> Report with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:155:5: replace looks_like_json -> bool with true",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:155:5: replace looks_like_json -> bool with false",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:157:9: delete match arm Some('{') in looks_like_json",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:158:9: delete match arm Some('[') in looks_like_json",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:158:37: delete ! in looks_like_json",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:166:7: replace + with - in count_values",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:166:5: replace count_values -> usize with 0",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:166:5: replace count_values -> usize with 1",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:166:7: replace + with * in count_values",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:174:5: replace malformed -> Finding with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:189:5: replace read_doc -> Result<Doc, TooComplex> with Ok(Default::default())",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:167:9: delete match arm Value::Array(items) in count_values",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:168:9: delete match arm Value::Object(map) in count_values",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:211:15: replace > with >= in read_doc",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:222:5: replace read_lines -> Doc with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:211:15: replace > with == in read_doc",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:230:21: replace match guard marker.eq_ignore_ascii_case(\"```json\") with true in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:230:21: replace match guard marker.eq_ignore_ascii_case(\"```json\") with false in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:234:36: replace match guard marker == \"```\" with true in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:234:36: replace match guard marker == \"```\" with false in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:211:15: replace > with < in read_doc",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:231:37: replace + with - in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:231:37: replace + with * in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:234:43: replace == with != in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:255:66: replace - with + in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:255:66: replace - with / in read_lines",
+          "outcome": "survived"
+        },
+        {
+          "mutant": "src/check.rs:261:8: delete ! in read_lines",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:278:9: replace <impl Check for Parse>::codes -> Vec<&'static str> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:282:9: replace <impl Check for Parse>::run -> Vec<Finding> with vec![Default::default()]",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:278:9: replace <impl Check for Parse>::codes -> Vec<&'static str> with vec![\"\"]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:278:9: replace <impl Check for Parse>::codes -> Vec<&'static str> with vec![\"xyzzy\"]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:282:9: replace <impl Check for Parse>::run -> Vec<Finding> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:288:5: replace locate -> (Option<usize>, String) with (None, String::new())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:288:5: replace locate -> (Option<usize>, String) with (None, \"xyzzy\".into())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:288:5: replace locate -> (Option<usize>, String) with (Some(0), String::new())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:288:5: replace locate -> (Option<usize>, String) with (Some(0), \"xyzzy\".into())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:288:5: replace locate -> (Option<usize>, String) with (Some(1), String::new())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:288:5: replace locate -> (Option<usize>, String) with (Some(1), \"xyzzy\".into())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:288:18: replace == with != in locate",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:295:28: replace + with - in locate",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:295:28: replace + with * in locate",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:330:5: replace has_word -> bool with true",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:330:5: replace has_word -> bool with false",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:332:29: replace + with - in has_word",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:332:29: replace + with * in has_word",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:334:13: replace && with || in has_word",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:333:9: delete ! in has_word",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:334:16: delete ! in has_word",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:334:24: replace && with || in has_word",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:356:5: replace confirmed -> bool with true",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:372:5: replace severity_of -> Severity with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:356:5: replace confirmed -> bool with false",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:361:9: delete match arm FailureClass::OptimalityHallucination in confirmed",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:364:9: delete match arm FailureClass::ComplexityHallucination in confirmed",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:381:9: replace <impl Check for Pharmacy>::codes -> Vec<&'static str> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:385:9: replace <impl Check for Pharmacy>::run -> Vec<Finding> with vec![Default::default()]",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:385:9: replace <impl Check for Pharmacy>::run -> Vec<Finding> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:381:9: replace <impl Check for Pharmacy>::codes -> Vec<&'static str> with vec![\"\"]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:381:9: replace <impl Check for Pharmacy>::codes -> Vec<&'static str> with vec![\"xyzzy\"]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:389:57: replace || with && in <impl Check for Pharmacy>::run",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:389:20: delete ! in <impl Check for Pharmacy>::run",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:389:60: delete ! in <impl Check for Pharmacy>::run",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:413:5: replace normalize -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:413:5: replace normalize -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:434:9: replace <impl Check for Preload>::codes -> Vec<&'static str> with vec![\"\"]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:434:9: replace <impl Check for Preload>::codes -> Vec<&'static str> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:438:9: replace <impl Check for Preload>::run -> Vec<Finding> with vec![Default::default()]",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:434:9: replace <impl Check for Preload>::codes -> Vec<&'static str> with vec![\"xyzzy\"]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:438:9: replace <impl Check for Preload>::run -> Vec<Finding> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:448:38: replace + with - in <impl Check for Preload>::run",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:448:38: replace + with * in <impl Check for Preload>::run",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:487:5: replace gives_a_way_out -> bool with true",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:487:5: replace gives_a_way_out -> bool with false",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:487:58: replace || with && in gives_a_way_out",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:489:14: replace || with && in gives_a_way_out",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:489:30: replace && with || in gives_a_way_out",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:494:9: replace <impl Check for RefusalPath>::codes -> Vec<&'static str> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:494:9: replace <impl Check for RefusalPath>::codes -> Vec<&'static str> with vec![\"\"]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:498:9: replace <impl Check for RefusalPath>::run -> Vec<Finding> with vec![Default::default()]",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/check.rs:494:9: replace <impl Check for RefusalPath>::codes -> Vec<&'static str> with vec![\"xyzzy\"]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/check.rs:498:9: replace <impl Check for RefusalPath>::run -> Vec<Finding> with vec![]",
+          "outcome": "killed"
+        }
+      ]
+    },
+    "code/rust/pfp_cli/src/lib.rs": {
+      "counts": {
+        "killed": 29,
+        "survived": 1
+      },
+      "sha256": "a5f50f81e2ddbc9e7fca1111cacca2723a165c6a1235f7141840de5afa0bb228",
+      "mutants": [
+        {
+          "mutant": "src/lib.rs:27:5: replace render_report -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:90:5: replace clean -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:104:5: replace count -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:90:5: replace clean -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:104:5: replace count -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:104:10: replace == with != in count",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:113:5: replace render_explain -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:54:21: replace != with == in render_report",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:27:5: replace render_report -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:113:5: replace render_explain -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:127:5: replace wrap -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:127:5: replace wrap -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:28: replace && with || in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:19: replace > with == in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:19: replace > with < in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:19: replace > with >= in wrap",
+          "outcome": "survived"
+        },
+        {
+          "mutant": "src/lib.rs:133:48: replace > with == in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:48: replace > with < in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:48: replace > with >= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:42: replace + with - in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:42: replace + with * in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:38: replace + with - in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:38: replace + with * in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:137:26: replace > with == in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:137:26: replace > with < in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:137:26: replace > with >= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:139:20: replace += with -= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:139:20: replace += with *= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:142:16: replace += with -= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:142:16: replace += with *= in wrap",
+          "outcome": "killed"
+        }
+      ]
+    },
+    "code/rust/pfp_cli/src/main.rs": {
+      "counts": {
+        "killed": 55,
+        "invalid": 19,
+        "survived": 2,
+        "inconclusive": 1
+      },
+      "sha256": "945edbfe38c7ae3abc8e4f8592898259f29a212fca699959c4e713b6ba38064c",
+      "mutants": [
+        {
+          "mutant": "src/main.rs:20:40: replace * with +",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:20:33: replace * with /",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:20:40: replace * with /",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:20:33: replace * with +",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:47:5: replace fail -> Result<T, Fail> with Ok(Default::default())",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:71:5: replace dispatch -> Run with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:53:5: replace main -> ExitCode with Default::default()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:74:20: replace == with != in dispatch",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:74:33: replace == with != in dispatch",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:73:28: replace != with == in dispatch",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:74:28: replace || with && in dispatch",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:103:9: replace Args::option -> Option<&str> with Some(\"\")",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:103:9: replace Args::option -> Option<&str> with Some(\"xyzzy\")",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:103:9: replace Args::option -> Option<&str> with None",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:105:30: replace == with != in Args::option",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:118:5: replace parse -> Result<Args, Fail> with Ok(Default::default())",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:110:9: replace Args::flag -> bool with true",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:110:9: replace Args::flag -> bool with false",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:126:17: replace == with != in parse",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:150:5: replace print -> Run with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:138:41: replace && with || in parse",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:110:37: replace == with != in Args::flag",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:138:49: replace != with == in parse",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:152:19: replace match guard e.kind() != io::ErrorKind::BrokenPipe with true in print",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:152:19: replace match guard e.kind() != io::ErrorKind::BrokenPipe with false in print",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:160:5: replace read_limited -> Result<Vec<u8>, Fail> with Ok(vec![])",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:152:28: replace != with == in print",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:160:5: replace read_limited -> Result<Vec<u8>, Fail> with Ok(vec![0])",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:160:5: replace read_limited -> Result<Vec<u8>, Fail> with Ok(vec![1])",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:165:27: replace > with < in read_limited",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:165:27: replace > with == in read_limited",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:165:27: replace > with >= in read_limited",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:174:5: replace read_file -> Result<Vec<u8>, Fail> with Ok(vec![])",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:174:5: replace read_file -> Result<Vec<u8>, Fail> with Ok(vec![0])",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:174:5: replace read_file -> Result<Vec<u8>, Fail> with Ok(vec![1])",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:176:21: replace match guard meta.is_file() with false in read_file",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:186:5: replace read_text -> Result<Text, Fail> with Ok(Default::default())",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:186:25: replace == with != in read_text",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:199:5: replace read_doc -> Result<pfp_cli::Doc, Fail> with Ok(Default::default())",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:162:31: replace + with * in read_limited",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:162:31: replace + with - in read_limited",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:210:5: replace use_color -> bool with true",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:210:32: replace && with || in use_color",
+          "outcome": "survived"
+        },
+        {
+          "mutant": "src/main.rs:210:5: replace use_color -> bool with false",
+          "outcome": "survived"
+        },
+        {
+          "mutant": "src/main.rs:221:81: replace + with - in run_and_render",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:221:81: replace + with * in run_and_render",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:229:5: replace cmd_check -> Run with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:214:5: replace run_and_render -> Result<(String, ExitCode), Fail> with Ok((String::new(), Default::default()))",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:214:5: replace run_and_render -> Result<(String, ExitCode), Fail> with Ok((\"xyzzy\".into(), Default::default()))",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:238:19: replace > with < in cmd_check",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:236:24: replace == with != in cmd_check",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:238:19: replace > with == in cmd_check",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:257:5: replace cmd_demo -> Run with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:276:19: replace + with - in cmd_demo",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:276:19: replace + with * in cmd_demo",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:241:25: replace && with || in cmd_check",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:288:5: replace resolve -> Resolved with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:238:19: replace > with >= in cmd_check",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:289:21: replace match guard real.starts_with(root) with true in resolve",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:289:21: replace match guard real.starts_with(root) with false in resolve",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:296:5: replace canonical_dir -> Result<PathBuf, Fail> with Ok(Default::default())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:303:5: replace cmd_seal -> Run with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:297:21: replace match guard path.is_dir() with false in canonical_dir",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:297:21: replace match guard path.is_dir() with true in canonical_dir",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:326:90: replace + with - in cmd_seal",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:326:90: replace + with * in cmd_seal",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:347:5: replace cmd_replay -> Run with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:305:12: replace == with != in cmd_seal",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:355:19: replace match guard p.code == \"ENVELOPE_TAMPERED\" with false in cmd_replay",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:355:19: replace match guard p.code == \"ENVELOPE_TAMPERED\" with true in cmd_replay",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:355:26: replace == with != in cmd_replay",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:399:5: replace cmd_explain -> Run with Default::default()",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/main.rs:381:25: replace == with != in cmd_replay",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:388:38: replace == with != in cmd_replay",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:401:9: delete match arm [] in cmd_explain",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:408:9: delete match arm [code] in cmd_explain",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/main.rs:176:21: replace match guard meta.is_file() with true in read_file",
+          "outcome": "inconclusive"
+        }
+      ]
+    },
+    "code/rust/pfp_cli/src/packet.rs": {
+      "counts": {
+        "killed": 31,
+        "invalid": 3
+      },
+      "sha256": "53504609a35c0a439e2fb545008794cc8634f011eeb33decf0ff018db0039216",
+      "mutants": [
+        {
+          "mutant": "src/packet.rs:59:5: replace sha256_hex -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:69:5: replace bad_part -> bool with true",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:59:5: replace sha256_hex -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:69:5: replace bad_part -> bool with false",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:70:52: replace || with && in bad_part",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:70:36: replace || with && in bad_part",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:70:21: replace || with && in bad_part",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:70:29: replace == with != in bad_part",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:70:44: replace == with != in bad_part",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:78:5: replace normalize_path -> Result<String, Problem> with Ok(String::new())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:78:5: replace normalize_path -> Result<String, Problem> with Ok(\"xyzzy\".into())",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:80:40: replace == with != in normalize_path",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:84:9: replace || with && in normalize_path",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:83:9: replace || with && in normalize_path",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:82:9: replace || with && in normalize_path",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:96:5: replace payload_digest -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:115:5: replace seal -> Result<Envelope, Problem> with Ok(Default::default())",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/packet.rs:96:5: replace payload_digest -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:152:5: replace parse_envelope -> Result<Envelope, Problem> with Ok(Default::default())",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/packet.rs:107:5: replace envelope_digest -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:107:5: replace envelope_digest -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:124:63: replace == with != in seal",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:160:24: replace != with == in parse_envelope",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:168:9: replace || with && in parse_envelope",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:167:35: replace != with == in parse_envelope",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:168:44: replace != with == in parse_envelope",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:177:41: replace != with == in parse_envelope",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:207:5: replace replay -> Vec<Problem> with vec![Default::default()]",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/packet.rs:186:34: replace || with && in parse_envelope",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:186:81: replace >= with < in parse_envelope",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:207:5: replace replay -> Vec<Problem> with vec![]",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:224:37: replace match guard sha256_hex(&bytes) != entry.sha256 with true in replay",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:224:37: replace match guard sha256_hex(&bytes) != entry.sha256 with false in replay",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/packet.rs:224:56: replace != with == in replay",
+          "outcome": "killed"
+        }
+      ]
+    }
+  }
+}

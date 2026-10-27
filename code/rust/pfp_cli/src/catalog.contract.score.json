@@ -1,0 +1,110 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_cli/src/catalog.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_cli/src/catalog.rs",
+      "language": "Rust",
+      "sha256": "99c2736ca280001e24866a35a5b2472b7816048a9e1c43ecd2f22d3528ba6716"
+    },
+    "contract_urn": "urn:pfp-cli:catalog:v1",
+    "symbols": [
+      "Entry",
+      "ENTRIES",
+      "find",
+      "wiki_url"
+    ],
+    "owned_invariants": [
+      "Every code a built-in check can emit has exactly one entry.",
+      "Lookup ignores case and treats - as _."
+    ],
+    "boundaries": [
+      "Static teaching text; no I/O."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_cli/src/catalog.rs",
+      "language": "Rust",
+      "sha256": "99c2736ca280001e24866a35a5b2472b7816048a9e1c43ecd2f22d3528ba6716"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "The teaching catalog behind `pfp explain` and the short report lines: one entry per code with meaning, rationale, remedy and wiki page, checked against every built-in check by test.",
+    "gates": {
+      "G1": "C",
+      "G2": "B",
+      "G3": "B",
+      "G4": "B",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None; the contract URN is unique; the public items are the ones the module docs and the crate README describe. Not B: no requirement-to-symbol trace beyond this contract.",
+      "G2": "Non-Numeric profile: static data and a case-folding lookup; the catalog-completeness test fails if a code lacks an entry.",
+      "G3": "No failure paths beyond a None lookup, which callers turn into exit code 2.",
+      "G4": "52 unit and end-to-end tests (safety contract, hostile inputs, path escapes, malformed JSON, escaping) pass; clippy -D warnings, rustfmt and the wasm32 build pass. Mutation R = 4/4 (see mutation_accounting).",
+      "G5": "Cyclomatic complexity from lizard; nesting from the brace estimate; cognitive complexity is not measured for Rust, so A is not claimed. Metrics: worst function: cyclomatic 1, cognitive None, nesting 0; metrics ceiling A+."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-27T05:03:08Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-cli-test.run.json",
+        "sha256": "f8b4034109dea3c08261ee487cb229dac3ca2d9611d2843f2b3f43eb0439d551",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-clippy.run.json",
+        "sha256": "60ab26a5dad663b0139887c845ad036b0327b0d9a602f370a4a9c776b945716b",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-fmt.run.json",
+        "sha256": "2d2a9f41cfd7694af8a18f7d9bfef49bc85f13d34fd8b63c031bc4af498e82d6",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-wasm.run.json",
+        "sha256": "82e7565597101b82fdd539001da54aa22cc75f7fb7146e358f73237141b6415a",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-metrics.run.json",
+        "sha256": "4f75c6caafa90ddefa773af7ab79f9ab1db00da11ac07d97c484f1053c1e131e",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-metrics.json",
+        "sha256": "d0854565a3e532675d4a88a5418c1bb6999933405a5018e0d51c9f05bfd465c9",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-mutants.run.json",
+        "sha256": "6636bdac5aea3ba4d1a6dfa444ba94346390606a3a63cd6e7ff5951d5a0751e4",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 4,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 1,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-cli.mutation.json",
+        "sha256": "4fba25924ae5e9cf0cf29576c216e234c53522b65998cda2f056be47f8c43125",
+        "note": "campaign m-pfp-cli (cargo-mutants)"
+      }
+    }
+  },
+  "history": []
+}

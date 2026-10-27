@@ -1,0 +1,109 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_cli/src/main.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_cli/src/main.rs",
+      "language": "Rust",
+      "sha256": "945edbfe38c7ae3abc8e4f8592898259f29a212fca699959c4e713b6ba38064c"
+    },
+    "contract_urn": "urn:pfp-cli:main:v1",
+    "symbols": [
+      "main"
+    ],
+    "owned_invariants": [
+      "Writes only with seal --out, never over an existing file.",
+      "Reads only regular files; replay and seal never read through a link out of the root.",
+      "Exit 0 nothing found, 1 findings or mismatches, 2 could not run; lost output is exit 2."
+    ],
+    "boundaries": [
+      "The only module that touches the file system or stdout.",
+      "No network, no subprocesses."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_cli/src/main.rs",
+      "language": "Rust",
+      "sha256": "945edbfe38c7ae3abc8e4f8592898259f29a212fca699959c4e713b6ba38064c"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "The command line: strict argument parsing, capped regular-file reads, canonical-path containment for seal and replay, create-new writes, and exit-code discipline.",
+    "gates": {
+      "G1": "C",
+      "G2": "B",
+      "G3": "C",
+      "G4": "B",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None; the contract URN is unique; the public items are the ones the module docs and the crate README describe. Not B: no requirement-to-symbol trace beyond this contract.",
+      "G2": "Non-Numeric profile: every command's contract (writes, reads, exit codes) is exercised end to end, including symlink escapes, FIFOs, /dev/full, non-Unicode arguments and size limits.",
+      "G3": "Typed failures: every I/O or input problem becomes a `pfp: ...` message and exit code 2; no unwrap or expect in runtime code (clippy -D warnings); inputs are capped (10 MiB, 20,000 JSON values) and only regular files are opened. Not B: panic-freedom is tested, not proven.",
+      "G4": "52 unit and end-to-end tests (safety contract, hostile inputs, path escapes, malformed JSON, escaping) pass; clippy -D warnings, rustfmt and the wasm32 build pass. Mutation R = 55/58 (see mutation_accounting).",
+      "G5": "Cyclomatic complexity from lizard; nesting from the brace estimate; cognitive complexity is not measured for Rust, so A is not claimed. Metrics: worst function: cyclomatic 14, cognitive None, nesting 2; metrics ceiling B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-27T05:03:08Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-cli-test.run.json",
+        "sha256": "f8b4034109dea3c08261ee487cb229dac3ca2d9611d2843f2b3f43eb0439d551",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-clippy.run.json",
+        "sha256": "60ab26a5dad663b0139887c845ad036b0327b0d9a602f370a4a9c776b945716b",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-fmt.run.json",
+        "sha256": "2d2a9f41cfd7694af8a18f7d9bfef49bc85f13d34fd8b63c031bc4af498e82d6",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-wasm.run.json",
+        "sha256": "82e7565597101b82fdd539001da54aa22cc75f7fb7146e358f73237141b6415a",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-metrics.run.json",
+        "sha256": "4f75c6caafa90ddefa773af7ab79f9ab1db00da11ac07d97c484f1053c1e131e",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-metrics.json",
+        "sha256": "d0854565a3e532675d4a88a5418c1bb6999933405a5018e0d51c9f05bfd465c9",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-mutants.run.json",
+        "sha256": "6636bdac5aea3ba4d1a6dfa444ba94346390606a3a63cd6e7ff5951d5a0751e4",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 55,
+      "survived": 2,
+      "demonstrably_equivalent": 0,
+      "invalid": 19,
+      "inconclusive": 1,
+      "unrun": 0,
+      "conservative_ratio": 0.9482758620689655,
+      "report": {
+        "path": "governance/evidence/m-pfp-cli.mutation.json",
+        "sha256": "4fba25924ae5e9cf0cf29576c216e234c53522b65998cda2f056be47f8c43125",
+        "note": "campaign m-pfp-cli (cargo-mutants)"
+      }
+    }
+  },
+  "history": []
+}
