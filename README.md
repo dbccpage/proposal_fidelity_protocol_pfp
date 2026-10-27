@@ -2,6 +2,19 @@
 
 AuthorityEffect: None.
 
+**Try it in ten seconds.** `pfp` checks a prompt and your model's reply for the
+ways they leave things to chance. One small binary: offline, read-only.
+
+![pfp check finding nine problems in a release-agent prompt and its JSON reply](code/rust/pfp_cli/demo/demo.gif)
+
+```sh
+cargo install --locked --git https://github.com/dbccpage/proposal_fidelity_protocol_pfp pfp-cli
+pfp demo
+pfp check --prompt your_prompt.md model_reply.json
+```
+
+More in [`code/rust/pfp_cli`](code/rust/pfp_cli/README.md).
+
 The Proposal Fidelity Protocol keeps three things apart that are easy to blur
 together when a model, a person or a program suggests something:
 
@@ -34,6 +47,7 @@ covers packets, obstruction, retraction and receipts.
 | [`csharp/`](csharp/README.md) | The Windows app for PFP Lab (WPF), which talks JSON-RPC to the Python core |
 | [`contracts/`](contracts/) | JSON schemas for PFP Lab scenarios and receipts |
 | [`demos/`](demos/) | Small offline demos, each with its own README and tests: exact LP certificates, Hodge decomposition, clique homology, XOR cycle obstructions, receipt invariants, replay refusal and more. The [test catalog](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Test-Catalog) has a page for each |
+| [`code/rust/pfp_cli/`](code/rust/pfp_cli/README.md) | The `pfp` command line: checks prompts and model replies, seals and replays packets. Offline, read-only, standalone |
 | [`code/rust/`](code/rust/) | A Cargo workspace with the native `pfp` and `pfp_runtime` crates and the engine crates they depend on |
 | [`pfp/`](pfp/README.md) | The core Python package: packets, evaluators, retraction, receipts and replay |
 | [`eis/`](eis/) | Epistemic Immune System: antibodies, screening and custody of rejected proposals |
