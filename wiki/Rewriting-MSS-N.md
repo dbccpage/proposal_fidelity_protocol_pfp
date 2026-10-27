@@ -1,6 +1,6 @@
 # MSS-N rewriting: overview
 
-Part of [Rewriting](Rewriting.md). Next: [Strategies R1–R12](Rewriting-MSS-N-Strategies.md) · [Examples](Rewriting-MSS-N-Examples.md)
+Part of [Rewriting](Rewriting.md). Next: [Strategies R1–R12](Rewriting-MSS-N-Strategies.md) · [Examples](Rewriting-MSS-N-Examples.md) · [Graph examples](Rewriting-MSS-N-Graph-Examples.md)
 
 MSS-N (the Minimal Symbol System at stage N) is the wire language that proposals
 are packetised into. It is where rewriting becomes term rewriting proper: rules,

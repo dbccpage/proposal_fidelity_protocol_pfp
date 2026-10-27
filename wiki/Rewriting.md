@@ -13,9 +13,15 @@ strategies or laws, and worked examples.
 | --- | --- | --- |
 | **Pre-Genesis** | Four glyphs, no rules yet. Nothing rewrites unless something is supplied. | [Overview](Rewriting-Pre-Genesis.md) · [Strategies PG1–PG8](Rewriting-Pre-Genesis-Strategies.md) · [Examples](Rewriting-Pre-Genesis-Examples.md) |
 | **Genesis** | A regime state that grows only through explicit admission events. | [Overview](Rewriting-Genesis.md) · [Strategies G1–G10](Rewriting-Genesis-Strategies.md) · [Examples](Rewriting-Genesis-Examples.md) |
-| **S(n)** | Stage presentations with lifts up and typed retractions down. | [Overview](Rewriting-Sn.md) · [Sections and retractions](Rewriting-Sn-Retraction.md) · [Examples](Rewriting-Sn-Examples.md) |
-| **MSS-N** | A 38-character wire language that can carry trees, numbers, complexes and rewrite rules. | [Overview](Rewriting-MSS-N.md) · [Strategies R1–R12](Rewriting-MSS-N-Strategies.md) · [Examples](Rewriting-MSS-N-Examples.md) |
-| **PFP** | Proposals, checks and permission to use them, across all the layers above. | [Overview](Rewriting-PFP.md) · [Residual repair](Rewriting-PFP-Residual-Repair.md) · [Dialects and pilot](Rewriting-PFP-Dialects.md) |
+| **S(n)** | Stage presentations with lifts up and typed retractions down. | [Overview](Rewriting-Sn.md) · [Sections and retractions](Rewriting-Sn-Retraction.md) · [Examples](Rewriting-Sn-Examples.md) · [Graph examples](Rewriting-Sn-Graph-Examples.md) |
+| **MSS-N** | A 38-character wire language that can carry trees, numbers, complexes and rewrite rules. | [Overview](Rewriting-MSS-N.md) · [Strategies R1–R12](Rewriting-MSS-N-Strategies.md) · [Examples](Rewriting-MSS-N-Examples.md) · [Graph examples](Rewriting-MSS-N-Graph-Examples.md) |
+| **PFP** | Proposals, checks and permission to use them, across all the layers above. | [Overview](Rewriting-PFP.md) · [Residual repair](Rewriting-PFP-Residual-Repair.md) · [Dialects and pilot](Rewriting-PFP-Dialects.md) · [Prompts as graphs](Rewriting-PFP-Graph-Prompts.md) |
+| **Shells** | Nested disciplines around a prompt's subtext, each with its own vocabulary and check. | [Overview](Rewriting-Shells.md) · [Worked example](Rewriting-Shells-Example.md) |
+
+**New here?** Start with the cycle `a>b>c>a`: the
+[S(n) graph examples](Rewriting-Sn-Graph-Examples.md) and
+[MSS-N graph examples](Rewriting-MSS-N-Graph-Examples.md) build everything else
+from it, simple examples first.
 | **WDP** | The mathematics underneath: what each repair, retention or measurement costs. | [Overview](Rewriting-WDP.md) · [DDC operations](Rewriting-WDP-DDC.md) · [Examples](Rewriting-WDP-Examples.md) |
 
 ## Five kinds of rewrite

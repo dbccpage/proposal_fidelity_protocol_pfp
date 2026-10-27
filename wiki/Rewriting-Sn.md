@@ -1,6 +1,6 @@
 # S(n) rewriting: overview
 
-Part of [Rewriting](Rewriting.md). Next: [Sections and retractions](Rewriting-Sn-Retraction.md) · [Examples](Rewriting-Sn-Examples.md)
+Part of [Rewriting](Rewriting.md). Next: [Sections and retractions](Rewriting-Sn-Retraction.md) · [Examples](Rewriting-Sn-Examples.md) · [Graph examples](Rewriting-Sn-Graph-Examples.md)
 
 S(n) carries Genesis forward with explicit **stage labels**. Each stage has
 presentations; a stage can be lifted into the next, and a lifted term can be
