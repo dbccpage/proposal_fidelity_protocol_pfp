@@ -492,3 +492,55 @@ fn a_full_disk_is_an_error_not_a_silent_success() {
         .expect("runs");
     assert_eq!(o.status.code(), Some(2));
 }
+
+#[test]
+fn inputs_up_to_ten_mebibytes_are_read_and_larger_ones_refused() {
+    let dir = scratch("size_cap");
+    let limit = 10 * 1024 * 1024;
+    fs::write(dir.join("at.md"), vec![b'a'; limit]).expect("write");
+    fs::write(dir.join("over.md"), vec![b'a'; limit + 1]).expect("write");
+    assert_eq!(pfp(&dir, &["check", "at.md"]).status.code(), Some(0));
+    let o = pfp(&dir, &["check", "over.md"]);
+    assert_eq!(o.status.code(), Some(2));
+    assert!(stderr(&o).contains("larger than 10485760 bytes"));
+}
+
+#[test]
+fn a_closed_pipe_is_not_an_error() {
+    let dir = scratch("closed_pipe");
+    fs::write(dir.join("r.md"), "This is optimal.\n".repeat(5000)).expect("write");
+    let mut child = Command::new(env!("CARGO_BIN_EXE_pfp"))
+        .args(["check", "r.md"])
+        .current_dir(&dir)
+        .stdout(std::process::Stdio::piped())
+        .spawn()
+        .expect("spawn");
+    drop(child.stdout.take());
+    assert_eq!(
+        child.wait().expect("wait").code(),
+        Some(1),
+        "findings, not a write error"
+    );
+}
+
+#[test]
+fn root_must_be_a_folder() {
+    let dir = scratch("root_file");
+    fs::write(dir.join("a.md"), "alpha\n").expect("write");
+    pfp(&dir, &["seal", "a.md", "--out", "p.json"]);
+    let o = pfp(&dir, &["replay", "p.json", "--root", "a.md"]);
+    assert_eq!(o.status.code(), Some(2));
+    assert!(stderr(&o).contains("a.md is not a folder"));
+}
+
+#[test]
+fn replay_counts_mismatches_in_plain_words() {
+    let dir = scratch("replay_words");
+    fs::write(dir.join("a.md"), "alpha\n").expect("write");
+    fs::write(dir.join("b.md"), "beta\n").expect("write");
+    pfp(&dir, &["seal", "a.md", "b.md", "--out", "p.json"]);
+    fs::write(dir.join("a.md"), "changed\n").expect("write");
+    assert!(stdout(&pfp(&dir, &["replay", "p.json"])).contains("1 of 2 files does not match."));
+    fs::write(dir.join("b.md"), "changed\n").expect("write");
+    assert!(stdout(&pfp(&dir, &["replay", "p.json"])).contains("2 of 2 files do not match."));
+}

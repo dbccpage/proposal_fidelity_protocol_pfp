@@ -322,3 +322,83 @@ fn every_detector_has_a_catalog_entry() {
         }
     }
 }
+
+#[test]
+fn explain_wraps_at_78_columns_under_a_hanging_label() {
+    let entry = pfp_cli::catalog::find("fake_receipt").expect("entry");
+    let shown = pfp_cli::render_explain(entry);
+    assert_eq!(
+        shown,
+        "FAKE_RECEIPT: a digest the model made up\n\n\
+         \x20 What:    A host-only field holds a 64-hex-digit value that looks like a\n\
+         \x20          SHA-256 digest.\n\
+         \x20 Why:     Models produce digest-shaped strings that were never computed. They\n\
+         \x20          pass a glance and fail any check.\n\
+         \x20 Instead: Compute digests in code. Never accept one from model output.\n\
+         \x20 Read:    https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/EIS\n"
+    );
+    for entry in pfp_cli::catalog::ENTRIES {
+        let shown = pfp_cli::render_explain(entry);
+        let body = shown.lines().filter(|l| !l.contains("Read:"));
+        assert!(body.clone().all(|l| l.chars().count() <= 78), "{shown}");
+    }
+}
+
+#[test]
+fn json_value_limit_is_inclusive() {
+    let at_limit = format!("[{}]", vec!["1"; MAX_JSON_VALUES - 1].join(","));
+    assert!(
+        read_doc(&text("ok", &at_limit)).is_ok(),
+        "exactly the limit is accepted"
+    );
+}
+
+#[test]
+fn an_unclosed_fence_is_still_checked_as_text() {
+    let input = Input {
+        prompt: None,
+        outputs: vec![doc("r.md", "intro\n```json\n{\"a\": 1}\nThis is optimal.")],
+    };
+    let report = run_checks(&builtin_checks(), &input);
+    let finding = report
+        .findings
+        .iter()
+        .find(|f| f.code == "OPTIMALITY_HALLUCINATION")
+        .expect("found");
+    assert_eq!(finding.line, Some(4));
+}
+
+#[test]
+fn preload_reports_its_line() {
+    let input = Input {
+        prompt: Some(text(
+            "p.md",
+            "Read the log.\nThen confirm that it passes.\nIf you cannot, say so.",
+        )),
+        outputs: vec![],
+    };
+    let report = run_checks(&builtin_checks(), &input);
+    assert_eq!(report.findings[0].line, Some(2));
+}
+
+#[test]
+fn colors_only_when_asked() {
+    let input = Input {
+        prompt: None,
+        outputs: vec![doc("r.md", "verified")],
+    };
+    let report = run_checks(&builtin_checks(), &input);
+    assert!(pfp_cli::render_report(&report, true).contains("\x1b[31m"));
+    assert!(!pfp_cli::render_report(&report, false).contains('\x1b'));
+}
+
+#[test]
+fn an_unclosed_fence_gives_back_the_line_after_it() {
+    let input = Input {
+        prompt: None,
+        outputs: vec![doc("r.md", "```json\nThis is optimal.")],
+    };
+    let report = run_checks(&builtin_checks(), &input);
+    assert_eq!(report.findings.len(), 1);
+    assert_eq!(report.findings[0].line, Some(2));
+}
