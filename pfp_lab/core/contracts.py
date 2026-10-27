@@ -234,7 +234,17 @@ class PackSummary(Strict):
 
 
 # Catalog order: the Paper 005 session first, then one pack per protocol idea.
-PACK_IDS: Final = ("paper-005-worked-session", "section-repair", "refusal-gallery", "two-islands")
+PACK_IDS: Final = (
+    "paper-005-worked-session",
+    "section-repair",
+    "refusal-gallery",
+    "two-islands",
+    "arbitrage-cycle",
+    "ledger-reconciliation",
+    "every-edge-not-all",
+    "cheapest-repair",
+    "retract-stale-claim",
+)
 
 
 @cache

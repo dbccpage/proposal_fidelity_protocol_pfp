@@ -52,31 +52,31 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evaluation_timestamp": "2026-10-27T00:21:44Z",
     "evidence": [
       {
         "path": "governance/evidence/dotnet-build.run.json",
-        "sha256": "c1e96cfed01989efe39a640925fc139be65d4e0ef1b01fb8c68bef90df6644c2",
+        "sha256": "34ac1022264a0a45f40a95b30ef07f7c07404270a6232354970381fd51e5c4c1",
         "note": ""
       },
       {
         "path": "governance/evidence/csharp-tests.run.json",
-        "sha256": "697207bf8bd01d4a07c4ede2c406c360de471c2b375db7cba891865f7e785ab9",
+        "sha256": "d95682c5fc1a1920f97bac1803d3ea9be4c52a52b877add69cb5af644e5dbf97",
         "note": ""
       },
       {
         "path": "governance/evidence/pytest-all.run.json",
-        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "sha256": "649f083f26e55fd3dbb817e3f6a742a30ffbaf4ef9513fd142511d7be0c2a1fc",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.run.json",
-        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "sha256": "35ab6edefe2f35348c79c3d3a20310d4c33029ae2ba5697ca3812d4faf150a70",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.json",
-        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "sha256": "986c809f1e3b28e042f4b08e891bcb6b8ecd1518fdbd742adc4ddab9749726b1",
         "note": ""
       }
     ],
@@ -95,5 +95,102 @@
       }
     }
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-10-27T00:21:46.549161Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "csharp/PfpLab.Client/JsonRpcChannel.cs",
+          "language": "C#",
+          "sha256": "263ce2b19107928aa13bb1633da9de683cd81344a1c2d05db7d34b3e9eac5f5e"
+        },
+        "contract_urn": "urn:pfp-lab:csharp:jsonrpc:v1",
+        "symbols": [
+          "CoreErrorKind",
+          "CoreException",
+          "JsonRpcChannel"
+        ],
+        "owned_invariants": [
+          "One request in flight at a time.",
+          "After a timeout or EOF no further call is attempted."
+        ],
+        "boundaries": [
+          "Speaks exactly the protocol of pfp_lab/cli/rpc.py."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "csharp/PfpLab.Client/JsonRpcChannel.cs",
+          "language": "C#",
+          "sha256": "263ce2b19107928aa13bb1633da9de683cd81344a1c2d05db7d34b3e9eac5f5e"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Line-framed JSON-RPC client with serialised calls, per-call timeout and cancellation, envelope and id checks, a channel that faults after desynchronisation, and the typed CoreException translation.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "B",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Header declares AuthorityEffect: None and a unique contract URN; the exported names (__all__ or public types) are the ones the docstring describes and the contract lists. Not B: no requirement-to-symbol trace beyond this contract.",
+          "G2": "Responses are accepted only for the matching id and version; malformed answers are Protocol errors; a timeout or closed stream faults the channel.",
+          "G3": "Typed failures: every core failure becomes CoreException with a CoreErrorKind (RULE_CS_002 checks run after deserialisation; no null-forgiving operator in runtime code, enforced by a scan); async methods take and forward CancellationToken (CA2016 as error); disposables are disposed (CA2000/CA1816 as error). Not B: panic-freedom is tested, not proven.",
+          "G4": "Unit tests, view-model tests with a scripted client, and contract tests against the real Python core. Mutation R = 1/1 (see mutation_accounting).",
+          "G5": "Cyclomatic complexity from lizard and CA1502 (threshold 10, error at build); nesting from the brace estimate. Cognitive complexity is not measured for C#, so A is not claimed. Metrics: worst function: cyclomatic 9, cognitive None, nesting 2; metrics ceiling A+."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-10-26T22:27:35Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/dotnet-build.run.json",
+            "sha256": "c1e96cfed01989efe39a640925fc139be65d4e0ef1b01fb8c68bef90df6644c2",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/csharp-tests.run.json",
+            "sha256": "697207bf8bd01d4a07c4ede2c406c360de471c2b375db7cba891865f7e785ab9",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pytest-all.run.json",
+            "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.run.json",
+            "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.json",
+            "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+            "note": ""
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 16,
+          "survived": 0,
+          "demonstrably_equivalent": 5,
+          "invalid": 10,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-csharp-client.mutation.json",
+            "sha256": "65ac8d7d497f36d6a6858d41f2a7b3c539bb72ce162f87b8f1fb77ab841a5e33",
+            "note": "campaign m-csharp-client"
+          }
+        }
+      }
+    }
+  ]
 }

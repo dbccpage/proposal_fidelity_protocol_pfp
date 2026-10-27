@@ -13,12 +13,10 @@ exact demonstration of one idea about claims on a graph. They contain no code.
 | `cheapest-repair` | Fitting a section that puts the whole mismatch on a heavy edge is refused, since the defect would rise. Putting it on the lightest edge is admitted. |
 | `retract-stale-claim` | A revision breaks consistency. RETRACT restores the state saved at the last consistent step, and both steps stay in the receipt. |
 
-Run any of them as a file:
+They are listed by `pfp-lab packs` and run like any built-in pack:
 
 ```bash
-python -m pfp_lab.cli.main run pfp_lab/core/packs/arbitrage-cycle.json
+python -m pfp_lab.cli.main run --pack arbitrage-cycle
 ```
 
-They are not yet listed by `pfp-lab packs`. Adding their ids to `PACK_IDS` in
-`pfp_lab/core/contracts.py` registers them; that change is governed and needs
-its score file regenerated.
+`pfp_lab/tests/test_packs.py` checks the outcome each title states.
