@@ -67,36 +67,36 @@
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-10-26T23:15:24Z",
+    "evaluation_timestamp": "2026-10-27T00:21:44Z",
     "evidence": [
       {
         "path": "governance/evidence/pytest-all.run.json",
-        "sha256": "ac13dda4ddfee46632288a8f83f92901001d71edf7e59feb89991ea0138d967c",
+        "sha256": "649f083f26e55fd3dbb817e3f6a742a30ffbaf4ef9513fd142511d7be0c2a1fc",
         "note": ""
       },
       {
         "path": "governance/evidence/mypy-strict.run.json",
-        "sha256": "c93f2a9f889e37a842371166ac68a95832dad30ef2661beeb970449fa1ee7837",
+        "sha256": "956d4446cd1cb721a955e92a0e1f3424ce8347d64a4971ff56d2195980756157",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-check.run.json",
-        "sha256": "82618ca866c9824afeeb2137c68566d65ac91444ccc8ee4d5b5ca93dd568f27b",
+        "sha256": "4af5aa5122915d963b7be10f8ba5eb0ef244771f756ee7e0284b058532c67811",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-format.run.json",
-        "sha256": "9075870f4bdd11f4340650fd09620abbb8197a28788ececcaf8f9f30d63f1243",
+        "sha256": "8d3ad6b31ce9a00a8944a28075704a8dfc7beb1bf4b8fe04e00109bd282b88d8",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.run.json",
-        "sha256": "cdbcb7937d8a7ccef4546ec2463569f0565045755f2c8f7597ff17a81cd3299a",
+        "sha256": "35ab6edefe2f35348c79c3d3a20310d4c33029ae2ba5697ca3812d4faf150a70",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.json",
-        "sha256": "5da0f13ed26026ae00782a794bb92732d206d79bee52d181ae804a1dbd22cd12",
+        "sha256": "986c809f1e3b28e042f4b08e891bcb6b8ecd1518fdbd742adc4ddab9749726b1",
         "note": ""
       }
     ],
@@ -200,6 +200,109 @@
           {
             "path": "governance/evidence/metrics.json",
             "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+            "note": ""
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-10-27T00:21:51.111395Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "governance/tools/tests/test_checker.py",
+          "language": "Python",
+          "sha256": "469800ec6f34a3204c04ac79776c5c92c4ab14933a75c747f9e481542169ac1c"
+        },
+        "contract_urn": "urn:pfp-governance:tests:checker:v1",
+        "symbols": [
+          "accounting",
+          "record",
+          "run",
+          "score",
+          "test_baseline_grandfathers_unchanged_bytes_only",
+          "test_changed_bytes_break_the_binding",
+          "test_changed_since_selects_changed_sources",
+          "test_empty_package_markers_are_pinned",
+          "test_evidence_must_resolve_and_be_fresh",
+          "test_fresh_run_record_and_mutation_report_are_accepted",
+          "test_glob",
+          "test_language_and_path_mismatch",
+          "test_malformed_companion",
+          "test_missing_companion_fails",
+          "test_mutation_accounting_matches_the_rubric_example",
+          "test_population_and_categories",
+          "test_record_keeps_history",
+          "test_record_then_check_and_explain",
+          "test_score_arithmetic_and_floor"
+        ],
+        "owned_invariants": [
+          "The tests pass against the current sources."
+        ],
+        "boundaries": [
+          "Test code; support category 'test' (L2D floor, pending maintainer approval)."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "governance/tools/tests/test_checker.py",
+          "language": "Python",
+          "sha256": "469800ec6f34a3204c04ac79776c5c92c4ab14933a75c747f9e481542169ac1c"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "Every checker problem message.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Header declares AuthorityEffect: None and a unique contract URN; the module docstring states what is tested.",
+          "G2": "Expected values have an independent basis (Paper 005 guide numbers, hand-worked defects, the unmodified oracle, the rubric's calibration example) rather than being recomputed by the code under test.",
+          "G3": "Tests clean up temporary files and processes; no test depends on network access.",
+          "G4": "The suite passes, and its sensitivity is measured by the mutation campaigns of the modules it covers.",
+          "G5": "Test functions measured like runtime code. Metrics: worst function: cyclomatic 2, cognitive 1, nesting 0; metrics ceiling A+."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-10-26T23:15:24Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pytest-all.run.json",
+            "sha256": "ac13dda4ddfee46632288a8f83f92901001d71edf7e59feb89991ea0138d967c",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/mypy-strict.run.json",
+            "sha256": "c93f2a9f889e37a842371166ac68a95832dad30ef2661beeb970449fa1ee7837",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-check.run.json",
+            "sha256": "82618ca866c9824afeeb2137c68566d65ac91444ccc8ee4d5b5ca93dd568f27b",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-format.run.json",
+            "sha256": "9075870f4bdd11f4340650fd09620abbb8197a28788ececcaf8f9f30d63f1243",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.run.json",
+            "sha256": "cdbcb7937d8a7ccef4546ec2463569f0565045755f2c8f7597ff17a81cd3299a",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.json",
+            "sha256": "5da0f13ed26026ae00782a794bb92732d206d79bee52d181ae804a1dbd22cd12",
             "note": ""
           }
         ],

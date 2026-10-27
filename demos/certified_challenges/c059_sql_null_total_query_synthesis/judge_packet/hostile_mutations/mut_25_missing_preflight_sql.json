@@ -1,0 +1,187 @@
+{
+  "mutation_id": "mut_25_missing_preflight_sql",
+  "description": "Empty preflight_sql string",
+  "case": {
+    "case_id": "c059_b01_where_distinct",
+    "schema": {
+      "users": {
+        "id": "INTEGER",
+        "name": "TEXT",
+        "role_id": "INTEGER",
+        "status": "TEXT"
+      },
+      "roles": {
+        "role_id": "INTEGER",
+        "role_name": "TEXT",
+        "clearance": "INTEGER"
+      },
+      "facts": {
+        "id": "INTEGER",
+        "f_val": "INTEGER",
+        "g_verdict": "INTEGER",
+        "l_prod": "INTEGER"
+      }
+    },
+    "spec": {
+      "op": "select",
+      "from": "facts",
+      "where": {
+        "distinct": [
+          {
+            "col": "g_verdict"
+          },
+          {
+            "col": "l_prod"
+          }
+        ]
+      },
+      "project": [
+        "id",
+        "f_val"
+      ]
+    },
+    "protected": [
+      "f_val",
+      "g_verdict"
+    ],
+    "test_databases": [
+      {
+        "users": [
+          {
+            "id": 1,
+            "name": "Alice",
+            "role_id": 10,
+            "status": "active"
+          },
+          {
+            "id": 2,
+            "name": "Bob",
+            "role_id": null,
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "name": "Charlie",
+            "role_id": 20,
+            "status": null
+          },
+          {
+            "id": 4,
+            "name": "David",
+            "role_id": null,
+            "status": null
+          },
+          {
+            "id": 5,
+            "name": "Eve",
+            "role_id": 10,
+            "status": "active"
+          }
+        ],
+        "roles": [
+          {
+            "role_id": 10,
+            "role_name": "Admin",
+            "clearance": 5
+          },
+          {
+            "role_id": 20,
+            "role_name": "User",
+            "clearance": 1
+          },
+          {
+            "role_id": 30,
+            "role_name": "Guest",
+            "clearance": null
+          }
+        ],
+        "facts": [
+          {
+            "id": 1,
+            "f_val": 100,
+            "g_verdict": 1,
+            "l_prod": 1
+          },
+          {
+            "id": 2,
+            "f_val": null,
+            "g_verdict": 0,
+            "l_prod": 1
+          },
+          {
+            "id": 3,
+            "f_val": 200,
+            "g_verdict": null,
+            "l_prod": null
+          },
+          {
+            "id": 4,
+            "f_val": 300,
+            "g_verdict": 1,
+            "l_prod": null
+          },
+          {
+            "id": 5,
+            "f_val": null,
+            "g_verdict": null,
+            "l_prod": 0
+          }
+        ]
+      },
+      {
+        "users": [
+          {
+            "id": 1,
+            "name": null,
+            "role_id": null,
+            "status": null
+          },
+          {
+            "id": 2,
+            "name": null,
+            "role_id": null,
+            "status": null
+          }
+        ],
+        "roles": [
+          {
+            "role_id": null,
+            "role_name": null,
+            "clearance": null
+          }
+        ],
+        "facts": [
+          {
+            "id": 1,
+            "f_val": null,
+            "g_verdict": null,
+            "l_prod": null
+          },
+          {
+            "id": 2,
+            "f_val": null,
+            "g_verdict": null,
+            "l_prod": null
+          }
+        ]
+      },
+      {
+        "users": [],
+        "roles": [],
+        "facts": []
+      }
+    ]
+  },
+  "candidate": {
+    "case_id": "c059_b01_where_distinct",
+    "status": "SOLVED",
+    "sql": "SELECT id, f_val FROM facts WHERE (g_verdict IS DISTINCT FROM l_prod)",
+    "preflight_sql": "",
+    "null_ledger": [
+      {
+        "node": "where.distinct",
+        "construct": "IS DISTINCT FROM"
+      }
+    ]
+  }
+}

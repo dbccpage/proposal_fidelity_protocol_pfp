@@ -59,46 +59,46 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evaluation_timestamp": "2026-10-27T00:21:44Z",
     "evidence": [
       {
         "path": "governance/evidence/pytest-all.run.json",
-        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "sha256": "649f083f26e55fd3dbb817e3f6a742a30ffbaf4ef9513fd142511d7be0c2a1fc",
         "note": ""
       },
       {
         "path": "governance/evidence/pytest-optimized.run.json",
-        "sha256": "ac3d840c58451cd659fce505f20cf43460d3fd7c73f36b19c9a73d01257a23b5",
+        "sha256": "625309fc8b02169694f9327e6fe2e14ce1d289d8480d06be8d7fa086a2c8e7a9",
         "note": ""
       },
       {
         "path": "governance/evidence/mypy-strict.run.json",
-        "sha256": "c3e91ff7afd81aa52b729959ce7f4391c3ff4cae52f5aa352927b3959628cc80",
+        "sha256": "956d4446cd1cb721a955e92a0e1f3424ce8347d64a4971ff56d2195980756157",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-check.run.json",
-        "sha256": "2ef6396146fac24df3de533e029117a816221211e77660704eca50b5cc6863af",
+        "sha256": "4af5aa5122915d963b7be10f8ba5eb0ef244771f756ee7e0284b058532c67811",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-format.run.json",
-        "sha256": "c8839377417062190ea553cc1ffd32ebad96f7c8b4ecfb7e9491f9ee03ed27a2",
+        "sha256": "8d3ad6b31ce9a00a8944a28075704a8dfc7beb1bf4b8fe04e00109bd282b88d8",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.run.json",
-        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "sha256": "35ab6edefe2f35348c79c3d3a20310d4c33029ae2ba5697ca3812d4faf150a70",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.json",
-        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "sha256": "986c809f1e3b28e042f4b08e891bcb6b8ecd1518fdbd742adc4ddab9749726b1",
         "note": ""
       },
       {
         "path": "governance/evidence/import-linter.run.json",
-        "sha256": "1db645be8b322223d516e7de3be0ed55d654d6cf6a37275240b7ff98f28646eb",
+        "sha256": "1de9be9a89df415aed97abe93d2976ef3aa00babcba40bfa6654bc04defba385",
         "note": ""
       }
     ],
@@ -117,5 +117,124 @@
       }
     }
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-10-27T00:21:54.416328Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp_lab/core/obstruction.py",
+          "language": "Python",
+          "sha256": "3398443114b0337ce8a57829482f6977f7cead57e5a9ba00fd5e84954eb011c9"
+        },
+        "contract_urn": "urn:pfp-lab:core:obstruction:v1",
+        "symbols": [
+          "DEFAULT_SEARCH_BUDGET",
+          "Claims",
+          "SearchBudget",
+          "Section",
+          "check_claims",
+          "edge_residual",
+          "obstruction",
+          "project",
+          "section_defect"
+        ],
+        "owned_invariants": [
+          "Phi_1 is the minimum of D over potentials and is attained by the returned potential.",
+          "P_S(P_S(s)) = P_S(s).",
+          "Every enumeration step is charged to the budget."
+        ],
+        "boundaries": [
+          "Exponential tree enumeration is bounded by the graph limits and the step budget (BudgetExceededError)."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp_lab/core/obstruction.py",
+          "language": "Python",
+          "sha256": "3398443114b0337ce8a57829482f6977f7cead57e5a9ba00fd5e84954eb011c9"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Non-trivial exact algorithm: L1 defect, the primary obstruction Phi_1 by spanning-forest enumeration per component with Paper 005 tie-breaking, the idempotent projection P_S, and an explicit search budget with a typed failure.",
+        "gates": {
+          "G1": "B",
+          "G2": "B",
+          "G3": "C",
+          "G4": "B",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "AuthorityEffect: None and a unique URN; complete provenance envelope for the ported logic (pfp_lab/core/PROVENANCE.md: source path, git blob, committed SHA-256, last commit, a table of every change); the differential test maps every verdict field back to the unmodified source. Not A: no signed receipt of the source.",
+          "G2": "Exact profile: all arithmetic on Fraction; claims must be Fraction on declared edges; per-component minimum is equal to the product enumeration because the defect is a sum over components. Property tests check Phi_1 <= D(s), D(P_S(s)) = Phi_1, P_S idempotence, gauge invariance and homogeneity; the differential test agrees with the unmodified Paper 005 code. Not A: optimality is tested, not proved here.",
+          "G3": "Every expected failure is a typed exception with a stable code (AdmissionError, BudgetExceededError, UnknownPackError) or a typed verdict; no assert in production code (Ruff S101, AST test) and the whole suite passes under python -O; no bare or broad except (Ruff BLE001/E722). Not B: panic-freedom is tested, not proven.",
+          "G4": "Unit and boundary tests for every branch, negative tests for each refusal, run under pytest and under python -O. Hypothesis properties and a 300-case differential test against the Paper 005 oracle. Mutation R = 51/52 (see mutation_accounting).",
+          "G5": "Functions are single-purpose; complexity measured per function. Metrics: worst function: cyclomatic 6, cognitive 8, nesting 3; metrics ceiling A+."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-10-26T22:27:35Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pytest-all.run.json",
+            "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pytest-optimized.run.json",
+            "sha256": "ac3d840c58451cd659fce505f20cf43460d3fd7c73f36b19c9a73d01257a23b5",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/mypy-strict.run.json",
+            "sha256": "c3e91ff7afd81aa52b729959ce7f4391c3ff4cae52f5aa352927b3959628cc80",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-check.run.json",
+            "sha256": "2ef6396146fac24df3de533e029117a816221211e77660704eca50b5cc6863af",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-format.run.json",
+            "sha256": "c8839377417062190ea553cc1ffd32ebad96f7c8b4ecfb7e9491f9ee03ed27a2",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.run.json",
+            "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.json",
+            "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/import-linter.run.json",
+            "sha256": "1db645be8b322223d516e7de3be0ed55d654d6cf6a37275240b7ff98f28646eb",
+            "note": ""
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 51,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 1,
+          "unrun": 0,
+          "conservative_ratio": 0.9807692307692307,
+          "report": {
+            "path": "governance/evidence/m-core-obstruction.mutation.json",
+            "sha256": "88465f686673b1c26a0855f00adeb1edd851816d11c942e65d9fa469a6704e8e",
+            "note": "campaign m-core-obstruction"
+          }
+        }
+      }
+    }
+  ]
 }

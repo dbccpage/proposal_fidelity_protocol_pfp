@@ -11,8 +11,16 @@
 
 - [pfp package](PFP-Package.md)
 - [Operads](Operads.md)
+  - [Primer](Operads-Primer.md) · [Prompt trees](Operads-Prompt-Trees.md)
+  - [Rewriting and packetization](Operads-Rewriting-and-Packetization.md)
+  - [Typed workflows](Operads-Typed-Workflows.md) · [Skills](Operads-Skills-and-Catalog.md)
+  - [Bounded repair](Operads-Bounded-Repair.md) · [Local to global](Operads-Local-to-Global.md)
 - [Epistemic Immune System](EIS.md)
+  - [Two-signal gate](EIS-Two-Signal-Gate.md) · [Antibodies](EIS-Antibody-Lifecycle.md)
+  - [Regulation and custody](EIS-Regulation-and-Custody.md)
 - [Prompt Civilization](PCIV.md)
+  - [Genomes and lineage](PCIV-Genomes-and-Lineage.md) · [Mutation](PCIV-Mutation-and-Inheritance.md)
+  - [Selection](PCIV-Selection-and-Retrieval.md) · [Safety](PCIV-Safety-and-Persistence.md)
 
 **Papers**
 

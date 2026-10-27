@@ -60,3 +60,42 @@ def test_two_islands_repair() -> None:
     assert session.verdicts[5].defect_before == "2"
     assert session.final.obstruction == "0"
     assert session.final.section["y"] == "-4/3"
+
+
+def _statuses(pack_id: str) -> list[str]:
+    return [verdict.status.value for verdict in run_scenario(get_pack(pack_id)).verdicts]
+
+
+def test_arbitrage_cycle_clears_after_the_stale_quote_is_retracted() -> None:
+    session = run_scenario(get_pack("arbitrage-cycle"))
+    assert _statuses("arbitrage-cycle")[3:7] == ["VerificationFailed", "Retracted", "Asserted", "Verified"]
+    assert session.verdicts[4].defect_after == "5"
+    assert (session.final.defect, session.final.obstruction) == ("0", "0")
+
+
+def test_ledger_reconciliation_edits_only_the_least_trusted_entry() -> None:
+    session = run_scenario(get_pack("ledger-reconciliation"))
+    repair = session.verdicts[5]
+    assert (repair.status.value, repair.defect_before, repair.defect_after) == ("ExactRepair", "5", "0")
+    assert session.final.obstruction == "0"
+
+
+def test_every_edge_not_all_keeps_its_obstruction() -> None:
+    session = run_scenario(get_pack("every-edge-not-all"))
+    matched = [verdict.admitted for verdict in session.verdicts if verdict.move.value == "VERIFY"]
+    assert matched == [True, True, False, True, True, False, False, False]
+    assert (session.final.defect, session.final.obstruction) == ("3", "3")
+
+
+def test_cheapest_repair_refuses_the_heavy_edge() -> None:
+    session = run_scenario(get_pack("cheapest-repair"))
+    heavy, light = session.verdicts[5], session.verdicts[6]
+    assert (heavy.admitted, heavy.status.value, heavy.defect_after) == (False, "DefectIncrease", "12")
+    assert (light.status.value, light.defect_before, light.defect_after) == ("MonotonicDescent", "9", "3")
+    assert session.final.obstruction == "0"
+
+
+def test_retract_stale_claim_restores_the_last_consistent_step() -> None:
+    session = run_scenario(get_pack("retract-stale-claim"))
+    assert _statuses("retract-stale-claim")[5:8] == ["VerificationFailed", "Retracted", "Verified"]
+    assert (session.final.defect, session.final.obstruction) == ("0", "0")
