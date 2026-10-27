@@ -7,7 +7,7 @@ from c047_sequence_law_discovery.reference_solver import (
     solve,
 )
 
-out_dir = "projects/mssn_sn_symgam/challenges/e_formal_math/c047_sequence_law_discovery/participant_packet/examples"
+out_dir = "demos/certified_challenges/c047_sequence_law_discovery/participant_packet/examples"
 os.makedirs(out_dir, exist_ok=True)
 
 examples = []

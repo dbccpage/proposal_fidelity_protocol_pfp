@@ -12,7 +12,7 @@ from operations.domain.rop.result import Ok
 from pfp.infrastructure.synthesis_matrix import RunnerRefusal
 from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
-PREFIX = "pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls"
+PREFIX = "pilots.llm_mechanism.c005_hosted_decode_controls"
 SCHEMA = importlib.import_module(PREFIX + ".empirical_001_runner")
 BIAS = importlib.import_module(PREFIX + ".empirical_002_runner")
 MODULES = (SCHEMA, BIAS)

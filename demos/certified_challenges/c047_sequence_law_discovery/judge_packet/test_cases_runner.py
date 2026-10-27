@@ -16,7 +16,7 @@ from c047_sequence_law_discovery.reference_solver import (
 
 case_files = sorted(
     glob.glob(
-        "projects/mssn_sn_symgam/challenges/e_formal_math/c047_sequence_law_discovery/judge_packet/cases/*.json"
+        "demos/certified_challenges/c047_sequence_law_discovery/judge_packet/cases/*.json"
     )
 )
 print(f"Total cases: {len(case_files)}", flush=True)

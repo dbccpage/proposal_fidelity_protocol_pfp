@@ -15,7 +15,7 @@ def test_legacy_challenge_alias_preserves_module_and_type_identity():
 
 
 def test_legacy_neural_runner_uses_the_same_hook_module():
-    prefix = "projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask"
+    prefix = "pilots.llm_mechanism.c001_attention_distractor_mask"
     hook = importlib.import_module(prefix + ".attention_hook")
     runner = importlib.import_module(prefix + ".empirical_neural_mcnemar_evaluation")
     assert runner.apply_distractor_key_mask is hook.apply_distractor_key_mask

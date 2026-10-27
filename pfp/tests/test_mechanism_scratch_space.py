@@ -17,7 +17,7 @@ from pfp.infrastructure.mechanism_scratch_space import (
 
 
 PROTOCOL = Path(__file__).resolve().parents[2] / (
-    "pfp/tests/demo_004/a_mechanism/"
+    "pilots/llm_mechanism/"
     "c006_host_scratch_space_vs_cot.md"
 )
 CLAIMS = {"a->b": 1, "b->c": 2, "c->a": 3, "b->d": 1, "d->a": 2, "c->d": 1}

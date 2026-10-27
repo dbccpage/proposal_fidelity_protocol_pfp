@@ -11,7 +11,7 @@ import subprocess
 import pytest
 
 from pfp.infrastructure import consistency_teaching as recording
-from pfp.tests.demo_004.a_mechanism.consistency_teaching import conditions, host, tasks
+from pilots.llm_mechanism.consistency_teaching import conditions, host, tasks
 from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 

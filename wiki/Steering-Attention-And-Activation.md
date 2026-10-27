@@ -80,7 +80,7 @@ produced.
 ## Where the code lives
 
 `pfp/infrastructure/adapters/decode_controls/local_hf_mechanism.py` and the
-planned challenges in `pfp/tests/demo_004/a_mechanism/`:
+planned challenges in `pilots/llm_mechanism/planned/`:
 `c001_attention_distractor_mask_task_level.md`,
 `c002_attention_steering_sweep_correctness.md`,
 `c003_head_attribution_activation_patching.md`,

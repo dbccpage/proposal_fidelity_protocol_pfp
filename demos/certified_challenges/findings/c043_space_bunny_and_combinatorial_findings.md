@@ -34,8 +34,8 @@
 We evaluated the newly released **Space Bunny Alpha** (`stealth/space-bunny-alpha`) model on OpenRouter against open-weights baselines (LLaMA 3.3 70B and LLaMA 3.1 8B) on **Challenge C043: Ramsey and van der Waerden Lower-Bound Constructions**.
 
 All candidate outputs were judged against dual independent checkers:
-1. Primary Python Checker: [`ramsey_vdw_checker.py`](../../../../../../projects/mssn_sn_symgam/challenges/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)
-2. Independent Matrix/Bitmask Checker: [`independent_checker.py`](../../../../../../projects/mssn_sn_symgam/challenges/e_formal_math/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)
+1. Primary Python Checker: [`ramsey_vdw_checker.py`](../c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)
+2. Independent Matrix/Bitmask Checker: [`independent_checker.py`](../c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)
 3. Cryptographic Commit-Reveal Scoring Receipt: `PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed) sealed in `_intelligence/_adversary/runs/c043_eval_1790620716/`.
 
 ---

@@ -82,11 +82,11 @@ JUDGES = {
 
 
 def c005_gate(case, answer):
-    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import (
+    from pilots.llm_mechanism.c005_hosted_decode_controls.checkers import (
         verify_consistency_certificate,
         verify_cycle_repair,
     )
-    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+    from pilots.llm_mechanism.c005_hosted_decode_controls.schemas import (
         validate_json_schema,
     )
 
