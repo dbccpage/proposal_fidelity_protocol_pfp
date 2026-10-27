@@ -26,6 +26,11 @@ jobs:
         working-directory: code/rust/pfp_cli
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Only the two crates: the full tree has paths past Windows' 260-character limit.
+          sparse-checkout: |
+            code/rust/pfp_cli
+            code/rust/core_prompt_civilization
       - name: Tag matches the crate version
         run: |
           version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)

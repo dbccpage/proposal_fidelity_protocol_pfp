@@ -32,6 +32,11 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Only the two crates: the full tree has paths past Windows' 260-character limit.
+          sparse-checkout: |
+            code/rust/pfp_cli
+            code/rust/core_prompt_civilization
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
@@ -44,6 +49,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Only the two crates: the full tree has paths past Windows' 260-character limit.
+          sparse-checkout: |
+            code/rust/pfp_cli
+            code/rust/core_prompt_civilization
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown
