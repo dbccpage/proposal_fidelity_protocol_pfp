@@ -42,6 +42,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
 
+from operads.canon import OPERAD_COLOUR
 from operations.domain.cicd.disk_binding import require_byte_reader
 
 #: Authored source; interactive host roots are generated views.
@@ -64,8 +65,8 @@ OPTIONAL_FIELDS: tuple[str, ...] = ("families",)
 #: explicitly so an unreadable package cannot be mistaken for an excluded one.
 META_PACKAGES: frozenset[str] = frozenset({"_shared", "_templates"})
 
-#: The closed operad colour vocabulary, mirrored from
-#: `operads.domain.planar_substitution`.
+#: The closed operad colour vocabulary, read from the operad canon
+#: (`code/rust/core_operad_canon`).
 #:
 #: Closed on purpose: an operation whose colour is outside this set cannot be
 #: composed with anything, and silently admitting it would make composability
@@ -75,20 +76,7 @@ META_PACKAGES: frozenset[str] = frozenset({"_shared", "_templates"})
 #: compared them to the vocabulary. A skill declaring `"Governance"` -- not one
 #: of the ten -- passed that audit and crashed `load_garden()` in sprint 037.
 #: Checking the type without checking the domain is how that got through.
-OPERAD_COLOURS: frozenset[str] = frozenset(
-    {
-        "Audit",
-        "Code",
-        "Contract",
-        "Diagram",
-        "Ledger",
-        "Paper",
-        "Post",
-        "Proof",
-        "Receipt",
-        "State",
-    }
-)
+OPERAD_COLOURS: frozenset[str] = frozenset(OPERAD_COLOUR)
 
 
 class FrontmatterAuditError(ValueError):

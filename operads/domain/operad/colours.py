@@ -5,9 +5,8 @@ Colour and ColourSignature Domain Value Objects.
 Canonical finite colours for the Sentinel operadic categories:
 State, Proof, Paper, Code, Contract, Receipt, Ledger, Diagram, Audit, Post.
 
-This tuple is the single admitted colour vocabulary and must stay identical to
-``ADMITTED_COLOURS`` in ``infrastructure/legacy/models.py`` and to the ``colours``
-block of ``.agents/operad/operad_signature.json``. It previously omitted
+The tuple is read from the operad canon (``code/rust/core_operad_canon``), the one
+definition of the vocabulary; every other colour list imports it. It once omitted
 ``Contract`` and ``Diagram``, which silently changed the arity of every skill
 declaring them and rewrote their target colour to ``Receipt`` -- 16 admitted
 skills were affected, among them ``blackrod``, ``rip-lawyers`` and
@@ -21,18 +20,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Sequence
 
-ADMITTED_FINITE_COLOURS: tuple[str, ...] = (
-    "State",
-    "Proof",
-    "Paper",
-    "Code",
-    "Contract",
-    "Receipt",
-    "Ledger",
-    "Diagram",
-    "Audit",
-    "Post",
-)
+from operads.canon import OPERAD_COLOUR
+
+ADMITTED_FINITE_COLOURS: tuple[str, ...] = OPERAD_COLOUR
 
 
 @dataclass(frozen=True)

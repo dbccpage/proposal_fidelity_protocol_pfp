@@ -1,0 +1,481 @@
+{
+  "schema_version": "core.operad-canon.v1",
+  "generated_by": "code/rust/core_operad_canon (cargo run -p core_operad_canon -- write)",
+  "authority_effect": "None",
+  "families": ["capabilities_and_lifecycle", "colours_and_wires", "operations", "signature_families", "operands", "immune_and_negative"],
+  "colour_meanings": {
+    "Audit": "Symmetry audit, red-team diagnostic, compliance report, or defect escalation",
+    "Code": "Rust/Python implementation, AST, solver module, or Pydantic schema",
+    "Contract": "Nomos governance contract, prime rule YAML, or API boundary specification",
+    "Diagram": "DIME figure, quick-start card, AST graph, or visualization artifact",
+    "Ledger": "Claim queue row, refusal store, hypothesis tree, or issue register entry",
+    "Paper": "OEARS paper package, LaTeX source, Pandoc AST, or claim ledger",
+    "Post": "Public math post, Glossa dialect draft, or forum cadence item",
+    "Proof": "Lean 4 formal proof term, math derivation, or step-truth assertion",
+    "Receipt": "Evidence receipt, CI report, GTLA swarm review, or SHA256 manifest",
+    "State": "Repository, session worktree, git ref, or execution environment state"
+  },
+  "types": [
+    {
+      "id": "capability_kind",
+      "family": "capabilities_and_lifecycle",
+      "description": "The kind discriminator of a typed capability.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["skill", "anti_skill", "rule", "helpful_pattern", "anti_pattern", "antibody"]
+    },
+    {
+      "id": "invocation_mode",
+      "family": "capabilities_and_lifecycle",
+      "description": "How a catalogued skill is invoked.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["discipline", "entry", "on-demand"]
+    },
+    {
+      "id": "lifecycle_declaration",
+      "family": "capabilities_and_lifecycle",
+      "description": "Lifecycle facet 1 of 5, how an operation came to exist.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Declared", "Abstract", "Synthesized"]
+    },
+    {
+      "id": "lifecycle_schema_binding",
+      "family": "capabilities_and_lifecycle",
+      "description": "Lifecycle facet 2 of 5, whether a schema is bound.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Unbound", "Bound", "AnySchema"]
+    },
+    {
+      "id": "lifecycle_executor_binding",
+      "family": "capabilities_and_lifecycle",
+      "description": "Lifecycle facet 3 of 5, whether an executor is bound.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Unbound", "Bound", "ExternalService"]
+    },
+    {
+      "id": "lifecycle_validation",
+      "family": "capabilities_and_lifecycle",
+      "description": "Lifecycle facet 4 of 5, the validation result.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Unchecked", "Validated", "Failed"]
+    },
+    {
+      "id": "lifecycle_admission",
+      "family": "capabilities_and_lifecycle",
+      "description": "Lifecycle facet 5 of 5, the admission state.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Unadmitted", "Admitted", "Retired"]
+    },
+    {
+      "id": "lifecycle_stage_legacy",
+      "family": "capabilities_and_lifecycle",
+      "description": "The older single-axis lifecycle stage of a skill package, superseded by the five facets.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["DRAFT", "TYPED", "BOUND", "TESTED", "COMPOSABLE", "ADMITTED"]
+    },
+    {
+      "id": "meta_skill_status",
+      "family": "capabilities_and_lifecycle",
+      "description": "Status of a synthesized meta-skill.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["provisional", "promoted", "certified", "retired"]
+    },
+    {
+      "id": "operad_colour",
+      "family": "colours_and_wires",
+      "description": "The sorts of the OEOP coloured planar multicategory.",
+      "status": "PROPOSED",
+      "closed": true,
+      "values": ["Audit", "Code", "Contract", "Diagram", "Ledger", "Paper", "Post", "Proof", "Receipt", "State"],
+      "decision": "The ten colours are defined once, as OperadColour in this crate, and every Python and Rust colour list reads them. The kernel type core_operad_theory::OperadColour still accepts any non-empty name. Proposed: make its constructor refuse names outside these ten, so the kernel rejects the same colours as everything else."
+    },
+    {
+      "id": "operad_subcolour",
+      "family": "colours_and_wires",
+      "description": "Typed sub-wires inside a colour, written Colour.subcolour.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Audit.hype_hits", "Audit.lint_diff", "Audit.sfh_findings", "Audit.shadow_violations", "Audit.layout_findings", "Audit.verdict", "Code.purged", "Ledger.source_hashes"]
+    },
+    {
+      "id": "operand_colour",
+      "family": "colours_and_wires",
+      "description": "Source and target colours that registered operands declare; they should be operad colours.",
+      "status": "PROPOSED",
+      "closed": true,
+      "values": ["Audit", "Code", "Contract", "Diagram", "Ledger", "Paper", "Post", "Proof", "Receipt", "State"],
+      "decision": "Four of the seven operands use Open and Closed as colours. These are not colours: they describe the obstruction before and after the operand (an open obstruction, then a closed one). Proposed: replace them with the operad colours of the actual input and output, and keep before and after in obstruction_signature."
+    },
+    {
+      "id": "prompt_colour",
+      "family": "colours_and_wires",
+      "description": "Colours of the prompt operad: the types of the spans inside one prompt.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["RawTextSpan", "Equation", "IsolatedVariable", "SubstitutionStep", "RationalValue", "InvariantWitness", "TargetResult"],
+      "note": "A separate vocabulary from operad_colour. It types spans inside one prompt, not skill ports, so the two are not reconciled. The source repository's Rust prompt runtime also had an open Custom colour; that crate is not in this repository and the Python enum has no Custom, so the set here is closed."
+    },
+    {
+      "id": "capability_wire_type",
+      "family": "colours_and_wires",
+      "description": "Wire types of typed capability ports.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["anti_skill_subject", "anti_skill_hits", "typed_audit_receipt", "code_text"]
+    },
+    {
+      "id": "adversary_port",
+      "family": "colours_and_wires",
+      "description": "Estate ports a Adversary specialisation may license.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["AdversaryRuntime", "NativeBout", "SeatTransport", "SgtEmission", "ImmuneAntibodies", "OeopLearning", "OeopAntiSkill", "PromptGenealogy", "CodaEvaluation", "LggrGluing", "EnvelopeStore"]
+    },
+    {
+      "id": "adversary_wire_type",
+      "family": "colours_and_wires",
+      "description": "Value types on Adversary mission operation wires; each maps to one operad colour.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["CandidateProposal", "CochainDefect", "Context", "Contract", "DualMultiplier", "DualityReceipt", "FlawAudit", "GateWitness", "GroundTruth", "PrimalResidual", "RawPacket", "RawSpan", "SanitizedPacket", "SessionHintRequest", "SessionHintResult", "TerminalStatus"]
+    },
+    {
+      "id": "operation_kind",
+      "family": "operations",
+      "description": "Kinds of operation in the coloured operad kernel.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Identity", "Generator", "Composite"]
+    },
+    {
+      "id": "operad_variant",
+      "family": "operations",
+      "description": "Whether an operad is planar or symmetric.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Planar", "Symmetric"]
+    },
+    {
+      "id": "operation_term",
+      "family": "operations",
+      "description": "Term constructors of composed operations.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Identity", "Primitive", "Substitute", "Admitted"]
+    },
+    {
+      "id": "operad_tree",
+      "family": "operations",
+      "description": "Tree shape of a prompt operad composition.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Leaf", "Node", "NullTree"]
+    },
+    {
+      "id": "op_binding_kind",
+      "family": "operations",
+      "description": "How an op in the op inventory is executed.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["host", "pfp_turn"]
+    },
+    {
+      "id": "inventory_op",
+      "family": "operations",
+      "description": "Ops declared in the op inventory.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["ara.bind_source_hashes", "ara.receipt", "ara.refute", "glossa.merge_hits", "glossa.propose_replacements", "glossa.report", "glossa.scan_hype_code", "glossa.scan_hype_prose", "gti.layout_check", "gti.receipt", "gti.shadow_scan", "mnc.gate", "mnc.purge", "sfh.report", "sfh.scan"]
+    },
+    {
+      "id": "inventory_anti_op",
+      "family": "operations",
+      "description": "Anti-ops declared in the op inventory.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["ara.refuse_undeclared_omission", "ara.refuse_unrecomputed_hash", "glossa.refuse_missing_claim_envelope", "gti.refuse_duplicate_test_basename", "gti.refuse_sys_path_hack", "sfh.refuse_bare_except", "sfh.refuse_pass_handler", "sfh.refuse_rust_unwrap"]
+    },
+    {
+      "id": "prompt_anti_op",
+      "family": "operations",
+      "description": "Built-in keyword detectors for prompt-hierarchy anti-ops.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["glossa.refuse_missing_claim_envelope", "pfp.refuse_scalar_proxy_theorem_substitution", "pfp.refuse_target_fitting_constant_compensation", "pfp.refuse_unlicensed_causality", "pfp.refuse_unlicensed_multiplication", "pfp.refuse_unmapped_continuum_import", "pfp.refuse_witness_certificate_desynchronization"]
+    },
+    {
+      "id": "ddc_letter",
+      "family": "operations",
+      "description": "The Discrete Deformation Calculus operational alphabet A_DDC.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["E", "R", "C", "I", "Λ", "D", "M", "T"],
+      "note": "Defined once, as DdcOp in this crate; core_wdp re-exports it and the Python DdcLetter is generated from it. The deprecated DdcRune alias is removed."
+    },
+    {
+      "id": "ddc_repair_stage",
+      "family": "operations",
+      "description": "Stages of a DDC code-repair operation; Λ and D are not repair stages.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["C", "R", "E", "I", "M", "T"]
+    },
+    {
+      "id": "dda_operation_kind",
+      "family": "operations",
+      "description": "Operation kinds on the DDC degree tower.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["SuccessorProbe", "ResidualUpdate", "CarrierLift"]
+    },
+    {
+      "id": "residual_effect",
+      "family": "operations",
+      "description": "What an operad morphism does to the residual it acts on.",
+      "status": "PROPOSED",
+      "closed": true,
+      "values": ["unknown", "contractive", "neutral", "dilative"],
+      "decision": "Three vocabularies are in use. The Python enum has the four values above. The schema in operad_data_type.yaml has eight values and no neutral or dilative. The catalogues use exact, diagnostic and ExactRationalCertificate, and the signature identities use residual_unknown. Proposed: keep the four Python values, which describe what happens to the residual, and map the rest as in legacy_map. exact, exact_receipt and ExactRationalCertificate describe the evidence an operation emits, not its residual effect, so they move to a separate evidence field.",
+      "legacy_map": {"preserving": "neutral", "diagnostic": "neutral", "residual_unknown": "unknown", "exact": "(not a residual effect: evidence kind)", "exact_receipt": "(not a residual effect: evidence kind)", "ExactRationalCertificate": "(not a residual effect: evidence kind)"}
+    },
+    {
+      "id": "morphism_execution_status",
+      "family": "operations",
+      "description": "Outcome of applying a morphism.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["SUCCESS", "CONTRACTIVE_PASS", "NEUTRAL_PASS", "REFUSED", "FAILED"]
+    },
+    {
+      "id": "cohomology_degree",
+      "family": "operations",
+      "description": "Meta-operad obstruction degree.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["H0_INVARIANT_FENCE", "H1_FIRST_ORDER_DEFORMATION", "H2_REPAIR_OBSTRUCTION", "HN_HIGHER_COHERENCE"]
+    },
+    {
+      "id": "evidence_type",
+      "family": "operations",
+      "description": "Kinds of operad evidence observation.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["compilation", "budget_audit", "associativity", "slice_verification", "cochain_obstruction"]
+    },
+    {
+      "id": "open_obligation_kind",
+      "family": "operations",
+      "description": "Kinds of obligation an evidence receipt can leave open.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["unverified_claim", "unavailable_gate", "type_precision_loss", "ambiguous_import", "missing_oracle", "anti_pattern_detected", "dirty_worktree", "packaging_mismatch", "counterexample_not_property_based", "architectural_smell", "security_or_resource_boundary", "escalation_required", "invariant_not_reexecutable"]
+    },
+    {
+      "id": "contractive_meta_operad",
+      "family": "signature_families",
+      "description": "Meta skills named meta-<source colours>--<target colour>--contractive.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["meta-code-audit--code--contractive", "meta-contract-audit--contract--contractive", "meta-contract-code--audit--contractive", "meta-paper--audit--contractive", "meta-paper--receipt--contractive", "meta-proof-code--proof--contractive", "meta-state--receipt--contractive", "meta-state--state--contractive"]
+    },
+    {
+      "id": "contractive_meta_operad_residual",
+      "family": "signature_families",
+      "description": "The residual effect the contractive meta operads declare.",
+      "status": "PROPOSED",
+      "closed": true,
+      "values": ["contractive"],
+      "decision": "All eight skills named --contractive declare operad_residual unknown. Proposed: once residual_effect is settled, set operad_residual to contractive in these eight SKILL.md files, or drop the suffix from the names."
+    },
+    {
+      "id": "x_to_y_verifier",
+      "family": "signature_families",
+      "description": "Meta skills named meta-<domain>-<x>-to-<y>-verifier; the name gives only the first source colour.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["meta-atlas-state-to-state-verifier", "meta-auto-paper-to-paper-verifier", "meta-auto-state-to-receipt-verifier", "meta-blackrod-contract-to-audit-verifier", "meta-glossa-proof-to-proof-verifier", "meta-goo-ledger-to-ledger-verifier", "meta-goo-paper-to-paper-verifier", "meta-goo-proof-to-audit-verifier", "meta-kybernesis-paper-to-post-verifier", "meta-proof-to-paper-verifier", "meta-techne-code-to-audit-verifier", "meta-techne-code-to-code-verifier"]
+    },
+    {
+      "id": "pfp_polarity",
+      "family": "signature_families",
+      "description": "Polarity of a PFP operad morphism.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["CONSTRUCTIVE", "INTERROGATIVE", "CORRECTIVE", "GATE"],
+      "note": "PolarizedOperadTriad holds sub-operads for constructive, interrogative and corrective only. GATE morphisms have no sub-operad there, so whether gates belong in the triad is an open design question."
+    },
+    {
+      "id": "polarity_pair_provenance",
+      "family": "signature_families",
+      "description": "How a declared constructive and adversarial skill pair was established.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["declared", "inferred"]
+    },
+    {
+      "id": "resolver_route",
+      "family": "signature_families",
+      "description": "Keyword routes from a request to a shared contract or a code gate.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["historical_pr_immunity", "oe010_dda", "six_host_parity", "coda_gtla_paper", "test_quality", "canonical_value_validation", "append_only_log_integrity", "pipeline_exit_code", "formal_lean", "skill_budget", "knowledge_parity_gate", "skill_name_verify", "rule_gate"]
+    },
+    {
+      "id": "registered_operand",
+      "family": "operands",
+      "description": "Operands in the operand registry.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["op_exact_cochain_coboundary_repair", "op_f2_gauge_board_classification", "op_meron_surgery_sign_inversion", "op_unpromoted_candidate_template", "op_adversary_hermetic_task_evidence_attestation", "op_adversary_strict_typed_input_refusal", "op_lean4_constructive_kernel_axiom_audit"]
+    },
+    {
+      "id": "obstruction_class",
+      "family": "operands",
+      "description": "The diagnostic class an operand addresses (GTLA invariant 6, diagnostic class axis).",
+      "status": "PROPOSED",
+      "closed": true,
+      "values": ["ExactRepair", "ClosedResidual", "OpenObstruction"],
+      "decision": "The schema and GTLA invariant 6 fix the diagnostic axis at three values, but three operands use EvidenceLeakage, SchemaCoercion and SmuggledAxiom. These are failure classes, not diagnostic classes. Using them here mixes the failure axis into the diagnostic axis, which GTLA invariant 4 forbids. Proposed: give each of those operands a diagnostic class, and record its failure class in a separate failure_class field."
+    },
+    {
+      "id": "operand_carrier_kind",
+      "family": "operands",
+      "description": "Carrier an operand's obstruction lives on; open, one per operand family.",
+      "status": "SETTLED",
+      "closed": false,
+      "values": ["evidence_record", "f2_gauge_board", "graph_cochain", "meron_cluster", "proof_term", "schema_mapping", "unverified_proposal"]
+    },
+    {
+      "id": "operand_ddc_motif",
+      "family": "operands",
+      "description": "DDC letter sequence an operand applies; every letter must be a ddc_letter.",
+      "status": "PROPOSED",
+      "closed": false,
+      "values": ["CE", "CM", "CP", "CR", "EM", "ID"],
+      "decision": "op_lean4_constructive_kernel_axiom_audit declares motif CP, but P is not a DDC letter. An axiom audit that refuses a smuggled axiom reads as C then M. Proposed: CM, which the operand's owner should confirm.",
+      "letters_of": "ddc_letter"
+    },
+    {
+      "id": "constraint_type",
+      "family": "immune_and_negative",
+      "description": "How an antibody constrains a candidate.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["ProjectOut", "Restrain", "Enforce"]
+    },
+    {
+      "id": "operatorizability",
+      "family": "immune_and_negative",
+      "description": "Whether a failure can be repaired by an operator.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["repairable", "fatal"]
+    },
+    {
+      "id": "runtime_action",
+      "family": "immune_and_negative",
+      "description": "What an antibody does when it fires.",
+      "status": "PROPOSED",
+      "closed": true,
+      "values": ["repair", "abort", "refuse"],
+      "decision": "RuntimeAction allows only repair and abort, but antibody YAML files also use refuse. A refusal is its own routing terminal (Refusal in core_types::routing), distinct from aborting the run. Proposed: add REFUSE = \"refuse\" to RuntimeAction rather than rewrite the antibody files."
+    },
+    {
+      "id": "severity",
+      "family": "immune_and_negative",
+      "description": "Antibody severity.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["P0", "P1", "P2", "P3"]
+    },
+    {
+      "id": "antibody_pharmacy_status",
+      "family": "immune_and_negative",
+      "description": "Pharmacy status of an antibody; farming writes candidate only, admission is a separate act.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["candidate", "admitted", "rejected", "retired"]
+    },
+    {
+      "id": "anti_skill_status",
+      "family": "immune_and_negative",
+      "description": "Lifecycle of a native anti-skill, a different object from a pharmacy antibody.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Proposed", "Candidate", "Admitted", "Suspended", "Retired"],
+      "note": "This is a separate lifecycle from antibody_pharmacy_status, so the two sets are not one vocabulary declared twice."
+    },
+    {
+      "id": "pharmacy_failure_class",
+      "family": "immune_and_negative",
+      "description": "Failure classes of the MSS-N pharmacy.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["SELF_CERTIFICATION", "FAKE_RECEIPT", "CONCLUSION_PRELOAD", "SCHEMA_SEMANTIC_LAUNDERING", "THEOREM_NAME_LAUNDERING", "OPTIMALITY_HALLUCINATION", "COMPLEXITY_HALLUCINATION", "BRANCH_DROP_EXHAUSTION", "PERSONA_AUTHORITY_LEAK", "PRIVATE_COT_DEPENDENCY", "VERSION_DUPLICATION", "DETECT_REPAIR_COUPLING"]
+    },
+    {
+      "id": "anti_skill_failure_class",
+      "family": "immune_and_negative",
+      "description": "Failure classes of native anti-skills; a separate taxonomy from pharmacy_failure_class.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["SemanticHallucination", "ApproximateContradiction", "ToyPromotion", "UnmechanizedProofClaim", "SelfContradiction", "DualityGapNonZero", "BoundaryLeakage", "UnboundPortAssumption", "CounterfeitExactness", "SycophanticAgreement", "StructuralNonFit", "StaleCensusReference"]
+    },
+    {
+      "id": "hit_disposition",
+      "family": "immune_and_negative",
+      "description": "What a fired anti-skill or pharmacy check does with the candidate.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["FINDING", "HOLD", "REFUSE"]
+    },
+    {
+      "id": "guard_disposition",
+      "family": "immune_and_negative",
+      "description": "Danger-gate guard outcome.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["NO_ACTIVATION", "FINDING", "HOLD", "REFUSE", "DEFENSIVE_LOCKDOWN", "TWO_SIGNAL_COLLAPSE"]
+    },
+    {
+      "id": "danger_decision",
+      "family": "immune_and_negative",
+      "description": "Danger-gate decision.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["TOLERATED", "DIAGNOSTIC_ONLY", "DEFENSIVE_LOCKDOWN", "QUARANTINED"]
+    },
+    {
+      "id": "authority_level",
+      "family": "immune_and_negative",
+      "description": "Authority level in regulatory T-cell supervision.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["BLOCKING_GATE", "DIAGNOSTIC_ONLY"]
+    },
+    {
+      "id": "anti_skill_claim_mode",
+      "family": "immune_and_negative",
+      "description": "Claim mode an anti-skill subject declares.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["PROPOSAL", "BOUNDED", "UNRESTRICTED", "SELF_CERTIFIED"]
+    },
+    {
+      "id": "anti_skill_predicate_mode",
+      "family": "immune_and_negative",
+      "description": "How an anti-skill predicate combines its atoms.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["ALL", "ANY"]
+    }
+  ]
+}

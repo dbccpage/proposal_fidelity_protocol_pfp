@@ -13,6 +13,8 @@ import json
 from dataclasses import dataclass
 from typing import Any, Mapping, cast
 
+from operads.canon import HIT_DISPOSITION
+
 from .canonical import canonical_id
 from .constants import AUTHORITY_EFFECT_NONE, DIGEST_PATTERN, IDENTIFIER_PATTERN
 
@@ -46,7 +48,7 @@ REQUESTED_EFFECTS = frozenset(
         "PUBLISH",
     }
 )
-HIT_DISPOSITIONS = frozenset({"FINDING", "HOLD", "REFUSE"})
+HIT_DISPOSITIONS = frozenset(HIT_DISPOSITION)
 PREDICATE_OPERATORS = frozenset(
     {"EQUAL_FIELDS", "NOT_SUBSET_FIELDS", "VALUE_IN", "IS_EMPTY"}
 )
