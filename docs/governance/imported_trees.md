@@ -4,11 +4,13 @@ AuthorityEffect: None. This is a screen of `main` at `6e6d9ed7`, not a score.
 Counts only. The trees joined the governed population with a baseline on
 2026-10-27, so the counts below are what scoring them would find.
 
-None of these files has a completed score, so none of them meets the
-`SCORING.md` section 1.5 floor yet. Once the rename of private names lands,
-they join the governed population with a baseline of their exact bytes:
-every file stays accepted only while it is unchanged, and any edit must come
-with an L4D score (L2D for tests).
+None of these files has a completed score. They are accepted because
+`governance/baseline.json` grandfathers each one at its exact bytes. A file
+stays accepted only while it is unchanged. To edit one, follow "Scoring a
+changed file" in `governance/README.md`: run its tests and the cited tools,
+record a contract and score at its floor (L4D, or L2D for test files, which
+the `test` category matches by `tests/`, `test_*.py` and `conftest.py`), and
+then run `checker baseline --write` so its stale entry is dropped.
 
 ## What is there
 
@@ -51,7 +53,8 @@ not exist in this repository (the rename work addresses those), and that no
 
 ## Suggested order for bringing them up to the floor
 
-1. Land the rename, then record the baseline so nothing regresses.
+1. Done: the rename landed and the baseline is recorded, so nothing regresses
+   unnoticed.
 2. Score the trees PFP Lab is most likely to reuse first: `eis/` and `pciv/`
    are small (62 and 63 runtime files).
 3. In `pfp/`, start with `domain/` and `use_cases/`. The assert-heavy
