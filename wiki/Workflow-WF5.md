@@ -73,9 +73,10 @@ The accepted path used 4,540 tokens and $0.00069292. Whole-development use was
 10,069 tokens and $0.00152852 across ten model actions. Those are different
 measurements. The reused seed baseline was never called again.
 
-**Current availability:** documented recipe and historical PFP-packet prototype,
-not a released general natural-language compiler or a `pfp-lab run WF5` command.
-[Integration status](Workflow-Integration-Status.md) · [Results and failures](Workflow-Results.md).
+**Current availability:** the automated standalone runner is
+`python -m pfp.workflows.wf0005`. See [Install and run](Workflow-Running.md)
+for tested commands, budget limits, offline controls and replay.
+Historical measurement versions remain separate from the migrated implementation.
 
 **Stop here** after preserving the checked result. Future refinements belong to
 new, named recipes in the [workflow library](Workflow-Library.md).

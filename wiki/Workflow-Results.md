@@ -120,7 +120,7 @@ One seed cannot establish causal learning, scaling behaviour or an efficiency fr
 - [Machine-readable measurements and original source hashes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/evidence/measurements.json).
 - [Raw reply index and SHA-256 hashes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/evidence/raw_manifest.json).
 - [Unchanged raw replies, including failures](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/evidence/raw).
-- [Current documentation checks](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/validation.json).
+- [Initial documentation checks, before runner migration](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/validation.json).
 
 This is a selected documentation export, not a portable full replay archive.
 The original provider/accounting records and legacy runtime dependencies are

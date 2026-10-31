@@ -56,10 +56,10 @@ Stop before the solver when mining is malformed, ungrounded or answer-bearing.
 Stop on unknown billing. A larger token allowance is a new, recorded policy
 decision; it must not become an invisible retry.
 
-**Current availability:** manual/integration recipe plus a historical finite
-prototype. The accepted Oct 28 path reused an older valid miner during repair;
-it was not a fresh independent two-call experiment. See
-[Results and costs](Workflow-Results.md).
+**Current availability:** the automated standalone runner is
+`python -m pfp.workflows.wf0003`. See [Install and run](Workflow-Running.md)
+for tested commands, budget limits, offline controls and replay.
+Historical measurement versions remain separate from the migrated implementation.
 
 Continue to [WF4](Workflow-WF4.md) when you need five isolated proposals and a
 global check. More agents do not replace that check.

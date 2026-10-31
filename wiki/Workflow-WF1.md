@@ -6,6 +6,9 @@
 **You will keep:** the task, the generated prompt, the actual reply and a check result.
 The example below uses the current repository's pure PFP task-turn API.
 
+For the automated runner, use [Install and run](Workflow-Running.md).
+The walkthrough below remains a small manual API example.
+
 ## Before you start
 
 Work from a checkout of this repository, using Python 3.12+:

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pfp-lab"
-version = "0.1.0"
+version = "0.2.0"
 description = "PFP Lab: run Proposal Fidelity Protocol scenarios and check their receipts."
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
@@ -13,6 +13,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+workflows = ["jsonschema==4.26.0", "PyYAML==6.0.3"]
 web = [
     "fastapi==0.128.0",
     "uvicorn==0.38.0",
@@ -33,13 +34,153 @@ dev = [
 [project.scripts]
 pfp-lab = "pfp_lab.cli.main:entry"
 pfp-lab-web = "pfp_lab.web.app:entry"
+pfp-wf1 = "pfp.workflows.wf0001.runner:main"
+pfp-wf2 = "pfp.workflows.wf0002.runner:main"
+pfp-wf3 = "pfp.workflows.wf0003.runner:main"
+pfp-wf4 = "pfp.workflows.wf0004.runner:main"
+pfp-wf5 = "pfp.workflows.wf0005.runner:main"
 
-[tool.setuptools.packages.find]
-include = ["pfp_lab*"]
+[tool.setuptools]
+packages = [
+    "adversary",
+    "adversary.domain",
+    "adversary.domain.providers",
+    "adversary.infrastructure",
+    "adversary.infrastructure.providers",
+    "adversary.infrastructure.providers.adapters",
+    "adversary.use_cases",
+    "adversary.use_cases.providers",
+    "governance",
+    "governance.domain",
+    "governance.domain.ingress",
+    "governance.domain.shared_kernel",
+    "governance.domain.shared_kernel.commands",
+    "governance.domain.shared_kernel.entities",
+    "governance.domain.shared_kernel.events",
+    "governance.domain.shared_kernel.result",
+    "governance.domain.shared_kernel.value_objects",
+    "governance.tools",
+    "operations",
+    "operations.domain",
+    "operations.domain.cicd",
+    "operations.domain.rop",
+    "pfp",
+    "pfp.controllers",
+    "pfp.documentation_integrity",
+    "pfp.domain",
+    "pfp.domain.aggregates",
+    "pfp.domain.ast_cochain",
+    "pfp.domain.biochem",
+    "pfp.domain.bridge",
+    "pfp.domain.civilization",
+    "pfp.domain.claim_hygiene",
+    "pfp.domain.cohomology",
+    "pfp.domain.contracts",
+    "pfp.domain.curriculum",
+    "pfp.domain.ddc",
+    "pfp.domain.decoding",
+    "pfp.domain.documentation_integrity",
+    "pfp.domain.dual_witness",
+    "pfp.domain.ensemble",
+    "pfp.domain.entities",
+    "pfp.domain.errors",
+    "pfp.domain.events",
+    "pfp.domain.exact",
+    "pfp.domain.finite_gauge",
+    "pfp.domain.genesis",
+    "pfp.domain.homology",
+    "pfp.domain.immune",
+    "pfp.domain.kernel",
+    "pfp.domain.lean_bridge",
+    "pfp.domain.mssn_research",
+    "pfp.domain.mssn_research.grammar",
+    "pfp.domain.mssn_research.packets",
+    "pfp.domain.mssn_research.shared_kernel",
+    "pfp.domain.normal_forms",
+    "pfp.domain.operad",
+    "pfp.domain.pilots",
+    "pfp.domain.ports",
+    "pfp.domain.prompt_representations",
+    "pfp.domain.prompts",
+    "pfp.domain.provenance",
+    "pfp.domain.quantum",
+    "pfp.domain.representation",
+    "pfp.domain.rewriting",
+    "pfp.domain.sandbox",
+    "pfp.domain.shared_kernel",
+    "pfp.domain.sn_tower",
+    "pfp.domain.solvers",
+    "pfp.domain.sovereignty",
+    "pfp.domain.stages",
+    "pfp.domain.synthesis",
+    "pfp.domain.task_families",
+    "pfp.domain.tower",
+    "pfp.domain.tower_lift",
+    "pfp.domain.type_register",
+    "pfp.domain.types",
+    "pfp.domain.validation",
+    "pfp.domain.value_objects",
+    "pfp.entrypoints",
+    "pfp.entrypoints.api",
+    "pfp.entrypoints.cli",
+    "pfp.entrypoints.web",
+    "pfp.fixtures",
+    "pfp.infrastructure",
+    "pfp.infrastructure.adapters",
+    "pfp.infrastructure.adapters.decode_controls",
+    "pfp.infrastructure.adapters.finite_gauge",
+    "pfp.infrastructure.adapters.mssn_research",
+    "pfp.infrastructure.adapters.mssn_research.checkers",
+    "pfp.infrastructure.adapters.mssn_research.contracts",
+    "pfp.infrastructure.adapters.mssn_research.contracts.grammar",
+    "pfp.infrastructure.adapters.mssn_research.contracts.packets",
+    "pfp.infrastructure.adapters.mssn_scenarios",
+    "pfp.infrastructure.composition",
+    "pfp.infrastructure.demos",
+    "pfp.infrastructure.events",
+    "pfp.infrastructure.normal_forms",
+    "pfp.infrastructure.normal_forms._golden_nfs",
+    "pfp.infrastructure.normal_forms.bqnf",
+    "pfp.infrastructure.persistence",
+    "pfp.infrastructure.pilot_runners",
+    "pfp.infrastructure.quantum",
+    "pfp.infrastructure.seat_transport",
+    "pfp.infrastructure.serialization",
+    "pfp.infrastructure.taxonomy",
+    "pfp.infrastructure.tower_evidence",
+    "pfp.infrastructure.tower_evidence.level_engine",
+    "pfp.infrastructure.trace",
+    "pfp.packet_schemas",
+    "pfp.use_cases",
+    "pfp.use_cases.curriculum",
+    "pfp.use_cases.detector_adequacy",
+    "pfp.use_cases.problem_builders",
+    "pfp.workflows",
+    "pfp.workflows.wf0001",
+    "pfp.workflows.wf0002",
+    "pfp.workflows.wf0003",
+    "pfp.workflows.wf0004",
+    "pfp.workflows.wf0005",
+    "pfp_lab",
+    "pfp_lab.cli",
+    "pfp_lab.core",
+    "pfp_lab.web"
+]
+
+[tool.setuptools.package-dir]
+adversary = "ops/adversary"
+operations = "ops/operations"
+"governance.domain" = "ops/governance/domain"
 
 [tool.setuptools.package-data]
+"pfp.infrastructure" = ["yaml/prompts/templates/template_standard_base.yaml"]
+"pfp.workflows" = ["wf0001/*.json", "wf0001/examples/*.json", "wf0002/*.json", "wf0002/examples/*.json", "wf0002/reference/*.txt", "wf0003/*.json", "wf0003/*.yaml", "wf0003/examples/*.json", "wf0004/*.json", "wf0004/examples/*.json", "wf0005/*.json", "wf0005/*.ebnf", "wf0005/examples/*.json"]
+"operations.domain.cicd" = ["*.yaml"]
 "pfp_lab.web" = ["static/*"]
 "pfp_lab.core" = ["packs/*.json"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["*.contract.score.json", "*/*.contract.score.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["pfp_lab/tests", "governance/tools/tests"]

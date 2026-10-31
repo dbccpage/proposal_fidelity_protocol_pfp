@@ -55,9 +55,10 @@ A missing slot is a contract error. Wrong arity or an invented source quote is
 a structural error. A schema-valid wrong answer is a task error. Keep each
 category visible; a clean JSON document can still be wrong.
 
-**Current availability:** this is a complete manual/integration recipe.
-The Oct 28 automated implementation belongs to the historical monorepo
-prototype, not a `pfp-lab run WF2` command. [Status and evidence](Workflow-Integration-Status.md).
+**Current availability:** the automated standalone runner is
+`python -m pfp.workflows.wf0002`. See [Install and run](Workflow-Running.md)
+for tested commands, budget limits, offline controls and replay.
+Historical measurement versions remain separate from the migrated implementation.
 
 **Stop here** if one explicit response is enough. Continue to
 [WF3](Workflow-WF3.md) when preparing guidance before solving is useful.

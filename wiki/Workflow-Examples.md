@@ -2,6 +2,7 @@
 
 **Read the short guide first.** This page is for adapting or auditing a workflow.
 These files are unchanged October 28 reference inputs, not newly measured runs.
+For current packaged fixtures and automated commands, use [Install and run](Workflow-Running.md).
 
 | Role | Exact prepared files |
 | --- | --- |

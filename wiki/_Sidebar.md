@@ -11,6 +11,7 @@
 **Use PFP in a workflow**
 
 - [Choose WF1–WF5](Workflows.md) · [Start here](Workflow-Start-Here.md)
+- [Install and run WF1–WF5](Workflow-Running.md)
 - [WF1: typed answer](Workflow-WF1.md)
 - [WF2: full slots](Workflow-WF2.md)
 - [WF3: mine first](Workflow-WF3.md)

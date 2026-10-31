@@ -20,10 +20,14 @@ validate either of them.
 | Recipe | Family | What you can use today | Evidence |
 | --- | --- | --- | --- |
 | `wf0001.integer_sum.manual.v1` | WF1 | Current-repository typed task-turn walkthrough | Executed offline example and negative controls. |
-| `wf0002.integer_sum.reference.v1` | WF2 | Full-slot manual/integration recipe | Retained Oct 28 single-response experiment. |
-| `wf0003.integer_sum.reference.v1` | WF3 | Mining/freeze/solve manual/integration recipe | Retained mining and repair history. |
-| `wf0004.integer_sum.reference.v1` | WF4 | Five-agent/global-check integration recipe | Retained concurrent six-call experiment. |
-| `wf0005.integer_sum.reference.v1` | WF5 | Full checked packet-rewrite recipe | Retained failures and accepted six-call path. |
+| `wf0002.integer_sum.reference.v1` | WF2 | Standalone full-slot runner and recipe | Retained Oct 28 single-response experiment. |
+| `wf0003.integer_sum.reference.v1` | WF3 | Standalone mining/freeze/solve runner | Retained mining and repair history. |
+| `wf0004.integer_sum.reference.v1` | WF4 | Standalone concurrent five-agent runner | Retained concurrent six-call experiment. |
+| `wf0005.integer_sum.reference.v1` | WF5 | Standalone checked packet-rewrite runner | Retained failures and accepted six-call path. |
+
+[Install and run](Workflow-Running.md) covers the automated runners. The manual
+recipe IDs below remain historical documentation identities; the registry now
+also includes a separate `.automated.v1` ID for each migrated runner.
 
 The machine-readable registry is
 [`docs/workflows/catalog.json`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/catalog.json).

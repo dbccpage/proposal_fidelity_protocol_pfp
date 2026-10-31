@@ -62,9 +62,10 @@ Keep all five outcomes, including partial failures. Unknown billing retains its
 liability. Refuse a global mismatch; do not pick a convincing minority or let a
 majority overrule the independent checker.
 
-**Current availability:** documented manual/integration pattern and historical
-finite experiment; no standalone `pfp-lab run WF4` command is claimed.
-[Integration status](Workflow-Integration-Status.md) · [Results](Workflow-Results.md).
+**Current availability:** the automated standalone runner is
+`python -m pfp.workflows.wf0004`. See [Install and run](Workflow-Running.md)
+for tested commands, budget limits, offline controls and replay.
+Historical measurement versions remain separate from the migrated implementation.
 
 Continue to [WF5](Workflow-WF5.md) when the task itself needs a checked grammar rewrite.
 

@@ -32,7 +32,8 @@ proposals or a final nonzero defect; it does not mean every proposal passed.
 
 ## 2. Use your own model
 
-Go to [WF1](Workflow-WF1.md). It shows how to prepare a typed task with the
+For automated execution, use [Install and run WF1–WF5](Workflow-Running.md).
+For the small manual API example, go to [WF1](Workflow-WF1.md). It shows how to prepare a typed task with the
 current `pfp` API, send the generated prompt through your existing model
 interface, and check the actual reply.
 

@@ -29,11 +29,11 @@ The pages tell you what to keep before moving on.
 
 ## What is available
 
-These are reusable recipes, with a current-repository WF1 worked example and
-historical finite experiments for all five families. The older automated
-`omega_engine_pfp.workflows` integration is not installed by this repository's
-`pfp-lab` package. [Integration status](Workflow-Integration-Status.md) separates
-the runnable entry points, manual recipes and historical prototypes.
+All five automated runners are available in the standalone migration branch.
+[Install and run](Workflow-Running.md) gives exact commands, offline controls,
+shared budgets and replay. The guides also retain a small manual WF1 walkthrough.
+[Integration status](Workflow-Integration-Status.md) distinguishes migrated
+versions from the original experiments.
 
 The benchmark task was integer addition. Its results do not establish that the
 workflows solve arbitrary research problems or eliminate hallucinations.

@@ -41,3 +41,12 @@ and the next allowed action. Rechecking saved bytes makes no model call.
 For a new paid attempt, preserve lineage and the remaining original allowance.
 
 [Back to workflows](Workflows.md) · [Glossary](Workflow-Glossary.md)
+
+## Migrated runners
+
+Install with `python -m pip install ".[workflows]"` using Python 3.12+.
+Use `pfp.workflows.wf0001` through `wf0005`; keep older `omega_engine_pfp`
+commands with their original integration. `NATIVE_BUDGET_UNAVAILABLE` applies
+to the optional native hard-budget path; the documented commands use the
+accounted estimated path. Never switch to unbounded billing to bypass a refusal.
+See [Install and run](Workflow-Running.md) for the exact argument shapes.

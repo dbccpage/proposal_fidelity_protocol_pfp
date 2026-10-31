@@ -3,7 +3,6 @@
 import re
 from datetime import datetime, timezone
 
-from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
 from operations.domain.rop.result import Err
 from adversary.domain.providers.types import BudgetExceeded, ProviderConfigError
 
@@ -22,7 +21,14 @@ class RustBudgetRuntime:
         return datetime.now(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z")
 
     def invoke(self, operation: str, **payload: object):
-        response = (self._host or RustSymbolGameHost()).invoke_runtime(
+        host = self._host
+        if host is None:
+            try:
+                from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+            except ImportError as exc:
+                raise NativeBudgetUnavailable("NATIVE_BUDGET_UNAVAILABLE") from exc
+            host = RustSymbolGameHost()
+        response = host.invoke_runtime(
             "provider_budget", {"operation": operation, **payload}
         )
         if isinstance(response, Err):

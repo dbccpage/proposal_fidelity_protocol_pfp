@@ -1,0 +1,13 @@
+(* WF5 PFP packet syntax, transcribed from domain/tower/grammar.py.
+   Public start: packet. No whitespace skipping or arithmetic interpretation.
+   The versioned WF5 decoder, not this grammar, binds sum/exact/once/values/total.
+   AuthorityEffect: None. *)
+packet = diff | atom | app ;
+diff = "<>" ;
+atom = "<", word, ">" ;
+app = "op<", { packet }, ">" ;
+word = alnum, { alnum } ;
+alnum = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+      | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
+      | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
+      | "u" | "v" | "w" | "x" | "y" | "z" ;
