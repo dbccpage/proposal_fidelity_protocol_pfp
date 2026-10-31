@@ -1,0 +1,222 @@
+{
+  "kind": "DOCUMENTATION_VALIDATION",
+  "date": "2026-10-31",
+  "python": "3.12.14",
+  "base_source_commit": "e6a73e5f3e7ff5777d2f732751f0c80f053cada3",
+  "fresh_model_calls": 0,
+  "fixture_origin": "HAND_AUTHORED_TEST_INPUT; not an LLM response or experimental result",
+  "published_code_execution": "Exact WF1 Python blocks with only runs/wf1-first replaced by a unique temporary folder. Original code otherwise unchanged.",
+  "scope": "Current documentation examples, Lab receipt replay, links, export hashes and registry. Not full legacy workflow replay or hosted CI.",
+  "checks": [
+    {
+      "name": "lab packs",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "paper-005-worked-session       8 moves  Paper 005 worked session: holonomy defect, refusal, repair, verify, retract\nsection-repair                 8 moves  Consistent claims: a section CUT reaches zero defect\nrefusal-gallery               13 moves  Every refusal the governor can give, each leaving the state unchanged\ntwo-islands                    7 moves  Two components: the obstruction is the sum of each island's\narbitrage-cycle                9 moves  Quoted price gaps around a loop that do not close are an arbitrage; fixing the stale quote removes it\nledger-reconciliation          7 moves  Two ledgers disagree around a loop; the cheapest repair edits only the least trusted entry\nevery-edge-not-all            13 moves  Every claim can be met on its own, but no single assignment meets them all\ncheapest-repair               10 moves  An inconsistent loop is cheapest to fit on its lowest-weight edge; fitting it on a heavy edge is refused\nretract-stale-claim           10 moves  Retracting to the last consistent step undoes a bad revision, and both steps stay in the receipt"
+    },
+    {
+      "name": "lab run paper-005-worked-session",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "Paper 005 worked session: holonomy defect, refusal, repair, verify, retract\nstep         move     ok  status                 defect\nstep_001     ASSERT   yes Asserted               0 -> 1\nstep_002     ASSERT   yes Asserted               1 -> 3\nstep_003     ASSERT   yes Asserted               3 -> 6\nstep_004     CUT      no  DefectIncrease         3 -> 5\nstep_005     CUT      yes ExactRepair            3 -> 0\nstep_006     VERIFY   yes Verified               0 -> 0\nstep_007     RETRACT  yes Retracted              0 -> 6\nstep_008     VERIFY   no  VerificationFailed     6 -> 6\nfinal defect 6, obstruction 3\nreceipt de07ba58d796700acb8d13d904f814cc218b0b862510d16f6244ab141b463541"
+    },
+    {
+      "name": "lab verify paper-005-worked-session",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "VALID  digest de07ba58d796700acb8d13d904f814cc218b0b862510d16f6244ab141b463541"
+    },
+    {
+      "name": "lab run arbitrage-cycle",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "Quoted price gaps around a loop that do not close are an arbitrage; fixing the stale quote removes it\nstep         move     ok  status                 defect\nquote_usd_eur ASSERT   yes Asserted               0 -> 3\nquote_eur_gbp ASSERT   yes Asserted               3 -> 5\nquote_gbp_usd ASSERT   yes Asserted               5 -> 9\nstep_004     VERIFY   no  VerificationFailed     9 -> 9\nstep_005     RETRACT  yes Retracted              9 -> 5\nfresh_gbp_usd ASSERT   yes Asserted               5 -> 10\nstep_007     VERIFY   yes Verified               10 -> 10\nstep_008     CUT      yes ExactRepair            10 -> 0\nstep_009     VERIFY   yes Verified               0 -> 0\nfinal defect 0, obstruction 0\nreceipt 9a32083d1948a0a3499a7b5f4398e15c198f247d1a5c034fd7766f61eb4b0e11"
+    },
+    {
+      "name": "lab verify arbitrage-cycle",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "VALID  digest 9a32083d1948a0a3499a7b5f4398e15c198f247d1a5c034fd7766f61eb4b0e11"
+    },
+    {
+      "name": "correct: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\correct"
+    },
+    {
+      "name": "correct: check and replay exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "HOST_ACCEPTED NONE\nRechecked saved bytes: HOST_ACCEPTED",
+      "status": "HOST_ACCEPTED",
+      "failure_class": "NONE"
+    },
+    {
+      "name": "fresh-folder overwrite guard",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": ""
+    },
+    {
+      "name": "check-record overwrite guard",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": ""
+    },
+    {
+      "name": "wrong_total: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\wrong_total"
+    },
+    {
+      "name": "wrong_total: check and replay exact published block",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": "PROVIDER_COMPLETED CERTIFICATE\nRechecked saved bytes: PROVIDER_COMPLETED",
+      "status": "PROVIDER_COMPLETED",
+      "failure_class": "CERTIFICATE"
+    },
+    {
+      "name": "boolean_total: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\boolean_total"
+    },
+    {
+      "name": "boolean_total: check and replay exact published block",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": "PROVIDER_COMPLETED TASK_ENVELOPE\nRechecked saved bytes: PROVIDER_COMPLETED",
+      "status": "PROVIDER_COMPLETED",
+      "failure_class": "TASK_ENVELOPE"
+    },
+    {
+      "name": "float_total: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\float_total"
+    },
+    {
+      "name": "float_total: check and replay exact published block",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": "PROVIDER_COMPLETED TASK_ENVELOPE\nRechecked saved bytes: PROVIDER_COMPLETED",
+      "status": "PROVIDER_COMPLETED",
+      "failure_class": "TASK_ENVELOPE"
+    },
+    {
+      "name": "extra_answer_field: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\extra_answer_field"
+    },
+    {
+      "name": "extra_answer_field: check and replay exact published block",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": "PROVIDER_COMPLETED TASK_ENVELOPE\nRechecked saved bytes: PROVIDER_COMPLETED",
+      "status": "PROVIDER_COMPLETED",
+      "failure_class": "TASK_ENVELOPE"
+    },
+    {
+      "name": "wrong_input_binding: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\wrong_input_binding"
+    },
+    {
+      "name": "wrong_input_binding: check and replay exact published block",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": "PROVIDER_COMPLETED TASK_ENVELOPE\nRechecked saved bytes: PROVIDER_COMPLETED",
+      "status": "PROVIDER_COMPLETED",
+      "failure_class": "TASK_ENVELOPE"
+    },
+    {
+      "name": "wrong_attempt: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\wrong_attempt"
+    },
+    {
+      "name": "wrong_attempt: check and replay exact published block",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": "PROVIDER_COMPLETED TASK_ENVELOPE\nRechecked saved bytes: PROVIDER_COMPLETED",
+      "status": "PROVIDER_COMPLETED",
+      "failure_class": "TASK_ENVELOPE"
+    },
+    {
+      "name": "duplicate_key: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\duplicate_key"
+    },
+    {
+      "name": "duplicate_key: check and replay exact published block",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": "PROVIDER_COMPLETED TASK_ENVELOPE\nRechecked saved bytes: PROVIDER_COMPLETED",
+      "status": "PROVIDER_COMPLETED",
+      "failure_class": "TASK_ENVELOPE"
+    },
+    {
+      "name": "fenced_json: prepare exact published block",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "<validation-artifacts>\\fenced_json"
+    },
+    {
+      "name": "fenced_json: check and replay exact published block",
+      "passed": true,
+      "exit_code": 1,
+      "stdout": "PROVIDER_COMPLETED TASK_ENVELOPE\nRechecked saved bytes: PROVIDER_COMPLETED",
+      "status": "PROVIDER_COMPLETED",
+      "failure_class": "TASK_ENVELOPE"
+    },
+    {
+      "name": "wiki links and code fences",
+      "passed": true,
+      "pages": 20,
+      "local_links": 208
+    },
+    {
+      "name": "export hashes: evidence/raw_manifest.json",
+      "passed": true,
+      "files": 33
+    },
+    {
+      "name": "export hashes: examples/manifest.json",
+      "passed": true,
+      "files": 33
+    },
+    {
+      "name": "recipe registry, 31 slots and measurement arithmetic",
+      "passed": true
+    }
+  ],
+  "checked_markdown_sha256": {
+    "wiki/_Sidebar.md": "067ec3b9dcf14c5a7961f62a940af3e02b6178e517ca886211dfc42a5104d3df",
+    "wiki/Getting-Started.md": "fe7510ebe332e67c87288f01cd2ecef4f5014303e2cc0de234d8f6a6e4dbf4f1",
+    "wiki/Home.md": "b17f4dcb751d3a6c8d1e3e7a90e2d972f0497fe38cb390c4012e10d9428cdca8",
+    "wiki/PFP-Lab.md": "4d2417faa9a662eea32ffbc793624b55ec57f2db29f8fdc8c321373b4cbab873",
+    "wiki/Workflow-Authoring.md": "5765a0faf9d339411db172212d6a2103db1c1192c2cc5b935d606799a9cb2e87",
+    "wiki/Workflow-Contracts.md": "f18aa3a45367af22b57a6817bab579792e4c133676eb14e857a2c09be263b6ec",
+    "wiki/Workflow-Examples.md": "b625423a211af5cb14e0d08a1a52d543ce6da6c600bea2b332d653c495c9dd1f",
+    "wiki/Workflow-Glossary.md": "73edcfdf90e58e0df6785e4acbe45921a03df7228cddb8712c831b843624cd4a",
+    "wiki/Workflow-Integration-Status.md": "19039121e63ae6ef11f97b919caebea09c45f8ba1161d80c5ac33c876d5773ac",
+    "wiki/Workflow-Library.md": "e64a74b9449e492d634c73a00345caa2eee264c0dbf50747bb69f4287dd2d5c0",
+    "wiki/Workflow-Recipe-Template.md": "9d7ec29f96dee0e8d8136e15f2e944622c5f7169b06f57c2316ebd8b1786404c",
+    "wiki/Workflow-Results.md": "20144c31896531524885a1d272e1103b5feb41ea3e5a079fe451b6c84b02efd5",
+    "wiki/Workflow-Start-Here.md": "be4229f6f4c6c39bb66963f76d5cbde6b5b87bcd461bd81f02ded81a04cfd7a2",
+    "wiki/Workflow-Troubleshooting.md": "b1cd8ed6e953f4b351eefd61cf052c20fc405e4ac1dff95135e873f7b80ce116",
+    "wiki/Workflow-WF1.md": "d3489a186eac8c2868075ea9ae6ce4b7f1af925ee3828507257aad9353583262",
+    "wiki/Workflow-WF2.md": "3ffff0ff6a31aeefeeae414a04b6d9cfc714e8c77edf25c1d7ce6f566ae60cfc",
+    "wiki/Workflow-WF3.md": "01b6f27aef295896cf58ec07663bb43ba5a1ceff53484341429e24840f8a7809",
+    "wiki/Workflow-WF4.md": "71d44ec3de190073dcb2f02d6328f3534fab752e20e2ad6bf66c6cae31eebc33",
+    "wiki/Workflow-WF5.md": "2cbbf3b078a612771e61358abbad215430b934f723111f0fe11ef289d9c89e6b",
+    "wiki/Workflows.md": "c8955dff362b84ec8ac3b9968f4ef346874542c1bb73a048d42435cb5ed48277"
+  }
+}

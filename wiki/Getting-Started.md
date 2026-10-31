@@ -46,6 +46,12 @@ third-party runtime packages. Test extras, where present, install with
 `python -m pip install ".[dev]"` from the package folder. On Windows, `py -3.12`
 can replace `python`.
 
+## Use it in your own workflow
+
+Start with the [short workflow walkthrough](Workflow-Start-Here.md), then
+[WF1's typed-answer example](Workflow-WF1.md). The [workflow chooser](Workflows.md)
+explains when to add operation records, mining, five agents or a checked rewrite.
+
 ## Next
 
 - [Core concepts](Core-Concepts.md) for the vocabulary.

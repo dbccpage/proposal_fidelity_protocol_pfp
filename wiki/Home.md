@@ -17,6 +17,7 @@ older papers and code.
 
 | If you want to... | Go to |
 | --- | --- |
+| Put PFP into a workflow | [Choose WF1–WF5](Workflows.md) · [Start in a few steps](Workflow-Start-Here.md) |
 | Understand the idea in plain language | [Getting started](Getting-Started.md) |
 | Learn the vocabulary (packets, obstruction, retraction, receipts) | [Core concepts](Core-Concepts.md) |
 | Read the research papers in order | [Papers](Papers.md), with a page per paper |
