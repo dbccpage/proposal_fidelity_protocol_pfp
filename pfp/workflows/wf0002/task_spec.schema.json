@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "task_id",
+    "seed_prompt",
+    "input",
+    "answer_schema",
+    "checker"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "\\S"
+    },
+    "seed_prompt": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 65536,
+      "pattern": "\\S"
+    },
+    "input": {
+      "type": "object"
+    },
+    "answer_schema": {
+      "type": "object"
+    },
+    "checker": {
+      "enum": [
+        "schema_only",
+        "integer_sum_v1"
+      ]
+    }
+  }
+}

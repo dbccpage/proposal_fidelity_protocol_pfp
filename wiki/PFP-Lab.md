@@ -2,8 +2,8 @@
 
 PFP Lab is a small tool for trying ideas against the protocol: you load a
 scenario of claims on a graph, apply operations, and watch the obstruction and
-the receipt change. It is under active development, and only its scenario packs
-are on `main` so far.
+the receipt change. Its Python command line and scenario packs are available in the repository.
+It remains under active development.
 
 ## Operations
 
@@ -30,11 +30,18 @@ Each is a small, exact demonstration of one idea.
 | `cheapest-repair` | Putting the whole mismatch on a heavy edge is refused; putting it on the lightest edge is admitted. |
 | `retract-stale-claim` | A revision breaks consistency; RETRACT restores the last consistent state. |
 
-Once the Lab's command line is merged, a pack runs as a file:
+From a source checkout with Python 3.12+, run and verify a pack:
 
 ```bash
-python -m pfp_lab.cli.main run pfp_lab/core/packs/arbitrage-cycle.json
+python -m pip install -e .
+python -m pfp_lab.cli.main packs
+python -m pfp_lab.cli.main run --pack arbitrage-cycle --receipt lab-receipt.json
+python -m pfp_lab.cli.main verify lab-receipt.json
 ```
+
+The command runs a local declared scenario; it does not make a fresh LLM call.
+See [Start here](Workflow-Start-Here.md) for the path from a fixture receipt to
+a [typed model-response workflow](Workflow-WF1.md).
 
 ## Planned front ends
 

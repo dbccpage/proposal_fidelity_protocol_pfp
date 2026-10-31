@@ -8,6 +8,21 @@
 - [Repository layout](Repository-Layout.md)
 - [Demos, pilots and tests](Demos-Pilots-And-Tests.md) · [Test catalog](Test-Catalog.md)
 
+**Use PFP in a workflow**
+
+- [Choose WF1–WF5](Workflows.md) · [Start here](Workflow-Start-Here.md)
+- [Install and run WF1–WF5](Workflow-Running.md)
+- [WF1: typed answer](Workflow-WF1.md)
+- [WF2: full slots](Workflow-WF2.md)
+- [WF3: mine first](Workflow-WF3.md)
+- [WF4: five agents + LGGR](Workflow-WF4.md)
+- [WF5: checked seed rewrite](Workflow-WF5.md)
+- [Results and costs](Workflow-Results.md) · [Troubleshooting](Workflow-Troubleshooting.md)
+- [Library](Workflow-Library.md) · [Integration status](Workflow-Integration-Status.md)
+- [Contracts](Workflow-Contracts.md) · [Glossary](Workflow-Glossary.md)
+- [Exact prompts and schemas](Workflow-Examples.md)
+- [Add a recipe](Workflow-Recipe-Template.md) · [Authoring guide](Workflow-Authoring.md)
+
 **Code**
 
 - [pfp package](PFP-Package.md)

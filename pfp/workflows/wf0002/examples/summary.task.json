@@ -1,0 +1,26 @@
+{
+  "task_id": "wf2-summary-example",
+  "seed_prompt": "Summarize the supplied issue and propose one next action.",
+  "input": {
+    "issue": "A caller still imports a package that was moved."
+  },
+  "answer_schema": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string",
+        "minLength": 1
+      },
+      "next_action": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "summary",
+      "next_action"
+    ],
+    "additionalProperties": false
+  },
+  "checker": "schema_only"
+}

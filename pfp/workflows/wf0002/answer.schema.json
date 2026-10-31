@@ -1,0 +1,220 @@
+{
+  "type": "object",
+  "properties": {
+    "task_result": {},
+    "slot_report": {
+      "type": "array",
+      "minItems": 31,
+      "maxItems": 31,
+      "items": {
+        "type": "object",
+        "properties": {
+          "slot": {
+            "enum": [
+              "carrier",
+              "equality_policy",
+              "algebraic_ring",
+              "ambient_space",
+              "assumptions",
+              "vacuum_state",
+              "gauge_group",
+              "observer_budget",
+              "operands",
+              "colours",
+              "operators",
+              "grafting_sequence",
+              "root",
+              "ordered_ports",
+              "intermediate_bindings",
+              "compatibility_obligations",
+              "concrete_spans",
+              "parameter_bindings",
+              "boundary_conditions",
+              "instantiated_arguments",
+              "congruence_ideals",
+              "preservation_obligations",
+              "invariant_witnesses",
+              "annihilators",
+              "anti_patterns",
+              "helpful_patterns",
+              "repair_candidates",
+              "unresolved_obligations",
+              "witness_anchors",
+              "ddc_trace",
+              "terminal"
+            ]
+          },
+          "disposition": {
+            "enum": [
+              "provided",
+              "not_applicable",
+              "unresolved"
+            ]
+          },
+          "value": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "slot",
+          "disposition",
+          "value",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "operad_candidates": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "operation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_colours": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "maxItems": 128
+          },
+          "target_colour": {
+            "type": "string",
+            "minLength": 1
+          },
+          "arity": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 128
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "seed_prompt",
+                  "input_json"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "quote"
+            ],
+            "additionalProperties": false
+          },
+          "witness_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "maxItems": 128
+          }
+        },
+        "required": [
+          "id",
+          "operation",
+          "source_colours",
+          "target_colour",
+          "arity",
+          "source",
+          "witness_refs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "ddc_moves": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "op": {
+            "enum": [
+              "E",
+              "R",
+              "C",
+              "I",
+              "Λ",
+              "D",
+              "M",
+              "T"
+            ]
+          },
+          "operad_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "before": {
+            "type": "string",
+            "minLength": 1
+          },
+          "after": {
+            "type": "string",
+            "minLength": 1
+          },
+          "local_log": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "refusal": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "witness_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "maxItems": 128
+          }
+        },
+        "required": [
+          "id",
+          "op",
+          "operad_id",
+          "before",
+          "after",
+          "local_log",
+          "refusal",
+          "witness_refs"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "task_result",
+    "slot_report",
+    "operad_candidates",
+    "ddc_moves"
+  ],
+  "additionalProperties": false
+}
