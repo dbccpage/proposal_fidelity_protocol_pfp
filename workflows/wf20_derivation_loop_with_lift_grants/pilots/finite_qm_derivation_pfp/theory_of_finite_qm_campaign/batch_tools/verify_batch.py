@@ -48,7 +48,7 @@ def repo_relative(root, pinned):
     """Map a receipt's absolute source pin (recorded in whatever checkout ran the batch) to the same file in this checkout:
     the shortest suffix that starts at a top-level entry of `root` and exists there. Falls back to the pinned path."""
     parts = Path(pinned).parts
-    top = {p.name for p in Path(root).iterdir()} - {'.claude', '.git'}
+    top = {p.name for p in Path(root).iterdir()} - {'.model_a', '.git'}
     for i, part in enumerate(parts):
         if part in top and Path(root).joinpath(*parts[i:]).exists():
             return Path(*parts[i:]).as_posix()

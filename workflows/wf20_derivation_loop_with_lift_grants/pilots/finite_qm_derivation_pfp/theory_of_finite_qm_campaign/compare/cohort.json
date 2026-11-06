@@ -1,7 +1,7 @@
 {
   "schema_id": "omega.pfp.compare.cohort.v1",
   "authority_effect": "None",
-  "claim": "Pre-registered cohort of the Fable-versus-swarm comparison. Arm F outcomes are what the receipts on disk say; no verifier was re-run to fill this file. The instructions of the agentic Fable sessions are not in the repository, so stratum D is an outcome comparison, not a paired one.",
+  "claim": "Pre-registered cohort of the Solo-versus-swarm comparison. Arm F outcomes are what the receipts on disk say; no verifier was re-run to fill this file. The instructions of the agentic Solo sessions are not in the repository, so stratum D is an outcome comparison, not a paired one.",
   "built_from": {
     "base_ref": "origin/main",
     "base_commit": "e8500fdbd665ad97225808633e2cdeab75dff32f",
@@ -23,8 +23,8 @@
     "wallclock_s": 1800
   },
   "strata": {
-    "D": "prompts with a completed expensive-model derivation run (Fable) in dag/results",
-    "P": "prompts with expensive-model ladder attempts (Opus, Fable) on a recorded packet",
+    "D": "prompts with a completed expensive-model derivation run (Solo) in dag/results",
+    "P": "prompts with expensive-model ladder attempts (Tier1, Solo) on a recorded packet",
     "C": "matched never-run controls (swarm only; yield and abstention rates, no parity claim)"
   },
   "items": [
@@ -38,14 +38,14 @@
       "operad_collection_sha256_at_freeze": "e08853c632c6f1f5bc65e0e62c5983b8ce56a3220f7bf82affa994368596f536",
       "index_position_at_base": 9,
       "source_candidates_at_base": 16,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
-            "path": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_fable51_born",
-            "run_slug": "20261020T004525Z_fable51_born",
-            "model": "claude-fable-5-1",
+            "path": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_solo51_born",
+            "run_slug": "20261020T004525Z_solo51_born",
+            "model": "model-a4",
             "model_basis": "in-folder model field (budget.json / model_access.json)",
             "agentic_session": false,
             "first_commit": "dff594695459e565e0bd30ea771948133f3f254d",
@@ -55,8 +55,8 @@
           {
             "path": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T205000Z_effect_valuation_lean",
             "run_slug": "20261020T205000Z_effect_valuation_lean",
-            "model": "claude-fable-5-1",
-            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Fable 5.1",
+            "model": "model-a4",
+            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Solo 5.1",
             "agentic_session": true,
             "first_commit": "61369f452330f1b10abcc34945b80009d3287697",
             "cost_status": "unrecorded",
@@ -65,8 +65,8 @@
           {
             "path": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T224000Z_gaussian_hermitian_carrier",
             "run_slug": "20261020T224000Z_gaussian_hermitian_carrier",
-            "model": "claude-fable-5-1",
-            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Fable 5.1",
+            "model": "model-a4",
+            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Solo 5.1",
             "agentic_session": true,
             "first_commit": "9d8eddb184a0214d13e01ca2a071635402baf66f",
             "cost_status": "unrecorded",
@@ -78,7 +78,7 @@
           "recorded_calls": [
             {
               "stage": "p0_mine",
-              "model": "claude-fable-5-1",
+              "model": "model-a4",
               "effort": "xhigh",
               "input_tokens": 47542,
               "output_tokens": 78058,
@@ -88,7 +88,7 @@
             },
             {
               "stage": "p1_derive",
-              "model": "claude-fable-5-1",
+              "model": "model-a4",
               "effort": "xhigh",
               "input_tokens": 8624,
               "output_tokens": 41942,
@@ -110,58 +110,58 @@
             }
           ],
           "estimate_lower_bound_usd_unrecorded_runs": 6.6725,
-          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (claude-fable-5-1 list price in llm_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
+          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (model-a4 list price in model_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
           "status": "partly_recorded"
         },
         "units": [
           {
-            "unit_id": "20261020T004525Z_fable51_born::matrix_instance_lean",
+            "unit_id": "20261020T004525Z_solo51_born::matrix_instance_lean",
             "class": "L",
             "kind": "MatrixInstance.lean (first compile, retained failure)",
             "exit_code": 1,
-            "receipt": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_fable51_born/p2_prepared/matrix_instance_lean_receipt.json",
+            "receipt": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_solo51_born/p2_prepared/matrix_instance_lean_receipt.json",
             "on_disk_verdict": "rejected",
-            "authored_by": "host session (not the Fable API reply); credited to Arm F by the generosity rule",
+            "authored_by": "host session (not the Solo API reply); credited to Arm F by the generosity rule",
             "receipt_toolchain": null,
             "evidence_kind": "process_receipt_exit_code_only"
           },
           {
-            "unit_id": "20261020T004525Z_fable51_born::matrix_instance_repaired_lean",
+            "unit_id": "20261020T004525Z_solo51_born::matrix_instance_repaired_lean",
             "class": "L",
             "kind": "MatrixInstanceRepaired.lean",
             "exit_code": 0,
-            "receipt": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_fable51_born/p2_prepared/matrix_instance_repaired_lean_receipt.json",
+            "receipt": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_solo51_born/p2_prepared/matrix_instance_repaired_lean_receipt.json",
             "on_disk_verdict": "accepted",
-            "authored_by": "host session (not the Fable API reply); credited to Arm F by the generosity rule",
+            "authored_by": "host session (not the Solo API reply); credited to Arm F by the generosity rule",
             "receipt_toolchain": null,
             "evidence_kind": "process_receipt_exit_code_only"
           },
           {
-            "unit_id": "20261020T004525Z_fable51_born::rust_tests",
+            "unit_id": "20261020T004525Z_solo51_born::rust_tests",
             "class": "W",
             "kind": "rust tests of numeric_replay.rs",
             "exit_code": 0,
-            "receipt": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_fable51_born/p2_prepared/rust_tests_receipt.json",
+            "receipt": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_solo51_born/p2_prepared/rust_tests_receipt.json",
             "on_disk_verdict": "accepted",
-            "authored_by": "host session (not the Fable API reply); credited to Arm F by the generosity rule",
+            "authored_by": "host session (not the Solo API reply); credited to Arm F by the generosity rule",
             "receipt_toolchain": null,
             "evidence_kind": "process_receipt_exit_code_only"
           },
           {
-            "unit_id": "20261020T004525Z_fable51_born::numeric_checker_preflight",
+            "unit_id": "20261020T004525Z_solo51_born::numeric_checker_preflight",
             "class": "W",
             "kind": "python numeric checker",
             "exit_code": 0,
-            "receipt": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_fable51_born/p2_prepared/numeric_checker_preflight_receipt.json",
+            "receipt": "dag/results/FQ-GAP-BORN-UNIQUENESS-GLEASON/runs/20261020T004525Z_solo51_born/p2_prepared/numeric_checker_preflight_receipt.json",
             "on_disk_verdict": "accepted",
-            "authored_by": "host session (not the Fable API reply); credited to Arm F by the generosity rule",
+            "authored_by": "host session (not the Solo API reply); credited to Arm F by the generosity rule",
             "receipt_toolchain": null,
             "evidence_kind": "process_receipt_exit_code_only"
           },
           {
-            "unit_id": "20261020T004525Z_fable51_born::p0_claims",
+            "unit_id": "20261020T004525Z_solo51_born::p0_claims",
             "class": "O",
-            "kind": "fable_p0_claims_after_host_review",
+            "kind": "solo_p0_claims_after_host_review",
             "claims_reviewed": 12,
             "dispositions": {
               "deferred_not_accepted": 3,
@@ -428,7 +428,7 @@
             "unit_id": "20261020T224000Z_gaussian_hermitian_carrier::rust_tests"
           }
         ],
-        "comparability": "Agentic multi-turn Claude Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
+        "comparability": "Agentic multi-turn Model_a Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
       },
       "arm_s": {
         "packet_source": "compile_p0_cleanroom",
@@ -457,16 +457,16 @@
           "lean4/contract.lean"
         ],
         "leak_markers": [
-          "20261020T004525Z_fable51_born",
+          "20261020T004525Z_solo51_born",
           "20261020T205000Z_effect_valuation_lean",
           "20261020T224000Z_gaussian_hermitian_carrier",
           "BornEffectValuation",
-          "BornFable",
-          "BornFable.HermitianCarrier",
-          "BornFable.HermitianPsd",
-          "BornFable.MatrixCarrier",
-          "BornFable.PsdDecomposition",
-          "BornFable.RationalSphere",
+          "BornSolo",
+          "BornSolo.HermitianCarrier",
+          "BornSolo.HermitianPsd",
+          "BornSolo.MatrixCarrier",
+          "BornSolo.PsdDecomposition",
+          "BornSolo.RationalSphere",
           "BornGaussRat",
           "BornHermitianCarrier",
           "BornHermitianPsdDecomposition",
@@ -495,15 +495,15 @@
       "operad_collection_sha256_at_freeze": "63ed717f8dc49a4deff29c33238eebeabe19a1161b8376f7b7f62d130383302c",
       "index_position_at_base": 11,
       "source_candidates_at_base": 6,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
             "path": "dag/results/FQ-GAP-CONTINUUM-HILBERT-LIFT/runs/20261020T230000Z_completion",
             "run_slug": "20261020T230000Z_completion",
-            "model": "claude-fable-5-1",
-            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Fable 5.1",
+            "model": "model-a4",
+            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Solo 5.1",
             "agentic_session": true,
             "first_commit": "6dd8d22f8c4ba4e0afc0a1f573cee5c2802d4f0c",
             "cost_status": "unrecorded",
@@ -512,8 +512,8 @@
           {
             "path": "dag/results/FQ-GAP-CONTINUUM-HILBERT-LIFT/runs/20261021T003000Z_lift_steps",
             "run_slug": "20261021T003000Z_lift_steps",
-            "model": "claude-fable-5-1",
-            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Fable 5.1",
+            "model": "model-a4",
+            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Solo 5.1",
             "agentic_session": true,
             "first_commit": "7877a475ff4dbd19bcb2d0e836d6cdab1705d40b",
             "cost_status": "unrecorded",
@@ -536,7 +536,7 @@
             }
           ],
           "estimate_lower_bound_usd_unrecorded_runs": 4.1084,
-          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (claude-fable-5-1 list price in llm_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
+          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (model-a4 list price in model_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
           "status": "unrecorded"
         },
         "units": [
@@ -724,7 +724,7 @@
             ]
           }
         ],
-        "comparability": "Agentic multi-turn Claude Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
+        "comparability": "Agentic multi-turn Model_a Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
       },
       "arm_s": {
         "packet_source": "compile_p0_cleanroom",
@@ -765,15 +765,15 @@
       "operad_collection_sha256_at_freeze": "8aa7efbc96bd35042f98209176142af5373f44578afb1737e4974cf799404a7a",
       "index_position_at_base": 48,
       "source_candidates_at_base": 3,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
             "path": "dag/results/FQ-GAP-STONE-CONTINUOUS-TIME/runs/20261020T225000Z_discrete_time_spec",
             "run_slug": "20261020T225000Z_discrete_time_spec",
-            "model": "claude-fable-5-1",
-            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Fable 5.1",
+            "model": "model-a4",
+            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Solo 5.1",
             "agentic_session": true,
             "first_commit": "0f433ce4ff6e20405e8b987fdb01fc67a0b8390a",
             "cost_status": "unrecorded",
@@ -791,7 +791,7 @@
             }
           ],
           "estimate_lower_bound_usd_unrecorded_runs": 1.3728,
-          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (claude-fable-5-1 list price in llm_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
+          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (model-a4 list price in model_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
           "status": "unrecorded"
         },
         "units": [
@@ -842,7 +842,7 @@
             "unit_id": "20261020T225000Z_discrete_time_spec::rust_tests"
           }
         ],
-        "comparability": "Agentic multi-turn Claude Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
+        "comparability": "Agentic multi-turn Model_a Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
       },
       "arm_s": {
         "packet_source": "compile_p0_cleanroom",
@@ -857,7 +857,7 @@
         ],
         "leak_markers": [
           "20261020T225000Z_discrete_time_spec",
-          "BornFable.DiscreteTime",
+          "BornSolo.DiscreteTime",
           "DiscreteTimeStoneSpec",
           "QParamGroup",
           "discrete_time_stone",
@@ -875,15 +875,15 @@
       "operad_collection_sha256_at_freeze": "256b07caec63378accede8257dd58f93812882201991934cac926544518d3a8b",
       "index_position_at_base": 130,
       "source_candidates_at_base": 7,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
             "path": "dag/results/L1-IMP-HILBERT-INNER-PRODUCT/runs/20261021T013500Z_sector_form",
             "run_slug": "20261021T013500Z_sector_form",
-            "model": "claude-fable-5-1",
-            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Fable 5.1",
+            "model": "model-a4",
+            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Solo 5.1",
             "agentic_session": true,
             "first_commit": "d8b768f6e2c86e4571ae2258645411ff91a4ca21",
             "cost_status": "unrecorded",
@@ -901,7 +901,7 @@
             }
           ],
           "estimate_lower_bound_usd_unrecorded_runs": 3.0146,
-          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (claude-fable-5-1 list price in llm_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
+          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (model-a4 list price in model_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
           "status": "unrecorded"
         },
         "units": [
@@ -974,7 +974,7 @@
             "unit_id": "20261021T013500Z_sector_form::rust_tests"
           }
         ],
-        "comparability": "Agentic multi-turn Claude Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
+        "comparability": "Agentic multi-turn Model_a Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
       },
       "arm_s": {
         "packet_source": "compile_p0_cleanroom",
@@ -990,8 +990,8 @@
         ],
         "leak_markers": [
           "20261021T013500Z_sector_form",
-          "InnerProductFable.HermitianSectorForm",
-          "InnerProductFable.SectorForm",
+          "InnerProductSolo.HermitianSectorForm",
+          "InnerProductSolo.SectorForm",
           "SectorFormHermitian",
           "SectorFormUniqueness",
           "inner_product_uniqueness",
@@ -1009,15 +1009,15 @@
       "operad_collection_sha256_at_freeze": "04d08d0120d0e6d2682298ecf36d2f11daeb831778d51bfef7006ed8c53f79b6",
       "index_position_at_base": 131,
       "source_candidates_at_base": 1,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
             "path": "dag/results/L1-IMP-LINEAR-ISOMETRIC-DYNAMICS/runs/20261021T190000Z_finite_wigner",
             "run_slug": "20261021T190000Z_finite_wigner",
-            "model": "claude-fable-5-1",
-            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Fable 5.1",
+            "model": "model-a4",
+            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Solo 5.1",
             "agentic_session": true,
             "first_commit": "50b35196e2a1395edbe41ce6642eab1a6dce2652",
             "cost_status": "unrecorded",
@@ -1035,7 +1035,7 @@
             }
           ],
           "estimate_lower_bound_usd_unrecorded_runs": 5.2177,
-          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (claude-fable-5-1 list price in llm_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
+          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (model-a4 list price in model_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
           "status": "unrecorded"
         },
         "units": [
@@ -1148,7 +1148,7 @@
             "unit_id": "20261021T190000Z_finite_wigner::rust_tests"
           }
         ],
-        "comparability": "Agentic multi-turn Claude Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
+        "comparability": "Agentic multi-turn Model_a Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
       },
       "arm_s": {
         "packet_source": "compile_p0_cleanroom",
@@ -1170,10 +1170,10 @@
           "FiniteWignerSimilarity",
           "FiniteWignerTheorem",
           "GaussRatAutomorphisms",
-          "WignerFable.GaussRatAut",
-          "WignerFable.Kernel",
-          "WignerFable.Similarity",
-          "WignerFable.Theorem",
+          "WignerSolo.GaussRatAut",
+          "WignerSolo.Kernel",
+          "WignerSolo.Similarity",
+          "WignerSolo.Theorem",
           "finite_wigner",
           "test_finite_wigner"
         ]
@@ -1189,15 +1189,15 @@
       "operad_collection_sha256_at_freeze": "89da2f21390784f6d5559683d20c3f346a1c1fe2e8d072fb99125f43359a6f61",
       "index_position_at_base": 177,
       "source_candidates_at_base": 19,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
             "path": "dag/results/TFQ-0084/runs/20261021T161243Z_staged",
             "run_slug": "20261021T161243Z_staged",
-            "model": "claude-fable-5-1",
-            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Fable 5.1",
+            "model": "model-a4",
+            "model_basis": "Co-Authored-By trailer on the commit that added the folder: Solo 5.1",
             "agentic_session": true,
             "first_commit": "5831dabdf8e90b626f6d34a0492d4d75c3cbd01a",
             "cost_status": "unrecorded",
@@ -1215,7 +1215,7 @@
             }
           ],
           "estimate_lower_bound_usd_unrecorded_runs": 1.5976,
-          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (claude-fable-5-1 list price in llm_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
+          "estimate_method": "LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; no receipts, no binaries) / 3.5 bytes per token x USD 50 per million output tokens (model-a4 list price in model_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the true cost is higher. The user may supply the real session cost in cost_overrides.json (see PROTOCOL.md 6.4).",
           "status": "unrecorded"
         },
         "units": [
@@ -1259,7 +1259,7 @@
             "evidence_kind": "candidate_json_only"
           }
         ],
-        "comparability": "Agentic multi-turn Claude Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
+        "comparability": "Agentic multi-turn Model_a Code sessions with tools and human steering; the instruction text each session received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only."
       },
       "arm_s": {
         "packet_source": "compile_p0_cleanroom",
@@ -1282,13 +1282,13 @@
       "operad_collection_sha256_at_freeze": "9c43eaa60f17b64eff5fb176fe3e66c267c0d41b44c637cb46164f8cb4df5bb1",
       "index_position_at_base": 198,
       "source_candidates_at_base": 0,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
             "path": "dag/results/TFQ-0022/runs/20261021T182150Z_ladder",
-            "model": "claude-opus-5-5",
+            "model": "model-a1",
             "model_basis": "ladder_receipt.json attempt rows",
             "agentic_session": false,
             "first_commit": "d9183ceb38f07a713b89b4c841994f687b5bd0d7",
@@ -1298,9 +1298,9 @@
         "headline_attempt": {
           "run": "dag/results/TFQ-0022/runs/20261021T182150Z_ladder",
           "attempt_id": "a4-1",
-          "model": "claude-opus-5-5"
+          "model": "model-a1"
         },
-        "headline_rule": "the highest-priced model attempted on the node (Fable before Opus), earliest run, earliest attempt",
+        "headline_rule": "the highest-priced model attempted on the node (Solo before Tier1), earliest run, earliest attempt",
         "cost": {
           "recorded_usd": 0.055716,
           "status": "recorded_rated",
@@ -1312,7 +1312,7 @@
             "unit_id": "20261021T182150Z_ladder::a4-1",
             "class": "O",
             "kind": "ladder_p0_attempt",
-            "model": "claude-opus-5-5",
+            "model": "model-a1",
             "verified_entries": 2,
             "refused_claims": 0,
             "refused_by_class": {},
@@ -1353,13 +1353,13 @@
       "operad_collection_sha256_at_freeze": "91a9d60d9e1200bdd5e70a3f991dbe1fb8899b93dc89510f5c4e78e793cacabc",
       "index_position_at_base": 204,
       "source_candidates_at_base": 0,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
             "path": "dag/results/TFQ-0028/runs/20261021T182106Z_ladder",
-            "model": "claude-opus-5-5",
+            "model": "model-a1",
             "model_basis": "ladder_receipt.json attempt rows",
             "agentic_session": false,
             "first_commit": "d9183ceb38f07a713b89b4c841994f687b5bd0d7",
@@ -1369,9 +1369,9 @@
         "headline_attempt": {
           "run": "dag/results/TFQ-0028/runs/20261021T182106Z_ladder",
           "attempt_id": "a4-1",
-          "model": "claude-opus-5-5"
+          "model": "model-a1"
         },
-        "headline_rule": "the highest-priced model attempted on the node (Fable before Opus), earliest run, earliest attempt",
+        "headline_rule": "the highest-priced model attempted on the node (Solo before Tier1), earliest run, earliest attempt",
         "cost": {
           "recorded_usd": 0.077536,
           "status": "recorded_rated",
@@ -1383,7 +1383,7 @@
             "unit_id": "20261021T182106Z_ladder::a4-1",
             "class": "O",
             "kind": "ladder_p0_attempt",
-            "model": "claude-opus-5-5",
+            "model": "model-a1",
             "verified_entries": 12,
             "refused_claims": 0,
             "refused_by_class": {},
@@ -1424,13 +1424,13 @@
       "operad_collection_sha256_at_freeze": "6ab93b3f2955f533a088fea19ef38234c31c657b0be29cc1c26d5d93bb568729",
       "index_position_at_base": 207,
       "source_candidates_at_base": 0,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "arm_f": {
         "mode": "reuse",
         "runs": [
           {
             "path": "dag/results/TFQ-0031/runs/20261021T181434Z_ladder",
-            "model": "claude-opus-5-5",
+            "model": "model-a1",
             "model_basis": "ladder_receipt.json attempt rows",
             "agentic_session": false,
             "first_commit": "d9183ceb38f07a713b89b4c841994f687b5bd0d7",
@@ -1438,7 +1438,7 @@
           },
           {
             "path": "dag/results/TFQ-0031/runs/20261021T181611Z_ladder",
-            "model": "claude-opus-5-5",
+            "model": "model-a1",
             "model_basis": "ladder_receipt.json attempt rows",
             "agentic_session": false,
             "first_commit": "d9183ceb38f07a713b89b4c841994f687b5bd0d7",
@@ -1446,7 +1446,7 @@
           },
           {
             "path": "dag/results/TFQ-0031/runs/20261021T181633Z_ladder",
-            "model": "claude-fable-5-1",
+            "model": "model-a4",
             "model_basis": "ladder_receipt.json attempt rows",
             "agentic_session": false,
             "first_commit": "d9183ceb38f07a713b89b4c841994f687b5bd0d7",
@@ -1456,9 +1456,9 @@
         "headline_attempt": {
           "run": "dag/results/TFQ-0031/runs/20261021T181633Z_ladder",
           "attempt_id": "a5-1",
-          "model": "claude-fable-5-1"
+          "model": "model-a4"
         },
-        "headline_rule": "the highest-priced model attempted on the node (Fable before Opus), earliest run, earliest attempt",
+        "headline_rule": "the highest-priced model attempted on the node (Solo before Tier1), earliest run, earliest attempt",
         "cost": {
           "recorded_usd": 0.27364,
           "status": "recorded_rated",
@@ -1470,7 +1470,7 @@
             "unit_id": "20261021T181633Z_ladder::a5-1",
             "class": "O",
             "kind": "ladder_p0_attempt",
-            "model": "claude-fable-5-1",
+            "model": "model-a4",
             "verified_entries": 4,
             "refused_claims": 2,
             "refused_by_class": {
@@ -1487,7 +1487,7 @@
             "unit_id": "20261021T181434Z_ladder::a4-9",
             "class": "O",
             "kind": "ladder_p0_attempt",
-            "model": "claude-opus-5-5",
+            "model": "model-a1",
             "verified_entries": 3,
             "refused_claims": 4,
             "refused_by_class": {
@@ -1506,7 +1506,7 @@
             "unit_id": "20261021T181611Z_ladder::a4-1",
             "class": "O",
             "kind": "ladder_p0_attempt",
-            "model": "claude-opus-5-5",
+            "model": "model-a1",
             "verified_entries": 4,
             "refused_claims": 1,
             "refused_by_class": {
@@ -1551,7 +1551,7 @@
       "operad_collection_sha256_at_freeze": "bdc6903aec8c794b90b03b41e54224ef267afabe31c2d321631308ba27eb9067",
       "index_position_at_base": 601,
       "source_candidates_at_base": 25,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "matched_to": "FQ-GAP-BORN-UNIQUENESS-GLEASON",
       "match_rule": "same prompt family if any, else any; nearest operation+relation candidate count; lowest index position",
       "match_quality": "same_family",
@@ -1606,7 +1606,7 @@
           "lean4/contract.lean"
         ],
         "leak_markers": [
-          "20261020T004525Z_fable51_born",
+          "20261020T004525Z_solo51_born",
           "20261020T205000Z_effect_valuation_lean",
           "20261020T224000Z_gaussian_hermitian_carrier",
           "20261020T225000Z_discrete_time_spec",
@@ -1616,13 +1616,13 @@
           "20261021T161243Z_staged",
           "20261021T190000Z_finite_wigner",
           "BornEffectValuation",
-          "BornFable",
-          "BornFable.DiscreteTime",
-          "BornFable.HermitianCarrier",
-          "BornFable.HermitianPsd",
-          "BornFable.MatrixCarrier",
-          "BornFable.PsdDecomposition",
-          "BornFable.RationalSphere",
+          "BornSolo",
+          "BornSolo.DiscreteTime",
+          "BornSolo.HermitianCarrier",
+          "BornSolo.HermitianPsd",
+          "BornSolo.MatrixCarrier",
+          "BornSolo.PsdDecomposition",
+          "BornSolo.RationalSphere",
           "BornGaussRat",
           "BornHermitianCarrier",
           "BornHermitianPsdDecomposition",
@@ -1647,16 +1647,16 @@
           "HilbertLiftL2Model",
           "HilbertLiftOperators",
           "HilbertLiftRationalUniformity",
-          "InnerProductFable.HermitianSectorForm",
-          "InnerProductFable.SectorForm",
+          "InnerProductSolo.HermitianSectorForm",
+          "InnerProductSolo.SectorForm",
           "OrderedQUnit",
           "QParamGroup",
           "SectorFormHermitian",
           "SectorFormUniqueness",
-          "WignerFable.GaussRatAut",
-          "WignerFable.Kernel",
-          "WignerFable.Similarity",
-          "WignerFable.Theorem",
+          "WignerSolo.GaussRatAut",
+          "WignerSolo.Kernel",
+          "WignerSolo.Similarity",
+          "WignerSolo.Theorem",
           "born_effect_valuation",
           "born_hermitian_valuation",
           "discrete_time_stone",
@@ -1680,7 +1680,7 @@
       "operad_collection_sha256_at_freeze": "d3b83e714b65da2f4add917ad36718f0f75de80c2f00ec6cdc910c714559e891",
       "index_position_at_base": 566,
       "source_candidates_at_base": 6,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "matched_to": "FQ-GAP-CONTINUUM-HILBERT-LIFT",
       "match_rule": "same prompt family if any, else any; nearest operation+relation candidate count; lowest index position",
       "match_quality": "fallback_any_family",
@@ -1735,7 +1735,7 @@
           "lean4/contract.lean"
         ],
         "leak_markers": [
-          "20261020T004525Z_fable51_born",
+          "20261020T004525Z_solo51_born",
           "20261020T205000Z_effect_valuation_lean",
           "20261020T224000Z_gaussian_hermitian_carrier",
           "20261020T225000Z_discrete_time_spec",
@@ -1745,13 +1745,13 @@
           "20261021T161243Z_staged",
           "20261021T190000Z_finite_wigner",
           "BornEffectValuation",
-          "BornFable",
-          "BornFable.DiscreteTime",
-          "BornFable.HermitianCarrier",
-          "BornFable.HermitianPsd",
-          "BornFable.MatrixCarrier",
-          "BornFable.PsdDecomposition",
-          "BornFable.RationalSphere",
+          "BornSolo",
+          "BornSolo.DiscreteTime",
+          "BornSolo.HermitianCarrier",
+          "BornSolo.HermitianPsd",
+          "BornSolo.MatrixCarrier",
+          "BornSolo.PsdDecomposition",
+          "BornSolo.RationalSphere",
           "BornGaussRat",
           "BornHermitianCarrier",
           "BornHermitianPsdDecomposition",
@@ -1776,16 +1776,16 @@
           "HilbertLiftL2Model",
           "HilbertLiftOperators",
           "HilbertLiftRationalUniformity",
-          "InnerProductFable.HermitianSectorForm",
-          "InnerProductFable.SectorForm",
+          "InnerProductSolo.HermitianSectorForm",
+          "InnerProductSolo.SectorForm",
           "OrderedQUnit",
           "QParamGroup",
           "SectorFormHermitian",
           "SectorFormUniqueness",
-          "WignerFable.GaussRatAut",
-          "WignerFable.Kernel",
-          "WignerFable.Similarity",
-          "WignerFable.Theorem",
+          "WignerSolo.GaussRatAut",
+          "WignerSolo.Kernel",
+          "WignerSolo.Similarity",
+          "WignerSolo.Theorem",
           "born_effect_valuation",
           "born_hermitian_valuation",
           "discrete_time_stone",
@@ -1809,7 +1809,7 @@
       "operad_collection_sha256_at_freeze": "b6efbdd2fe4917ffaea0bb51971866d3ccb74ad710cf757fd390b259d7fa5255",
       "index_position_at_base": 352,
       "source_candidates_at_base": 0,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "matched_to": "FQ-GAP-STONE-CONTINUOUS-TIME",
       "match_rule": "same prompt family if any, else any; nearest operation+relation candidate count; lowest index position",
       "match_quality": "same_family",
@@ -1864,7 +1864,7 @@
           "lean4/contract.lean"
         ],
         "leak_markers": [
-          "20261020T004525Z_fable51_born",
+          "20261020T004525Z_solo51_born",
           "20261020T205000Z_effect_valuation_lean",
           "20261020T224000Z_gaussian_hermitian_carrier",
           "20261020T225000Z_discrete_time_spec",
@@ -1874,13 +1874,13 @@
           "20261021T161243Z_staged",
           "20261021T190000Z_finite_wigner",
           "BornEffectValuation",
-          "BornFable",
-          "BornFable.DiscreteTime",
-          "BornFable.HermitianCarrier",
-          "BornFable.HermitianPsd",
-          "BornFable.MatrixCarrier",
-          "BornFable.PsdDecomposition",
-          "BornFable.RationalSphere",
+          "BornSolo",
+          "BornSolo.DiscreteTime",
+          "BornSolo.HermitianCarrier",
+          "BornSolo.HermitianPsd",
+          "BornSolo.MatrixCarrier",
+          "BornSolo.PsdDecomposition",
+          "BornSolo.RationalSphere",
           "BornGaussRat",
           "BornHermitianCarrier",
           "BornHermitianPsdDecomposition",
@@ -1905,16 +1905,16 @@
           "HilbertLiftL2Model",
           "HilbertLiftOperators",
           "HilbertLiftRationalUniformity",
-          "InnerProductFable.HermitianSectorForm",
-          "InnerProductFable.SectorForm",
+          "InnerProductSolo.HermitianSectorForm",
+          "InnerProductSolo.SectorForm",
           "OrderedQUnit",
           "QParamGroup",
           "SectorFormHermitian",
           "SectorFormUniqueness",
-          "WignerFable.GaussRatAut",
-          "WignerFable.Kernel",
-          "WignerFable.Similarity",
-          "WignerFable.Theorem",
+          "WignerSolo.GaussRatAut",
+          "WignerSolo.Kernel",
+          "WignerSolo.Similarity",
+          "WignerSolo.Theorem",
           "born_effect_valuation",
           "born_hermitian_valuation",
           "discrete_time_stone",
@@ -1938,7 +1938,7 @@
       "operad_collection_sha256_at_freeze": "aed4538beea8a10ecbed71686849814b08b674500f469ada967b0787901e05eb",
       "index_position_at_base": 354,
       "source_candidates_at_base": 0,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "matched_to": "L1-IMP-HILBERT-INNER-PRODUCT",
       "match_rule": "same prompt family if any, else any; nearest operation+relation candidate count; lowest index position",
       "match_quality": "same_family",
@@ -1993,7 +1993,7 @@
           "lean4/contract.lean"
         ],
         "leak_markers": [
-          "20261020T004525Z_fable51_born",
+          "20261020T004525Z_solo51_born",
           "20261020T205000Z_effect_valuation_lean",
           "20261020T224000Z_gaussian_hermitian_carrier",
           "20261020T225000Z_discrete_time_spec",
@@ -2003,13 +2003,13 @@
           "20261021T161243Z_staged",
           "20261021T190000Z_finite_wigner",
           "BornEffectValuation",
-          "BornFable",
-          "BornFable.DiscreteTime",
-          "BornFable.HermitianCarrier",
-          "BornFable.HermitianPsd",
-          "BornFable.MatrixCarrier",
-          "BornFable.PsdDecomposition",
-          "BornFable.RationalSphere",
+          "BornSolo",
+          "BornSolo.DiscreteTime",
+          "BornSolo.HermitianCarrier",
+          "BornSolo.HermitianPsd",
+          "BornSolo.MatrixCarrier",
+          "BornSolo.PsdDecomposition",
+          "BornSolo.RationalSphere",
           "BornGaussRat",
           "BornHermitianCarrier",
           "BornHermitianPsdDecomposition",
@@ -2034,16 +2034,16 @@
           "HilbertLiftL2Model",
           "HilbertLiftOperators",
           "HilbertLiftRationalUniformity",
-          "InnerProductFable.HermitianSectorForm",
-          "InnerProductFable.SectorForm",
+          "InnerProductSolo.HermitianSectorForm",
+          "InnerProductSolo.SectorForm",
           "OrderedQUnit",
           "QParamGroup",
           "SectorFormHermitian",
           "SectorFormUniqueness",
-          "WignerFable.GaussRatAut",
-          "WignerFable.Kernel",
-          "WignerFable.Similarity",
-          "WignerFable.Theorem",
+          "WignerSolo.GaussRatAut",
+          "WignerSolo.Kernel",
+          "WignerSolo.Similarity",
+          "WignerSolo.Theorem",
           "born_effect_valuation",
           "born_hermitian_valuation",
           "discrete_time_stone",
@@ -2067,7 +2067,7 @@
       "operad_collection_sha256_at_freeze": "c9c35d4d1507f51d430d7f25981714b955cfa06e86e331847572d40a9d34ae1d",
       "index_position_at_base": 355,
       "source_candidates_at_base": 0,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "matched_to": "L1-IMP-LINEAR-ISOMETRIC-DYNAMICS",
       "match_rule": "same prompt family if any, else any; nearest operation+relation candidate count; lowest index position",
       "match_quality": "same_family",
@@ -2122,7 +2122,7 @@
           "lean4/contract.lean"
         ],
         "leak_markers": [
-          "20261020T004525Z_fable51_born",
+          "20261020T004525Z_solo51_born",
           "20261020T205000Z_effect_valuation_lean",
           "20261020T224000Z_gaussian_hermitian_carrier",
           "20261020T225000Z_discrete_time_spec",
@@ -2132,13 +2132,13 @@
           "20261021T161243Z_staged",
           "20261021T190000Z_finite_wigner",
           "BornEffectValuation",
-          "BornFable",
-          "BornFable.DiscreteTime",
-          "BornFable.HermitianCarrier",
-          "BornFable.HermitianPsd",
-          "BornFable.MatrixCarrier",
-          "BornFable.PsdDecomposition",
-          "BornFable.RationalSphere",
+          "BornSolo",
+          "BornSolo.DiscreteTime",
+          "BornSolo.HermitianCarrier",
+          "BornSolo.HermitianPsd",
+          "BornSolo.MatrixCarrier",
+          "BornSolo.PsdDecomposition",
+          "BornSolo.RationalSphere",
           "BornGaussRat",
           "BornHermitianCarrier",
           "BornHermitianPsdDecomposition",
@@ -2163,16 +2163,16 @@
           "HilbertLiftL2Model",
           "HilbertLiftOperators",
           "HilbertLiftRationalUniformity",
-          "InnerProductFable.HermitianSectorForm",
-          "InnerProductFable.SectorForm",
+          "InnerProductSolo.HermitianSectorForm",
+          "InnerProductSolo.SectorForm",
           "OrderedQUnit",
           "QParamGroup",
           "SectorFormHermitian",
           "SectorFormUniqueness",
-          "WignerFable.GaussRatAut",
-          "WignerFable.Kernel",
-          "WignerFable.Similarity",
-          "WignerFable.Theorem",
+          "WignerSolo.GaussRatAut",
+          "WignerSolo.Kernel",
+          "WignerSolo.Similarity",
+          "WignerSolo.Theorem",
           "born_effect_valuation",
           "born_hermitian_valuation",
           "discrete_time_stone",
@@ -2196,7 +2196,7 @@
       "operad_collection_sha256_at_freeze": "012836af4c5bc0703053ec9f77e1cb6b5ae053cff5248acbd531b1764caa1f01",
       "index_position_at_base": 229,
       "source_candidates_at_base": 0,
-      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
+      "note": "The model never reads the prompt file; both arms receive the packet compiled from the operad collection (model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.",
       "matched_to": "TFQ-0084",
       "match_rule": "same prompt family if any, else any; nearest operation+relation candidate count; lowest index position",
       "match_quality": "same_family",
@@ -2251,7 +2251,7 @@
           "lean4/contract.lean"
         ],
         "leak_markers": [
-          "20261020T004525Z_fable51_born",
+          "20261020T004525Z_solo51_born",
           "20261020T205000Z_effect_valuation_lean",
           "20261020T224000Z_gaussian_hermitian_carrier",
           "20261020T225000Z_discrete_time_spec",
@@ -2261,13 +2261,13 @@
           "20261021T161243Z_staged",
           "20261021T190000Z_finite_wigner",
           "BornEffectValuation",
-          "BornFable",
-          "BornFable.DiscreteTime",
-          "BornFable.HermitianCarrier",
-          "BornFable.HermitianPsd",
-          "BornFable.MatrixCarrier",
-          "BornFable.PsdDecomposition",
-          "BornFable.RationalSphere",
+          "BornSolo",
+          "BornSolo.DiscreteTime",
+          "BornSolo.HermitianCarrier",
+          "BornSolo.HermitianPsd",
+          "BornSolo.MatrixCarrier",
+          "BornSolo.PsdDecomposition",
+          "BornSolo.RationalSphere",
           "BornGaussRat",
           "BornHermitianCarrier",
           "BornHermitianPsdDecomposition",
@@ -2292,16 +2292,16 @@
           "HilbertLiftL2Model",
           "HilbertLiftOperators",
           "HilbertLiftRationalUniformity",
-          "InnerProductFable.HermitianSectorForm",
-          "InnerProductFable.SectorForm",
+          "InnerProductSolo.HermitianSectorForm",
+          "InnerProductSolo.SectorForm",
           "OrderedQUnit",
           "QParamGroup",
           "SectorFormHermitian",
           "SectorFormUniqueness",
-          "WignerFable.GaussRatAut",
-          "WignerFable.Kernel",
-          "WignerFable.Similarity",
-          "WignerFable.Theorem",
+          "WignerSolo.GaussRatAut",
+          "WignerSolo.Kernel",
+          "WignerSolo.Similarity",
+          "WignerSolo.Theorem",
           "born_effect_valuation",
           "born_hermitian_valuation",
           "discrete_time_stone",
@@ -2320,13 +2320,13 @@
     "scan": {
       "runs_scanned_excluding_ladder": 193,
       "by_provenance_category": {
-        "fable": 9,
+        "solo": 9,
         "no_trailer": 158,
-        "sonnet": 26
+        "tier2": 26
       }
     },
     "no_expensive_model_provenance": {
-      "reason": "The commit has no Co-Authored-By model trailer and the folder carries no model field, or the folder text names Codex (the batch runs of 2026-10-19..20). Such runs may have been made by a large model but cannot be shown to be; they are not Arm F.",
+      "reason": "The commit has no Co-Authored-By model trailer and the folder carries no model field, or the folder text names Agent (the batch runs of 2026-10-19..20). Such runs may have been made by a large model but cannot be shown to be; they are not Arm F.",
       "staged_runs_no_trailer": 150,
       "named_runs_no_trailer": [
         "dag/results/FQ-BELL-CLASSICAL-JOINT-EXTENSION/runs/20261018T225117Z_operad_expectation",
@@ -2339,8 +2339,8 @@
         "dag/results/L1-IMP-COMPLEX-FIELD/runs/20261021T162659Z_complex_selection"
       ]
     },
-    "sonnet_reference_only": {
-      "reason": "Sonnet 5.5 is not in the expensive set (list price 2/10 USD per million tokens against 10/50 for Fable). The 26 batch-1 staged runs (positions 152-177) are listed for context only.",
+    "tier2_reference_only": {
+      "reason": "Tier2 5.5 is not in the expensive set (list price 2/10 USD per million tokens against 10/50 for Solo). The 26 batch-1 staged runs (positions 152-177) are listed for context only.",
       "runs": [
         "dag/results/L1-QM122-PHASE-BLIND-FIBER-INTERFERENCE/runs/20261021T132245Z_staged",
         "dag/results/L1-RESIDUAL-SECTOR-WEIGHTS-DECLARED/runs/20261021T132245Z_staged",
@@ -2370,8 +2370,8 @@
         "dag/results/PG-WDP-QUOTIENT-EXACT-SEQUENCE/runs/20261021T175809Z_staged"
       ]
     },
-    "opus_runs": {
-      "reason": "No completed Opus run folder exists other than the ladder attempts of stratum P. Opus commits are tooling, migration and DAG work, and Opus sub-agents wrote the Python and Rust twins inside Fable sessions (named in validation.json); neither is a prompt run.",
+    "tier1_runs": {
+      "reason": "No completed Tier1 run folder exists other than the ladder attempts of stratum P. Tier1 commits are tooling, migration and DAG work, and Tier1 sub-agents wrote the Python and Rust twins inside Solo sessions (named in validation.json); neither is a prompt run.",
       "runs": []
     }
   }

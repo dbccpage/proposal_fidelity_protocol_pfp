@@ -18,7 +18,7 @@ provider_policy:
   dispatch_owner: existing_PFP_provider_port
 bounds:
   candidate_attempt_limit: caller_supplied_per_run
-  llm_call_limit: caller_supplied_per_run
+  model_call_limit: caller_supplied_per_run
   output_token_limit: caller_supplied_per_stage
   total_cost_limit: Explicit caller reservation before paid dispatch; record unknown costs explicitly.
   stop_on:
@@ -27,7 +27,7 @@ bounds:
   - unresolved_billing
   - caller_budget_exhausted
   checkpoint_on_stop: P5_RECORD with the operad collection and unresolved next step; no success fabrication.
-llm_techniques:
+model_techniques:
 - id: H1_POPULATE_BEFORE_EXECUTE
   attach_to: P0_MINE_OPERAD
   mechanism: Fill M1 through M4 before requesting a dependent derivation.

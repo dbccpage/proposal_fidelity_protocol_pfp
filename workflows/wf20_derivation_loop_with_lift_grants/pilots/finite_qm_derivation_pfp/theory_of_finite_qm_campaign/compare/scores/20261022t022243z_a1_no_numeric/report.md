@@ -1,4 +1,4 @@
-# Fable versus swarm: score report
+# Solo versus swarm: score report
 
 AuthorityEffect: None. Verifier verdicts only. Protocol sha256 `a9daabae34d01499`; cohort base commit `e8500fdbd665`.
 
@@ -6,14 +6,14 @@ AuthorityEffect: None. Verifier verdicts only. Protocol sha256 `a9daabae34d01499
 
 ## Decision (pre-registered rule, protocol.md section 8)
 
-| comparison | class | eligible | Fable-only | swarm-only | ties | quality | cost | ratio | verdict |
+| comparison | class | eligible | Solo-only | swarm-only | ties | quality | cost | ratio | verdict |
 |---|---|---|---|---|---|---|---|---|---|
-| C1 paired P0 (replayed packet / fresh Fable) | O | 9 | 4 | 0 | 5 | fail | pass | 0.0013 | **REFUTES** |
-| C2 outcome (Fable agentic sessions, reuse) | O | 0 | 0 | 0 | 0 | - | - | - | **INCONCLUSIVE** |
-| C1 paired P0 (replayed packet / fresh Fable) | L | 0 | 0 | 0 | 0 | - | - | - | **INCONCLUSIVE** |
-| C2 outcome (Fable agentic sessions, reuse) | L | 5 | 1 | 0 | 4 | - | - | - | **INCONCLUSIVE** |
-| C1 paired P0 (replayed packet / fresh Fable) | W | 0 | 0 | 0 | 0 | - | - | - | **NOT_TESTABLE_AT_P0** |
-| C2 outcome (Fable agentic sessions, reuse) | W | 6 | 0 | 0 | 6 | - | - | - | **NOT_TESTABLE_AT_P0** |
+| C1 paired P0 (replayed packet / fresh Solo) | O | 9 | 4 | 0 | 5 | fail | pass | 0.0013 | **REFUTES** |
+| C2 outcome (Solo agentic sessions, reuse) | O | 0 | 0 | 0 | 0 | - | - | - | **INCONCLUSIVE** |
+| C1 paired P0 (replayed packet / fresh Solo) | L | 0 | 0 | 0 | 0 | - | - | - | **INCONCLUSIVE** |
+| C2 outcome (Solo agentic sessions, reuse) | L | 5 | 1 | 0 | 4 | - | - | - | **INCONCLUSIVE** |
+| C1 paired P0 (replayed packet / fresh Solo) | W | 0 | 0 | 0 | 0 | - | - | - | **NOT_TESTABLE_AT_P0** |
+| C2 outcome (Solo agentic sessions, reuse) | W | 6 | 0 | 0 | 6 | - | - | - | **NOT_TESTABLE_AT_P0** |
 
 ## Aggregates per arm (strict = verified now or by sealed receipt at Lean 4.35.0; as-recorded = every verdict a receipt claims, any toolchain, self-reports included)
 

@@ -63,7 +63,7 @@ def main(argv=None):
     p.add_argument('--batch-id')
     p.add_argument('--allow-short', action='store_true')
     p = add('prepare-p0', node=True, help='P0 request and byte-custody source inventory')
-    p.add_argument('--external', action='append', default=[], metavar='REPO=PATH', help='checkout of an external repository, e.g. the_symbol_game=...')
+    p.add_argument('--external', action='append', default=[], metavar='REPO=PATH', help='checkout of an external repository, e.g. upstream_repo=...')
     p = add('preflight', batch=False, node=True, help='run the checker, formatter and every P4 mutant of <spec-dir>/<NODE>.json before P0 (nothing is written)')
     p.add_argument('--batch', help='batch folder whose specs/ holds the specs')
     p.add_argument('--spec-dir', type=Path, help='explicit spec directory (a batch that does not exist yet)')

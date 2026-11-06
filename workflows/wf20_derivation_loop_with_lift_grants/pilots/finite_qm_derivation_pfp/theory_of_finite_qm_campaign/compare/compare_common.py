@@ -1,4 +1,4 @@
-"""Shared helpers of the Fable-versus-swarm comparison harness.
+"""Shared helpers of the Solo-versus-swarm comparison harness.
 
 AuthorityEffect: None. Nothing here accepts a theorem and nothing here calls a provider.
 
@@ -8,7 +8,7 @@ What lives here, so that the two arms and the scorer cannot drift apart:
   * the CLEAN ROOM: a source-only copy of the repository at the freeze commit of one prompt, taken with
     `git archive`, from which dag/results/** and every Arm F artifact are removed. Both arms compile the same
     packet bytes from it, and the host verifier checks claims against it, so a model can never be credited for
-    (or shown) a declaration that exists only because Fable wrote it later;
+    (or shown) a declaration that exists only because Solo wrote it later;
   * the packet loaders (compile from the clean room, or replay the stored request of an earlier expensive
     attempt byte for byte) and the leak guard that stops a run if an Arm F marker appears in packet text;
   * the per-prompt call and wall-clock cap, implemented as a Ledger subclass so that the cap is enforced at the
@@ -30,7 +30,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 PFP = HERE.parent
 REPO = HERE.parents[2]
-sys.path.insert(0, str(PFP))  # dag/pfp, so that the package `llm_ladder` imports under `python -I`
+sys.path.insert(0, str(PFP))  # dag/pfp, so that the package `model_ladder` imports under `python -I`
 sys.dont_write_bytecode = True
 
 PROTOCOL = HERE / 'protocol.md'
@@ -39,9 +39,9 @@ COHORT_SCHEMA_ID = 'omega.pfp.compare.cohort.v1'
 STRATA = ('D', 'P', 'C')
 
 # Models that define the expensive baseline. They are never callable from Arm S (enforced twice: tier filter and name check).
-EXPENSIVE_MARKERS = ('opus', 'fable')
-ARM_S_MAX_TIER = 3          # tiers 0..3 = free, cheap OpenRouter, Haiku 5.5, Sonnet 5.5; 4 = Opus, 5 = Fable are never in Arm S
-ARM_S_DEFAULT_MAX_TIER = 2  # the pre-registered Arm S: free, cheap, Haiku
+EXPENSIVE_MARKERS = ('tier1', 'solo')
+ARM_S_MAX_TIER = 3          # tiers 0..3 = free, cheap Router_r, Tier3 5.5, Tier2 5.5; 4 = Tier1, 5 = Solo are never in Arm S
+ARM_S_DEFAULT_MAX_TIER = 2  # the pre-registered Arm S: free, cheap, Tier3
 DEFAULT_MAX_CALLS = 7       # provider calls per prompt, both arms (the default ladder is 3 + 2 + 2)
 DEFAULT_WALLCLOCK_S = 1800
 STANDARD_AXIOMS = ('propext', 'Classical.choice', 'Quot.sound')
@@ -244,7 +244,7 @@ def cleanroom_dir(item: dict, tag: str, base: Path | None = None) -> Path:
 # --------------------------------------------------------------------------- packets
 def load_stored_packet(item: dict, cleanroom: Path):
     """Replay mode (stratum P): the exact request of an earlier expensive attempt, byte for byte."""
-    from llm_ladder.packets import CompiledPacket, load_row
+    from model_ladder.packets import CompiledPacket, load_row
     import yaml
     replay = item['arm_s']['replay']
     path = REPO / replay['request_path']
@@ -262,15 +262,15 @@ def load_stored_packet(item: dict, cleanroom: Path):
 
 
 def make_packet_factory(item: dict, cleanroom: Path, policy: dict, index, hall):
-    """(first_packet, compile_function). The function has the signature of llm_ladder.packets.compile_p0 and is patched into
+    """(first_packet, compile_function). The function has the signature of model_ladder.packets.compile_p0 and is patched into
     the runner; in replay mode it returns the stored packet for every attempt, so that every attempt of every arm sees
     identical bytes."""
-    from llm_ladder import packets
+    from model_ladder import packets
     if item['arm_s']['packet_source'] == 'replay_stored_request':
         stored = load_stored_packet(item, cleanroom)
         return stored, (lambda root, node_id, **kwargs: stored)
     # The attempt id is part of the packet header and of its digest. A constant id makes the first packet of Arm S and of the
-    # fresh Fable arm byte-identical; later packets differ only through the negative entries the arm's own failures produced.
+    # fresh Solo arm byte-identical; later packets differ only through the negative entries the arm's own failures produced.
     first = packets.compile_p0(cleanroom, item['node_id'], attempt_id='cmp', policy=policy, index=index, feedback=True, hallucinations=hall)
 
     def compile_fixed(root, node_id, **kwargs):
@@ -288,7 +288,7 @@ def assert_no_leak(packet, markers) -> None:
 
 # --------------------------------------------------------------------------- per-prompt caps
 def capped_ledger_class():
-    from llm_ladder.budget import BudgetRefused, Ledger
+    from model_ladder.budget import BudgetRefused, Ledger
 
     class CappedLedger(Ledger):
         """Ledger plus the per-prompt call cap and wall-clock cap of the protocol. Raised before dispatch, like the money caps."""
@@ -341,19 +341,19 @@ def seeded_memory(clean_root: Path, seed: Path | None, cohort_nodes: set) -> dic
     return {'freeze_index_removed': removed, 'seed_file': str(seed) if seed else None, 'seed_entries_kept': kept}
 
 
-def run_ladder_item(args, item, *, arm, suffix, cohort, providers, redactor, tiers, start_tier, max_tier, allow_fable,
+def run_ladder_item(args, item, *, arm, suffix, cohort, providers, redactor, tiers, start_tier, max_tier, allow_solo,
                     arm_spent_micro, workdir, effort_override=None) -> dict:
     """Clean room -> packet -> leak guard -> LadderRunner -> published run folder + receipt. One prompt, one arm.
 
-    `args` must carry: ledger, anthropic_weekly_cap_usd, paid_other_weekly_cap_usd, max_calls, wallclock_s, node_cap_usd,
-    arm_cap_usd, abstain_stop, seed_memory, keep_cleanroom, allow_rerun. Arm S uses tiers 0..3 with allow_fable False;
-    fresh Arm F uses the single Fable tier, with the same packet bytes, caps and verifier."""
-    from llm_ladder import runner as runner_module
-    from llm_ladder.budget import usd_to_micro
-    from llm_ladder.config import DEFAULT_POLICY
-    from llm_ladder.memory import HallucinationIndex, index_path
-    from llm_ladder.runner import LadderRunner
-    from llm_ladder.verify import DeclIndex, LeanRunner, Verifier
+    `args` must carry: ledger, provider_a_weekly_cap_usd, paid_other_weekly_cap_usd, max_calls, wallclock_s, node_cap_usd,
+    arm_cap_usd, abstain_stop, seed_memory, keep_cleanroom, allow_rerun. Arm S uses tiers 0..3 with allow_solo False;
+    fresh Arm F uses the single Solo tier, with the same packet bytes, caps and verifier."""
+    from model_ladder import runner as runner_module
+    from model_ladder.budget import usd_to_micro
+    from model_ladder.config import DEFAULT_POLICY
+    from model_ladder.memory import HallucinationIndex, index_path
+    from model_ladder.runner import LadderRunner
+    from model_ladder.verify import DeclIndex, LeanRunner, Verifier
 
     node = item['node_id']
     name = suffix.split('_', 1)[1]
@@ -371,7 +371,7 @@ def run_ladder_item(args, item, *, arm, suffix, cohort, providers, redactor, tie
         packet, compile_fn = make_packet_factory(item, root, policy, index, hall)
         assert_no_leak(packet, item['arm_s']['leak_markers'])
         digest = packet_bytes_sha256(packet.system, packet.user, packet.schema)
-        ledger = capped_ledger_class()(args.ledger, caps={'anthropic_weekly_usd': args.anthropic_weekly_cap_usd,
+        ledger = capped_ledger_class()(args.ledger, caps={'provider_a_weekly_usd': args.provider_a_weekly_cap_usd,
                                                            'paid_other_weekly_usd': args.paid_other_weekly_cap_usd},
                                         max_calls=args.max_calls, wallclock_s=args.wallclock_s)
         # Lean skeletons are elaborated by score.py in the real project, for both arms alike (the clean room has no Mathlib build).
@@ -381,7 +381,7 @@ def run_ladder_item(args, item, *, arm, suffix, cohort, providers, redactor, tie
         paid = any(t['family'] != 'free' for t in tiers if start_tier <= t['id'] <= max_tier)
         cap = min(usd_to_micro(args.node_cap_usd), max(0, usd_to_micro(args.arm_cap_usd) - arm_spent_micro)) if paid else 0
         summary = redactor.redact_obj(runner.run(node, stage='P0', run_cap_microusd=cap, start_tier=start_tier, max_tier=max_tier, feedback=True,
-                                                 allow_fable=allow_fable, effort_override=effort_override))
+                                                 allow_solo=allow_solo, effort_override=effort_override))
         elapsed = time.monotonic() - started
         run_dir = summary.get('run_dir')
         destination = None
@@ -401,10 +401,10 @@ def run_ladder_item(args, item, *, arm, suffix, cohort, providers, redactor, tie
                                   'level': 'packet text is a hard stop; clean-room file mentions are recorded as warnings'},
                    'tiers_allowed': [t['id'] for t in tiers if start_tier <= t['id'] <= max_tier],
                    'models_allowed': [c['model'] for t in tiers if start_tier <= t['id'] <= max_tier for c in t['candidates'] if c.get('enabled', True)],
-                   'effort_override': effort_override, 'allow_fable': allow_fable,
+                   'effort_override': effort_override, 'allow_solo': allow_solo,
                    'caps': {'max_calls': args.max_calls, 'wallclock_s': args.wallclock_s, 'node_cap_usd': args.node_cap_usd, 'arm_cap_usd': args.arm_cap_usd,
                             'abstain_stop': args.abstain_stop,
-                            'ledger_weekly_caps': {'anthropic_usd': args.anthropic_weekly_cap_usd, 'paid_other_usd': args.paid_other_weekly_cap_usd}},
+                            'ledger_weekly_caps': {'provider_a_usd': args.provider_a_weekly_cap_usd, 'paid_other_usd': args.paid_other_weekly_cap_usd}},
                    'rerun_reason': getattr(args, 'allow_rerun', None),
                    'ladder': {k: summary.get(k) for k in ('status', 'stop_reason', 'accepted_attempt', 'best_attempt', 'spend_usd', 'spend_microusd',
                                                           'totals_by_tier', 'hallucinations_by_class', 'verified')},

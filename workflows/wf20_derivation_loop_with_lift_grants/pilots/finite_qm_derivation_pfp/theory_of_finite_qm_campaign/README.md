@@ -12,20 +12,27 @@ Everything else the programme produced is kept here as the record of what was tr
 | `prompt_audit.json`, `prompt_audit_extension.json`, `filename_custody.json`, `custody.py`, `integration_source_changes.json`, `audit.md` | The prompt audit: before/after digests and custody of every prompt |
 | `campaign/` | The derivation queue, its run log and skipped items |
 | `batch_tools/` | Batch runner and batch verifier |
-| `llm_ladder/` | The model ladder: providers, budget ledger, runner, pilots and the semantic reviews of its rounds |
+| `model_ladder/` | The model ladder: providers, budget ledger, runner, pilots and the semantic reviews of its rounds |
 | `compare/` | The cohort comparison: protocol, amendment A1, arm receipts and the eight scored runs |
 | `validation/` | Integration and main-branch validation logs and receipts |
-| `fable_api/` | Packets and runner for the direct-API arm |
+| `solo_api/` | Packets and runner for the direct-API arm |
 | `test_*.py` | The programme's own tests |
 
-What changed in the move: file and folder names are lowercase (only README files keep capitals), and
-references to renamed files in `.md`, `.py` and `.yaml` files were updated to match. JSON receipts and
-logs keep their original content (four JSON files had CRLF line endings, which this
-repository stores as LF), so they still name the old `dag/pfp/...` paths and original folder
-names. Nothing here runs in this repository's CI: the code needs a model, provider keys and the
-original repository layout. Model replies are untrusted experimental output.
+What changed in the move:
 
-## The programme's own README (unchanged)
+- File and folder names are lowercase (only README files keep capitals).
+- Model, product and provider names are replaced by neutral labels in every file and file name: models are
+  `model-a1`, `model-b1` and so on, providers `provider_a`, `provider_b`, hosts `host_g`, `host_n`, and the
+  single-model arm of the cohort comparison is the `solo` arm. The same label always stands for the same
+  original name, so counts, costs and comparisons are unchanged. Identifiers that embedded a name (for
+  example Lean declaration names in run records) were relabelled the same way and no longer match their
+  sources by name.
+- Receipts and logs otherwise keep their content, so they still name the old `dag/pfp/...` paths.
+
+Nothing here runs in this repository's CI: the code needs a model, provider keys and the original
+repository layout. Model replies are untrusted experimental output.
+
+## The programme's own README
 
 ### Staged PFP research and per-prompt operad collection
 
