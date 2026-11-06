@@ -1,16 +1,16 @@
-"""Arm S of the Fable-versus-swarm comparison: the cheap-first PFP ladder over the frozen cohort.
+"""Arm S of the Solo-versus-swarm comparison: the cheap-first PFP ladder over the frozen cohort.
 
     python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --dry-run                      # the plan; no network, no key read, nothing written
     python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --dry-run --compile-packets    # also builds each clean room and prints the packet digest (no network)
     python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --max-tier 0                   # free models only, no spend flag needed
-    python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --confirm-spend --arm-cap-usd 2.00   # free, cheap OpenRouter and Haiku tiers
+    python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --confirm-spend --arm-cap-usd 2.00   # free, cheap Router_r and Tier3 tiers
 
 What it does for every selected cohort item (protocol.md section 4):
   1. refuses to start unless protocol.md still matches the sha256 pinned in cohort.json;
   2. builds the CLEAN ROOM of the item (git archive of its freeze commit, no dag/results, every Arm F artifact removed);
-  3. obtains the packet: compiled from the clean room (strata D and C) or the stored request of the earlier Opus/Fable
+  3. obtains the packet: compiled from the clean room (strata D and C) or the stored request of the earlier Tier1/Solo
      attempt, replayed byte for byte (stratum P); stops if an Arm F marker appears in the packet text;
-  4. runs llm_ladder.runner.LadderRunner over the clean room with tiers 0..max-tier only. Opus (tier 4) and Fable (tier 5)
+  4. runs model_ladder.runner.LadderRunner over the clean room with tiers 0..max-tier only. Tier1 (tier 4) and Solo (tier 5)
      are never callable: the tier list is cut and the model names are checked;
   5. enforces the money caps of the shared ledger (budget.py), the per-prompt call cap and wall-clock cap, and an arm cap;
   6. copies the run folder to dag/results/<NODE>/runs/<ts>_compare_swarm/ and adds compare_swarm_receipt.json.
@@ -32,7 +32,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-sys.path.insert(0, str(HERE.parent))  # dag/pfp, so that the package `llm_ladder` imports under `python -I`
+sys.path.insert(0, str(HERE.parent))  # dag/pfp, so that the package `model_ladder` imports under `python -I`
 sys.dont_write_bytecode = True
 
 from compare_common import (ARM_S_DEFAULT_MAX_TIER, ARM_S_MAX_TIER, DEFAULT_MAX_CALLS, DEFAULT_WALLCLOCK_S, EXPENSIVE_MARKERS, REPO,  # noqa: E402
@@ -48,7 +48,7 @@ def parse_args(argv=None):
     parser.add_argument('--only', default=None, help='comma list of node ids')
     parser.add_argument('--stage', default='P0', help='only P0 is wired in the ladder; P1-P5 are refused with the reason')
     parser.add_argument('--max-tier', type=int, default=ARM_S_DEFAULT_MAX_TIER,
-                        help='0 free, 1 cheap OpenRouter, 2 Haiku 5.5, 3 Sonnet 5.5; tiers 4 (Opus) and 5 (Fable) are never allowed in Arm S')
+                        help='0 free, 1 cheap Router_r, 2 Tier3 5.5, 3 Tier2 5.5; tiers 4 (Tier1) and 5 (Solo) are never allowed in Arm S')
     parser.add_argument('--dry-run', action='store_true', help='print the plan; no network, no key read, nothing written (except with --compile-packets: temp clean rooms)')
     parser.add_argument('--compile-packets', action='store_true', help='with --dry-run: build each clean room and compile/load the packet (local only)')
     parser.add_argument('--confirm-spend', action='store_true', help='required for any paid tier (max-tier >= 1)')
@@ -62,8 +62,8 @@ def parse_args(argv=None):
     parser.add_argument('--workdir', default=str(SHORT_ROOT), help='short directory for clean rooms (Windows MAX_PATH)')
     parser.add_argument('--keep-cleanroom', action='store_true')
     parser.add_argument('--min-free-gb', type=float, default=3.0)
-    parser.add_argument('--ledger', default=str(HERE.parent / 'llm_ladder' / 'budget_ledger.json'))
-    parser.add_argument('--anthropic-weekly-cap-usd', type=float, default=150.0)
+    parser.add_argument('--ledger', default=str(HERE.parent / 'model_ladder' / 'budget_ledger.json'))
+    parser.add_argument('--provider_a-weekly-cap-usd', type=float, default=150.0)
     parser.add_argument('--paid-other-weekly-cap-usd', type=float, default=10.0)
     parser.add_argument('--env-file', default=None, help='explicit .env path (default: the ladder search order)')
     parser.add_argument('--json', action='store_true', help='print the plan as JSON')
@@ -72,9 +72,9 @@ def parse_args(argv=None):
 
 # --------------------------------------------------------------------------- guards
 def tiers_for_arm_s(max_tier: int, env=None) -> list:
-    from llm_ladder.config import load_tiers
+    from model_ladder.config import load_tiers
     if not 0 <= max_tier <= ARM_S_MAX_TIER:
-        raise CompareError('--max-tier %d refused: Arm S may use tiers 0..%d. Opus (4) and Fable (5) are the expensive baseline and are never in the swarm arm.' % (max_tier, ARM_S_MAX_TIER))
+        raise CompareError('--max-tier %d refused: Arm S may use tiers 0..%d. Tier1 (4) and Solo (5) are the expensive baseline and are never in the swarm arm.' % (max_tier, ARM_S_MAX_TIER))
     tiers = [t for t in load_tiers(None, env or {}) if t['id'] <= max_tier]
     for tier in tiers:
         for cand in tier['candidates']:
@@ -86,8 +86,8 @@ def tiers_for_arm_s(max_tier: int, env=None) -> list:
 def stage_guard(stage: str) -> None:
     if stage != 'P0':
         raise CompareError(
-            'Only --stage P0 is wired for Arm S. llm_ladder/runner.py raises for any other stage ("P1+ need host-reviewed missions"), and dag/pfp/batch_tools '
-            'runs P1-P5 from a host-authored spec without any provider call. The reference system (the_symbol_game/omega_engine_pfp use_cases/pfp_stages.py) '
+            'Only --stage P0 is wired for Arm S. model_ladder/runner.py raises for any other stage ("P1+ need host-reviewed missions"), and dag/pfp/batch_tools '
+            'runs P1-P5 from a host-authored spec without any provider call. The reference system (upstream_repo/omega_engine_pfp use_cases/pfp_stages.py) '
             'defines a six-stage pipeline behind a native host that this repository does not import. P1-P5 are therefore NOT part of Arm S; protocol.md section 3.1 states what that limits.')
 
 
@@ -97,8 +97,8 @@ def existing_runs(items: list) -> dict:
 
 # --------------------------------------------------------------------------- plan
 def worst_case_per_call(tier: dict, tokens: int) -> float:
-    from llm_ladder.budget import cost_microusd, micro_to_usd
-    from llm_ladder.config import PRICES
+    from model_ladder.budget import cost_microusd, micro_to_usd
+    from model_ladder.config import PRICES
     if tier['family'] == 'free':
         return 0.0
     cand = tier['candidates'][0]
@@ -132,7 +132,7 @@ def tier_rows(tiers, tokens) -> list:
 
 
 def print_plan(args, items, tiers, plan, packets) -> None:
-    print('=== Arm S plan (stage P0, ladder tiers 0..%d, claude-opus-5-5 and claude-fable-5-1 excluded) ===' % args.max_tier)
+    print('=== Arm S plan (stage P0, ladder tiers 0..%d, model-a1 and model-a4 excluded) ===' % args.max_tier)
     print('protocol sha256 verified against cohort.json; cohort base commit %s' % args.cohort_base[:12])
     print('network: none in --dry-run. Keys: not read in --dry-run. Ledger: %s (read at run time only)' % Path(args.ledger).as_posix())
     print('caps per prompt: %d provider calls, %d s wall-clock, USD %.2f paid; arm cap USD %.2f; abstain-stop %d' % (
@@ -165,7 +165,7 @@ def plan_tokens(plan) -> int:
 # --------------------------------------------------------------------------- one item
 def run_item(args, item, *, cohort, providers, redactor, arm_spent_micro, workdir) -> dict:
     return run_ladder_item(args, item, arm='S', suffix='compare_swarm', cohort=cohort, providers=providers, redactor=redactor,
-                           tiers=tiers_for_arm_s(args.max_tier), start_tier=0, max_tier=args.max_tier, allow_fable=False,
+                           tiers=tiers_for_arm_s(args.max_tier), start_tier=0, max_tier=args.max_tier, allow_solo=False,
                            arm_spent_micro=arm_spent_micro, workdir=workdir)
 
 
@@ -185,8 +185,8 @@ def main(argv=None) -> int:
         if prior and not args.allow_rerun and not args.dry_run:
             raise CompareError('already run (protocol: one Arm S run per prompt): %s. A rerun needs --allow-rerun "reason" and is allowed only after an all-infrastructure failure.' % json.dumps(prior))
         if args.max_tier >= 1 and not args.dry_run and not args.confirm_spend:
-            raise CompareError('tiers 1..%d are PAID (OpenRouter paid model%s). Re-run with --confirm-spend, or use --max-tier 0 for the free models only.' % (
-                args.max_tier, ', Haiku 5.5' if args.max_tier >= 2 else ''))
+            raise CompareError('tiers 1..%d are PAID (Router_r paid model%s). Re-run with --confirm-spend, or use --max-tier 0 for the free models only.' % (
+                args.max_tier, ', Tier3 5.5' if args.max_tier >= 2 else ''))
         workdir = Path(args.workdir)
         if free_space_gb(workdir) < args.min_free_gb:
             raise CompareError('only %.1f GB free where %s lives (need %.1f); free disk or pass --workdir' % (free_space_gb(workdir), workdir, args.min_free_gb))
@@ -194,9 +194,9 @@ def main(argv=None) -> int:
         if args.dry_run:
             tokens_by_node, packet_lines = {}, {}
             if args.compile_packets:
-                from llm_ladder.config import DEFAULT_POLICY
-                from llm_ladder.memory import HallucinationIndex, index_path
-                from llm_ladder.verify import DeclIndex
+                from model_ladder.config import DEFAULT_POLICY
+                from model_ladder.memory import HallucinationIndex, index_path
+                from model_ladder.verify import DeclIndex
                 for item in items:
                     root = cleanroom_dir(item, 'dry', workdir)
                     if root.exists():
@@ -221,8 +221,8 @@ def main(argv=None) -> int:
                     print('\nNOTE: _compare_swarm runs already exist for %s' % json.dumps(prior))
             return 0
         # ---- live run
-        from llm_ladder.llm_common import SECRET_NAMES, Redactor, load_env
-        from llm_ladder.providers import build_providers
+        from model_ladder.model_common import SECRET_NAMES, Redactor, load_env
+        from model_ladder.providers import build_providers
         env = load_env(env_file=args.env_file, root=REPO)
         redactor = Redactor(env.get(name) for name in SECRET_NAMES)
         providers = build_providers(env)

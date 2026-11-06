@@ -2,7 +2,7 @@
 
 **AuthorityEffect:** None.
 
-This brief is for an autonomous agent (Gemini, Claude, Codex, or a human contributor). It works through the open targets of the derivation DAG one at a time. Each target gets one pull request. The aim is to close every derivation that can be closed honestly. Where a target cannot be closed, the aim is to record precisely why and what is missing.
+This brief is for an autonomous agent (Model_g, Model_a, Agent, or a human contributor). It works through the open targets of the derivation DAG one at a time. Each target gets one pull request. The aim is to close every derivation that can be closed honestly. Where a target cannot be closed, the aim is to record precisely why and what is missing.
 
 ## The queue
 

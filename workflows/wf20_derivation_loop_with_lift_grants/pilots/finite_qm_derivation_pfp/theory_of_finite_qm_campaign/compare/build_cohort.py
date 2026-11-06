@@ -1,4 +1,4 @@
-"""Select the cohort of the Fable-versus-swarm comparison and write cohort.json.
+"""Select the cohort of the Solo-versus-swarm comparison and write cohort.json.
 
     python -I -X utf8 dag/pfp/compare/build_cohort.py [--base origin/main] [--controls 6] [--print]
 
@@ -7,9 +7,9 @@ outcomes it records are what the receipts and validation records on disk say, wi
 
 Selection rule (frozen in protocol.md, section 2):
   D  every run folder under dag/results/*/runs/ (other than _ladder runs) whose provenance names an expensive model:
-     a Co-Authored-By trailer (Fable, Opus) on a commit that added it, or a model field inside the folder
+     a Co-Authored-By trailer (Solo, Tier1) on a commit that added it, or a model field inside the folder
      (budget.json, model_access.json). Runs are grouped by node: one prompt = one DAG node.
-  P  every node whose _ladder runs contain an attempt by claude-opus-5-5 or claude-fable-5-1 (paired by construction: the
+  P  every node whose _ladder runs contain an attempt by model-a1 or model-a4 (paired by construction: the
      stored request is replayed byte for byte to the swarm).
   C  controls: for each D prompt, the never-run prompt of the same family nearest in operation+relation candidates.
 Everything else is listed under excluded_candidates with the reason. Nothing is chosen by outcome.
@@ -34,10 +34,10 @@ from compare_common import (COHORT, COHORT_SCHEMA_ID, DEFAULT_MAX_CALLS, DEFAULT
                             STANDARD_AXIOMS, CompareError, git, git_show, json_bytes, packet_bytes_sha256, protocol_sha256,
                             sha256_bytes)
 
-EXPENSIVE = ('claude-opus-5-5', 'claude-fable-5-1')
-FABLE_OUT_USD_PER_MTOK = 50.0   # llm_ladder/config.py PRICES[('anthropic', 'claude-fable-5-1')]
-BYTES_PER_TOKEN = 3.5           # llm_ladder/packets.py estimate_tokens
-TRAILER = re.compile(r'Co-Authored-By:\s*Claude\s+(\w+)\s+([\d.]+)', re.I)
+EXPENSIVE = ('model-a1', 'model-a4')
+SOLO_OUT_USD_PER_MTOK = 50.0   # model_ladder/config.py PRICES[('provider_a', 'model-a4')]
+BYTES_PER_TOKEN = 3.5           # model_ladder/packets.py estimate_tokens
+TRAILER = re.compile(r'Co-Authored-By:\s*Model_a\s+(\w+)\s+([\d.]+)', re.I)
 AUTHORED_EXT = ('.lean', '.py', '.rs', '.md', '.json', '.yaml')
 NOT_AUTHORED = ('.doc.yaml', '.contract.score.yaml', 'raw_response.json', 'manifest.json', 'accepted_modules.json')
 
@@ -89,12 +89,12 @@ def classify(run_rel: str, commits: list) -> dict:
     trailers = sorted({t for c in commits for t in c['trailers']})
     category = 'unknown'
     names = ' '.join(in_models + trailers).lower()
-    if 'fable' in names:
-        category = 'fable'
-    elif 'opus' in names:
-        category = 'opus'
-    elif 'sonnet' in names:
-        category = 'sonnet'
+    if 'solo' in names:
+        category = 'solo'
+    elif 'tier1' in names:
+        category = 'tier1'
+    elif 'tier2' in names:
+        category = 'tier2'
     elif commits and not trailers:
         category = 'no_trailer'
     return {'category': category, 'in_folder_models': in_models, 'commit_trailers': trailers,
@@ -190,7 +190,7 @@ def witness_units(run_rel: str) -> list:
 
 
 def api_run_units(run_rel: str) -> list:
-    """The one API-dispatched Fable run (budget.json, model_access.json). Units come from its own receipts."""
+    """The one API-dispatched Solo run (budget.json, model_access.json). Units come from its own receipts."""
     folder = REPO / run_rel
     units = []
     for stem, label, cls in (('matrix_instance_lean', 'MatrixInstance.lean (first compile, retained failure)', 'L'),
@@ -201,11 +201,11 @@ def api_run_units(run_rel: str) -> list:
         units.append({'unit_id': '%s::%s' % (run_rel.rsplit('/', 1)[-1], stem), 'class': cls, 'kind': label, 'exit_code': code,
                       'receipt': run_rel + '/p2_prepared/%s_receipt.json' % stem if receipt else None,
                       'on_disk_verdict': 'not_recorded' if code is None else ('accepted' if code == 0 else 'rejected'),
-                      'authored_by': 'host session (not the Fable API reply); credited to Arm F by the generosity rule',
+                      'authored_by': 'host session (not the Solo API reply); credited to Arm F by the generosity rule',
                       'receipt_toolchain': None, 'evidence_kind': 'process_receipt_exit_code_only'})
     review = load_json(folder / 'p0_mine' / 'claim_review.json') or {}
     dispositions = collections.Counter(c.get('disposition') for c in review.get('claims', []))
-    units.append({'unit_id': '%s::p0_claims' % run_rel.rsplit('/', 1)[-1], 'class': 'O', 'kind': 'fable_p0_claims_after_host_review',
+    units.append({'unit_id': '%s::p0_claims' % run_rel.rsplit('/', 1)[-1], 'class': 'O', 'kind': 'solo_p0_claims_after_host_review',
                   'claims_reviewed': len(review.get('claims', [])), 'dispositions': dict(sorted(dispositions.items())),
                   'accepted_as_theorem': 0, 'on_disk_verdict': 'not_accepted',
                   'note': 'No P0 claim was accepted by the ladder verifier (it did not exist then); the host disposition is recorded. '
@@ -266,8 +266,8 @@ def authored_bytes(base: str, run_rel: str, validation: dict) -> dict:
     return {'bytes': total, 'files': len(files)}
 
 
-def fable_lower_bound_usd(nbytes: int) -> float:
-    return round(nbytes / BYTES_PER_TOKEN * FABLE_OUT_USD_PER_MTOK / 1e6, 4)
+def solo_lower_bound_usd(nbytes: int) -> float:
+    return round(nbytes / BYTES_PER_TOKEN * SOLO_OUT_USD_PER_MTOK / 1e6, 4)
 
 
 def api_cost(run_rel: str):
@@ -322,7 +322,7 @@ def prompt_block(index_rows: dict, node: str, freeze: str, base: str) -> dict:
             'index_position_at_base': position,
             'source_candidates_at_base': row['source_operation_candidates'] + row['source_relation_candidates'],
             'note': 'The model never reads the prompt file; both arms receive the packet compiled from the operad collection '
-                    '(llm_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.'}
+                    '(model_ladder/packets.py). The packet identity is packet_bytes_sha256, recorded at run time.'}
 
 
 def dedupe_units(units: list) -> list:
@@ -347,7 +347,7 @@ def dedupe_units(units: list) -> list:
 def build_d_items(base, index_rows, hist, classes) -> list:
     by_node = collections.defaultdict(list)
     for run_rel, info in classes.items():
-        if info['category'] in ('fable', 'opus') and not run_rel.endswith(('_ladder',)) and '_ladder_' not in run_rel:
+        if info['category'] in ('solo', 'tier1') and not run_rel.endswith(('_ladder',)) and '_ladder_' not in run_rel:
             by_node[run_rel.split('/')[2]].append(run_rel)
     items = []
     for node in sorted(by_node):
@@ -386,26 +386,26 @@ def build_d_items(base, index_rows, hist, classes) -> list:
                 exclude.add(path)
                 if path.startswith('code/'):
                     markers.add(Path(path).stem)
-            run_entries.append({'path': run_rel, 'run_slug': slug, 'model': 'claude-fable-5-1' if info['category'] == 'fable' else 'claude-opus-5-5',
+            run_entries.append({'path': run_rel, 'run_slug': slug, 'model': 'model-a4' if info['category'] == 'solo' else 'model-a1',
                                 'model_basis': 'in-folder model field (budget.json / model_access.json)' if info['in_folder_models'] else
                                                'Co-Authored-By trailer on the commit that added the folder: ' + ', '.join(info['commit_trailers']),
                                 'agentic_session': not bool(info['in_folder_models']),
                                 'first_commit': info['first_commit'], 'cost_status': cost_status, 'units': len(run_units)})
         units = dedupe_units(units)
-        lb = fable_lower_bound_usd(lb_bytes)
+        lb = solo_lower_bound_usd(lb_bytes)
         cost = {'recorded_usd': round(recorded, 6) if recorded else None,
                 'recorded_calls': api_call_rows,
                 'unrecorded_runs': unrecorded,
                 'estimate_lower_bound_usd_unrecorded_runs': lb if unrecorded else None,
                 'estimate_method': ('LOWER BOUND ONLY. committed authored bytes of the unrecorded runs (Lean sources, run notes, twins and their tests; '
-                                    'no receipts, no binaries) / %.1f bytes per token x USD %.0f per million output tokens (claude-fable-5-1 list price in '
-                                    'llm_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the '
-                                    'true cost is higher. The user may supply the real session cost in cost_overrides.json (see protocol.md 6.4).' % (BYTES_PER_TOKEN, FABLE_OUT_USD_PER_MTOK))
+                                    'no receipts, no binaries) / %.1f bytes per token x USD %.0f per million output tokens (model-a4 list price in '
+                                    'model_ladder/config.py). It omits thinking, tool calls, every re-read of context, repairs and abandoned attempts, so the '
+                                    'true cost is higher. The user may supply the real session cost in cost_overrides.json (see protocol.md 6.4).' % (BYTES_PER_TOKEN, SOLO_OUT_USD_PER_MTOK))
                 if unrecorded else None,
                 'status': 'recorded_rated' if recorded and not unrecorded else ('partly_recorded' if recorded else 'unrecorded')}
         items.append({'stratum': 'D', 'node_id': node, **prompt_block(index_rows, node, freeze, base),
                       'arm_f': {'mode': 'reuse', 'runs': run_entries, 'cost': cost, 'units': units,
-                                'comparability': ('Agentic multi-turn Claude Code sessions with tools and human steering; the instruction text each session '
+                                'comparability': ('Agentic multi-turn Model_a Code sessions with tools and human steering; the instruction text each session '
                                                   'received is not in the repository, so the input is NOT byte-identical to Arm S. Outcome comparison only.')
                                 if any(r['agentic_session'] for r in run_entries) else 'API-dispatched, but the request was the staged prompt, not the ladder packet'},
                       'arm_s': {'packet_source': 'compile_p0_cleanroom', 'freeze_commit': freeze, 'freeze_rule': 'parent of the oldest commit that added any Arm F run folder of this node',
@@ -432,7 +432,7 @@ def build_p_items(base, index_rows, hist) -> list:
                                     'input_tokens': call.get('input_tokens'), 'output_tokens': call.get('output_tokens'),
                                     'latency_s': call.get('latency_s'), 'stop_reason': call.get('stop_reason'),
                                     'request_path': run_dir.relative_to(REPO).as_posix() + '/p0/attempts/%s/request.json' % attempt['attempt_id']})
-    rank = {'claude-fable-5-1': 0, 'claude-opus-5-5': 1}
+    rank = {'model-a4': 0, 'model-a1': 1}
     items = []
     for node in sorted(found):
         attempts = sorted(found[node], key=lambda a: (rank[a['model']], a['run'], a['attempt_id']))
@@ -455,7 +455,7 @@ def build_p_items(base, index_rows, hist) -> list:
                                                            'first_commit': (hist.get(r) or [{}])[0].get('commit'), 'cost_status': 'recorded_rated'}
                                                           for r in sorted({a['run'] for a in attempts})],
                                 'headline_attempt': {'run': headline['run'], 'attempt_id': headline['attempt_id'], 'model': headline['model']},
-                                'headline_rule': 'the highest-priced model attempted on the node (Fable before Opus), earliest run, earliest attempt',
+                                'headline_rule': 'the highest-priced model attempted on the node (Solo before Tier1), earliest run, earliest attempt',
                                 'cost': {'recorded_usd': headline['cost_usd'], 'status': 'recorded_rated', 'basis': 'ladder_receipt.json calls[].cost_microusd (rated from provider usage)',
                                          'all_expensive_attempts_usd': round(sum(a['cost_usd'] for a in attempts), 6)},
                                 'units': units,
@@ -478,7 +478,7 @@ def build_c_items(base, index_rows, d_items) -> list:
         unrun.append((node, position, row, family, row['source_operation_candidates'] + row['source_relation_candidates']))
     taken, items, matches = set(), [], []
     # A control is a never-run prompt, but the repository at the base commit already holds every Arm F artifact of the cohort.
-    # They are removed from the control clean rooms too, so that a control cannot be graded on Fable's later declarations.
+    # They are removed from the control clean rooms too, so that a control cannot be graded on Solo's later declarations.
     all_exclude = sorted({p for d in d_items for p in d['arm_s']['exclude_paths']})
     all_markers = sorted({m for d in d_items for m in d['arm_s']['leak_markers']})
     for d in d_items:
@@ -526,27 +526,27 @@ def main(argv=None) -> int:
     excluded = {
         'scan': {'runs_scanned_excluding_ladder': len(classes), 'by_provenance_category': dict(sorted(by_category.items()))},
         'no_expensive_model_provenance': {
-            'reason': 'The commit has no Co-Authored-By model trailer and the folder carries no model field, or the folder text names Codex (the batch runs of 2026-10-19..20). '
+            'reason': 'The commit has no Co-Authored-By model trailer and the folder carries no model field, or the folder text names Agent (the batch runs of 2026-10-19..20). '
                       'Such runs may have been made by a large model but cannot be shown to be; they are not Arm F.',
             'staged_runs_no_trailer': sum(1 for run, info in classes.items() if info['category'] == 'no_trailer' and run.endswith('_staged')),
             'named_runs_no_trailer': named_unproven},
-        'sonnet_reference_only': {
-            'reason': 'Sonnet 5.5 is not in the expensive set (list price 2/10 USD per million tokens against 10/50 for Fable). The 26 batch-1 staged runs (positions 152-177) are '
+        'tier2_reference_only': {
+            'reason': 'Tier2 5.5 is not in the expensive set (list price 2/10 USD per million tokens against 10/50 for Solo). The 26 batch-1 staged runs (positions 152-177) are '
                       'listed for context only.',
-            'runs': sorted(run for run, info in classes.items() if info['category'] == 'sonnet')},
-        'opus_runs': {'reason': 'No completed Opus run folder exists other than the ladder attempts of stratum P. Opus commits are tooling, migration and DAG work, and Opus sub-agents wrote the '
-                                'Python and Rust twins inside Fable sessions (named in validation.json); neither is a prompt run.',
-                      'runs': sorted(run for run, info in classes.items() if info['category'] == 'opus')}}
+            'runs': sorted(run for run, info in classes.items() if info['category'] == 'tier2')},
+        'tier1_runs': {'reason': 'No completed Tier1 run folder exists other than the ladder attempts of stratum P. Tier1 commits are tooling, migration and DAG work, and Tier1 sub-agents wrote the '
+                                'Python and Rust twins inside Solo sessions (named in validation.json); neither is a prompt run.',
+                      'runs': sorted(run for run, info in classes.items() if info['category'] == 'tier1')}}
     cohort = {'schema_id': COHORT_SCHEMA_ID, 'authority_effect': 'None',
-              'claim': ('Pre-registered cohort of the Fable-versus-swarm comparison. Arm F outcomes are what the receipts on disk say; no verifier was re-run to fill this file. '
-                        'The instructions of the agentic Fable sessions are not in the repository, so stratum D is an outcome comparison, not a paired one.'),
+              'claim': ('Pre-registered cohort of the Solo-versus-swarm comparison. Arm F outcomes are what the receipts on disk say; no verifier was re-run to fill this file. '
+                        'The instructions of the agentic Solo sessions are not in the repository, so stratum D is an outcome comparison, not a paired one.'),
               'built_from': {'base_ref': args.base, 'base_commit': base, 'base_commit_date': git('log', '-1', '--format=%cI', base).strip()},
               'protocol': {'path': PROTOCOL.relative_to(REPO).as_posix(), 'sha256': protocol_sha256(),
                            'sha256_basis': 'sha256 of the file bytes with CRLF folded to LF'},
               'lean_version_required': LEAN_VERSION, 'standard_axioms': list(STANDARD_AXIOMS),
               'caps_per_prompt': {'max_provider_calls': DEFAULT_MAX_CALLS, 'wallclock_s': DEFAULT_WALLCLOCK_S},
-              'strata': {'D': 'prompts with a completed expensive-model derivation run (Fable) in dag/results',
-                         'P': 'prompts with expensive-model ladder attempts (Opus, Fable) on a recorded packet',
+              'strata': {'D': 'prompts with a completed expensive-model derivation run (Solo) in dag/results',
+                         'P': 'prompts with expensive-model ladder attempts (Tier1, Solo) on a recorded packet',
                          'C': 'matched never-run controls (swarm only; yield and abstention rates, no parity claim)'},
               'items': d_items + p_items + c_items, 'excluded_candidates': excluded}
     Path(args.out).write_bytes(json_bytes(cohort))

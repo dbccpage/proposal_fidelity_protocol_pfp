@@ -1,12 +1,12 @@
-# Fable versus swarm: how to run the comparison
+# Solo versus swarm: how to run the comparison
 
 AuthorityEffect: None. Read `protocol.md` first: it is the pre-registration, frozen by the sha256 in `cohort.json`.
 This harness was built without any provider call, Lean, cargo, pytest or spend. Its dry-runs and `py_compile` are the only
-things that were executed. The live paths (the swarm and Fable runs, the verifier subprocesses of `score.py`) are therefore
+things that were executed. The live paths (the swarm and Solo runs, the verifier subprocesses of `score.py`) are therefore
 untested against real providers and a real Lean build: watch the first prompt.
 
 Question: can a swarm of free and cheap models plus the PFP ladder produce, on the same prompts, the verifier-accepted results
-that Fable produced, at a fraction of the cost? Score = what a verifier accepts, nothing else: Lean 4.35.0 files with
+that Solo produced, at a fraction of the cost? Score = what a verifier accepts, nothing else: Lean 4.35.0 files with
 `#print axioms` limited to `propext`, `Classical.choice`, `Quot.sound` (L); passing Rust or Python witnesses (W); host-verified
 operad entries (O). Abstentions and failures stay in the denominator and their spend in the numerator.
 
@@ -15,13 +15,13 @@ operad entries (O). Abstentions and failures stay in the denominator and their s
 | `protocol.md` | hypothesis, cohort rule, arms, fairness, rubric, decision rule, threats |
 | `cohort.json` | the 15 prompts (6 D, 3 P, 6 C): prompt and collection sha256, freeze commit, exclusion list, Arm F run, model, cost, on-disk verdicts |
 | `build_cohort.py` | rebuilds `cohort.json` from git and the run folders (read only; deterministic for a base commit) |
-| `run_swarm_arm.py` | Arm S through `dag/pfp/llm_ladder` |
-| `run_fable_arm.py` | optional fresh Fable, same bytes, costs money |
+| `run_swarm_arm.py` | Arm S through `dag/pfp/model_ladder` |
+| `run_solo_arm.py` | optional fresh Solo, same bytes, costs money |
 | `score.py` | blinded verifier-only scoring, cost per accepted result, decision |
 | `compare_common.py` | clean room, packet loaders, leak guard, call and wall-clock caps |
 
-Everything is run from the repository root with `python -I -X utf8 ...`. Keys (`ANTHROPIC_API_KEY`, `OPENROUTER_API_KEY`,
-`GROQ_API_KEY`) are read at run time by the ladder's own loader from the environment or the `.env` files it already searches;
+Everything is run from the repository root with `python -I -X utf8 ...`. Keys (`PROVIDER_A_API_KEY`, `ROUTER_R_API_KEY`,
+`HOST_G_API_KEY`) are read at run time by the ladder's own loader from the environment or the `.env` files it already searches;
 nothing prints, logs or copies them. A dry-run reads no key.
 
 ## 1. Look before you spend (no network, no key)
@@ -29,13 +29,13 @@ nothing prints, logs or copies them. A dry-run reads no key.
 ```
 python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --dry-run
 python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --dry-run --compile-packets
-python -I -X utf8 dag/pfp/compare/run_fable_arm.py
+python -I -X utf8 dag/pfp/compare/run_solo_arm.py
 ```
 
 The first prints the plan for all 15 prompts, the tiers and the worst-case paid cost. `--compile-packets` also builds each clean
 room under `%USERPROFILE%\.fvs` (about 80 to 100 MB, removed at once), compiles the packet, checks the leak guard and prints the
 packet digest; for the P prompts it checks the stored request against the sha256 frozen in `cohort.json`. The third is the
-Fable dry-run (its default) with the worst-case cost. Packets are about 1,500 to 2,900 input tokens (all 15 compiled cleanly and passed the leak guard when this harness was built; the
+Solo dry-run (its default) with the worst-case cost. Packets are about 1,500 to 2,900 input tokens (all 15 compiled cleanly and passed the leak guard when this harness was built; the
 clean rooms of the controls drop 39 Arm F files that exist at the base commit, those of D and P drop none because the freeze
 commit predates them).
 
@@ -45,13 +45,13 @@ commit predates them).
 python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --confirm-spend --arm-cap-usd 2.00
 ```
 
-* Tiers 0 to 2 (free models, gpt-4o-mini on OpenRouter, Haiku 5.5). `--max-tier 0` is free models only and needs no
-  `--confirm-spend`. Opus and Fable are refused; `--max-tier 3` (Sonnet) is a recorded deviation.
+* Tiers 0 to 2 (free models, model-b3 on Router_r, Tier3 5.5). `--max-tier 0` is free models only and needs no
+  `--confirm-spend`. Tier1 and Solo are refused; `--max-tier 3` (Tier2) is a recorded deviation.
 * One run per prompt (the protocol). Order is the cohort order: D, then P, then C. `--only NODE[,NODE]` and `--strata D,P` select;
   a run that stops early can be continued with `--only` for the prompts not yet run.
 * Output: `dag/results/<NODE>/runs/<ts>_compare_swarm/` (ladder layout plus `compare_swarm_receipt.json`: protocol sha, packet and
   clean-room hashes, caps, leak check, spend) and `dag/pfp/compare/receipts/swarm_arm_<ts>.json`. The ladder ledger
-  `dag/pfp/llm_ladder/budget_ledger.json` is updated; commit it with the results.
+  `dag/pfp/model_ladder/budget_ledger.json` is updated; commit it with the results.
 * **Expected cost.** Free tiers cost 0. Paid tiers are used only after free attempts were rejected: at most about 0.01 USD per
   prompt at these packet sizes, so a worst case of 0.14 USD for all 15 prompts (`--dry-run --compile-packets` prints it; plain `--dry-run` assumes 12,000 tokens and prints 0.21), far below
   the 2.00 USD arm cap and the 0.25 USD per-prompt cap.
@@ -59,23 +59,23 @@ python -I -X utf8 dag/pfp/compare/run_swarm_arm.py --confirm-spend --arm-cap-usd
   plus about 30 to 60 s per prompt to build the clean room.
 * **Disk.** One clean room at a time, deleted after each prompt (`--keep-cleanroom` keeps them); peak about 0.2 GB. Run folders are small.
 
-## 3. Arm F, optional fresh Fable (this spends real money)
+## 3. Arm F, optional fresh Solo (this spends real money)
 
 ```
-python -I -X utf8 dag/pfp/compare/run_fable_arm.py --compile-packets
-python -I -X utf8 dag/pfp/compare/run_fable_arm.py --confirm-spend --usd-cap 8
+python -I -X utf8 dag/pfp/compare/run_solo_arm.py --compile-packets
+python -I -X utf8 dag/pfp/compare/run_solo_arm.py --confirm-spend --usd-cap 8
 ```
 
 Without it the primary test has at most 3 eligible prompts (the P stratum) and is INCONCLUSIVE by rule. The default is the D
 stratum (6 prompts), up to 3 answered attempts each, tier-5 settings of the ladder (effort medium, 8,000 max tokens), no tools,
 the swarm's packet, the same verifier. It refuses without `--confirm-spend` and a positive `--usd-cap`, reserves each call's
-worst case before sending, and applies the weekly Anthropic cap of the ledger.
+worst case before sending, and applies the weekly Provider_a cap of the ledger.
 
-* **Expected cost.** A reply is 450 to 2,900 tokens on Claude at these settings (`llm_ladder/design.md`), so about 0.03 to 0.15 USD
+* **Expected cost.** A reply is 450 to 2,900 tokens on Model_a at these settings (`model_ladder/design.md`), so about 0.03 to 0.15 USD
   a call and 0.2 to 1 USD for six prompts that are accepted at the first attempt. Worst case, every attempt at its token cap:
   about 1.3 to 1.5 USD a prompt, about 8 to 9 USD for the arm; hence the explicit cap.
 * **Time.** Seconds to a few minutes per call.
-* Output: `dag/results/<NODE>/runs/<ts>_compare_fable/` and `receipts/fable_arm_<ts>.json`. `--effort` and `--max-tokens` are
+* Output: `dag/results/<NODE>/runs/<ts>_compare_solo/` and `receipts/solo_arm_<ts>.json`. `--effort` and `--max-tokens` are
   labelled SENSITIVITY runs.
 
 ## 4. Score
@@ -104,7 +104,7 @@ What `--run-verifiers` needs and costs:
 * **Rust.** `cargo test --lib <module>` with `CARGO_TARGET_DIR` set to a short path (`--cargo-target`, default `~/.pfp-ct`), no debug
   info; the Rust twins have needed 10 to 18 GB of target in the past. Below `--min-free-gb-cargo` (15) free GB the cargo units are
   left unverified; `--skip-cargo` skips them. The target is deleted afterwards unless `--keep-cargo-target`.
-* Unknown Fable cost for D prompts: put real session costs from the Anthropic console in a JSON file and pass
+* Unknown Solo cost for D prompts: put real session costs from the Provider_a console in a JSON file and pass
   `--cost-overrides file.json` (`{"<NODE>": {"usd": 12.3, "basis": "console, session of <date>"}}`); otherwise the labelled lower bound is used.
 
 ## 5. After the run

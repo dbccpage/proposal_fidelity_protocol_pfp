@@ -317,7 +317,7 @@ def mine_node(corpus: Corpus, node):
         if local_path is None:
             internal = ref_path.startswith(('lean4/', 'code/', 'dag/', 'papers/'))
             entry.update(availability='unavailable' if internal else 'external', symbol=symbol, path=ref_path,
-                         repository='this_repository' if internal else 'the_symbol_game', sha256=None,
+                         repository='this_repository' if internal else 'upstream_repo', sha256=None,
                          declaration_status='path_not_found_locally' if internal else 'external_source_not_scanned',
                          role='source_lead_only')
             bindings.append(entry)

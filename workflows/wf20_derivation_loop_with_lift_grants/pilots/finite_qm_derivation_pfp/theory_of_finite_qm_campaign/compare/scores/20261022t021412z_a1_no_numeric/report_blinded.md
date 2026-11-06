@@ -1,4 +1,4 @@
-# Fable versus swarm: score report
+# Solo versus swarm: score report
 
 AuthorityEffect: None. Verifier verdicts only. Protocol sha256 `a9daabae34d01499`; cohort base commit `e8500fdbd665`.
 

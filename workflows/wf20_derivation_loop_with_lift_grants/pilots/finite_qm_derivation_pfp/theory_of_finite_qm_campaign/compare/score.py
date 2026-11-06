@@ -1,4 +1,4 @@
-"""Score the Fable-versus-swarm comparison by verifier verdicts only, blinded, with cost per accepted result.
+"""Score the Solo-versus-swarm comparison by verifier verdicts only, blinded, with cost per accepted result.
 
     python -I -X utf8 dag/pfp/compare/score.py                         # read the receipts on disk; whatever needs Lean/cargo/pytest is marked "unverified"
     python -I -X utf8 dag/pfp/compare/score.py --run-verifiers          # also run Lean 4.35.0, pytest and cargo as subprocesses (slow, needs disk; see README.md)
@@ -34,7 +34,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-sys.path.insert(0, str(HERE.parent))  # dag/pfp, so that the package `llm_ladder` imports under `python -I`
+sys.path.insert(0, str(HERE.parent))  # dag/pfp, so that the package `model_ladder` imports under `python -I`
 sys.dont_write_bytecode = True
 
 import yaml  # noqa: E402
@@ -48,7 +48,7 @@ S_CAN_REACH = {'O': True, 'L': True, 'W': False}   # Arm S is P0 only: Lean only
 MARGIN_PROMPTS = 1          # non-inferiority margin: the swarm may lose at most this many prompts net
 REFUTE_NET_PROMPTS = 3      # net loss that refutes outright
 SIGN_TEST_ALPHA = 0.05
-COST_RATIO_MAX = 0.10       # swarm cost per accepted prompt must be at most this fraction of Fable's
+COST_RATIO_MAX = 0.10       # swarm cost per accepted prompt must be at most this fraction of Solo's
 MIN_ELIGIBLE = 6            # fewer eligible prompts than this: INCONCLUSIVE whatever the counts
 TIE_COST_REL = 0.01
 
@@ -135,7 +135,7 @@ class Verifiers:
 
     @staticmethod
     def declarations(source: str) -> list:
-        from llm_ladder.verify import DeclIndex
+        from model_ladder.verify import DeclIndex
         private = {m.group(1) for m in re.finditer(r'^(?:@\[[^\]]*\]\s*)*(?:(?:protected|noncomputable|partial|unsafe)\s+)*private\s+'
                                                     r'(?:(?:protected|noncomputable|partial|unsafe)\s+)*(?:theorem|lemma|def|abbrev)\s+([^\s:({\[]+)', source, re.M)}
         names = []
@@ -311,7 +311,7 @@ def f_reuse_units(item: dict, verifiers: Verifiers) -> list:
             if unit.get('kind') == 'ladder_p0_attempt':
                 row['entries'] = {'verified': unit['verified_entries'], 'refused': unit['refused_claims']}
         row['verdict'], row['evidence_level'] = verdict, level
-        # as-recorded view, generous to Fable: any 'accepted' on disk counts, whatever the toolchain or evidence kind
+        # as-recorded view, generous to Solo: any 'accepted' on disk counts, whatever the toolchain or evidence kind
         row['as_recorded_accepted'] = recorded == 'accepted'
         out.append(row)
     return out
@@ -367,8 +367,8 @@ def delta_entries(delta: dict) -> list:
 
 def reverify_attempt(item: dict, run: Path, aid: str, workdir: Path):
     """Replay one stored answer through the host verifier against a rebuilt clean room (no network, no Lean)."""
-    from llm_ladder.packets import P0_SCHEMA, load_row
-    from llm_ladder.verify import DeclIndex, Verifier
+    from model_ladder.packets import P0_SCHEMA, load_row
+    from model_ladder.verify import DeclIndex, Verifier
     response = load_json(run / 'p0' / 'attempts' / aid / 'response.json')
     if not isinstance(response, dict) or response == {'parsed': None}:
         return None
@@ -388,7 +388,7 @@ def reverify_attempt(item: dict, run: Path, aid: str, workdir: Path):
 
 def ladder_arm(item: dict, run: Path, group: str, args, verifiers: Verifiers, workdir: Path) -> dict:
     receipt = load_json(run / 'ladder_receipt.json') or {}
-    compare = load_json(run / ('compare_%s_receipt.json' % ('swarm' if group == 'S' else 'fable'))) or {}
+    compare = load_json(run / ('compare_%s_receipt.json' % ('swarm' if group == 'S' else 'solo'))) or {}
     summary = receipt.get('summary', {})
     attempts = summary.get('attempts', [])
     # accepted_partial (ladder after #164) is an answered attempt; it is not `accepted`, so it earns no units under §5.3
@@ -539,19 +539,19 @@ def completeness(rows: list, keys) -> dict:
 def decide(cls: str, pairs: list, s_cost: float | None, f_cost: float | None, f_cost_basis: str, complete: bool, label: str) -> dict:
     """pairs: [(node, S_accepts, F_accepts)] for eligible prompts."""
     n = len(pairs)
-    b = sum(1 for _, s, f in pairs if f and not s)   # Fable accepted, swarm not
-    c = sum(1 for _, s, f in pairs if s and not f)   # swarm accepted, Fable not
+    b = sum(1 for _, s, f in pairs if f and not s)   # Solo accepted, swarm not
+    c = sum(1 for _, s, f in pairs if s and not f)   # swarm accepted, Solo not
     ties = n - b - c
-    result = {'comparison': label, 'class': cls, 'eligible_prompts': n, 'fable_only': b, 'swarm_only': c, 'ties': ties,
+    result = {'comparison': label, 'class': cls, 'eligible_prompts': n, 'solo_only': b, 'swarm_only': c, 'ties': ties,
               'swarm_accept_rate': round(sum(1 for _, s, _f in pairs if s) / n, 3) if n else None,
-              'fable_accept_rate': round(sum(1 for _, _s, f in pairs if f) / n, 3) if n else None,
-              'swarm_accept_wilson95': wilson(sum(1 for _, s, _f in pairs if s), n), 'fable_accept_wilson95': wilson(sum(1 for _, _s, f in pairs if f), n),
+              'solo_accept_rate': round(sum(1 for _, _s, f in pairs if f) / n, 3) if n else None,
+              'swarm_accept_wilson95': wilson(sum(1 for _, s, _f in pairs if s), n), 'solo_accept_wilson95': wilson(sum(1 for _, _s, f in pairs if f), n),
               'net_loss_prompts': b - c, 'sign_test_p_swarm_worse': round(sign_test_p(b, c), 4) if b > c else None}
     if not S_CAN_REACH[cls]:
         result.update(verdict='NOT_TESTABLE_AT_P0', reason='Arm S is P0 only and cannot produce a %s unit; stages P1-P5 are not wired.' % ('Rust/Python witness' if cls == 'W' else cls))
         return result
     if n < MIN_ELIGIBLE:
-        result.update(verdict='INCONCLUSIVE', reason='%d eligible prompts, fewer than the pre-registered minimum of %d (the fresh-Fable arm is what raises n).' % (n, MIN_ELIGIBLE))
+        result.update(verdict='INCONCLUSIVE', reason='%d eligible prompts, fewer than the pre-registered minimum of %d (the fresh-Solo arm is what raises n).' % (n, MIN_ELIGIBLE))
         return result
     net = b - c
     quality = 'pass' if net <= MARGIN_PROMPTS else ('fail' if net >= REFUTE_NET_PROMPTS or (result['sign_test_p_swarm_worse'] or 1) <= SIGN_TEST_ALPHA else 'borderline')
@@ -565,7 +565,7 @@ def decide(cls: str, pairs: list, s_cost: float | None, f_cost: float | None, f_
     else:
         ratio = round(s_cost / f_cost, 4)
         cost = 'tie' if abs(ratio - 1) <= TIE_COST_REL else ('pass' if ratio <= COST_RATIO_MAX else 'fail')
-    result.update(quality_leg=quality, cost_leg=cost, swarm_over_fable_cost_ratio=ratio, fable_cost_basis=f_cost_basis)
+    result.update(quality_leg=quality, cost_leg=cost, swarm_over_solo_cost_ratio=ratio, solo_cost_basis=f_cost_basis)
     if quality == 'fail':
         verdict = 'REFUTES'
     elif quality == 'borderline':
@@ -615,7 +615,7 @@ def render_blinded(rows: list, protocol_sha: str) -> str:
 
 
 def render_report(result: dict) -> str:
-    out = ['# Fable versus swarm: score report', '',
+    out = ['# Solo versus swarm: score report', '',
            'AuthorityEffect: None. Verifier verdicts only. Protocol sha256 `%s`; cohort base commit `%s`.' % (result['protocol_sha256'][:16], result['cohort_base_commit'][:12]), '',
            '**Mode:** verifiers re-run = %s; operad entries re-verified = %s; verification complete = %s (%d of %d units unverified).' % (
                result['flags']['run_verifiers'], result['flags']['reverify_o'], result['completeness']['complete'],
@@ -623,10 +623,10 @@ def render_report(result: dict) -> str:
     if not result['unblinded']:
         out += ['The arm-resolved table, costs and decision are withheld. Re-run with `--unblind` after reading the blinded table.', '']
         return '\n'.join(out)
-    out += ['## Decision (pre-registered rule, protocol.md section 8)', '', '| comparison | class | eligible | Fable-only | swarm-only | ties | quality | cost | ratio | verdict |', '|---|---|---|---|---|---|---|---|---|---|']
+    out += ['## Decision (pre-registered rule, protocol.md section 8)', '', '| comparison | class | eligible | Solo-only | swarm-only | ties | quality | cost | ratio | verdict |', '|---|---|---|---|---|---|---|---|---|---|']
     for d in result['decisions']:
-        out.append('| %s | %s | %d | %d | %d | %d | %s | %s | %s | **%s** |' % (d['comparison'], d['class'], d['eligible_prompts'], d['fable_only'], d['swarm_only'], d['ties'],
-                                                                         d.get('quality_leg', '-'), d.get('cost_leg', '-'), d.get('swarm_over_fable_cost_ratio', '-'), d['verdict']))
+        out.append('| %s | %s | %d | %d | %d | %d | %s | %s | %s | **%s** |' % (d['comparison'], d['class'], d['eligible_prompts'], d['solo_only'], d['swarm_only'], d['ties'],
+                                                                         d.get('quality_leg', '-'), d.get('cost_leg', '-'), d.get('swarm_over_solo_cost_ratio', '-'), d['verdict']))
     out += ['', '## Aggregates per arm (strict = verified now or by sealed receipt at Lean %s; as-recorded = every verdict a receipt claims, any toolchain, self-reports included)' % LEAN_VERSION, '']
     for name, agg in result['aggregates'].items():
         out.append('### %s' % name)
@@ -697,7 +697,7 @@ def main(argv=None) -> int:
             row = {'stratum': item['stratum'], 'node_id': item['node_id'], 'cohort_item_sha256': item_sha256(item), 'S': None, 'F_fresh': None, 'F_reuse': None}
             run = find_run(item['node_id'], 'compare_swarm', notes)
             row['S'] = ladder_arm(item, run, 'S', args, verifiers, workdir) if run else None
-            fresh = find_run(item['node_id'], 'compare_fable', notes)
+            fresh = find_run(item['node_id'], 'compare_solo', notes)
             row['F_fresh'] = ladder_arm(item, fresh, 'F', args, verifiers, workdir) if fresh else None
             if row['S']:
                 row['S']['cost_basis'] = 'recorded_rated'
@@ -716,7 +716,7 @@ def main(argv=None) -> int:
                 row['F_reuse'] = {'run': [r['path'] for r in item['arm_f']['runs']], 'outcome': outcome, 'units': units, 'spend_usd': usd, 'cost_basis': basis,
                                   'calls': None, 'seconds': None, 'verified_claims': sum(u.get('entries', {}).get('verified', 0) for u in units),
                                   'refused_claims': sum(u.get('entries', {}).get('refused', 0) for u in units)}
-                if item['stratum'] == 'P':   # the recorded attempt is the pre-registered paired Fable baseline for the replayed packet
+                if item['stratum'] == 'P':   # the recorded attempt is the pre-registered paired Solo baseline for the replayed packet
                     row['F_fresh'] = row['F_fresh'] or dict(row['F_reuse'], paired_source='recorded ladder attempt, byte-identical packet replayed to Arm S')
             rows.append(row)
         # ---- aggregates
@@ -736,7 +736,7 @@ def main(argv=None) -> int:
                       if r['S'] and r['F_fresh'] and (has_class(r['F_fresh'], cls) or cls == 'O')]
             s_cost = sum(r['S']['spend_usd'] for r in rows if r['S'] and r['F_fresh']) / max(1, sum(1 for _, s, _f in paired if s)) if any(s for _, s, _f in paired) else None
             f_cost = sum((r['F_fresh']['spend_usd'] or 0) for r in rows if r['S'] and r['F_fresh']) / max(1, sum(1 for _, _s, f in paired if f)) if any(f for _, _s, f in paired) else None
-            decisions.append(decide(cls, paired, s_cost, f_cost, 'recorded_rated', comp['complete'], 'C1 paired P0 (replayed packet / fresh Fable)'))
+            decisions.append(decide(cls, paired, s_cost, f_cost, 'recorded_rated', comp['complete'], 'C1 paired P0 (replayed packet / fresh Solo)'))
             outcome_pairs = [(r['node_id'], prompt_accept(r['S'], cls, True), prompt_accept(r['F_reuse'], cls, True)) for r in rows
                              if r['S'] and r['F_reuse'] and r['stratum'] == 'D' and has_class(r['F_reuse'], cls)]
             s_all = sum(r['S']['spend_usd'] for r in rows if r['S'] and r['F_reuse'] and r['stratum'] == 'D')
@@ -744,7 +744,7 @@ def main(argv=None) -> int:
             f_known = None if any(c is None for c in f_costs) or not f_costs else sum(f_costs)
             s_cost2 = (s_all / max(1, sum(1 for _, s, _f in outcome_pairs if s))) if any(s for _, s, _f in outcome_pairs) else None
             f_cost2 = (f_known / max(1, sum(1 for _, _s, f in outcome_pairs if f))) if f_known is not None and any(f for _, _s, f in outcome_pairs) else None
-            decisions.append(decide(cls, outcome_pairs, s_cost2, f_cost2, 'mixed: recorded where available, LOWER_BOUND otherwise', comp['complete'], 'C2 outcome (Fable agentic sessions, reuse)'))
+            decisions.append(decide(cls, outcome_pairs, s_cost2, f_cost2, 'mixed: recorded where available, LOWER_BOUND otherwise', comp['complete'], 'C2 outcome (Solo agentic sessions, reuse)'))
         result = {'schema_id': 'omega.pfp.compare.score.v1', 'authority_effect': 'None', 'protocol_sha256': protocol_sha, 'cohort_base_commit': cohort['built_from']['base_commit'],
                   'flags': {k: getattr(args, k) for k in ('run_verifiers', 'reverify_o', 'skip_lean', 'skip_python', 'skip_cargo', 'strata', 'only', 'unblind',
                                                            'exclude_numeric')},
@@ -779,7 +779,7 @@ def main(argv=None) -> int:
         print('verification complete: %s (%d of %d units unverified)' % (comp['complete'], comp['unverified'], comp['units']))
         if args.unblind:
             for d in decisions:
-                print('%-44s class %s eligible %d  F-only %d  S-only %d  -> %s' % (d['comparison'], d['class'], d['eligible_prompts'], d['fable_only'], d['swarm_only'], d['verdict']))
+                print('%-44s class %s eligible %d  F-only %d  S-only %d  -> %s' % (d['comparison'], d['class'], d['eligible_prompts'], d['solo_only'], d['swarm_only'], d['verdict']))
         return 0
     except CompareError as error:
         print('REFUSED: %s' % error, file=sys.stderr)
