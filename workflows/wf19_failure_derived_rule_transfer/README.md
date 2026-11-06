@@ -30,13 +30,6 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 - [`pilots/challenge_suite/`](pilots/challenge_suite/) — pilot material
 - [`pilots/evidence/`](pilots/evidence/) — recorded campaign evidence (raw replies, ledgers, receipts)
-- [`pilots/pilot_0000192/`](pilots/pilot_0000192/) — pilot_0000192: a_mechanism
-- [`pilots/pilot_0000193/`](pilots/pilot_0000193/) — pilot_0000193: b_cohomology
-- [`pilots/pilot_0000194/`](pilots/pilot_0000194/) — pilot_0000194: c_quantum
-- [`pilots/pilot_0000195/`](pilots/pilot_0000195/) — pilot_0000195: d_physics_mtheory
-- [`pilots/pilot_0000196/`](pilots/pilot_0000196/) — pilot_0000196: e_formal_math
-- [`pilots/pilot_0000197/`](pilots/pilot_0000197/) — pilot_0000197: f_program_synthesis
-- [`pilots/pilot_0000198/`](pilots/pilot_0000198/) — pilot_0000198: harness_tests
 
 ## Team
 

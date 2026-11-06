@@ -36,8 +36,6 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 - [`pilots/c054_exact_linear_systems/`](pilots/c054_exact_linear_systems/) — pilot material
 - [`pilots/c055_assignment_with_potentials/`](pilots/c055_assignment_with_potentials/) — pilot material
 - [`pilots/c059_sql_null_total_query_synthesis/`](pilots/c059_sql_null_total_query_synthesis/) — pilot material
-- [`pilots/pilot_0000053/`](pilots/pilot_0000053/) — pilot material
-- [`pilots/pilot_0000054/`](pilots/pilot_0000054/) — pilot material
 
 ## Team
 

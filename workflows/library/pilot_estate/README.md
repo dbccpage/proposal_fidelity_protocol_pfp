@@ -36,26 +36,25 @@ private runtime and is kept as a record, not as runnable code.
 
 ## Where each pilot went
 
-| Pilots | Workflow folder |
+Only pilots with recorded model runs or working checkers were kept. On
+2026-11-06 the never-dispatched capsule pilots (52–187), the host-only mode
+trials (5–25) and the empty learning wrappers (192–198) were deleted, with
+their result capsules; the research repository still has them.
+
+| Pilots kept | Workflow folder |
 | --- | --- |
-| 0, 1, 2, 4 (dialect rewrites) | `wf06_dialect_sweep/pilots/` |
-| 3 (refusal), homological objects | `wf07_typed_refusal/pilots/` |
-| 5–25 (mode trials, staged packets) | `wf08_staged_sealed_packets/pilots/` |
-| 26–50 (offline quizzes) | not copied: rewritten earlier as `workflows/tasks/` examples |
-| 51 | `wf10_local_to_global_obstruction_certificate/pilots/` |
-| 53–54, c051–c059 | `wf11_dual_certificate_synthesis/pilots/` |
-| 52 | `wf12_mechanism_control_arms/pilots/` |
-| 55–124 | `wf13_exact_domain_capsule_battery/pilots/` |
-| 125–134 | `wf14_immune_failure_classification/pilots/` |
-| 135–144 | `wf15_adversary_tribunal/pilots/` |
-| 145–169 | `wf16_substrate_crosswalk/pilots/` |
-| 170–187 | `wf17_witnessed_difference_programme/pilots/` |
-| 188–191, replay runners | `wf18_dossier_replay_campaign/pilots/` |
-| 192–198, challenge suite, PFP-learning evidence | `wf19_failure_derived_rule_transfer/pilots/` |
-| 199–203, relational spacetime, PO035 evidence | `wf20_derivation_loop_with_lift_grants/pilots/` |
+| 0, 1, 2, 4 (dialect rewrites, live replies) | `wf06_dialect_sweep/pilots/` |
+| 3 (typed refusal, live replies), homological objects | `wf07_typed_refusal/pilots/` |
+| 51 (observer-visibility obstruction, live replies) | `wf10_local_to_global_obstruction_certificate/pilots/` |
+| c051–c055, c059 (certificate challenges with run results) | `wf11_dual_certificate_synthesis/pilots/` |
+| C001, C005, consistency teaching, C006 protocol | `wf12_mechanism_control_arms/pilots/` |
+| 188–191 (dossier replay, 120 live calls), replay runners | `wf18_dossier_replay_campaign/pilots/` |
+| challenge suite, PFP-learning evidence (35 live replies) | `wf19_failure_derived_rule_transfer/pilots/` |
+| 199–203 (derivation loops, 25 live calls), finite-QM campaign, relational spacetime, PO035 evidence | `wf20_derivation_loop_with_lift_grants/pilots/` |
 | ACSet rewriting pilots, optional rewrite backends | `wf21_structural_prompt_rewriting/pilots/` |
 | certified ladder, M5 campaign evidence | `wf22_certified_cost_ladder/pilots/` |
 | judge-packet audit | `wf23_judge_packet_custody_audit/pilots/` |
+| 26–50 | not copied: rewritten earlier as `workflows/tasks/` examples |
 
 ## Not copied
 
