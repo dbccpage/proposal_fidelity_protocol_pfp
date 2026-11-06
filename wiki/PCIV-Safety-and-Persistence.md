@@ -102,7 +102,7 @@ it the experimental incumbent, with no deployment authority.
 `use_cases/ablation.py` complements this with report-only ablations that remove
 one or two barriers at a time to see what each contributes.
 
-This is the selection step of [Paper 029](Paper-029.md)'s harness-evolution
+This is the selection step of [Paper 019](Paper-019.md)'s harness-evolution
 loop. That campaign was deferred, so no improvement is claimed.
 
 ## Open horizons

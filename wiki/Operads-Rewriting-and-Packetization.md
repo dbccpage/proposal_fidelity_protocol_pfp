@@ -93,7 +93,7 @@ Rewriting is also how the operad catalogue is simplified.
 propose declared normalisations and quotient candidates: operations that might
 be merged. They are read-only by default and never merge or delete anything,
 because matching signatures and a few scalar observations do not prove two
-operations behave the same. [Paper 026](Paper-026.md) shows the general danger:
+operations behave the same. [Paper 016](Paper-016.md) shows the general danger:
 two states with the same current output can still allow different future
 operations or costs, so compressing them on output alone loses information.
 
@@ -143,7 +143,7 @@ a prompt genome apart from its many execution occurrences.
 
 ## Why the channel does not matter
 
-Theorem 1 of [Paper 027](Paper-027.md) is the reason the three stages can vary
+Theorem 1 of [Paper 017](Paper-017.md) is the reason the three stages can vary
 freely while the guarantee holds. Fix a task, a decoder that binds every
 admitted reply to that task, and a sound host checker. Then **no** proposal
 channel, whether a natural-language prompt, a glyph game, an operad

@@ -32,7 +32,7 @@ gives the unit of work:
   and its edge claims, as in the Paper 005 worked triangle with claims (1,1,1)
   and weights (1,2,3).
 - A **proposal** is one move from the four-move vocabulary in
-  `papers/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py`:
+  `papers/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py`:
   ASSERT, CUT, VERIFY, RETRACT.
 - The **governor** returns a verdict (MonotonicDescent, ExactRepair,
   IdempotentStationary, DefectIncrease, InvariantViolation, CarrierViolation,

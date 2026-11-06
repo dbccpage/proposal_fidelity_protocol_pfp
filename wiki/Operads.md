@@ -36,8 +36,8 @@ as `PipelineStage` in
 | [Rewriting and packetization](Operads-Rewriting-and-Packetization.md) | Follow a prompt from tree to rewrite to sealed packet, and see where the host checks each step |
 | [Typed workflows](Operads-Typed-Workflows.md) | Read the v1 workflow contract: nodes, bindings, the five-field port check, the refusal codes and the substitution laws |
 | [Skills, op inventory and the resolver](Operads-Skills-and-Catalog.md) | See how skill documents compile into operations, how they are refined into small ops and guarded by anti-ops, and how the resolver composes a plan |
-| [Bounded repair (C, R, E, I, M, T)](Operads-Bounded-Repair.md) | Walk through the six-operation code-repair example of Paper 028 |
-| [Local checks, global compatibility](Operads-Local-to-Global.md) | Understand why parts that fit and pass locally can still fail together (Paper 025), and what typed composition does not prove |
+| [Bounded repair (C, R, E, I, M, T)](Operads-Bounded-Repair.md) | Walk through the six-operation code-repair example of Paper 018 |
+| [Local checks, global compatibility](Operads-Local-to-Global.md) | Understand why parts that fit and pass locally can still fail together (Paper 015), and what typed composition does not prove |
 | [Operad type inventory](Operads-Type-Inventory.md) | Look up every kind of operad thing the code defines (colours, DDC letters, skills and anti-skills, rules, helpful and anti-patterns, antibodies, agents, operands and spans), with counts, locations, duplicates and what does not exist |
 
 ## Three ideas to hold on to
@@ -76,4 +76,4 @@ interpreter and calls the native port where one exists.
   up to PFP and the deformation calculus.
 - [Core concepts](Core-Concepts.md): packets, obstruction, retraction and
   receipts.
-- Papers [025](Paper-025.md), [027](Paper-027.md) and [028](Paper-028.md).
+- Papers [015](Paper-015.md), [017](Paper-017.md) and [018](Paper-018.md).

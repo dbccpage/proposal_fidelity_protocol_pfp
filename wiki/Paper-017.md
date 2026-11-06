@@ -1,7 +1,7 @@
-# Paper 027: Glyphs, rewrites, logits and attention as checked proposal channels
+# Paper 017: Glyphs, rewrites, logits and attention as checked proposal channels
 
 **Status:** Author-review draft; not an external deposit, v0.7.0  
-**Folder:** [`papers/027_pfp_proposal_channels_and_internal_interventions`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/027_pfp_proposal_channels_and_internal_interventions)
+**Folder:** [`papers/pfp/017_pfp_proposal_channels_and_internal_interventions`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/017_pfp_proposal_channels_and_internal_interventions)
 
 ## In brief
 
@@ -15,10 +15,10 @@ Candidates can come from natural-language prompts, glyph games, operad prompt de
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/027_pfp_proposal_channels_and_internal_interventions/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/017_pfp_proposal_channels_and_internal_interventions/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [Operads](Operads.md)
 
 ---
 
-Previous: [Paper 026](Paper-026.md) · [Papers](Papers.md) · Next: [Paper 028](Paper-028.md)
+Previous: [Paper 016](Paper-016.md) · [Papers](Papers.md) · Next: [Paper 018](Paper-018.md)

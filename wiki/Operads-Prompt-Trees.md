@@ -6,7 +6,7 @@ A PFP prompt is not a free-form string. It is assembled as a tree whose leaves
 are exact slices of a source document and whose internal nodes are typed
 operators. The code is in
 [`pfp/domain/operad/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/domain/operad),
-and the mathematics is Theorem 3 of [Paper 027](Paper-027.md).
+and the mathematics is Theorem 3 of [Paper 017](Paper-017.md).
 
 ## Prompt colours
 
@@ -41,7 +41,7 @@ child whose output colour differs from the slot's colour.
 
 ## The null tree and the congruence ideal
 
-Some defects make a tree useless no matter what surrounds it. Paper 027 collects
+Some defects make a tree useless no matter what surrounds it. Paper 017 collects
 them into a set `I` of defective trees:
 
 1. a numeric value that is not exact, or is a boolean dressed up as a number;
@@ -118,7 +118,7 @@ carries `authority_effect: "None"`.
 
 ## Why a two-stage prompt helps
 
-Paper 027 studies a two-stage pipeline `X → Z1 → Y`: stage 1 proposes a small
+Paper 017 studies a two-stage pipeline `X → Z1 → Y`: stage 1 proposes a small
 tuple of invariants, the host checks it, and only then is it grafted into
 stage 2. If the stage-1 guard is sound and complete, Theorem 5 shows that:
 
@@ -132,4 +132,4 @@ omits the global cycle-sum equation leaves an infinite set of false greens. A
 guard is only as good as the equations it actually checks.
 
 These are finite results under stated hypotheses. The historical model trials
-in Paper 027 are reported as unverified summaries, not current evidence.
+in Paper 017 are reported as unverified summaries, not current evidence.

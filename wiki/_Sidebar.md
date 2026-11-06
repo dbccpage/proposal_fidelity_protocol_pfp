@@ -41,14 +41,15 @@
   - [Genomes and lineage](PCIV-Genomes-and-Lineage.md) · [Mutation](PCIV-Mutation-and-Inheritance.md)
   - [Selection](PCIV-Selection-and-Retrieval.md) · [Safety](PCIV-Safety-and-Persistence.md)
 
-**Papers**
+**PFP papers**
 
 - [000](Paper-000.md) · [001](Paper-001.md) · [002](Paper-002.md) · [003](Paper-003.md)
 - [004](Paper-004.md) · [005](Paper-005.md) · [006](Paper-006.md) · [007](Paper-007.md)
 - [008](Paper-008.md) · [009](Paper-009.md) · [010](Paper-010.md) · [011](Paper-011.md)
-- [021](Paper-021.md) · [022](Paper-022.md) · [023](Paper-023.md) · [024](Paper-024.md)
-- [025](Paper-025.md) · [026](Paper-026.md) · [027](Paper-027.md) · [028](Paper-028.md)
-- [029](Paper-029.md) · [034](Paper-034.md)
+- [012](Paper-012.md) · [013](Paper-013.md) · [014](Paper-014.md) · [015](Paper-015.md)
+- [016](Paper-016.md) · [017](Paper-017.md) · [018](Paper-018.md) · [019](Paper-019.md)
+- [020](Paper-020.md) · [021](Paper-021.md)
+- [Non-PFP papers](Papers.md#non-pfp-papers)
 - [Contributing](Contributing.md)
 
 **Rewriting**

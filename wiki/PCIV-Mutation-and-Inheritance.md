@@ -106,7 +106,7 @@ descends from `P` through a second, longer path of length 4.
 
 ## Related reading
 
-[Paper 024](Paper-024.md) shows why inheritance needs these bindings: a
+[Paper 014](Paper-014.md) shows why inheritance needs these bindings: a
 rejection rule that is sound for its source task can become unsound after a
 task change, so a returned rule is re-used only when its task, evidence,
 transport and resource bindings survive.
