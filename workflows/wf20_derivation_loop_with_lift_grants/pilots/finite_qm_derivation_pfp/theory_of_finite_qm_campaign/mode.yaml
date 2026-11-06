@@ -1,0 +1,77 @@
+schema_id: omega.pfp.finite-qm.mode.v3
+mode_id: FINITE_QM_DERIVATION
+authority_effect: None
+purpose: Derive one finite-QM target with operad-guided construction and independently checked certificates.
+default_path:
+- P0_MINE_OPERAD
+- P1_DERIVE
+- P2_VERIFY
+- P4_CHALLENGE
+- P5_RECORD
+repair_path:
+- P3_REPAIR
+- P2_VERIFY
+provider_policy:
+  model_id: supplied_by_caller
+  silent_model_substitution: false
+  escalation: Only within the admitted call and cost budget after a failed repair.
+  dispatch_owner: existing_PFP_provider_port
+bounds:
+  candidate_attempt_limit: caller_supplied_per_run
+  llm_call_limit: caller_supplied_per_run
+  output_token_limit: caller_supplied_per_stage
+  total_cost_limit: Explicit caller reservation before paid dispatch; record unknown costs explicitly.
+  stop_on:
+  - unavailable_required_source_or_checker
+  - checker_disagreement
+  - unresolved_billing
+  - caller_budget_exhausted
+  checkpoint_on_stop: P5_RECORD with the operad collection and unresolved next step; no success fabrication.
+llm_techniques:
+- id: H1_POPULATE_BEFORE_EXECUTE
+  attach_to: P0_MINE_OPERAD
+  mechanism: Fill M1 through M4 before requesting a dependent derivation.
+  prompt_move: State the carrier, admissible operations, quotient/trap equations and certificate predicates first.
+  check: Required inputs and operation signatures are present; no sought answer is prefilled.
+- id: H2_DECOY_EQUATIONS
+  attach_to:
+  - P1_DERIVE
+  - P4_CHALLENGE
+  mechanism: Make a plausible wrong computation and the law that rejects it explicit.
+  prompt_move: Track the raw quantity, justified gauge/sign corrections and reduced quantity symbolically; ask
+    for the result.
+  check: The same mathematical checker rejects the near miss and accepts a valid control.
+- id: H3_WITNESS_FIRST
+  attach_to: P1_DERIVE
+  mechanism: Ask for a small checkable object instead of an unconstrained essay.
+  prompt_move: Construct the certificate now; include only the equations required to verify it.
+  check: Strict host schema when supplied; exact arithmetic and actual witness equations.
+  note: Output budgets are enforceable; a hidden 150-token thinking cap is not asserted.
+- id: H4_C4_DIAGNOSTIC
+  attach_to: P1_DERIVE
+  enabled_when: The task is a cochain problem or a separately scored orientation diagnostic is requested.
+  mechanism: Integrate a spanning tree then compute the chord discrepancy from its endpoints.
+  prompt_move: Compute potentials from the directed tree and evaluate the remaining chord residual exactly.
+  check: Score the C4 calculation separately from any broader QM claim.
+- id: H5_FRESH_CONTEXT_RESIDUAL_REPAIR
+  attach_to: P3_REPAIR
+  mechanism: Supply original inputs and bounded host failure classes in a fresh request.
+  prompt_move: Recompute the named invariant and return a complete replacement certificate.
+  check: No expected values or raw judge diagnostics enter feedback; every attempt is retained.
+- id: H6_MASKED_SECOND_VIEW
+  attach_to: P4_CHALLENGE
+  enabled_when: A reversible representation map and transported checker are available.
+  mechanism: Remove domain-triggering labels to test the same finite algebra in a second representation.
+  prompt_move: Solve the relabelled carrier using the supplied operations; transport the certificate back.
+  check: Same problem and acceptance predicate after transport; fresh dispatches count as separate trials.
+measurement:
+  technique_status: Design mechanisms; general performance benefit remains to be measured.
+  compare: Same public target checker model decoding and total budget with and without the selected technique.
+  record:
+  - first_attempt_acceptance
+  - final_acceptance
+  - calls
+  - tokens
+  - latency
+  - known_or_unknown_cost
+  - typed_failures

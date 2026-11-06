@@ -33,6 +33,7 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 - [`pilots/derivation_dag_pfp_staged_benchmark.py`](pilots/derivation_dag_pfp_staged_benchmark.py) — one-shot versus staged derivation certificates on slices of the finite-QM derivation graph
 - [`pilots/evidence/`](pilots/evidence/) — recorded campaign evidence (raw replies, ledgers, receipts)
 - [`pilots/finite_qm_derivation_pfp/`](pilots/finite_qm_derivation_pfp/) — operad mining, prompt compilation and gate checks for a multi-stage finite-QM derivation campaign
+- [`pilots/finite_qm_derivation_pfp/theory_of_finite_qm_campaign/`](pilots/finite_qm_derivation_pfp/theory_of_finite_qm_campaign/README.md) — that campaign's prompt programme, model ladder, batch runs and cohort scores, moved from the finite-QM repository
 - [`pilots/pilot_0000199/`](pilots/pilot_0000199/) — pilot_0000199: Corrected causal refinement theorem
 - [`pilots/pilot_0000200/`](pilots/pilot_0000200/) — pilot_0000200: Current from microscopic projection residual dynamics
 - [`pilots/pilot_0000201/`](pilots/pilot_0000201/) — pilot_0000201: Typed transport and categorical relational spine

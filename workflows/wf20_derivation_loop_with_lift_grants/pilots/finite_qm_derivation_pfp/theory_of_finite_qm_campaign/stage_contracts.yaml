@@ -1,0 +1,100 @@
+schema_id: omega.pfp.finite-qm.stage-contracts.v1
+every_stage:
+  binding:
+  - task_id
+  - stage_id
+  - attempt_id
+  - input_sha256
+  operad_delta:
+    add_or_refine_generators: []
+    add_or_refine_relations: []
+    checked_compositions: []
+    failed_compositions: []
+    counterexamples: []
+    open_obligations: []
+  claim_boundary:
+  - supports
+  - does_not_support
+  - narrowest_claim
+  - next_test
+stages:
+  P0_MINE_OPERAD:
+    required:
+    - mission_patch
+    - source_checks
+    - next_missing_dependency
+    - operad_delta
+    status_values:
+    - incomplete
+    - ready_for_host_review
+    note: Patch only what the sources support; never mark all slots FILLED merely to progress.
+  P1_DERIVE:
+    required:
+    - candidate_certificate
+    - construction
+    - remaining_obligations
+    - operad_delta
+    note: The exact domain-certificate schema is bound during reviewed M4 preparation, not guessed globally.
+  P2_VERIFY:
+    actor: host
+    required:
+    - candidate_sha256
+    - checker_pins
+    - predicate_results
+    - bounded_failure_codes
+    - operad_delta
+  P3_REPAIR:
+    required:
+    - replacement_candidate_certificate
+    - repaired_invariants
+    - remaining_obligations
+    - operad_delta
+    note: Preserve original target and inputs; no expected-answer feedback.
+  P4_CHALLENGE:
+    required:
+    - near_miss
+    - challenged_predicate
+    - valid_control
+    - challenge_result
+    - operad_delta
+    note: Challenge result is a host check; model proposals are not self-accepted.
+  P5_RECORD:
+    required:
+    - result_or_obstruction
+    - attempt_refs
+    - source_bindings
+    - remaining_obligations
+    - operad_delta
+    - next_mathematical_step
+generator_fields:
+- id
+- ordered_inputs
+- output
+- arity
+- carrier
+- coefficient_ring
+- hypotheses
+- source_pins
+- semantic_predicate
+- evidence_status
+relation_fields:
+- id
+- equation_or_predicate
+- typing_conditions
+- source_pins
+- evidence_status
+- scope
+composition_fields:
+- outer_operation
+- input_slot
+- inner_operation
+- colour_match
+- hypothesis_match
+- licensing_relations
+- evidence_status
+presentation_obligations:
+- identity_operations
+- unit_laws
+- partial_composition_associativity
+- symmetric_action_if_claimed
+- relations_stable_under_grafting

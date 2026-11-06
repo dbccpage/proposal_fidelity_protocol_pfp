@@ -1,0 +1,172 @@
+schema_id: omega.pfp.finite-qm.workflow.v3
+workflow_id: FINITE_QM_OPERAD_DERIVATION
+authority_effect: None
+prompt_template: prompt_template.yaml
+mode: mode.yaml
+entry_stage: P0_MINE_OPERAD
+terminal_stage: P5_RECORD
+stages:
+- id: P0_MINE_OPERAD
+  actor: researcher_with_host_review
+  input:
+  - target
+  - source_material
+  - existing_results
+  output:
+  - M1_carrier
+  - M2_operations
+  - M3_relations_and_decoys
+  - M4_certificate_contract
+  - operad_delta
+  instruction: |
+    Mine the four missions for this target. Locate existing results before
+    proposing new work. State each usable generator's ordered signature,
+    relations, scope and checker. Fill only missing slots. Keep the sought
+    witness and evaluated answer outside the public prompt.
+    Persist new or revised generators, relations, compositions, and obligations in this target's operad delta.
+  completion: The prerequisites of the selected next step are explicit and host-reviewed; incomplete mining remains
+    at P0.
+  transitions:
+    missing_or_unreviewed_dependency: P0_MINE_OPERAD
+    reviewed_next_step_ready: P1_DERIVE
+- id: P1_DERIVE
+  actor: model_or_exact_solver
+  input:
+  - target
+  - reviewed_missions
+  - public_input
+  output:
+  - candidate_certificate
+  - operad_delta
+  instruction: |
+    Carry out the derivation now. Construct the shortest checkable witness
+    for the stated target using the admitted operations. Check the original
+    equations before submission. If the target fails, supply a counterexample
+    satisfying its premises, or identify the exact missing implication.
+    Return the host's certificate shape; do not return a plan or your own verdict.
+    Persist new or revised generators, relations, compositions, and obligations in this target's operad delta.
+  llm_techniques:
+  - H1_POPULATE_BEFORE_EXECUTE
+  - H2_DECOY_EQUATIONS
+  - H3_WITNESS_FIRST
+  - H4_C4_DIAGNOSTIC
+  next: P2_VERIFY
+- id: P2_VERIFY
+  actor: host
+  input:
+  - public_input
+  - raw_candidate_bytes
+  - pinned_checkers
+  output:
+  - gate_results
+  - bounded_failure_codes
+  - retained_raw_bytes
+  - operad_delta
+  instruction: |
+    Parse the original candidate bytes under the bound schema. Run the
+    preselected independent predicates on the actual candidate and public
+    problem. Retain each result. Return only bounded failure classes to a
+    repair turn; keep expected answers and raw judge diagnostics private.
+    Persist new or revised generators, relations, compositions, and obligations in this target's operad delta.
+  gates:
+  - id: G1_SCHEMA
+    predicate: Exact response shape and task/attempt/input binding.
+  - id: G2_COCHAIN
+    predicate: Applicable carrier dimensions orientation and chain equations.
+  - id: G3_WITNESS
+    predicate: Independent domain certificate equations and feasibility.
+  - id: G4_COUNTERMODEL
+    predicate: Claimed countermodel satisfies premises and violates the target.
+  - id: G5_SCOPE
+    predicate: Imported assumptions and language anchors match the claimed result.
+  gate_rule: Select task-applicable predicates before dispatch; an unavailable required checker stops the run.
+  transitions:
+    accepted: P4_CHALLENGE
+    repairable_candidate_defect: P3_REPAIR
+    checked_terminal_refusal: P5_RECORD
+    checker_or_infrastructure_defect: P5_RECORD
+- id: P3_REPAIR
+  actor: model
+  input:
+  - original_public_input
+  - reviewed_missions
+  - bounded_failure_codes
+  output:
+  - replacement_candidate_certificate
+  - operad_delta
+  instruction: |
+    Recompute the candidate from the original public input. Repair only the
+    invariant classes named in the host feedback below. Recheck signs, dimensions,
+    quotient relations and certificate equations. Preserve the original target
+    and assumptions. Return a complete replacement certificate, not a patch,
+    explanation of the failure, or a request for the expected answer.
+    Persist new or revised generators, relations, compositions, and obligations in this target's operad delta.
+  llm_techniques:
+  - H5_FRESH_CONTEXT_RESIDUAL_REPAIR
+  next: P2_VERIFY
+- id: P4_CHALLENGE
+  actor: independent_check_or_isolated_model_proposal
+  input:
+  - target
+  - premises
+  - accepted_candidate
+  output:
+  - near_miss
+  - challenged_predicate
+  - host_checked_challenge_result
+  - operad_delta
+  instruction: |
+    Try to break the candidate's most fragile mathematical step. Produce a
+    concrete rival, sign/gauge mutation, or missing-hypothesis example. Name the
+    exact predicate at issue. The host must check the challenge and a valid
+    control before it changes the result. An adversary's assertion is a proposal.
+    Persist new or revised generators, relations, compositions, and obligations in this target's operad delta.
+  llm_techniques:
+  - H2_DECOY_EQUATIONS
+  - H6_MASKED_SECOND_VIEW
+  transitions:
+    survives: P5_RECORD
+    genuine_obstruction_and_repair_budget_remains: P3_REPAIR
+    unresolved: P5_RECORD
+- id: P5_RECORD
+  actor: host_and_researcher
+  input:
+  - checked_result
+  - all_attempts
+  - source_bindings
+  - remaining_obligations
+  output:
+  - finite_result_or_obstruction
+  - certificate_receipt
+  - next_mathematical_step
+  - operad_delta
+  instruction: |
+    State the result actually established and its assumptions. Link the checked
+    certificate, executed language anchors and raw responses. Keep missing
+    proofs, imports and unavailable executions open. Record every attempt and
+    its actual cost status. End with the four claim-hygiene statements.
+    Persist new or revised generators, relations, compositions, and obligations in this target's operad delta.
+repair_guidance:
+  G1_SCHEMA: Return the declared schema and bound identifiers with no extra prose or fields.
+  G2_COCHAIN: Recompute endpoint differences and oriented face sums on the supplied complex.
+  G3_WITNESS: Recompute the certificate and check feasibility before matching objective values.
+  G4_COUNTERMODEL: Check every premise on the rival before evaluating the target it is meant to violate.
+  G5_SCOPE: Separate supplied assumptions from derived statements and bind each claimed anchor to the same result.
+integration:
+  preparation_and_repair: prepare_finite_qm_turn uses this template and stage instructions.
+  candidate_checking: Existing PreparedTaskTurn plus independently registered domain judges.
+  provider_attempts_and_accounting: Existing RunPfpStagesUseCase and admitted provider port.
+  full_workflow_dispatch: Stage preparation and checkpoint runbook; provider dispatch and independent judges remain
+    the existing PFP ports.
+stage_response_contract: stage_contracts.yaml
+checkpointing:
+  root: ../results/{node_id}/runs/{run_id}/{attempt_id}/
+  retain:
+  - request.json
+  - raw_response.txt
+  - candidate.json
+  - host_check.json
+  - operad_delta.yaml
+  collection: ../operads/{node_id}.yaml
+  rule: Append attempt deltas; a host review merges supported changes into the target collection. Keep rejected
+    candidates with reasons.
