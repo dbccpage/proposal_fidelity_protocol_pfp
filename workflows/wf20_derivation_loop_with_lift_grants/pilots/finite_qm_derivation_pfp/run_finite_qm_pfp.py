@@ -4,7 +4,7 @@ Supports:
 1. `init-unfilled-prompts`: Initialize all 35 `dag/prompts/*.yaml` files with unfilled operad slots (`Phase A`).
 2. `run-dag-prompts`: Execute the sequential 4-Mission Operad Mining -> Slot Filling -> Live Multi-Stage PFP
    campaign against OpenRouter `deepseek/deepseek-v4.1-flash` (with automatic fallback to `deepseek/deepseek-v4-flash`
-   and Anthropic `fable5.1` / `claude-sonnet-4-5`), recording receipts in
+   and Anthropic `run-f` / `claude-sonnet-4-5`), recording receipts in
    `C:\\Users\\a343o\\source\\repos\\theory_of_finite_quantum_mechanics\\evidence\\receipts\\pfp_dag_prompts\\`
    and updating the corresponding `TFQ-*.md` papers in `papers/derivations/`.
 3. `mine-dag`: Mine all 177 nodes, 172 routes, and 25 operad families of `derivation_dag.json`.

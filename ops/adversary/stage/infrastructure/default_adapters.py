@@ -863,7 +863,7 @@ class AntigravityAgentTurnAdapter(SeatPortV1):
 
 
 class OearsApiTurnAdapter(SeatPortV1):
-    """Scaffold for live API transport (OpenRouter / Gemini API) — disabled by default in Sprint 2."""
+    """Scaffold for live API transport (OpenRouter / Google API) — disabled by default in Sprint 2."""
 
     def __init__(self, api_key: str = "", endpoint_url: str = "") -> None:
         self.api_key = api_key

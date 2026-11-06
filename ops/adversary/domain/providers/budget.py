@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from adversary.domain.providers import model_ids as ids
+
 import hashlib
 import json
 import re
@@ -214,8 +216,8 @@ class PriceTable:
             "qwen2.5:0.5b": (0, 0),
             "deepseek/deepseek-v4-flash": (140_000, 280_000),
             "deepseek-v4-flash": (140_000, 280_000),
-            "gemini-2.5-flash": (150_000, 600_000),
-            "google/gemini-2.5-flash": (150_000, 600_000),
+            ids.NATIVE_G_FAST: (150_000, 600_000),
+            ids.ROUTER_G_FAST: (150_000, 600_000),
             "meta/llama-3.3-70b-instruct": (0, 0),
             "nvidia/llama-3.1-nemotron-70b-instruct": (0, 0),
             "deepseek-ai/deepseek-r1": (0, 0),

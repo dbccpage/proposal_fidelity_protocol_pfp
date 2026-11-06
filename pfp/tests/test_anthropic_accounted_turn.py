@@ -211,7 +211,7 @@ def test_observed_standard_usage_thinking_breakdown_is_already_in_total():
 
 @pytest.mark.parametrize("tokens,accepted", [(8000, True), (16000, True), (16001, False)])
 def test_anthropic_output_bound_allows_thinking_room_up_to_its_ceiling(tmp_path, tokens, accepted):
-    """Live 2026-10-21: an Opus builder used all 2000 tokens on thinking plus a partial answer."""
+    """Live 2026-10-21: an Run O builder used all 2000 tokens on thinking plus a partial answer."""
     gateway = unbudgeted_gateway(provider=Provider.ANTHROPIC, model=MODELS[0],
         transport=lambda *a: b"", max_output_tokens=tokens)
     build = lambda: owner.EstimatedBudgetGateway(gateway, provider=Provider.ANTHROPIC, model=MODELS[0],
@@ -226,7 +226,7 @@ def test_anthropic_output_bound_allows_thinking_room_up_to_its_ceiling(tmp_path,
 
 
 def test_observed_standard_speed_rates_and_fast_speed_is_refused():
-    """The live Messages usage on 2026-10-21 carried speed='standard' (Opus 5.5)."""
+    """The live Messages usage on 2026-10-21 carried speed='standard' (Run O 5.5)."""
     usage = dict(input_tokens=1038, cache_creation_input_tokens=0, cache_read_input_tokens=0,
         cache_creation=dict(ephemeral_5m_input_tokens=0, ephemeral_1h_input_tokens=0),
         output_tokens=422, output_tokens_details={"thinking_tokens": 222},

@@ -475,10 +475,10 @@ def fixture_residual_improver_propose(
     return out
 
 
-def gemini_strong_judge_route(*, stage_id: str = "stage_2_adversary") -> StageRoute:
-    """SCALE-003 S3: strong-judge route using native Gemini Flash (allowlist+budget).
+def native_g_strong_judge_route(*, stage_id: str = "stage_2_adversary") -> StageRoute:
+    """SCALE-003 S3: strong-judge route using the native Google fast model (allowlist+budget).
 
-    Does not change default Anthropic judge; operator opts into Gemini explicitly.
+    Does not change default Anthropic judge; operator opts into the Google route explicitly.
     """
     base = resolve_stage_route(stage_id=stage_id)
     return StageRoute(
@@ -493,8 +493,8 @@ def gemini_strong_judge_route(*, stage_id: str = "stage_2_adversary") -> StageRo
     )
 
 
-def gemini_openrouter_propose_route() -> StageRoute:
-    """SCALE-003 S3: cheap propose via OpenRouter Google Gemini Flash slug."""
+def router_g_propose_route() -> StageRoute:
+    """SCALE-003 S3: cheap propose via the OpenRouter Google fast slug."""
     base = improver_default_route()
     return StageRoute(
         stage_id=base.stage_id,

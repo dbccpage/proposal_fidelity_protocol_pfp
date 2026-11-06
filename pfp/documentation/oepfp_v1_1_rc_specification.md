@@ -304,7 +304,7 @@ The table covers all **308 physical `test_*.py` modules**. **Tests executed for 
 | [tests/research/test_oears_host_scale_002_s3_live_residual.py](../../adversary/tests/research/test_oears_host_scale_002_s3_live_residual.py) | 8 / 25 | R1, R4 | `source_test_candidate` |
 | [tests/research/test_oears_host_scale_002_s4_stage5_on_demand.py](../../adversary/tests/research/test_oears_host_scale_002_s4_stage5_on_demand.py) | 11 / 22 | R1, R4 | `source_test_candidate` |
 | [tests/research/test_oears_host_scale_002_s5_strict_estate.py](../../adversary/tests/research/test_oears_host_scale_002_s5_strict_estate.py) | 14 / 16 | R1, R4 | `source_test_candidate` |
-| [tests/research/test_oears_host_scale_003_s3_gemini_provider.py](../../adversary/tests/research/test_oears_host_scale_003_s3_gemini_provider.py) | 9 / 25 | R1, R5 | `source_test_candidate` |
+| [tests/research/test_oears_host_scale_003_s3_run_g_provider.py](../../adversary/tests/research/test_oears_host_scale_003_s3_run_g_provider.py) | 9 / 25 | R1, R5 | `source_test_candidate` |
 | [tests/research/test_oears_host_scale_005_s1_warm_cache.py](../../adversary/tests/research/test_oears_host_scale_005_s1_warm_cache.py) | 4 / 12 | R1, R4 | `source_test_candidate` |
 | [tests/research/test_oears_host_scale_005_s2_cloud_kill_dispatch.py](../../adversary/tests/research/test_oears_host_scale_005_s2_cloud_kill_dispatch.py) | 7 / 11 | R1, R4 | `source_test_candidate` |
 | [tests/research/test_oears_host_scale_005_s3_multi_job_isolation.py](../../adversary/tests/research/test_oears_host_scale_005_s3_multi_job_isolation.py) | 5 / 7 | R1 | `source_test_candidate` |
@@ -377,8 +377,8 @@ The table covers all **308 physical `test_*.py` modules**. **Tests executed for 
 | [tests/test_digestion_extraction.py](../../adversary/tests/test_digestion_extraction.py) | 26 / 61 | R1, R3, R4, R5 | `source_test_candidate` |
 | [tests/test_end_to_end_multiturn_bout_derivation_target.py](../../adversary/tests/test_end_to_end_multiturn_bout_derivation_target.py) | 8 / 62 | R1, R2, R4, R5 | `source_test_candidate` |
 | [tests/test_evidence_gate_review_findings.py](../../adversary/tests/test_evidence_gate_review_findings.py) | 24 / 58 | R1, R3, R4 | `source_test_candidate` |
-| [tests/test_fable_long_horizon_critique.py](../../adversary/tests/test_fable_long_horizon_critique.py) | 5 / 24 | R1, R4 | `source_test_candidate` |
-| [tests/test_fugu_autophagous_cemetery.py](../../adversary/tests/test_fugu_autophagous_cemetery.py) | 3 / 19 | R1, R2, R4 | `source_test_candidate` |
+| [tests/test_run_f_long_horizon_critique.py](../../adversary/tests/test_run_f_long_horizon_critique.py) | 5 / 24 | R1, R4 | `source_test_candidate` |
+| [tests/test_run_u_autophagous_cemetery.py](../../adversary/tests/test_run_u_autophagous_cemetery.py) | 3 / 19 | R1, R2, R4 | `source_test_candidate` |
 | [tests/test_governance_dispatch.py](../../adversary/tests/test_governance_dispatch.py) | 11 / 50 | R1, R2, R3, R4, R5 | `source_test_candidate` |
 | [tests/test_governing_councils_bout_use_case.py](../../adversary/tests/test_governing_councils_bout_use_case.py) | 7 / 59 | R1, R4, R5 | `source_test_candidate` |
 | [tests/test_governing_councils_input_binding.py](../../adversary/tests/test_governing_councils_input_binding.py) | 5 / 28 | R1, R4 | `source_test_candidate` |

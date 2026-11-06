@@ -6,6 +6,8 @@ cue/context slots. OpenRouter callers supply an existing accounted gateway.
 
 from __future__ import annotations
 
+from adversary.domain.providers import model_ids as ids
+
 import json
 import os
 from dataclasses import dataclass, field
@@ -85,7 +87,7 @@ class OpenRouterDialogueProvider:
     """
 
     api_key: str = ""
-    model: str = "google/gemini-2.5-flash"
+    model: str = ids.ROUTER_G_FAST
     timeout_seconds: float = 10.0
     gateway: Any | None = field(default=None, kw_only=True, repr=False, compare=False)
     last_pfp_result: dict | None = field(default=None, init=False, repr=False, compare=False)
@@ -128,29 +130,29 @@ class OpenRouterDialogueProvider:
 
 
 @dataclass(frozen=True)
-class GeminiDialogueProvider:
-    """Retained constructor for the retired unaccounted native Gemini route."""
+class NativeGoogleDialogueProvider:
+    """Retained constructor for the retired unaccounted native Google route."""
 
     api_key: str
-    model: str = "gemini-2.5-pro"
+    model: str = ids.NATIVE_G_PRO
     timeout_seconds: float = 10.0
 
     @classmethod
     def from_environment(cls, environ: Optional[Mapping[str, str]] = None
-    ) -> "GeminiDialogueProvider | None":
+    ) -> "NativeGoogleDialogueProvider | None":
         env = os.environ if environ is None else environ
         api_key = env.get("GEMINI_API_KEY") or env.get("GOOGLE_API_KEY")
         return cls(api_key=api_key) if api_key else None
 
     def generate(self, speaker: str, cue: str, context: str = "") -> Result[str, Refusal]:
-        return Err(Refusal("DIALOGUE_NATIVE_GEMINI_RETIRED",
+        return Err(Refusal("DIALOGUE_NATIVE_GOOGLE_RETIRED",
             "Use current-IDE dialogue or the OpenRouter adapter with an accounted gateway. "
             "No provider fallback was attempted.", __name__))
 
 
 def resolve_dialogue_provider_from_environment(
     environ: Optional[Mapping[str, str]] = None, *, gateway=None,
-) -> OpenRouterDialogueProvider | GeminiDialogueProvider | None:
-    """Prefer OpenRouter; legacy Gemini selection produces an explicit refusal."""
+) -> OpenRouterDialogueProvider | NativeGoogleDialogueProvider | None:
+    """Prefer OpenRouter; legacy native Google selection produces an explicit refusal."""
     openrouter = OpenRouterDialogueProvider.from_environment(environ, gateway=gateway)
-    return openrouter if openrouter is not None else GeminiDialogueProvider.from_environment(environ)
+    return openrouter if openrouter is not None else NativeGoogleDialogueProvider.from_environment(environ)

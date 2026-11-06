@@ -53,7 +53,7 @@ When reviewing or creating agents, assign model tiers based on reasoning complex
 | **sonnet** | Structured/formulaic work, pattern matching, code review, process execution, build fixing | code-review, debug, autoskill, build-error-resolver, e2e-runner, dianoia, erc, student |
 | **haiku** | Administrative tasks, fast validation, lightweight orchestration | build-validator, secretary_cc, secretary_sadc, secretary_uc |
 
-**Default bias:** When uncertain, lean toward the higher tier. Opus adaptive thinking manages cost automatically by scaling reasoning effort to task complexity.
+**Default bias:** When uncertain, lean toward the higher tier. Run O adaptive thinking manages cost automatically by scaling reasoning effort to task complexity.
 
 **Audit steps:** See [`audit-steps.md`](references/audit-steps.md).
 

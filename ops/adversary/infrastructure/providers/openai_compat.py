@@ -1,11 +1,13 @@
 """OpenAI-compatible chat-completions KVP.
 
-Providers: OpenAI/Grok/Groq/Local/OpenRouter/DeepSeek/Gemini.
+Providers: OpenAI/Grok/Groq/Local/OpenRouter/DeepSeek/Google.
 No sockets in fixture path. Live keys never logged.
 AuthorityEffect: None.
 """
 
 from __future__ import annotations
+
+from adversary.domain.providers import model_ids as ids
 
 import json
 import os
@@ -93,9 +95,9 @@ DEFAULT_GROQ_MODEL = "llama-3.1-8b-instant"
 DEFAULT_LOCAL_MODEL = "qwen2.5:0.5b"
 DEFAULT_OPENROUTER_MODEL = "deepseek/deepseek-v4-flash"
 DEFAULT_DEEPSEEK_MODEL = "deepseek-v4-flash"
-DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
-# OpenRouter slug for Gemini Flash (alternate path)
-DEFAULT_OPENROUTER_GEMINI_MODEL = "google/gemini-2.5-flash"
+DEFAULT_GEMINI_MODEL = ids.NATIVE_G_FAST
+# OpenRouter slug for the same model (alternate path)
+DEFAULT_OPENROUTER_GEMINI_MODEL = ids.ROUTER_G_FAST
 DEFAULT_NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
 # Operator-confirmed env names (root .env); never log values.
@@ -154,7 +156,7 @@ def default_model(provider: Provider) -> str:
 _KEY_NAMES: dict[Provider, tuple[tuple[str, ...], str]] = {
     Provider.OPENROUTER: ((OPENROUTER_API_KEY_ENV,), "OpenRouter"),
     Provider.DEEPSEEK: ((DEEPSEEK_API_KEY_ENV,), "DeepSeek"),
-    Provider.GEMINI: ((GEMINI_API_KEY_ENV,), "Gemini"),
+    Provider.GEMINI: ((GEMINI_API_KEY_ENV,), "Google"),
     Provider.NVIDIA: ((NVIDIA_API_KEY_ENV,), "NVIDIA"),
     Provider.OPENAI: (("OPENAI_API_KEY",), "OpenAI"),
     Provider.GROK: (("XAI_API_KEY", "GROK_API_KEY"), "Grok"),

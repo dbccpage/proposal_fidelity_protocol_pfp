@@ -408,7 +408,7 @@ def get_backend(provider: str | None = None, **kwargs) -> Backend:
         return CascadingOpenRouterBackend(**kwargs)
     if provider in ("mock", "offline"):
         return MockBackend(**{k: v for k, v in kwargs.items() if k == "answer"})
-    if provider in ("sakana", "fugu", "sakana_openrouter"):
+    if provider in ("sakana", "run_u", "sakana_openrouter"):
         from adversary.infrastructure.providers.adapters.sakana_adapter import (
             SakanaOpenRouterAdapter,
         )

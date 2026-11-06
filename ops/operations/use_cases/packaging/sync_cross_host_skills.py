@@ -15,7 +15,7 @@ Authority: None. Sync is a packaging operation, not skill admission.
 
 THE ROSTER IS TRACKED, AND THAT IS LOAD-BEARING
 -----------------------------------------------
-`.gemini/skills` was removed from the roster on 2026-08-05 (operator: Gemini is
+`.gemini/skills` was removed from the roster on 2026-08-05 (operator: Run G is
 out). It is worth recording WHY its presence made this gate lie, because the
 mechanism will recur with any host added carelessly.
 

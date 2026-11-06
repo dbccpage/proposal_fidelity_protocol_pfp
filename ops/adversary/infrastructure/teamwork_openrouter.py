@@ -8,6 +8,8 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
+from adversary.domain.providers import model_ids as ids
+
 from dataclasses import dataclass
 from typing import ClassVar
 
@@ -24,7 +26,7 @@ from .teamwork_remote import (
 
 
 OPENROUTER_PRESET_MODEL_MAP = {
-    "anthropic/claude-3.7-sonnet:thinking": "anthropic/claude-opus-5.5",
+    "anthropic/claude-3.7-sonnet:thinking": ids.ROUTER_O,
     "anthropic/claude-3.7-sonnet": "anthropic/claude-sonnet-5.5",
     "anthropic/claude-3.5-sonnet": "anthropic/claude-sonnet-5.5",
     "anthropic/claude-3.5-haiku": "anthropic/claude-haiku-5.5",
@@ -32,8 +34,8 @@ OPENROUTER_PRESET_MODEL_MAP = {
     "openai/gpt-4o": "openai/gpt-4o",
     "openai/gpt-4o-mini": "openai/gpt-4o-mini",
     "deepseek/deepseek-r1": "deepseek/deepseek-v3.2",
-    "google/gemini-2.5-flash": "google/gemini-2.5-flash",
-    "google/gemini-2.5-flash-lite": "google/gemini-2.5-flash",
+    ids.ROUTER_G_FAST: ids.ROUTER_G_FAST,
+    ids.ROUTER_G_LITE: ids.ROUTER_G_FAST,
 }
 
 

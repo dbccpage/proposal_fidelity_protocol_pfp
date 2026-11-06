@@ -11,7 +11,7 @@ This directory contains typed Pydantic models (`.py`) and authoritative YAML spe
 
 ## 1. Overview of Evaluated Representations
 
-As recorded in [`results.md`](../../pilots/pilot_output/results.md), four prompt representations were evaluated across 64 dispatches across four models (`openai/gpt-4o-mini`, `google/gemini-2.5-flash`, `meta-llama/llama-3.3-70b-instruct`, `deepseek/deepseek-chat`):
+As recorded in [`results.md`](../../pilots/pilot_output/results.md), four prompt representations were evaluated across 64 dispatches across four models (`openai/gpt-4o-mini`, `router-g-fast`, `meta-llama/llama-3.3-70b-instruct`, `deepseek/deepseek-chat`):
 
 | Representation | Format Posture | Python / Pydantic Model | YAML Specification | Avg Tokens | Validation Rate | Marginal Overhead |
 |---|---|---|---|---|---|---|

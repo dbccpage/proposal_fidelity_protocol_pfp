@@ -121,7 +121,7 @@ class ConstraintMode(str, Enum):
 #: the Symbol Game domain to the research host.
 #:
 #: `local` is grammar-capable because the llama.cpp backend behind Ollama
-#: accepts GBNF. `anthropic` and `gemini` expose no per-token bias at all.
+#: accepts GBNF. `anthropic` and `run_g` expose no per-token bias at all.
 CONSTRAINT_BY_PROVIDER: dict[str, ConstraintMode] = {
     "fixture": ConstraintMode.GRAMMAR,
     "local": ConstraintMode.GRAMMAR,

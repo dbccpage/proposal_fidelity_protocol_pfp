@@ -26,7 +26,7 @@ benchmark (`DAG-QM-S1`) across 3 multi-node Finite-QM derivation slices (`dag_qm
      `AnnihilatorDecoy` refutations (`O^-`), extracting the verified 8-node derivation
      certificate in a single extraction turn.
 3. `operad_p_star_pfp_staged_0_3`:
-   Feeds the `P*`-materialized Coloured Operad container into the Fable 5.5 upgraded
+   Feeds the `P*`-materialized Coloured Operad container into the Run F upgraded
    11-stage `pfp-staged.0.3` pipeline (`ExecuteStagePipelineUseCase`):
    - Stage 1 (`admit`, `host`, 0 model calls): admits the seed `declaration` (`declaration_source="seed"`).
    - Stage 2 (`ideation`, `model`, `seat_gauge_breaker`, 1 model call): proposes 5-7 candidates

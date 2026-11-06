@@ -142,7 +142,7 @@ Every claim in `{stem}_claim_ledger.md` MUST be assigned one of the 7 canonical 
 ## 6. Domain Campaign & Goal Prompt Custody
 
 1. **Prompt Repository Locus**:
-   - Maintains active and looping goal prompts under `library/prompts/` and `coda_university/coda_library/prompts/` (e.g. `qm_looping_goal_prompt.md`, `q_looping_goal_prompt.md`, `fable_gtla_prompt.md`, `coda_codaq_solver_of_solvers_looping_goal_prompt.md`).
+   - Maintains active and looping goal prompts under `library/prompts/` and `coda_university/coda_library/prompts/` (e.g. `qm_looping_goal_prompt.md`, `q_looping_goal_prompt.md`, `run_f_gtla_prompt.md`, `coda_codaq_solver_of_solvers_looping_goal_prompt.md`).
 2. **Custody Protocol**:
    - Every goal prompt must explicitly declare `AuthorityEffect: None`.
    - Maintains hypothesis ledgers and points strictly to canonical contracts without speculative claim inflation.

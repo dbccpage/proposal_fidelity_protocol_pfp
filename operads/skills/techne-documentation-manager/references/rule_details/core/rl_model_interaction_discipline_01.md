@@ -12,7 +12,7 @@ Parent: [Model Selection & 4E Operating Posture](../../../../../rules/core/rl_mo
    The active LLM powering the primary conversation thread is strictly determined by the user via the client UI model selection dropdown. The agent cannot programmatically reconfigure, swap, or execute an API call to change its own active root model mid-session.
 
 2. **Immediate Clarification on Model Switch Requests**:
-   If the user issues an instruction to switch models (e.g. "switch to Gemini", "use Claude Opus"), the assistant must immediately acknowledge and explain that the switch is performed via the client UI dropdown. The assistant must never proceed with long, silent, or blocking tasks without first delivering this clarification.
+   If the user issues an instruction to switch models (e.g. "switch to Run G", "use Run O"), the assistant must immediately acknowledge and explain that the switch is performed via the client UI dropdown. The assistant must never proceed with long, silent, or blocking tasks without first delivering this clarification.
 
 3. **Runtime-Declared Subagent Dispatch**:
    When the runtime exposes subagent delegation, use only its advertised tools and model identifiers. Inherit the active model unless an available override is justified, and report any explicit override. Never invent provider-specific commands or tiers in a shared rule.

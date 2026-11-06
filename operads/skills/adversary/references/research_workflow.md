@@ -38,7 +38,7 @@ user scope decide applicable checks, budgets and transitions. In particular:
 
 ---
 
-## 1. Executive Overview & Fable-Compatible Control Law
+## 1. Executive Overview & Run F-Compatible Control Law
 
 This workflow defines the unified, bounded execution loop for **autonomous research missions**, **frontier software engineering tasks**, and **strategic context compactions**. It unifies the produce-freeze-evaluate-challenge-repair loop of the Proposal Fidelity Protocol (PFP) with the Adversary 22-character adversarial reality gate, strict railway-oriented programming (ROP) monads, and zero-loss artifact custody.
 
@@ -208,5 +208,5 @@ cargo test -j 1 -p core_adversary --test research_loop_replay --test research_pa
 py -3.12 -m adversary.entrypoints.cli research check-pack
 
 # Full Adversary 5-phase test suite
-python -m pytest adversary/tests/test_panel_22_cast_totality.py adversary/tests/intergates/test_intergates_evaluator.py adversary/tests/test_fugu_autophagous_cemetery.py adversary/tests/test_fable_long_horizon_critique.py adversary/tests/test_compositional_open_games.py -v
+python -m pytest adversary/tests/test_panel_22_cast_totality.py adversary/tests/intergates/test_intergates_evaluator.py adversary/tests/test_run_u_autophagous_cemetery.py adversary/tests/test_run_f_long_horizon_critique.py adversary/tests/test_compositional_open_games.py -v
 ```

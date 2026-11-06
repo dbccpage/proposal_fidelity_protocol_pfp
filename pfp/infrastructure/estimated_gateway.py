@@ -154,9 +154,9 @@ def create_accounted_openrouter_gateway(
 
 ANTHROPIC_COST_BASIS = "anthropic-standard-rated-v1"
 # Rated run-wide ceiling for one Anthropic run. Raised from $0.50 for a full Sonnet Panel, then
-# to $4 because an Opus run reserves twice each call's worst case and stops at 80%.
+# to $4 because an Run O run reserves twice each call's worst case and stops at 80%.
 ANTHROPIC_RUN_CEILING_MICROUSD = 4_000_000
-# Output bound for one Anthropic call; thinking shares it, so 3000 truncated Opus builders.
+# Output bound for one Anthropic call; thinking shares it, so 3000 truncated Run O builders.
 ANTHROPIC_MAX_OUTPUT_TOKENS = 16_000
 
 
