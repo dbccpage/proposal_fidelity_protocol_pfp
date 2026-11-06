@@ -10,7 +10,7 @@ The definitive technical specification for Version 1.0RC and its integration wit
 - [**01. V1.0RC System Design & Integration**](01_v10rc_system_design_and_integration.md): The Four-Tier Civilizational Topology, Two-Graph Separation, Lamarckian Retro-Inheritance, and PFP/Adversary Seams.
 - [**Normal Form 01: Prompt Societies & Civilizations**](normal_forms/nf_01_prompt_society_and_civilization.md): Normative schemas, Pareto domination criteria, and budget conservation laws.
 - [**Normal Form 02: Lamarckian PFP-Adversary Feedback Loop**](normal_forms/nf_02_lamarckian_pfp_adversary_loop.md): Trace algebra, protected core invariance, and cryptographic mutation receipts.
-- [**Normal Form 03: The Autophagous "Fugu" Cemetery & Pharmacy Gate**](normal_forms/nf_03_fugu_cemetery_and_antibody_gate.md): Closed-loop failure interment, pre-execution Act IV screening, and antibody regression prevention.
+- [**Normal Form 03: The Autophagous "Run U" Cemetery & Pharmacy Gate**](normal_forms/nf_03_run_u_cemetery_and_antibody_gate.md): Closed-loop failure interment, pre-execution Act IV screening, and antibody regression prevention.
 
 ---
 
@@ -48,8 +48,8 @@ The complete technical curriculum for prompt genome evolution, causal inheritanc
   # 2. Python prompt civilization unit tests (domain, models, fitness, F1-F4)
   py -3.12 -m pytest pciv/unit -v -p no:cacheprovider
 
-  # 3. Autophagous Fugu cemetery and antibody blocking integration suite
-  py -3.12 -m pytest pciv/tests/integration/test_fugu_cemetery_blocking_loop.py -v -p no:cacheprovider
+  # 3. Autophagous Run U cemetery and antibody blocking integration suite
+  py -3.12 -m pytest pciv/tests/integration/test_run_u_cemetery_blocking_loop.py -v -p no:cacheprovider
 
   # 4. Lamarckian Adversary loop integration tests
   py -3.12 -m pytest pciv/tests/integration/test_lamarckian_adversary_loop.py -v -p no:cacheprovider

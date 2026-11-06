@@ -54,7 +54,7 @@ $b_1 \in \{5, 7\}$), and one multi-stage `P*` cohomology certificate campaign
 (`B-COH-S1` across `C011`–`C020`) across a pinned local checkpoint
 (`Qwen/Qwen2.5-0.5B-Instruct`, rev `7ae557604adf67be50417f59c2c2f167def9a775`)
 and accounted OpenRouter (`openai/gpt-4o-mini` and `qwen/qwen-2.5-7b-instruct`),
-together with an accounted Anthropic `claude-fable-5-1` theorem-derivation
+together with an accounted Anthropic `run-f` theorem-derivation
 receipt (`msg_011Cg74HxZqarY627LKcRzQa`).
 
 The historical model-receipt files are unavailable in this revision. Their
@@ -65,9 +65,9 @@ harness protocol have separate checks; the new paid campaign is NOT_RUN.
 
 | Mechanism | Evidence |
 | --- | --- |
-| Mathematical statements (Theorems 1–3, Proposition 4, Theorems 5–12) | Written proofs under declared finite hypotheses + accounted `claude-fable-5-1` derivation (`fable_5_1_guard_theorem_receipt.json`) |
+| Mathematical statements (Theorems 1–3, Proposition 4, Theorems 5–12) | Written proofs under declared finite hypotheses + accounted `run-f` derivation (`run_f_5_1_guard_theorem_receipt.json`) |
 | Finite example & theorem checks | Standard-library replay (`code/replay.py`) of glyph round trips, single-cycle and $K_4$ / higher-Betti ($b_1 \in \{4..8\}$) cochain duality, operad `NullTree` absorption, BPE prefix-automaton states, partial- vs. complete-guard kernel checks, dichotomic Fredholm-alternative guard closure, C001 cohomological syndrome decoding $\mathbf{r}^* = S\mathbf{c}$, path-integrated $B_T^{-1}$ vs. edge-local $B_T$ retry diagnostics, and `b_cohomology` (`C011`–`C020`) independent exact certificate verification |
-| Bounded C001, C004, C005, C006 & `b_cohomology` (`C011`–`C020`) mechanism trials (Panel 1 local + Panel 2 OpenRouter + Anthropic `claude-fable-5-1`) | Thirteen committed JSON receipts replayed offline with zero network calls (`c004_paired_benchmark_receipt.json`, `operad_cochain_ablation_receipt.json`, `p_star_operad_materialization_receipt.json`, `p_star_4slot_binding_receipt.json`, `p_star_verified_guard_receipt.json`, `fable_5_1_guard_theorem_receipt.json`, `c004_40case_hidden_p_star_receipt.json`, `c006_overlap_basis_p_star_receipt.json`, `c006_higher_betti_p_star_receipt.json`, `c006_60board_hidden_p_star_receipt.json`, `c005_dichotomic_fredholm_p_star_receipt.json`, `c001_distractor_cochain_p_star_receipt.json`, `b_cohomology_p_star_receipt.json`) |
+| Bounded C001, C004, C005, C006 & `b_cohomology` (`C011`–`C020`) mechanism trials (Panel 1 local + Panel 2 OpenRouter + Anthropic `run-f`) | Thirteen committed JSON receipts replayed offline with zero network calls (`c004_paired_benchmark_receipt.json`, `operad_cochain_ablation_receipt.json`, `p_star_operad_materialization_receipt.json`, `p_star_4slot_binding_receipt.json`, `p_star_verified_guard_receipt.json`, `run_f_5_1_guard_theorem_receipt.json`, `c004_40case_hidden_p_star_receipt.json`, `c006_overlap_basis_p_star_receipt.json`, `c006_higher_betti_p_star_receipt.json`, `c006_60board_hidden_p_star_receipt.json`, `c005_dichotomic_fredholm_p_star_receipt.json`, `c001_distractor_cochain_p_star_receipt.json`, `b_cohomology_p_star_receipt.json`) |
 | Lean verification | No new formalization claimed in this draft |
 | Authorization | None supplied |
 
@@ -290,7 +290,7 @@ host guard, let $\pi_{\mathcal{I}}$ project any rejected Stage-1 output
 ($G_1(x, z_1) = 0$) to `NullTree` ($\mathbf{0}$), and let $R \ge 1$ be a bounded
 Stage-1 retry cap (1 initial attempt + at most $R - 1$ diagnostic retries).
 
-**Theorem 5 (Guarded Stage-1 Slot Retry with Ideal Abstention — derived with `claude-fable-5-1`, `msg_011Cg74HxZqarY627LKcRzQa`).**
+**Theorem 5 (Guarded Stage-1 Slot Retry with Ideal Abstention — derived with `run-f`, `msg_011Cg74HxZqarY627LKcRzQa`).**
 Suppose the Stage-1 guard $G_1$ is sound and complete for $z_1^*(x)$, meaning
 $G_1(x, z_1) = 1 \iff z_1 = z_1^*(x)$. Let $p_1(x) := \mathbb{P}(Z_1^{(1)} = z_1^*(x) \mid x)$
 be the Attempt-1 exact Stage-1 probability, and under the conditional
@@ -344,7 +344,7 @@ $$G_{\text{partial}}(x, z_1) = 1 \iff \Bigl(\hat{i}^* = i^*(w)\Bigr) \;\wedge\; 
 whereas the **complete** guard adjoins the global cycle-sum check:
 $$G_{\text{complete}}(x, z_1) = 1 \iff G_{\text{partial}}(x, z_1) = 1 \;\wedge\; \left(\hat{s} = \sum_{j=0}^{k-1} c_j\right).$$
 
-**Theorem 6 (Partial-Guard Visibility Gap & False-Green Kernel — derived with `claude-fable-5-1`, `msg_011Cg74HxZqarY627LKcRzQa`).**
+**Theorem 6 (Partial-Guard Visibility Gap & False-Green Kernel — derived with `run-f`, `msg_011Cg74HxZqarY627LKcRzQa`).**
 For every directed $k$-cycle $x = (c, w)$:
 
 1. **Infinite False-Green Kernel under $G_{\text{partial}}$:** The set of false-green
@@ -1270,9 +1270,9 @@ executes twelve deterministic verification suites with zero model calls:
     `C018` (signed-graph switching frustration) instances that status-label-only
     acceptance admits invalid `"status": "SOLVED"` payloads whereas independent
     algebraic recomputation rejects them.
-12. **Offline recount of all 13 committed C001, C004, `claude-fable-5-1`, C005, C006, and `b_cohomology` receipts:**
+12. **Offline recount of all 13 committed C001, C004, `run-f`, C005, C006, and `b_cohomology` receipts:**
     Replays all six committed C004 benchmark receipts (including the 40-case
-    hidden ladder `C004-S6`), the accounted `claude-fable-5-1` theorem-derivation
+    hidden ladder `C004-S6`), the accounted `run-f` theorem-derivation
     receipt, all three C006 receipts (`C006-S6` $K_4$, `C006-S7` higher-Betti,
     and `C006-S8` 60-board hidden campaign), the `C005-S1` dichotomic Fredholm
     receipt, the `C001-S1` distractor-filtered syndrome receipt, and the

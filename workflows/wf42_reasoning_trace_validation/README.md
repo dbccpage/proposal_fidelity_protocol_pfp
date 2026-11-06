@@ -25,7 +25,7 @@ Code and tests; the extractor adequacy battery is specified, not certified.
 
 ## Team
 
-Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when extractor collapses: CarrierFailure (limit 0).
 

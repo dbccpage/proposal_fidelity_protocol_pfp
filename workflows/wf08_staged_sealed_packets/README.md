@@ -26,9 +26,9 @@ Mode trials mode_01..mode_20 and wire encodings (EBNF wire, S(n) wire, boundary 
 
 ## Team
 
-Pattern `relay`: coder ×k (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `relay`: coder ×k (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-Boost: when a stage receipt fails: rerun that stage once with opus and the receipt residual; earlier seals are reused (limit 1).
+Boost: when a stage receipt fails: rerun that stage once with run_o and the receipt residual; earlier seals are reused (limit 1).
 
 ## Recorded variations
 

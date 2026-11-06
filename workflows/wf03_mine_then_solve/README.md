@@ -48,7 +48,7 @@ Host check: typed_envelope_and_independent_exact_sum.
 
 ## Team
 
-Pattern `relay`: miner ×1 (opus); coder ×1 (sonnet); host_checker ×1 (none).
+Pattern `relay`: miner ×1 (run_o); coder ×1 (sonnet); host_checker ×1 (none).
 
 Boost: when guidance screen rejects: none on the base path (limit 0).
 

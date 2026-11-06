@@ -26,7 +26,7 @@ related:
 - 01_v10rc_system_design_and_integration.md
 - normal_forms/nf_01_prompt_society_and_civilization.md
 - normal_forms/nf_02_lamarckian_pfp_adversary_loop.md
-- normal_forms/nf_03_fugu_cemetery_and_antibody_gate.md
+- normal_forms/nf_03_run_u_cemetery_and_antibody_gate.md
 last_verified: 2026-10-10
 ---
 
@@ -49,7 +49,7 @@ This directory establishes the architecture, population dynamics, and inheritanc
 - [**01. V1.0RC System Design & Integration**](01_v10rc_system_design_and_integration.md): Master architectural monograph defining the Four-Tier Civilizational Topology, Two-Graph Separation, Lamarckian Retro-Inheritance, and PFP/Adversary Integration.
 - [**Normal Form 01: Prompt Societies & Civilizations**](normal_forms/nf_01_prompt_society_and_civilization.md): Normative RFC 8785 compatibility target (not encoder verification), mathematical state space, and Pareto conservation laws.
 - [**Normal Form 02: Lamarckian PFP-Adversary Feedback Loop**](normal_forms/nf_02_lamarckian_pfp_adversary_loop.md): State machine algebra, sequence diagrams, and cryptographic mutation receipts.
-- [**Normal Form 03: The Autophagous "Fugu" Cemetery & Pharmacy Gate**](normal_forms/nf_03_fugu_cemetery_and_antibody_gate.md): Closed-loop failure interment, pre-execution Act IV screening, and antibody regression prevention.
+- [**Normal Form 03: The Autophagous "Run U" Cemetery & Pharmacy Gate**](normal_forms/nf_03_run_u_cemetery_and_antibody_gate.md): Closed-loop failure interment, pre-execution Act IV screening, and antibody regression prevention.
 
 ## Progressive Levels Curriculum & Interactive Tracks
 

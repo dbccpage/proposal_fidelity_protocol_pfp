@@ -27,9 +27,9 @@ Pilot 35 freezes role submissions and checks them separately (118 tests, 17 muta
 
 ## Team
 
-Pattern `tribunal`: prosecutor ×1 (fable); defender ×1 (opus); coder ×1 (sonnet); host_checker ×1 (none).
+Pattern `tribunal`: prosecutor ×1 (run_f); defender ×1 (run_o); coder ×1 (sonnet); host_checker ×1 (none).
 
-Boost: when both submissions fail the check: one fresh opus round per side with the checker output (limit 1).
+Boost: when both submissions fail the check: one fresh run_o round per side with the checker output (limit 1).
 
 ## Recorded variations
 

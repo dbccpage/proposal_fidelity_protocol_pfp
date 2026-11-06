@@ -25,7 +25,7 @@ Live on one torus case: tokens fell from over 8,000 to 2,810 and overall 4/5 pas
 
 ## Team
 
-Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when token ceiling reached: split into macro-blocks and rerun once (limit 1).
 

@@ -378,12 +378,12 @@ deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
    - 2-turn `P*` 4-slot (`(s, i*, c_{i*}, c'_{i*})`): **`3/8` (`37.5%`)** optimal (`5/8` `ExactCoboundary`).
 3. **Remaining Stage-1 failure modes retained as negative evidence:** On `2/5` of the exact-`(s, i*, c_{i*})` cases (`c004_k3_02`: emitted `4 1 6 -2` instead of `4 1 6 2`; `c004_k5_02`: emitted `-1 3 -3 2` instead of `-1 3 -3 -2`), the model flipped the sign of the subtraction $c_{i^*} - s$, and on `3/8` cases (`c004_k3_01`, `c004_k6_01`, `c004_k6_02`) it selected a suboptimal edge index $\hat{i}^*$.
 
-### Paired evaluator-verified Stage-1 slot retry / guard filtering (`C004-S5`) vs. unverified 2-turn 4-slot `P*` grafting and `claude-fable-5-1` theorem derivation, 2026-10-16
+### Paired evaluator-verified Stage-1 slot retry / guard filtering (`C004-S5`) vs. unverified 2-turn 4-slot `P*` grafting and `run-f` theorem derivation, 2026-10-16
 
 Executed via `workflows/wf12_mechanism_control_arms/pilots/p_star_verified_guard_benchmark.py`
 with receipt committed at `workflows/wf12_mechanism_control_arms/pilots/p_star_verified_guard_receipt.json`
-and theorem derivation executed via `workflows/wf12_mechanism_control_arms/pilots/fable_5_1_guard_theorem_derivation.py`
-with receipt committed at `workflows/wf12_mechanism_control_arms/pilots/fable_5_1_guard_theorem_receipt.json`
+and theorem derivation executed via `workflows/wf12_mechanism_control_arms/pilots/run_f_5_1_guard_theorem_derivation.py`
+with receipt committed at `workflows/wf12_mechanism_control_arms/pilots/run_f_5_1_guard_theorem_receipt.json`
 under `EPIC-OE-PFP-010` (`M2`/`M5`/`M6`, `ADMIT_BOUNDED_TRIAL`) across the same $N = 8$
 deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 
@@ -415,7 +415,7 @@ deterministic C004 directed $k$-cycle cases ($k \in \{3, 4, 5, 6\}$):
 | `p_star_4slot_unverified_graft` (`R=1`, prior `C004-S4`) | `16` (`8` S1 + `8` S2) | `3/8` (`37.5%`) | `3/8` (`37.5%`) | `0/8` (`0` Stage-2 calls saved) | `5/8` (`62.5%`) | `3/8` (`37.5%`) | `3/8` (`37.5%`) |
 | **`p_star_verified_stage1_complete_guard` (`R=2`, `C004-S5`)** | **`7` incremental (`13` total vs. `16` unverified)** | **`3/8 -> 6/8` (`75.0%`)** | **`3/8 -> 5/8` (`62.5%`)** | **`3/8` (`37.5%`, `3` Stage-2 calls saved)** | **`5/8` (`62.5%`)** | **`5/8` (`62.5%`)** | **`5/5` (`100.0%`) under $G_{\text{complete}}$; `5/6` (`83.3%`) if $G_{\text{partial}}$ admitted `c004_k6_01`** |
 
-**Accounted Anthropic `claude-fable-5-1` theorem derivation (`fable_5_1_guard_theorem_receipt.json`, `generation_id: msg_011Cg74HxZqarY627LKcRzQa`, `attempt_state: CompletedRatedEstimate`, `rated_cost_usd: "0.12620"` / `126,200` micro-USD under `200,000` micro-USD cap, `2,718` input + `4,007` output tokens):**
+**Accounted Anthropic `run-f` theorem derivation (`run_f_5_1_guard_theorem_receipt.json`, `generation_id: msg_011Cg74HxZqarY627LKcRzQa`, `attempt_state: CompletedRatedEstimate`, `rated_cost_usd: "0.12620"` / `126,200` micro-USD under `200,000` micro-USD cap, `2,718` input + `4,007` output tokens):**
 
 1. **Theorem 5 (`theorem_1_guarded_slot_retry_and_abstention` — Guarded Stage-1 Slot Retry with Ideal Abstention):**
    Under a sound and complete deterministic Stage-1 guard $G_1(x, z_1) = 1 \iff z_1 = z_1^*(x)$ and $R \ge 1$ bounded attempts with `NullTree` projection ($\pi_{\mathcal{I}}$) on guard failure:
@@ -618,7 +618,7 @@ before any local or paid execution:
    committed tests and receipts (`c004_paired_benchmark_receipt.json`,
    `operad_cochain_ablation_receipt.json`, `p_star_operad_materialization_receipt.json`,
    `p_star_4slot_binding_receipt.json`, `p_star_verified_guard_receipt.json`,
-   `fable_5_1_guard_theorem_receipt.json`, `c004_40case_hidden_p_star_receipt.json`,
+   `run_f_5_1_guard_theorem_receipt.json`, `c004_40case_hidden_p_star_receipt.json`,
    `c006_overlap_basis_p_star_receipt.json`, `c006_higher_betti_p_star_receipt.json`,
    `c006_60board_hidden_p_star_receipt.json`, `c005_dichotomic_fredholm_p_star_receipt.json`,
    `c001_distractor_cochain_p_star_receipt.json`, `b_cohomology_p_star_receipt.json`,
@@ -637,7 +637,7 @@ before any local or paid execution:
 | **Single-turn Coloured Operad slot-grafting ($\circ_i$) + Layer-2 grammar mask vs. plain prompt on $\Phi_1/\Gamma_2$ repair** | Yes (`operad.py`, `cochain.py`, `carrier_decoding.py`) | **Yes** (`operad_cochain_ablation_receipt.json`, `test_operad_cochain_ablation.py`) | Yes (`M2` / `M5` / `M6`) | **`SKIP_LIVE_REPLAY_ONLY`** (completed 2026-10-16; negative single-turn zero-scratchpad finding recorded) |
 | **2-turn `P*` staged operad slot materialization (`(s, i*, c'_{i*})` $\to$ `LeafTextSpan` $\circ_i$ graft $\to$ $k$-slot repair) vs. plain prompt** | Yes (`operad.py`, `cochain.py`, `task_turn.py`) | **Yes** (`p_star_operad_materialization_receipt.json`, `test_operad_cochain_ablation.py`) | Yes (`M2` / `M5` / `M6`) | **`SKIP_LIVE_REPLAY_ONLY`** (completed 2026-10-16; `0/8 -> 3/8` `ExactCoboundary` and `0/8 -> 2/8` optimal vs. 1-turn operad; Stage-1 slot-2 index-lookup bottleneck isolated) |
 | **4-slot Stage-1 index-value binding (`(s, i*, c_{i*}, c'_{i*})` with `gbnf_slots=4`) `P*` operad ablation** | Yes (`operad.py`, `cochain.py`, `carrier_decoding.py`) | **Yes** (`p_star_4slot_binding_receipt.json`, `test_operad_cochain_ablation.py`) | Yes (`M2` / `M5` / `M6`) | **`SKIP_LIVE_REPLAY_ONLY`** (completed 2026-10-16; doubled Stage-1 $c'_{i^*}$ accuracy `2/8 -> 4/8`, raised `ExactCoboundary` `3/8 -> 5/8` and $\ell_1$-optimal `2/8 -> 3/8`) |
-| **Evaluator-verified Stage-1 slot retry / guard filtering (`G_partial` vs. `G_complete`, `NullTree` abstention) & `claude-fable-5-1` theorem derivation (`C004-S5`)** | Yes (`operad.py`, `cochain.py`, `estimated_gateway.py`) | **Yes** (`p_star_verified_guard_receipt.json`, `fable_5_1_guard_theorem_receipt.json`, `test_operad_cochain_ablation.py`) | Yes (`M2` / `M5` / `M6`) | **`SKIP_LIVE_REPLAY_ONLY`** (completed 2026-10-16; raised $\ell_1$-optimal repair `3/8 -> 5/8` (`5/5` conditional precision), saved `3/8` hosted & `8/8` local Stage-2 calls via `NullTree`, and isolated $\mathcal{K}_{\text{false}} \cong \mathbb{Z} \setminus \{0\}$ on `c004_k6_01`) |
+| **Evaluator-verified Stage-1 slot retry / guard filtering (`G_partial` vs. `G_complete`, `NullTree` abstention) & `run-f` theorem derivation (`C004-S5`)** | Yes (`operad.py`, `cochain.py`, `estimated_gateway.py`) | **Yes** (`p_star_verified_guard_receipt.json`, `run_f_5_1_guard_theorem_receipt.json`, `test_operad_cochain_ablation.py`) | Yes (`M2` / `M5` / `M6`) | **`SKIP_LIVE_REPLAY_ONLY`** (completed 2026-10-16; raised $\ell_1$-optimal repair `3/8 -> 5/8` (`5/5` conditional precision), saved `3/8` hosted & `8/8` local Stage-2 calls via `NullTree`, and isolated $\mathcal{K}_{\text{false}} \cong \mathbb{Z} \setminus \{0\}$ on `c004_k6_01`) |
 | **Held-out 40-case `C004` (`C004-S6`, $k \in \{3..12\}$) & 60-board `C006` (`C006-S8`, $b_1 \in \{3..8\}$) hidden campaigns on `qwen/qwen-2.5-7b-instruct`** | Yes (`operad.py`, `cochain.py`, `mechanism_sessions.py`) | **Yes** (`c004_40case_hidden_p_star_receipt.json`, `c006_60board_hidden_p_star_receipt.json`, `test_operad_cochain_ablation.py`) | Yes (`M4` / `M5`) | **`SKIP_LIVE_REPLAY_ONLY`** (completed 2026-10-17; `2/2 = 100%` conditional Stage-2 $\ell_1$-optimality on `C004-S6` with `3` Local Green / Global Red witnesses caught; `8/60` (`8/8 = 100%` conditional precision) on `C006-S8` vs. `0/60` un-staged, saving `208` downstream turns via `NullTree`) |
 | **C006 multi-cycle overlap-basis cochain repair ($K_4, b_1 = 3 \ge 2$) comparing `P*` staged guarded overlap materialization (`G_complete_c006`, $R=2$) vs. un-staged action generation (`C006-S6`)** | Yes (`mechanism_sessions.py`, `operad.py`, `carrier_decoding.py`) | **Yes** (`c006_overlap_basis_p_star_receipt.json`, `test_operad_cochain_ablation.py`, `test_c004_pfp_mechanism_boundary.py`) | Yes (`M4` / `M5`) | **`SKIP_LIVE_REPLAY_ONLY`** (completed 2026-10-17; lifted `ACCEPTED_ZERO_DEFECT` from `0/4 -> 2/4` (`2/2` conditional precision), saved `6` hosted & `12` local Stage-2 turns via `NullTree`, and isolated 3 empirical witnesses in $\mathcal{K}_{\text{false}}^{\text{C006}} \cong \mathbb{Z}^{2 b_1} \setminus \{0\}$) |
 | **C006 higher-Betti ($b_1 \in \{4, 5, 6, 7\}$ across $K_{3,3}, Q_3, K_5, \text{Petersen}, W_7$) two-stage tree-then-chord `P*` factorization (`C006-S7`)** | Yes (`mechanism_sessions.py`, `operad.py`, `carrier_decoding.py`) | **Yes** (`c006_higher_betti_p_star_receipt.json`, `test_operad_cochain_ablation.py`, `test_c004_pfp_mechanism_boundary.py`) | Yes (`M4` / `M5`) | **`SKIP_LIVE_REPLAY_ONLY`** (completed 2026-10-17; reduced slot arity from $|V|-1+2 b_1 \in \{13..21\}$ to $\max(|V|-1, b_1) \in \{5..9\}$, lifting `ACCEPTED_ZERO_DEFECT` from `0/5 -> 5/5` (`100.0%`) on `openai/gpt-4o-mini` and saving `20` local turns via `NullTree`) |
@@ -662,7 +662,7 @@ the BPE prefix-automaton GBNF slot mask (`gbnf_slots=k`),
 hosted paired mask benchmark, the single-turn Coloured Operad slot-grafting ($\circ_i$)
 ablation, the 2-turn `P*` 3-slot operad materialization ablation, the 2-turn `P*`
 4-slot index-value binding ablation (`(s, i*, c_{i*}, c'_{i*})`), the evaluator-verified
-Stage-1 slot retry / guard filtering ablation (`C004-S5`) with `claude-fable-5-1`
+Stage-1 slot retry / guard filtering ablation (`C004-S5`) with `run-f`
 theorem derivation (`Theorem 5` & `Theorem 6` in Paper `027`), the bounded paired
 `C006-S6` $K_4$ multi-cycle overlap-basis `P*` ablation (`Theorem 7` in Paper `027`),
 the `C006-S7` two-stage tree-then-chord `P*` higher-Betti scaling benchmark (`Theorem 8`

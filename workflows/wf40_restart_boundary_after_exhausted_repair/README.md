@@ -24,7 +24,7 @@ Code and tests; offline scripted demos only.
 
 ## Team
 
-Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when none: terminal by design (limit 0).
 

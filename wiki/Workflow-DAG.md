@@ -171,9 +171,9 @@ Every family has a **goal** (decided only by its host check), a **team**
 (roles with model tiers), a **teamwork pattern** and a bounded **boost**.
 
 - **Sonnet** does most of the work: code, encoders, runs, custody.
-- **Opus** does deep research: derivations, checker and certificate design,
+- **Run O** does deep research: derivations, checker and certificate design,
   analysis, and usually the boost step.
-- **Fable** does adversarial research: countermodels, leak tests,
+- **Run F** does adversarial research: countermodels, leak tests,
   premise-removing variants, prosecution.
 - The **host check** is deterministic code and is the only thing that accepts.
 
@@ -259,7 +259,7 @@ success.
 
 **Host check:** typed_envelope_and_independent_exact_sum.
 
-**Team (`relay`):** miner ×1 (opus); coder ×1 (sonnet); host_checker ×1 (none).
+**Team (`relay`):** miner ×1 (run_o); coder ×1 (sonnet); host_checker ×1 (none).
 
 **Boost:** when guidance screen rejects: none on the base path. Limit 0.
 
@@ -286,7 +286,7 @@ success.
 
 **Host check:** typed_envelope_and_independent_exact_sum.
 
-**Team (`parallel_isolated_then_global`):** miner ×1 (opus); coder ×5 (sonnet); host_checker ×1 (none).
+**Team (`parallel_isolated_then_global`):** miner ×1 (run_o); coder ×5 (sonnet); host_checker ×1 (none).
 
 **Boost:** when global disagreement: none on the base path. Limit 0.
 
@@ -313,7 +313,7 @@ success.
 
 **Host check:** typed_envelope_and_independent_exact_sum.
 
-**Team (`parallel_isolated_then_global`):** coder ×1 (sonnet); miner ×1 (opus); coder ×5 (sonnet); host_checker ×1 (none).
+**Team (`parallel_isolated_then_global`):** coder ×1 (sonnet); miner ×1 (run_o); coder ×5 (sonnet); host_checker ×1 (none).
 
 **Boost:** when preservation check fails: stop; never solve an unpreserved task. Limit 0.
 
@@ -345,9 +345,9 @@ success.
 
 **Host check:** family checker (e.g. exact linear algebra, graph facts, graph repair, typed refusal).
 
-**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-**Boost:** when a dialect fails preservation: opus proposes a corrected rewrite from the preservation residual; recheck before any dispatch. Limit 1.
+**Boost:** when a dialect fails preservation: run_o proposes a corrected rewrite from the preservation residual; recheck before any dispatch. Limit 1.
 
 <a id="wf7"></a>
 
@@ -375,9 +375,9 @@ success.
 
 **Host check:** typed refusal checker.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
-**Boost:** when bluff detected: fable adds the variant to the negative-control bank; no retry on the same item. Limit 0.
+**Boost:** when bluff detected: run_f adds the variant to the negative-control bank; no retry on the same item. Limit 0.
 
 <a id="wf8"></a>
 
@@ -405,9 +405,9 @@ success.
 
 **Host check:** per-stage receipts plus the family checker.
 
-**Team (`relay`):** coder ×k (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`relay`):** coder ×k (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-**Boost:** when a stage receipt fails: rerun that stage once with opus and the receipt residual; earlier seals are reused. Limit 1.
+**Boost:** when a stage receipt fails: rerun that stage once with run_o and the receipt residual; earlier seals are reused. Limit 1.
 
 <a id="wf9"></a>
 
@@ -438,7 +438,7 @@ success.
 
 **Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); host_checker ×1 (none).
 
-**Boost:** when two rejections in a row: final attempt goes to opus with the full residual history. Limit 1.
+**Boost:** when two rejections in a row: final attempt goes to run_o with the full residual history. Limit 1.
 
 <a id="wf10"></a>
 
@@ -468,9 +468,9 @@ success.
 
 **Host check:** exact cochain / homology checker.
 
-**Team (`parallel_isolated_then_global`):** coder ×n_patches (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`parallel_isolated_then_global`):** coder ×n_patches (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
-**Boost:** when local checks pass but the global check fails: opus receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate. Limit 1.
+**Boost:** when local checks pass but the global check fails: run_o receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate. Limit 1.
 
 <a id="wf11"></a>
 
@@ -500,9 +500,9 @@ success.
 
 **Host check:** exact certificate checker plus an independent second checker.
 
-**Team (`research_cell`):** coder ×2 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`research_cell`):** coder ×2 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
-**Boost:** when a certificate is rejected on public cases: opus reads the rejected certificate and the checker message, proposes one patch; sonnet applies it. Limit 2.
+**Boost:** when a certificate is rejected on public cases: run_o reads the rejected certificate and the checker message, proposes one patch; sonnet applies it. Limit 2.
 
 <a id="wf12"></a>
 
@@ -530,7 +530,7 @@ success.
 
 **Host check:** integer rank-difference certificate (to be registered).
 
-**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when leak found: rebuild the carrier; discard affected runs. Limit 0.
 
@@ -562,9 +562,9 @@ success.
 
 **Host check:** per-domain registered checker.
 
-**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-**Boost:** when checker rejects: one opus attempt with the checker message. Limit 1.
+**Boost:** when checker rejects: one run_o attempt with the checker message. Limit 1.
 
 <a id="wf14"></a>
 
@@ -593,9 +593,9 @@ success.
 
 **Host check:** detector admission check over the sealed panel.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
-**Boost:** when a detector fires on Self: discard it; opus may propose one narrower detector. Limit 1.
+**Boost:** when a detector fires on Self: discard it; run_o may propose one narrower detector. Limit 1.
 
 <a id="wf15"></a>
 
@@ -624,9 +624,9 @@ success.
 
 **Host check:** finite model checker.
 
-**Team (`tribunal`):** prosecutor ×1 (fable); defender ×1 (opus); coder ×1 (sonnet); host_checker ×1 (none).
+**Team (`tribunal`):** prosecutor ×1 (run_f); defender ×1 (run_o); coder ×1 (sonnet); host_checker ×1 (none).
 
-**Boost:** when both submissions fail the check: one fresh opus round per side with the checker output. Limit 1.
+**Boost:** when both submissions fail the check: one fresh run_o round per side with the checker output. Limit 1.
 
 <a id="wf16"></a>
 
@@ -654,9 +654,9 @@ success.
 
 **Host check:** relation-preservation checker (Lean or finite tables).
 
-**Team (`research_cell`):** coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`research_cell`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
-**Boost:** when Lean or table check fails: opus repairs the encoding from the error. Limit 2.
+**Boost:** when Lean or table check fails: run_o repairs the encoding from the error. Limit 2.
 
 <a id="wf17"></a>
 
@@ -685,9 +685,9 @@ success.
 
 **Host check:** witness / countermodel checker.
 
-**Team (`research_cell`):** deep_researcher ×2 (opus); adversary ×1 (fable); coder ×2 (sonnet); host_checker ×1 (none).
+**Team (`research_cell`):** deep_researcher ×2 (run_o); adversary ×1 (run_f); coder ×2 (sonnet); host_checker ×1 (none).
 
-**Boost:** when countermodel found: claim is narrowed or withdrawn; opus restates it once. Limit 1.
+**Boost:** when countermodel found: claim is narrowed or withdrawn; run_o restates it once. Limit 1.
 
 <a id="wf18"></a>
 
@@ -716,7 +716,7 @@ success.
 
 **Host check:** family checker; replay must reproduce every grade.
 
-**Team (`sweep_with_shared_judge`):** coder ×2 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`sweep_with_shared_judge`):** coder ×2 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when replay grade differs: stop the campaign; investigate custody before any new call. Limit 0.
 
@@ -746,9 +746,9 @@ success.
 
 **Host check:** original domain judges; disagreement halts.
 
-**Team (`research_cell`):** deep_researcher ×1 (opus); adversary ×1 (fable); coder ×1 (sonnet); host_checker ×1 (none).
+**Team (`research_cell`):** deep_researcher ×1 (run_o); adversary ×1 (run_f); coder ×1 (sonnet); host_checker ×1 (none).
 
-**Boost:** when rule shows no gain: one revised rule from opus; otherwise the rule is retired. Limit 1.
+**Boost:** when rule shows no gain: one revised rule from run_o; otherwise the rule is retired. Limit 1.
 
 <a id="wf20"></a>
 
@@ -778,7 +778,7 @@ success.
 
 **Host check:** finite witness controls; proofs need independent review.
 
-**Team (`research_cell`):** deep_researcher ×1 (opus); adversary ×1 (fable); coder ×1 (sonnet); host_checker ×1 (none).
+**Team (`research_cell`):** deep_researcher ×1 (run_o); adversary ×1 (run_f); coder ×1 (sonnet); host_checker ×1 (none).
 
 **Boost:** when witness check fails twice: next loop starts from the adversary's counterexample. Limit 1.
 
@@ -808,7 +808,7 @@ success.
 
 **Host check:** byte-preservation and exact judge.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when meaning-loss case found: add it as a refusal test. Limit 0.
 
@@ -839,7 +839,7 @@ success.
 
 **Host check:** family certificate checkers; hypothesis evaluator.
 
-**Team (`sweep_with_shared_judge`):** coder ×2 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`sweep_with_shared_judge`):** coder ×2 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when none: a ladder run never escalates mid-campaign: boosted arms are separate pre-registered arms. Limit 0.
 
@@ -869,7 +869,7 @@ success.
 
 **Host check:** audit report.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when leak found: block the challenge until it is resealed. Limit 0.
 
@@ -897,9 +897,9 @@ success.
 
 **Host check:** dual holonomy checkers that must agree.
 
-**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-**Boost:** when checker rejects: opus repairs the scratchpad from the residual. Limit 1.
+**Boost:** when checker rejects: run_o repairs the scratchpad from the residual. Limit 1.
 
 <a id="wf25"></a>
 
@@ -926,7 +926,7 @@ success.
 
 **Host check:** dual checkers.
 
-**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when token ceiling reached: split into macro-blocks and rerun once. Limit 1.
 
@@ -955,9 +955,9 @@ success.
 
 **Host check:** exact oracle.
 
-**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
-**Boost:** when two rounds without progress: opus rewrites the antibody set once. Limit 1.
+**Boost:** when two rounds without progress: run_o rewrites the antibody set once. Limit 1.
 
 <a id="wf27"></a>
 
@@ -1012,7 +1012,7 @@ success.
 
 **Host check:** strict l1 descent in the host.
 
-**Team (`tribunal`):** coder ×1 (sonnet); adversary ×1 (fable); defender ×1 (opus); host_checker ×1 (none).
+**Team (`tribunal`):** coder ×1 (sonnet); adversary ×1 (run_f); defender ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when arbiter and host disagree: host wins; record the disagreement. Limit 0.
 
@@ -1040,9 +1040,9 @@ success.
 
 **Host check:** mutation suite plus valid-case panel.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
-**Boost:** when a mutant survives: opus patches the checker once. Limit 1.
+**Boost:** when a mutant survives: run_o patches the checker once. Limit 1.
 
 <a id="wf30"></a>
 
@@ -1067,7 +1067,7 @@ success.
 
 **Host check:** exact property checker.
 
-**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when none: recitation is a finding, not a retry. Limit 0.
 
@@ -1096,7 +1096,7 @@ success.
 
 **Host check:** exact rational referee.
 
-**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when none: tournaments do not escalate mid-round. Limit 0.
 
@@ -1154,7 +1154,7 @@ success.
 
 **Host check:** per-edge maps plus parent binding.
 
-**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when stale parent: refuse. Limit 0.
 
@@ -1183,7 +1183,7 @@ success.
 
 **Host check:** endpoint-state equality and reference retention.
 
-**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when dropped reference: refuse. Limit 0.
 
@@ -1211,7 +1211,7 @@ success.
 
 **Host check:** fixed exact oracle.
 
-**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when none: channels are arms, not boosts. Limit 0.
 
@@ -1240,7 +1240,7 @@ success.
 
 **Host check:** exact cochain check.
 
-**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when guard fails: one retry, then abstain. Limit 1.
 
@@ -1270,7 +1270,7 @@ success.
 
 **Host check:** frozen checkers, isolation, reserved budget.
 
-**Team (`research_cell`):** coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`research_cell`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when no confirmed gain: retain incumbent. Limit 0.
 
@@ -1299,7 +1299,7 @@ success.
 
 **Host check:** exact rational diagnostics.
 
-**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when no candidate passes: typed refusal. Limit 0.
 
@@ -1328,7 +1328,7 @@ success.
 
 **Host check:** guard vector over the reply.
 
-**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when none: gates never escalate. Limit 0.
 
@@ -1356,7 +1356,7 @@ success.
 
 **Host check:** trichotomy and lift-witness check.
 
-**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when none: terminal by design. Limit 0.
 
@@ -1385,7 +1385,7 @@ success.
 
 **Host check:** calibration record and two-signal table.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when a class is missing: DetectorInadequate. Limit 0.
 
@@ -1414,7 +1414,7 @@ success.
 
 **Host check:** rational LP primal-dual check.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when extractor collapses: CarrierFailure. Limit 0.
 
@@ -1442,7 +1442,7 @@ success.
 
 **Host check:** replay against the audited checkers.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when leak found: block until resealed. Limit 0.
 
@@ -1469,9 +1469,9 @@ success.
 
 **Host check:** exact certificate check.
 
-**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-**Boost:** when certificate rejected: one opus attempt. Limit 1.
+**Boost:** when certificate rejected: one run_o attempt. Limit 1.
 
 <a id="wf45"></a>
 
@@ -1498,7 +1498,7 @@ success.
 
 **Host check:** deterministic verifier and survivor set.
 
-**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when none: typed verdict. Limit 0.
 
@@ -1526,7 +1526,7 @@ success.
 
 **Host check:** global evaluator on the glued trace.
 
-**Team (`parallel_isolated_then_global`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`parallel_isolated_then_global`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when none: diagnostic only. Limit 0.
 
@@ -1583,7 +1583,7 @@ success.
 
 **Host check:** dual checkers plus mutation suite.
 
-**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 **Boost:** when mutant survives: block the checker. Limit 0.
 
@@ -1611,7 +1611,7 @@ success.
 
 **Host check:** per-family oracles.
 
-**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 **Boost:** when safety regression: stop the lane. Limit 0.
 

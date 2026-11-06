@@ -23,8 +23,8 @@ Host checks have code and tests; no model runs.
 
 ## Team
 
-Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-Boost: when certificate rejected: one opus attempt (limit 1).
+Boost: when certificate rejected: one run_o attempt (limit 1).
 
 More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf44) · [machine-readable entry](../dag/workflow_dag.json)

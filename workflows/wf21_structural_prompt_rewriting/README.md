@@ -34,7 +34,7 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 Boost: when meaning-loss case found: add it as a refusal test (limit 0).
 

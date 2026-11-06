@@ -34,9 +34,9 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `parallel_isolated_then_global`: coder ×n_patches (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `parallel_isolated_then_global`: coder ×n_patches (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
-Boost: when local checks pass but the global check fails: opus receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate (limit 1).
+Boost: when local checks pass but the global check fails: run_o receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate (limit 1).
 
 ## Recorded variations
 

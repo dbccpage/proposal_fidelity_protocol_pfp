@@ -25,7 +25,7 @@ Replay only.
 
 ## Team
 
-Pattern `relay`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `relay`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when stale parent: refuse (limit 0).
 

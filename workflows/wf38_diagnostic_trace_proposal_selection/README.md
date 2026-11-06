@@ -25,7 +25,7 @@ Host checks have code and tests; no model runs.
 
 ## Team
 
-Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when no candidate passes: typed refusal (limit 0).
 

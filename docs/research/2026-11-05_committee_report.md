@@ -9,7 +9,7 @@ the rest of the adversary research repo, the PFP research repo, the immune
 research repo, the prompt-evolution research repo, the operads research
 repo), one on research material inside the engine repo, and one
 adversarial gap scan against current practice. Ten ran on Sonnet, the gap
-scan on Opus.
+scan on Run O.
 
 ## 1. Verdict on WF1–WF5
 
@@ -102,8 +102,8 @@ harness gates. WF11, WF13–WF17 become task/checker parameters of
 | Pilot capsules 0–51 | ~770 with token counts | Mostly typed-answer sweeps |
 | Dossier campaign 188–191 | 120 (free Nemotron) | All refused: schema invalid |
 | Derivation loops 199–203 | 25 (free Nemotron) | 0 certificates accepted |
-| M5 campaigns | ~218 DeepSeek V4 Flash, ~205 Gemini 2.5 Flash | v4: 79 calls, 4 accepted |
-| Cost ladder v2 | 44 (34 Haiku, 7 Sonnet, 3 Opus), $0.067 | Arm data on 35 cases |
+| M5 campaigns | ~218 DeepSeek V4 Flash, ~205 Run G 2.5 Flash | v4: 79 calls, 4 accepted |
+| Cost ladder v2 | 44 (34 Haiku, 7 Sonnet, 3 Run O), $0.067 | Arm data on 35 cases |
 | PFP learning (demo004) | 35 replies, $0.019 | 3 accepted one-shot witnesses |
 | Detector adequacy | ~1,600 Haiku, $1.00 | Pre-registered kill: dropped |
 | Empirical gates | 74 Anthropic, $0.11 | Token and injection comparison |

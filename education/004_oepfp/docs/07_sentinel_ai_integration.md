@@ -305,7 +305,7 @@ Max repair iterations default to 2 to stay within the 30s latency ceiling.
 │  LLM Backends                           │
 │  ├─ Claude (Anthropic API)              │
 │  ├─ DeepSeek (OpenAI-compatible)        │
-│  ├─ Gemini (Google API)                 │
+│  ├─ Run G (Google API)                 │
 │  ├─ Local models (Ollama/vLLM)          │
 │  └─ File backend (deterministic tests)  │
 └─────────────────────────────────────────┘

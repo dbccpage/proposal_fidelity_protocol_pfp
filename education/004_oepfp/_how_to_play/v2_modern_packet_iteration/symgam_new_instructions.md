@@ -213,13 +213,13 @@ example is illustrative.
 
 <!-- markdownlint-enable MD013 -->
 
-## Fable source capture (incomplete)
+## Run F source capture (incomplete)
 
 The following source capture is retained as provenance. Multiple lines are
 clipped mid-sentence, so it is not a complete or runnable prompt. No claim in
 this design note relies on the capture's missing text.
 
-### Original label: FABLE EXAMPLE
+### Original label: RUN_F EXAMPLE
 
 <!-- markdownlint-disable MD007 MD013 MD032 MD033 -->
 

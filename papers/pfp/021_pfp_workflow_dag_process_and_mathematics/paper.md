@@ -24,7 +24,7 @@ and names eighteen further families, WF6–WF23, as nodes of one acyclic
 dependency graph. For each family we give the process, the mathematics of
 its acceptance rule, and its source evidence. We also give a team design for
 running each family with model agents: a measurable goal, roles assigned to
-model tiers (Sonnet for coding, Opus for deep research, Fable for
+model tiers (Sonnet for coding, Run O for deep research, Run F for
 adversarial research), a teamwork pattern, and a bounded *boost* step.
 
 The machine-readable graph is `workflows/dag/workflow_dag.json` in this
@@ -385,11 +385,11 @@ $C(T, p) = \mathsf{accept}$ with a stop rule; $\mathcal R$ is a set of roles
 with model tiers; $\pi$ is a teamwork pattern; $\beta = (\tau, \alpha, \lambda)$
 is a boost with trigger $\tau$, action $\alpha$ and limit $\lambda$.
 
-**Tiers.** Sonnet holds coding, encoding, running and custody roles; Opus
+**Tiers.** Sonnet holds coding, encoding, running and custody roles; Run O
 holds deep-research roles (derivation, checker and certificate design,
-analysis, the boost); Fable holds adversarial roles (countermodels, leak
+analysis, the boost); Run F holds adversarial roles (countermodels, leak
 tests, prosecution). Across WF6–WF23 the design has 23 Sonnet seats,
-14 Opus seats and 13 Fable seats (counting a variable seat as one).
+14 Run O seats and 13 Run F seats (counting a variable seat as one).
 
 **Patterns.** `solo`, `relay`, `parallel_isolated_then_global`,
 `sweep_with_shared_judge`, `red_team_pair`,
@@ -399,7 +399,7 @@ agent $k$ is a function of frozen shared artifacts only, never of another
 agent's reply before that reply is frozen.
 
 **Boost.** After a failed check matching $\tau$, at most $\lambda$
-escalations run action $\alpha$, usually an Opus call that receives the typed
+escalations run action $\alpha$, usually an Run O call that receives the typed
 residual $\rho_t = C(T, p_t)$ but never the expected answer. Boost calls are
 charged against $B$. A boost changes the proposer, never $C$. Families whose
 comparison would be broken by escalation (WF22) or whose correct response is

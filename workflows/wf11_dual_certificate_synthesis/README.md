@@ -39,9 +39,9 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `research_cell`: coder ×2 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `research_cell`: coder ×2 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
-Boost: when a certificate is rejected on public cases: opus reads the rejected certificate and the checker message, proposes one patch; sonnet applies it (limit 2).
+Boost: when a certificate is rejected on public cases: run_o reads the rejected certificate and the checker message, proposes one patch; sonnet applies it (limit 2).
 
 ## Recorded variations
 

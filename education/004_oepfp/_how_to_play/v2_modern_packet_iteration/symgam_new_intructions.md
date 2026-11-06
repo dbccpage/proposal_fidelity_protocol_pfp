@@ -209,7 +209,7 @@ example is illustrative.
 
 `AuthorityEffect: None.`
 
-## FABLE EXAMPLE
+## RUN_F EXAMPLE
 
 ---
 

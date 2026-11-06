@@ -33,9 +33,9 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
-Boost: when bluff detected: fable adds the variant to the negative-control bank; no retry on the same item (limit 0).
+Boost: when bluff detected: run_f adds the variant to the negative-control bank; no retry on the same item (limit 0).
 
 ## Recorded variations
 

@@ -33,8 +33,8 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `research_cell`: deep_researcher ×1 (opus); adversary ×1 (fable); coder ×1 (sonnet); host_checker ×1 (none).
+Pattern `research_cell`: deep_researcher ×1 (run_o); adversary ×1 (run_f); coder ×1 (sonnet); host_checker ×1 (none).
 
-Boost: when rule shows no gain: one revised rule from opus; otherwise the rule is retired (limit 1).
+Boost: when rule shows no gain: one revised rule from run_o; otherwise the rule is retired (limit 1).
 
 More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf19) · [machine-readable entry](../dag/workflow_dag.json)

@@ -24,7 +24,7 @@ Offline receipts; attention, activation and steering channels were not exercised
 
 ## Team
 
-Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when none: channels are arms, not boosts (limit 0).
 

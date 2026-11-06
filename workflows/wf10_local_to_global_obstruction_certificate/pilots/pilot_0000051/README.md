@@ -75,7 +75,7 @@ $$J^\alpha(s) = \sum_{e \in \text{Edges}(\alpha)} \|\pi_\alpha((d_0 s)_e)\|_1$$
 - Under the declared assumptions and finite 3-patch covering diagram with $\mathbb{R}^3$ $\ell^1$ fibers, the host verification engine deterministically distinguishes exact observer tallies ($J=\{C1:0, C2:0, C3:0\}$, $I=6$, $\Lambda=6$, $\text{recovery\_modulus\_exists}=\text{false}$) from heuristic shortcuts (e.g. Euclidean $\ell^2$ norms, false cancellation, or hallucinated recovery bounds).
 
 ### 2.4 Next Test Needed
-- Evaluate cross-model sensitivity by dispatching the identical 13-test suite across Frontier reasoning models (e.g. `anthropic/claude-3.7-sonnet`, `openai/o3-mini`, `google/gemini-2.5-pro`) to measure comparative dialect robustness, latency scaling, and structural lift request frequency.
+- Evaluate cross-model sensitivity by dispatching the identical 13-test suite across Frontier reasoning models (e.g. `anthropic/claude-3.7-sonnet`, `openai/o3-mini`, `google/run_g-2.5-pro`) to measure comparative dialect robustness, latency scaling, and structural lift request frequency.
 
 ---
 

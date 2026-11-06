@@ -27,6 +27,6 @@ Law: DOCS_CONSOLIDATION_LAW.md Family 7 and section 2_how_to_play. YAML stays YA
 - code/rust/Cargo.toml (package name core_symbol_game)
 - code/rust/README.md, src/bin/run_sg.rs, src/bin/core_symbol_admit.rs, tests/symbol_packet_iteration_e2e.rs
 - 1_historical_documents/05_modern_synthesis.md
-- 0_research_briefs/20_modern_benchmark_opus_5_ultracoda.md
+- 0_research_briefs/20_modern_benchmark_run_o_5_ultracoda.md
 - Paper 043 (The Symbol Game: Finite Packetization, LGGR, and the Authority Firewall) is the theory-spine pointer; math_spine is not canon for v2.
 - dest papers/032 (PO-032) is a different dest monograph and is not this version’s spine pointer.

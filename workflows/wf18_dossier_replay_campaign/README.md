@@ -37,7 +37,7 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `sweep_with_shared_judge`: coder ×2 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `sweep_with_shared_judge`: coder ×2 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when replay grade differs: stop the campaign; investigate custody before any new call (limit 0).
 

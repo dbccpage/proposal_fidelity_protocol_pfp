@@ -36,7 +36,7 @@ AuthorityEffect: None. This is a review proposal; nothing here was applied to tr
    documentation an empty tool list "usually refuses to launch the subagent ... `Agent would be
    spawned with zero tools`". The repo's own generator writes that value
    (`workflows_agents_skills/infrastructure/autopoiesis/agent_learning.py:124`), and the
-   same line asks for `model: inherit` while all 40 files say `model: opus`.
+   same line asks for `model: inherit` while all 40 files say `model: run_o`.
 3. **Hooks are not wired for Claude Code.** `.claude/hooks/hooks.json` holds the git-guard and BOM
    hooks, but Claude Code reads project hooks only from `.claude/settings.json` (none is tracked);
    `hooks/hooks.json` is the plugin layout. The commands also call `py -3.12`, which Linux hosts lack.
@@ -176,7 +176,7 @@ is four copies of session logs. Skill scripts are 323,089 B per host, also ×4.
   `licensed_skills`, `licensed_colours`, `authority_effect`, `standalone` "are ignored".
 - So the "licensed skills" mapping is not enforced by the harness, and no agent preloads a skill
   (`skills:` field absent in all 40).
-- `grep -h '^model:' .claude/agents/*.md | sort | uniq -c` → `40 model: opus`, while
+- `grep -h '^model:' .claude/agents/*.md | sort | uniq -c` → `40 model: run_o`, while
   `agent_learning.py:124` says new agents use `model: inherit`. The always-loaded
   `rl_model_interaction_discipline.md` asks to inherit the active model unless justified.
 - Six near-duplicate pairs: `code-testing`/`techne-code-testing`, `database`/`techne-database`,
@@ -185,7 +185,7 @@ is four copies of session logs. Skill scripts are 323,089 B per host, also ×4.
 > **Editor's note (2026-10-07, thread session that requested the review).** F2's launch failure was
 > not observed. In the session that commissioned this review, the harness listed the 39 agents with
 > `tools: []` as having "All tools", so this Claude Code build appears to read an empty list as no
-> restriction. The `model: opus` versus `inherit` mismatch, the six duplicate pairs and the ignored
+> restriction. The `model: run_o` versus `inherit` mismatch, the six duplicate pairs and the ignored
 > `licensed_*` fields stand. Reform 2 keeps its value as manifest hygiene, at lower urgency.
 
 ### F3. Hooks and safety directives are prose in Claude sessions (Q5)

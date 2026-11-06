@@ -24,7 +24,7 @@ Executed offline: a bare refusal passed 10/10 on two challenges before identifie
 
 ## Team
 
-Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 Boost: when leak found: block until resealed (limit 0).
 

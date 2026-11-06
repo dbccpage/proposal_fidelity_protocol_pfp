@@ -10,7 +10,7 @@ There is no model accuracy, token-efficiency or management-benefit finding.
 | P1 | One Haiku attempt returned native `TRANSPORT_ERROR`; no response bytes; accounting halted |
 | P2 | Provider work blocked by the unresolved P1 attempt; two host-only rows completed |
 | P3 | Provider work blocked; no training reply supports an antibody or management winner |
-| P4 | Provider work blocked; one host-only row completed; no Opus comparison occurred |
+| P4 | Provider work blocked; one host-only row completed; no Run O comparison occurred |
 
 The continuing ledger holds **1,014 micro-USD ($0.001014)** for the ambiguous
 attempt. Actual invoiced cost and usage are **unknown**. This is a retained
@@ -41,7 +41,7 @@ Its native host SHA-256 is
 `1e83ec688a73cea703b945c27b25d7cd51d9a267bc1ff8a7c24de206e9819364`.
 Stage reservations were $0 / $0.20 / $0.60 / $0.80 / $0.40. Native quote-only
 preflight admitted at most 8 / 12 / 43 / 6 calls for P1–P4, including staged arms
-and the bounded repair. The largest admitted Opus quote was 63,444 micro-USD.
+and the bounded repair. The largest admitted Run O quote was 63,444 micro-USD.
 Later-stage allowances could not be consumed by earlier stages.
 
 The tiny four-node compression control occupied 1,144 expanded bytes and 2,033

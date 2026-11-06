@@ -31,7 +31,7 @@ answer leakage: P0 checks the complete expected response and the data flow.
 - P3: Haiku M0, M1, M2, M3 at 1/3/5/8 stages, M4, M5 and M6 on one training
   composition item. Retain five by correctness, then rated cost, then stable policy
   name. Evaluate those five once on the held-out composition counterpart.
-- P4: Opus A0 versus the selected managed policy on held-out composition and linear
+- P4: Run O A0 versus the selected managed policy on held-out composition and linear
   algebra. Select the managed policy from training; held-out outcomes never tune it.
 
 M1 adds typed objectives and obligations. M2 enforces structured output.
@@ -60,7 +60,7 @@ is limited to its first 2,048 UTF-8 bytes, with complete original replies retain
 The 43-call P3 maximum includes the eight-stage arm and one-repair arm; P4 reserves
 for the possible eight-stage winner. No allowance is transferred between stages.
 
-Requested models are `claude-haiku-5-5`, `claude-sonnet-5-5`, `claude-opus-5-5`.
+Requested models are `claude-haiku-5-5`, `claude-sonnet-5-5`, `run-o`.
 Official capabilities and standard global rates are pinned in
 `pfp/fixtures/empirical/anthropic_pricing_20261015.json`.
 Provider model access failures are retained, not substituted. Maximum output is 768

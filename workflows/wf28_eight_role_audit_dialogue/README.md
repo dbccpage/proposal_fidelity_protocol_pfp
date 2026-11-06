@@ -24,7 +24,7 @@ Sources: F challenges_findings_and_updates §2.
 
 ## Team
 
-Pattern `tribunal`: coder ×1 (sonnet); adversary ×1 (fable); defender ×1 (opus); host_checker ×1 (none).
+Pattern `tribunal`: coder ×1 (sonnet); adversary ×1 (run_f); defender ×1 (run_o); host_checker ×1 (none).
 
 Boost: when arbiter and host disagree: host wins; record the disagreement (limit 0).
 

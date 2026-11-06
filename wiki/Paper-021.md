@@ -19,7 +19,7 @@ what each one does and which mathematics its check relies on.
   cohomology and local-green/global-red, LP duality and Farkas certificates,
   negative selection, Kripke model checking, double-pushout rewriting, paired
   tests) and the pilots it came from.
-- A team design per family: a goal, roles on Sonnet, Opus or Fable, a
+- A team design per family: a goal, roles on Sonnet, Run O or Run F, a
   teamwork pattern and a bounded boost step.
 
 ## What it does not claim

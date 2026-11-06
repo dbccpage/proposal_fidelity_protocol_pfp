@@ -35,7 +35,7 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
 Boost: when leak found: rebuild the carrier; discard affected runs (limit 0).
 

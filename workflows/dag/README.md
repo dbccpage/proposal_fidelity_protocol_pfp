@@ -199,53 +199,53 @@ new workflow. `merge_into` names where a node is expected to fold in.
 | --- | --- | --- | --- | --- | --- | --- |
 | WF1 | Typed answer (implemented) | base | — | WF1–WF5 runs | `solo` | sonnet: coder |
 | WF2 | Full slots (implemented) | procedure extension | WF1 | WF1–WF5 runs | `solo` | sonnet: coder |
-| WF3 | Mine, then solve (implemented) | procedure extension | WF1 | WF1–WF5 runs | `relay` | sonnet: coder; opus: miner |
-| WF4 | Five agents + LGGR (implemented) | procedure extension | WF3 | WF1–WF5 runs | `parallel_isolated_then_global` | sonnet: coder; opus: miner |
-| WF5 | Checked rewrite (implemented) | procedure extension | WF4 | WF1–WF5 runs | `parallel_isolated_then_global` | sonnet: coder; opus: miner |
-| WF6 | Dialect sweep | experiment design → Sweep | WF5 | 0000000-0000019 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher |
-| WF7 | Typed refusal | procedure extension | WF1 | 0000003, 0000007, 0000011, 0000015, 0000019, 0000034, 0000175 | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF8 | Staged sealed packets | procedure extension | WF2, WF5 | 0000001-0000025, 0000033 | `relay` | sonnet: coder; opus: deep_researcher |
+| WF3 | Mine, then solve (implemented) | procedure extension | WF1 | WF1–WF5 runs | `relay` | sonnet: coder; run_o: miner |
+| WF4 | Five agents + LGGR (implemented) | procedure extension | WF3 | WF1–WF5 runs | `parallel_isolated_then_global` | sonnet: coder; run_o: miner |
+| WF5 | Checked rewrite (implemented) | procedure extension | WF4 | WF1–WF5 runs | `parallel_isolated_then_global` | sonnet: coder; run_o: miner |
+| WF6 | Dialect sweep | experiment design → Sweep | WF5 | 0000000-0000019 | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher |
+| WF7 | Typed refusal | procedure extension | WF1 | 0000003, 0000007, 0000011, 0000015, 0000019, 0000034, 0000175 | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF8 | Staged sealed packets | procedure extension | WF2, WF5 | 0000001-0000025, 0000033 | `relay` | sonnet: coder; run_o: deep_researcher |
 | WF9 | Bounded check-and-repair | procedure extension | WF2 | 0000002, 0000006, 0000010, 0000026, 0000049, 0000055, 0000062, 0000096 | `proposer_with_residual_feedback` | sonnet: coder |
-| WF10 | Local-to-global obstruction certificate | task preset → WF4 | WF4, WF9 | 0000029, 0000039-0000045, 0000051, 0000056-0000064, 0000083 | `parallel_isolated_then_global` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF11 | Dual-certificate synthesis | task preset → WF1 | WF3, WF9 | 0000027, 0000053, 0000054, 0000095, 0000115-0000124, 0000171, 0000180, c051, c052, c053, c054, c055, c059 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF12 | Mechanism-control arms | experiment design → Sweep | WF6, WF3 | 0000052 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF13 | Exact-domain capsule battery | task preset → WF1 | WF1, WF7 | 0000065-0000114, 0000177, 0000176, 0000178, 0000187 | `solo` | sonnet: coder; opus: deep_researcher |
-| WF14 | Immune failure classification | meta workflow | WF7, WF12 | 0000125-0000134 | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF15 | Adversary tribunal | procedure extension | WF4, WF14 | 0000035, 0000135-0000144 | `tribunal` | sonnet: coder; opus: defender; fable: prosecutor |
-| WF16 | Substrate crosswalk | task preset → WF5 | WF5, WF10 | 0000145-0000169 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF17 | Witnessed-difference programme | task preset → WF10 | WF10, WF11 | 0000170-0000187 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF18 | Dossier replay campaign | harness gate | WF6, WF12 | 0000188-0000191 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher |
-| WF19 | Failure-derived rule transfer | experiment design | WF12, WF14 | 0000192-0000198 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF20 | Derivation loop with lift grants | procedure extension → WF9 | WF9, WF10, WF19 | 0000199-0000203 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF21 | Structural prompt rewriting | procedure extension → WF5 | WF5 | 0000028, 0000030, 0000050, acset_prompt_rewriting, acset_cochain_rewriting | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF22 | Certified cost ladder | experiment design → Sweep | WF6, WF8, WF18 | certified_ladder | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF23 | Judge-packet custody audit | harness gate | WF11 | judge_packet_audit | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF24 | Pinned-token operational scratchpad | procedure extension | WF2 | F symbol_game_challenge_and_demos_findings §3.4, F challenges_findings_and_updates §8.2 (C017) | `solo` | sonnet: coder; opus: deep_researcher |
-| WF25 | Hierarchical decimation | procedure extension | WF24 | F symbol_game_challenge_and_demos_findings §3.6, §15, F challenges_findings_and_updates §12 | `solo` | sonnet: coder; opus: deep_researcher |
-| WF26 | Multi-round antibody dialogue | procedure extension | WF9, WF14 | F symbol_game_challenge_and_demos_findings §2 | `proposer_with_residual_feedback` | sonnet: coder; fable: adversary |
+| WF10 | Local-to-global obstruction certificate | task preset → WF4 | WF4, WF9 | 0000029, 0000039-0000045, 0000051, 0000056-0000064, 0000083 | `parallel_isolated_then_global` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF11 | Dual-certificate synthesis | task preset → WF1 | WF3, WF9 | 0000027, 0000053, 0000054, 0000095, 0000115-0000124, 0000171, 0000180, c051, c052, c053, c054, c055, c059 | `research_cell` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF12 | Mechanism-control arms | experiment design → Sweep | WF6, WF3 | 0000052 | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF13 | Exact-domain capsule battery | task preset → WF1 | WF1, WF7 | 0000065-0000114, 0000177, 0000176, 0000178, 0000187 | `solo` | sonnet: coder; run_o: deep_researcher |
+| WF14 | Immune failure classification | meta workflow | WF7, WF12 | 0000125-0000134 | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF15 | Adversary tribunal | procedure extension | WF4, WF14 | 0000035, 0000135-0000144 | `tribunal` | sonnet: coder; run_o: defender; run_f: prosecutor |
+| WF16 | Substrate crosswalk | task preset → WF5 | WF5, WF10 | 0000145-0000169 | `research_cell` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF17 | Witnessed-difference programme | task preset → WF10 | WF10, WF11 | 0000170-0000187 | `research_cell` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF18 | Dossier replay campaign | harness gate | WF6, WF12 | 0000188-0000191 | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher |
+| WF19 | Failure-derived rule transfer | experiment design | WF12, WF14 | 0000192-0000198 | `research_cell` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF20 | Derivation loop with lift grants | procedure extension → WF9 | WF9, WF10, WF19 | 0000199-0000203 | `research_cell` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF21 | Structural prompt rewriting | procedure extension → WF5 | WF5 | 0000028, 0000030, 0000050, acset_prompt_rewriting, acset_cochain_rewriting | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF22 | Certified cost ladder | experiment design → Sweep | WF6, WF8, WF18 | certified_ladder | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF23 | Judge-packet custody audit | harness gate | WF11 | judge_packet_audit | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF24 | Pinned-token operational scratchpad | procedure extension | WF2 | F symbol_game_challenge_and_demos_findings §3.4, F challenges_findings_and_updates §8.2 (C017) | `solo` | sonnet: coder; run_o: deep_researcher |
+| WF25 | Hierarchical decimation | procedure extension | WF24 | F symbol_game_challenge_and_demos_findings §3.6, §15, F challenges_findings_and_updates §12 | `solo` | sonnet: coder; run_o: deep_researcher |
+| WF26 | Multi-round antibody dialogue | procedure extension | WF9, WF14 | F symbol_game_challenge_and_demos_findings §2 | `proposer_with_residual_feedback` | sonnet: coder; run_f: adversary |
 | WF27 | Hinted retraction with a stationary-loop detector | procedure extension → WF9 | WF9 | F challenges_findings_and_updates §4, §10.1, P008 §10, P027 §5.9 | `proposer_with_residual_feedback` | sonnet: coder |
-| WF28 | Eight-role audit dialogue | procedure extension | WF15 | F challenges_findings_and_updates §2 | `tribunal` | sonnet: coder; opus: defender; fable: adversary |
-| WF29 | Checker synthesis scored by mutation kill rate | task preset → WF11 | WF11 | F challenges_findings_and_updates §11 (C060) | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF30 | Constraint-forcing anti-recitation | procedure extension | WF1 | F c057_*_sorting_network_findings | `solo` | sonnet: coder; fable: adversary |
-| WF31 | Multi-agent tournament with held-out cross-validation | experiment design | WF1 | P022 §3-4 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF28 | Eight-role audit dialogue | procedure extension | WF15 | F challenges_findings_and_updates §2 | `tribunal` | sonnet: coder; run_o: defender; run_f: adversary |
+| WF29 | Checker synthesis scored by mutation kill rate | task preset → WF11 | WF11 | F challenges_findings_and_updates §11 (C060) | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF30 | Constraint-forcing anti-recitation | procedure extension | WF1 | F c057_*_sorting_network_findings | `solo` | sonnet: coder; run_f: adversary |
+| WF31 | Multi-agent tournament with held-out cross-validation | experiment design | WF1 | P022 §3-4 | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
 | WF32 | Claim-scoped receipt | procedure extension | WF1, WF2 | P023 §1-4 | `solo` | sonnet: coder |
-| WF33 | Recursive re-entry with shared fuel | procedure extension | WF9, WF20 | P024 §1-5 | `relay` | sonnet: coder; opus: deep_researcher |
-| WF34 | Future-faithful compression and bounded context | procedure extension | WF8, WF22 | P026 §1-6, §8, P029 §4 | `relay` | sonnet: coder; opus: deep_researcher |
-| WF35 | Proposal-channel comparison | experiment design | WF6, WF12 | P027 §1-3, §5.1-5.2 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher |
-| WF36 | Guarded staged slot materialisation | procedure extension → WF8 | WF8 | P027 §5.3, §5.6-5.8 | `relay` | sonnet: coder; opus: deep_researcher |
-| WF37 | Evidence-bound harness evolution | meta workflow | WF19, WF22 | P029 §2-8, P004-P006 extensions | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF38 | Diagnostic-trace proposal selection | procedure extension → WF9 | WF9 | P026 §2-4, P018 §2-4, P019 §2-5 | `proposer_with_residual_feedback` | sonnet: coder; opus: deep_researcher |
-| WF39 | Authority firewall gate | harness gate | WF1, WF23 | P027(firewall) §2.4, §3.8, P028(finite authority) §6, §12-14, P030 §4, P004(role) §3-8 | `solo` | sonnet: coder; fable: adversary |
-| WF40 | Restart boundary after exhausted repair | procedure extension | WF9, WF20 | P029(boundary) §2.4, §6, P004 §6, P005 §2-5 | `proposer_with_residual_feedback` | sonnet: coder; opus: deep_researcher |
-| WF41 | Detector adequacy and two-signal admission | meta workflow → WF14 | WF14 | P030 §2, P003 §3, App A, P006 §7 | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF42 | Reasoning-trace validation | procedure extension | WF10, WF21 | P033 §2-8 | `red_team_pair` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF43 | Gate-honesty and answer-free leak audit | harness gate | WF23 | P009 §4, App A, P010 §4.1-4.2 | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF44 | Exact certificate presets | task preset → WF11 | WF11, WF10 | P002(l1) §4-5, P003(l1) Thm 4.2, P001(covering) §3-4, P004(DSL), P002(signed) §5-6 | `solo` | sonnet: coder; opus: deep_researcher |
-| WF45 | Finite terminal selector and plenitude test | procedure extension | WF7 | P003(representation) §2-5 | `solo` | sonnet: coder; fable: adversary |
-| WF46 | Boundary sufficiency and gluing diagnostic | procedure extension | WF4 | P028(finite authority) §11, P005(authority gap) §3 | `parallel_isolated_then_global` | sonnet: coder; opus: deep_researcher |
+| WF33 | Recursive re-entry with shared fuel | procedure extension | WF9, WF20 | P024 §1-5 | `relay` | sonnet: coder; run_o: deep_researcher |
+| WF34 | Future-faithful compression and bounded context | procedure extension | WF8, WF22 | P026 §1-6, §8, P029 §4 | `relay` | sonnet: coder; run_o: deep_researcher |
+| WF35 | Proposal-channel comparison | experiment design | WF6, WF12 | P027 §1-3, §5.1-5.2 | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher |
+| WF36 | Guarded staged slot materialisation | procedure extension → WF8 | WF8 | P027 §5.3, §5.6-5.8 | `relay` | sonnet: coder; run_o: deep_researcher |
+| WF37 | Evidence-bound harness evolution | meta workflow | WF19, WF22 | P029 §2-8, P004-P006 extensions | `research_cell` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF38 | Diagnostic-trace proposal selection | procedure extension → WF9 | WF9 | P026 §2-4, P018 §2-4, P019 §2-5 | `proposer_with_residual_feedback` | sonnet: coder; run_o: deep_researcher |
+| WF39 | Authority firewall gate | harness gate | WF1, WF23 | P027(firewall) §2.4, §3.8, P028(finite authority) §6, §12-14, P030 §4, P004(role) §3-8 | `solo` | sonnet: coder; run_f: adversary |
+| WF40 | Restart boundary after exhausted repair | procedure extension | WF9, WF20 | P029(boundary) §2.4, §6, P004 §6, P005 §2-5 | `proposer_with_residual_feedback` | sonnet: coder; run_o: deep_researcher |
+| WF41 | Detector adequacy and two-signal admission | meta workflow → WF14 | WF14 | P030 §2, P003 §3, App A, P006 §7 | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF42 | Reasoning-trace validation | procedure extension | WF10, WF21 | P033 §2-8 | `red_team_pair` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
+| WF43 | Gate-honesty and answer-free leak audit | harness gate | WF23 | P009 §4, App A, P010 §4.1-4.2 | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF44 | Exact certificate presets | task preset → WF11 | WF11, WF10 | P002(l1) §4-5, P003(l1) Thm 4.2, P001(covering) §3-4, P004(DSL), P002(signed) §5-6 | `solo` | sonnet: coder; run_o: deep_researcher |
+| WF45 | Finite terminal selector and plenitude test | procedure extension | WF7 | P003(representation) §2-5 | `solo` | sonnet: coder; run_f: adversary |
+| WF46 | Boundary sufficiency and gluing diagnostic | procedure extension | WF4 | P028(finite authority) §11, P005(authority gap) §3 | `parallel_isolated_then_global` | sonnet: coder; run_o: deep_researcher |
 | WF47 | Resumable bounded frontier search | procedure extension | WF9 | P002(signed) §4 | `relay` | sonnet: coder |
-| WF48 | Commit-reveal with a hostile mutation gate | harness gate → WF23 | WF11, WF23 | F symbol_game_challenge_and_demos_findings §7-14, F challenges_findings_and_updates §9.3-9.5, F c043-c059 template | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF49 | Query-preservation stage and mode campaign | experiment design | WF8, WF22 | P011 §3-5 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher |
+| WF48 | Commit-reveal with a hostile mutation gate | harness gate → WF23 | WF11, WF23 | F symbol_game_challenge_and_demos_findings §7-14, F challenges_findings_and_updates §9.3-9.5, F c043-c059 template | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF49 | Query-preservation stage and mode campaign | experiment design | WF8, WF22 | P011 §3-5 | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher |
 
 WF24–WF49 cite their findings notes (F) and papers (P###) directly. Pilot numbers are directory numbers in the source estate; `c051`–`c059` are
 its commit-reveal challenge folders. The process and mathematics of each
@@ -261,30 +261,30 @@ family are summarised in
 | WF3 | Useful frozen guidance, then an accepted answer. | guidance screen rejects → none on the base path (0) |
 | WF4 | Five isolated answers whose local checks pass and which agree globally. | global disagreement → none on the base path (0) |
 | WF5 | A rewrite that preserves the protected query, then a WF4 pass. | preservation check fails → stop; never solve an unpreserved task (0) |
-| WF6 | Measure, item by item, which presentation of the same task the host accepts more often, without changing the task. | a dialect fails preservation → opus proposes a corrected rewrite from the preservation residual; recheck before any dispatch (1) |
-| WF7 | Return the correct refusal code whenever the premises do not determine an answer. | bluff detected → fable adds the variant to the negative-control bank; no retry on the same item (0) |
-| WF8 | Each stage produces a sealed, typed output; the final answer checks. | a stage receipt fails → rerun that stage once with opus and the receipt residual; earlier seals are reused (1) |
-| WF9 | An accepted reply within L attempts, or a recorded stop at the limit. | two rejections in a row → final attempt goes to opus with the full residual history (1) |
-| WF10 | A checked gluing witness or a checked obstruction class for the declared cover. | local checks pass but the global check fails → opus receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate (1) |
-| WF11 | A frozen solver whose every output carries a certificate the judge accepts on hidden cases. | a certificate is rejected on public cases → opus reads the rejected certificate and the checker message, proposes one patch; sonnet applies it (2) |
+| WF6 | Measure, item by item, which presentation of the same task the host accepts more often, without changing the task. | a dialect fails preservation → run_o proposes a corrected rewrite from the preservation residual; recheck before any dispatch (1) |
+| WF7 | Return the correct refusal code whenever the premises do not determine an answer. | bluff detected → run_f adds the variant to the negative-control bank; no retry on the same item (0) |
+| WF8 | Each stage produces a sealed, typed output; the final answer checks. | a stage receipt fails → rerun that stage once with run_o and the receipt residual; earlier seals are reused (1) |
+| WF9 | An accepted reply within L attempts, or a recorded stop at the limit. | two rejections in a row → final attempt goes to run_o with the full residual history (1) |
+| WF10 | A checked gluing witness or a checked obstruction class for the declared cover. | local checks pass but the global check fails → run_o receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate (1) |
+| WF11 | A frozen solver whose every output carries a certificate the judge accepts on hidden cases. | a certificate is rejected on public cases → run_o reads the rejected certificate and the checker message, proposes one patch; sonnet applies it (2) |
 | WF12 | An arm comparison on a fixed carrier whose only difference is the mechanism note. | leak found → rebuild the carrier; discard affected runs (0) |
-| WF13 | One checked answer or refusal per domain capsule. | checker rejects → one opus attempt with the checker message (1) |
-| WF14 | Detectors that catch the recorded failures and never fire on the sealed self panel. | a detector fires on Self → discard it; opus may propose one narrower detector (1) |
-| WF15 | A verdict that the finite check supports, with both sides frozen first. | both submissions fail the check → one fresh opus round per side with the checker output (1) |
-| WF16 | A translation that preserves every declared relation, with alternatives recorded. | Lean or table check fails → opus repairs the encoding from the error (2) |
-| WF17 | Each claimed difference has a checked witness and each equivalence a checked certificate. | countermodel found → claim is narrowed or withdrawn; opus restates it once (1) |
+| WF13 | One checked answer or refusal per domain capsule. | checker rejects → one run_o attempt with the checker message (1) |
+| WF14 | Detectors that catch the recorded failures and never fire on the sealed self panel. | a detector fires on Self → discard it; run_o may propose one narrower detector (1) |
+| WF15 | A verdict that the finite check supports, with both sides frozen first. | both submissions fail the check → one fresh run_o round per side with the checker output (1) |
+| WF16 | A translation that preserves every declared relation, with alternatives recorded. | Lean or table check fails → run_o repairs the encoding from the error (2) |
+| WF17 | Each claimed difference has a checked witness and each equivalence a checked certificate. | countermodel found → claim is narrowed or withdrawn; run_o restates it once (1) |
 | WF18 | A replayable 5 x 5 + 5 campaign whose every grade reproduces from stored bytes. | replay grade differs → stop the campaign; investigate custody before any new call (0) |
-| WF19 | A rule that improves held-out acceptance without new false positives. | rule shows no gain → one revised rule from opus; otherwise the rule is retired (1) |
+| WF19 | A rule that improves held-out acceptance without new false positives. | rule shows no gain → one revised rule from run_o; otherwise the rule is retired (1) |
 | WF20 | Discharge the named obligations or stop with a typed record at the loop limit. | witness check fails twice → next loop starts from the adversary's counterexample (1) |
 | WF21 | Rewrites that attach hints or encodings without touching protected bytes. | meaning-loss case found → add it as a refusal test (0) |
 | WF22 | Decide each pre-registered hypothesis on this bank, at this rung, with this gate. | none: a ladder run never escalates mid-campaign → boosted arms are separate pre-registered arms (0) |
 | WF23 | Show that every challenge packet is sealed and leak-free before any team runs it. | leak found → block the challenge until it is resealed (0) |
-| WF24 | An accepted answer whose scratchpad follows the pinned grammar. | checker rejects → opus repairs the scratchpad from the residual (1) |
+| WF24 | An accepted answer whose scratchpad follows the pinned grammar. | checker rejects → run_o repairs the scratchpad from the residual (1) |
 | WF25 | Fit large lattices inside the token limit without losing exactness. | token ceiling reached → split into macro-blocks and rerun once (1) |
-| WF26 | Converge to an accepted answer as antibodies accumulate, without leaking the answer. | two rounds without progress → opus rewrites the antibody set once (1) |
+| WF26 | Converge to an accepted answer as antibodies accumulate, without leaking the answer. | two rounds without progress → run_o rewrites the antibody set once (1) |
 | WF27 | Repair to zero residual within the turn cap, with unassisted and assisted arms kept separate. | stationary loop → forced lift or reframe (1) |
 | WF28 | A role sequence whose final packet the host accepts or refuses with a typed reason. | arbiter and host disagree → host wins; record the disagreement (0) |
-| WF29 | A checker that kills every mutant and accepts every valid case. | a mutant survives → opus patches the checker once (1) |
+| WF29 | A checker that kills every mutant and accepts every valid case. | a mutant survives → run_o patches the checker once (1) |
 | WF30 | Separate solving from recall. | none → recitation is a finding, not a retry (0) |
 | WF31 | A ranking that holds on held-out parts of each instance. | none → tournaments do not escalate mid-round (0) |
 | WF32 | A receipt that says exactly which claims were checked. | unchecked claim found → drop it from the receipt (0) |
@@ -299,7 +299,7 @@ family are summarised in
 | WF41 | Detectors whose adequacy is shown, not assumed. | a class is missing → DetectorInadequate (0) |
 | WF42 | Validate the structure of a reasoning trace, not its fluency. | extractor collapses → CarrierFailure (0) |
 | WF43 | Show no answer-free reply can pass. | leak found → block until resealed (0) |
-| WF44 | Verify-easy, solve-hard tasks for every other workflow to use. | certificate rejected → one opus attempt (1) |
+| WF44 | Verify-easy, solve-hard tasks for every other workflow to use. | certificate rejected → one run_o attempt (1) |
 | WF45 | Never report a unique answer the evidence cannot separate. | none → typed verdict (0) |
 | WF46 | Measure how often local passes hide a global failure. | none → diagnostic only (0) |
 | WF47 | Search that can stop and resume without changing the question. | none → unknown is a lawful result (0) |
