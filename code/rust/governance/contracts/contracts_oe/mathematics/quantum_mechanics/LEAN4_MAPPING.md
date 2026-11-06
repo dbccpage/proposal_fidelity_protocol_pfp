@@ -288,7 +288,7 @@ An exhaustive automated audit was conducted across all **164 Lean 4 theory modul
 | Standalone Compilation (No Mathlib) | 163 of 164 files pure Std/Init | **163 / 164** (`EntropyDichotomy.lean` single Mathlib import) | **PASS** |
 
 ### Classical.choice Isolation Boundary Receipt
-In accordance with the epistemic rigor rules of the Fable Hilbert Walk, `Classical.choice` is completely forbidden in the constructive arithmetic core. All list summations, permutations, and rational evaluations in `HWKernel.lean`, `BornNormalization.lean`, `ContextualityObstruction.lean`, and `TraceZeroDuality.lean` are executed using choice-free decision procedures (`decide`, `omega`). The only presence of `Classical.choice` across the repository arises at the disclosed boundary receipt of the standard library's `Rat` multiplication pack (`HWKernel.lean:22`), ensuring complete transparency.
+In accordance with the epistemic rigor rules of the Run F Hilbert Walk, `Classical.choice` is completely forbidden in the constructive arithmetic core. All list summations, permutations, and rational evaluations in `HWKernel.lean`, `BornNormalization.lean`, `ContextualityObstruction.lean`, and `TraceZeroDuality.lean` are executed using choice-free decision procedures (`decide`, `omega`). The only presence of `Classical.choice` across the repository arises at the disclosed boundary receipt of the standard library's `Rat` multiplication pack (`HWKernel.lean:22`), ensuring complete transparency.
 
 ---
 

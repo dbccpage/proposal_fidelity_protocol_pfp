@@ -6,6 +6,8 @@ There is no provider discovery, tool execution, scheduler or background worker h
 
 from __future__ import annotations
 
+from adversary.domain.providers import model_ids as ids
+
 import hashlib
 import json
 import uuid
@@ -53,13 +55,13 @@ PRESET_CONFIGURATIONS = {
         "tier_frontier": "anthropic/claude-3.7-sonnet",
         "tier_reasoning": "openai/o3-mini",
         "tier_standard": "openai/gpt-4o",
-        "tier_fast": "google/gemini-2.5-flash",
+        "tier_fast": ids.ROUTER_G_FAST,
     },
     "cheap-falsifiers": {
         "tier_frontier": "anthropic/claude-3.5-sonnet",
         "tier_reasoning": "deepseek/deepseek-r1",
         "tier_standard": "openai/gpt-4o-mini",
-        "tier_fast": "google/gemini-2.5-flash-lite",
+        "tier_fast": ids.ROUTER_G_LITE,
     },
 }
 

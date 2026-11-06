@@ -50,7 +50,7 @@ class PfpNextWorkItem(PfpBaseModel):
     work_id: str
 
 
-class PfpFableLongHorizonTaskPacket(PfpBaseModel):
+class PfpLongHorizonTaskPacket(PfpBaseModel):
     schema_version: str = Field(default="core.symbol-game.packet-envelope.v2")
     task_id: str
     packet_id: str
@@ -79,4 +79,4 @@ EvidenceCeiling = PfpEvidenceCeiling
 OraclePolicy = PfpOraclePolicy
 PacketKind = PfpPacketKind
 NextWorkItem = PfpNextWorkItem
-FableLongHorizonTaskPacket = PfpFableLongHorizonTaskPacket
+LongHorizonTaskPacket = PfpLongHorizonTaskPacket

@@ -653,7 +653,7 @@ class ThreeRoleAuthorityTests(unittest.TestCase):
         """
 
         gate = ThreeRoleGate(SCOPE, frozenset({"root:ops"}))
-        for rank in ("asi:core-9000", "proof-assistant:lean", "brain:alice", "llm:fable"):
+        for rank in ("asi:core-9000", "proof-assistant:lean", "brain:alice", "llm:run_f"):
             with self.subTest(agent=rank):
                 payload = gate_payload(self.cases["distinct_roles_admitted_root"])
                 for role in ("proposer", "evaluator", "authorizer"):

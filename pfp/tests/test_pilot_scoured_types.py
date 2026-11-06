@@ -202,7 +202,7 @@ def test_mub6_frontier_prompt_packet_lineage_and_antibodies():
     assert pstar.lineage.mutation_kind == "root_seed"
     assert pstar.lineage.mutation_notes is not None
     assert pstar.lineage.mutation_note == pstar.lineage.mutation_notes
-    assert pstar.lineage.author == "gemini-frontier-architect"
+    assert pstar.lineage.author == "run_g-frontier-architect"
     assert pstar.lineage.status == "assembled"
 
     assert len(pstar.guidance.antibodies) >= 3

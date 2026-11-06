@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from adversary.domain.providers import model_ids as ids
+
 from collections.abc import Iterable
 
 from adversary.domain.providers.types import ModelNotAllowed, Provider
@@ -28,14 +30,14 @@ class ModelAllowlist:
             .allow(Provider.GROQ, "llama-3.1-8b-instant")
             .allow(Provider.LOCAL, "qwen2.5:0.5b")
             .allow(Provider.OPENROUTER, "deepseek/deepseek-v4-flash")
-            .allow(Provider.OPENROUTER, "google/gemini-2.5-flash")
+            .allow(Provider.OPENROUTER, ids.ROUTER_G_FAST)
             .allow(Provider.OPENROUTER, "openai/gpt-4o-mini")
             # Open-weight lane for challenges: at most 70B total parameters per the
             # model registry. Qwen2.5-72B and Qwen3-235B-A22B were removed as over it.
             .allow(Provider.OPENROUTER, "meta-llama/llama-3.3-70b-instruct")
             .allow(Provider.DEEPSEEK, "deepseek-v4-flash")
-            # SCALE-003 S3: Gemini strong-judge / propose path
-            .allow(Provider.GEMINI, "gemini-2.5-flash")
+            # SCALE-003 S3: native Google strong-judge / propose path
+            .allow(Provider.GEMINI, ids.NATIVE_G_FAST)
             # NVIDIA NIM API (free tier / .env integrated)
             .allow(Provider.NVIDIA, "meta/llama-3.3-70b-instruct")
             .allow(Provider.NVIDIA, "nvidia/llama-3.1-nemotron-70b-instruct")

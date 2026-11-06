@@ -3,7 +3,7 @@
 
 AuthorityEffect: None.
 
-Milestone M1 Deprecation Notice (gemini_001.md §2.2 G1-OPS.4):
+Milestone M1 Deprecation Notice (run_g_001.md §2.2 G1-OPS.4):
 Direct DDC runtime law checking and tape verification in operations are deprecated
 in favor of the DDC module core_wdp::ddc (op_verification.rs, parser.rs)
 and workflow operad parsers (DdcOperadParser).

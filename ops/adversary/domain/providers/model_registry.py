@@ -10,6 +10,8 @@ whose weights are closed, cannot be admitted under a parameter ceiling.
 
 from __future__ import annotations
 
+from adversary.domain.providers import model_ids as ids
+
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from typing import Any
@@ -154,9 +156,9 @@ class ModelRegistry:
                   source="DeepSeek model card: DeepSeek-R1-Distill-Llama-70B"),
             _spec(Provider.OPENROUTER, "deepseek/deepseek-v4-flash", None, open_weights=False,
                   architecture="undisclosed", source="parameter count not recorded in this estate"),
-            _spec(Provider.OPENROUTER, "google/gemini-2.5-flash", None, open_weights=False,
+            _spec(Provider.OPENROUTER, ids.ROUTER_G_FAST, None, open_weights=False,
                   architecture="undisclosed", source=closed),
-            _spec(Provider.OPENROUTER, "google/gemini-2.5-pro", None, open_weights=False,
+            _spec(Provider.OPENROUTER, ids.ROUTER_G_PRO, None, open_weights=False,
                   architecture="undisclosed", source=closed),
             _spec(Provider.OPENROUTER, "openai/gpt-4o-mini", None, open_weights=False,
                   architecture="undisclosed", source=closed),
@@ -178,7 +180,7 @@ class ModelRegistry:
                   architecture="undisclosed", source="hosted deployment; parameter count not recorded in this estate"),
             _spec(Provider.DEEPSEEK, "deepseek-v4-flash", None, open_weights=False,
                   architecture="undisclosed", source="parameter count not recorded in this estate"),
-            _spec(Provider.GEMINI, "gemini-2.5-flash", None, open_weights=False,
+            _spec(Provider.GEMINI, ids.NATIVE_G_FAST, None, open_weights=False,
                   architecture="undisclosed", source=closed),
         ))
 

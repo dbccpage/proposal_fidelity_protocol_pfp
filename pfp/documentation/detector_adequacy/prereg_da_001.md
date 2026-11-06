@@ -7,7 +7,7 @@ its paid stage, or citing its result as evidence needs Jeremy's approval.
 |---|---|
 | Written | 2026-10-15 |
 | Base revision | `the_symbol_game` main `dc4346860` |
-| Source of the test | Test #3 from Jeremy's Gemini Notebook answer (2026-10-15), amended as below |
+| Source of the test | Test #3 from Jeremy's Run G Notebook answer (2026-10-15), amended as below |
 | Stage A (free) | Detector adequacy battery: deterministic, no model calls, no network |
 | Stage B (paid) | Trace prediction study: written plan only; needs written approval and a lock of its own |
 | Code | `pfp/use_cases/detector_adequacy/` |

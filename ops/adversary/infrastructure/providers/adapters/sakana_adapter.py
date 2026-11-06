@@ -1,9 +1,9 @@
-"""sakana_adapter.py — OpenRouter & Sakana AI provider adapter for `sakana/fugu-ultra-v2`.
+"""sakana_adapter.py — OpenRouter & Sakana AI provider adapter for model label `router-u-ultra`.
 
 AuthorityEffect: None.
 
 Provides a model-agnostic completion backend connecting to OpenRouter for the
-Sakana AI model `sakana/fugu-ultra-v2` (console: https://console.sakana.ai/).
+Sakana AI model labelled `router-u-ultra` in model_ids (console: https://console.sakana.ai/).
 Live OpenRouter requires an injected accounted PFP gateway. Direct Sakana live
 execution is unsupported; explicit dry runs need no credentials or transport.
 """
@@ -24,6 +24,7 @@ if _REPO_ROOT not in sys.path:
     sys.path.insert(0, _REPO_ROOT)
 
 from adversary.infrastructure.providers.openai_compat import OPENROUTER_BASE_URL  # noqa: E402
+from adversary.domain.providers import model_ids as ids  # noqa: E402
 
 try:
     from adversary.infrastructure.providers.adapters.model_backends import (
@@ -36,7 +37,7 @@ except ImportError:
 
         def complete(self, prompt: str) -> str: ...
 
-DEFAULT_SAKANA_MODEL = "sakana/fugu-ultra-v2"
+DEFAULT_SAKANA_MODEL = ids.ROUTER_U_ULTRA
 DEFAULT_SAKANA_MAX_TOKENS = 65536
 SAKANA_DIRECT_BASE_URL = "https://api.sakana.ai/v1"
 SAKANA_CONSOLE_URL = "https://console.sakana.ai/"
@@ -74,7 +75,7 @@ class SakanaReceipt:
 
 
 class SakanaOpenRouterAdapter(Backend):
-    """Adapter for `sakana/fugu-ultra-v2` via an accounted OpenRouter PFP gateway.
+    """Adapter for model label `router-u-ultra` via an accounted OpenRouter PFP gateway.
 
     Direct live execution is retired; its explicit dry configuration remains.
     Implements the `Backend` protocol (`name`, `complete(prompt)`).
@@ -233,7 +234,7 @@ def ask_sakana(
 def main() -> int:
     """CLI entrypoint for interactive or one-shot testing of the Sakana adapter."""
     parser = argparse.ArgumentParser(
-        description="Adapter for Sakana AI models (default: sakana/fugu-ultra-v2) via OpenRouter"
+        description="Adapter for Sakana AI models (default label: router-u-ultra) via OpenRouter"
     )
     parser.add_argument("prompt", nargs="?", default=None, help="Prompt text to send")
     parser.add_argument(
@@ -271,7 +272,7 @@ def main() -> int:
     prompt = args.prompt
     if not prompt:
         if sys.stdin.isatty():
-            prompt = "Explain in one sentence what makes the Fugu architecture unique."
+            prompt = "Explain in one sentence what makes a mixture-of-models architecture unique."
         else:
             prompt = sys.stdin.read().strip()
 

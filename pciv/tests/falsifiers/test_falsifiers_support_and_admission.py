@@ -45,7 +45,7 @@ def test_f_support_01_support_is_independent_of_ingestion_order() -> None:
     )
     obs3 = RawObservationV1(
         occurrence_id="occ_3",
-        generating_model_id="model_gemini_pro",
+        generating_model_id="model_g_pro",
         scaffold_digest="scaffold_sha_3",
         precedent_set_digest="precedent_sha_3",
         inheritance_root="lineage_root_3",

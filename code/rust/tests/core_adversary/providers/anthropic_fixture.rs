@@ -24,7 +24,7 @@ use std::path::PathBuf;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
 const EXECUTOR: &str = "claude-sonnet-5-5";
-const ADVISOR: &str = "claude-opus-5-5";
+const ADVISOR: &str = "model-anthropic-o";
 const KEY: &str = "fixture-key-not-a-secret";
 
 #[derive(Default)]

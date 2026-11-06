@@ -16,7 +16,7 @@ This rule codifies canonical model provider adapter locations, anti-shim legacy 
 
 > **Canonical Provider Adapters Location:**
 >
-> 1. All model and LLM provider adapters (e.g., Mock LLM, Ollama Local, Gemini Live, Local ONNX) must reside strictly within `adversary/infrastructure/providers/adapters/`.
+> 1. All model and LLM provider adapters (e.g., Mock LLM, Ollama Local, Run G Live, Local ONNX) must reside strictly within `adversary/infrastructure/providers/adapters/`.
 > 2. The legacy `engine/adapters/` and `providers/` locations are permanently deleted and must never be reintroduced or imported.
 > 3. Consumers and test suites across the repository must import from `adversary.infrastructure.providers.adapters` (and domain types from `adversary.domain.providers`), with `pytest.ini` configured to run `adversary/tests/providers`.
 

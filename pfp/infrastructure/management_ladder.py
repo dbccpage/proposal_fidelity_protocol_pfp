@@ -14,6 +14,7 @@ from pfp.domain.prompts.compression import compress_prompt_tree, prompt_tree_sto
 from pfp.infrastructure.compressed_task_turn import prepare_compressed_turn
 from pfp.infrastructure.estimated_gateway import NativeAnthropicCampaign, native_anthropic_request
 from operations.domain.rop.result import Err
+from adversary.domain.providers import model_ids as ids
 from pfp.infrastructure.pfp_operad import PfpTurnExecutor
 from pfp.infrastructure.seat_transport.anthropic_messages import AnthropicMessagesTransport
 from pfp.infrastructure.task_turn import prepare_task_turn
@@ -23,7 +24,7 @@ from operads.skill_operad.skill_compiler.op_inventory import (
 from operads.skill_operad.resolver.resolver import compose, Refusal
 from operads.skill_operad.resolver.native_runtime import run_native as run
 
-MODELS=('claude-haiku-5-5','claude-sonnet-5-5','claude-opus-5-5')
+MODELS=(ids.ANTHROPIC_H,ids.ANTHROPIC_S,ids.ANTHROPIC_O)
 STAGE_CAPS=dict(P0=0,P1=200000,P2=600000,P3=800000,P4=400000)
 BASE=Path(__file__).resolve().parents[2]
 DESIGN=BASE/'workflows/wf22_certified_cost_ladder/pilots/certified_ladder/design_v2.md'

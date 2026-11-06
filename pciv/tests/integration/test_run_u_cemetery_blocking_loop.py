@@ -1,4 +1,4 @@
-"""Closed-Loop "Fugu" Autophagous Cemetery & Antibody Blocking Integration Test.
+"""Closed-Loop "Run U" Autophagous Cemetery & Antibody Blocking Integration Test.
 
 Implements the closed-loop autophagous cycle across Adversary, the city, and Prompt Civilization:
 1. Generation g=1: A candidate with a deliberate fatal defect (Clean Architecture layer violation)
@@ -80,7 +80,7 @@ def _make_packet(task_key: str, objective: str) -> WorkPacketV1:
     )
 
 
-def test_fugu_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> None:
+def test_run_u_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> None:
     """Full closed-loop test: g=1 kills & buries defect, g=2 blocks identical candidate before token spend."""
     out_dir = tmp_path / "_intelligence" / "_adversary"
     _, _, profile, _, _ = load_adversary_council_profile()
@@ -125,7 +125,7 @@ def test_fugu_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> None
     turn_adapter_g1 = FixtureAgentTurnAdapter(canned_replies=canned_g1)
     object.__setattr__(rt_g1, "seat_port", turn_adapter_g1)
 
-    packet_g1 = _make_packet("fugu_g1_run", "Refactor OrderDomainService with pure domain isolation")
+    packet_g1 = _make_packet("run_u_g1_run", "Refactor OrderDomainService with pure domain isolation")
     res_g1 = execute_7act_adversary_bout(profile, rt_g1, packet_g1, output_dir=out_dir, native_support=DefaultNativeOperationPort())
 
     # Bout completes with zero surviving candidates (candidate was killed by Defect Hunter)
@@ -149,8 +149,8 @@ def test_fugu_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> None
     seeder = PharmacySeeder(repo_root=tmp_path, text_writer=filesystem_text_writer, text_source=filesystem_catalog_text)
     farmed_antibodies = seeder.farm_antibodies_from_defects(
         ["clean_arch_violation: OrderDomainService directly imports RawSocketDatabase"],
-        run_id="fugu_g1_run",
-        task_id="task_fugu_g1",
+        run_id="run_u_g1_run",
+        task_id="task_run_u_g1",
     )
     assert len(farmed_antibodies) == 1
     assert farmed_antibodies[0].constraint_type == "ProjectOut"
@@ -195,7 +195,7 @@ def test_fugu_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> None
     turn_adapter_g2 = FixtureAgentTurnAdapter(canned_replies=canned_g2)
     object.__setattr__(rt_g2, "seat_port", turn_adapter_g2)
 
-    packet_g2 = _make_packet("fugu_g2_run", "Refactor OrderDomainService with pure domain isolation")
+    packet_g2 = _make_packet("run_u_g2_run", "Refactor OrderDomainService with pure domain isolation")
     res_g2 = execute_7act_adversary_bout(profile, rt_g2, packet_g2, output_dir=out_dir, native_support=DefaultNativeOperationPort())
 
     # In g=2, the bout must be REFUSED at the Act IV Sandbox gate
@@ -233,7 +233,7 @@ def test_fugu_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> None
     assert refusal_payload.get("act_reached") == "SANDBOX"
 
 
-def test_fugu_armed_antibody_blocking_mutation(tmp_path: Path) -> None:
+def test_run_u_armed_antibody_blocking_mutation(tmp_path: Path) -> None:
     """Tests that a mutated variant carrying the farmed antibody pattern is blocked in Act IV."""
     out_dir = tmp_path / "_intelligence" / "_adversary"
     _, _, profile, _, _ = load_adversary_council_profile()
@@ -278,7 +278,7 @@ def test_fugu_armed_antibody_blocking_mutation(tmp_path: Path) -> None:
 
     from adversary.infrastructure.estates.oeeis_immune import OeeisImmuneAdapter
 
-    packet = _make_packet("fugu_g3_run", "Refactor CustomerService")
+    packet = _make_packet("run_u_g3_run", "Refactor CustomerService")
     res = execute_7act_adversary_bout(
         profile,
         rt,
@@ -295,7 +295,7 @@ def test_fugu_armed_antibody_blocking_mutation(tmp_path: Path) -> None:
     assert "matches admitted antibody" in refusal.message
 
 
-def test_fugu_clean_candidate_passes_sandbox_gate(tmp_path: Path) -> None:
+def test_run_u_clean_candidate_passes_sandbox_gate(tmp_path: Path) -> None:
     """Tests that a clean candidate without defects passes Act IV Sandbox gate cleanly."""
     out_dir = tmp_path / "_intelligence" / "_adversary"
     _, _, profile, _, _ = load_adversary_council_profile()
@@ -344,7 +344,7 @@ def test_fugu_clean_candidate_passes_sandbox_gate(tmp_path: Path) -> None:
     turn_adapter = FixtureAgentTurnAdapter(canned_replies=canned)
     object.__setattr__(rt, "seat_port", turn_adapter)
 
-    packet = _make_packet("fugu_clean_run", "Decoupled Clean Architecture implementation")
+    packet = _make_packet("run_u_clean_run", "Decoupled Clean Architecture implementation")
     res = execute_7act_adversary_bout(profile, rt, packet, output_dir=out_dir, native_support=DefaultNativeOperationPort())
 
     assert res.is_ok, f"Expected clean candidate to pass all 7 acts: {res.unwrap_err()}"
@@ -353,7 +353,7 @@ def test_fugu_clean_candidate_passes_sandbox_gate(tmp_path: Path) -> None:
     assert receipt.final_state.terminal_status == "COMPLETED"
 
 
-def test_fugu_cemetery_defense_ablation(tmp_path: Path) -> None:
+def test_run_u_cemetery_defense_ablation(tmp_path: Path) -> None:
     """Ablation test: with no_cemetery_defense=True, the candidate bypasses Act IV Sandbox."""
     out_dir = tmp_path / "_intelligence" / "_adversary"
     _, _, profile, _, _ = load_adversary_council_profile()
@@ -402,7 +402,7 @@ def test_fugu_cemetery_defense_ablation(tmp_path: Path) -> None:
     turn_adapter = FixtureAgentTurnAdapter(canned_replies=canned)
     object.__setattr__(rt, "seat_port", turn_adapter)
 
-    packet = _make_packet("fugu_ablation_run", "Ablation test run")
+    packet = _make_packet("run_u_ablation_run", "Ablation test run")
     res = execute_7act_adversary_bout(
         profile,
         rt,

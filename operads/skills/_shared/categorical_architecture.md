@@ -42,7 +42,7 @@ $$\mathfrak{C} = \{\text{State}, \text{Proof}, \text{Paper}, \text{Code}, \text{
 | **Colours** ($C \in \mathfrak{C}$) | Artifact Types | Domain representations | The 10 typed boundary carriers (`Code`, `Proof`, `Paper`, `Receipt`, etc.). |
 | **Operations** ($f \in \mathcal{O}(C_1, \dots, C_n; D)$) | **Skills** | `.agents/skills/<skill>/SKILL.md` | Atomic multi-input typed transformations of declared arity $n \ge 1$ and target colour $D$. `AuthorityEffect: None`. |
 | **Planar Trees** ($\gamma(f; g_1, \dots, g_n)$) | **Workflows** | `.agents/workflows/<flow>.md` | Multi-stage operadic substitutions composing skills into verified pipelines (`/rip-papers`, `/rip-sprints`, `/rip-code`). |
-| **Sub-Operad Slices** ($\mathcal{O}_A \subseteq \mathcal{O}$) | **Agents** | `.agents/agents/<agent>.md` | Evaluation algebras defining authorized colour subsets, licensed operations, model tiers (Opus/Sonnet/Haiku), and non-waivable authority ceilings. |
+| **Sub-Operad Slices** ($\mathcal{O}_A \subseteq \mathcal{O}$) | **Agents** | `.agents/agents/<agent>.md` | Evaluation algebras defining authorized colour subsets, licensed operations, model tiers (Run O/Sonnet/Haiku), and non-waivable authority ceilings. |
 
 ---
 
@@ -88,7 +88,7 @@ An Agent is an **evaluation algebra** over a restricted sub-operad $\mathcal{O}_
 - **Licensed Operations:** The exact subset of skills the agent is authorized to invoke.
 - **Authority Ceiling:** Enforces that no agent (except explicit human authorization) can mint authority, promote releases, or self-certify test results.
 - **Model Reasoning Tier:**
-  - **Opus:** Complex multi-step reasoning, mathematical synthesis, adversary evaluations (`panep-math-and-physics-prof`, `blackrod`, `techne-vp`).
+  - **Run O:** Complex multi-step reasoning, mathematical synthesis, adversary evaluations (`panep-math-and-physics-prof`, `blackrod`, `techne-vp`).
   - **Sonnet:** Formulaic execution, code review, test construction (`techne-code-builder`, `autoskill`).
   - **Haiku:** Lightweight validation, gate checks, and routing.
 
