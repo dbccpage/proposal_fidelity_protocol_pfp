@@ -11,7 +11,7 @@
 **Use PFP in a workflow**
 
 - [Choose a workflow](Workflows.md) · [Start here](Workflow-Start-Here.md)
-- [Workflow DAG: WF1–WF23](Workflow-DAG.md)
+- [Workflow DAG: WF1–WF49](Workflow-DAG.md)
 - [Install and run WF1–WF5](Workflow-Running.md)
 - [WF1: typed answer](Workflow-WF1.md)
 - [WF2: full slots](Workflow-WF2.md)

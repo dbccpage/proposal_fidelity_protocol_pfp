@@ -2,7 +2,7 @@
   "schema_version": "pfp.workflow-dag.v1",
   "AuthorityEffect": "None",
   "date": "2026-11-05",
-  "scope": "Workflow families WF1-WF5 (implemented) and WF6-WF23 (proposals, revised by the 2026-11-05 research committee: see docs/research/2026-11-05_committee_report.md). WF6-WF23 were derived by reading the retained pilot estate (pilots 0000000-0000203 plus its auxiliary folders) in the sibling research repository; no new model call was made. A proposal node is a recipe design with source evidence, not an implemented runner and not a measured result.",
+  "scope": "Workflow families WF1-WF5 (implemented), WF6-WF23 (proposals from the pilot estate) and WF24-WF49 (proposals extracted on 2026-11-06 from workflows/certified_challenges/findings and papers/; their sources are cited per node). All proposals were classified by kind after the 2026-11-05 research committee (docs/research/2026-11-05_committee_report.md). WF6-WF23 were derived by reading the retained pilot estate (pilots 0000000-0000203 plus its auxiliary folders) in the sibling research repository; no new model call was made. A proposal node is a recipe design with source evidence, not an implemented runner and not a measured result.",
   "kinds": {
     "base": "The typed task turn: frozen task, one typed reply, independent host check, replay, accounting.",
     "procedure_extension": "Adds one step or contract to the base (or to another extension). A real procedure.",
@@ -11,7 +11,12 @@
     "meta_workflow": "Acts on prompts or detectors rather than on one task (immune lifecycle, prompt evolution).",
     "harness_gate": "Required on every run (seal chain, replay, custody audit); not a research node."
   },
+  "perturbations_note": "A perturbation varies one setting or step of an existing workflow. It is recorded under its target workflow, not as a new node. status: live (model replies exist), offline (host-only replay or fixtures), code (checker with tests), theory, planning, proposed or not run.",
   "settings_not_workflows": [
+    "assistance_level (unassisted / hinted / answer-bearing)",
+    "identifier_disclosure (neutral / descriptive)",
+    "completion_ceiling",
+    "reasoning (default / off)",
     "task_family",
     "checker_id",
     "dialect_or_representation",
@@ -1533,6 +1538,1861 @@
           "limit": 0
         }
       }
+    },
+    {
+      "id": "WF24",
+      "name": "Pinned-token operational scratchpad",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF2"
+      ],
+      "layer": 2,
+      "sources": [
+        "F symbol_game_challenge_and_demos_findings §3.4",
+        "F challenges_findings_and_updates §8.2 (C017)"
+      ],
+      "task_families": [],
+      "source_evidence": "Live, 5 cases: 0/5 became 3/5 on a 70B model and on a reasoning model. Historical; the findings carry errata.",
+      "process": [
+        "Pin canonical coordinate tokens in the reply grammar",
+        "Require an operational scratchpad of the exact computation (e.g. path products)",
+        "Check the final answer with dual independent checkers"
+      ],
+      "math": [
+        "holonomy along a loop: g_acc <- g_acc * U(e) for each edge e, compared with the identity"
+      ],
+      "host_check": "dual holonomy checkers that must agree",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "An accepted answer whose scratchpad follows the pinned grammar.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "checker rejects",
+          "action": "opus repairs the scratchpad from the residual",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF25",
+      "name": "Hierarchical decimation",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF24"
+      ],
+      "layer": 3,
+      "sources": [
+        "F symbol_game_challenge_and_demos_findings §3.6, §15",
+        "F challenges_findings_and_updates §12"
+      ],
+      "task_families": [],
+      "source_evidence": "Live on one torus case: tokens fell from over 8,000 to 2,810 and overall 4/5 passed. Two-pass quad-tree aggregation is proposed, not run.",
+      "process": [
+        "Certify trivially flat sub-blocks at zero tokens",
+        "Evaluate only the non-contractible loops",
+        "Check that the remaining holonomies commute",
+        "Optional second pass aggregates macro-blocks"
+      ],
+      "math": [
+        "flat blocks contribute the identity; global flatness reduces to the cycle holonomies of the quotient"
+      ],
+      "host_check": "dual checkers",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Fit large lattices inside the token limit without losing exactness.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "token ceiling reached",
+          "action": "split into macro-blocks and rerun once",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF26",
+      "name": "Multi-round antibody dialogue",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF9",
+        "WF14"
+      ],
+      "layer": 7,
+      "sources": [
+        "F symbol_game_challenge_and_demos_findings §2"
+      ],
+      "task_families": [],
+      "source_evidence": "Live: 5 models, 22 calls, $0.015; two models reached 4/4 by round 2-3. The prompts leaked the answer (erratum), so this is plumbing evidence only.",
+      "process": [
+        "Run up to R dialogue rounds on one task",
+        "Turn each recorded hallucination into a typed negative-constraint antibody",
+        "Carry accumulated antibodies into the next round",
+        "Accept only on the exact oracle"
+      ],
+      "math": [
+        "antibody set A_{t+1} = A_t ∪ {typed constraint from failure_t}; stop when check passes or t = R"
+      ],
+      "host_check": "exact oracle",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Converge to an accepted answer as antibodies accumulate, without leaking the answer.",
+        "pattern": "proposer_with_residual_feedback",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "two rounds without progress",
+          "action": "opus rewrites the antibody set once",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF27",
+      "name": "Hinted retraction with a stationary-loop detector",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": "WF9",
+      "depends_on": [
+        "WF9"
+      ],
+      "layer": 3,
+      "sources": [
+        "F challenges_findings_and_updates §4, §10.1",
+        "P008 §10",
+        "P027 §5.9"
+      ],
+      "task_families": [],
+      "source_evidence": "Live, 28 trials on 7-8B models: baseline 0%, hinted 100% (the hint was the full repair, so only copying is shown).",
+      "process": [
+        "Inject the residual vector and the non-zero cell ids each turn",
+        "Detect a stationary loop after 3 repeats",
+        "Force a structural lift or reframe",
+        "Stop at the turn cap"
+      ],
+      "math": [
+        "residual r_t = d c_t; stationary if r_t = r_{t-3}; path-integrated retry uses B_T^{-1}, not edge-local B_T"
+      ],
+      "host_check": "host residual gate (Phi1 = 0)",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Repair to zero residual within the turn cap, with unassisted and assisted arms kept separate.",
+        "pattern": "proposer_with_residual_feedback",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "stationary loop",
+          "action": "forced lift or reframe",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF28",
+      "name": "Eight-role audit dialogue",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF15"
+      ],
+      "layer": 8,
+      "sources": [
+        "F challenges_findings_and_updates §2"
+      ],
+      "task_families": [],
+      "source_evidence": "6 run folders; verdict counts are reference self-scores.",
+      "process": [
+        "Proposer, adversary, solver, overconfidence probe, stabilizer, schema auditor, truth repair, terminal arbiter in sequence",
+        "Each role sees only frozen earlier outputs",
+        "Host check decides; the arbiter cannot accept"
+      ],
+      "math": [
+        "strict descent of the l1 defect across the role sequence"
+      ],
+      "host_check": "strict l1 descent in the host",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "A role sequence whose final packet the host accepts or refuses with a typed reason.",
+        "pattern": "tribunal",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "defender",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Stabilise and repair."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "arbiter and host disagree",
+          "action": "host wins; record the disagreement",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF29",
+      "name": "Checker synthesis scored by mutation kill rate",
+      "status": "proposal",
+      "kind": "task_preset",
+      "merge_into": "WF11",
+      "depends_on": [
+        "WF11"
+      ],
+      "layer": 4,
+      "sources": [
+        "F challenges_findings_and_updates §11 (C060)"
+      ],
+      "task_families": [],
+      "source_evidence": "Live: reasoning model 10/10, 70B 5/10, 8B 0/10.",
+      "process": [
+        "The model writes a checker for a declared certificate",
+        "Run it against valid cases and a hostile mutation suite",
+        "Score by kills and by false rejections"
+      ],
+      "math": [
+        "kill rate = killed / mutants; soundness requires zero false rejections on valid cases"
+      ],
+      "host_check": "mutation suite plus valid-case panel",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "A checker that kills every mutant and accepts every valid case.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "a mutant survives",
+          "action": "opus patches the checker once",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF30",
+      "name": "Constraint-forcing anti-recitation",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF1"
+      ],
+      "layer": 1,
+      "sources": [
+        "F c057_*_sorting_network_findings"
+      ],
+      "task_families": [],
+      "source_evidence": "Live: 70B and 8B recited the textbook network and failed every constrained case.",
+      "process": [
+        "Add task constraints that break memorised textbook answers (forced prefix, forbidden step)",
+        "Check with the exact property (e.g. the 0-1 principle)"
+      ],
+      "math": [
+        "a comparator network sorts all inputs iff it sorts all 2^n binary inputs"
+      ],
+      "host_check": "exact property checker",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Separate solving from recall.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "recitation is a finding, not a retry",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF31",
+      "name": "Multi-agent tournament with held-out cross-validation",
+      "status": "proposal",
+      "kind": "experiment_design",
+      "merge_into": null,
+      "depends_on": [
+        "WF1"
+      ],
+      "layer": 1,
+      "sources": [
+        "P022 §3-4"
+      ],
+      "task_families": [],
+      "source_evidence": "Offline deterministic strategies and live-capable; the earlier rates were withdrawn. Held-out split: random baseline 0/16, others 16/16 (offline).",
+      "process": [
+        "Several proposers answer the same packet each round",
+        "Include a random-baseline negative control",
+        "Proposers see a training share of the instance; the host scores the held-out share",
+        "Rank per budget"
+      ],
+      "math": [
+        "exact referee: SO(4N), det = +1, defect <= tolerance; held-out score on the 30% the proposer never saw"
+      ],
+      "host_check": "exact rational referee",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "A ranking that holds on held-out parts of each instance.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "tournaments do not escalate mid-round",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF32",
+      "name": "Claim-scoped receipt",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF1",
+        "WF2"
+      ],
+      "layer": 2,
+      "sources": [
+        "P023 §1-4"
+      ],
+      "task_families": [],
+      "source_evidence": "Proof and finite replay; no model runs.",
+      "process": [
+        "Record the exact set of admitted claims J_checked",
+        "Check each claim with its own checker",
+        "A correct witness admits nothing around it (prose, universals, quotes)",
+        "Quotes need source bytes and a span"
+      ],
+      "math": [
+        "admitted(J) = {j : C_j(witness_j) = accept}; everything else stays unadmitted"
+      ],
+      "host_check": "per-claim independent checkers",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "A receipt that says exactly which claims were checked.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "unchecked claim found",
+          "action": "drop it from the receipt",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF33",
+      "name": "Recursive re-entry with shared fuel",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF9",
+        "WF20"
+      ],
+      "layer": 9,
+      "sources": [
+        "P024 §1-5"
+      ],
+      "task_families": [],
+      "source_evidence": "Replay only.",
+      "process": [
+        "An output becomes the next proposal",
+        "Check a backward solution map and a forward coverage map per edge",
+        "Bind the parent receipt",
+        "Charge every prefix against one original budget"
+      ],
+      "math": [
+        "at most floor(B / delta) operations under budget B; stale parent, changed task or fuel reset is refused"
+      ],
+      "host_check": "per-edge maps plus parent binding",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Chains of re-entry that never reset their budget or lose their parent.",
+        "pattern": "relay",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "stale parent",
+          "action": "refuse",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF34",
+      "name": "Future-faithful compression and bounded context",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF8",
+        "WF22"
+      ],
+      "layer": 8,
+      "sources": [
+        "P026 §1-6, §8",
+        "P029 §4"
+      ],
+      "task_families": [],
+      "source_evidence": "Proof and replay; the bounded-context harness arm is implemented and NOT_RUN.",
+      "process": [
+        "Compress state only if enablement, cost, successors and terminal labels all survive",
+        "Stage boundaries require equal states, not equal diagnostics",
+        "Bounded context keeps root, champion, two recent attempts and evidence references",
+        "Compare with a full-history arm at the same ceiling"
+      ],
+      "math": [
+        "coarsest stable refinement; states equal under every finite continuation"
+      ],
+      "host_check": "endpoint-state equality and reference retention",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Smaller context with no lost future operation.",
+        "pattern": "relay",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "dropped reference",
+          "action": "refuse",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF35",
+      "name": "Proposal-channel comparison",
+      "status": "proposal",
+      "kind": "experiment_design",
+      "merge_into": null,
+      "depends_on": [
+        "WF6",
+        "WF12"
+      ],
+      "layer": 6,
+      "sources": [
+        "P027 §1-3, §5.1-5.2"
+      ],
+      "task_families": [],
+      "source_evidence": "Offline receipts; attention, activation and steering channels were not exercised on live models. Qwen-0.5B: 0/8 exact on every channel; the null channel matched free decoding token for token.",
+      "process": [
+        "Fix the host check",
+        "Vary only the channel: prompt, glyph code, logit mask, grammar mask, typed tree, attention or activation bias",
+        "Compare per item"
+      ],
+      "math": [
+        "channel invariance: the accept set depends on the reply, never on the channel that produced it"
+      ],
+      "host_check": "fixed exact oracle",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Find which channel changes acceptance on the same items.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "channels are arms, not boosts",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF36",
+      "name": "Guarded staged slot materialisation",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": "WF8",
+      "depends_on": [
+        "WF8"
+      ],
+      "layer": 5,
+      "sources": [
+        "P027 §5.3, §5.6-5.8"
+      ],
+      "task_families": [],
+      "source_evidence": "Live on a local 0.5B model, gpt-4o-mini and a 7B model; 40-case ladder: 7B unstaged 9/40 exact, guarded 2/40 admitted and both optimal.",
+      "process": [
+        "Stage 1 emits typed slots",
+        "A complete guard with one retry gates stage 2 or abstains",
+        "Two-stage tree-then-chord for higher cycle rank",
+        "A dichotomic guard removes the lazy false-refusal attractor"
+      ],
+      "math": [
+        "syndrome r* = S c shared across verdict, repair and audit; a partial guard leaves a false-green kernel"
+      ],
+      "host_check": "exact cochain check",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Admit only complete stage-1 packets; abstain otherwise.",
+        "pattern": "relay",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "guard fails",
+          "action": "one retry, then abstain",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF37",
+      "name": "Evidence-bound harness evolution",
+      "status": "proposal",
+      "kind": "meta_workflow",
+      "merge_into": null,
+      "depends_on": [
+        "WF19",
+        "WF22"
+      ],
+      "layer": 8,
+      "sources": [
+        "P029 §2-8",
+        "P004-P006 extensions"
+      ],
+      "task_families": [],
+      "source_evidence": "Implemented offline; NOT_RUN live ($40 plan).",
+      "process": [
+        "An outer model rewrites a small harness (prompt, workflow, search and context policy)",
+        "UCB1 plus softmax search over strategies; scoped failure memory",
+        "Public and private grading split",
+        "Fresh confirmation before replacing the incumbent",
+        "Untouched transfer and ablation panels"
+      ],
+      "math": [
+        "paired bootstrap, exact sign test, Holm correction over transfer and ablation contrasts"
+      ],
+      "host_check": "frozen checkers, isolation, reserved budget",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "A harness change that wins on fresh confirmation and transfers.",
+        "pattern": "research_cell",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "no confirmed gain",
+          "action": "retain incumbent",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF38",
+      "name": "Diagnostic-trace proposal selection",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": "WF9",
+      "depends_on": [
+        "WF9"
+      ],
+      "layer": 3,
+      "sources": [
+        "P026 §2-4",
+        "P018 §2-4",
+        "P019 §2-5"
+      ],
+      "task_families": [],
+      "source_evidence": "Host checks have code and tests; no model runs.",
+      "process": [
+        "The model proposes candidates; it never reports its own score",
+        "The host recomputes Phi, Gamma and other channels",
+        "Filter by strict lexicographic decrease and a ratio ceiling",
+        "Rank with fixed weights; ties by name; every observer must pass in the multi-observer form"
+      ],
+      "math": [
+        "primal-dual witness: B^T phi = 0, ||phi||_inf <= 1, phi . c = ||h||_1; Gamma <= ||D|| Phi"
+      ],
+      "host_check": "exact rational diagnostics",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Select repairs only by host-recomputed diagnostics.",
+        "pattern": "proposer_with_residual_feedback",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "no candidate passes",
+          "action": "typed refusal",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF39",
+      "name": "Authority firewall gate",
+      "status": "proposal",
+      "kind": "harness_gate",
+      "merge_into": null,
+      "depends_on": [
+        "WF1",
+        "WF23"
+      ],
+      "layer": 5,
+      "sources": [
+        "P027(firewall) §2.4, §3.8",
+        "P028(finite authority) §6, §12-14",
+        "P030 §4",
+        "P004(role) §3-8"
+      ],
+      "task_families": [],
+      "source_evidence": "Code, tests and Lean; no model runs.",
+      "process": [
+        "A rejected or obstructed reply can only become residual evidence, never an accept",
+        "Accept requires every guard: replay hash, replay match, terminaliser, exhaustion, zero defect, descent witness, freshness",
+        "Packet gates C1-C8 keep tool halt separate from authority",
+        "Witness must be bound to a registered verifier and the exact payload hash"
+      ],
+      "math": [
+        "accept iff AllGuardsPass; a non-zero obstruction class cannot satisfy a truthful zero-defect guard"
+      ],
+      "host_check": "guard vector over the reply",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "No path from a fluent wrong answer to authority.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "gates never escalate",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF40",
+      "name": "Restart boundary after exhausted repair",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF9",
+        "WF20"
+      ],
+      "layer": 9,
+      "sources": [
+        "P029(boundary) §2.4, §6",
+        "P004 §6",
+        "P005 §2-5"
+      ],
+      "task_families": [],
+      "source_evidence": "Code and tests; offline scripted demos only.",
+      "process": [
+        "When bounded repair ends with a positive residual, choose exactly one of: typed refusal, lift request, restart seed carrying the residual",
+        "A lift needs a preservation witness",
+        "A changed claim set is a new problem, not a repair"
+      ],
+      "math": [
+        "cochain trichotomy: exact / unclosed / closed non-exact; lift authorised only with Delta > 0"
+      ],
+      "host_check": "trichotomy and lift-witness check",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "End every exhausted repair with a lawful typed outcome.",
+        "pattern": "proposer_with_residual_feedback",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "terminal by design",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF41",
+      "name": "Detector adequacy and two-signal admission",
+      "status": "proposal",
+      "kind": "meta_workflow",
+      "merge_into": "WF14",
+      "depends_on": [
+        "WF14"
+      ],
+      "layer": 7,
+      "sources": [
+        "P030 §2",
+        "P003 §3, App A",
+        "P006 §7"
+      ],
+      "task_families": [],
+      "source_evidence": "Lemmas checked exhaustively offline; no detector admitted; the six-arm effectiveness experiment is proposed (~299 opportunities needed for a <1% bound).",
+      "process": [
+        "Admit a detector only with positive, negative, collision and metamorphic cases plus one representative per class",
+        "Two signals: pattern match and structural defect; pattern alone is diagnostic only",
+        "Bind a human decision to the receipt digest",
+        "Report effective diversity of the self panel"
+      ],
+      "math": [
+        "finite calibration completeness: D = A iff D = A on a class-representative set R (sharp)"
+      ],
+      "host_check": "calibration record and two-signal table",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Detectors whose adequacy is shown, not assumed.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "a class is missing",
+          "action": "DetectorInadequate",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF42",
+      "name": "Reasoning-trace validation",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF10",
+        "WF21"
+      ],
+      "layer": 5,
+      "sources": [
+        "P033 §2-8"
+      ],
+      "task_families": [],
+      "source_evidence": "Code and tests; the extractor adequacy battery is specified, not certified.",
+      "process": [
+        "A fixed extractor turns the model's text into a claim, citation or tool graph",
+        "The host computes the obstruction and a dual witness",
+        "Emit a typed status",
+        "Run an adversarial battery against the extractor"
+      ],
+      "math": [
+        "Exact only describes the extractor's image; a three-claim cycle with Phi = 1 and phi = (1,1,1) is the worked obstruction"
+      ],
+      "host_check": "rational LP primal-dual check",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Validate the structure of a reasoning trace, not its fluency.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "extractor collapses",
+          "action": "CarrierFailure",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF43",
+      "name": "Gate-honesty and answer-free leak audit",
+      "status": "proposal",
+      "kind": "harness_gate",
+      "merge_into": null,
+      "depends_on": [
+        "WF23"
+      ],
+      "layer": 5,
+      "sources": [
+        "P009 §4, App A",
+        "P010 §4.1-4.2"
+      ],
+      "task_families": [],
+      "source_evidence": "Executed offline: a bare refusal passed 10/10 on two challenges before identifiers were neutralised.",
+      "process": [
+        "Ask which operation produced each verdict",
+        "Probe with input replacement, keyword adjudication, phantom evidence and templated receipts",
+        "Replay constant refusals, empty objects and constant verdicts against both checkers"
+      ],
+      "math": [
+        "a gate is honest only if no answer-free reply passes and every verdict traces to a check"
+      ],
+      "host_check": "replay against the audited checkers",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Show no answer-free reply can pass.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "leak found",
+          "action": "block until resealed",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF44",
+      "name": "Exact certificate presets",
+      "status": "proposal",
+      "kind": "task_preset",
+      "merge_into": "WF11",
+      "depends_on": [
+        "WF11",
+        "WF10"
+      ],
+      "layer": 4,
+      "sources": [
+        "P002(l1) §4-5",
+        "P003(l1) Thm 4.2",
+        "P001(covering) §3-4",
+        "P004(DSL)",
+        "P002(signed) §5-6"
+      ],
+      "task_families": [],
+      "source_evidence": "Host checks have code and tests; no model runs.",
+      "process": [
+        "The model emits a certificate: l1 potential, residual and dual circulation; a sparse representative; an equal-weight pairing involution; or a typed DSL program",
+        "The host checks it exactly; ill-typed programs are refused before evaluation"
+      ],
+      "math": [
+        "r = w + B f, B^T z = 0, |z_e| <= w_e, w . z = ||r||_1 (weak duality)"
+      ],
+      "host_check": "exact certificate check",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Verify-easy, solve-hard tasks for every other workflow to use.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "certificate rejected",
+          "action": "one opus attempt",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF45",
+      "name": "Finite terminal selector and plenitude test",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF7"
+      ],
+      "layer": 2,
+      "sources": [
+        "P003(representation) §2-5"
+      ],
+      "task_families": [],
+      "source_evidence": "Code and tests; stress test with 100 candidates.",
+      "process": [
+        "Check every candidate against evidence with tolerances",
+        "Return Accepted, Underdetermined, Refuted or Refused for the family",
+        "Add indistinguishable candidates and check the survivor count rises",
+        "Deleting competitors is not evidence"
+      ],
+      "math": [
+        "unique acceptance is only relative to the declared family"
+      ],
+      "host_check": "deterministic verifier and survivor set",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Never report a unique answer the evidence cannot separate.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "typed verdict",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF46",
+      "name": "Boundary sufficiency and gluing diagnostic",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF4"
+      ],
+      "layer": 3,
+      "sources": [
+        "P028(finite authority) §11",
+        "P005(authority gap) §3"
+      ],
+      "task_families": [],
+      "source_evidence": "Theory plus finite Lean split; NGD code not yet run on WF4 data.",
+      "process": [
+        "Check that the handoff object between isolated agents keeps everything the global evaluator needs",
+        "Report NGD over runs; undefined when no run is locally accepted",
+        "Report completed share and backlog"
+      ],
+      "math": [
+        "NGD = Pr(global fail | all locals pass)"
+      ],
+      "host_check": "global evaluator on the glued trace",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Measure how often local passes hide a global failure.",
+        "pattern": "parallel_isolated_then_global",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "diagnostic only",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF47",
+      "name": "Resumable bounded frontier search",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF9"
+      ],
+      "layer": 3,
+      "sources": [
+        "P002(signed) §4"
+      ],
+      "task_families": [],
+      "source_evidence": "Offline worked trace; no benchmark.",
+      "process": [
+        "Deterministic lexicographic batches",
+        "Statuses: verified, unknown with suffix, restricted obstruction",
+        "Continuing requires replaying the contiguous chain from index 0"
+      ],
+      "math": [
+        "the presentation key includes basis and representation, so a resumed search cannot silently change problem"
+      ],
+      "host_check": "exact sign-gauge verifier",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Search that can stop and resume without changing the question.",
+        "pattern": "relay",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "unknown is a lawful result",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF48",
+      "name": "Commit-reveal with a hostile mutation gate",
+      "status": "proposal",
+      "kind": "harness_gate",
+      "merge_into": "WF23",
+      "depends_on": [
+        "WF11",
+        "WF23"
+      ],
+      "layer": 5,
+      "sources": [
+        "F symbol_game_challenge_and_demos_findings §7-14",
+        "F challenges_findings_and_updates §9.3-9.5",
+        "F c043-c059 template"
+      ],
+      "task_families": [],
+      "source_evidence": "All C043-C060 reference solvers passed 64/64 and killed 48/48 mutants; these are reference self-scores, not model results.",
+      "process": [
+        "Commit the judge manifest",
+        "Freeze the solver and commit its hash",
+        "Reveal hidden cases (base, relabel/gauge controls, poison bait) and score",
+        "Kill a hostile certificate-mutation suite with both checkers"
+      ],
+      "math": [
+        "commit H(salt || artifact) before reveal; both checkers must reject every mutant"
+      ],
+      "host_check": "dual checkers plus mutation suite",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Scores that could not have been tuned to the hidden cases.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build negative controls and countermodels."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "mutant survives",
+          "action": "block the checker",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF49",
+      "name": "Query-preservation stage and mode campaign",
+      "status": "proposal",
+      "kind": "experiment_design",
+      "merge_into": null,
+      "depends_on": [
+        "WF8",
+        "WF22"
+      ],
+      "layer": 8,
+      "sources": [
+        "P011 §3-5"
+      ],
+      "task_families": [],
+      "source_evidence": "Proposed: zero campaign cases executed; 17 live records from earlier rounds.",
+      "process": [
+        "Run declared stages and mode contracts over task families",
+        "Independent oracle per family",
+        "Stop a lane on any safety regression"
+      ],
+      "math": [
+        "a stage passes only if the decoded query is unchanged"
+      ],
+      "host_check": "per-family oracles",
+      "model_calls_normal_path": "see process",
+      "team": {
+        "goal": "Measure which stages and modes preserve the query at scale.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed proposal."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the check and read the residuals."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "safety regression",
+          "action": "stop the lane",
+          "limit": 0
+        }
+      }
+    }
+  ],
+  "perturbations": [
+    {
+      "target": "WF1",
+      "setting": "scratchpad",
+      "values": "JSON verdict-first vs numeric scratchpad vs glyph runes vs runes+scratchpad+canary (405B, 50 cases)",
+      "outcome": "50% vs 74% (McNemar p=0.035) vs 48% vs 8%",
+      "status": "live",
+      "source": "F §4; P008 §9.3"
+    },
+    {
+      "target": "WF1",
+      "setting": "model size ladder",
+      "values": "8B, 70B, a reasoning model across C043-C060",
+      "outcome": "task-dependent, not monotonic; reruns changed 5/10 outcomes",
+      "status": "live",
+      "source": "F c043-c059; P010 §4.1"
+    },
+    {
+      "target": "WF1",
+      "setting": "completion ceiling",
+      "values": "2048 / 4096 / 8000 tokens",
+      "outcome": "reasoning model returned empty replies at the cap; budget confounds reasoning vs dense",
+      "status": "live",
+      "source": "F c045, c046"
+    },
+    {
+      "target": "WF1",
+      "setting": "arithmetic",
+      "values": "float vs exact rational",
+      "outcome": "floats give spurious holonomy ~1e-16",
+      "status": "offline",
+      "source": "F challenges §6.2"
+    },
+    {
+      "target": "WF1",
+      "setting": "case identifiers",
+      "values": "descriptive vs neutral ids",
+      "outcome": "descriptive ids leaked verdicts; a bare refusal passed",
+      "status": "offline",
+      "source": "P010 §4.2"
+    },
+    {
+      "target": "WF1",
+      "setting": "decode controls",
+      "values": "attention bias, grammar mask, activation patching, KV surgery, steering, repeated sampling N=1..16",
+      "outcome": "attention bias raised mass, not correctness; the rest not run",
+      "status": "proposed",
+      "source": "F challenges §8.1"
+    },
+    {
+      "target": "WF1",
+      "setting": "gate subset",
+      "values": "C1-C8 subsets; replay on/off; leakage audit on/off",
+      "outcome": "",
+      "status": "code",
+      "source": "P028 §6"
+    },
+    {
+      "target": "WF1",
+      "setting": "self-report",
+      "values": "self-critique or self-verified flag included vs stripped",
+      "outcome": "never read by the host",
+      "status": "code",
+      "source": "P028 §7; P030"
+    },
+    {
+      "target": "WF1",
+      "setting": "schema examples",
+      "values": "with vs without example values",
+      "outcome": "8B copied placeholder keys",
+      "status": "live",
+      "source": "F c043-c059"
+    },
+    {
+      "target": "WF2",
+      "setting": "arm",
+      "values": "unstaged vs staged vs no-model oracle",
+      "outcome": "oracle 100%",
+      "status": "live",
+      "source": "P027"
+    },
+    {
+      "target": "WF3",
+      "setting": "priming",
+      "values": "gauge-fixing algorithm primed first vs not",
+      "outcome": "primed: 0% (pure-gauge bias)",
+      "status": "live",
+      "source": "F §3.4"
+    },
+    {
+      "target": "WF3",
+      "setting": "antibodies",
+      "values": "prompt antibodies alone vs antibodies plus pinned tokens",
+      "outcome": "alone: 0% on non-abelian; with pinned tokens helped",
+      "status": "live",
+      "source": "F synthesis"
+    },
+    {
+      "target": "WF4",
+      "setting": "handoff object",
+      "values": "full trace vs summary vs answer only",
+      "outcome": "",
+      "status": "theory",
+      "source": "P028 §11"
+    },
+    {
+      "target": "WF4",
+      "setting": "consensus",
+      "values": "majority vote vs component-level descent",
+      "outcome": "",
+      "status": "code",
+      "source": "P030"
+    },
+    {
+      "target": "WF4",
+      "setting": "trials for a zero-failure bound",
+      "values": "n = 8 vs n = 299",
+      "outcome": "upper bound ~31% vs <1%",
+      "status": "planning",
+      "source": "P003 §7"
+    },
+    {
+      "target": "WF5",
+      "setting": "representation",
+      "values": "raw edge list, distractor-masked, 8-letter glyphs, full hybrid",
+      "outcome": "glyphs compressed prompts 56-74%",
+      "status": "live",
+      "source": "F §2.3"
+    },
+    {
+      "target": "WF6",
+      "setting": "channel",
+      "values": "free, null, carrier filter, grammar mask",
+      "outcome": "0/8 for all on a 0.5B model",
+      "status": "live",
+      "source": "P027 T1"
+    },
+    {
+      "target": "WF6",
+      "setting": "gauge and relabel twins",
+      "values": "8-16 invariance controls per challenge",
+      "outcome": "",
+      "status": "offline",
+      "source": "F c011, c051"
+    },
+    {
+      "target": "WF7",
+      "setting": "poison-bait notes",
+      "values": "false optimum, false max flow, false unsolvability claims",
+      "outcome": "over-refusal on C049; bluffing on UNSAT Ramsey",
+      "status": "live",
+      "source": "F c043-c059"
+    },
+    {
+      "target": "WF7",
+      "setting": "terminal taxonomy",
+      "values": "ResolvedExact / ClosedResidual / OpenResidual / CoherentUpTo(N) / BudgetUnknown",
+      "outcome": "",
+      "status": "code",
+      "source": "P004(role)"
+    },
+    {
+      "target": "WF7",
+      "setting": "critic channel",
+      "values": "keyword match vs typed JSON block",
+      "outcome": "keyword mode gave false blocks and passes",
+      "status": "offline",
+      "source": "P009 App A.2"
+    },
+    {
+      "target": "WF8",
+      "setting": "stage interface",
+      "values": "diagnostic-equal vs endpoint-state-equal",
+      "outcome": "",
+      "status": "code",
+      "source": "P026 §5, §8"
+    },
+    {
+      "target": "WF8",
+      "setting": "stage count and slots",
+      "values": "1-turn vs 2-turn; 3 vs 4 slots; guard retry 2",
+      "outcome": "gpt-4o-mini: 5/8, 3/8, 5/8; guarded 5 admitted, 3 abstained",
+      "status": "live",
+      "source": "P027 T2"
+    },
+    {
+      "target": "WF9",
+      "setting": "prompt condition",
+      "values": "baseline, partially masked, scratchpad, hinted",
+      "outcome": "baseline and masked failed; hinted passed by copying",
+      "status": "live",
+      "source": "P008 §10.1; F §4.1"
+    },
+    {
+      "target": "WF9",
+      "setting": "turn cap and loop trigger",
+      "values": "12 turns; loop after 3 repeats; 5 dialogue rounds",
+      "outcome": "",
+      "status": "live",
+      "source": "F §4.1, §2.3"
+    },
+    {
+      "target": "WF9",
+      "setting": "fuel",
+      "values": "1 vs 2 attempts",
+      "outcome": "UNKNOWN vs CHECKED",
+      "status": "offline",
+      "source": "P000 §8"
+    },
+    {
+      "target": "WF9",
+      "setting": "cut mode",
+      "values": "strict descent vs non-increase",
+      "outcome": "strict descent alone does not terminate over Q",
+      "status": "offline",
+      "source": "P001 §5; P005 §4"
+    },
+    {
+      "target": "WF9",
+      "setting": "accept policy",
+      "values": "lexicographic (Phi, Gamma, X) vs Phi only; ratio ceiling; tolerance",
+      "outcome": "",
+      "status": "code",
+      "source": "P026 §3-4; P018"
+    },
+    {
+      "target": "WF9",
+      "setting": "negative control",
+      "values": "deletion edit that makes the ratio test pass vacuously",
+      "outcome": "passes: a known gap",
+      "status": "code",
+      "source": "P018 CE 3.1"
+    },
+    {
+      "target": "WF9",
+      "setting": "retry kind",
+      "values": "blind retry vs packet-changing retry",
+      "outcome": "blind retry saturates as (1-p)^n p",
+      "status": "theory",
+      "source": "P028 §10.3"
+    },
+    {
+      "target": "WF10",
+      "setting": "cover and complex",
+      "values": "add/drop 2-cells; filled vs unfilled triangle; theta graph; hexagon",
+      "outcome": "",
+      "status": "code",
+      "source": "P004(DSL); P018; P003(rep)"
+    },
+    {
+      "target": "WF10",
+      "setting": "local tolerance",
+      "values": "tau 1/10 vs 1/5 on a hexagon",
+      "outcome": "holonomy 3/5 vs bound 6/5",
+      "status": "code",
+      "source": "P003(rep) Cor 3.3"
+    },
+    {
+      "target": "WF10",
+      "setting": "extractor carrier",
+      "values": "claim, citation, tool-trace, proof-obligation or reasoning-step graph",
+      "outcome": "",
+      "status": "code",
+      "source": "P033"
+    },
+    {
+      "target": "WF11",
+      "setting": "norm family",
+      "values": "p=1 simplex, p=2 Hodge, p=inf Chebyshev, interior p, Schatten-1",
+      "outcome": "only p in {1, 2, inf} certified exactly",
+      "status": "code",
+      "source": "P002(l1); P003(l1)"
+    },
+    {
+      "target": "WF11",
+      "setting": "mutation suites",
+      "values": "C011, C012, C022, C031",
+      "outcome": "150-188 mutants, all rejected by both checkers",
+      "status": "offline",
+      "source": "F §9.1; P021"
+    },
+    {
+      "target": "WF12",
+      "setting": "validity gate",
+      "values": "baseline, null-hook gate, distractor mask, string delete (0.5B)",
+      "outcome": "null hook matched baseline tokens 100%",
+      "status": "live",
+      "source": "F §8.1"
+    },
+    {
+      "target": "WF12",
+      "setting": "C017 prompt arms",
+      "values": "arms 1, 2, 5, 6",
+      "outcome": "0/5, 0/5, 3/5, 3/5 (4/5 with decimation)",
+      "status": "live",
+      "source": "P010 §3"
+    },
+    {
+      "target": "WF14",
+      "setting": "calibration set",
+      "values": "4 cases vs one per class; omit a class",
+      "outcome": "omitting a class breaks adequacy (sharp)",
+      "status": "code",
+      "source": "P030 §2.4"
+    },
+    {
+      "target": "WF14",
+      "setting": "toxicity threshold and decay",
+      "values": "1/5 threshold; decay tau = 5",
+      "outcome": "policy arithmetic, not a rate",
+      "status": "offline",
+      "source": "P006 §8"
+    },
+    {
+      "target": "WF14",
+      "setting": "self-panel diversity",
+      "values": "1000 rows, 40 distinct",
+      "outcome": "effective n = 40",
+      "status": "offline",
+      "source": "P003; P006"
+    },
+    {
+      "target": "WF15",
+      "setting": "role omitted",
+      "values": "each of six roles in turn",
+      "outcome": "named failure label per omission",
+      "status": "code",
+      "source": "P004(role) §3"
+    },
+    {
+      "target": "WF22",
+      "setting": "cross-architecture transfer",
+      "values": "70B vs a reasoning model on C017",
+      "outcome": "same pass rate and failure modes",
+      "status": "live",
+      "source": "F §3.5"
+    },
+    {
+      "target": "WF22",
+      "setting": "context policy",
+      "values": "compressed vs full history at the same ceiling",
+      "outcome": "",
+      "status": "not run",
+      "source": "P026; P029"
+    },
+    {
+      "target": "WF22",
+      "setting": "arrival vs completion rate",
+      "values": "cohort vs window counting",
+      "outcome": "",
+      "status": "code",
+      "source": "P005(gap) §3.3"
+    },
+    {
+      "target": "WF23",
+      "setting": "witness integrity",
+      "values": "fabricated verifier id, unbound witness, tampered hash",
+      "outcome": "all refused",
+      "status": "code",
+      "source": "P030 §4.2"
+    },
+    {
+      "target": "WF31",
+      "setting": "difficulty and noise",
+      "values": "N=2 vs N=4 modes; noise budget 1/100 vs 1/50; four targets",
+      "outcome": "random 0/16, others 16/16",
+      "status": "offline",
+      "source": "P022 §4.2"
     }
   ],
   "edges": [
@@ -1683,6 +3543,158 @@
     {
       "from": "WF11",
       "to": "WF23"
+    },
+    {
+      "from": "WF2",
+      "to": "WF24"
+    },
+    {
+      "from": "WF24",
+      "to": "WF25"
+    },
+    {
+      "from": "WF9",
+      "to": "WF26"
+    },
+    {
+      "from": "WF14",
+      "to": "WF26"
+    },
+    {
+      "from": "WF9",
+      "to": "WF27"
+    },
+    {
+      "from": "WF15",
+      "to": "WF28"
+    },
+    {
+      "from": "WF11",
+      "to": "WF29"
+    },
+    {
+      "from": "WF1",
+      "to": "WF30"
+    },
+    {
+      "from": "WF1",
+      "to": "WF31"
+    },
+    {
+      "from": "WF1",
+      "to": "WF32"
+    },
+    {
+      "from": "WF2",
+      "to": "WF32"
+    },
+    {
+      "from": "WF9",
+      "to": "WF33"
+    },
+    {
+      "from": "WF20",
+      "to": "WF33"
+    },
+    {
+      "from": "WF8",
+      "to": "WF34"
+    },
+    {
+      "from": "WF22",
+      "to": "WF34"
+    },
+    {
+      "from": "WF6",
+      "to": "WF35"
+    },
+    {
+      "from": "WF12",
+      "to": "WF35"
+    },
+    {
+      "from": "WF8",
+      "to": "WF36"
+    },
+    {
+      "from": "WF19",
+      "to": "WF37"
+    },
+    {
+      "from": "WF22",
+      "to": "WF37"
+    },
+    {
+      "from": "WF9",
+      "to": "WF38"
+    },
+    {
+      "from": "WF1",
+      "to": "WF39"
+    },
+    {
+      "from": "WF23",
+      "to": "WF39"
+    },
+    {
+      "from": "WF9",
+      "to": "WF40"
+    },
+    {
+      "from": "WF20",
+      "to": "WF40"
+    },
+    {
+      "from": "WF14",
+      "to": "WF41"
+    },
+    {
+      "from": "WF10",
+      "to": "WF42"
+    },
+    {
+      "from": "WF21",
+      "to": "WF42"
+    },
+    {
+      "from": "WF23",
+      "to": "WF43"
+    },
+    {
+      "from": "WF11",
+      "to": "WF44"
+    },
+    {
+      "from": "WF10",
+      "to": "WF44"
+    },
+    {
+      "from": "WF7",
+      "to": "WF45"
+    },
+    {
+      "from": "WF4",
+      "to": "WF46"
+    },
+    {
+      "from": "WF9",
+      "to": "WF47"
+    },
+    {
+      "from": "WF11",
+      "to": "WF48"
+    },
+    {
+      "from": "WF23",
+      "to": "WF48"
+    },
+    {
+      "from": "WF8",
+      "to": "WF49"
+    },
+    {
+      "from": "WF22",
+      "to": "WF49"
     }
   ]
 }

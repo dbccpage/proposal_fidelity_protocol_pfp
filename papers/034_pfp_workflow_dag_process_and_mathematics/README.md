@@ -1,4 +1,4 @@
-# Paper 034: The PFP Workflow DAG — process and mathematics of WF1–WF23
+# Paper 034: The PFP Workflow DAG — process and mathematics of WF1–WF49
 
 **Status:** author-review draft, 2026-11-05. Not a deposit.
 

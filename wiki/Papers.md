@@ -42,7 +42,7 @@ These are not external deposits.
 | [027](Paper-027.md) | Proposal channels: glyphs, rewrites, logits and attention |
 | [028](Paper-028.md) | Operadic composition and bounded repair (implementation study) |
 | [029](Paper-029.md) | Evidence-bound harness evolution |
-| [034](Paper-034.md) | The workflow DAG: process and mathematics of WF1–WF23 |
+| [034](Paper-034.md) | The workflow DAG: process and mathematics of WF1–WF49 |
 
 Shelves 012 to 020 are absent at this baseline.
 

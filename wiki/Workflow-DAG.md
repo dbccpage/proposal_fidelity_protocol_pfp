@@ -1,7 +1,6 @@
-# Workflow DAG: WF1–WF23
+# Workflow DAG: WF1–WF49
 
-**WF1–WF5 are the implemented runners. WF6–WF23 are proposals, not runners.** Each
-derived family was read off the retained pilot experiments: what the pilots
+**WF1–WF5 are the implemented runners. WF6–WF49 are proposals, not runners.** WF6–WF23 were read off the retained pilot experiments, and WF24–WF49 off the certified-challenge findings notes and the papers: what the pilots
 did, which check decided, and which earlier workflow they reuse. No new model
 call was made to build this graph, and most of the source pilots from 52 to
 187 are planned capsules that were never dispatched.
@@ -34,6 +33,32 @@ flowchart TD
   WF21("WF21 Structural prompt rewriting<br/><small>procedure extension</small>")
   WF22("WF22 Certified cost ladder<br/><small>experiment design</small>")
   WF23("WF23 Judge-packet custody audit<br/><small>harness gate</small>")
+  WF24("WF24 Pinned-token operational scratchpad<br/><small>procedure extension</small>")
+  WF25("WF25 Hierarchical decimation<br/><small>procedure extension</small>")
+  WF26("WF26 Multi-round antibody dialogue<br/><small>procedure extension</small>")
+  WF27("WF27 Hinted retraction with a stationary-loop detector<br/><small>procedure extension</small>")
+  WF28("WF28 Eight-role audit dialogue<br/><small>procedure extension</small>")
+  WF29("WF29 Checker synthesis scored by mutation kill rate<br/><small>task preset</small>")
+  WF30("WF30 Constraint-forcing anti-recitation<br/><small>procedure extension</small>")
+  WF31("WF31 Multi-agent tournament with held-out cross-validation<br/><small>experiment design</small>")
+  WF32("WF32 Claim-scoped receipt<br/><small>procedure extension</small>")
+  WF33("WF33 Recursive re-entry with shared fuel<br/><small>procedure extension</small>")
+  WF34("WF34 Future-faithful compression and bounded context<br/><small>procedure extension</small>")
+  WF35("WF35 Proposal-channel comparison<br/><small>experiment design</small>")
+  WF36("WF36 Guarded staged slot materialisation<br/><small>procedure extension</small>")
+  WF37("WF37 Evidence-bound harness evolution<br/><small>meta workflow</small>")
+  WF38("WF38 Diagnostic-trace proposal selection<br/><small>procedure extension</small>")
+  WF39("WF39 Authority firewall gate<br/><small>harness gate</small>")
+  WF40("WF40 Restart boundary after exhausted repair<br/><small>procedure extension</small>")
+  WF41("WF41 Detector adequacy and two-signal admission<br/><small>meta workflow</small>")
+  WF42("WF42 Reasoning-trace validation<br/><small>procedure extension</small>")
+  WF43("WF43 Gate-honesty and answer-free leak audit<br/><small>harness gate</small>")
+  WF44("WF44 Exact certificate presets<br/><small>task preset</small>")
+  WF45("WF45 Finite terminal selector and plenitude test<br/><small>procedure extension</small>")
+  WF46("WF46 Boundary sufficiency and gluing diagnostic<br/><small>procedure extension</small>")
+  WF47("WF47 Resumable bounded frontier search<br/><small>procedure extension</small>")
+  WF48("WF48 Commit-reveal with a hostile mutation gate<br/><small>harness gate</small>")
+  WF49("WF49 Query-preservation stage and mode campaign<br/><small>experiment design</small>")
   WF1 --> WF2
   WF1 --> WF3
   WF3 --> WF4
@@ -71,12 +96,50 @@ flowchart TD
   WF8 --> WF22
   WF18 --> WF22
   WF11 --> WF23
+  WF2 --> WF24
+  WF24 --> WF25
+  WF9 --> WF26
+  WF14 --> WF26
+  WF9 --> WF27
+  WF15 --> WF28
+  WF11 --> WF29
+  WF1 --> WF30
+  WF1 --> WF31
+  WF1 --> WF32
+  WF2 --> WF32
+  WF9 --> WF33
+  WF20 --> WF33
+  WF8 --> WF34
+  WF22 --> WF34
+  WF6 --> WF35
+  WF12 --> WF35
+  WF8 --> WF36
+  WF19 --> WF37
+  WF22 --> WF37
+  WF9 --> WF38
+  WF1 --> WF39
+  WF23 --> WF39
+  WF9 --> WF40
+  WF20 --> WF40
+  WF14 --> WF41
+  WF10 --> WF42
+  WF21 --> WF42
+  WF23 --> WF43
+  WF11 --> WF44
+  WF10 --> WF44
+  WF7 --> WF45
+  WF4 --> WF46
+  WF9 --> WF47
+  WF11 --> WF48
+  WF23 --> WF48
+  WF8 --> WF49
+  WF22 --> WF49
   classDef implemented fill:#dbeafe,stroke:#1d4ed8,color:#0f172a
   classDef gate fill:#e5e7eb,stroke:#4b5563,color:#0f172a
   classDef derived fill:#fef3c7,stroke:#b45309,color:#0f172a
   class WF1,WF2,WF3,WF4,WF5 implemented
-  class WF6,WF7,WF8,WF9,WF10,WF11,WF12,WF13,WF14,WF15,WF16,WF17,WF19,WF20,WF21,WF22 derived
-  class WF18,WF23 gate
+  class WF6,WF7,WF8,WF9,WF10,WF11,WF12,WF13,WF14,WF15,WF16,WF17,WF19,WF20,WF21,WF22,WF24,WF25,WF26,WF27,WF28,WF29,WF30,WF31,WF32,WF33,WF34,WF35,WF36,WF37,WF38,WF40,WF41,WF42,WF44,WF45,WF46,WF47,WF49 derived
+  class WF18,WF23,WF39,WF43,WF48 gate
 ```
 
 Files: [JSON](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/dag/workflow_dag.json) · [Mermaid](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/dag/workflow_dag.mmd) ·
@@ -238,7 +301,7 @@ success.
 
 **Goal:** Measure, item by item, which presentation of the same task the host accepts more often, without changing the task.
 
-**Source pilots:** 0000000-0000019. Pilots 0-10 retain 53-83 test capsules each (seed, P*, ten seed rewrites, ten P* rewrites); a few capsules hold manual live replies, most are offline controls.
+**Sources:** 0000000-0000019. Pilots 0-10 retain 53-83 test capsules each (seed, P*, ten seed rewrites, ten P* rewrites); a few capsules hold manual live replies, most are offline controls.
 
 **Process:**
 
@@ -268,7 +331,7 @@ success.
 
 **Goal:** Return the correct refusal code whenever the premises do not determine an answer.
 
-**Source pilots:** 0000003, 0000007, 0000011, 0000015, 0000019, 0000034, 0000175. Refusal rungs 1-5 with checkers PFP-04 and PFP-14 typed refusal; pilot 34 refuses stationary traces; pilot 175 is a planned capsule.
+**Sources:** 0000003, 0000007, 0000011, 0000015, 0000019, 0000034, 0000175. Refusal rungs 1-5 with checkers PFP-04 and PFP-14 typed refusal; pilot 34 refuses stationary traces; pilot 175 is a planned capsule.
 
 **Process:**
 
@@ -296,7 +359,7 @@ success.
 
 **Goal:** Each stage produces a sealed, typed output; the final answer checks.
 
-**Source pilots:** 0000001-0000025, 0000033. Mode trials mode_01..mode_20 and wire encodings (EBNF wire, S(n) wire, boundary packets, glyph alphabets); pilot 20 runs two local stages with zero provider calls; pilot 33 documents a two-pass loop the old runner did not implement.
+**Sources:** 0000001-0000025, 0000033. Mode trials mode_01..mode_20 and wire encodings (EBNF wire, S(n) wire, boundary packets, glyph alphabets); pilot 20 runs two local stages with zero provider calls; pilot 33 documents a two-pass loop the old runner did not implement.
 
 **Process:**
 
@@ -324,7 +387,7 @@ success.
 
 **Goal:** An accepted reply within L attempts, or a recorded stop at the limit.
 
-**Source pilots:** 0000002, 0000006, 0000010, 0000026, 0000049, 0000055, 0000062, 0000096. Pilot 49 is a deterministic mock (41 then 42, two mock calls, zero provider cost); pilot 26 retains all three least-cost repairs of an odd XOR cycle; graph-repair rungs use PFP-03.
+**Sources:** 0000002, 0000006, 0000010, 0000026, 0000049, 0000055, 0000062, 0000096. Pilot 49 is a deterministic mock (41 then 42, two mock calls, zero provider cost); pilot 26 retains all three least-cost repairs of an odd XOR cycle; graph-repair rungs use PFP-03.
 
 **Process:**
 
@@ -353,7 +416,7 @@ success.
 
 **Goal:** A checked gluing witness or a checked obstruction class for the declared cover.
 
-**Source pilots:** 0000029, 0000039-0000045, 0000051, 0000056-0000064, 0000083. Pilot 51 records live runs on the three-patch observer-visibility obstruction; 39-45 are offline exact checkers (angle defects, Hodge, clique homology, triangle fans); 56-64 are planned capsules.
+**Sources:** 0000029, 0000039-0000045, 0000051, 0000056-0000064, 0000083. Pilot 51 records live runs on the three-patch observer-visibility obstruction; 39-45 are offline exact checkers (angle defects, Hodge, clique homology, triangle fans); 56-64 are planned capsules.
 
 **Process:**
 
@@ -383,7 +446,7 @@ success.
 
 **Goal:** A frozen solver whose every output carries a certificate the judge accepts on hidden cases.
 
-**Source pilots:** 0000027, 0000053, 0000054, 0000095, 0000115-0000124, 0000171, 0000180, c051, c052, c053, c054, c055, c059. Challenge folders c051-c055 and c059 hold participant packets, judge packets, reference solvers and commit-reveal scripts; dossier LP pilots are planned capsules.
+**Sources:** 0000027, 0000053, 0000054, 0000095, 0000115-0000124, 0000171, 0000180, c051, c052, c053, c054, c055, c059. Challenge folders c051-c055 and c059 hold participant packets, judge packets, reference solvers and commit-reveal scripts; dossier LP pilots are planned capsules.
 
 **Process:**
 
@@ -413,7 +476,7 @@ success.
 
 **Goal:** An arm comparison on a fixed carrier whose only difference is the mechanism note.
 
-**Source pilots:** 0000052. Ten planned capsules (c001-c010) on one integer rank-difference carrier with three distractor spans; no model was called and the checker id is not registered.
+**Sources:** 0000052. Ten planned capsules (c001-c010) on one integer rank-difference carrier with three distractor spans; no model was called and the checker id is not registered.
 
 **Process:**
 
@@ -441,7 +504,7 @@ success.
 
 **Goal:** One checked answer or refusal per domain capsule.
 
-**Source pilots:** 0000065-0000114, 0000177, 0000176, 0000178, 0000187. Fifty planned single-capsule pilots, one per catalog challenge, each naming a domain checker id; none was dispatched.
+**Sources:** 0000065-0000114, 0000177, 0000176, 0000178, 0000187. Fifty planned single-capsule pilots, one per catalog challenge, each naming a domain checker id; none was dispatched.
 
 **Process:**
 
@@ -471,7 +534,7 @@ success.
 
 **Goal:** Detectors that catch the recorded failures and never fire on the sealed self panel.
 
-**Source pilots:** 0000125-0000134. Ten planned capsules (C081-C090), e.g. negative selection against a sealed self panel; none dispatched.
+**Sources:** 0000125-0000134. Ten planned capsules (C081-C090), e.g. negative selection against a sealed self panel; none dispatched.
 
 **Process:**
 
@@ -500,7 +563,7 @@ success.
 
 **Goal:** A verdict that the finite check supports, with both sides frozen first.
 
-**Source pilots:** 0000035, 0000135-0000144. Pilot 35 freezes role submissions and checks them separately (118 tests, 17 mutations); 135-144 are planned tribunal capsules (e.g. modal model checking).
+**Sources:** 0000035, 0000135-0000144. Pilot 35 freezes role submissions and checks them separately (118 tests, 17 mutations); 135-144 are planned tribunal capsules (e.g. modal model checking).
 
 **Process:**
 
@@ -529,7 +592,7 @@ success.
 
 **Goal:** A translation that preserves every declared relation, with alternatives recorded.
 
-**Source pilots:** 0000145-0000169. Twenty-five planned capsules (G01-G25), e.g. reading non-uniqueness in Lean; none dispatched.
+**Sources:** 0000145-0000169. Twenty-five planned capsules (G01-G25), e.g. reading non-uniqueness in Lean; none dispatched.
 
 **Process:**
 
@@ -557,7 +620,7 @@ success.
 
 **Goal:** Each claimed difference has a checked witness and each equivalence a checked certificate.
 
-**Source pilots:** 0000170-0000187. Eighteen planned capsules (W01-W18): behavioral equivalence, cochain quotients, Cech gluing, Fenchel-Rockafellar duality, LGGR I-VI, countermodels CE1-CE5; none dispatched.
+**Sources:** 0000170-0000187. Eighteen planned capsules (W01-W18): behavioral equivalence, cochain quotients, Cech gluing, Fenchel-Rockafellar duality, LGGR I-VI, countermodels CE1-CE5; none dispatched.
 
 **Process:**
 
@@ -586,7 +649,7 @@ success.
 
 **Goal:** A replayable 5 x 5 + 5 campaign whose every grade reproduces from stored bytes.
 
-**Source pilots:** 0000188-0000191. Each pilot crosses five finite carriers with five wrapped representations plus five matched guidance trials (30 capsules each); replay and learning runners exist in the source estate.
+**Sources:** 0000188-0000191. Each pilot crosses five finite carriers with five wrapped representations plus five matched guidance trials (30 capsules each); replay and learning runners exist in the source estate.
 
 **Process:**
 
@@ -615,7 +678,7 @@ success.
 
 **Goal:** A rule that improves held-out acceptance without new false positives.
 
-**Source pilots:** 0000192-0000198. Seven partially executed learning pilots over challenge families A-F plus harness tests; reference solver outputs are controls, never model responses.
+**Sources:** 0000192-0000198. Seven partially executed learning pilots over challenge families A-F plus harness tests; reference solver outputs are controls, never model responses.
 
 **Process:**
 
@@ -643,7 +706,7 @@ success.
 
 **Goal:** Discharge the named obligations or stop with a typed record at the loop limit.
 
-**Source pilots:** 0000199-0000203. Each pilot ran five loops: five provider trials and twenty host stages, capped at USD 0.05, 120,000 tokens and 180 s; analytical status stays unverified until independent proof review.
+**Sources:** 0000199-0000203. Each pilot ran five loops: five provider trials and twenty host stages, capped at USD 0.05, 120,000 tokens and 180 s; analytical status stays unverified until independent proof review.
 
 **Process:**
 
@@ -673,7 +736,7 @@ success.
 
 **Goal:** Rewrites that attach hints or encodings without touching protected bytes.
 
-**Source pilots:** 0000028, 0000030, 0000050, acset_prompt_rewriting, acset_cochain_rewriting. Offline pilots: grammar selection preserving bytes (28), a normal form that loses the question (30), no substitution inside substituted data (50), and finite ACSet/DPO rewriting with an exact judge.
+**Sources:** 0000028, 0000030, 0000050, acset_prompt_rewriting, acset_cochain_rewriting. Offline pilots: grammar selection preserving bytes (28), a normal form that loses the question (30), no substitution inside substituted data (50), and finite ACSet/DPO rewriting with an exact judge.
 
 **Process:**
 
@@ -701,7 +764,7 @@ success.
 
 **Goal:** Decide each pre-registered hypothesis on this bank, at this rung, with this gate.
 
-**Source pilots:** certified_ladder. Pre-registered design with fourteen falsifiable hypotheses (H0-H13) and pinned baseline models; arms vary stage count 1-8, rewrites, model tier and antibodies.
+**Sources:** certified_ladder. Pre-registered design with fourteen falsifiable hypotheses (H0-H13) and pinned baseline models; arms vary stage count 1-8, rewrites, model tier and antibodies.
 
 **Process:**
 
@@ -730,7 +793,7 @@ success.
 
 **Goal:** Show that every challenge packet is sealed and leak-free before any team runs it.
 
-**Source pilots:** judge_packet_audit. Audit modules for canonical form, custody, execution, layout and leakage of challenge packets.
+**Sources:** judge_packet_audit. Audit modules for canonical form, custody, execution, layout and leakage of challenge packets.
 
 **Process:**
 
@@ -749,3 +812,746 @@ success.
 **Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
 
 **Boost:** when leak found: block the challenge until it is resealed. Limit 0.
+
+<a id="wf24"></a>
+
+## WF24: Pinned-token operational scratchpad
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF2. **Model calls on the normal path:** see process.
+
+**Goal:** An accepted answer whose scratchpad follows the pinned grammar.
+
+**Sources:** F symbol_game_challenge_and_demos_findings §3.4, F challenges_findings_and_updates §8.2 (C017). Live, 5 cases: 0/5 became 3/5 on a 70B model and on a reasoning model. Historical; the findings carry errata.
+
+**Process:**
+
+1. Pin canonical coordinate tokens in the reply grammar
+2. Require an operational scratchpad of the exact computation (e.g. path products)
+3. Check the final answer with dual independent checkers
+
+**Mathematics:**
+
+- `holonomy along a loop: g_acc <- g_acc * U(e) for each edge e, compared with the identity`
+
+**Host check:** dual holonomy checkers that must agree.
+
+**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when checker rejects: opus repairs the scratchpad from the residual. Limit 1.
+
+<a id="wf25"></a>
+
+## WF25: Hierarchical decimation
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF24. **Model calls on the normal path:** see process.
+
+**Goal:** Fit large lattices inside the token limit without losing exactness.
+
+**Sources:** F symbol_game_challenge_and_demos_findings §3.6, §15, F challenges_findings_and_updates §12. Live on one torus case: tokens fell from over 8,000 to 2,810 and overall 4/5 passed. Two-pass quad-tree aggregation is proposed, not run.
+
+**Process:**
+
+1. Certify trivially flat sub-blocks at zero tokens
+2. Evaluate only the non-contractible loops
+3. Check that the remaining holonomies commute
+4. Optional second pass aggregates macro-blocks
+
+**Mathematics:**
+
+- `flat blocks contribute the identity; global flatness reduces to the cycle holonomies of the quotient`
+
+**Host check:** dual checkers.
+
+**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when token ceiling reached: split into macro-blocks and rerun once. Limit 1.
+
+<a id="wf26"></a>
+
+## WF26: Multi-round antibody dialogue
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF9, WF14. **Model calls on the normal path:** see process.
+
+**Goal:** Converge to an accepted answer as antibodies accumulate, without leaking the answer.
+
+**Sources:** F symbol_game_challenge_and_demos_findings §2. Live: 5 models, 22 calls, $0.015; two models reached 4/4 by round 2-3. The prompts leaked the answer (erratum), so this is plumbing evidence only.
+
+**Process:**
+
+1. Run up to R dialogue rounds on one task
+2. Turn each recorded hallucination into a typed negative-constraint antibody
+3. Carry accumulated antibodies into the next round
+4. Accept only on the exact oracle
+
+**Mathematics:**
+
+- `antibody set A_{t+1} = A_t ∪ {typed constraint from failure_t}; stop when check passes or t = R`
+
+**Host check:** exact oracle.
+
+**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when two rounds without progress: opus rewrites the antibody set once. Limit 1.
+
+<a id="wf27"></a>
+
+## WF27: Hinted retraction with a stationary-loop detector
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9. **Model calls on the normal path:** see process.
+
+**Goal:** Repair to zero residual within the turn cap, with unassisted and assisted arms kept separate.
+
+**Sources:** F challenges_findings_and_updates §4, §10.1, P008 §10, P027 §5.9. Live, 28 trials on 7-8B models: baseline 0%, hinted 100% (the hint was the full repair, so only copying is shown).
+
+**Process:**
+
+1. Inject the residual vector and the non-zero cell ids each turn
+2. Detect a stationary loop after 3 repeats
+3. Force a structural lift or reframe
+4. Stop at the turn cap
+
+**Mathematics:**
+
+- `residual r_t = d c_t; stationary if r_t = r_{t-3}; path-integrated retry uses B_T^{-1}, not edge-local B_T`
+
+**Host check:** host residual gate (Phi1 = 0).
+
+**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); host_checker ×1 (none).
+
+**Boost:** when stationary loop: forced lift or reframe. Limit 1.
+
+<a id="wf28"></a>
+
+## WF28: Eight-role audit dialogue
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF15. **Model calls on the normal path:** see process.
+
+**Goal:** A role sequence whose final packet the host accepts or refuses with a typed reason.
+
+**Sources:** F challenges_findings_and_updates §2. 6 run folders; verdict counts are reference self-scores.
+
+**Process:**
+
+1. Proposer, adversary, solver, overconfidence probe, stabilizer, schema auditor, truth repair, terminal arbiter in sequence
+2. Each role sees only frozen earlier outputs
+3. Host check decides; the arbiter cannot accept
+
+**Mathematics:**
+
+- `strict descent of the l1 defect across the role sequence`
+
+**Host check:** strict l1 descent in the host.
+
+**Team (`tribunal`):** coder ×1 (sonnet); adversary ×1 (fable); defender ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when arbiter and host disagree: host wins; record the disagreement. Limit 0.
+
+<a id="wf29"></a>
+
+## WF29: Checker synthesis scored by mutation kill rate
+
+**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF11. **Builds on:** WF11. **Model calls on the normal path:** see process.
+
+**Goal:** A checker that kills every mutant and accepts every valid case.
+
+**Sources:** F challenges_findings_and_updates §11 (C060). Live: reasoning model 10/10, 70B 5/10, 8B 0/10.
+
+**Process:**
+
+1. The model writes a checker for a declared certificate
+2. Run it against valid cases and a hostile mutation suite
+3. Score by kills and by false rejections
+
+**Mathematics:**
+
+- `kill rate = killed / mutants; soundness requires zero false rejections on valid cases`
+
+**Host check:** mutation suite plus valid-case panel.
+
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when a mutant survives: opus patches the checker once. Limit 1.
+
+<a id="wf30"></a>
+
+## WF30: Constraint-forcing anti-recitation
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF1. **Model calls on the normal path:** see process.
+
+**Goal:** Separate solving from recall.
+
+**Sources:** F c057_*_sorting_network_findings. Live: 70B and 8B recited the textbook network and failed every constrained case.
+
+**Process:**
+
+1. Add task constraints that break memorised textbook answers (forced prefix, forbidden step)
+2. Check with the exact property (e.g. the 0-1 principle)
+
+**Mathematics:**
+
+- `a comparator network sorts all inputs iff it sorts all 2^n binary inputs`
+
+**Host check:** exact property checker.
+
+**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when none: recitation is a finding, not a retry. Limit 0.
+
+<a id="wf31"></a>
+
+## WF31: Multi-agent tournament with held-out cross-validation
+
+**Status:** proposal (no runner, no run). **Kind:** experiment design. **Builds on:** WF1. **Model calls on the normal path:** see process.
+
+**Goal:** A ranking that holds on held-out parts of each instance.
+
+**Sources:** P022 §3-4. Offline deterministic strategies and live-capable; the earlier rates were withdrawn. Held-out split: random baseline 0/16, others 16/16 (offline).
+
+**Process:**
+
+1. Several proposers answer the same packet each round
+2. Include a random-baseline negative control
+3. Proposers see a training share of the instance; the host scores the held-out share
+4. Rank per budget
+
+**Mathematics:**
+
+- `exact referee: SO(4N), det = +1, defect <= tolerance; held-out score on the 30% the proposer never saw`
+
+**Host check:** exact rational referee.
+
+**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when none: tournaments do not escalate mid-round. Limit 0.
+
+<a id="wf32"></a>
+
+## WF32: Claim-scoped receipt
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF1, WF2. **Model calls on the normal path:** see process.
+
+**Goal:** A receipt that says exactly which claims were checked.
+
+**Sources:** P023 §1-4. Proof and finite replay; no model runs.
+
+**Process:**
+
+1. Record the exact set of admitted claims J_checked
+2. Check each claim with its own checker
+3. A correct witness admits nothing around it (prose, universals, quotes)
+4. Quotes need source bytes and a span
+
+**Mathematics:**
+
+- `admitted(J) = {j : C_j(witness_j) = accept}; everything else stays unadmitted`
+
+**Host check:** per-claim independent checkers.
+
+**Team (`solo`):** coder ×1 (sonnet); host_checker ×1 (none).
+
+**Boost:** when unchecked claim found: drop it from the receipt. Limit 0.
+
+<a id="wf33"></a>
+
+## WF33: Recursive re-entry with shared fuel
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF9, WF20. **Model calls on the normal path:** see process.
+
+**Goal:** Chains of re-entry that never reset their budget or lose their parent.
+
+**Sources:** P024 §1-5. Replay only.
+
+**Process:**
+
+1. An output becomes the next proposal
+2. Check a backward solution map and a forward coverage map per edge
+3. Bind the parent receipt
+4. Charge every prefix against one original budget
+
+**Mathematics:**
+
+- `at most floor(B / delta) operations under budget B; stale parent, changed task or fuel reset is refused`
+
+**Host check:** per-edge maps plus parent binding.
+
+**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when stale parent: refuse. Limit 0.
+
+<a id="wf34"></a>
+
+## WF34: Future-faithful compression and bounded context
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF8, WF22. **Model calls on the normal path:** see process.
+
+**Goal:** Smaller context with no lost future operation.
+
+**Sources:** P026 §1-6, §8, P029 §4. Proof and replay; the bounded-context harness arm is implemented and NOT_RUN.
+
+**Process:**
+
+1. Compress state only if enablement, cost, successors and terminal labels all survive
+2. Stage boundaries require equal states, not equal diagnostics
+3. Bounded context keeps root, champion, two recent attempts and evidence references
+4. Compare with a full-history arm at the same ceiling
+
+**Mathematics:**
+
+- `coarsest stable refinement; states equal under every finite continuation`
+
+**Host check:** endpoint-state equality and reference retention.
+
+**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when dropped reference: refuse. Limit 0.
+
+<a id="wf35"></a>
+
+## WF35: Proposal-channel comparison
+
+**Status:** proposal (no runner, no run). **Kind:** experiment design. **Builds on:** WF6, WF12. **Model calls on the normal path:** see process.
+
+**Goal:** Find which channel changes acceptance on the same items.
+
+**Sources:** P027 §1-3, §5.1-5.2. Offline receipts; attention, activation and steering channels were not exercised on live models. Qwen-0.5B: 0/8 exact on every channel; the null channel matched free decoding token for token.
+
+**Process:**
+
+1. Fix the host check
+2. Vary only the channel: prompt, glyph code, logit mask, grammar mask, typed tree, attention or activation bias
+3. Compare per item
+
+**Mathematics:**
+
+- `channel invariance: the accept set depends on the reply, never on the channel that produced it`
+
+**Host check:** fixed exact oracle.
+
+**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when none: channels are arms, not boosts. Limit 0.
+
+<a id="wf36"></a>
+
+## WF36: Guarded staged slot materialisation
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF8. **Builds on:** WF8. **Model calls on the normal path:** see process.
+
+**Goal:** Admit only complete stage-1 packets; abstain otherwise.
+
+**Sources:** P027 §5.3, §5.6-5.8. Live on a local 0.5B model, gpt-4o-mini and a 7B model; 40-case ladder: 7B unstaged 9/40 exact, guarded 2/40 admitted and both optimal.
+
+**Process:**
+
+1. Stage 1 emits typed slots
+2. A complete guard with one retry gates stage 2 or abstains
+3. Two-stage tree-then-chord for higher cycle rank
+4. A dichotomic guard removes the lazy false-refusal attractor
+
+**Mathematics:**
+
+- `syndrome r* = S c shared across verdict, repair and audit; a partial guard leaves a false-green kernel`
+
+**Host check:** exact cochain check.
+
+**Team (`relay`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when guard fails: one retry, then abstain. Limit 1.
+
+<a id="wf37"></a>
+
+## WF37: Evidence-bound harness evolution
+
+**Status:** proposal (no runner, no run). **Kind:** meta workflow. **Builds on:** WF19, WF22. **Model calls on the normal path:** see process.
+
+**Goal:** A harness change that wins on fresh confirmation and transfers.
+
+**Sources:** P029 §2-8, P004-P006 extensions. Implemented offline; NOT_RUN live ($40 plan).
+
+**Process:**
+
+1. An outer model rewrites a small harness (prompt, workflow, search and context policy)
+2. UCB1 plus softmax search over strategies; scoped failure memory
+3. Public and private grading split
+4. Fresh confirmation before replacing the incumbent
+5. Untouched transfer and ablation panels
+
+**Mathematics:**
+
+- `paired bootstrap, exact sign test, Holm correction over transfer and ablation contrasts`
+
+**Host check:** frozen checkers, isolation, reserved budget.
+
+**Team (`research_cell`):** coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when no confirmed gain: retain incumbent. Limit 0.
+
+<a id="wf38"></a>
+
+## WF38: Diagnostic-trace proposal selection
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9. **Model calls on the normal path:** see process.
+
+**Goal:** Select repairs only by host-recomputed diagnostics.
+
+**Sources:** P026 §2-4, P018 §2-4, P019 §2-5. Host checks have code and tests; no model runs.
+
+**Process:**
+
+1. The model proposes candidates; it never reports its own score
+2. The host recomputes Phi, Gamma and other channels
+3. Filter by strict lexicographic decrease and a ratio ceiling
+4. Rank with fixed weights; ties by name; every observer must pass in the multi-observer form
+
+**Mathematics:**
+
+- `primal-dual witness: B^T phi = 0, ||phi||_inf <= 1, phi . c = ||h||_1; Gamma <= ||D|| Phi`
+
+**Host check:** exact rational diagnostics.
+
+**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when no candidate passes: typed refusal. Limit 0.
+
+<a id="wf39"></a>
+
+## WF39: Authority firewall gate
+
+**Status:** proposal (no runner, no run). **Kind:** harness gate. **Builds on:** WF1, WF23. **Model calls on the normal path:** see process.
+
+**Goal:** No path from a fluent wrong answer to authority.
+
+**Sources:** P027(firewall) §2.4, §3.8, P028(finite authority) §6, §12-14, P030 §4, P004(role) §3-8. Code, tests and Lean; no model runs.
+
+**Process:**
+
+1. A rejected or obstructed reply can only become residual evidence, never an accept
+2. Accept requires every guard: replay hash, replay match, terminaliser, exhaustion, zero defect, descent witness, freshness
+3. Packet gates C1-C8 keep tool halt separate from authority
+4. Witness must be bound to a registered verifier and the exact payload hash
+
+**Mathematics:**
+
+- `accept iff AllGuardsPass; a non-zero obstruction class cannot satisfy a truthful zero-defect guard`
+
+**Host check:** guard vector over the reply.
+
+**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when none: gates never escalate. Limit 0.
+
+<a id="wf40"></a>
+
+## WF40: Restart boundary after exhausted repair
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF9, WF20. **Model calls on the normal path:** see process.
+
+**Goal:** End every exhausted repair with a lawful typed outcome.
+
+**Sources:** P029(boundary) §2.4, §6, P004 §6, P005 §2-5. Code and tests; offline scripted demos only.
+
+**Process:**
+
+1. When bounded repair ends with a positive residual, choose exactly one of: typed refusal, lift request, restart seed carrying the residual
+2. A lift needs a preservation witness
+3. A changed claim set is a new problem, not a repair
+
+**Mathematics:**
+
+- `cochain trichotomy: exact / unclosed / closed non-exact; lift authorised only with Delta > 0`
+
+**Host check:** trichotomy and lift-witness check.
+
+**Team (`proposer_with_residual_feedback`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when none: terminal by design. Limit 0.
+
+<a id="wf41"></a>
+
+## WF41: Detector adequacy and two-signal admission
+
+**Status:** proposal (no runner, no run). **Kind:** meta workflow, expected to fold into WF14. **Builds on:** WF14. **Model calls on the normal path:** see process.
+
+**Goal:** Detectors whose adequacy is shown, not assumed.
+
+**Sources:** P030 §2, P003 §3, App A, P006 §7. Lemmas checked exhaustively offline; no detector admitted; the six-arm effectiveness experiment is proposed (~299 opportunities needed for a <1% bound).
+
+**Process:**
+
+1. Admit a detector only with positive, negative, collision and metamorphic cases plus one representative per class
+2. Two signals: pattern match and structural defect; pattern alone is diagnostic only
+3. Bind a human decision to the receipt digest
+4. Report effective diversity of the self panel
+
+**Mathematics:**
+
+- `finite calibration completeness: D = A iff D = A on a class-representative set R (sharp)`
+
+**Host check:** calibration record and two-signal table.
+
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when a class is missing: DetectorInadequate. Limit 0.
+
+<a id="wf42"></a>
+
+## WF42: Reasoning-trace validation
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF10, WF21. **Model calls on the normal path:** see process.
+
+**Goal:** Validate the structure of a reasoning trace, not its fluency.
+
+**Sources:** P033 §2-8. Code and tests; the extractor adequacy battery is specified, not certified.
+
+**Process:**
+
+1. A fixed extractor turns the model's text into a claim, citation or tool graph
+2. The host computes the obstruction and a dual witness
+3. Emit a typed status
+4. Run an adversarial battery against the extractor
+
+**Mathematics:**
+
+- `Exact only describes the extractor's image; a three-claim cycle with Phi = 1 and phi = (1,1,1) is the worked obstruction`
+
+**Host check:** rational LP primal-dual check.
+
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when extractor collapses: CarrierFailure. Limit 0.
+
+<a id="wf43"></a>
+
+## WF43: Gate-honesty and answer-free leak audit
+
+**Status:** proposal (no runner, no run). **Kind:** harness gate. **Builds on:** WF23. **Model calls on the normal path:** see process.
+
+**Goal:** Show no answer-free reply can pass.
+
+**Sources:** P009 §4, App A, P010 §4.1-4.2. Executed offline: a bare refusal passed 10/10 on two challenges before identifiers were neutralised.
+
+**Process:**
+
+1. Ask which operation produced each verdict
+2. Probe with input replacement, keyword adjudication, phantom evidence and templated receipts
+3. Replay constant refusals, empty objects and constant verdicts against both checkers
+
+**Mathematics:**
+
+- `a gate is honest only if no answer-free reply passes and every verdict traces to a check`
+
+**Host check:** replay against the audited checkers.
+
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when leak found: block until resealed. Limit 0.
+
+<a id="wf44"></a>
+
+## WF44: Exact certificate presets
+
+**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF11. **Builds on:** WF11, WF10. **Model calls on the normal path:** see process.
+
+**Goal:** Verify-easy, solve-hard tasks for every other workflow to use.
+
+**Sources:** P002(l1) §4-5, P003(l1) Thm 4.2, P001(covering) §3-4, P004(DSL), P002(signed) §5-6. Host checks have code and tests; no model runs.
+
+**Process:**
+
+1. The model emits a certificate: l1 potential, residual and dual circulation; a sparse representative; an equal-weight pairing involution; or a typed DSL program
+2. The host checks it exactly; ill-typed programs are refused before evaluation
+
+**Mathematics:**
+
+- `r = w + B f, B^T z = 0, |z_e| <= w_e, w . z = ||r||_1 (weak duality)`
+
+**Host check:** exact certificate check.
+
+**Team (`solo`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when certificate rejected: one opus attempt. Limit 1.
+
+<a id="wf45"></a>
+
+## WF45: Finite terminal selector and plenitude test
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF7. **Model calls on the normal path:** see process.
+
+**Goal:** Never report a unique answer the evidence cannot separate.
+
+**Sources:** P003(representation) §2-5. Code and tests; stress test with 100 candidates.
+
+**Process:**
+
+1. Check every candidate against evidence with tolerances
+2. Return Accepted, Underdetermined, Refuted or Refused for the family
+3. Add indistinguishable candidates and check the survivor count rises
+4. Deleting competitors is not evidence
+
+**Mathematics:**
+
+- `unique acceptance is only relative to the declared family`
+
+**Host check:** deterministic verifier and survivor set.
+
+**Team (`solo`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when none: typed verdict. Limit 0.
+
+<a id="wf46"></a>
+
+## WF46: Boundary sufficiency and gluing diagnostic
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF4. **Model calls on the normal path:** see process.
+
+**Goal:** Measure how often local passes hide a global failure.
+
+**Sources:** P028(finite authority) §11, P005(authority gap) §3. Theory plus finite Lean split; NGD code not yet run on WF4 data.
+
+**Process:**
+
+1. Check that the handoff object between isolated agents keeps everything the global evaluator needs
+2. Report NGD over runs; undefined when no run is locally accepted
+3. Report completed share and backlog
+
+**Mathematics:**
+
+- `NGD = Pr(global fail | all locals pass)`
+
+**Host check:** global evaluator on the glued trace.
+
+**Team (`parallel_isolated_then_global`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when none: diagnostic only. Limit 0.
+
+<a id="wf47"></a>
+
+## WF47: Resumable bounded frontier search
+
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF9. **Model calls on the normal path:** see process.
+
+**Goal:** Search that can stop and resume without changing the question.
+
+**Sources:** P002(signed) §4. Offline worked trace; no benchmark.
+
+**Process:**
+
+1. Deterministic lexicographic batches
+2. Statuses: verified, unknown with suffix, restricted obstruction
+3. Continuing requires replaying the contiguous chain from index 0
+
+**Mathematics:**
+
+- `the presentation key includes basis and representation, so a resumed search cannot silently change problem`
+
+**Host check:** exact sign-gauge verifier.
+
+**Team (`relay`):** coder ×1 (sonnet); host_checker ×1 (none).
+
+**Boost:** when none: unknown is a lawful result. Limit 0.
+
+<a id="wf48"></a>
+
+## WF48: Commit-reveal with a hostile mutation gate
+
+**Status:** proposal (no runner, no run). **Kind:** harness gate, expected to fold into WF23. **Builds on:** WF11, WF23. **Model calls on the normal path:** see process.
+
+**Goal:** Scores that could not have been tuned to the hidden cases.
+
+**Sources:** F symbol_game_challenge_and_demos_findings §7-14, F challenges_findings_and_updates §9.3-9.5, F c043-c059 template. All C043-C060 reference solvers passed 64/64 and killed 48/48 mutants; these are reference self-scores, not model results.
+
+**Process:**
+
+1. Commit the judge manifest
+2. Freeze the solver and commit its hash
+3. Reveal hidden cases (base, relabel/gauge controls, poison bait) and score
+4. Kill a hostile certificate-mutation suite with both checkers
+
+**Mathematics:**
+
+- `commit H(salt || artifact) before reveal; both checkers must reject every mutant`
+
+**Host check:** dual checkers plus mutation suite.
+
+**Team (`red_team_pair`):** coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+
+**Boost:** when mutant survives: block the checker. Limit 0.
+
+<a id="wf49"></a>
+
+## WF49: Query-preservation stage and mode campaign
+
+**Status:** proposal (no runner, no run). **Kind:** experiment design. **Builds on:** WF8, WF22. **Model calls on the normal path:** see process.
+
+**Goal:** Measure which stages and modes preserve the query at scale.
+
+**Sources:** P011 §3-5. Proposed: zero campaign cases executed; 17 live records from earlier rounds.
+
+**Process:**
+
+1. Run declared stages and mode contracts over task families
+2. Independent oracle per family
+3. Stop a lane on any safety regression
+
+**Mathematics:**
+
+- `a stage passes only if the decoded query is unchanged`
+
+**Host check:** per-family oracles.
+
+**Team (`sweep_with_shared_judge`):** coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+**Boost:** when safety regression: stop the lane. Limit 0.
+
+## Perturbations of existing workflows
+
+Each row varies one setting or step of an existing workflow, so it is recorded under that workflow rather than as a new node. Status: live (model replies exist), offline, code (checker with tests), theory, planning, proposed or not run. Rows from the findings notes are historical and carry errata (withdrawn figures, leaked answers, reference self-scores).
+
+| Target | Setting varied | Values | Outcome | Status | Source |
+| --- | --- | --- | --- | --- | --- |
+| WF1 | arithmetic | float vs exact rational | floats give spurious holonomy ~1e-16 | offline | F challenges §6.2 |
+| WF1 | case identifiers | descriptive vs neutral ids | descriptive ids leaked verdicts; a bare refusal passed | offline | P010 §4.2 |
+| WF1 | completion ceiling | 2048 / 4096 / 8000 tokens | reasoning model returned empty replies at the cap; budget confounds reasoning vs dense | live | F c045, c046 |
+| WF1 | decode controls | attention bias, grammar mask, activation patching, KV surgery, steering, repeated sampling N=1..16 | attention bias raised mass, not correctness; the rest not run | proposed | F challenges §8.1 |
+| WF1 | gate subset | C1-C8 subsets; replay on/off; leakage audit on/off | — | code | P028 §6 |
+| WF1 | model size ladder | 8B, 70B, a reasoning model across C043-C060 | task-dependent, not monotonic; reruns changed 5/10 outcomes | live | F c043-c059; P010 §4.1 |
+| WF1 | schema examples | with vs without example values | 8B copied placeholder keys | live | F c043-c059 |
+| WF1 | scratchpad | JSON verdict-first vs numeric scratchpad vs glyph runes vs runes+scratchpad+canary (405B, 50 cases) | 50% vs 74% (McNemar p=0.035) vs 48% vs 8% | live | F §4; P008 §9.3 |
+| WF1 | self-report | self-critique or self-verified flag included vs stripped | never read by the host | code | P028 §7; P030 |
+| WF2 | arm | unstaged vs staged vs no-model oracle | oracle 100% | live | P027 |
+| WF3 | antibodies | prompt antibodies alone vs antibodies plus pinned tokens | alone: 0% on non-abelian; with pinned tokens helped | live | F synthesis |
+| WF3 | priming | gauge-fixing algorithm primed first vs not | primed: 0% (pure-gauge bias) | live | F §3.4 |
+| WF4 | consensus | majority vote vs component-level descent | — | code | P030 |
+| WF4 | handoff object | full trace vs summary vs answer only | — | theory | P028 §11 |
+| WF4 | trials for a zero-failure bound | n = 8 vs n = 299 | upper bound ~31% vs <1% | planning | P003 §7 |
+| WF5 | representation | raw edge list, distractor-masked, 8-letter glyphs, full hybrid | glyphs compressed prompts 56-74% | live | F §2.3 |
+| WF6 | channel | free, null, carrier filter, grammar mask | 0/8 for all on a 0.5B model | live | P027 T1 |
+| WF6 | gauge and relabel twins | 8-16 invariance controls per challenge | — | offline | F c011, c051 |
+| WF7 | critic channel | keyword match vs typed JSON block | keyword mode gave false blocks and passes | offline | P009 App A.2 |
+| WF7 | poison-bait notes | false optimum, false max flow, false unsolvability claims | over-refusal on C049; bluffing on UNSAT Ramsey | live | F c043-c059 |
+| WF7 | terminal taxonomy | ResolvedExact / ClosedResidual / OpenResidual / CoherentUpTo(N) / BudgetUnknown | — | code | P004(role) |
+| WF8 | stage count and slots | 1-turn vs 2-turn; 3 vs 4 slots; guard retry 2 | gpt-4o-mini: 5/8, 3/8, 5/8; guarded 5 admitted, 3 abstained | live | P027 T2 |
+| WF8 | stage interface | diagnostic-equal vs endpoint-state-equal | — | code | P026 §5, §8 |
+| WF9 | accept policy | lexicographic (Phi, Gamma, X) vs Phi only; ratio ceiling; tolerance | — | code | P026 §3-4; P018 |
+| WF9 | cut mode | strict descent vs non-increase | strict descent alone does not terminate over Q | offline | P001 §5; P005 §4 |
+| WF9 | fuel | 1 vs 2 attempts | UNKNOWN vs CHECKED | offline | P000 §8 |
+| WF9 | negative control | deletion edit that makes the ratio test pass vacuously | passes: a known gap | code | P018 CE 3.1 |
+| WF9 | prompt condition | baseline, partially masked, scratchpad, hinted | baseline and masked failed; hinted passed by copying | live | P008 §10.1; F §4.1 |
+| WF9 | retry kind | blind retry vs packet-changing retry | blind retry saturates as (1-p)^n p | theory | P028 §10.3 |
+| WF9 | turn cap and loop trigger | 12 turns; loop after 3 repeats; 5 dialogue rounds | — | live | F §4.1, §2.3 |
+| WF10 | cover and complex | add/drop 2-cells; filled vs unfilled triangle; theta graph; hexagon | — | code | P004(DSL); P018; P003(rep) |
+| WF10 | extractor carrier | claim, citation, tool-trace, proof-obligation or reasoning-step graph | — | code | P033 |
+| WF10 | local tolerance | tau 1/10 vs 1/5 on a hexagon | holonomy 3/5 vs bound 6/5 | code | P003(rep) Cor 3.3 |
+| WF11 | mutation suites | C011, C012, C022, C031 | 150-188 mutants, all rejected by both checkers | offline | F §9.1; P021 |
+| WF11 | norm family | p=1 simplex, p=2 Hodge, p=inf Chebyshev, interior p, Schatten-1 | only p in {1, 2, inf} certified exactly | code | P002(l1); P003(l1) |
+| WF12 | C017 prompt arms | arms 1, 2, 5, 6 | 0/5, 0/5, 3/5, 3/5 (4/5 with decimation) | live | P010 §3 |
+| WF12 | validity gate | baseline, null-hook gate, distractor mask, string delete (0.5B) | null hook matched baseline tokens 100% | live | F §8.1 |
+| WF14 | calibration set | 4 cases vs one per class; omit a class | omitting a class breaks adequacy (sharp) | code | P030 §2.4 |
+| WF14 | self-panel diversity | 1000 rows, 40 distinct | effective n = 40 | offline | P003; P006 |
+| WF14 | toxicity threshold and decay | 1/5 threshold; decay tau = 5 | policy arithmetic, not a rate | offline | P006 §8 |
+| WF15 | role omitted | each of six roles in turn | named failure label per omission | code | P004(role) §3 |
+| WF22 | arrival vs completion rate | cohort vs window counting | — | code | P005(gap) §3.3 |
+| WF22 | context policy | compressed vs full history at the same ceiling | — | not run | P026; P029 |
+| WF22 | cross-architecture transfer | 70B vs a reasoning model on C017 | same pass rate and failure modes | live | F §3.5 |
+| WF23 | witness integrity | fabricated verifier id, unbound witness, tampered hash | all refused | code | P030 §4.2 |
+| WF31 | difficulty and noise | N=2 vs N=4 modes; noise budget 1/100 vs 1/50; four targets | random 0/16, others 16/16 | offline | P022 §4.2 |

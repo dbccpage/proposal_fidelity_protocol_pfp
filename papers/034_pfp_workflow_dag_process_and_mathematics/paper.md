@@ -1,11 +1,11 @@
 ---
-title: "The PFP Workflow DAG: Process and Mathematics of WF1–WF23"
+title: "The PFP Workflow DAG: Process and Mathematics of WF1–WF49"
 author: "Jeremy H. Carroll"
 date: "2026-11-05"
 status: "author-review draft; not a deposit"
 ---
 
-# The PFP Workflow DAG: Process and Mathematics of WF1–WF23
+# The PFP Workflow DAG: Process and Mathematics of WF1–WF49
 
 **AuthorityEffect:** None. **Status:** author-review draft, 2026-11-05.
 This paper summarises procedures and the mathematics their checks rely on.
@@ -310,6 +310,72 @@ test for leakage, and verify that the judge executes the sealed checker.
 *Mathematics.* Leakage: the expected answer is not present in, and not a
 declared function of, participant bytes. Custody: recorded SHA-256 equals
 the hash of executed bytes.
+
+## 3b. Families added from the findings and the papers (WF24–WF49)
+
+These were extracted on 2026-11-06 from the certified-challenge findings notes
+(`workflows/certified_challenges/findings/`) and from Papers 000–033. Each is a
+proposal with cited sources; the findings carry errata, so their live figures
+are historical. Kinds follow the committee classification.
+
+**WF24 — Pinned-token operational scratchpad** (procedure extension; extends WF2). *Process:* pin canonical coordinate tokens in the reply grammar; require an operational scratchpad of the exact computation (e.g. path products); check the final answer with dual independent checkers. *Mathematics:* holonomy along a loop: g_acc <- g_acc * U(e) for each edge e, compared with the identity. *Evidence:* Live, 5 cases: 0/5 became 3/5 on a 70B model and on a reasoning model. Historical; the findings carry errata.
+
+**WF25 — Hierarchical decimation** (procedure extension; extends WF24). *Process:* certify trivially flat sub-blocks at zero tokens; evaluate only the non-contractible loops; check that the remaining holonomies commute; optional second pass aggregates macro-blocks. *Mathematics:* flat blocks contribute the identity; global flatness reduces to the cycle holonomies of the quotient. *Evidence:* Live on one torus case: tokens fell from over 8,000 to 2,810 and overall 4/5 passed. Two-pass quad-tree aggregation is proposed, not run.
+
+**WF26 — Multi-round antibody dialogue** (procedure extension; extends WF9, WF14). *Process:* run up to R dialogue rounds on one task; turn each recorded hallucination into a typed negative-constraint antibody; carry accumulated antibodies into the next round; accept only on the exact oracle. *Mathematics:* antibody set A_{t+1} = A_t ∪ {typed constraint from failure_t}; stop when check passes or t = R. *Evidence:* Live: 5 models, 22 calls, $0.015; two models reached 4/4 by round 2-3. The prompts leaked the answer (erratum), so this is plumbing evidence only.
+
+**WF27 — Hinted retraction with a stationary-loop detector** (procedure extension; extends WF9). *Process:* inject the residual vector and the non-zero cell ids each turn; detect a stationary loop after 3 repeats; force a structural lift or reframe; stop at the turn cap. *Mathematics:* residual r_t = d c_t; stationary if r_t = r_{t-3}; path-integrated retry uses B_T^{-1}, not edge-local B_T. *Evidence:* Live, 28 trials on 7-8B models: baseline 0%, hinted 100% (the hint was the full repair, so only copying is shown).
+
+**WF28 — Eight-role audit dialogue** (procedure extension; extends WF15). *Process:* proposer, adversary, solver, overconfidence probe, stabilizer, schema auditor, truth repair, terminal arbiter in sequence; each role sees only frozen earlier outputs; host check decides; the arbiter cannot accept. *Mathematics:* strict descent of the l1 defect across the role sequence. *Evidence:* 6 run folders; verdict counts are reference self-scores.
+
+**WF29 — Checker synthesis scored by mutation kill rate** (task preset; extends WF11). *Process:* the model writes a checker for a declared certificate; run it against valid cases and a hostile mutation suite; score by kills and by false rejections. *Mathematics:* kill rate = killed / mutants; soundness requires zero false rejections on valid cases. *Evidence:* Live: reasoning model 10/10, 70B 5/10, 8B 0/10.
+
+**WF30 — Constraint-forcing anti-recitation** (procedure extension; extends WF1). *Process:* add task constraints that break memorised textbook answers (forced prefix, forbidden step); check with the exact property (e.g. the 0-1 principle). *Mathematics:* a comparator network sorts all inputs iff it sorts all 2^n binary inputs. *Evidence:* Live: 70B and 8B recited the textbook network and failed every constrained case.
+
+**WF31 — Multi-agent tournament with held-out cross-validation** (experiment design; extends WF1). *Process:* several proposers answer the same packet each round; include a random-baseline negative control; proposers see a training share of the instance; the host scores the held-out share; rank per budget. *Mathematics:* exact referee: SO(4N), det = +1, defect <= tolerance; held-out score on the 30% the proposer never saw. *Evidence:* Offline deterministic strategies and live-capable; the earlier rates were withdrawn. Held-out split: random baseline 0/16, others 16/16 (offline).
+
+**WF32 — Claim-scoped receipt** (procedure extension; extends WF1, WF2). *Process:* record the exact set of admitted claims J_checked; check each claim with its own checker; a correct witness admits nothing around it (prose, universals, quotes); quotes need source bytes and a span. *Mathematics:* admitted(J) = {j : C_j(witness_j) = accept}; everything else stays unadmitted. *Evidence:* Proof and finite replay; no model runs.
+
+**WF33 — Recursive re-entry with shared fuel** (procedure extension; extends WF9, WF20). *Process:* an output becomes the next proposal; check a backward solution map and a forward coverage map per edge; bind the parent receipt; charge every prefix against one original budget. *Mathematics:* at most floor(B / delta) operations under budget B; stale parent, changed task or fuel reset is refused. *Evidence:* Replay only.
+
+**WF34 — Future-faithful compression and bounded context** (procedure extension; extends WF8, WF22). *Process:* compress state only if enablement, cost, successors and terminal labels all survive; stage boundaries require equal states, not equal diagnostics; bounded context keeps root, champion, two recent attempts and evidence references; compare with a full-history arm at the same ceiling. *Mathematics:* coarsest stable refinement; states equal under every finite continuation. *Evidence:* Proof and replay; the bounded-context harness arm is implemented and NOT_RUN.
+
+**WF35 — Proposal-channel comparison** (experiment design; extends WF6, WF12). *Process:* fix the host check; vary only the channel: prompt, glyph code, logit mask, grammar mask, typed tree, attention or activation bias; compare per item. *Mathematics:* channel invariance: the accept set depends on the reply, never on the channel that produced it. *Evidence:* Offline receipts; attention, activation and steering channels were not exercised on live models. Qwen-0.5B: 0/8 exact on every channel; the null channel matched free decoding token for token.
+
+**WF36 — Guarded staged slot materialisation** (procedure extension; extends WF8). *Process:* stage 1 emits typed slots; a complete guard with one retry gates stage 2 or abstains; two-stage tree-then-chord for higher cycle rank; a dichotomic guard removes the lazy false-refusal attractor. *Mathematics:* syndrome r* = S c shared across verdict, repair and audit; a partial guard leaves a false-green kernel. *Evidence:* Live on a local 0.5B model, gpt-4o-mini and a 7B model; 40-case ladder: 7B unstaged 9/40 exact, guarded 2/40 admitted and both optimal.
+
+**WF37 — Evidence-bound harness evolution** (meta workflow; extends WF19, WF22). *Process:* an outer model rewrites a small harness (prompt, workflow, search and context policy); uCB1 plus softmax search over strategies; scoped failure memory; public and private grading split; fresh confirmation before replacing the incumbent; untouched transfer and ablation panels. *Mathematics:* paired bootstrap, exact sign test, Holm correction over transfer and ablation contrasts. *Evidence:* Implemented offline; NOT_RUN live ($40 plan).
+
+**WF38 — Diagnostic-trace proposal selection** (procedure extension; extends WF9). *Process:* the model proposes candidates; it never reports its own score; the host recomputes Phi, Gamma and other channels; filter by strict lexicographic decrease and a ratio ceiling; rank with fixed weights; ties by name; every observer must pass in the multi-observer form. *Mathematics:* primal-dual witness: B^T phi = 0, ||phi||_inf <= 1, phi . c = ||h||_1; Gamma <= ||D|| Phi. *Evidence:* Host checks have code and tests; no model runs.
+
+**WF39 — Authority firewall gate** (harness gate; extends WF1, WF23). *Process:* a rejected or obstructed reply can only become residual evidence, never an accept; accept requires every guard: replay hash, replay match, terminaliser, exhaustion, zero defect, descent witness, freshness; packet gates C1-C8 keep tool halt separate from authority; witness must be bound to a registered verifier and the exact payload hash. *Mathematics:* accept iff AllGuardsPass; a non-zero obstruction class cannot satisfy a truthful zero-defect guard. *Evidence:* Code, tests and Lean; no model runs.
+
+**WF40 — Restart boundary after exhausted repair** (procedure extension; extends WF9, WF20). *Process:* when bounded repair ends with a positive residual, choose exactly one of: typed refusal, lift request, restart seed carrying the residual; a lift needs a preservation witness; a changed claim set is a new problem, not a repair. *Mathematics:* cochain trichotomy: exact / unclosed / closed non-exact; lift authorised only with Delta > 0. *Evidence:* Code and tests; offline scripted demos only.
+
+**WF41 — Detector adequacy and two-signal admission** (meta workflow; extends WF14). *Process:* admit a detector only with positive, negative, collision and metamorphic cases plus one representative per class; two signals: pattern match and structural defect; pattern alone is diagnostic only; bind a human decision to the receipt digest; report effective diversity of the self panel. *Mathematics:* finite calibration completeness: D = A iff D = A on a class-representative set R (sharp). *Evidence:* Lemmas checked exhaustively offline; no detector admitted; the six-arm effectiveness experiment is proposed (~299 opportunities needed for a <1% bound).
+
+**WF42 — Reasoning-trace validation** (procedure extension; extends WF10, WF21). *Process:* a fixed extractor turns the model's text into a claim, citation or tool graph; the host computes the obstruction and a dual witness; emit a typed status; run an adversarial battery against the extractor. *Mathematics:* Exact only describes the extractor's image; a three-claim cycle with Phi = 1 and phi = (1,1,1) is the worked obstruction. *Evidence:* Code and tests; the extractor adequacy battery is specified, not certified.
+
+**WF43 — Gate-honesty and answer-free leak audit** (harness gate; extends WF23). *Process:* ask which operation produced each verdict; probe with input replacement, keyword adjudication, phantom evidence and templated receipts; replay constant refusals, empty objects and constant verdicts against both checkers. *Mathematics:* a gate is honest only if no answer-free reply passes and every verdict traces to a check. *Evidence:* Executed offline: a bare refusal passed 10/10 on two challenges before identifiers were neutralised.
+
+**WF44 — Exact certificate presets** (task preset; extends WF11, WF10). *Process:* the model emits a certificate: l1 potential, residual and dual circulation; a sparse representative; an equal-weight pairing involution; or a typed DSL program; the host checks it exactly; ill-typed programs are refused before evaluation. *Mathematics:* r = w + B f, B^T z = 0, |z_e| <= w_e, w . z = ||r||_1 (weak duality). *Evidence:* Host checks have code and tests; no model runs.
+
+**WF45 — Finite terminal selector and plenitude test** (procedure extension; extends WF7). *Process:* check every candidate against evidence with tolerances; return Accepted, Underdetermined, Refuted or Refused for the family; add indistinguishable candidates and check the survivor count rises; deleting competitors is not evidence. *Mathematics:* unique acceptance is only relative to the declared family. *Evidence:* Code and tests; stress test with 100 candidates.
+
+**WF46 — Boundary sufficiency and gluing diagnostic** (procedure extension; extends WF4). *Process:* check that the handoff object between isolated agents keeps everything the global evaluator needs; report NGD over runs; undefined when no run is locally accepted; report completed share and backlog. *Mathematics:* NGD = Pr(global fail | all locals pass). *Evidence:* Theory plus finite Lean split; NGD code not yet run on WF4 data.
+
+**WF47 — Resumable bounded frontier search** (procedure extension; extends WF9). *Process:* deterministic lexicographic batches; statuses: verified, unknown with suffix, restricted obstruction; continuing requires replaying the contiguous chain from index 0. *Mathematics:* the presentation key includes basis and representation, so a resumed search cannot silently change problem. *Evidence:* Offline worked trace; no benchmark.
+
+**WF48 — Commit-reveal with a hostile mutation gate** (harness gate; extends WF11, WF23). *Process:* commit the judge manifest; freeze the solver and commit its hash; reveal hidden cases (base, relabel/gauge controls, poison bait) and score; kill a hostile certificate-mutation suite with both checkers. *Mathematics:* commit H(salt || artifact) before reveal; both checkers must reject every mutant. *Evidence:* All C043-C060 reference solvers passed 64/64 and killed 48/48 mutants; these are reference self-scores, not model results.
+
+**WF49 — Query-preservation stage and mode campaign** (experiment design; extends WF8, WF22). *Process:* run declared stages and mode contracts over task families; independent oracle per family; stop a lane on any safety regression. *Mathematics:* a stage passes only if the decoded query is unchanged. *Evidence:* Proposed: zero campaign cases executed; 17 live records from earlier rounds.
+
+**Perturbations.** Forty-six variations of existing workflows (for example
+scratchpad arms, completion ceilings, hint and masking levels, norm families for
+certificates, cover and complex choices, calibration-set coverage and neutral
+case identifiers) are listed under their target workflow in
+`workflows/dag/workflow_dag.json` (`perturbations`). They are settings of a run,
+not new procedures.
 
 ## 4. Teams, goals and boost
 
