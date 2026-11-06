@@ -28,8 +28,8 @@ Fifty planned single-capsule pilots, one per catalog challenge, each naming a do
 
 ## Team
 
-Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-Boost: when checker rejects: one opus attempt with the checker message (limit 1).
+Boost: when checker rejects: one run_o attempt with the checker message (limit 1).
 
 More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf13) · [machine-readable entry](../dag/workflow_dag.json)

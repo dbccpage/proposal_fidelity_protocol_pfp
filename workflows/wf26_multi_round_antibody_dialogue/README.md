@@ -25,8 +25,8 @@ Live: 5 models, 22 calls, $0.015; two models reached 4/4 by round 2-3. The promp
 
 ## Team
 
-Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
-Boost: when two rounds without progress: opus rewrites the antibody set once (limit 1).
+Boost: when two rounds without progress: run_o rewrites the antibody set once (limit 1).
 
 More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf26) · [machine-readable entry](../dag/workflow_dag.json)

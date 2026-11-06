@@ -177,7 +177,7 @@ The tree below is that historical layout. At the 2026-10-20 pin the strand is `0
 │   └── packets/                # Genesis cycle balance wire & 4-object JSON test instances
 ├── schemas/                    # Draft 2020-12 YAML schemas for all packet families
 ├── gates/                      # 13 fail-closed verification gates (Syntax Prefilter Cold to Adversary)
-├── fixtures/                   # Long-horizon Fable task fixtures (v1, v2)
+├── fixtures/                   # Long-horizon Run F task fixtures (v1, v2)
 ├── grammar/                    # EBNF grammars, check_grammars.py recognizer, conformance cases
 ├── lean4/                      # Formal CarrierOrigin.lean constructive kernel
 ├── encyclopedia/entries/       # 95 authoritative symbol game and PFP domain entries

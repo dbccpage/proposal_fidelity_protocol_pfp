@@ -123,7 +123,7 @@ Conduct your research across the following six core investigative pillars:
 - Provide pseudocode and schema definitions (JSON/YAML or Rust trait definitions) for the core interfaces.
 
 #### Pillar 6: Empirical Benchmark Design & Stress-Testing Scenarios
-- How should this hybrid architecture be evaluated against state-of-the-art reasoning baselines (e.g., OpenAI o1/o3-mini, DeepSeek-R1, Gemini 2.0 Flash Thinking, Qwen-2.5-Coder)?
+- How should this hybrid architecture be evaluated against state-of-the-art reasoning baselines (e.g., OpenAI o1/o3-mini, DeepSeek-R1, Run G 2.0 Flash Thinking, Qwen-2.5-Coder)?
 - Design experimental testbeds across:
   1. *Formal Mathematics & Olympiad Reasoning* (AIME, Putnam, Lean 4 miniF2F).
   2. *Complex Software Synthesis & Bug Localization* (SWE-bench Verified, repository-scale multi-file refactoring).
@@ -2509,7 +2509,7 @@ The same distinction explains why intrinsic self-correction literature appears c
 
 Formal-tool coupling is the nearest existing implementation family to the desired architecture. Lean's kernel architecture gives the LLM permission to be creative and wrong during tactic search because the proof term ultimately receives an independent type-theoretic check. citeturn25search0turn25search6 This same design should be generalized wherever certificate formats exist.
 
-The user-supplied benchmark list should also be treated as **historical anchors rather than a frozen 2026 frontier**. OpenAI o3-mini was released in January 2025, and later o3/o4-mini results themselves demonstrated that model/scaffold choices change rapidly. citeturn30search1turn30search5 As of October 8, 2026, official sources also expose newer families: OpenAI's GPT-6 Sol/Luna launch, Google's Gemini 3.8 Flash model card, DeepSeek's V4/V4.1 family, and Qwen documentation showing qwen3.8-max as stable. citeturn22search11turn22search0turn30search0turn31search0
+The user-supplied benchmark list should also be treated as **historical anchors rather than a frozen 2026 frontier**. OpenAI o3-mini was released in January 2025, and later o3/o4-mini results themselves demonstrated that model/scaffold choices change rapidly. citeturn30search1turn30search5 As of October 8, 2026, official sources also expose newer families: OpenAI's GPT-6 Sol/Luna launch, Google's Run G 3.8 Flash model card, DeepSeek's V4/V4.1 family, and Qwen documentation showing qwen3.8-max as stable. citeturn22search11turn22search0turn30search0turn31search0
 
 That fact creates an important benchmarking rule: **the unit of comparison is not just the model name**. It must be
 
@@ -2763,7 +2763,7 @@ A particularly important negative-control experiment should generate **random bu
 
 Another control should replace \(L^1\) repair with a generic learned error score. This tests whether sparse cohomological repair adds value over simply training a better critic.
 
-The model suite should include the historical models named in the supplied scope for continuity, but contemporaneous evaluations need a current frontier stratum. As of October 8, 2026, official vendor sources identify substantially newer families including OpenAI GPT-6 Sol/Luna, Gemini 3.8 Flash, DeepSeek V4.1/V4, and qwen3.8-max. citeturn22search11turn22search0turn30search0turn31search0 Historical models should therefore be labeled by exact snapshot and date, not called “state of the art.”
+The model suite should include the historical models named in the supplied scope for continuity, but contemporaneous evaluations need a current frontier stratum. As of October 8, 2026, official vendor sources identify substantially newer families including OpenAI GPT-6 Sol/Luna, Run G 3.8 Flash, DeepSeek V4.1/V4, and qwen3.8-max. citeturn22search11turn22search0turn30search0turn31search0 Historical models should therefore be labeled by exact snapshot and date, not called “state of the art.”
 
 The experiment must also pin scaffolding. OpenAI has itself published materially different SWE-bench results depending on tool scaffold, while the SWE-bench project now exposes a standardized “bash only” setup specifically to improve model comparability. citeturn30search2turn28search1
 

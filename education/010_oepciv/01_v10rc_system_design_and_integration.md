@@ -187,7 +187,7 @@ When a candidate prompt produces an execution artifact that fails an external or
 
 ---
 
-## 7. The Autophagous "Fugu" Cemetery & Pharmacy Antibody Gate
+## 7. The Autophagous "Run U" Cemetery & Pharmacy Antibody Gate
 
 To eliminate circular evolutionary search where candidate mutations regress to previously falsified hypotheses, `OEPCIV` integrates directly with Adversary's Act IV pre-execution sandbox screening:
 

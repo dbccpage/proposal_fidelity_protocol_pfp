@@ -25,7 +25,7 @@ Proof and replay; the bounded-context harness arm is implemented and NOT_RUN.
 
 ## Team
 
-Pattern `relay`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `relay`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when dropped reference: refuse (limit 0).
 

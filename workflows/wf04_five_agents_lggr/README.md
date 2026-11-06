@@ -45,7 +45,7 @@ Host check: typed_envelope_and_independent_exact_sum.
 
 ## Team
 
-Pattern `parallel_isolated_then_global`: miner ×1 (opus); coder ×5 (sonnet); host_checker ×1 (none).
+Pattern `parallel_isolated_then_global`: miner ×1 (run_o); coder ×5 (sonnet); host_checker ×1 (none).
 
 Boost: when global disagreement: none on the base path (limit 0).
 

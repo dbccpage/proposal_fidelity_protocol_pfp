@@ -566,9 +566,9 @@ An executable Python prototype implementing the arity rewrite engine, the $L_1$ 
 - **Core Repository Sources:**
   - `coda_all_universe/1_the_tower/3_observer_and_symbol_game/06_observer_treatise.md`
   - `coda_all_universe/1_the_tower/3_observer_and_symbol_game/07_symbol_game_fermion_sign.md`
-  - `_ooutwire/symbol_game_review_20260901_opus_5_ultracoda/theory_research_20260901/01_fields/LLM_attention_and_parsing.md`
-  - `_ooutwire/symbol_game_review_20260901_opus_5_ultracoda/theory_research_20260901/01_fields/OE_symbol_game_engine.md`
-  - `_ooutwire/symbol_game_review_20260901_opus_5_ultracoda/symgam_full_review_opus_5_ultracode.md`
+  - `_ooutwire/symbol_game_review_20260901_run_o_5_ultracoda/theory_research_20260901/01_fields/LLM_attention_and_parsing.md`
+  - `_ooutwire/symbol_game_review_20260901_run_o_5_ultracoda/theory_research_20260901/01_fields/OE_symbol_game_engine.md`
+  - `_ooutwire/symbol_game_review_20260901_run_o_5_ultracoda/symgam_full_review_run_o_5_ultracode.md`
 - **External Literature:**
   - Elhage, N., et al. (2021). *A Mathematical Framework for Transformer Circuits*. Anthropic Research.
   - Huet, G. (1980). *Confluent Reductions: Abstract Properties and Applications to Term Rewriting Systems*. Journal of the ACM, 27(4), 797-821.

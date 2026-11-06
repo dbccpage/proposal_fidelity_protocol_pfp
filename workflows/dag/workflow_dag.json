@@ -34,8 +34,8 @@
   "edge_meaning": "from -> to: the target workflow reuses the source workflow's procedure or acceptance rule as a step, so the source should be understood and working first.",
   "model_tiers": {
     "sonnet": "Coding, encoding, running and custody work. The default tier.",
-    "opus": "Deep research: derivations, certificate design, hypothesis analysis, and the boost step.",
-    "fable": "Adversarial research: countermodels, leak tests, near-self inputs, prosecution.",
+    "run_o": "Deep research: derivations, certificate design, hypothesis analysis, and the boost step.",
+    "run_f": "Adversarial research: countermodels, leak tests, near-self inputs, prosecution.",
     "none": "Deterministic host code. Never a model."
   },
   "team_patterns": {
@@ -176,7 +176,7 @@
         "roles": [
           {
             "role": "miner",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Propose operation guidance."
           },
@@ -231,7 +231,7 @@
         "roles": [
           {
             "role": "miner",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Shared guidance."
           },
@@ -292,7 +292,7 @@
           },
           {
             "role": "miner",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Shared guidance."
           },
@@ -368,7 +368,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Choose dialects worth testing and read the per-item differences."
           },
@@ -381,7 +381,7 @@
         ],
         "boost": {
           "trigger": "a dialect fails preservation",
-          "action": "opus proposes a corrected rewrite from the preservation residual; recheck before any dispatch",
+          "action": "run_o proposes a corrected rewrite from the preservation residual; recheck before any dispatch",
           "limit": 1
         }
       }
@@ -434,7 +434,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Write premise-removing variants that tempt a bluff."
           },
@@ -447,7 +447,7 @@
         ],
         "boost": {
           "trigger": "bluff detected",
-          "action": "fable adds the variant to the negative-control bank; no retry on the same item",
+          "action": "run_f adds the variant to the negative-control bank; no retry on the same item",
           "limit": 0
         }
       }
@@ -496,7 +496,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the stage split and interfaces."
           },
@@ -509,7 +509,7 @@
         ],
         "boost": {
           "trigger": "a stage receipt fails",
-          "action": "rerun that stage once with opus and the receipt residual; earlier seals are reused",
+          "action": "rerun that stage once with run_o and the receipt residual; earlier seals are reused",
           "limit": 1
         }
       }
@@ -570,7 +570,7 @@
         ],
         "boost": {
           "trigger": "two rejections in a row",
-          "action": "final attempt goes to opus with the full residual history",
+          "action": "final attempt goes to run_o with the full residual history",
           "limit": 1
         }
       }
@@ -628,13 +628,13 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "State the cover and the expected obstruction type."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Search for a cover change that hides the obstruction."
           },
@@ -647,7 +647,7 @@
         ],
         "boost": {
           "trigger": "local checks pass but the global check fails",
-          "action": "opus receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate",
+          "action": "run_o receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate",
           "limit": 1
         }
       }
@@ -709,13 +709,13 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Choose the certificate form and the pivot rule (cycling, sign conventions)."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Write degenerate and overflow cases against the public examples."
           },
@@ -728,7 +728,7 @@
         ],
         "boost": {
           "trigger": "a certificate is rejected on public cases",
-          "action": "opus reads the rejected certificate and the checker message, proposes one patch; sonnet applies it",
+          "action": "run_o reads the rejected certificate and the checker message, proposes one patch; sonnet applies it",
           "limit": 2
         }
       }
@@ -775,13 +775,13 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Specify the mechanism hypotheses."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Check that distractor spans do not leak the answer."
           },
@@ -854,7 +854,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Write and register the domain checker before any run."
           },
@@ -867,7 +867,7 @@
         ],
         "boost": {
           "trigger": "checker rejects",
-          "action": "one opus attempt with the checker message",
+          "action": "one run_o attempt with the checker message",
           "limit": 1
         }
       }
@@ -915,7 +915,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Generate near-self inputs that should not fire."
           },
@@ -928,7 +928,7 @@
         ],
         "boost": {
           "trigger": "a detector fires on Self",
-          "action": "discard it; opus may propose one narrower detector",
+          "action": "discard it; run_o may propose one narrower detector",
           "limit": 1
         }
       }
@@ -971,13 +971,13 @@
         "roles": [
           {
             "role": "prosecutor",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Argue the claim fails; supply a countermodel."
           },
           {
             "role": "defender",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Argue the claim holds; supply a witness."
           },
@@ -996,7 +996,7 @@
         ],
         "boost": {
           "trigger": "both submissions fail the check",
-          "action": "one fresh opus round per side with the checker output",
+          "action": "one fresh run_o round per side with the checker output",
           "limit": 1
         }
       }
@@ -1043,13 +1043,13 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Find the generators and relations."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Find a second crosswalk or a broken relation."
           },
@@ -1062,7 +1062,7 @@
         ],
         "boost": {
           "trigger": "Lean or table check fails",
-          "action": "opus repairs the encoding from the error",
+          "action": "run_o repairs the encoding from the error",
           "limit": 2
         }
       }
@@ -1109,13 +1109,13 @@
         "roles": [
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 2,
             "task": "Derive the claims and witnesses."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build countermodels."
           },
@@ -1134,7 +1134,7 @@
         ],
         "boost": {
           "trigger": "countermodel found",
-          "action": "claim is narrowed or withdrawn; opus restates it once",
+          "action": "claim is narrowed or withdrawn; run_o restates it once",
           "limit": 1
         }
       }
@@ -1185,7 +1185,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Write the matched guidance and read the learning."
           },
@@ -1239,13 +1239,13 @@
         "roles": [
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Derive candidate rules from recorded failures."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Find held-out cases where the rule hurts."
           },
@@ -1264,7 +1264,7 @@
         ],
         "boost": {
           "trigger": "rule shows no gain",
-          "action": "one revised rule from opus; otherwise the rule is retired",
+          "action": "one revised rule from run_o; otherwise the rule is retired",
           "limit": 1
         }
       }
@@ -1312,13 +1312,13 @@
         "roles": [
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Propose derivations."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Run the negative control and attack each step."
           },
@@ -1389,7 +1389,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Find rewrites that pass syntax but lose meaning."
           },
@@ -1455,13 +1455,13 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Own the hypotheses and the analysis."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Run the leak test on every item."
           },
@@ -1521,7 +1521,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Try to recover answers from participant bytes."
           },
@@ -1577,7 +1577,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -1590,7 +1590,7 @@
         ],
         "boost": {
           "trigger": "checker rejects",
-          "action": "opus repairs the scratchpad from the residual",
+          "action": "run_o repairs the scratchpad from the residual",
           "limit": 1
         }
       }
@@ -1634,7 +1634,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -1691,7 +1691,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -1704,7 +1704,7 @@
         ],
         "boost": {
           "trigger": "two rounds without progress",
-          "action": "opus rewrites the antibody set once",
+          "action": "run_o rewrites the antibody set once",
           "limit": 1
         }
       }
@@ -1798,13 +1798,13 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
           {
             "role": "defender",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Stabilise and repair."
           },
@@ -1859,7 +1859,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -1872,7 +1872,7 @@
         ],
         "boost": {
           "trigger": "a mutant survives",
-          "action": "opus patches the checker once",
+          "action": "run_o patches the checker once",
           "limit": 1
         }
       }
@@ -1913,7 +1913,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -1969,13 +1969,13 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -2083,7 +2083,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2141,7 +2141,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2197,7 +2197,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2253,7 +2253,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2312,13 +2312,13 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -2376,7 +2376,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2436,7 +2436,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -2494,7 +2494,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2552,7 +2552,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -2609,13 +2609,13 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2671,7 +2671,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -2730,7 +2730,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2743,7 +2743,7 @@
         ],
         "boost": {
           "trigger": "certificate rejected",
-          "action": "one opus attempt",
+          "action": "one run_o attempt",
           "limit": 1
         }
       }
@@ -2786,7 +2786,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -2842,7 +2842,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },
@@ -2950,7 +2950,7 @@
           },
           {
             "role": "adversary",
-            "model_tier": "fable",
+            "model_tier": "run_f",
             "count": 1,
             "task": "Build negative controls and countermodels."
           },
@@ -3006,7 +3006,7 @@
           },
           {
             "role": "deep_researcher",
-            "model_tier": "opus",
+            "model_tier": "run_o",
             "count": 1,
             "task": "Design the check and read the residuals."
           },

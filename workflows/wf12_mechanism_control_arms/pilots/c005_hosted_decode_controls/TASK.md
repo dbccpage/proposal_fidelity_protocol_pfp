@@ -7,7 +7,7 @@ Compare the effectiveness, parseability, host-verified accuracy, and cost per ve
 3. `json_schema`: Strict JSON schema structured outputs (`response_format={"type": "json_schema", ...}`).
 4. `gbnf`: Formal context-free grammar constraint admitting only admissible carrier strings.
 
-Evaluated across open weights and hosted frontier models (>70B, e.g. Llama-3.1-405B, Qwen2.5-72B, Claude 3.5 Sonnet, Gemini 1.5 Pro) under strict budget control ($0.10 ceiling per arm).
+Evaluated across open weights and hosted frontier models (>70B, e.g. Llama-3.1-405B, Qwen2.5-72B, Claude 3.5 Sonnet, Run G 1.5 Pro) under strict budget control ($0.10 ceiling per arm).
 
 ## 2. Tasks
 1. **Consistency Verdict with Potential Certificate (C001 Family):**

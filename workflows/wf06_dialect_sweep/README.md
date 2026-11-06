@@ -37,9 +37,9 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-Boost: when a dialect fails preservation: opus proposes a corrected rewrite from the preservation residual; recheck before any dispatch (limit 1).
+Boost: when a dialect fails preservation: run_o proposes a corrected rewrite from the preservation residual; recheck before any dispatch (limit 1).
 
 ## Recorded variations
 

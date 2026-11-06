@@ -19,7 +19,7 @@ AuthorityEffect: None. Source pin `c419cc6beb`. This monograph was written on 20
 | `02_mathematics/` | [`math/`](../math/README.md) in this strand | Present. |
 | `03_packetization/` chapters | None found | Historical. No `03_packetization` directory is tracked. |
 | `schemas/` | [`pfp/infrastructure/yaml/schemas/`](../../../../pfp/infrastructure/yaml/schemas/README.md) | Present; 13 schema files, `schema_register.yaml` and a README at the pin. |
-| `fixtures/` | [`pfp/infrastructure/yaml/fixtures/`](../../../../pfp/infrastructure/yaml/fixtures/README.md) | Present; the Fable fixture is now `fix_fable_long_horizon_task_packet.yaml`. |
+| `fixtures/` | [`pfp/infrastructure/yaml/fixtures/`](../../../../pfp/infrastructure/yaml/fixtures/README.md) | Present; the Run F fixture is now `fix_run_f_long_horizon_task_packet.yaml`. |
 | `packets/` (cycle balance) | [`pfp/infrastructure/yaml/cycle_balance/`](../../../../pfp/infrastructure/yaml/cycle_balance/README.md) | Present: wire, problem, candidate, verifier and receipt files. |
 | `04_pfp_cec/` | No directory. Files with the same names (02, 03, 04, 12, 13) are in this `docs/` directory. | Historical directory. The other five names in the tree of section 5 (01, 06, 07, 09 and the two-digit duplicates) are not present under those names. |
 | `packet_and_prompt.md` vocabulary | None found | Historical. Use [06](06_prompt_packet_stage_synthesis.md) and [16](16_current_types_and_learnings.md) for current vocabulary. |
@@ -155,8 +155,8 @@ The host envelope is [`packet_envelope_v2.schema.yaml`](../../../../pfp/infrastr
 ### 3.2 Schemas and fixtures in this tree
 Contracts are the YAML files in [`yaml/schemas/`](../../../../pfp/infrastructure/yaml/schemas/README.md). Fixtures are the YAML files in [`yaml/fixtures/`](../../../../pfp/infrastructure/yaml/fixtures/README.md) and the cycle-balance files in [`yaml/cycle_balance/`](../../../../pfp/infrastructure/yaml/cycle_balance/README.md). The register of schemas is [`schema_register.yaml`](../../../../pfp/infrastructure/yaml/schemas/schema_register.yaml). The former catalogue chapter `03_packetization/05_schema_catalog_and_validation_gates.md` is not present.
 
-### 3.3 The Claude Fable handoff fixture
-[`fix_fable_long_horizon_task_packet.yaml`](../../../../pfp/infrastructure/yaml/fixtures/fix_fable_long_horizon_task_packet.yaml) is the current bootstrap fixture (renamed from `fable_long_horizon_task_packet_v2.yaml`). Its payload text includes `BOOTSTRAP_REFUSED`. The JSON filename used in older prose is absent.
+### 3.3 The Run F handoff fixture
+[`fix_run_f_long_horizon_task_packet.yaml`](../../../../pfp/infrastructure/yaml/fixtures/fix_run_f_long_horizon_task_packet.yaml) is the current bootstrap fixture (renamed from `run_f_long_horizon_task_packet_v2.yaml`). Its payload text includes `BOOTSTRAP_REFUSED`. The JSON filename used in older prose is absent.
 
 ---
 
@@ -189,7 +189,7 @@ The tree below describes the former `ow/pfp_v0.2/` estate. None of its top-level
 ├── filtrations/                             <-- 04_pfp_cec 4-axis proposal decision records
 ├── 00_master_synthesis_and_cartography.md
 ├── schemas/                                   <-- YAML contracts (no *.schema.json child)
-├── fixtures/                                  <-- fable YAML fixtures; sidecar names a missing markdown file
+├── fixtures/                                  <-- run_f YAML fixtures; sidecar names a missing markdown file
 ├── packets/                                   <-- cycle-balance fixtures, unverified receipt skeleton
 ├── prompt_templates/                          <-- PromptPacketV0_1 templates
 ├── rewriting/                                 <-- mss-boundary-v1 prompt rewriting specs
@@ -200,7 +200,7 @@ The tree below describes the former `ow/pfp_v0.2/` estate. None of its top-level
 │   ├── 01_packet_kernel_and_sgpp_architecture.md
 │   ├── 02_packet_family_specifications.md
 │   ├── 03_proposal_generator_and_boundary_compiler.md
-│   ├── 04_long_horizon_handoff_and_fable_protocol.md
+│   ├── 04_long_horizon_handoff_and_run_f_protocol.md
 │   └── 05_schema_catalog_and_validation_gates.md
 │
 └── 04_pfp_cec/                                <-- proposal filter, documents 01–09

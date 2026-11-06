@@ -61,7 +61,7 @@ Green / Global Red witnesses in $\mathcal{K}_{\text{false}}^{\text{C006}}(x) \co
 Added Theorem 5 (Guarded Stage-1 Slot Retry with Ideal Abstention: Admission
 Rate, Conditional Precision, and Call Savings) and Theorem 6 (Partial-Guard
 Visibility Gap & False-Green Kernel $\mathcal{K}_{\text{false}}(x) \cong \mathbb{Z} \setminus \{0\}$),
-derived with accounted Anthropic `claude-fable-5-1` (`fable_5_1_guard_theorem_receipt.json`,
+derived with accounted Anthropic `run-f` (`run_f_5_1_guard_theorem_receipt.json`,
 `msg_011Cg74HxZqarY627LKcRzQa`), together with Trial 5 (`C004-S5`,
 `p_star_verified_guard_receipt.json`) demonstrating `3/8 -> 5/8` (`62.5%`)
 $\ell_1$-optimal repair, `5/5` (`100%`) conditional Stage-2 precision, `8/8`

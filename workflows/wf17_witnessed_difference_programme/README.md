@@ -27,8 +27,8 @@ Eighteen planned capsules (W01-W18): behavioral equivalence, cochain quotients, 
 
 ## Team
 
-Pattern `research_cell`: deep_researcher ×2 (opus); adversary ×1 (fable); coder ×2 (sonnet); host_checker ×1 (none).
+Pattern `research_cell`: deep_researcher ×2 (run_o); adversary ×1 (run_f); coder ×2 (sonnet); host_checker ×1 (none).
 
-Boost: when countermodel found: claim is narrowed or withdrawn; opus restates it once (limit 1).
+Boost: when countermodel found: claim is narrowed or withdrawn; run_o restates it once (limit 1).
 
 More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf17) · [machine-readable entry](../dag/workflow_dag.json)

@@ -23,7 +23,7 @@ Live: 70B and 8B recited the textbook network and failed every constrained case.
 
 ## Team
 
-Pattern `solo`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `solo`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 Boost: when none: recitation is a finding, not a retry (limit 0).
 

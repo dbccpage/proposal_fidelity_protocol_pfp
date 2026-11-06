@@ -20,7 +20,7 @@ provider calls**. Original unpriced evidence remains in its reconciliation event
 
 The repaired campaign completed P0–P4. There are **45 ledger attempts: 44 settled
 responses and one historical conservative charge**. Response counts are 34
-Haiku, seven Sonnet and three Opus. Total ledger charge is **67,134 micro-USD
+Haiku, seven Sonnet and three Run O. Total ledger charge is **67,134 micro-USD
 ($0.067134)**, including the 1,014-micro-USD reserve. Usage-rated costs are not an
 observed vendor invoice. No new unknown settlement remains.
 
@@ -66,7 +66,7 @@ The MUB exact-count item remains external to its owner and was not dispatched.
 
 Pricing was checked against the [official pricing page](https://platform.claude.com/docs/en/about-claude/pricing)
 and selected IDs against the authenticated Models API. Standard input/output rates
-per million tokens were Haiku $0.10/$0.50, Sonnet $2/$10, Opus $4/$20. Requests
+per million tokens were Haiku $0.10/$0.50, Sonnet $2/$10, Run O $4/$20. Requests
 disabled tools/cache, omitted unsupported generation seeds and temperature,
 and retained local experiment seed separately. Exact observations are in the packet.
 

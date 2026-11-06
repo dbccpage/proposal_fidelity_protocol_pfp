@@ -1,6 +1,6 @@
 ---
 documentation_contract: symbol-game-documentation/v1
-title: "Normal Form 03: The Autophagous \"Fugu\" Cemetery & Pharmacy Antibody Gate"
+title: "Normal Form 03: The Autophagous \"Run U\" Cemetery & Pharmacy Antibody Gate"
 kind: normal-form-specification
 audience:
   - researchers
@@ -13,17 +13,17 @@ authority_effect: "None"
 source_paths:
   - adversary/infrastructure/default_adapters.py
   - adversary/use_cases/act_helpers.py
-  - pciv/tests/integration/test_fugu_cemetery_blocking_loop.py
+  - pciv/tests/integration/test_run_u_cemetery_blocking_loop.py
 prerequisites:
   - ../01_v10rc_system_design_and_integration.md
   - nf_01_prompt_society_and_civilization.md
   - nf_02_lamarckian_pfp_adversary_loop.md
 related:
-  - ../../120_the_adversary_panel_swarm/11_autophagous_fugu_cemetery_and_pharmacy_antibody_gates.md
+  - ../../120_the_adversary_panel_swarm/11_autophagous_run_u_cemetery_and_pharmacy_antibody_gates.md
 last_verified: 2026-10-09
 ---
 
-# Normal Form 03: The Autophagous "Fugu" Cemetery & Pharmacy Antibody Gate
+# Normal Form 03: The Autophagous "Run U" Cemetery & Pharmacy Antibody Gate
 
 **AuthorityEffect:** None.  
 **Epistemic Posture:** Normative specification and verification contract; mints no operational or mathematical authority.
@@ -34,7 +34,7 @@ last_verified: 2026-10-09
 
 In evolutionary prompt algorithms, random mutations and LLM proposals routinely drift into previously discovered failure modes, repeating invalid imports, broken type constraints, or known logical contradictions across generations.
 
-The **Autophagous "Fugu" Gate** closes this loop:
+The **Autophagous "Run U" Gate** closes this loop:
 1. Every failed candidate mutation in generation $g$ is interred as a typed `CemeteryHeadstoneV1` record within `_intelligence/_adversary/cemetery/`.
 2. Active failure witnesses are translated into structural lint rules and semantic antibodies within the epistemic pharmacy repertoire.
 3. In generation $g+1$, candidate mutations are screened *prior to execution* at Act IV. If a mutation matches an interred casualty or an active antibody, the gate refuses execution with an immutable typed refusal.

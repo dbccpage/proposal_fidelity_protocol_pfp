@@ -24,7 +24,7 @@ Theory plus finite Lean split; NGD code not yet run on WF4 data.
 
 ## Team
 
-Pattern `parallel_isolated_then_global`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `parallel_isolated_then_global`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
 Boost: when none: diagnostic only (limit 0).
 

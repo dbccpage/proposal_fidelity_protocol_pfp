@@ -29,7 +29,7 @@ Pilot 49 is a deterministic mock (41 then 42, two mock calls, zero provider cost
 
 Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); host_checker ×1 (none).
 
-Boost: when two rejections in a row: final attempt goes to opus with the full residual history (limit 1).
+Boost: when two rejections in a row: final attempt goes to run_o with the full residual history (limit 1).
 
 ## Recorded variations
 

@@ -19,7 +19,7 @@ $B_T$ retry diagnostics (Theorems 10 & 11), independent exact certificate
 verification across `C011`–`C020` (`b_cohomology`) eliminating false-`SOLVED`
 status-label admissions (Theorem 12), and—when run inside the repository
 checkout—all thirteen committed C001, C004 (including the 40-case hidden ladder),
-`claude-fable-5-1`, C005, C006 (including the 60-board hidden campaign), and
+`run-f`, C005, C006 (including the 60-board hidden campaign), and
 `b_cohomology` (`C011`–`C020`) mechanism benchmark receipts with zero network or
 provider calls. Written proofs, finite standard-library replay, and bounded
 model-panel receipts remain distinct evidence classes; no new Lean proof, PDF,

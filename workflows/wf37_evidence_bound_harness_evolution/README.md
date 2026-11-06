@@ -26,7 +26,7 @@ Implemented offline; NOT_RUN live ($40 plan).
 
 ## Team
 
-Pattern `research_cell`: coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `research_cell`: coder ×1 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
 Boost: when no confirmed gain: retain incumbent (limit 0).
 

@@ -24,11 +24,11 @@ Each role has a model tier. The tiers divide the work like this:
 | Tier | Used for | Typical roles |
 | --- | --- | --- |
 | Sonnet | Most of the work: writing code and encoders, running capsules, keeping custody and accounting, applying patches | `coder` |
-| Opus | Deep research: derivations, certificate and checker design, hypotheses, analysis, and the boost step | `deep_researcher`, `miner`, `defender` |
-| Fable | Adversarial research: countermodels, leak tests, near-self inputs, premise removal, prosecution | `adversary`, `prosecutor` |
+| Run O | Deep research: derivations, certificate and checker design, hypotheses, analysis, and the boost step | `deep_researcher`, `miner`, `defender` |
+| Run F | Adversarial research: countermodels, leak tests, near-self inputs, premise removal, prosecution | `adversary`, `prosecutor` |
 | none | The host check, which is deterministic code | `host_checker` |
 
-Across WF6–WF23 Sonnet holds the most seats; Opus and Fable appear where a
+Across WF6–WF23 Sonnet holds the most seats; Run O and Run F appear where a
 family needs deep or adversarial research. The counts are in each node's
 `team.roles`.
 
@@ -60,7 +60,7 @@ A boost is one bounded escalation after a failed host check:
 
 - **Trigger**: a named failure (for example "local checks pass but the global
   check fails", or "two rejections in a row").
-- **Action**: a stronger tier, usually Opus, receives the typed residual and
+- **Action**: a stronger tier, usually Run O, receives the typed residual and
   the attempt history. It never receives the expected answer.
 - **Limit**: a per-run count, often 1. Some families set 0, because
   escalating mid-campaign would break their comparison (WF22) or because the

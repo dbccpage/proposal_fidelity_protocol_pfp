@@ -25,7 +25,7 @@ Code, tests and Lean; no model runs.
 
 ## Team
 
-Pattern `solo`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `solo`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 Boost: when none: gates never escalate (limit 0).
 

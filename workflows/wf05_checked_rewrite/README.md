@@ -45,7 +45,7 @@ Host check: typed_envelope_and_independent_exact_sum.
 
 ## Team
 
-Pattern `parallel_isolated_then_global`: coder ×1 (sonnet); miner ×1 (opus); coder ×5 (sonnet); host_checker ×1 (none).
+Pattern `parallel_isolated_then_global`: coder ×1 (sonnet); miner ×1 (run_o); coder ×5 (sonnet); host_checker ×1 (none).
 
 Boost: when preservation check fails: stop; never solve an unpreserved task (limit 0).
 

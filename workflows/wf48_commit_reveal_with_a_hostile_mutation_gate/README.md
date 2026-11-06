@@ -25,7 +25,7 @@ All C043-C060 reference solvers passed 64/64 and killed 48/48 mutants; these are
 
 ## Team
 
-Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
 Boost: when mutant survives: block the checker (limit 0).
 

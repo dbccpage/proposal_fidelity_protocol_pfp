@@ -24,8 +24,8 @@ Live: reasoning model 10/10, 70B 5/10, 8B 0/10.
 
 ## Team
 
-Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (none).
 
-Boost: when a mutant survives: opus patches the checker once (limit 1).
+Boost: when a mutant survives: run_o patches the checker once (limit 1).
 
 More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf29) · [machine-readable entry](../dag/workflow_dag.json)

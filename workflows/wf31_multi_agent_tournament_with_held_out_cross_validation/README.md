@@ -25,7 +25,7 @@ Offline deterministic strategies and live-capable; the earlier rates were withdr
 
 ## Team
 
-Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
 Boost: when none: tournaments do not escalate mid-round (limit 0).
 

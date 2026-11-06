@@ -96,9 +96,9 @@ That is packetization: **finite algebraic objects + witnesses + host upgrade onl
 
 ---
 
-## 3. Map to our live GATE11 / Fable 2
+## 3. Map to our live GATE11 / Run F 2
 
-| MSS-μ / packetization        | Live cookbook / Fable 2                                         |
+| MSS-μ / packetization        | Live cookbook / Run F 2                                         |
 | ---------------------------- | --------------------------------------------------------------- |
 | Stage 0 chain lock d1∘d0=0   | `f2step0` nilp; host G2                                         |
 | Ex / Surv / Open + witnesses | Exact / StabilizedSurvivor / OpenObstruction + α*, y*           |
@@ -130,9 +130,9 @@ seed → S1 admit grammar
     → S2 candidates (optional for pure dual work)
     → S3 audit
     → S4 extract (T,d0,d1) packet
-    → S5 classify Ex/Surv/Open + witnesses   [Fable2 / GATE11 host]
+    → S5 classify Ex/Surv/Open + witnesses   [RunF2 / GATE11 host]
     → S6 context attack
-    → S8 evidence / Route plan               [Fable3]
+    → S8 evidence / Route plan               [RunF3]
 
 ```
 
@@ -146,8 +146,8 @@ For residual dual long shot: **S0+S4+S5** are load-bearing; S2 chat ideation is 
 | -------- | ------------------------------------------------------------------------------------------- |
 | P0       | Treat Stage 0 controller as required preamble for any model call (wire), not English README |
 | P0       | Host refuse without Stage-4-shaped extraction (matrices / T / d0 / d1)                      |
-| P1       | Wire Fable2 `f2step` = S5 slice of MSS-μ                                                    |
-| P1       | Fable3 Route = S8 legality after class                                                      |
+| P1       | Wire RunF2 `f2step` = S5 slice of MSS-μ                                                    |
+| P1       | RunF3 Route = S8 legality after class                                                      |
 | P2       | Rehydrate Rust CLI "prepend controller to every stage" path if still archived               |
 
 ---
@@ -160,6 +160,6 @@ _the_symbol_game_history/stage_1_compression_gate.yaml
 ... stage_8_evidence_plan.yaml
 _the_symbol_game_history/controller.yaml
 _the_symbol_game_history/00_symbol_game_packetization_protocol_architecture.md
-prompts/fable_02_gate11_fw8_dual_HARDEST.md
+prompts/run_f_02_gate11_fw8_dual_HARDEST.md
 
 ```

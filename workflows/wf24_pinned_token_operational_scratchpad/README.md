@@ -24,8 +24,8 @@ Live, 5 cases: 0/5 became 3/5 on a 70B model and on a reasoning model. Historica
 
 ## Team
 
-Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×1 (none).
 
-Boost: when checker rejects: opus repairs the scratchpad from the residual (limit 1).
+Boost: when checker rejects: run_o repairs the scratchpad from the residual (limit 1).
 
 More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf24) · [machine-readable entry](../dag/workflow_dag.json)

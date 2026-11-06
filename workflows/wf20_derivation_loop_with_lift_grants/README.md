@@ -43,7 +43,7 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 
 ## Team
 
-Pattern `research_cell`: deep_researcher ×1 (opus); adversary ×1 (fable); coder ×1 (sonnet); host_checker ×1 (none).
+Pattern `research_cell`: deep_researcher ×1 (run_o); adversary ×1 (run_f); coder ×1 (sonnet); host_checker ×1 (none).
 
 Boost: when witness check fails twice: next loop starts from the adversary's counterexample (limit 1).
 

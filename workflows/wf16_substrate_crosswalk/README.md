@@ -26,8 +26,8 @@ Twenty-five planned capsules (G01-G25), e.g. reading non-uniqueness in Lean; non
 
 ## Team
 
-Pattern `research_cell`: coder ×1 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).
+Pattern `research_cell`: coder ×1 (sonnet); deep_researcher ×1 (run_o); adversary ×1 (run_f); host_checker ×1 (none).
 
-Boost: when Lean or table check fails: opus repairs the encoding from the error (limit 2).
+Boost: when Lean or table check fails: run_o repairs the encoding from the error (limit 2).
 
 More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf16) · [machine-readable entry](../dag/workflow_dag.json)
