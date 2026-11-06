@@ -25,7 +25,7 @@ guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fid
 | 11 | [Dual-certificate synthesis](wf11_dual_certificate_synthesis/README.md) | proposal | task preset | WF3, WF9 | 6 |
 | 12 | [Mechanism-control arms](wf12_mechanism_control_arms/README.md) | proposal | experiment design | WF6, WF3 | 4 |
 | 13 | [Exact-domain capsule battery](wf13_exact_domain_capsule_battery/README.md) | proposal | task preset | WF1, WF7 | — |
-| 14 | [Immune failure classification](wf14_immune_failure_classification/README.md) | proposal | meta workflow | WF7, WF12 | — |
+| 14 | [Immune failure classification](wf14_immune_failure_classification/README.md) | proposal | meta workflow | WF7, WF12 | 1 |
 | 15 | [Adversary tribunal](wf15_adversary_tribunal/README.md) | proposal | procedure extension | WF4, WF14 | — |
 | 16 | [Substrate crosswalk](wf16_substrate_crosswalk/README.md) | proposal | task preset | WF5, WF10 | — |
 | 17 | [Witnessed-difference programme](wf17_witnessed_difference_programme/README.md) | proposal | task preset | WF10, WF11 | — |

@@ -25,6 +25,12 @@ Sources: 0000125-0000134.
 
 Ten planned capsules (C081-C090), e.g. negative selection against a sealed self panel; none dispatched.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/pilot035/`](pilots/pilot035/) — Tao cross-ratio task packet with an immune fence; its antibody admissions are in eis/antibodies/admissions
+
 ## Team
 
 Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).
