@@ -36,11 +36,11 @@ The second lesson is about refusals. An answer of `UNKNOWN` must carry a `code` 
 
 From the repository root (standard library plus pytest):
 
-    python -m pytest demos/certified_challenges/c057_sorting_network_synthesis -q
+    python -m pytest workflows/certified_challenges/c057_sorting_network_synthesis -q
 
 Score the reference solver on the public examples:
 
-    python demos/certified_challenges/c057_sorting_network_synthesis/participant_packet/runner.py
+    python workflows/certified_challenges/c057_sorting_network_synthesis/participant_packet/runner.py
 
 ## Expected output
 
@@ -60,6 +60,6 @@ Score the reference solver on the public examples:
 
 ## Where it lives
 
-`demos/certified_challenges/c057_sorting_network_synthesis`. Moved from the internal challenge suite; imports now use the package name. The script that ran language models on this challenge was left behind because it needs the unpublished runtime. Its prompt stated the proven bounds for `n = 9` and `n = 10`, so those model results measured reading rather than reasoning; the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/demos/certified_challenges/findings) record this. `judge_packet/generate_cases.py` writes the cases under their descriptive names, not the opaque ids the tests use, so it does not reproduce the committed folder.
+`workflows/certified_challenges/c057_sorting_network_synthesis`. Moved from the internal challenge suite; imports now use the package name. The script that ran language models on this challenge was left behind because it needs the unpublished runtime. Its prompt stated the proven bounds for `n = 9` and `n = 10`, so those model results measured reading rather than reasoning; the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/certified_challenges/findings) record this. `judge_packet/generate_cases.py` writes the cases under their descriptive names, not the opaque ids the tests use, so it does not reproduce the committed folder.
 
 See also [Superoptimizer Equivalence Limits](Test-Superoptimizer-Equivalence-Limits.md), [Exact LP Dual Certificates](Test-Exact-LP-Dual-Certificates.md) and [Core Concepts](Core-Concepts.md).

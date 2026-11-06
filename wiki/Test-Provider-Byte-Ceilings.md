@@ -52,7 +52,7 @@ No network or provider is used.
 
 From the repository root:
 
-    python -m pytest demos/provider_reply_guard/test_reply_guard_byte_ceilings.py -q
+    python -m pytest workflows/provider_reply_guard/test_reply_guard_byte_ceilings.py -q
 
 ## Expected output
 
@@ -82,4 +82,4 @@ going through the gateway. The chat-message case is new.
 
 ## Location
 
-`demos/provider_reply_guard/` (package `replyguard/`).
+`workflows/provider_reply_guard/` (package `replyguard/`).

@@ -76,12 +76,12 @@ conditions. It includes:
 - **Logic and synthesis:** finite proof tasks, SAT certificates, equational
   rewriting, countermodels, finite categories and bounded program constructions.
 
-The [50 challenge packages, C011–C060](demos/certified_challenges/)
+The [50 challenge packages, C011–C060](workflows/certified_challenges/)
 provide problem statements, witness formats, reference implementations and
 checker tests. The [test catalogue](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Test-Catalog)
 explains individual examples and their limitations. Two direct entry points are
-[exact LP with dual certificates](demos/certified_challenges/c051_exact_lp_solver_with_duals/README.md)
-and [discrete Hodge decomposition](demos/certified_challenges/c014_discrete_hodge_decomposition/CHALLENGE.md).
+[exact LP with dual certificates](workflows/certified_challenges/c051_exact_lp_solver_with_duals/README.md)
+and [discrete Hodge decomposition](workflows/certified_challenges/c014_discrete_hodge_decomposition/CHALLENGE.md).
 
 The [Rust workspace](code/rust/Cargo.toml) contains the native PFP runtime and
 supporting kernels for algebra, certifiers, topology, quantum checks, operads,
@@ -146,7 +146,7 @@ catalogue tools as MCP definitions. See the [CLI command reference](code/rust/pf
 The [standalone automated runners](pfp/workflows/README.md) are available on
 `main`, with each workflow in its own named package. Follow the
 [tested installation/run/replay guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-Running)
-or the [repository runbook](docs/workflows/README.md). The migration evidence
+or the [repository runbook](workflows/library/README.md). The migration evidence
 records 201 offline tests and 27 installation checks, with an offline CI run.
 The shared historical seed baseline, failed attempts and original budget
 records are preserved.
@@ -161,7 +161,7 @@ checkers and evidence; the integer-sum examples establish that finite integratio
 | --- | --- |
 | [`papers/`](papers/README.md) | Research manuscripts, claim ledgers, implementations, reproduction instructions and publication records. The register distinguishes deposited packages from author-review drafts. |
 | [`education/`](education/) | Learning routes for PFP, operads, EIS and Prompt Civilization, including mathematical foundations and worked exercises. |
-| [`demos/`](demos/) | Offline demonstrations and certificate-checking challenges. |
+| [`workflows/`](workflows/) | Offline demonstrations and certificate-checking challenges. |
 | [`pilots/`](pilots/) | Retained model-experiment material and recipes; consult each pilot's runtime and data prerequisites. |
 | [`pfp/`](pfp/), [`operads/`](operads/), [`eis/`](eis/), [`pciv/`](pciv/) | The protocol, composition, immune and evolution systems described above. |
 | [`ops/`](ops/) | Execution, adversarial panels, provider/accounting adapters, governance and host infrastructure. |
@@ -193,7 +193,7 @@ through one package extra or that the entire platform has one end-to-end proof.
 | Check | Entry point |
 | --- | --- |
 | PFP Lab and governance tool tests | `python -m pytest` after installing `.[dev]` |
-| A certificate challenge | Its README under `demos/certified_challenges/` |
+| A certificate challenge | Its README under `workflows/certified_challenges/` |
 | Native PFP runtime tests | `cargo test -p pfp -p pfp_runtime` from `code/rust/`; check crate-specific prerequisites |
 | Lean kernel and axiom census | Build/audit commands in [lean4/README.md](lean4/README.md) |
 | Changed-source acceptance policy | `python -m governance.tools.checker check --changed-since origin/main` |

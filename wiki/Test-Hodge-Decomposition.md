@@ -27,11 +27,11 @@ Default: the worksheet. `--input document.json` with exactly `request` and `prop
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/hodge_decomposition/tests -q -p no:cacheprovider
-python demos/hodge_decomposition/run.py --output-dir <scratch-dir>
+python -m pytest workflows/hodge_decomposition/tests -q -p no:cacheprovider
+python workflows/hodge_decomposition/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000042/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000042/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -55,4 +55,4 @@ The cochain placeholder in the wire strings was renamed from a Greek-letter name
 
 ## Where the code lives
 
-`demos/hodge_decomposition/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/hodge_decomposition/` (`run.py`, `tests/`, and a short `README.md`).

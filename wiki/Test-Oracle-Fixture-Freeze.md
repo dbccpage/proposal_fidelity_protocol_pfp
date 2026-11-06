@@ -53,13 +53,13 @@ the refusal test runs instead.
 
 From the repository root:
 
-    py -3.12 -m pytest demos/oracle_fixture_freeze -q
+    py -3.12 -m pytest workflows/oracle_fixture_freeze -q
 
 To write the fixtures to a folder:
 
-    py -3.12 demos/oracle_fixture_freeze/freeze_python_case.py --out oracle_fixtures --emit-data
-    python demos/oracle_fixture_freeze/freeze_python_repr.py --out oracle_fixtures
-    python demos/oracle_fixture_freeze/freeze_json_acceptance.py --out oracle_fixtures
+    py -3.12 workflows/oracle_fixture_freeze/freeze_python_case.py --out oracle_fixtures --emit-data
+    python workflows/oracle_fixture_freeze/freeze_python_repr.py --out oracle_fixtures
+    python workflows/oracle_fixture_freeze/freeze_json_acceptance.py --out oracle_fixtures
 
 On a machine without the `py` launcher, use any Python 3.12 interpreter.
 
@@ -97,4 +97,4 @@ file is new to this repository. Three related freezers became one page.
 
 ## Location
 
-`demos/oracle_fixture_freeze/`.
+`workflows/oracle_fixture_freeze/`.

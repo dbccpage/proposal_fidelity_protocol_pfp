@@ -54,7 +54,7 @@ the tip.
 
 From the repository root:
 
-    python -m pytest demos/candidate_telemetry -q
+    python -m pytest workflows/candidate_telemetry -q
 
 ## Expected output
 
@@ -80,10 +80,10 @@ From the repository root:
 
 ## Where it lives
 
-- `demos/candidate_telemetry/ast_fault_tracer.py`
-- `demos/candidate_telemetry/diff_telemetry.py`
-- `demos/candidate_telemetry/state_graph_recovery.py`
-- `demos/candidate_telemetry/test_candidate_telemetry.py`
+- `workflows/candidate_telemetry/ast_fault_tracer.py`
+- `workflows/candidate_telemetry/diff_telemetry.py`
+- `workflows/candidate_telemetry/state_graph_recovery.py`
+- `workflows/candidate_telemetry/test_candidate_telemetry.py`
 
 Port notes: the original exposed the three modules through a lazily loading
 package; here the test imports each module directly from its folder. An unused

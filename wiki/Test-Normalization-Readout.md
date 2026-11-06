@@ -27,11 +27,11 @@ Default: the worked exercises. `--input problem.json --proposal proposal.json` g
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/normalization_readout/tests -q -p no:cacheprovider
-python demos/normalization_readout/run.py --output-dir <scratch-dir>
+python -m pytest workflows/normalization_readout/tests -q -p no:cacheprovider
+python workflows/normalization_readout/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000032/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000032/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -55,4 +55,4 @@ No code changes beyond the move. Pairs with [Interference Weights](Test-Interfer
 
 ## Where the code lives
 
-`demos/normalization_readout/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/normalization_readout/` (`run.py`, `tests/`, and a short `README.md`).

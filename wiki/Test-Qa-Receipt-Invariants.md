@@ -60,7 +60,7 @@ and pytest; no other dependencies.
 
 From the repository root:
 
-    python -m pytest demos/qa_receipt_invariants -q
+    python -m pytest workflows/qa_receipt_invariants -q
 
 ## Expected output
 
@@ -91,6 +91,6 @@ to neutral role names; the checks are unchanged.
 
 ## Location
 
-`demos/qa_receipt_invariants/` (tests in
-`demos/qa_receipt_invariants/test_qa_evidence_falsification.py`, code in
-`demos/qa_receipt_invariants/qa_evidence/`).
+`workflows/qa_receipt_invariants/` (tests in
+`workflows/qa_receipt_invariants/test_qa_evidence_falsification.py`, code in
+`workflows/qa_receipt_invariants/qa_evidence/`).

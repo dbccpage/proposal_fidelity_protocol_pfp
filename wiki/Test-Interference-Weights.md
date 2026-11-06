@@ -27,11 +27,11 @@ Default: the worked exercises. `--input problem.json --proposal probabilities.js
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/interference_weights/tests -q -p no:cacheprovider
-python demos/interference_weights/run.py --output-dir <scratch-dir>
+python -m pytest workflows/interference_weights/tests -q -p no:cacheprovider
+python workflows/interference_weights/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000031/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000031/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -55,4 +55,4 @@ No code changes beyond the move. This is arithmetic in a declared model, not a q
 
 ## Where the code lives
 
-`demos/interference_weights/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/interference_weights/` (`run.py`, `tests/`, and a short `README.md`).

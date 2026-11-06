@@ -27,11 +27,11 @@ Default: four puzzles, five drills and an enumeration follow-up. `--input file.j
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/finite_quotients/tests -q -p no:cacheprovider
-python demos/finite_quotients/run.py --output-dir <scratch-dir>
+python -m pytest workflows/finite_quotients/tests -q -p no:cacheprovider
+python workflows/finite_quotients/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000037/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000037/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -55,4 +55,4 @@ No code changes beyond the move.
 
 ## Where the code lives
 
-`demos/finite_quotients/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/finite_quotients/` (`run.py`, `tests/`, and a short `README.md`).

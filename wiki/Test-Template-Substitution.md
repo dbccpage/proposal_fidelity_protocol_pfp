@@ -26,9 +26,9 @@ Default: data that contains the literal text `${question}`. `--input examples/re
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/template_substitution/tests -q -p no:cacheprovider
-python demos/template_substitution/run.py
-python demos/template_substitution/run.py --input demos/template_substitution/examples/request.json
+python -m pytest workflows/template_substitution/tests -q -p no:cacheprovider
+python workflows/template_substitution/run.py
+python workflows/template_substitution/run.py --input workflows/template_substitution/examples/request.json
 ```
 
 ## Expected output
@@ -51,4 +51,4 @@ Only `run.py`, the example request and its main test file were ported. A separat
 
 ## Where the code lives
 
-`demos/template_substitution/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/template_substitution/` (`run.py`, `tests/`, and a short `README.md`).

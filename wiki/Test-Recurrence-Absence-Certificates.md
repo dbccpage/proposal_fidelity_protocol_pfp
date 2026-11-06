@@ -42,11 +42,11 @@ The reference answers are 46 recurrences, 16 certified absences and 2 refusals. 
 
 From the repository root (standard library plus pytest):
 
-    python -m pytest demos/certified_challenges/c047_sequence_law_discovery -q
+    python -m pytest workflows/certified_challenges/c047_sequence_law_discovery -q
 
 Score the reference solver on the 12 public examples:
 
-    python demos/certified_challenges/c047_sequence_law_discovery/participant_packet/runner.py
+    python workflows/certified_challenges/c047_sequence_law_discovery/participant_packet/runner.py
 
 ## Expected output
 
@@ -65,6 +65,6 @@ Score the reference solver on the 12 public examples:
 
 ## Where it lives
 
-`demos/certified_challenges/c047_sequence_law_discovery`. Moved from the internal challenge suite; imports now use the package name, and the two subprocess tests run from `demos/certified_challenges` instead of the source repository root. The script that ran language models on this challenge was left behind because it needs the unpublished runtime; the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/demos/certified_challenges/findings) keep its results with their correction notices.
+`workflows/certified_challenges/c047_sequence_law_discovery`. Moved from the internal challenge suite; imports now use the package name, and the two subprocess tests run from `workflows/certified_challenges` instead of the source repository root. The script that ran language models on this challenge was left behind because it needs the unpublished runtime; the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/certified_challenges/findings) keep its results with their correction notices.
 
 See also [Exact Matrix Inversion Certificates](Test-Exact-Matrix-Inversion-Certificates.md) (the same Bareiss determinant), [Exact Linear System Witnesses](Test-Exact-Linear-System-Witnesses.md) and [Core Concepts](Core-Concepts.md).

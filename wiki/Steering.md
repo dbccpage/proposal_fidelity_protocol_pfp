@@ -8,7 +8,7 @@ relates to PFP, the [Epistemic Immune System](EIS.md) and
 [Prompt Civilization](PCIV.md).
 
 The examples were mined from the source project's documentation, experiment
-folders and tests. Tests that were already ported to `demos/` are not repeated
+folders and tests. Tests that were already ported to `workflows/` are not repeated
 here; the [test catalog](Test-Catalog.md) links them, and the table at the end
 of this page points to the relevant ones.
 

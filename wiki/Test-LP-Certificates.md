@@ -28,11 +28,11 @@ Default: the worked exercises. `--input problem.json` with `--proposal certifica
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/lp_certificates/tests -q -p no:cacheprovider
-python demos/lp_certificates/run.py --output-dir <scratch-dir>
+python -m pytest workflows/lp_certificates/tests -q -p no:cacheprovider
+python workflows/lp_certificates/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000027/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000027/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -56,4 +56,4 @@ No code changes beyond the move. Data files were copied unchanged.
 
 ## Where the code lives
 
-`demos/lp_certificates/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/lp_certificates/` (`run.py`, `tests/`, and a short `README.md`).

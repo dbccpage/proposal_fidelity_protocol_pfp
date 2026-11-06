@@ -10,7 +10,8 @@
 
 **Use PFP in a workflow**
 
-- [Choose WF1–WF5](Workflows.md) · [Start here](Workflow-Start-Here.md)
+- [Choose a workflow](Workflows.md) · [Start here](Workflow-Start-Here.md)
+- [Workflow DAG: WF1–WF23](Workflow-DAG.md)
 - [Install and run WF1–WF5](Workflow-Running.md)
 - [WF1: typed answer](Workflow-WF1.md)
 - [WF2: full slots](Workflow-WF2.md)
@@ -47,7 +48,7 @@
 - [008](Paper-008.md) · [009](Paper-009.md) · [010](Paper-010.md) · [011](Paper-011.md)
 - [021](Paper-021.md) · [022](Paper-022.md) · [023](Paper-023.md) · [024](Paper-024.md)
 - [025](Paper-025.md) · [026](Paper-026.md) · [027](Paper-027.md) · [028](Paper-028.md)
-- [029](Paper-029.md)
+- [029](Paper-029.md) · [034](Paper-034.md)
 - [Contributing](Contributing.md)
 
 **Rewriting**

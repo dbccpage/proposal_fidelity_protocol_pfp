@@ -27,11 +27,11 @@ Default: four puzzles, seven drills and seven controls. `--input submission.json
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/checkerboard_paths/tests -q -p no:cacheprovider
-python demos/checkerboard_paths/run.py --output-dir <scratch-dir>
+python -m pytest workflows/checkerboard_paths/tests -q -p no:cacheprovider
+python workflows/checkerboard_paths/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000043/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000043/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -55,4 +55,4 @@ A code comment that pointed at the original README was reworded. No behavior cha
 
 ## Where the code lives
 
-`demos/checkerboard_paths/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/checkerboard_paths/` (`run.py`, `tests/`, and a short `README.md`).

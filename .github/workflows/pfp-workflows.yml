@@ -8,7 +8,7 @@ on:
       - 'ops/operations/**'
       - 'ops/governance/domain/**'
       - 'pyproject.toml'
-      - 'docs/workflows/**'
+      - 'workflows/library/**'
       - '.github/workflows/pfp-workflows.yml'
   workflow_dispatch:
 
@@ -30,5 +30,5 @@ jobs:
       - run: python -m pip wheel --no-deps --wheel-dir '${{ runner.temp }}/pfp-wheels' .
       - run: python -m venv '${{ runner.temp }}/pfp-installed'
       - run: '${{ runner.temp }}/pfp-installed/bin/python -m pip install "${{ runner.temp }}/pfp-wheels/pfp_lab-0.2.0-py3-none-any.whl[workflows]"'
-      - run: '${{ runner.temp }}/pfp-installed/bin/python "${{ github.workspace }}/docs/workflows/check_install.py" --artifact-dir "${{ runner.temp }}" --checkout "${{ github.workspace }}"'
+      - run: '${{ runner.temp }}/pfp-installed/bin/python "${{ github.workspace }}/.github/scripts/check_workflow_install.py" --artifact-dir "${{ runner.temp }}" --checkout "${{ github.workspace }}"'
         working-directory: '${{ runner.temp }}'

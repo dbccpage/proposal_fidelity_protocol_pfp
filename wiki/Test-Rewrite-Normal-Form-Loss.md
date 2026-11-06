@@ -27,11 +27,11 @@ Default: the worked exercises. `--input word.txt --presentation original|extende
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/rewrite_normal_form_loss/tests -q -p no:cacheprovider
-python demos/rewrite_normal_form_loss/run.py --output-dir <scratch-dir>
+python -m pytest workflows/rewrite_normal_form_loss/tests -q -p no:cacheprovider
+python workflows/rewrite_normal_form_loss/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000030/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000030/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -55,4 +55,4 @@ Two test inputs that use a Cyrillic look-alike letter were rewritten as `\u` esc
 
 ## Where the code lives
 
-`demos/rewrite_normal_form_loss/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/rewrite_normal_form_loss/` (`run.py`, `tests/`, and a short `README.md`).

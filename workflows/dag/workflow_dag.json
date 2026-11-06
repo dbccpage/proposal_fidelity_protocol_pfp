@@ -1,0 +1,1619 @@
+{
+  "schema_version": "pfp.workflow-dag.v1",
+  "AuthorityEffect": "None",
+  "date": "2026-11-05",
+  "scope": "Workflow families WF1-WF5 (implemented) and WF6-WF23 (derived designs). WF6-WF23 were derived by reading the retained pilot estate (pilots 0000000-0000203 plus its auxiliary folders) in the sibling research repository; no new model call was made. A derived node is a recipe design with source evidence, not an implemented runner and not a measured result.",
+  "edge_meaning": "from -> to: the target workflow reuses the source workflow's procedure or acceptance rule as a step, so the source should be understood and working first.",
+  "model_tiers": {
+    "sonnet": "Coding, encoding, running and custody work. The default tier.",
+    "opus": "Deep research: derivations, certificate design, hypothesis analysis, and the boost step.",
+    "fable": "Adversarial research: countermodels, leak tests, near-self inputs, prosecution.",
+    "none": "Deterministic host code. Never a model."
+  },
+  "team_patterns": {
+    "solo": "One worker, one host check.",
+    "relay": "Workers in sequence; each reads only the frozen, sealed output of the previous one.",
+    "parallel_isolated_then_global": "Isolated workers share frozen inputs, never each other's replies; the host checks each locally, then globally.",
+    "sweep_with_shared_judge": "The same task under several arms or presentations, all graded by one unchanged checker, compared item by item.",
+    "red_team_pair": "A builder and an adversary; the adversary's cases become negative controls, never extra authority.",
+    "proposer_with_residual_feedback": "One proposer receives only the checker's typed residual between attempts, within a fixed limit.",
+    "tribunal": "Opposing sides submit independently and are frozen before seeing each other; the host check gives the verdict.",
+    "research_cell": "A deep researcher plans obligations, coders build checkers and witnesses, an adversary searches for countermodels; nothing is accepted without the host check."
+  },
+  "boost_rule": "A boost is one bounded escalation after a failed host check: a stronger tier receives the typed residual (never the expected answer), its calls are charged, and the limit is per run. A boost cannot accept anything; only the host check accepts.",
+  "nodes": [
+    {
+      "id": "WF1",
+      "name": "Typed answer",
+      "status": "implemented",
+      "depends_on": [],
+      "layer": 0,
+      "source_pilots": [],
+      "task_families": [
+        "finite_integer_sum"
+      ],
+      "process": [
+        "Freeze the task and response schema",
+        "One solver reply",
+        "Parse the typed envelope",
+        "Independent exact check"
+      ],
+      "math": [
+        "accept(r) iff parse(r) = v and v = f(x) for the host-computed f"
+      ],
+      "host_check": "typed_envelope_and_independent_exact_sum",
+      "model_calls_normal_path": "1",
+      "team": {
+        "goal": "One schema-valid answer that the host check accepts, or a typed refusal.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Produce the typed answer."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "host check rejects",
+          "action": "none on the base path; WF9 adds bounded repair",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF2",
+      "name": "Full slots",
+      "status": "implemented",
+      "depends_on": [
+        "WF1"
+      ],
+      "layer": 1,
+      "source_pilots": [],
+      "task_families": [
+        "finite_integer_sum"
+      ],
+      "process": [
+        "Freeze the slot catalogue",
+        "One reply filling operations, missing information and repair moves",
+        "Check slots and exact answer"
+      ],
+      "math": [
+        "slot coverage: every declared slot s has a typed value or an explicit absence"
+      ],
+      "host_check": "typed_envelope_and_independent_exact_sum",
+      "model_calls_normal_path": "1",
+      "team": {
+        "goal": "A complete slot record plus an accepted answer.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Fill every slot."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "missing slot",
+          "action": "none on the base path",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF3",
+      "name": "Mine, then solve",
+      "status": "implemented",
+      "depends_on": [
+        "WF1"
+      ],
+      "layer": 1,
+      "source_pilots": [],
+      "task_families": [
+        "finite_integer_sum"
+      ],
+      "process": [
+        "Mining call proposes operation guidance",
+        "Screen and freeze guidance",
+        "Solver call uses frozen guidance",
+        "Independent check"
+      ],
+      "math": [
+        "guidance g is frozen before the solve: hash(g) recorded, never edited after the solver starts"
+      ],
+      "host_check": "typed_envelope_and_independent_exact_sum",
+      "model_calls_normal_path": "2",
+      "team": {
+        "goal": "Useful frozen guidance, then an accepted answer.",
+        "pattern": "relay",
+        "roles": [
+          {
+            "role": "miner",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Propose operation guidance."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Solve with frozen guidance."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "guidance screen rejects",
+          "action": "none on the base path",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF4",
+      "name": "Five agents + LGGR",
+      "status": "implemented",
+      "depends_on": [
+        "WF3"
+      ],
+      "layer": 2,
+      "source_pilots": [],
+      "task_families": [
+        "finite_integer_sum"
+      ],
+      "process": [
+        "One shared mining call",
+        "Five isolated solvers",
+        "Local checks per agent",
+        "One global compatibility check (local green, global red)"
+      ],
+      "math": [
+        "global accept iff every local check passes and the local answers glue: a_1 = ... = a_5 = f(x)"
+      ],
+      "host_check": "typed_envelope_and_independent_exact_sum",
+      "model_calls_normal_path": "6",
+      "team": {
+        "goal": "Five isolated answers whose local checks pass and which agree globally.",
+        "pattern": "parallel_isolated_then_global",
+        "roles": [
+          {
+            "role": "miner",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Shared guidance."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 5,
+            "task": "Isolated solvers."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "global disagreement",
+          "action": "none on the base path",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF5",
+      "name": "Checked rewrite",
+      "status": "implemented",
+      "depends_on": [
+        "WF4"
+      ],
+      "layer": 3,
+      "source_pilots": [],
+      "task_families": [
+        "finite_integer_sum"
+      ],
+      "process": [
+        "Label every source span",
+        "Rewrite the whole seed into one grammar",
+        "Parse, decode and check preservation",
+        "Run WF4 against the original public input"
+      ],
+      "math": [
+        "preservation: decode(rewrite(s)) = query(s) on the declared finite language"
+      ],
+      "host_check": "typed_envelope_and_independent_exact_sum",
+      "model_calls_normal_path": "6",
+      "team": {
+        "goal": "A rewrite that preserves the protected query, then a WF4 pass.",
+        "pattern": "parallel_isolated_then_global",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Deterministic rewrite and decoder."
+          },
+          {
+            "role": "miner",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Shared guidance."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 5,
+            "task": "Isolated solvers."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "preservation check fails",
+          "action": "stop; never solve an unpreserved task",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF6",
+      "name": "Dialect sweep",
+      "status": "derived",
+      "depends_on": [
+        "WF5"
+      ],
+      "layer": 4,
+      "source_pilots": [
+        "0000000-0000019"
+      ],
+      "task_families": [
+        "linear_algebra",
+        "graph_facts",
+        "graph_repair",
+        "refusal"
+      ],
+      "source_evidence": "Pilots 0-10 retain 53-83 test capsules each (seed, P*, ten seed rewrites, ten P* rewrites); a few capsules hold manual live replies, most are offline controls.",
+      "process": [
+        "Freeze one seed and its host answer",
+        "Compile P* and k checked rewrites (dialects) of seed and P*",
+        "Dispatch each capsule once under the same model and parameters",
+        "Grade every reply with the same host checker",
+        "Report acceptance per dialect, item by item"
+      ],
+      "math": [
+        "dialect family {rho_k}: decode(rho_k(s)) = q(s) for every k (preservation precondition)",
+        "acceptance A_k = (1/N) sum_i 1[check(r_ik)] compared pairwise on the same items",
+        "exact rational structure delta: Net = Delta_created - Delta_removed"
+      ],
+      "host_check": "family checker (e.g. exact linear algebra, graph facts, graph repair, typed refusal)",
+      "model_calls_normal_path": "2 + 2k per seed",
+      "team": {
+        "goal": "Measure, item by item, which presentation of the same task the host accepts more often, without changing the task.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Build the rewrites and decoders; check preservation."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Run the capsules; keep raw bytes."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Choose dialects worth testing and read the per-item differences."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "a dialect fails preservation",
+          "action": "opus proposes a corrected rewrite from the preservation residual; recheck before any dispatch",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF7",
+      "name": "Typed refusal",
+      "status": "derived",
+      "depends_on": [
+        "WF1"
+      ],
+      "layer": 1,
+      "source_pilots": [
+        "0000003",
+        "0000007",
+        "0000011",
+        "0000015",
+        "0000019",
+        "0000034",
+        "0000175"
+      ],
+      "task_families": [
+        "refusal",
+        "epistemic_abstention"
+      ],
+      "source_evidence": "Refusal rungs 1-5 with checkers PFP-04 and PFP-14 typed refusal; pilot 34 refuses stationary traces; pilot 175 is a planned capsule.",
+      "process": [
+        "Declare the answerability predicate and the refusal codes",
+        "Pose an underdetermined or undefined task",
+        "Accept only the correct typed refusal or a checked answer",
+        "Count bluffs: a confident answer to an unanswerable task"
+      ],
+      "math": [
+        "answerable(A x = b) iff rank(A) = rank([A|b]) = n; otherwise the right outcome is UNRESOLVED <code>",
+        "bluff rate = #(answered and unanswerable) / #unanswerable"
+      ],
+      "host_check": "typed refusal checker",
+      "model_calls_normal_path": "1",
+      "team": {
+        "goal": "Return the correct refusal code whenever the premises do not determine an answer.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Answer or refuse with a code."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Write premise-removing variants that tempt a bluff."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "bluff detected",
+          "action": "fable adds the variant to the negative-control bank; no retry on the same item",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF8",
+      "name": "Staged sealed packets",
+      "status": "derived",
+      "depends_on": [
+        "WF2",
+        "WF5"
+      ],
+      "layer": 4,
+      "source_pilots": [
+        "0000001-0000025",
+        "0000033"
+      ],
+      "task_families": [
+        "linear_algebra",
+        "graph_facts"
+      ],
+      "source_evidence": "Mode trials mode_01..mode_20 and wire encodings (EBNF wire, S(n) wire, boundary packets, glyph alphabets); pilot 20 runs two local stages with zero provider calls; pilot 33 documents a two-pass loop the old runner did not implement.",
+      "process": [
+        "Choose a mode contract and wire encoding",
+        "Split the task into k declared stages",
+        "Seal each stage output (hash chain) before the next stage reads it",
+        "Check every stage receipt and the final answer"
+      ],
+      "math": [
+        "composition F = f_k o ... o f_1 with typed interfaces between stages",
+        "seal chain h_0 = H(seed), h_i = H(h_{i-1} || payload_i); any edit breaks every later h_j"
+      ],
+      "host_check": "per-stage receipts plus the family checker",
+      "model_calls_normal_path": "k",
+      "team": {
+        "goal": "Each stage produces a sealed, typed output; the final answer checks.",
+        "pattern": "relay",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": "k",
+            "task": "One stage each, reading only sealed inputs."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Design the stage split and interfaces."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "a stage receipt fails",
+          "action": "rerun that stage once with opus and the receipt residual; earlier seals are reused",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF9",
+      "name": "Bounded check-and-repair",
+      "status": "derived",
+      "depends_on": [
+        "WF2"
+      ],
+      "layer": 2,
+      "source_pilots": [
+        "0000002",
+        "0000006",
+        "0000010",
+        "0000026",
+        "0000049",
+        "0000055",
+        "0000062",
+        "0000096"
+      ],
+      "task_families": [
+        "graph_repair"
+      ],
+      "source_evidence": "Pilot 49 is a deterministic mock (41 then 42, two mock calls, zero provider cost); pilot 26 retains all three least-cost repairs of an odd XOR cycle; graph-repair rungs use PFP-03.",
+      "process": [
+        "Check the reply",
+        "On rejection return only the typed residual (never the expected answer)",
+        "Allow at most L repair attempts",
+        "Stop at the first accepted reply or at the limit"
+      ],
+      "math": [
+        "XOR cycle: a consistent assignment exists iff the cycle sum of edge labels is 0 mod 2",
+        "minimal repair: argmin |Delta| subject to c + Delta in im(delta_0) for the edge cochain c",
+        "termination: attempts <= L, and each attempt is charged"
+      ],
+      "host_check": "repair checker (coboundary or parity)",
+      "model_calls_normal_path": "1..L",
+      "team": {
+        "goal": "An accepted reply within L attempts, or a recorded stop at the limit.",
+        "pattern": "proposer_with_residual_feedback",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Propose and repair."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "two rejections in a row",
+          "action": "final attempt goes to opus with the full residual history",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF10",
+      "name": "Local-to-global obstruction certificate",
+      "status": "derived",
+      "depends_on": [
+        "WF4",
+        "WF9"
+      ],
+      "layer": 3,
+      "source_pilots": [
+        "0000029",
+        "0000039-0000045",
+        "0000051",
+        "0000056-0000064",
+        "0000083"
+      ],
+      "task_families": [
+        "projection_obstruction",
+        "cochain_defect",
+        "simplex_homology",
+        "cell_complex_duality",
+        "discrete_cohomology_battery",
+        "cochain_holonomy_descent"
+      ],
+      "source_evidence": "Pilot 51 records live runs on the three-patch observer-visibility obstruction; 39-45 are offline exact checkers (angle defects, Hodge, clique homology, triangle fans); 56-64 are planned capsules.",
+      "process": [
+        "Declare the cover, cochains and restriction maps",
+        "Agents certify local sections on each patch",
+        "Host computes the global obstruction class",
+        "Accept a gluing witness or an obstruction certificate, never a prose claim"
+      ],
+      "math": [
+        "H^1 = ker(delta_1) / im(delta_0); a class [c] != 0 means local green, global red",
+        "three-patch observer visibility: each observer sees zero on its edges, yet sum_alpha J^alpha(s) > 0 for the glued section",
+        "Hodge: c = delta alpha + delta^* beta + h with h harmonic (exact rational arithmetic)",
+        "integer lift: an obstruction in H^1(X; Z) can survive the map to rational coefficients only if it is non-torsion"
+      ],
+      "host_check": "exact cochain / homology checker",
+      "model_calls_normal_path": "1 + n_patches",
+      "team": {
+        "goal": "A checked gluing witness or a checked obstruction class for the declared cover.",
+        "pattern": "parallel_isolated_then_global",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": "n_patches",
+            "task": "One local certificate per patch."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "State the cover and the expected obstruction type."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Search for a cover change that hides the obstruction."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "local checks pass but the global check fails",
+          "action": "opus receives the coboundary residual and proposes either a repair (WF9) or an obstruction certificate",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF11",
+      "name": "Dual-certificate synthesis",
+      "status": "derived",
+      "depends_on": [
+        "WF3",
+        "WF9"
+      ],
+      "layer": 3,
+      "source_pilots": [
+        "0000027",
+        "0000053",
+        "0000054",
+        "0000095",
+        "0000115-0000124",
+        "0000171",
+        "0000180",
+        "c051",
+        "c052",
+        "c053",
+        "c054",
+        "c055",
+        "c059"
+      ],
+      "task_families": [
+        "dossier_linear_programming",
+        "degree4_characteristic_classes"
+      ],
+      "source_evidence": "Challenge folders c051-c055 and c059 hold participant packets, judge packets, reference solvers and commit-reveal scripts; dossier LP pilots are planned capsules.",
+      "process": [
+        "Publish the participant packet; keep the judge packet sealed",
+        "Team writes a solver that emits certificates, not just answers",
+        "Commit H(salt || solver) before hidden cases are revealed",
+        "Judge checks each certificate with exact dot products"
+      ],
+      "math": [
+        "LP optimality: x >= 0, A x <= b, y >= 0, A^T y >= c, c.x = b.y (weak duality closes the gap)",
+        "infeasibility (Farkas): y >= 0, A^T y >= 0, b.y < 0",
+        "max-flow value = min-cut capacity; assignment potentials u_i + v_j <= c_ij with equality on the matching",
+        "Bareiss fraction-free elimination keeps every intermediate an exact integer"
+      ],
+      "host_check": "exact certificate checker plus an independent second checker",
+      "model_calls_normal_path": "planned, budget-capped",
+      "team": {
+        "goal": "A frozen solver whose every output carries a certificate the judge accepts on hidden cases.",
+        "pattern": "research_cell",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 2,
+            "task": "Write the solver and its tests."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Choose the certificate form and the pivot rule (cycling, sign conventions)."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Write degenerate and overflow cases against the public examples."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "a certificate is rejected on public cases",
+          "action": "opus reads the rejected certificate and the checker message, proposes one patch; sonnet applies it",
+          "limit": 2
+        }
+      }
+    },
+    {
+      "id": "WF12",
+      "name": "Mechanism-control arms",
+      "status": "derived",
+      "depends_on": [
+        "WF6",
+        "WF3"
+      ],
+      "layer": 5,
+      "source_pilots": [
+        "0000052"
+      ],
+      "task_families": [
+        "attention_mechanism_control"
+      ],
+      "source_evidence": "Ten planned capsules (c001-c010) on one integer rank-difference carrier with three distractor spans; no model was called and the checker id is not registered.",
+      "process": [
+        "Hold the carrier fixed; vary only the mechanism note",
+        "Run baseline, typed-witness and mechanism arms on the same items",
+        "Grade with one registered checker",
+        "Compare arms item by item"
+      ],
+      "math": [
+        "rank difference: r_i - r_j recovered from a gauge-fixed assignment; gauge freedom r -> r + c leaves differences unchanged",
+        "paired effect: d_i = 1[check(arm_B, i)] - 1[check(arm_A, i)]"
+      ],
+      "host_check": "integer rank-difference certificate (to be registered)",
+      "model_calls_normal_path": "arms x items",
+      "team": {
+        "goal": "An arm comparison on a fixed carrier whose only difference is the mechanism note.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Build arms and run them."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Specify the mechanism hypotheses."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Check that distractor spans do not leak the answer."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "leak found",
+          "action": "rebuild the carrier; discard affected runs",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF13",
+      "name": "Exact-domain capsule battery",
+      "status": "derived",
+      "depends_on": [
+        "WF1",
+        "WF7"
+      ],
+      "layer": 2,
+      "source_pilots": [
+        "0000065-0000114",
+        "0000177",
+        "0000176",
+        "0000178",
+        "0000187"
+      ],
+      "task_families": [
+        "quantum_stabilizer_exact",
+        "gauge_anomaly_cancellation",
+        "exceptional_lie_torsion",
+        "arithmetic_enumeration",
+        "group_commutator",
+        "regge_spacetime_curvature",
+        "formal_logic_deduction",
+        "polygraph_term_rewriting"
+      ],
+      "source_evidence": "Fifty planned single-capsule pilots, one per catalog challenge, each naming a domain checker id; none was dispatched.",
+      "process": [
+        "One catalog challenge becomes one capsule",
+        "A domain checker is registered before dispatch",
+        "One reply or typed refusal per capsule",
+        "Results stay per domain; no cross-domain average is claimed"
+      ],
+      "math": [
+        "stabilizer codes: generators commute iff their symplectic product is 0 mod 2",
+        "U(1) anomaly freedom: sum_i q_i = 0 and sum_i q_i^3 = 0 over the declared charges",
+        "Regge deficit: epsilon = 2 pi - sum of dihedral angles at a hinge",
+        "commutator [g, h] = g^-1 h^-1 g h, checked in the declared finite group"
+      ],
+      "host_check": "per-domain registered checker",
+      "model_calls_normal_path": "1 per capsule",
+      "team": {
+        "goal": "One checked answer or refusal per domain capsule.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Answer the capsule."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Write and register the domain checker before any run."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "checker rejects",
+          "action": "one opus attempt with the checker message",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF14",
+      "name": "Immune failure classification",
+      "status": "derived",
+      "depends_on": [
+        "WF7",
+        "WF12"
+      ],
+      "layer": 6,
+      "source_pilots": [
+        "0000125-0000134"
+      ],
+      "task_families": [
+        "immune_failure_classification"
+      ],
+      "source_evidence": "Ten planned capsules (C081-C090), e.g. negative selection against a sealed self panel; none dispatched.",
+      "process": [
+        "Seal a self panel of known-good outputs",
+        "Propose candidate detectors (antibodies) from observed failures",
+        "Reject any detector that fires on the self panel",
+        "Admit a detector only with two signals: a failure match and a host check"
+      ],
+      "math": [
+        "negative selection: keep d iff for all s in Self, match(d, s) < theta",
+        "two-signal gate: admit iff signal_1 (pattern) and signal_2 (host evidence)",
+        "self-tolerance = 1 - false positives on Self / |Self|"
+      ],
+      "host_check": "detector admission check over the sealed panel",
+      "model_calls_normal_path": "per candidate",
+      "team": {
+        "goal": "Detectors that catch the recorded failures and never fire on the sealed self panel.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Implement detectors."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Generate near-self inputs that should not fire."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "a detector fires on Self",
+          "action": "discard it; opus may propose one narrower detector",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF15",
+      "name": "Adversary tribunal",
+      "status": "derived",
+      "depends_on": [
+        "WF4",
+        "WF14"
+      ],
+      "layer": 7,
+      "source_pilots": [
+        "0000035",
+        "0000135-0000144"
+      ],
+      "task_families": [
+        "adversary_tribunal_dialectic"
+      ],
+      "source_evidence": "Pilot 35 freezes role submissions and checks them separately (118 tests, 17 mutations); 135-144 are planned tribunal capsules (e.g. modal model checking).",
+      "process": [
+        "Prosecutor and defender submit independently; submissions are frozen",
+        "Neither sees the other before freezing",
+        "The host checks each claim on the finite model",
+        "Verdict comes only from the check; rhetoric is not evidence"
+      ],
+      "math": [
+        "Kripke model M = (W, R, V); M, w |= box phi iff phi holds at every R-successor of w",
+        "argument acceptance: grounded extension of the attack graph, computed by the host",
+        "finite predicate example: sum(left) <= sum(right) on 1..16 bounded integers"
+      ],
+      "host_check": "finite model checker",
+      "model_calls_normal_path": "2 per claim",
+      "team": {
+        "goal": "A verdict that the finite check supports, with both sides frozen first.",
+        "pattern": "tribunal",
+        "roles": [
+          {
+            "role": "prosecutor",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Argue the claim fails; supply a countermodel."
+          },
+          {
+            "role": "defender",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Argue the claim holds; supply a witness."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Encode both submissions for the checker."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "both submissions fail the check",
+          "action": "one fresh opus round per side with the checker output",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF16",
+      "name": "Substrate crosswalk",
+      "status": "derived",
+      "depends_on": [
+        "WF5",
+        "WF10"
+      ],
+      "layer": 4,
+      "source_pilots": [
+        "0000145-0000169"
+      ],
+      "task_families": [
+        "genesis_substrate_crosswalk"
+      ],
+      "source_evidence": "Twenty-five planned capsules (G01-G25), e.g. reading non-uniqueness in Lean; none dispatched.",
+      "process": [
+        "Declare source and target substrates (e.g. prose, Lean, finite tables)",
+        "Translate generators and relations",
+        "Check that relations are preserved on the target",
+        "Record every non-unique choice"
+      ],
+      "math": [
+        "a crosswalk F: C -> D is accepted iff F(r) holds in D for every relation r of C",
+        "non-uniqueness: F and F' both preserve relations yet differ on a generator; both are recorded"
+      ],
+      "host_check": "relation-preservation checker (Lean or finite tables)",
+      "model_calls_normal_path": "1 per capsule",
+      "team": {
+        "goal": "A translation that preserves every declared relation, with alternatives recorded.",
+        "pattern": "research_cell",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Write the target encoding (e.g. Lean)."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Find the generators and relations."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Find a second crosswalk or a broken relation."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "Lean or table check fails",
+          "action": "opus repairs the encoding from the error",
+          "limit": 2
+        }
+      }
+    },
+    {
+      "id": "WF17",
+      "name": "Witnessed-difference programme",
+      "status": "derived",
+      "depends_on": [
+        "WF10",
+        "WF11"
+      ],
+      "layer": 4,
+      "source_pilots": [
+        "0000170-0000187"
+      ],
+      "task_families": [
+        "fibred_sheaf_descent",
+        "tower_lift_necessity",
+        "epistemic_abstention",
+        "cochain_defect",
+        "formal_logic_deduction",
+        "quantum_stabilizer_exact"
+      ],
+      "source_evidence": "Eighteen planned capsules (W01-W18): behavioral equivalence, cochain quotients, Cech gluing, Fenchel-Rockafellar duality, LGGR I-VI, countermodels CE1-CE5; none dispatched.",
+      "process": [
+        "State two artifacts and the claimed difference or equivalence",
+        "Require a witness for a difference and a certificate for an equivalence",
+        "Pair every theorem with countermodels",
+        "Host checks witnesses on finite instances"
+      ],
+      "math": [
+        "behavioral equivalence: a bisimulation relation B with (p, q) in B and matching transitions",
+        "Fenchel-Rockafellar: inf_x f(x) + g(Ax) = sup_y -f^*(A^T y) - g^*(-y) under the stated qualification",
+        "Cech gluing obstruction lives in the first Cech cohomology of the cover"
+      ],
+      "host_check": "witness / countermodel checker",
+      "model_calls_normal_path": "research budget, capped",
+      "team": {
+        "goal": "Each claimed difference has a checked witness and each equivalence a checked certificate.",
+        "pattern": "research_cell",
+        "roles": [
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 2,
+            "task": "Derive the claims and witnesses."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Build countermodels."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 2,
+            "task": "Implement finite checkers and instances."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "countermodel found",
+          "action": "claim is narrowed or withdrawn; opus restates it once",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF18",
+      "name": "Dossier replay campaign",
+      "status": "derived",
+      "depends_on": [
+        "WF6",
+        "WF12"
+      ],
+      "layer": 6,
+      "source_pilots": [
+        "0000188-0000191"
+      ],
+      "task_families": [
+        "binary_spin_frustration",
+        "weighted_cycle_duality",
+        "degree4_primal_dual_certificate",
+        "chain_topology_scope_audit"
+      ],
+      "source_evidence": "Each pilot crosses five finite carriers with five wrapped representations plus five matched guidance trials (30 capsules each); replay and learning runners exist in the source estate.",
+      "process": [
+        "Fix five carriers and five representations (including emoji and glyph carrier encodings with an explicit legend)",
+        "Run the 5 x 5 baseline",
+        "Run five matched guidance trials",
+        "Replay from stored bytes and extract learning"
+      ],
+      "math": [
+        "frustrated spin triangle: no s in {+1,-1}^3 satisfies s_i s_j = -1 on all three edges (odd cycle)",
+        "weighted cycle duality: a feasible potential exists iff no negative cycle exists",
+        "design: 25 baseline cells + 5 matched cells, compared per carrier"
+      ],
+      "host_check": "family checker; replay must reproduce every grade",
+      "model_calls_normal_path": "30 per pilot",
+      "team": {
+        "goal": "A replayable 5 x 5 + 5 campaign whose every grade reproduces from stored bytes.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 2,
+            "task": "Build carriers and representations; run and replay."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Write the matched guidance and read the learning."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "replay grade differs",
+          "action": "stop the campaign; investigate custody before any new call",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF19",
+      "name": "Failure-derived rule transfer",
+      "status": "derived",
+      "depends_on": [
+        "WF12",
+        "WF14"
+      ],
+      "layer": 7,
+      "source_pilots": [
+        "0000192-0000198"
+      ],
+      "task_families": [
+        "pfp_learning"
+      ],
+      "source_evidence": "Seven partially executed learning pilots over challenge families A-F plus harness tests; reference solver outputs are controls, never model responses.",
+      "process": [
+        "Compare baseline, typed-witness and failure-derived rule prompts",
+        "Use disjoint held-out cases",
+        "Allow at most two stages; checker disagreement stops the run",
+        "A rule stays a candidate until transfer and self-tolerance are measured"
+      ],
+      "math": [
+        "transfer gain = acc(rule, held-out) - acc(baseline, held-out) on disjoint items",
+        "a rule is admitted only if gain > 0 and self-tolerance holds (WF14)"
+      ],
+      "host_check": "original domain judges; disagreement halts",
+      "model_calls_normal_path": "arms x held-out items",
+      "team": {
+        "goal": "A rule that improves held-out acceptance without new false positives.",
+        "pattern": "research_cell",
+        "roles": [
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Derive candidate rules from recorded failures."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Find held-out cases where the rule hurts."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Run arms and keep custody."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "rule shows no gain",
+          "action": "one revised rule from opus; otherwise the rule is retired",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF20",
+      "name": "Derivation loop with lift grants",
+      "status": "derived",
+      "depends_on": [
+        "WF9",
+        "WF10",
+        "WF19"
+      ],
+      "layer": 8,
+      "source_pilots": [
+        "0000199-0000203"
+      ],
+      "task_families": [
+        "causal_refinement_derivation",
+        "microscopic_defect_current_derivation",
+        "covariant_relational_spine_derivation",
+        "metric_cochain_bridge_derivation",
+        "obstruction_terminal_policy_derivation"
+      ],
+      "source_evidence": "Each pilot ran five loops: five provider trials and twenty host stages, capped at USD 0.05, 120,000 tokens and 180 s; analytical status stays unverified until independent proof review.",
+      "process": [
+        "Proposal against named obligations",
+        "Lift grant: the host licenses which higher structure may be used",
+        "Witness check on the exact finite control",
+        "Negative control",
+        "Learning refinement for the next loop; stop at the loop limit"
+      ],
+      "math": [
+        "loop state (P_t, G_t, W_t); P_{t+1} = refine(P_t, residual_t) with t <= 5",
+        "metric/cochain bridge: additive curvature and metric Regge holonomy are checked separately",
+        "terminal policy: halt on certificate, on budget, or on the loop limit, whichever comes first"
+      ],
+      "host_check": "finite witness controls; proofs need independent review",
+      "model_calls_normal_path": "5 per pilot",
+      "team": {
+        "goal": "Discharge the named obligations or stop with a typed record at the loop limit.",
+        "pattern": "research_cell",
+        "roles": [
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Propose derivations."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Run the negative control and attack each step."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Exact finite witnesses and stage capsules."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "witness check fails twice",
+          "action": "next loop starts from the adversary's counterexample",
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "WF21",
+      "name": "Structural prompt rewriting",
+      "status": "derived",
+      "depends_on": [
+        "WF5"
+      ],
+      "layer": 4,
+      "source_pilots": [
+        "0000028",
+        "0000030",
+        "0000050",
+        "acset_prompt_rewriting",
+        "acset_cochain_rewriting"
+      ],
+      "task_families": [
+        "grammar_profiles",
+        "rewrite_normal_form_loss",
+        "template_substitution"
+      ],
+      "source_evidence": "Offline pilots: grammar selection preserving bytes (28), a normal form that loses the question (30), no substitution inside substituted data (50), and finite ACSet/DPO rewriting with an exact judge.",
+      "process": [
+        "Represent the prompt as an attributed graph with protected task, constraint and output nodes",
+        "Apply a rule only through an explicit injective match",
+        "Check protected bytes are unchanged",
+        "Refuse a rewrite whose normal form drops the question"
+      ],
+      "math": [
+        "double-pushout rewrite: L <- K -> R with injective match m: L -> G; the pushout complement must exist (gluing condition)",
+        "protected invariant: bytes(protected(G')) = bytes(protected(G))"
+      ],
+      "host_check": "byte-preservation and exact judge",
+      "model_calls_normal_path": "0 (deterministic) or 1 per proposed rule",
+      "team": {
+        "goal": "Rewrites that attach hints or encodings without touching protected bytes.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Implement rules and the executor."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Find rewrites that pass syntax but lose meaning."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "meaning-loss case found",
+          "action": "add it as a refusal test",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF22",
+      "name": "Certified cost ladder",
+      "status": "derived",
+      "depends_on": [
+        "WF6",
+        "WF8",
+        "WF18"
+      ],
+      "layer": 7,
+      "source_pilots": [
+        "certified_ladder"
+      ],
+      "task_families": [
+        "linear_algebra",
+        "graph_facts",
+        "graph_repair",
+        "refusal",
+        "cochain_defect"
+      ],
+      "source_evidence": "Pre-registered design with fourteen falsifiable hypotheses (H0-H13) and pinned baseline models; arms vary stage count 1-8, rewrites, model tier and antibodies.",
+      "process": [
+        "Pre-register items, arms and hypotheses",
+        "Every arm ends with one canonical ANSWER line or ANSWER: UNRESOLVED <code>",
+        "Run every item under every arm",
+        "Evaluate hypotheses item by item with refutation criteria"
+      ],
+      "math": [
+        "cost to certified correct: C_arm = total spend / #accepted",
+        "paired test on discordant items (McNemar-style): b = #(A ok, B fail), c = #(A fail, B ok)",
+        "bluff rate per arm, as in WF7"
+      ],
+      "host_check": "family certificate checkers; hypothesis evaluator",
+      "model_calls_normal_path": "items x arms",
+      "team": {
+        "goal": "Decide each pre-registered hypothesis on this bank, at this rung, with this gate.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 2,
+            "task": "Run arms; maintain accounting."
+          },
+          {
+            "role": "deep_researcher",
+            "model_tier": "opus",
+            "count": 1,
+            "task": "Own the hypotheses and the analysis."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Run the leak test on every item."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none: a ladder run never escalates mid-campaign",
+          "action": "boosted arms are separate pre-registered arms",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF23",
+      "name": "Judge-packet custody audit",
+      "status": "derived",
+      "depends_on": [
+        "WF11"
+      ],
+      "layer": 4,
+      "source_pilots": [
+        "judge_packet_audit"
+      ],
+      "task_families": [
+        "custody",
+        "leakage"
+      ],
+      "source_evidence": "Audit modules for canonical form, custody, execution, layout and leakage of challenge packets.",
+      "process": [
+        "Canonicalise participant and judge packets",
+        "Hash every file",
+        "Test that no expected answer is derivable from participant bytes",
+        "Verify the judge executes the sealed checker version"
+      ],
+      "math": [
+        "leakage test: the expected answer does not appear in, and is not a declared function of, participant bytes",
+        "custody: recorded SHA-256 equals the hash of the executed bytes"
+      ],
+      "host_check": "audit report",
+      "model_calls_normal_path": "0",
+      "team": {
+        "goal": "Show that every challenge packet is sealed and leak-free before any team runs it.",
+        "pattern": "red_team_pair",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Run the audit tools."
+          },
+          {
+            "role": "adversary",
+            "model_tier": "fable",
+            "count": 1,
+            "task": "Try to recover answers from participant bytes."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "leak found",
+          "action": "block the challenge until it is resealed",
+          "limit": 0
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "WF1",
+      "to": "WF2"
+    },
+    {
+      "from": "WF1",
+      "to": "WF3"
+    },
+    {
+      "from": "WF3",
+      "to": "WF4"
+    },
+    {
+      "from": "WF4",
+      "to": "WF5"
+    },
+    {
+      "from": "WF5",
+      "to": "WF6"
+    },
+    {
+      "from": "WF1",
+      "to": "WF7"
+    },
+    {
+      "from": "WF2",
+      "to": "WF8"
+    },
+    {
+      "from": "WF5",
+      "to": "WF8"
+    },
+    {
+      "from": "WF2",
+      "to": "WF9"
+    },
+    {
+      "from": "WF4",
+      "to": "WF10"
+    },
+    {
+      "from": "WF9",
+      "to": "WF10"
+    },
+    {
+      "from": "WF3",
+      "to": "WF11"
+    },
+    {
+      "from": "WF9",
+      "to": "WF11"
+    },
+    {
+      "from": "WF6",
+      "to": "WF12"
+    },
+    {
+      "from": "WF3",
+      "to": "WF12"
+    },
+    {
+      "from": "WF1",
+      "to": "WF13"
+    },
+    {
+      "from": "WF7",
+      "to": "WF13"
+    },
+    {
+      "from": "WF7",
+      "to": "WF14"
+    },
+    {
+      "from": "WF12",
+      "to": "WF14"
+    },
+    {
+      "from": "WF4",
+      "to": "WF15"
+    },
+    {
+      "from": "WF14",
+      "to": "WF15"
+    },
+    {
+      "from": "WF5",
+      "to": "WF16"
+    },
+    {
+      "from": "WF10",
+      "to": "WF16"
+    },
+    {
+      "from": "WF10",
+      "to": "WF17"
+    },
+    {
+      "from": "WF11",
+      "to": "WF17"
+    },
+    {
+      "from": "WF6",
+      "to": "WF18"
+    },
+    {
+      "from": "WF12",
+      "to": "WF18"
+    },
+    {
+      "from": "WF12",
+      "to": "WF19"
+    },
+    {
+      "from": "WF14",
+      "to": "WF19"
+    },
+    {
+      "from": "WF9",
+      "to": "WF20"
+    },
+    {
+      "from": "WF10",
+      "to": "WF20"
+    },
+    {
+      "from": "WF19",
+      "to": "WF20"
+    },
+    {
+      "from": "WF5",
+      "to": "WF21"
+    },
+    {
+      "from": "WF6",
+      "to": "WF22"
+    },
+    {
+      "from": "WF8",
+      "to": "WF22"
+    },
+    {
+      "from": "WF18",
+      "to": "WF22"
+    },
+    {
+      "from": "WF11",
+      "to": "WF23"
+    }
+  ]
+}
