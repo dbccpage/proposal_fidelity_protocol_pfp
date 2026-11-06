@@ -1,5 +1,7 @@
 # WF3: mine guidance, then solve once
 
+> **Adds to WF2:** a mining call whose guidance is screened and frozen before the solver runs. **Costs:** 2 calls on the normal path. **Shown so far:** the "2 calls" figure is stitched from a miner in one run and a solver in another; the actual development path took 10 actions ($0.0043) with 7 failures. The L2 slot check re-checks values the solver schema already pins, so it cannot fail on a valid reply.
+
 **Use this when:** the solver would benefit from concrete, typed operation
 guidance prepared before its answer. **Normal model calls:** two.
 

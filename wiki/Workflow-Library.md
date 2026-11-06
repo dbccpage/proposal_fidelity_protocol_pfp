@@ -20,10 +20,10 @@ validate either of them.
 | Recipe | Family | What you can use today | Evidence |
 | --- | --- | --- | --- |
 | `wf0001.integer_sum.manual.v1` | WF1 | Current-repository typed task-turn walkthrough | Executed offline example and negative controls. |
-| `wf0002.integer_sum.reference.v1` | WF2 | Standalone full-slot runner and recipe | Retained Oct 28 single-response experiment. |
-| `wf0003.integer_sum.reference.v1` | WF3 | Standalone mining/freeze/solve runner | Retained mining and repair history. |
-| `wf0004.integer_sum.reference.v1` | WF4 | Standalone concurrent five-agent runner | Retained concurrent six-call experiment. |
-| `wf0005.integer_sum.reference.v1` | WF5 | Standalone checked packet-rewrite runner | Retained failures and accepted six-call path. |
+| `wf0002.integer_sum.reference.v1` | WF2 | Standalone full-slot runner (`.automated.v1`); the `.reference.v1` ID names the historical recipe | Oct 28 experiment on the earlier prototype; the standalone runner itself has offline tests only. |
+| `wf0003.integer_sum.reference.v1` | WF3 | Standalone mining/freeze/solve runner | Oct 28 mining and repair history on the earlier prototype; runner has offline tests only. |
+| `wf0004.integer_sum.reference.v1` | WF4 | Standalone concurrent five-agent runner | Oct 28 six-call experiment on the earlier prototype; runner has offline tests only. |
+| `wf0005.integer_sum.reference.v1` | WF5 | Standalone checked packet-rewrite runner | Oct 28 failures and accepted path on the earlier prototype; runner has offline tests only. |
 
 [Install and run](Workflow-Running.md) covers the automated runners. The manual
 recipe IDs below remain historical documentation identities; the registry now

@@ -233,6 +233,8 @@ class WorkflowRuntime:
         if provider_record is not None:
             if provider_record != self._read_json(root / "provider.json"):
                 raise ValueError(f"{self.workflow.WORKFLOW_ID}_PROVIDER_RECORD_MISMATCH")
+            if not _wire_matches_response(provider_record, (root / "response.raw").read_bytes()):
+                raise ValueError(f"{self.workflow.WORKFLOW_ID}_PROVIDER_WIRE_MISMATCH")
             if provider_record["accounting_state"] not in {
                 "CompletedSettled",
                 "CompletedPendingSettlement",
@@ -444,3 +446,23 @@ class WorkflowRuntime:
                 )
             )
             return 2
+
+
+def _wire_matches_response(provider_record: dict, response: bytes) -> bool:
+    """Tie the checked reply bytes to the retained provider wire body.
+
+    Without this, a replaced ``response.raw`` with a matching receipt would replay
+    as verified. Records that retain no wire body (fixtures) have nothing to compare.
+    """
+    wire = provider_record.get("raw_reply_base64")
+    if wire is None:
+        return True
+    try:
+        body = json.loads(base64.b64decode(wire, validate=True))
+        content = body["choices"][0]["message"]["content"]
+    except (ValueError, TypeError, KeyError, IndexError, UnicodeError):
+        return False
+    if type(content) is not str:
+        return False
+    return content.encode("utf-8", errors="surrogatepass") == response
+

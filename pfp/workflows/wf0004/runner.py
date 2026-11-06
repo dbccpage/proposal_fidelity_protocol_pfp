@@ -136,10 +136,19 @@ def capture(runtime, phase, req, outcome, bound, model, tokens, elapsed):
         write_new(phase / "failure.json", record)
         return record
     value, c = outcome.value, outcome.value.candidate
+    finish_reason, reasoning = None, None
     try:
         body = json.loads(value.reply_bytes)
-    except (ValueError, UnicodeError):
-        body = {}
+        finish_reason = body.get("choices", [{}])[0].get("finish_reason")
+        reasoning = body.get("usage", {}).get("completion_tokens_details", {}).get(
+            "reasoning_tokens"
+        )
+    except (ValueError, UnicodeError, AttributeError, IndexError, TypeError):
+        # A malformed vendor envelope must not lose a charged reply: the raw bytes
+        # below are still retained, and these optional metadata fields stay null.
+        pass
+    if type(reasoning) is not int or reasoning < 0:
+        reasoning = None
     record = dict(
         request=build_openai_compat_body(
             req, model=model, max_tokens=tokens, provider=Provider.OPENROUTER
@@ -157,10 +166,8 @@ def capture(runtime, phase, req, outcome, bound, model, tokens, elapsed):
         accounting_binding=bound.binding,
         identity_error=c.model != model or c.provider != "openrouter",
         provider_elapsed_seconds=elapsed,
-        finish_reason=body.get("choices", [{}])[0].get("finish_reason"),
-        reasoning_tokens=body.get("usage", {})
-        .get("completion_tokens_details", {})
-        .get("reasoning_tokens"),
+        finish_reason=finish_reason,
+        reasoning_tokens=reasoning,
         tool_execution_count=0,
         raw_reply_base64=base64.b64encode(value.reply_bytes).decode(),
         raw_reply_sha256=digest(value.reply_bytes),

@@ -1,5 +1,7 @@
 # WF1: one task, one typed answer
 
+> **Adds:** nothing; this is the base. **Costs:** 1 call. **Shown so far:** one accepted live call on integer addition (1,496 tokens, $0.00017). The current runner has offline tests only.
+
 **Use this when:** you want one model response with a clear answer contract.
 **Normal model calls:** one. **Math needed for this example:** integer addition.
 

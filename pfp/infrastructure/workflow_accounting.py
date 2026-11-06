@@ -69,9 +69,10 @@ class EstimatedBudgetGateway(CanonicalEstimatedBudgetGateway):
         barrier = Barrier(len(requests))
 
         def send(action_id, request):
-            barrier.wait(timeout=30)
             started = perf_counter()
             try:
+                # A broken barrier must still close the reservation it made above.
+                barrier.wait(timeout=30)
                 result = self._dispatch_reserved(action_id, request, model, options)
             except Exception:
                 self._update_action(action_id, state="outcome_unknown")

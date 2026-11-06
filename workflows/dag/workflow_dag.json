@@ -2,7 +2,30 @@
   "schema_version": "pfp.workflow-dag.v1",
   "AuthorityEffect": "None",
   "date": "2026-11-05",
-  "scope": "Workflow families WF1-WF5 (implemented) and WF6-WF23 (derived designs). WF6-WF23 were derived by reading the retained pilot estate (pilots 0000000-0000203 plus its auxiliary folders) in the sibling research repository; no new model call was made. A derived node is a recipe design with source evidence, not an implemented runner and not a measured result.",
+  "scope": "Workflow families WF1-WF5 (implemented) and WF6-WF23 (proposals, revised by the 2026-11-05 research committee: see docs/research/2026-11-05_committee_report.md). WF6-WF23 were derived by reading the retained pilot estate (pilots 0000000-0000203 plus its auxiliary folders) in the sibling research repository; no new model call was made. A proposal node is a recipe design with source evidence, not an implemented runner and not a measured result.",
+  "kinds": {
+    "base": "The typed task turn: frozen task, one typed reply, independent host check, replay, accounting.",
+    "procedure_extension": "Adds one step or contract to the base (or to another extension). A real procedure.",
+    "task_preset": "The same procedure with a different task family and checker. Kept as a named preset, not a new procedure; merge_into names the procedure it runs.",
+    "experiment_design": "Wraps any workflow to compare arms (sweeps, held-out transfer, cost ladders). merge_into 'Sweep' marks designs that are one sweep with different arm sets.",
+    "meta_workflow": "Acts on prompts or detectors rather than on one task (immune lifecycle, prompt evolution).",
+    "harness_gate": "Required on every run (seal chain, replay, custody audit); not a research node."
+  },
+  "settings_not_workflows": [
+    "task_family",
+    "checker_id",
+    "dialect_or_representation",
+    "difficulty_rung",
+    "model_id",
+    "model_tier",
+    "temperature",
+    "antibody_ids",
+    "stage_count",
+    "attempt_limit",
+    "replicate_count",
+    "carrier_alphabet",
+    "arm_template"
+  ],
   "edge_meaning": "from -> to: the target workflow reuses the source workflow's procedure or acceptance rule as a step, so the source should be understood and working first.",
   "model_tiers": {
     "sonnet": "Coding, encoding, running and custody work. The default tier.",
@@ -26,6 +49,8 @@
       "id": "WF1",
       "name": "Typed answer",
       "status": "implemented",
+      "kind": "base",
+      "merge_into": null,
       "depends_on": [],
       "layer": 0,
       "source_pilots": [],
@@ -71,6 +96,8 @@
       "id": "WF2",
       "name": "Full slots",
       "status": "implemented",
+      "kind": "procedure_extension",
+      "merge_into": null,
       "depends_on": [
         "WF1"
       ],
@@ -117,6 +144,8 @@
       "id": "WF3",
       "name": "Mine, then solve",
       "status": "implemented",
+      "kind": "procedure_extension",
+      "merge_into": null,
       "depends_on": [
         "WF1"
       ],
@@ -170,6 +199,8 @@
       "id": "WF4",
       "name": "Five agents + LGGR",
       "status": "implemented",
+      "kind": "procedure_extension",
+      "merge_into": null,
       "depends_on": [
         "WF3"
       ],
@@ -223,6 +254,8 @@
       "id": "WF5",
       "name": "Checked rewrite",
       "status": "implemented",
+      "kind": "procedure_extension",
+      "merge_into": null,
       "depends_on": [
         "WF4"
       ],
@@ -281,7 +314,9 @@
     {
       "id": "WF6",
       "name": "Dialect sweep",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "experiment_design",
+      "merge_into": "Sweep",
       "depends_on": [
         "WF5"
       ],
@@ -349,7 +384,9 @@
     {
       "id": "WF7",
       "name": "Typed refusal",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
       "depends_on": [
         "WF1"
       ],
@@ -413,7 +450,9 @@
     {
       "id": "WF8",
       "name": "Staged sealed packets",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
       "depends_on": [
         "WF2",
         "WF5"
@@ -473,7 +512,9 @@
     {
       "id": "WF9",
       "name": "Bounded check-and-repair",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
       "depends_on": [
         "WF2"
       ],
@@ -532,7 +573,9 @@
     {
       "id": "WF10",
       "name": "Local-to-global obstruction certificate",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "task_preset",
+      "merge_into": "WF4",
       "depends_on": [
         "WF4",
         "WF9"
@@ -607,7 +650,9 @@
     {
       "id": "WF11",
       "name": "Dual-certificate synthesis",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "task_preset",
+      "merge_into": "WF1",
       "depends_on": [
         "WF3",
         "WF9"
@@ -686,7 +731,9 @@
     {
       "id": "WF12",
       "name": "Mechanism-control arms",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "experiment_design",
+      "merge_into": "Sweep",
       "depends_on": [
         "WF6",
         "WF3"
@@ -750,7 +797,9 @@
     {
       "id": "WF13",
       "name": "Exact-domain capsule battery",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "task_preset",
+      "merge_into": "WF1",
       "depends_on": [
         "WF1",
         "WF7"
@@ -821,7 +870,9 @@
     {
       "id": "WF14",
       "name": "Immune failure classification",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "meta_workflow",
+      "merge_into": null,
       "depends_on": [
         "WF7",
         "WF12"
@@ -880,7 +931,9 @@
     {
       "id": "WF15",
       "name": "Adversary tribunal",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": null,
       "depends_on": [
         "WF4",
         "WF14"
@@ -946,7 +999,9 @@
     {
       "id": "WF16",
       "name": "Substrate crosswalk",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "task_preset",
+      "merge_into": "WF5",
       "depends_on": [
         "WF5",
         "WF10"
@@ -1010,7 +1065,9 @@
     {
       "id": "WF17",
       "name": "Witnessed-difference programme",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "task_preset",
+      "merge_into": "WF10",
       "depends_on": [
         "WF10",
         "WF11"
@@ -1080,7 +1137,9 @@
     {
       "id": "WF18",
       "name": "Dossier replay campaign",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "harness_gate",
+      "merge_into": null,
       "depends_on": [
         "WF6",
         "WF12"
@@ -1142,7 +1201,9 @@
     {
       "id": "WF19",
       "name": "Failure-derived rule transfer",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "experiment_design",
+      "merge_into": null,
       "depends_on": [
         "WF12",
         "WF14"
@@ -1206,7 +1267,9 @@
     {
       "id": "WF20",
       "name": "Derivation loop with lift grants",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": "WF9",
       "depends_on": [
         "WF9",
         "WF10",
@@ -1277,7 +1340,9 @@
     {
       "id": "WF21",
       "name": "Structural prompt rewriting",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "procedure_extension",
+      "merge_into": "WF5",
       "depends_on": [
         "WF5"
       ],
@@ -1340,7 +1405,9 @@
     {
       "id": "WF22",
       "name": "Certified cost ladder",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "experiment_design",
+      "merge_into": "Sweep",
       "depends_on": [
         "WF6",
         "WF8",
@@ -1410,7 +1477,9 @@
     {
       "id": "WF23",
       "name": "Judge-packet custody audit",
-      "status": "derived",
+      "status": "proposal",
+      "kind": "harness_gate",
+      "merge_into": null,
       "depends_on": [
         "WF11"
       ],

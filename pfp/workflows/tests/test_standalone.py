@@ -154,3 +154,20 @@ def test_missing_optional_native_budget_is_a_typed_refusal(monkeypatch):
     assert runtime.utc_now().endswith("Z")
     with pytest.raises(NativeBudgetUnavailable, match="NATIVE_BUDGET_UNAVAILABLE"):
         runtime.invoke("state")
+
+
+def test_replay_ties_response_bytes_to_retained_wire_body():
+    import base64
+    import json as _json
+
+    from pfp.infrastructure.workflow_runtime import _wire_matches_response
+
+    def record(content):
+        wire = _json.dumps({"choices": [{"message": {"content": content}}]}).encode()
+        return {"raw_reply_base64": base64.b64encode(wire).decode()}
+
+    assert _wire_matches_response(record("abc"), b"abc")
+    assert not _wire_matches_response(record("abc"), b"abd")  # swapped reply
+    assert not _wire_matches_response(record(None), b"")  # no text content
+    assert not _wire_matches_response({"raw_reply_base64": "!!"}, b"abc")  # corrupt wire
+    assert _wire_matches_response({}, b"abc")  # fixtures retain no wire body

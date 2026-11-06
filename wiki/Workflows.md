@@ -5,50 +5,33 @@ Add another mechanism when your work needs it. You can stop at any workflow.
 
 ## Pick the problem you have
 
-| I need to… | Choose | Model calls on the normal path |
-| --- | --- | ---: |
-| Get one answer in a declared format and check it | [WF1 — typed answer](Workflow-WF1.md) | 1 |
-| Keep the operations, missing information and proposed repair moves | [WF2 — full slots](Workflow-WF2.md) | 1 |
-| Prepare useful operation guidance before solving | [WF3 — mine, then solve](Workflow-WF3.md) | 2 |
-| Compare five isolated answers against one global check | [WF4 — five agents + LGGR](Workflow-WF4.md) | 6 |
-| Preserve the task through a grammar rewrite before WF4 | [WF5 — checked rewrite](Workflow-WF5.md) | 6 |
+| I need to… | Choose | Adds to WF1 | Model calls | Evidence so far |
+| --- | --- | --- | ---: | --- |
+| Get one answer in a declared format and check it | [WF1 — typed answer](Workflow-WF1.md) | (the base) | 1 | 1 task, 1 accepted run |
+| Keep the operations, missing information and proposed repair moves | [WF2 — full slots](Workflow-WF2.md) | a larger response contract | 1 | 1 task, 1 accepted run; repair moves never exercised |
+| Prepare operation guidance before solving | [WF3 — mine, then solve](Workflow-WF3.md) | a mining stage | 2 | 1 task; the 2-call figure is stitched from two runs, the real path took 10 actions ($0.0043) |
+| Compare five isolated answers against one global check | [WF4 — five agents + LGGR](Workflow-WF4.md) | five isolated solvers and a global check | 6 | 1 task, 1 run, all five correct |
+| Preserve the task through a grammar rewrite before WF4 | [WF5 — checked rewrite](Workflow-WF5.md) | a deterministic rewrite step | 6 | 1 task, 1 accepted run after 4 failed miners |
+
+**What the evidence shows.** Every result so far is one integer-addition task.
+All five workflows gave the right answer, and none was cheaper, faster or
+more accurate than WF1 on it. That is a starting point, not a ranking: pick
+the extension your task needs, not the highest number. See
+[Results and costs](Workflow-Results.md) for every attempt, including failures.
 
 WF4/WF5 share one mining call across five solvers. The demonstrated WF5 rewrite
 is deterministic and adds zero model calls. Repairs and failed attempts are
 additional actions and stay in the accounting.
 
-## Beyond WF5: eighteen derived families
+## One base, several extensions
 
-WF6–WF23 extend the five runners into the procedures that the retained
-pilots used: dialect sweeps, typed refusal, staged packets, bounded repair,
-obstruction certificates, dual certificates, tribunals, rule transfer and
-more. **They are designs, not runners yet.** Each one has a goal, a host
-check, a process, its mathematics, and a team with a bounded boost step.
-
-| Family | Goal | Builds on |
-| --- | --- | --- |
-| [WF6 — Dialect sweep](Workflow-DAG.md#wf6) | Measure, item by item, which presentation of the same task the host accepts more often, without changing the task. | WF5 |
-| [WF7 — Typed refusal](Workflow-DAG.md#wf7) | Return the correct refusal code whenever the premises do not determine an answer. | WF1 |
-| [WF8 — Staged sealed packets](Workflow-DAG.md#wf8) | Each stage produces a sealed, typed output; the final answer checks. | WF2, WF5 |
-| [WF9 — Bounded check-and-repair](Workflow-DAG.md#wf9) | An accepted reply within L attempts, or a recorded stop at the limit. | WF2 |
-| [WF10 — Local-to-global obstruction certificate](Workflow-DAG.md#wf10) | A checked gluing witness or a checked obstruction class for the declared cover. | WF4, WF9 |
-| [WF11 — Dual-certificate synthesis](Workflow-DAG.md#wf11) | A frozen solver whose every output carries a certificate the judge accepts on hidden cases. | WF3, WF9 |
-| [WF12 — Mechanism-control arms](Workflow-DAG.md#wf12) | An arm comparison on a fixed carrier whose only difference is the mechanism note. | WF6, WF3 |
-| [WF13 — Exact-domain capsule battery](Workflow-DAG.md#wf13) | One checked answer or refusal per domain capsule. | WF1, WF7 |
-| [WF14 — Immune failure classification](Workflow-DAG.md#wf14) | Detectors that catch the recorded failures and never fire on the sealed self panel. | WF7, WF12 |
-| [WF15 — Adversary tribunal](Workflow-DAG.md#wf15) | A verdict that the finite check supports, with both sides frozen first. | WF4, WF14 |
-| [WF16 — Substrate crosswalk](Workflow-DAG.md#wf16) | A translation that preserves every declared relation, with alternatives recorded. | WF5, WF10 |
-| [WF17 — Witnessed-difference programme](Workflow-DAG.md#wf17) | Each claimed difference has a checked witness and each equivalence a checked certificate. | WF10, WF11 |
-| [WF18 — Dossier replay campaign](Workflow-DAG.md#wf18) | A replayable 5 x 5 + 5 campaign whose every grade reproduces from stored bytes. | WF6, WF12 |
-| [WF19 — Failure-derived rule transfer](Workflow-DAG.md#wf19) | A rule that improves held-out acceptance without new false positives. | WF12, WF14 |
-| [WF20 — Derivation loop with lift grants](Workflow-DAG.md#wf20) | Discharge the named obligations or stop with a typed record at the loop limit. | WF9, WF10, WF19 |
-| [WF21 — Structural prompt rewriting](Workflow-DAG.md#wf21) | Rewrites that attach hints or encodings without touching protected bytes. | WF5 |
-| [WF22 — Certified cost ladder](Workflow-DAG.md#wf22) | Decide each pre-registered hypothesis on this bank, at this rung, with this gate. | WF6, WF8, WF18 |
-| [WF23 — Judge-packet custody audit](Workflow-DAG.md#wf23) | Show that every challenge packet is sealed and leak-free before any team runs it. | WF11 |
-
-See the [workflow DAG](Workflow-DAG.md) for the dependency graph, the team
-for each family and how the boost step works. The machine-readable graph is
-[`workflows/dag/workflow_dag.json`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/dag/workflow_dag.json).
+WF2–WF5 are WF1 plus one switch each: a larger response contract (WF2), a
+mining stage before solving (WF3), five isolated solvers with a global check
+(WF4), and a deterministic rewrite before WF4 (WF5). The
+[workflow DAG](Workflow-DAG.md) uses that shape for everything else: one base
+workflow, a few procedure extensions, experiment designs that wrap any
+workflow, and design proposals (WF6–WF23) that have **no runner and no run
+yet**.
 
 ## Your shortest route
 

@@ -1,5 +1,7 @@
 # WF2: collect the operations in one response
 
+> **Adds to WF1:** a 31-slot response contract (operations, missing information, repair moves). **Costs:** 1 call, about 3.5× WF1's tokens. **Shown so far:** one accepted run on integer addition; the slot checks are structural, and no repair move has ever been exercised.
+
 **Use this when:** you want the answer and a structured account of the operations,
 missing information and proposed DDC moves. **Normal model calls:** one.
 

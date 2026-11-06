@@ -3,13 +3,13 @@
 **Start with WF1.** All five runners now live in separate `pfp/workflows/wf0001`
 through `wf0005` folders. You need Python 3.12+.
 
-The commands below target the migration branch while its source PR is open.
+The commands below use the `main` branch, where the runners now live.
 After merging, a normal checkout of `main` includes them.
 
 ## 1. Install
 
 ```powershell
-git clone --branch codex/workflow-library-guides https://github.com/dbccpage/proposal_fidelity_protocol_pfp.git
+git clone https://github.com/dbccpage/proposal_fidelity_protocol_pfp.git
 cd proposal_fidelity_protocol_pfp
 python -m venv .venv
 $pfpPython = (Resolve-Path .venv/Scripts/python.exe).Path
