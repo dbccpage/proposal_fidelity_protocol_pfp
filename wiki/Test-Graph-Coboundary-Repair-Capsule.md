@@ -22,7 +22,7 @@ when the claims are already a coboundary (a difference of potentials).
 
 ## Setup and inputs
 
-`demos/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/`
+`workflows/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/`
 
 - `reference_solver/` builds a spanning tree, finds the cycle basis, solves the
   minimum-L1 repair exactly with rational numbers, and emits the certificate.
@@ -50,9 +50,9 @@ All numbers on the wire are canonical rational strings such as `"3/2"`.
 
 From the repository root:
 
-    python -m pytest demos/certified_challenges/test_c011_reference_cases.py demos/certified_challenges/c011_cycle_rank_ladder_coboundary_repair -q
+    python -m pytest workflows/certified_challenges/test_c011_reference_cases.py workflows/certified_challenges/c011_cycle_rank_ladder_coboundary_repair -q
 
-Expected: `104 passed`. `python -m pytest demos/certified_challenges -q` runs all fifty challenge packages.
+Expected: `104 passed`. `python -m pytest workflows/certified_challenges -q` runs all fifty challenge packages.
 
 ## What a failure means
 

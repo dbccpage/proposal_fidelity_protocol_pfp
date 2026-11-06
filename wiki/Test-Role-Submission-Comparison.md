@@ -28,11 +28,11 @@ Default: the worksheet puzzles and drills. `--input file.json` supplies a task, 
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/role_submission_comparison/tests -q -p no:cacheprovider
-python demos/role_submission_comparison/run.py --output-dir <scratch-dir>
+python -m pytest workflows/role_submission_comparison/tests -q -p no:cacheprovider
+python workflows/role_submission_comparison/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000035/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000035/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -56,4 +56,4 @@ A comment that pointed at the original README was reworded to point at the origi
 
 ## Where the code lives
 
-`demos/role_submission_comparison/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/role_submission_comparison/` (`run.py`, `tests/`, and a short `README.md`).

@@ -90,7 +90,7 @@ A record emitted by a model is a proposal, not a proof that its preconditions ho
 
 None of these automatically establishes another. Preserve all failed records.
 The exact historical catalogue, including its original source identity, is
-[available as JSON](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/contracts/slot_catalogue.json).
+[available as JSON](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/library/contracts/slot_catalogue.json).
 It is the reference workflow profile, not a claim that every PFP application
 must use these 31 fields.
 

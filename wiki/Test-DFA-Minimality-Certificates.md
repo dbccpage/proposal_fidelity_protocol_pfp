@@ -43,11 +43,11 @@ The 48 corrupted answers include redirected transitions, an extra unreachable st
 
 From the repository root (standard library plus pytest):
 
-    python -m pytest demos/certified_challenges/c056_dfa_minimization_equivalence -q
+    python -m pytest workflows/certified_challenges/c056_dfa_minimization_equivalence -q
 
 Score the reference solver on the 14 public examples:
 
-    python demos/certified_challenges/c056_dfa_minimization_equivalence/participant_packet/runner.py
+    python workflows/certified_challenges/c056_dfa_minimization_equivalence/participant_packet/runner.py
 
 ## Expected output
 
@@ -66,6 +66,6 @@ Score the reference solver on the 14 public examples:
 
 ## Where it lives
 
-`demos/certified_challenges/c056_dfa_minimization_equivalence`. Moved from the internal challenge suite; imports now use the package name. The script that ran language models on this challenge, and the one test that read that script's prompt, were left behind because they need the unpublished runtime. Model results are in the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/demos/certified_challenges/findings) with their notices.
+`workflows/certified_challenges/c056_dfa_minimization_equivalence`. Moved from the internal challenge suite; imports now use the package name. The script that ran language models on this challenge, and the one test that read that script's prompt, were left behind because they need the unpublished runtime. Model results are in the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/certified_challenges/findings) with their notices.
 
 See also [Sorting Network Zero-One Principle](Test-Sorting-Network-Zero-One-Principle.md), [Rewrite Normal Form Loss](Test-Rewrite-Normal-Form-Loss.md) and [Core Concepts](Core-Concepts.md).

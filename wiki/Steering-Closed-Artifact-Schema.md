@@ -31,7 +31,7 @@ duplicate keys, non-finite numbers, bad bytes and non-object roots without
 echoing the reply.
 
 ```powershell
-python -m pytest demos/provider_reply_guard/test_reply_guard_strict_json.py -q
+python -m pytest workflows/provider_reply_guard/test_reply_guard_strict_json.py -q
 ```
 
 [PFP Lab](PFP-Lab.md) uses the same discipline for its own input: a scenario

@@ -30,7 +30,7 @@ recipe IDs below remain historical documentation identities; the registry now
 also includes a separate `.automated.v1` ID for each migrated runner.
 
 The machine-readable registry is
-[`docs/workflows/catalog.json`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/catalog.json).
+[`workflows/library/catalog.json`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/library/catalog.json).
 It distinguishes documentation versions from historical runtime versions.
 [Integration status](Workflow-Integration-Status.md) explains the current packaging boundary.
 

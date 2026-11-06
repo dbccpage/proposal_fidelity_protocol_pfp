@@ -127,7 +127,7 @@ included actual concurrent host invocation and independent global rejection of
 wrong unanimous answers. A built wheel was checked outside the checkout for
 resource lookup and entry points. No new live model call was made.
 
-The [migration validation receipt](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/migration_validation.json)
+The [migration validation receipt](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/library/migration_validation.json)
 records the exact checks and their limits. Existing [October 28 results](Workflow-Results.md)
 remain historical measurements, with their original versions and raw replies intact.
 

@@ -51,7 +51,7 @@ finding nothing is retired. The composition of roles is described in
 
 From the repository root:
 
-    python -m pytest demos/yardstick -q
+    python -m pytest workflows/yardstick -q
 
 Only the standard library and pytest are needed.
 
@@ -88,4 +88,4 @@ renamed to `panel_coverage`.
 
 ## Location
 
-`demos/yardstick/arm_yardstick.py` and `demos/yardstick/test_arm_yardstick.py`.
+`workflows/yardstick/arm_yardstick.py` and `workflows/yardstick/test_arm_yardstick.py`.

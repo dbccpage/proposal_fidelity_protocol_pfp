@@ -1,6 +1,6 @@
 # Pilots
 
-Experiments that ran language models against a task. Unlike [`demos/`](../demos/README.md),
+Experiments that ran language models against a task. Unlike [`workflows/`](../workflows/README.md),
 these need a model and the private runtime (the `adversary`, `operations` and
 `operating_system` packages), which are not published here, so their tests do
 not run in this repository. They are kept for their task definitions, cases

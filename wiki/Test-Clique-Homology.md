@@ -27,11 +27,11 @@ Default: nine historical question and answer pairs plus seven controls. `--input
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest demos/clique_homology/tests -q -p no:cacheprovider
-python demos/clique_homology/run.py --output-dir <scratch-dir>
+python -m pytest workflows/clique_homology/tests -q -p no:cacheprovider
+python workflows/clique_homology/run.py --output-dir <scratch-dir>
 ```
 
-Without `--output-dir`, results go to `demos/pilot_output/pilot_0000044/` beside the demo folders. Use a scratch directory to keep the repository clean.
+Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000044/` beside the demo folders. Use a scratch directory to keep the repository clean.
 
 ## Expected output
 
@@ -55,4 +55,4 @@ No code changes beyond the move. Rational homology only; integral torsion is out
 
 ## Where the code lives
 
-`demos/clique_homology/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/clique_homology/` (`run.py`, `tests/`, and a short `README.md`).

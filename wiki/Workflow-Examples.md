@@ -6,20 +6,20 @@ For current packaged fixtures and automated commands, use [Install and run](Work
 
 | Role | Exact prepared files |
 | --- | --- |
-| `seed-only` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/seed-only) |
-| `wf1-solver` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/wf1-solver) |
-| `wf2-solver` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/wf2-solver) |
-| `wf3-miner` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/wf3-miner) |
-| `wf3-solver` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/wf3-solver) |
-| `wf4-miner` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/wf4-miner) |
-| `wf4-agent-1` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/wf4-agent-1) |
-| `wf5-miner` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/wf5-miner) |
-| `wf5-agent-1` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/examples/wf5-agent-1) |
+| `seed-only` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/seed-only) |
+| `wf1-solver` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/wf1-solver) |
+| `wf2-solver` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/wf2-solver) |
+| `wf3-miner` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/wf3-miner) |
+| `wf3-solver` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/wf3-solver) |
+| `wf4-miner` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/wf4-miner) |
+| `wf4-agent-1` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/wf4-agent-1) |
+| `wf5-miner` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/wf5-miner) |
+| `wf5-agent-1` | [Open files](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/examples/wf5-agent-1) |
 
 Each available folder contains `system_prompt.txt`, `user_prompt.txt`,
 `response_schema.json` and `task.json` as retained by its historical runner.
 Some roles do not have all four files. The
-[file manifest](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/workflows/examples/manifest.json)
+[file manifest](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/library/examples/manifest.json)
 lists exactly what is present and its original SHA-256.
 
 ## Adapt an example safely
@@ -35,7 +35,7 @@ you also need the grounding, provenance, operation screening, global checks
 and accounting described by the corresponding recipe. The miner's provider
 projection may be simpler than its exact host schema.
 
-The [raw replies](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/docs/workflows/evidence/raw)
+The [raw replies](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/evidence/raw)
 include failures. Treat them as untrusted experimental output.
 This selected export does not include all old runtime dependencies or a
 portable provider/accounting replay system.

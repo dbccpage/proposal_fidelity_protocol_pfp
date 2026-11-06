@@ -26,7 +26,7 @@ during replay, the replay records `CRASH: ...` and fails, rather than passing.
 
 ## Setup and inputs
 
-- `demos/certified_challenges/sqlite_pilot_store.py`: `PilotRunRecord` (one
+- `workflows/certified_challenges/sqlite_pilot_store.py`: `PilotRunRecord` (one
   run) and `SqlitePilotStore` with `record_run`, `get_run`, `list_runs` and
   `replay_run`. Standard library only.
 - `test_c051_replay_custody.py` to `test_c059_replay_custody.py`: one file per
@@ -38,7 +38,7 @@ during replay, the replay records `CRASH: ...` and fails, rather than passing.
 
 From the repository root:
 
-    python -m pytest demos/certified_challenges/test_c051_replay_custody.py demos/certified_challenges/test_c052_replay_custody.py demos/certified_challenges/test_c053_replay_custody.py demos/certified_challenges/test_c054_replay_custody.py demos/certified_challenges/test_c055_replay_custody.py demos/certified_challenges/test_c059_replay_custody.py -q
+    python -m pytest workflows/certified_challenges/test_c051_replay_custody.py workflows/certified_challenges/test_c052_replay_custody.py workflows/certified_challenges/test_c053_replay_custody.py workflows/certified_challenges/test_c054_replay_custody.py workflows/certified_challenges/test_c055_replay_custody.py workflows/certified_challenges/test_c059_replay_custody.py -q
 
 ## Expected output
 
@@ -73,6 +73,6 @@ matrix scripts.
 
 ## Where it lives
 
-`demos/certified_challenges/sqlite_pilot_store.py` and
-`demos/certified_challenges/test_c05*_replay_custody.py`. See also
+`workflows/certified_challenges/sqlite_pilot_store.py` and
+`workflows/certified_challenges/test_c05*_replay_custody.py`. See also
 [Core Concepts](Core-Concepts.md) and [PFP Package](PFP-Package.md).

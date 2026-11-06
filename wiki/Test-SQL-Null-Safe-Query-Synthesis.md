@@ -29,7 +29,7 @@ What the tests guard, in PFP terms:
 
 ## Package layout
 
-Every challenge package in `demos/certified_challenges/` has the same shape:
+Every challenge package in `workflows/certified_challenges/` has the same shape:
 
 - `participant_packet/TASK.md`: the problem statement and the exact answer
   format a solver must produce.
@@ -58,12 +58,12 @@ wrong table, syntax errors and false refusals). Test databases are built by
 
 From the repository root (Python 3.12 standard library plus pytest):
 
-    python -m pytest demos/certified_challenges/c059_sql_null_total_query_synthesis -q
-    python -m pytest demos/certified_challenges/test_c059_replay_custody.py -q
-    python demos/certified_challenges/c059_sql_null_total_query_synthesis/participant_packet/runner.py
+    python -m pytest workflows/certified_challenges/c059_sql_null_total_query_synthesis -q
+    python -m pytest workflows/certified_challenges/test_c059_replay_custody.py -q
+    python workflows/certified_challenges/c059_sql_null_total_query_synthesis/participant_packet/runner.py
 
 The fixture generators are modules in the package; run them from inside
-`demos/certified_challenges` as
+`workflows/certified_challenges` as
 `python -m c059_sql_null_total_query_synthesis.generate_cases`.
 
 ## Expected output
@@ -84,7 +84,7 @@ The fixture generators are modules in the package; run them from inside
 ## Adaptations
 
 Besides the import paths, the five tests that start a fresh Python process now
-pass `cwd=` set to `demos/certified_challenges`, so the child process can
+pass `cwd=` set to `workflows/certified_challenges`, so the child process can
 import the package by name. A code comment that named SQLite's temporary
 schema table now uses its alias `sqlite_temp_schema`.
 
@@ -100,9 +100,9 @@ schema table now uses its alias `sqlite_temp_schema`.
 
 ## Where it lives
 
-`demos/certified_challenges/c059_sql_null_total_query_synthesis`. Ported from an internal test suite. Imports were changed from the
+`workflows/certified_challenges/c059_sql_null_total_query_synthesis`. Ported from an internal test suite. Imports were changed from the
 original package path to the package's own name, and the `conftest.py` in
-`demos/certified_challenges/` puts that folder on `sys.path`. The checkers,
+`workflows/certified_challenges/` puts that folder on `sys.path`. The checkers,
 cases and assertions are unchanged.
 
 See also [Certified Run Replay Store](Test-Certified-Run-Replay-Store.md),
