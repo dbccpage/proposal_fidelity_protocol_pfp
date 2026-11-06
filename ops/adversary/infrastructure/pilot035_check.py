@@ -9,7 +9,7 @@ from pathlib import Path
 from pfp.domain.pfp_ingress import strict_json
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / 'operads/data/pilots/pilot035'
+DATA = ROOT.parent / 'workflows/wf14_immune_failure_classification/pilots/pilot035'
 
 
 def canonical(value) -> bytes:

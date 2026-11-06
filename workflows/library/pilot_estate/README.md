@@ -51,6 +51,7 @@ their result capsules; the research repository still has them.
 | 188–191 (dossier replay, 120 live calls), replay runners | `wf18_dossier_replay_campaign/pilots/` |
 | challenge suite, PFP-learning evidence (35 live replies) | `wf19_failure_derived_rule_transfer/pilots/` |
 | 199–203 (derivation loops, 25 live calls), finite-QM campaign, relational spacetime, PO035 evidence | `wf20_derivation_loop_with_lift_grants/pilots/` |
+| pilot035 (Tao cross-ratio packet; was `operads/data/pilots/`) | `wf14_immune_failure_classification/pilots/` |
 | ACSet rewriting pilots, optional rewrite backends | `wf21_structural_prompt_rewriting/pilots/` |
 | certified ladder, M5 campaign evidence | `wf22_certified_cost_ladder/pilots/` |
 | judge-packet audit | `wf23_judge_packet_custody_audit/pilots/` |
