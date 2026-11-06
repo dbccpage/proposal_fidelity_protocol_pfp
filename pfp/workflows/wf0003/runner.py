@@ -10,6 +10,7 @@ from time import perf_counter
 from operations.domain.rop.result import Err
 from pfp.infrastructure.adapters.pfp_campaign import canonical, digest, write_new
 from pfp.infrastructure.workflow_accounting import create_accounted_openrouter_gateway
+from pfp.infrastructure.workflow_tasks import reasoning_policy
 from pfp.infrastructure.pilot_matrix import validate_pilot_gateways
 from pfp.infrastructure.workflow_runtime import WorkflowRuntime
 from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
@@ -174,6 +175,7 @@ def dispatch_phase(runtime, spec, phase_root, gateway, model, tokens):
             top_p=1.0,
             allow_fallbacks=False,
             require_parameters=True,
+            thinking=reasoning_policy(),
             response_format={"type": "json_object"}
             if runtime.workflow.WORKFLOW_ID == "WF3_MINER"
             else {

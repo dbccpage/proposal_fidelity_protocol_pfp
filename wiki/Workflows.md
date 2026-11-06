@@ -7,14 +7,14 @@ Add another mechanism when your work needs it. You can stop at any workflow.
 
 | I need to… | Choose | Adds to WF1 | Model calls | Evidence so far |
 | --- | --- | --- | ---: | --- |
-| Get one answer in a declared format and check it | [WF1 — typed answer](Workflow-WF1.md) | (the base) | 1 | 1 task, 1 accepted run |
-| Keep the operations, missing information and proposed repair moves | [WF2 — full slots](Workflow-WF2.md) | a larger response contract | 1 | 1 task, 1 accepted run; repair moves never exercised |
-| Prepare operation guidance before solving | [WF3 — mine, then solve](Workflow-WF3.md) | a mining stage | 2 | 1 task; the 2-call figure is stitched from two runs, the real path took 10 actions ($0.0043) |
-| Compare five isolated answers against one global check | [WF4 — five agents + LGGR](Workflow-WF4.md) | five isolated solvers and a global check | 6 | 1 task, 1 run, all five correct |
-| Preserve the task through a grammar rewrite before WF4 | [WF5 — checked rewrite](Workflow-WF5.md) | a deterministic rewrite step | 6 | 1 task, 1 accepted run after 4 failed miners |
+| Get one answer in a declared format and check it | [WF1 — typed answer](Workflow-WF1.md) | (the base) | 1 | 1 task; accepted on two models (Oct 28 prototype, Nov 6 shipped runner) |
+| Keep the operations, missing information and proposed repair moves | [WF2 — full slots](Workflow-WF2.md) | a larger response contract | 1 | 1 task; accepted on two models; repair moves never exercised |
+| Prepare operation guidance before solving | [WF3 — mine, then solve](Workflow-WF3.md) | a mining stage | 2 | 1 task; the Oct 28 2-call figure is stitched from two runs (real path 10 actions, $0.0043); refused on Nov 6 at its 1,300-token solver limit |
+| Compare five isolated answers against one global check | [WF4 — five agents + LGGR](Workflow-WF4.md) | five isolated solvers and a global check | 6 | 1 task; all five correct on two models |
+| Preserve the task through a grammar rewrite before WF4 | [WF5 — checked rewrite](Workflow-WF5.md) | a deterministic rewrite step | 6 | 1 task; accepted Oct 28 after 4 failed miners; Nov 6 miner refused on schema |
 
 **What the evidence shows.** Every result so far is one integer-addition task.
-All five workflows gave the right answer, and none was cheaper, faster or
+On the earlier prototype all five gave the right answer, and none was cheaper, faster or
 more accurate than WF1 on it. That is a starting point, not a ranking: pick
 the extension your task needs, not the highest number. See
 [Results and costs](Workflow-Results.md) for every attempt, including failures.

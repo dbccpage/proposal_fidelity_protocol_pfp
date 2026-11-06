@@ -58,6 +58,8 @@ and preservation check. Unsupported seed language is refused before model dispat
 
 ## 3. Run with OpenRouter
 
+For reasoning models (for example DeepSeek V4.1 Flash), set `PFP_REASONING=off` so hidden reasoning does not use up the fixed output allowances; the setting is recorded in the retained wire request. WF4 and WF5 accept `--model`; the default stays the historical comparison model.
+
 Set `OPENROUTER_API_KEY` in your environment using your usual secret-management
 method. The following commands **can incur charges**. Keep preview folders and
 live run folders separate; `run` creates a new attempt and never overwrites one.

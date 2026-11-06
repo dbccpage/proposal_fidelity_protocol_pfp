@@ -1,6 +1,6 @@
 # WF4: five agents and a global check
 
-> **Adds to WF3:** five isolated solvers and a global check. **Costs:** 6 calls, about 4.4× WF1. **Shown so far:** one live run, all five correct. Each agent's receipt now checks its own total, so a wrong agent is visible locally; the global check adds agreement across agents.
+> **Adds to WF3:** five isolated solvers and a global check. **Costs:** 6 calls, about 4.4× WF1. **Shown so far:** live runs on two models, all five agents correct each time. Each agent's receipt now checks its own total, so a wrong agent is visible locally; the global check adds agreement across agents.
 
 **Use this when:** you want five isolated proposals checked against the same
 task and against their shared requirements. **Normal model calls:** six.

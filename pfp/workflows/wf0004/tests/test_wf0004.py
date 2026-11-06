@@ -343,3 +343,15 @@ def test_malformed_vendor_envelope_keeps_charged_replies(tmp_path):
         assert provider["finish_reason"] is None and provider["reasoning_tokens"] is None
         assert (root / f"agent-{i}" / "response.raw").read_bytes()
 
+
+
+def test_other_model_is_allowed_and_recorded(tmp_path):
+    calls = []
+    root = tmp_path / "other"
+    other = "vendor/other-model"
+    result = runner.run(SPEC, root, other, gateway_factory=scripted_factory(calls))
+    assert result["status"] == "HOST_ACCEPTED"
+    provider = json.loads((root / "agent-1" / "provider.json").read_text(encoding="utf-8"))
+    assert provider["requested_model"] == other and provider["served_model"] == other
+    with pytest.raises(ValueError, match="MODEL_REQUIRED"):
+        runner.run(SPEC, tmp_path / "blank", " ", gateway_factory=scripted_factory([]))

@@ -272,6 +272,7 @@ class WorkflowRuntime:
         from adversary.infrastructure.providers.openai_compat import (
             build_openai_compat_body,
         )
+        from pfp.infrastructure.workflow_tasks import reasoning_policy
 
         validate_pilot_gateways({model: gateway}, [model], max_tokens=max_output_tokens)
         limit = getattr(gateway, "limit", gateway.scope.get("limit_microusd"))
@@ -295,7 +296,11 @@ class WorkflowRuntime:
             turn.prompt.system,
             turn.prompt.user,
             decoding=DecodingParamsV1(
-                temperature=0.0, top_p=1.0, allow_fallbacks=False, require_parameters=True
+                temperature=0.0,
+                top_p=1.0,
+                allow_fallbacks=False,
+                require_parameters=True,
+                thinking=reasoning_policy(),
             ),
         )
         wire_request = build_openai_compat_body(
