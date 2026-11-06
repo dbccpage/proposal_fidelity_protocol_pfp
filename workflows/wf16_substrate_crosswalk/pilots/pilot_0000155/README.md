@@ -1,0 +1,61 @@
+# pilot_0000155 — G11 Wiring the m114 Solver Adapter into the Search Policies
+
+**AuthorityEffect:** None.
+**Task family token declared here:** `genesis_substrate_crosswalk`
+**Checker id declared here:** `PFP-155-GENESIS-SUBSTRATE-CROSSWALK-G11`
+**Disposition:** planned transmutation of demo_004 `G11`. Not a provider run.
+
+## 1. Description
+
+This directory stores one planned capsule for catalog challenge `G11`. The stimulus is the catalog title and summary. The live spec at `omega_engine_education/pilots/demo_004/k_genesis_19l57g1/g11_m114_solver_adapter_wiring.md` was absent when this layout was written. That file was not copied into the prompt. Judge packets, answer files, and solver modules stayed in `demo_004`.
+
+No model was called. `response.yaml` has no reply bytes. `trial_status` is `PLANNED`. The typed evaluation field is `NOT_RUN`, because that enum has no `PLANNED` member. The evaluation reason records that disposition. That is not an acceptance.
+
+`coordinates.model_class` is `8B` because that is the unrun layout band used by pilot 0000052. `model_id` is `not-dispatched`. `target_spend_usd: 0.0` is the spend allocated to this unrun layout. It is not a measured cost. `difficulty_rung: 2` is an unmeasured layout coordinate.
+
+Historic catalog status `planned` is inventory metadata from `demo_004/catalog.yaml`. It is not a measurement produced by this directory. Morning-agenda titles were not used. C001–C010 remain in `pilot_0000052` and were not copied here.
+
+Review of `G11` found no taxonomy token whose checker is this certificate. `genesis_substrate_crosswalk` is the nearest existing token in `task_families.yaml` and is only a layout coordinate.
+
+`AB_INTERMEDIATE_WITNESS` is a layout label in the prompt guidance. It is not a file under `pilots/antibodies/`.
+
+## 2. Claim hygiene
+
+### 2.1 Supports
+
+- Supports the directory layout: root specifications, one `misc/` aggregate, and `tests/test_00`.
+- Supports a source citation to `omega_engine_education/pilots/demo_004/k_genesis_19l57g1/g11_m114_solver_adapter_wiring.md` and to catalog id `G11`.
+
+### 2.2 Does not support
+
+- Does not support a live model result.
+- Does not support a claim that `PFP-155-GENESIS-SUBSTRATE-CROSSWALK-G11` is a registered checker.
+- Does not support a claim that the historic catalog status `planned` is a fresh checker receipt.
+- Does not support a claim that `genesis_substrate_crosswalk` is the certificate's checker family when this README calls that token a layout coordinate.
+- Does not support copying hidden cases, public gold, or a reference-solver gate into this capsule.
+
+### 2.3 Narrowest claim
+
+`pilot_0000155` stores one planned prompt capsule for `G11`. The expected string records the historic catalog status and says this layout made no fresh receipt.
+
+### 2.4 Next test
+
+Register a checker for this finite task, or bind an existing one if a later registry contains it. Then dispatch only `tests/test_00` on one pinned local model, keep the reply bytes, and set status from that dispatch. Do not mark this planned row accepted.
+
+## 3. Capsule catalog
+
+- [`tests/test_00`](tests/test_00): `g11_catalog_summary`. Source citation `omega_engine_education/pilots/demo_004/k_genesis_19l57g1/g11_m114_solver_adapter_wiring.md`. Spec file absent. Terminal status PLANNED. No provider reply.
+
+## 4. CoT miner
+
+Command, from the repository root:
+
+`py -3.12 -m omega_engine_adversary.tests.pilots.cot_miner --results omega_engine_adversary/tests/pilots/pilot_0000155/misc --out omega_engine_adversary/tests/pilots/pilot_0000155/misc/cot_mine.yaml`
+
+Recorded stdout: `traces 0 skills 0 antiskills 0 antibodies 0 rules 0`.
+
+The miner output is in `misc/cot_mine.yaml`. A layout index was appended after that run. The index is not a mined trace.
+
+## 5. Files not copied
+
+Solvers, judge packets, answer files, `__pycache__`, and the morning agenda were not copied.

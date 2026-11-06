@@ -1,0 +1,435 @@
+authority_effect: None
+generation: 1
+guidance: []
+mode: PFP-12-SIMPLICIAL-CARRIER
+original_seed: "Derive a corrected causal refinement statement for PO035 \xA73, rather\
+  \ than just evaluating its envelope. On a pitch-a hypercubic comparison graph take\
+  \ an LR upper bound E_a(t,x)=min(1,C_a exp[-mu_a (||x||_1-a*v_hop(a)*t)/a]) for\
+  \ t>=0. State uniform assumptions, physical velocity/time scaling, limiting spatial\
+  \ norm, what the bound establishes outside the cone, and what remains unproved inside\
+  \ it. Analyze the null boundary under different rates of convergence of a*v_hop(a)\
+  \ to c. Determine whether causal order alone identifies the Minkowski metric or\
+  \ its scale. Give a derivation or a counterexample and corrected conditional theorem;\
+  \ do not silently assume isotropy or sharp propagation.\nFor an independent exact\
+  \ counterexample witness use c=1,t=1,x=(1,1), dilation factor 2. Separately evaluate\
+  \ the null envelope at t=1,x=(1,0), C_a=1/4,mu_a=1 with exactly matched physical\
+  \ speed c. Return a certificate with l1_radius, euclidean_radius_squared, interval_before,\
+  \ interval_after for the first point, null_envelope for the separate null point\
+  \ (rational strings), and cone_order_preserved (boolean). Address the analytical\
+  \ goal in derivation, not only these fixtures. Request any missing licenses. Generate\
+  \ useful rules, skills, antiskills, patterns and candidate antibodies from your\
+  \ attempt."
+original_seed_sha256: 42c14c02d2e28ac9efa8a5b5b061ce57bcde4f9e8a9addeb7b6fd34df62e04ff
+parent_prompt_id: null
+pilot_id: pilot_0000199
+prompt_id: pilot_0000199:po035:loop01
+prompt_uri: prompt://pfp/po035/derivation/proposal/pilot_0000199/1
+response_schema:
+  $defs:
+    JsonValue: {}
+    ProcessIntegrityValue:
+      additionalProperties: false
+      properties:
+        detected_prompt_biases:
+          default: []
+          items:
+            minLength: 1
+            pattern: \S
+            type: string
+          title: Detected Prompt Biases
+          type: array
+          x-slot: data
+        seed_allows_theory_refutation:
+          title: Seed Allows Theory Refutation
+          type: boolean
+          x-slot: data
+        should_continue:
+          title: Should Continue
+          type: boolean
+          x-slot: data
+      required:
+      - seed_allows_theory_refutation
+      - should_continue
+      title: ProcessIntegrityValue
+      type: object
+    ResponseSectionValue:
+      additionalProperties: false
+      description: Rows validated against the packet response contract by validate_response.
+      properties:
+        name:
+          maxLength: 240
+          minLength: 1
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+          title: Name
+          type: string
+          x-slot: data
+        rows:
+          items:
+            $ref: '#/$defs/JsonValue'
+          title: Rows
+          type: array
+          x-slot: data
+      required:
+      - name
+      - rows
+      title: ResponseSectionValue
+      type: object
+    ResponseSummaryValue:
+      additionalProperties: false
+      properties:
+        evidence_scope:
+          minLength: 1
+          pattern: \S
+          title: Evidence Scope
+          type: string
+          x-slot: data
+        narrowest_defensible_thesis:
+          minLength: 1
+          pattern: \S
+          title: Narrowest Defensible Thesis
+          type: string
+          x-slot: data
+        next_concrete_test:
+          minLength: 1
+          pattern: \S
+          title: Next Concrete Test
+          type: string
+          x-slot: data
+      required:
+      - narrowest_defensible_thesis
+      - evidence_scope
+      - next_concrete_test
+      title: ResponseSummaryValue
+      type: object
+  $schema: https://json-schema.org/draft/2020-12/schema
+  additionalProperties: false
+  description: Actual model response. Descriptive strings and true|false placeholders
+    belong only to the template.
+  properties:
+    derived_under_policy:
+      const: SPK-001
+      title: Derived Under Policy
+      type: string
+      x-slot: data
+    process_integrity:
+      $ref: '#/$defs/ProcessIntegrityValue'
+      x-slot: data
+    sections:
+      items:
+        additionalProperties: false
+        properties:
+          name:
+            const: po035_derivation
+          rows:
+            items:
+              additionalProperties: false
+              properties:
+                certificate:
+                  anyOf:
+                  - additionalProperties: false
+                    properties:
+                      cone_order_preserved:
+                        type: boolean
+                      euclidean_radius_squared:
+                        maxLength: 100
+                        pattern: ^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$
+                        type: string
+                      interval_after:
+                        maxLength: 100
+                        pattern: ^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$
+                        type: string
+                      interval_before:
+                        maxLength: 100
+                        pattern: ^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$
+                        type: string
+                      l1_radius:
+                        maxLength: 100
+                        pattern: ^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$
+                        type: string
+                      null_envelope:
+                        maxLength: 100
+                        pattern: ^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$
+                        type: string
+                    required:
+                    - l1_radius
+                    - euclidean_radius_squared
+                    - interval_before
+                    - interval_after
+                    - null_envelope
+                    - cone_order_preserved
+                    type: object
+                  - type: 'null'
+                derivation:
+                  additionalProperties: false
+                  properties:
+                    assumptions:
+                      items:
+                        maxLength: 900
+                        minLength: 1
+                        type: string
+                      maxItems: 12
+                      minItems: 1
+                      type: array
+                    claim:
+                      maxLength: 900
+                      minLength: 1
+                      type: string
+                    limitations:
+                      items:
+                        maxLength: 900
+                        minLength: 1
+                        type: string
+                      maxItems: 12
+                      minItems: 1
+                      type: array
+                    open_obligations:
+                      items:
+                        maxLength: 900
+                        minLength: 1
+                        type: string
+                      maxItems: 12
+                      minItems: 1
+                      type: array
+                    steps:
+                      items:
+                        maxLength: 900
+                        minLength: 1
+                        type: string
+                      maxItems: 12
+                      minItems: 1
+                      type: array
+                  required:
+                  - claim
+                  - assumptions
+                  - steps
+                  - open_obligations
+                  - limitations
+                  type: object
+                learning:
+                  items:
+                    additionalProperties: false
+                    properties:
+                      failure_or_gain:
+                        maxLength: 900
+                        minLength: 1
+                        type: string
+                      kind:
+                        enum:
+                        - skill
+                        - antiskill
+                        - rule
+                        - pattern
+                        - antibody
+                      text:
+                        maxLength: 900
+                        minLength: 1
+                        type: string
+                    required:
+                    - kind
+                    - text
+                    - failure_or_gain
+                    type: object
+                  maxItems: 15
+                  minItems: 1
+                  type: array
+                prompt_id:
+                  maxLength: 900
+                  minLength: 1
+                  type: string
+                requested_lifts:
+                  items:
+                    additionalProperties: false
+                    properties:
+                      id:
+                        maxLength: 900
+                        minLength: 1
+                        type: string
+                      reason:
+                        maxLength: 900
+                        minLength: 1
+                        type: string
+                    required:
+                    - id
+                    - reason
+                    type: object
+                  maxItems: 8
+                  type: array
+                status:
+                  enum:
+                  - PROPOSAL
+                  - TYPED_REFUSAL
+              required:
+              - prompt_id
+              - status
+              - derivation
+              - certificate
+              - requested_lifts
+              - learning
+              type: object
+            maxItems: 1
+            minItems: 1
+            type: array
+        required:
+        - name
+        - rows
+        type: object
+      maxItems: 1
+      minItems: 1
+      type: array
+    summary:
+      $ref: '#/$defs/ResponseSummaryValue'
+      x-slot: data
+  required:
+  - derived_under_policy
+  - summary
+  - process_integrity
+  - sections
+  title: PromptResponse
+  type: object
+schema: pfp.po035-prompt-container.v1
+source_obligations:
+- OBL-R01-01
+- OBL-R01-02
+- OBL-R01-03
+system_prompt: "semantic_policy_manifest:\n  policy_id: SPK-001\n  required_stamp:\
+  \ 'derived_under_policy: SPK-001'\nmss0_grammar_constraint:\n  system_name: SYM\
+  \ SYS\n  atomic_glyph_count: 38\n  node_labels: a..z\n  numeric_labels: 0..9\n \
+  \ delimiters:\n  - <\n  - '>'\n  pair_note: The written form <> is a two-glyph expression,\
+  \ not a 39th atomic glyph.\n  numeric_license_rule: Numeric labels acquire arithmetic\
+  \ or weight semantics only\n    through an explicit license.\n  derived_patterns_note:\
+  \ Category-theoretic structures (functors, limits, adjunctions,\n    monads) are\
+  \ derived patterns, not new primitives.\nop_semantics:\n  default_layer: 1\n  default_meaning:\
+  \ syntactic_binary_operator\n  forbidden_unlicensed_interpretations:\n  - arithmetic\n\
+  \  - multiplication\n  - tensor_product\n  - boundary\n  - coboundary\n  - causality\n\
+  \  - optimization\n  - physical_transition\n  license_required_for:\n  - cohomological_interpretation\n\
+  \  - category_theoretic_interpretation\nimport_boundary: Do not import continuous\
+  \ physics, Lie algebras, or differential geometry\n  unless explicitly mapping them\
+  \ FROM the 38 SYM SYS primitives.\nmss0_typing_rules:\n  preamble: 'Whenever formalizing\
+  \ structures, adhere to the MSS-0 topological hierarchy:'\n  levels:\n  - level:\
+  \ 1\n    code: N\n    name: Node\n    meaning: 0-simplex\n  - level: 2\n    code:\
+  \ L\n    name: Edge\n    meaning: 1-simplex\n  - level: 3\n    code: C2\n    name:\
+  \ Cycle\n    meaning: 1-chain closed loop; strictly distinct from a filled region\n\
+  \  - level: 4\n    code: F1\n    name: Face\n    meaning: 2-simplex / triangle;\
+  \ strictly requires a declared 2-cell\n  - level: 5\n    code: M1\n    name: Mass\n\
+  \    meaning: Topological lock; requires LockStructure, ObstructionClass, and ConstraintInvariant\n\
+  \  - level: 6\n    code: H1\n    name: SelfModel\n    meaning: Recursive Locus;\
+  \ requires explicit declaration of recursive equivalence\n      semantics\nevaluator_scope_rule:\n\
+  \  principle: An evaluator may promote only the claim type it directly tests.\n\
+  \  bindings:\n  - evaluator: cargo test\n    promotes: implementation behavior\n\
+  \    does_not_promote: mathematical truth\n  - evaluator: SymPy\n    promotes: symbolic\
+  \ computation\n    does_not_promote: empirical reality\n  - evaluator: Lean/Coq/Isabelle\n\
+  \    promotes: formal theorem validity relative to stated axioms\n    does_not_promote:\
+  \ null\n  - evaluator: Reference checks\n    promotes: provenance support\n    does_not_promote:\
+  \ proof\n  - evaluator: Confidence scores\n    promotes: nothing\n    does_not_promote:\
+  \ evidence\nevidence_levels:\n- code: F0\n  meaning: unverified idea\n- code: F1\n\
+  \  meaning: internally consistent\n- code: F2\n  meaning: structurally validated\n\
+  - code: F3\n  meaning: mechanically-verified (within verification scope)\n- code:\
+  \ F4\n  meaning: independently reproduced\nclaim_hygiene:\n  discipline: You must\
+  \ write with strict claim discipline.\n  forbidden_words:\n  - proves\n  - guarantees\n\
+  \  - mathematically verifies\n  - fundamentally\n  - true intelligence\n  - impossible\n\
+  \  - universal\n  - flawless\n  - perfectly\n  - clearly\n  - obviously\n  - simply\n\
+  \  - merely\n  - weaponized\n  forbidden_word_exceptions: unless explicitly scoped\
+  \ as speculative or nested inside\n    user quotes\n  replacement_defaults:\n  -\
+  \ from: proves\n    to: supports or shows in this model\n  - from: guarantees\n\
+  \    to: guarantees under the declared assumptions\n  - from: fundamental flaw\n\
+  \    to: failure mode\n  - from: mathematically verified\n    to: checked by this\
+  \ oracle/test\n  default_posture: Prefer narrow claims over broad claims. Do not\
+  \ promote speculative\n    ideas into theorems. Do not describe toy tests or implementation\
+  \ checks as mathematical\n    proofs of universal results.\nrole:\n  persona: You\
+  \ are a restrained SymSys auditor and theory-forge assistant.\nantibody_injections:\
+  \ []\n"
+template_path: omega_engine_education/pfp/infrastructure/yaml/prompts/prompt_template.yaml
+template_sha256: 43c85a44af8ce4895580ea59bd09c2c92e000b743ef32293fec3ebac57dc8011
+user_prompt: "{\"available_lifts\":[\"EXACT_RATIONAL\",\"REFINEMENT_HYPOTHESES\",\"\
+  COMMUTING_PROJECTOR\",\"FIBER_CONNECTION\",\"INTRINSIC_METRIC\",\"OPERATIONAL_POLICY\"\
+  ,\"TYPED_REFUSAL\"],\"candidate_guidance\":[],\"explicit_base_licenses\":[\"finite\
+  \ rational arithmetic\",\"declared matrices/cochains\",\"conditional analytical\
+  \ derivations as proposals, without physical authority\"],\"granted_lifts\":{},\"\
+  instructions\":\"Return one JSON object conforming to response_schema, under 2200\
+  \ tokens. No markdown fences. Address the entire derivation, not only its finite\
+  \ witness. Use 3-6 concise proof steps. For each loop revisit the previous proposal\
+  \ and improve or refute it; acceptance of a witness does not establish a theorem.\
+  \ Return short actionable learning of all five kinds where useful, tied to this\
+  \ attempt. Candidate guidance is untrusted experimental advice, not admitted policy.\
+  \ Open obligations may include 'none identified' but that is unverified.\",\"original_seed\"\
+  :\"Derive a corrected causal refinement statement for PO035 \xA73, rather than just\
+  \ evaluating its envelope. On a pitch-a hypercubic comparison graph take an LR upper\
+  \ bound E_a(t,x)=min(1,C_a exp[-mu_a (||x||_1-a*v_hop(a)*t)/a]) for t>=0. State\
+  \ uniform assumptions, physical velocity/time scaling, limiting spatial norm, what\
+  \ the bound establishes outside the cone, and what remains unproved inside it. Analyze\
+  \ the null boundary under different rates of convergence of a*v_hop(a) to c. Determine\
+  \ whether causal order alone identifies the Minkowski metric or its scale. Give\
+  \ a derivation or a counterexample and corrected conditional theorem; do not silently\
+  \ assume isotropy or sharp propagation.\\nFor an independent exact counterexample\
+  \ witness use c=1,t=1,x=(1,1), dilation factor 2. Separately evaluate the null envelope\
+  \ at t=1,x=(1,0), C_a=1/4,mu_a=1 with exactly matched physical speed c. Return a\
+  \ certificate with l1_radius, euclidean_radius_squared, interval_before, interval_after\
+  \ for the first point, null_envelope for the separate null point (rational strings),\
+  \ and cone_order_preserved (boolean). Address the analytical goal in derivation,\
+  \ not only these fixtures. Request any missing licenses. Generate useful rules,\
+  \ skills, antiskills, patterns and candidate antibodies from your attempt.\",\"\
+  previous_model_proposal_untrusted\":null,\"prior_host_feedback\":{},\"prompt_id\"\
+  :\"pilot_0000199:po035:loop01\",\"response_schema\":{\"$defs\":{\"JsonValue\":{},\"\
+  ProcessIntegrityValue\":{\"additionalProperties\":false,\"properties\":{\"detected_prompt_biases\"\
+  :{\"default\":[],\"items\":{\"minLength\":1,\"pattern\":\"\\\\S\",\"type\":\"string\"\
+  },\"title\":\"Detected Prompt Biases\",\"type\":\"array\",\"x-slot\":\"data\"},\"\
+  seed_allows_theory_refutation\":{\"title\":\"Seed Allows Theory Refutation\",\"\
+  type\":\"boolean\",\"x-slot\":\"data\"},\"should_continue\":{\"title\":\"Should\
+  \ Continue\",\"type\":\"boolean\",\"x-slot\":\"data\"}},\"required\":[\"seed_allows_theory_refutation\"\
+  ,\"should_continue\"],\"title\":\"ProcessIntegrityValue\",\"type\":\"object\"},\"\
+  ResponseSectionValue\":{\"additionalProperties\":false,\"description\":\"Rows validated\
+  \ against the packet response contract by validate_response.\",\"properties\":{\"\
+  name\":{\"maxLength\":240,\"minLength\":1,\"pattern\":\"^[A-Za-z0-9][A-Za-z0-9._:/@-]*$\"\
+  ,\"title\":\"Name\",\"type\":\"string\",\"x-slot\":\"data\"},\"rows\":{\"items\"\
+  :{\"$ref\":\"#/$defs/JsonValue\"},\"title\":\"Rows\",\"type\":\"array\",\"x-slot\"\
+  :\"data\"}},\"required\":[\"name\",\"rows\"],\"title\":\"ResponseSectionValue\"\
+  ,\"type\":\"object\"},\"ResponseSummaryValue\":{\"additionalProperties\":false,\"\
+  properties\":{\"evidence_scope\":{\"minLength\":1,\"pattern\":\"\\\\S\",\"title\"\
+  :\"Evidence Scope\",\"type\":\"string\",\"x-slot\":\"data\"},\"narrowest_defensible_thesis\"\
+  :{\"minLength\":1,\"pattern\":\"\\\\S\",\"title\":\"Narrowest Defensible Thesis\"\
+  ,\"type\":\"string\",\"x-slot\":\"data\"},\"next_concrete_test\":{\"minLength\"\
+  :1,\"pattern\":\"\\\\S\",\"title\":\"Next Concrete Test\",\"type\":\"string\",\"\
+  x-slot\":\"data\"}},\"required\":[\"narrowest_defensible_thesis\",\"evidence_scope\"\
+  ,\"next_concrete_test\"],\"title\":\"ResponseSummaryValue\",\"type\":\"object\"\
+  }},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\"\
+  :false,\"description\":\"Actual model response. Descriptive strings and true|false\
+  \ placeholders belong only to the template.\",\"properties\":{\"derived_under_policy\"\
+  :{\"const\":\"SPK-001\",\"title\":\"Derived Under Policy\",\"type\":\"string\",\"\
+  x-slot\":\"data\"},\"process_integrity\":{\"$ref\":\"#/$defs/ProcessIntegrityValue\"\
+  ,\"x-slot\":\"data\"},\"sections\":{\"items\":{\"additionalProperties\":false,\"\
+  properties\":{\"name\":{\"const\":\"po035_derivation\"},\"rows\":{\"items\":{\"\
+  additionalProperties\":false,\"properties\":{\"certificate\":{\"anyOf\":[{\"additionalProperties\"\
+  :false,\"properties\":{\"cone_order_preserved\":{\"type\":\"boolean\"},\"euclidean_radius_squared\"\
+  :{\"maxLength\":100,\"pattern\":\"^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$\",\"type\"\
+  :\"string\"},\"interval_after\":{\"maxLength\":100,\"pattern\":\"^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$\"\
+  ,\"type\":\"string\"},\"interval_before\":{\"maxLength\":100,\"pattern\":\"^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$\"\
+  ,\"type\":\"string\"},\"l1_radius\":{\"maxLength\":100,\"pattern\":\"^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$\"\
+  ,\"type\":\"string\"},\"null_envelope\":{\"maxLength\":100,\"pattern\":\"^-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?$\"\
+  ,\"type\":\"string\"}},\"required\":[\"l1_radius\",\"euclidean_radius_squared\"\
+  ,\"interval_before\",\"interval_after\",\"null_envelope\",\"cone_order_preserved\"\
+  ],\"type\":\"object\"},{\"type\":\"null\"}]},\"derivation\":{\"additionalProperties\"\
+  :false,\"properties\":{\"assumptions\":{\"items\":{\"maxLength\":900,\"minLength\"\
+  :1,\"type\":\"string\"},\"maxItems\":12,\"minItems\":1,\"type\":\"array\"},\"claim\"\
+  :{\"maxLength\":900,\"minLength\":1,\"type\":\"string\"},\"limitations\":{\"items\"\
+  :{\"maxLength\":900,\"minLength\":1,\"type\":\"string\"},\"maxItems\":12,\"minItems\"\
+  :1,\"type\":\"array\"},\"open_obligations\":{\"items\":{\"maxLength\":900,\"minLength\"\
+  :1,\"type\":\"string\"},\"maxItems\":12,\"minItems\":1,\"type\":\"array\"},\"steps\"\
+  :{\"items\":{\"maxLength\":900,\"minLength\":1,\"type\":\"string\"},\"maxItems\"\
+  :12,\"minItems\":1,\"type\":\"array\"}},\"required\":[\"claim\",\"assumptions\"\
+  ,\"steps\",\"open_obligations\",\"limitations\"],\"type\":\"object\"},\"learning\"\
+  :{\"items\":{\"additionalProperties\":false,\"properties\":{\"failure_or_gain\"\
+  :{\"maxLength\":900,\"minLength\":1,\"type\":\"string\"},\"kind\":{\"enum\":[\"\
+  skill\",\"antiskill\",\"rule\",\"pattern\",\"antibody\"]},\"text\":{\"maxLength\"\
+  :900,\"minLength\":1,\"type\":\"string\"}},\"required\":[\"kind\",\"text\",\"failure_or_gain\"\
+  ],\"type\":\"object\"},\"maxItems\":15,\"minItems\":1,\"type\":\"array\"},\"prompt_id\"\
+  :{\"maxLength\":900,\"minLength\":1,\"type\":\"string\"},\"requested_lifts\":{\"\
+  items\":{\"additionalProperties\":false,\"properties\":{\"id\":{\"maxLength\":900,\"\
+  minLength\":1,\"type\":\"string\"},\"reason\":{\"maxLength\":900,\"minLength\":1,\"\
+  type\":\"string\"}},\"required\":[\"id\",\"reason\"],\"type\":\"object\"},\"maxItems\"\
+  :8,\"type\":\"array\"},\"status\":{\"enum\":[\"PROPOSAL\",\"TYPED_REFUSAL\"]}},\"\
+  required\":[\"prompt_id\",\"status\",\"derivation\",\"certificate\",\"requested_lifts\"\
+  ,\"learning\"],\"type\":\"object\"},\"maxItems\":1,\"minItems\":1,\"type\":\"array\"\
+  }},\"required\":[\"name\",\"rows\"],\"type\":\"object\"},\"maxItems\":1,\"minItems\"\
+  :1,\"type\":\"array\"},\"summary\":{\"$ref\":\"#/$defs/ResponseSummaryValue\",\"\
+  x-slot\":\"data\"}},\"required\":[\"derived_under_policy\",\"summary\",\"process_integrity\"\
+  ,\"sections\"],\"title\":\"PromptResponse\",\"type\":\"object\"}}"

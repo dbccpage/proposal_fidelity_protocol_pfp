@@ -1,0 +1,26 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000000
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000000_req_0_rewrite_04
+rewrite_metadata:
+  rewrite_id: rewrite_04
+  name: Strategy R6 - Strict Boundary Wire AST (Tier S)
+  governing_specification: rewriting_strategies_mssn_wire.md#dialect-tier-s
+  governing_strategy: Strategy R6 (Cross-Dialect Transpiler)
+  target_stratum: Stratum 3 (Structural Boundary Packets)
+  explanation: |
+    Compiles the system of equations and return contract strictly into the 38-glyph wire
+    alphabet Gamma38 with zero whitespace, zero external punctuation, and strictly balanced
+    pair boundaries. Every operator and operand is an explicit packet in P_38.
+input_typing:
+  lexical_alphabet: "Gamma_38 strictly ({a..z, 0..9, <, >})"
+  syntactic_category: StrictBoundaryPacketAST
+  semantic_carrier: LinearSystem(dimension=2, field=Rational)
+  dialect_tier: Tier S
+  boundary_format: mss-boundary-v1
+seed_prompt: '<<solve><<eqs><<eq><<add><x><<mul><2><y>>><5>><<eq><<sub<<mul><3><x>><y>><1>>><<return><<answer><<add><x><y>>>>>>'
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

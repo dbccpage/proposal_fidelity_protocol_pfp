@@ -1,0 +1,33 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000015
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000015_req_0
+rewrite_metadata:
+  rewrite_id: idea_06
+  name: Idea 06 - Observable Versus Unavailable Interventions
+  governing_specification: IDEAS.md#observable-versus-unavailable-interventions
+  governing_strategy: Strategy I6 (Observable Prompt Control)
+  target_stratum: Stratum 5 (Host-Provider Interventions)
+  explanation: Separates hosted logit-bias capability from local attention interventions,
+    declaring observable prompt constraints.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*'}
+  syntactic_category: ObservableInterventionProposal
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) via Observable Prompt
+    Steering
+  dialect_tier: Tier S (Observable Prompt Constraints)
+  boundary_format: pfp-observable-v1
+seed_prompt: '<intervention_layer: "prompt_syntax_only">
+
+  <unavailable_features: ["logit_bias", "attention_masking"]>
+
+  <task: "Solve x + 2y = 5 and 3x - y = 1 using prompt-level exact guidance">
+
+  <return: {"answer": x + y}>
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

@@ -25,6 +25,16 @@ Sources: 0000188-0000191.
 
 Each pilot crosses five finite carriers with five wrapped representations plus five matched guidance trials (30 capsules each); replay and learning runners exist in the source estate.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/pilot_0000188/`](pilots/pilot_0000188/) — pilot_0000188: binary_spin_frustration
+- [`pilots/pilot_0000189/`](pilots/pilot_0000189/) — pilot_0000189: weighted_cycle_duality
+- [`pilots/pilot_0000190/`](pilots/pilot_0000190/) — pilot_0000190: degree4_primal_dual_certificate
+- [`pilots/pilot_0000191/`](pilots/pilot_0000191/) — pilot_0000191: chain_topology_scope_audit
+- [`pilots/replay_runners/`](pilots/replay_runners/) — pilot material
+
 ## Team
 
 Pattern `sweep_with_shared_judge`: coder ×2 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).

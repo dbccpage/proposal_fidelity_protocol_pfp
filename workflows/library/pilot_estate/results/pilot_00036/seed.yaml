@@ -1,0 +1,35 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00036
+task_family: formal_logic_deduction
+difficulty_rung: 1
+request_id: pilot_00036_req_0
+rewrite_metadata:
+  rewrite_id: t1_bench-002-deduction_structured
+  name: Tier 1 bench-002-deduction (structured) - Canonical JSON Structured Segments
+  governing_specification: tier1_live_runs_tier1-001.md
+  governing_strategy: Strategy T1-STRUCT (Role Segment Schema Partitioning)
+  target_stratum: Stratum 3 (First-Order Logic Syllogistic Inference)
+  explanation: Tier 1 prompt variation for bench-002-deduction rendered under structured
+    encoding.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union UTF-8 text
+  syntactic_category: SyllogisticDeduction
+  semantic_carrier: First-order logic syllogistic transitive deduction with 2 premises.
+  dialect_tier: Tier Struct (Segmented JSON)
+  boundary_format: pfp-structured-v1
+seed_prompt: '{"segments":[{"role":"task","slot":"s0","text":"Task: Given that all
+  squares are rectangles and all rectangles are polygons, does it follow that all
+  squares are polygons? "},{"role":"context","slot":"s1","text":"Context: Classical
+  first-order logic. "},{"role":"output","slot":"s2","text":"Output: Respond with
+  a JSON object containing \"verdict\": \"YES\" or \"NO\", and \"premise_count\":
+  2."}],"source":"Task: Given that all squares are rectangles and all rectangles are
+  polygons, does it follow that all squares are polygons? Context: Classical first-order
+  logic. Output: Respond with a JSON object containing \"verdict\": \"YES\" or \"NO\",
+  and \"premise_count\": 2."}'
+expected_outcome:
+  answer:
+    verdict: 'YES'
+    premise_count: 2
+  status: ACCEPTED

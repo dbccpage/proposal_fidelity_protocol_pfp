@@ -1,0 +1,149 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: p_star_rewrite_06_v4
+test_kind: p_star_templated
+pilot_id: pilot_0000000
+case_id: rewrite_06
+request_id: pilot_0000000_req_p_star_rewrite_06_v4
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: p_star_rewrite_06_v4.yaml
+  source_file_bytes: 10613
+  source_file_kb: 10.364
+  payload_bytes: 5668
+  payload_kb: 5.535
+  messages_count: 2
+raw_reply: "{\n  \"derived_under_policy\": \"SPK-001\",\n  \"answer\": 3,\n  \"summary\"\
+  : {\n    \"narrowest_defensible_thesis\": \"Under the granted integer linear-system\
+  \ license, solving A=[[1,2],[3,-1]] with b=[5,1] gives x=1 and y=2, so c^T x for\
+  \ c=[1,1] is 3.\",\n    \"evidence_scope\": \"Finite integer linear-system computation\
+  \ by substitution; this check is limited to the provided encoded system and target.\"\
+  ,\n    \"next_concrete_test\": \"Substitute x=1 and y=2 into both rows to confirm\
+  \ residuals [0,0] and recompute 1*1 + 1*2 = 3.\"\n  },\n  \"process_integrity\"\
+  : {\n    \"seed_allows_theory_refutation\": true,\n    \"detected_prompt_biases\"\
+  : [],\n    \"should_continue\": true\n  },\n  \"sections\": []\n}"
+reasoning_content: "We need answer math. Need parse. We must produce JSON matching\
+  \ schema. Need solve. Let's parse carrier:\n\n<<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5><1>><<target><<vec><1><1>>>>\n\
+  \nWe need interpret. Provided task license: matrix, vector, negation operators.\
+  \ 'mat','row','vec','sys','neg' denote standard finite linear system Ax=b over integers\
+  \ with unary negation (<<neg><1>> = -1). 'row' defines rows of matrix A, 'vec' defines\
+  \ column vectors, and 'target' denotes linear functional c^T x to evaluate on solution\
+  \ vector [x,y]^T. Solve for x and y and evaluate target.\n\nLet's parse carefully.\
+  \ Surface:\n<<sys>\n  <<mat>\n    <<row><1><2>>\n    <<row><3><<neg><1>>>>\n  >\n\
+  \  <<vec><5><1>>\n  <<target><<vec><1><1>>>\n>\n\nNeed determine matrix rows: row1\
+  \ [1,2], row2 [3, -1]. Vector b = [5,1]? target vector [1,1]? Then system:\nA =\
+  \ [[1,2],[3,-1]], b=[5,1], solve:\nx + 2y = 5\n3x - y = 1\nSolve. From second y=3x-1.\
+  \ Substitute x+2(3x-1)=5 => x+6x-2=5 =>7x=7=>x=1, y=2. Target c^T x = [1,1] dot\
+  \ [1,2] = 3. Answer 3.\n\nNeed include process_integrity etc. Need not mention forbidden\
+  \ words. Need derived_under_policy: SPK-001. sections empty. summary fields strings.\
+  \ process_integrity: seed_allows_theory_refutation bool, detected_prompt_biases\
+  \ array, should_continue bool.\n\nNeed infer process integrity. seed_allows_theory_refutation:\
+  \ The prompt includes explicit operational licenses and maybe process integrity\
+  \ value. We need answer maybe seed_allows_theory_refutation false? Let's understand.\
+  \ This schema from some eval? ProcessIntegrityValue asks whether seed allows theory\
+  \ refutation, detected prompt biases, should_continue. We need make truthful. We\
+  \ as auditor. The task is self-contained. \"seed_allows_theory_refutation\": whether\
+  \ initial prompt permits refutation? Hmm likely boolean indicating if the setup\
+  \ allows the theory to be refuted by evidence. Here task is arithmetic; no theory.\
+  \ \"detected_prompt_biases\" maybe list biases. \"should_continue\" whether to continue?\
+  \ It might be a meta field. Need provide plausible.\n\nNeed comply with semantic\
+  \ policy manifest: required_stamp. We include.\n\nNeed produce valid JSON only?\
+  \ likely final answer JSON. Need ensure answer integer 3. summary narrowest_defensible_thesis:\
+  \ \"Under the granted linear-system license, the computed target c^T x for A=[[1,2],[3,-1]],\
+  \ b=[5,1], c=[1,1] is 3.\" Evidence scope: \"Finite integer linear system solved\
+  \ by substitution; no external evaluator invoked.\" Next concrete test: \"Substitute\
+  \ x=1,y=2 into both equations to check residuals.\" Process integrity:\n- seed_allows_theory_refutation:\
+  \ maybe true? The seed is self-contained but could be refuted by arithmetic? Hmm.\n\
+  - detected_prompt_biases: maybe [\"self-contained benchmark claim\", \"explicit\
+  \ operator license\"], etc. But \"detected_prompt_biases\" could be prompts trying\
+  \ to bias. Need maybe empty? The prompt says \"Do not search for external benchmark\
+  \ corpora\". That's a directive. Bias? The task includes \"The checker evaluates\
+  \ the top-level 'answer' field...\" That's an instruction. We might list detected\
+  \ biases: [\"checker_field_focus\", \"self_contained_carrier_claim\"]. But detected_prompt_biases\
+  \ expects array of strings minLength. Could be empty default. We need decide.\n\n\
+  Need no forbidden words. \"proves\", \"guarantees\", etc. Avoid.\n\nLet's check\
+  \ if any subtle parse issue. The notation: <<row><3><<neg><1>>>> means row [3, <<neg><1>>]\
+  \ = [3, -1]. Yes. <<vec><5><1>> = b? Wait \"vec\" defines column vectors, and target\
+  \ denotes linear functional c^T x. The system may be <<sys> <<mat> rows </mat> <<vec>\
+  \ ... </vec> <<target> <<vec>... </vec> </target> </sys>. Could the <<vec><5><1>>\
+  \ be the target? Let's parse: It appears after mat, before target. In linear system\
+  \ Ax=b, b vector. Then target c. Yes.\n\nCould there be multiple vec? The target\
+  \ contains a vec: <<target><<vec><1><1>>>. So target vector [1,1]. So answer 3.\n\
+  \nNeed maybe \"target denotes linear functional c^T x to evaluate on solution vector\
+  \ [x,y]^T.\" So yes.\n\nNeed satisfy JSON schema: additionalProperties false at\
+  \ top. sections maxItems 0, so empty array. summary required fields. process_integrity\
+  \ required fields. derived_under_policy const SPK-001.\n\nNo markdown? final can\
+  \ be JSON object. Ensure no extra text.\n\nLet's construct:\n\n{\n  \"derived_under_policy\"\
+  : \"SPK-001\",\n  \"answer\": 3,\n  \"summary\": {\n    \"narrowest_defensible_thesis\"\
+  : \"Under the granted integer linear-system license, solving A=[[1,2],[3,-1]] and\
+  \ b=[5,1] gives x=1,y=2, so c^T x for c=[1,1] is 3.\",\n    \"evidence_scope\":\
+  \ \"Finite integer linear-system computation by substitution; this check is limited\
+  \ to the provided encoded system and target.\",\n    \"next_concrete_test\": \"\
+  Substitute x=1 and y=2 into both rows to confirm residuals [0,0] and recompute 1*1+1*2=3.\"\
+  \n  },\n  \"process_integrity\": {\n    \"seed_allows_theory_refutation\": true,\n\
+  \    \"detected_prompt_biases\": [],\n    \"should_continue\": true\n  },\n  \"\
+  sections\": []\n}\n\nCheck forbidden words: none. \"confirm\" okay. \"integer linear-system\"\
+  \ okay. \"granted\" okay. \"computation\" okay. \"check\" okay. Maybe \"supports\"\
+  \ not used.\n\nNeed think about process_integrity. \"seed_allows_theory_refutation\"\
+  \ maybe should be false because no theory? The field name means whether the seed\
+  \ prompt allows the theory to be refuted. In this task, it is a math puzzle with\
+  \ a fixed answer; but the process can be refuted by computation. Maybe true. \"\
+  should_continue\": true. detected_prompt_biases: maybe empty. This should be okay.\n\
+  \nBut there might be hidden eval expectations: They may expect \"seed_allows_theory_refutation\"\
+  : true if there is license? Hmm. It's from some \"ProcessIntegrityValue\" schema\
+  \ likely part of an anti-sycophancy benchmark. The fields are about detecting prompt\
+  \ biases and refusing to continue if seed doesn't allow refutation? Let's infer\
+  \ from names:\n- seed_allows_theory_refutation: boolean\n- detected_prompt_biases:\
+  \ array\n- should_continue: boolean\n\nMaybe this is a \"Process Integrity\" slot\
+  \ used in tasks to ask the model to evaluate whether the prompt is a fair test.\
+  \ The seed might be a prompt that could be biased. Here task is straightforward.\
+  \ \"seed_allows_theory_refutation\" likely true if the task permits theory falsification.\
+  \ The prompt says \"rule_carrier_is_the_whole_task... Do not search external...\"\
+  \ and \"explicit operational license...\" It is self-contained and has a verifiable\
+  \ answer, so it allows refutation by arithmetic. So true.\n\n\"detected_prompt_biases\"\
+  : Could include \"The prompt asserts a checker evaluates the top-level answer field\"\
+  \ but that's not bias. It might include \"The prompt prohibits external benchmark\
+  \ corpora\" which is a constraint, not bias. I think empty is safe.\n\nNeed ensure\
+  \ JSON valid. The schema has $defs but no issue.\n\nLet's final with exactly JSON."
+parsed_response:
+  derived_under_policy: SPK-001
+  answer: 3
+  summary:
+    narrowest_defensible_thesis: Under the granted integer linear-system license,
+      solving A=[[1,2],[3,-1]] with b=[5,1] gives x=1 and y=2, so c^T x for c=[1,1]
+      is 3.
+    evidence_scope: Finite integer linear-system computation by substitution; this
+      check is limited to the provided encoded system and target.
+    next_concrete_test: Substitute x=1 and y=2 into both rows to confirm residuals
+      [0,0] and recompute 1*1 + 1*2 = 3.
+  process_integrity:
+    seed_allows_theory_refutation: true
+    detected_prompt_biases: []
+    should_continue: true
+  sections: []
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: ACCEPTED
+  reason: Linear system solution matches exact rational ground truth
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: openrouter
+  duration_seconds: 8.449
+  tokens_per_second: 0.0
+  usage:
+    prompt_tokens: 1956
+    completion_tokens: 2014
+    reasoning_tokens: 1798
+    total_tokens: 3970
+  cost:
+    total_cost_usd: 0.0
+  timestamp_utc: '2026-10-11T03:29:12.369395+00:00'

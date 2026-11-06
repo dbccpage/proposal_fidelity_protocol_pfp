@@ -1,0 +1,66 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_06
+case_id: rewrite_06_discrete_cochain
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+witness_verified: null
+raw_reply: "{\n  \"answer\": {\n    \"observed_tallies\": {\n      \"C1\": 0,\n  \
+  \    \"C2\": 0,\n      \"C3\": 0\n    },\n    \"all_green\": true,\n    \"raw_global_defect_I\"\
+  : 6,\n    \"visibility_gap_lambda\": 6,\n    \"recovery_modulus_exists\": false\n\
+  \  }\n}"
+reasoning_content: "We need answer. Need parse problem. Need compute. Need be careful.\
+  \ We have cellular sheaf cochain complex over 1D cell complex with 6 vertices and\
+  \ 6 directed 1-cells. Coefficient sheaf R^3 with L1 norm identity restrictions.\
+  \ Section s in C^0. Given values at vertices u1,u2,u3 and x12,x23,x31? Wait 6 vertices:\
+  \ u1,u2,u3 and x12,x23,x31? They call s(x12)=... zero. Edges e1 (x12->u1), e6 (x31->u1),\
+  \ e2 (x12->u2), e3 (x23->u2), e4 (x23->u3), e5 (x31->u3). So vertices are u1,u2,u3,x12,x23,x31.\
+  \ Section values: u1=(1,0,0), u2=(0,1,0), u3=(0,0,1), x12=x23=x31=0.\n\nCoboundary\
+  \ d0 s on edge e = s(target)-s(source). For e1 x12->u1: u1 - x12 = (1,0,0). e6 x31->u1:\
+  \ u1 - x31 = (1,0,0). e2 x12->u2: u2 - x12 = (0,1,0). e3 x23->u2: u2 - x23 = (0,1,0).\
+  \ e4 x23->u3: u3 - x23 = (0,0,1). e5 x31->u3: u3 - x31 = (0,0,1). Yes.\n\nSub-evaluators:\n\
+  C1 deletes index 0 on {e1,e6}. Need coordinate deletion maps. If vector in R^3,\
+  \ delete index 0 (first coordinate) leaves (v2,v3). For e1/e6 vector (1,0,0), delete\
+  \ index0 -> (0,0). L1 norm = 0. Sum over two = 0. J^C1=0.\n\nC2 deletes index 1\
+  \ on {e2,e3}. Vector (0,1,0), delete index1 (second coordinate) -> (0,0). L1=0.\
+  \ J^C2=0.\n\nC3 deletes index 2 on {e4,e5}. Vector (0,0,1), delete index2 (third\
+  \ coordinate) -> (0,0). J^C3=0.\n\nall_green true if all zero. true.\n\nraw_global_defect_I\
+  \ = sum over all 6 edges ||(d0 s)_e||_1. Each vector has one coordinate 1, L1 norm=1.\
+  \ Six edges => 6. Wait e1,e6 each (1,0,0) norm 1; e2,e3 norm 1; e4,e5 norm 1. Sum=6.\n\
+  \nvisibility_gap_lambda = raw_global_defect_I - max(J^C1,J^C2,J^C3) = 6 - 0 = 6.\n\
+  \nrecovery_modulus_exists: whether \u2203 f: R_+ -> R_+ s.t. I(lambda * s) <= f(max\
+  \ J(lambda * s)) for all lambda > 0.\n\nNeed interpret. This is from sheaf cohomology?\
+  \ Need determine if recovery modulus exists. We need analyze scaling lambda. Section\
+  \ s scaled by lambda. d0 linear, so (d0(lambda s))_e = lambda (d0 s)_e. Norm L1\
+  \ scales by |lambda| = lambda (positive). Thus raw_global_defect I(lambda s) = lambda\
+  \ * 6. Sub-evaluator J^alpha(lambda s) = lambda * J^alpha(s) = 0 for all alpha.\
+  \ max = 0. Need \u2203 f: R_+ -> R_+ such that for all lambda>0, 6 lambda <= f(0).\
+  \ Since f(0) is a fixed nonnegative real (or R_+ maybe positive). For all lambda>0,\
+  \ 6 lambda <= constant. Impossible. So recovery_modulus_exists false.\n\nBut need\
+  \ consider if f can depend on lambda? No, f fixed. So false.\n\nNeed output JSON\
+  \ exactly. Ensure integers. observed_tallies C1 0 C2 0 C3 0. all_green true. raw_global_defect_I\
+  \ 6. visibility_gap_lambda 6. recovery_modulus_exists false.\n\nNeed maybe check\
+  \ if \"visibility_gap_lambda\" maybe raw_global_defect_I - max(J^C1, J^C2, J^C3)\
+  \ = 6 - 0 = 6. Yes.\n\nNeed final only JSON."
+parsed_payload:
+  answer: *id001
+metrics:
+  duration_seconds: 12.832
+  prompt_tokens: 651
+  completion_tokens: 1098
+  reasoning_tokens: 669
+  total_tokens: 1749
+  cost_usd: 0.0
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

@@ -1,0 +1,28 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00063
+task_family: antimorphic_involution
+difficulty_rung: 1
+request_id: pilot_00063_req_0
+rewrite_metadata:
+  rewrite_id: demo_antimorphic_reversal
+  name: Demo Antimorphic Reversal - Fixed-Point-Free Meron Involution (Mode 08)
+  governing_specification: pilots/demo_003/demo_antimorphic_reversal/README.md
+  governing_strategy: Strategy DAR (Mode 08 Fixed-Point-Free Meron Flips)
+  target_stratum: Stratum 4 (Axiomatic Symmetry Invariants)
+  explanation: Fixed-point-free meron involution verification ensuring exact signed
+    orbit cancellation.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union {involution_valid, fixed_points}
+  syntactic_category: InvolutionSymmetryVerification
+  semantic_carrier: Signed 2-element state space under involution Xi(x0)=x1, Xi(x1)=x0
+  dialect_tier: Tier M (Meron Involution)
+  boundary_format: pfp-involution-v1
+seed_prompt: '{"state_space":["x0","x1"],"signs":{"x0":1,"x1":-1},"weights":{"x0":1,"x1":1},"candidate_map":{"x0":"x1","x1":"x0"},"task":"Verify
+  that map Xi satisfies Xi^2 = id, Xi(x) != x, and reverses signs preserving weights","output":{"involution_valid":true,"fixed_points":0}}'
+expected_outcome:
+  answer:
+    involution_valid: true
+    fixed_points: 0
+  status: ACCEPTED

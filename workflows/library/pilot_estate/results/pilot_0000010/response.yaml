@@ -1,0 +1,54 @@
+schema: pfp.pilot-response.v1
+authority_effect: None
+pilot_id: pilot_0000010
+request_id: pilot_0000010_req_0
+execution_mode: live_gateway_dispatch
+model_id: nvidia/nemotron-3.5-lightning:free
+trial_status: COMPLETED
+raw_reply: |-
+  {
+    "derived_under_policy": "SPK-001",
+    "summary": {
+      "narrowest_defensible_thesis": "The solution (x,y)=(1,2) satisfies both equations x+2y=5 and 3x-y=1 by direct substitution.",
+      "evidence_scope": "Verified within PFP-01-EXACT-LINALG gate using exact linear algebra substitution.",
+      "next_concrete_test": "Apply same verification method to a new linear system under SPK-001 policy."
+    },
+    "process_integrity": {
+      "seed_allows_theory_refutation": true,
+      "detected_prompt_biases": [],
+      "should_continue": true
+    },
+    "answer": 3
+  }
+parsed_response:
+  derived_under_policy: SPK-001
+  summary:
+    narrowest_defensible_thesis: The solution (x,y)=(1,2) satisfies both equations
+      x+2y=5 and 3x-y=1 by direct substitution.
+    evidence_scope: Verified within PFP-01-EXACT-LINALG gate using exact linear algebra
+      substitution.
+    next_concrete_test: Apply same verification method to a new linear system under
+      SPK-001 policy.
+  process_integrity:
+    seed_allows_theory_refutation: true
+    detected_prompt_biases: []
+    should_continue: true
+  sections: []
+parsed_json: null
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: ACCEPTED
+receipt:
+  provider: openrouter
+  dispatch_kind: live_provider_call
+  cost_microusd: 0
+  evidence: LIVE_DISPATCH_COMPLETION_gen-1791578894-6haO1DQzjheAOkKAT5b8
+  timestamp_utc: '2026-10-09T20:48:36.763901+00:00'
+  provider_calls: 1

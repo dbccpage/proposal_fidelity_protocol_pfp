@@ -1,0 +1,40 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000000
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000000_req_0_rewrite_07
+rewrite_metadata:
+  rewrite_id: rewrite_07
+  name: Pre-Genesis Quiescent Inscription & Separated Observation Regime
+  governing_specification: rewriting_strategies_pregen_wire.md#strategy-pg5-forced-separation-lift
+  governing_strategy: Strategy PG5 (Forced Separation Lift) & Strategy PG7 (Replay History Custody)
+  target_stratum: Stratum 2 (Epistemic State & Observational Quotienting)
+  explanation: |
+    Encodes the linear system task into a Pre-Genesis regime inscription conforming strictly to
+    pre_genesis.ebnf over Sigma_pre = {<, >, a, b}. Relies on observational separation of states
+    and explicit codebook slots, isolating unadmitted arithmetic operators into external
+    context bindings while enforcing no-transition quiescence at the ground boundary.
+  codebook_slots:
+    s0:
+      role: ground_reference
+      source_text_span: 'Uncarved baseline ground state <>'
+    s1:
+      role: linear_constraint_eq1
+      source_text_span: 'x + 2y = 5'
+    s2:
+      role: linear_constraint_eq2
+      source_text_span: '3x - y = 1'
+    s3:
+      role: evaluation_target
+      source_text_span: 'Return answer = x + y'
+input_typing:
+  lexical_alphabet: "Sigma_pre strictly ({<, >, a, b}) with sidecar codebook"
+  syntactic_category: PreGenesisRegime
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) via Observational Separation
+  dialect_tier: Pre-Genesis Wire
+  boundary_format: pregen-regime-v1
+seed_prompt: '{<>,<a>,<ab>,<ba>}'
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

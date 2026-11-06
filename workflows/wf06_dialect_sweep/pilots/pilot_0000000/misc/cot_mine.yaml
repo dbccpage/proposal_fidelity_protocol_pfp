@@ -1,0 +1,1396 @@
+schema: pfp.cot-mine.v1
+authority_effect: None
+results_dir: misc
+schema_terms:
+- SPK-001
+- derived_under_policy
+- evidence_scope
+- narrowest_defensible_thesis
+- next_concrete_test
+- process_integrity
+- sections
+- seed_allows_theory_refutation
+- should_continue
+- summary
+trace_count: 31
+skipped_files: []
+answer_match_count: 11
+accepted_count: 8
+patterns:
+- id: answer_channel_displacement
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `answer_channel_displacement`.
+  trace_count: 13
+  answer_match_count: 3
+  test_ids:
+  - p_star_rewrite_02
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_10_v2
+  evidence:
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: 'schema doesn''t define semantics. We need choose. Maybe set seed_allows_theory_refutation:
+      true because the equations can be checked and refuted if inconsistent.'
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: schema doesn't specify. In such cases, maybe the answer is the number of characters? 28? Or
+      number of < and >? 19? Or number of atomic glyphs? 9. Let's look at
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: 'schema doesn''t enforce forbidden words, but policy says claim discipline. Avoid "proves",
+      etc. Use narrow claims. Summary: narrowest_defensible_thesis: "Under t'
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: 'schema doesn''t have a place to explain except summary. We can include detected_prompt_biases:
+      ["declared obstacle ''singularsystem'' is not supported by the given'
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: schema doesn't have a question field. The user just provided the expression. The task is to
+      compute the answer. So we need to infer what to compute. The most st
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: 'schema doesn''t have a question field. We need produce a valid JSON. The answer field is integer.
+      We need choose. Maybe there is a hidden task: The set {<>,<a>,'
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: 'put answer integer. Need summary etc. We need infer what delta means. It lists operations:
+      NewDatum; NewDatum; NewForm(1); NewForm(2); NewInst(1,[1,2]); NewIns'
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: schema doesn't ask for validity. It asks for "Final computed integer answer." Maybe the computation
+      is to count the number of valid atomic glyphs? Or the number
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: schema doesn't specify. We need to make a choice. Let's think about typical "compliant refusal"
+      in these tasks. Often, when a model refuses, it outputs a specif
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: schema doesn't have refusal field. Could set answer to 0 and summary says refusal. But task
+      says checker evaluates top-level 'answer' for final computed integer
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: schema doesn't have refusal field. Could set answer to 0 and summary says no admitted interpretation.
+      But "checker evaluates top-level answer field for final co
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: schema doesn't have refusal. How to emit compliant refusal? Maybe answer=0, summary says refusal.
+      But the checker evaluates top-level answer field for final com
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: schema doesn't have a refusal flag other than should_continue. So answer might be checked.
+      However, the instruction says "The checker evaluates the top-level 'a
+- id: clarification_retreat
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `clarification_retreat`.
+  trace_count: 11
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_09
+  - rewrite_03_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: 'ask clarification? But maybe there is hidden meaning. Let''s inspect string: <<p><v1><<q><s0>><<c><s1>>>>
+      Break: < <p> <v1> < <q> <s0> > < <c> <s1> > > > Actua'
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: No explicit question. Need respond maybe describe set? We need figure likely from context?
+      We only have this. Could be they want something with this set? Maybe
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: 'ask clarification? But likely they expect something. We need inspect. String: delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);N'
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: 'ask clarification? But maybe they expect explanation? We need answer likely. Let''s inspect.
+      The prompt is extremely terse: "r_1<x->y>". Could be a mathematical'
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: no explicit question. Maybe the task is to evaluate the expression? But no arithmetic license.
+      The op_semantics says default layer 1 syntactic binary operator.
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: 'no explicit question. Maybe the input is a set of strings representing nodes/edges? Need compute
+      something? The set includes delimiters: <>, <a>, <ab>, <ba>. Co'
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: no explicit question. The system likely expects us to compute something from the delta. Could
+      be a known benchmark where the delta encodes a sequence of operati
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: no explicit question except return JSON. Need fill answer integer. Maybe answer is 0? Need
+      analyze. We have semantic policy manifest. It defines SYM SYS atomic
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: 'no explicit question. The directive says "rule_name_the_checker_field: The checker evaluates
+      the top-level ''answer'' field for the final computed integer." That'
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: 'no explicit question. Maybe hidden: compute something from matrix/vector/target? Could be
+      matrix-vector multiplication? Let''s see. If mat = [[1,2],[3,-1]], vec'
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: No explicit question. Task directives mention rule_name_the_checker_field, rule_carrier_is_the_whole_task.
+      It says if carrier lacks admitted interpretation or o
+- id: corpus_invention
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `corpus_invention`.
+  trace_count: 1
+  answer_match_count: 0
+  test_ids:
+  - rewrite_03_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: BBH
+- id: ghost_hypothesis_stack
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `ghost_hypothesis_stack`.
+  trace_count: 13
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_09_v2
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  - rewrite_03_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: hypotheses=92
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: hypotheses=26
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: hypotheses=56
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: hypotheses=55
+  - test_id: rewrite_10_plain
+    file: response.yaml
+    quote: hypotheses=67
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: hypotheses=65
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: hypotheses=65
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: hypotheses=63
+  - test_id: p_star_rewrite_10
+    file: response.yaml
+    quote: hypotheses=173
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: hypotheses=86
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: hypotheses=22
+  - test_id: p_star_rewrite_09_v2
+    file: response.yaml
+    quote: hypotheses=19
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: hypotheses=136
+- id: license_rule_echo
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `license_rule_echo`.
+  trace_count: 4
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  evidence:
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: Without license, it's just a label. So r_1 is a relation symbol with subscript 1. The expression
+      <x->y> might be a pair? Actually the arrow -> is not defined. I
+  - test_id: p_star_rewrite_10
+    file: response.yaml
+    quote: 'no licensed arithmetic operator is declared." evidence_scope: "Syntactic parse of MSS-0-style
+      tags only." next_concrete_test: "Add an explicit licensed operatio'
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: 'without license. So no. The levels: N, L, C2, F1, M1, H1. The string has nested brackets.
+      Could it be a representation of a simplicial complex? The labels p, v1'
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: Without license, no arithmetic. So cannot solve. But schema requires integer. A compliant refusal
+      could set answer to 0? But checker expects final computed inte
+- id: need_parse_preamble
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `need_parse_preamble`.
+  trace_count: 31
+  answer_match_count: 11
+  test_ids:
+  - p_star_rewrite_01
+  - p_star_rewrite_02
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_06_v3
+  - p_star_rewrite_06_v4
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_09_v2
+  - p_star_rewrite_09_v3
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  - p_star_seed
+  - rewrite_01_plain
+  - rewrite_02_plain
+  - rewrite_03_plain
+  - rewrite_04_plain
+  - rewrite_05_plain
+  - rewrite_06_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+  - seed_plain
+  evidence:
+  - test_id: seed_plain
+    file: response.yaml
+    quote: 'We need answer solve system. Need return {"answer": x+y}. Need compute. Equations x+2y=5,
+      3x-y=1. Solve. From second y=3x-1. Substitute x+2(3x-1)=5 => x+6x-2=5'
+  - test_id: rewrite_01_plain
+    file: response.yaml
+    quote: 'We need answer solve. Need parse weird syntax. User wrote: solve< eq1<add<x, mul<2, y>>, 5>,
+      eq2<sub<mul<3, x>, y>, 1>, return<record<pair<answer, add<x,'
+  - test_id: rewrite_02_plain
+    file: response.yaml
+    quote: 'We need answer user. Need parse. They provided symbolic expressions? Need infer task. They
+      wrote: <assume eq1 <eq <add x <mul 2 y>> 5>> <assume eq2 <eq <sub <m'
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: 'We need answer to user. Need parse. User message: "<<p><v1><<q><s0>><<c><s1>>>>" Hmm likely
+      some encoded prompt? Need understand. It looks like XML-ish tags? Ma'
+  - test_id: rewrite_04_plain
+    file: response.yaml
+    quote: 'We need answer solve system. Need parse weird notation. Need infer. User: "<<solve><<eqs><<eq><<add><x><<mul><2><y>>><5>><<eq><<sub<<mul><3><x>><y>><1>>><<retur'
+  - test_id: rewrite_05_plain
+    file: response.yaml
+    quote: 'We need answer user. Need parse. The prompt seems encoded in some symbolic format. Need infer
+      task. Let''s parse carefully. User text: <<decl><<alph><gamma38>>'
+  - test_id: rewrite_06_plain
+    file: response.yaml
+    quote: We need answer to user. Need parse weird notation. Need understand task. User provided <<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5><1>><<target><<ve
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: We need answer? User just provided set of strings? Need infer task? They wrote "{<>,<a>,<ab>,<ba>}".
+      Maybe asking something? No explicit question. Need respond
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: 'We need answer to user. Need parse. User wrote: "delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);NewRuleAll(1)>"
+      This looks lik'
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: We need answer to user. Need infer. User wrote "r_1<x->y>" maybe asking? Need parse. Could
+      be notation? They just typed r_1<x->y>. Need respond? We need determi
+  - test_id: rewrite_10_plain
+    file: response.yaml
+    quote: 'We need answer to user. Need parse weird prompt. Need understand. User provided: <<passage><<pregen><{<>,<a>}>><<gen><regime<data:2,forms:2,insts:2,rules:1>>><'
+  - test_id: p_star_seed
+    file: response.yaml
+    quote: 'We need answer solve linear system. Need output JSON matching schema. Need compute x+y. Equations:
+      x + 2y = 5 3x - y = 1 Solve. From first x=5-2y. Substitute'
+  - test_id: p_star_rewrite_01
+    file: response.yaml
+    quote: 'We need answer solve system. Need parse expression. Need return JSON matching schema. Need
+      compute x,y from equations: eq1<add<x, mul<2, y>>, 5> means x + 2*y ='
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: 'We need answer. Need parse equations. Need obey policy. Need output JSON matching schema.
+      Need compute x+y. We have: eq1: <eq <add x <mul 2 y>> 5> => x + 2y ='
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: 'We need answer user. Need parse prompt. We have weird input: "<<p><v1><<q><s0>><<c><s1>>>>"
+      plus schema. Need return JSON matching schema. Need infer task? It s'
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: 'We need answer solve equations. Need parse weird nested notation. Need return JSON matching
+      schema. Need compute x,y from equations: <<eq><<add><x><<mul><2><y>>'
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: 'We need answer. Need parse packet. Need solve system? Let''s inspect. User gives encoded-ish:
+      <<decl><<alph><gamma38>><<terms><ratsys>><<rules><exactrational>><'
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: 'We need answer. Need parse input. We need return JSON matching schema. Need compute integer
+      answer from given expression? Let''s inspect user content. Input: <<'
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: 'We need answer user. Need parse prompt. We have a set notation: {<>,<a>,<ab>,<ba>}. Need return
+      JSON matching schema. Need infer task? It seems likely asking to'
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: 'We need answer. Need parse delta. We have MSS-0 grammar. Input: delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);NewRuleAll(1)>'
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: 'We need answer user. Need parse. User input: "r_1<x->y>" and asks Return JSON matching schema.
+      We need produce JSON only likely. Need understand task. We are Sy'
+  - test_id: p_star_rewrite_10
+    file: response.yaml
+    quote: 'We need answer JSON only. Need parse passage. Need compute answer? Let''s inspect. Passage:
+      <<passage><<pregen><{<>,<a>}>><<gen><regime<data:2,forms:2,insts:2,r'
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: 'We need answer JSON. Need parse task. We have surface form: <<p><v1><<q><s0>><<c><s1>>>> Task
+      directives: rule_name_the_checker_field: checker evaluates top-l'
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: 'We need answer. Need parse task. We have weird surface: <<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5><1>><<target><<vec><1><1>>>>
+      Need determine if'
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: 'We need answer JSON. Need parse task. We have surface form: {<>,<a>,<ab>,<ba>}. Need compute
+      integer? Need understand MSS-0 grammar. We are SymSys auditor. Need'
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: We need answer JSON. Need parse task. We have delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);NewRuleAll(1)>
+      We need compute fi
+  - test_id: p_star_rewrite_09_v2
+    file: response.yaml
+    quote: We need answer JSON. Need parse task. User gives "r_1<x->y>" plus directives. Need determine
+      if admitted interpretation/operational license. We are SymSys audit
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: 'We need answer to user. Need parse. We need determine if task has admitted interpretation/operational
+      license. Surface form given weird: <<passage><<pregen><{<'
+  - test_id: p_star_rewrite_06_v3
+    file: response.yaml
+    quote: 'We need answer solve. Need parse given surface. Need obey policy manifest: include derived_under_policy
+      SPK-001. Need JSON schema. Need compute integer. We hav'
+  - test_id: p_star_rewrite_09_v3
+    file: response.yaml
+    quote: 'We need answer JSON. Need parse task. We have r_1<x->y> with license: retraction down-map
+      denotes canonical coordinate retraction projection evaluating scalar s'
+  - test_id: p_star_rewrite_06_v4
+    file: response.yaml
+    quote: 'We need answer math. Need parse. We must produce JSON matching schema. Need solve. Let''s
+      parse carrier: <<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5'
+- id: schema_displacement
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `schema_displacement`.
+  trace_count: 20
+  answer_match_count: 8
+  test_ids:
+  - p_star_rewrite_01
+  - p_star_rewrite_02
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_06_v3
+  - p_star_rewrite_06_v4
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_09_v2
+  - p_star_rewrite_09_v3
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  - p_star_seed
+  evidence:
+  - test_id: p_star_seed
+    file: response.yaml
+    quote: schema_mentions=20 certificates=6
+  - test_id: p_star_rewrite_01
+    file: response.yaml
+    quote: schema_mentions=37 certificates=5
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: schema_mentions=39 certificates=6
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: schema_mentions=97 certificates=0
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: schema_mentions=38 certificates=4
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: schema_mentions=52 certificates=5
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: schema_mentions=58 certificates=28
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: schema_mentions=67 certificates=0
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: schema_mentions=55 certificates=2
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: schema_mentions=74 certificates=0
+  - test_id: p_star_rewrite_10
+    file: response.yaml
+    quote: schema_mentions=47 certificates=0
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: schema_mentions=106 certificates=0
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: schema_mentions=64 certificates=10
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: schema_mentions=37 certificates=0
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: schema_mentions=66 certificates=2
+  - test_id: p_star_rewrite_09_v2
+    file: response.yaml
+    quote: schema_mentions=37 certificates=0
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: schema_mentions=57 certificates=0
+  - test_id: p_star_rewrite_06_v3
+    file: response.yaml
+    quote: schema_mentions=49 certificates=5
+  - test_id: p_star_rewrite_09_v3
+    file: response.yaml
+    quote: schema_mentions=17 certificates=0
+  - test_id: p_star_rewrite_06_v4
+    file: response.yaml
+    quote: schema_mentions=38 certificates=6
+- id: substitution_certificate
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `substitution_certificate`.
+  trace_count: 17
+  answer_match_count: 10
+  test_ids:
+  - p_star_rewrite_01
+  - p_star_rewrite_02
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_06_v3
+  - p_star_rewrite_06_v4
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_seed
+  - rewrite_01_plain
+  - rewrite_02_plain
+  - rewrite_04_plain
+  - rewrite_05_plain
+  - rewrite_06_plain
+  - seed_plain
+  evidence:
+  - test_id: seed_plain
+    file: response.yaml
+    quote: Substitute x+2(3x-1)=5 => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Return JSON.
+  - test_id: rewrite_01_plain
+    file: response.yaml
+    quote: '=> x + 2y = 5. eq2<sub<mul<3,x>, y>, 1> => (3x - y)=1. return<record<pair<answer, add<x,y>>>>
+      maybe return {answer: x+y}. Need compute. Solve: x + 2y = 5 3x -'
+  - test_id: rewrite_02_plain
+    file: response.yaml
+    quote: 'Substitute: x + 2(3x -1)=5 => x+6x-2=5 =>7x=7 => x=1. y=3*1-1=2. x+y=3. Need final maybe just
+      3 or <add x y> = 3. Need maybe include answer. Since user likely'
+  - test_id: rewrite_04_plain
+    file: response.yaml
+    quote: '=> x + 2y = 5 eq2: sub (mul 3 x) y = 1 => 3x - y = 1 return answer add x y => x+y. Need solve.
+      Let''s solve: x + 2y =5 3x - y =1 From second y=3x-1. Substitute'
+  - test_id: rewrite_05_plain
+    file: response.yaml
+    quote: 'Substitute into first: x + 2(3x -1)=5 => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Answer 3. Need
+      ensure no ambiguity. The notation <<add><x><<mul><2><y>>>><5>> mean'
+  - test_id: rewrite_06_plain
+    file: response.yaml
+    quote: Substitute x+2(3x-1)=5 => 7x-2=5 => 7x=7 => x=1, y=2. Solution (1,2). The given target is <<vec><1><1>>.
+      That's not solution. Maybe target is [1,1]? Wait matrix
+  - test_id: p_star_seed
+    file: response.yaml
+    quote: Substitute 3(5-2y)-y=1 =>15-6y-y=1 =>15-7y=1 => -7y=-14 => y=2. x=5-4=1. x+y=3. Need provide
+      JSON with derived_under_policy SPK-001, answer 3, summary fields,
+  - test_id: p_star_rewrite_01
+    file: response.yaml
+    quote: => x +6x -2=5 =>7x=7 => x=1. y=2. x+y=3. answer integer 3. Need produce JSON with derived_under_policy
+      SPK-001, answer 3, summary fields, process_integrity. se
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: '=> x + 2y = 5. eq2: <eq <sub <mul 3 x> y> 1> => 3x - y = 1. Solve. From eq2 y = 3x -1. Plug
+      eq1: x + 2(3x -1)=5 => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Need pr'
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Need produce JSON with derived_under_policy SPK-001,
+      answer 3, summary fields, process_integrity. sections empty array.
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: => 15 -6y - y =1 => -7y = -14 => y=2. x=5-4=1. x+y=3. Need provide JSON with derived_under_policy
+      SPK-001, answer 3, summary fields, process_integrity. section
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: =>3-6y-y=1 => -7y=-2 => y=2/7, x=1-4/7=3/7. Not integer. Maybe compute determinant? det A =
+      1*(-1) - 2*3 = -1-6=-7. Answer maybe -7? But target vec [1,1]? Hmm.
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: '=> two data? Maybe nodes? - NewForm(1): creates form 1? - NewForm(2): creates form 2? - NewInst(1,[1,2]):
+      instantiate form 1 with arguments [1,2]? - NewInst(2,'
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: '=> [1,2]. row2: <3><<neg><1>>> => [3, -1]? Then vec <5><1> maybe vector [5,1]. target <vec><1><1>>
+      maybe target vector [1,1]. sys wraps mat, vec, target. Could'
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: => creates data? NewForm(1), NewForm(2). NewInst(1,[1,2]) maybe instantiate form 1 with datum
+      1 and 2? NewInst(2,[3,1]) maybe form 2 with something? NewRuleAll(
+  - test_id: p_star_rewrite_06_v3
+    file: response.yaml
+    quote: Substitute 3(5-2y) - y = 1 => 15 -6y - y =1 => -7y = -14 => y=2. x=5-4=1. Target = 1*x + 1*y
+      = 3. Answer 3. Need produce JSON matching. Sections maxItems 0, so
+  - test_id: p_star_rewrite_06_v4
+    file: response.yaml
+    quote: Substitute x+2(3x-1)=5 => x+6x-2=5 =>7x=7=>x=1, y=2. Target c^T x = [1,1] dot [1,2] = 3. Answer
+      3. Need include process_integrity etc. Need not mention forbidd
+- id: template_withdrew_license
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `template_withdrew_license`.
+  trace_count: 3
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_08_v2
+  evidence:
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: without license. So maybe the answer is 0 because no valid arithmetic can be performed? Or
+      maybe the answer is the number of atomic glyphs? 38? No. Let's look
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: without license. There is no explicit license. So we cannot compute matrix-vector product.
+      Thus no admitted interpretation. So refusal. But the schema requires
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: Without license, numeric labels do not have arithmetic semantics. The task asks final computed
+      integer. But op_semantics forbids arithmetic unless license. We n
+- id: unbounded_scratchpad
+  kind: pattern
+  admitted: false
+  statement: Repeated scratchpad move `unbounded_scratchpad`.
+  trace_count: 6
+  answer_match_count: 0
+  test_ids:
+  - rewrite_03_plain
+  - rewrite_06_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: reasoning_tokens=5213
+  - test_id: rewrite_06_plain
+    file: response.yaml
+    quote: reasoning_tokens=27142
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: reasoning_tokens=1223
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: reasoning_tokens=5364
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: reasoning_tokens=2219
+  - test_id: rewrite_10_plain
+    file: response.yaml
+    quote: reasoning_tokens=4413
+skills:
+- id: skill_substitute_then_report
+  kind: skill
+  admitted: false
+  statement: Bind the declared equations, substitute, and put the checker value in the answer field.
+  trace_count: 10
+  answer_match_count: 10
+  test_ids:
+  - p_star_rewrite_01
+  - p_star_rewrite_02
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06_v3
+  - p_star_rewrite_06_v4
+  - p_star_seed
+  - rewrite_01_plain
+  - rewrite_05_plain
+  - seed_plain
+  evidence:
+  - test_id: seed_plain
+    file: response.yaml
+    quote: Substitute x+2(3x-1)=5 => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Return JSON.
+  - test_id: rewrite_01_plain
+    file: response.yaml
+    quote: '=> x + 2y = 5. eq2<sub<mul<3,x>, y>, 1> => (3x - y)=1. return<record<pair<answer, add<x,y>>>>
+      maybe return {answer: x+y}. Need compute. Solve: x + 2y = 5 3x -'
+  - test_id: rewrite_05_plain
+    file: response.yaml
+    quote: 'Substitute into first: x + 2(3x -1)=5 => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Answer 3. Need
+      ensure no ambiguity. The notation <<add><x><<mul><2><y>>>><5>> mean'
+  - test_id: p_star_seed
+    file: response.yaml
+    quote: Substitute 3(5-2y)-y=1 =>15-6y-y=1 =>15-7y=1 => -7y=-14 => y=2. x=5-4=1. x+y=3. Need provide
+      JSON with derived_under_policy SPK-001, answer 3, summary fields,
+  - test_id: p_star_rewrite_01
+    file: response.yaml
+    quote: => x +6x -2=5 =>7x=7 => x=1. y=2. x+y=3. answer integer 3. Need produce JSON with derived_under_policy
+      SPK-001, answer 3, summary fields, process_integrity. se
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: '=> x + 2y = 5. eq2: <eq <sub <mul 3 x> y> 1> => 3x - y = 1. Solve. From eq2 y = 3x -1. Plug
+      eq1: x + 2(3x -1)=5 => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Need pr'
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Need produce JSON with derived_under_policy SPK-001,
+      answer 3, summary fields, process_integrity. sections empty array.
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: => 15 -6y - y =1 => -7y = -14 => y=2. x=5-4=1. x+y=3. Need provide JSON with derived_under_policy
+      SPK-001, answer 3, summary fields, process_integrity. section
+  - test_id: p_star_rewrite_06_v3
+    file: response.yaml
+    quote: Substitute 3(5-2y) - y = 1 => 15 -6y - y =1 => -7y = -14 => y=2. x=5-4=1. Target = 1*x + 1*y
+      = 3. Answer 3. Need produce JSON matching. Sections maxItems 0, so
+  - test_id: p_star_rewrite_06_v4
+    file: response.yaml
+    quote: Substitute x+2(3x-1)=5 => x+6x-2=5 =>7x=7=>x=1, y=2. Target c^T x = [1,1] dot [1,2] = 3. Answer
+      3. Need include process_integrity etc. Need not mention forbidd
+- id: skill_parse_before_arithmetic
+  kind: skill
+  admitted: false
+  statement: Open the scratchpad by parsing the carrier, then calculate. Do not search for a hidden task.
+  trace_count: 10
+  answer_match_count: 10
+  test_ids:
+  - p_star_rewrite_01
+  - p_star_rewrite_02
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06_v3
+  - p_star_rewrite_06_v4
+  - p_star_seed
+  - rewrite_01_plain
+  - rewrite_05_plain
+  - seed_plain
+  evidence:
+  - test_id: seed_plain
+    file: response.yaml
+    quote: 'We need answer solve system. Need return {"answer": x+y}. Need compute. Equations x+2y=5,
+      3x-y=1. Solve. From second y=3x-1. Substitute x+2(3x-1)=5 => x+6x-2=5'
+  - test_id: rewrite_01_plain
+    file: response.yaml
+    quote: 'We need answer solve. Need parse weird syntax. User wrote: solve< eq1<add<x, mul<2, y>>, 5>,
+      eq2<sub<mul<3, x>, y>, 1>, return<record<pair<answer, add<x,'
+  - test_id: rewrite_05_plain
+    file: response.yaml
+    quote: 'We need answer user. Need parse. The prompt seems encoded in some symbolic format. Need infer
+      task. Let''s parse carefully. User text: <<decl><<alph><gamma38>>'
+  - test_id: p_star_seed
+    file: response.yaml
+    quote: 'We need answer solve linear system. Need output JSON matching schema. Need compute x+y. Equations:
+      x + 2y = 5 3x - y = 1 Solve. From first x=5-2y. Substitute'
+  - test_id: p_star_rewrite_01
+    file: response.yaml
+    quote: 'We need answer solve system. Need parse expression. Need return JSON matching schema. Need
+      compute x,y from equations: eq1<add<x, mul<2, y>>, 5> means x + 2*y ='
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: 'We need answer. Need parse equations. Need obey policy. Need output JSON matching schema.
+      Need compute x+y. We have: eq1: <eq <add x <mul 2 y>> 5> => x + 2y ='
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: 'We need answer solve equations. Need parse weird nested notation. Need return JSON matching
+      schema. Need compute x,y from equations: <<eq><<add><x><<mul><2><y>>'
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: 'We need answer. Need parse packet. Need solve system? Let''s inspect. User gives encoded-ish:
+      <<decl><<alph><gamma38>><<terms><ratsys>><<rules><exactrational>><'
+  - test_id: p_star_rewrite_06_v3
+    file: response.yaml
+    quote: 'We need answer solve. Need parse given surface. Need obey policy manifest: include derived_under_policy
+      SPK-001. Need JSON schema. Need compute integer. We hav'
+  - test_id: p_star_rewrite_06_v4
+    file: response.yaml
+    quote: 'We need answer math. Need parse. We must produce JSON matching schema. Need solve. Let''s
+      parse carrier: <<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5'
+antiskills:
+- id: antiskill_corpus_invention
+  kind: antiskill
+  admitted: false
+  statement: Naming a benchmark or corpus that is not in the source prompt.
+  trace_count: 1
+  answer_match_count: 0
+  test_ids:
+  - rewrite_03_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: BBH
+- id: antiskill_clarification_retreat
+  kind: antiskill
+  admitted: false
+  statement: Asking what to do with a closed carrier instead of binding it.
+  trace_count: 11
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_09
+  - rewrite_03_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: 'ask clarification? But maybe there is hidden meaning. Let''s inspect string: <<p><v1><<q><s0>><<c><s1>>>>
+      Break: < <p> <v1> < <q> <s0> > < <c> <s1> > > > Actua'
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: No explicit question. Need respond maybe describe set? We need figure likely from context?
+      We only have this. Could be they want something with this set? Maybe
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: 'ask clarification? But likely they expect something. We need inspect. String: delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);N'
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: 'ask clarification? But maybe they expect explanation? We need answer likely. Let''s inspect.
+      The prompt is extremely terse: "r_1<x->y>". Could be a mathematical'
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: no explicit question. Maybe the task is to evaluate the expression? But no arithmetic license.
+      The op_semantics says default layer 1 syntactic binary operator.
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: 'no explicit question. Maybe the input is a set of strings representing nodes/edges? Need compute
+      something? The set includes delimiters: <>, <a>, <ab>, <ba>. Co'
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: no explicit question. The system likely expects us to compute something from the delta. Could
+      be a known benchmark where the delta encodes a sequence of operati
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: no explicit question except return JSON. Need fill answer integer. Maybe answer is 0? Need
+      analyze. We have semantic policy manifest. It defines SYM SYS atomic
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: 'no explicit question. The directive says "rule_name_the_checker_field: The checker evaluates
+      the top-level ''answer'' field for the final computed integer." That'
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: 'no explicit question. Maybe hidden: compute something from matrix/vector/target? Could be
+      matrix-vector multiplication? Let''s see. If mat = [[1,2],[3,-1]], vec'
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: No explicit question. Task directives mention rule_name_the_checker_field, rule_carrier_is_the_whole_task.
+      It says if carrier lacks admitted interpretation or o
+- id: antiskill_ghost_hypothesis_stack
+  kind: antiskill
+  admitted: false
+  statement: Stacking undecided hypotheses without a substitution certificate.
+  trace_count: 13
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_09_v2
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  - rewrite_03_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: hypotheses=92
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: hypotheses=26
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: hypotheses=56
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: hypotheses=55
+  - test_id: rewrite_10_plain
+    file: response.yaml
+    quote: hypotheses=67
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: hypotheses=65
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: hypotheses=65
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: hypotheses=63
+  - test_id: p_star_rewrite_10
+    file: response.yaml
+    quote: hypotheses=173
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: hypotheses=86
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: hypotheses=22
+  - test_id: p_star_rewrite_09_v2
+    file: response.yaml
+    quote: hypotheses=19
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: hypotheses=136
+- id: antiskill_schema_displacement
+  kind: antiskill
+  admitted: false
+  statement: Spending the scratchpad on response-schema field names.
+  trace_count: 20
+  answer_match_count: 8
+  test_ids:
+  - p_star_rewrite_01
+  - p_star_rewrite_02
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_06_v3
+  - p_star_rewrite_06_v4
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_09_v2
+  - p_star_rewrite_09_v3
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  - p_star_seed
+  evidence:
+  - test_id: p_star_seed
+    file: response.yaml
+    quote: schema_mentions=20 certificates=6
+  - test_id: p_star_rewrite_01
+    file: response.yaml
+    quote: schema_mentions=37 certificates=5
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: schema_mentions=39 certificates=6
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: schema_mentions=97 certificates=0
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: schema_mentions=38 certificates=4
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: schema_mentions=52 certificates=5
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: schema_mentions=58 certificates=28
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: schema_mentions=67 certificates=0
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: schema_mentions=55 certificates=2
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: schema_mentions=74 certificates=0
+  - test_id: p_star_rewrite_10
+    file: response.yaml
+    quote: schema_mentions=47 certificates=0
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: schema_mentions=106 certificates=0
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: schema_mentions=64 certificates=10
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: schema_mentions=37 certificates=0
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: schema_mentions=66 certificates=2
+  - test_id: p_star_rewrite_09_v2
+    file: response.yaml
+    quote: schema_mentions=37 certificates=0
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: schema_mentions=57 certificates=0
+  - test_id: p_star_rewrite_06_v3
+    file: response.yaml
+    quote: schema_mentions=49 certificates=5
+  - test_id: p_star_rewrite_09_v3
+    file: response.yaml
+    quote: schema_mentions=17 certificates=0
+  - test_id: p_star_rewrite_06_v4
+    file: response.yaml
+    quote: schema_mentions=38 certificates=6
+- id: antiskill_answer_channel_displacement
+  kind: antiskill
+  admitted: false
+  statement: Moving the numeric result into the thesis because the schema has no answer field.
+  trace_count: 13
+  answer_match_count: 3
+  test_ids:
+  - p_star_rewrite_02
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_10_v2
+  evidence:
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: 'schema doesn''t define semantics. We need choose. Maybe set seed_allows_theory_refutation:
+      true because the equations can be checked and refuted if inconsistent.'
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: schema doesn't specify. In such cases, maybe the answer is the number of characters? 28? Or
+      number of < and >? 19? Or number of atomic glyphs? 9. Let's look at
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: 'schema doesn''t enforce forbidden words, but policy says claim discipline. Avoid "proves",
+      etc. Use narrow claims. Summary: narrowest_defensible_thesis: "Under t'
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: 'schema doesn''t have a place to explain except summary. We can include detected_prompt_biases:
+      ["declared obstacle ''singularsystem'' is not supported by the given'
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: schema doesn't have a question field. The user just provided the expression. The task is to
+      compute the answer. So we need to infer what to compute. The most st
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: 'schema doesn''t have a question field. We need produce a valid JSON. The answer field is integer.
+      We need choose. Maybe there is a hidden task: The set {<>,<a>,'
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: 'put answer integer. Need summary etc. We need infer what delta means. It lists operations:
+      NewDatum; NewDatum; NewForm(1); NewForm(2); NewInst(1,[1,2]); NewIns'
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: schema doesn't ask for validity. It asks for "Final computed integer answer." Maybe the computation
+      is to count the number of valid atomic glyphs? Or the number
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: schema doesn't specify. We need to make a choice. Let's think about typical "compliant refusal"
+      in these tasks. Often, when a model refuses, it outputs a specif
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: schema doesn't have refusal field. Could set answer to 0 and summary says refusal. But task
+      says checker evaluates top-level 'answer' for final computed integer
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: schema doesn't have refusal field. Could set answer to 0 and summary says no admitted interpretation.
+      But "checker evaluates top-level answer field for final co
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: schema doesn't have refusal. How to emit compliant refusal? Maybe answer=0, summary says refusal.
+      But the checker evaluates top-level answer field for final com
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: schema doesn't have a refusal flag other than should_continue. So answer might be checked.
+      However, the instruction says "The checker evaluates the top-level 'a
+- id: antiskill_template_withdrew_license
+  kind: antiskill
+  admitted: false
+  statement: Solving the system, then discarding the number because the template withdraws arithmetic
+    license.
+  trace_count: 3
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_08_v2
+  evidence:
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: without license. So maybe the answer is 0 because no valid arithmetic can be performed? Or
+      maybe the answer is the number of atomic glyphs? 38? No. Let's look
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: without license. There is no explicit license. So we cannot compute matrix-vector product.
+      Thus no admitted interpretation. So refusal. But the schema requires
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: Without license, numeric labels do not have arithmetic semantics. The task asks final computed
+      integer. But op_semantics forbids arithmetic unless license. We n
+- id: antiskill_unbounded_scratchpad
+  kind: antiskill
+  admitted: false
+  statement: Continuing the scratchpad past the token cap with no extracted answer.
+  trace_count: 6
+  answer_match_count: 0
+  test_ids:
+  - rewrite_03_plain
+  - rewrite_06_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: reasoning_tokens=5213
+  - test_id: rewrite_06_plain
+    file: response.yaml
+    quote: reasoning_tokens=27142
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: reasoning_tokens=1223
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: reasoning_tokens=5364
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: reasoning_tokens=2219
+  - test_id: rewrite_10_plain
+    file: response.yaml
+    quote: reasoning_tokens=4413
+antibodies:
+- id: ab_cot_corpus_invention
+  kind: antibody
+  admitted: false
+  statement: Fire when a corpus token is in the scratchpad and absent from the source prompt.
+  trace_count: 1
+  answer_match_count: 0
+  test_ids:
+  - rewrite_03_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: BBH
+- id: ab_cot_license_conflict
+  kind: antibody
+  admitted: false
+  statement: Fire when the scratchpad both computes a value and then refuses it under a license rule present
+    in the template.
+  trace_count: 3
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_08_v2
+  evidence:
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: without license. So maybe the answer is 0 because no valid arithmetic can be performed? Or
+      maybe the answer is the number of atomic glyphs? 38? No. Let's look
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: without license. There is no explicit license. So we cannot compute matrix-vector product.
+      Thus no admitted interpretation. So refusal. But the schema requires
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: Without license, numeric labels do not have arithmetic semantics. The task asks final computed
+      integer. But op_semantics forbids arithmetic unless license. We n
+- id: ab_cot_unbounded_scratchpad
+  kind: antibody
+  admitted: false
+  statement: Fire when reasoning_tokens >= 1000 and extracted_answer is null.
+  trace_count: 6
+  answer_match_count: 0
+  test_ids:
+  - rewrite_03_plain
+  - rewrite_06_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: reasoning_tokens=5213
+  - test_id: rewrite_06_plain
+    file: response.yaml
+    quote: reasoning_tokens=27142
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: reasoning_tokens=1223
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: reasoning_tokens=5364
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: reasoning_tokens=2219
+  - test_id: rewrite_10_plain
+    file: response.yaml
+    quote: reasoning_tokens=4413
+- id: ab_cot_ghost_hypothesis
+  kind: antibody
+  admitted: false
+  statement: Fire when hypothesis markers >= 6 and no substitution certificate appears.
+  trace_count: 13
+  answer_match_count: 0
+  test_ids:
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_09_v2
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  - rewrite_03_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+  evidence:
+  - test_id: rewrite_03_plain
+    file: response.yaml
+    quote: hypotheses=92
+  - test_id: rewrite_07_plain
+    file: response.yaml
+    quote: hypotheses=26
+  - test_id: rewrite_08_plain
+    file: response.yaml
+    quote: hypotheses=56
+  - test_id: rewrite_09_plain
+    file: response.yaml
+    quote: hypotheses=55
+  - test_id: rewrite_10_plain
+    file: response.yaml
+    quote: hypotheses=67
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: hypotheses=65
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: hypotheses=65
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: hypotheses=63
+  - test_id: p_star_rewrite_10
+    file: response.yaml
+    quote: hypotheses=173
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: hypotheses=86
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: hypotheses=22
+  - test_id: p_star_rewrite_09_v2
+    file: response.yaml
+    quote: hypotheses=19
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: hypotheses=136
+- id: ab_cot_answer_channel
+  kind: antibody
+  admitted: false
+  statement: Fire when the scratchpad says the checker field cannot hold the answer.
+  trace_count: 13
+  answer_match_count: 3
+  test_ids:
+  - p_star_rewrite_02
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_10_v2
+  evidence:
+  - test_id: p_star_rewrite_02
+    file: response.yaml
+    quote: 'schema doesn''t define semantics. We need choose. Maybe set seed_allows_theory_refutation:
+      true because the equations can be checked and refuted if inconsistent.'
+  - test_id: p_star_rewrite_03
+    file: response.yaml
+    quote: schema doesn't specify. In such cases, maybe the answer is the number of characters? 28? Or
+      number of < and >? 19? Or number of atomic glyphs? 9. Let's look at
+  - test_id: p_star_rewrite_04
+    file: response.yaml
+    quote: 'schema doesn''t enforce forbidden words, but policy says claim discipline. Avoid "proves",
+      etc. Use narrow claims. Summary: narrowest_defensible_thesis: "Under t'
+  - test_id: p_star_rewrite_05
+    file: response.yaml
+    quote: 'schema doesn''t have a place to explain except summary. We can include detected_prompt_biases:
+      ["declared obstacle ''singularsystem'' is not supported by the given'
+  - test_id: p_star_rewrite_06
+    file: response.yaml
+    quote: schema doesn't have a question field. The user just provided the expression. The task is to
+      compute the answer. So we need to infer what to compute. The most st
+  - test_id: p_star_rewrite_07
+    file: response.yaml
+    quote: 'schema doesn''t have a question field. We need produce a valid JSON. The answer field is integer.
+      We need choose. Maybe there is a hidden task: The set {<>,<a>,'
+  - test_id: p_star_rewrite_08
+    file: response.yaml
+    quote: 'put answer integer. Need summary etc. We need infer what delta means. It lists operations:
+      NewDatum; NewDatum; NewForm(1); NewForm(2); NewInst(1,[1,2]); NewIns'
+  - test_id: p_star_rewrite_09
+    file: response.yaml
+    quote: schema doesn't ask for validity. It asks for "Final computed integer answer." Maybe the computation
+      is to count the number of valid atomic glyphs? Or the number
+  - test_id: p_star_rewrite_03_v2
+    file: response.yaml
+    quote: schema doesn't specify. We need to make a choice. Let's think about typical "compliant refusal"
+      in these tasks. Often, when a model refuses, it outputs a specif
+  - test_id: p_star_rewrite_06_v2
+    file: response.yaml
+    quote: schema doesn't have refusal field. Could set answer to 0 and summary says refusal. But task
+      says checker evaluates top-level 'answer' for final computed integer
+  - test_id: p_star_rewrite_07_v2
+    file: response.yaml
+    quote: schema doesn't have refusal field. Could set answer to 0 and summary says no admitted interpretation.
+      But "checker evaluates top-level answer field for final co
+  - test_id: p_star_rewrite_08_v2
+    file: response.yaml
+    quote: schema doesn't have refusal. How to emit compliant refusal? Maybe answer=0, summary says refusal.
+      But the checker evaluates top-level answer field for final com
+  - test_id: p_star_rewrite_10_v2
+    file: response.yaml
+    quote: schema doesn't have a refusal flag other than should_continue. So answer might be checked.
+      However, the instruction says "The checker evaluates the top-level 'a
+rules:
+- id: rule_name_the_checker_field
+  manipulation: Name the checker field in the task. Do not force the number to live only inside narrowest_defensible_thesis.
+  test_ids:
+  - p_star_rewrite_01
+  - p_star_rewrite_02
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_06_v3
+  - p_star_rewrite_06_v4
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_09_v2
+  - p_star_rewrite_09_v3
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  - p_star_seed
+- id: rule_license_the_operators
+  manipulation: When the template forbids unlicensed arithmetic, put an explicit license on the same operators
+    the carrier uses.
+  test_ids:
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_08_v2
+- id: rule_carrier_is_the_whole_task
+  manipulation: Tell the scratchpad that the surface form is the whole carrier. Do not invite a search
+    for an outside benchmark.
+  test_ids:
+  - p_star_rewrite_03
+  - p_star_rewrite_03_v2
+  - p_star_rewrite_07
+  - p_star_rewrite_07_v2
+  - p_star_rewrite_09
+  - p_star_rewrite_09_v2
+  - p_star_rewrite_10
+  - p_star_rewrite_10_v2
+  - rewrite_03_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+- id: rule_cap_the_scratchpad
+  manipulation: Stop the scratchpad at 1000 reasoning tokens unless a substitution certificate is already
+    present.
+  test_ids:
+  - rewrite_03_plain
+  - rewrite_06_plain
+  - rewrite_07_plain
+  - rewrite_08_plain
+  - rewrite_09_plain
+  - rewrite_10_plain
+- id: rule_require_one_substitution_line
+  manipulation: Require one substitution line before any schema talk or corpus guess.
+  test_ids:
+  - p_star_rewrite_01
+  - p_star_rewrite_02
+  - p_star_rewrite_04
+  - p_star_rewrite_05
+  - p_star_rewrite_06
+  - p_star_rewrite_06_v2
+  - p_star_rewrite_06_v3
+  - p_star_rewrite_06_v4
+  - p_star_rewrite_08
+  - p_star_rewrite_08_v2
+  - p_star_seed
+  - rewrite_01_plain
+  - rewrite_02_plain
+  - rewrite_04_plain
+  - rewrite_05_plain
+  - rewrite_06_plain
+  - seed_plain

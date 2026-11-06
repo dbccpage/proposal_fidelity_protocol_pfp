@@ -1,0 +1,29 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00055
+task_family: cell_complex_duality
+difficulty_rung: 1
+request_id: pilot_00055_req_0
+rewrite_metadata:
+  rewrite_id: demo_5
+  name: Demo 5 - Multi-Cycle Cell Complexes & Exact Rational Duality (B1=2, B1=4)
+  governing_specification: pilots/demo_003/demo_5/5_demo.md
+  governing_strategy: Strategy D5 (Planar Triangular & Kagome Betti Verification)
+  target_stratum: Stratum 3 (Homological Betti Invariants)
+  explanation: Discrete 1-cycle Betti number computation over planar triangular and
+    Kagome lattice complexes.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union {betti_1_triangular, betti_1_kagome}
+  syntactic_category: BettiInvariantComputation
+  semantic_carrier: Planar triangular cell complex (B1=2) and Kagome lattice (B1=4)
+    over Q
+  dialect_tier: Tier S (Multi-Cycle 2D Complex)
+  boundary_format: pfp-betti-v1
+seed_prompt: '{"complex_1":"planar_triangular_b1_2","complex_2":"kagome_lattice_b1_4","task":"Compute
+  exact 1-cycle Betti numbers b1 = dim(ker d1) - dim(im d2) for both cell complexes","output":{"betti_1_triangular":2,"betti_1_kagome":4}}'
+expected_outcome:
+  answer:
+    betti_1_triangular: 2
+    betti_1_kagome: 4
+  status: ACCEPTED

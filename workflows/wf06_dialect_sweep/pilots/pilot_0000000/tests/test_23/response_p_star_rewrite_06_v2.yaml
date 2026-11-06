@@ -1,0 +1,305 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: p_star_rewrite_06_v2
+test_kind: p_star_templated
+pilot_id: pilot_0000000
+case_id: rewrite_06
+request_id: pilot_0000000_req_p_star_rewrite_06_v2
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: p_star_rewrite_06_v2.yaml
+  source_file_bytes: 10113
+  source_file_kb: 9.876
+  payload_bytes: 6870
+  payload_kb: 6.709
+  messages_count: 2
+raw_reply: "{\n  \"derived_under_policy\": \"SPK-001\",\n  \"answer\": 0,\n  \"summary\"\
+  : {\n    \"narrowest_defensible_thesis\": \"The surface form is not a valid SYM\
+  \ SYS expression under the declared grammar, and no operational license is provided\
+  \ for arithmetic or matrix interpretations.\",\n    \"evidence_scope\": \"Based\
+  \ on the provided policy manifest SPK-001, MSS-0 grammar, and op_semantics.\",\n\
+  \    \"next_concrete_test\": \"Provide a valid SYM SYS expression with single-letter\
+  \ node labels and an explicit license for any arithmetic or matrix interpretation.\"\
+  \n  },\n  \"process_integrity\": {\n    \"seed_allows_theory_refutation\": false,\n\
+  \    \"detected_prompt_biases\": [\n      \"assumes arithmetic interpretation without\
+  \ license\",\n      \"assumes matrix multiplication without license\"\n    ],\n\
+  \    \"should_continue\": false\n  },\n  \"sections\": []\n}"
+reasoning_content: "We need answer. Need parse task. We have weird surface: <<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5><1>><<target><<vec><1><1>>>>\n\
+  \nNeed determine if admitted interpretation. We have policy manifest. Need return\
+  \ JSON schema. Need compute integer? Need inspect.\n\nThis looks like encoded expression\
+  \ in SYM SYS? Atomic glyphs 38, node labels a..z, numeric labels 0..9, delimiters\
+  \ < >. Surface uses tags: sys, mat, row, neg, vec, target. These are not in atomic\
+  \ glyph list? Maybe derived? Need apply MSS-0 typing? Need decide if task carrier\
+  \ lacks admitted interpretation or operational license -> compliant refusal. But\
+  \ schema requires answer integer. Maybe answer can be? Need infer.\n\nLet's parse.\
+  \ The string:\n<<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5><1>><<target><<vec><1><1>>>>\n\
+  \nIt's nested angle brackets. Tags: sys, mat, row, neg, vec, target. Numbers 1,2,3,5.\
+  \ Maybe represents matrix? Let's decode.\n\nMaybe this is a \"matrix\" with rows?\
+  \ <<mat> ... > contains two rows? row1: <1><2> => [1,2]. row2: <3><<neg><1>>> =>\
+  \ [3, -1]? Then vec <5><1> maybe vector [5,1]. target <vec><1><1>> maybe target\
+  \ vector [1,1]. sys wraps mat, vec, target. Could be linear algebra? Need compute\
+  \ something? Maybe solve? The task directives mention checker evaluates top-level\
+  \ 'answer' field for final computed integer. But no explicit question. Maybe hidden:\
+  \ compute something from matrix/vector/target? Could be matrix-vector multiplication?\
+  \ Let's see.\n\nIf mat = [[1,2],[3,-1]], vec = [5,1], target = [1,1]. Maybe compute?\
+  \ Matrix times vector: [[1*5+2*1=7], [3*5 + (-1)*1=14]] = [7,14]. Target [1,1]?\
+  \ Maybe compare? Difference? Maybe answer? Could be determinant? det = 1*(-1)-2*3\
+  \ = -7. Absolute 7? Hmm.\n\nMaybe \"neg\" means negative. row2 <3><neg><1>> = 3,\
+  \ -1. vec <5><1> = [5,1]. target <vec><1><1>> = [1,1]. Could be solve linear system?\
+  \ Matrix [[1,2],[3,-1]] times x = target [1,1]? Solve: x + 2y =1; 3x - y =1. From\
+  \ second y=3x-1. Substitute x+2(3x-1)=1 => 7x-2=1 => x=3/7, y=2/7. Not integer.\
+  \ Maybe answer? no.\n\nMaybe compute matrix-vector product and then something with\
+  \ target? If target is [1,1], maybe dot product? [7,14] dot [1,1] =21. Or difference?\
+  \ 7+14=21. Could be answer 21? Need more.\n\nLet's examine syntax. <<sys><<mat>...><<vec>...><<target>...>>.\
+  \ sys contains mat, vec, target. Maybe \"sys\" means system of equations? mat is\
+  \ coefficient matrix, vec is constants? target is solution? Wait target <vec><1><1>>\
+  \ maybe target vector [1,1]. Could be system: matrix * x = target? But vec [5,1]\
+  \ maybe? Hmm.\n\nMaybe \"mat\" is matrix, \"vec\" is vector, \"target\" is target.\
+  \ Could be compute something like matrix-vector product? The presence of target\
+  \ maybe expected output? Let's parse tags:\n- sys: system\n- mat: matrix\n- row:\
+  \ row\n- neg: negative\n- vec: vector\n- target: target\n\nMaybe this is a linear\
+  \ algebra problem: Given matrix and vector, compute target? Actually target contains\
+  \ vec [1,1]. Maybe target is the expected result? If mat * vec = target? Let's check:\
+  \ mat [[1,2],[3,-1]] * vec [5,1] = [7,14], not [1,1]. So no.\n\nMaybe mat is augmented\
+  \ matrix? Rows: [1,2] and [3,-1]. vec [5,1] maybe right-hand side? target [1,1]?\
+  \ Solve? Not.\n\nMaybe \"neg\" is unary negation. So row2 is <3><neg><1>> = 3, -1.\
+  \ That's clear.\n\nCould be a neural network? sys, mat, vec, target? Maybe compute\
+  \ loss? No.\n\nNeed consider policy: \"If carrier lacks an admitted interpretation\
+  \ or operational license, emit a compliant refusal.\" But schema requires answer\
+  \ integer. Maybe we can set answer to 0? But \"compliant refusal\" maybe answer?\
+  \ The schema doesn't have refusal field. Could set answer to 0 and summary says\
+  \ refusal. But task says checker evaluates top-level 'answer' for final computed\
+  \ integer. If no admitted interpretation, maybe answer should be 0? Need decide.\n\
+  \nLet's read prompt carefully. It includes semantic_policy_manifest, mss0 grammar,\
+  \ op_semantics, etc. The actual user content is the surface form and task directives.\
+  \ The task directives:\n- rule_name_the_checker_field: The checker evaluates the\
+  \ top-level 'answer' field for the final computed integer.\n- rule_carrier_is_the_whole_task:\
+  \ The provided surface form is the complete, self-contained task carrier. Do not\
+  \ search for or invent external benchmark corpora (e.g. BigBench, ARC, Dyck). If\
+  \ the carrier lacks an admitted interpretation or operational license, emit a compliant\
+  \ refusal.\n\nSo we need either compute integer or refuse. But schema requires answer\
+  \ integer. Maybe if refuse, answer can be 0? But \"compliant refusal\" might mean\
+  \ we should not compute, but still return JSON with answer maybe 0? The schema doesn't\
+  \ allow null. Could set answer to 0 and summary says no admitted interpretation.\
+  \ But checker might expect integer. Hmm.\n\nMaybe there is an admitted interpretation:\
+  \ It's a SYM SYS expression. We can parse it as a term. The tags sys, mat, row,\
+  \ neg, vec, target are not in atomic glyphs? The grammar says atomic glyph count\
+  \ 38, node labels a..z, numeric labels 0..9, delimiters < >. It doesn't list tags\
+  \ like sys, mat, row, neg, vec, target. But maybe these are derived patterns? The\
+  \ manifest says \"Category-theoretic structures ... are derived patterns, not new\
+  \ primitives.\" But tags are not in atomic glyphs. However, the surface form uses\
+  \ them. Are they allowed? The grammar constraint says system_name SYM SYS, atomic_glyph_count\
+  \ 38, node_labels a..z, numeric_labels 0..9, delimiters < >. It doesn't mention\
+  \ tags. So tags like sys, mat, row, neg, vec, target are not atomic glyphs. They\
+  \ might be multi-character labels? But node_labels are a..z single letters. So this\
+  \ surface form violates the grammar? Unless tags are just labels composed of letters?\
+  \ But they are multiple letters. The grammar says node_labels: a..z, numeric_labels:\
+  \ 0..9. So \"sys\" is three letters, not a single node label. So it's not a valid\
+  \ SYM SYS expression under the stated grammar. Therefore lacks admitted interpretation.\
+  \ So compliant refusal.\n\nBut wait, the surface form might be a different notation,\
+  \ not SYM SYS. The task directives say \"provided surface form is the complete,\
+  \ self-contained task carrier.\" It doesn't say it must be SYM SYS. But the manifest\
+  \ is about SYM SYS. The surface form uses tags that could be interpreted as operations.\
+  \ But no operational license for arithmetic, multiplication, etc. The op_semantics\
+  \ says default_layer 1, default_meaning syntactic_binary_operator, forbidden unlicensed\
+  \ interpretations include arithmetic, multiplication, tensor_product, etc. So if\
+  \ we interpret mat as matrix multiplication, that's forbidden without license. There\
+  \ is no explicit license. So we cannot compute matrix-vector product. Thus no admitted\
+  \ interpretation. So refusal.\n\nBut the schema requires answer integer. How to\
+  \ emit compliant refusal? Maybe answer = 0, and summary explains refusal. The process_integrity\
+  \ should indicate should_continue false? Let's see schema: ProcessIntegrityValue\
+  \ has seed_allows_theory_refutation boolean, detected_prompt_biases array, should_continue\
+  \ boolean. For refusal, should_continue false. seed_allows_theory_refutation? Maybe\
+  \ true? The seed allows theory refutation? Not sure. We can set true? The prompt\
+  \ has no seed. Maybe false? We need fill.\n\nAlso derived_under_policy: SPK-001.\n\
+  \nSections: maxItems 0, so empty array.\n\nSummary: narrowest_defensible_thesis,\
+  \ evidence_scope, next_concrete_test. For refusal, narrowest_defensible_thesis:\
+  \ \"The surface form is not a valid SYM SYS expression under the declared grammar,\
+  \ and no operational license is provided for arithmetic/matrix interpretations.\"\
+  \ Evidence scope: \"Based on the provided policy manifest and grammar constraints.\"\
+  \ Next concrete test: \"Provide a valid SYM SYS expression with single-letter node\
+  \ labels and explicit license for any arithmetic interpretation.\"\n\nAnswer: integer.\
+  \ Could be 0. But maybe they expect a specific integer if we interpret. Let's see\
+  \ if there is any other possible integer. Could be count of something? Count of\
+  \ nodes? Let's count atomic glyphs? The surface has numbers 1,2,3,1,5,1,1,1. Maybe\
+  \ sum? 1+2+3+1+5+1+1+1 = 15? But that's arithmetic, forbidden. Count of tags? sys,\
+  \ mat, row, row, neg, vec, target = 7? Count of rows? 2? Count of vectors? 2? Count\
+  \ of negative? 1? Maybe answer is 1? But no.\n\nMaybe the task is from a benchmark\
+  \ where the answer is computed by a simple program. The surface form might be a\
+  \ serialized AST for a program. Tags: sys, mat, row, neg, vec, target. Could be\
+  \ a stack-based language? Let's try to interpret as a program. <<sys> ... > maybe\
+  \ system call? mat? row? neg? vec? target? Could be a neural network? No.\n\nMaybe\
+  \ it's a \"matrix\" with rows, and \"vec\" and \"target\". Could be a linear algebra\
+  \ problem: compute the dot product of matrix-vector product with target? Let's compute:\
+  \ mat * vec = [7,14]. target = [1,1]. Dot product = 7*1 + 14*1 = 21. Or maybe compute\
+  \ determinant? det = -7. Or maybe solve for x? Not integer. Or maybe compute the\
+  \ norm? sqrt(7^2+14^2) not integer. Or maybe compute the sum of elements? 1+2+3-1+5+1+1+1\
+  \ = 13? Let's sum all numbers: 1+2+3+1+5+1+1+1 = 15. But neg means -1, so 1+2+3-1+5+1+1+1\
+  \ = 13. If target is [1,1], maybe add? 13+2=15. Hmm.\n\nMaybe the answer is the\
+  \ determinant of the matrix? det = 1*(-1) - 2*3 = -7. Absolute 7. Could be 7. The\
+  \ presence of vec and target might be distractors? Or maybe the task is to compute\
+  \ the determinant of the matrix? The surface has mat with two rows. vec and target\
+  \ might be irrelevant? But why include them? Maybe it's a system: mat is coefficient\
+  \ matrix, vec is constants, target is solution? Actually target <vec><1><1>> could\
+  \ be the solution vector? If mat * target = vec? Let's check: mat [[1,2],[3,-1]]\
+  \ * [1,1] = [3,2], not [5,1]. So no.\n\nMaybe mat is augmented matrix? Rows: [1,2]\
+  \ and [3,-1]. vec [5,1] is right-hand side. target [1,1] is something else. Solve:\
+  \ x + 2y =5; 3x - y =1. Solve: from second y=3x-1. Substitute x+2(3x-1)=5 => 7x-2=5\
+  \ => 7x=7 => x=1, y=2. So solution is [1,2]. But target is [1,1]. Not.\n\nIf vec\
+  \ is [5,1] and target is [1,1], maybe compute something? If mat * target = [3,2],\
+  \ then difference with vec = [2,-1]. Sum =1? Hmm.\n\nMaybe the tags indicate a neural\
+  \ network layer: mat is weight matrix, vec is input vector, target is target output.\
+  \ Compute loss? No.\n\nGiven the policy, we should not invent arithmetic interpretations.\
+  \ So refusal is safest.\n\nBut the schema requires answer integer. We can set answer\
+  \ to 0. Is 0 a compliant refusal? The task says \"If the carrier lacks an admitted\
+  \ interpretation or operational license, emit a compliant refusal.\" It doesn't\
+  \ specify how to encode refusal in JSON. Maybe answer can be 0 and summary explains.\
+  \ Or maybe answer should be -1? But schema says integer. I'll set answer to 0.\n\
+  \nLet's check process_integrity. seed_allows_theory_refutation: The seed? There\
+  \ is no seed. Maybe false. detected_prompt_biases: We can list biases like \"assumes\
+  \ arithmetic interpretation without license\", \"assumes matrix multiplication\"\
+  . should_continue: false.\n\nSummary: narrowest_defensible_thesis: \"No admitted\
+  \ interpretation or operational license is provided for the surface form; a compliant\
+  \ refusal is required.\" evidence_scope: \"Policy manifest SPK-001, MSS-0 grammar,\
+  \ and op_semantics.\" next_concrete_test: \"Provide a valid SYM SYS expression with\
+  \ single-letter node labels and an explicit license for any arithmetic or matrix\
+  \ interpretation.\"\n\nSections: [].\n\nDerived_under_policy: \"SPK-001\".\n\nAnswer:\
+  \ 0.\n\nBut wait, the schema says answer is integer, description \"Final computed\
+  \ integer answer.\" If we refuse, maybe answer should be 0? Or maybe we can compute\
+  \ the number of nodes? But that would be an interpretation. The task says \"checker\
+  \ evaluates the top-level 'answer' field for the final computed integer.\" If we\
+  \ refuse, maybe checker expects a specific integer? But if no admitted interpretation,\
+  \ maybe the correct answer is a refusal, but the schema doesn't have a refusal field.\
+  \ So maybe the benchmark expects us to compute something anyway. Let's try to see\
+  \ if there is a standard interpretation for such surface forms. It might be from\
+  \ a benchmark called \"SYM SYS\" or something. The tags sys, mat, row, neg, vec,\
+  \ target might be from a specific task. Could be a \"matrix\" problem where you\
+  \ compute the result of a system. Let's try to decode as a program in a stack language.\n\
+  \nMaybe the syntax is like Lisp: (sys (mat (row 1 2) (row 3 (neg 1))) (vec 5 1)\
+  \ (target (vec 1 1))). This could be a data structure. The task might be to compute\
+  \ something like the determinant of the matrix? Or solve the system? The presence\
+  \ of target suggests a target vector. Maybe it's a linear regression? No.\n\nMaybe\
+  \ it's a \"matrix\" with rows, and \"vec\" is a vector, and \"target\" is a target\
+  \ vector. Could be a neural network forward pass? mat is weight matrix, vec is input,\
+  \ target is target output. Compute mean squared error? Let's compute: mat * vec\
+  \ = [7,14]. target = [1,1]. Error = [6,13]. MSE = (36+169)/2 = 205/2 = 102.5. Not\
+  \ integer. Sum of squared errors = 205. Maybe answer 205? But that's arithmetic.\n\
+  \nMaybe mat is a 2x2 matrix, vec is a 2x1 vector, target is a 2x1 vector. Compute\
+  \ something like mat * vec - target? [6,13]. Sum = 19. Or dot product? 7*1 + 14*1\
+  \ = 21. Or determinant of mat? -7. Or trace? 0. Or sum of elements? 1+2+3-1=5. vec\
+  \ sum=6. target sum=2. Total sum=13. Many possibilities.\n\nMaybe the tags indicate\
+  \ operations: sys = system, mat = matrix, row = row, neg = negative, vec = vector,\
+  \ target = target. Could be a linear system: mat * x = vec, and target is the solution?\
+  \ But target is [1,1], which doesn't satisfy. If mat * x = target, solve: x + 2y\
+  \ =1; 3x - y =1 => x=3/7, y=2/7. Not integer. If mat * vec = target? No.\n\nMaybe\
+  \ \"target\" is the target of a function? Could be a neural network with a target\
+  \ output. The task might be to compute the loss. But no loss function specified.\n\
+  \nGiven the policy, we must not assume arithmetic. So refusal is correct.\n\nBut\
+  \ the schema requires answer integer. I'll set answer to 0. Is there a convention\
+  \ for refusal? Maybe answer = -1? But 0 is neutral.\n\nLet's check the process_integrity\
+  \ fields. seed_allows_theory_refutation: The seed? There is no seed. Maybe it's\
+  \ asking if the seed allows theory refutation. Since no seed, false. detected_prompt_biases:\
+  \ We can list \"assumes arithmetic interpretation\", \"assumes matrix multiplication\"\
+  , \"assumes linear algebra\". should_continue: false.\n\nSummary: narrowest_defensible_thesis:\
+  \ \"The surface form is not a valid SYM SYS expression under the declared grammar,\
+  \ and no operational license is provided for arithmetic or matrix interpretations.\"\
+  \ evidence_scope: \"Based on the provided policy manifest SPK-001, MSS-0 grammar,\
+  \ and op_semantics.\" next_concrete_test: \"Provide a valid SYM SYS expression with\
+  \ single-letter node labels and an explicit license for any arithmetic or matrix\
+  \ interpretation.\"\n\nSections: [].\n\nDerived_under_policy: \"SPK-001\".\n\nAnswer:\
+  \ 0.\n\nBut wait, the schema says additionalProperties: false. So we must include\
+  \ exactly required fields. Required: derived_under_policy, answer, summary, process_integrity.\
+  \ Sections is optional? It's in properties but not required. The schema has \"required\"\
+  \ list: derived_under_policy, answer, summary, process_integrity. So sections is\
+  \ not required. But the schema also has \"sections\" property with maxItems 0. We\
+  \ can omit it or include empty array. I'll include empty array to be safe? The schema\
+  \ says additionalProperties: false, so if we include sections, it's allowed. But\
+  \ not required. I'll include it as empty array.\n\nLet's construct JSON.\n\n{\n\
+  \  \"derived_under_policy\": \"SPK-001\",\n  \"answer\": 0,\n  \"summary\": {\n\
+  \    \"narrowest_defensible_thesis\": \"The surface form is not a valid SYM SYS\
+  \ expression under the declared grammar, and no operational license is provided\
+  \ for arithmetic or matrix interpretations.\",\n    \"evidence_scope\": \"Based\
+  \ on the provided policy manifest SPK-001, MSS-0 grammar, and op_semantics.\",\n\
+  \    \"next_concrete_test\": \"Provide a valid SYM SYS expression with single-letter\
+  \ node labels and an explicit license for any arithmetic or matrix interpretation.\"\
+  \n  },\n  \"process_integrity\": {\n    \"seed_allows_theory_refutation\": false,\n\
+  \    \"detected_prompt_biases\": [\n      \"assumes arithmetic interpretation without\
+  \ license\",\n      \"assumes matrix multiplication without license\"\n    ],\n\
+  \    \"should_continue\": false\n  },\n  \"sections\": []\n}\n\nCheck schema: process_integrity\
+  \ required fields: seed_allows_theory_refutation, should_continue. detected_prompt_biases\
+  \ has default [] but we provide. Good.\n\nAnswer is integer 0.\n\nIs there any chance\
+  \ the answer should be 7? Let's think if there is a standard interpretation. The\
+  \ surface form might be a serialized expression for a simple program. The tags:\
+  \ sys, mat, row, neg, vec, target. Could be from a benchmark where the task is to\
+  \ compute the determinant of a matrix? The matrix is given by rows: row 1 2, row\
+  \ 3 neg 1. So matrix [[1,2],[3,-1]]. Determinant = 1*(-1) - 2*3 = -7. Absolute value\
+  \ 7. The vec and target might be distractors. But why include them? Maybe the task\
+  \ is to compute the dot product of the matrix-vector product with the target? That\
+  \ gave 21. Or maybe the task is to compute the result of a system: mat * x = vec,\
+  \ and target is the solution? But target is [1,1], which doesn't satisfy. If mat\
+  \ * x = target, solution is [3/7, 2/7]. Not integer. If mat * vec = target? No.\n\
+  \nMaybe \"target\" is the target of a function, and we need to compute the output\
+  \ of a neural network? mat is weights, vec is input, target is target output. Compute\
+  \ loss? No.\n\nMaybe the tags are from a specific domain: sys = system, mat = matrix,\
+  \ row = row, neg = negative, vec = vector, target = target. Could be a linear algebra\
+  \ problem: Given matrix A, vector b, and target x, compute something like A*x -\
+  \ b? Let's compute A*x - b where x=target=[1,1], b=vec=[5,1]. A*x = [3,2]. A*x -\
+  \ b = [-2,1]. Sum = -1. Or norm? sqrt(5). Not integer.\n\nMaybe the answer is the\
+  \ number of rows? 2. Or number of vectors? 2. Or number of negative signs? 1. Or\
+  \ sum of all numbers? 13. Or sum of matrix elements? 5. Or sum of vec elements?\
+  \ 6. Or sum of target elements? 2. Or product? 1*2*3*(-1)*5*1*1*1 = -30. Absolute\
+  \ 30.\n\nGiven the policy, we must not guess. So refusal is correct.\n\nI'll output\
+  \ the JSON."
+parsed_response:
+  derived_under_policy: SPK-001
+  answer: 0
+  summary:
+    narrowest_defensible_thesis: The surface form is not a valid SYM SYS expression
+      under the declared grammar, and no operational license is provided for arithmetic
+      or matrix interpretations.
+    evidence_scope: Based on the provided policy manifest SPK-001, MSS-0 grammar,
+      and op_semantics.
+    next_concrete_test: Provide a valid SYM SYS expression with single-letter node
+      labels and an explicit license for any arithmetic or matrix interpretation.
+  process_integrity:
+    seed_allows_theory_refutation: false
+    detected_prompt_biases:
+    - assumes arithmetic interpretation without license
+    - assumes matrix multiplication without license
+    should_continue: false
+  sections: []
+extracted_answer: 0
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 0
+  status: REFUSED
+  reason: 'Compliant refusal: The surface form is not a valid SYM SYS expression under
+    the declared grammar, and no operational license is provided for arithmetic or
+    matrix interpretations.'
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: Morph
+  dispatch_id: gen-1791688270-rCE0WANwDj250BpbpcMZ
+  system_fingerprint: null
+  duration_seconds: 25.767
+  tokens_per_second: 197.89
+  usage:
+    prompt_tokens: 1852
+    completion_tokens: 5099
+    reasoning_tokens: 4902
+    total_tokens: 6951
+  cost:
+    total_cost_usd: 0.00156734
+    total_cost_microusd: 1567
+    cost_details:
+      upstream_inference_cost: 0.00156734
+      upstream_inference_prompt_cost: 3.764e-05
+      upstream_inference_completions_cost: 0.0015297
+  timestamp_utc: '2026-10-11T03:11:35.810648+00:00'

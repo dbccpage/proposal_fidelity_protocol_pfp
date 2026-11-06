@@ -1,0 +1,37 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000010
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000010_req_0
+rewrite_metadata:
+  rewrite_id: idea_01
+  name: Idea 01 - Semantic-Checker Negative Controls
+  governing_specification: IDEAS.md#semantic-checker-negative-controls
+  governing_strategy: Strategy I1 (Executable Witness Checking)
+  target_stratum: Stratum 4 (Axiomatic Evaluation & Gate Discipline)
+  explanation: Compares keyword-matching graders with executable witness checks; preserves
+    valid paraphrases while rejecting a correct-looking verdict attached to the wrong
+    witness.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*', '{', '}',
+    ':', '"'}
+  syntactic_category: WitnessCheckedProposal
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) with Verified Solution
+    Certificate
+  dialect_tier: Tier S (Executable Witness)
+  boundary_format: pfp-witness-v1
+seed_prompt: '<task: linear_solve>
+
+  <equations: [x + 2y = 5, 3x - y = 1]>
+
+  <witness_certificate: {x: 1, y: 2}>
+
+  <evaluation_gate: PFP-01-EXACT-LINALG>
+
+  <goal: return {"answer": x + y}>
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

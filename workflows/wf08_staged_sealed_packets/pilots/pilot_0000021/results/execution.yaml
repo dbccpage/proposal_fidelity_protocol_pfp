@@ -1,0 +1,35 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000021
+mode_id: 2
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_02_packets_and_sealed_envelopes/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: Mode coordinate mode_02_span_overlap is a variation of mode 02, not a new contract file.
+advantages:
+- Disjoint edge spans give each edge one digest owner.
+disadvantages:
+- A shared vertex is not an edge owner. Moving an edge changes two spans at once.
+variations:
+- variation_id: carrier_facts
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: The carrier is connected and the cycle rank is 2. The two spans do not share an edge, so
+    each edge has one owner.
+  evidence:
+    components: 1
+    cycle_rank: 2
+    edge_overlap: false
+- variation_id: edge_moved_across_spans
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Overlapping span custody
+  observation: Moving 0-1 into the second span changes both span digests. Vertex 0 is shared, so the vertex
+    alone does not name the owner.
+  evidence:
+    both_span_digests_changed: true
+    shared_vertex: 0

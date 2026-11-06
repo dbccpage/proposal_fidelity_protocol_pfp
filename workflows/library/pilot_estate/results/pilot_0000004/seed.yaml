@@ -1,0 +1,32 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000004
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000004_req_0
+rewrite_metadata:
+  rewrite_id: rewrite_05
+  name: Strategy R1 & R7 - Carrier-Declared & Role-Typed Wire Form
+  governing_specification: rewriting_strategies_mssn_wire.md#strategy-r1-carrier-declaration-injection
+  governing_strategy: Strategy R1 (Carrier Declaration) & Strategy R7 (Directive Role
+    Typing)
+  target_stratum: Stratum 5 (Protocol Coordination)
+  explanation: 'Prepends a formal 5-tuple carrier declaration (Sigma, Terms, Rules,
+    Obstruction, Terminal)
+
+    to the task packet to satisfy the fail-closed evaluator requirement, and wraps
+    each equation
+
+    and goal into explicit typed epistemic roles (<assume>, <goal>, <return>).
+
+    '
+input_typing:
+  lexical_alphabet: Gamma_38 strictly ({a..z, 0..9, <, >})
+  syntactic_category: CarrierDeclaredRoleTypedPacket
+  semantic_carrier: 5-Tuple Carrier (Sigma, Terms, Rules, Obstruction, Terminal)
+  dialect_tier: Tier S
+  boundary_format: mss-boundary-v1
+seed_prompt: <<decl><<alph><gamma38>><<terms><ratsys>><<rules><exactrational>><<obst><singularsystem>><<term><exactsolution>>>><<task><<assume><<eq><<add><x><<mul><2><y>>><5>>><<assume><<eq><<sub<<mul><3><x>><y>><1>>><<goal><<eval><<add><x><y>>>><<return><<answer><<add><x><y>>>>>>
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

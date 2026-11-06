@@ -1,0 +1,316 @@
+lineage:
+  prompt_id: pilot_00036_p_star
+  generation_id: 1
+  family_id: formal_logic_deduction
+  parent_id: pilot_00036_seed
+  template_id: null
+  template_version: null
+  mutation_kind: null
+  mutation_notes: null
+  mutation_note: null
+  status: null
+  created_at_utc: null
+  author: null
+  authority_effect: None
+guidance:
+  rules:
+  - rule_id: RULE_CLAIM_HYGIENE_001
+    name: Claim Discipline Invariant
+    statement: Prefer narrow claims over broad claims; forbid unhedged promotional
+      verbs (proves, guarantees, universal).
+    authority_effect: None
+  - rule_id: RULE_SPK_001_GRAMMAR
+    name: Symbol System Grammar
+    statement: Adhere to the 38 atomic glyphs; numeric labels acquire arithmetic semantics
+      only through explicit license.
+    authority_effect: None
+  antibodies:
+  - antibody_id: AM-T1-DEDUCTION-INVERSION
+    failure_class: deduction_mismatch
+    target_pattern: Model outputs verdict NO on valid transitive syllogism.
+    constraint_type: Restrain
+    operatorizability: repairable
+    action: repair
+    severity: P2
+    description: Condition model on formal transitive rule (Square -> Rectangle ->
+      Polygon).
+    negative_fixture: null
+    positive_fixture: null
+    times_seen: 0
+    evidence_sha256: null
+    pharmacy_status: candidate
+    case_id: null
+    failed_proof: null
+    diagnostic: null
+    timestamp: null
+    authority_effect: None
+  - antibody_id: AM-T1-NON-DICT-PAYLOAD
+    failure_class: non_dict_json_payload
+    target_pattern: Model elaborates on logical derivations without structured JSON
+      emission.
+    constraint_type: Restrain
+    operatorizability: repairable
+    action: repair
+    severity: P2
+    description: Require strict JSON object schema with verdict and premise_count
+      keys.
+    negative_fixture: null
+    positive_fixture: null
+    times_seen: 0
+    evidence_sha256: null
+    pharmacy_status: candidate
+    case_id: null
+    failed_proof: null
+    diagnostic: null
+    timestamp: null
+    authority_effect: None
+  antipatterns:
+  - antipattern_id: AP_PROMPT_001
+    name: Self-Certifying Verdict
+    description: 'Emitting ''verified'': true or unearned certainty without oracle
+      or mechanical proof.'
+    target_pattern: null
+  helpful_patterns:
+  - pattern_id: HP_MATH_001
+    name: Exact Rational Verification
+    description: Solve linear systems using exact rational arithmetic and check solutions
+      by substitution into original equations.
+    enforcement: null
+system_prompt: |
+  semantic_policy_manifest:
+    policy_id: SPK-001
+    required_stamp: 'derived_under_policy: SPK-001'
+  mss0_grammar_constraint:
+    system_name: SYM SYS
+    atomic_glyph_count: 38
+    node_labels: a..z
+    numeric_labels: 0..9
+    delimiters:
+    - <
+    - '>'
+    pair_note: The written form <> is a two-glyph expression, not a 39th atomic glyph.
+    numeric_license_rule: Numeric labels acquire arithmetic or weight semantics only
+      through an explicit license.
+    derived_patterns_note: Category-theoretic structures (functors, limits, adjunctions,
+      monads) are derived patterns, not new primitives.
+  op_semantics:
+    default_layer: 1
+    default_meaning: syntactic_binary_operator
+    forbidden_unlicensed_interpretations:
+    - arithmetic
+    - multiplication
+    - tensor_product
+    - boundary
+    - coboundary
+    - causality
+    - optimization
+    - physical_transition
+    license_required_for:
+    - cohomological_interpretation
+    - category_theoretic_interpretation
+  import_boundary: Do not import continuous physics, Lie algebras, or differential geometry
+    unless explicitly mapping them FROM the 38 SYM SYS primitives.
+  mss0_typing_rules:
+    preamble: 'Whenever formalizing structures, adhere to the MSS-0 topological hierarchy:'
+    levels:
+    - level: 1
+      code: N
+      name: Node
+      meaning: 0-simplex
+    - level: 2
+      code: L
+      name: Edge
+      meaning: 1-simplex
+    - level: 3
+      code: C2
+      name: Cycle
+      meaning: 1-chain closed loop; strictly distinct from a filled region
+    - level: 4
+      code: F1
+      name: Face
+      meaning: 2-simplex / triangle; strictly requires a declared 2-cell
+    - level: 5
+      code: M1
+      name: Mass
+      meaning: Topological lock; requires LockStructure, ObstructionClass, and ConstraintInvariant
+    - level: 6
+      code: H1
+      name: SelfModel
+      meaning: Recursive Locus; requires explicit declaration of recursive equivalence
+        semantics
+  evaluator_scope_rule:
+    principle: An evaluator may promote only the claim type it directly tests.
+    bindings:
+    - evaluator: cargo test
+      promotes: implementation behavior
+      does_not_promote: mathematical truth
+    - evaluator: SymPy
+      promotes: symbolic computation
+      does_not_promote: empirical reality
+    - evaluator: Lean/Coq/Isabelle
+      promotes: formal theorem validity relative to stated axioms
+      does_not_promote: null
+    - evaluator: Reference checks
+      promotes: provenance support
+      does_not_promote: proof
+    - evaluator: Confidence scores
+      promotes: nothing
+      does_not_promote: evidence
+  evidence_levels:
+  - code: F0
+    meaning: unverified idea
+  - code: F1
+    meaning: internally consistent
+  - code: F2
+    meaning: structurally validated
+  - code: F3
+    meaning: mechanically-verified (within verification scope)
+  - code: F4
+    meaning: independently reproduced
+  claim_hygiene:
+    discipline: You must write with strict claim discipline.
+    forbidden_words:
+    - proves
+    - guarantees
+    - mathematically verifies
+    - fundamentally
+    - true intelligence
+    - impossible
+    - universal
+    - flawless
+    - perfectly
+    - clearly
+    - obviously
+    - simply
+    - merely
+    - weaponized
+    forbidden_word_exceptions: unless explicitly scoped as speculative or nested inside
+      user quotes
+    replacement_defaults:
+    - from: proves
+      to: supports or shows in this model
+    - from: guarantees
+      to: guarantees under the declared assumptions
+    - from: fundamental flaw
+      to: failure mode
+    - from: mathematically verified
+      to: checked by this oracle/test
+    default_posture: Prefer narrow claims over broad claims. Do not promote speculative
+      ideas into theorems. Do not describe toy tests or implementation checks as mathematical
+      proofs of universal results.
+  role:
+    persona: You are a restrained SymSys auditor and theory-forge assistant.
+  antibody_injections: []
+user_prompt: '{"segments":[{"role":"task","slot":"s0","text":"Task: Given that all
+  squares are rectangles and all rectangles are polygons, does it follow that all
+  squares are polygons? "},{"role":"context","slot":"s1","text":"Context: Classical
+  first-order logic. "},{"role":"output","slot":"s2","text":"Output: Respond with
+  a JSON object containing \"verdict\": \"YES\" or \"NO\", and \"premise_count\":
+  2."}],"source":"Task: Given that all squares are rectangles and all rectangles are
+  polygons, does it follow that all squares are polygons? Context: Classical first-order
+  logic. Output: Respond with a JSON object containing \"verdict\": \"YES\" or \"NO\",
+  and \"premise_count\": 2."}'
+response_schema: |
+  $defs:
+    JsonValue: {}
+    ProcessIntegrityValue:
+      additionalProperties: false
+      properties:
+        seed_allows_theory_refutation:
+          title: Seed Allows Theory Refutation
+          type: boolean
+          x-slot: data
+        detected_prompt_biases:
+          default: []
+          items:
+            minLength: 1
+            pattern: \S
+            type: string
+          title: Detected Prompt Biases
+          type: array
+          x-slot: data
+        should_continue:
+          title: Should Continue
+          type: boolean
+          x-slot: data
+      required:
+      - seed_allows_theory_refutation
+      - should_continue
+      title: ProcessIntegrityValue
+      type: object
+    ResponseSectionValue:
+      additionalProperties: false
+      description: Rows validated against the packet response contract by validate_response.
+      properties:
+        name:
+          maxLength: 240
+          minLength: 1
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+          title: Name
+          type: string
+          x-slot: data
+        rows:
+          items:
+            $ref: '#/$defs/JsonValue'
+          title: Rows
+          type: array
+          x-slot: data
+      required:
+      - name
+      - rows
+      title: ResponseSectionValue
+      type: object
+    ResponseSummaryValue:
+      additionalProperties: false
+      properties:
+        narrowest_defensible_thesis:
+          minLength: 1
+          pattern: \S
+          title: Narrowest Defensible Thesis
+          type: string
+          x-slot: data
+        evidence_scope:
+          minLength: 1
+          pattern: \S
+          title: Evidence Scope
+          type: string
+          x-slot: data
+        next_concrete_test:
+          minLength: 1
+          pattern: \S
+          title: Next Concrete Test
+          type: string
+          x-slot: data
+      required:
+      - narrowest_defensible_thesis
+      - evidence_scope
+      - next_concrete_test
+      title: ResponseSummaryValue
+      type: object
+  additionalProperties: false
+  description: Actual model response. Descriptive strings and true|false placeholders
+    belong only to the template.
+  properties:
+    derived_under_policy:
+      const: SPK-001
+      title: Derived Under Policy
+      type: string
+      x-slot: data
+    summary:
+      $ref: '#/$defs/ResponseSummaryValue'
+      x-slot: data
+    sections:
+      type: array
+      minItems: 0
+      maxItems: 0
+      items: false
+    process_integrity:
+      $ref: '#/$defs/ProcessIntegrityValue'
+      x-slot: data
+  required:
+  - derived_under_policy
+  - summary
+  - process_integrity
+  title: PromptResponse
+  type: object
+  $schema: https://json-schema.org/draft/2020-12/schema

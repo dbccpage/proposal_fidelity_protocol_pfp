@@ -1,0 +1,33 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000021
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000021_req_0
+rewrite_metadata:
+  rewrite_id: idea_12
+  name: Idea 12 - BQNF Incremental Prompts
+  governing_specification: IDEAS.md#bqnf-incremental-prompts
+  governing_strategy: Strategy I12 (BQNF State Preservation & Delta Repair)
+  target_stratum: Stratum 2 (Boundary-Query Normal Form Incremental State)
+  explanation: Compares full-state recomputation with BQNF declared query boundary
+    and incremental prior result.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*'}
+  syntactic_category: BqnfIncrementalProposal
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) via BQNF Prior-Delta
+    Composition
+  dialect_tier: Tier S (BQNF Incremental Wire)
+  boundary_format: pfp-bqnf-inc-v1
+seed_prompt: '<prior_certified_state: {x: 1, y: 2}>
+
+  <incremental_delta: "query target expression eval(x + y)">
+
+  <boundary_gate: "preserve prior certified solution, evaluate delta">
+
+  <return: {"answer": x + y}>
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

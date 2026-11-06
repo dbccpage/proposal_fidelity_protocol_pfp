@@ -24,6 +24,12 @@ Sources: judge_packet_audit.
 
 Audit modules for canonical form, custody, execution, layout and leakage of challenge packets.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/judge_packet_audit/`](pilots/judge_packet_audit/) — pilot material
+
 ## Team
 
 Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).

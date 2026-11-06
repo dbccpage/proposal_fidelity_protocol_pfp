@@ -1,0 +1,118 @@
+{
+  "schema": "pfp.po035-simplified-architecture-review.v1",
+  "authority_effect": "None",
+  "reviewer": "Codex independent architecture and budget reviewer",
+  "review_date": "2026-10-12",
+  "status": "PREFLIGHT_CODE_REVIEW_PASS",
+  "provider_calls_by_review": 0,
+  "network_calls_by_review": 0,
+  "frozen_runtime_or_evidence_edits": false,
+  "planned_scope": {
+    "runs": 5,
+    "stages": [
+      "control",
+      "public_workpad",
+      "typed_final"
+    ],
+    "output_token_ceilings": [
+      2500,
+      600,
+      2500
+    ],
+    "temperature": 0,
+    "maximum_provider_calls": 15,
+    "per_run_cost_microusd": 50000,
+    "per_run_provider_tokens": 120000,
+    "per_run_elapsed_seconds": 180,
+    "all_arms_rounds_and_host_stages_share_caps": true,
+    "automatic_retry": false
+  },
+  "design_findings": [],
+  "replay_recommendation": {
+    "approach": "A new explicit three-stage completed-run replayer with injected prompt builder and observer, without changing frozen modules or monkeypatching their globals.",
+    "completed_run_requirements": [
+      "Exact expected pilot inventory and three contiguous settled attempts per run",
+      "Current source pins and retained source bytes match",
+      "SQLite state equals the retained budget snapshot",
+      "Reconstructed prompt, wire, raw receipt and verdict bindings match",
+      "Token and cost holds, reported resources, stage identity and elapsed times agree",
+      "Terminal context, counts and shared limits agree"
+    ],
+    "partial_run_policy": "Explicitly refuse to label a pending or partial run as completed replay. Retain all pending artifacts and require separate reconciliation; no retry or new pilot budget follows uncertainty."
+  },
+  "pre_dispatch_review_requirements": [
+    "Freeze exact stage role, order, identity, output ceilings and decoding in versioned source",
+    "Carry only a schema-valid stage-2 workpad belonging to the same pilot and run",
+    "Keep control response and control verdict out of workpad and final requests",
+    "Invalid workpads remain absent and cannot crash final rendering",
+    "Validate the exact role-specific binding inventory and types before unchanged original finite CHECKS",
+    "Reject missing, extra, duplicate, cross-carrier and wrong-stage bindings",
+    "Verify actual wire decoding and output ceilings against saved requests and receipts",
+    "Check pre-dispatch cap refusal and missing usage/cost fail-closed retention",
+    "Reject duplicate pilot selections before spending and prevent run reuse",
+    "Freeze source and prompt recipes before provider dispatch"
+  ],
+  "interpretation_limits": [
+    "The simplification changes a contract bundle; historical improvements do not isolate a single ingredient.",
+    "A single-shot control and two-call treatment use different call and time allocations.",
+    "Only visible public calculation records are requested; no hidden reasoning channel is inspected.",
+    "Finite witness acceptance is separate from analytical completion and learning admission.",
+    "This receipt reviews pre-dispatch code and offline payloads; it does not claim any new live result or mathematical completion."
+  ],
+  "reviewed_source_sha256": {
+    "omega_engine_education/pfp/infrastructure/po035/simplified_prompts.py": "ef58ea80b36b47d50f2c220d7365611ce6a4f2d263645e503c667b47f4aabd5c",
+    "omega_engine_education/pfp/infrastructure/po035/simplified_checking.py": "dfc14420a49d1c29dde559859e99173df03e960d932871a2c974d28927a38668",
+    "omega_engine_education/pfp/infrastructure/po035/simplified_round.py": "03d0adecf29c47f2c1909837e60cafd789ea6ec1d7189f1cc65671be421db8ef",
+    "omega_engine_education/pilots/evidence/po035_simplified_20261012/spec.yaml": "57c1e30e091bd801793e6c11a79316d78ffbd8d58b95422cf12db6910e34ceea",
+    "omega_engine_education/pfp/infrastructure/yaml/prompts/versioned/PFP-prompt-role-registry-v1.0.0.yaml": "34df63f05c168570e7942dc7cd4c4ddd4911723f35996dc008390bdc4e504d68",
+    "omega_engine_education/pfp/infrastructure/yaml/prompts/versioned/PFP-R0001-v1.0.0.yaml": "b742ae28054e7745ce29820f594b52f217379154778b9b24e79fd70f8ac0babe",
+    "omega_engine_education/pfp/infrastructure/yaml/prompts/versioned/PFP-T0001-v1.0.0.yaml": "d5da7ada446ade90d33ba3910838bb1f74eaa9a645243c20b39a39d484638195",
+    "omega_engine_education/pfp/infrastructure/yaml/prompts/versioned/PFP-T0002-v1.0.0.yaml": "783ba0fc4f809a9aa663e181e03912aaf91907fdac3b4d22232788b85201e3e0",
+    "omega_engine_education/pfp/infrastructure/yaml/prompts/versioned/PFP-T0003-v1.0.0.yaml": "4da19cc6a7430a6d584c95abfa30ac92f756f716f4f73975244a802ea7626ecd"
+  },
+  "open_blockers": [],
+  "addressed_findings": [
+    {
+      "severity": "P1",
+      "location": "simplified_round.prepare",
+      "finding": "The first implementation read the nonexistent prompt user key and could not produce preflight.json.",
+      "resolution": "Changed the UTF-8 byte metric to prompt.user_prompt; independently inspected the corrected implementation before source freeze."
+    }
+  ],
+  "completed_review": [
+    "Read all three new runtime modules, the numbered role/recipe/registry files, and the experiment spec.",
+    "Compiled all 15 base prompt instances; reviewed shared exact fragments and every task/stage difference, plus valid/missing-workpad behavior.",
+    "Confirmed exact seed retention, the full disputed pilot-201 source excerpt, explicit conditional system licenses and stage-specific output contracts.",
+    "Confirmed same-pilot/same-run workpad validation and isolation of control output and verdict from treatment requests.",
+    "Confirmed shared durable reservations and hard deadlines use the existing frozen adapter without additional attempts or transport duplication.",
+    "Confirmed complete-run replay binds current and retained source bytes, canonical request, raw reply, typed attempt resources, SQLite state, stages, contexts, terminal counts and original finite checks.",
+    "Confirmed prepare is network-free, includes the spec in source pins, labels stage-3 previews as missing-workpad cases and run refuses source drift before catalog discovery."
+  ],
+  "independent_targeted_checks": {
+    "command": ".venv/Scripts/python.exe -m pytest -q omega_engine_education/pfp/tests/test_po035_simplified_round.py omega_engine_education/pfp/tests/test_po035_simplified_prompts.py omega_engine_education/pfp/tests/test_po035_simplified_checking.py --basetemp=scratch/po035-architecture-review-pytest",
+    "exit_code": 0,
+    "cases": 148,
+    "scope": "The three new simplified modules only; no full canonical or hosted CI.",
+    "revision_scope": "Completed before the final prepare/source-drift addition and final run-ID guard tests. Those final changes received static review here; final targeted execution is separately owned by the root local-validation receipt."
+  },
+  "retained_preflight": {
+    "path": "preflight.json",
+    "sha256": "e8f33373ce349e8d75ee0e4ed7d6afb9637c1b9bb60d66ba4a8adb10e3325e77",
+    "preview_count": 15,
+    "preview_canonical_hashes_checked": true,
+    "reviewed_source_hashes_match": true,
+    "provider_calls": 0,
+    "stage3_scope": "Missing-workpad case; actual valid workpad unknown before dispatch",
+    "user_utf8_bytes_minimum": 4517,
+    "user_utf8_bytes_maximum": 9580
+  },
+  "final_local_checks": {
+    "attribution": "Reported by root; separately retained in final local validation, not rerun here.",
+    "prepare_previews": 15,
+    "prepare_provider_calls": 0,
+    "prompt_tests_passed": 74,
+    "root_tests_initial": "16 passed; 2 failed on corrected imported user-key bug",
+    "root_affected_tests_rerun_passed": 2,
+    "ruff_six_new_source_and_test_files": "PASS"
+  }
+}

@@ -24,6 +24,32 @@ Sources: 0000001-0000025, 0000033.
 
 Mode trials mode_01..mode_20 and wire encodings (EBNF wire, S(n) wire, boundary packets, glyph alphabets); pilot 20 runs two local stages with zero provider calls; pilot 33 documents a two-pass loop the old runner did not implement.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/pilot_0000005/`](pilots/pilot_0000005/) — pilot_0000005 — Graph Facts (Rung 2)
+- [`pilots/pilot_0000006/`](pilots/pilot_0000006/) — pilot_0000006 — Graph Repair (Rung 2)
+- [`pilots/pilot_0000007/`](pilots/pilot_0000007/) — pilot_0000007 — Refusal (Rung 2)
+- [`pilots/pilot_0000008/`](pilots/pilot_0000008/) — pilot_0000008 — Linear Algebra (Rung 3)
+- [`pilots/pilot_0000009/`](pilots/pilot_0000009/) — pilot_0000009 — Graph Facts (Rung 3)
+- [`pilots/pilot_0000010/`](pilots/pilot_0000010/) — pilot_0000010 — Graph Repair (Rung 3)
+- [`pilots/pilot_0000011/`](pilots/pilot_0000011/) — pilot_0000011 — Refusal (Rung 3)
+- [`pilots/pilot_0000012/`](pilots/pilot_0000012/) — pilot_0000012 — Linear Algebra (Rung 4)
+- [`pilots/pilot_0000013/`](pilots/pilot_0000013/) — pilot_0000013 — Graph Facts (Rung 4)
+- [`pilots/pilot_0000014/`](pilots/pilot_0000014/) — pilot_0000014 — Graph Repair (Rung 4)
+- [`pilots/pilot_0000015/`](pilots/pilot_0000015/) — pilot_0000015 — Refusal (Rung 4)
+- [`pilots/pilot_0000016/`](pilots/pilot_0000016/) — pilot_0000016 — Linear Algebra (Rung 5)
+- [`pilots/pilot_0000017/`](pilots/pilot_0000017/) — pilot_0000017 — Graph Facts (Rung 5)
+- [`pilots/pilot_0000018/`](pilots/pilot_0000018/) — pilot_0000018 — Graph Repair (Rung 5)
+- [`pilots/pilot_0000019/`](pilots/pilot_0000019/) — pilot_0000019 — Refusal (Rung 5)
+- [`pilots/pilot_0000020/`](pilots/pilot_0000020/) — pilot_0000020 — Linear Algebra (Rung 1)
+- [`pilots/pilot_0000021/`](pilots/pilot_0000021/) — pilot_0000021 — Graph Facts (Rung 1)
+- [`pilots/pilot_0000022/`](pilots/pilot_0000022/) — pilot_0000022 — Linear Algebra (Rung 2)
+- [`pilots/pilot_0000023/`](pilots/pilot_0000023/) — pilot_0000023 — Linear Algebra (Rung 2)
+- [`pilots/pilot_0000024/`](pilots/pilot_0000024/) — pilot_0000024 — Linear Algebra (Rung 2)
+- [`pilots/pilot_0000025/`](pilots/pilot_0000025/) — pilot_0000025 — Linear Algebra (Rung 2)
+
 ## Team
 
 Pattern `relay`: coder ×k (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).

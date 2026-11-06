@@ -1,0 +1,43 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000004
+mode_id: 5
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_05_skill_injection_and_operad_morphisms/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: The three skills are local functions. No skill registry was loaded.
+advantages:
+- Associativity is checkable on this three-skill chain.
+disadvantages:
+- A matching sum does not license a cycle or a colour skip.
+variations:
+- variation_id: associative_chain
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: Both groupings of the three skills return the same sum.
+  evidence:
+    left: 6
+    right: 6
+- variation_id: cyclic_skill_graph
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Cyclic morphism composition
+  observation: Sending parse back into itself is a cycle. The chain is not an operad composition.
+  evidence:
+    cycle:
+    - parse
+    - eliminate
+    - parse
+- variation_id: colour_mismatch
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Colour type mismatch
+  observation: The report skill requires a Solution. Feeding it the raw rows is a colour mismatch.
+  evidence:
+    expected: Solution
+    received: System

@@ -1,0 +1,30 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000000
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000000_req_0_rewrite_02
+rewrite_metadata:
+  rewrite_id: rewrite_02
+  name: Tier D - Proposal Fidelity Protocol (PFP) Directive Form
+  governing_specification: rewriting_strategies_mssn_wire.md#dialect-tier-d
+  governing_strategy: Strategy R7 (Directive Role Typing)
+  target_stratum: Stratum 5 (Protocol Coordination)
+  explanation: |
+    Transforms the conversational prompt into space-delimited command directives where each
+    clause declares an explicit epistemic role (<assume>, <goal>, <return>). Eliminates prose
+    and punctuation in favor of machine-checkable command envelopes for host oracle coordination.
+input_typing:
+  lexical_alphabet: "Gamma_38 union {A-Z, space, '_'}"
+  syntactic_category: DirectiveCommandStream
+  semantic_carrier: LinearSystem(dimension=2, field=Rational)
+  dialect_tier: Tier D
+  boundary_format: pfp-directive-v1
+seed_prompt: |
+  <assume eq1 <eq <add x <mul 2 y>> 5>>
+  <assume eq2 <eq <sub <mul 3 x> y> 1>>
+  <goal <eval <add x y>>>
+  <return answer <add x y>>
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

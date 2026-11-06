@@ -1,0 +1,37 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000016
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000016_req_0
+rewrite_metadata:
+  rewrite_id: idea_07
+  name: Idea 07 - Query-Aware Prompt Compression
+  governing_specification: IDEAS.md#query-aware-prompt-compression
+  governing_strategy: Strategy I7 (Sufficient Statistic Preservation)
+  target_stratum: Stratum 2 (Information Loss & Sufficient Statistics)
+  explanation: Compresses prompt by retaining sufficient statistics of the linear
+    system, preserving zero information loss with respect to query c.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*', '[', ']'}
+  syntactic_category: SufficientStatisticCompression
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) with Query-Preserving
+    Compression
+  dialect_tier: Tier S (Sufficient Statistic Compression)
+  boundary_format: pfp-compressed-v1
+seed_prompt: '<compression_mode: "sufficient_statistic_retained">
+
+  <matrix_A: [[1, 2], [3, -1]]>
+
+  <vector_b: [5, 1]>
+
+  <query_vector_c: [1, 1]>
+
+  <information_loss: 0>
+
+  <return: {"answer": c^T * A^{-1} * b}>
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

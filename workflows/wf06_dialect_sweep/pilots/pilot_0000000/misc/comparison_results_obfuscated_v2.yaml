@@ -1,0 +1,56 @@
+schema: pfp.pilot-comparison-results.v1
+authority_effect: null
+pilot_id: pilot_0000000
+description: Evaluation of obfuscated rewrites v2 under rule_name_the_checker_field
+  and rule_carrier_is_the_whole_task
+tests:
+- test_id: p_star_rewrite_03_v2
+  case_id: rewrite_03
+  v1_status: WRONG_ANSWER (ans=9; BigBench hallucination)
+  v2_status: REFUSED
+  refusal_code: MISSING_EPISTEMIC_GROUNDING
+  reason: 'Compliant refusal: The surface form lacks an admitted interpretation or
+    operational license to compute an integer within SYM SYS.'
+- test_id: p_star_rewrite_06_v2
+  case_id: rewrite_06
+  v1_status: WRONG_ANSWER (ans=1; unlicensed matrix contraction)
+  v2_status: REFUSED
+  refusal_code: MISSING_EPISTEMIC_GROUNDING
+  reason: 'Compliant refusal: The surface form is not a valid SYM SYS expression under
+    the declared grammar, and no operational license is provided for arithmetic or
+    matrix interpretations.'
+- test_id: p_star_rewrite_07_v2
+  case_id: rewrite_07
+  v1_status: WRONG_ANSWER (ans=4; guessed set cardinality)
+  v2_status: REFUSED
+  refusal_code: MISSING_EPISTEMIC_GROUNDING
+  reason: 'Compliant refusal: No admitted MSS-0 interpretation or operational license
+    is present for the surface form {<>,<a>,<ab>,<ba>}; a computed integer is not
+    licensed.'
+- test_id: p_star_rewrite_08_v2
+  case_id: rewrite_08
+  v1_status: WRONG_ANSWER (ans=7; 105 ghost hypotheses)
+  v2_status: REFUSED
+  refusal_code: MISSING_EPISTEMIC_GROUNDING
+  reason: 'Compliant refusal: No final integer is computable from the surface form
+    delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);NewRuleAll(1)>
+    under SPK-001 because NewDatum, NewForm, NewInst, and NewRuleAll are not admitted
+    primitives or licensed operations in the supplied manifest.'
+- test_id: p_star_rewrite_09_v2
+  case_id: rewrite_09
+  v1_status: WRONG_ANSWER (ans=7; ungrounded down-map guess)
+  v2_status: REFUSED
+  refusal_code: MISSING_EPISTEMIC_GROUNDING
+  reason: 'Compliant refusal: The carrier r_1<x->y> is not well-formed under MSS-0
+    because it contains glyphs ''_'' and ''-'' outside the 38 atomic glyphs, and no
+    explicit license admits an arithmetic, cohomological, or category-theoretic interpretation.
+    No computed integer is admitted; the answer field is set to 0 only to satisfy
+    the response schema.'
+- test_id: p_star_rewrite_10_v2
+  case_id: rewrite_10
+  v1_status: WRONG_ANSWER (ans=1; ARC corpus invention)
+  v2_status: REFUSED
+  refusal_code: MISSING_EPISTEMIC_GROUNDING
+  reason: 'Compliant refusal: The carrier includes glyphs outside the declared 38
+    SYM SYS primitives and lacks an explicit operational license for arithmetic or
+    a defined binary operator, so no integer answer can be computed under SPK-001.'

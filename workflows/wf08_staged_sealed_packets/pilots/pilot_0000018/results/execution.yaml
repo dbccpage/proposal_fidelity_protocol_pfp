@@ -1,0 +1,39 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000018
+mode_id: 19
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_19_genesis_first_cut_arb/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: Two marks and one edge. No larger genesis tower was built.
+advantages:
+- Irreflexivity of the two marks is decidable before any edge is added.
+disadvantages:
+- Distinct marks do not justify a continuous repair or a length.
+variations:
+- variation_id: two_marks_then_one_edge
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: The marks differ. One edge on two vertices is connected and has cycle rank 0.
+  evidence:
+    distinct: true
+    cycle_rank: 0
+- variation_id: collapsed_marks
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Relational collapse (a = b)
+  observation: A cut that names both marks p does not create an edge carrier.
+  evidence:
+    distinct: false
+- variation_id: coordinate_presupposition
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Carrier-first / difference-first circular regress
+  observation: Starting from points in R^2 assumes the carrier the cut is supposed to create.
+  evidence:
+    presupposed_coordinates: true

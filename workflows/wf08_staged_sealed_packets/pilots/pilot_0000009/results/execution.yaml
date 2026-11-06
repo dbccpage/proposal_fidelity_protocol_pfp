@@ -1,0 +1,40 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000009
+mode_id: 10
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_10_cemetery_dag_mining/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: One stored rejection. No external cemetery archive was read.
+advantages:
+- Replay catches a checker that has forgotten why the tree claim died.
+disadvantages:
+- The cemetery only protects candidates that were stored.
+variations:
+- variation_id: replay_reproduces_rejection
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: The stored tree claim is rejected again because the cycle rank is 1.
+  evidence:
+    replay: REJECTED
+    cycle_rank: 1
+- variation_id: immune_amnesia
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Immune amnesia (previously rejected candidate now passes)
+  observation: A checker that ignores cycle rank accepts the dead tree claim.
+  evidence:
+    amnesiac: ACCEPTED
+    historical: REJECTED
+- variation_id: corrupted_cemetery_digest
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Corrupted cemetery digest
+  observation: Editing the stored claim without updating the hash breaks the cemetery digest.
+  evidence:
+    digest_match: false

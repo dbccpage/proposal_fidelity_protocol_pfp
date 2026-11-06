@@ -1,0 +1,42 @@
+{
+  "schema": "mssn/demo9/witness_near_miss/v1",
+  "cases": [
+    {
+      "case_id": "near_miss_spurious_exactness",
+      "description": "Claiming non-trivial instanton flux has zero Pontryagin number.",
+      "test_type": "pontryagin_pairing",
+      "claimed_pontryagin_number": "0",
+      "expected_refusal": "PONTRYAGIN_NUMBER_MISMATCH"
+    },
+    {
+      "case_id": "near_miss_suboptimal_gauge_phi4",
+      "description": "Feasible zero dual witness yields a positive gap against the declared 4-cochain.",
+      "test_type": "phi4_certificate",
+      "pontryagin_4cochain": ["2"],
+      "potential_c": ["1", "0"],
+      "dual_witness": ["0"],
+      "reported_value": "2",
+      "expected_refusal": "POSITIVE_DUALITY_GAP"
+    },
+    {
+      "case_id": "near_miss_dual_norm_violation",
+      "description": "Dual witness exceeding fundamental cycle weight bound.",
+      "test_type": "phi4_certificate",
+      "pontryagin_4cochain": ["2"],
+      "potential_c": ["0", "0"],
+      "dual_witness": ["3"],
+      "reported_value": "2",
+      "expected_refusal": "DUAL_NORM_EXCEEDED"
+    },
+    {
+      "case_id": "near_miss_float_injection",
+      "description": "Float value injected in witness, violating Zero-Float Law.",
+      "test_type": "phi4_certificate",
+      "pontryagin_4cochain": [2.0],
+      "potential_c": [0.0, 0.0],
+      "dual_witness": [1.0],
+      "reported_value": 2.0,
+      "expected_refusal": "REFUSED_FLOAT_DETECTED"
+    }
+  ]
+}

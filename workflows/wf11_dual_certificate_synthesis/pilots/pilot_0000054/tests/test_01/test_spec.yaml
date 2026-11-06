@@ -1,0 +1,29 @@
+# AuthorityEffect: None.
+# Planned transmutation. Not a provider run.
+schema: pfp.test-spec.v1
+authority_effect: None
+pilot_id: pilot_0000054
+test_folder: test_01
+test_id: d1_non_closed_cycle
+case_id: d1_non_closed
+test_index: 1
+generation_id: 0
+dialect_name: Dual closure audit (planned, not dispatched)
+input_source_file: input.yaml
+response_file: response.yaml
+model_id: not-dispatched
+expected_outcome:
+  answer: |
+    actual_status=REFUSED_DUAL_WITNESS_NOT_CLOSED; file_expected_refusal=DUAL_WITNESS_NOT_CLOSED; closure_defect=2; tet_index=0; rejected_as_expected=true; source=dossier_1_hollow_5simplex_b4_1/checker_output.json near_miss_non_closed_cycle
+  status: PLANNED
+actual_outcome:
+  extracted_answer: null
+  gate_status: PLANNED
+  reason: |
+    PFP-054-DEGREE4-FINITE-LP is not registered in checker_registry.py. No provider reply was copied. Terminal status is PLANNED, not accepted. The expected string transcribes the named historic file. This layout did not execute that file's checker.
+  status: PLANNED
+  refusal_code: null
+metrics: {}
+notes: |-
+  Candidate reported_value is the stimulus. The closure defect is host-side.
+  source_markdown: omega_engine_education/pilots/demo_003/demo_9/9_demo.md source_artifact: omega_engine_education/pilots/demo_003/demo_9/dossier_1_hollow_5simplex_b4_1/witness_near_miss.json checker_registered: false

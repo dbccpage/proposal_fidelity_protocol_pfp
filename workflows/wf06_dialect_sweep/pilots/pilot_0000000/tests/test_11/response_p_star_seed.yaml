@@ -1,0 +1,104 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: p_star_seed
+test_kind: p_star_templated
+pilot_id: pilot_0000000
+case_id: seed
+request_id: pilot_0000000_req_p_star_seed
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: p_star.yaml
+  source_file_bytes: 8770
+  source_file_kb: 8.564
+  payload_bytes: 6422
+  payload_kb: 6.271
+  messages_count: 2
+raw_reply: "{\n  \"derived_under_policy\": \"SPK-001\",\n  \"answer\": 3,\n  \"summary\"\
+  : {\n    \"narrowest_defensible_thesis\": \"For the stated linear system, x = 1\
+  \ and y = 2, so x + y = 3.\",\n    \"evidence_scope\": \"Algebraic substitution\
+  \ over the two given equations.\",\n    \"next_concrete_test\": \"Substitute x =\
+  \ 1 and y = 2 into both original equations.\"\n  },\n  \"process_integrity\": {\n\
+  \    \"seed_allows_theory_refutation\": true,\n    \"detected_prompt_biases\": [],\n\
+  \    \"should_continue\": true\n  },\n  \"sections\": []\n}"
+reasoning_content: 'We need answer solve linear system. Need output JSON matching
+  schema. Need compute x+y.
+
+
+  Equations:
+
+  x + 2y = 5
+
+  3x - y = 1
+
+
+  Solve. From first x=5-2y. Substitute 3(5-2y)-y=1 =>15-6y-y=1 =>15-7y=1 => -7y=-14
+  => y=2. x=5-4=1. x+y=3.
+
+
+  Need provide JSON with derived_under_policy SPK-001, answer 3, summary fields, process_integrity.
+  sections empty array. Need ensure no forbidden words? We can write concise. Need
+  process_integrity: seed_allows_theory_refutation boolean, detected_prompt_biases
+  array, should_continue boolean. We need decide values. This is a simple math prompt.
+  seed_allows_theory_refutation? Probably true? It asks solve. "seed_allows_theory_refutation"
+  maybe whether seed allows refutation? We can set true? should_continue true? detected_prompt_biases
+  maybe [] or note? Need not overdo. The schema requires. We can set seed_allows_theory_refutation
+  true, should_continue true, detected_prompt_biases [].
+
+
+  Summary: narrowest_defensible_thesis: "For the stated linear system, x=1 and y=2,
+  so x+y=3." evidence_scope: "Algebraic substitution over the given equations." next_concrete_test:
+  "Substitute x=1, y=2 into both equations." Need avoid forbidden words? "proves"
+  etc. Fine.
+
+
+  Need output valid JSON only. Ensure answer integer. derived_under_policy exactly
+  SPK-001. sections [].
+
+
+  Let''s craft.'
+parsed_response:
+  derived_under_policy: SPK-001
+  answer: 3
+  summary:
+    narrowest_defensible_thesis: For the stated linear system, x = 1 and y = 2, so
+      x + y = 3.
+    evidence_scope: Algebraic substitution over the two given equations.
+    next_concrete_test: Substitute x = 1 and y = 2 into both original equations.
+  process_integrity:
+    seed_allows_theory_refutation: true
+    detected_prompt_biases: []
+    should_continue: true
+  sections: []
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: ACCEPTED
+  reason: Linear system solution matches exact rational ground truth
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: Together
+  dispatch_id: gen-1791686428-y03nLRaK1dPVlOGDcJrz
+  system_fingerprint: default
+  duration_seconds: 2.048
+  tokens_per_second: 257.81
+  usage:
+    prompt_tokens: 1745
+    completion_tokens: 528
+    reasoning_tokens: 372
+    total_tokens: 2273
+  cost:
+    total_cost_usd: 0.0011571
+    total_cost_microusd: 1157
+    cost_details:
+      upstream_inference_cost: 0.0011571
+      upstream_inference_prompt_cost: 0.0005235
+      upstream_inference_completions_cost: 0.0006336
+  timestamp_utc: '2026-10-11T02:40:29.966342+00:00'

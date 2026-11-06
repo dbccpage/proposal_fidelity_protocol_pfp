@@ -26,11 +26,12 @@ Ten planned capsules (c001-c010) on one integer rank-difference carrier with thr
 
 ## Pilots in this folder
 
-Model experiments for this workflow (formerly in the top-level `pilots/` folder). They need a model runtime that is not published here.
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
 
 - [`pilots/c001_attention_distractor_mask/`](pilots/c001_attention_distractor_mask/) — masking attention to distractor keys, with a McNemar comparison of arms (needs a local model with attention hooks)
 - [`pilots/c005_hosted_decode_controls/`](pilots/c005_hosted_decode_controls/) — a bake-off of hosted decoding controls (budgets, scratchpads, hybrids) on checkable cases
 - [`pilots/consistency_teaching/`](pilots/consistency_teaching/) — rank-difference tasks, clean or poisoned, with direct and chain-of-thought prompts
+- [`pilots/pilot_0000052/`](pilots/pilot_0000052/) — pilot_0000052 — Attention mechanism control (planned layout)
 - [`pilots/planned/`](pilots/planned/) — eight write-ups (C002-C004, C006-C010) for mechanism experiments that were planned but never built
 
 ## Team

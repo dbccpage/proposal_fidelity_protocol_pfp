@@ -1,0 +1,228 @@
+# AuthorityEffect: None.
+# Planned transmutation of demo_004. Not a provider run.
+lineage:
+  prompt_id: pilot_0000173_p_star
+  generation_id: 0
+  family_id: tower_lift_necessity
+  parent_id: null
+  template_id: prompt_template.yaml
+  template_version: pfp.prompt-template.v1
+  mutation_kind: catalog_summary
+  mutation_notes: One planned capsule. The user prompt is the catalog title and summary.
+  status: PLANNED
+  author: pilot_0000173_layout
+  authority_effect: None
+guidance:
+  rules:
+  - rule_id: RULE_PFP_ZERO_ANSWER_LEAKAGE
+    name: No host target in the prompt
+    statement: The prompt states the task. It does not state the host expected string.
+  - rule_id: RULE_INTERMEDIATE_WITNESS
+    name: Bind steps
+    statement: Bind each step you use before the certificate.
+  - rule_id: RULE_CLAIM_HYGIENE_001
+    name: Claim discipline
+    statement: Prefer a narrow claim. Do not describe this unrun capsule as a measured result.
+  antibodies:
+  - antibody_id: AB_INTERMEDIATE_WITNESS
+    failure_class: heuristic_shortcut
+    target_pattern: ungrounded_composite_answer
+    constraint_type: Restrain
+    operatorizability: repairable
+    action: repair
+    severity: P2
+    description: Layout label. It is not a pharmacy antibody file.
+  antipatterns:
+  - antipattern_id: AP_ANSWER_LEAK
+    name: Host target in the prompt
+    description: Copying the host expected string into the participant prompt.
+    target_pattern: expected_string_in_user_prompt
+  helpful_patterns:
+  - pattern_id: HP_RESPONSE_ANSWER_SLOT
+    name: Response answer slot
+    description: Put the certificate string in the top-level answer field.
+    enforcement: required
+system_prompt: |
+  semantic_policy_manifest:
+    policy_id: SPK-001
+    required_stamp: 'derived_under_policy: SPK-001'
+  mss0_grammar_constraint:
+    system_name: SYM SYS
+    atomic_glyph_count: 38
+    node_labels: a..z
+    numeric_labels: 0..9
+    delimiters:
+    - <
+    - '>'
+    pair_note: The written form <> is a two-glyph expression, not a 39th atomic glyph.
+    numeric_license_rule: This task licenses only the operations named in the user prompt.
+      It does not license a floating-point numeral as a certificate.
+    derived_patterns_note: Category-theoretic structures (functors, limits, adjunctions,
+      monads) are derived patterns, not new primitives.
+  op_semantics:
+    default_layer: 1
+    default_meaning: syntactic_binary_operator
+    forbidden_unlicensed_interpretations:
+    - arithmetic
+    - multiplication
+    - tensor_product
+    - boundary
+    - coboundary
+    - causality
+    - optimization
+    - physical_transition
+    license_required_for:
+    - cohomological_interpretation
+    - category_theoretic_interpretation
+  import_boundary: Do not import a structure the user prompt does not declare. This
+    planned capsule supplies the catalog title and summary.
+  mss0_typing_rules:
+    preamble: 'Whenever formalizing structures, adhere to the MSS-0 topological hierarchy:'
+    levels:
+    - level: 1
+      code: N
+      name: Node
+      meaning: 0-simplex
+    - level: 2
+      code: L
+      name: Edge
+      meaning: 1-simplex
+    - level: 3
+      code: C2
+      name: Cycle
+      meaning: 1-chain closed loop; strictly distinct from a filled region
+    - level: 4
+      code: F1
+      name: Face
+      meaning: 2-simplex / triangle; strictly requires a declared 2-cell
+    - level: 5
+      code: M1
+      name: Mass
+      meaning: Topological lock; requires LockStructure, ObstructionClass, and ConstraintInvariant
+    - level: 6
+      code: H1
+      name: SelfModel
+      meaning: Recursive Locus; requires explicit declaration of recursive equivalence
+        semantics
+  evaluator_scope_rule:
+    principle: An evaluator may promote only the claim type it directly tests.
+    bindings:
+    - evaluator: host certificate check
+      promotes: residuals on the supplied finite carrier
+      does_not_promote: a live model result or a registered-checker receipt
+    - evaluator: planned capsule note
+      promotes: nothing
+      does_not_promote: evidence
+  evidence_levels:
+  - code: F0
+    meaning: unverified idea
+  - code: F1
+    meaning: internally consistent
+  - code: F2
+    meaning: structurally validated
+  - code: F3
+    meaning: mechanically-verified (within verification scope)
+  - code: F4
+    meaning: independently reproduced
+  claim_hygiene:
+    discipline: Write with strict claim discipline.
+    forbidden_words:
+    - proves
+    - guarantees
+    - obviously
+    - clearly
+    - simply
+    - merely
+    - perfectly
+    - universal
+    - impossible
+    - fundamentally
+    forbidden_word_exceptions: unless explicitly scoped as speculative or nested inside
+      user quotes
+    replacement_defaults:
+    - from: proves
+      to: supports in this instance
+    - from: guarantees
+      to: holds under the declared assumptions
+    - from: obviously
+      to: on the stated carrier
+    default_posture: Prefer narrow claims. A planned capsule is not a measured effect
+      and not a host acceptance.
+  role:
+    persona: You are a restrained SymSys auditor.
+    goal: Answer the stated task. Bind each step you use. Do not treat this capsule
+      as a measured result.
+  antibody_injections: []
+user_prompt: |
+  Event Poset Adequacy & Stable Atomic-Mass Valuations
+
+  Catalog summary: Prove event poset adequacy under step refinement without global clocks and solve atomic-mass valuations mu(A) = sum m_a.
+
+  Return one JSON object. Put the certificate in the answer field.
+  Bind each step you use before the certificate.
+
+  Source citation: omega_engine_education/pilots/demo_004/m_witnessed_difference_programme/w04_clock_packet_adequacy_atomic_mass.md
+  The catalog names that path. This layout found the file and did not copy it into the prompt.
+response_schema: |
+  $schema: https://json-schema.org/draft/2020-12/schema
+  title: PromptResponse
+  type: object
+  additionalProperties: false
+  description: Candidate response envelope. The schema does not contain the host target.
+  required:
+  - derived_under_policy
+  - answer
+  - summary
+  - process_integrity
+  properties:
+    derived_under_policy:
+      const: SPK-001
+      type: string
+    answer:
+      type: string
+      minLength: 1
+      description: Certificate string for this capsule. The schema does not contain the host target.
+    summary:
+      $ref: '#/$defs/ResponseSummaryValue'
+    sections:
+      type: array
+      minItems: 0
+      maxItems: 0
+      items: false
+    process_integrity:
+      $ref: '#/$defs/ProcessIntegrityValue'
+  $defs:
+    ResponseSummaryValue:
+      type: object
+      additionalProperties: false
+      required:
+      - narrowest_defensible_thesis
+      - evidence_scope
+      - next_concrete_test
+      properties:
+        narrowest_defensible_thesis:
+          type: string
+          minLength: 1
+        evidence_scope:
+          type: string
+          minLength: 1
+        next_concrete_test:
+          type: string
+          minLength: 1
+    ProcessIntegrityValue:
+      type: object
+      additionalProperties: false
+      required:
+      - seed_allows_theory_refutation
+      - should_continue
+      properties:
+        seed_allows_theory_refutation:
+          type: boolean
+        detected_prompt_biases:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          default: []
+        should_continue:
+          type: boolean

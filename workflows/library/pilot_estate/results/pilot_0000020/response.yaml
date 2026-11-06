@@ -1,0 +1,52 @@
+schema: pfp.pilot-response.v1
+authority_effect: None
+pilot_id: pilot_0000020
+request_id: pilot_0000020_req_0
+execution_mode: live_gateway_dispatch
+model_id: nvidia/nemotron-3.5-lightning:free
+trial_status: COMPLETED
+raw_reply: |-
+  {
+    "derived_under_policy": "SPK-001",
+    "summary": {
+      "narrowest_defensible_thesis": "Order-invariant solution (x,y)=(1,2) yields x+y=3.",
+      "evidence_scope": "Algebraic solution of the linear system; verified that swapping eq_beta and eq_alpha does not change the solution.",
+      "next_concrete_test": "Confirm x+y=3 via matrix method or coefficient perturbation."
+    },
+    "process_integrity": {
+      "seed_allows_theory_refutation": true,
+      "detected_prompt_biases": [],
+      "should_continue": true
+    },
+    "answer": 3
+  }
+parsed_response:
+  derived_under_policy: SPK-001
+  summary:
+    narrowest_defensible_thesis: Order-invariant solution (x,y)=(1,2) yields x+y=3.
+    evidence_scope: Algebraic solution of the linear system; verified that swapping
+      eq_beta and eq_alpha does not change the solution.
+    next_concrete_test: Confirm x+y=3 via matrix method or coefficient perturbation.
+  process_integrity:
+    seed_allows_theory_refutation: true
+    detected_prompt_biases: []
+    should_continue: true
+  sections: []
+parsed_json: null
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: ACCEPTED
+receipt:
+  provider: openrouter
+  dispatch_kind: live_provider_call
+  cost_microusd: 0
+  evidence: LIVE_DISPATCH_COMPLETION_gen-1791579390-dWS0NsRLvnvJwS1wLEi0
+  timestamp_utc: '2026-10-09T20:57:01.159761+00:00'
+  provider_calls: 1

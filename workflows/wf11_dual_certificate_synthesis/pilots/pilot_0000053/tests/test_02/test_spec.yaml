@@ -1,0 +1,29 @@
+# AuthorityEffect: None.
+# Planned transmutation. Not a provider run.
+schema: pfp.test-spec.v1
+authority_effect: None
+pilot_id: pilot_0000053
+test_folder: test_02
+test_id: d2_valid_lp_gap_zero
+case_id: d2_valid
+test_index: 2
+generation_id: 0
+dialect_name: Exact rational LP stimulus (planned, not dispatched)
+input_source_file: input.yaml
+response_file: response.yaml
+model_id: not-dispatched
+expected_outcome:
+  answer: |
+    CERTIFIED_OPTIMAL_LP_GAP_ZERO; primal_feasible=true; dual_feasible=true; primal_objective=1; dual_objective=1; duality_gap=0; is_exact_zero_gap=true; source=dossier_2_exact_lp_certificate/checker_output.json valid_witness_result
+  status: PLANNED
+actual_outcome:
+  extracted_answer: null
+  gate_status: PLANNED
+  reason: |
+    PFP-053-FINITE-CYCLE-CERTIFICATE is not registered in checker_registry.py. No provider reply was copied. Terminal status is PLANNED, not accepted. The expected string transcribes the named historic file. This layout did not execute that file's checker.
+  status: PLANNED
+  refusal_code: null
+metrics: {}
+notes: |-
+  Transcribes the historic valid LP receipt. witness_valid.json was not copied into the prompt.
+  source_markdown: omega_engine_education/pilots/demo_003/demo_4/4_demo.md source_artifact: omega_engine_education/pilots/demo_003/demo_4/dossier_2_exact_lp_certificate/checker_output.json checker_registered: false
