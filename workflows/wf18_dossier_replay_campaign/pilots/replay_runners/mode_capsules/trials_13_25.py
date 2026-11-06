@@ -7,12 +7,12 @@ from __future__ import annotations
 
 from fractions import Fraction
 
-from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.kernels import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.kernels import (
     components,
     cycle_rank,
     solve_linear,
 )
-from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.packet import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.packet import (
     GLYPHS,
     _finished,
     digest,

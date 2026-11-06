@@ -3,7 +3,7 @@
 Two separate code paths from the detectors:
 
 * ``replay_witness`` re-derives each named step's relation with Cramer's rule and the
-  Adversary dossier checker's ``mv`` (``adversary/tests/pilots/replay_runners/
+  Adversary dossier checker's ``mv`` (``workflows/wf18_dossier_replay_campaign/pilots/replay_runners/
   dossier_capsules/checking.py``), not with the detectors' parsing or arithmetic. A red
   verdict is sound only when every step it names is confirmed defective here.
 * ``answer_is_correct`` is the outcome judge: the Adversary checker's ``check_answer`` on the
@@ -22,7 +22,7 @@ from typing import Any, Dict, Iterable, List, Tuple
 from pfp.use_cases.detector_adequacy.detectors import repo_root
 from pfp.use_cases.detector_adequacy.traces import cramer
 
-ADVERSARY_CHECKER = "adversary/tests/pilots/replay_runners/dossier_capsules/checking.py"
+ADVERSARY_CHECKER = "workflows/wf18_dossier_replay_campaign/pilots/replay_runners/dossier_capsules/checking.py"
 
 _CHECKER: Any = None
 

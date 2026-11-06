@@ -18,15 +18,15 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_adversary.tests.pilots.replay_runners._paths import repository_root
-from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.packet import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners._paths import repository_root
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.packet import (
     MODE_DIRS,
     MODES,
     PILOTS,
     NoAliasDumper,
     digests_match,
 )
-from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.trials_01_12 import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.trials_01_12 import (
     trial_0000001,
     trial_0000002,
     trial_0000003,
@@ -40,7 +40,7 @@ from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.trials_01_
     trial_0000011,
     trial_0000012,
 )
-from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.trials_13_25 import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.trials_13_25 import (
     trial_0000013,
     trial_0000014,
     trial_0000015,
@@ -258,7 +258,7 @@ def pilot_folder(pilot_id: str) -> Path:
     direct = PILOTS / pilot_id
     if direct.is_dir():
         return direct
-    relocated = repository_root(PILOTS) / "omega_engine_pfp" / "tests" / pilot_id
+    relocated = repository_root(PILOTS) / "pfp" / "tests" / pilot_id
     if relocated.is_dir():
         return relocated
     return direct

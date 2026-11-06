@@ -273,7 +273,7 @@ def test_max_pilot_matrix_yaml_and_results_estate():
 def test_offline_evaluator_dry_run_execution(tmp_path):
     import shutil
 
-    from adversary.tests.pilots.offline_evaluator import run_all_pilots
+    from workflows.library.pilot_estate.offline_evaluator import run_all_pilots
     source = REPO_ROOT / "adversary" / "tests" / "pilots" / "results"
     shutil.copytree(source, tmp_path / "results")
     reports = run_all_pilots(tmp_path / "results")
@@ -286,7 +286,7 @@ def test_offline_evaluator_dry_run_execution(tmp_path):
 
 
 def test_offline_evaluator_negative_mutation_suite():
-    from adversary.tests.pilots.offline_evaluator import run_negative_mutation_suite
+    from workflows.library.pilot_estate.offline_evaluator import run_negative_mutation_suite
 
     reports = run_negative_mutation_suite()
     assert len(reports) >= 20

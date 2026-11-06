@@ -24,8 +24,8 @@ from pfp.domain.pilots.checker_registry import (
 from pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
 from pfp.infrastructure import pilot_evidence as evidence
 from pfp.infrastructure.pilot_runner import grade, materialize_results
-from adversary.tests.pilots import live_evaluator as live
-from adversary.tests.pilots.offline_evaluator import ExactLinalgEvaluator
+from workflows.library.pilot_estate import live_evaluator as live
+from workflows.library.pilot_estate.offline_evaluator import ExactLinalgEvaluator
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / ".git").exists())
 RESULTS = ROOT / "adversary" / "tests" / "pilots" / "results"

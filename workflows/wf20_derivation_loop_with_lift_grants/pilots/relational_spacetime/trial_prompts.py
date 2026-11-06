@@ -12,17 +12,17 @@ import re
 import jsonschema
 import yaml
 
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import canonical, digest
+from pfp.infrastructure.adapters.pfp_evidence import canonical, digest
 
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import LIFTS
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import ROOT
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import SOURCE
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import STRING
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import array
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import obj
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import prompt_container
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import response_schema
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import LIFTS
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import ROOT
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import SOURCE
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import STRING
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import array
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import obj
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import prompt_container
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import response_schema
 
 RECIPE = "po035_experiment_prompts_v1"
 WORKPAD_SCHEMA_ID = "pfp.po035-public-workpad.v1"
@@ -207,14 +207,14 @@ def workpad_schema(pilot, *, stage=None, prompt_id=None):
     )
 
 
-def section_5_excerpt(expected_sha256=SECTION_5_SHA256):
+def section_5_excerpt():
     source = (ROOT / SOURCE_PATH).read_text(encoding="utf-8")
     excerpt = source[
         source.index("## 5. The 8-Stage Unified Relational Spine") : source.index(
             "## 6. Zero-Container Relational Regge Curvature"
         )
     ].strip()
-    if digest(excerpt.encode()) != expected_sha256:
+    if digest(excerpt.encode()) != SECTION_5_SHA256:
         raise ValueError("SECTION_5_SOURCE_CHANGED")
     return excerpt
 
@@ -252,14 +252,8 @@ def _workpad_context(pilot, loop, context):
     return selected, list(feedback)
 
 
-def build_prompt(
-    pilot, loop, context=None, *, experiment, temperature=0, section_5_sha256=SECTION_5_SHA256
-):
-    """Compile a fresh control, public workpad or final without control leakage.
-
-    A later numbered profile may bind a corrected section 5 by its own digest;
-    the default keeps this recipe's original pin, which refuses changed source.
-    """
+def build_prompt(pilot, loop, context=None, *, experiment, temperature=0):
+    """Compile a fresh control, public workpad or final without control leakage."""
     if pilot not in BY_ID:
         raise ValueError("UNKNOWN_PO035_PILOT")
     config = stage_config(experiment, loop, temperature)
@@ -334,7 +328,7 @@ def build_prompt(
     )
     if number == 201:
         user["source_context"] = dict(
-            status="DISPUTED_CLAIMS_TO_REPAIR", section_5=section_5_excerpt(section_5_sha256)
+            status="DISPUTED_CLAIMS_TO_REPAIR", section_5=section_5_excerpt()
         )
     if config["response_kind"] == "spk_final":
         user["response_placement"] = {
@@ -376,5 +370,5 @@ def build_prompt(
         provider_dispatches=0,
     )
     if number == 201:
-        prompt["source_context_binding"] = dict(path=SOURCE_PATH, section_5_sha256=section_5_sha256)
+        prompt["source_context_binding"] = dict(path=SOURCE_PATH, section_5_sha256=SECTION_5_SHA256)
     return prompt

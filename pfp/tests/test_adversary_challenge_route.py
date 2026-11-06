@@ -8,7 +8,7 @@ import tempfile
 import pytest
 
 from pfp.infrastructure.challenge_live import choose_case
-from adversary.tests.pilots.challenge_suite.catalog import load_case
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import load_case
 
 
 @pytest.fixture(autouse=True)

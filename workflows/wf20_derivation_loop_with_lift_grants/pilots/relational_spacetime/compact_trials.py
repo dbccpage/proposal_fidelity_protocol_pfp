@@ -6,47 +6,47 @@ import math
 import sqlite3
 from pathlib import Path
 
-from omega_engine_adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
-from omega_engine_adversary.infrastructure.providers.wire import decode_reply
-from omega_engine_pfp.infrastructure.adapters.pfp_derivation import (
+from adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
+from adversary.infrastructure.providers.wire import decode_reply
+from pfp.infrastructure.adapters.pfp_derivation import (
     model_pricing,
     provider_result,
     replay_current_run,
 )
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import (
+from pfp.infrastructure.adapters.pfp_evidence import (
     canonical,
     digest,
     write_once,
 )
-from omega_engine_pfp.infrastructure.adapters.pfp_experiment import (
+from pfp.infrastructure.adapters.pfp_experiment import (
     PfpExperimentAdapter,
     wire_for,
 )
-from omega_engine_pfp.use_cases.pfp_derivation_loops import (
+from pfp.use_cases.pfp_derivation_loops import (
     DerivationLimits,
     run_derivation_loops,
 )
 
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import MODEL
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import PILOTS
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import ROOT
-from omega_engine_adversary.tests.pilots.relational_spacetime.baseline import refuse_without_checkout
-from omega_engine_adversary.tests.pilots.relational_spacetime.baseline import fresh_run_output
-from omega_engine_adversary.tests.pilots.relational_spacetime.baseline import require_campaign_checkout
-from omega_engine_adversary.tests.pilots.relational_spacetime.parameter_trials import sources as previous_sources
-from omega_engine_pfp.infrastructure.numbered_prompts import DEFAULT_RUN_ID, build_prompt
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import MODEL
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import PILOTS
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import ROOT
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import refuse_without_checkout
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import fresh_run_output
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import require_campaign_checkout
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.parameter_trials import sources as previous_sources
+from pfp.infrastructure.numbered_prompts import DEFAULT_RUN_ID, build_prompt
 
 CAMPAIGN = DEFAULT_RUN_ID
 EVIDENCE = PILOTS / "evidence" / CAMPAIGN
-TEMPLATES = ROOT / "omega_engine_pfp/infrastructure/yaml/prompts/templates"
+TEMPLATES = ROOT / "pfp/infrastructure/yaml/prompts/templates"
 LIMITS = DerivationLimits(loops=3)
 
 
 def sources():
     pins = previous_sources()
     paths = [
-        ROOT / "omega_engine_pfp/infrastructure/numbered_prompts.py",
+        ROOT / "pfp/infrastructure/numbered_prompts.py",
         *[
             Path(__file__).with_name(f"compact_{name}.py")
             for name in ("checks", "trials")
@@ -65,9 +65,9 @@ def render(pilot, loop, context):
 
 def observation(pilot, loop, prompt, result, context):
     """Pure interpretation used identically during live capture and offline replay."""
-    from omega_engine_adversary.tests.pilots.relational_spacetime.compact_checks import evaluate
-    from omega_engine_adversary.tests.pilots.relational_spacetime.compact_checks import negative_controls
-    from omega_engine_adversary.tests.pilots.relational_spacetime.compact_checks import validate_workpad
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.compact_checks import evaluate
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.compact_checks import negative_controls
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.compact_checks import validate_workpad
 
     if loop == 2:
         verdict, packet = validate_workpad(pilot, prompt["prompt_id"], result["content"])

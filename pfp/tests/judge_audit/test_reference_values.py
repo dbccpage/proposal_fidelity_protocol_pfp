@@ -6,7 +6,7 @@ import hashlib
 from fractions import Fraction
 
 import pytest
-from adversary.tests.pilots.judge_packet_audit import reference_values as rv
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import reference_values as rv
 
 
 def test_quintic_gv_invariants_match_candelas_et_al() -> None:

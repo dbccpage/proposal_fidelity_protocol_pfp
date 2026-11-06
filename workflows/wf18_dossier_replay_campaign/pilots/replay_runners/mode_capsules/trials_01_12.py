@@ -5,7 +5,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.kernels import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.kernels import (
     components,
     cycle_rank,
     edge_set,
@@ -15,7 +15,7 @@ from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.kernels im
     solve_linear,
     triangle_area_numerator,
 )
-from omega_engine_adversary.tests.pilots.replay_runners.mode_capsules.packet import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.packet import (
     _finished,
     _pilot_id,
     digest,

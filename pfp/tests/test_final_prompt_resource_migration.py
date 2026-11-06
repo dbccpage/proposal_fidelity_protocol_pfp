@@ -50,11 +50,11 @@ def test_original_identity_reads_exact_frozen_bytes(name, expected, tmp_path, mo
     assert not (tmp_path / "education").exists()
     assert not (ROOT / destination(name)).exists()
     if name != "README.md":
-        bundle = ROOT / "adversary/tests/pilots/evidence/pfp_ownership_migration_20261012"
+        bundle = ROOT / "workflows/library/pilot_estate/evidence/pfp_ownership_migration_20261012"
         manifest = json.loads((bundle / "frozen_runtime.json").read_bytes())
         assert manifest["files"][OLD + name] == expected
         assert raw == (bundle / "frozen_sources" / (OLD + name)).read_bytes()
-        snapshot = ROOT / "adversary/tests/pilots/evidence/po035_simplified_20261012/source_snapshot"
+        snapshot = ROOT / "workflows/library/pilot_estate/evidence/po035_simplified_20261012/source_snapshot"
         assert raw == (snapshot / (OLD + name)).read_bytes()
 
 
@@ -82,7 +82,7 @@ def test_unversioned_active_templates_conform_to_slug_and_prefix():
 
 def test_current_profile_does_not_silently_read_an_old_paper(monkeypatch):
     from pfp.infrastructure import numbered_prompts
-    from adversary.tests.pilots.relational_spacetime.trial_prompts import SOURCE_PATH
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.trial_prompts import SOURCE_PATH
 
     source = ROOT / SOURCE_PATH
     original = Path.read_bytes

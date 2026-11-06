@@ -12,7 +12,7 @@ from types import ModuleType
 
 
 _SOURCE = (Path(__file__).resolve().parents[2]
-    / "adversary/tests/pilots/evidence/pfp_ownership_migration_20261012"
+    / "workflows/library/pilot_estate/evidence/pfp_ownership_migration_20261012"
     / "frozen_sources/symbol_game/infrastructure/adapters")
 _HASHES = {
     "pfp_derivation": "74e1c7df658d2cfad48882fb4f1a6c16c1e839bd3cb2ca1f51e60632f94cdf72",

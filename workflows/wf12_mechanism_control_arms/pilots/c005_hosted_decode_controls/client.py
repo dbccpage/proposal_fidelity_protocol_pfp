@@ -25,7 +25,7 @@ class PfpLiveRouteRequired(RuntimeError):
         super().__init__(
             f"{self.reason_code}: C005 GovernedClient is fixture-only; "
             "use the canonical C005 PFP adapter "
-            "(python -m adversary.tests.pilots.challenge_suite --help). "
+            "(python -m workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite --help). "
             "Decoder controls require explicit shared-route support and honored-control probes."
         )
 

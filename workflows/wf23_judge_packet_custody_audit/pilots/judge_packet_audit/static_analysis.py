@@ -15,12 +15,12 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
-CHALLENGES_PREFIX = "omega_engine_pfp.tests.demo_004."
+CHALLENGES_PREFIX = "pfp.tests.demo_004."
 # Historical fallback imports remain in sealed scoring/checker sources. Resolve
 # their syntax for analysis only; executable descriptors always use the current owner.
 SOURCE_CHALLENGES_PREFIXES = (
     CHALLENGES_PREFIX,
-    "omega_engine_projects.mssn_sn_symgam.challenges.",
+    "projects.mssn_sn_symgam.challenges.",
 )
 REFUSAL_STATUS_WORDS = frozenset(
     {"UNKNOWN", "OUT_OF_SCOPE", "REFUSED", "REFUSAL", "ABSTAIN", "ABSTAINED"}

@@ -6,8 +6,8 @@ import pytest
 
 from pfp.infrastructure.adapters import pfp_derivation, pfp_experiment
 from pfp.use_cases.pfp_derivation_loops import DerivationLimits
-from adversary.tests.pilots.relational_spacetime import baseline, compact_trials
-from adversary.tests.pilots.relational_spacetime import parameter_trials, typed_signals
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import baseline, compact_trials
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import parameter_trials, typed_signals
 
 
 @pytest.mark.parametrize("kind", ["baseline", "typed", "temperature", "compact"])

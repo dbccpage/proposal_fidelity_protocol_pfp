@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from adversary.tests.pilots.challenge_suite import typed_certificate_repair
-from adversary.tests.pilots.challenge_suite.typed_certificate_repair import (
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite import typed_certificate_repair
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.typed_certificate_repair import (
     EDGES,
     check_certificate,
 )

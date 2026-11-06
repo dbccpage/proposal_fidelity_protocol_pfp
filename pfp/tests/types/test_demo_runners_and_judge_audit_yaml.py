@@ -25,9 +25,9 @@ from pfp.infrastructure.pilot_runners.mssn_models import (
 )
 from pfp.infrastructure.pilot_runners.mssn_models import PfpStageStatus
 from pfp.infrastructure.pilot_runners.mssn_models import ProposalStatus
-from adversary.tests.pilots.judge_packet_audit.audit import OUTCOME_CODES
-from adversary.tests.pilots.judge_packet_audit.leakage import VERDICT_WORDS
-from adversary.tests.pilots.judge_packet_audit.static_analysis import REFUSAL_STATUS_WORDS
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit.audit import OUTCOME_CODES
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit.leakage import VERDICT_WORDS
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit.static_analysis import REFUSAL_STATUS_WORDS
 
 _INFRA_ROOT = Path(__file__).resolve().parents[2] / "infrastructure"
 _DEMO_RUNNERS_YAML_DIR = _INFRA_ROOT / "yaml" / "demo_runners"

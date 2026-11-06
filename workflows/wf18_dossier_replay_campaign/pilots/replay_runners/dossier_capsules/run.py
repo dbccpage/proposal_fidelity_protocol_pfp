@@ -1,6 +1,6 @@
 """Read-only offline replay for the retired dossier-trials campaign.
 
-python -m omega_engine_adversary.tests.pilots.replay_runners.dossier_capsules.run --replay
+python -m workflows.wf18_dossier_replay_campaign.pilots.replay_runners.dossier_capsules.run --replay
 Live dispatch is retired; current tasks use the shared PFP/Adversary commands.
 Original source snapshots, receipt bytes and checker-drift refusals are retained.
 """
@@ -16,9 +16,9 @@ from pathlib import Path, PurePosixPath, PureWindowsPath
 
 import yaml
 
-from omega_engine_adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
-from omega_engine_adversary.infrastructure.providers.openai_compat import build_openai_compat_body
-from omega_engine_adversary.infrastructure.providers.wire import decode_reply
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
+from adversary.infrastructure.providers.openai_compat import build_openai_compat_body
+from adversary.infrastructure.providers.wire import decode_reply
 
 from .cases import PILOTS, canonical, sha
 from .checking import evaluate
@@ -26,34 +26,34 @@ from .prepare import CAMPAIGN, ROOT, historical_bytes, historical_plan, prepare
 
 RETIREMENT_REASON = (
     "RETIRED_DOSSIER_CAMPAIGN: live dispatch is retired; historical bytes remain read-only. "
-    "For current tasks use python -m omega_engine_pfp.entrypoints.cli.pfp prepare-task TASK.json --attempt ID "
-    "or python -m omega_engine_adversary.entrypoints.cli teamwork start --objective TASK --state NEW.json."
+    "For current tasks use python -m pfp.entrypoints.cli.pfp prepare-task TASK.json --attempt ID "
+    "or python -m adversary.entrypoints.cli teamwork start --objective TASK --state NEW.json."
 )
 MAX_OUTPUT = 900
 ACTIVE_DEPENDENCIES = (
-    "omega_engine_adversary/tests/pilots/replay_runners/dossier_capsules/checking.py",
-    "omega_engine_adversary/tests/pilots/replay_runners/dossier_capsules/cases.py",
-    "omega_engine_adversary/tests/pilots/replay_runners/dossier_capsules/run.py",
-    "omega_engine_pfp/domain/pilots/checker_registry.py",
-    "omega_engine_adversary/infrastructure/providers/wire.py",
-    "omega_engine_adversary/infrastructure/providers/openai_compat.py",
-    "omega_engine_adversary/infrastructure/providers/openrouter_transport.py",
-    "omega_engine_adversary/domain/providers/types.py",
+    "workflows/wf18_dossier_replay_campaign/pilots/replay_runners/dossier_capsules/checking.py",
+    "workflows/wf18_dossier_replay_campaign/pilots/replay_runners/dossier_capsules/cases.py",
+    "workflows/wf18_dossier_replay_campaign/pilots/replay_runners/dossier_capsules/run.py",
+    "pfp/domain/pilots/checker_registry.py",
+    "adversary/infrastructure/providers/wire.py",
+    "adversary/infrastructure/providers/openai_compat.py",
+    "adversary/infrastructure/providers/openrouter_transport.py",
+    "adversary/domain/providers/types.py",
 )
 
 LEGACY_SOURCE_ARCHIVE = {
-    "omega_engine_education/pilots/dossier_trials/checking.py": "checking.py",
-    "omega_engine_education/pilots/dossier_trials/cases.py": "cases.py",
-    "omega_engine_education/pilots/dossier_trials/run.py": "run.py",
+    "education/pilots/dossier_trials/checking.py": "checking.py",
+    "education/pilots/dossier_trials/cases.py": "cases.py",
+    "education/pilots/dossier_trials/run.py": "run.py",
 }
-LEGACY_CHECKER_SOURCE = "omega_engine_education/pfp/domain/pilots/checker_registry.py"
+LEGACY_CHECKER_SOURCE = "education/pfp/domain/pilots/checker_registry.py"
 # These exact old source identities resolve current bytes for digest comparison,
 # never semantic equivalence or acceptance of a changed historical checker.
 LEGACY_PROVIDER_SOURCES = {
-    "omega_engine_providers/infrastructure/wire.py": ACTIVE_DEPENDENCIES[4],
-    "omega_engine_providers/infrastructure/openai_compat.py": ACTIVE_DEPENDENCIES[5],
-    "omega_engine_providers/infrastructure/openrouter_transport.py": ACTIVE_DEPENDENCIES[6],
-    "omega_engine_providers/domain/types.py": ACTIVE_DEPENDENCIES[7],
+    "providers/infrastructure/wire.py": ACTIVE_DEPENDENCIES[4],
+    "providers/infrastructure/openai_compat.py": ACTIVE_DEPENDENCIES[5],
+    "providers/infrastructure/openrouter_transport.py": ACTIVE_DEPENDENCIES[6],
+    "providers/domain/types.py": ACTIVE_DEPENDENCIES[7],
 }
 LEGACY_DEPENDENCIES = tuple(LEGACY_SOURCE_ARCHIVE) + (LEGACY_CHECKER_SOURCE,) + tuple(LEGACY_PROVIDER_SOURCES)
 # The intermediate active reader emitted a current checker key with old provider keys.
@@ -125,7 +125,7 @@ def capsule_folder(capsule):
             or PurePosixPath(capsule).is_absolute() or PureWindowsPath(capsule).drive
             or any(part in ("", ".", "..") for part in capsule.split("/"))):
         raise ValueError("INVALID_CAPSULE_PATH")
-    owner = ROOT / "omega_engine_pfp" / "tests" if capsule.split("/")[0] in RELOCATED_PILOTS else PILOTS
+    owner = ROOT / "pfp" / "tests" if capsule.split("/")[0] in RELOCATED_PILOTS else PILOTS
     folder = owner / Path(capsule)
     if not folder.resolve().is_relative_to(owner.resolve()):
         raise ValueError("INVALID_CAPSULE_PATH")

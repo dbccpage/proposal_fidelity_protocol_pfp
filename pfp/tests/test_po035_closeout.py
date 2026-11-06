@@ -6,11 +6,11 @@ import json
 import pytest
 import yaml
 
-from adversary.tests.pilots.relational_spacetime import typed_signals as adaptive
-from adversary.tests.pilots.relational_spacetime import final_prompts as closeout
-from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from adversary.tests.pilots.relational_spacetime.tasks import STAGES
-from adversary.tests.pilots.relational_spacetime.tasks import TEMPLATE
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import typed_signals as adaptive
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import final_prompts as closeout
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import STAGES
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import TEMPLATE
 from pfp.infrastructure.adapters.pfp_evidence import digest
 
 

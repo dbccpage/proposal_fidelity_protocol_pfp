@@ -9,9 +9,9 @@ from types import SimpleNamespace
 import pytest
 
 from pfp.infrastructure import challenge_live as live
-from adversary.tests.pilots.challenge_suite.catalog import ROOT
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT
 
-EVIDENCE = ROOT / "adversary/tests/pilots/evidence/demo004_pfp_learning/live"
+EVIDENCE = ROOT / "workflows/library/pilot_estate/evidence/demo004_pfp_learning/live"
 
 
 @pytest.mark.parametrize(
@@ -90,7 +90,7 @@ def test_missing_runtime_source_refuses_before_replay(tmp_path, monkeypatch):
 def test_consumed_prompt_inputs_are_captured_and_drift_refuses_before_replay(
     tmp_path, monkeypatch, changed
 ):
-    from adversary.tests.pilots.challenge_suite import catalog
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite import catalog
 
     root = tmp_path / "sources"
     challenge = root / "c005_fixture"
@@ -137,7 +137,7 @@ def test_consumed_prompt_inputs_are_captured_and_drift_refuses_before_replay(
 
 
 def test_c005_saved_request_judgments_and_stops_replay_at_recorded_revision(tmp_path):
-    from adversary.tests.pilots.challenge_suite.replay_snapshots import replay
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.replay_snapshots import replay
 
     evidence = EVIDENCE.parent
     record = json.loads((evidence / "frozen_replay_v4.json").read_bytes())

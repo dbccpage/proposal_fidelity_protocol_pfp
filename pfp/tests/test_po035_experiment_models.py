@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-from adversary.tests.pilots.relational_spacetime import decoding_controls as models
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import decoding_controls as models
 
 
 def documents():

@@ -8,7 +8,7 @@ Oracle fixtures are generated only by the separate --create-fixtures command.
 """
 
 from __future__ import annotations
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
+from pfp.infrastructure.model_loading import load_yaml_model
 
 import argparse
 import sys
@@ -25,12 +25,12 @@ _REPO_ROOT = next((p for p in _HERE.parents if (p / ".git").exists()), _HERE.par
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from omega_engine_pfp.domain.types import EvaluationStatus
-from omega_engine_pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
-from omega_engine_pfp.domain.types import NegativeMutationFixture
-from omega_engine_pfp.domain.types import PilotResponse
-from omega_engine_pfp.domain.types import PilotSpec
-from omega_engine_pfp.domain.types import SeedPrompt
+from pfp.domain.types import EvaluationStatus
+from pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
+from pfp.domain.types import NegativeMutationFixture
+from pfp.domain.types import PilotResponse
+from pfp.domain.types import PilotSpec
+from pfp.domain.types import SeedPrompt
 
 
 class ExactLinalgEvaluator:
@@ -68,8 +68,8 @@ class ExactLinalgEvaluator:
     @classmethod
     def evaluate_pilot(cls, pilot_dir: Path) -> Dict[str, Any]:
         """Regrade saved raw evidence without changing response.yaml."""
-        from omega_engine_pfp.infrastructure.pilot_evidence import record_evaluation
-        from omega_engine_adversary.tests.pilots.live_evaluator import (
+        from pfp.infrastructure.pilot_evidence import record_evaluation
+        from workflows.library.pilot_estate.live_evaluator import (
             extract_and_evaluate,
             sanitize_raw_reply,
         )
@@ -117,7 +117,7 @@ class ExactLinalgEvaluator:
     @classmethod
     def create_fixture(cls, pilot_dir: Path) -> Path:
         """Explicit oracle fixture generation, separate from observations and evaluation."""
-        from omega_engine_pfp.infrastructure.pilot_evidence import (
+        from pfp.infrastructure.pilot_evidence import (
             canonical_bytes,
             digest,
             write_once,
@@ -192,13 +192,13 @@ def run_negative_mutation_suite(fixtures_path: Path | None = None) -> List[Dict[
     """Run fail-closed evaluation across all negative mutation and perturbation fixtures."""
     fpath = fixtures_path
     if fpath is None:
-        cand = files("omega_engine_pfp").joinpath(
+        cand = files("pfp").joinpath(
             "infrastructure", "yaml", "fixtures", "fix_negative_mutation_fixtures.yaml"
         )
         if cand.is_file():
             fpath = cand
         else:
-            fpath = files("omega_engine_pfp").joinpath(
+            fpath = files("pfp").joinpath(
                 "infrastructure", "yaml", "fixtures", "negative_mutation_fixtures.yaml"
             )
 

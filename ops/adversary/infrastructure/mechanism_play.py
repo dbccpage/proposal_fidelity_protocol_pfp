@@ -12,7 +12,7 @@ import json
 from decimal import Decimal
 from pathlib import Path
 
-from adversary.tests.pilots.challenge_suite.catalog import ROOT, canonical, digest
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT, canonical, digest
 from operations.domain.rop.result import Err
 from pfp.ffi import RustSymbolGameHost, find_core_symbol_game_binary
 from pfp.infrastructure import mechanism_sessions as sessions

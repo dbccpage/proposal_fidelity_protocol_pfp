@@ -17,13 +17,13 @@ from pathlib import Path
 
 from pfp.use_cases.pfp_proposal import CheckProposalUseCase, repair_feedback
 
-from adversary.tests.pilots.challenge_suite.catalog import ROOT
-from adversary.tests.pilots.challenge_suite.catalog import canonical
-from adversary.tests.pilots.challenge_suite.catalog import digest
-from adversary.tests.pilots.challenge_suite.catalog import load_case
-from adversary.tests.pilots.challenge_suite.catalog import load_plan
-from adversary.tests.pilots.challenge_suite.catalog import relocated
-from adversary.tests.pilots.challenge_suite.catalog import selected_rows
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import canonical
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import digest
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import load_case
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import load_plan
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import relocated
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import selected_rows
 
 # Separate entrypoints, not a common stored-answer comparator. C042's SAT/DRAT
 # paths are complementary, so its one dispatcher is explicitly a single judge.
@@ -129,7 +129,7 @@ def source_bindings(challenge):
 def judges_for(challenge):
     n = int(challenge.name[1:4])
     if n == 1:
-        from adversary.tests.pilots.challenge_suite.c001 import CHECKER_ID, check_answer
+        from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.c001 import CHECKER_ID, check_answer
         return [(CHECKER_ID, check_answer)]
     if n == 5:
         return [("c005:task_predicate", c005_gate)]

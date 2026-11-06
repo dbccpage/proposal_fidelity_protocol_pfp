@@ -8,11 +8,11 @@ import yaml
 from pfp.infrastructure import numbered_prompts as prompts
 from pfp.infrastructure.adapters.pfp_evidence import digest
 from pfp.infrastructure.adapters.pfp_frozen_replay import read_frozen_prompt_source
-from adversary.tests.pilots.relational_spacetime import trial_prompts
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import trial_prompts
 
 
 def test_current_renderer_has_one_canonical_owner_and_real_consumers():
-    from adversary.tests.pilots.relational_spacetime import compact_checks, compact_trials
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import compact_checks, compact_trials
 
     assert prompts.__name__ == "pfp.infrastructure.numbered_prompts"
     assert not (
@@ -108,6 +108,6 @@ def test_relocation_profile_changes_source_custody_without_changing_role_contrac
                 stage["template"] = stage["template"].replace("-v1.0.4", "-v1.0.3")
         assert old == new
     for name in ("tasks.py", "trial_prompts.py"):
-        path = "adversary/tests/pilots/relational_spacetime/" + name
+        path = "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/" + name
         assert current["file_sha256"][path] == digest((prompts.ROOT / path).read_bytes())
     assert not any(path.startswith("education/pilots/") for path in current["file_sha256"])

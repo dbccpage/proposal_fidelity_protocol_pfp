@@ -46,7 +46,7 @@ def current_profile_probe(installed):
 
     from pfp.infrastructure import numbered_prompts as prompts
     from pfp.infrastructure.adapters.pfp_frozen_replay import read_frozen_prompt_source
-    from adversary.tests.pilots.relational_spacetime import tasks, trial_prompts
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import tasks, trial_prompts
 
     assert prompts.VERSION == "1.0.4"
     assert Path(prompts.__file__).resolve().is_relative_to(installed / "pfp")
@@ -89,7 +89,7 @@ def current_profile_probe(installed):
         assert str(exc) == "UNKNOWN_FROZEN_PROMPT_SOURCE"
     else:
         raise AssertionError("current prompt was accepted under a historical identity")
-    from adversary.tests.pilots.relational_spacetime import (
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import (
         baseline,
         compact_trials,
         parameter_trials,
@@ -245,7 +245,7 @@ def installed_challenge_probe(installed):
     """Require installed tasks/cases/checkers to prepare real source-bound briefs."""
     from pfp.infrastructure.challenge_live import choose_case
     from adversary.infrastructure import challenge_play
-    from adversary.tests.pilots.challenge_suite.catalog import (
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import (
         ROOT,
         canonical,
         digest,
@@ -291,7 +291,7 @@ def installed_host_fixture_probe(installed):
     """One original C054 host fixture and falsifier; no model experiment."""
     from pfp.infrastructure.challenge_execution import isolated
     from pfp.infrastructure.challenge_live import choose_case
-    from adversary.tests.pilots.challenge_suite.catalog import ROOT
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT
 
     assert ROOT.resolve() == installed.resolve()
     row = choose_case("C054", "development", 0)
@@ -551,7 +551,7 @@ def main():
         assert spec is None, old
     assert not (installed / "education/pilots").exists()
     assert not (installed / "education/pfp").exists()
-    assert not (installed / "adversary/tests/pilots/evidence").exists()
+    assert not (installed / "workflows/library/pilot_estate/evidence").exists()
     assert not (installed / "adversary/tests/pilots/results").exists()
     probes.append("retired active runtime paths absent; no forwarding modules")
 

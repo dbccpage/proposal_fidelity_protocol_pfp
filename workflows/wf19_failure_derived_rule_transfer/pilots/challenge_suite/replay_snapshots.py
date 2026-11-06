@@ -14,7 +14,7 @@ import sys
 from hashlib import sha256
 from pathlib import Path
 
-from omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay import inside
+from pfp.infrastructure.adapters.pfp_frozen_replay import inside
 
 
 def git(checkout, *args):
@@ -63,7 +63,7 @@ def replay(checkout: Path, evidence: Path, output: Path, run_names=()):
             name
             for name in paths
             if name.endswith(("/challenge_campaign/live.py", "/challenge_suite/live.py"))
-            or name == "omega_engine_pfp/infrastructure/challenge_live.py"
+            or name == "pfp/infrastructure/challenge_live.py"
         ]
         if len(live_sources) != 1:
             raise ValueError("CAPTURED_LIVE_ENTRYPOINT_REQUIRED")

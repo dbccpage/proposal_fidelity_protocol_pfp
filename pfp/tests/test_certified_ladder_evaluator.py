@@ -20,7 +20,7 @@ from pfp.domain.pilots.certified_ladder import (
 from pfp.use_cases.evaluate_certified_ladder import (
     EvaluateCertifiedLadderUseCase,
 )
-from adversary.tests.pilots.certified_ladder.hypothesis_evaluator import (
+from workflows.wf22_certified_cost_ladder.pilots.certified_ladder.hypothesis_evaluator import (
     CertifiedLadderEvaluator,
 )
 

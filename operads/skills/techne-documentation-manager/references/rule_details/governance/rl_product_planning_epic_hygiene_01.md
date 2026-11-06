@@ -20,7 +20,7 @@ See [council planning](../../../../../rules/governance/rl_councils_planning_and_
 > 2. **Zero Evidence & Data Clutter in Epics:**
 >    Product planning epic folders must NEVER contain:
 >    - **Execution Evidence & Tracking Manifests:** Progress JSONs (e.g. `*_acceptance_and_progress.json`), cryptographic review manifests, or verification records. These belong in `_ic/` or `receipts/`.
->    - **Data Matrices & Large Datasets:** Multi-megabyte YAML/CSV datasets (e.g. `seeds.yaml`). Large execution matrices must reside in their domain matrix homes (e.g. `adversary/tests/pilots/matrix/`).
+>    - **Data Matrices & Large Datasets:** Multi-megabyte YAML/CSV datasets (e.g. `seeds.yaml`). Large execution matrices must reside in their domain matrix homes (e.g. `workflows/library/pilot_estate/matrix/`).
 >    - **Test Suites & Test Runners:** Python test modules (`test_*.py`) or scratch test scripts. Tests must reside exclusively within the test directories of functional packages (e.g. `tests/`).
 >    - **Ephemeral Review Scratchpads & Visual Mockups:** Offline HTML mockups, review transcripts, and validation scratch scripts (`review/`, `source_notes/`). These must be digested and cleared before finalizing plans.
 >

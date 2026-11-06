@@ -107,7 +107,7 @@ def test_matrix_help_keeps_both_entry_styles_without_dispatch(tmp_path, module):
 def test_catalog_rows_reach_current_pilots_without_rewriting_identity(challenge_id):
     from pfp.infrastructure.challenge_live import choose_case
     from adversary.infrastructure import challenge_play
-    from adversary.tests.pilots.challenge_suite import catalog
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite import catalog
 
     row = choose_case(challenge_id, "development", 0)
     before = dict(row)
@@ -122,7 +122,7 @@ def test_catalog_rows_reach_current_pilots_without_rewriting_identity(challenge_
 
 def test_relocated_case_still_requires_original_bytes(monkeypatch, tmp_path):
     from pfp.infrastructure.challenge_live import choose_case
-    from adversary.tests.pilots.challenge_suite import catalog
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite import catalog
 
     row = choose_case("C054", "development", 0)
     destination = tmp_path / "adversary/tests/pilots" / row["source"].split("f_program_synthesis/", 1)[1]

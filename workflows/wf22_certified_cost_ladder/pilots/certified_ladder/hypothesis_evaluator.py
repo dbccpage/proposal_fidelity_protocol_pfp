@@ -30,7 +30,7 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 
-from omega_engine_pfp.domain.pilots.certified_ladder import (  # noqa: E402
+from pfp.domain.pilots.certified_ladder import (  # noqa: E402
     EvaluationReport,
     HypothesisDefinition,
     HypothesisVerdict,
@@ -52,7 +52,7 @@ from omega_engine_pfp.domain.pilots.certified_ladder import (  # noqa: E402
     evaluate_h12,
     evaluate_h13,
 )
-from omega_engine_pfp.use_cases.evaluate_certified_ladder import (  # noqa: E402
+from pfp.use_cases.evaluate_certified_ladder import (  # noqa: E402
     EvaluateCertifiedLadderUseCase,
 )
 

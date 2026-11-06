@@ -39,7 +39,7 @@ def worker_env(intelligence_root: Path) -> dict[str, str]:
     env["PYTHONHASHSEED"] = "0"
     env["PYTHONIOENCODING"] = "utf-8"
     env["PYTHONUTF8"] = "1"
-    env["OMEGA_INTELLIGENCE_ROOT"] = str(intelligence_root)
+    env["CORE_INTELLIGENCE_ROOT"] = str(intelligence_root)
     return env
 
 

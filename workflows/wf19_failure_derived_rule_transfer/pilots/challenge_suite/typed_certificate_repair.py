@@ -12,15 +12,15 @@ import json
 from hashlib import sha256
 from pathlib import Path
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
-from omega_engine_pfp.infrastructure.estimated_gateway import (
+from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
+from pfp.infrastructure.estimated_gateway import (
     DurableRunGateway,
     create_accounted_openrouter_gateway,
 )
-from omega_engine_pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
-from omega_engine_pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
-from omega_engine_adversary.infrastructure.live_openrouter_transport import default_pfp_model_port
-from omega_engine_adversary.infrastructure.providers.wire import decode_reply
+from pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
+from pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
+from adversary.infrastructure.live_openrouter_transport import default_pfp_model_port
+from adversary.infrastructure.providers.wire import decode_reply
 
 RECIPE = "cochain-certificate-repair-v1.0.0"
 EDGES = [[0, 1, 4], [1, 2, -7], [2, 3, 9], [3, 4, -3], [4, 5, 5], [0, 5, 8], [1, 4, -1], [2, 5, 11]]

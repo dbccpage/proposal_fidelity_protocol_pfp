@@ -34,7 +34,7 @@ from adversary.infrastructure.teamwork_intelligence_host import (
 )
 from adversary.infrastructure.teamwork_openrouter import OpenRouterTeamworkExecutor
 from adversary.infrastructure.teamwork_panel import create_teamwork_run, run_syntax_prefilter_check
-from adversary.tests.pilots.challenge_suite.catalog import (
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import (
     ROOT,
     canonical,
     digest,
@@ -63,13 +63,13 @@ def context(row):
     case = normalized_case(row["challenge"], load_case(row))
     task = challenge / ("TASK.md" if row["challenge"] == "C005" else "participant_packet/TASK.md")
     if row["challenge"] == "C001":
-        from adversary.tests.pilots.challenge_suite.c001 import TASK_PATH
+        from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.c001 import TASK_PATH
         task = TASK_PATH
     if not task.is_file():
         raise ValueError("CHALLENGE_TASK_UNAVAILABLE:" + row["challenge"])
     sources = source_bindings(challenge)
     if row["challenge"] == "C001":
-        from adversary.tests.pilots.challenge_suite.c001 import SOURCE_PATHS
+        from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.c001 import SOURCE_PATHS
         sources.update({p.relative_to(ROOT).as_posix(): digest(p.read_bytes()) for p in SOURCE_PATHS})
     for name in (*RUNTIME_SOURCES, task.relative_to(ROOT).as_posix(),
         "pfp/infrastructure/task_turn.py",
@@ -94,7 +94,7 @@ def start(row, *, executor="ide", max_repairs=1, learn_after_run=True, max_actio
     case, task_text, sources = context(row)
     schema = {"type": "object", "minProperties": 1}
     if row["challenge"] == "C001":
-        from adversary.tests.pilots.challenge_suite.c001 import answer_schema, public_case
+        from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.c001 import answer_schema, public_case
 
         schema, case = answer_schema(case), public_case(case)
     elif row["challenge"] == "C005":

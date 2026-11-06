@@ -20,7 +20,7 @@ from __future__ import annotations
 from collections import Counter
 from typing import Any
 
-from omega_engine_adversary.tests.pilots.judge_packet_audit.static_analysis import REFUSAL_STATUS_WORDS
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit.static_analysis import REFUSAL_STATUS_WORDS
 
 REFUSAL_FAMILIES = ("abstain", "refuse", "refuse_template", "case_derived")
 TEMPLATE_FAMILIES = ("template_example", "constant_reference")

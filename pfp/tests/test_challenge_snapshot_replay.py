@@ -6,7 +6,7 @@ import subprocess
 
 import pytest
 
-from adversary.tests.pilots.challenge_suite.replay_snapshots import replay
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.replay_snapshots import replay
 
 
 @pytest.mark.parametrize(

@@ -6,7 +6,7 @@ import json
 import pytest
 
 from pfp.infrastructure import challenge_execution as execution
-from adversary.tests.pilots.challenge_suite.catalog import digest, load_case
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import digest, load_case
 
 
 def test_isolated_child_invokes_canonical_pfp_owner(monkeypatch):

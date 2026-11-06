@@ -26,7 +26,7 @@ def historical_bytes(relative):
     if relative not in allowed:
         raise ValueError("UNREGISTERED_HISTORICAL_CAMPAIGN_PATH")
     result = subprocess.run(
-        ["git", "show", f"{HISTORICAL_REVISION}:omega_engine_education/pilots/{relative}"],
+        ["git", "show", f"{HISTORICAL_REVISION}:education/pilots/{relative}"],
         cwd=ROOT, capture_output=True, check=False,
     )
     if result.returncode:

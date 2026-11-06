@@ -12,7 +12,7 @@ def _candidates(start: Path) -> tuple[Path, ...]:
 def pilots_root(start: Path) -> Path:
     """Return the pilot estate containing its matrix and base template."""
     for candidate in _candidates(start):
-        for estate in (candidate, candidate / "pilots", candidate / "omega_engine_adversary/tests/pilots"):
+        for estate in (candidate, candidate / "pilots", candidate / "adversary/tests/pilots"):
             if (estate / "matrix").is_dir() and (
                 (estate / "pilot_0000000").is_dir() or (estate / "pilot_0000006").is_dir()
             ):

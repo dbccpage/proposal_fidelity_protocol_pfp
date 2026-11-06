@@ -66,8 +66,8 @@ This reads retained data without regenerating plans or rewriting responses.
 For one retained capsule, from the repository root:
 
 ```python
-from adversary.tests.pilots.replay_runners.dossier_capsules.prepare import historical_plan
-from adversary.tests.pilots.replay_runners.dossier_capsules.run import load_case
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.dossier_capsules.prepare import historical_plan
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.dossier_capsules.run import load_case
 
 row = historical_plan("_free")["cases"][0]
 folder, case = load_case(row)

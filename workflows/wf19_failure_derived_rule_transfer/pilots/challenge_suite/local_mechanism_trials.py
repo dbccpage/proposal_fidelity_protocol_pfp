@@ -11,12 +11,12 @@ from hashlib import sha256
 from itertools import combinations
 from pathlib import Path
 
-from omega_engine_adversary.tests.pilots.challenge_suite.catalog import SOURCE as CHALLENGE_SOURCE
-from omega_engine_pfp.domain.quantum.pauli import PauliString
-from omega_engine_pfp.infrastructure.adapters.decode_controls.local_hf_mechanism import (
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import SOURCE as CHALLENGE_SOURCE
+from pfp.domain.quantum.pauli import PauliString
+from pfp.infrastructure.adapters.decode_controls.local_hf_mechanism import (
     HfLocalRunner,
 )
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
+from pfp.infrastructure.task_turn import prepare_task_turn
 
 SOURCE = CHALLENGE_SOURCE / "a_mechanism"
 PROTOCOL_FILES = (

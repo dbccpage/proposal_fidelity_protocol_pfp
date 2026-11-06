@@ -168,7 +168,7 @@ For each detector and family:
 **Witness replay.** `witness_replay.py` re-derives each named step:
 - the reduced matrix by Cramer's rule;
 - products and answers with the Adversary dossier checker (`check_answer`, `mv` in
-  `adversary/tests/pilots/replay_runners/dossier_capsules/checking.py`).
+  `workflows/wf18_dossier_replay_campaign/pilots/replay_runners/dossier_capsules/checking.py`).
 
 None of the detectors' parsing or arithmetic is used. A witness replays when it names at
 least one step and every named step is defective.

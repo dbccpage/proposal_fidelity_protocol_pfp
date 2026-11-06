@@ -482,7 +482,7 @@ capsules succeeded, while a retained free-followup reply returned the expected
 Focused command (no full 250-case campaign execution):
 
 ```powershell
-python -m pytest adversary/tests/pilots/replay_runners/dossier_capsules/test_campaign.py -k "capsule_reader or current_environment_and_explicit or replay_tampering_refuses or preserved_source_bytes or budget_and_unknown_billing or retired_plan_is_read_only or guidance_preserves" -q -o addopts="" -p no:cacheprovider
+python -m pytest workflows/wf18_dossier_replay_campaign/pilots/replay_runners/dossier_capsules/test_campaign.py -k "capsule_reader or current_environment_and_explicit or replay_tampering_refuses or preserved_source_bytes or budget_and_unknown_billing or retired_plan_is_read_only or guidance_preserves" -q -o addopts="" -p no:cacheprovider
 ```
 
 The C052 example in the pilot runbook now names its actual

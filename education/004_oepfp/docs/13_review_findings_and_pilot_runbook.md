@@ -13,7 +13,7 @@ authority_effect: "None"
 source_paths:
   - pfp
   - pfp/entrypoints/cli/pfp.py
-  - adversary/tests/pilots/matrix/seeds.yaml
+  - workflows/library/pilot_estate/matrix/seeds.yaml
 last_verified: 2026-10-20
 verification_scope: command and catalog paths checked against source; the findings in section 1 were not re-audited
 ---
@@ -59,4 +59,4 @@ py -3.12 ow/pfp_v0.2/python/controllers/run_fifty_demos.py
 | `run-seed <seed_id>` | Numbered stages; `--stages` 1 to 11, default 5 |
 | `check-seed`, `prepare-task`, `check-task` | Offline candidate and task-turn checks |
 
-The seed catalog read by `_seed_catalog_from_snapshot` ([pilot_runner.py](../../../../pfp/infrastructure/pilot_runner.py) lines 60-104) is [seeds.yaml](../../../../adversary/tests/pilots/matrix/seeds.yaml): `total_seeds: 74`, made of 24 review seeds and 50 MSSN50 seeds. The loader refuses a count, folder-index or SHA-256 mismatch. So the "50 demos" of this runbook correspond to the 50 MSSN50 seeds inside a 74-seed catalog. Run one seed at a time; do not run the whole catalog in one command on a low-memory machine. The practical guide linked at the top gives worked commands.
+The seed catalog read by `_seed_catalog_from_snapshot` ([pilot_runner.py](../../../../pfp/infrastructure/pilot_runner.py) lines 60-104) is [seeds.yaml](../../../../workflows/library/pilot_estate/matrix/seeds.yaml): `total_seeds: 74`, made of 24 review seeds and 50 MSSN50 seeds. The loader refuses a count, folder-index or SHA-256 mismatch. So the "50 demos" of this runbook correspond to the 50 MSSN50 seeds inside a 74-seed catalog. Run one seed at a time; do not run the whole catalog in one command on a low-memory machine. The practical guide linked at the top gives worked commands.

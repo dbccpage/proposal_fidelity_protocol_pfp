@@ -25,18 +25,18 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
-from omega_engine_adversary.tests.pilots.judge_packet_audit import canonical
-from omega_engine_adversary.tests.pilots.judge_packet_audit import custody
-from omega_engine_adversary.tests.pilots.judge_packet_audit import execution
-from omega_engine_adversary.tests.pilots.judge_packet_audit import layout
-from omega_engine_adversary.tests.pilots.judge_packet_audit import leakage
-from omega_engine_adversary.tests.pilots.judge_packet_audit import mutation_inventory
-from omega_engine_adversary.tests.pilots.judge_packet_audit import responders
-from omega_engine_adversary.tests.pilots.judge_packet_audit import semantic
-from omega_engine_adversary.tests.pilots.judge_packet_audit import special_checks
-from omega_engine_adversary.tests.pilots.judge_packet_audit import summaries
-from omega_engine_adversary.tests.pilots.judge_packet_audit import worker
-from omega_engine_adversary.tests.pilots.judge_packet_audit import static_analysis as sa
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import canonical
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import custody
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import execution
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import layout
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import leakage
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import mutation_inventory
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import responders
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import semantic
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import special_checks
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import summaries
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import worker
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import static_analysis as sa
 
 HARNESS_VERSION = "1.0.0"
 MESSAGE_LIMIT = 160
@@ -717,7 +717,7 @@ def run(argv: list[str] | None = None) -> int:
     status_after = _tree_state(repo_root)
     info = {
         "command": subprocess.list2cmdline(
-            [sys.executable, "-m", "omega_engine_adversary.tests.pilots.judge_packet_audit.audit", *args]
+            [sys.executable, "-m", "workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit.audit", *args]
         ),
         "python": platform.python_version(),
         "platform": platform.platform(),

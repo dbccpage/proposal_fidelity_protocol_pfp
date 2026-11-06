@@ -4,7 +4,7 @@ from copy import deepcopy
 
 import pytest
 
-from adversary.tests.pilots.challenge_suite.mechanism_panels import (
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.mechanism_panels import (
     ROUND5,
     VERSION,
     build_compaction_panels,

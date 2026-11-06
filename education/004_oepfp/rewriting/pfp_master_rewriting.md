@@ -107,7 +107,7 @@ All candidate proposals are verified against sovereign host gates implementing f
 - **`AB_INTERMEDIATE_WITNESS` (Active Gate Antibody):** Evaluates reasoning traces to verify that explicit intermediate bindings ($x=1, y=2$) were derived prior to composite scalar emission.
 
 ### 4.3 Candidate Mined Antibodies (`admitted: false`)
-Mined from the 22 scratchpad traces via [`cot_miner.py`](../../../../adversary/tests/pilots/cot_miner.py):
+Mined from the 22 scratchpad traces via [`cot_miner.py`](../../../../workflows/library/pilot_estate/cot_miner.py):
 - `ab_cot_answer_channel` (5 traces): Scratchpad claims the response schema cannot hold scalar answers.
 - `ab_cot_license_conflict` (2 traces): Scratchpad derives valid substitution but refuses execution under template license rules.
 - `ab_cot_corpus_invention` (2 traces): Scratchpad hypothesizes external benchmark tasks (BigBench, ARC).

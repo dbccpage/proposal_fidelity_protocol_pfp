@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from adversary.tests.pilots import live_evaluator as live
+from workflows.library.pilot_estate import live_evaluator as live
 from pfp.domain.types import EvaluationStatus, PilotSpec, PStarPrompt
 from pfp.infrastructure import pilot_evidence as evidence
 from pfp.infrastructure.model_loading import load_yaml_model

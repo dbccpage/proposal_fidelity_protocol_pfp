@@ -18,8 +18,8 @@ PILOTS = pilots_root(Path(__file__))
 RETIREMENT_REASON = (
     "RETIRED_MODE_CAMPAIGN: live dispatch and spec retargeting are retired; "
     "historical bytes remain read-only. For current tasks use "
-    "python -m omega_engine_pfp.entrypoints.cli.pfp prepare-task TASK.json --attempt ID "
-    "or python -m omega_engine_adversary.entrypoints.cli teamwork start --objective TASK --state NEW.json."
+    "python -m pfp.entrypoints.cli.pfp prepare-task TASK.json --attempt ID "
+    "or python -m adversary.entrypoints.cli teamwork start --objective TASK --state NEW.json."
 )
 PAID_MODEL = "deepseek/deepseek-v4.1-flash"
 PREFERRED_MICROUSD = 1_000

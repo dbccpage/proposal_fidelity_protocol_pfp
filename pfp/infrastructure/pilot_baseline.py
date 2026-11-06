@@ -12,7 +12,7 @@ import yaml
 
 PILOTS = "education/pilots/"
 CATALOG = PILOTS + "demo_004/catalog.yaml"
-MATRIX = "adversary/tests/pilots/matrix/max_pilot_matrix.yaml"
+MATRIX = "workflows/library/pilot_estate/matrix/max_pilot_matrix.yaml"
 
 
 def build_baseline(root: Path, base: str) -> dict:

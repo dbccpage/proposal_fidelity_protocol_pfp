@@ -13,40 +13,40 @@ from pathlib import Path
 import jsonschema
 import yaml
 
-from omega_engine_adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
-from omega_engine_adversary.infrastructure.providers.wire import decode_reply
-from omega_engine_pfp.infrastructure.adapters.pfp_derivation import (
+from adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
+from adversary.infrastructure.providers.wire import decode_reply
+from pfp.infrastructure.adapters.pfp_derivation import (
     PfpDerivationAdapter,
     model_pricing,
     provider_result,
     replay_run,
 )
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import (
+from pfp.infrastructure.adapters.pfp_evidence import (
     canonical,
     digest,
     write_once,
 )
-from omega_engine_pfp.use_cases.pfp_derivation_loops import (
+from pfp.use_cases.pfp_derivation_loops import (
     DerivationLimits,
     run_derivation_loops,
 )
 
-from omega_engine_adversary.tests.pilots.relational_spacetime import baseline as base
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import LIFTS
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import MODEL
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import PILOTS
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import ROOT
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import load
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import prompt_container
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import proposal_body
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import response_schema
-from omega_engine_adversary.tests.pilots.relational_spacetime.finite_checks import evaluate
-from omega_engine_adversary.tests.pilots.relational_spacetime.finite_checks import negative_control
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import baseline as base
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import LIFTS
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import MODEL
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import PILOTS
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import ROOT
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import load
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import prompt_container
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import proposal_body
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import response_schema
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import evaluate
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import negative_control
 
 CAMPAIGN = "po035_derivations_20261012_v2"
 EVIDENCE = PILOTS / "evidence" / CAMPAIGN
-SELF = "omega_engine_adversary/tests/pilots/relational_spacetime/typed_signals.py"
+SELF = "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/typed_signals.py"
 
 
 def sources():

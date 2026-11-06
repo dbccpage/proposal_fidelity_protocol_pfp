@@ -12,7 +12,7 @@ from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 
 def inputs():
-    source = live.ROOT / "adversary/tests/pilots/evidence/demo004_pfp_learning/live/c050_dev_typed_witness_v3"
+    source = live.ROOT / "workflows/library/pilot_estate/evidence/demo004_pfp_learning/live/c050_dev_typed_witness_v3"
     config = json.loads((source / "config.json").read_bytes())
     wire = json.loads((source / "stage_1/provider_response.json").read_bytes())
     return config["row"], json.loads(wire["choices"][0]["message"]["content"])

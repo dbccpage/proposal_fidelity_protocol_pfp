@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from adversary.tests.pilots.judge_packet_audit import summaries
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import summaries
 
 DESC = {
     "checkers": [{"role": "exact"}, {"role": "independent"}],
