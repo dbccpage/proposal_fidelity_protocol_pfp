@@ -4,7 +4,7 @@ Moved here on 2026-11-06 from `dag/pfp/` in
 [theory_of_finite_quantum_mechanics](https://github.com/dbccpage/theory_of_finite_quantum_mechanics),
 which retired the programme in its PR #556. That repository keeps only what its derivation graph
 cites: the review results (now under `evidence/reviews/`) and the exact checkers its tests import.
-Everything else the programme produced is kept here, byte for byte, as the record of what was tried.
+Everything else the programme produced is kept here as the record of what was tried.
 
 | Folder or file | What it holds |
 | --- | --- |
@@ -20,7 +20,8 @@ Everything else the programme produced is kept here, byte for byte, as the recor
 
 What changed in the move: file and folder names are lowercase (only README files keep capitals), and
 references to renamed files in `.md`, `.py` and `.yaml` files were updated to match. JSON receipts and
-logs keep their original bytes, so they still name the old `dag/pfp/...` paths and original folder
+logs keep their original content (four JSON files had CRLF line endings, which this
+repository stores as LF), so they still name the old `dag/pfp/...` paths and original folder
 names. Nothing here runs in this repository's CI: the code needs a model, provider keys and the
 original repository layout. Model replies are untrusted experimental output.
 
