@@ -154,3 +154,50 @@ def test_missing_optional_native_budget_is_a_typed_refusal(monkeypatch):
     assert runtime.utc_now().endswith("Z")
     with pytest.raises(NativeBudgetUnavailable, match="NATIVE_BUDGET_UNAVAILABLE"):
         runtime.invoke("state")
+
+
+def test_replay_ties_response_bytes_to_retained_wire_body():
+    import base64
+    import json as _json
+
+    from pfp.infrastructure.workflow_runtime import _wire_matches_response
+
+    def record(content):
+        wire = _json.dumps({"choices": [{"message": {"content": content}}]}).encode()
+        return {"raw_reply_base64": base64.b64encode(wire).decode()}
+
+    assert _wire_matches_response(record("abc"), b"abc")
+    assert not _wire_matches_response(record("abc"), b"abd")  # swapped reply
+    assert not _wire_matches_response(record(None), b"")  # no text content
+    assert not _wire_matches_response({"raw_reply_base64": "!!"}, b"abc")  # corrupt wire
+    assert _wire_matches_response({}, b"abc")  # fixtures retain no wire body
+
+
+def test_reasoning_policy_defaults_to_unchanged_requests(monkeypatch):
+    from pfp.infrastructure.workflow_tasks import REASONING_ENV, reasoning_policy
+
+    monkeypatch.delenv(REASONING_ENV, raising=False)
+    assert reasoning_policy() is None
+    monkeypatch.setenv(REASONING_ENV, "default")
+    assert reasoning_policy() is None
+    monkeypatch.setenv(REASONING_ENV, "off")
+    assert reasoning_policy() == "disabled"
+    monkeypatch.setenv(REASONING_ENV, "on")
+    with pytest.raises(ValueError, match="PFP_REASONING"):
+        reasoning_policy()
+
+
+def test_reasoning_off_reaches_the_wire_request(monkeypatch):
+    from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
+    from adversary.infrastructure.providers.openai_compat import build_openai_compat_body
+    from pfp.infrastructure.workflow_tasks import reasoning_policy
+
+    def body():
+        decoding = DecodingParamsV1(require_parameters=True, thinking=reasoning_policy())
+        request = CandidateRequest("s", "u", decoding=decoding)
+        return build_openai_compat_body(request, model="m", max_tokens=10, provider=Provider.OPENROUTER)
+
+    monkeypatch.setenv("PFP_REASONING", "off")
+    assert body()["reasoning"] == {"enabled": False}
+    monkeypatch.delenv("PFP_REASONING")
+    assert "reasoning" not in body()

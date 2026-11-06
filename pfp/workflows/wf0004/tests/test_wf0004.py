@@ -108,7 +108,7 @@ def test_reference_digest_and_unsupported_scope_fail_before_dispatch():
         workflow.validate_task(spec)
 
 
-def scripted_factory(calls, *, wrong=False, unknown=False):
+def scripted_factory(calls, *, wrong=False, unknown=False, broken_envelope=False):
     barrier, lock = Barrier(5), Lock()
 
     def factory(root, model, tokens):
@@ -153,6 +153,8 @@ def scripted_factory(calls, *, wrong=False, unknown=False):
                         choices=[dict(message=dict(content=content), finish_reason="stop")],
                         usage=dict(prompt_tokens=15, completion_tokens=25, cost=cost),
                     )
+                    if not (broken_envelope and not miner)
+                    else dict(id=generation, choices=[], usage=None)
                 )
                 candidate = CandidateResponse(
                     content,
@@ -317,3 +319,39 @@ def test_full_wrong_unanimous_run_rejected_and_replayable(tmp_path):
     assert result["selected_agent"] is None
     assert result["task_claim_audit"]["false"] == 5
     assert runner.replay_run(root)["status"] == "TYPED_REFUSAL"
+
+
+def test_wrong_total_is_rejected_on_each_agent_receipt():
+    # Regression: per-agent receipts used to read HOST_ACCEPTED for a wrong total.
+    checked = local(39)
+    assert checked["local_green"] and checked["task_correct"] is False
+    assert checked["status"] != "HOST_ACCEPTED"
+    assert local(38)["status"] == "HOST_ACCEPTED" and local(38)["task_correct"] is True
+
+
+def test_malformed_vendor_envelope_keeps_charged_replies(tmp_path):
+    # Regression: choices=[] or usage=null used to crash capture and lose the reply.
+    calls = []
+    root = tmp_path / "broken"
+    # Sealing replays each agent: the wire body no longer contains the checked
+    # reply, so the run refuses to seal, but every charged reply is on disk.
+    with pytest.raises(ValueError, match="WIRE_MISMATCH"):
+        runner.run(SPEC, root, gateway_factory=scripted_factory(calls, broken_envelope=True))
+    assert len(calls) == 6
+    for i in range(1, 6):
+        provider = json.loads((root / f"agent-{i}" / "provider.json").read_text(encoding="utf-8"))
+        assert provider["finish_reason"] is None and provider["reasoning_tokens"] is None
+        assert (root / f"agent-{i}" / "response.raw").read_bytes()
+
+
+
+def test_other_model_is_allowed_and_recorded(tmp_path):
+    calls = []
+    root = tmp_path / "other"
+    other = "vendor/other-model"
+    result = runner.run(SPEC, root, other, gateway_factory=scripted_factory(calls))
+    assert result["status"] == "HOST_ACCEPTED"
+    provider = json.loads((root / "agent-1" / "provider.json").read_text(encoding="utf-8"))
+    assert provider["requested_model"] == other and provider["served_model"] == other
+    with pytest.raises(ValueError, match="MODEL_REQUIRED"):
+        runner.run(SPEC, tmp_path / "blank", " ", gateway_factory=scripted_factory([]))

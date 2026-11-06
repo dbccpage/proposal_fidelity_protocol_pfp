@@ -4,11 +4,11 @@ AuthorityEffect: None. This folder describes workflow designs and their
 sources. It adds no measured result.
 
 **WF1–WF5 are implemented** (`pfp.workflows`, offline-verified).
-**WF6–WF23 are derived designs.** They were derived on 2026-11-05 by reading
+**WF6–WF23 are proposals.** They were derived on 2026-11-05 by reading
 the retained pilot estate of the sibling research repository (`pilot_0000000`
 through `pilot_0000203` and its auxiliary folders: the certified cost ladder,
 the commit-reveal challenge folders, the ACSet rewriting pilots and the
-judge-packet audit). No model was called to make this graph. A derived node
+judge-packet audit). No model was called to make this graph. A proposal node
 records a procedure, its mathematics, its host check and the evidence the
 pilots hold; it is not a runner and it is not a performance claim. Most
 pilots from 52 to 187 are planned capsules that were never dispatched, and
@@ -27,29 +27,29 @@ dependencies appear before it in `workflow_dag.json`.
 
 ```mermaid
 flowchart TD
-  WF1["WF1 Typed answer"]
-  WF2["WF2 Full slots"]
-  WF3["WF3 Mine, then solve"]
-  WF4["WF4 Five agents + LGGR"]
-  WF5["WF5 Checked rewrite"]
-  WF6("WF6 Dialect sweep")
-  WF7("WF7 Typed refusal")
-  WF8("WF8 Staged sealed packets")
-  WF9("WF9 Bounded check-and-repair")
-  WF10("WF10 Local-to-global obstruction certificate")
-  WF11("WF11 Dual-certificate synthesis")
-  WF12("WF12 Mechanism-control arms")
-  WF13("WF13 Exact-domain capsule battery")
-  WF14("WF14 Immune failure classification")
-  WF15("WF15 Adversary tribunal")
-  WF16("WF16 Substrate crosswalk")
-  WF17("WF17 Witnessed-difference programme")
-  WF18("WF18 Dossier replay campaign")
-  WF19("WF19 Failure-derived rule transfer")
-  WF20("WF20 Derivation loop with lift grants")
-  WF21("WF21 Structural prompt rewriting")
-  WF22("WF22 Certified cost ladder")
-  WF23("WF23 Judge-packet custody audit")
+  WF1["WF1 Typed answer<br/><small>base</small>"]
+  WF2["WF2 Full slots<br/><small>procedure extension</small>"]
+  WF3["WF3 Mine, then solve<br/><small>procedure extension</small>"]
+  WF4["WF4 Five agents + LGGR<br/><small>procedure extension</small>"]
+  WF5["WF5 Checked rewrite<br/><small>procedure extension</small>"]
+  WF6("WF6 Dialect sweep<br/><small>experiment design</small>")
+  WF7("WF7 Typed refusal<br/><small>procedure extension</small>")
+  WF8("WF8 Staged sealed packets<br/><small>procedure extension</small>")
+  WF9("WF9 Bounded check-and-repair<br/><small>procedure extension</small>")
+  WF10("WF10 Local-to-global obstruction certificate<br/><small>task preset</small>")
+  WF11("WF11 Dual-certificate synthesis<br/><small>task preset</small>")
+  WF12("WF12 Mechanism-control arms<br/><small>experiment design</small>")
+  WF13("WF13 Exact-domain capsule battery<br/><small>task preset</small>")
+  WF14("WF14 Immune failure classification<br/><small>meta workflow</small>")
+  WF15("WF15 Adversary tribunal<br/><small>procedure extension</small>")
+  WF16("WF16 Substrate crosswalk<br/><small>task preset</small>")
+  WF17("WF17 Witnessed-difference programme<br/><small>task preset</small>")
+  WF18("WF18 Dossier replay campaign<br/><small>harness gate</small>")
+  WF19("WF19 Failure-derived rule transfer<br/><small>experiment design</small>")
+  WF20("WF20 Derivation loop with lift grants<br/><small>procedure extension</small>")
+  WF21("WF21 Structural prompt rewriting<br/><small>procedure extension</small>")
+  WF22("WF22 Certified cost ladder<br/><small>experiment design</small>")
+  WF23("WF23 Judge-packet custody audit<br/><small>harness gate</small>")
   WF1 --> WF2
   WF1 --> WF3
   WF3 --> WF4
@@ -88,38 +88,60 @@ flowchart TD
   WF18 --> WF22
   WF11 --> WF23
   classDef implemented fill:#dbeafe,stroke:#1d4ed8,color:#0f172a
+  classDef gate fill:#e5e7eb,stroke:#4b5563,color:#0f172a
   classDef derived fill:#fef3c7,stroke:#b45309,color:#0f172a
   class WF1,WF2,WF3,WF4,WF5 implemented
-  class WF6,WF7,WF8,WF9,WF10,WF11,WF12,WF13,WF14,WF15,WF16,WF17,WF18,WF19,WF20,WF21,WF22,WF23 derived
+  class WF6,WF7,WF8,WF9,WF10,WF11,WF12,WF13,WF14,WF15,WF16,WF17,WF19,WF20,WF21,WF22 derived
+  class WF18,WF23 gate
 ```
+
+## Structure: one base and its extensions
+
+The 2026-11-05 research committee
+([report](../../docs/research/2026-11-05_committee_report.md)) found about six
+real procedures behind the 23 nodes. Each node now has a `kind`:
+
+| Kind | Meaning | Nodes |
+| --- | --- | --- |
+| base | The typed task turn: frozen task, one typed reply, independent host check, replay, accounting. | WF1 |
+| procedure extension | Adds one step or contract to the base (or to another extension). A real procedure. | WF2, WF3, WF4, WF5, WF7, WF8, WF9, WF15, WF20, WF21 |
+| task preset | The same procedure with a different task family and checker. Kept as a named preset, not a new procedure; merge_into names the procedure it runs. | WF10, WF11, WF13, WF16, WF17 |
+| experiment design | Wraps any workflow to compare arms (sweeps, held-out transfer, cost ladders). merge_into 'Sweep' marks designs that are one sweep with different arm sets. | WF6, WF12, WF19, WF22 |
+| meta workflow | Acts on prompts or detectors rather than on one task (immune lifecycle, prompt evolution). | WF14 |
+| harness gate | Required on every run (seal chain, replay, custody audit); not a research node. | WF18, WF23 |
+
+Many apparent workflows are **settings**: task family, checker, dialect,
+rung, model, temperature, antibodies, stage count, attempt limit, replicate
+count, carrier alphabet and arm template. They vary a run; they do not make a
+new workflow. `merge_into` names where a node is expected to fold in.
 
 ## The families
 
-| WF | Family | Builds on | Source in the pilot estate | Team pattern | Model tiers by role |
-| --- | --- | --- | --- | --- | --- |
-| WF1 | Typed answer (implemented) | — | WF1–WF5 runs | `solo` | sonnet: coder |
-| WF2 | Full slots (implemented) | WF1 | WF1–WF5 runs | `solo` | sonnet: coder |
-| WF3 | Mine, then solve (implemented) | WF1 | WF1–WF5 runs | `relay` | sonnet: coder; opus: miner |
-| WF4 | Five agents + LGGR (implemented) | WF3 | WF1–WF5 runs | `parallel_isolated_then_global` | sonnet: coder; opus: miner |
-| WF5 | Checked rewrite (implemented) | WF4 | WF1–WF5 runs | `parallel_isolated_then_global` | sonnet: coder; opus: miner |
-| WF6 | Dialect sweep | WF5 | 0000000-0000019 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher |
-| WF7 | Typed refusal | WF1 | 0000003, 0000007, 0000011, 0000015, 0000019, 0000034, 0000175 | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF8 | Staged sealed packets | WF2, WF5 | 0000001-0000025, 0000033 | `relay` | sonnet: coder; opus: deep_researcher |
-| WF9 | Bounded check-and-repair | WF2 | 0000002, 0000006, 0000010, 0000026, 0000049, 0000055, 0000062, 0000096 | `proposer_with_residual_feedback` | sonnet: coder |
-| WF10 | Local-to-global obstruction certificate | WF4, WF9 | 0000029, 0000039-0000045, 0000051, 0000056-0000064, 0000083 | `parallel_isolated_then_global` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF11 | Dual-certificate synthesis | WF3, WF9 | 0000027, 0000053, 0000054, 0000095, 0000115-0000124, 0000171, 0000180, c051, c052, c053, c054, c055, c059 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF12 | Mechanism-control arms | WF6, WF3 | 0000052 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF13 | Exact-domain capsule battery | WF1, WF7 | 0000065-0000114, 0000177, 0000176, 0000178, 0000187 | `solo` | sonnet: coder; opus: deep_researcher |
-| WF14 | Immune failure classification | WF7, WF12 | 0000125-0000134 | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF15 | Adversary tribunal | WF4, WF14 | 0000035, 0000135-0000144 | `tribunal` | sonnet: coder; opus: defender; fable: prosecutor |
-| WF16 | Substrate crosswalk | WF5, WF10 | 0000145-0000169 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF17 | Witnessed-difference programme | WF10, WF11 | 0000170-0000187 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF18 | Dossier replay campaign | WF6, WF12 | 0000188-0000191 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher |
-| WF19 | Failure-derived rule transfer | WF12, WF14 | 0000192-0000198 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF20 | Derivation loop with lift grants | WF9, WF10, WF19 | 0000199-0000203 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF21 | Structural prompt rewriting | WF5 | 0000028, 0000030, 0000050, acset_prompt_rewriting, acset_cochain_rewriting | `red_team_pair` | sonnet: coder; fable: adversary |
-| WF22 | Certified cost ladder | WF6, WF8, WF18 | certified_ladder | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher; fable: adversary |
-| WF23 | Judge-packet custody audit | WF11 | judge_packet_audit | `red_team_pair` | sonnet: coder; fable: adversary |
+| WF | Family | Kind | Builds on | Source in the pilot estate | Team pattern | Model tiers by role |
+| --- | --- | --- | --- | --- | --- | --- |
+| WF1 | Typed answer (implemented) | base | — | WF1–WF5 runs | `solo` | sonnet: coder |
+| WF2 | Full slots (implemented) | procedure extension | WF1 | WF1–WF5 runs | `solo` | sonnet: coder |
+| WF3 | Mine, then solve (implemented) | procedure extension | WF1 | WF1–WF5 runs | `relay` | sonnet: coder; opus: miner |
+| WF4 | Five agents + LGGR (implemented) | procedure extension | WF3 | WF1–WF5 runs | `parallel_isolated_then_global` | sonnet: coder; opus: miner |
+| WF5 | Checked rewrite (implemented) | procedure extension | WF4 | WF1–WF5 runs | `parallel_isolated_then_global` | sonnet: coder; opus: miner |
+| WF6 | Dialect sweep | experiment design → Sweep | WF5 | 0000000-0000019 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher |
+| WF7 | Typed refusal | procedure extension | WF1 | 0000003, 0000007, 0000011, 0000015, 0000019, 0000034, 0000175 | `red_team_pair` | sonnet: coder; fable: adversary |
+| WF8 | Staged sealed packets | procedure extension | WF2, WF5 | 0000001-0000025, 0000033 | `relay` | sonnet: coder; opus: deep_researcher |
+| WF9 | Bounded check-and-repair | procedure extension | WF2 | 0000002, 0000006, 0000010, 0000026, 0000049, 0000055, 0000062, 0000096 | `proposer_with_residual_feedback` | sonnet: coder |
+| WF10 | Local-to-global obstruction certificate | task preset → WF4 | WF4, WF9 | 0000029, 0000039-0000045, 0000051, 0000056-0000064, 0000083 | `parallel_isolated_then_global` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF11 | Dual-certificate synthesis | task preset → WF1 | WF3, WF9 | 0000027, 0000053, 0000054, 0000095, 0000115-0000124, 0000171, 0000180, c051, c052, c053, c054, c055, c059 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF12 | Mechanism-control arms | experiment design → Sweep | WF6, WF3 | 0000052 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF13 | Exact-domain capsule battery | task preset → WF1 | WF1, WF7 | 0000065-0000114, 0000177, 0000176, 0000178, 0000187 | `solo` | sonnet: coder; opus: deep_researcher |
+| WF14 | Immune failure classification | meta workflow | WF7, WF12 | 0000125-0000134 | `red_team_pair` | sonnet: coder; fable: adversary |
+| WF15 | Adversary tribunal | procedure extension | WF4, WF14 | 0000035, 0000135-0000144 | `tribunal` | sonnet: coder; opus: defender; fable: prosecutor |
+| WF16 | Substrate crosswalk | task preset → WF5 | WF5, WF10 | 0000145-0000169 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF17 | Witnessed-difference programme | task preset → WF10 | WF10, WF11 | 0000170-0000187 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF18 | Dossier replay campaign | harness gate | WF6, WF12 | 0000188-0000191 | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher |
+| WF19 | Failure-derived rule transfer | experiment design | WF12, WF14 | 0000192-0000198 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF20 | Derivation loop with lift grants | procedure extension → WF9 | WF9, WF10, WF19 | 0000199-0000203 | `research_cell` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF21 | Structural prompt rewriting | procedure extension → WF5 | WF5 | 0000028, 0000030, 0000050, acset_prompt_rewriting, acset_cochain_rewriting | `red_team_pair` | sonnet: coder; fable: adversary |
+| WF22 | Certified cost ladder | experiment design → Sweep | WF6, WF8, WF18 | certified_ladder | `sweep_with_shared_judge` | sonnet: coder; opus: deep_researcher; fable: adversary |
+| WF23 | Judge-packet custody audit | harness gate | WF11 | judge_packet_audit | `red_team_pair` | sonnet: coder; fable: adversary |
 
 Pilot numbers are directory numbers in the source estate; `c051`–`c059` are
 its commit-reveal challenge folders. The process and mathematics of each

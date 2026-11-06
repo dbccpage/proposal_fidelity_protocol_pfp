@@ -3,13 +3,13 @@
 **Start with WF1.** All five runners now live in separate `pfp/workflows/wf0001`
 through `wf0005` folders. You need Python 3.12+.
 
-The commands below target the migration branch while its source PR is open.
+The commands below use the `main` branch, where the runners now live.
 After merging, a normal checkout of `main` includes them.
 
 ## 1. Install
 
 ```powershell
-git clone --branch codex/workflow-library-guides https://github.com/dbccpage/proposal_fidelity_protocol_pfp.git
+git clone https://github.com/dbccpage/proposal_fidelity_protocol_pfp.git
 cd proposal_fidelity_protocol_pfp
 python -m venv .venv
 $pfpPython = (Resolve-Path .venv/Scripts/python.exe).Path
@@ -57,6 +57,8 @@ Preparation does not claim a completed six-call run. WF5 also writes its rewrite
 and preservation check. Unsupported seed language is refused before model dispatch.
 
 ## 3. Run with OpenRouter
+
+For reasoning models (for example DeepSeek V4.1 Flash), set `PFP_REASONING=off` so hidden reasoning does not use up the fixed output allowances; the setting is recorded in the retained wire request. WF4 and WF5 accept `--model`; the default stays the historical comparison model.
 
 Set `OPENROUTER_API_KEY` in your environment using your usual secret-management
 method. The following commands **can incur charges**. Keep preview folders and

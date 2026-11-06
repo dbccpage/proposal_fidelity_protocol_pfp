@@ -1,5 +1,7 @@
 # WF1: one task, one typed answer
 
+> **Adds:** nothing; this is the base. **Costs:** 1 call. **Shown so far:** accepted live calls on integer addition with two models: the Oct 28 prototype ($0.00017) and the shipped runner on DeepSeek V4.1 Flash ($0.00005).
+
 **Use this when:** you want one model response with a clear answer contract.
 **Normal model calls:** one. **Math needed for this example:** integer addition.
 

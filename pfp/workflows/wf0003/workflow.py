@@ -319,7 +319,14 @@ class SolverContract:
 
 
 def assess_l2(spec, checked):
-    """Check public input bindings and explicit constraint declarations, not model execution."""
+    """Recheck the four L2 slots against the host's public facts.
+
+    The WF3 solver schema pins these slots to the same host-computed constants
+    (see ``structured.answer_schema``), so a schema-valid reply always passes:
+    this is a defence-in-depth recheck of the copied bindings, not evidence that
+    the model grounded anything. ``WF3_L2_GROUNDING`` can only fire if schema
+    validation is bypassed.
+    """
     if not checked["schema_valid"] or spec["checker"] != "integer_sum_v1":
         return dict(l2_grounding_valid=None, l2_errors=[], l2_checked_slots=[])
     rows = checked["answer"]["slot_report"]

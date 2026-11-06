@@ -467,8 +467,12 @@ def run(
     budget_microusd=RUN_CAP,
     previous_attempt=None,
 ):
-    if model != MODEL:
-        raise ValueError("WF5_COMPARISON_REQUIRES_LLAMA_3_3_70B")
+    # MODEL is the historical comparison model and the default; repair chains
+    # (``previous_attempt``) still require it, because they continue that history.
+    if type(model) is not str or not model.strip():
+        raise ValueError("WF5_MODEL_REQUIRED")
+    if previous_attempt is not None and model != MODEL:
+        raise ValueError("WF5_REPAIR_CHAIN_REQUIRES_ITS_ORIGINAL_MODEL")
     root, started = Path(root), perf_counter()
     prepared = prepare_run(spec, root, budget_microusd, previous_attempt)
     if prepared["status"] != "PREPARED":
@@ -568,6 +572,7 @@ def main(argv=None):
         command.add_argument("--output", type=Path, required=True)
         command.add_argument("--budget-microusd", type=int, default=RUN_CAP)
         command.add_argument("--previous-attempt", type=Path)
+        command.add_argument("--model", default=MODEL)
     command = sub.add_parser("replay")
     command.add_argument("--run", type=Path, required=True)
     args = parser.parse_args(argv)
@@ -579,6 +584,7 @@ def main(argv=None):
         else run(
             read(args.task),
             args.output,
+            args.model,
             budget_microusd=args.budget_microusd,
             previous_attempt=args.previous_attempt,
         )

@@ -10,6 +10,7 @@ from time import perf_counter
 from operations.domain.rop.result import Err
 from pfp.infrastructure.adapters.pfp_campaign import canonical, digest, write_new
 from pfp.infrastructure.workflow_accounting import create_accounted_openrouter_gateway
+from pfp.infrastructure.workflow_tasks import reasoning_policy
 from pfp.infrastructure.workflow_runtime import WorkflowRuntime, source_bytes
 from pfp.workflows.measurement import measure_seed
 from pfp.workflows.wf0003 import workflow as wf3
@@ -102,6 +103,7 @@ def request(runtime, phase):
             top_p=1.0,
             allow_fallbacks=False,
             require_parameters=True,
+            thinking=reasoning_policy(),
             response_format={"type": "json_object"},
         ),
     )
@@ -136,10 +138,19 @@ def capture(runtime, phase, req, outcome, bound, model, tokens, elapsed):
         write_new(phase / "failure.json", record)
         return record
     value, c = outcome.value, outcome.value.candidate
+    finish_reason, reasoning = None, None
     try:
         body = json.loads(value.reply_bytes)
-    except (ValueError, UnicodeError):
-        body = {}
+        finish_reason = body.get("choices", [{}])[0].get("finish_reason")
+        reasoning = body.get("usage", {}).get("completion_tokens_details", {}).get(
+            "reasoning_tokens"
+        )
+    except (ValueError, UnicodeError, AttributeError, IndexError, TypeError):
+        # A malformed vendor envelope must not lose a charged reply: the raw bytes
+        # below are still retained, and these optional metadata fields stay null.
+        pass
+    if type(reasoning) is not int or reasoning < 0:
+        reasoning = None
     record = dict(
         request=build_openai_compat_body(
             req, model=model, max_tokens=tokens, provider=Provider.OPENROUTER
@@ -157,10 +168,8 @@ def capture(runtime, phase, req, outcome, bound, model, tokens, elapsed):
         accounting_binding=bound.binding,
         identity_error=c.model != model or c.provider != "openrouter",
         provider_elapsed_seconds=elapsed,
-        finish_reason=body.get("choices", [{}])[0].get("finish_reason"),
-        reasoning_tokens=body.get("usage", {})
-        .get("completion_tokens_details", {})
-        .get("reasoning_tokens"),
+        finish_reason=finish_reason,
+        reasoning_tokens=reasoning,
         tool_execution_count=0,
         raw_reply_base64=base64.b64encode(value.reply_bytes).decode(),
         raw_reply_sha256=digest(value.reply_bytes),
@@ -340,8 +349,10 @@ def stop(root, code):
 
 def run(spec, root, model=MODEL, *, gateway_factory=gateway, budget_microusd=RUN_CAP):
     root, started = Path(root), perf_counter()
-    if model != MODEL:
-        raise ValueError("WF4_COMPARISON_MODEL_MUST_BE_LLAMA_3_3_70B")
+    # MODEL is the historical comparison model and the default. Another model is
+    # allowed; every provider record keeps requested and served model identities.
+    if type(model) is not str or not model.strip():
+        raise ValueError("WF4_MODEL_REQUIRED")
     prepare_run(spec, root, budget_microusd)
     bound = gateway_factory(root, model, MINER_TOKENS)
     scope_check(bound, root, MINER_TOKENS, model)
@@ -432,6 +443,7 @@ def main(argv=None):
         command.add_argument("--task", type=Path, required=True)
         command.add_argument("--output", type=Path, required=True)
         command.add_argument("--budget-microusd", type=int, default=RUN_CAP)
+        command.add_argument("--model", default=MODEL)
     command = sub.add_parser("replay")
     command.add_argument("--run", type=Path, required=True)
     args = parser.parse_args(argv)
@@ -441,7 +453,9 @@ def main(argv=None):
         else (
             prepare_run(read(args.task), args.output, args.budget_microusd)
             if args.command == "prepare"
-            else run(read(args.task), args.output, budget_microusd=args.budget_microusd)
+            else run(
+                read(args.task), args.output, args.model, budget_microusd=args.budget_microusd
+            )
         )
     )
     print(json.dumps(value, indent=2))

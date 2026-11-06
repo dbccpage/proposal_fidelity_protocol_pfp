@@ -1,5 +1,7 @@
 # WF4: five agents and a global check
 
+> **Adds to WF3:** five isolated solvers and a global check. **Costs:** 6 calls, about 4.4× WF1. **Shown so far:** live runs on two models, all five agents correct each time. Each agent's receipt now checks its own total, so a wrong agent is visible locally; the global check adds agreement across agents.
+
 **Use this when:** you want five isolated proposals checked against the same
 task and against their shared requirements. **Normal model calls:** six.
 
@@ -39,6 +41,10 @@ combined requirement fails. The Boolean boundary measure is:
 | Five structural passes; all totals independently correct and agreeing | 0 | Accept this finite task. |
 | Five structural passes; even a unanimous wrong total | -1 | Refuse globally. |
 | A local failure and global rejection | 0 | Refuse. Zero is not automatically success. |
+
+The −1 row has been shown only with scripted providers; the one live run had
+five correct answers. When the run is accepted the result is taken from agent 1;
+that is a fixed rule, not a selection by evidence.
 
 The independent original-input check matters even when all five models agree.
 Same-model responses are correlated; five calls are not five independent

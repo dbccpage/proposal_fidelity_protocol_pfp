@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from importlib.resources import files
 
 import yaml
@@ -10,6 +11,25 @@ import yaml
 from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate
 from pfp.domain.pfp_ingress import strict_json
 from pfp.use_cases.pfp_proposal import task_turn_validator
+
+REASONING_ENV = "PFP_REASONING"
+
+
+def reasoning_policy() -> str | None:
+    """Provider reasoning setting for workflow requests, from ``PFP_REASONING``.
+
+    ``default`` (or unset) sends no reasoning field, as before. ``off`` asks
+    OpenRouter to disable reasoning, so reasoning models do not spend the small
+    fixed output allowances on hidden thinking. The choice is recorded in the
+    retained wire request, so replay and audit can see it.
+    """
+    value = os.environ.get(REASONING_ENV, "default")
+    if value == "default":
+        return None
+    if value == "off":
+        return "disabled"
+    raise ValueError("PFP_REASONING_MUST_BE_OFF_OR_DEFAULT")
+
 
 BASE_TEMPLATE = "infrastructure/yaml/prompts/templates/template_standard_base.yaml"
 SUM_ANSWER_SCHEMA = {

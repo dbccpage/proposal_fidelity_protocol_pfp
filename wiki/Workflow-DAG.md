@@ -1,6 +1,6 @@
 # Workflow DAG: WF1–WF23
 
-**WF1–WF5 are the implemented runners. WF6–WF23 are derived designs.** Each
+**WF1–WF5 are the implemented runners. WF6–WF23 are proposals, not runners.** Each
 derived family was read off the retained pilot experiments: what the pilots
 did, which check decided, and which earlier workflow they reuse. No new model
 call was made to build this graph, and most of the source pilots from 52 to
@@ -11,29 +11,29 @@ and run A first.
 
 ```mermaid
 flowchart TD
-  WF1["WF1 Typed answer"]
-  WF2["WF2 Full slots"]
-  WF3["WF3 Mine, then solve"]
-  WF4["WF4 Five agents + LGGR"]
-  WF5["WF5 Checked rewrite"]
-  WF6("WF6 Dialect sweep")
-  WF7("WF7 Typed refusal")
-  WF8("WF8 Staged sealed packets")
-  WF9("WF9 Bounded check-and-repair")
-  WF10("WF10 Local-to-global obstruction certificate")
-  WF11("WF11 Dual-certificate synthesis")
-  WF12("WF12 Mechanism-control arms")
-  WF13("WF13 Exact-domain capsule battery")
-  WF14("WF14 Immune failure classification")
-  WF15("WF15 Adversary tribunal")
-  WF16("WF16 Substrate crosswalk")
-  WF17("WF17 Witnessed-difference programme")
-  WF18("WF18 Dossier replay campaign")
-  WF19("WF19 Failure-derived rule transfer")
-  WF20("WF20 Derivation loop with lift grants")
-  WF21("WF21 Structural prompt rewriting")
-  WF22("WF22 Certified cost ladder")
-  WF23("WF23 Judge-packet custody audit")
+  WF1["WF1 Typed answer<br/><small>base</small>"]
+  WF2["WF2 Full slots<br/><small>procedure extension</small>"]
+  WF3["WF3 Mine, then solve<br/><small>procedure extension</small>"]
+  WF4["WF4 Five agents + LGGR<br/><small>procedure extension</small>"]
+  WF5["WF5 Checked rewrite<br/><small>procedure extension</small>"]
+  WF6("WF6 Dialect sweep<br/><small>experiment design</small>")
+  WF7("WF7 Typed refusal<br/><small>procedure extension</small>")
+  WF8("WF8 Staged sealed packets<br/><small>procedure extension</small>")
+  WF9("WF9 Bounded check-and-repair<br/><small>procedure extension</small>")
+  WF10("WF10 Local-to-global obstruction certificate<br/><small>task preset</small>")
+  WF11("WF11 Dual-certificate synthesis<br/><small>task preset</small>")
+  WF12("WF12 Mechanism-control arms<br/><small>experiment design</small>")
+  WF13("WF13 Exact-domain capsule battery<br/><small>task preset</small>")
+  WF14("WF14 Immune failure classification<br/><small>meta workflow</small>")
+  WF15("WF15 Adversary tribunal<br/><small>procedure extension</small>")
+  WF16("WF16 Substrate crosswalk<br/><small>task preset</small>")
+  WF17("WF17 Witnessed-difference programme<br/><small>task preset</small>")
+  WF18("WF18 Dossier replay campaign<br/><small>harness gate</small>")
+  WF19("WF19 Failure-derived rule transfer<br/><small>experiment design</small>")
+  WF20("WF20 Derivation loop with lift grants<br/><small>procedure extension</small>")
+  WF21("WF21 Structural prompt rewriting<br/><small>procedure extension</small>")
+  WF22("WF22 Certified cost ladder<br/><small>experiment design</small>")
+  WF23("WF23 Judge-packet custody audit<br/><small>harness gate</small>")
   WF1 --> WF2
   WF1 --> WF3
   WF3 --> WF4
@@ -72,15 +72,21 @@ flowchart TD
   WF18 --> WF22
   WF11 --> WF23
   classDef implemented fill:#dbeafe,stroke:#1d4ed8,color:#0f172a
+  classDef gate fill:#e5e7eb,stroke:#4b5563,color:#0f172a
   classDef derived fill:#fef3c7,stroke:#b45309,color:#0f172a
   class WF1,WF2,WF3,WF4,WF5 implemented
-  class WF6,WF7,WF8,WF9,WF10,WF11,WF12,WF13,WF14,WF15,WF16,WF17,WF18,WF19,WF20,WF21,WF22,WF23 derived
+  class WF6,WF7,WF8,WF9,WF10,WF11,WF12,WF13,WF14,WF15,WF16,WF17,WF19,WF20,WF21,WF22 derived
+  class WF18,WF23 gate
 ```
 
 Files: [JSON](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/dag/workflow_dag.json) · [Mermaid](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/dag/workflow_dag.mmd) ·
 [SVG](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/dag/workflow_dag.svg) · [orchestration guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/dag/ORCHESTRATION.md).
 The process and mathematics are written up in Paper 034
 (`papers/034_pfp_workflow_dag_process_and_mathematics/`).
+
+## Structure
+
+One base workflow (WF1); procedure extensions that add one step (WF2–WF5, refusal, staged packets, repair loop, tribunal); task presets that only change the task and checker; experiment designs that wrap any workflow; meta-workflows over prompts and detectors; and harness gates required on every run. Settings such as model, dialect, rung and stage count vary a run without making a new workflow. Details are in the [committee report](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/docs/research/2026-11-05_committee_report.md).
 
 ## How a team runs a family
 
@@ -104,7 +110,7 @@ success.
 
 ## WF1: Typed answer
 
-**Status:** implemented runner. **Builds on:** nothing. **Model calls on the normal path:** 1.
+**Status:** implemented runner. **Kind:** base. **Builds on:** nothing. **Model calls on the normal path:** 1.
 
 **Goal:** One schema-valid answer that the host check accepts, or a typed refusal.
 
@@ -129,7 +135,7 @@ success.
 
 ## WF2: Full slots
 
-**Status:** implemented runner. **Builds on:** WF1. **Model calls on the normal path:** 1.
+**Status:** implemented runner. **Kind:** procedure extension. **Builds on:** WF1. **Model calls on the normal path:** 1.
 
 **Goal:** A complete slot record plus an accepted answer.
 
@@ -153,7 +159,7 @@ success.
 
 ## WF3: Mine, then solve
 
-**Status:** implemented runner. **Builds on:** WF1. **Model calls on the normal path:** 2.
+**Status:** implemented runner. **Kind:** procedure extension. **Builds on:** WF1. **Model calls on the normal path:** 2.
 
 **Goal:** Useful frozen guidance, then an accepted answer.
 
@@ -178,7 +184,7 @@ success.
 
 ## WF4: Five agents + LGGR
 
-**Status:** implemented runner. **Builds on:** WF3. **Model calls on the normal path:** 6.
+**Status:** implemented runner. **Kind:** procedure extension. **Builds on:** WF3. **Model calls on the normal path:** 6.
 
 **Goal:** Five isolated answers whose local checks pass and which agree globally.
 
@@ -203,7 +209,7 @@ success.
 
 ## WF5: Checked rewrite
 
-**Status:** implemented runner. **Builds on:** WF4. **Model calls on the normal path:** 6.
+**Status:** implemented runner. **Kind:** procedure extension. **Builds on:** WF4. **Model calls on the normal path:** 6.
 
 **Goal:** A rewrite that preserves the protected query, then a WF4 pass.
 
@@ -228,7 +234,7 @@ success.
 
 ## WF6: Dialect sweep
 
-**Status:** derived design. **Builds on:** WF5. **Model calls on the normal path:** 2 + 2k per seed.
+**Status:** proposal (no runner, no run). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF5. **Model calls on the normal path:** 2 + 2k per seed.
 
 **Goal:** Measure, item by item, which presentation of the same task the host accepts more often, without changing the task.
 
@@ -258,7 +264,7 @@ success.
 
 ## WF7: Typed refusal
 
-**Status:** derived design. **Builds on:** WF1. **Model calls on the normal path:** 1.
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF1. **Model calls on the normal path:** 1.
 
 **Goal:** Return the correct refusal code whenever the premises do not determine an answer.
 
@@ -286,7 +292,7 @@ success.
 
 ## WF8: Staged sealed packets
 
-**Status:** derived design. **Builds on:** WF2, WF5. **Model calls on the normal path:** k.
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF2, WF5. **Model calls on the normal path:** k.
 
 **Goal:** Each stage produces a sealed, typed output; the final answer checks.
 
@@ -314,7 +320,7 @@ success.
 
 ## WF9: Bounded check-and-repair
 
-**Status:** derived design. **Builds on:** WF2. **Model calls on the normal path:** 1..L.
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF2. **Model calls on the normal path:** 1..L.
 
 **Goal:** An accepted reply within L attempts, or a recorded stop at the limit.
 
@@ -343,7 +349,7 @@ success.
 
 ## WF10: Local-to-global obstruction certificate
 
-**Status:** derived design. **Builds on:** WF4, WF9. **Model calls on the normal path:** 1 + n_patches.
+**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF4. **Builds on:** WF4, WF9. **Model calls on the normal path:** 1 + n_patches.
 
 **Goal:** A checked gluing witness or a checked obstruction class for the declared cover.
 
@@ -373,7 +379,7 @@ success.
 
 ## WF11: Dual-certificate synthesis
 
-**Status:** derived design. **Builds on:** WF3, WF9. **Model calls on the normal path:** planned, budget-capped.
+**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF1. **Builds on:** WF3, WF9. **Model calls on the normal path:** planned, budget-capped.
 
 **Goal:** A frozen solver whose every output carries a certificate the judge accepts on hidden cases.
 
@@ -403,7 +409,7 @@ success.
 
 ## WF12: Mechanism-control arms
 
-**Status:** derived design. **Builds on:** WF6, WF3. **Model calls on the normal path:** arms x items.
+**Status:** proposal (no runner, no run). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF6, WF3. **Model calls on the normal path:** arms x items.
 
 **Goal:** An arm comparison on a fixed carrier whose only difference is the mechanism note.
 
@@ -431,7 +437,7 @@ success.
 
 ## WF13: Exact-domain capsule battery
 
-**Status:** derived design. **Builds on:** WF1, WF7. **Model calls on the normal path:** 1 per capsule.
+**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF1. **Builds on:** WF1, WF7. **Model calls on the normal path:** 1 per capsule.
 
 **Goal:** One checked answer or refusal per domain capsule.
 
@@ -461,7 +467,7 @@ success.
 
 ## WF14: Immune failure classification
 
-**Status:** derived design. **Builds on:** WF7, WF12. **Model calls on the normal path:** per candidate.
+**Status:** proposal (no runner, no run). **Kind:** meta workflow. **Builds on:** WF7, WF12. **Model calls on the normal path:** per candidate.
 
 **Goal:** Detectors that catch the recorded failures and never fire on the sealed self panel.
 
@@ -490,7 +496,7 @@ success.
 
 ## WF15: Adversary tribunal
 
-**Status:** derived design. **Builds on:** WF4, WF14. **Model calls on the normal path:** 2 per claim.
+**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF4, WF14. **Model calls on the normal path:** 2 per claim.
 
 **Goal:** A verdict that the finite check supports, with both sides frozen first.
 
@@ -519,7 +525,7 @@ success.
 
 ## WF16: Substrate crosswalk
 
-**Status:** derived design. **Builds on:** WF5, WF10. **Model calls on the normal path:** 1 per capsule.
+**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF5. **Builds on:** WF5, WF10. **Model calls on the normal path:** 1 per capsule.
 
 **Goal:** A translation that preserves every declared relation, with alternatives recorded.
 
@@ -547,7 +553,7 @@ success.
 
 ## WF17: Witnessed-difference programme
 
-**Status:** derived design. **Builds on:** WF10, WF11. **Model calls on the normal path:** research budget, capped.
+**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF10. **Builds on:** WF10, WF11. **Model calls on the normal path:** research budget, capped.
 
 **Goal:** Each claimed difference has a checked witness and each equivalence a checked certificate.
 
@@ -576,7 +582,7 @@ success.
 
 ## WF18: Dossier replay campaign
 
-**Status:** derived design. **Builds on:** WF6, WF12. **Model calls on the normal path:** 30 per pilot.
+**Status:** proposal (no runner, no run). **Kind:** harness gate. **Builds on:** WF6, WF12. **Model calls on the normal path:** 30 per pilot.
 
 **Goal:** A replayable 5 x 5 + 5 campaign whose every grade reproduces from stored bytes.
 
@@ -605,7 +611,7 @@ success.
 
 ## WF19: Failure-derived rule transfer
 
-**Status:** derived design. **Builds on:** WF12, WF14. **Model calls on the normal path:** arms x held-out items.
+**Status:** proposal (no runner, no run). **Kind:** experiment design. **Builds on:** WF12, WF14. **Model calls on the normal path:** arms x held-out items.
 
 **Goal:** A rule that improves held-out acceptance without new false positives.
 
@@ -633,7 +639,7 @@ success.
 
 ## WF20: Derivation loop with lift grants
 
-**Status:** derived design. **Builds on:** WF9, WF10, WF19. **Model calls on the normal path:** 5 per pilot.
+**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9, WF10, WF19. **Model calls on the normal path:** 5 per pilot.
 
 **Goal:** Discharge the named obligations or stop with a typed record at the loop limit.
 
@@ -663,7 +669,7 @@ success.
 
 ## WF21: Structural prompt rewriting
 
-**Status:** derived design. **Builds on:** WF5. **Model calls on the normal path:** 0 (deterministic) or 1 per proposed rule.
+**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF5. **Builds on:** WF5. **Model calls on the normal path:** 0 (deterministic) or 1 per proposed rule.
 
 **Goal:** Rewrites that attach hints or encodings without touching protected bytes.
 
@@ -691,7 +697,7 @@ success.
 
 ## WF22: Certified cost ladder
 
-**Status:** derived design. **Builds on:** WF6, WF8, WF18. **Model calls on the normal path:** items x arms.
+**Status:** proposal (no runner, no run). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF6, WF8, WF18. **Model calls on the normal path:** items x arms.
 
 **Goal:** Decide each pre-registered hypothesis on this bank, at this rung, with this gate.
 
@@ -720,7 +726,7 @@ success.
 
 ## WF23: Judge-packet custody audit
 
-**Status:** derived design. **Builds on:** WF11. **Model calls on the normal path:** 0.
+**Status:** proposal (no runner, no run). **Kind:** harness gate. **Builds on:** WF11. **Model calls on the normal path:** 0.
 
 **Goal:** Show that every challenge packet is sealed and leak-free before any team runs it.
 

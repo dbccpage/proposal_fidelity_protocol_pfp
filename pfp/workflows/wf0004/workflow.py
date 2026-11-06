@@ -187,15 +187,14 @@ class SolverContract:
 
     @staticmethod
     def judges_for(spec):
-        return (
-            (
-                "wf4-local-binding",
-                lambda case, a: (
-                    canonical(a["values"]) == canonical(spec["input"]["values"]),
-                    "Public input binding only; global evaluator checks arithmetic.",
-                ),
-            ),
-        )
+        def judge(case, a):
+            # Each agent's receipt must not read as accepted for a wrong total,
+            # so the local judge checks the public binding and the exact sum.
+            if canonical(a["values"]) != canonical(spec["input"]["values"]):
+                return False, "Public input binding mismatch."
+            return integer_sum_judge(spec["input"], a["task_result"])
+
+        return (("wf0004:binding_and_integer_sum_v1", judge),)
 
     def finalize_check(self, spec, checked):
         errors = []
@@ -218,7 +217,11 @@ class SolverContract:
         checked["local_green"] = checked["schema_valid"] and not errors
         checked["local_errors"] = errors
         checked["operad_structure_valid"] = checked["local_green"]
-        checked["task_correct"] = None  # Task semantics belong to the independent global evaluator.
+        checked["task_correct"] = (
+            integer_sum_judge(spec["input"], checked["answer"]["task_result"])[0]
+            if checked["schema_valid"]
+            else False
+        )
         if not checked["local_green"]:
             checked.update(status="PROVIDER_COMPLETED", failure_class="WF4_LOCAL_CONTRACT")
         return checked

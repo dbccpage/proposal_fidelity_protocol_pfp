@@ -7,7 +7,40 @@ contracts, operation records and checks; it did not pay for itself on addition.
 The task was: **“Calculate the exact sum of 17, 25, and -4.”** Its answer is 38.
 The answer is reported here as an observation, never inserted into a model prompt.
 
-## Read these numbers correctly
+## Live round, November 6, 2026: the shipped runners on DeepSeek V4.1 Flash
+
+**First live calls of the shipped v0.2 runners.** One model for every call
+(`deepseek/deepseek-v4.1-flash` on OpenRouter), the same integer-sum task, and
+reasoning switched off (`PFP_REASONING=off`) after the first WF2 attempt spent
+its whole 3,000-token allowance on hidden reasoning. Total reported cost for the
+whole round, including failures: **$0.0047**. Every run folder replayed offline
+with zero provider calls. Raw replies and measurements:
+[`workflows/library/evidence/live_20261106/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/evidence/live_20261106).
+
+| Workflow | Outcome | Calls | Input / output tokens | Cost (USD) | Provider seconds |
+| --- | --- | ---: | ---: | ---: | ---: |
+| WF1 | Accepted, total 38 | 1 | 1440 / 77 | $0.00004714 | 1.16 |
+| WF2 | Accepted, total 38 | 1 | 2640 / 1640 | $0.00083533 | 16.71 |
+| WF3 | **Refused**: solver hit its fixed 1,300-token limit mid-slot-report (`TASK_ENVELOPE`) | 2 | 2029 / 1710 | $0.00086717 | 35.19 |
+| WF4 | Accepted, all five agents 38 (run twice, see below) | 6 | 4593 / 1126 | $0.00059056 | 15.61 |
+| WF5 | **Refused**: the miner's reply did not match the strict mining schema (`WF5_MINING_SCREEN_FAILED`); no paid retry, by design | 1 | 641 / 375 | $0.00019135 | 6.28 |
+
+Also recorded: one WF1 run with reasoning on (accepted, $0.00005729); one WF2
+run with reasoning on that hit its token limit with no visible answer
+($0.00151548); and repeated HTTP 429 rate limits from the shared upstream pool,
+which made no completion. WF4 ran twice because a retry script misread an
+accepted run as rate-limited; both runs were accepted and are kept.
+
+**What this adds to the October 28 picture.** WF1, WF2 and WF4 now work end to
+end on a second model with the shipped code. WF3 and WF5 failed on fixed
+allowances and strict schemas that were tuned on the earlier model: WF3's
+solver budget is too small for this model's full slot report, and WF5's miner
+needs schema-following the model did not give on its first try. Still one
+task, one run each, so no ranking between workflows follows from it.
+
+## The October 28 comparison
+
+### Read these numbers correctly
 
 These are retained **October 28, 2026** captures using OpenRouter's
 `meta-llama/llama-3.3-70b-instruct`. One plain-seed call is reused throughout.
