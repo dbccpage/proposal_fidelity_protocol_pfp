@@ -1,7 +1,7 @@
 # Paper 004: PFP IV: Native verification and the custody of finite evidence
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/004_pfp_native_verification_and_evidence_custody`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/004_pfp_native_verification_and_evidence_custody)
+**Folder:** [`papers/pfp/004_pfp_native_verification_and_evidence_custody`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/004_pfp_native_verification_and_evidence_custody)
 
 ## In brief
 
@@ -15,7 +15,7 @@ How the separation between generating and checking survives across Python object
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/004_pfp_native_verification_and_evidence_custody/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/004_pfp_native_verification_and_evidence_custody/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [pfp package](PFP-Package.md)
 

@@ -1,7 +1,7 @@
-# Paper 022: PFP XX: Identity prefixes share the braid action and the mean defect 23/1200
+# Paper 020: PFP XX: Identity prefixes share the braid action and the mean defect 23/1200
 
 **Status:** Retained draft, v0.1.0  
-**Folder:** [`papers/022_pfp_frontier_research`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/022_pfp_frontier_research)  
+**Folder:** [`papers/pfp/020_pfp_frontier_research`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/020_pfp_frontier_research)  
 **Record:** [Zenodo 23120020](https://zenodo.org/records/23120020)
 
 ## In brief
@@ -16,8 +16,8 @@ Extends PFP to tournaments on a topological quantum compilation task. The host r
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/022_pfp_frontier_research/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/020_pfp_frontier_research/README.md), which lists the manuscript, claim ledger and change log.
 
 ---
 
-Previous: [Paper 021](Paper-021.md) · [Papers](Papers.md) · Next: [Paper 023](Paper-023.md)
+Previous: [Paper 019](Paper-019.md) · [Papers](Papers.md) · Next: [Paper 021](Paper-021.md)

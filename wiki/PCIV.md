@@ -85,5 +85,5 @@ The [levels](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/mai
 The level documents are specifications marked as drafts; read each claim at its
 stated evidence grade.
 
-Related papers: [024](Paper-024.md) (recursive re-entry with evidence scope)
-and [029](Paper-029.md) (evidence-bound harness evolution).
+Related papers: [014](Paper-014.md) (recursive re-entry with evidence scope)
+and [019](Paper-019.md) (evidence-bound harness evolution).

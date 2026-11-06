@@ -1,16 +1,32 @@
 # Papers
 
 The paper collection lives in
-[`papers/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers),
-and its
-[README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/README.md)
-is the authoritative register. Each published package is self-contained: the
-manuscript (`paper.md`, `paper.tex`, `paper.pdf`), a claim ledger and change
-log, code with tests, and a release archive with checksum manifests.
+[`papers/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers)
+in two series:
 
-Each paper has its own page here with a short summary; follow the ID links.
+- [`papers/pfp/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp):
+  the Proposal Fidelity Protocol papers. Their
+  [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/README.md)
+  is the authoritative register.
+- [`papers/non_pfp/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp):
+  the finite obstruction calculus and authority papers moved in from the
+  research repository.
 
-## Published series (v0.1.0)
+Both series are numbered in the order a reader would meet them, as if they were
+posted to arXiv one after another. The papers were renumbered on 2026-11-06;
+[`papers/RENUMBERING.md`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/RENUMBERING.md)
+maps every old number to its new one. Manuscripts, receipts and frozen
+renderings keep their bytes, so a number written inside a paper is its old
+number.
+
+Each published package is self-contained: the manuscript (`paper.md`,
+`paper.tex`, `paper.pdf`), a claim ledger and change log, code with tests, and
+a release archive with checksum manifests. Each PFP paper has its own page here
+with a short summary; follow the ID links.
+
+## PFP papers
+
+### Published series (v0.1.0)
 
 | ID | Topic | Read it to... |
 | --- | --- | --- |
@@ -26,35 +42,59 @@ Each paper has its own page here with a short summary; follow the ID links.
 | [009](Paper-009.md) | Adversarial dialectics and reality gates | Challenge a claim with an explicit property and a counterexample |
 | [010](Paper-010.md) | Holonomy checks and model pilots | Check lattice holonomy exactly and read small pilots at their scale |
 
-## Author-review drafts
+### Later papers and author-review drafts
 
-These are not external deposits.
+These are not external deposits, except Paper 020, which was deposited as
+PFP XX.
 
-| Shelf | Topic |
-| --- | --- |
-| [011](Paper-011.md) | PFP shape, review findings and the next test campaign |
-| [021](Paper-021.md) | Archive audit of recreated demos and evidence |
-| [022](Paper-022.md) | Frontier research and tournament design |
-| [023](Paper-023.md) | Task-bound claims and the scope of hallucination control |
-| [024](Paper-024.md) | Recursive re-entry with evidence scope and shared fuel |
-| [025](Paper-025.md) | Local witnesses and global compatibility in agent composition |
-| [026](Paper-026.md) | Compression that preserves future operations and their cost |
-| [027](Paper-027.md) | Proposal channels: glyphs, rewrites, logits and attention |
-| [028](Paper-028.md) | Operadic composition and bounded repair (implementation study) |
-| [029](Paper-029.md) | Evidence-bound harness evolution |
-| [034](Paper-034.md) | The workflow DAG: process and mathematics of WF1–WF49 |
+| ID | Was | Topic |
+| --- | --- | --- |
+| [011](Paper-011.md) | 021 | PFP XI: archive audit of recreated demos and evidence |
+| [012](Paper-012.md) | 011 | PFP shape, review findings and the next test campaign |
+| [013](Paper-013.md) | 023 | Task-bound claims and the scope of hallucination control |
+| [014](Paper-014.md) | 024 | Recursive re-entry with evidence scope and shared fuel |
+| [015](Paper-015.md) | 025 | Local witnesses and global compatibility in agent composition |
+| [016](Paper-016.md) | 026 | Compression that preserves future operations and their cost |
+| [017](Paper-017.md) | 027 | Proposal channels: glyphs, rewrites, logits and attention |
+| [018](Paper-018.md) | 028 | Operadic composition and bounded repair (implementation study) |
+| [019](Paper-019.md) | 029 | Evidence-bound harness evolution |
+| [020](Paper-020.md) | 022 | PFP XX: frontier research and tournament design |
+| [021](Paper-021.md) | 034 | The workflow DAG: process and mathematics of WF1–WF49 |
 
-Shelves 012 to 020 are absent at this baseline.
+## Non-PFP papers
+
+The finite obstruction calculus first, then selection and control on finite
+systems, then the authority papers, each after the papers it cites.
+
+| ID | Was | Paper |
+| --- | --- | --- |
+| [001](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/001_l1_native_cohomology) | 002 | ℓ¹-native cohomology of finite defect fields |
+| [002](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/002_l1_obstruction_framework) | 003 | Finite ℓ¹ coboundary obstructions: primal–dual certificates |
+| [003](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/003_degree_wise_dsl) | 004 | Degree-wise obstruction calculus and symbolic DSL |
+| [004](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects) | 001 | Covering-edge descent and coherence defects |
+| [005](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/005_operator_lifts_trace_metrics_and_representation_limits) | 013 | Operator lifts, trace metrics and representation limits |
+| [006](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/006_operator_proposal_layer_for_finite_l1_obstruction_systems) | 026 | Proposal selection and continuation-stable diagnostics on finite graphs |
+| [007](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/007_constraint_level_regulation_via_multi_channel_obstruction_diagnostics) | 018 | Candidate selection with residual and constraint diagnostics |
+| [008](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/008_observer_robust_control_of_obstruction_diagnostics) | 019 | Observer-relative control of cochain residuals |
+| [009](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/009_reasoning_trace_validation_via_l1_obstruction_geometry) | 033 | Path-additive coboundary defects for reasoning-trace validation |
+| [010](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/010_the_authority_firewall_a_machine_checked_separation_of_evidence_from_authority_in_finite_systems) | 027 | The authority firewall |
+| [011](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/011_authority_firewall_and_verification_limits) | 030 | The authority firewall and verification limits |
+| [012](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/012_role_non_impersonation_and_authority_preservation) | 004 | Role non-impersonation and authority preservation |
+| [013](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/013_the_authority_gap) | 005 | The authority gap |
+| [014](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/014_finite_authority_and_non_terminal_computation) | 028 | Finite authority and non-terminal computation |
+| [015](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/015_representation_abundance_is_not_physical_authority) | 003 | Representation abundance is not physical authority |
+| [016](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/non_pfp/README.md) | 029 | Primitive difference, structure and the authority boundary of meaning |
 
 ## Reading the claims
 
 Each paper keeps a claim ledger. Numbers that could not be traced to a retained
 file were withdrawn during the 2026-09-28 revision, and later errata are listed
-in the papers README. Where a working note and a paper disagree, the paper is
-authoritative. Historical self-scores and model-labelled tables are not evidence
-of live model performance.
+in the PFP papers README. Where a working note and a paper disagree, the paper
+is authoritative. Historical self-scores and model-labelled tables are not
+evidence of live model performance.
 
 ## Licensing
 
 Paper text is CC BY 4.0. Paper code is PolyForm Noncommercial 1.0.0 (see
-`LICENSE-CODE` in each package).
+`LICENSE-CODE` in each package); some non-PFP packages use Apache-2.0 or MIT
+for code, as their own `LICENSE-CODE` states.

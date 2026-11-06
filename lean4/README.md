@@ -24,7 +24,7 @@ Scores follow `SCORING.md` v2.0.0: a level, then the weakest of the five gates. 
 
 Not moved, and why:
 
-- `Demo3ProtocolInvariants` is MSS-N, not Symbol Game. Its namespace is `MSSN.Demo3Protocol`, and the finite quantum mechanics repository already holds it, imported as MSS-N. `papers/completion_receipt.json` still pins `lean4/Demo3ProtocolInvariants.lean`; that receipt was made in a `the_symbol_game` checkout.
+- `Demo3ProtocolInvariants` is MSS-N, not Symbol Game. Its namespace is `MSSN.Demo3Protocol`, and the finite quantum mechanics repository already holds it, imported as MSS-N. `papers/pfp/completion_receipt.json` still pins `lean4/Demo3ProtocolInvariants.lean`; that receipt was made in a `the_symbol_game` checkout.
 - `Family` is L2D, but its only import, `Expressivity`, is L1D.
 - `ShadowFactorization`, `SnSymbolGameAndPackets`, `SymbolGame`, `Lib`, `TokenFrontier` and `AntimorphicInvolution` are L1D.
 - `FiniteConsequences`, `LpWeakDuality` and `TerminalizerPolicy` have no grade, because their builds did not complete.

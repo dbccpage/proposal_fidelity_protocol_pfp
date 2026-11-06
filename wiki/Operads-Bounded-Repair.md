@@ -2,7 +2,7 @@
 
 Part of [Operads](Operads.md). Previous: [Skills, op inventory and the resolver](Operads-Skills-and-Catalog.md) · Next: [Local checks, global compatibility](Operads-Local-to-Global.md)
 
-[Paper 028](Paper-028.md) applies the operad machinery to one small, real task:
+[Paper 018](Paper-018.md) applies the operad machinery to one small, real task:
 testing a supplied code patch. It is an implementation study, not a theorem
 about programs and not a model benchmark.
 
@@ -94,7 +94,7 @@ not another independent trial.
 
 ## The research extension
 
-The same route is extended in [Paper 029](Paper-029.md) into an outer loop that
+The same route is extended in [Paper 019](Paper-019.md) into an outer loop that
 proposes changes to a harness (its prompt, workflow options, search and context
 policies) and an inner loop that evaluates them in isolated containers. The
 evaluators, private fixtures, budgets, credentials and admission rules stay with

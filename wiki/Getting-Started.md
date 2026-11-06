@@ -17,25 +17,25 @@ checked.
 ## Three reading routes
 
 **New to the topic.** Read
-[Paper 000](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/000_pfp_introduction),
+[Paper 000](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/000_pfp_introduction),
 an introductory preprint that needs only marks, relations, S(n), MSS-N and
 packets. It ships a standard-library teaching checker and a workbook with eight
 gradual examples.
 
 **Want to run a session.** Read the
-[practitioner's guide (Paper 005)](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/005_pfp_practitioners_field_manual).
+[practitioner's guide (Paper 005)](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/005_pfp_practitioners_field_manual).
 It follows one triangle through declaration, proposal, refusal, repair,
 verification and restoring a saved snapshot. Its examples run with plain
 Python:
 
 ```powershell
-cd papers/005_pfp_practitioners_field_manual
+cd papers/pfp/005_pfp_practitioners_field_manual
 python code/play_demo.py
 python code/study_capstone.py
 ```
 
 **Want a worked finite example.** Read
-[Paper 001](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/001_pfp_discrete_cochain_retraction_and_toy_involutions),
+[Paper 001](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions),
 which separates residual improvement, obstruction, safety and termination on a
 small graph.
 

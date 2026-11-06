@@ -28,9 +28,9 @@ pub const RESULT_SCHEMA: &str = "core.genesis.report-result.v1";
 // The binary pins the original executable source, not a caller-supplied digest.
 // The retained G01 copy is byte-identical to the retired Genesis paper source.
 const SOURCE: &[u8] = include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"),
-    "/../../../papers/021_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/model.py"));
+    "/../../../papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/model.py"));
 const OBSERVATION_SOURCE: &[u8] = include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"),
-    "/../../../papers/021_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/observe.py"));
+    "/../../../papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/observe.py"));
 
 pub fn source_sha256() -> String {
     let mut digest = Sha256::new();

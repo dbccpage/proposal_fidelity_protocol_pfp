@@ -4,7 +4,7 @@ Part of [Operads](Operads.md). Previous: [Bounded repair](Operads-Bounded-Repair
 
 When several agents each solve part of a problem, each local answer can be
 checked and pass, and still the answers cannot be put together.
-[Paper 025](Paper-025.md) states this precisely for finite tables, and draws the
+[Paper 015](Paper-015.md) states this precisely for finite tables, and draws the
 line between that question and what typed operad composition checks.
 
 ## The setting

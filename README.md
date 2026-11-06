@@ -169,12 +169,12 @@ checkers and evidence; the integer-sum examples establish that finite integratio
 | [`contracts/`](contracts/), [`governance/`](governance/README.md), [`SCORING.md`](SCORING.md) | Wire schemas, source-bound assessments and the repository acceptance policy. |
 | [`wiki/`](wiki/), [`docs/`](docs/) | User guides, subsystem references, plans and validation records. |
 
-Useful research routes include [the practitioner field manual](papers/005_pfp_practitioners_field_manual/README.md),
-[local-to-global agent composition](papers/025_pfp_local_to_global_agent_composition/paper.md),
-[future-faithful compression](papers/026_pfp_future_faithful_compression_and_cost/paper.md),
-[proposal-channel interventions](papers/027_pfp_proposal_channels_and_internal_interventions/paper.md),
-[operadic bounded repair](papers/028_pfp_operadic_composition_and_bounded_ddc_repair/paper.md)
-and [evidence-bound harness evolution](papers/029_pfp_evidence_bound_harness_evolution/paper.md).
+Useful research routes include [the practitioner field manual](papers/pfp/005_pfp_practitioners_field_manual/README.md),
+[local-to-global agent composition](papers/pfp/015_pfp_local_to_global_agent_composition/paper.md),
+[future-faithful compression](papers/pfp/016_pfp_future_faithful_compression_and_cost/paper.md),
+[proposal-channel interventions](papers/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md),
+[operadic bounded repair](papers/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md)
+and [evidence-bound harness evolution](papers/pfp/019_pfp_evidence_bound_harness_evolution/paper.md).
 
 ## Evidence and development
 

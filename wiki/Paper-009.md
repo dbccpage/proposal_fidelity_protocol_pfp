@@ -1,7 +1,7 @@
 # Paper 009: PFP IX: Reviewing claims against code and evidence
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/009_pfp_adversarial_dialectics_and_terminal_reality_gates`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/009_pfp_adversarial_dialectics_and_terminal_reality_gates)  
+**Folder:** [`papers/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates)  
 **Record:** [Zenodo 23115634](https://zenodo.org/records/23115634)
 
 ## In brief
@@ -16,7 +16,7 @@ A review protocol for deciding what a technical claim is actually supported by. 
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/009_pfp_adversarial_dialectics_and_terminal_reality_gates/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/README.md), which lists the manuscript, claim ledger and change log.
 
 ---
 

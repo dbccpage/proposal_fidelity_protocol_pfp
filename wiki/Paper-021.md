@@ -1,21 +1,33 @@
-# Paper 021: PFP XI: The broken referee, an archive audit and self-falsification ledger
+# Paper 021: The workflow DAG — process and mathematics of WF1–WF49
 
-**Status:** Retained draft, v0.1.1  
-**Folder:** [`papers/021_recreated_demos_and_proposal_fidelity_evidence`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/021_recreated_demos_and_proposal_fidelity_evidence)
+**Status:** Author-review draft; not an external deposit  
+**Folder:** [`papers/pfp/021_pfp_workflow_dag_process_and_mathematics`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/021_pfp_workflow_dag_process_and_mathematics)
 
 ## In brief
 
-Reconstructs the demonstration corpus through a source-bound inventory and replay procedures, so each result names its source, algorithm, dependencies and what its output checks.
+Five workflows run today. The retained pilot experiments used many more
+procedures that were never named. This paper names eighteen of them,
+WF6–WF23, places all twenty-three in one dependency graph, and writes down
+what each one does and which mathematics its check relies on.
 
 ## What it covers
 
-- Historical self-scores and prompts containing answers stay visible as limitations.
-- A copied receipt is not a new experiment, and an unavailable operation is not a verified computation.
+- The common shape of a workflow: frozen task, procedure, host check, budget
+  and retained record, with the rule that only the host check accepts.
+- For each family: the process, the acceptance mathematics (preservation of
+  rewrites, rank conditions for refusal, seal chains, cochain repair, first
+  cohomology and local-green/global-red, LP duality and Farkas certificates,
+  negative selection, Kripke model checking, double-pushout rewriting, paired
+  tests) and the pilots it came from.
+- A team design per family: a goal, roles on Sonnet, Opus or Fable, a
+  teamwork pattern and a bounded boost step.
 
-## Reading and running it
+## What it does not claim
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/021_recreated_demos_and_proposal_fidelity_evidence/README.md), which lists the manuscript, claim ledger and change log.
+WF6–WF23 are designs, not runners, and many source pilots were never
+dispatched. The model-tier assignments are a starting design, not a
+measurement. See the [workflow DAG](Workflow-DAG.md).
 
 ---
 
-Previous: [Paper 011](Paper-011.md) · [Papers](Papers.md) · Next: [Paper 022](Paper-022.md)
+Previous: [Paper 020](Paper-020.md) · [Papers](Papers.md)
