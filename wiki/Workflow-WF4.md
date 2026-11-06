@@ -1,5 +1,7 @@
 # WF4: five agents and a global check
 
+**Folder:** [`workflows/wf04_five_agents_lggr/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf04_five_agents_lggr) · **Code:** [`pfp/workflows/wf0004/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0004)
+
 > **Adds to WF3:** five isolated solvers and a global check. **Costs:** 6 calls, about 4.4× WF1. **Shown so far:** live runs on two models, all five agents correct each time. Each agent's receipt now checks its own total, so a wrong agent is visible locally; the global check adds agreement across agents.
 
 **Use this when:** you want five isolated proposals checked against the same

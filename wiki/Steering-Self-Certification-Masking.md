@@ -108,6 +108,6 @@ believes.
 ## Where the code lives
 
 `pfp/infrastructure/adapters/decode_controls/` (local runner and a vLLM adapter)
-and the planned challenge write-ups in `pilots/llm_mechanism/planned/`,
+and the planned challenge write-ups in `workflows/wf12_mechanism_control_arms/pilots/planned/`,
 especially `c004_grammar_masked_decode_ladder.md` and
 `c005_hosted_decode_controls_bakeoff.md`.

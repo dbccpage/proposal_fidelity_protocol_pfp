@@ -40,7 +40,7 @@ block that calls `val.execute()`) and expect none.
 
 From the repository root:
 
-    python -m pytest workflows/tautology_lint -q
+    python -m pytest workflows/tasks/tautology_lint -q
 
 Only the Python standard library and pytest are needed.
 
@@ -68,8 +68,8 @@ Only the Python standard library and pytest are needed.
 
 ## Where it lives
 
-- Scanner: `workflows/tautology_lint/tautology_lint.py`
-- Tests: `workflows/tautology_lint/test_tautology_lint.py`
+- Scanner: `workflows/tasks/tautology_lint/tautology_lint.py`
+- Tests: `workflows/tasks/tautology_lint/test_tautology_lint.py`
 
 Port notes: the import was changed to load the scanner from the same folder,
 and an unused import was removed. The checks are unchanged.

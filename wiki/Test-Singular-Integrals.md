@@ -27,8 +27,8 @@ Default: the worksheet. `--input file.json` supplies a request and proposal to g
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest workflows/singular_integrals/tests -q -p no:cacheprovider
-python workflows/singular_integrals/run.py --output-dir <scratch-dir>
+python -m pytest workflows/tasks/singular_integrals/tests -q -p no:cacheprovider
+python workflows/tasks/singular_integrals/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000038/` beside the demo folders. Use a scratch directory to keep the repository clean.
@@ -55,4 +55,4 @@ No code changes beyond the move. Some tests write into the default output root (
 
 ## Where the code lives
 
-`workflows/singular_integrals/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/tasks/singular_integrals/` (`run.py`, `tests/`, and a short `README.md`).

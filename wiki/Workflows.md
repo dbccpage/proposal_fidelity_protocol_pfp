@@ -3,6 +3,14 @@
 **Start with [WF1](Workflow-WF1.md): one task, one reply, one independent check.**
 Add another mechanism when your work needs it. You can stop at any workflow.
 
+## Where the files are
+
+Every workflow has one folder in the repository, numbered the same as here:
+[`workflows/wf01_typed_answer/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf01_typed_answer)
+through `workflows/wf49_…`. Each folder's README says how to run and replay
+it and links to its code. The full list is the
+[workflows index](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/README.md).
+
 ## Pick the problem you have
 
 | I need to… | Choose | Adds to WF1 | Model calls | Evidence so far |

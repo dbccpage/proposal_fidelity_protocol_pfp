@@ -28,8 +28,8 @@ Default: the four source cases and controls. `--input document.json` with `reque
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest workflows/triangle_fan_pairing/tests -q -p no:cacheprovider
-python workflows/triangle_fan_pairing/run.py --output-dir <scratch-dir>
+python -m pytest workflows/tasks/triangle_fan_pairing/tests -q -p no:cacheprovider
+python workflows/tasks/triangle_fan_pairing/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000045/` beside the demo folders. Use a scratch directory to keep the repository clean.
@@ -56,4 +56,4 @@ No code changes beyond the move.
 
 ## Where the code lives
 
-`workflows/triangle_fan_pairing/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/tasks/triangle_fan_pairing/` (`run.py`, `tests/`, and a short `README.md`).

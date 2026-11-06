@@ -43,11 +43,11 @@ The 48 corrupted answers include the wrong operator, a wrong constant, `lshr` fo
 
 From the repository root (standard library plus pytest):
 
-    python -m pytest workflows/certified_challenges/c058_straight_line_superoptimization -q
+    python -m pytest workflows/tasks/certified_challenges/c058_straight_line_superoptimization -q
 
 Score the reference solver on the 14 public examples:
 
-    python workflows/certified_challenges/c058_straight_line_superoptimization/participant_packet/runner.py
+    python workflows/tasks/certified_challenges/c058_straight_line_superoptimization/participant_packet/runner.py
 
 ## Expected output
 
@@ -67,6 +67,6 @@ Score the reference solver on the 14 public examples:
 
 ## Where it lives
 
-`workflows/certified_challenges/c058_straight_line_superoptimization`. Moved from the internal challenge suite; imports now use the package name. The script that ran language models on this challenge was left behind because it needs the unpublished runtime; the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/certified_challenges/findings) keep its results with their notices.
+`workflows/tasks/certified_challenges/c058_straight_line_superoptimization`. Moved from the internal challenge suite; imports now use the package name. The script that ran language models on this challenge was left behind because it needs the unpublished runtime; the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/tasks/certified_challenges/findings) keep its results with their notices.
 
 See also [Sorting Network Zero-One Principle](Test-Sorting-Network-Zero-One-Principle.md) (where exhaustive checking is always affordable), [Rewrite Normal Form Loss](Test-Rewrite-Normal-Form-Loss.md) and [Core Concepts](Core-Concepts.md).

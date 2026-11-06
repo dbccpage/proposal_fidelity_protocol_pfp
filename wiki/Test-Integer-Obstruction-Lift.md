@@ -28,8 +28,8 @@ Default: the four worked exercises. `--input problem.json --proposal witness.jso
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest workflows/integer_obstruction_lift/tests -q -p no:cacheprovider
-python workflows/integer_obstruction_lift/run.py --output-dir <scratch-dir>
+python -m pytest workflows/tasks/integer_obstruction_lift/tests -q -p no:cacheprovider
+python workflows/tasks/integer_obstruction_lift/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000029/` beside the demo folders. Use a scratch directory to keep the repository clean.
@@ -56,4 +56,4 @@ No code changes beyond the move.
 
 ## Where the code lives
 
-`workflows/integer_obstruction_lift/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/tasks/integer_obstruction_lift/` (`run.py`, `tests/`, and a short `README.md`).

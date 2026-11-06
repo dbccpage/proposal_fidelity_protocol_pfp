@@ -1,5 +1,7 @@
 # WF2: collect the operations in one response
 
+**Folder:** [`workflows/wf02_full_slots/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf02_full_slots) · **Code:** [`pfp/workflows/wf0002/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0002)
+
 > **Adds to WF1:** a 31-slot response contract (operations, missing information, repair moves). **Costs:** 1 call, about 3.5× WF1's tokens. **Shown so far:** accepted runs on integer addition with two models (Nov 6: $0.00084, after turning reasoning off); the slot checks are structural, and no repair move has ever been exercised.
 
 **Use this when:** you want the answer and a structured account of the operations,

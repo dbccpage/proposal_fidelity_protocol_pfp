@@ -52,12 +52,12 @@ checker executes only its own copy of the function, never reviewer text.
 
 From the repository root:
 
-    python -m pytest workflows/calibration_task_bank -q
+    python -m pytest workflows/tasks/calibration_task_bank -q
 
 To try a task by hand, write an answer file and run its checker:
 
-    python -I workflows/calibration_task_bank/tasks/review_graph_claims/check.py --reference
-    python -I workflows/calibration_task_bank/tasks/review_graph_claims/check.py --detail answer.json
+    python -I workflows/tasks/calibration_task_bank/tasks/review_graph_claims/check.py --reference
+    python -I workflows/tasks/calibration_task_bank/tasks/review_graph_claims/check.py --detail answer.json
 
 `--reference` prints the computed answer key; `--detail` prints misses and
 false alarms. Exit status 0 is pass, 1 is fail.
@@ -85,8 +85,8 @@ the prompt fragments that must appear, then add the folder name to
 
 ## Where it lives
 
-- Tasks: `workflows/calibration_task_bank/tasks/`
-- Tests: `workflows/calibration_task_bank/test_calibration_tasks.py`
+- Tasks: `workflows/tasks/calibration_task_bank/tasks/`
+- Tests: `workflows/tasks/calibration_task_bank/test_calibration_tasks.py`
 
 Port notes: the task folder moved next to the test, so the test's path to it
 changed. The checkers and prompts are unchanged.

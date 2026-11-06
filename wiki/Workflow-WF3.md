@@ -1,5 +1,7 @@
 # WF3: mine guidance, then solve once
 
+**Folder:** [`workflows/wf03_mine_then_solve/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf03_mine_then_solve) · **Code:** [`pfp/workflows/wf0003/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0003)
+
 > **Adds to WF2:** a mining call whose guidance is screened and frozen before the solver runs. **Costs:** 2 calls on the normal path. **Shown so far:** the "2 calls" figure is stitched from a miner in one run and a solver in another; the actual development path took 10 actions ($0.0043) with 7 failures. On Nov 6 the shipped runner was refused: the solver hit its fixed 1,300-token limit mid-report. The L2 slot check re-checks values the solver schema already pins, so it cannot fail on a valid reply.
 
 **Use this when:** the solver would benefit from concrete, typed operation

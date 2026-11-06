@@ -110,7 +110,7 @@ Internal glyph, logit, and attention experiments remain explicit unexecuted prop
 
 | Source | Retained lesson and evidence boundary | Drafts |
 | --- | --- | --- |
-| [Corrected challenge findings](../../workflows/certified_challenges/findings/README.md) | Reference scores, answer-bearing prompts and missing raw data are separate from observed model performance. | 023, 027 |
+| [Corrected challenge findings](../../workflows/tasks/certified_challenges/findings/README.md) | Reference scores, answer-bearing prompts and missing raw data are separate from observed model performance. | 023, 027 |
 | [021 source audit](011_recreated_demos_and_proposal_fidelity_evidence/paper.md) | Preserve source bytes, task identity, returned witnesses and failed reconstructions; a new fixture does not recreate a missing historical run. | 023, 024 |
 | [022 tournament design](020_pfp_frontier_research/paper.md) | A finite referee can compare proposals. Offline/live switches and model names require raw execution provenance before a performance comparison. | 026, 027 |
 | [PFP prompt and packet account](../../../docs/06_prompt_packet_stage_synthesis.md) | Stimulus, typed candidate, independent receipt and allowed use are distinct. Orchestration stages 1–8, Genesis levels and MSS indices differ; the source's Postnikov terminology does not establish an equivalence. | All five teaching packets |
@@ -129,7 +129,7 @@ Every paper was revised against its retained evidence on 2026-09-28. Numbers
 that could not be traced to a retained file were withdrawn or narrowed, and
 each paper's change log lists them. Papers 003, 006, 008, 009 and 010 changed
 most; Paper 010 was rescoped as version 2.0.0. The working notes in
-[challenge findings notes](../../workflows/certified_challenges/findings/README.md)
+[challenge findings notes](../../workflows/tasks/certified_challenges/findings/README.md)
 predate this revision and carry a correction notice; where a note and a paper
 disagree, the paper is authoritative.
 
@@ -152,7 +152,7 @@ three corrections and one new paper.
 - The judge-packet audit that this note called Paper 012 was not finished. That draft now lives on shelf 021. The new shelf 012 is a different, short note on three declared readings of one sentence.
 
 The working notes in
-[challenge findings notes](../../workflows/certified_challenges/findings/README.md)
+[challenge findings notes](../../workflows/tasks/certified_challenges/findings/README.md)
 carry a second dated notice. The replays behind the new tables are in
 [tools](tools/) and their records in [verification](verification/); the open
 items are in [the residual register](verification/residuals.md), section 8.

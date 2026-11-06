@@ -314,7 +314,7 @@ the hash of executed bytes.
 ## 3b. Families added from the findings and the papers (WF24–WF49)
 
 These were extracted on 2026-11-06 from the certified-challenge findings notes
-(`workflows/certified_challenges/findings/`) and from Papers 000–033. Each is a
+(`workflows/tasks/certified_challenges/findings/`) and from Papers 000–033. Each is a
 proposal with cited sources; the findings carry errata, so their live figures
 are historical. Kinds follow the committee classification.
 

@@ -27,8 +27,8 @@ Default: the worksheet rows. `--input file.json` supplies a task, query and prop
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest workflows/triangle_angle_defects/tests -q -p no:cacheprovider
-python workflows/triangle_angle_defects/run.py --output-dir <scratch-dir>
+python -m pytest workflows/tasks/triangle_angle_defects/tests -q -p no:cacheprovider
+python workflows/tasks/triangle_angle_defects/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000039/` beside the demo folders. Use a scratch directory to keep the repository clean.
@@ -55,4 +55,4 @@ A code comment that pointed at the original README was reworded. No behavior cha
 
 ## Where the code lives
 
-`workflows/triangle_angle_defects/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/tasks/triangle_angle_defects/` (`run.py`, `tests/`, and a short `README.md`).

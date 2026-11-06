@@ -28,8 +28,8 @@ With no arguments the original odd cycle is used. `--input problem.json` supplie
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest workflows/xor_cycle_obstruction/tests -q -p no:cacheprovider
-python workflows/xor_cycle_obstruction/run.py --output-dir <scratch-dir>
+python -m pytest workflows/tasks/xor_cycle_obstruction/tests -q -p no:cacheprovider
+python workflows/tasks/xor_cycle_obstruction/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000026/` beside the demo folders. Use a scratch directory to keep the repository clean.
@@ -56,4 +56,4 @@ One test (`test_deep_json_returns_controlled_refusal`) was adapted: on Python 3.
 
 ## Where the code lives
 
-`workflows/xor_cycle_obstruction/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/tasks/xor_cycle_obstruction/` (`run.py`, `tests/`, and a short `README.md`).

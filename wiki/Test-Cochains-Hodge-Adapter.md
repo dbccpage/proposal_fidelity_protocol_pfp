@@ -28,8 +28,8 @@ Default: ten worksheet rows plus counterexamples. `--input packet.json` with exa
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest workflows/cochains_hodge_adapter/tests -q -p no:cacheprovider
-python workflows/cochains_hodge_adapter/run.py --output-dir <scratch-dir>
+python -m pytest workflows/tasks/cochains_hodge_adapter/tests -q -p no:cacheprovider
+python workflows/tasks/cochains_hodge_adapter/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000040/` beside the demo folders. Use a scratch directory to keep the repository clean.
@@ -56,4 +56,4 @@ A code comment that pointed at the original README was reworded. No behavior cha
 
 ## Where the code lives
 
-`workflows/cochains_hodge_adapter/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/tasks/cochains_hodge_adapter/` (`run.py`, `tests/`, and a short `README.md`).

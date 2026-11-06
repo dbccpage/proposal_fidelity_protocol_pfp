@@ -27,8 +27,8 @@ Default: the worked exercises. `--input packet.bin --profile <name>` checks your
 From the repository root, with Python 3.12 or later and pytest installed:
 
 ```
-python -m pytest workflows/grammar_profiles/tests -q -p no:cacheprovider
-python workflows/grammar_profiles/run.py --output-dir <scratch-dir>
+python -m pytest workflows/tasks/grammar_profiles/tests -q -p no:cacheprovider
+python workflows/tasks/grammar_profiles/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000028/` beside the demo folders. Use a scratch directory to keep the repository clean.
@@ -55,4 +55,4 @@ The homoglyph test inputs were rewritten as `\u0430` escapes so the source files
 
 ## Where the code lives
 
-`workflows/grammar_profiles/` (`run.py`, `tests/`, and a short `README.md`).
+`workflows/tasks/grammar_profiles/` (`run.py`, `tests/`, and a short `README.md`).
