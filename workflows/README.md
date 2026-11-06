@@ -19,18 +19,18 @@ guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fid
 | 5 | [Checked rewrite](wf05_checked_rewrite/README.md) | **runnable** | procedure extension | WF4 | — |
 | 6 | [Dialect sweep](wf06_dialect_sweep/README.md) | proposal | experiment design | WF5 | 4 |
 | 7 | [Typed refusal](wf07_typed_refusal/README.md) | proposal | procedure extension | WF1 | 2 |
-| 8 | [Staged sealed packets](wf08_staged_sealed_packets/README.md) | proposal | procedure extension | WF2, WF5 | 21 |
+| 8 | [Staged sealed packets](wf08_staged_sealed_packets/README.md) | proposal | procedure extension | WF2, WF5 | — |
 | 9 | [Bounded check-and-repair](wf09_bounded_check_and_repair/README.md) | proposal | procedure extension | WF2 | — |
 | 10 | [Local-to-global obstruction certificate](wf10_local_to_global_obstruction_certificate/README.md) | proposal | task preset | WF4, WF9 | 1 |
-| 11 | [Dual-certificate synthesis](wf11_dual_certificate_synthesis/README.md) | proposal | task preset | WF3, WF9 | 8 |
-| 12 | [Mechanism-control arms](wf12_mechanism_control_arms/README.md) | proposal | experiment design | WF6, WF3 | 5 |
-| 13 | [Exact-domain capsule battery](wf13_exact_domain_capsule_battery/README.md) | proposal | task preset | WF1, WF7 | 70 |
-| 14 | [Immune failure classification](wf14_immune_failure_classification/README.md) | proposal | meta workflow | WF7, WF12 | 10 |
-| 15 | [Adversary tribunal](wf15_adversary_tribunal/README.md) | proposal | procedure extension | WF4, WF14 | 10 |
-| 16 | [Substrate crosswalk](wf16_substrate_crosswalk/README.md) | proposal | task preset | WF5, WF10 | 25 |
-| 17 | [Witnessed-difference programme](wf17_witnessed_difference_programme/README.md) | proposal | task preset | WF10, WF11 | 18 |
+| 11 | [Dual-certificate synthesis](wf11_dual_certificate_synthesis/README.md) | proposal | task preset | WF3, WF9 | 6 |
+| 12 | [Mechanism-control arms](wf12_mechanism_control_arms/README.md) | proposal | experiment design | WF6, WF3 | 4 |
+| 13 | [Exact-domain capsule battery](wf13_exact_domain_capsule_battery/README.md) | proposal | task preset | WF1, WF7 | — |
+| 14 | [Immune failure classification](wf14_immune_failure_classification/README.md) | proposal | meta workflow | WF7, WF12 | — |
+| 15 | [Adversary tribunal](wf15_adversary_tribunal/README.md) | proposal | procedure extension | WF4, WF14 | — |
+| 16 | [Substrate crosswalk](wf16_substrate_crosswalk/README.md) | proposal | task preset | WF5, WF10 | — |
+| 17 | [Witnessed-difference programme](wf17_witnessed_difference_programme/README.md) | proposal | task preset | WF10, WF11 | — |
 | 18 | [Dossier replay campaign](wf18_dossier_replay_campaign/README.md) | proposal | harness gate | WF6, WF12 | 5 |
-| 19 | [Failure-derived rule transfer](wf19_failure_derived_rule_transfer/README.md) | proposal | experiment design | WF12, WF14 | 9 |
+| 19 | [Failure-derived rule transfer](wf19_failure_derived_rule_transfer/README.md) | proposal | experiment design | WF12, WF14 | 2 |
 | 20 | [Derivation loop with lift grants](wf20_derivation_loop_with_lift_grants/README.md) | proposal | procedure extension | WF9, WF10, WF19 | 9 |
 | 21 | [Structural prompt rewriting](wf21_structural_prompt_rewriting/README.md) | proposal | procedure extension | WF5 | 3 |
 | 22 | [Certified cost ladder](wf22_certified_cost_ladder/README.md) | proposal | experiment design | WF6, WF8, WF18 | 2 |

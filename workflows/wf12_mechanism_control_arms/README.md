@@ -31,8 +31,7 @@ Model experiments for this workflow, moved here on 2026-11-06 from the research 
 - [`pilots/c001_attention_distractor_mask/`](pilots/c001_attention_distractor_mask/) — masking attention to distractor keys, with a McNemar comparison of arms (needs a local model with attention hooks)
 - [`pilots/c005_hosted_decode_controls/`](pilots/c005_hosted_decode_controls/) — a bake-off of hosted decoding controls (budgets, scratchpads, hybrids) on checkable cases
 - [`pilots/consistency_teaching/`](pilots/consistency_teaching/) — rank-difference tasks, clean or poisoned, with direct and chain-of-thought prompts
-- [`pilots/pilot_0000052/`](pilots/pilot_0000052/) — pilot_0000052 — Attention mechanism control (planned layout)
-- [`pilots/planned/`](pilots/planned/) — eight write-ups (C002-C004, C006-C010) for mechanism experiments that were planned but never built
+- [`pilots/planned/`](pilots/planned/) — the C006 host scratch-space protocol (the other planned write-ups were removed)
 
 ## Team
 
