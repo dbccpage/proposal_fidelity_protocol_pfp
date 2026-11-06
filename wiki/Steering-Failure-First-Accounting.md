@@ -42,7 +42,7 @@ covers Wilson intervals, exact McNemar, the Pareto frontier and the
 unique-finding value of each reviewer.
 
 ```powershell
-python -m pytest workflows/yardstick -q
+python -m pytest workflows/tasks/yardstick -q
 ```
 
 The accounting rules are in `ops/adversary/use_cases/yardstick.py` (`Trial`,

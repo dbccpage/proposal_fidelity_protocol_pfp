@@ -1,0 +1,30 @@
+# WF44: Exact certificate presets
+
+**Status:** proposal: no runner and no run yet. **Kind:** task preset. **Builds on:** [WF11](../wf11_dual_certificate_synthesis/README.md), [WF10](../wf10_local_to_global_obstruction_certificate/README.md).
+
+**Goal:** Verify-easy, solve-hard tasks for every other workflow to use.
+
+## How it works
+
+1. The model emits a certificate: l1 potential, residual and dual circulation; a sparse representative; an equal-weight pairing involution; or a typed DSL program
+2. The host checks it exactly; ill-typed programs are refused before evaluation
+
+## The check
+
+Host check: exact certificate check.
+
+- `r = w + B f, B^T z = 0, |z_e| <= w_e, w . z = ||r||_1 (weak duality)`
+
+## Where it comes from
+
+Sources: P002(l1) §4-5, P003(l1) Thm 4.2, P001(covering) §3-4, P004(DSL), P002(signed) §5-6.
+
+Host checks have code and tests; no model runs.
+
+## Team
+
+Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).
+
+Boost: when certificate rejected: one opus attempt (limit 1).
+
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf44) · [machine-readable entry](../dag/workflow_dag.json)

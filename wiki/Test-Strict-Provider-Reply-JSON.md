@@ -47,7 +47,7 @@ then edited by string replacement.
 
 From the repository root:
 
-    python -m pytest workflows/provider_reply_guard/test_reply_guard_strict_json.py -q
+    python -m pytest workflows/tasks/provider_reply_guard/test_reply_guard_strict_json.py -q
 
 ## Expected output
 
@@ -77,4 +77,4 @@ sample character was replaced with another.
 
 ## Location
 
-`workflows/provider_reply_guard/test_reply_guard_strict_json.py`.
+`workflows/tasks/provider_reply_guard/test_reply_guard_strict_json.py`.

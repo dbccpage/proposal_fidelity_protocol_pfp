@@ -46,7 +46,7 @@ Two runnable pieces show the parts:
 - [Candidate revision telemetry](Test-Candidate-Revision-Telemetry.md) has the
   fault tracing, content-hashed diffs and checkpoint backtracking used between
   rounds:
-  `python -m pytest workflows/candidate_telemetry -q`
+  `python -m pytest workflows/tasks/candidate_telemetry -q`
 - [PFP Lab](PFP-Lab.md) keeps every refused move in its receipt, which is the
   same idea as the ledger of buried candidates. In `refusal-gallery`, twelve of
   thirteen proposals are refused and each one stays in the record:

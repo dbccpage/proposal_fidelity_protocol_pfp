@@ -30,7 +30,7 @@ use different mathematics:
 
 ## Setup and inputs
 
-`workflows/certified_challenges/c039_lattice_z2_gauge_theory_gauss_law/`
+`workflows/tasks/certified_challenges/c039_lattice_z2_gauge_theory_gauss_law/`
 
 - `reference_solver/`: `cell_complex.py`, `f2_algebra.py`, `gauss_sector.py`,
   `solver.py`, and a step tracer.
@@ -49,11 +49,11 @@ use different mathematics:
 
 From the repository root:
 
-    python -m pytest workflows/certified_challenges/test_c039_reference_cases.py workflows/certified_challenges/c039_lattice_z2_gauge_theory_gauss_law -q
+    python -m pytest workflows/tasks/certified_challenges/test_c039_reference_cases.py workflows/tasks/certified_challenges/c039_lattice_z2_gauge_theory_gauss_law -q
 
 Expected: `76 passed` (49 reference-case tests, 4 mutation-suite tests and the package's own 23; the
 mutation suite loops over all 48 files inside each test). Running
-`python -m pytest workflows/certified_challenges -q` runs all fifty challenge packages.
+`python -m pytest workflows/tasks/certified_challenges -q` runs all fifty challenge packages.
 
 ## What a failure means
 

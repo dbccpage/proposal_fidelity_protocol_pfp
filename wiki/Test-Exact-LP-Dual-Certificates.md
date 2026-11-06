@@ -20,7 +20,7 @@ the problem and never trusts the proposer: it checks the certificate.
 
 ## Package layout
 
-Every challenge package in `workflows/certified_challenges/` has the same shape:
+Every challenge package in `workflows/tasks/certified_challenges/` has the same shape:
 
 - `participant_packet/TASK.md`: the problem statement and the exact answer
   format a solver must produce.
@@ -48,12 +48,12 @@ claims.
 
 From the repository root (Python 3.12 standard library plus pytest):
 
-    python -m pytest workflows/certified_challenges/c051_exact_lp_solver_with_duals -q
+    python -m pytest workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals -q
 
 Score the reference solver on the 14 public examples (the runner takes the
 path of any solver file that defines `solve(case)`):
 
-    python workflows/certified_challenges/c051_exact_lp_solver_with_duals/participant_packet/runner.py workflows/certified_challenges/c051_exact_lp_solver_with_duals/reference_solver/solver.py
+    python workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/participant_packet/runner.py workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/reference_solver/solver.py
 
 ## Expected output
 
@@ -83,9 +83,9 @@ path of any solver file that defines `solve(case)`):
 
 ## Where it lives
 
-`workflows/certified_challenges/c051_exact_lp_solver_with_duals`. Ported from an internal test suite. Imports were changed from the
+`workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals`. Ported from an internal test suite. Imports were changed from the
 original package path to the package's own name, and the `conftest.py` in
-`workflows/certified_challenges/` puts that folder on `sys.path`. The checkers,
+`workflows/tasks/certified_challenges/` puts that folder on `sys.path`. The checkers,
 cases and assertions are unchanged.
 
 See also [Certified Run Replay Store](Test-Certified-Run-Replay-Store.md),

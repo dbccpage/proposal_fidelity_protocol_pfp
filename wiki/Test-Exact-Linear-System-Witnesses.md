@@ -22,7 +22,7 @@ Boolean) is not a reliable refusal, so each such reply must produce
 
 ## Package layout
 
-Every challenge package in `workflows/certified_challenges/` has the same shape:
+Every challenge package in `workflows/tasks/certified_challenges/` has the same shape:
 
 - `participant_packet/TASK.md`: the problem statement and the exact answer
   format a solver must produce.
@@ -50,9 +50,9 @@ dependent bases, floats, unreduced fractions, Booleans and missing fields.
 
 From the repository root (Python 3.12 standard library plus pytest):
 
-    python -m pytest workflows/certified_challenges/c054_exact_linear_systems -q
-    python -m pytest workflows/certified_challenges/test_c054_replay_custody.py -q
-    python workflows/certified_challenges/c054_exact_linear_systems/participant_packet/runner.py
+    python -m pytest workflows/tasks/certified_challenges/c054_exact_linear_systems -q
+    python -m pytest workflows/tasks/certified_challenges/test_c054_replay_custody.py -q
+    python workflows/tasks/certified_challenges/c054_exact_linear_systems/participant_packet/runner.py
 
 ## Expected output
 
@@ -79,9 +79,9 @@ From the repository root (Python 3.12 standard library plus pytest):
 
 ## Where it lives
 
-`workflows/certified_challenges/c054_exact_linear_systems`. Ported from an internal test suite. Imports were changed from the
+`workflows/tasks/certified_challenges/c054_exact_linear_systems`. Ported from an internal test suite. Imports were changed from the
 original package path to the package's own name, and the `conftest.py` in
-`workflows/certified_challenges/` puts that folder on `sys.path`. The checkers,
+`workflows/tasks/certified_challenges/` puts that folder on `sys.path`. The checkers,
 cases and assertions are unchanged.
 
 See also [Certified Run Replay Store](Test-Certified-Run-Replay-Store.md),

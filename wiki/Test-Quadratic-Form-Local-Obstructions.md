@@ -43,11 +43,11 @@ The reference answers are 41 points, 20 obstructions (12 at 2, 7 over the reals,
 
 From the repository root (standard library plus pytest):
 
-    python -m pytest workflows/certified_challenges/c048_ternary_quadratic_forms -q
+    python -m pytest workflows/tasks/certified_challenges/c048_ternary_quadratic_forms -q
 
 Score the reference solver on the 12 public examples:
 
-    python workflows/certified_challenges/c048_ternary_quadratic_forms/participant_packet/runner.py
+    python workflows/tasks/certified_challenges/c048_ternary_quadratic_forms/participant_packet/runner.py
 
 ## Expected output
 
@@ -66,6 +66,6 @@ Score the reference solver on the 12 public examples:
 
 ## Where it lives
 
-`workflows/certified_challenges/c048_ternary_quadratic_forms`. Moved from the internal challenge suite; imports now use the package name. The script that ran language models on this challenge was left behind because it needs the unpublished runtime; the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/certified_challenges/findings) keep its results with their notices.
+`workflows/tasks/certified_challenges/c048_ternary_quadratic_forms`. Moved from the internal challenge suite; imports now use the package name. The script that ran language models on this challenge was left behind because it needs the unpublished runtime; the [findings notes](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/tasks/certified_challenges/findings) keep its results with their notices.
 
 See also [Recurrence Absence Certificates](Test-Recurrence-Absence-Certificates.md) (another refusal that carries its own proof), [Integer Obstruction Lift](Test-Integer-Obstruction-Lift.md) and [Core Concepts](Core-Concepts.md).

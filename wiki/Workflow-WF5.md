@@ -1,5 +1,7 @@
 # WF5: rewrite the task without losing its meaning
 
+**Folder:** [`workflows/wf05_checked_rewrite/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf05_checked_rewrite) · **Code:** [`pfp/workflows/wf0005/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0005)
+
 > **Adds to WF4:** a deterministic rewrite of the seed with preservation checks. **Costs:** 6 calls (the rewrite adds none). **Shown so far:** one accepted run after 4 failed miners on Oct 28 ($0.0015 in total); on Nov 6 the miner reply failed the strict schema and the run stopped, by design. The rewrite supports one sentence pattern ("Calculate the exact sum of …").
 
 **Use this when:** you need an explicit grammar representation before the

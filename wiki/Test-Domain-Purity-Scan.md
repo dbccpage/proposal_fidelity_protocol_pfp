@@ -8,7 +8,7 @@ I/O cannot creep in without someone changing the list.
 
 ## What it tests
 
-`test_paper_run_domain_purity.py` (15 tests) scans `workflows/paper_run_rules/paperrun/`:
+`test_paper_run_domain_purity.py` (15 tests) scans `workflows/tasks/paper_run_rules/paperrun/`:
 
 - Each of the 12 pure modules (claims, obligations, transitions, run plan,
   stage list, services, result type, planning use case) has zero disk-I/O
@@ -39,7 +39,7 @@ imports nothing from the package.
 
 From the repository root:
 
-    python -m pytest workflows/paper_run_rules/test_paper_run_domain_purity.py -q
+    python -m pytest workflows/tasks/paper_run_rules/test_paper_run_domain_purity.py -q
 
 ## Expected output
 
@@ -71,4 +71,4 @@ classification test and negative control are new.
 
 ## Location
 
-`workflows/paper_run_rules/test_paper_run_domain_purity.py`.
+`workflows/tasks/paper_run_rules/test_paper_run_domain_purity.py`.

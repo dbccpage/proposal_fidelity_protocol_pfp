@@ -314,7 +314,7 @@ run stops or moves to the next item.
 A perturbation varies one setting or step of an existing workflow, so it is
 recorded under that workflow rather than as a new node. These were extracted
 on 2026-11-06 from the findings notes in
-[`../certified_challenges/findings/`](../certified_challenges/findings/README.md)
+[`../certified_challenges/findings/`](../tasks/certified_challenges/findings/README.md)
 and from the papers. The findings carry errata (withdrawn figures, leaked
 answers, reference self-scores); read every "live" outcome as historical.
 

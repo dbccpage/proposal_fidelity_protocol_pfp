@@ -24,7 +24,7 @@ refusals: bad input gets a closed-list UNKNOWN code, not a guess.
 
 ## Setup and inputs
 
-`workflows/certified_challenges/c021_q40_r/`
+`workflows/tasks/certified_challenges/c021_q40_r/`
 
 - `reference_solver/pauli.py` implements Pauli strings with exact phase
   tracking (Y = iXZ); `solver.py` finds the basis, enumerates the 2^k joint
@@ -46,9 +46,9 @@ refusals: bad input gets a closed-list UNKNOWN code, not a guess.
 
 From the repository root:
 
-    python -m pytest workflows/certified_challenges/test_c021_reference_cases.py workflows/certified_challenges/c021_q40_r -q
+    python -m pytest workflows/tasks/certified_challenges/test_c021_reference_cases.py workflows/tasks/certified_challenges/c021_q40_r -q
 
-Expected: `365 passed`. `python -m pytest workflows/certified_challenges -q` runs all fifty challenge packages.
+Expected: `365 passed`. `python -m pytest workflows/tasks/certified_challenges -q` runs all fifty challenge packages.
 
 ## What a failure means
 

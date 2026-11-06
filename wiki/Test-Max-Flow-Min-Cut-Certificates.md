@@ -19,7 +19,7 @@ trust in an expensive computation.
 
 ## Package layout
 
-Every challenge package in `workflows/certified_challenges/` has the same shape:
+Every challenge package in `workflows/tasks/certified_challenges/` has the same shape:
 
 - `participant_packet/TASK.md`: the problem statement and the exact answer
   format a solver must produce.
@@ -51,11 +51,11 @@ From the repository root (Python 3.12 standard library plus pytest):
 This package has no test folder of its own; its test is the replay-custody
 test:
 
-    python -m pytest workflows/certified_challenges/test_c052_replay_custody.py -q
+    python -m pytest workflows/tasks/certified_challenges/test_c052_replay_custody.py -q
 
 Score the reference solver on the public examples:
 
-    python workflows/certified_challenges/c052_maxflow_mincut_certificates/participant_packet/runner.py --all-examples
+    python workflows/tasks/certified_challenges/c052_maxflow_mincut_certificates/participant_packet/runner.py --all-examples
 
 ## Expected output
 
@@ -82,9 +82,9 @@ Score the reference solver on the public examples:
 
 ## Where it lives
 
-`workflows/certified_challenges/c052_maxflow_mincut_certificates`. Ported from an internal test suite. Imports were changed from the
+`workflows/tasks/certified_challenges/c052_maxflow_mincut_certificates`. Ported from an internal test suite. Imports were changed from the
 original package path to the package's own name, and the `conftest.py` in
-`workflows/certified_challenges/` puts that folder on `sys.path`. The checkers,
+`workflows/tasks/certified_challenges/` puts that folder on `sys.path`. The checkers,
 cases and assertions are unchanged.
 
 See also [Certified Run Replay Store](Test-Certified-Run-Replay-Store.md),

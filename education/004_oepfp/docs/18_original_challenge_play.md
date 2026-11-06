@@ -192,21 +192,21 @@ reported as one worker. One gateway allowance continues across the selected case
 Inspect current commands without importing an SDK, reading credentials or sending:
 
 ```powershell
-python -m pilots.llm_mechanism.c005_hosted_decode_controls.empirical_001_runner --help
-python -m pilots.llm_mechanism.c005_hosted_decode_controls.empirical_002_runner --help
+python -m workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.empirical_001_runner --help
+python -m workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.empirical_002_runner --help
 ```
 
 Exercise two host fixtures without a model call:
 
 ```powershell
-python -m pilots.llm_mechanism.c005_hosted_decode_controls.empirical_001_runner --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-schema-fixture"
+python -m workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.empirical_001_runner --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-schema-fixture"
 ```
 
 For a separately authorized provider check, use a new output directory and an
 explicit model, call allowance and estimated financial policy:
 
 ```powershell
-python -m pilots.llm_mechanism.c005_hosted_decode_controls.empirical_001_runner --model nousresearch/hermes-3-llama-3.1-405b --max-cases 2 --max-output-tokens 96 --max-provider-calls 2 --max-estimated-cost-microusd 10000 --output-dir "$env:TEMP/c005-schema-live"
+python -m workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.empirical_001_runner --model nousresearch/hermes-3-llama-3.1-405b --max-cases 2 --max-output-tokens 96 --max-provider-calls 2 --max-estimated-cost-microusd 10000 --output-dir "$env:TEMP/c005-schema-live"
 ```
 
 Live execution requires an accounted gateway or explicit bounded gateway policy.
@@ -235,8 +235,8 @@ original arm prompts, schemas, factorization and certificate/canary judges remai
 Run either with a new explicit output directory:
 
 ```powershell
-python -m pilots.llm_mechanism.c005_hosted_decode_controls.benchmark_3arm_scratchpad --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-three-arm-fixture"
-python -m pilots.llm_mechanism.c005_hosted_decode_controls.benchmark_arm4_hybrid --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-hybrid-fixture"
+python -m workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.benchmark_3arm_scratchpad --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-three-arm-fixture"
+python -m workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.benchmark_arm4_hybrid --dry-run --max-cases 2 --output-dir "$env:TEMP/c005-hybrid-fixture"
 ```
 
 These commands write `master_evaluation_report.json` and `summary.json`. Dry

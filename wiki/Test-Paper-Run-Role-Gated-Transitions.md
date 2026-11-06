@@ -55,7 +55,7 @@ and PyYAML.
 
 From the repository root:
 
-    python -m pytest workflows/paper_run_rules/test_paper_run_transitions.py workflows/paper_run_rules/test_paper_run_domain_objects.py -q
+    python -m pytest workflows/tasks/paper_run_rules/test_paper_run_transitions.py workflows/tasks/paper_run_rules/test_paper_run_domain_objects.py -q
 
 ## Expected output
 
@@ -89,4 +89,4 @@ made neutral. The carrier-hash-change test is new.
 
 ## Location
 
-`workflows/paper_run_rules/` (package `paperrun/`).
+`workflows/tasks/paper_run_rules/` (package `paperrun/`).

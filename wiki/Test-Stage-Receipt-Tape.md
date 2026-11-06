@@ -47,7 +47,7 @@ predictable) or with `StageReceipt.issue`, which fills in an id and time.
 
 From the repository root:
 
-    python -m pytest workflows/paper_run_rules/test_paper_run_stage_tape.py -q
+    python -m pytest workflows/tasks/paper_run_rules/test_paper_run_stage_tape.py -q
 
 ## Expected output
 
@@ -78,4 +78,4 @@ global-green and authority test is new.
 
 ## Location
 
-`workflows/paper_run_rules/` (package `paperrun/`).
+`workflows/tasks/paper_run_rules/` (package `paperrun/`).
