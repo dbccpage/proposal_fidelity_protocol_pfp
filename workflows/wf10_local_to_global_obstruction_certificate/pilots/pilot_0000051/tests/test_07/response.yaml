@@ -1,0 +1,56 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_07
+case_id: rewrite_07_sensor_masking
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+witness_verified: null
+raw_reply: "{\n  \"answer\": {\n    \"observed_tallies\": {\n      \"C1\": 0,\n  \
+  \    \"C2\": 0,\n      \"C3\": 0\n    },\n    \"all_green\": true,\n    \"raw_global_defect_I\"\
+  : 6,\n    \"visibility_gap_lambda\": 6,\n    \"recovery_modulus_exists\": false\n\
+  \  }\n}"
+reasoning_content: "We need answer. Need parse problem. Need compute. Need be careful.\
+  \ We need solve.\n\nWe have 6 channels vectors:\n1 [1,0,0]\n2 [0,1,0]\n3 [0,1,0]\n\
+  4 [0,0,1]\n5 [0,0,1]\n6 [1,0,0]\n\nSensors monitor disjoint pairs:\nC1 channels\
+  \ 1 and 6, dead index0, measures only [v1,v2] in l1. Need total error reported by\
+  \ sensor? Likely sum over monitored channels of l1 norm of projected vector? Need\
+  \ infer. For C1, channels 1 and 6 both [1,0,0]. Projection removing index0 gives\
+  \ [v1,v2] = [0,0] for each. l1=0. Sum=0.\n\nC2 channels 2 and 3, dead index1, measures\
+  \ [v0,v2]. Channels [0,1,0] -> [0,0], l1=0 each. Sum=0.\n\nC3 channels 4 and 5,\
+  \ dead index2, measures [v0,v1]. Channels [0,0,1] -> [0,0], l1=0 each. Sum=0.\n\n\
+  Thus observed tallies all 0. all_green true? \"Is every sensor reporting 0 error\"\
+  \ yes.\n\nRaw global defect I = sum ||Channel_k||_1. Each nonzero vector has l1=1.\
+  \ Six channels => 6.\n\nmax(J)=0. Lambda = I - max(J)=6-0=6.\n\nRecovery modulus\
+  \ exists? Need think. If packet signals scale uniformly by lambda >0, can any continuous\
+  \ function of sensor readings bound true global defect? Sensor readings are all\
+  \ zero for any scaling? Let's see if original vectors scaled by lambda: Channel1\
+  \ [\u03BB,0,0], C1 projection [0,0] still 0. C2 channels [0,\u03BB,0] projection\
+  \ [0,0]? C2 measures [v0,v2] = [0,0]. C3 [0,0,\u03BB] projection [v0,v1]=[0,0].\
+  \ So all sensor readings remain 0 for any \u03BB. True global defect I = 6\u03BB\
+  . No continuous function of zero readings can bound arbitrary \u03BB. So recovery_modulus_exists\
+  \ false.\n\nNeed output JSON exactly. Ensure integers. observed_tallies C1 etc integer\
+  \ 0. all_green true. raw_global_defect_I 6. visibility_gap_lambda 6. recovery_modulus_exists\
+  \ false.\n\nNeed maybe \"all_green\" if every sensor reporting 0 error. Yes.\n\n\
+  Let's craft final only JSON."
+parsed_payload:
+  answer: *id001
+metrics:
+  duration_seconds: 11.264
+  prompt_tokens: 537
+  completion_tokens: 654
+  reasoning_tokens: 573
+  total_tokens: 1191
+  cost_usd: 0.0
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

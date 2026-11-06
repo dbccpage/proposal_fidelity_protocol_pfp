@@ -25,6 +25,13 @@ Sources: certified_ladder.
 
 Pre-registered design with fourteen falsifiable hypotheses (H0-H13) and pinned baseline models; arms vary stage count 1-8, rewrites, model tier and antibodies.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/certified_ladder/`](pilots/certified_ladder/) — pilot material
+- [`pilots/evidence/`](pilots/evidence/) — recorded campaign evidence (raw replies, ledgers, receipts)
+
 ## Team
 
 Pattern `sweep_with_shared_judge`: coder ×2 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).

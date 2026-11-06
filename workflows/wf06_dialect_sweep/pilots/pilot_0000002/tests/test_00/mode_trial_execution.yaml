@@ -1,0 +1,44 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000002
+mode_id: 3
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_03_attention_head_and_logit_steering/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: false
+execution_limit: No logit bias or KV-cache hook was available. target_spend_usd is 0.
+advantages:
+- A declared token list rejects an obvious out-of-alphabet word.
+disadvantages:
+- The text mask does not constrain decoding.
+- A legal token string can still name the wrong repair.
+variations:
+- variation_id: text_mask_holds
+  role: limit
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: The legal repair string stays inside the declared token list. This is a text filter, not
+    a logit bias.
+  evidence:
+    rank_change: 1
+    logit_hook_called: false
+- variation_id: out_of_alphabet_token
+  role: advantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Logit leakage (non-zero probability on illegal tokens)
+  observation: PLEASE is outside the declared token list, so a mask can reject it before any graph check.
+  evidence:
+    illegal_token: PLEASE
+    logit_hook_called: false
+- variation_id: mask_is_not_a_kv_hook
+  role: disadvantage
+  status: NOT_EXECUTED
+  claim_held: true
+  failure_mode: Attention drift across multi-step sequences
+  observation: OpenRouter text in, text out does not expose KV-cache hooks or logit biases. The mode winning
+    condition was not run.
+  evidence:
+    logit_hook_called: false
+    winning_condition_executed: false

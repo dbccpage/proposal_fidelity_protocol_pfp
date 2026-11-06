@@ -1,0 +1,73 @@
+schema: pfp.certified-ladder-hypotheses.v1
+authority_effect: None
+status: registered
+registration_date: '2026-10-11'
+registered_by: Adversary Swarm Coordinator
+pinned_baseline_models:
+  - 'google/gemma-4-26b-a4b-it:free'
+  - 'google/gemma-4-31b-it:free'
+  - 'nvidia/nemotron-3-super-120b-a12b:free'
+  - 'deepseek/deepseek-v4-flash'
+note: >-
+  Formally registered on 2026-10-11. Each hypothesis names a predicted direction and the result that
+  refutes it. The prior is the author's guess at the time of writing, recorded so it can be
+  wrong. Governed by design.md.
+hypotheses:
+  - id: H0
+    claim: The gate rejects a wrong answer, a shuffled answer, an empty reply, a reply with no ANSWER line and every cheat proposal listed in design.md section 4b, and gives the same verdict to the same answer in every arm's dressing and on a second judging pass.
+    refuted_if: Any control or cheat is accepted, the verdict depends on the arm, or the two passes disagree.
+    consequence_if_refuted: The run is void and nothing else is reported.
+    prior: expected to hold
+  - id: H1
+    claim: At the lowest rung where plain text solves half of the items or fewer, the P* template arm raises the verified-correct rate by at least 20 points, or cuts the cost to a certified answer by at least half at equal verified-correct rate.
+    refuted_if: Neither holds at 30 or more items per rung, paired, exact sign test below 0.05.
+    prior: expected to fail on easy rungs, unknown on hard rungs; the tiny-task screen showed encodings costing about 3 times the input tokens with no gain
+  - id: H2
+    claim: Verified-correct rate rises with stage count and then saturates.
+    refuted_if: The rate is flat across 1, 3, 5 and 8 stages, or falls.
+    prior: expected to show a modest gain
+  - id: H3
+    claim: One minor rewrite changes the verified-correct rate by less than 5 points in either direction.
+    refuted_if: The change is 5 points or more.
+    prior: expected to hold
+  - id: H4
+    claim: Antibodies mined from training items raise the verified-correct rate on held-out items of the same domain by at least 10 points.
+    refuted_if: The held-out gain is under 10 points, or the training and held-out items overlap.
+    prior: unknown
+  - id: H5
+    claim: On refusal items the P* and Adversary arm bluffs less than plain text.
+    refuted_if: The bluff rate is not lower, paired, exact sign test below 0.05.
+    prior: unknown
+  - id: H6
+    claim: Under carrier contraction, scale descent projections lose zero protected fine coordinates when audited in an explicit, invertible LossLedger (Law 6).
+    refuted_if: Coarse projection discards detail coordinates without ledger custody, or fine reconstruction from coarse state plus ledger fails to invert algebraically.
+    prior: expected to hold under integer block summation (Pilot 51)
+  - id: H7
+    claim: Closed non-exact boundary residuals (Phi_1 > 0, Gamma_2 = 0, H^1 != 0) cannot be discharged by local gradient descent and must either be admitted via a licensed context contract Lambda or refused fail-closed (Law 4).
+    refuted_if: Carrier capacity extends without a valid licensed contract token, or an authorized contract is falsely refused.
+    prior: expected to hold (Pilot 52)
+  - id: H8
+    claim: Non-zero discrete curvature defects (Gamma_2 = ||d_1 x||_1 > 0) cannot be bypassed by descent mutation and force an immediate, immutable typed refusal with exact defect magnitude (Law 3).
+    refuted_if: Descent mutation is permitted on non-zero curvature, or typed refusal is emitted on a flat metric.
+    prior: expected to hold (Pilot 53)
+  - id: H9
+    claim: Floating-point evaluation on discrete algebraic fields introduces catastrophic rounding drift, whereas exact modular integer residuals achieve zero-tolerance deterministic decision boundaries under the Zero-Float Law.
+    refuted_if: Float rounding drift is credited as mathematical convergence, or exact integer modular gates permit approximation leakage.
+    prior: expected to hold (Pilot 50)
+  - id: H10
+    claim: Deductive reasoning on relational constraint networks is invariant under variable renaming and clause ordering permutations, whereas surface pattern-matching accuracy degrades under identifier permutation.
+    refuted_if: Verified correct rate does not vary across canonical vs permuted representations under deductive solvers.
+    prior: unknown on small LLMs; solvers are invariant (Pilot 49)
+  - id: H11
+    claim: Speculative non-associativity claims on finite binary magmas fail closed unless the candidate supplies an executable counterexample witness triple [a, b, c] where (a * b) * c != a * (b * c).
+    refuted_if: A non-associativity verdict is accepted without an executable diverging witness triple.
+    prior: expected to hold (Pilot 55)
+  - id: H12
+    claim: Every operational pilot evaluation gate is sensitive to ground truth alterations and boundary corruptions, killing at least 4 compiled semantic mutants per test suite.
+    refuted_if: Any semantic mutant survives undetected in an evaluation test suite.
+    prior: expected to hold (Pilots 22-55)
+  - id: H13
+    claim: Static pre-flight auditing eliminates synthetic pass rates by rejecting prompts or case identifiers that leak expected answers and refusing tautological always-true verification flags.
+    refuted_if: Test items with prompt answer leakage or tautological flags pass pre-flight filters.
+    prior: expected to hold (Papers 009, 010, Pilot 21)
+

@@ -1,0 +1,38 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000007
+mode_id: 8
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_08_discrete_cochain_involutions/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: Finite declared pair only.
+advantages:
+- The identity sign(x) w(x) + sign(Xi(x)) w(Xi(x)) = 0 is an integer check.
+disadvantages:
+- The check says nothing about pairs that were not declared.
+variations:
+- variation_id: pairwise_cancellation
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: The declared pair cancels and neither configuration is a fixed point.
+  evidence:
+    residual: 0
+- variation_id: fixed_point
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Fixed point existence (Xi(x) = x)
+  observation: A refusal paired with itself is a fixed point.
+  evidence:
+    residual: 1
+- variation_id: sign_preserved
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Sign preservation instead of cancellation
+  observation: Keeping both signs positive leaves a nonzero signed sum.
+  evidence:
+    residual: 1

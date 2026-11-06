@@ -1,0 +1,31 @@
+schema: pfp.mode-trial-plan.v1
+authority_effect: None
+pilot_id: pilot_0000013
+spec: spec.yaml
+mode_id: 14
+mode_coordinate: mode_14
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_14_fail_closed_typed_refusal/contract.yaml
+packet: packet.yaml
+seed: seed.yaml
+responses: results
+canonical_template: pilot_0000000/prompt_template.yaml is a generated empty shell and is not copied here.
+provider_calls: 0
+winning_condition_executed: true
+execution_limit: One hostile query. No exception handler was wrapped around a live model call.
+advantages:
+- The refusal code and the unchanged edge digest are separately checkable.
+disadvantages:
+- A correct code with a mutated edge list is still a failure.
+variations:
+- variation_id: typed_refusal_keeps_state
+  role: winning
+  status: ACCEPTED
+  failure_mode: null
+- variation_id: silent_numeric_answer
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Silent pass on hostile input
+- variation_id: refusal_that_deletes_an_edge
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Partial state corruption

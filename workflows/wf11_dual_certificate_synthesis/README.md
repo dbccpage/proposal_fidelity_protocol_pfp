@@ -26,6 +26,19 @@ Sources: 0000027, 0000053, 0000054, 0000095, 0000115-0000124, 0000171, 0000180, 
 
 Challenge folders c051-c055 and c059 hold participant packets, judge packets, reference solvers and commit-reveal scripts; dossier LP pilots are planned capsules.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/c051_exact_lp_solver_with_duals/`](pilots/c051_exact_lp_solver_with_duals/) — pilot material
+- [`pilots/c052_maxflow_mincut_certificates/`](pilots/c052_maxflow_mincut_certificates/) — pilot material
+- [`pilots/c053_bareiss_fraction_free_matrix_inversion/`](pilots/c053_bareiss_fraction_free_matrix_inversion/) — pilot material
+- [`pilots/c054_exact_linear_systems/`](pilots/c054_exact_linear_systems/) — pilot material
+- [`pilots/c055_assignment_with_potentials/`](pilots/c055_assignment_with_potentials/) — pilot material
+- [`pilots/c059_sql_null_total_query_synthesis/`](pilots/c059_sql_null_total_query_synthesis/) — pilot material
+- [`pilots/pilot_0000053/`](pilots/pilot_0000053/) — pilot material
+- [`pilots/pilot_0000054/`](pilots/pilot_0000054/) — pilot material
+
 ## Team
 
 Pattern `research_cell`: coder ×2 (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).

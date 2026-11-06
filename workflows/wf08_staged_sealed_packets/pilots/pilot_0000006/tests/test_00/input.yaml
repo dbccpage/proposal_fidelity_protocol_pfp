@@ -1,0 +1,26 @@
+# AuthorityEffect: None.
+# Dimension probe for pilots 5-10. Not a provider run.
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000006
+task_family: graph_repair
+difficulty_rung: 2
+request_id: pilot_0000006_req_test_00
+seed_prompt: |
+  Path 0-1-2-3. The repair may close 3-0 or add diagonal 0-2. Rank change is not enough to name the edge. Odd relabeling flips orientation.
+
+
+  Dimension probe temperature is held at: 0.
+  Return one JSON object. Put the certificate in the answer field.
+  Bind each step you use before the certificate.
+expected_outcome:
+  answer:
+    rank_change: 1
+    repairs_with_same_rank_change: 2
+  status: ACCEPTED
+input_typing:
+  lexical_alphabet: UTF-8
+  syntactic_category: ModeTrialSeed
+  semantic_carrier: graph_repair
+  dialect_tier: mode_07
+  boundary_format: pfp.sealed-packet.v1

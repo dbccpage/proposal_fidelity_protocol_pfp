@@ -24,6 +24,13 @@ Sources: 0000003, 0000007, 0000011, 0000015, 0000019, 0000034, 0000175.
 
 Refusal rungs 1-5 with checkers PFP-04 and PFP-14 typed refusal; pilot 34 refuses stationary traces; pilot 175 is a planned capsule.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/homological_objects/`](pilots/homological_objects/) — pilot material
+- [`pilots/pilot_0000003/`](pilots/pilot_0000003/) — pilot_0000003
+
 ## Team
 
 Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).

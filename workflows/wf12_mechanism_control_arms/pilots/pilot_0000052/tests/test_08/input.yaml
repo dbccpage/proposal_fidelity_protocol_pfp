@@ -1,0 +1,270 @@
+# AuthorityEffect: None.
+# Planned transmutation of demo_004/a_mechanism c001-c010. Not a provider run.
+lineage:
+  prompt_id: pilot_0000052_p_star
+  generation_id: 0
+  family_id: attention_mechanism_control
+  parent_id: null
+  template_id: prompt_template.yaml
+  template_version: pfp.prompt-template.v1
+  mutation_kind: mechanism_condition
+  mutation_notes: 'Mechanism condition C009. Source markdown: c009_model_size_ladder_advantage_curve.md.
+    The planned measurement is a paired gap across a model-size ladder on matched arms. This capsule names
+    no rung result and does not call a model.'
+  status: 'PLANNED'
+  author: pilot_0000052_layout
+  authority_effect: 'None'
+guidance:
+  rules:
+  - rule_id: RULE_DISTRACTOR_KEY_ISOLATION
+    name: Distractor key isolation
+    statement: Host-labelled distractor spans are not relations. A planned key mask would drop those key
+      positions and keep position ids. Do not copy a distractor-only integer into the certificate.
+  - rule_id: RULE_LICENSE_RANK_DIFFERENCE
+    name: License the rank-difference operators
+    statement: Integer subtraction on the declared claims is licensed. Attention mass, a finite logit
+      bias, and a grammar shape are not licensed as scores.
+  - rule_id: RULE_CLAIM_HYGIENE_001
+    name: Claim discipline
+    statement: Prefer a narrow claim. Do not describe an unrun mechanism note as a measured effect.
+  - rule_id: RULE_C009_CONDITION
+    name: C009 Model Size Ladder
+    statement: 'Mechanism condition C009. Source markdown: c009_model_size_ladder_advantage_curve.md.
+      The planned measurement is a paired gap across a model-size ladder on matched arms. This capsule
+      names no rung result and does not call a model.'
+  antibodies:
+  - antibody_id: AB_DISTRACTOR_ISOLATION
+    failure_class: distractor_capture
+    target_pattern: certificate_integer_only_in_distractor_span
+    constraint_type: Restrain
+    operatorizability: repairable
+    action: repair
+    severity: P1
+    description: Reject a certificate that uses an integer found only inside a distractor span.
+  - antibody_id: AB_INTERMEDIATE_WITNESS
+    failure_class: heuristic_shortcut
+    target_pattern: ungrounded_composite_answer
+    constraint_type: Restrain
+    operatorizability: repairable
+    action: repair
+    severity: P2
+    description: Reject a certificate that does not bind each declared relation before the composite answer.
+  antipatterns:
+  - antipattern_id: AP_DISTRACTOR_CAPTURE
+    name: Distractor capture
+    description: Copying a distractor integer into the potential or the verdict.
+    target_pattern: distractor_integer_in_answer
+  - antipattern_id: AP_ATTENTION_AS_SCORE
+    name: Attention mass used as the score
+    description: Treating attention mass, a bias, or a cache edit as the host verdict.
+    target_pattern: mechanism_readout_replaces_certificate
+  helpful_patterns:
+  - pattern_id: HP_RESPONSE_ANSWER_SLOT
+    name: Response answer slot
+    description: Put the certificate string in the top-level answer field.
+    enforcement: required
+system_prompt: |
+  semantic_policy_manifest:
+    policy_id: SPK-001
+    required_stamp: 'derived_under_policy: SPK-001'
+  mss0_grammar_constraint:
+    system_name: SYM SYS
+    atomic_glyph_count: 38
+    node_labels: a..z
+    numeric_labels: 0..9
+    delimiters:
+    - <
+    - '>'
+    pair_note: The written form <> is a two-glyph expression, not a 39th atomic glyph.
+    numeric_license_rule: Numeric labels acquire arithmetic or weight semantics only through an explicit
+      license. This task licenses integer subtraction on the declared rank-difference claims and their weights.
+      It does not license attention mass as a correctness score.
+    derived_patterns_note: Category-theoretic structures (functors, limits, adjunctions, monads) are derived
+      patterns, not new primitives.
+  op_semantics:
+    default_layer: 1
+    default_meaning: syntactic_binary_operator
+    forbidden_unlicensed_interpretations:
+    - arithmetic
+    - multiplication
+    - tensor_product
+    - boundary
+    - coboundary
+    - causality
+    - optimization
+    - physical_transition
+    license_required_for:
+    - cohomological_interpretation
+    - category_theoretic_interpretation
+  import_boundary: Do not import continuous physics, Lie algebras, or differential geometry unless explicitly
+    mapping them FROM the 38 SYM SYS primitives.
+  mss0_typing_rules:
+    preamble: 'Whenever formalizing structures, adhere to the MSS-0 topological hierarchy:'
+    levels:
+    - level: 1
+      code: N
+      name: Node
+      meaning: 0-simplex
+    - level: 2
+      code: L
+      name: Edge
+      meaning: 1-simplex
+    - level: 3
+      code: C2
+      name: Cycle
+      meaning: 1-chain closed loop; strictly distinct from a filled region
+    - level: 4
+      code: F1
+      name: Face
+      meaning: 2-simplex / triangle; strictly requires a declared 2-cell
+    - level: 5
+      code: M1
+      name: Mass
+      meaning: Topological lock; requires LockStructure, ObstructionClass, and ConstraintInvariant
+    - level: 6
+      code: H1
+      name: SelfModel
+      meaning: Recursive Locus; requires explicit declaration of recursive equivalence semantics
+  evaluator_scope_rule:
+    principle: An evaluator may promote only the claim type it directly tests.
+    bindings:
+    - evaluator: host certificate check
+      promotes: relation residuals on the supplied case
+      does_not_promote: a measured attention effect
+    - evaluator: planned mechanism note
+      promotes: nothing
+      does_not_promote: evidence
+  evidence_levels:
+  - code: F0
+    meaning: unverified idea
+  - code: F1
+    meaning: internally consistent
+  - code: F2
+    meaning: structurally validated
+  - code: F3
+    meaning: mechanically-verified (within verification scope)
+  - code: F4
+    meaning: independently reproduced
+  claim_hygiene:
+    discipline: Write with strict claim discipline.
+    forbidden_words:
+    - proves
+    - guarantees
+    - obviously
+    - clearly
+    - simply
+    - merely
+    - perfectly
+    - universal
+    - impossible
+    - fundamentally
+    forbidden_word_exceptions: unless explicitly scoped as speculative or nested inside user quotes
+    replacement_defaults:
+    - from: proves
+      to: supports in this instance
+    - from: guarantees
+      to: holds under the declared assumptions
+    - from: obviously
+      to: on the stated carrier
+    default_posture: Prefer narrow claims. A planned mechanism note is not a measured effect. Do not describe
+      this unrun capsule as a host acceptance.
+  role:
+    persona: You are a restrained SymSys auditor.
+    goal: Answer the rank-difference task from the relation lines. Treat distractor spans as masked non-relations.
+      Do not treat a planned mechanism note as a measured result.
+  antibody_injections: []
+user_prompt: |
+  Integer rank-difference system.
+  Items: A, B, C, D, E, F.
+  A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+  A potential assigns an integer to each item.
+  The relation holds when the head integer minus the tail integer equals the claim.
+  Weights are not claims.
+  Relations:
+  - tail A, head B, claim 4, weight 1
+  - tail B, head C, claim 7, weight 1
+  - tail C, head D, claim -14, weight 1
+  - tail D, head E, claim 9, weight 1
+  - tail E, head F, claim -4, weight 1
+  - tail F, head A, claim -2, weight 1
+  - tail A, head D, claim -3, weight 1
+  - tail B, head E, claim 2, weight 1
+  - tail C, head F, claim -9, weight 1
+  - tail D, head B, claim 7, weight 1
+  Distractor key spans follow. They are not relations.
+  Do not copy an integer that occurs only inside a distractor span into the certificate.
+  [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+  [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+  [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+  Return one JSON object.
+  Put the certificate in the answer field.
+  If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+  If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+  Bind each relation before the certificate.
+  Ignore distractor spans.
+
+  Mechanism condition C009. Source markdown: c009_model_size_ladder_advantage_curve.md. The planned measurement is a paired gap across a model-size ladder on matched arms. This capsule names no rung result and does not call a model.
+response_schema: |
+  $schema: https://json-schema.org/draft/2020-12/schema
+  title: PromptResponse
+  type: object
+  additionalProperties: false
+  description: Candidate response envelope. Do not copy a worked potential into this schema text.
+  required:
+  - derived_under_policy
+  - answer
+  - summary
+  - process_integrity
+  properties:
+    derived_under_policy:
+      const: SPK-001
+      type: string
+    answer:
+      type: string
+      minLength: 1
+      description: Certificate string for the rank-difference system. The schema does not contain the host
+        target.
+    summary:
+      $ref: '#/$defs/ResponseSummaryValue'
+    sections:
+      type: array
+      minItems: 0
+      maxItems: 0
+      items: false
+    process_integrity:
+      $ref: '#/$defs/ProcessIntegrityValue'
+  $defs:
+    ResponseSummaryValue:
+      type: object
+      additionalProperties: false
+      required:
+      - narrowest_defensible_thesis
+      - evidence_scope
+      - next_concrete_test
+      properties:
+        narrowest_defensible_thesis:
+          type: string
+          minLength: 1
+        evidence_scope:
+          type: string
+          minLength: 1
+        next_concrete_test:
+          type: string
+          minLength: 1
+    ProcessIntegrityValue:
+      type: object
+      additionalProperties: false
+      required:
+      - seed_allows_theory_refutation
+      - should_continue
+      properties:
+        seed_allows_theory_refutation:
+          type: boolean
+        detected_prompt_biases:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          default: []
+        should_continue:
+          type: boolean

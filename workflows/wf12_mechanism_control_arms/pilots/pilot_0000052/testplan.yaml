@@ -1,0 +1,905 @@
+# AuthorityEffect: None.
+# Planned transmutation of demo_004/a_mechanism c001-c010. Not a provider run.
+schema: pfp.rewrite-test-plan.v1
+authority_effect: 'None'
+pilot_id: pilot_0000052
+spec: spec.yaml
+responses: misc
+description: Ten planned mechanism capsules. Each test keeps the same rank-difference carrier and changes
+  only the mechanism note. No provider was called. Comparison rows are PLANNED.
+prompt_template:
+  path: prompt_template.yaml
+  shared_by_all_tests: true
+seed:
+  path: seed.yaml
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  instantiated_template: prompt_template.yaml
+  prompt_id: pilot_0000052_p_star
+  signature: structured_spans
+expected_outcome:
+  answer: CONSISTENT;phi1=0;phi(A)=0;phi(B)=4;phi(C)=11;phi(D)=-3;phi(E)=6;phi(F)=2
+  status: 'PLANNED'
+counts:
+  unique_cases: 10
+  rewrite_files: 0
+  tests: 10
+cases:
+- case_id: c001
+  rewrite_id: null
+  signature: C001 Distractor-Key Masking
+  grammar: null
+  name: C001 Distractor-Key Masking
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c001_attention_distractor_mask_task_level.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_00/input.yaml
+  instantiated_template: tests/test_00/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c001_distractor_key_mask
+- case_id: c002
+  rewrite_id: null
+  signature: C002 Attention Steering Sweep
+  grammar: null
+  name: C002 Attention Steering Sweep
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c002_attention_steering_sweep_correctness.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_01/input.yaml
+  instantiated_template: tests/test_01/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c002_attention_steering_sweep
+- case_id: c003
+  rewrite_id: null
+  signature: C003 Head Attribution Patching
+  grammar: null
+  name: C003 Head Attribution Patching
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c003_head_attribution_activation_patching.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_02/input.yaml
+  instantiated_template: tests/test_02/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c003_head_attribution_patching
+- case_id: c004
+  rewrite_id: null
+  signature: C004 Grammar-Masked Decoding
+  grammar: null
+  name: C004 Grammar-Masked Decoding
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c004_grammar_masked_decode_ladder.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_03/input.yaml
+  instantiated_template: tests/test_03/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c004_grammar_masked_decode
+- case_id: c005
+  rewrite_id: null
+  signature: C005 Decode Controls
+  grammar: null
+  name: C005 Decode Controls
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c005_hosted_decode_controls_bakeoff.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_04/input.yaml
+  instantiated_template: tests/test_04/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c005_decode_controls
+- case_id: c006
+  rewrite_id: null
+  signature: C006 Scratch Space vs CoT
+  grammar: null
+  name: C006 Scratch Space vs CoT
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c006_host_scratch_space_vs_cot.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_05/input.yaml
+  instantiated_template: tests/test_05/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c006_scratch_space_vs_cot
+- case_id: c007
+  rewrite_id: null
+  signature: C007 KV Cache Surgery
+  grammar: null
+  name: C007 KV Cache Surgery
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c007_context_compaction_kv_surgery.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_06/input.yaml
+  instantiated_template: tests/test_06/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c007_kv_cache_surgery
+- case_id: c008
+  rewrite_id: null
+  signature: C008 Sign Discipline
+  grammar: null
+  name: C008 Sign Discipline
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c008_activation_steering_sign_discipline.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_07/input.yaml
+  instantiated_template: tests/test_07/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c008_sign_discipline
+- case_id: c009
+  rewrite_id: null
+  signature: C009 Model Size Ladder
+  grammar: null
+  name: C009 Model Size Ladder
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c009_model_size_ladder_advantage_curve.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_08/input.yaml
+  instantiated_template: tests/test_08/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c009_model_size_ladder
+- case_id: c010
+  rewrite_id: null
+  signature: C010 Repeated Sampling Frontier
+  grammar: null
+  name: C010 Repeated Sampling Frontier
+  governing_strategy: planned mechanism condition; no rewrite file
+  governing_specification: omega_engine_education/pilots/demo_004/a_mechanism/c010_repeated_sampling_frontier.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: integer rank-difference system with distractor key spans
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  artifact: tests/test_09/input.yaml
+  instantiated_template: tests/test_09/input.yaml
+  prompt_id: pilot_0000052_p_star
+  tests:
+  - c010_repeated_sampling_frontier
+tests:
+- test_id: c001_distractor_key_mask
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C001 Distractor-Key Masking
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_00/input.yaml
+  request_id: pilot_0000052_req_test_00
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c001
+- test_id: c002_attention_steering_sweep
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C002 Attention Steering Sweep
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_01/input.yaml
+  request_id: pilot_0000052_req_test_01
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c002
+- test_id: c003_head_attribution_patching
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C003 Head Attribution Patching
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_02/input.yaml
+  request_id: pilot_0000052_req_test_02
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c003
+- test_id: c004_grammar_masked_decode
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C004 Grammar-Masked Decoding
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_03/input.yaml
+  request_id: pilot_0000052_req_test_03
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c004
+- test_id: c005_decode_controls
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C005 Decode Controls
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_04/input.yaml
+  request_id: pilot_0000052_req_test_04
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c005
+- test_id: c006_scratch_space_vs_cot
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C006 Scratch Space vs CoT
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_05/input.yaml
+  request_id: pilot_0000052_req_test_05
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c006
+- test_id: c007_kv_cache_surgery
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C007 KV Cache Surgery
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_06/input.yaml
+  request_id: pilot_0000052_req_test_06
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c007
+- test_id: c008_sign_discipline
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C008 Sign Discipline
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_07/input.yaml
+  request_id: pilot_0000052_req_test_07
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c008
+- test_id: c009_model_size_ladder
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C009 Model Size Ladder
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_08/input.yaml
+  request_id: pilot_0000052_req_test_08
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c009
+- test_id: c010_repeated_sampling_frontier
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C010 Repeated Sampling Frontier
+  grammar: null
+  seed_prompt: |
+    Integer rank-difference system.
+    Items: A, B, C, D, E, F.
+    A relation is an ordered pair (tail, head) with an integer claim and a positive integer weight.
+    A potential assigns an integer to each item.
+    The relation holds when the head integer minus the tail integer equals the claim.
+    Weights are not claims.
+    Relations:
+    - tail A, head B, claim 4, weight 1
+    - tail B, head C, claim 7, weight 1
+    - tail C, head D, claim -14, weight 1
+    - tail D, head E, claim 9, weight 1
+    - tail E, head F, claim -4, weight 1
+    - tail F, head A, claim -2, weight 1
+    - tail A, head D, claim -3, weight 1
+    - tail B, head E, claim 2, weight 1
+    - tail C, head F, claim -9, weight 1
+    - tail D, head B, claim 7, weight 1
+    Distractor key spans follow. They are not relations.
+    Do not copy an integer that occurs only inside a distractor span into the certificate.
+    [[distractor id=d1]]A clerk's margin says item F sits 19 above item A, and that the question is already settled.[[/distractor]]
+    [[distractor id=d2]]An unrelated ledger pairs item E with item D at difference 1 and calls cycle A-B-C broken.[[/distractor]]
+    [[distractor id=d3]]A scratch note says to set every item to 5 and to call the defect 12.[[/distractor]]
+    Return one JSON object.
+    Put the certificate in the answer field.
+    If a potential exists, start with the label CONSISTENT and then give the integer at each item, with item A fixed at 0.
+    If no potential exists, start with the label CONTRADICTION and name one directed cycle whose signed claim sum is nonzero.
+    Bind each relation before the certificate.
+    Ignore distractor spans.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_09/input.yaml
+  request_id: pilot_0000052_req_test_09
+  prompt_id: pilot_0000052_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: false
+  case_id: c010

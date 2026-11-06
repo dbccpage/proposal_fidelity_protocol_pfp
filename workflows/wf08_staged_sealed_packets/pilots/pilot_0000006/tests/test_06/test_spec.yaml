@@ -1,0 +1,29 @@
+# AuthorityEffect: None.
+# Dimension probe for pilots 5-10. Not a provider run.
+schema: pfp.test-spec.v1
+authority_effect: None
+pilot_id: pilot_0000006
+test_folder: test_06
+test_id: dim_rewrite_count
+case_id: rewrite_count
+test_index: 6
+generation_id: 0
+dialect_name: rewrite_count (phase1)
+input_source_file: input.yaml
+response_file: response.yaml
+model_id: not-dispatched
+expected_outcome:
+  answer:
+    rank_change: 1
+    repairs_with_same_rank_change: 2
+  status: ACCEPTED
+actual_outcome:
+  extracted_answer: null
+  gate_status: NOT_RUN
+  reason: Dimension rewrite_count is recorded at level 0. No provider reply was copied. The expected object
+    is the sealed seed target.
+  status: NOT_RUN
+  refusal_code: null
+metrics: {}
+notes: 'Mirrors pilot_0000000 capsule layout. PFP type named by this probe: InputTypingModel. Value kind:
+  mapping. The type witness lives in dimension_probe.yaml. It is not a measured receipt.'

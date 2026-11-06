@@ -1,0 +1,41 @@
+# Typed test input for Dossier 2: Exact Rational LP Certificate
+schema: mssn/demo4/exact-lp-certificate/v1
+field: Q
+carrier:
+  vertices:
+    - id: "v0"
+      index: 0
+    - id: "v1"
+      index: 1
+    - id: "v2"
+      index: 2
+  edges:
+    - id: "e01"
+      index: 0
+      source: "v0"
+      target: "v1"
+      weight: "1"
+    - id: "e12"
+      index: 1
+      source: "v1"
+      target: "v2"
+      weight: "1"
+    - id: "e20"
+      index: 2
+      source: "v2"
+      target: "v0"
+      weight: "1"
+
+matrices:
+  # d0 maps vertices C0 to edges C1: (d0*alpha)[e] = alpha[target] - alpha[source]
+  # e01: v0 -> v1 => alpha[1] - alpha[0] => [-1, 1, 0]
+  # e12: v1 -> v2 => alpha[2] - alpha[1] => [0, -1, 1]
+  # e20: v2 -> v0 => alpha[0] - alpha[2] => [1, 0, -1]
+  d0:
+    - ["-1", "1", "0"]
+    - ["0", "-1", "1"]
+    - ["1", "0", "-1"]
+
+target_cochain:
+  description: "Uniform 3-cycle edge defect with directed cycle sum = 1"
+  values: ["1/3", "1/3", "1/3"]

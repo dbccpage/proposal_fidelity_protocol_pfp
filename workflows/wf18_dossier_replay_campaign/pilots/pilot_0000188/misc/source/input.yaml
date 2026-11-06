@@ -1,0 +1,47 @@
+# Typed test input for Dossier 1: F2 Frustrated Spin Triangle
+schema: mssn/demo4/f2-spin-triangle/v1
+field: F2
+carrier:
+  vertices:
+    - id: "v0"
+      index: 0
+    - id: "v1"
+      index: 1
+    - id: "v2"
+      index: 2
+  edges:
+    - id: "e01"
+      index: 0
+      source: "v0"
+      target: "v1"
+    - id: "e12"
+      index: 1
+      source: "v1"
+      target: "v2"
+    - id: "e20"
+      index: 2
+      source: "v2"
+      target: "v0"
+  faces:
+    - id: "f012"
+      index: 0
+      boundary_edges: ["e01", "e12", "e20"]
+
+matrices:
+  # d0 maps vertices C0 to edges C1: (d0*s)[e] = s[target] - s[source] mod 2
+  # e01: v0 -> v1 => [1, 1, 0] in F2 (v0 + v1)
+  # e12: v1 -> v2 => [0, 1, 1] in F2 (v1 + v2)
+  # e20: v2 -> v0 => [1, 0, 1] in F2 (v2 + v0)
+  d0:
+    - [1, 1, 0]
+    - [0, 1, 1]
+    - [1, 0, 1]
+  # d1 maps edges C1 to face C2: face curl around triangle
+  # f012 => e01 + e12 + e20 => [1, 1, 1] in F2
+  d1:
+    - [1, 1, 1]
+
+target_cochain:
+  # Antiferromagnetic preference: each bond wishes to be anti-aligned (difference = 1)
+  description: "Uniform antiferromagnetic bond preference"
+  values: [1, 1, 1]

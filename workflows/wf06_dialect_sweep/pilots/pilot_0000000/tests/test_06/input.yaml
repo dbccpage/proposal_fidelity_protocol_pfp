@@ -1,0 +1,26 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000000
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000000_req_0_rewrite_06
+rewrite_metadata:
+  rewrite_id: rewrite_06
+  name: Strategy R10 - Discrete Matrix/Vector Linear System Wire
+  governing_specification: rewriting_strategies_mssn_wire.md#strategy-r10-positional-arithmetic-normalization
+  governing_strategy: Strategy R10 (Positional Arithmetic Normalization)
+  target_stratum: Stratum 2 (Positional Arithmetic & Rational Reduction)
+  explanation: |
+    Abstracts symbolic variable names away by formulating the system as an exact integer
+    matrix equation A x = b with linear functional target c^T x. Enables direct mechanical
+    row reduction and exact rational evaluation without symbol-parsing ambiguities.
+input_typing:
+  lexical_alphabet: "Gamma_38 strictly ({a..z, 0..9, <, >})"
+  syntactic_category: MatrixVectorLinearSystemPacket
+  semantic_carrier: "MatrixEquation(A in Z^(2x2), b in Z^2, c in Z^2)"
+  dialect_tier: Tier S
+  boundary_format: mss-boundary-v1
+seed_prompt: '<<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5><1>><<target><<vec><1><1>>>>'
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

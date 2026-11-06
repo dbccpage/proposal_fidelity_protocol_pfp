@@ -1,0 +1,32 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000023
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000023_req_0
+rewrite_metadata:
+  rewrite_id: idea_14
+  name: Idea 14 - Task-Mode Fidelity
+  governing_specification: IDEAS.md#task-mode-fidelity
+  governing_strategy: Strategy I14 (Finite Deduction vs Literal Extraction)
+  target_stratum: Stratum 5 (Task Mode Contract Enforcement)
+  explanation: Keeps facts fixed while explicitly declaring finite deduction mode
+    contract.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*'}
+  syntactic_category: TaskModeDirectiveProposal
+  semantic_carrier: 'LinearSystem(dimension=2, field=Rational) under Mode: finite_deduction'
+  dialect_tier: Tier S (Explicit Task-Mode Directive)
+  boundary_format: pfp-task-mode-v1
+seed_prompt: '<mode: finite_deduction>
+
+  <facts: ["x + 2y = 5", "3x - y = 1"]>
+
+  <goal: "deduce value of x + y from facts over Q">
+
+  <return: {"answer": x + y}>
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

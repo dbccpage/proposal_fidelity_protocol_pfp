@@ -1,0 +1,57 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: rewrite_04_plain
+test_kind: plain_input
+pilot_id: pilot_0000000
+case_id: rewrite_04
+request_id: pilot_0000000_req_rewrite_04_plain
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: seed_rewrite_04.yaml
+  source_file_bytes: 1154
+  source_file_kb: 1.127
+  payload_bytes: 113
+  payload_kb: 0.11
+  messages_count: 1
+raw_reply: '3'
+reasoning_content: "We need answer solve system. Need parse weird notation. Need infer.\
+  \ User: \"<<solve><<eqs><<eq><<add><x><<mul><2><y>>><5>><<eq><<sub<<mul><3><x>><y>><1>>><<return><<answer><<add><x><y>>>>>>\"\
+  \n\nThis looks like S-expression / custom. Need solve equations:\neq1: add x (mul\
+  \ 2 y) = 5 => x + 2y = 5\neq2: sub (mul 3 x) y = 1 => 3x - y = 1\nreturn answer\
+  \ add x y => x+y.\n\nNeed solve. Let's solve:\nx + 2y =5\n3x - y =1\nFrom second\
+  \ y=3x-1. Substitute x+2(3x-1)=5 => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3.\n\nNeed\
+  \ final maybe just 3. Ensure parse. Let's craft concise. \n"
+parsed_response: 3
+extracted_answer: null
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: null
+  status: MALFORMED
+  reason: Candidate payload must be a JSON dictionary
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: Ionstream
+  dispatch_id: gen-1791686174-5s3RPAsVKsSpGG2deDjz
+  system_fingerprint: null
+  duration_seconds: 1.833
+  tokens_per_second: 127.69
+  usage:
+    prompt_tokens: 89
+    completion_tokens: 234
+    reasoning_tokens: 232
+    total_tokens: 323
+  cost:
+    total_cost_usd: 0.0001844
+    total_cost_microusd: 184
+    cost_details:
+      upstream_inference_cost: 0.0001844
+      upstream_inference_prompt_cost: 8.9e-06
+      upstream_inference_completions_cost: 0.0001755
+  timestamp_utc: '2026-10-11T02:36:16.101818+00:00'

@@ -26,6 +26,15 @@ Sources: 0000000-0000019.
 
 Pilots 0-10 retain 53-83 test capsules each (seed, P*, ten seed rewrites, ten P* rewrites); a few capsules hold manual live replies, most are offline controls.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/pilot_0000000/`](pilots/pilot_0000000/) — pilot_0000000 — Linear Algebra (Rung 1)
+- [`pilots/pilot_0000001/`](pilots/pilot_0000001/) — pilot_0000001
+- [`pilots/pilot_0000002/`](pilots/pilot_0000002/) — pilot_0000002
+- [`pilots/pilot_0000004/`](pilots/pilot_0000004/) — pilot_0000004
+
 ## Team
 
 Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); coder ×1 (sonnet); deep_researcher ×1 (opus); host_checker ×1 (none).

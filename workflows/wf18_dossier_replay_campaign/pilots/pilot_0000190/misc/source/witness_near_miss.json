@@ -1,0 +1,37 @@
+{
+  "schema": "mssn/demo9/witness_near_miss/v1",
+  "cases": [
+    {
+      "case_id": "near_miss_non_closed_cycle",
+      "description": "Dual witness is not a closed 4-cycle (boundary d3^T * v != 0).",
+      "potential_c": ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+      "dual_witness": ["1", "1", "1", "1", "1", "1"],
+      "reported_value": "1",
+      "expected_refusal": "DUAL_WITNESS_NOT_CLOSED"
+    },
+    {
+      "case_id": "near_miss_suboptimal_gauge",
+      "description": "Primal gauge choice yields non-zero duality gap.",
+      "potential_c": ["1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+      "dual_witness": ["-1", "1", "-1", "1", "-1", "1"],
+      "reported_value": "1",
+      "expected_refusal": "POSITIVE_DUALITY_GAP"
+    },
+    {
+      "case_id": "near_miss_dual_norm_violation",
+      "description": "Dual witness element exceeds 4-simplex weight bound (|v_sigma| > mu_sigma).",
+      "potential_c": ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+      "dual_witness": ["-2", "2", "-2", "2", "-2", "2"],
+      "reported_value": "1",
+      "expected_refusal": "DUAL_NORM_EXCEEDED"
+    },
+    {
+      "case_id": "near_miss_float_injection",
+      "description": "Float value injected in witness, violating Zero-Float Law.",
+      "potential_c": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+      "dual_witness": [-1.0, 1.0, -1.0, 1.0, -1.0, 1.0],
+      "reported_value": 1.0,
+      "expected_refusal": "REFUSED_FLOAT_DETECTED"
+    }
+  ]
+}

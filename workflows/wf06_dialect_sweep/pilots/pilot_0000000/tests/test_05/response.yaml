@@ -1,0 +1,120 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: rewrite_05_plain
+test_kind: plain_input
+pilot_id: pilot_0000000
+case_id: rewrite_05
+request_id: pilot_0000000_req_rewrite_05_plain
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: seed_rewrite_05.yaml
+  source_file_bytes: 1413
+  source_file_kb: 1.38
+  payload_bytes: 268
+  payload_kb: 0.262
+  messages_count: 1
+raw_reply: " The system is:\n\n\\[\nx+2y=5,\\qquad 3x-y=1\n\\]\n\nFrom \\(3x-y=1\\\
+  ), we get \\(y=3x-1\\).  \nSubstitute into \\(x+2y=5\\):\n\n\\[\nx+2(3x-1)=5\n\\\
+  ]\n\\[\n7x-2=5\n\\]\n\\[\n7x=7 \\Rightarrow x=1\n\\]\n\nThen \\(y=3(1)-1=2\\).\n\
+  \nSo:\n\n\\[\nx+y=1+2=3\n\\]\n\n**Answer: 3**"
+reasoning_content: 'We need answer user. Need parse. The prompt seems encoded in some
+  symbolic format. Need infer task. Let''s parse carefully.
+
+
+  User text:
+
+
+  <<decl><<alph><gamma38>><<terms><ratsys>><<rules><exactrational>><<obst><singularsystem>><<term><exactsolution>>>><<task><<assume><<eq><<add><x><<mul><2><y>>><5>>><<assume><<eq><<sub<<mul><3><x>><y>><1>>><<goal><<eval><<add><x><y>>>><<return><<answer><<add><x><y>>>>>>
+
+
+  This looks like custom notation. Need solve system? Let''s decode.
+
+
+  Declarations? alph gamma38? terms ratsys? rules exactrational? obst singularsystem?
+  term exactsolution? Task: assume eq add x (mul 2 y) = 5? assume eq sub (mul 3 x)
+  y = 1? goal eval add x y? return answer add x y.
+
+
+  Let''s parse carefully.
+
+
+  <<task><<assume><<eq><<add><x><<mul><2><y>>><5>>><<assume><<eq><<sub<<mul><3><x>><y>><1>>><<goal><<eval><<add><x><y>>>><<return><<answer><<add><x><y>>>>>>
+
+
+  Maybe equations:
+
+  x + 2y = 5
+
+  3x - y = 1
+
+  Find x+y.
+
+
+  Let''s solve. From second y = 3x -1. Substitute into first: x + 2(3x -1)=5 => x+6x-2=5
+  =>7x=7 => x=1. y=2. x+y=3. Answer 3.
+
+
+  Need ensure no ambiguity. The notation <<add><x><<mul><2><y>>>><5>> means add x
+  (mul 2 y) = 5. <<sub<<mul><3><x>><y>><1>> means sub (mul 3 x) y = 1. Yes.
+
+
+  Need respond likely just answer. But maybe need include exact solution? The prompt
+  has <<term><exactsolution>> and <<obst><singularsystem>>? Hmm. It might be a benchmark
+  for "exact rational" solving. Need output in same format? The final should be answer?
+  The user likely expects solving. We can provide concise with equations and answer.
+
+
+  Need consider if "singularsystem" means maybe system singular? But equations are
+  not singular. Let''s verify determinant matrix [[1,2],[3,-1]] determinant -1 -6
+  = -7 nonzero. Unique solution. x=1, y=2, x+y=3.
+
+
+  Need final. Since desired oververbosity 5, maybe include steps. But user encoded
+  maybe wants just answer. We can answer "3". Maybe include derivation.
+
+
+  Let''s craft final: Solve system:
+
+  x+2y=5
+
+  3x-y=1
+
+  From second y=3x-1. Substitute: x+2(3x-1)=5 -> 7x=7 -> x=1, y=2. Thus x+y=3. Answer:
+  3.
+
+
+  Need ensure no extra weird. Final.'
+parsed_response: null
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: false
+  structure_leakage_debt_chars: 228
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: MALFORMED
+  reason: Reply was not valid JSON dictionary
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: OpenInference
+  dispatch_id: gen-1791686176-2aCTkBqIhSe5K7xodsH2
+  system_fingerprint: vllm-dev-b2e6e867
+  duration_seconds: 25.605
+  tokens_per_second: 32.42
+  usage:
+    prompt_tokens: 148
+    completion_tokens: 830
+    reasoning_tokens: 704
+    total_tokens: 978
+  cost:
+    total_cost_usd: 0.00029881628
+    total_cost_microusd: 299
+    cost_details:
+      upstream_inference_cost: 0.00029881628
+      upstream_inference_prompt_cost: 1.628e-08
+      upstream_inference_completions_cost: 0.0002988
+  timestamp_utc: '2026-10-11T02:36:41.711770+00:00'

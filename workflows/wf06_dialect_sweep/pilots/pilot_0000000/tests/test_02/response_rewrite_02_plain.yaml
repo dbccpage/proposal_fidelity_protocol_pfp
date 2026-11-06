@@ -1,0 +1,92 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: rewrite_02_plain
+test_kind: plain_input
+pilot_id: pilot_0000000
+case_id: rewrite_02
+request_id: pilot_0000000_req_rewrite_02_plain
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: seed_rewrite_02.yaml
+  source_file_bytes: 1192
+  source_file_kb: 1.164
+  payload_bytes: 125
+  payload_kb: 0.122
+  messages_count: 1
+raw_reply: '3'
+reasoning_content: 'We need answer user. Need parse. They provided symbolic expressions?
+  Need infer task. They wrote:
+
+
+  <assume eq1 <eq <add x <mul 2 y>> 5>>
+
+  <assume eq2 <eq <sub <mul 3 x> y> 1>>
+
+  <goal <eval <add x y>>>
+
+  <return answer <add x y>>>
+
+
+  Seems like a math problem in some Lisp-like notation. Need solve system:
+
+  eq1: x + 2y = 5
+
+  eq2: 3x - y = 1
+
+  Goal evaluate x+y. Return answer <add x y>. Need compute.
+
+
+  Solve:
+
+  x + 2y = 5
+
+  3x - y = 1
+
+
+  From second y = 3x -1. Substitute: x + 2(3x -1)=5 => x+6x-2=5 =>7x=7 => x=1. y=3*1-1=2.
+  x+y=3.
+
+
+  Need final maybe just 3 or <add x y> = 3. Need maybe include answer. Since user
+  likely expects return answer. We can provide concise.
+
+
+  Need ensure no hidden issue: They use <assume eq1 ...> etc. Maybe from "Logic" or
+  "Math" benchmark. Need output answer. Final: 3. Could include equations.
+
+
+  Let''s craft final with minimal explanation.'
+parsed_response: 3
+extracted_answer: null
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: null
+  status: MALFORMED
+  reason: Candidate payload must be a JSON dictionary
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: InferenceNet
+  dispatch_id: gen-1791686081-jZNeet7Uab0U2ot85XYY
+  system_fingerprint: inference.net
+  duration_seconds: 2.143
+  tokens_per_second: 138.11
+  usage:
+    prompt_tokens: 87
+    completion_tokens: 296
+    reasoning_tokens: 293
+    total_tokens: 383
+  cost:
+    total_cost_usd: 0.000202059
+    total_cost_microusd: 202
+    cost_details:
+      upstream_inference_cost: 0.000202059
+      upstream_inference_prompt_cost: 6.699e-06
+      upstream_inference_completions_cost: 0.00019536
+  timestamp_utc: '2026-10-11T02:34:43.405923+00:00'

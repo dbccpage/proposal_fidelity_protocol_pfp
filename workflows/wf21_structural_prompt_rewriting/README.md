@@ -24,6 +24,14 @@ Sources: 0000028, 0000030, 0000050, acset_prompt_rewriting, acset_cochain_rewrit
 
 Offline pilots: grammar selection preserving bytes (28), a normal form that loses the question (30), no substitution inside substituted data (50), and finite ACSet/DPO rewriting with an exact judge.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/acset_cochain_rewriting/`](pilots/acset_cochain_rewriting/) — Finite ACSet/DPO cochain rewriting v001
+- [`pilots/acset_prompt_rewriting/`](pilots/acset_prompt_rewriting/) — ACSets and DPO prompt rewriting pilot
+- [`pilots/optional_rewrite_backends/`](pilots/optional_rewrite_backends/) — Optional Julia and DSPy demonstrations
+
 ## Team
 
 Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (fable); host_checker ×1 (none).

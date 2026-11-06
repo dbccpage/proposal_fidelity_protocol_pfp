@@ -1,0 +1,83 @@
+# AuthorityEffect: None.
+# Planned transmutation of demo_004. Not a provider run.
+schema: pfp.rewrite-test-plan.v1
+authority_effect: None
+pilot_id: pilot_0000059
+spec: spec.yaml
+responses: misc
+description: One planned capsule for C015. The stimulus is the catalog title and summary. No provider
+  was called.
+prompt_template:
+  path: prompt_template.yaml
+  shared_by_all_tests: true
+seed:
+  path: seed.yaml
+  seed_prompt: |
+    Persistent Homology Barcodes with Reduction Certificates
+
+    Catalog summary: F2 barcodes of filtered complexes up to 2000 simplices, certified by the reduced boundary matrix.
+
+    Return one JSON object. Put the certificate in the answer field.
+    Bind each step you use before the certificate.
+
+    Source citation: omega_engine_education/pilots/demo_004/b_cohomology/c015_persistent_homology_barcodes.md
+    The catalog names that path. This layout found the file and did not copy it into the prompt.
+  instantiated_template: prompt_template.yaml
+  prompt_id: pilot_0000059_p_star
+  signature: structured_spans
+expected_outcome:
+  answer: PLANNED; historic catalog status packet_built; no fresh receipt by this layout
+  status: PLANNED
+counts:
+  unique_cases: 1
+  rewrite_files: 0
+  tests: 1
+cases:
+- case_id: c015
+  rewrite_id: null
+  signature: C015
+  grammar: null
+  name: Persistent Homology Barcodes with Reduction Certificates
+  governing_strategy: planned catalog summary; spec file not inlined
+  governing_specification: omega_engine_education/pilots/demo_004/b_cohomology/c015_persistent_homology_barcodes.md
+  dialect_tier: planned P* envelope
+  boundary_format: pfp-p-star-envelope
+  semantic_carrier: simplex_homology
+  seed_prompt: |
+    Persistent Homology Barcodes with Reduction Certificates
+
+    Catalog summary: F2 barcodes of filtered complexes up to 2000 simplices, certified by the reduced boundary matrix.
+
+    Return one JSON object. Put the certificate in the answer field.
+    Bind each step you use before the certificate.
+
+    Source citation: omega_engine_education/pilots/demo_004/b_cohomology/c015_persistent_homology_barcodes.md
+    The catalog names that path. This layout found the file and did not copy it into the prompt.
+  artifact: tests/test_00/input.yaml
+  instantiated_template: tests/test_00/input.yaml
+  prompt_id: pilot_0000059_p_star
+  tests:
+  - c015_catalog_summary
+tests:
+- test_id: c015_catalog_summary
+  kind: planned_p_star
+  rewrite_id: null
+  signature: C015
+  grammar: null
+  seed_prompt: |
+    Persistent Homology Barcodes with Reduction Certificates
+
+    Catalog summary: F2 barcodes of filtered complexes up to 2000 simplices, certified by the reduced boundary matrix.
+
+    Return one JSON object. Put the certificate in the answer field.
+    Bind each step you use before the certificate.
+
+    Source citation: omega_engine_education/pilots/demo_004/b_cohomology/c015_persistent_homology_barcodes.md
+    The catalog names that path. This layout found the file and did not copy it into the prompt.
+  prompt_template: prompt_template.yaml
+  artifact: tests/test_00/input.yaml
+  request_id: pilot_0000059_req_test_00
+  prompt_id: pilot_0000059_p_star
+  parent_prompt_id: null
+  user_prompt_equals_rewritten_seed: true
+  case_id: c015

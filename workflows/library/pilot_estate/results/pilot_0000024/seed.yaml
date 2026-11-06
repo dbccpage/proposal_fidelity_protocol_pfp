@@ -1,0 +1,33 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000024
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000024_req_0
+rewrite_metadata:
+  rewrite_id: idea_15
+  name: Idea 15 - Representation-Order Sensitivity
+  governing_specification: IDEAS.md#representation-order-sensitivity
+  governing_strategy: Strategy I15 (Field Permutation Invariance)
+  target_stratum: Stratum 3 (Presentation Permutation Sensitivity)
+  explanation: Permutes independent fields while keeping protected answer fixed to
+    test representation sensitivity.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*'}
+  syntactic_category: PermutedFieldsProposal
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) with Inverted Field
+    Blocks
+  dialect_tier: Tier S (Permuted Fields Proposal)
+  boundary_format: pfp-permuted-fields-v1
+seed_prompt: '<return_spec: {"answer": x + y}>
+
+  <equation_secondary: "3x - y = 1">
+
+  <equation_primary: "x + 2y = 5">
+
+  <evaluate: "x + y">
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

@@ -1,0 +1,54 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: seed_plain
+test_kind: plain_input
+pilot_id: pilot_0000000
+case_id: seed
+request_id: pilot_0000000_req_seed_plain
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: seed.yaml
+  source_file_bytes: 274
+  source_file_kb: 0.268
+  payload_bytes: 56
+  payload_kb: 0.055
+  messages_count: 1
+raw_reply: '{"answer": 3}'
+reasoning_content: 'We need answer solve system. Need return {"answer": x+y}. Need
+  compute. Equations x+2y=5, 3x-y=1. Solve. From second y=3x-1. Substitute x+2(3x-1)=5
+  => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3. Return JSON.'
+parsed_response:
+  answer: 3
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: ACCEPTED
+  reason: Linear system solution matches exact rational ground truth
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: CoreWeave
+  dispatch_id: gen-1791686077-z0dO6bppUW0YoImyUGMy
+  system_fingerprint: null
+  duration_seconds: 0.997
+  tokens_per_second: 93.24
+  usage:
+    prompt_tokens: 58
+    completion_tokens: 93
+    reasoning_tokens: 86
+    total_tokens: 151
+  cost:
+    total_cost_usd: 7.205e-05
+    total_cost_microusd: 72
+    cost_details:
+      upstream_inference_cost: 7.205e-05
+      upstream_inference_prompt_cost: 1.16e-05
+      upstream_inference_completions_cost: 6.045e-05
+  timestamp_utc: '2026-10-11T02:34:37.912100+00:00'

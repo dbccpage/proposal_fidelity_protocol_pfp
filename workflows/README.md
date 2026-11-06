@@ -10,57 +10,57 @@ with `pip install ".[workflows]"`, then every runnable workflow has offline
 commands (no model, no cost) and live commands in its README. The step-by-step
 guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflows).
 
-| WF | Workflow | Status | Kind | Builds on |
-| --- | --- | --- | --- | --- |
-| 1 | [Typed answer](wf01_typed_answer/README.md) | **runnable** | base | — |
-| 2 | [Full slots](wf02_full_slots/README.md) | **runnable** | procedure extension | WF1 |
-| 3 | [Mine, then solve](wf03_mine_then_solve/README.md) | **runnable** | procedure extension | WF1 |
-| 4 | [Five agents + LGGR](wf04_five_agents_lggr/README.md) | **runnable** | procedure extension | WF3 |
-| 5 | [Checked rewrite](wf05_checked_rewrite/README.md) | **runnable** | procedure extension | WF4 |
-| 6 | [Dialect sweep](wf06_dialect_sweep/README.md) | proposal | experiment design | WF5 |
-| 7 | [Typed refusal](wf07_typed_refusal/README.md) | proposal | procedure extension | WF1 |
-| 8 | [Staged sealed packets](wf08_staged_sealed_packets/README.md) | proposal | procedure extension | WF2, WF5 |
-| 9 | [Bounded check-and-repair](wf09_bounded_check_and_repair/README.md) | proposal | procedure extension | WF2 |
-| 10 | [Local-to-global obstruction certificate](wf10_local_to_global_obstruction_certificate/README.md) | proposal | task preset | WF4, WF9 |
-| 11 | [Dual-certificate synthesis](wf11_dual_certificate_synthesis/README.md) | proposal | task preset | WF3, WF9 |
-| 12 | [Mechanism-control arms](wf12_mechanism_control_arms/README.md) | proposal | experiment design | WF6, WF3 |
-| 13 | [Exact-domain capsule battery](wf13_exact_domain_capsule_battery/README.md) | proposal | task preset | WF1, WF7 |
-| 14 | [Immune failure classification](wf14_immune_failure_classification/README.md) | proposal | meta workflow | WF7, WF12 |
-| 15 | [Adversary tribunal](wf15_adversary_tribunal/README.md) | proposal | procedure extension | WF4, WF14 |
-| 16 | [Substrate crosswalk](wf16_substrate_crosswalk/README.md) | proposal | task preset | WF5, WF10 |
-| 17 | [Witnessed-difference programme](wf17_witnessed_difference_programme/README.md) | proposal | task preset | WF10, WF11 |
-| 18 | [Dossier replay campaign](wf18_dossier_replay_campaign/README.md) | proposal | harness gate | WF6, WF12 |
-| 19 | [Failure-derived rule transfer](wf19_failure_derived_rule_transfer/README.md) | proposal | experiment design | WF12, WF14 |
-| 20 | [Derivation loop with lift grants](wf20_derivation_loop_with_lift_grants/README.md) | proposal | procedure extension | WF9, WF10, WF19 |
-| 21 | [Structural prompt rewriting](wf21_structural_prompt_rewriting/README.md) | proposal | procedure extension | WF5 |
-| 22 | [Certified cost ladder](wf22_certified_cost_ladder/README.md) | proposal | experiment design | WF6, WF8, WF18 |
-| 23 | [Judge-packet custody audit](wf23_judge_packet_custody_audit/README.md) | proposal | harness gate | WF11 |
-| 24 | [Pinned-token operational scratchpad](wf24_pinned_token_operational_scratchpad/README.md) | proposal | procedure extension | WF2 |
-| 25 | [Hierarchical decimation](wf25_hierarchical_decimation/README.md) | proposal | procedure extension | WF24 |
-| 26 | [Multi-round antibody dialogue](wf26_multi_round_antibody_dialogue/README.md) | proposal | procedure extension | WF9, WF14 |
-| 27 | [Hinted retraction with a stationary-loop detector](wf27_hinted_retraction_with_a_stationary_loop_detector/README.md) | proposal | procedure extension | WF9 |
-| 28 | [Eight-role audit dialogue](wf28_eight_role_audit_dialogue/README.md) | proposal | procedure extension | WF15 |
-| 29 | [Checker synthesis scored by mutation kill rate](wf29_checker_synthesis_scored_by_mutation_kill_rate/README.md) | proposal | task preset | WF11 |
-| 30 | [Constraint-forcing anti-recitation](wf30_constraint_forcing_anti_recitation/README.md) | proposal | procedure extension | WF1 |
-| 31 | [Multi-agent tournament with held-out cross-validation](wf31_multi_agent_tournament_with_held_out_cross_validation/README.md) | proposal | experiment design | WF1 |
-| 32 | [Claim-scoped receipt](wf32_claim_scoped_receipt/README.md) | proposal | procedure extension | WF1, WF2 |
-| 33 | [Recursive re-entry with shared fuel](wf33_recursive_re_entry_with_shared_fuel/README.md) | proposal | procedure extension | WF9, WF20 |
-| 34 | [Future-faithful compression and bounded context](wf34_future_faithful_compression_and_bounded_context/README.md) | proposal | procedure extension | WF8, WF22 |
-| 35 | [Proposal-channel comparison](wf35_proposal_channel_comparison/README.md) | proposal | experiment design | WF6, WF12 |
-| 36 | [Guarded staged slot materialisation](wf36_guarded_staged_slot_materialisation/README.md) | proposal | procedure extension | WF8 |
-| 37 | [Evidence-bound harness evolution](wf37_evidence_bound_harness_evolution/README.md) | proposal | meta workflow | WF19, WF22 |
-| 38 | [Diagnostic-trace proposal selection](wf38_diagnostic_trace_proposal_selection/README.md) | proposal | procedure extension | WF9 |
-| 39 | [Authority firewall gate](wf39_authority_firewall_gate/README.md) | proposal | harness gate | WF1, WF23 |
-| 40 | [Restart boundary after exhausted repair](wf40_restart_boundary_after_exhausted_repair/README.md) | proposal | procedure extension | WF9, WF20 |
-| 41 | [Detector adequacy and two-signal admission](wf41_detector_adequacy_and_two_signal_admission/README.md) | proposal | meta workflow | WF14 |
-| 42 | [Reasoning-trace validation](wf42_reasoning_trace_validation/README.md) | proposal | procedure extension | WF10, WF21 |
-| 43 | [Gate-honesty and answer-free leak audit](wf43_gate_honesty_and_answer_free_leak_audit/README.md) | proposal | harness gate | WF23 |
-| 44 | [Exact certificate presets](wf44_exact_certificate_presets/README.md) | proposal | task preset | WF11, WF10 |
-| 45 | [Finite terminal selector and plenitude test](wf45_finite_terminal_selector_and_plenitude_test/README.md) | proposal | procedure extension | WF7 |
-| 46 | [Boundary sufficiency and gluing diagnostic](wf46_boundary_sufficiency_and_gluing_diagnostic/README.md) | proposal | procedure extension | WF4 |
-| 47 | [Resumable bounded frontier search](wf47_resumable_bounded_frontier_search/README.md) | proposal | procedure extension | WF9 |
-| 48 | [Commit-reveal with a hostile mutation gate](wf48_commit_reveal_with_a_hostile_mutation_gate/README.md) | proposal | harness gate | WF11, WF23 |
-| 49 | [Query-preservation stage and mode campaign](wf49_query_preservation_stage_and_mode_campaign/README.md) | proposal | experiment design | WF8, WF22 |
+| WF | Workflow | Status | Kind | Builds on | Pilots |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | [Typed answer](wf01_typed_answer/README.md) | **runnable** | base | — | — |
+| 2 | [Full slots](wf02_full_slots/README.md) | **runnable** | procedure extension | WF1 | — |
+| 3 | [Mine, then solve](wf03_mine_then_solve/README.md) | **runnable** | procedure extension | WF1 | — |
+| 4 | [Five agents + LGGR](wf04_five_agents_lggr/README.md) | **runnable** | procedure extension | WF3 | — |
+| 5 | [Checked rewrite](wf05_checked_rewrite/README.md) | **runnable** | procedure extension | WF4 | — |
+| 6 | [Dialect sweep](wf06_dialect_sweep/README.md) | proposal | experiment design | WF5 | 4 |
+| 7 | [Typed refusal](wf07_typed_refusal/README.md) | proposal | procedure extension | WF1 | 2 |
+| 8 | [Staged sealed packets](wf08_staged_sealed_packets/README.md) | proposal | procedure extension | WF2, WF5 | 21 |
+| 9 | [Bounded check-and-repair](wf09_bounded_check_and_repair/README.md) | proposal | procedure extension | WF2 | — |
+| 10 | [Local-to-global obstruction certificate](wf10_local_to_global_obstruction_certificate/README.md) | proposal | task preset | WF4, WF9 | 1 |
+| 11 | [Dual-certificate synthesis](wf11_dual_certificate_synthesis/README.md) | proposal | task preset | WF3, WF9 | 8 |
+| 12 | [Mechanism-control arms](wf12_mechanism_control_arms/README.md) | proposal | experiment design | WF6, WF3 | 5 |
+| 13 | [Exact-domain capsule battery](wf13_exact_domain_capsule_battery/README.md) | proposal | task preset | WF1, WF7 | 70 |
+| 14 | [Immune failure classification](wf14_immune_failure_classification/README.md) | proposal | meta workflow | WF7, WF12 | 10 |
+| 15 | [Adversary tribunal](wf15_adversary_tribunal/README.md) | proposal | procedure extension | WF4, WF14 | 10 |
+| 16 | [Substrate crosswalk](wf16_substrate_crosswalk/README.md) | proposal | task preset | WF5, WF10 | 25 |
+| 17 | [Witnessed-difference programme](wf17_witnessed_difference_programme/README.md) | proposal | task preset | WF10, WF11 | 18 |
+| 18 | [Dossier replay campaign](wf18_dossier_replay_campaign/README.md) | proposal | harness gate | WF6, WF12 | 5 |
+| 19 | [Failure-derived rule transfer](wf19_failure_derived_rule_transfer/README.md) | proposal | experiment design | WF12, WF14 | 9 |
+| 20 | [Derivation loop with lift grants](wf20_derivation_loop_with_lift_grants/README.md) | proposal | procedure extension | WF9, WF10, WF19 | 9 |
+| 21 | [Structural prompt rewriting](wf21_structural_prompt_rewriting/README.md) | proposal | procedure extension | WF5 | 3 |
+| 22 | [Certified cost ladder](wf22_certified_cost_ladder/README.md) | proposal | experiment design | WF6, WF8, WF18 | 2 |
+| 23 | [Judge-packet custody audit](wf23_judge_packet_custody_audit/README.md) | proposal | harness gate | WF11 | 1 |
+| 24 | [Pinned-token operational scratchpad](wf24_pinned_token_operational_scratchpad/README.md) | proposal | procedure extension | WF2 | — |
+| 25 | [Hierarchical decimation](wf25_hierarchical_decimation/README.md) | proposal | procedure extension | WF24 | — |
+| 26 | [Multi-round antibody dialogue](wf26_multi_round_antibody_dialogue/README.md) | proposal | procedure extension | WF9, WF14 | — |
+| 27 | [Hinted retraction with a stationary-loop detector](wf27_hinted_retraction_with_a_stationary_loop_detector/README.md) | proposal | procedure extension | WF9 | — |
+| 28 | [Eight-role audit dialogue](wf28_eight_role_audit_dialogue/README.md) | proposal | procedure extension | WF15 | — |
+| 29 | [Checker synthesis scored by mutation kill rate](wf29_checker_synthesis_scored_by_mutation_kill_rate/README.md) | proposal | task preset | WF11 | — |
+| 30 | [Constraint-forcing anti-recitation](wf30_constraint_forcing_anti_recitation/README.md) | proposal | procedure extension | WF1 | — |
+| 31 | [Multi-agent tournament with held-out cross-validation](wf31_multi_agent_tournament_with_held_out_cross_validation/README.md) | proposal | experiment design | WF1 | — |
+| 32 | [Claim-scoped receipt](wf32_claim_scoped_receipt/README.md) | proposal | procedure extension | WF1, WF2 | — |
+| 33 | [Recursive re-entry with shared fuel](wf33_recursive_re_entry_with_shared_fuel/README.md) | proposal | procedure extension | WF9, WF20 | — |
+| 34 | [Future-faithful compression and bounded context](wf34_future_faithful_compression_and_bounded_context/README.md) | proposal | procedure extension | WF8, WF22 | — |
+| 35 | [Proposal-channel comparison](wf35_proposal_channel_comparison/README.md) | proposal | experiment design | WF6, WF12 | — |
+| 36 | [Guarded staged slot materialisation](wf36_guarded_staged_slot_materialisation/README.md) | proposal | procedure extension | WF8 | — |
+| 37 | [Evidence-bound harness evolution](wf37_evidence_bound_harness_evolution/README.md) | proposal | meta workflow | WF19, WF22 | — |
+| 38 | [Diagnostic-trace proposal selection](wf38_diagnostic_trace_proposal_selection/README.md) | proposal | procedure extension | WF9 | — |
+| 39 | [Authority firewall gate](wf39_authority_firewall_gate/README.md) | proposal | harness gate | WF1, WF23 | — |
+| 40 | [Restart boundary after exhausted repair](wf40_restart_boundary_after_exhausted_repair/README.md) | proposal | procedure extension | WF9, WF20 | — |
+| 41 | [Detector adequacy and two-signal admission](wf41_detector_adequacy_and_two_signal_admission/README.md) | proposal | meta workflow | WF14 | — |
+| 42 | [Reasoning-trace validation](wf42_reasoning_trace_validation/README.md) | proposal | procedure extension | WF10, WF21 | — |
+| 43 | [Gate-honesty and answer-free leak audit](wf43_gate_honesty_and_answer_free_leak_audit/README.md) | proposal | harness gate | WF23 | — |
+| 44 | [Exact certificate presets](wf44_exact_certificate_presets/README.md) | proposal | task preset | WF11, WF10 | — |
+| 45 | [Finite terminal selector and plenitude test](wf45_finite_terminal_selector_and_plenitude_test/README.md) | proposal | procedure extension | WF7 | — |
+| 46 | [Boundary sufficiency and gluing diagnostic](wf46_boundary_sufficiency_and_gluing_diagnostic/README.md) | proposal | procedure extension | WF4 | — |
+| 47 | [Resumable bounded frontier search](wf47_resumable_bounded_frontier_search/README.md) | proposal | procedure extension | WF9 | — |
+| 48 | [Commit-reveal with a hostile mutation gate](wf48_commit_reveal_with_a_hostile_mutation_gate/README.md) | proposal | harness gate | WF11, WF23 | — |
+| 49 | [Query-preservation stage and mode campaign](wf49_query_preservation_stage_and_mode_campaign/README.md) | proposal | experiment design | WF8, WF22 | — |
 
 ## Other folders here
 
@@ -68,15 +68,15 @@ guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fid
 | --- | --- |
 | [`tasks/`](tasks/README.md) | The problems workflows run on: 29 offline examples and 50 certified challenges, each with exact checkers |
 | [`dag/`](dag/README.md) | The dependency graph of WF1–WF49 (JSON, Mermaid, SVG), plus the recorded variations of each workflow |
-| [`library/`](library/README.md) | Recipe catalogue, contracts and the raw evidence of the WF1–WF5 runs |
+| [`library/`](library/README.md) | Recipe catalogue, contracts, the raw evidence of the WF1–WF5 runs, and the shared pilot-estate registers |
 
 **Where the code is.** The runnable code for WF1–WF5 is the installable
 `pfp.workflows` package ([`pfp/workflows/`](../pfp/workflows/README.md)), so
 `pip install` and the `pfp-wf1`…`pfp-wf5` commands keep working; each workflow
-README links straight to its code. Pilot experiments (model runs that need a
-private runtime) sit inside their workflow folder, e.g.
-[`wf12_mechanism_control_arms/pilots/`](wf12_mechanism_control_arms/pilots/README.md).
-The former top-level `pilots/` folder was removed on 2026-11-06.
+README links straight to its code. Pilot experiments (model runs; most need a private runtime) sit inside their
+workflow folder under `pilots/`. That includes the whole pilot estate moved from
+the research repository on 2026-11-06; its shared registers and records are in
+[`library/pilot_estate/`](library/pilot_estate/README.md).
 
 **Naming.** A folder is `wfNN_short_name`. New workflows take the next number;
 a variation of an existing workflow (a different setting or step) goes under

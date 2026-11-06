@@ -1,0 +1,41 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000002
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000002_req_0
+rewrite_metadata:
+  rewrite_id: rewrite_03
+  name: Strategy R2 - Prose Enclosure Quarantine with Codebook Mapping
+  governing_specification: rewriting_strategies_mssn_wire.md#strategy-r2-prose-enclosure-quarantine
+  governing_strategy: Strategy R2 (Prose Enclosure Quarantine)
+  target_stratum: Stratum 3 (Structural Boundary Packets)
+  explanation: 'Quarantines all natural language prose, ambient formatting, and JSON
+    punctuation into
+
+    external codebook slots (s0, s1), leaving only a pure 38-glyph boundary wire proposal
+
+    envelope (<<p><v1><<q><s0>><<c><s1>>>>) that passes the syntactic firewall while
+    preserving
+
+    verbatim text custody in the custody ledger.
+
+    '
+  codebook_slots:
+    s0:
+      role: task_equations
+      source_text_span: 'Solve: x + 2y = 5, 3x - y = 1.'
+    s1:
+      role: output_contract
+      source_text_span: 'Return {"answer": x + y}.'
+input_typing:
+  lexical_alphabet: Gamma_38 strictly ({a..z, 0..9, <, >}) for wire proposal; UTF-8
+    string table for codebook
+  syntactic_category: QuarantinedProposalEnvelope
+  semantic_carrier: QuarantinedStringCodebook
+  dialect_tier: Tier S Envelope with Sidecar Codebook
+  boundary_format: mss-boundary-v1
+seed_prompt: <<p><v1><<q><s0>><<c><s1>>>>
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

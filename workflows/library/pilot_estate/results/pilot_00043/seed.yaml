@@ -1,0 +1,35 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00043
+task_family: epistemic_abstention
+difficulty_rung: 1
+request_id: pilot_00043_req_0
+rewrite_metadata:
+  rewrite_id: t1_bench-003-unresolved_relational
+  name: Tier 1 bench-003-unresolved (relational) - SQLite Strict Relational Normal
+    Form
+  governing_specification: tier1_live_runs_tier1-001.md
+  governing_strategy: Strategy T1-REL (Prompt Spans SQL INSERT Normal Form)
+  target_stratum: Stratum 4 (Epistemic Abstention & Grounding Fences)
+  explanation: Tier 1 prompt variation for bench-003-unresolved rendered under relational
+    encoding.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union UTF-8 text
+  syntactic_category: EpistemicRefusal
+  semantic_carrier: Epistemic abstention refusal for an undefined function rule.
+  dialect_tier: Tier SQL (Relational Sets)
+  boundary_format: sqlite-strict-v1
+seed_prompt: |-
+  -- Prompt Relational Normal Form (profile: sqlite_strict_text_set_v1)
+  -- Source ID: bench-003-unresolved | Hash: 335595fb38ae253e
+  -- Occurrences and role bindings:
+  INSERT INTO prompt_spans (slot, role, text) VALUES ('s0', 'task', "Task: Evaluate the function f at x=5. "::text);
+  INSERT INTO prompt_spans (slot, role, text) VALUES ('s1', 'context', "Context: The function f: R -> R is undefined without an explicit rule. "::text);
+  INSERT INTO prompt_spans (slot, role, text) VALUES ('s2', 'constraint', "Constraint: State whether evaluation is possible. "::text);
+  INSERT INTO prompt_spans (slot, role, text) VALUES ('s3', 'output', "Output: JSON with \"computable\": false and \"reason\": \"function f has no declared definition\"."::text);
+expected_outcome:
+  answer:
+    computable: false
+    reason: function f has no declared definition
+  status: ACCEPTED

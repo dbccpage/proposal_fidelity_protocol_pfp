@@ -26,6 +26,12 @@ Sources: 0000029, 0000039-0000045, 0000051, 0000056-0000064, 0000083.
 
 Pilot 51 records live runs on the three-patch observer-visibility obstruction; 39-45 are offline exact checkers (angle defects, Hodge, clique homology, triangle fans); 56-64 are planned capsules.
 
+## Pilots in this folder
+
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
+
+- [`pilots/pilot_0000051/`](pilots/pilot_0000051/) — pilot_0000051 — Projection Obstruction & Observer Visibility (Rung 4)
+
 ## Team
 
 Pattern `parallel_isolated_then_global`: coder ×n_patches (sonnet); deep_researcher ×1 (opus); adversary ×1 (fable); host_checker ×1 (none).

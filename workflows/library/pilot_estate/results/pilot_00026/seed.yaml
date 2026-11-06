@@ -1,0 +1,35 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00026
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_00026_req_0
+rewrite_metadata:
+  rewrite_id: idea_17
+  name: Idea 17 - Root Question Versus Declared Decomposition
+  governing_specification: IDEAS.md#root-question-versus-declared-decomposition
+  governing_strategy: Strategy I17 (Child Obligation Joint Verification)
+  target_stratum: Stratum 5 (Hierarchical Obligation Trees)
+  explanation: Starts from root question and explicit child obligations, checking
+    whether child answers jointly answer root.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*'}
+  syntactic_category: DecomposedObligationProposal
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) via Explicit Child Proof
+    Obligations
+  dialect_tier: Tier S (Declared Decomposition Tree)
+  boundary_format: pfp-decomp-tree-v1
+seed_prompt: '<root_question: "Compute x + y for the linear system">
+
+  <obligation_1: "Eliminate y: (x + 2y) + 2(3x - y) = 5 + 2(1) => 7x = 7 => x = 1">
+
+  <obligation_2: "Substitute x: 1 + 2y = 5 => 2y = 4 => y = 2">
+
+  <join_obligation: "Sum x and y: 1 + 2 = 3">
+
+  <return: {"answer": 3}>
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

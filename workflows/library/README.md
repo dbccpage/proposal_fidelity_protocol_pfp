@@ -4,6 +4,7 @@ This folder was `docs/workflows/` until 2026-11-05. Historical records inside it
 
 The human entry point is the [workflow wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflows).
 
+- [`pilot_estate/`](pilot_estate/README.md): shared registers, results and records of the pilot estate (2026-11-06).
 - `catalog.json`: five actual recipes and their availability. The derived families WF6–WF23 are in [`../dag/`](../dag/README.md).
 - `contracts/slot_catalogue.json`: original WF2 profile, unchanged bytes.
 - `evidence/measurements.json`: derived comparison and original source hashes.

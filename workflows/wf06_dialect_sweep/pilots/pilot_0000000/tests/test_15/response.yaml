@@ -1,0 +1,162 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: p_star_rewrite_04
+test_kind: p_star_templated
+pilot_id: pilot_0000000
+case_id: rewrite_04
+request_id: pilot_0000000_req_p_star_rewrite_04
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: p_star_rewrite_04.yaml
+  source_file_bytes: 8879
+  source_file_kb: 8.671
+  payload_bytes: 6479
+  payload_kb: 6.327
+  messages_count: 2
+raw_reply: "{\n  \"derived_under_policy\": \"SPK-001\",\n  \"answer\": 3,\n  \"summary\"\
+  : {\n    \"narrowest_defensible_thesis\": \"Under the standard reading of the nested\
+  \ expressions as x + 2y = 5 and 3x - y = 1, the solution is x = 1 and y = 2, so\
+  \ x + y = 3.\",\n    \"evidence_scope\": \"Symbolic arithmetic check of the two\
+  \ linear equations; no external validation is claimed.\",\n    \"next_concrete_test\"\
+  : \"Substitute x = 1 and y = 2 into both equations to check 1 + 2*2 = 5 and 3*1\
+  \ - 2 = 1.\"\n  },\n  \"process_integrity\": {\n    \"seed_allows_theory_refutation\"\
+  : true,\n    \"detected_prompt_biases\": [],\n    \"should_continue\": true\n  },\n\
+  \  \"sections\": []\n}"
+reasoning_content: 'We need answer solve equations. Need parse weird nested notation.
+  Need return JSON matching schema. Need compute x,y from equations:
+
+  <<eq><<add><x><<mul><2><y>>><5>>
+
+  This likely equation: x + 2*y = 5.
+
+  Second: <<eq><<sub<<mul><3><x>><y>><1>>
+
+  Likely 3*x - y = 1.
+
+  Return answer x+y.
+
+
+  Solve:
+
+  x + 2y = 5
+
+  3x - y = 1
+
+  From second y = 3x -1.
+
+  Plug x + 2(3x-1)=5 => x+6x-2=5 =>7x=7 => x=1. y=2. x+y=3.
+
+
+  Need produce JSON with derived_under_policy SPK-001, answer 3, summary fields, process_integrity.
+  sections empty array. Need maybe detected_prompt_biases? We need assess prompt biases.
+  The prompt includes antibody injections empty. Need process_integrity seed_allows_theory_refutation
+  boolean, should_continue boolean. We need decide. The task is arithmetic solve.
+  Seed? "seed_allows_theory_refutation" maybe whether initial prompt allows refutation?
+  Hmm. We can set true? Need be careful. The schema requires. We can include detected_prompt_biases
+  maybe empty. should_continue true? Since can solve. seed_allows_theory_refutation:
+  Does seed allow theory refutation? The prompt is a puzzle, not theory. Maybe true?
+  It asks solve equations. There is no theory. Could set false? Need infer from process
+  integrity. It likely asks if the seed allows theory refutation (i.e., can the prompt
+  be falsified). For arithmetic equations, yes, if equations inconsistent. But here
+  consistent. "seed_allows_theory_refutation" maybe whether the prompt permits refutation
+  of a theory. Since no theory, maybe false. But process_integrity is about prompt.
+  We can set true if the problem is testable. Hmm.
+
+
+  Need ensure no forbidden words in summary? The schema doesn''t enforce forbidden
+  words, but policy says claim discipline. Avoid "proves", etc. Use narrow claims.
+  Summary:
+
+  narrowest_defensible_thesis: "Under the standard reading of the nested expressions
+  as x + 2y = 5 and 3x - y = 1, the solution is x=1, y=2, so x+y=3."
+
+  evidence_scope: "Symbolic arithmetic check of the two linear equations; no external
+  validation."
+
+  next_concrete_test: "Substitute x=1 and y=2 into both equations to confirm 1+2*2=5
+  and 3*1-2=1."
+
+
+  Process integrity:
+
+  seed_allows_theory_refutation: true? The equations can be refuted if substitution
+  fails. But "theory" maybe not. I''d set true because the seed is a solvable constraint
+  system that can be checked/refuted. detected_prompt_biases: [] maybe. should_continue:
+  true.
+
+
+  Need output only JSON. Ensure sections maxItems 0, so empty array. answer integer
+  3. derived_under_policy "SPK-001".
+
+
+  Check schema: additionalProperties false at root. Required: derived_under_policy,
+  answer, summary, process_integrity. sections optional? It has sections property
+  but not required. We can include sections: []? The schema has sections type array
+  maxItems 0. If included, must be empty. It''s not required but okay. The prompt
+  says "Return JSON matching this response schema". We can include sections empty.
+  But additionalProperties false, so only allowed properties. sections allowed. We''ll
+  include.
+
+
+  ProcessIntegrityValue: additionalProperties false, required seed_allows_theory_refutation,
+  should_continue. detected_prompt_biases optional default []. We can include empty
+  array.
+
+
+  ResponseSummaryValue: required narrowest_defensible_thesis, evidence_scope, next_concrete_test.
+  All strings minLength 1 pattern \S. Good.
+
+
+  Need ensure no forbidden words. "standard reading" okay. "solution" okay. "confirm"
+  okay. "check" okay. Avoid "proves", "guarantees", etc.
+
+
+  Let''s craft JSON.'
+parsed_response:
+  derived_under_policy: SPK-001
+  answer: 3
+  summary:
+    narrowest_defensible_thesis: Under the standard reading of the nested expressions
+      as x + 2y = 5 and 3x - y = 1, the solution is x = 1 and y = 2, so x + y = 3.
+    evidence_scope: Symbolic arithmetic check of the two linear equations; no external
+      validation is claimed.
+    next_concrete_test: Substitute x = 1 and y = 2 into both equations to check 1
+      + 2*2 = 5 and 3*1 - 2 = 1.
+  process_integrity:
+    seed_allows_theory_refutation: true
+    detected_prompt_biases: []
+    should_continue: true
+  sections: []
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: ACCEPTED
+  reason: Linear system solution matches exact rational ground truth
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: Decart
+  dispatch_id: gen-1791686481-X8hIteiaDvxV4Dud7nAd
+  system_fingerprint: null
+  duration_seconds: 17.674
+  tokens_per_second: 62.58
+  usage:
+    prompt_tokens: 1777
+    completion_tokens: 1106
+    reasoning_tokens: 876
+    total_tokens: 2883
+  cost:
+    total_cost_usd: 0.00035901
+    total_cost_microusd: 359
+    cost_details:
+      upstream_inference_cost: 0.00035901
+      upstream_inference_prompt_cost: 0.00015993
+      upstream_inference_completions_cost: 0.00019908
+  timestamp_utc: '2026-10-11T02:41:39.550306+00:00'

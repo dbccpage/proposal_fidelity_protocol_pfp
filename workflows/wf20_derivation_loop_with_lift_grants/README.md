@@ -28,10 +28,17 @@ Each pilot ran five loops: five provider trials and twenty host stages, capped a
 
 ## Pilots in this folder
 
-Model experiments for this workflow (formerly in the top-level `pilots/` folder). They need a model runtime that is not published here.
+Model experiments for this workflow, moved here on 2026-11-06 from the research repository pilot estate (private names and local paths replaced). Most need a model runtime that is not published here; their recorded inputs, replies and checks are kept as data.
 
-- [`pilots/finite_qm_derivation_pfp/`](pilots/finite_qm_derivation_pfp/) — operad mining, prompt compilation and gate checks for a multi-stage finite-QM derivation campaign
 - [`pilots/derivation_dag_pfp_staged_benchmark.py`](pilots/derivation_dag_pfp_staged_benchmark.py) — one-shot versus staged derivation certificates on slices of the finite-QM derivation graph
+- [`pilots/evidence/`](pilots/evidence/) — recorded campaign evidence (raw replies, ledgers, receipts)
+- [`pilots/finite_qm_derivation_pfp/`](pilots/finite_qm_derivation_pfp/) — operad mining, prompt compilation and gate checks for a multi-stage finite-QM derivation campaign
+- [`pilots/pilot_0000199/`](pilots/pilot_0000199/) — pilot_0000199: Corrected causal refinement theorem
+- [`pilots/pilot_0000200/`](pilots/pilot_0000200/) — pilot_0000200: Current from microscopic projection residual dynamics
+- [`pilots/pilot_0000201/`](pilots/pilot_0000201/) — pilot_0000201: Typed transport and categorical relational spine
+- [`pilots/pilot_0000202/`](pilots/pilot_0000202/) — pilot_0000202: Separate additive curvature from metric Regge holonomy
+- [`pilots/pilot_0000203/`](pilots/pilot_0000203/) — pilot_0000203: Exact obstruction certificate and operational halting conditions
+- [`pilots/relational_spacetime/`](pilots/relational_spacetime/) — Relational spacetime derivation pilots
 
 ## Team
 

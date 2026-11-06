@@ -1,0 +1,53 @@
+# Proposal Fidelity Protocol (PFP) - Pilot Specification
+# AuthorityEffect: None.
+
+schema: pfp.pilot-spec.v1
+authority_effect: None
+pilot_id: pilot_0000024
+prompt_id: prompt_0000024
+parent_prompt_id: null
+generation_id: 0
+phase: phase_0_bedrock
+split: development
+coordinates:
+  task_family: linear_algebra
+  difficulty_rung: 2
+  representation_rewrite: mss_boundary_v1
+  rewrite_count: 1
+  legend_present: false
+  mode: mode_01
+  stage_count: 1
+  pass_count: 1
+  single_shot: true
+  antibody_active: false
+  antibody_ids: []
+  model_class: 70B
+  model_id: qwen/qwen-2.5-72b-instruct:free
+  temperature: 0.0
+  target_spend_usd: 0.0010
+ingress:
+  task_mode_fidelity: finite_deduction
+  variable_identifier_permutation: canonical
+  floating_point_approximation_risk: exact_modular
+  arm_template: A2
+  missing_premise: answerable
+  cohomology_defect_class: none
+  magma_associativity_type: none
+host_gate:
+  checker_id: PFP-01-EXACT-LINALG
+  response_schema: PromptResponse.v1
+  residual_logging: true
+  structure_delta_metric: exact_rational_delta
+  expected_outcome: ACCEPTED
+models:
+  - qwen/qwen-2.5-72b-instruct:free
+  - deepseek/deepseek-v4.1-flash
+# Folder pointers. PilotSpec ignores unknown keys.
+test_plan:
+  path: testplan.yaml
+  mode_id: 1
+  packet: packet.yaml
+  seed: seed.yaml
+  variations: 4
+responses:
+  directory: results

@@ -1,0 +1,31 @@
+schema: pfp.mode-trial-plan.v1
+authority_effect: None
+pilot_id: pilot_0000009
+spec: spec.yaml
+mode_id: 10
+mode_coordinate: mode_10
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_10_cemetery_dag_mining/contract.yaml
+packet: packet.yaml
+seed: seed.yaml
+responses: results
+canonical_template: pilot_0000000/prompt_template.yaml is a generated empty shell and is not copied here.
+provider_calls: 0
+winning_condition_executed: true
+execution_limit: One stored rejection. No external cemetery archive was read.
+advantages:
+- Replay catches a checker that has forgotten why the tree claim died.
+disadvantages:
+- The cemetery only protects candidates that were stored.
+variations:
+- variation_id: replay_reproduces_rejection
+  role: winning
+  status: ACCEPTED
+  failure_mode: null
+- variation_id: immune_amnesia
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Immune amnesia (previously rejected candidate now passes)
+- variation_id: corrupted_cemetery_digest
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Corrupted cemetery digest

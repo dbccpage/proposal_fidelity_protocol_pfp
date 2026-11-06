@@ -1,0 +1,32 @@
+schema: pfp.mode-trial-plan.v1
+authority_effect: None
+pilot_id: pilot_0000002
+spec: spec.yaml
+mode_id: 3
+mode_coordinate: mode_03
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_03_attention_head_and_logit_steering/contract.yaml
+packet: packet.yaml
+seed: seed.yaml
+responses: results
+canonical_template: pilot_0000000/prompt_template.yaml is a generated empty shell and is not copied here.
+provider_calls: 0
+winning_condition_executed: false
+execution_limit: No logit bias or KV-cache hook was available. target_spend_usd is 0.
+advantages:
+- A declared token list rejects an obvious out-of-alphabet word.
+disadvantages:
+- The text mask does not constrain decoding.
+- A legal token string can still name the wrong repair.
+variations:
+- variation_id: text_mask_holds
+  role: limit
+  status: ACCEPTED
+  failure_mode: null
+- variation_id: out_of_alphabet_token
+  role: advantage
+  status: REJECTED
+  failure_mode: Logit leakage (non-zero probability on illegal tokens)
+- variation_id: mask_is_not_a_kv_hook
+  role: disadvantage
+  status: NOT_EXECUTED
+  failure_mode: Attention drift across multi-step sequences

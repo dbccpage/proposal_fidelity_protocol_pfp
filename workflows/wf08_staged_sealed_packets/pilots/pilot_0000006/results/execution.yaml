@@ -1,0 +1,41 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000006
+mode_id: 7
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_07_sn_permutation_and_braid_equivariance/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: Checked on this four-vertex carrier, not on a general symmetry group.
+advantages:
+- Rank is label-invariant. Orientation records the odd permutation. The braid words agree.
+disadvantages:
+- Equal rank change does not choose between the boundary edge and the diagonal.
+variations:
+- variation_id: rank_survives_relabeling
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: Closing the square raises cycle rank by 1 on every relabeling. The transposition flips
+    orientation. The 3-cycle does not.
+  evidence:
+    odd_orientation: -1
+    even_orientation: 1
+- variation_id: rank_change_does_not_name_the_edge
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Asymmetric label preference
+  observation: The diagonal raises cycle rank by the same amount as the boundary edge.
+  evidence:
+    boundary_rank_change: 1
+    diagonal_rank_change: 1
+- variation_id: braid_on_three_labels
+  role: advantage
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: 'The two braid words on labels 0,1,2 agree: s1 s2 s1 and s2 s1 s2 both reverse the triple.'
+  evidence:
+    yang_baxter: true
