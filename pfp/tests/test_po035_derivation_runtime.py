@@ -5,12 +5,12 @@ import sqlite3
 
 import pytest
 
-from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from adversary.tests.pilots.relational_spacetime.tasks import prompt_container
-from adversary.tests.pilots.relational_spacetime.finite_checks import evaluate
-from adversary.tests.pilots.relational_spacetime.finite_fixtures import VARIANTS
-from adversary.tests.pilots.relational_spacetime.finite_fixtures import check_variant
-from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import prompt_container
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import evaluate
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_fixtures import VARIANTS
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_fixtures import check_variant
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_fixtures import fixture_payload
 from pfp.infrastructure.adapters import pfp_derivation as adapter
 from pfp.tests._po035_historical import historical_derivation
 from pfp.infrastructure.adapters.pfp_evidence import write_once
@@ -229,11 +229,11 @@ def test_worker_timeout_retains_attempt_hold(tmp_path, monkeypatch):
 
 
 def test_negative_controls_are_schema_valid():
-    from adversary.tests.pilots.relational_spacetime.finite_checks import negative_control
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import negative_control
 
     for pilot in BY_ID:
         payload = fixture_payload(pilot, "fixture")
-        from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
+        from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import proposal_body
 
         body = proposal_body(payload)
         body["certificate"] = dict(reversed(list(body["certificate"].items())))

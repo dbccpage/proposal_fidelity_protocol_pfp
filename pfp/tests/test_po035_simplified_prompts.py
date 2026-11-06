@@ -10,8 +10,8 @@ import yaml
 
 from pfp.infrastructure import numbered_prompts as prompts
 from pfp.infrastructure.adapters.pfp_evidence import canonical, digest
-from adversary.tests.pilots.relational_spacetime.tasks import BY_ID, CERTIFICATES, ROOT
-from adversary.tests.pilots.relational_spacetime.trial_prompts import SECTION_5_SHA256
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID, CERTIFICATES, ROOT
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.trial_prompts import SECTION_5_SHA256
 
 
 def _workpad(pilot):
@@ -320,7 +320,7 @@ def test_tampered_versioned_input_refused_without_touching_real_files(monkeypatc
 
 def test_tampered_current_construction_input_refused(monkeypatch):
     real_read = Path.read_bytes
-    target = ROOT / "adversary/tests/pilots/relational_spacetime/tasks.py"
+    target = ROOT / "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/tasks.py"
 
     def changed_read(path):
         data = real_read(path)

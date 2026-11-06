@@ -86,7 +86,7 @@ These are proposals, not decisions:
 3. Print progress and save partial results during the run. This run printed nothing for
    about 40 minutes.
 4. `witness_replay.py` loads the Adversary dossier checker
-   (`adversary/tests/pilots/replay_runners/dossier_capsules/checking.py`) by file
+   (`workflows/wf18_dossier_replay_campaign/pilots/replay_runners/dossier_capsules/checking.py`) by file
    path. The import guard does not see that load, but it is still a dependency on Adversary test
    code. It is pinned in both locks, so it can only move in a new lock.
 

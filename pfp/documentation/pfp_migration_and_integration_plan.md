@@ -96,7 +96,7 @@ is required before calling either a hard-cap live demonstration.
 ## Targeted evidence
 
 All new model wire replies in automated controls are labelled synthetic. The
-[retained current-IDE example](../../adversary/tests/pilots/evidence/pfp_app_integration_20261012/ide_handoff/README.md)
+[retained current-IDE example](../../workflows/library/pilot_estate/evidence/pfp_app_integration_20261012/ide_handoff/README.md)
 is a finite signed matrix calculation, not an independent model comparison.
 Replay reconstructs consumed state from actual reply bytes and rejects changed
 answers, inputs, consumed content and verdicts. New failures enter EIS as
@@ -113,7 +113,7 @@ Unicode-custody, IDE-artifact, transport-admission and packaging gaps. Those
 findings are repaired. The installed durable probe also exposed a Windows
 SQLite initialization handle leak; its repair has a focused regression.
 
-The [scoped verification record](../../adversary/tests/pilots/evidence/pfp_app_integration_20261012/verification.json)
+The [scoped verification record](../../workflows/library/pilot_estate/evidence/pfp_app_integration_20261012/verification.json)
 records **289 distinct passing targeted checks**, the required 52/52 republication
 and 6/6 education gates, and the installed wheel's digest. The isolated probe
 resolved 19 Adversary root and two controller exports, checked 682 imported Core
@@ -225,7 +225,7 @@ captured entrypoint identities and the canonical `challenge_live.py` identity:
 
 ```powershell
 git worktree add --detach <disposable-checkout> 69570b3e5fcf4b3799469f7d294ffee5899637fc
-python -m adversary.tests.pilots.challenge_suite.replay_snapshots --checkout <disposable-checkout> --evidence adversary/tests/pilots/evidence/demo004_pfp_learning --run c005_dev_typed_witness_v5 --output <new-output.json>
+python -m workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.replay_snapshots --checkout <disposable-checkout> --evidence workflows/library/pilot_estate/evidence/demo004_pfp_learning --run c005_dev_typed_witness_v5 --output <new-output.json>
 git -C <disposable-checkout> status --porcelain
 git worktree remove <disposable-checkout>
 ```
@@ -293,13 +293,13 @@ neural/model performance, native parity or the original C001-C030 obligations.
 For a deterministic public-example run from the repository root:
 
 ```bash
-python -m adversary.tests.pilots.c052_maxflow_mincut_certificates.participant_packet.runner --all-examples
+python -m workflows.wf11_dual_certificate_synthesis.pilots.c052_maxflow_mincut_certificates.participant_packet.runner --all-examples
 ```
 
 Inspect the existing PFP matrix CLI without dispatching a model:
 
 ```bash
-python -m adversary.tests.pilots.c052_maxflow_mincut_certificates.run_c052_matrix --help
+python -m workflows.wf11_dual_certificate_synthesis.pilots.c052_maxflow_mincut_certificates.run_c052_matrix --help
 ```
 
 That inherited repair was offline and did not claim model/native parity.

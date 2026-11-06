@@ -89,11 +89,11 @@ def test_saved_real_responses_reproduce_observed_outcomes():
 
     from pfp.infrastructure.adapters.pfp_campaign import grade_reply
     from pfp.infrastructure.challenge_execution import isolated
-    from adversary.tests.pilots.challenge_suite.catalog import ROOT
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT
 
     folder = (
         ROOT
-        / "adversary/tests/pilots/evidence/demo004_pfp_learning/validation/implementation_20261012"
+        / "workflows/library/pilot_estate/evidence/demo004_pfp_learning/validation/implementation_20261012"
     )
     observations = json.loads((folder / "observations.json").read_bytes())
     for record in observations["records"]:

@@ -2,10 +2,10 @@
 
 import json
 
-from adversary.tests.pilots.relational_spacetime import typed_signals as adaptive
-from adversary.tests.pilots.relational_spacetime import baseline as campaign
-from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
-from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import typed_signals as adaptive
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import baseline as campaign
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import proposal_body
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_fixtures import fixture_payload
 from pfp.infrastructure.adapters import pfp_derivation as adapter
 from pfp.tests._po035_historical import historical_derivation
 from pfp.use_cases.pfp_derivation_loops import run_derivation_loops

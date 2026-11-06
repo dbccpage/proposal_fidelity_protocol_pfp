@@ -10,14 +10,14 @@ from hashlib import sha256
 from pathlib import Path
 
 import yaml
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
 
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import resource_root
-from omega_engine_pfp.use_cases.pfp_prompt import AssemblePfpPromptUseCase
+from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
+from pfp.infrastructure.adapters.pfp_evidence import resource_root
+from pfp.use_cases.pfp_prompt import AssemblePfpPromptUseCase
 
 ROOT = resource_root(Path(__file__))
-PILOTS = ROOT / "omega_engine_adversary/tests/pilots"
-SOURCE = ROOT / "omega_engine_pfp/tests/demo_004"
+PILOTS = ROOT / "adversary/tests/pilots"
+SOURCE = ROOT / "pfp/tests/demo_004"
 # C051-C055 and C059 kept the education catalog identity but live beside
 # demo_004. Those prefixes must be tried before the demo_004 prefix.
 _SYNTHESIS_UNDER_PILOTS = (
@@ -31,42 +31,34 @@ _SYNTHESIS_UNDER_PILOTS = (
 _MOVED_PREFIXES = (
     *(
         (
-            f"omega_engine_education/pilots/demo_004/f_program_synthesis/{name}",
-            f"omega_engine_adversary/tests/pilots/{name}",
+            f"education/pilots/demo_004/f_program_synthesis/{name}",
+            f"adversary/tests/pilots/{name}",
         )
         for name in _SYNTHESIS_UNDER_PILOTS
     ),
     *(
         (
-            f"omega_engine_pfp/tests/pilots/{name}",
-            f"omega_engine_adversary/tests/pilots/{name}",
+            f"pfp/tests/pilots/{name}",
+            f"adversary/tests/pilots/{name}",
         )
         for name in _SYNTHESIS_UNDER_PILOTS
     ),
-    ("omega_engine_education/pilots/demo_004", "omega_engine_pfp/tests/demo_004"),
+    ("education/pilots/demo_004", "pfp/tests/demo_004"),
     *(
         (
-            f"omega_engine_education/pilots/pilot_{index:07d}",
-            f"omega_engine_adversary/tests/pilots/pilot_{index:07d}",
+            f"education/pilots/pilot_{index:07d}",
+            f"adversary/tests/pilots/pilot_{index:07d}",
         )
         for index in range(6)
     ),
     *(
         (
-            f"omega_engine_pfp/tests/pilot_{index:07d}",
-            f"omega_engine_adversary/tests/pilots/pilot_{index:07d}",
+            f"pfp/tests/pilot_{index:07d}",
+            f"adversary/tests/pilots/pilot_{index:07d}",
         )
         for index in range(6)
     ),
-    ("omega_engine_education/pilots", "omega_engine_adversary/tests/pilots"),
-    (
-        "omega_engine_pfp/domain/contracts",
-        "omega_engine_pfp/domain/bounded_contexts/verification/contracts",
-    ),
-    (
-        "omega_engine_pfp/domain/quantum",
-        "omega_engine_pfp/domain/bounded_contexts/mathematics/quantum",
-    ),
+    ("education/pilots", "adversary/tests/pilots"),
 )
 
 
@@ -77,7 +69,7 @@ def relocated(relative: str) -> str:
         if text == old or text.startswith(old + "/"):
             return new + text[len(old) :]
     return text
-TEMPLATE = ROOT / "omega_engine_pfp/infrastructure/yaml/prompts/prompt_template.yaml"
+TEMPLATE = ROOT / "pfp/infrastructure/yaml/prompts/prompt_template.yaml"
 CAMPAIGN = PILOTS / "matrix/max_pilot_matrix.yaml"
 FAMILIES = (
     "a_mechanism",
@@ -154,7 +146,7 @@ def case_rows(challenge):
 
 
 def mechanism_rows():
-    from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import (
+    from workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.cases import (
         get_hidden_base_cases,
         get_public_examples,
         get_relabel_controls,
@@ -199,7 +191,7 @@ def prompt_for(row, arm="baseline", feedback=None):
     case = load_case(row)
     answer_schema = None
     if row["challenge"] == "C005":
-        from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+        from workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.schemas import (
             CONSISTENCY_JSON_SCHEMA,
             CYCLE_REPAIR_JSON_SCHEMA,
         )

@@ -791,7 +791,7 @@ def _mssn_compilation_paths():
     return {
         "loader": "pfp/infrastructure/pilot_runner.py",
         "metadata": "pfp/infrastructure/pilot_runners/mssn_seeds.py",
-        "catalog": "adversary/tests/pilots/matrix/seeds.yaml",
+        "catalog": "workflows/library/pilot_estate/matrix/seeds.yaml",
         "template": "pfp/infrastructure/yaml/prompts/templates/template_single_slot.yaml",
         "assembler": "pfp/use_cases/pfp_prompt.py",
         "prompt_input": "pfp/domain/contracts/pfp_runtime.py",

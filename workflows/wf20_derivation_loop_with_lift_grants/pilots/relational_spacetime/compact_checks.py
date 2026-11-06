@@ -12,19 +12,19 @@ from fractions import Fraction
 
 import jsonschema
 
-from omega_engine_pfp.domain.contracts.pfp_calculations import (
+from pfp.domain.contracts.pfp_calculations import (
     calculation_binding_failures,
     same_typed_value,
 )
 
-from omega_engine_adversary.infrastructure.providers.wire import decode_reply
+from adversary.infrastructure.providers.wire import decode_reply
 
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import proposal_body
-from omega_engine_adversary.tests.pilots.relational_spacetime.finite_checks import CHECKS
-from omega_engine_pfp.infrastructure.numbered_prompts import FIELD_CARRIERS
-from omega_engine_pfp.infrastructure.numbered_prompts import response_schema
-from omega_engine_pfp.infrastructure.numbered_prompts import workpad_schema
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import proposal_body
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import CHECKS
+from pfp.infrastructure.numbered_prompts import FIELD_CARRIERS
+from pfp.infrastructure.numbered_prompts import response_schema
+from pfp.infrastructure.numbered_prompts import workpad_schema
 
 CLAIM_LIMITS = (
     "Field binding establishes structural consistency only; expressions are unverified.",

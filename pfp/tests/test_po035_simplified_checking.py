@@ -5,15 +5,15 @@ import json
 
 import pytest
 
-from adversary.tests.pilots.relational_spacetime import finite_checks as checking
-from adversary.tests.pilots.relational_spacetime import compact_checks as simplified_checking
-from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import finite_checks as checking
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import compact_checks as simplified_checking
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import proposal_body
 from pfp.infrastructure.numbered_prompts import FIELD_CARRIERS
 from pfp.infrastructure.numbered_prompts import prompt_id
 from pfp.infrastructure.numbered_prompts import response_schema
 from pfp.infrastructure.numbered_prompts import workpad_schema
-from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_fixtures import fixture_payload
 
 PILOTS = tuple(BY_ID)
 

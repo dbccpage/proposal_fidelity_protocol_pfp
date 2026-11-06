@@ -9,10 +9,10 @@ import re
 from hashlib import sha256
 from pathlib import Path
 
-from omega_engine_adversary.tests.pilots.challenge_suite.catalog import ROOT, SOURCE
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT, SOURCE
 
-DOC = "omega_engine_education/documentation/004_oepfp/docs/18_adversary_original_challenge_play.md"
-SESSION_DOC = "omega_engine_education/documentation/004_oepfp/docs/19_bounded_mechanism_sessions.md"
+DOC = "education/documentation/004_oepfp/docs/18_original_challenge_play.md"
+SESSION_DOC = "education/documentation/004_oepfp/docs/19_bounded_mechanism_sessions.md"
 
 
 def _pin(path):
@@ -22,7 +22,7 @@ def _pin(path):
 
 def recheck_local_trial(trial, *, recipe):
     """Recompute local evidence from actual raw bytes; stored verdicts are inert."""
-    from omega_engine_adversary.tests.pilots.challenge_suite.local_mechanism_trials import (
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.local_mechanism_trials import (
         cases,
         judge,
         second_judge,
@@ -131,8 +131,8 @@ def build(*, local_trials=None, local_learned=None, baseline_calibration_repair=
             efficacy_claim="NONE_FINITE_SMALL_UNREPLICATED_INTERVENTION_CASES",
             guidance_status="CANDIDATE_NOT_ADMITTED", provider_calls=0, billed_usd="0"),
         original_protocols_closed=0, identity_count=len(rows),
-        unavailable_original_sources=["omega_engine_pfp/tests/demo_004/g_chem_bio/c061_redox_equation_balancing.md",
-            "omega_engine_pfp/tests/demo_004/h_economics/c071_bimatrix_all_nash_equilibria.md"])
+        unavailable_original_sources=["pfp/tests/demo_004/g_chem_bio/c061_redox_equation_balancing.md",
+            "pfp/tests/demo_004/h_economics/c071_bimatrix_all_nash_equilibria.md"])
 
 
 if __name__ == "__main__":

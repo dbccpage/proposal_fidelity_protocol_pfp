@@ -54,8 +54,8 @@ frozen-runtime replay belong to its domain, use-case and infrastructure layers.
 | Current braid tournament | `infrastructure/braid_tournament.py`; [bounded execution guide](documentation/braid_tournament.md) |
 | Current graph retraction benchmark | `infrastructure/retraction_benchmark.py`; [conditions, commands and replay](../education/documentation/004_oepfp/docs/17_runtime_ownership_and_replay.md#current-paper-008-graph-benchmark) |
 | Finite signed-graph workbench checker | `infrastructure/adapters/finite_gauge/`; [commands and scope](../education/documentation/004_oepfp/docs/17_runtime_ownership_and_replay.md#finite-signed-graph-workbench) |
-| Relational spacetime research and independent judges | `../adversary/tests/pilots/relational_spacetime/` |
-| Challenge compositions and packet audits | `../adversary/tests/pilots/challenge_suite/`, `../adversary/tests/pilots/judge_packet_audit/` |
+| Relational spacetime research and independent judges | `../workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/` |
+| Challenge compositions and packet audits | `../workflows/wf19_failure_derived_rule_transfer/pilots/challenge_suite/`, `../workflows/wf23_judge_packet_custody_audit/pilots/judge_packet_audit/` |
 
 Education retains teaching documents and papers. Remaining pilot recipes,
 history and fixtures live under `adversary/tests/pilots`; `demo_004`

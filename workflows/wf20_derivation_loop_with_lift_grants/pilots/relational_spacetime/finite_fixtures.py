@@ -3,9 +3,9 @@
 import copy
 import json
 
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import proposal_body
-from omega_engine_adversary.tests.pilots.relational_spacetime.finite_checks import evaluate
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import proposal_body
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import evaluate
 
 FIXTURES = [
     dict(

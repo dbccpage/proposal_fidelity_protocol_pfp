@@ -26,11 +26,11 @@ from adversary.infrastructure.providers.openai_compat import build_openai_compat
 from adversary.infrastructure.providers.wire import decode_reply
 from adversary.use_cases.providers.completion import request_digest
 
-from adversary.tests.pilots.challenge_suite.catalog import ROOT
-from adversary.tests.pilots.challenge_suite.catalog import digest
-from adversary.tests.pilots.challenge_suite.catalog import load_plan
-from adversary.tests.pilots.challenge_suite.catalog import prompt_for, prompt_input_paths
-from adversary.tests.pilots.challenge_suite.catalog import relocated
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import digest
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import load_plan
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import prompt_for, prompt_input_paths
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import relocated
 from pfp.infrastructure.challenge_execution import isolated
 from pfp.infrastructure.challenge_execution import source_bindings
 
@@ -39,7 +39,7 @@ def choose_case(challenge_id, split, ordinal):
     if split not in ("development", "held_out") or type(ordinal) is not int or ordinal < 0:
         raise ValueError("INVALID_CASE_SELECTION")
     if challenge_id == "C001":
-        from adversary.tests.pilots.challenge_suite.c001 import case_rows
+        from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.c001 import case_rows
 
         matches = [row for row in case_rows() if row["split"] == split]
         if ordinal >= len(matches):
@@ -68,7 +68,7 @@ RUNTIME_SOURCES = (
     "pfp/use_cases/pfp_stages.py",
     "pfp/infrastructure/adapters/pfp_proposals.py",
     "pfp/ffi.py",
-    "adversary/tests/pilots/challenge_suite/catalog.py",
+    "workflows/wf19_failure_derived_rule_transfer/pilots/challenge_suite/catalog.py",
     "pfp/infrastructure/challenge_execution.py",
     "pfp/infrastructure/challenge_live.py",
 )

@@ -5,7 +5,7 @@ AuthorityEffect: None.
 Reads landed ``response*.yaml`` files. It does not call a model and it does not
 write a prompt. Re-run::
 
-    py -3.12 -m omega_engine_adversary.tests.pilots.cot_miner
+    py -3.12 -m workflows.library.pilot_estate.cot_miner
 """
 
 from __future__ import annotations
@@ -18,17 +18,17 @@ from typing import Any
 
 import yaml
 
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import resource_root
+from pfp.infrastructure.adapters.pfp_evidence import resource_root
 
 PILOTS = Path(__file__).resolve().parent
-RELOCATED_PILOT = resource_root(Path(__file__)) / "omega_engine_pfp" / "tests" / "pilot_0000000"
+RELOCATED_PILOT = resource_root(Path(__file__)) / "pfp" / "tests" / "pilot_0000000"
 DEFAULT_RESULTS = (
     RELOCATED_PILOT / "misc"
     if (RELOCATED_PILOT / "misc").is_dir()
     else RELOCATED_PILOT / "results"
 )
 DEFAULT_SCHEMA = (
-    files("omega_engine_pfp").joinpath("infrastructure", "yaml", "pilots", "pilot_response_v1.schema.yaml")
+    files("pfp").joinpath("infrastructure", "yaml", "pilots", "pilot_response_v1.schema.yaml")
 )
 UNBOUNDED_REASONING_TOKENS = 1000
 HYPOTHESIS_MIN = 6

@@ -15,13 +15,13 @@ import yaml
 
 from pfp.domain.types import PilotSpec, SeedPrompt
 from pfp.infrastructure.model_loading import load_yaml_model
-from adversary.tests.pilots.replay_runners._paths import pilots_root, repository_root
-from adversary.tests.pilots.replay_runners.mode_capsules.execute import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners._paths import pilots_root, repository_root
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.execute import (
     build_trials,
     digests_match,
     write_trials,
 )
-from adversary.tests.pilots.replay_runners.mode_capsules.live_dispatch import (
+from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules.live_dispatch import (
     PAID_MODEL,
     host_answer_matches,
     models_for,
@@ -42,7 +42,7 @@ class _RetiredRootTripwire:
 
 @pytest.mark.parametrize("entrypoint", ["retarget_specs", "dispatch_pilots", "main"])
 def test_retired_mode_live_entrypoints_refuse_before_side_effects(monkeypatch, entrypoint):
-    from adversary.tests.pilots.replay_runners.mode_capsules import live_dispatch
+    from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules import live_dispatch
 
     for name in ("resolve_credential", "fetch_paid_pricing", "openrouter_transport", "_write"):
         monkeypatch.setattr(live_dispatch, name, _retired_tripwire, raising=False)
@@ -54,7 +54,7 @@ def test_retired_mode_live_entrypoints_refuse_before_side_effects(monkeypatch, e
 
 
 def test_retired_dossier_live_callable_refuses_before_side_effects(monkeypatch):
-    from adversary.tests.pilots.replay_runners.dossier_capsules import run
+    from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.dossier_capsules import run
 
     for name in ("environment", "pricing", "openrouter_transport", "write_once", "SqliteBudgetLedger"):
         monkeypatch.setattr(run, name, _retired_tripwire, raising=False)
@@ -65,7 +65,7 @@ def test_retired_dossier_live_callable_refuses_before_side_effects(monkeypatch):
 
 @pytest.mark.parametrize("session", ["primary", "free_followup"])
 def test_retired_dossier_cli_live_refuses_before_historical_plan(monkeypatch, session):
-    from adversary.tests.pilots.replay_runners.dossier_capsules import run
+    from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.dossier_capsules import run
 
     monkeypatch.setattr("sys.argv", ["dossier-capsules", "--live", "--session", session])
     for name in ("prepare", "historical_plan", "live", "replay"):
@@ -126,7 +126,7 @@ def test_mode_limits_stay_inside_what_ran():
 
 
 def test_written_packets_match_a_fresh_run_and_do_not_touch_later_pilots(tmp_path, monkeypatch):
-    from adversary.tests.pilots.replay_runners.mode_capsules import execute
+    from workflows.wf18_dossier_replay_campaign.pilots.replay_runners.mode_capsules import execute
 
     copied_pilots = tmp_path / "pilots"
     shutil.copytree(PILOTS, copied_pilots)

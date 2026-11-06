@@ -11,62 +11,62 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     root = next(p for p in Path(__file__).resolve().parents
-        if (p / "omega_engine_adversary").is_dir() and (p / "omega_engine_pfp").is_dir())
+        if (p / "adversary").is_dir() and (p / "pfp").is_dir())
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
 import jsonschema
 import yaml
 
-from omega_engine_adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
-from omega_engine_pfp.infrastructure.adapters.pfp_derivation import (
+from adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
+from pfp.infrastructure.adapters.pfp_derivation import (
     PfpDerivationAdapter,
     model_pricing,
     replay_run,
 )
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import (
+from pfp.infrastructure.adapters.pfp_evidence import (
     canonical,
     digest,
     require_checkout,
     write_once,
 )
-from omega_engine_pfp.use_cases.pfp_derivation_loops import (
+from pfp.use_cases.pfp_derivation_loops import (
     DerivationLimits,
     run_derivation_loops,
 )
 
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import CAMPAIGN
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import LIFTS
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import MODE
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import MODEL
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import PILOTS
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import ROOT
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import SOURCE
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import STAGES
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import TEMPLATE
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import load
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import prompt_container
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import proposal_body
-from omega_engine_adversary.tests.pilots.relational_spacetime.finite_checks import evaluate
-from omega_engine_adversary.tests.pilots.relational_spacetime.finite_checks import negative_control
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import CAMPAIGN
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import LIFTS
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import MODE
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import MODEL
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import PILOTS
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import ROOT
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import SOURCE
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import STAGES
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import TEMPLATE
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import load
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import prompt_container
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import proposal_body
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import evaluate
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import negative_control
 
 EVIDENCE = PILOTS / "evidence" / CAMPAIGN
 SOURCE_FILES = [
     *[
-        f"omega_engine_adversary/tests/pilots/relational_spacetime/{name}.py"
+        f"workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/{name}.py"
         for name in ("tasks", "finite_checks", "baseline")
     ],
-    "omega_engine_pfp/use_cases/pfp_derivation_loops.py",
-    "omega_engine_pfp/infrastructure/adapters/pfp_derivation.py",
-    "omega_engine_pfp/infrastructure/adapters/pfp_evidence.py",
-    "omega_engine_pfp/infrastructure/task_turn.py",
-    "omega_engine_pfp/use_cases/pfp_prompt.py",
-    "omega_engine_pfp/use_cases/pfp_proposal.py",
-    "omega_engine_pfp/domain/contracts/pfp_runtime.py",
-    "omega_engine_pfp/domain/pfp_ingress.py",
+    "pfp/use_cases/pfp_derivation_loops.py",
+    "pfp/infrastructure/adapters/pfp_derivation.py",
+    "pfp/infrastructure/adapters/pfp_evidence.py",
+    "pfp/infrastructure/task_turn.py",
+    "pfp/use_cases/pfp_prompt.py",
+    "pfp/use_cases/pfp_proposal.py",
+    "pfp/domain/contracts/pfp_runtime.py",
+    "pfp/domain/pfp_ingress.py",
     *[
-        f"omega_engine_adversary/infrastructure/providers/{name}.py"
+        f"adversary/infrastructure/providers/{name}.py"
         for name in (
             "wire",
             "openai_compat",
@@ -77,8 +77,8 @@ SOURCE_FILES = [
             "openrouter_deadline",
         )
     ],
-    "omega_engine_adversary/domain/providers/types.py",
-    "omega_engine_adversary/domain/providers/ledger.py",
+    "adversary/domain/providers/types.py",
+    "adversary/domain/providers/ledger.py",
     TEMPLATE,
     f"{SOURCE}/claim_ledger.yaml",
     f"{SOURCE}/zero_container_relational_spacetime_and_witness_holonomy.md",
@@ -87,7 +87,7 @@ SOURCE_FILES = [
 
 def require_campaign_checkout():
     """Read the live tasks root so a test can point historical ops at a non-checkout."""
-    from omega_engine_adversary.tests.pilots.relational_spacetime import tasks as task_records
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import tasks as task_records
 
     return require_checkout(task_records.ROOT)
 
@@ -217,7 +217,7 @@ def observe(pilot, loop, path, prompt, result, receipt, context, *, capsule_root
 
 def preserve_prior_evidence():
     require_campaign_checkout()
-    old = ROOT / ".worktrees/oegov-planning/omega_engine_education/pilots"
+    old = ROOT / ".worktrees/oegov-planning/education/pilots"
     if not old.exists():
         return
     target = EVIDENCE / "historical_v1.zip"
@@ -308,13 +308,13 @@ def prepare():
                 f"This pilot attempts {', '.join(row['obligations'])} from PO035. The full derivation stays in its seed; the finite certificate is an independent control.\n\n"
                 "Five loops each traverse proposal, lift grant, witness check, negative control, and learning refinement. These are five provider trials and twenty host stages, not twenty-five independent model trials.\n\n"
                 "Limits per pilot: USD 0.05, 120000 total provider tokens, 180 seconds, five loops. No hidden retries or fallback. Learned guidance remains candidate advice, never automatically admitted.\n\n"
-                "Run or replay through `python -m omega_engine_adversary.tests.pilots.relational_spacetime.baseline --replay`. Results and final prompts are in `../evidence/po035_derivations_20261012/`. Analytical derivations remain unverified; finite acceptance does not repair the paper's claim ledger.\n"
+                "Run or replay through `python -m workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline --replay`. Results and final prompts are in `../evidence/po035_derivations_20261012/`. Analytical derivations remain unverified; finite acceptance does not repair the paper's claim ledger.\n"
             ).encode(),
         )
         write_once(
             folder / "run.py",
             (
-                '"""Canonical PO035 campaign entrypoint."""\nfrom omega_engine_adversary.tests.pilots.relational_spacetime.baseline import main\n\nif __name__ == \'__main__\':\n    main()\n'
+                '"""Canonical PO035 campaign entrypoint."""\nfrom workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import main\n\nif __name__ == \'__main__\':\n    main()\n'
             ).encode(),
         )
         write_once(
@@ -322,7 +322,7 @@ def prepare():
             (
                 '"""Twenty-five host-only adversarial controls; no provider calls."""\n'
                 "import pytest\n"
-                "from omega_engine_adversary.tests.pilots.relational_spacetime.finite_fixtures import VARIANTS, check_variant\n\n"
+                "from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_fixtures import VARIANTS, check_variant\n\n"
                 '@pytest.mark.parametrize("variant", VARIANTS)\n'
                 f'def test_certificate_control(variant):\n    check_variant("{pilot}", variant)\n'
             ).encode(),
@@ -528,7 +528,7 @@ def consolidate():
 
 
 def decode_provider_content(path):
-    from omega_engine_adversary.infrastructure.providers.wire import decode_reply
+    from adversary.infrastructure.providers.wire import decode_reply
 
     return decode_reply(path.read_bytes())["choices"][0]["message"]["content"]
 

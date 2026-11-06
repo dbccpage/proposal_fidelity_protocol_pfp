@@ -11,49 +11,49 @@ from pathlib import Path
 
 import jsonschema
 
-from omega_engine_adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
-from omega_engine_adversary.infrastructure.providers.wire import decode_reply
-from omega_engine_pfp.infrastructure.adapters.pfp_derivation import (
+from adversary.infrastructure.providers.openrouter_catalog import fetch_openrouter_catalog
+from adversary.infrastructure.providers.wire import decode_reply
+from pfp.infrastructure.adapters.pfp_derivation import (
     microusd,
     model_pricing,
     provider_result,
     replay_current_run,
 )
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import (
+from pfp.infrastructure.adapters.pfp_evidence import (
     canonical,
     digest,
     write_once,
 )
-from omega_engine_pfp.infrastructure.adapters.pfp_experiment import (
+from pfp.infrastructure.adapters.pfp_experiment import (
     PfpExperimentAdapter,
     wire_for,
 )
-from omega_engine_pfp.use_cases.pfp_derivation_loops import (
+from pfp.use_cases.pfp_derivation_loops import (
     DerivationLimits,
     run_derivation_loops,
 )
 
-from omega_engine_adversary.tests.pilots.relational_spacetime.baseline import refuse_without_checkout
-from omega_engine_adversary.tests.pilots.relational_spacetime.baseline import fresh_run_output
-from omega_engine_adversary.tests.pilots.relational_spacetime.baseline import require_campaign_checkout
-from omega_engine_adversary.tests.pilots.relational_spacetime.baseline import sources as original_sources
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import MODEL as MODEL
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import PILOTS
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import ROOT
-from omega_engine_adversary.tests.pilots.relational_spacetime.finite_checks import evaluate
-from omega_engine_adversary.tests.pilots.relational_spacetime.finite_checks import negative_control
-from omega_engine_adversary.tests.pilots.relational_spacetime.trial_prompts import build_prompt
-from omega_engine_adversary.tests.pilots.relational_spacetime.trial_prompts import stage_config
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import refuse_without_checkout
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import fresh_run_output
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import require_campaign_checkout
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import sources as original_sources
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import MODEL as MODEL
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import PILOTS
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import ROOT
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import evaluate
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_checks import negative_control
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.trial_prompts import build_prompt
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.trial_prompts import stage_config
 
 CAMPAIGN = "po035_experiments_20261012"
 EVIDENCE = PILOTS / "evidence" / CAMPAIGN
 NEW_SOURCES = (
-    "omega_engine_adversary/tests/pilots/relational_spacetime/parameter_trials.py",
-    "omega_engine_adversary/tests/pilots/relational_spacetime/trial_prompts.py",
-    "omega_engine_pfp/infrastructure/adapters/pfp_experiment.py",
-    "omega_engine_adversary/infrastructure/providers/openrouter_experiment_deadline.py",
-    "omega_engine_adversary/tests/pilots/relational_spacetime/decoding_controls.py",
+    "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/parameter_trials.py",
+    "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/trial_prompts.py",
+    "pfp/infrastructure/adapters/pfp_experiment.py",
+    "adversary/infrastructure/providers/openrouter_experiment_deadline.py",
+    "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/decoding_controls.py",
 )
 
 
@@ -80,10 +80,10 @@ def render(pilot, loop, context, *, experiment):
     )
     config = config_for(experiment, loop)
     if experiment == "logit":
-        from omega_engine_adversary.tests.pilots.relational_spacetime.decoding_controls import (
+        from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.decoding_controls import (
             cached_tokenizer_path,
         )
-        from omega_engine_adversary.tests.pilots.relational_spacetime.decoding_controls import (
+        from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.decoding_controls import (
             format_only_logit_bias,
         )
 
@@ -139,8 +139,8 @@ def observe(pilot, loop, path, prompt, result, receipt, context, *, experiment):
 
 def fetch_logit_endpoints():
     """Refresh the original logit profile's public quote before any generation."""
-    from omega_engine_adversary.infrastructure.providers.openai_compat import OPENROUTER_BASE_URL
-    from omega_engine_adversary.tests.pilots.relational_spacetime.decoding_controls import LOGIT_MODEL
+    from adversary.infrastructure.providers.openai_compat import OPENROUTER_BASE_URL
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.decoding_controls import LOGIT_MODEL
 
     request = urllib.request.Request(
         f"{OPENROUTER_BASE_URL}/models/{LOGIT_MODEL}/endpoints",
@@ -152,8 +152,8 @@ def fetch_logit_endpoints():
 
 def run(experiment, pilots, *, output=None, model=None):
     require_campaign_checkout()
-    from omega_engine_adversary.tests.pilots.relational_spacetime.decoding_controls import LOGIT_MODEL
-    from omega_engine_adversary.tests.pilots.relational_spacetime.decoding_controls import (
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.decoding_controls import LOGIT_MODEL
+    from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.decoding_controls import (
         validate_logit_profile,
     )
 
@@ -217,7 +217,7 @@ def run(experiment, pilots, *, output=None, model=None):
 def replay(experiment, pilots, *, output=None):
     require_campaign_checkout()
     if output is not None:
-        from omega_engine_adversary.tests.pilots.relational_spacetime.decoding_controls import validate_logit_profile
+        from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.decoding_controls import validate_logit_profile
 
         if experiment not in ("scratchpad", "temperature", "logit"):
             raise ValueError("UNKNOWN_EXPERIMENT")

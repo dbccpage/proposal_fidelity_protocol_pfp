@@ -8,7 +8,7 @@ import re
 from jsonschema import Draft202012Validator, validators
 from jsonschema.exceptions import ValidationError
 
-from omega_engine_pfp.domain.pilots.checker_registry import strict_json
+from pfp.domain.pilots.checker_registry import strict_json
 
 StrictValidator = validators.extend(Draft202012Validator, type_checker=
     Draft202012Validator.TYPE_CHECKER.redefine("integer", lambda _, x: type(x) is int))

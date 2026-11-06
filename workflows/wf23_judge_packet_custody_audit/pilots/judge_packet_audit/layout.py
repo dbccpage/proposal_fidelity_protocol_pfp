@@ -14,9 +14,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-from omega_engine_adversary.tests.pilots.judge_packet_audit import static_analysis as sa
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import static_analysis as sa
 
-CHALLENGES_REL = "omega_engine_pfp/tests/demo_004"
+CHALLENGES_REL = "pfp/tests/demo_004"
 CASE_DIRS = ("cases", "hidden_cases")
 MUTATION_DIRS = ("mutation_suite", "hostile_mutations")
 MUTATION_CASE_KEYS = ("case", "input_case")

@@ -1,4 +1,4 @@
-"""python -m omega_engine_adversary.tests.pilots.challenge_suite --help"""
+"""python -m workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite --help"""
 
 from __future__ import annotations
 
@@ -11,14 +11,14 @@ from uuid import uuid4
 
 if __package__ in (None, ""):
     root = next(p for p in Path(__file__).resolve().parents
-        if (p / "omega_engine_adversary").is_dir() and (p / "omega_engine_pfp").is_dir())
+        if (p / "adversary").is_dir() and (p / "pfp").is_dir())
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
 import yaml
 
-from omega_engine_pfp.infrastructure.challenge_execution import replay_host, run_host
-from omega_engine_adversary.tests.pilots.challenge_suite.catalog import PILOTS, build, selected_rows
+from pfp.infrastructure.challenge_execution import replay_host, run_host
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import PILOTS, build, selected_rows
 
 
 def create_pilots(plan):
@@ -83,14 +83,14 @@ def create_pilots(plan):
             encoding="utf-8",
         )
         (folder / "run.py").write_text(
-            '"""Thin route to the shared PFP learning campaign. AuthorityEffect: None."""\nfrom omega_engine_adversary.tests.pilots.challenge_suite.__main__ import main\n\nif __name__ == "__main__":\n    main()\n',
+            '"""Thin route to the shared PFP learning campaign. AuthorityEffect: None."""\nfrom workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.__main__ import main\n\nif __name__ == "__main__":\n    main()\n',
             encoding="utf-8",
         )
         readme = f"# {family['pilot_id']}: {family['family']}\n\nAuthorityEffect: None.\n\n" + (
             "This pilot tests PFP proposal fidelity and transfer of bounded repair rules across the original challenge family. "
-            "The complete source problems remain at repository paths `omega_engine_pfp/tests/demo_004/` "
-            "and `omega_engine_adversary/tests/pilots/`. Cases and source digests live in the canonical matrix.\n\n"
-            "Run `python -m omega_engine_adversary.tests.pilots.challenge_suite --help` from the repository root. "
+            "The complete source problems remain at repository paths `pfp/tests/demo_004/` "
+            "and `adversary/tests/pilots/`. Cases and source digests live in the canonical matrix.\n\n"
+            "Run `python -m workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite --help` from the repository root. "
             "Use `--host` for trusted NO_LLM controls and `--replay` for independent reruns. "
             "A reference solver's output is a control, never a model response.\n\n"
             "Compare a baseline prompt, a typed witness prompt, and a failure-derived rule on disjoint held-out cases. "
@@ -104,8 +104,8 @@ def create_pilots(plan):
         (folder / "tests/test_pilot.py").write_text(
             '"""Frozen test-plan custody. Domain attempts are retained in campaign receipts."""\n'
             "from pathlib import Path\nimport pytest\nimport yaml\n"
-            "from omega_engine_adversary.tests.pilots.challenge_suite.catalog import load_case\n"
-            "from omega_engine_pfp.use_cases.pfp_prompt import stimulus\n\n"
+            "from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import load_case\n"
+            "from pfp.use_cases.pfp_prompt import stimulus\n\n"
             '_PLAN = yaml.safe_load((Path(__file__).resolve().parent.parent / "testplan.yaml").read_text(encoding="utf-8"))\n\n'
             '@pytest.mark.parametrize("case", _PLAN["cases"])\n'
             "def test_declared_case(case):\n"
@@ -125,8 +125,8 @@ def create_pilots(plan):
         if family["family"] == "harness_tests":
             (folder / "tests/test_pilot.py").write_text(
                 '"""Actual PFP gate mutants, not inventory passes."""\nimport pytest\n'
-                "from omega_engine_adversary.tests.pilots.challenge_suite.__main__ import HARNESS_MUTANTS\n"
-                "from omega_engine_pfp.tests.test_challenge_learning import test_gate_mutant as _assert_mutant\n\n"
+                "from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.__main__ import HARNESS_MUTANTS\n"
+                "from pfp.tests.test_challenge_learning import test_gate_mutant as _assert_mutant\n\n"
                 '@pytest.mark.parametrize("name", HARNESS_MUTANTS)\n'
                 "def test_pfp_gate_mutant(name):\n    _assert_mutant(name)\n",
                 encoding="utf-8",
@@ -211,8 +211,8 @@ def main():
         if args.max_cost_microusd is None and args.max_estimated_cost_microusd is None:
             parser.error("--live requires an explicit hard or estimated cost policy")
     if args.check:
-        from omega_engine_pfp.infrastructure.challenge_execution import isolated
-        from omega_engine_pfp.infrastructure.challenge_live import choose_case
+        from pfp.infrastructure.challenge_execution import isolated
+        from pfp.infrastructure.challenge_live import choose_case
 
         if not args.challenge:
             parser.error("--check requires --challenge")
@@ -263,8 +263,8 @@ def main():
     if args.replay:
         print(json.dumps(replay_host(args.replay, args.timeout)["totals"]))
     if args.live:
-        from omega_engine_pfp.infrastructure.challenge_live import choose_case, live_run
-        from omega_engine_pfp.infrastructure.estimated_gateway import (
+        from pfp.infrastructure.challenge_live import choose_case, live_run
+        from pfp.infrastructure.estimated_gateway import (
             create_accounted_openrouter_gateway,
         )
 
@@ -297,7 +297,7 @@ def main():
                              output=str(args.output))))
         return 2 if status in ("NO_STAGE_RECORDED", "INFRASTRUCTURE_ERROR") else 0
     if args.replay_live:
-        from omega_engine_pfp.infrastructure.challenge_live import replay_live
+        from pfp.infrastructure.challenge_live import replay_live
 
         print(json.dumps({"replayed_stages": replay_live(args.replay_live)}))
 

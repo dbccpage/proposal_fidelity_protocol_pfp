@@ -4,10 +4,10 @@ Sends the cases below to each declared model and scores the replies with both
 judge checkers. This script makes live provider calls; run it only with an
 explicit authorization of provider, budget and data handling, from the
 repository root, as
-``py -3.12 -m omega_engine_adversary.tests.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix --output-dir <new directory> --max-estimated-cost-microusd 10000 --max-provider-calls 1 --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-output-tokens 2048``.
+``py -3.12 -m workflows.wf11_dual_certificate_synthesis.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix --output-dir <new directory> --max-estimated-cost-microusd 10000 --max-provider-calls 1 --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-output-tokens 2048``.
 Shared behaviour (explicit configuration, opaque case tokens, full raw
 responses, INFRA_ERROR and CHECKER_DEFECT outcomes, no overwriting) lives in
-``omega_engine_pfp/infrastructure/synthesis_matrix.py``.
+``pfp/infrastructure/synthesis_matrix.py``.
 
 Correction, 2026-09-29: the earlier runner read a ``.env`` file, sent case IDs that name
 the expected construct (for example ``c059_m06_anti_join_null_safe``), claimed
@@ -19,19 +19,18 @@ from __future__ import annotations
 
 import sys
 
-from omega_engine_pfp.infrastructure.synthesis_matrix import (
-    MatrixSpec,
-    main,
-)
-
-from .generate_cases import (
-    create_sample_dbs,
-)
 from .judge_packet.exact_checker import (
     verify_candidate,
 )
+from .judge_packet.generate_cases import (
+    create_sample_dbs,
+)
 from .judge_packet.independent_checker import (
     independent_check,
+)
+from pfp.infrastructure.synthesis_matrix import (
+    MatrixSpec,
+    main,
 )
 
 MODELS = [

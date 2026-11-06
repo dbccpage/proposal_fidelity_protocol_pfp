@@ -18,7 +18,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from adversary.tests.pilots.judge_packet_audit import audit, canonical
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import audit, canonical
 from pfp.tests.judge_audit import fake_packages as fp
 
 

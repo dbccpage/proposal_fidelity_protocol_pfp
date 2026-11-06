@@ -61,7 +61,7 @@ dated and is not revalidated by later edits.
 
 **Where the pilots are.** 204 pilot folders, `pilot_0000000` to
 `pilot_0000203`, are under [`adversary/tests/pilots/`](../../../adversary/tests/pilots/README.md).
-The live matrix is [`matrix/max_pilot_matrix.yaml`](../../../adversary/tests/pilots/matrix/max_pilot_matrix.yaml)
+The live matrix is [`matrix/max_pilot_matrix.yaml`](../../../workflows/library/pilot_estate/matrix/max_pilot_matrix.yaml)
 (75 entries). Its entries have no execution-state field, although the pilots
 README says the matrix records execution state. The `pilot_matrix.yaml` file
 and `PM-` ids added in PR #544 are no longer in the tree; no page in this folder
@@ -74,8 +74,8 @@ pointed to them.
 | All pilot test folders with a real reply | 378 replies | 13 `ACCEPTED` | per-test `response.yaml` |
 | Dossier replay on a free Nemotron model | 300 | 0 accepted | same |
 | `deepseek-v4.1-flash` replies | 50 | 13 accepted | same |
-| PFP-PILOT-001, four representations | 64 | validation rate raw 0.938, structured 0.75, relational 0.75, symbolic 0.812; one call per cell | [`max_pilot_matrix.yaml:2337-2358`](../../../adversary/tests/pilots/matrix/max_pilot_matrix.yaml) |
-| PO035 | 40 | 0 accepted; a compact rerun (15 calls) had 0 schema-valid replies | [PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md), [compact rerun](../../../adversary/tests/pilots/evidence/po035_simplified_20261012/README.md) |
+| PFP-PILOT-001, four representations | 64 | validation rate raw 0.938, structured 0.75, relational 0.75, symbolic 0.812; one call per cell | [`max_pilot_matrix.yaml:2337-2358`](../../../workflows/library/pilot_estate/matrix/max_pilot_matrix.yaml) |
+| PO035 | 40 | 0 accepted; a compact rerun (15 calls) had 0 schema-valid replies | [PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md), [compact rerun](../../../workflows/library/pilot_estate/evidence/po035_simplified_20261012/README.md) |
 | Claude gate runs, 2026-10-14 | 74 | Haiku 5.5 was 8 of 8 PFP-valid; 22 failures were Markdown-fenced replies; the SQLite form gave no advantage | [`empirical_observations_20261014.md`](../../../pfp/documentation/empirical_observations_20261014.md) |
 
 With one call per cell, the PFP-PILOT-001 rates do not separate the four
@@ -95,9 +95,9 @@ accepts `{"answer":3,"status":"REFUSED"}`. Prompt lineage is typed in
 `golden_prompts/`, `examples/` and `originals/`, which do not exist.
 
 **Certified ladder.** The H0–H13 design at
-[`certified_ladder/design.md`](../../../adversary/tests/pilots/certified_ladder/design.md) was registered
+[`certified_ladder/design.md`](../../../workflows/wf22_certified_cost_ladder/pilots/certified_ladder/design.md) was registered
 on 2026-10-11. Only its gate controls have run
-([`p0_gate_controls_receipt.json`](../../../adversary/tests/pilots/certified_ladder/receipts/p0_gate_controls_receipt.json)).
+([`p0_gate_controls_receipt.json`](../../../workflows/wf22_certified_cost_ladder/pilots/certified_ladder/receipts/p0_gate_controls_receipt.json)).
 
 **Next.** [EPIC-OE-OEWAS-012](../../../product_planning_office/plans/epics/oewas/epic_oe_oewas_012_adversary_operad_binding_and_management_ladder_pilot_plan.md) proposes a management ladder M0–M6 with two
 new arms: A5, a typed operad tree of turns, and A6, repair and reuse. It runs in

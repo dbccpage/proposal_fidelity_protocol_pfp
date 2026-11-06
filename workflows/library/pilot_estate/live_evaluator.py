@@ -5,7 +5,7 @@ P0 evaluations are ineligible for efficacy claims. Fresh model dispatch moved
 to bounded ``pfp run-seed`` execution; this module retains offline regrading.
 """
 from __future__ import annotations
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
+from pfp.infrastructure.model_loading import load_yaml_model
 
 import argparse
 import json
@@ -19,17 +19,17 @@ _REPO_ROOT = next((p for p in _HERE.parents if (p / ".git").exists()), _HERE.par
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from omega_engine_pfp.domain.types import EvaluationStatus
-from omega_engine_pfp.domain.types import PilotSpec
-from omega_engine_pfp.domain.types import PStarPrompt
-from omega_engine_pfp.domain.types import SeedPrompt
-from omega_engine_pfp.domain.pilots.checker_registry import (  # noqa: E402
+from pfp.domain.types import EvaluationStatus
+from pfp.domain.types import PilotSpec
+from pfp.domain.types import PStarPrompt
+from pfp.domain.types import SeedPrompt
+from pfp.domain.pilots.checker_registry import (  # noqa: E402
     MAX_REPLY_BYTES,
     checker_definition,
     evaluate_candidate,
     strict_json,
 )
-from omega_engine_pfp.infrastructure.pilot_evidence import (  # noqa: E402
+from pfp.infrastructure.pilot_evidence import (  # noqa: E402
     canonical_bytes,
     digest,
     input_binding,

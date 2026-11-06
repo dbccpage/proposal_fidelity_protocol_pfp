@@ -5,21 +5,21 @@ import json
 
 import yaml
 
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import (
+from pfp.infrastructure.adapters.pfp_evidence import (
     canonical,
     digest,
     write_once,
 )
 
-from omega_engine_adversary.tests.pilots.relational_spacetime import typed_signals as adaptive
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import ROOT
-from omega_engine_adversary.tests.pilots.relational_spacetime.baseline import refuse_without_checkout
-from omega_engine_adversary.tests.pilots.relational_spacetime.tasks import load
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import typed_signals as adaptive
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import ROOT
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline import refuse_without_checkout
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import load
 
 FINAL = adaptive.EVIDENCE / "reviewed_final_prompts"
 REVIEW = adaptive.EVIDENCE / "review_annotations_v2.json"
-SELF = "omega_engine_adversary/tests/pilots/relational_spacetime/final_prompts.py"
+SELF = "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/final_prompts.py"
 
 
 def dereference(document, pointer):
@@ -50,9 +50,9 @@ def validate_candidate(candidate, original_root):
 
 def documents():
     """Verify and reconstruct the recorded final prompts with their exact runtime."""
-    from omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay import replay_bundle
+    from pfp.infrastructure.adapters.pfp_frozen_replay import replay_bundle
 
-    bundle = ROOT / "omega_engine_adversary/tests/pilots/evidence/pfp_ownership_migration_20261012"
+    bundle = ROOT / "workflows/library/pilot_estate/evidence/pfp_ownership_migration_20261012"
     result = replay_bundle(ROOT, bundle, "final-prompt-documents")
     return {pilot: text.encode("utf-8") for pilot, text in result.items()}
 

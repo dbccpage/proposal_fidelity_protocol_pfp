@@ -12,13 +12,13 @@ claim_status: source-grounded
 authority_effect: "None"
 source_paths:
   - pfp/infrastructure/numbered_prompts.py
-  - adversary/tests/pilots/relational_spacetime/compact_checks.py
-  - adversary/tests/pilots/relational_spacetime/compact_trials.py
+  - workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/compact_checks.py
+  - workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/compact_trials.py
   - pfp/infrastructure/yaml/prompts/templates/template_role_registry.yaml
   - pfp/infrastructure/adapters/pfp_frozen_replay.py
   - pfp/infrastructure/yaml/taxonomy/task_families.yaml
-  - adversary/tests/pilots/evidence/po035_simplified_20261012
-  - adversary/tests/pilots/evidence/po035_experiments_20261012
+  - workflows/library/pilot_estate/evidence/po035_simplified_20261012
+  - workflows/library/pilot_estate/evidence/po035_experiments_20261012
 last_verified: 2026-10-20
 verification_scope: paths, registry version and refusal codes checked against source at c419cc6beb; PO035 results are historical and were not replayed
 ---
@@ -33,7 +33,7 @@ specific ways a plausible prompt can fail.
 
 ## Discoveries from the bounded trials
 
-The [compact rerun](../../../../adversary/tests/pilots/evidence/po035_simplified_20261012/README.md)
+The [compact rerun](../../../../workflows/library/pilot_estate/evidence/po035_simplified_20261012/README.md)
 covered pilots 199–203: five runs, three calls per run, 56450 reported tokens and
 $0 reported provider cost. All calls and host stages shared each pilot's $0.05,
 120000-token and 180-second ceilings. All 15 replies ended normally, with no
@@ -57,7 +57,7 @@ all six finite witness values correct, but a malformed contract and an incomplet
 refinement theorem. Useful arithmetic in an invalid packet is retained as partial
 evidence, never converted into an accepted result.
 
-The [preceding experiment](../../../../adversary/tests/pilots/evidence/po035_experiments_20261012/README.md)
+The [preceding experiment](../../../../workflows/library/pilot_estate/evidence/po035_experiments_20261012/README.md)
 ran five scratchpad, five temperature and five logit-bias cases: 40 calls,
 198952 tokens and $0.017035 reported cost, all within their per-run caps. Eight of
 ten larger public workpads were truncated. Only five of thirty final packets were
@@ -207,15 +207,15 @@ bedrock tokens or promote experimental types into grammar rules.
 From the repository root:
 
 ```powershell
-.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle adversary/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile compact-three-stage
-.venv/Scripts/python.exe -m adversary.tests.pilots.evidence.po035_simplified_20261012.verify_manifest
+.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle workflows/library/pilot_estate/evidence/pfp_ownership_migration_20261012 --profile compact-three-stage
+.venv/Scripts/python.exe -m workflows.library.pilot_estate.evidence.po035_simplified_20261012.verify_manifest
 ```
 
 Replay uses the 32 dispatch-pinned source files plus three separately retained
 eager-import dependencies captured at closeout with clean Git-base provenance.
 It preserves old prompt versions even after the registry grows. It verifies the
 15 retained calls without contacting a provider; it does not promise identical
-future hosted text. The [evidence report](../../../../adversary/tests/pilots/evidence/po035_simplified_20261012/README.md)
+future hosted text. The [evidence report](../../../../workflows/library/pilot_estate/evidence/po035_simplified_20261012/README.md)
 links raw replies, receipts, reviews, replay and the full manifest.
 
 First test the exact-output-contract correction on five single-shot packets under

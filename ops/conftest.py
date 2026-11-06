@@ -93,7 +93,7 @@ class _MssnSnSymgamAliasFinder(MetaPathFinder):
             elif sub == ".judge_audit.tests" or sub.startswith(".judge_audit.tests."):
                 target_name = f"pfp.tests.judge_audit{sub[len('.judge_audit.tests'):]}"
             elif sub == ".judge_audit" or sub.startswith(".judge_audit."):
-                target_name = f"adversary.tests.pilots.judge_packet_audit{sub[len('.judge_audit'):]}"
+                target_name = f"workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit{sub[len('.judge_audit'):]}"
             else:
                 target_name = f"{self._PREFIX_NEW}{sub}"
             target_mod = importlib.import_module(target_name)

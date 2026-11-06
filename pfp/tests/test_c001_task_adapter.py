@@ -16,7 +16,7 @@ from pfp.use_cases.pfp_proposal import task_turn_validator
 
 
 def adapter():
-    from adversary.tests.pilots.challenge_suite import c001
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite import c001
 
     return c001
 

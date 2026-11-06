@@ -497,7 +497,7 @@ To reproduce a selected local arm without a provider:
 
 ```powershell
 git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/oev1rc_integration_closure/local_model_custody.json > $env:TEMP/local_model_custody.json
-python -m adversary.tests.pilots.challenge_suite.local_mechanism_trials --model-dir target/models/SmolLM2-135M-Instruct --model-id HuggingFaceTB/SmolLM2-135M-Instruct --revision 12fd25f77366fa6b3b4b768ec3050bf629380bac --custody-manifest $env:TEMP/local_model_custody.json --recipe local-mechanism-v1.0.1 --output "$env:TEMP/pfp-local-learned.json"
+python -m workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.local_mechanism_trials --model-dir target/models/SmolLM2-135M-Instruct --model-id HuggingFaceTB/SmolLM2-135M-Instruct --revision 12fd25f77366fa6b3b4b768ec3050bf629380bac --custody-manifest $env:TEMP/local_model_custody.json --recipe local-mechanism-v1.0.1 --output "$env:TEMP/pfp-local-learned.json"
 ```
 
 Local billed inference is zero; CPU compute is recorded but unpriced. Actual
@@ -571,8 +571,8 @@ schema compliance alone does not establish a correct witness.
 Select one case and an explicit allowance, for example:
 
 ```powershell
-python -m adversary.tests.pilots.challenge_suite --live MODEL_ID --challenge C005 --split development --ordinal 0 --arm typed_witness --output "$env:TEMP/pfp-challenge-new" --max-output-tokens 3000 --max-provider-calls 2 --max-estimated-cost-microusd 50000
-python -m adversary.tests.pilots.challenge_suite --replay-live "$env:TEMP/pfp-challenge-new"
+python -m workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite --live MODEL_ID --challenge C005 --split development --ordinal 0 --arm typed_witness --output "$env:TEMP/pfp-challenge-new" --max-output-tokens 3000 --max-provider-calls 2 --max-estimated-cost-microusd 50000
+python -m workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite --replay-live "$env:TEMP/pfp-challenge-new"
 ```
 
 Replace `MODEL_ID` explicitly; this is a command example, not authorization or

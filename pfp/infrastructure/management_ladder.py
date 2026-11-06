@@ -26,7 +26,7 @@ from operads.skill_operad.resolver.native_runtime import run_native as run
 MODELS=('claude-haiku-5-5','claude-sonnet-5-5','claude-opus-5-5')
 STAGE_CAPS=dict(P0=0,P1=200000,P2=600000,P3=800000,P4=400000)
 BASE=Path(__file__).resolve().parents[2]
-DESIGN=BASE/'adversary/tests/pilots/certified_ladder/design_v2.md'
+DESIGN=BASE/'workflows/wf22_certified_cost_ladder/pilots/certified_ladder/design_v2.md'
 PRICES=BASE/'pfp/fixtures/empirical/anthropic_pricing_20261015.json'
 MODEL_ACCESS=BASE/'pfp/fixtures/empirical/anthropic_model_access_20261015.json'
 MODELS_RESPONSE=BASE/'pfp/fixtures/empirical/anthropic_models_20261015.json'

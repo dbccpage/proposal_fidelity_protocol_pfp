@@ -9,7 +9,7 @@ from hashlib import sha256
 from itertools import combinations
 from random import Random
 
-from omega_engine_pfp.domain.solvers.simplicial_cochain import CochainCarrier
+from pfp.domain.solvers.simplicial_cochain import CochainCarrier
 
 VERSION = "c006.panels.v2"
 ROUND5 = dict(case_id="round5-K4-diagnostic", nodes=["a", "b", "c", "d"],

@@ -11,19 +11,19 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from workflows.wf12_mechanism_control_arms.pilots.c001_attention_distractor_mask.case_generator import (
     generate_public_set,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.solver import (
+from workflows.wf12_mechanism_control_arms.pilots.c001_attention_distractor_mask.solver import (
     verify_certificate,
 )
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpTaskPrompt
-from omega_engine_pfp.use_cases.pfp_proposal import task_turn_validator
+from pfp.domain.contracts.pfp_runtime import PfpTaskPrompt
+from pfp.use_cases.pfp_proposal import task_turn_validator
 
 from .catalog import ROOT, canonical, digest, relative
 
 
-CHALLENGE_PATH = ROOT / "omega_engine_pfp/tests/demo_004/a_mechanism/c001_attention_distractor_mask"
+CHALLENGE_PATH = ROOT / "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask"
 TASK_PATH = CHALLENGE_PATH.with_name("c001_attention_distractor_mask_task_level.md")
 GENERATOR_PATH = CHALLENGE_PATH / "case_generator.py"
 SOURCE_PATHS = (Path(__file__), TASK_PATH, GENERATOR_PATH, CHALLENGE_PATH / "solver.py",

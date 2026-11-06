@@ -6,11 +6,11 @@ import sqlite3
 import pytest
 import yaml
 
-from adversary.tests.pilots.relational_spacetime import compact_trials as round_
-from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import compact_trials as round_
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import proposal_body
 from pfp.infrastructure.numbered_prompts import FIELD_CARRIERS
-from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_fixtures import fixture_payload
 from pfp.infrastructure.adapters import pfp_experiment
 from pfp.tests._po035_historical import historical_experiment
 from pfp.infrastructure.adapters.pfp_evidence import (

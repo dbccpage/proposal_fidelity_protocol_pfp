@@ -9,7 +9,7 @@ import pytest
 
 from pfp.infrastructure import pilot_runner as owner
 
-MANIFEST_REL = "adversary/tests/pilots/matrix/mssn_expected/manifest.v1.json"
+MANIFEST_REL = "workflows/library/pilot_estate/matrix/mssn_expected/manifest.v1.json"
 
 
 def write_json(path, value):

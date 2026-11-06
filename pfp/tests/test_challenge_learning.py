@@ -7,9 +7,9 @@ import json
 
 import pytest
 
-from adversary.tests.pilots.challenge_suite.__main__ import HARNESS_MUTANTS
-from adversary.tests.pilots.challenge_suite.catalog import load_plan
-from adversary.tests.pilots.challenge_suite.catalog import prompt_for
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.__main__ import HARNESS_MUTANTS
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import load_plan
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import prompt_for
 from pfp.infrastructure.adapters.pfp_proposals import SymbolGameProposalAdapter
 from pfp.use_cases.pfp_prompt import stimulus, task_contract
 from pfp.use_cases.pfp_proposal import (
@@ -251,7 +251,7 @@ def test_redacted_contract_withholds_status_and_phi1_values(tmp_path):
 
 @pytest.mark.parametrize("kind", ["consistency", "cycle_repair"])
 def test_exact_c005_schema_survives_example_mining(kind):
-    from adversary.tests.pilots.challenge_suite.catalog import load_case
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import load_case
     from workflows.wf12_mechanism_control_arms.pilots.c005_hosted_decode_controls.schemas import (
         CONSISTENCY_JSON_SCHEMA,
         CYCLE_REPAIR_JSON_SCHEMA,

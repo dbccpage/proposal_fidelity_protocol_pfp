@@ -17,9 +17,9 @@ def test_distribution_discovers_only_the_declared_pilot_runtime_subset(tmp_path)
     ]["setuptools"]["packages"]["find"]
     allowed = {
         "pfp.tests.demo_004.e_formal_math.checker",
-        "adversary.tests.pilots.matrix",
-        "adversary.tests.pilots.relational_spacetime",
-        "adversary.tests.pilots.challenge_suite",
+        "workflows.library.pilot_estate.matrix",
+        "workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime",
+        "workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite",
         "adversary.tests.pilots.pilot_0000192",
         "education.domain",
     }
@@ -27,8 +27,8 @@ def test_distribution_discovers_only_the_declared_pilot_runtime_subset(tmp_path)
         "pfp.tests.other_test_helpers",
         "adversary.tests.other_test_helpers",
         "adversary.tests.pilots.pilot_0000193",
-        "adversary.tests.pilots.evidence.frozen_sources",
-        "adversary.tests.pilots.relational_spacetime.tests",
+        "workflows.library.pilot_estate.evidence.frozen_sources",
+        "workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tests",
         "education.pilots.matrix",
         "education.pfp",
         "education.pfp.infrastructure",
@@ -100,7 +100,7 @@ def readonly_help(event, args):
         raise RuntimeError('C059_HELP_FILE_WRITE_FORBIDDEN')
 sys.addaudithook(readonly_help)
 sys.argv = ['run_c059_matrix', '--help']
-runpy.run_module('adversary.tests.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix', run_name='__main__')
+runpy.run_module('workflows.wf11_dual_certificate_synthesis.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix', run_name='__main__')
 """
     result = subprocess.run(
         [sys.executable, "-E", "-B", "-c", driver, str(root)],

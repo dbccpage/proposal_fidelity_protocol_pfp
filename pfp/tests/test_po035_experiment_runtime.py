@@ -22,9 +22,9 @@ from pfp.use_cases.pfp_derivation_loops import (
     DerivationLimits,
     run_derivation_loops,
 )
-from adversary.tests.pilots.relational_spacetime import parameter_trials as experiments
-from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
-from adversary.tests.pilots.relational_spacetime.tasks import BY_ID, proposal_body
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import parameter_trials as experiments
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID, proposal_body
 
 PAID_PROFILE = {"model": "fixture/model", "ceiling_usd_per_token": "0.0000004"}
 CONTROL_MARKER = "INDEPENDENT_CONTROL_RESPONSE_MUST_NOT_ENTER_TREATMENT"
@@ -183,7 +183,7 @@ def test_temperature_pair_has_two_fresh_requests_and_real_wire_values(tmp_path, 
 def test_logit_bias_reaches_actual_wire_and_bound_receipts(tmp_path, monkeypatch):
     import sys
 
-    module = "adversary.tests.pilots.relational_spacetime.decoding_controls"
+    module = "workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.decoding_controls"
     tokenizer = tmp_path / "tokenizer-fixture"
     tokenizer.write_bytes(b"host-only tokenizer fixture")
     _missing_module = object()

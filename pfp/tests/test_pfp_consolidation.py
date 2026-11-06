@@ -25,7 +25,7 @@ def test_one_final_application_owner_without_legacy_shadows():
     old_application = "" + "symbol_game"
     assert not (REPOSITORY / old_application).exists()
     assert not list((REPOSITORY / "education" / "pfp").rglob("*.py"))
-    pilot_tasks = REPOSITORY / "adversary/tests/pilots/challenge_suite"
+    pilot_tasks = REPOSITORY / "workflows/wf19_failure_derived_rule_transfer/pilots/challenge_suite"
     assert not (REPOSITORY / "education/pilots").exists()
     assert all(not (pilot_tasks / name).exists()
                for name in ("execution.py", "live.py", "adversary.py", "mechanism.py"))

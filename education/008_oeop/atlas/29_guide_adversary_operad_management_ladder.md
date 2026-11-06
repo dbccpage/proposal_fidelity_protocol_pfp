@@ -71,7 +71,7 @@ continues to decide closure.
 
 ## Run the bounded experiment
 
-The [v2 design](../../../../adversary/tests/pilots/certified_ladder/design_v2.md)
+The [v2 design](../../../../workflows/wf22_certified_cost_ladder/pilots/certified_ladder/design_v2.md)
 freezes deterministic item order, held-out separation, native quote limits,
 three model IDs and one continuing $2 ledger before inference. A0 and managed
 arms share the same PFP envelope and exact answer channel. Model composition
@@ -97,7 +97,7 @@ and review the generated amendment before execution. This command prepares only
 native quotes; it neither sends inference nor reconciles accounting:
 
 ```powershell
-$prior='adversary/tests/pilots/certified_ladder/v2/campaign_20261015'
+$prior='workflows/wf22_certified_cost_ladder/pilots/certified_ladder/v2/campaign_20261015'
 $out='.scratch/oewas-complete-20261016/campaign'
 $ledger='.scratch/oewas012/pilot/accounting.sqlite3'
 $decision='Reference to the explicit human conservative-charge and continuation decision'
@@ -139,7 +139,7 @@ every earlier amendment remain in the same ledger's history.
 
 ## What was observed
 
-The [retained result](../../../../adversary/tests/pilots/certified_ladder/v2/campaign_20261015/REPORT.md)
+The [retained result](../../../../workflows/wf22_certified_cost_ladder/pilots/certified_ladder/v2/campaign_20261015/REPORT.md)
 contains the exact commands, registration, public request, source snapshot and
 ledger. P0 passed 196 controls and 18 native host runs. The first Haiku request
 returned a transport error without response bytes. The ledger retained 1,014
@@ -152,7 +152,7 @@ the same prepared requests. Shared source storage can avoid duplication, but
 its envelope has overhead. Provider-token savings require a different measured
 request; deduplicated disk storage alone cannot establish them.
 
-The [shared-backend run](../../../../adversary/tests/pilots/certified_ladder/v2/adversary_20261015/REPORT.md)
+The [shared-backend run](../../../../workflows/wf22_certified_cost_ladder/pilots/certified_ladder/v2/adversary_20261015/REPORT.md)
 executed all 22 mandatory Panel roles: Syntax Prefilter through the host checker and the
 other 21 as PFP replies from the current IDE worker applying each perspective.
 These are not 22 independent model workers. Its unchanged original-task checker
@@ -175,4 +175,4 @@ counts remain in the earlier chapters; they are not fresh implementation results
 
 ## Completed continuation, 2026-10-16
 
-The [successor campaign packet](../../../../adversary/tests/pilots/certified_ladder/v2/campaign_20261016/REPORT.md) records the completed P0–P4 run, source-bound amendments and exact commands. Its continuing ledger totals $0.067134, including the original $0.001014 conservative charge. Forty-four responses settled; unknown historical usage remains unknown. The first retained response was repriced without resending after repairing standard-speed metering. Composition and host-solvable cases remain separate; this small sample establishes no universal management winner. The earlier stopped results above retain their original meaning.
+The [successor campaign packet](../../../../workflows/wf22_certified_cost_ladder/pilots/certified_ladder/v2/campaign_20261016/REPORT.md) records the completed P0–P4 run, source-bound amendments and exact commands. Its continuing ledger totals $0.067134, including the original $0.001014 conservative charge. Forty-four responses settled; unknown historical usage remains unknown. The first retained response was repriced without resending after repairing standard-speed metering. Composition and host-solvable cases remain separate; this small sample establishes no universal management winner. The earlier stopped results above retain their original meaning.

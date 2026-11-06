@@ -16,7 +16,7 @@ from .._paths import pilots_root
 
 
 PILOTS = pilots_root(Path(__file__))
-MODES = files("omega_engine_pfp").joinpath("infrastructure", "yaml", "modes")
+MODES = files("pfp").joinpath("infrastructure", "yaml", "modes")
 MODE_DIRS = {
     1: "mode_01_hieroglyphics_and_glyph_alphabets",
     2: "mode_02_packets_and_sealed_envelopes",
@@ -28,7 +28,7 @@ MODE_DIRS = {
     8: "mode_08_discrete_cochain_involutions",
     9: "mode_09_lean4_proof_kernel_elaboration",
     10: "mode_10_cemetery_dag_mining",
-    11: "mode_11_adversary_adversarial_tribunal",
+    11: "mode_11_adversarial_tribunal",
     12: "mode_12_simplicial_triangulation_and_regge",
     13: "mode_13_normal_form_confluent_chase",
     14: "mode_14_fail_closed_typed_refusal",
@@ -114,7 +114,7 @@ def _pilot_id(index: int) -> str:
 
 
 def _contract_path(mode_id: int) -> str:
-    return f"omega_engine_pfp/infrastructure/yaml/modes/{MODE_DIRS[mode_id]}/contract.yaml"
+    return f"pfp/infrastructure/yaml/modes/{MODE_DIRS[mode_id]}/contract.yaml"
 
 
 def _finished(

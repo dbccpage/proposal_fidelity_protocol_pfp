@@ -62,7 +62,7 @@ for the possible eight-stage winner. No allowance is transferred between stages.
 
 Requested models are `claude-haiku-5-5`, `claude-sonnet-5-5`, `claude-opus-5-5`.
 Official capabilities and standard global rates are pinned in
-`omega_engine_pfp/fixtures/empirical/anthropic_pricing_20261015.json`.
+`pfp/fixtures/empirical/anthropic_pricing_20261015.json`.
 Provider model access failures are retained, not substituted. Maximum output is 768
 tokens per call; requests stay below the Haiku 100,000-input-token tier boundary.
 No tools, cache writes, temperature or unsupported provider seed is sent. The local
@@ -79,10 +79,10 @@ complete pairs exist. This sample supports descriptive observations; insufficien
 pairs leave H14-H17 unestablished. Storage bytes and rendered input tokens are
 separate metrics; prompt-tree storage compression does not claim token savings.
 
-Prepare with `python -m omega_engine_pfp.infrastructure.management_ladder --output <external-directory>`.
+Prepare with `python -m pfp.infrastructure.management_ladder --output <external-directory>`.
 Execute that unchanged registration with the same command plus `--execute`, using the
 existing credential resolver to place `ANTHROPIC_API_KEY` into the native child
-process environment. `OMEGA_SYMBOL_GAME_HOST` selects the freshly built host.
+process environment. `CORE_SYMBOL_GAME_HOST` selects the freshly built host.
 The command writes raw replies and accounting to the supplied output directory
 (use the ignored `.scratch/oewas012/pilot` directory for this run). It never runs
 the retired 2,500-pilot grid. The MUB exact-count item remains with its external owner.

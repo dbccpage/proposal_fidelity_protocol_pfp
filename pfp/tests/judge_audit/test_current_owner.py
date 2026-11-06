@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from pfp.tests.judge_audit import fake_packages as fp
-from adversary.tests.pilots.judge_packet_audit import audit, layout, special_checks
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import audit, layout, special_checks
 
 
 def test_real_c014_descriptor_uses_current_owner_and_original_checker_contract():
@@ -88,6 +88,6 @@ def test_existing_special_only_c001_selection_is_preserved_and_recorded(tmp_path
     assert summary["special_cases"]["C001"]["path"] == source.relative_to(root).as_posix()
     info = json.loads((out / "run_info.json").read_text())
     assert info["packages"] == ["C001"]
-    assert "adversary.tests.pilots.judge_packet_audit.audit" in info["command"]
+    assert "workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit.audit" in info["command"]
     assert "projects" not in info["command"]
     assert info["audited_tree_state_unchanged"]

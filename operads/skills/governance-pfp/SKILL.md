@@ -94,7 +94,7 @@ Directly mined from the comprehensive audit review of 338 registered entries and
 ## 2. What Governance-PFP Must PROMOTE (The Six Coalescence Pillars)
 
 1. **Multidimensional Parameter Matrix Architecture (`RULE_PFP_MULTIDIMENSIONAL_MATRIX_001`)**
-   - Knobs span orthogonal dimensions defined in [`dimension_register.yaml`](../../../adversary/tests/pilots/dimensions/dimension_register.yaml):
+   - Knobs span orthogonal dimensions defined in [`dimension_register.yaml`](../../../workflows/library/pilot_estate/dimensions/dimension_register.yaml):
      - **Open Task Family Universe:** The task universe is unbounded and coextensive with all problems that can be posed as text prompts (symbolic manipulation, combinatorial search, graph theory, automated reasoning, constraint satisfaction, code generation, cochain defect verification, semantic parsing, formal refutation, etc.). An initial finite seed suite (e.g. `linear_algebra`, `graph_facts`, `graph_repair`, `refusal`, `cochain_defect`, `magma_associativity`) serves solely as a Phase 1 calibration fixture slice for baseline failure-boundary benchmarking, not a closed domain boundary.
      - **Multi-Rung Difficulty Scaling:** Difficulty rungs (e.g. Rungs 1â€“5 and beyond) calibrated to baseline model failure boundaries where unstructured prompt-response loops break down.
      - **Representation Rewrites:** Encodings across representations and syntax styles (`raw_prose`, `structured_spans`, `ebnf_wire_v1`, `sn_wire_v2`, `mss_boundary_v1`, `hieroglyphic_glyphs`, or domain ASTs).

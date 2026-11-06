@@ -105,13 +105,13 @@ def test_type_test_helpers_resolve_the_new_package_without_a_legacy_pfp_tree():
 
 
 def test_replay_paths_find_adversary_pilots_from_the_combined_application():
-    paths = importlib.import_module("adversary.tests.pilots.replay_runners._paths")
+    paths = importlib.import_module("workflows.wf18_dossier_replay_campaign.pilots.replay_runners._paths")
     assert paths.pilots_root(Path(__file__)) == REPOSITORY / "adversary/tests/pilots"
     assert paths.repository_root(Path(__file__)) == REPOSITORY
 
 
 def test_replay_paths_accept_a_linked_worktree_file(tmp_path):
-    paths = importlib.import_module("adversary.tests.pilots.replay_runners._paths")
+    paths = importlib.import_module("workflows.wf18_dossier_replay_campaign.pilots.replay_runners._paths")
     checkout = tmp_path / "checkout"
     estate = checkout / "adversary/tests/pilots"
     (estate / "matrix").mkdir(parents=True)

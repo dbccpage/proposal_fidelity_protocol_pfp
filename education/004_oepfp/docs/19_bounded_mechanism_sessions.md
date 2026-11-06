@@ -13,7 +13,7 @@ two each at ranks 3, 4, 5 and 6, and four at rank 7. The original source and
 Round-5 diagnostic remain unchanged. Select the corrected version explicitly:
 
 ```python
-from adversary.tests.pilots.challenge_suite.mechanism_panels import build_panels
+from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.mechanism_panels import build_panels
 panels = build_panels(version="c006.panels.v2")
 public_board = panels["public"][0]["board"]
 ```

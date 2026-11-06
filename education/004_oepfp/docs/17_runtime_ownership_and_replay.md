@@ -9,10 +9,10 @@ claim_status: source-grounded
 authority_effect: "None"
 source_paths:
   - pfp/README.md
-  - adversary/tests/pilots/relational_spacetime
+  - workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime
   - pfp/use_cases/pfp_calculation_contracts.py
   - pfp/infrastructure/adapters/pfp_frozen_replay.py
-  - adversary/tests/pilots/evidence/pfp_ownership_migration_20261012
+  - workflows/library/pilot_estate/evidence/pfp_ownership_migration_20261012
 last_verified: 2026-10-20
 verification_scope: module paths, CLI flags, stage executors and linked files checked at c419cc6beb; no command or test was run
 ---
@@ -26,7 +26,7 @@ AuthorityEffect: None.
 PFP research identifiers are provenance, not application boundaries. A paper
 number such as PO035 belongs in a seed's citation and evidence record. Active
 code for that research is discoverable as
-`adversary/tests/pilots/relational_spacetime`, with
+`workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime`, with
 `tasks`, `finite_checks`, `trial_prompts`, `parameter_trials`, `compact_prompts`,
 `compact_checks`, and `compact_trials` modules.
 
@@ -140,9 +140,9 @@ Run historical records through their pinned runtime, without recreating legacy
 imports in the active application:
 
 ```powershell
-.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle adversary/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile scratchpad-temperature-logit
-.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle adversary/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile compact-three-stage
-.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle adversary/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile five-final-prompts
+.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle workflows/library/pilot_estate/evidence/pfp_ownership_migration_20261012 --profile scratchpad-temperature-logit
+.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle workflows/library/pilot_estate/evidence/pfp_ownership_migration_20261012 --profile compact-three-stage
+.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle workflows/library/pilot_estate/evidence/pfp_ownership_migration_20261012 --profile five-final-prompts
 ```
 
 These profiles verify 40 experiment calls, 15 compact-round calls, and 25 source
@@ -154,12 +154,12 @@ part of replay. Current-source replay continues to refuse source drift.
 ## Audit the current original judge packets
 
 The existing audit runner lives in
-`adversary.tests.pilots.judge_packet_audit`; its current task tree is
+`workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit`; its current task tree is
 `pfp/tests/demo_004`. Select the packages needed for the question.
 For a source-only inspection of the retained Hodge packet:
 
 ```powershell
-python -m adversary.tests.pilots.judge_packet_audit.audit --repo-root . --packages C014 --skip-execution --out "$env:TEMP/c014-audit-new" --work-dir "$env:TEMP/c014-audit-work-new"
+python -m workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit.audit --repo-root . --packages C014 --skip-execution --out "$env:TEMP/c014-audit-new" --work-dir "$env:TEMP/c014-audit-work-new"
 ```
 
 Choose fresh output/work directories to retain earlier audit packets. Inspect
@@ -244,7 +244,7 @@ from dataclasses import replace
 from pathlib import Path
 from pfp.infrastructure.pilot_matrix import make_pilot_gateways
 from pfp.infrastructure.synthesis_matrix import run_matrix
-from adversary.tests.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix import SPEC
+from workflows.wf11_dual_certificate_synthesis.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix import SPEC
 
 model = "<explicit authorized OpenRouter model>"
 spec = replace(SPEC, cases=SPEC.cases[:1], max_tokens=512,
@@ -306,8 +306,8 @@ outside the historical pilot estate. The default derivation still allows five
 loops; this smaller example selects one, so it does not complete that protocol:
 
 ```powershell
-python -m adversary.tests.pilots.relational_spacetime.baseline --run pilot_0000199 --model YOUR_FREE_MODEL_ID --loops 1 --output "$env:TEMP/po035-current-one"
-python -m adversary.tests.pilots.relational_spacetime.baseline --replay --pilot pilot_0000199 --output "$env:TEMP/po035-current-one"
+python -m workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline --run pilot_0000199 --model YOUR_FREE_MODEL_ID --loops 1 --output "$env:TEMP/po035-current-one"
+python -m workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.baseline --replay --pilot pilot_0000199 --output "$env:TEMP/po035-current-one"
 ```
 
 The selected model must satisfy the existing zero-price and decoding capability
@@ -321,9 +321,9 @@ maximum-liability caps. No automatic retry or budget reset follows a stop.
 Compact runs retain preparation and source-drift refusal before dispatch:
 
 ```powershell
-python -m adversary.tests.pilots.relational_spacetime.compact_trials prepare --model YOUR_FREE_MODEL_ID --output "$env:TEMP/po035-compact-prep"
-python -m adversary.tests.pilots.relational_spacetime.compact_trials run --pilot pilot_0000199 --model YOUR_FREE_MODEL_ID --preflight "$env:TEMP/po035-compact-prep/preflight.json" --output "$env:TEMP/po035-compact-current"
-python -m adversary.tests.pilots.relational_spacetime.compact_trials replay --pilot pilot_0000199 --output "$env:TEMP/po035-compact-current"
+python -m workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.compact_trials prepare --model YOUR_FREE_MODEL_ID --output "$env:TEMP/po035-compact-prep"
+python -m workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.compact_trials run --pilot pilot_0000199 --model YOUR_FREE_MODEL_ID --preflight "$env:TEMP/po035-compact-prep/preflight.json" --output "$env:TEMP/po035-compact-current"
+python -m workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.compact_trials replay --pilot pilot_0000199 --output "$env:TEMP/po035-compact-current"
 ```
 
 `parameter_trials run scratchpad|temperature|logit` likewise requires `--pilot`,

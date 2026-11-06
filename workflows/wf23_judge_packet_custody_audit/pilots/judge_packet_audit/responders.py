@@ -28,7 +28,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from omega_engine_adversary.tests.pilots.judge_packet_audit.static_analysis import REFUSAL_STATUS_WORDS
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit.static_analysis import REFUSAL_STATUS_WORDS
 
 BOGUS_CODE = "JUDGE_AUDIT_UNLISTED_CODE"
 MAX_REFUSE_TEMPLATES = 8

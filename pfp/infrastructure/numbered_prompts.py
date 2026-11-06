@@ -20,12 +20,12 @@ from pfp.use_cases.pfp_calculation_contracts import (
     public_workpad_schema,
 )
 
-from adversary.tests.pilots.relational_spacetime import trial_prompts as experiment_prompts
-from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from adversary.tests.pilots.relational_spacetime.tasks import CERTIFICATES
-from adversary.tests.pilots.relational_spacetime.tasks import array
-from adversary.tests.pilots.relational_spacetime.tasks import obj
-from adversary.tests.pilots.relational_spacetime.tasks import (
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import trial_prompts as experiment_prompts
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import CERTIFICATES
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import array
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import obj
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import (
     response_schema as frozen_response_schema,
 )
 
@@ -111,9 +111,9 @@ def _pilot(pilot):
 def _resource_bytes(path):
     relocated = {
         "education/pilots/relational_spacetime/tasks.py":
-            "adversary/tests/pilots/relational_spacetime/tasks.py",
+            "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/tasks.py",
         "education/pilots/relational_spacetime/trial_prompts.py":
-            "adversary/tests/pilots/relational_spacetime/trial_prompts.py",
+            "workflows/wf20_derivation_loop_with_lift_grants/pilots/relational_spacetime/trial_prompts.py",
     }
     relative = path.relative_to(ROOT).as_posix()
     path = ROOT / relocated.get(relative, relative)

@@ -18,10 +18,10 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from omega_engine_adversary.tests.pilots.judge_packet_audit import execution
-from omega_engine_adversary.tests.pilots.judge_packet_audit import layout
-from omega_engine_adversary.tests.pilots.judge_packet_audit import reference_values
-from omega_engine_adversary.tests.pilots.judge_packet_audit import static_analysis as sa
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import execution
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import layout
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import reference_values
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import static_analysis as sa
 
 C032_PAIRS = [
     *[(f"SU({n})", rep) for n in range(2, 9) for rep in ("fund", "adj", "antisym", "sym")],

@@ -6,7 +6,7 @@ import pytest
 
 from pfp.infrastructure import numbered_prompts as prompts
 from pfp.infrastructure.adapters import pfp_evidence
-from adversary.tests.pilots.relational_spacetime import (
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import (
     baseline,
     compact_trials,
     parameter_trials,
@@ -88,7 +88,7 @@ def test_distribution_probe_requires_current_challenge_resources_and_source_bind
     import socket
 
     from pfp.tests import installed_package_probe
-    from adversary.tests.pilots.challenge_suite.catalog import ROOT
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT
 
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(
@@ -105,7 +105,7 @@ def test_distribution_probe_requires_current_challenge_resources_and_source_bind
 
 def test_distribution_probe_exercises_one_original_isolated_host_fixture():
     from pfp.tests import installed_package_probe
-    from adversary.tests.pilots.challenge_suite.catalog import ROOT
+    from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT
 
     assert installed_package_probe.installed_host_fixture_probe(ROOT) == [
         "installed C054 host fixture: isolated original dual-judge verification and empty-witness refusal; no model evidence"

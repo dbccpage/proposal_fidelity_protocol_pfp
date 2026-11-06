@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from adversary.tests.pilots.judge_packet_audit import static_analysis as sa
+from workflows.wf23_judge_packet_custody_audit.pilots.judge_packet_audit import static_analysis as sa
 
 REL = "z_fake.c950_static"
 

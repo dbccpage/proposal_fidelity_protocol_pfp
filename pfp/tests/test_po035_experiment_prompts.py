@@ -7,11 +7,11 @@ import jsonschema
 import pytest
 import yaml
 
-from adversary.tests.pilots.relational_spacetime import trial_prompts as prompts
-from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
-from adversary.tests.pilots.relational_spacetime.tasks import ROOT
-from adversary.tests.pilots.relational_spacetime.tasks import TEMPLATE
-from adversary.tests.pilots.relational_spacetime.tasks import response_schema
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime import trial_prompts as prompts
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import BY_ID
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import ROOT
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import TEMPLATE
+from workflows.wf20_derivation_loop_with_lift_grants.pilots.relational_spacetime.tasks import response_schema
 from pfp.infrastructure.adapters.pfp_evidence import digest
 
 

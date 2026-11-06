@@ -5,17 +5,17 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import (
+from pfp.infrastructure.adapters.pfp_evidence import (
     canonical,
     digest,
     repository_root,
 )
 
 ROOT = repository_root(Path(__file__))
-PILOTS = ROOT / "omega_engine_adversary/tests/pilots"
+PILOTS = ROOT / "adversary/tests/pilots"
 CAMPAIGN = "po035_derivations_20261012"
-SOURCE = "omega_engine_atlas/035_zero_container_relational_spacetime_and_witness_holonomy"
-TEMPLATE = "omega_engine_pfp/infrastructure/yaml/prompts/templates/template_single_slot.yaml"
+SOURCE = "atlas/coda_atlas/F004_papers/002_projection_obstruction/035_zero_container_relational_spacetime_and_witness_holonomy"
+TEMPLATE = "pfp/infrastructure/yaml/prompts/templates/template_single_slot.yaml"
 MODE = "PFP-12-SIMPLICIAL-CARRIER"
 MODEL = "nvidia/nemotron-3.5-lightning:free"
 STAGES = ("proposal", "lift_grant", "witness_check", "negative_control", "learning_refinement")
