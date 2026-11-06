@@ -89,7 +89,7 @@ Paper 028 is a separate implementation study, not a sixth finite theorem.
 | [027](027_pfp_proposal_channels_and_internal_interventions/README.md) | Glyphs, rewrites, logits, and attention as checked proposal channels |
 | [028](028_pfp_operadic_composition_and_bounded_ddc_repair/README.md) | Current operadic composition, subsystem ownership and bounded DDC repair; implementation study, not a new finite theorem |
 | [029](029_pfp_evidence_bound_harness_evolution/README.md) | Evidence-bound harness evolution: search, failure memory, held-out transfer, costs and experimental limits |
-| [034](034_pfp_workflow_dag_process_and_mathematics/README.md) | The workflow DAG: process and mathematics of WF1–WF23, with team, goal and boost designs; author-review draft |
+| [034](034_pfp_workflow_dag_process_and_mathematics/README.md) | The workflow DAG: process and mathematics of WF1–WF49, with team, goal and boost designs; author-review draft |
 
 Internal glyph, logit, and attention experiments remain explicit unexecuted proposals.
 

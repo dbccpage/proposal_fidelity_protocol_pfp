@@ -31,7 +31,10 @@ mining stage before solving (WF3), five isolated solvers with a global check
 [workflow DAG](Workflow-DAG.md) uses that shape for everything else: one base
 workflow, a few procedure extensions, experiment designs that wrap any
 workflow, and design proposals (WF6–WF23) that have **no runner and no run
-yet**.
+yet**. WF24–WF49 were added on 2026-11-06 from the certified-challenge
+findings notes and the papers, together with 46 recorded perturbations
+(variations of an existing workflow's settings or steps, such as scratchpad
+on or off, completion ceilings, hint levels or neutral case identifiers).
 
 ## Your shortest route
 

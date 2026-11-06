@@ -1,4 +1,4 @@
-# Paper 034: The workflow DAG — process and mathematics of WF1–WF23
+# Paper 034: The workflow DAG — process and mathematics of WF1–WF49
 
 **Status:** Author-review draft; not an external deposit  
 **Folder:** [`papers/034_pfp_workflow_dag_process_and_mathematics`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/034_pfp_workflow_dag_process_and_mathematics)
