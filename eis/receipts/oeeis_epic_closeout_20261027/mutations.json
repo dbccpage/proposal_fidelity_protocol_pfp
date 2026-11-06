@@ -1,0 +1,198 @@
+[
+  {
+    "id": "EIS001-dup-provenance",
+    "file": "eis/infrastructure/native_pharmacy.py",
+    "source_sha256": "ced3c6ea2afe74c47271cd9e672b6f1e9adfef6fcde5d84b09d3dbe04e7494a7",
+    "mutated_from": "if len(set(findings)) != len(findings):",
+    "mutated_to": "if False:",
+    "command": ".venv/bin/python -m pytest -q -p no:cacheprovider eis/tests/unit/test_pharmacy_role_partition.py",
+    "mutant_exit": 1,
+    "mutant_tail": [
+      "eis/tests/unit/test_pharmacy_role_partition.py:109: Failed",
+      "=========================== short test summary info ============================",
+      "FAILED eis/tests/unit/test_pharmacy_role_partition.py::test_duplicate_native_findings_are_refused_not_merged"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      "............                                                             [100%]"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS001-mislabeled-native",
+    "file": "eis/infrastructure/mssn_ports.py",
+    "source_sha256": "ae4bea1797a2b66fb4edf29881fc65b7ff1939401fa2113b5ca15bc8cd9112c9",
+    "mutated_from": "if any(finding.source != \"native\" for finding in native.findings):",
+    "mutated_to": "if False:",
+    "command": ".venv/bin/python -m pytest -q -p no:cacheprovider eis/tests/unit/test_pharmacy_role_partition.py",
+    "mutant_exit": 1,
+    "mutant_tail": [
+      "eis/tests/unit/test_pharmacy_role_partition.py:135: Failed",
+      "=========================== short test summary info ============================",
+      "FAILED eis/tests/unit/test_pharmacy_role_partition.py::test_a_native_report_carrying_python_provenance_is_refused"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      "............                                                             [100%]"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS001-unavailable-host-to-empty",
+    "file": "eis/infrastructure/native_pharmacy.py",
+    "source_sha256": "ced3c6ea2afe74c47271cd9e672b6f1e9adfef6fcde5d84b09d3dbe04e7494a7",
+    "mutated_from": "raise NativePharmacyUnavailable(\"HOST_BINARY_NOT_FOUND\", str(exc)) from exc",
+    "mutated_to": "return NativePharmacyReport(\"sha256:\" + \"0\" * 64, \"sha256:\" + \"0\" * 64, None, tuple(NATIVE_CLASS_CODES.values()), ())  # type: ignore[return-value]",
+    "command": ".venv/bin/python -m pytest -q -p no:cacheprovider eis/tests/unit/test_native_pharmacy_adapter.py",
+    "mutant_exit": 1,
+    "mutant_tail": [
+      "eis/infrastructure/native_pharmacy.py:198: AttributeError",
+      "=========================== short test summary info ============================",
+      "FAILED eis/tests/unit/test_native_pharmacy_adapter.py::test_a_missing_binary_is_a_typed_refusal"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      "...........                                                              [100%]"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS001-admission-undeclared-fields",
+    "file": "crates_rs/core_epistemic_immune_system/src/admission.rs",
+    "source_sha256": "5ac8b2fe869a949d19bda8e1504f1363d9074c13250e02254c8339f49745d04f",
+    "mutated_from": "if !unknown.is_empty() {",
+    "mutated_to": "if false && !unknown.is_empty() {",
+    "command": ".venv/bin/python -m pytest -q -p no:cacheprovider eis/tests/unit/test_pharmacy_role_partition.py",
+    "mutant_exit": 1,
+    "mutant_tail": [
+      "eis/tests/unit/test_pharmacy_role_partition.py:179: Failed",
+      "=========================== short test summary info ============================",
+      "FAILED eis/tests/unit/test_pharmacy_role_partition.py::test_clean_report_does_not_admit"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      "............                                                             [100%]"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS001-disable-shared-class",
+    "file": "crates_rs/core_prompt_civilization/src/pharmacy.rs",
+    "source_sha256": "b30c5cf3cd9fab58db7e83b7697d58df1c60a88130a5f76b827a468334984c60",
+    "mutated_from": "if has_findings && has_repair {",
+    "mutated_to": "if false && has_findings && has_repair {",
+    "command": ".venv/bin/python -m pytest -q -p no:cacheprovider eis/tests/unit/test_pharmacy_parity.py",
+    "mutant_exit": 1,
+    "mutant_tail": [
+      "FAILED eis/tests/unit/test_pharmacy_parity.py::test_the_dual_controls_agree_on_the_shared_classes[POS_12_DETECT_REPAIR_COUPLING]",
+      "FAILED eis/tests/unit/test_pharmacy_parity.py::test_further_cases_agree_on_the_shared_classes[5]",
+      "FAILED eis/tests/unit/test_pharmacy_parity.py::test_the_rerouted_matcher_reports_the_python_classes_on_the_controls"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      "..................................................                       [100%]"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS002-danger-subject-from-hit",
+    "file": "eis/use_cases/guard_activation.py",
+    "source_sha256": "0a2a9851852157fd9012b07305e82d056b6d730b44e829f342aceaad707a46e7",
+    "mutated_from": "danger = None if signal is None else danger_receipt(signal, subject_digest(content))",
+    "mutated_to": "danger = None if signal is None else danger_receipt(signal, hit.subject_id if hit else subject_digest(content))",
+    "command": ".venv/bin/python -m pytest -q -p no:cacheprovider eis/tests/unit/test_activation_receipt_transplant.py",
+    "mutant_exit": 1,
+    "mutant_tail": [
+      "eis/tests/unit/test_activation_receipt_transplant.py:92: AssertionError",
+      "=========================== short test summary info ============================",
+      "FAILED eis/tests/unit/test_activation_receipt_transplant.py::test_subject_transplant_and_recovery"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      ".                                                                        [100%]"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS003-suspension-removed",
+    "file": "eis/use_cases/guard_activation.py",
+    "source_sha256": "0a2a9851852157fd9012b07305e82d056b6d730b44e829f342aceaad707a46e7",
+    "mutated_from": "suspended = guard_state.is_suspended(spec_id, subject_scope)",
+    "mutated_to": "suspended = False",
+    "command": ".venv/bin/python -m pytest -q -p no:cacheprovider eis/tests/unit/test_immune_admission_use_cases.py eis/tests/unit/test_activation_host_health.py",
+    "mutant_exit": 1,
+    "mutant_tail": [
+      "eis/tests/unit/test_immune_admission_use_cases.py:117: AssertionError",
+      "=========================== short test summary info ============================",
+      "FAILED eis/tests/unit/test_immune_admission_use_cases.py::test_admission_and_suspension_come_from_the_port"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      ".....................                                                    [100%]"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS003-min-samples-removed",
+    "file": "crates_rs/core_epistemic_immune_system/src/regulation.rs",
+    "source_sha256": "f0a9312018599dad46983cb5a1619fd44f86fffd2af50d83ffc76c20f3f6c01d",
+    "mutated_from": "if total == 0 || total < u128::from(self.min_samples_for_evaluation) {",
+    "mutated_to": "if total == 0 {",
+    "command": "cargo test --manifest-path crates_rs/Cargo.toml -p core_epistemic_immune_system -j 3 --test regulation_exact_boundaries --test learning_regulation_composition",
+    "mutant_exit": 101,
+    "mutant_tail": [
+      "    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.31s",
+      "     Running ../tests/core_epistemic_immune_system/learning_regulation_composition.rs (crates_rs/target/debug/deps/learning_regulation_composition-93548470cfd400fd)",
+      "error: test failed, to rerun pass `-p core_epistemic_immune_system --test learning_regulation_composition`"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      "    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.27s",
+      "     Running ../tests/core_epistemic_immune_system/learning_regulation_composition.rs (crates_rs/target/debug/deps/learning_regulation_composition-93548470cfd400fd)",
+      "     Running ../tests/core_epistemic_immune_system/regulation_exact_boundaries.rs (crates_rs/target/debug/deps/regulation_exact_boundaries-283dbffa617bcd2f)"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS003-denominator-tp-only",
+    "file": "crates_rs/core_epistemic_immune_system/src/regulation.rs",
+    "source_sha256": "f0a9312018599dad46983cb5a1619fd44f86fffd2af50d83ffc76c20f3f6c01d",
+    "mutated_from": "BigUint::from(total) * BigUint::from(*self.max_false_discovery_proportion.numer());",
+    "mutated_to": "BigUint::from(telemetry.true_positives) * BigUint::from(*self.max_false_discovery_proportion.numer());",
+    "command": "cargo test --manifest-path crates_rs/Cargo.toml -p core_epistemic_immune_system -j 3 --test regulation_exact_boundaries --test learning_regulation_composition",
+    "mutant_exit": 101,
+    "mutant_tail": [
+      "    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.19s",
+      "     Running ../tests/core_epistemic_immune_system/learning_regulation_composition.rs (crates_rs/target/debug/deps/learning_regulation_composition-93548470cfd400fd)",
+      "error: test failed, to rerun pass `-p core_epistemic_immune_system --test learning_regulation_composition`"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      "    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.17s",
+      "     Running ../tests/core_epistemic_immune_system/learning_regulation_composition.rs (crates_rs/target/debug/deps/learning_regulation_composition-93548470cfd400fd)",
+      "     Running ../tests/core_epistemic_immune_system/regulation_exact_boundaries.rs (crates_rs/target/debug/deps/regulation_exact_boundaries-283dbffa617bcd2f)"
+    ],
+    "detected": true
+  },
+  {
+    "id": "EIS003-clonal-closed-fields-removed",
+    "file": "crates_rs/core_epistemic_immune_system/src/clonal_selection.rs",
+    "source_sha256": "2f2f0bf924d0b1574888e7fd6aa0a13fec8144587939d2b860c32bfa11048ae7",
+    "mutated_from": "if let Some(extra) = fields.keys().find(|key| !RULE_FIELDS.contains(&key.as_str())) {",
+    "mutated_to": "if let Some(extra) = fields.keys().find(|_| false) {",
+    "command": "cargo test --manifest-path crates_rs/Cargo.toml -p core_epistemic_immune_system -j 3 --test learning_regulation_composition",
+    "mutant_exit": 101,
+    "mutant_tail": [
+      "    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.22s",
+      "     Running ../tests/core_epistemic_immune_system/learning_regulation_composition.rs (crates_rs/target/debug/deps/learning_regulation_composition-93548470cfd400fd)",
+      "error: test failed, to rerun pass `-p core_epistemic_immune_system --test learning_regulation_composition`"
+    ],
+    "restored_exit": 0,
+    "restored_tail": [
+      "   Compiling core_epistemic_immune_system v0.1.0 (/home/claude/the_symbol_game/crates_rs/core_epistemic_immune_system)",
+      "    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.35s",
+      "     Running ../tests/core_epistemic_immune_system/learning_regulation_composition.rs (crates_rs/target/debug/deps/learning_regulation_composition-93548470cfd400fd)"
+    ],
+    "detected": true
+  }
+]
