@@ -43,8 +43,8 @@ PR58head4cdacabfd7d5a03ab346004559724335906558e2 verified viaGitHub; draft/open/
 
 Original audit coverage:9576full,33partial,22652pending of32261files.
 Background audit expansion is stopped at durable checkpoints during this workflow
-increment. The broader audit, migration destination and DAG artifacts remain local
-and incomplete; the full goal stays active.
+increment. The broader audit remains incomplete. Migration destinations and DAG artifacts
+are published in companion PR59. This session is paused for the requested handoff.
 
 ## User-requested publication checkpoint
 

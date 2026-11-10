@@ -14,7 +14,7 @@ Repository: <https://github.com/dbccpage/proposal_fidelity_protocol_pfp>.
 Local checkout: `C:\Users\a343o\source\repos\proposal_fidelity_protocol_pfp`.
 Original census baseline: `8050c66900899771766f33e8f5fdd200b7dd9120`.
 Benchmark branch: `codex/pfp-workflow-benchmark-20261110`, published head `4cdacabfd7d5a03ab346004559724335906558e2`, draft [PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58).
-Companion checkpoint branch: `codex/pfp-research-handoff-20261110`, based on that benchmark head. Consult `publication.json` for the final companion PR and current commits; recheck mutable GitHub state before acting.
+Companion checkpoint branch: `codex/pfp-research-handoff-20261110`, [draft PR #59](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/59), based on that benchmark head. Consult `publication.json` for the final companion PR and current commits; recheck mutable GitHub state before acting.
 
 Read these small entry points before broad searching:
 
