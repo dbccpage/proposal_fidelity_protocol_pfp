@@ -936,7 +936,7 @@ mod tests {
         let digest = tower.digest_sha256();
         assert_eq!(
             digest,
-            "9779cf6ef05b997c4d725ee5975ba1c7d9a214b74f7e3b0f4a317ad88cbb6ad5"
+            "e0b267fb35ac392c2de5a387dc0274c62be069f57627f4e2a36bb8b3e57e5218"
         );
         assert_ne!(digest, tampered.digest_sha256());
     }

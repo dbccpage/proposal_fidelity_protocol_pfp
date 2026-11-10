@@ -70,7 +70,7 @@ fn test_ddc_v1_12_substrings_survive_in_v1_13() {
     );
 
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(
-        "../../../governance/contracts/contract_canonical_definitions/rust/core_discrete_deformation_algebra/discrete_deformation_algebra.contract.yaml",
+        "../governance/contracts/contract_canonical_definitions/rust/core_discrete_deformation_algebra/discrete_deformation_algebra.contract.yaml",
     );
     let source = fs::read_to_string(&path).expect("DDC contract is readable");
     let contract: serde_yaml::Value =

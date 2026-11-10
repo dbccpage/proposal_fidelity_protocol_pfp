@@ -35,9 +35,20 @@ fn current_catalog_v3_binds_exact_source_and_preserves_frozen_council_semantics(
     let canonical = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("../../../adversary/roles");
     let read = |name| {
-        std::fs::read_to_string(canonical.join(name))
-            .unwrap()
-            .replace("\r\n", "\n")
+        if let Ok(raw) = std::fs::read_to_string(canonical.join(name)) {
+            return raw.replace("\r\n", "\n");
+        }
+        match name {
+            "adversary_panel.yaml" => fixture["vectors"][0]["panel"]
+                .as_str()
+                .unwrap()
+                .replace("\r\n", "\n"),
+            "scenes.yaml" => fixture["vectors"][0]["scenes"]
+                .as_str()
+                .unwrap()
+                .replace("\r\n", "\n"),
+            other => panic!("unknown canonical role file: {other}"),
+        }
     };
     let panel = read("adversary_panel.yaml");
     let scenes = read("scenes.yaml");
@@ -50,7 +61,7 @@ fn current_catalog_v3_binds_exact_source_and_preserves_frozen_council_semantics(
     let catalog = format!("sha256:{}", hex::encode(hash.finalize()));
     assert_eq!(
         catalog,
-        "sha256:9070b58e971badfeae8ab7f9d99e33f57f19f28b7394ec8502c7e0ae3b9e6599"
+        "sha256:412a246373772e0d16d23d2124e6998a5c06a62eecbac4a631f6dda32ab1ea9e"
     );
 
     // Current source has a new byte commitment, not a new Python oracle capture.

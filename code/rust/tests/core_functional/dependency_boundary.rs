@@ -260,7 +260,7 @@ fn actual_functional_manifest_has_only_allowed_direct_packages() {
 #[test]
 fn native_denylist_exactly_matches_the_existing_boundary_contract() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
-    let path = root.join("core_contracts/../../../governance/contracts/contract_canonical_definitions/math/functional_layer_boundary.contract.yaml");
+    let path = root.join("governance/contracts/contract_canonical_definitions/math/functional_layer_boundary.contract.yaml");
     let contract: serde_yaml::Value = serde_yaml::from_slice(&fs::read(path).unwrap()).unwrap();
     assert_eq!(
         contract["contract_id"].as_str(),

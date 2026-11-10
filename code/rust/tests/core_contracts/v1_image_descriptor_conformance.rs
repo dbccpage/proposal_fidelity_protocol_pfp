@@ -29,7 +29,7 @@ fn collect_contracts(dir: &Path, out: &mut Vec<PathBuf>) {
 }
 
 fn v1_contracts_by_id() -> BTreeMap<String, CoreContractV1> {
-    let corpus = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../governance/contracts/contract_canonical_definitions");
+    let corpus = Path::new(env!("CARGO_MANIFEST_DIR")).join("../governance/contracts/contract_canonical_definitions");
     let mut files = Vec::new();
     collect_contracts(&corpus, &mut files);
 

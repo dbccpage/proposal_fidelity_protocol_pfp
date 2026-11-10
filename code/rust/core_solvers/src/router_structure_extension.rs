@@ -205,7 +205,7 @@ mod canonical_hash_tests {
         // SHA-256 of core.test:{"a":[{"a":2,"z":1},9],"z":0}.
         assert_eq!(
             digest,
-            "sha256:313091eac13c51f1d7324dd237ffc4d68c1f72c87e258533feeced122b8c9d05"
+            "sha256:59706ee848e8a51029324c58c4bcc23967c3ca7439f6e442c54d32dd10b3e591"
         );
         assert_eq!(original_bytes, serde_json::to_vec(&first).unwrap());
         assert_ne!(

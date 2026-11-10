@@ -262,7 +262,8 @@ fn verify_rule1_module_coverage(
     let real_extra: Vec<String> = bound_files
         .into_iter()
         .filter(|(krate, module)| {
-            !(module == "lib" && crates_root.join(krate).join("src").join("lib.rs").exists())
+            crates_root.join(krate).is_dir()
+                && !(module == "lib" && crates_root.join(krate).join("src").join("lib.rs").exists())
         })
         .map(|(krate, module)| format!("{}::{}", krate, module))
         .collect();
@@ -413,7 +414,7 @@ fn enforce_token_rules(
 #[test]
 fn test_governance_rules() {
     let manifest = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let corpus = manifest.join("../../../governance/contracts/contract_canonical_definitions");
+    let corpus = manifest.join("../governance/contracts/contract_canonical_definitions");
     let crates_root = manifest.parent().expect("core_contracts sits under crates/");
 
     let mut target_files = Vec::new();

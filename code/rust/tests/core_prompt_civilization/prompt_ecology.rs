@@ -5,7 +5,9 @@ use core_prompt_civilization::crossover::*;
 use core_prompt_civilization::ecology::*;
 use core_prompt_civilization::evidence::*;
 use core_prompt_civilization::fitness::PromptFitnessV1;
-use core_prompt_civilization::genealogy::{InheritanceRelationship, LineageGraphV1};
+use core_prompt_civilization::genealogy::{
+    inheritance_witness_digest, InheritanceRelationship, LineageGraphV1,
+};
 use core_prompt_civilization::record::{
     CustodyTier, PacketRefV1, PromptGenomeV1, ProtectedSpanV1,
 };
@@ -58,12 +60,17 @@ fn crossover_preserves_core_two_parents_and_ancestry_without_admission() {
     let rb = blocks(12);
     let immunity = BTreeMap::from([("family".into(), "rule-1".into())]);
     let mut graph = LineageGraphV1::new();
+    let edge_witness = inheritance_witness_digest(
+        "ancestor",
+        &left.prompt_id,
+        &InheritanceRelationship::DirectMutation,
+    );
     graph
         .add_inheritance_edge(
             "ancestor",
             &left.prompt_id,
             InheritanceRelationship::DirectMutation,
-            "receipt",
+            &edge_witness,
         )
         .unwrap();
     let result = recombine(
@@ -464,12 +471,17 @@ fn raf_requires_food_generation_and_closed_catalysis() {
 #[test]
 fn descendant_evaluation_requires_external_anchor_and_distinct_actors() {
     let mut lineage = LineageGraphV1::new();
+    let edge_witness = inheritance_witness_digest(
+        "parent",
+        "child",
+        &InheritanceRelationship::DirectMutation,
+    );
     lineage
         .add_inheritance_edge(
             "parent",
             "child",
             InheritanceRelationship::DirectMutation,
-            "witness",
+            &edge_witness,
         )
         .unwrap();
     let trace = EvaluationTraceV1 {

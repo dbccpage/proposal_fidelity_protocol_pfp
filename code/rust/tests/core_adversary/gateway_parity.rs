@@ -170,7 +170,7 @@ fn frozen_python_gateway_vectors() {
         hex::encode(Sha256::digest(include_bytes!(
             "fixtures/python_routing_v1.json"
         ))),
-        "0f4096430765bea91ef9ed1c46dd97846101281ec49512ed309dc788428a358b"
+        "5307271c7a731a3de5502bdb754ddc2f14a35e6a1e00f28f6f0cc450b6d3694a"
     );
     let mut count = 0;
     let mut intentional_deltas = 0;

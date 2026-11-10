@@ -87,8 +87,8 @@ fn malformed_routes() -> Vec<(&'static str, RouteResult)> {
 
 fn record_malformed_packing_routes(
     results: &mut Vec<(&'static str, RouteResult)>,
-    unit: &matrix::Matrix<Rational>,
-    bad_matrix: &matrix::Matrix<Rational>,
+    unit: &BasicMatrix<BigRational>,
+    bad_matrix: &BasicMatrix<BigRational>,
 ) {
     let packing = PackingWitness {
         primal: vec![q(1)],

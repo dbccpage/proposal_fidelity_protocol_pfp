@@ -48,7 +48,7 @@ fn bounded_complete_nerve_and_endpoint_paths() {
     assert_eq!(nerve.all_degeneracies(&simplex).unwrap().len(), 3);
 }
 
-fn assert_face_degeneracy_identities(nerve: &ValidatedFiniteNerve, simplex: &NerveSimplex, n: usize, j: usize) {
+fn assert_face_degeneracy_identities(nerve: &ValidatedFiniteNerve, simplex: &Simplex, n: usize, j: usize) {
     for i in 0..=j {
         assert_eq!(
             nerve.degeneracy(&nerve.degeneracy(simplex, j).unwrap(), i).unwrap(),

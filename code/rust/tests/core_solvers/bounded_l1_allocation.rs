@@ -2,28 +2,31 @@
 
 use core_kernel::bounded_rational::StackRational as Q;
 use std::alloc::{GlobalAlloc, Layout, System};
-use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
+use std::cell::Cell;
+use std::sync::atomic::{AtomicUsize, Ordering};
 
 use core_solvers::solver_lp_bounded_candidate::{propose, CandidateError, MAX_COLS, MAX_ROWS};
 
-static MEASURING: AtomicBool = AtomicBool::new(false);
+thread_local! {
+    static MEASURING: Cell<bool> = const { Cell::new(false) };
+}
 static ALLOCATIONS: AtomicUsize = AtomicUsize::new(0);
 struct Counter;
 unsafe impl GlobalAlloc for Counter {
     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-        if MEASURING.load(Ordering::Relaxed) {
+        if MEASURING.with(Cell::get) {
             ALLOCATIONS.fetch_add(1, Ordering::Relaxed);
         }
         unsafe { System.alloc(layout) }
     }
     unsafe fn alloc_zeroed(&self, layout: Layout) -> *mut u8 {
-        if MEASURING.load(Ordering::Relaxed) {
+        if MEASURING.with(Cell::get) {
             ALLOCATIONS.fetch_add(1, Ordering::Relaxed);
         }
         unsafe { System.alloc_zeroed(layout) }
     }
     unsafe fn realloc(&self, p: *mut u8, layout: Layout, size: usize) -> *mut u8 {
-        if MEASURING.load(Ordering::Relaxed) {
+        if MEASURING.with(Cell::get) {
             ALLOCATIONS.fetch_add(1, Ordering::Relaxed);
         }
         unsafe { System.realloc(p, layout, size) }
@@ -46,9 +49,9 @@ fn bounded_enumeration_retains_all_ties_without_heap_allocations() {
     reading[0] = q(1);
     let weights = [q(1); MAX_ROWS];
     ALLOCATIONS.store(0, Ordering::Relaxed);
-    MEASURING.store(true, Ordering::SeqCst);
+    MEASURING.with(|m| m.set(true));
     let candidate = propose(&matrix, 3, 3, &reading, &weights, 32);
-    MEASURING.store(false, Ordering::SeqCst);
+    MEASURING.with(|m| m.set(false));
     let allocation_count = ALLOCATIONS.load(Ordering::Relaxed);
     let candidate = candidate.unwrap();
     assert_eq!(allocation_count, 0);

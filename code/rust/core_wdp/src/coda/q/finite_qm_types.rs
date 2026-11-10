@@ -32,7 +32,7 @@ pub const CANONICAL_JSON_ENCODING: &str = "core.canonical_json.v1";
 /// Recomputed by `fixture_canonical_hash_is_stable`. Do not hand-edit without re-running
 /// the fixture construction.
 pub const SMOKE_FIXTURE_SHA256: &str =
-    "6bb78de524b10eb32ae23f3b5aa277b632e0490ca888ab554340202d8a3a10f0";
+    "c1ec1376403eed19cddc50cf15e3a9d6d6bcec23e2d8f7aae709a9105fdd91ae";
 
 /// Finite set of states / discrete support (fence `FINITE_CARRIER`).
 ///

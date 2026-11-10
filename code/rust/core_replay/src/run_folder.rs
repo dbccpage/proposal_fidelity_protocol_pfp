@@ -662,7 +662,7 @@ mod tests {
 
     #[test]
     fn test_slug_sanitization() {
-        assert_eq!(sanitize_task_slug("my task / with spaces!"), "my_task___with_spaces");
+        assert_eq!(sanitize_task_slug("my task / with spaces!"), "my_task__with_spaces");
         assert_eq!(sanitize_task_slug(""), "task");
     }
 

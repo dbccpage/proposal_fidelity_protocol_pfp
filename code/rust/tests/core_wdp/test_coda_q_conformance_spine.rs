@@ -32,8 +32,8 @@ const DEMO_ENGINE_SHA256: &[&str] = &[
 /// structural field parity. The historical v1 hashes above remain unchanged;
 /// their unavailable source bytes are not claimed to have been replayed.
 const DEMO_ENGINE_V2_PATHS: &[&str] = &[
-    "engine/crates_rs/tests/core_wdp/fixtures/coda_cs_q/reference/coda_cs_q_bridge_core.py.txt",
-    "engine/crates_rs/tests/core_wdp/fixtures/coda_cs_q/reference/test_coda_cs_q_engine.py.txt",
+    "code/rust/tests/core_wdp/fixtures/coda_cs_q/reference/coda_cs_q_bridge_core.py.txt",
+    "code/rust/tests/core_wdp/fixtures/coda_cs_q/reference/test_coda_cs_q_engine.py.txt",
 ];
 const DEMO_ENGINE_V2_SHA256: &[&str] = &[
     "bc8c50ad1f8c40d38de216659d1c437f0e5f9a527c0126fc9e1133f961e6b13d",

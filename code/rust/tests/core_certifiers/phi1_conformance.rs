@@ -107,10 +107,10 @@ fn test_authority_effect_no_implicit_promotion() {
     collect_rust_files(&workspace, &mut rust_files);
 
     let expected = [
-        ("crates_rs/core_types/src/authority.rs", "core_types::authority::AuthorityEffect"),
-        ("crates_rs/core_operad_theory/src/kernel/model.rs", "core_operad_theory::kernel::model::AuthorityEffect"),
-        ("crates_rs/core_wdp/src/types.rs", "core_wdp::types::AuthorityEffect"),
-        ("crates_rs/core_operads/src/estate.rs", "core_operads::estate::AuthorityEffect"),
+        ("rust/core_types/src/authority.rs", "core_types::authority::AuthorityEffect"),
+        ("rust/core_operad_theory/src/kernel/model.rs", "core_operad_theory::kernel::model::AuthorityEffect"),
+        ("rust/core_wdp/src/types.rs", "core_wdp::types::AuthorityEffect"),
+        ("rust/core_operads/src/estate.rs", "core_operads::estate::AuthorityEffect"),
     ];
     let mut definitions = Vec::new();
     for path in &rust_files {
@@ -130,7 +130,7 @@ fn test_authority_effect_no_implicit_promotion() {
     expected_paths.sort();
     assert_eq!(definitions, expected_paths, "qualified AuthorityEffect census: {expected:?}");
 
-    let contract_source = fs::read_to_string(workspace.join("crates_rs/core_contracts/src/kinds.rs"))
+    let contract_source = fs::read_to_string(workspace.join("rust/core_contracts/src/kinds.rs"))
         .expect("contract kind source must be readable");
     assert!(contract_source.contains("pub enum ContractEffect"));
     assert!(!contract_source.contains("pub enum AuthorityEffect"));

@@ -31,7 +31,7 @@ const RECENT_MATH: &[&str] = &[
 ];
 
 fn math_dir() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../governance/contracts/contract_canonical_definitions/math")
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("../governance/contracts/contract_canonical_definitions/math")
 }
 
 fn parse_math_document(text: &str) -> Result<Option<CoreContractV1>, String> {

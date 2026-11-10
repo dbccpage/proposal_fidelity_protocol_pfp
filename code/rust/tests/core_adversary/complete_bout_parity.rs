@@ -309,7 +309,7 @@ fn immutable_v1_inputs_preserve_candidate_checker_and_custody_contracts() {
     let frozen = include_bytes!("fixtures/python_complete_bout_v1.json");
     assert_eq!(
         independent_digest(frozen),
-        "34daee98cddb90f78518107741ccc2c554cea14e1f263029dac60e59450e11bf"
+        "69120a1e3557f54562c5c2270e9ff7582af548517b527318720e4100cf8870ac"
     );
     let fixture: Value = serde_json::from_slice(frozen).unwrap();
     assert_eq!(fixture["freeze"], "before-native-composition");

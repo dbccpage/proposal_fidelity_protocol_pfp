@@ -226,7 +226,7 @@ mod tests {
         let bytes = canonical_bytes("core.test", &json!({"b": 1, "a": {"d": 2, "c": 3}})).unwrap();
         assert_eq!(
             String::from_utf8(bytes).unwrap(),
-            r#"{"domain":"omega.test","payload":{"a":{"c":3,"d":2},"b":1}}"#
+            r#"{"domain":"core.test","payload":{"a":{"c":3,"d":2},"b":1}}"#
         );
     }
 
@@ -256,7 +256,7 @@ mod tests {
         assert_eq!(first, second);
         assert_eq!(
             canonical_bytes("core.test", &first).unwrap(),
-            br#"{"domain":"omega.test","payload":{"a":[{"a":2,"z":1},9],"z":0}}"#
+            br#"{"domain":"core.test","payload":{"a":[{"a":2,"z":1},9],"z":0}}"#
         );
         assert_eq!(
             canonical_bytes("core.test", &first).unwrap(),

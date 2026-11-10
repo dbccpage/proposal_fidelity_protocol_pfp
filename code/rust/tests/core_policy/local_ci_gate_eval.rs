@@ -4,7 +4,7 @@ use core_policy::local_ci_gates::{
     evaluate_bytes, receipt_bytes, resolved_invocation_digest, GateStatus, Verdict,
 };
 
-const PIN: &str = "7e506a6b5a946b01740d2bc3398c2ef3b58cf88c1a4517828733a5d96029195f";
+const PIN: &str = "60a3b40718b4286a213976b53a1a4271bbc728b37f7c6d4237e255ec20f0487c";
 const AUTH: &str = r#""authority_effect":null,"creates_execution_authority":false"#;
 
 fn repeated(byte: char, len: usize) -> String {
@@ -13,7 +13,7 @@ fn repeated(byte: char, len: usize) -> String {
 
 fn manifest() -> String {
     format!(
-        r#"{{"schema":"omega.local_ci.candidate_manifest.v1",{AUTH},"base_oid":"{base}","head_oid":"{head}","entries":[{{"path":"a.rs","blob_oid":"{blob}","content_sha256":"{sha}"}}]}}"#,
+        r#"{{"schema":"core.local_ci.candidate_manifest.v1",{AUTH},"base_oid":"{base}","head_oid":"{head}","entries":[{{"path":"a.rs","blob_oid":"{blob}","content_sha256":"{sha}"}}]}}"#,
         base = repeated('c', 40),
         head = repeated('d', 40),
         blob = repeated('a', 40),
@@ -47,7 +47,7 @@ fn result(gate_id: &str, status: &str, exit_code: &str, digest: &str, argv: &str
 
 fn request(catalog: &str, results: &str) -> String {
     format!(
-        r#"{{"schema":"omega.policy.local_ci_gate_request.v1","interpreter":"py",{AUTH},"manifest":{manifest},"catalog":[{catalog}],"results":[{results}]}}"#,
+        r#"{{"schema":"core.policy.local_ci_gate_request.v1","interpreter":"py",{AUTH},"manifest":{manifest},"catalog":[{catalog}],"results":[{results}]}}"#,
         manifest = manifest(),
     )
 }

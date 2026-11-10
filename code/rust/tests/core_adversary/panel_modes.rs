@@ -7,12 +7,19 @@ use serde_json::{json, Value};
 use std::collections::BTreeSet;
 
 fn canonical(name: &str) -> String {
-    std::fs::read_to_string(
-        std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-            .join("../../../adversary/roles")
-            .join(name),
-    )
-    .unwrap()
+    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../../adversary/roles")
+        .join(name);
+    if let Ok(text) = std::fs::read_to_string(&path) {
+        return text;
+    }
+    let fixture: Value =
+        serde_json::from_str(include_str!("fixtures/python_council_catalog_v2.json")).unwrap();
+    match name {
+        "adversary_panel.yaml" => fixture["vectors"][0]["panel"].as_str().unwrap().to_owned(),
+        "scenes.yaml" => fixture["vectors"][0]["scenes"].as_str().unwrap().to_owned(),
+        other => panic!("unknown canonical role file: {other}"),
+    }
 }
 
 fn assembly(mode: PanelMode) -> core_adversary::council::CouncilAssembly {

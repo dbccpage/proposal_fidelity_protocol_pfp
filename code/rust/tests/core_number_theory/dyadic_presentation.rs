@@ -177,7 +177,7 @@ fn sum_budget_and_field_caps_refuse_before_cyclotomic_work() {
 #[test]
 fn source_generated_coordinates_inclusions_and_turns_match() {
     let fixture: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/evidence/dyadic_source_oracle.json"
+        "fixtures/dyadic_source_oracle.json"
     )).unwrap();
     let integer = |value: &serde_json::Value| value.as_u64().unwrap() as usize;
     let inclusions = fixture["inclusions"].as_array().unwrap();

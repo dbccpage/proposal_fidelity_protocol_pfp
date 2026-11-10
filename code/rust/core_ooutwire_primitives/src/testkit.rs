@@ -33,9 +33,20 @@ pub fn edge_events(parent: &Regime, edge: &crate::tree::Edge) -> Vec<Event> {
     out
 }
 
-// Exact carrier witness.
+/// Exact carrier witness error for `try_separate_pair`.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum SeparateError { Protocol, Index, Distinct, Roundtrip, Overflow }
+pub enum SeparateError {
+    /// Missing `separate(i, j)` framing or delimiter.
+    Protocol,
+    /// Non-digit or empty index token.
+    Index,
+    /// Indices `i` and `j` are not distinct.
+    Distinct,
+    /// Canonical formatting did not round-trip the input string.
+    Roundtrip,
+    /// Index overflowed `usize`.
+    Overflow,
+}
 
 // Origin: engine/crates_rs/core_ooutwire_primitives/src/testkit.rs
 // Claim: urn:core:crates_rs:core-ooutwire-primitives:testkit:l4-production-boundary:v1

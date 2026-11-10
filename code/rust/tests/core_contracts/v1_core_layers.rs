@@ -24,7 +24,7 @@ use std::path::Path;
 #[test]
 fn constitution_layer_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/00_core_constitution");
+        .join("../governance/contracts/contract_canonical_definitions/00_core_constitution");
     let report = load_v1_dir(&dir).expect("dir readable");
     assert_eq!(
         report.loaded, 8,
@@ -96,7 +96,7 @@ fn admit_state_layer(
 #[test]
 fn state_layer_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/01_core_state");
+        .join("../governance/contracts/contract_canonical_definitions/01_core_state");
     let report = load_v1_dir(&dir).expect("dir readable");
     assert_eq!(report.loaded, 5, "expected 5 migrated state contracts");
     assert!(
@@ -151,7 +151,7 @@ fn findings_block_state_layer_admission() {
 #[test]
 fn evidence_layer_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/02_core_evidence");
+        .join("../governance/contracts/contract_canonical_definitions/02_core_evidence");
     let report = load_v1_dir(&dir).expect("dir readable");
     assert_eq!(report.loaded, 29, "expected 29 migrated evidence contracts");
     assert!(
@@ -168,7 +168,7 @@ fn evidence_layer_loads_and_validates() {
 #[test]
 fn obstruction_layer_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/03_core_obstruction");
+        .join("../governance/contracts/contract_canonical_definitions/03_core_obstruction");
     let report = load_v1_dir(&dir).expect("dir readable");
     assert_eq!(
         report.loaded, 5,
@@ -231,7 +231,7 @@ impl GovernancePartition {
 #[test]
 fn governance_layer_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/05_core_governance");
+        .join("../governance/contracts/contract_canonical_definitions/05_core_governance");
     let report = load_v1_dir(&dir).expect("dir readable");
     assert!(
         report.findings.is_empty(),
@@ -479,7 +479,7 @@ fn forbidden_names(text: &str) -> Result<Vec<&str>, ExecutionCensusError> {
 #[test]
 fn execution_layer_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/06_core_execution");
+        .join("../governance/contracts/contract_canonical_definitions/06_core_execution");
     let report = load_v1_dir(&dir).expect("dir readable");
     assert_eq!(report.loaded, 8, "expected 8 migrated execution contracts");
     assert!(
@@ -544,7 +544,7 @@ fn partition_products(report: &V1LoadReport) -> Result<(usize, usize), &'static 
 #[test]
 fn products_layer_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/07_core_products");
+        .join("../governance/contracts/contract_canonical_definitions/07_core_products");
     let report = match load_v1_dir(&dir) {
         Ok(report) => report,
         Err(_) => loop {
@@ -570,7 +570,7 @@ fn products_layer_loads_and_validates() {
 #[test]
 fn lift_license_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/08_core_lifts");
+        .join("../governance/contracts/contract_canonical_definitions/08_core_lifts");
     let report = load_v1_dir(&dir).expect("dir readable");
     let expected = BTreeSet::from([
         "urn:core:lifts:lift_license:v1.0.0".to_owned(),

@@ -52,7 +52,7 @@ fn require_firewall(
 #[test]
 fn trichotomy_declares_floating_firewall_and_negative_test() {
     let p = Path::new(env!("CARGO_MANIFEST_DIR")).join(
-        "../../../governance/contracts/contract_canonical_definitions/math/finite_obstruction_trichotomy.contract.yaml",
+        "../governance/contracts/contract_canonical_definitions/math/finite_obstruction_trichotomy.contract.yaml",
     );
     let text = std::fs::read_to_string(p).expect("migrated exemplar exists");
     let c: CoreContractV1 = serde_yaml::from_str(&text).expect("exemplar parses as v1");
@@ -117,7 +117,7 @@ fn a_valid_law_without_its_decisive_negative_fixture_is_refused() {
 #[test]
 fn invariant_defect_profile_declares_authority_free_and_order_sensitive() {
     let p = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/contracts/contract_canonical_definitions/math/invariant_defect_profile.contract.yaml");
+        .join("../governance/contracts/contract_canonical_definitions/math/invariant_defect_profile.contract.yaml");
     let text = std::fs::read_to_string(p).expect("invariant_defect_profile contract exists");
     let c: CoreContractV1 = serde_yaml::from_str(&text).expect("parses as v1");
 

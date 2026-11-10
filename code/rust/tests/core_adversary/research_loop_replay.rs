@@ -617,7 +617,7 @@ fn every_oracle_check_has_a_named_test() {
 fn the_pack_example_mission_is_admitted() {
     let text = std::fs::read_to_string(concat!(
         env!("CARGO_MANIFEST_DIR"),
-        "/../../../adversary/tests/fixtures/rust_research_loop/example_mission.yaml"
+        "/../tests/core_adversary/fixtures/research_pack_v1/examples/mission.yaml"
     ))
     .unwrap();
     let value: Value = serde_yaml::from_str(&text).unwrap();

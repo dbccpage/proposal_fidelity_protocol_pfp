@@ -12,7 +12,7 @@ fn decode_two_state_table(mut number: usize) -> Vec<Vec<Option<usize>>> {
     table
 }
 
-fn assert_shortest_distinction(m: &PartialDynamics, c: &DistinctionCertificate) {
+fn assert_shortest_distinction(m: &PartialDynamics, c: &DistinguishingWord) {
     m.verify_distinction(c).unwrap();
     // Independently enumerate every strictly shorter word: BFS really
     // returned a shortest distinction, including availability failure.

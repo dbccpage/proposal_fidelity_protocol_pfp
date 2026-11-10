@@ -13,17 +13,12 @@ use serde_yaml::Value;
 fn engine_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
-        .expect("core_functional is under crates_rs/")
-        .parent()
-        .expect("crates_rs/ is under engine/")
+        .expect("core_contracts is under code/rust/")
         .to_path_buf()
 }
 
 fn repository_root() -> PathBuf {
     engine_root()
-        .parent()
-        .expect("engine is below the repository root")
-        .to_path_buf()
 }
 
 fn canonical_contract_path() -> PathBuf {

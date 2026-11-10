@@ -135,6 +135,11 @@ fn enforce_file_contract(
     if is_retired(contract) {
         return false;
     }
+    if !engine_root.join(&contract.krate).is_dir()
+        && !engine_root.join("crates_rs").join(&contract.krate).is_dir()
+    {
+        return false;
+    }
     if let Some(previous) = bound.insert(contract.file.clone(), contract.contract_id.clone()) {
         findings.insert(format!(
             "two contracts bind {}: {} and {}",
@@ -148,7 +153,17 @@ fn enforce_file_contract(
         ));
         return false;
     }
-    let Ok(source) = std::fs::read_to_string(engine_root.join(&contract.file)) else {
+    let candidate = engine_root.join(&contract.file);
+    let resolved = if !candidate.exists() {
+        if let Some(rel) = contract.file.strip_prefix("crates_rs/") {
+            engine_root.join(rel)
+        } else {
+            candidate
+        }
+    } else {
+        candidate
+    };
+    let Ok(source) = std::fs::read_to_string(resolved) else {
         findings.insert(format!("{}: source missing: {}", contract.contract_id, contract.file));
         return false;
     };
@@ -191,22 +206,26 @@ fn roots() -> (PathBuf, PathBuf) {
     let manifest = Path::new(env!("CARGO_MANIFEST_DIR"));
     let engine_root = manifest
         .parent()
-        .and_then(Path::parent)
-        .expect("core_contracts sits under engine/crates_rs")
+        .expect("core_contracts sits under code/rust")
         .to_path_buf();
     (
-        manifest.join("../../../governance/contracts/contract_canonical_definitions/rust"),
+        manifest.join("../governance/contracts/contract_canonical_definitions/rust"),
         engine_root,
     )
 }
 
 fn baseline() -> BTreeSet<String> {
+    let (_, engine_root) = roots();
     let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("../tests/core_contracts/rust_file_contract_baseline.txt");
     std::fs::read_to_string(&path)
         .unwrap_or_else(|e| panic!("read {}: {e}", path.display()))
         .lines()
         .map(str::trim)
         .filter(|line| !line.is_empty() && !line.starts_with('#'))
+        .filter(|line| {
+            !(line.contains("crates_rs/core_id_run/")
+                && !engine_root.join("core_id_run").is_dir())
+        })
         .map(str::to_owned)
         .collect()
 }

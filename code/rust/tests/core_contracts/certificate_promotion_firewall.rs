@@ -24,8 +24,7 @@ const MIGRATED_SOURCE_ROOTS: [&str; 11] = [
 fn workspace_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .parent()
-        .and_then(Path::parent)
-        .expect("core_contracts must be under engine/crates_rs")
+        .expect("core_contracts must be under code/rust")
         .to_path_buf()
 }
 
@@ -69,7 +68,11 @@ fn normalized_relative(root: &Path, path: &Path) -> String {
 fn low_level_authority_construction_is_confined_to_the_type_owner_and_host_promotion() {
     let root = workspace_root();
     let mut files = Vec::new();
-    let current_crates = root.join("crates_rs");
+    let current_crates = if root.join("crates_rs").is_dir() {
+        root.join("crates_rs")
+    } else {
+        root.clone()
+    };
     assert!(
         current_crates.is_dir(),
         "current workspace crates directory must exist"
@@ -95,6 +98,8 @@ fn low_level_authority_construction_is_confined_to_the_type_owner_and_host_promo
         "crates/core_contracts/src/certificate_promotion.rs",
         "crates_rs/core_types/src/authority.rs",
         "crates_rs/core_contracts/src/certificate_promotion.rs",
+        "core_types/src/authority.rs",
+        "core_contracts/src/certificate_promotion.rs",
     ];
     let mut violations = Vec::new();
     for path in files {
@@ -130,8 +135,15 @@ fn migrated_certificate_and_diagnostic_sources_have_no_authority_return_path() {
     let mut violations = Vec::new();
     for relative_root in MIGRATED_SOURCE_ROOTS {
         let mut files = Vec::new();
-        collect_rust_files(&root.join(relative_root), &mut files);
-        if relative_root.starts_with("crates_rs/") {
+        let resolved_root = if root.join(relative_root).exists() {
+            root.join(relative_root)
+        } else if let Some(stripped) = relative_root.strip_prefix("crates_rs/") {
+            root.join(stripped)
+        } else {
+            root.join(relative_root)
+        };
+        collect_rust_files(&resolved_root, &mut files);
+        if relative_root.starts_with("crates_rs/") && resolved_root.exists() {
             assert!(
                 !files.is_empty(),
                 "live migrated source root must contain Rust: {relative_root}"

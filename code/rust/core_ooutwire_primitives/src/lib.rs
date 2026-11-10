@@ -240,12 +240,14 @@ impl BoundaryRecord226f4086 {
 pub mod testkit;
 
 /// Fuel left after one licensed structure step.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct GateReceipt {
     fuel_after: u32,
     licensed: bool,
 }
 
 /// Why a structure-creating step was refused.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum GateError {
     /// The licence gate is closed.
     Unlicensed,

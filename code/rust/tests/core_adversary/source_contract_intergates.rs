@@ -383,7 +383,7 @@ fn legacy_receipt_identity_and_new_repeated_actual_edge_are_explicit() {
     assert_eq!(old["implementation"], "core_adversary.intergates.v1");
     assert_eq!(
         old["specification_sha256"],
-        "sha256:27ca9fd449e4c09af438f6228c308f708834ef36ffd90beb5ba6dd47bb74fcc3"
+        "sha256:0a16e1404b067b9ada375b27074ca9adc03c726ed684f9469728e012e2d8c816"
     );
     let mut explicit = p;
     explicit["contract_profile"] = json!(intergates::LEGACY_DIAGNOSTIC_PROFILE);

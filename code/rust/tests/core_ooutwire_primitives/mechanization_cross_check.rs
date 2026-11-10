@@ -355,11 +355,14 @@ fn source_text() -> String {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
     let rel_relocation = "atlas/000_projection_obstruction/evidence/000_mechanization_run.json";
     let rel_legacy = "coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/evidence/000_mechanization_run.json";
+    let retained = manifest_dir.join("../tests/core_ooutwire_primitives/fixtures/000_mechanization_run.json");
     let root = manifest_dir.join("../../..");
     let path = if root.join(rel_relocation).exists() {
         root.join(rel_relocation)
-    } else {
+    } else if root.join(rel_legacy).exists() {
         root.join(rel_legacy)
+    } else {
+        retained
     };
     std::fs::read_to_string(&path)
         .unwrap_or_else(|e| panic!("required Python mechanization receipt at {}: {e}", path.display()))

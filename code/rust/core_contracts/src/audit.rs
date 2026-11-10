@@ -148,8 +148,20 @@ impl std::fmt::Display for AuditError {
 impl std::error::Error for AuditError {}
 
 pub fn audit(repo_root: &Path) -> Result<AuditReport, AuditError> {
-    let crates_rs = repo_root.join(CRATES_RS_DIR);
-    let engine = repo_root.join(ENGINE_DIR);
+    let default_crates_rs = repo_root.join(CRATES_RS_DIR);
+    let crates_rs = if default_crates_rs.join("Cargo.toml").is_file() {
+        default_crates_rs
+    } else if repo_root.join("Cargo.toml").is_file() {
+        repo_root.to_path_buf()
+    } else {
+        default_crates_rs
+    };
+    let default_engine = repo_root.join(ENGINE_DIR);
+    let engine = if default_engine.is_dir() {
+        default_engine
+    } else {
+        repo_root.to_path_buf()
+    };
     let contracts_dir = repo_root.join(CONTRACTS_DIR);
 
     let members = workspace_members(&crates_rs)?;
@@ -382,9 +394,16 @@ fn resolve(
             )
         }
         BindingTarget::File { file } => {
-            let path = match file.strip_prefix("engine/") {
-                Some(rest) => engine.join(rest),
-                None => engine.join(file),
+            let rest = file.strip_prefix("engine/").unwrap_or(file);
+            let candidate = engine.join(rest);
+            let path = if !candidate.is_file() {
+                if let Some(crate_rel) = rest.strip_prefix("crates_rs/") {
+                    crates_rs.join(crate_rel)
+                } else {
+                    candidate
+                }
+            } else {
+                candidate
             };
             let path = normalize(&path);
             if !path.is_file() {

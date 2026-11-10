@@ -6,7 +6,7 @@ use std::path::Path;
 
 #[test]
 fn all_v1_contracts_in_corpus_validate() {
-    let corpus = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../governance/contracts/contract_canonical_definitions");
+    let corpus = Path::new(env!("CARGO_MANIFEST_DIR")).join("../governance/contracts/contract_canonical_definitions");
     let report = load_v1_dir(&corpus).expect("corpus dir readable");
     // Repository census at 2026-08-26: 221 files explicitly declare
     // `schema_version: core.contract.v1` (75 across the eight numbered core

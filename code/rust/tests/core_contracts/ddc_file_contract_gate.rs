@@ -59,12 +59,11 @@ fn ddc_file_contracts_bind_to_sources_and_required_markers() {
     let manifest = Path::new(env!("CARGO_MANIFEST_DIR"));
     let engine_root = manifest
         .parent()
-        .and_then(Path::parent)
-        .expect("core_contracts sits under engine/crates");
+        .expect("core_contracts sits under code/rust");
     // Layout: DDC file contracts live under rust/ (corpus tree); not a top-level
     // contract_canonical_definitions/core_discrete_deformation_algebra/ directory.
     let contract_dir =
-        manifest.join("../../../governance/contracts/contract_canonical_definitions/rust/core_discrete_deformation_algebra");
+        manifest.join("../governance/contracts/contract_canonical_definitions/rust/core_discrete_deformation_algebra");
 
     let mut paths = Vec::new();
     collect_contracts(&contract_dir, &mut paths);
@@ -114,7 +113,16 @@ fn ddc_file_contracts_bind_to_sources_and_required_markers() {
             findings.push(format!("duplicate DDC file contract for {}", contract.file));
         }
 
-        let source_path = engine_root.join(&contract.file);
+        let candidate = engine_root.join(&contract.file);
+        let source_path = if !candidate.exists() {
+            if let Some(rel) = contract.file.strip_prefix("crates_rs/") {
+                engine_root.join(rel)
+            } else {
+                candidate
+            }
+        } else {
+            candidate
+        };
         if !source_path.exists() {
             findings.push(format!(
                 "{} source file missing: {}",
