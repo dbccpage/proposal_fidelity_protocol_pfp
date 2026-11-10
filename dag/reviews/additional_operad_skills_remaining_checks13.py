@@ -1,0 +1,10 @@
+"""Current bridge symbol census and bounded equivalence counterexample; no native execution."""
+import hashlib,json,pathlib,re,sys
+H=pathlib.Path(__file__).resolve().parent;R=H.parents[1];P='additional_operad_skills_remaining';fs=json.loads((H/(P+'_preparation.json')).read_text())['files'];out=[]
+owner='code/rust/core_quantum_physics/src/engine_bridge.rs';raw=(R/owner).read_bytes();text=raw.decode();names=re.findall(r'^pub fn (\w+)',text,re.M);wanted=['evaluate_state_observables','verify_exact_state_with_engine','evaluate_state_fidelity','evaluate_bures_geometry','verify_born_gleason_domain_bridge','verify_composition_tomography_domain_bridge'];assert not set(wanted)&set(names)
+out.append({'id':'OPSKILL-CHECK-097','status':'observed','source':{'path':fs[519]['path'],'sha256':fs[519]['sha256']},'additional_source':{'path':owner,'sha256':hashlib.sha256(raw).hexdigest(),'reviewed_lines':[[1,156]],'full_source_read':True},'observation':{'public_functions':names,'documented_missing_functions':wanted},'limitations':'Entire owning module was separately read to rule out reexports/macros; symbol census alone would not grant semantic credit. No Cargo/compiler run.'})
+f=lambda x:0;g=lambda x:0 if x<=100 else 1
+assert all(f(x)==g(x)for x in range(101))and f(101)!=g(101)
+out.append({'id':'OPSKILL-CHECK-098','status':'observed','source':{'path':fs[524]['path'],'sha256':fs[524]['sha256']},'observation':{'declared_domain':'nonnegative integers','tested_population':'0..100 inclusive','all101_small_cases_agree':True,'first_unchecked_input':101,'original':f(101),'mutant':g(101)},'limitations':'Independent functions demonstrate why finite small-case agreement cannot prove unbounded equivalence. Complete enumeration is a proof on an explicitly finite admitted carrier.'})
+for v in out:assert hashlib.sha256((R/v['source']['path']).read_bytes()).hexdigest()==v['source']['sha256']
+(H/(P+'_checks13.json')).write_text(json.dumps({'python':sys.version,'retained_owner_execution':False,'results':out},indent=2)+'\n');print(json.dumps({'observed':len(out)}))

@@ -1,0 +1,476 @@
+{
+  "qm-length-20261110:direct:000": {
+    "run_id": "qm-length-20261110:direct:000",
+    "run_sha256": "ac77cbf6a6486715ce146b8c4568742dc673b0430051d1cb0ad6b4e7cb5d748b",
+    "answer_sha256": "2a69e0b747904235b40a098b1e7c3cf06c4151dc16f84ab8d467c8d05a46e4e1",
+    "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+    "evaluator_id": "audit_systems_independent_public_seed_evaluator_v1",
+    "method": "trusted_post_freeze_mathematical_review",
+    "rubric_sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+    "reference_provenance_sha256": "7a74b3dc3769e562d1195b1965f8d82f3b3a141f1bbfe9eddd1b519d10536959",
+    "points": {
+      "spectrum": 18,
+      "dynamics": 17,
+      "pure_entanglement": 21,
+      "thermal_entanglement": 0,
+      "checks": 6
+    },
+    "deductions": [
+      {
+        "criterion_id": "spectrum.projectors",
+        "points": 2,
+        "reason": "The displayed orthonormal eigenvectors and their outer products give a complete spectral resolution on the valid angle domain. Deduct 2: theta in [0,pi] with sin(theta)=J/D does not exist for J<0; thus the claimed general-real-parameter projectors are undefined there. The explicit eigenvector verification is credited on its admitted domain.",
+        "evidence": [
+          {
+            "quote": "Define $ \\theta \\in [0, \\pi] $ such that:\n\n$$\n\\cos \\theta = \\frac{\\Delta}{D}, \\quad \\sin \\theta = \\frac{J}{D}",
+            "character_range": [
+              7003,
+              7112
+            ],
+            "line_range": [
+              277,
+              280
+            ]
+          },
+          {
+            "quote": "So yes, $ H' |\\psi_+\\rangle = 2D |\\psi_+\\rangle $\n\nSimilarly, $ |\\psi_-\\rangle = -\\sin(\\theta/2) |01\\rangle + \\cos(\\theta/2) |10\\rangle $ gives eigenvalue $ -2D $\n\nSo:\n\n- $ |\\psi_+\\rangle = \\cos(\\theta/2) |01\\rangle + \\sin(\\theta/2) |10\\rangle $\n- $ |\\psi_-\\rangle = -\\sin(\\theta/2) |01\\rangle + \\cos(\\theta/2) |10\\rangle $\n\nwith $ \\cos\\theta = \\Delta / D $, $ \\sin\\theta = J / D $, $ D = \\sqrt{J^2 + \\Delta^2} $, $ \\theta \\in [0, \\pi] $",
+            "character_range": [
+              7961,
+              8398
+            ],
+            "line_range": [
+              301,
+              310
+            ]
+          },
+          {
+            "quote": "- $ P_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11| $\n- $ P_{E_+} = |\\psi_+\\rangle\\langle \\psi_+| $\n- $ P_{E_-} = |\\psi_-\\rangle\\langle \\psi_-| $",
+            "character_range": [
+              8678,
+              8827
+            ],
+            "line_range": [
+              323,
+              325
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "dynamics.state",
+        "points": 1,
+        "reason": "The spectral evolution, computational-basis expansion, signed beta amplitude, and D=0 phase are correct. Deduct 1 for the remaining invalid negative-J theta restriction in the state representation. The correct explicit signed beta and the equivalent half-angle-square alpha earn substantial credit; this is not treated as a wrong transition probability.",
+        "evidence": [
+          {
+            "quote": "|\\psi(t)\\rangle = e^{-i E_+ t} \\cos(\\theta/2) |\\psi_+\\rangle - e^{-i E_- t} \\sin(\\theta/2) |\\psi_-\\rangle\n$$\n\nWith $ E_\\pm = -K \\pm 2D $, $ D = \\sqrt{J^2 + \\Delta^2} $\n\nLet $ \\omega = E_+ - E_- = 4D $\n\nThen:\n\n$$\n|\\psi(t)\\rangle = e^{-i(-K + 2D)t} \\cos(\\theta/2) |\\psi_+\\rangle - e^{-i(-K - 2D)t} \\sin(\\theta/2) |\\psi_-\\rangle\n= e^{iK t} \\left[ e^{-i 2D t} \\cos(\\theta/2) |\\psi_+\\rangle - e^{i 2D t} \\sin(\\theta/2) |\\psi_-\\rangle \\right]",
+            "character_range": [
+              10775,
+              11211
+            ],
+            "line_range": [
+              395,
+              406
+            ]
+          },
+          {
+            "quote": "\\langle 10 | \\psi(t) \\rangle = \\frac{J}{2D} \\cdot e^{iK t} (-2i \\sin(2D t)) = -i e^{iK t} \\frac{J}{D} \\sin(2D t)",
+            "character_range": [
+              12401,
+              12513
+            ],
+            "line_range": [
+              450,
+              450
+            ]
+          },
+          {
+            "quote": "But if $ J = \\Delta = 0 $, then $ H = K Z \\otimes Z $, so $ |01\\rangle $ is energy eigenstate with energy $ -K $, so $ |\\psi(t)\\rangle = e^{iKt} |01\\rangle $, so $ \\langle 10 | \\psi(t) \\rangle = 0 $, so $ P = 0 $",
+            "character_range": [
+              12984,
+              13196
+            ],
+            "line_range": [
+              471,
+              471
+            ]
+          },
+          {
+            "quote": "= \\left[ e^{-i E_+ t} c^2 + e^{-i E_- t} s^2 \\right] |01\\rangle + \\left[ e^{-i E_+ t} c s - e^{-i E_- t} s c \\right] |10\\rangle\n$$\n\nSimplify:\n\nLet $ \\alpha(t) = e^{-i E_+ t} \\cos^2(\\theta/2) + e^{-i E_- t} \\sin^2(\\theta/2) $\n\n$ \\beta(t) = c s \\left( e^{-i E_+ t} - e^{-i E_- t} \\right) $\n\nNote $ c s = \\frac{1}{2} \\sin\\theta = \\frac{J}{2D} $\n\nBut earlier we had $ \\langle 10 | \\psi(t) \\rangle = \\beta(t) $, which we computed.\n\nNow, $ |\\psi(t)\\rangle = \\alpha(t) |01\\rangle + \\beta(t) |10\\rangle $, since $ |00\\rangle, |11\\rangle $ components are zero (initial state in $ \\text{span}\\{|01\\rangle, |10\\rangle\\} $, and $ H $ preserves this subspace)",
+            "character_range": [
+              14600,
+              15246
+            ],
+            "line_range": [
+              518,
+              531
+            ]
+          },
+          {
+            "quote": "with $ \\cos\\theta = \\Delta / D $, $ \\sin\\theta = J / D $, $ D = \\sqrt{J^2 + \\Delta^2} $, $ \\theta \\in [0, \\pi] $",
+            "character_range": [
+              8286,
+              8398
+            ],
+            "line_range": [
+              310,
+              310
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "dynamics.earliest_and_constant_branches",
+        "points": 2,
+        "reason": "Correct earliest oscillatory maximum for J!=0. Deduct 2: the stated condition D>0 wrongly includes J=0, Delta!=0, for which every time maximizes zero probability and the earliest is t=0. The D=0 branch says constant but does not give earliest t=0.",
+        "evidence": [
+          {
+            "quote": "- If $ J = 0 $, then $ P = 0 $ for all $ t $ — no transition",
+            "character_range": [
+              12792,
+              12852
+            ],
+            "line_range": [
+              467,
+              467
+            ]
+          },
+          {
+            "quote": "This supremum is attained when $ \\sin^2(2D t) = 1 $, i.e., $ 2D t = \\frac{\\pi}{2} + n\\pi $, so earliest time:\n\n$$\nt_{\\min} = \\frac{\\pi}{4D} = \\frac{\\pi}{4 \\sqrt{J^2 + \\Delta^2}}, \\quad \\text{provided } D > 0\n$$\n\nIf $ D = 0 $, i.e., $ J = \\Delta = 0 $, then $ P(t) = 0 $ for all $ t $ — constant probability.\n\nSo:\n\n- If $ J = \\Delta = 0 $: $ P(t) = 0 $, constant\n- Else: $ \\sup P = \\frac{J^2}{J^2 + \\Delta^2} $, attained at $ t = \\frac{\\pi}{4\\sqrt{J^2 + \\Delta^2}} $",
+            "character_range": [
+              13377,
+              13842
+            ],
+            "line_range": [
+              481,
+              492
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.entropy",
+        "points": 1,
+        "reason": "Correct binary entropy in bits. Deduct 1 for omitting the required 0 log 0 = 0 endpoint convention; the initial and decoupled states have zero eigenvalues.",
+        "evidence": [
+          {
+            "quote": "$ S(\\rho_1) = - |\\alpha|^2 \\log_2 |\\alpha|^2 - |\\beta|^2 \\log_2 |\\beta|^2 $ bits",
+            "character_range": [
+              20191,
+              20271
+            ],
+            "line_range": [
+              667,
+              667
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.CHSH",
+        "points": 3,
+        "reason": "Correct final maximal value 2 sqrt(1+C^2) and connection to Schmidt weights. Deduct 3: no self-contained correlation-matrix or measurement optimization proves the maximum; the intermediate lambda_1/lambda_2 statement is also inconsistent. Recollection of a formula does not fulfill the derivation half of this criterion.",
+        "evidence": [
+          {
+            "quote": "Standard: for a pure state, the maximum of $ |\\langle A \\otimes B \\rangle + \\langle A \\otimes B' \\rangle + \\langle A' \\otimes B \\rangle - \\langle A' \\otimes B' \\rangle| $ is $ 2\\sqrt{2} $ for maximally entangled, and for general, it's $ 2\\sqrt{1 + C^2} $? I think it's $ 2\\sqrt{1 + C^2} $ is not correct.\n\nActually, for a pure state with Schmidt coefficients $ \\lambda_1, \\lambda_2 $, the maximum CHSH is $ 2\\sqrt{1 + 4\\lambda_1\\lambda_2} = 2\\sqrt{1 + C^2} $ since $ C = 2\\lambda_1\\lambda_2 $ for pure states.\n\nFor two qubits, if $ |\\psi\\rangle = \\sqrt{\\lambda} |00\\rangle + \\sqrt{1-\\lambda} |11\\rangle $, then $ C = 2\\sqrt{\\lambda(1-\\lambda)} $, and max CHSH = 2\\sqrt{1 + C^2} = 2\\sqrt{1 + 4\\lambda(1-\\lambda)} $\n\nBut in our case, the state is $ \\alpha |01\\rangle + \\beta |10\\rangle $, which is like $ \\sqrt{p} |01\\rangle + \\sqrt{1-p} e^{i\\phi} |10\\rangle $, so Schmidt coefficients are $ |\\alpha|, |\\beta| $, so $ C = 2 |\\alpha| |\\beta| $, and max CHSH = 2\\sqrt{1 + C^2} = 2\\sqrt{1 + 4 |\\alpha|^2 |\\beta|^2} $\n\nYes.\n\nSo $ \\langle \\text{CHSH} \\rangle_{\\max} = 2\\sqrt{1 + C(t)^2} = 2\\sqrt{1 + 4 |\\alpha(t)|^2 |\\beta(t)|^2} $",
+            "character_range": [
+              22921,
+              24045
+            ],
+            "line_range": [
+              719,
+              729
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "thermal.Gibbs_state",
+        "points": 6,
+        "reason": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+        "evidence": [
+          {
+            "quote": "Due to length, we pause here and continue in next message.",
+            "character_range": [
+              26141,
+              26199
+            ],
+            "line_range": [
+              785,
+              785
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "thermal.partition_function",
+        "points": 4,
+        "reason": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+        "evidence": [
+          {
+            "quote": "Due to length, we pause here and continue in next message.",
+            "character_range": [
+              26141,
+              26199
+            ],
+            "line_range": [
+              785,
+              785
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "thermal.partial_transpose",
+        "points": 7,
+        "reason": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+        "evidence": [
+          {
+            "quote": "Due to length, we pause here and continue in next message.",
+            "character_range": [
+              26141,
+              26199
+            ],
+            "line_range": [
+              785,
+              785
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "thermal.entanglement_criterion",
+        "points": 5,
+        "reason": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+        "evidence": [
+          {
+            "quote": "Due to length, we pause here and continue in next message.",
+            "character_range": [
+              26141,
+              26199
+            ],
+            "line_range": [
+              785,
+              785
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "thermal.thermal_limits",
+        "points": 3,
+        "reason": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+        "evidence": [
+          {
+            "quote": "Due to length, we pause here and continue in next message.",
+            "character_range": [
+              26141,
+              26199
+            ],
+            "line_range": [
+              785,
+              785
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "checks.conventions",
+        "points": 1,
+        "reason": "Correct Pauli/basis/Hamiltonian and entropy log-base conventions. Deduct 1 because the spin-2 partial-transpose convention is never instantiated or checked in the omitted thermal part.",
+        "evidence": [
+          {
+            "quote": "We are given a Hamiltonian for two distinguishable spin-1/2 systems in the computational basis $ \\{|00\\rangle, |01\\rangle, |10\\rangle, |11\\rangle\\} $, where $ Z|0\\rangle = |0\\rangle $, $ Z|1\\rangle = -|1\\rangle $. The Pauli matrices are defined as usual:\n\n$$\nX = \\begin{pmatrix}0 & 1 \\\\ 1 & 0\\end{pmatrix},\\quad\nY = \\begin{pmatrix}0 & -i \\\\ i & 0\\end{pmatrix},\\quad\nZ = \\begin{pmatrix}1 & 0 \\\\ 0 & -1\\end{pmatrix},\\quad\nI = \\begin{pmatrix}1 & 0 \\\\ 0 & 1\\end{pmatrix}\n$$\n\nThe Hamiltonian is:\n\n$$\nH = J (X \\otimes X + Y \\otimes Y) + \\Delta (Z \\otimes I - I \\otimes Z) + K (Z \\otimes Z)\n$$\n\nwith real parameters $ J, \\Delta, K $. The initial state is $ |\\psi(0)\\rangle = |01\\rangle $. We set $ \\hbar = k_B = 1 $.",
+            "character_range": [
+              0,
+              709
+            ],
+            "line_range": [
+              1,
+              16
+            ]
+          },
+          {
+            "quote": "$ S(\\rho_1) = - |\\alpha|^2 \\log_2 |\\alpha|^2 - |\\beta|^2 \\log_2 |\\beta|^2 $ bits",
+            "character_range": [
+              20191,
+              20271
+            ],
+            "line_range": [
+              667,
+              667
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "checks.decoupled_limit",
+        "points": 1,
+        "reason": "The explicit J=0 no-transition check and D=0 eigenstate evolution earn partial credit. Deduct 1: there is no complete general J=0 state/entanglement/thermal consistency check, and the earliest-time claim contradicts the constant branch.",
+        "evidence": [
+          {
+            "quote": "- If $ J = 0 $, then $ P = 0 $ for all $ t $ — no transition\n- If $ \\Delta = 0 $, $ D = |J| $, so $ P = \\sin^2(2|J| t) $\n- If $ J = \\Delta = 0 $, $ D = 0 $, expression undefined — need limit\n\nBut if $ J = \\Delta = 0 $, then $ H = K Z \\otimes Z $, so $ |01\\rangle $ is energy eigenstate with energy $ -K $, so $ |\\psi(t)\\rangle = e^{iKt} |01\\rangle $, so $ \\langle 10 | \\psi(t) \\rangle = 0 $, so $ P = 0 $\n\nSo we define $ P_{01 \\to 10}(t) = 0 $ when $ J = \\Delta = 0 $",
+            "character_range": [
+              12792,
+              13259
+            ],
+            "line_range": [
+              467,
+              473
+            ]
+          },
+          {
+            "quote": "t_{\\min} = \\frac{\\pi}{4D} = \\frac{\\pi}{4 \\sqrt{J^2 + \\Delta^2}}, \\quad \\text{provided } D > 0",
+            "character_range": [
+              13491,
+              13584
+            ],
+            "line_range": [
+              484,
+              484
+            ]
+          },
+          {
+            "quote": "If $ J = 0 $, then $ |\\beta(t)|^2 = 0 $, so never maximally entangled.\n\nIf $ J = \\Delta = 0 $, same.",
+            "character_range": [
+              25919,
+              26019
+            ],
+            "line_range": [
+              775,
+              777
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "checks.nontrivial_numerical_example",
+        "points": 2,
+        "reason": "No nontrivial numerical parameter example or numerical cross-check occurs in the full delivered body.",
+        "evidence": [
+          {
+            "quote": "Due to length, we pause here and continue in next message.",
+            "character_range": [
+              26141,
+              26199
+            ],
+            "line_range": [
+              785,
+              785
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              26199
+            ],
+            "line_range": [
+              1,
+              785
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 62
+  }
+}

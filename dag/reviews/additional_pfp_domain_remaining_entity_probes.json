@@ -1,0 +1,128 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/exceptions.py",
+      "sha256": "c0f7d4b1e65275d7604192e6cc8294d123a6f360e88c314a3eb63c3439429c69",
+      "removed_imports": [],
+      "body_changes": false
+    },
+    {
+      "path": "pfp/domain/shared_kernel/canonical.py",
+      "sha256": "d7170c6f8f37d12489843dccd63162b471afea062d3df6b8bce1119e99ab7918",
+      "removed_imports": [],
+      "body_changes": false
+    },
+    {
+      "path": "pfp/functional_boundary.py",
+      "sha256": "de2a3e10556b28ebde1ab10b86ac89c85a336929c4d68e2ba110be2c1877c8d0",
+      "removed_imports": [],
+      "body_changes": false
+    },
+    {
+      "path": "pfp/domain/entities/projection_receipt.py",
+      "sha256": "255f0d8221f15765a1471b9aa5e8be64ce4042dc123f6db5294f4f41c69a50e9",
+      "removed_imports": [],
+      "body_changes": false
+    },
+    {
+      "path": "pfp/domain/entities/airy.py",
+      "sha256": "3df6b0a2bf8851acb7d3281f5878cef551668d063d97af142fc13cad4df05c45",
+      "removed_imports": [
+        {
+          "line": 13,
+          "module": "pfp.domain.entities.packet_envelope"
+        }
+      ],
+      "body_changes": false
+    },
+    {
+      "path": "pfp/domain/entities/lab.py",
+      "sha256": "523d252e95b891e7889c7f73f3e000f0742cbe6257b6a098fadc9a73a7e4d5a2",
+      "removed_imports": [
+        {
+          "line": 14,
+          "module": "pfp.domain.entities.packet_envelope"
+        },
+        {
+          "line": 20,
+          "module": "pfp.domain.entities.problem"
+        }
+      ],
+      "body_changes": false
+    },
+    {
+      "path": "pfp/domain/entities/oesos_evidence_bundle.py",
+      "sha256": "3f8726ced6df162ed2007f0a7563619a14bd81124a54eb4ff4a27ff4c0435f26",
+      "selected_unmodified_definitions": [
+        "_digest",
+        "_none_authority",
+        "build_oesos_evidence_bundle"
+      ],
+      "limit": "No original package imports or event/foreign enum execution."
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C091",
+      "rule": "Airy_computed_zero_equals_exact_critical_equation",
+      "status": "counterexample_observed",
+      "lambda_hex": "0x0.0000000000001p-1022",
+      "z_hex": "0x1.0000000000001p+0",
+      "computed_residual": 0.0,
+      "exact_rational_residual_nonzero": true,
+      "limit": "Exact rational interpretation of stored binary floats; neither symbolic proof nor native solver executed."
+    },
+    {
+      "id": "PFPDOMAIN-C092",
+      "rule": "Airy_large_finite_component_overflow",
+      "status": "bounded_negative_control_observed",
+      "refused": true,
+      "input_component": 1e+308,
+      "lambda": "1+1j",
+      "limit": "Both lambda1 and1+1j large-value probes refused. No actual NaN-masking acceptance demonstrated; maximum-only check is not independently strengthened by this probe."
+    },
+    {
+      "id": "PFPDOMAIN-C093",
+      "rule": "lab_executes_claimed_packet_adapter_detector_controls",
+      "status": "counterexample_observed",
+      "observed_calls": [
+        "adapt",
+        "project",
+        "descend"
+      ],
+      "packet_validator_would_refuse": true,
+      "declared_negative_detector_case_inconsistent": true,
+      "receipt_locally_resolved": true,
+      "receipt_detector_adequate": true,
+      "receipt_adapter_sound": true,
+      "receipt_evidence_valid": true,
+      "limit": "Direct read-vetted lab body with synthetic protocol objects and actual ProjectionReceipt; outer aggregate controls are separate."
+    },
+    {
+      "id": "PFPDOMAIN-C094",
+      "rule": "lab_registry_hash_binds_solver_manifest",
+      "status": "counterexample_observed",
+      "different_families_versions_determinism": true,
+      "same_registry_hash": true,
+      "identity_valid_reported": true,
+      "limit": "Hash covers sorted solver IDs, not implementation or manifest."
+    },
+    {
+      "id": "PFPDOMAIN-C095",
+      "rule": "evidence_bundle_builder_runtime_type_import",
+      "status": "counterexample_observed",
+      "failure": "NameError: RuntimeProblem",
+      "source_imports_or_definitions_of_RuntimeProblem": 0,
+      "limit": "Function-only execution confirms source-level unresolved global; normal module has no RuntimeProblem/RunReceipt import either."
+    },
+    {
+      "id": "PFPDOMAIN-C096",
+      "rule": "recursive_authority_scan_all_mapping_keys",
+      "status": "counterexample_observed",
+      "ordinary_payload_refused": true,
+      "ordinary_fields_mapping_authority_granted_accepted": true,
+      "limit": "Scanner unconditionally skips fields key even when mapping is not a canonical dataclass; content hashes do not repair policy omission."
+    }
+  ]
+}

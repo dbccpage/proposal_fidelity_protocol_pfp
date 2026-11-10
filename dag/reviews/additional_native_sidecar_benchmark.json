@@ -1,0 +1,56 @@
+{
+  "status": "bounded_implementation_review",
+  "scope": "New native checker outside the frozen original-source census; no original-file coverage increment.",
+  "file_reviews": [],
+  "claims": [
+    {
+      "id": "NATIVE-CHARPOLY-C001",
+      "claim": "For admitted rational affine A(J,Delta,K) of dimension1..4 and a candidate characteristic polynomial with each parameter degree bounded by n, exact native agreement on the full(n+1)^3 Cartesian grid is equivalent to polynomial identity for every real parameter triple.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/native_sidecar.py",
+          "lines": [
+            80,
+            105
+          ]
+        },
+        {
+          "path": "dag/benchmark/native_sidecar.py",
+          "lines": [
+            108,
+            133
+          ]
+        },
+        {
+          "path": "dag/benchmark/native_sidecar.py",
+          "lines": [
+            241,
+            280
+          ]
+        }
+      ],
+      "dependencies": [
+        "Public matrix interpretation is an admitted input; no natural-language semantic preservation theorem.",
+        "The determinant expansion bounds every true coefficient degree in each parameter by n; candidate admission checks the same bound.",
+        "Repeated univariate root bounds over Q prove equality from the full Cartesian grid.",
+        "Source-extracted Faddeev-LeVerrier arithmetic, rational admission, wrapper and compiler/runtime behave as reviewed."
+      ],
+      "limitations": [
+        "Only the explicit bound characteristic-polynomial assertion is certified. Surrounding prose, projectors, dynamics and other obligations remain unresolved.",
+        "This is native arithmetic reuse in a new isolated wrapper, not the full PFP port host or an OPERADS/EIS/PCIV integration.",
+        "Control tests support implementation behavior; they are not a machine-checked proof of the entire software stack."
+      ]
+    }
+  ],
+  "findings": [],
+  "validation": {
+    "native_controls": 15,
+    "receipt": "dag/benchmark/native_sidecar_validation.json",
+    "parent_dense_control": "dag/benchmark/native_sidecar_parent_review.json",
+    "paid_model_calls": 0
+  },
+  "source_pins": {
+    "dag/benchmark/native_sidecar.py": "67feada49e7e73a45897c81b1353aed7251964ed43bb463767cc2434b9c0fc3c",
+    "dag/benchmark/native_sidecar_host/src/main.rs": "b6ad4c855adb4202b3fc7ee4ccdc40c2240a8d3c904ee32406c41663b40da22c"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "independent_charpoly_workflow_reference_provenance_v1",
+  "created_utc": "2026-11-10T19:53:14.447140+00:00",
+  "campaign_id": "qm-charpoly-20261110",
+  "expected_run_ids": [
+    "qm-charpoly-20261110:qm_charpoly_checked_v1:000",
+    "qm-charpoly-20261110:qm_charpoly_ungated_v1:000"
+  ],
+  "run_binding_status": "Campaign and workflow IDs supplied by parent; exact run paths will be confirmed after freeze. No output access at preparation.",
+  "current_run_output_content_read": false,
+  "frozen_output_confirmation_received": false,
+  "method": "Reuse unchanged public-seed reference independently derived before the first benchmark outputs. Prior answers have been evaluated but supply no credit; native integration review does not supply a whole-answer accuracy judgment. No private answer key/storage access.",
+  "rubric": {
+    "path": "dag/benchmark/pilot_20261110/evaluator_rubric.json",
+    "sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+    "criteria": 25,
+    "total_points": 100
+  },
+  "public_seed": {
+    "path": "dag/benchmark/seed_prompt.txt",
+    "sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7"
+  },
+  "reference": {
+    "definitions": "r=sqrt(J^2+Delta^2); Qe=|00><00|+|11><11|; Qo=I-Qe; B=J(|01><10|+|10><01|)+Delta(|01><01|-|10><10|).",
+    "spectrum": "H=K Qe-K Qo+2B. For r>0: energies K (rank2), -K+/-2r with Q+/-=(Qo+/-B/r)/2. At K=+r merge Qe with Q+; at K=-r merge Qe with Q-. At r=0: K Qe-K Qo; K=0 gives sole projector I.",
+    "dynamics": "For r>0 psi(t)=exp(iKt)[(cos(2rt)-i Delta sin(2rt)/r)|01>-i J sin(2rt)/r |10>]. For r=0: exp(iKt)|01>. p=J^2 sin^2(2rt)/r^2. If J=0, p=0 always and earliest maximizing time0; otherwise supremum J^2/r^2 and earliest maximizing time pi/(4r).",
+    "pure_state": "rho1=diag(1-p,p); S=-p log2 p-(1-p)log2(1-p), endpoint0log0=0; C=2sqrt(p(1-p)); CHSHmax=2sqrt(1+C^2) with correlation-matrix/measurement derivation required. Maximal entanglement iff J!=0 and |J|>=|Delta|; first time arcsin(r/(sqrt(2)|J|))/(2r).",
+    "thermal": "For r>0 set c=cosh(2 beta r),s=sinh(2 beta r),Z=2 exp(-beta K)+2 exp(beta K)c. Gibbs diagonal u,v,w,u with u=exp(-beta K)/Z,v=exp(beta K)(c-Delta s/r)/Z,w=exp(beta K)(c+Delta s/r)/Z and off-diagonal z=-exp(beta K)J s/(rZ) only between01,10. PT eigenvalues v,w,u+/-|z|. Entangled iff exp(2 beta K)|J|s/r>1; equality separable. beta0 gives I/4. r0 gives diag(exp(-beta K),exp(beta K),exp(beta K),exp(-beta K))/(4 cosh(beta K)), separable.",
+    "checks": "Normalization, t=0, J=0 and a correct nontrivial numerical example must be actually evaluated; identity derivations and finite numerical checks remain distinct."
+  },
+  "preceding_public_reference_provenance": {
+    "path": "dag/benchmark/deepseek_critique_20261110/reference_provenance.json",
+    "sha256": "719d729c4a9c7e0bc6675a364feccd288c7e29e9baf2098748837eab13489f9f"
+  },
+  "historical_protocol_context": {
+    "path": "dag/benchmark/EXPERIMENT_PROTOCOL.md",
+    "sha256": "5e8894044ce222300983a51355232e53f6b9d903abafca806e05f084b3707343",
+    "original_sha256_at_rubric_freeze": "6eeb2068cf555b32623d48994b44794f13a514947ff6fd61df0d50f5500e9918",
+    "assessment": "Current public protocol was fully read before this run output. Its current bytes differ from the original rubric-time pin; the same 20/20/25/25/10 allocation and post-freeze evaluator boundary remain. Original rubric and reference formulas are unchanged."
+  },
+  "grading_policy": [
+    "Wait for parent confirmation that both run.json files and sidecars are frozen before reading any new answer.",
+    "Grade delivered final answer_text only; no proposal, repaired coefficient artifact, checker verdict, native receipt or provider reasoning credit.",
+    "Use all25 unchanged criterion maxima and exact quotation/omission evidence.",
+    "Retain refusals and infrastructure failures in all-attempt denominator with zero delivered-solution points, distinguished from asserted mathematical errors.",
+    "No evaluator reference, rubric, corrections or private information may enter workflow requests.",
+    "One attempt per arm on one item does not support a general efficacy ranking."
+  ],
+  "prior_experiment_outputs_previously_reviewed": true,
+  "planned_run_constraints": {
+    "requested_max_output_tokens": 16000,
+    "proposal_ceiling": 2400,
+    "repair_ceiling": 2400,
+    "synthesis_ceiling": 12000,
+    "campaign_cap_microusd": 200000,
+    "per_run_cap_microusd": 100000
+  },
+  "limits": [
+    "Trusted manual mathematical review, not proof-assistant certification.",
+    "Context protocol pin is historical, not a claim that mutable status prose remains identical.",
+    "Execution, cost, intermediate identity certification and final mathematical accuracy are separate evidence."
+  ]
+}

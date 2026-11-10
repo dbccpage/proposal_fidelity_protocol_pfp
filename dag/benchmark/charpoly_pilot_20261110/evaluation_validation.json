@@ -1,0 +1,165 @@
+{
+  "passed": true,
+  "status": "complete",
+  "validator_sha256": "2ba7648938ffe93e5215ef962e3adb31fd7d4fb216697fa8412361b6f4147eb1",
+  "rubric_sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+  "reference_provenance_sha256": "b2679b9ba498f4ed26533908ac7d1c7be5e0a3112d85cfb54f42b80d7dad79b6",
+  "runs": [
+    {
+      "run_id": "qm-charpoly-20261110:qm_charpoly_checked_v1:000",
+      "run_path": "runs/00_checked/run.json",
+      "run_sha256": "64bdea8a8391b5bdc20e8bb517c88531616a1a24f852a1de0e7bf0ded64ae747",
+      "answer_sha256": null,
+      "status": "certificate_refused",
+      "grade_total": 0,
+      "criteria": 25,
+      "exact_quote_ranges_checked": 0,
+      "final_characters": null,
+      "final_lines": null,
+      "safe_call_metadata": [
+        {
+          "stage_id": "charpoly",
+          "finish_reason": "stop",
+          "input_tokens": 1187,
+          "output_tokens": 196,
+          "actual_microusd": 384
+        },
+        {
+          "stage_id": "charpoly_repair",
+          "finish_reason": "length",
+          "input_tokens": 1493,
+          "output_tokens": 2400,
+          "actual_microusd": 1301
+        }
+      ],
+      "spent_microusd": 1685,
+      "held_microusd": 0
+    },
+    {
+      "run_id": "qm-charpoly-20261110:qm_charpoly_ungated_v1:000",
+      "run_path": "runs/01_ungated/run.json",
+      "run_sha256": "28a9aa26ee1fa6caa87817541573b3a86d4ead368d4ad8d979a05c5a667eb93c",
+      "answer_sha256": "92dff27860cdb2b6db06847c45bf30d4556b1a614ac20805f921024061650a00",
+      "status": "completed",
+      "grade_total": 47,
+      "criteria": 25,
+      "exact_quote_ranges_checked": 39,
+      "final_characters": 35015,
+      "final_lines": 641,
+      "safe_call_metadata": [
+        {
+          "stage_id": "charpoly",
+          "finish_reason": "stop",
+          "input_tokens": 1187,
+          "output_tokens": 395,
+          "actual_microusd": 309
+        },
+        {
+          "stage_id": "solve",
+          "finish_reason": "length",
+          "input_tokens": 1769,
+          "output_tokens": 12000,
+          "actual_microusd": 5020
+        }
+      ],
+      "spent_microusd": 5329,
+      "held_microusd": 0
+    }
+  ],
+  "pending_run_ids": [],
+  "grades_sha256": "797555a9dbf91cc21d4026d590effc0406ab39a95b6fb68adf4346da57825c42",
+  "criterion_evidence_sha256": "757b193687ee1e34be5de394629650f5a41083dec890a00b10a09de688a0acf1",
+  "preparation_policy_update": "Original preparation planned to wait for both runs. Parent subsequently explicitly authorized grading the checked run immediately after its individual freeze; the other output is not accessed until its own freeze confirmation.",
+  "limits": [
+    "One item and one attempt per arm; no general efficacy inference.",
+    "Mechanical validation checks custody, quotation and score arithmetic, not the trusted mathematical judgment."
+  ],
+  "independent_validation_passed": true,
+  "graded_runs": [
+    {
+      "run_id": "qm-charpoly-20261110:qm_charpoly_checked_v1:000",
+      "score": 0,
+      "spent_microusd": 1685,
+      "run_sha256": "64bdea8a8391b5bdc20e8bb517c88531616a1a24f852a1de0e7bf0ded64ae747",
+      "answer_sha256": null
+    },
+    {
+      "run_id": "qm-charpoly-20261110:qm_charpoly_ungated_v1:000",
+      "score": 47,
+      "spent_microusd": 5329,
+      "run_sha256": "28a9aa26ee1fa6caa87817541573b3a86d4ead368d4ad8d979a05c5a667eb93c",
+      "answer_sha256": "92dff27860cdb2b6db06847c45bf30d4556b1a614ac20805f921024061650a00"
+    }
+  ],
+  "criteria_checked": 50,
+  "exact_criterion_quote_ranges_checked": 39,
+  "total_spent_microusd": 7014,
+  "total_held_microusd": 0,
+  "bounded_independent_controls": [
+    {
+      "id": "CP-UNGATED-CE-01",
+      "passed": true,
+      "method": "Exact diagonal basis action and the least element of[0,infinity)",
+      "H_diagonal": [
+        0,
+        2,
+        -2,
+        0
+      ],
+      "initial_basis_index": 1,
+      "eigenvalue": 2,
+      "transition_probability_all_times": 0,
+      "earliest_maximizer": 0,
+      "limit": "The all-time conclusion uses the diagonal exponential identity and the declared ordered time domain, not numerical time sampling."
+    },
+    {
+      "id": "CP-UNGATED-CE-02",
+      "passed": true,
+      "method": "Exact diagonal basis action",
+      "H_diagonal": [
+        1,
+        -1,
+        -1,
+        1
+      ],
+      "initial_basis_index": 1,
+      "eigenvalue": -1,
+      "state": "exp(it)|01>",
+      "limit": "Shows the omitted zero-radius branch; does not refute the correct nonzero-radius formula."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "dag/benchmark/charpoly_pilot_20261110/reference_provenance.json",
+      "sha256": "b2679b9ba498f4ed26533908ac7d1c7be5e0a3112d85cfb54f42b80d7dad79b6"
+    },
+    {
+      "path": "dag/benchmark/charpoly_pilot_20261110/evaluation_tools.py",
+      "sha256": "2bc44cefedd035d46df7b238b9b0cbc47f33c6f094b056676b36e95148656bbb"
+    },
+    {
+      "path": "dag/benchmark/charpoly_pilot_20261110/evaluation_ungated_assessments.py",
+      "sha256": "789446015b8a858748c0c06bb3a9f9b48217e0022d3d19648a352550f55457d5"
+    },
+    {
+      "path": "dag/benchmark/charpoly_pilot_20261110/criterion_assessments.json",
+      "sha256": "719cca340f28422b037ce28e4d0aae9c3dbbcb396c073aac9fa615284cb76538"
+    },
+    {
+      "path": "dag/benchmark/charpoly_pilot_20261110/grades.json",
+      "sha256": "797555a9dbf91cc21d4026d590effc0406ab39a95b6fb68adf4346da57825c42"
+    },
+    {
+      "path": "dag/benchmark/charpoly_pilot_20261110/criterion_evidence.json",
+      "sha256": "757b193687ee1e34be5de394629650f5a41083dec890a00b10a09de688a0acf1"
+    },
+    {
+      "path": "dag/benchmark/charpoly_pilot_20261110/evaluation.md",
+      "sha256": "5e4a86dfd14556274d3b3ca046410fb16f352d11c41dc4ec7bcc04ff0c3751f6"
+    },
+    {
+      "path": "dag/benchmark/charpoly_pilot_20261110/evaluation_validate.py",
+      "sha256": "e6f89f9257607ce06d348e317d68f4acfa94debb072efa3809dcd56791098940"
+    }
+  ]
+}

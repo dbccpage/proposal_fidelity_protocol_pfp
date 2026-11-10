@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0",
+  "status": "complete_seven_file_configuration_and_contract_slice",
+  "file_reviews": [
+    {
+      "path": ".gitignore",
+      "sha256": "2a4ab5bae28a3ea52fde3aff3d936055ce23165ae7fb15a71b3bf5a2633790b0",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          219
+        ]
+      ],
+      "assessment": "Full file reviewed as checkout hygiene. Ignores virtual environments, caches, build products, secrets paths and workflow output; tracked files remain in the pinned inventory. It supplies no mathematical result."
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          201
+        ]
+      ],
+      "assessment": "Full file reviewed as repository metadata: Apache License 2.0 template with an unfilled copyright appendix. It supplies no mathematical premise, evidence of correctness or original authorship. No legal interpretation or completeness-of-attribution claim made."
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "d5860624f5282c9c827705bb904dc9908282371c754b4c0c62d0c51b5974a60d",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          234
+        ]
+      ],
+      "assessment": "Full package/dependency/test/lint configuration reviewed. Default pytest paths cover only pfp_lab/tests and governance/tools/tests; this is not a test census for PFP, EIS, PCIV or OPERADS. Explicit setuptools package list includes PFP/Lab and selected ops packages but not eis, pciv or operads. No new dependency installation or wheel build performed."
+    },
+    {
+      "path": "contracts/schema/scenario.v1.schema.json",
+      "sha256": "b91a89549976aca3ebfacb1847ee8c02af1631621480be64b99d19e4c309181d",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          304
+        ]
+      ],
+      "assessment": "Full JSON Schema reviewed. Discriminated moves, forbidden extra fields and finite array bounds describe structural admissibility; name/rational, graph endpoint/uniqueness and positive-weight predicates are absent from generated schema. Four bad-carrier/value examples pass JSON Schema while runtime validators refuse them."
+    },
+    {
+      "path": "contracts/schema/receipt.v1.schema.json",
+      "sha256": "199352ae66922d89641ae81aec8c316e1fc478cdc3c6f3251557e63c69f01237",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          454
+        ]
+      ],
+      "assessment": "Full receipt schema reviewed. Requires SHA-shaped digest, input, verdicts and final state but does not validate their consistency or authenticity. Resealed invented final state passes schema/model while current-core replay rejects it."
+    },
+    {
+      "path": "pfp_lab/core/contracts.py",
+      "sha256": "5bc7b94a606f87ddb51ffb237e8be44b81e17abaab15815a631748af8caad3ea",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          294
+        ]
+      ],
+      "assessment": "Full source reviewed. BeforeValidator adapters and ScenarioIn graph validator impose stronger predicates than JSON Schema. Shallow frozen models contain mutable CutIn.section dictionaries; cached get_pack returns the same object, allowing in-process caller mutation to contaminate later lookups."
+    },
+    {
+      "path": "pfp_lab/core/session.py",
+      "sha256": "8ec322fe99245b05b6c383bcc38b5ca2f38f7e42d67da52030bb812d56700df2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          152
+        ]
+      ],
+      "assessment": "Full source reviewed. Receipt digest binds fields and verification recomputes current-core outputs. Rehashed invented final state is refused; invented core_version is accepted if present current-core outputs match. Replay therefore does not authenticate claimed historic implementation version. Canonicalization cross-language standard equivalence was not independently verified in this slice."
+    }
+  ],
+  "claims": [
+    {
+      "id": "CONFIG-CLAIM-01",
+      "statement": "Schema acceptance, runtime admission and current-core replay are three different predicates. The selected synthetic examples separate them.",
+      "status": "bounded_counterexamples_reproduced",
+      "evidence": [
+        "contracts/schema/scenario.v1.schema.json",
+        "contracts/schema/receipt.v1.schema.json",
+        "pfp_lab/core/contracts.py",
+        "pfp_lab/core/session.py"
+      ],
+      "dependencies": [
+        "A semantics-level certificate requires an independently adequate target predicate and a correct checker beyond JSON shape.",
+        "Historic execution authenticity requires source/runtime identity evidence beyond a self-recomputed receipt digest."
+      ]
+    },
+    {
+      "id": "CONFIG-CLAIM-02",
+      "statement": "Default pytest success and installed package support cover a declared subset of this checkout, not the entire four-system estate.",
+      "status": "configuration_observation",
+      "evidence": [
+        "pyproject.toml:241"
+      ],
+      "dependencies": [
+        "Any full-repository test claim needs an explicit test census, environments and invocation set."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "CONFIG-F01",
+      "severity": "implementation_defect",
+      "statement": "Frozen cached pack models expose mutable nested section dictionaries. A public caller changes a returned CutIn.section value without validation, and the next get_pack call exposes the mutation.",
+      "evidence": [
+        "pfp_lab/core/contracts.py:104",
+        "pfp_lab/core/contracts.py:266"
+      ],
+      "probe": "dag/reviews/additional_contracts_and_packaging_probe.json#cached_frozen_pack_nested_mutation",
+      "scope": "Reproduced in a single public process and restored before exit; no source edits. It does not demonstrate a remote endpoint mutation path."
+    },
+    {
+      "id": "CONFIG-F02",
+      "severity": "evidence_boundary",
+      "statement": "Generated JSON Schemas admit cases that stronger runtime validators refuse; schema-validity is not carrier/rational correctness.",
+      "evidence": [
+        "contracts/schema/scenario.v1.schema.json",
+        "pfp_lab/core/contracts.py:65"
+      ],
+      "probe": "dag/reviews/additional_contracts_and_packaging_probe.json",
+      "scope": "Four synthetic invalid instances; positive and unknown-field controls included."
+    },
+    {
+      "id": "CONFIG-F03",
+      "severity": "evidence_boundary",
+      "statement": "Receipt verification replays against the current core and does not authenticate the declared historic core_version.",
+      "evidence": [
+        "pfp_lab/core/session.py:119"
+      ],
+      "probe": "dag/reviews/additional_contracts_and_packaging_probe.json#resealed_invented_core_version",
+      "scope": "This is the current function contract, not proof that receipts were forged historically."
+    }
+  ],
+  "validation": {
+    "probe": "dag/reviews/additional_contracts_and_packaging_probe.json",
+    "observations_reproduced": 9,
+    "source_hashes_match_inventory": true
+  },
+  "limits": [
+    "No package install, wheel build, network, providers, protected benchmark access or full-suite invocation.",
+    "Runtime validators were exercised on the selected public cases; complete admission/governor/graph implementations are outside this incremental slice.",
+    "No claim about legal licensing sufficiency or history authenticity."
+  ]
+}

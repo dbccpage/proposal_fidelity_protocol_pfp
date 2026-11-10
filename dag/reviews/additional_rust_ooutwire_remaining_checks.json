@@ -1,0 +1,181 @@
+{
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "native_execution": false,
+  "results": [
+    {
+      "id": "ROUT-CHECK-001",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/observer.rs",
+        "sha256": "2d2e84363140a3826316af60e8b28fbff2b6156e21b06296ab2cade197f0bf1e"
+      },
+      "observation": {
+        "complete_domain": "all16Boolean functions of(coverage,admission)",
+        "classes": {
+          "(False, False)": [
+            0,
+            3,
+            12,
+            15
+          ],
+          "(True, False)": [
+            1,
+            2,
+            13,
+            14
+          ],
+          "(False, True)": [
+            4,
+            7,
+            8,
+            11
+          ],
+          "(True, True)": [
+            5,
+            6,
+            9,
+            10
+          ]
+        },
+        "sealed_OR_table_number": 14,
+        "sealed_OR_behavior": [
+          true,
+          false
+        ]
+      },
+      "limitations": "Exhaustive independent finite truth-table calculation, not native parity. Coverage is held fixed across compared data; arbitrary multi-bit/stateful observers require different premises."
+    },
+    {
+      "id": "ROUT-CHECK-002",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/observer.rs",
+        "sha256": "2d2e84363140a3826316af60e8b28fbff2b6156e21b06296ab2cade197f0bf1e"
+      },
+      "observation": {
+        "regime": {
+          "data_count": 2,
+          "forms": [
+            1
+          ],
+          "instances": [
+            [
+              0,
+              [
+                0
+              ]
+            ]
+          ],
+          "rules": []
+        },
+        "pair": [
+          0,
+          99
+        ],
+        "unary_context": [
+          null
+        ],
+        "sealed_observer_separates": true,
+        "domain_checked_separable": false
+      },
+      "limitations": "Independent direct predicates from read bodies; Pair(0,99) is publicly constructible and ordered but mark99 is unadmitted. No original Rust invoked."
+    },
+    {
+      "id": "ROUT-CHECK-003",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/profile.rs",
+        "sha256": "e4d66e96ce4651ffa02431204e001e6fb3b39f9768edc6dfa235538870afd6d9"
+      },
+      "observation": {
+        "data": [
+          0,
+          1
+        ],
+        "form_arity": 1,
+        "admitted_instances": [
+          [
+            0
+          ]
+        ],
+        "before_rule_verdicts": [
+          true,
+          false
+        ],
+        "after_uniform_rule_verdicts": [
+          true,
+          true
+        ],
+        "separation_lost": true
+      },
+      "limitations": "Illustrates declared OR semantics; admission is monotone in positive facts but separation need not be monotone. Requirement checking belongs to response layer, not a claim this admission is invalid."
+    },
+    {
+      "id": "ROUT-CHECK-004",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/census.rs",
+        "sha256": "59551fe3cabee5246856e9f16b8f693f1f531db7f65bb59d697128cdc0fb5365"
+      },
+      "observation": {
+        "comment_only": "// pub fn phantom() -> Event { unimplemented!() }\n",
+        "comment_findings": [
+          "phantom"
+        ],
+        "callback_parameter": "pub fn check(f: fn() -> Event) -> bool { true }\n",
+        "callback_findings": [
+          "check"
+        ]
+      },
+      "limitations": "Independent lexical control of displayed signature scanner, not Rust parser or native replay. Complete read already admits aliases/async/traits omissions; this adds false positives from comments and parameter arrows."
+    },
+    {
+      "id": "ROUT-CHECK-005",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/admission.rs",
+        "sha256": "18934e9988e9427942295fb8b73d78100ee26d4ad745749355e239b3be2ce852"
+      },
+      "observation": {
+        "initial_token_lists": [
+          [
+            "a"
+          ],
+          [
+            "b"
+          ]
+        ],
+        "same_structure_key_before": [
+          1,
+          [],
+          [],
+          [],
+          []
+        ],
+        "fixed_event": "AdmitDatum(a)",
+        "post_lengths": [
+          1,
+          2
+        ]
+      },
+      "limitations": "Exact one-datum no-form structural counterexample: canonical token erasure is not a transition congruence under fixed external token events. Does not refute equivariance with appropriately transported event/token identities."
+    },
+    {
+      "id": "ROUT-CHECK-006",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/context.rs",
+        "sha256": "8c465b2cff4a31cda2ecc5074b3b71ec6596491c13f4a123726e4703706b09fe"
+      },
+      "observation": {
+        "n_data": 2,
+        "arity": 100,
+        "slot_tuple_count": 515377520732011331036461129765621272702107522001,
+        "hole_context_count": 515377520732011329768810529537391871205404316625,
+        "admit_form_accepts_positive_usize100": true,
+        "slot_tuples_allocates_all_then_filters": true
+      },
+      "limitations": "Exact cardinality arithmetic only; no allocation or resource exhaustion attempted. Source APIs expose no context enumeration cap, so finite mathematical domain does not mean feasible runtime resource bound."
+    }
+  ]
+}

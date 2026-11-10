@@ -1,0 +1,479 @@
+{
+  "finite_suite_overfit": {
+    "case": {
+      "case_id": "audit_sql",
+      "schema": {
+        "t": {
+          "id": "INTEGER"
+        }
+      },
+      "spec": {
+        "op": "select",
+        "from": "t"
+      },
+      "protected": [],
+      "test_databases": [
+        {
+          "t": [
+            {
+              "id": 1
+            }
+          ]
+        }
+      ]
+    },
+    "on_supplied": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT 1 AS id",
+        "preflight_sql": "SELECT 1 WHERE 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        [
+          true,
+          "SQL_VERIFIED_VALID"
+        ],
+        [
+          true,
+          "INDEPENDENT_VERIFICATION_PASSED"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    },
+    "on_new_database": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT 1 AS id",
+        "preflight_sql": "SELECT 1 WHERE 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        [
+          false,
+          "RESULT_BAG_MISMATCH_ON_DB_0: BAG_ELEMENT_MISMATCH: excess_in_1={(2,): 1}, excess_in_2={(1,): 1}"
+        ],
+        [
+          false,
+          "INDEP_RESULT_BAG_DIFF_DB_0: BAG_ELEMENT_MISMATCH: excess_in_1={(2,): 1}, excess_in_2={(1,): 1}"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    }
+  },
+  "ledger_and_syntax": {
+    "omitted_required_construct": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT id FROM t WHERE id IS NOT 1",
+        "preflight_sql": "SELECT 1 WHERE 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        [
+          true,
+          "SQL_VERIFIED_VALID"
+        ],
+        [
+          true,
+          "INDEPENDENT_VERIFICATION_PASSED"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    },
+    "fabricated_comment_entry": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT id FROM t /* COALESCE */",
+        "preflight_sql": "SELECT 1 WHERE 0",
+        "null_ledger": [
+          {
+            "node": "nonexistent.path",
+            "construct": "COALESCE fabricated trailing words"
+          }
+        ]
+      },
+      "owner_verdict": [
+        [
+          true,
+          "SQL_VERIFIED_VALID"
+        ],
+        [
+          true,
+          "INDEPENDENT_VERIFICATION_PASSED"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    }
+  },
+  "affinity_disagreement": {
+    "case": {
+      "case_id": "audit_sql",
+      "schema": {
+        "t": {
+          "id": "INTEGER"
+        }
+      },
+      "spec": {
+        "op": "select",
+        "from": "t",
+        "where": {
+          "eq3": [
+            "id",
+            {
+              "val": "01"
+            }
+          ]
+        }
+      },
+      "protected": [],
+      "test_databases": [
+        {
+          "t": [
+            {
+              "id": 1
+            }
+          ]
+        }
+      ]
+    },
+    "reference": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT * FROM t WHERE (id = '01')",
+        "preflight_sql": "SELECT 1 WHERE 1 = 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        [
+          true,
+          "SQL_VERIFIED_VALID"
+        ],
+        [
+          false,
+          "INDEP_RESULT_BAG_DIFF_DB_0: BAG_SIZE_MISMATCH: 0 != 1"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    },
+    "sqlite_semantics": "INTEGER 1 compares equal to text literal 01 after column affinity; Python scalar equality does not."
+  },
+  "coalesce_text_truth_disagreement": {
+    "case": {
+      "case_id": "audit_sql",
+      "schema": {
+        "t": {
+          "id": "TEXT"
+        }
+      },
+      "spec": {
+        "op": "select",
+        "from": "t",
+        "where": {
+          "coalesce": [
+            "id",
+            {
+              "val": 0
+            }
+          ]
+        }
+      },
+      "protected": [],
+      "test_databases": [
+        {
+          "t": [
+            {
+              "id": "0"
+            }
+          ]
+        }
+      ]
+    },
+    "reference": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT * FROM t WHERE COALESCE(id, 0)",
+        "preflight_sql": "SELECT 1 WHERE 1 = 0",
+        "null_ledger": [
+          {
+            "node": "where.coalesce",
+            "construct": "COALESCE"
+          }
+        ]
+      },
+      "owner_verdict": [
+        [
+          true,
+          "SQL_VERIFIED_VALID"
+        ],
+        [
+          false,
+          "INDEP_RESULT_BAG_DIFF_DB_0: BAG_SIZE_MISMATCH: 1 != 0"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    }
+  },
+  "nested_rename_drops_column": {
+    "case": {
+      "case_id": "audit_sql",
+      "schema": {
+        "t": {
+          "id": "INTEGER",
+          "other": "INTEGER"
+        }
+      },
+      "spec": {
+        "op": "rename",
+        "from": {
+          "op": "select",
+          "from": "t"
+        },
+        "map": {
+          "id": "newid"
+        }
+      },
+      "protected": [],
+      "test_databases": [
+        {
+          "t": [
+            {
+              "id": 1,
+              "other": 7
+            }
+          ]
+        }
+      ]
+    },
+    "reference": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT id AS newid FROM (SELECT * FROM t) AS sq_1",
+        "preflight_sql": "SELECT 1 WHERE 1 = 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        [
+          false,
+          "RESULT_HEADING_MISMATCH_ON_DB_0"
+        ],
+        [
+          false,
+          "INDEP_RESULT_HEADING_DIFF_DB_0"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    },
+    "valid_candidate": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT id AS newid,other FROM t",
+        "preflight_sql": "SELECT 1 WHERE 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        [
+          true,
+          "SQL_VERIFIED_VALID"
+        ],
+        [
+          true,
+          "INDEPENDENT_VERIFICATION_PASSED"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    }
+  },
+  "missing_join_predicate": {
+    "case": {
+      "case_id": "audit_sql",
+      "schema": {
+        "t": {
+          "id": "INTEGER"
+        },
+        "r": {
+          "other": "INTEGER"
+        }
+      },
+      "spec": {
+        "op": "semi_join",
+        "left": "t",
+        "right": "r"
+      },
+      "protected": [],
+      "test_databases": [
+        {
+          "t": [
+            {
+              "id": 1
+            }
+          ],
+          "r": [
+            {
+              "other": 2
+            }
+          ]
+        }
+      ]
+    },
+    "reference": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT * FROM t WHERE EXISTS (SELECT 1 FROM r WHERE )",
+        "preflight_sql": "SELECT 1 WHERE 1 = 0",
+        "null_ledger": [
+          {
+            "node": "semi_join",
+            "construct": "EXISTS"
+          }
+        ]
+      },
+      "owner_verdict": [
+        [
+          false,
+          "CANDIDATE_SQL_RUNTIME_ERROR_ON_DB_0: near \")\": syntax error"
+        ],
+        [
+          false,
+          "INDEP_SQL_EXEC_ERROR_DB_0: near \")\": syntax error"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    },
+    "valid_candidate": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT * FROM t WHERE EXISTS (SELECT 1 FROM r)",
+        "preflight_sql": "SELECT 1 WHERE 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        [
+          true,
+          "SQL_VERIFIED_VALID"
+        ],
+        [
+          true,
+          "INDEPENDENT_VERIFICATION_PASSED"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    }
+  },
+  "empty_projection": {
+    "case": {
+      "case_id": "audit_sql",
+      "schema": {
+        "t": {
+          "id": "INTEGER"
+        }
+      },
+      "spec": {
+        "op": "project",
+        "from": "t",
+        "columns": []
+      },
+      "protected": [],
+      "test_databases": [
+        {
+          "t": [
+            {
+              "id": 1
+            }
+          ]
+        }
+      ]
+    },
+    "reference": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT  FROM t",
+        "preflight_sql": "SELECT 1 WHERE 1 = 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        [
+          false,
+          "CANDIDATE_SQL_RUNTIME_ERROR_ON_DB_0: near \"FROM\": syntax error"
+        ],
+        [
+          false,
+          "INDEP_SQL_EXEC_ERROR_DB_0: near \"FROM\": syntax error"
+        ]
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    }
+  },
+  "malformed": {
+    "case_null": {
+      "answer": {},
+      "owner_verdict": [
+        {
+          "exception": "AttributeError",
+          "message": "'NoneType' object has no attribute 'get'"
+        },
+        {
+          "exception": "AttributeError",
+          "message": "'NoneType' object has no attribute 'get'"
+        }
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    },
+    "unhashable_status": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": [],
+        "sql": "SELECT id FROM t",
+        "preflight_sql": "SELECT 1 WHERE 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        {
+          "exception": "TypeError",
+          "message": "cannot use 'list' as a set element (unhashable type: 'list')"
+        },
+        {
+          "exception": "TypeError",
+          "message": "cannot use 'list' as a set element (unhashable type: 'list')"
+        }
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    },
+    "unhashable_operator": {
+      "answer": {
+        "case_id": "audit_sql",
+        "status": "SOLVED",
+        "sql": "SELECT id FROM t",
+        "preflight_sql": "SELECT 1 WHERE 0",
+        "null_ledger": []
+      },
+      "owner_verdict": [
+        {
+          "exception": "TypeError",
+          "message": "cannot use 'list' as a set element (unhashable type: 'list')"
+        },
+        {
+          "exception": "TypeError",
+          "message": "cannot use 'list' as a set element (unhashable type: 'list')"
+        }
+      ],
+      "limits": "Results compare only supplied finite database instances. No independent universal query-equivalence proof or dialect-neutral validation is claimed; both judges share schema/bag contracts and SQLite candidate execution."
+    }
+  },
+  "independent_kleene_bag_controls": {
+    "cases": 104,
+    "mismatches": [],
+    "limits": "Exhaustive bags of length 0..2 over NULL,0,1 and eight separately written predicates; no general relational-algebra completeness or mixed-affinity claim."
+  }
+}

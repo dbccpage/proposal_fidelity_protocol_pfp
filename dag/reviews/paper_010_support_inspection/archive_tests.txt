@@ -1,0 +1,180 @@
+..........................................F                              [100%]
+================================== FAILURES ===================================
+_______________ test_render_keeps_section_sign_from_pandoc_body _______________
+
+pandoc = 'pandoc'
+xelatex = 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\paper_010_support_inspection\\archive_test\\pytest_temp\\test_render_keeps_section_sign0\\xelatex.bat'
+
+    def render(pandoc: str, xelatex: str) -> None:
+        manuscript = (ROOT / "paper.md").read_text(encoding="utf-8")
+        title = re.search(r"^# (.+)$", manuscript, re.M).group(1)
+        header = manuscript.split("</div>", 1)[0]
+        author = next(line.rstrip("\\") for line in header.splitlines() if line.startswith("Jeremy"))
+        date = next(line for line in header.splitlines() if line.startswith("2026-"))
+        body_source = manuscript.split("</div>", 1)[1]
+        table_space = {"1": 18, "2": 20, "3": 25, "4": 16}
+        body_source = re.sub(
+            r"(?m)^(Table ([1-4])\. )",
+            lambda match: "\\Needspace{" + str(table_space[match.group(2)])
+            + "\\baselineskip}\n\n" + match.group(1), body_source,
+        )
+        environment = dict(os.environ)
+        environment["SOURCE_DATE_EPOCH"] = "1790899200"
+        with tempfile.TemporaryDirectory(prefix="paper010-render-") as directory:
+            build = Path(directory)
+>           (build / "body.md").write_text(body_source, encoding="utf-8")
+
+dag\reviews\paper_010_support_inspection\archive\tools\render_paper.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\pathlib\__init__.py:809: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/a343o/AppData/Local/Packages/sandbox.{da95b3ab-0b7e-45eb-9d0e-61a09bdb44ec}/AC/Temp/paper010-render-xoxqzfkc/body.md')
+mode = 'w', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: [Errno 13] Permission denied: 'C:\\Users\\a343o\\AppData\\Local\\Packages\\sandbox.{da95b3ab-0b7e-45eb-9d0e-61a09bdb44ec}\\AC\\Temp\\paper010-render-xoxqzfkc\\body.md'
+
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\pathlib\__init__.py:771: PermissionError
+
+During handling of the above exception, another exception occurred:
+
+path = 'C:\\Users\\a343o\\AppData\\Local\\Packages\\sandbox.{da95b3ab-0b7e-45eb-9d0e-61a09bdb44ec}\\AC\\Temp\\paper010-render-xoxqzfkc'
+dir_fd = None
+onexc = <function TemporaryDirectory._rmtree.<locals>.onexc at 0x0000019525C27060>
+
+    def _rmtree_unsafe(path, dir_fd, onexc):
+        if dir_fd is not None:
+            raise NotImplementedError("dir_fd unavailable on this platform")
+        try:
+            st = os.lstat(path)
+        except OSError as err:
+            onexc(os.lstat, path, err)
+            return
+        try:
+            if _rmtree_islink(st):
+                # symlinks to directories are forbidden, see bug #1669
+                raise OSError("Cannot call rmtree on a symbolic link")
+        except OSError as err:
+            onexc(os.path.islink, path, err)
+            # can't continue even if onexc hook returns
+            return
+        def onerror(err):
+            if not isinstance(err, FileNotFoundError):
+                onexc(os.scandir, err.filename, err)
+        results = os.walk(path, topdown=False, onerror=onerror, followlinks=os._walk_symlinks_as_files)
+        for dirpath, dirnames, filenames in results:
+            for name in dirnames:
+                fullname = os.path.join(dirpath, name)
+                try:
+                    os.rmdir(fullname)
+                except FileNotFoundError:
+                    continue
+                except OSError as err:
+                    onexc(os.rmdir, fullname, err)
+            for name in filenames:
+                fullname = os.path.join(dirpath, name)
+                try:
+                    os.unlink(fullname)
+                except FileNotFoundError:
+                    continue
+                except OSError as err:
+                    onexc(os.unlink, fullname, err)
+        try:
+>           os.rmdir(path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\AppData\\Local\\Packages\\sandbox.{da95b3ab-0b7e-45eb-9d0e-61a09bdb44ec}\\AC\\Temp\\paper010-render-xoxqzfkc'
+
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\shutil.py:707: PermissionError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/reviews/paper_010_support_inspection/archive_test/pytest_temp/test_render_keeps_section_sign0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000019525AA3BB0>
+
+    def test_render_keeps_section_sign_from_pandoc_body(tmp_path: Path, monkeypatch) -> None:
+        """A section sign in the manuscript body survives into the emitted TeX.
+    
+        The default text encoding on this host is the ANSI code page once UTF-8
+        mode is off. The check runs in that mode so a locale read is visible.
+        """
+        if sys.flags.utf8_mode:
+            env = dict(os.environ)
+            env["PYTHONUTF8"] = "0"
+            completed = subprocess.run(
+                [
+                    sys.executable, "-X", "utf8=0", "-m", "pytest",
+                    str(Path(__file__).resolve()), "-s", "--tb=short", "-p", "no:cacheprovider",
+                ],
+                cwd=Path(__file__).resolve().parents[2],
+                env=env,
+                check=False,
+                text=True,
+            )
+            sys.stdout.write(completed.stdout)
+            sys.stderr.write(completed.stderr)
+            assert completed.returncode == 0
+            return
+        package = Path(__file__).resolve().parents[2]
+        root = tmp_path / "pkg"
+        (root / "tools").mkdir(parents=True)
+        shutil.copy(package / "tools" / "paper_preamble.tex", root / "tools" / "paper_preamble.tex")
+        shutil.copy(package / "tools" / "latex_inline_code.lua", root / "tools" / "latex_inline_code.lua")
+        (root / "paper.md").write_text(
+            "# Holonomy checks\n\nJeremy Carroll\n\n2026-10-02\n\n</div>\n\nwhose §2 admits a loop.\n",
+            encoding="utf-8",
+        )
+        stub = tmp_path / "xelatex.bat"
+        stub.write_text(
+            "@echo off\r\necho.>paper.log\r\necho.>paper.pdf\r\nexit /b 0\r\n",
+            encoding="ascii",
+        )
+        monkeypatch.setattr(render_paper, "ROOT", root)
+>       render_paper.render("pandoc", str(stub))
+
+dag\reviews\paper_010_support_inspection\archive\code\tests\test_render_paper.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+dag\reviews\paper_010_support_inspection\archive\tools\render_paper.py:39: in render
+    with tempfile.TemporaryDirectory(prefix="paper010-render-") as directory:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\tempfile.py:971: in __exit__
+    self.cleanup()
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\tempfile.py:975: in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\tempfile.py:955: in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\shutil.py:852: in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\shutil.py:711: in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\tempfile.py:927: in onexc
+    _resetperms(path)
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\tempfile.py:287: in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+func = <built-in function chmod>
+path = 'C:\\Users\\a343o\\AppData\\Local\\Packages\\sandbox.{da95b3ab-0b7e-45eb-9d0e-61a09bdb44ec}\\AC\\Temp\\paper010-render-xoxqzfkc'
+args = (448,)
+
+    def _dont_follow_symlinks(func, path, *args):
+        # Pass follow_symlinks=False, unless not supported on this platform.
+        if func in _os.supports_follow_symlinks:
+>           func(path, *args, follow_symlinks=False)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\AppData\\Local\\Packages\\sandbox.{da95b3ab-0b7e-45eb-9d0e-61a09bdb44ec}\\AC\\Temp\\paper010-render-xoxqzfkc'
+
+..\..\..\AppData\Local\Python\pythoncore-3.14-64\Lib\tempfile.py:276: PermissionError
+=========================== short test summary info ===========================
+FAILED dag\reviews\paper_010_support_inspection\archive\code\tests\test_render_paper.py::test_render_keeps_section_sign_from_pandoc_body
+
+STDERR

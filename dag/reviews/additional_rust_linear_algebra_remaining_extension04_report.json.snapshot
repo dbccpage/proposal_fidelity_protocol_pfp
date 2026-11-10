@@ -1,0 +1,3450 @@
+{
+  "review_id": "additional_rust_linear_algebra_remaining",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "status": "in_progress",
+  "repository_wide_audit_complete": false,
+  "scope": {
+    "files": 83,
+    "full_source_reads": 71,
+    "full_source_lines": 28724,
+    "pending": 12
+  },
+  "file_reviews": [
+    {
+      "path": "code/rust/core_linear_algebra/Cargo.toml",
+      "sha256": "03e6ed1c20c5ac9fea9fd190fe61782bef428ba7e8b5200f38ad105de3736b3d",
+      "size_bytes": 2472,
+      "full_source_read": true,
+      "line_count": 94,
+      "reviewed_lines": [
+        [
+          1,
+          94
+        ]
+      ],
+      "assessment": "Read all 94 lines. Edition2021 crate with autotests=false and 17 explicit sibling integration targets; exact arithmetic, serde, nalgebra and category/combinatorics dependencies. Manifest inclusion is not execution of target bodies or dependency review. No Cargo build or original integration test run."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/backend/basic_matrix.rs",
+      "sha256": "6adf8811c58b01cc1dcf3599c694f543e352ac309f4f43cfa5cb1457e393d7ac",
+      "size_bytes": 49890,
+      "full_source_read": true,
+      "line_count": 1468,
+      "reviewed_lines": [
+        [
+          1,
+          360
+        ],
+        [
+          361,
+          740
+        ],
+        [
+          741,
+          1110
+        ],
+        [
+          1111,
+          1468
+        ]
+      ],
+      "assessment": "Read all1468 lines in four contiguous displayed ranges. Private rows/cols/data and checked product/length construction preserve rectangular storage; bounded indexing and shape checks make finite matrix operations meaningful. Ordinary Numeric explicitly allows overflow/nonfinite behavior; CheckedNumeric uses fallible scalar operations whose laws and callback behavior remain assumptions. Rational64 checked operations widen before normalization and refuse zero denominators or unrepresentable canonical outputs. OperationLimits preflights element counts and exact multiply/add call counts, not elapsed time or arbitrary-precision scalar memory. Generators check shape/limits/reservation before callbacks; zero-area cases do not loop over huge empty row dimensions. Checked matrix multiplication follows ordered dot products and may refuse an intermediate overflow even when the final mathematical sum would fit. Tests cover useful shape, arithmetic, zero, conversion and overflow boundaries, but none was run here; historical mutation comments are not fresh receipts. No new defect asserted."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/backend/mod.rs",
+      "sha256": "4349b58787250c432cee0fe7eaad0dbe9b9f4eda613f131e9b1ec04471e28a92",
+      "size_bytes": 5406,
+      "full_source_read": true,
+      "line_count": 172,
+      "reviewed_lines": [
+        [
+          1,
+          172
+        ]
+      ],
+      "assessment": "Read all172 lines. Introductory private-backend prose is stale: lib.rs publicly exports backend and this file publicly exports basic_matrix. PermutationTrace admits an actual square binary matrix of degree1..64, verifies exactly one unit per row and column and counts fixed points, giving the usual finite permutation trace. Its result stores degree/count rather than binding to the original matrix. The two tests are substantive finite examples, not a new execution receipt."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/basic_matrix_serde.rs",
+      "sha256": "3e82317861433e8ea361363323c73e46aa56b5b7a65a40e28d7bac1abfd14622",
+      "size_bytes": 5385,
+      "full_source_read": true,
+      "line_count": 148,
+      "reviewed_lines": [
+        [
+          1,
+          148
+        ]
+      ],
+      "assessment": "Read all148 lines. The three-field rows/cols/data wire denies unknown fields and routes deserialization through checked row-major construction, preserving shape/storage equality. Wire parsing and allocation occur before that constructor and have no resource quota here. The remaining capacity metadata and tests concern counts, not serialization or algebraic correctness. No original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/basis.rs",
+      "sha256": "01ac33717a4bb5b870f4886acc5435351f78f2f7abab024ddd2542b541584a04",
+      "size_bytes": 3773,
+      "full_source_read": true,
+      "line_count": 131,
+      "reviewed_lines": [
+        [
+          1,
+          131
+        ]
+      ],
+      "assessment": "Read all 131 lines. BasisId trims and refuses empty text; private descriptor stores only label and dimension, permits dimension zero, explicitly disclaims proof that an explicit vector family is a basis. Error types describe later inverse/shape checks, whose implementations are outside this body. Four tests cover these declared metadata invariants; historical mutation count not revalidated."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/change_basis.rs",
+      "sha256": "b3cf23eafc9da6df0b6e0a43f90a1af5dba423e462cb55f918e0f9cf6e0965d6",
+      "size_bytes": 19539,
+      "full_source_read": true,
+      "line_count": 633,
+      "reviewed_lines": [
+        [
+          1,
+          340
+        ],
+        [
+          341,
+          633
+        ]
+      ],
+      "assessment": "Read all633 lines in two complete ranges. Private BasisIsomorphism retains both matrices and matching basis dimensions; public constructors actually replay both inverse products. Checked arithmetic path propagates scalar refusal; ordinary path explicitly warns of raw Add/Mul semantics. Conjugation computes P*A*P_inv under the stated source-to-target coordinate convention. Certificate alone has shapes/provenance, but the containing isomorphism retains the checked matrices without a public mutator, unlike the mixed RankNullity interface. Provenance is caller metadata, not authenticated theorem evidence. Seven embedded boundary examples are substantive; no Rust execution. Independent rational model verifies48 invertible small matrices and3888 transported operators."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/choice.rs",
+      "sha256": "902a16f1b10022fc06c4e3e8c2658224b7bb129f8a293b31a2d7bda4e7c636b8",
+      "size_bytes": 3501,
+      "full_source_read": true,
+      "line_count": 128,
+      "reviewed_lines": [
+        [
+          1,
+          128
+        ]
+      ],
+      "assessment": "Read all 128 lines. Generic Choice is marker-only; WithChoice pairs a public mutable value with a private choice label, supports access and forgetting. BasisChoice/WithChosenBasis explicitly declare conventions rather than existence or actual validity of a basis. ChangeBasisExt is a trait signature delegating certification to BasisIsomorphism, now fully read and separately assessed. Two metadata tests preserve object value and descriptor; no hidden mathematical construction."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/contract_property_witnesses.rs",
+      "sha256": "05bb6abb483f2ca87867d5af433a603528629a63c9c778da093609c19a0000b5",
+      "size_bytes": 7422,
+      "full_source_read": true,
+      "line_count": 184,
+      "reviewed_lines": [
+        [
+          1,
+          184
+        ]
+      ],
+      "assessment": "Direct full184-line body read. Private RankNullityCertificate admits only positive ambient and supplied image+kernel=ambient via checked subtraction; there is no matrix, map, basis or rank computation. Its rank-one-plane test only instantiates2,1,1. The remaining property witnesses are type-name substring/function-symbol/trait-instantiation compilation checks, including useful BigRational genericity coverage but no mathematical density/eigen/orthogonality contract validation. Mutation accounting footer is not a replay receipt; meaningful owner tests remain separate."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/determinant.rs",
+      "sha256": "8b30282c01deb21fda285d5507af9691ededa346915fcb5d52789e092c15c00d",
+      "size_bytes": 4440,
+      "full_source_read": true,
+      "line_count": 132,
+      "reviewed_lines": [
+        [
+          1,
+          132
+        ]
+      ],
+      "assessment": "Read all 132 lines. Arbitrary-precision integer Bareiss elimination validates square rows, returns determinant1 for empty, swaps a later nonzero pivot row with sign change, returns zero when no such pivot exists, and uses previous-pivot exact division on the trailing submatrix. No resource budget; library arithmetic and Sylvester exact-division invariant are dependencies. Embedded tests genuinely cover small expansion, pivot sign, singularity, K4 Laplacian minor and ragged refusal. Independent model agrees with permutation expansion on19768 exhaustive dimensions0..3 entries{-1,0,1} plus128 deterministic4x4 matrices, with every modeled division exact. Finite checks are not a universal proof or Rust execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/characteristic_polynomial.rs",
+      "sha256": "d2b41a2a270a7c308dbc05292e96545daa451e453b6895345edcdc38eda67d73",
+      "size_bytes": 37767,
+      "full_source_read": true,
+      "line_count": 995,
+      "reviewed_lines": [
+        [
+          1,
+          360
+        ],
+        [
+          361,
+          700
+        ],
+        [
+          701,
+          995
+        ]
+      ],
+      "assessment": "Read all995 lines in three complete ranges. Division-free trailing-block Toeplitz recurrence computes characteristic coefficients in ascending order; Horner evaluation and the first Krylov dependence implement matrix evaluation and minimal polynomial. Under commutative-ring laws the characteristic recurrence is meaningful even with zero divisors; minimal-polynomial construction requires a lawful field. The literal rings-of-any-kind extension omits commutativity: a finite noncommutative coefficient-ring example fails the implied Cayley-Hamilton extension. The Field type bound is stronger than the arithmetic actually needed by the characteristic routine; tests deliberately use Z/6 to expose this. Source tests include hand polynomials, companions, small characteristic, minimality/divisibility, similarity and explicit budgets, not just capacity boilerplate. Independent1919 characteristic and616 minimal-polynomial cases pass against permutation determinants/exhaustive monic search. No native execution; no generic proof or universal mutation adequacy inferred from random examples."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/commutant.rs",
+      "sha256": "0db3dd785dc6e17e27860d2b5c9160b29b4b059a0b537c2b9fc273f9d6be4ee6",
+      "size_bytes": 10330,
+      "full_source_read": true,
+      "line_count": 311,
+      "reviewed_lines": [
+        [
+          1,
+          311
+        ],
+        [
+          10,
+          33
+        ]
+      ],
+      "assessment": "Read all311 lines. The row-major linear system has coefficient delta_ik G_lj - delta_jl G_ik for unknown X_kl, exactly encoding XG-GX. Its kernel gives a complete centralizer basis under lawful field elimination and each basis matrix is separately replayed against every intact generator. Empty families and n=0 are handled without dividing by zero because no entry callback is visited. Independent355 finite families and11010 membership checks agree with direct commutation. The budget is reset across construction/kernel/replay phases: n=1,G=[1],cap4 admits6 actual modeled arithmetic calls, contradicting the common whole-operation convention. Replay budget is also checked after earlier work. Real centralizer tests are distinct from unrelated count/capacity boilerplate; no original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/complex_tensor.rs",
+      "sha256": "ae14c1637f2534ac3f1630d5563c202e74f3690cb85d79d653394cabfc08913e",
+      "size_bytes": 11973,
+      "full_source_read": true,
+      "line_count": 345,
+      "reviewed_lines": [
+        [
+          1,
+          345
+        ]
+      ],
+      "assessment": "Direct full345-line body read: doubled-coordinate realification and balance map implement the stated complex multiplication identities with rectangular/empty shapes. Characteristic2 is refused where half is required, and even a supplied inverse of2 is replayed. Normalized tensor checks actual block complex-structure intertwiners and applies T_out(A tensor B)T_in^t/2; unscaled state convention and balanced lift are explicitly distinct. Aggregate arithmetic/per-allocation bounds are computed before scalar work. These are useful exact coefficient mechanisms conditional on lawful field operations and declared complex structure, not positivity, density or scalar selection. Independent rational component-product controls corroborate indexing and normalization."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/complex_tensor/tests.rs",
+      "sha256": "239b3e6ee55f826c336ac7071758a08e81dcf5a15fdceb5cff7ab2bc3010c9f4",
+      "size_bytes": 14723,
+      "full_source_read": true,
+      "line_count": 404,
+      "reviewed_lines": [
+        [
+          1,
+          404
+        ]
+      ],
+      "assessment": "Direct full404-line test body read: actual owners exercised for projector idempotence/rank/kernel, two local complex structures, rectangular component products, associativity in full coordinate order, state/operator normalization distinction and lift recovery. Negative controls separately test shape, image, characteristic2, nonunit/lying inverse, exact resource threshold and overflow before allocation. Shared fixtures/elimination backend mean not every oracle is independent; own rational audit models are separate. Appended capacity bookkeeping does not add tensor evidence. No original tests executed."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/congruence.rs",
+      "sha256": "ba50317cb238b16d2e539eef6b449a54fe8ad12b2b971733be68a24ec3768924",
+      "size_bytes": 27095,
+      "full_source_read": true,
+      "line_count": 735,
+      "reviewed_lines": [
+        [
+          1,
+          280
+        ],
+        [
+          281,
+          735
+        ]
+      ],
+      "assessment": "Read all735 lines in two complete ranges. Square symmetric/Hermitian ingress is checked; characteristic2 is explicitly refused for nonempty inputs. Swaps, shears and elementary elimination track S with S* A S=diag(D); inverse off-diagonal shear also works for imaginary entries. Transform is a product of determinant+-1 operations. The private certificate exposes separate replay which checks shape, transform invertibility and every diagonal/off-diagonal product entry; construction itself does not automatically invoke replay. Calling the Hermitian replay method alone establishes its stated matrix equation, not an additional independent positivity or Hermiticity admission. Budgeted construction and unbudgeted verifier are distinct interfaces. Substantive source tests cover empty shapes, finite fields, nonunits, imaginary shear and several tamper classes; no Rust execution. Independent760 symmetric rational cases compare full elementary products and intact-input replay, determinant+-1 and PSD signs. No physical interpretation or proof about arbitrary scalar implementations follows."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/elimination.rs",
+      "sha256": "dcd4c6d10cf4210edb74d047e17e625ac288eb58fa580f99b648dda3186e33fe",
+      "size_bytes": 59059,
+      "full_source_read": true,
+      "line_count": 1598,
+      "reviewed_lines": [
+        [
+          1,
+          420
+        ],
+        [
+          421,
+          840
+        ],
+        [
+          841,
+          1240
+        ],
+        [
+          1241,
+          1598
+        ],
+        [
+          160,
+          205
+        ]
+      ],
+      "assessment": "Read all1598 lines in four complete ranges. Leftmost-pivot Gauss-Jordan reduction gives canonical reduced rows, free-coordinate kernel vectors and original pivot-column image generators. Solve preflights both success and refusal paths, replays Ax=b, and constructs a dual witness by solving [A^T;b^T]y=e with full replay of y^T A=0 and y^T b!=0. Inverse and determinant use standard exact elimination under lawful field operations; the private inconsistency witness has substantive public verification. The operation estimate is conservative, not a scalar bit-complexity guarantee. Principal-minor enumeration is explicitly capped at n<=12. Extensive embedded tests cover empty shapes, several finite fields, singularity, tampering and budgets, but were not run. Independent exhaustive F2/F3 model checks793 systems,572 solution families and221 dual refusals; no original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/involution.rs",
+      "sha256": "654ad5aff9dc27a84d6aef9cd81fdc955ab2d7547d77ac7b79b704bd82eed151",
+      "size_bytes": 24821,
+      "full_source_read": true,
+      "line_count": 629,
+      "reviewed_lines": [
+        [
+          1,
+          340
+        ],
+        [
+          341,
+          629
+        ]
+      ],
+      "assessment": "Read all629 lines in two complete ranges. The open Involution trait explicitly requires additive/multiplicative conjugation, preservation of1 and order at most2, with no ordering assumption. Adjoint, Hermitian/skew/unitary/normal predicates and inner/outer products use the correct conjugation positions and shape checks. They define Hermitian forms over the admitted field, not necessarily positive norms: nonzero isotropic vectors may exist over finite fields. Positivity requires the separate ordered interface. Concrete Q(i), Q(sqrt2), finite-field, Pauli and conjugate-linearity tests are substantive, although test-support arithmetic is now fully read with its small-fixture limitations recorded and tests were not executed. A comment near585 reverses the ordering explanation while the assertion correctly reports(0,2). Nonlinear predicates lack individual with_limits twins despite broad facade wording; no provider/native execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/laws.rs",
+      "sha256": "693c3ae72fce742cb1e6b8f670eb1b8acf4d222be10172fbaa390943ca569965",
+      "size_bytes": 21383,
+      "full_source_read": true,
+      "line_count": 583,
+      "reviewed_lines": [
+        [
+          1,
+          330
+        ],
+        [
+          331,
+          583
+        ]
+      ],
+      "assessment": "Read all583 lines in two complete ranges. Finite unary/pair/triple checks cover field identities, inverses, commutativity, associativity and distributivity, with separate conjugation and order predicates. The documentation correctly says finite passes are sample evidence, not universal proof; empty samples still check only a few constants. These checkers do not mutually invoke one another, so callers must supply the complete intended suite. Derived norm values receive a weaker sign test: a Gaussian sample0,1,-1,4+i with a defective sign2 only at real17 passes because norm checking accepts any nonnegative sign, while adding17 itself triggers domain refusal. Substantive tests include small complete finite fields and deliberately defective scalars, plus an exact negative Galois norm; their Galois-versus-complex-conjugation wording should remain distinguished. All assertions were read, not executed. Unrelated capacity boilerplate supplies no law-checker mutation evidence."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/matrix.rs",
+      "sha256": "79c9c4419985b585bb27c0b2429a1689b51d3a7ba180afef840111a9dc713871",
+      "size_bytes": 58938,
+      "full_source_read": true,
+      "line_count": 1697,
+      "reviewed_lines": [
+        [
+          1,
+          430
+        ],
+        [
+          431,
+          860
+        ],
+        [
+          861,
+          1280
+        ],
+        [
+          1281,
+          1697
+        ],
+        [
+          298,
+          378
+        ]
+      ],
+      "assessment": "Read all1697 lines in five complete ranges. Shape-checked constructors, products, tensor products, stacks, powers and finite predicates are substantive operations with private BasicMatrix storage; multiplication counts both mul and add, and whole-power preflight is conservative. Generic scalar laws and scalar resource behavior remain external premises. Row and column extraction validate indices only inside the opposite-axis loop, accepting an out-of-range index for zero-width or zero-height matrices. Row-list conversion also loses the column dimension of0xn matrices despite inverse wording. Rational conversion assumes canonical nonzero-denominator inputs but public raw ratio constructors can violate that premise: narrowing checks the unreduced pair and can refuse a representable value; raw zero denominators are not admitted explicitly. Dependency constructor/reduction excerpts were read separately, not credited as whole files. Substantive tests cover ordinary field operations and budgets but miss these edge cases. No original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/mod.rs",
+      "sha256": "13498e00565db34e3e621a418bc94b37e0eee2daea1d7857b104ab52819dedfd",
+      "size_bytes": 15674,
+      "full_source_read": true,
+      "line_count": 399,
+      "reviewed_lines": [
+        [
+          1,
+          399
+        ],
+        [
+          36,
+          56
+        ]
+      ],
+      "assessment": "Read all399 lines. Generic exact-field facade and private rectangular Grid implement typed errors, checked shape arithmetic, fallible allocation, scalar-operation charging and inverse refusal. Unlike the separate sealed CheckedExactField interface, Field plus ExactRing leaves algebraic laws and scalar panic/Clone/Drop behavior as stated premises. Per-matrix allocation and arithmetic-call bounds are explicitly not bit-length, heap or elapsed-time guarantees. Inverse presence does not itself establish inverse laws. Broad prose about nonlinear with_limits availability exceeds some helper interfaces. Substantive shared utilities, not a mathematical proof or native validation; no original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/neville_aitken.rs",
+      "sha256": "3f2885c855add1fe695a553b35fc2a2aed6017f4e509e5e24214772116ca32af",
+      "size_bytes": 10728,
+      "full_source_read": true,
+      "line_count": 324,
+      "reviewed_lines": [
+        [
+          1,
+          324
+        ]
+      ],
+      "assessment": "Read all324 lines. Nonempty distinct canonical nodes, matching sample counts and valid ordered intervals are checked before the Neville recurrence. The shared RationalBudget is passed through scalar steps, endpoint arithmetic, comparisons and allocations. Recursive interval propagation is a conservative enclosure because repeated dependencies can widen bounds; the independently formed Lagrange weights give the exact linear image of the sample box. Neither implies a function approximation remainder, asymptotic limit or empirical prediction, as the source states. A finite independent900-case control checks2412 prefixes against corner extrema and gives an explicit strict-enclosure example. The sole embedded test checks literal Ok/Err and does not exercise interpolation or justify the six-mutant comment. No original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/ordered.rs",
+      "sha256": "5b86785889c0cb6a3e3e8fa8adf901ad0bc55e5c0a9cbd473bc920ce2b0df00b",
+      "size_bytes": 61146,
+      "full_source_read": true,
+      "line_count": 1627,
+      "reviewed_lines": [
+        [
+          1,
+          410
+        ],
+        [
+          411,
+          830
+        ],
+        [
+          831,
+          1240
+        ],
+        [
+          1241,
+          1627
+        ]
+      ],
+      "assessment": "Read all1627 lines in four complete ranges. OrderedExactField and HermitianOrdered explicitly state universal sign/order/conjugation/positive-norm obligations; local guards only check sign range and zero consistency, not all those laws. BigRational sign uses its admitted reduced positive-denominator representation, so arbitrary raw ratios are outside that valid representation premise. Inertia delegates to congruence and counts signs; nonpivoting LDL constructs exact factors or a negative direction, lifting through the partial unit-lower factor. Zero-pivot/nonzero-Schur-column witness has value exactly-1, including the correctly conjugated Hermitian formula. Extensive tests compare minors, rank, congruence, realification and both witness branches; none were run. The paragraph398-405 incorrectly suggests a positive-definite matrix can require permutation to avoid a zero leading principal minor; the actual zero-column rule is complete for PSD under the stated laws, as later tests explicitly expect. Several smaller test comments overstate tolerance independence or misstate matrix size, without changing the asserted finite equations. Independent760 rational symmetric cases replay factors/witnesses and agree with every-principal-minor criterion. Capacity bookkeeping is separate from these mathematical facts."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/pseudoinverse.rs",
+      "sha256": "defb30695bf8fc699a83af4167e9a4d9a20509eea5eee6bc6c9a7e631fb279fd",
+      "size_bytes": 10102,
+      "full_source_read": true,
+      "line_count": 275,
+      "reviewed_lines": [
+        [
+          1,
+          275
+        ]
+      ],
+      "assessment": "Read all275 lines. Full-rank factorization replays C=A*B, constructs B* (B B*)^-1 (A* A)^-1 A*, then separately verifies all four Penrose identities against the original matrix. Zero rank returns correctly shaped zero. Positive Hermitian norm and lawful scalar/involution operations are substantive premises of Gram invertibility; the HermitianOrdered owner is now fully read and its universal laws remain implementor obligations. The constructor has a conservative100(m+n)^3 whole-call budget; the standalone public verifier instead resets a per-product limit, permitting8 counted calls at cap2 for1x1 identity. Independent1560 rational matrices satisfy all four equations and1560 perturbed outputs are rejected. Embedded tests are meaningful but not run; unrelated capacity metadata proves no pseudoinverse property."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/rational_bareiss.rs",
+      "sha256": "a04f5e16e9792823507afb0353910acb03e55dc4d0977c9fdc040ea1221eb21a",
+      "size_bytes": 23019,
+      "full_source_read": true,
+      "line_count": 706,
+      "reviewed_lines": [
+        [
+          1,
+          380
+        ],
+        [
+          381,
+          706
+        ]
+      ],
+      "assessment": "Read all706 lines in two complete ranges. Mutable caller-owned fuel is shared through canonical-rational admission, arithmetic, row-denominator clearing, fraction-free exact divisions, back substitution and final original-equation replay. Raw zero/negative denominators and unreduced pairs are rejected, improving the generic exact-field ingress. Free columns are set to zero; Inconsistent is a typed producer refusal, explicitly not a dual inconsistency certificate, and replay failure uses that same category. Destination mutation on exhausted in-place matvec is explicitly documented as partial. Exposed integer/rational values are checked against max_bits after arithmetic, but dependency arithmetic can create larger temporaries before reduction:3/2+3/2 passes a2-bit value bound while constructing numerator6. Per-collection element bounds and scalar-call fuel are not elapsed time or total allocation guarantees. Independent921 systems agree with rational Gauss-Jordan and replay627 solutions, with7558 exact integer divisions. Embedded tests meaningfully cover rectangular/singular/empty cases, canonicality, bit/fuel refusal and cross-solver comparison; not run."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/second_order_jet.rs",
+      "sha256": "6f53d865e6e2960e39491c2a470a8d2ee5b8b240a0af308d6e2f34f7f4bb0845",
+      "size_bytes": 6985,
+      "full_source_read": true,
+      "line_count": 198,
+      "reviewed_lines": [
+        [
+          1,
+          198
+        ]
+      ],
+      "assessment": "Read all198 lines. Private equal-square-shape triples store value, first derivative and second derivative rather than Taylor coefficients. Product preserves matrix order and uses A2*B0+2*A1*B1+A0*B2, with an aggregate preflight for six products, three additions, one scale and constructing2. This is a substantive truncated formal product rule; actual analytic curves or arbitrary jet realizability over small characteristic are not established by shape admission. Independent64 rational2x2 polynomial-curve pairs agree with coefficient convolution and derivative conversion. Embedded tests cover only unrelated count/capacity metadata, so no native jet tests or original execution are claimed."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/tensor_projector.rs",
+      "sha256": "25ac8e619fa6b1cfd0c31af29aab0d562ae6a5270e2d6886c0245c37a0bd275f",
+      "size_bytes": 25898,
+      "full_source_read": true,
+      "line_count": 731,
+      "reviewed_lines": [
+        [
+          1,
+          385
+        ],
+        [
+          386,
+          731
+        ]
+      ],
+      "assessment": "Direct full731-line body read in two contiguous chunks: private heterogeneous layout validates positive sites, checked products/strides and unique retained subset order. Partial traces/embedding support arbitrary site permutations and total trace on empty retention. Private ProductReference admits only exact trace1 factors, explicitly not Hermitian/positive states. P_S replaces omitted factors by references; homogeneous product differential retains support0/1, normal complement retains support>=2, while product(I-E_j) and complete inclusion-exclusion select only highest support. Exact normalization makes commuting replacements idempotent; no Hilbert orthogonality is claimed. Resource accounting covers scalar calls and metadata/per-allocation counts, not scalar internals. Sole inline test uses literal Ok/Err; own full matrix-unit panel validates the mathematical distinction, including non-Hermitian reference."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_field/test_support.rs",
+      "sha256": "7872900b48ba8e1a2eb70c4fb387b0bb2d6c61a588e56071ca84cff6a06a1a16",
+      "size_bytes": 20603,
+      "full_source_read": true,
+      "line_count": 702,
+      "reviewed_lines": [
+        [
+          1,
+          270
+        ],
+        [
+          271,
+          520
+        ],
+        [
+          521,
+          702
+        ]
+      ],
+      "assessment": "Read all702 lines in three complete ranges. Test-only owner defines canonical rational constructors, deterministic SplitMix64 inputs, small prime-field arithmetic, Z/6 nonunit refusals, exact Gaussian-rational and Q(sqrt2) arithmetic and intentionally defective Shaky variants. The quadratic sign comparison is exact under rational canonicality and irrationality of sqrt2; its involution is identity, distinct from Galois conjugation. Small shipped finite-field parameters fit fixed-width operations; arbitrary const P is not safely admitted by primality alone because P-as-i64 conversion and u64 multiplication need additional range bounds. Generator dimensions/ranges likewise assume small trusted fixture inputs. These limitations concern test helpers, not an observed production failure; deliberate Shaky modes are negative controls, not accidental defects. Test scalar routes sharing these operations are not fully independent arithmetic implementations. No source execution; repeated capacity tests remain unrelated to surrounding algebra."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_ldlt.rs",
+      "sha256": "a145f112d28efb0cbd98cbbe1fc5883dbf47ad3b7538e0129043af325bd764d2",
+      "size_bytes": 9821,
+      "full_source_read": true,
+      "line_count": 286,
+      "reviewed_lines": [
+        [
+          1,
+          286
+        ]
+      ],
+      "assessment": "Read all286 lines. Rational LDLT admits nonempty square symmetric input and uses exact Schur updates. Positive pivots proceed; zero pivots require zero residual coupling; negative or coupled-zero pivots return a negative PSD decision with partial factors, not a complete inertia decomposition. The separate is_psd helper treats empty input as PSD and explicitly requires caller-supplied symmetry, so absence of its own symmetry test is not concealed. Under that premise, a nonzero coupling at a zero diagonal gives a negative2x2 principal minor. Independent exact controls compare759 symmetric matrices of sizes1..3 to all principal minors and reconstruct32 complete positive decompositions. Capacity boilerplate does not itself test LDLT; no original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_pfaffian.rs",
+      "sha256": "0f6b8f03c6b5dae5065a1d1e8055a98ccef0c5819e0a5950654769fb42a5cada",
+      "size_bytes": 3735,
+      "full_source_read": true,
+      "line_count": 99,
+      "reviewed_lines": [
+        [
+          1,
+          99
+        ]
+      ],
+      "assessment": "Read all 99 lines. Bounded even square alternating matrix admission (dimension at most128, zero diagonal, skew entries), paired pivot selection, simultaneous row/column sign update and skew Schur complement. A missing pivot returns zero; empty matrix returns one; noninvertible supplied scalar refuses. Useful exact Pfaffian algorithm under lawful field/equality and well-formed BasicMatrix premises, with generic traits not a proof of those laws. Independent rational controls compare matching expansion and determinant square on733 exhaustive small alternating matrices and128 deterministic6x6 cases. Sole inline mutation test only checks literal Ok/Err; sibling integration target body is unreviewed, no original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/exact_repair.rs",
+      "sha256": "d6a4f9c4683085fee65053a20de6e628c77334efeed451b1bb12c086475f6481",
+      "size_bytes": 9189,
+      "full_source_read": true,
+      "line_count": 264,
+      "reviewed_lines": [
+        [
+          1,
+          264
+        ]
+      ],
+      "assessment": "Read all264 lines. Public ExactRepairSpace rank/ambient/basis fields and constructors record unchecked metadata: with_basis counts vectors without checking independence, equal lengths, or a map image. Duplicate vectors give stored rank2 but actual rank1. This is separate from private ExactRepair, whose constructor and deserializer enforce dimensions and whose exact-class method actually checks omega-d0*alpha=0. That is a supplied finite image witness, with no d1 chain law, optimality, or semantic repair guarantee. Zero-edge/nonempty-vertex input legitimately represents the empty map. Embedded malformed-wire, residual and round-trip tests are useful but not executed."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/finite_cochain_map.rs",
+      "sha256": "20901b3a403b1c99313cfb54150ed656c3297c2fb316cc30b8337df76f437d7b",
+      "size_bytes": 11436,
+      "full_source_read": true,
+      "line_count": 336,
+      "reviewed_lines": [
+        [
+          1,
+          336
+        ]
+      ],
+      "assessment": "Read all336 lines. Private three-term windows admit matching differential dimensions and d1*d0=0; private cochain maps check both commuting squares. Composition requires equality of the entire intermediate differential presentation, not just dimensions; retraction checks one explicitly documented composite. Ring-valued homotopy checks F-G=dH+Hd in all three degrees with the same endpoints. Under lawful stable scalar operations these are substantive finite equations; quotient interpretation over a general semiring needs a specified congruence, and no norm preservation or equality reflection is claimed. Generic i64 raw operations retain representability premises. Capacity-only tests do not exercise these equations. Independent small F2 models check38 maps,496 compositions and152 fillers; no original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/gauge_pair_table.rs",
+      "sha256": "47d99dabf296591b4ca58f95d07514eca95caeb2aa0bf0e4c94967d050d163ae",
+      "size_bytes": 9259,
+      "full_source_read": true,
+      "line_count": 253,
+      "reviewed_lines": [
+        [
+          1,
+          253
+        ]
+      ],
+      "assessment": "Direct full253-line body read including complete unrelated capacity-record suffix. Root potential is0 at root and e(x,0) elsewhere, retaining e00/diagonals/cycles and making nonroot root-column zero. Normalizing after each shared relabeling is essential because fixed root is not permutation equivariant. Exact orbit minimum and fixed-target alignment use full enumeration admission; None means exhausted admitted orbit, not budget refusal. Decoration transport supplied as unverified callback. Generic capacity constructor/tests constrain only count1..cap, not table memory/search or gauge correctness. Independent729gauge cases support normalization and orbit identities."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/gauge_pair_transport.rs",
+      "sha256": "4ef34a6ca1331d2d12f3635891d7f77175b2ef4e5bcaa6082e575b61aa6ff22e",
+      "size_bytes": 8591,
+      "full_source_read": true,
+      "line_count": 234,
+      "reviewed_lines": [
+        [
+          1,
+          234
+        ]
+      ],
+      "assessment": "Direct full234-line body read. Private total maps retain complete target carrier and empty fibers, cap source/target256. Pushforward sums all directed entries; pushed gradient equals m_b*s_a-m_a*s_b. Universal descent criterion handles target<=2, at most one occupied fiber, or equal all fiber counts; otherwise an occupied-fiber unit potential and distinct triangle give nonzero cycle. verify_obstruction replays actual P(dg)P^t and checks index/distinct/nonzero value. Quotient potential requires universal descent, not accidental success for a given potential; composition checks exact intermediate carrier. This is a nontrivial finite quotient mechanism, not category/physics from labels. Sole inline literal Result test not coverage. Independent499total maps exactly match basis-gradient tests."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/image_kernel.rs",
+      "sha256": "49e7665a68897228015ed1374233c4dc9a57e98ec5c1e6213cd5f7368a9d0c97",
+      "size_bytes": 3798,
+      "full_source_read": true,
+      "line_count": 124,
+      "reviewed_lines": [
+        [
+          1,
+          124
+        ]
+      ],
+      "assessment": "Read all124 lines and now also the entire canonical image/kernel owner. admit_rank_nullity checks pivot count/order/range and rank plus supplied kernel list length equals supplied columns. It neither binds the two private values to the same original matrix nor compares supplied columns to reduced-matrix width. Both values can legitimately be constructed from different sources: A=[1,0] and kernel of B=[0,1] pass the count checks although A*(1,0)=1. A second example passes declared columns3 for a1-column RREF and a2-column zero-map kernel. These countermodels refute common-source witness interpretation, not the numerical rank-nullity theorem. The sole embedded positive uses consistent inputs. No native execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/lib.rs",
+      "sha256": "b6a7f3c4cb28c0477d4340fd934af3cffafc1285dbc1de4509b07bc807373fdc",
+      "size_bytes": 4847,
+      "full_source_read": true,
+      "line_count": 144,
+      "reviewed_lines": [
+        [
+          1,
+          144
+        ]
+      ],
+      "assessment": "Read all 144 lines. Exposes active matrix, exact field, tensor, cochain, Regge and observer modules; historic reachability and mutation comments are retained claims, not new receipts. IntegerMatrix2x2Adjugate computes the determinant and all four entries of A adj(A) with checked i128 intermediates, then refuses a determinant outside i64. Private result stores only determinant, not binding to original matrix. Three substantive tests cover diagonal, i64::MIN intermediate and output overflow; not executed. Independent 625-case integer identity control agrees."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/graph_laplacian.rs",
+      "sha256": "0c884f46ce7b6ff15daab8372fd54d3e85e986a65bd9730db313af1d459dc8a5",
+      "size_bytes": 4805,
+      "full_source_read": true,
+      "line_count": 146,
+      "reviewed_lines": [
+        [
+          1,
+          146
+        ]
+      ],
+      "assessment": "Direct full146-line body read. Each undirected edge contributes (e_i-e_j)(e_i-e_j)^t, loops net zero, duplicates add multiplicity; integer path checks dimensions, every increment and row sum. Float path uses raw additions with no roundoff monitor despite generic numerical-profile footer. Positive-semidefinite/constant-kernel identities follow over reals from this construction; exact nullity/components theorem not computed. Sole inline mutation test compares literal Ok/Err and cannot justify claimed killed6 count. Independent75small graphs confirm integer quadratic identity; not native execution or historical mutation validation."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/homology_basis.rs",
+      "sha256": "af4b176515985798f4924c270dcf3c5ef183c527492a173207ec0c45dc479b5e",
+      "size_bytes": 11620,
+      "full_source_read": true,
+      "line_count": 373,
+      "reviewed_lines": [
+        [
+          1,
+          220
+        ],
+        [
+          221,
+          373
+        ]
+      ],
+      "assessment": "Direct full373-line body read. Checks shape and d_k*d_next=0 with checked rational arithmetic, obtains exact kernel and image bases from reviewed owner, greedily extends boundaries by independent cycles, checks quotient dimension and replays representative cycles. This is rational homology at one supplied chain step, not integral torsion, topological realization or whole-complex verification. Degree/provenance are caller labels and witness binds shapes/counts, not hashes of boundaries. Correctness of independence and completeness depends on exact reduction owner and canonical representable Rational64 arithmetic. Tests include filled/unfilled triangle plus actual chain/shape negatives; no source execution. Independent129small rational chain-step controls support basis-extension logic."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/image_kernel.rs",
+      "sha256": "8ca0c5c63db3766ea70970f2947cfc00d3723687c81fc98f5c8aa9bef49946c9",
+      "size_bytes": 35238,
+      "full_source_read": true,
+      "line_count": 1058,
+      "reviewed_lines": [
+        [
+          1,
+          360
+        ],
+        [
+          361,
+          720
+        ],
+        [
+          721,
+          1058
+        ]
+      ],
+      "assessment": "Read all1058 lines in three contiguous displayed ranges. Sealed checked exact fields support ordinary leftmost-pivot Gauss-Jordan reduction with typed arithmetic refusal. Image vectors are original pivot columns; kernel vectors correspond to free coordinates. Private RankRref and RawSubspaceBasis record computed outputs but do not bind the two values to one source matrix. Image membership compares augmented rank, constructs a free-zero particular solution and replays A*x=t before returning its witness; public output DTOs are not unforgeable capabilities. Unbounded allocations and unchecked augmented size arithmetic have no universal resource guarantee. Independent models compare831 small matrices with determinant-minor ranks and729 membership cases with augmented rank and replay. Tests contain real shape, overflow, kernel and in/out examples; render-only replay text is explicitly not execution evidence. No original/native run."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/incidence_matrix.rs",
+      "sha256": "8cf595b9c12698fecb069d66bb59bcc2c20ecdbc61bb2e764b5a934a292730a5",
+      "size_bytes": 4779,
+      "full_source_read": true,
+      "line_count": 148,
+      "reviewed_lines": [
+        [
+          1,
+          148
+        ]
+      ],
+      "assessment": "Direct full148-line body read. Edge-by-node orientation is supplied; each validated nonloop edge gives -1,+1. Duplicate/reversed edges remain distinct rows, correct for multigraph convention. Shape allocation precedes index validation; allocation ceiling is inherited BasicMatrix. DMatrix conversion explicitly traverses columns and preserves coordinate orientation. Empty graph, endpoints, self-loop and conversion tests are substantive but no graph-topology inference or current native result."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/l1_additivity.rs",
+      "sha256": "704ec17d7d394a2f6eb1e53f0ba64628a9d4cc7b2343a92a04b938ef9071f29b",
+      "size_bytes": 5379,
+      "full_source_read": true,
+      "line_count": 190,
+      "reviewed_lines": [
+        [
+          1,
+          190
+        ]
+      ],
+      "assessment": "Direct full190-line body read. Enforces finite inputs, equal lengths, finite nonnegative tolerance and exact zero-coordinate disjointness; threshold0 helpers yield true coordinate merge. L1 additivity is mathematically exact for these hypotheses, but ordinary float sums can overflow to Infinity and subtraction produce NaN returned in Ok with passed=false, not typed arithmetic refusal (F12 extension). Tests exercise ordinary exact examples and malformed input only. No normalized error bound/convergence monitor supplied by generic footer."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/mod.rs",
+      "sha256": "ecad82518c9ec502de29326d36b63d28a6484ef322ccbaad26c3217c22eb7454",
+      "size_bytes": 2658,
+      "full_source_read": true,
+      "line_count": 98,
+      "reviewed_lines": [
+        [
+          1,
+          98
+        ]
+      ],
+      "assessment": "Direct full98-line body read: module exports plus private RankNullityWitness checks only u32 rank+nullity=dimension with overflow refusal. No matrix, kernel or map enters this constructor; it proves a numerical partition of a declared dimension, not rank-nullity for a supplied operator. Its positive/mutant count test is meaningful for that exact predicate and has no broader law evidence."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/module.rs",
+      "sha256": "572730cfeab8ac92e38d2552efd88c76af661b29224498994888e78a1f14c1a8",
+      "size_bytes": 5518,
+      "full_source_read": true,
+      "line_count": 190,
+      "reviewed_lines": [
+        [
+          1,
+          190
+        ]
+      ],
+      "assessment": "Direct full190-line body read: Module and GradedModule explicitly trust algebraic laws. FreeModuleVector keeps private coordinate storage, checks equal lengths for add, permits zero rank, and assumes a shared standard coordinate space rather than authenticating basis. Scale uses right multiplication x*r, so noncommutative use has right-module semantics; tests use small i64 where intermediates fit and are real arithmetic examples. It does not implement Module for FreeModuleVector here, and no universal law or overflow safety follows from Ring."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/norm.rs",
+      "sha256": "8cafe725b4590268e6644e25a80711aa65c58f48a2af5e9a2afecd3d749adb10",
+      "size_bytes": 7834,
+      "full_source_read": true,
+      "line_count": 235,
+      "reviewed_lines": [
+        [
+          1,
+          235
+        ]
+      ],
+      "assessment": "Direct full235-line body read. Private positive-weight and nonnegative-tolerance profiles plus fixed-order checked weighted absolute sum enforce finite-dimensional weighted L1 calculations for canonical representable rationals. Emptydimension valid; i64MIN absolute value and sum/product overflow explicitly refused. Positivity/homogeneity/triangle inequality are mathematical consequences on lawful rationals, not computed universal checks; tolerance is separate data unused by norm evaluator. Public raw Ratio spellings are not separately validated here, inheriting representation caveat of F05. Tests are substantive including ceilings; no Banach, inner-product or repair-infimum claim."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/rank.rs",
+      "sha256": "8a8e05188bc011e2f4548630a9053ca070bc131132d22bfb6f1eed770b5c5e15",
+      "size_bytes": 10600,
+      "full_source_read": true,
+      "line_count": 318,
+      "reviewed_lines": [
+        [
+          1,
+          318
+        ]
+      ],
+      "assessment": "Direct full318-line body read. Exact rank/nullity recomputed from same supplied Rational64 matrix through reviewed RREF owner, with debug-only consistency assertions; unlike F01 it does not accept unrelated reduction witnesses. Numeric path admits finite matrix/tolerance then external SVD, checks finite returned singular values and uses absolute strict threshold. Report keeps singular values/shape, and threshold_margin is counted-minus-rejected gap, not distance to tolerance or certified perturbation radius. Shape-only validate_rank_bound is explicitly weaker than rank. Tests meaningfully cover exact/numeric distinction, threshold sensitivity, empty shapes and input refusals; no native SVD run or convergence guarantee."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/support_operations.rs",
+      "sha256": "430fc664e449c0ba9ded76d761cac62b2014d84fa81e08119872b6703d5ad46c",
+      "size_bytes": 9001,
+      "full_source_read": true,
+      "line_count": 316,
+      "reviewed_lines": [
+        [
+          1,
+          316
+        ]
+      ],
+      "assessment": "Direct full316-line body read. Finite threshold>=0 and finite/equal coordinates admitted; effectivezero iff abs<=threshold explicitly approximate. Disjoint merge discards both small coordinates rather than computing unrestricted x+y; threshold0 under disjointness is exact coordinate union. Index-set split is complementary coordinate projection and threshold projection is idempotent, but threshold map need not be linear. Tests exercise actual overlap, finiteness, dimensions, bounds and threshold equality. No abstract support/topology or approximation error theorem proved."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_category.rs",
+      "sha256": "4e3e35442655aa4a31df8926fe40f90dd99a8b1b0f2ca0757a6970cc66a0f72c",
+      "size_bytes": 7367,
+      "full_source_read": true,
+      "line_count": 229,
+      "reviewed_lines": [
+        [
+          1,
+          229
+        ]
+      ],
+      "assessment": "Direct full229-line body read: symbolic composition checks exact target/source and concatenates names, which associates as text but fails either identity law under derived VecMor equality. The documentation already limits this to a category-shaped structure; Category trait implementation and identity-preserves-morphism test names must not be read as lawful category evidence, since tests compare endpoints only (F11). associate_checked additionally requires a positive representable product of four dimensions, excluding legitimate zero-dimensional symbolic chains by an explicit extra gate."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_monoidal.rs",
+      "sha256": "3e6a69cf0aaed6c755e244fbcdaccbb4ac54d6249483562643a581908da0c9ac",
+      "size_bytes": 9375,
+      "full_source_read": true,
+      "line_count": 269,
+      "reviewed_lines": [
+        [
+          1,
+          269
+        ]
+      ],
+      "assessment": "Direct full269-line body read: tensor object dimensions use checked multiplication and named arrows carry correct declared endpoints. No actual tensor map, inverses, naturality, triangle, pentagon or hexagon is checked; source explicitly states these limits and deliberately avoids upstream infallible monoidal traits. FallibleSymbolicMonoidal is useful finite endpoint bookkeeping. Source tests cover dimensions, overflow and endpoint names, not mathematical coherence; no native execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_types.rs",
+      "sha256": "326402bc7e20fd692ea77252bf29850af1b4316769fce50e3ba2a41d26179e45",
+      "size_bytes": 6175,
+      "full_source_read": true,
+      "line_count": 222,
+      "reviewed_lines": [
+        [
+          1,
+          222
+        ]
+      ],
+      "assessment": "Direct full222-line body read: private VecOb/VecMor explicitly carry only trimmed nonempty names, dimensions and endpoints, not vector spaces or linear maps. Derived equality includes names; identity is only a named self-arrow. Separate TensorDimWitness checks both parenthesized usize products and stores the equal product; it supplies no tensor associator/coherence. Tests cover names/zero dimensions and checked product overflow. No semantic or native execution credit."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/vector_space.rs",
+      "sha256": "c0d1039bb49f28f4038ea9f8c4914728d32872250d2e2c1eb4cab51a1db09d07",
+      "size_bytes": 12863,
+      "full_source_read": true,
+      "line_count": 378,
+      "reviewed_lines": [
+        [
+          1,
+          378
+        ]
+      ],
+      "assessment": "Direct full378-line body read: vector-space traits and FiniteVectorSpace are metadata only, with explicit scalar-law nonclaim; BasisLabeledVector binds coordinate length and convention, not an actual orthonormal basis. Floating dot checks both inputs finite and lengths equal but returns unchecked multiply/sum, allowing Inf/NaN from finite coordinates (F12). Same-basis dot correctly warns orthonormality is external. Tests cover input NaN/Inf/shape/basis and zero space, missing nonfinite computed outputs. No native execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_map.rs",
+      "sha256": "0d01e0c99049021335171d5bcfcb72b900aa5ddeeca176b35b048b3af6cf8c88",
+      "size_bytes": 19671,
+      "full_source_read": true,
+      "line_count": 605,
+      "reviewed_lines": [
+        [
+          1,
+          320
+        ],
+        [
+          321,
+          605
+        ]
+      ],
+      "assessment": "Read all605 lines in two ranges. Public shape-gated maps retain private matrices and declared basis dimensions. Checked application verifies basis label and coordinate length; composition verifies both intermediate label and dimension, computes checked product and rechecks outer shape. Labels are declared coordinate conventions, not actual basis proofs. Kernel and image methods explicitly return SolverUnavailable, despite the separately implemented canonical solver elsewhere; this interface is incomplete without pretending success. Embedded tests cover mismatch, arithmetic refusal, composition and unavailable methods; stale internal constructor comments do not negate the live public shape gate. No original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_observer_presentation.rs",
+      "sha256": "dae161c9201d44023d689455e6f023a56cb6189d5cb305c7aa4a235b44e95741",
+      "size_bytes": 9151,
+      "full_source_read": true,
+      "line_count": 221,
+      "reviewed_lines": [
+        [
+          1,
+          221
+        ]
+      ],
+      "assessment": "Read all221 lines. Exact BigRational entries reject zero denominators and normalize before multiplication. General sensing admits compatible shapes without demanding invisible repairs; strengthening to a quotient report checks every entry of R*d0=0. For Q-vector spaces that condition exactly states constancy on cosets of im(d0). Blindspot records replay the actual supplied repair and report, distinguishing zero from nontrivial hidden repairs. Public DTO forgery is checked by full recomputation. Finite-dimensional rational carriers are not finite sets, as the source explicitly notes; no physical or semantic extraction follows. Three embedded tests cover meaningful visible/hidden/zero/forged/shape cases. Independent81-map-pair control checks2187 shifts; no original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/pair_table_canonical.rs",
+      "sha256": "1a1e122faa25dab7c21326a1592f5a3f83798ce57f662930bc7ef9d4dce3cc78",
+      "size_bytes": 4461,
+      "full_source_read": true,
+      "line_count": 111,
+      "reviewed_lines": [
+        [
+          1,
+          111
+        ]
+      ],
+      "assessment": "Direct full111-line body read. All tables must share square carrier; external Permutations admission is relied on for complete n! orbit and lexical order, not newly body-reviewed in this slice. Each permutation uses same pushforward for every table and deterministic caller decoration, comparing row-major table key then decoration with first tie retained. This gives orbit canonicalization conditional on lawful ordered scalar, actual complete enumeration and an equivariant deterministic decoration contract. Fn type does not enforce purity/coherence. Public result fields are freely forgeable diagnostics. Only inline literal Ok/Err test; no canonicalization test body here. Independent gauge/permutation models separate from original dependency."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/proof.rs",
+      "sha256": "b7e5a1c6f12255f95201c848b59e389f68950fed9ccb7a6cd49e9a2414f949f6",
+      "size_bytes": 9899,
+      "full_source_read": true,
+      "line_count": 354,
+      "reviewed_lines": [
+        [
+          1,
+          354
+        ]
+      ],
+      "assessment": "Read all354 lines. IDs reject blank text but retain untrimmed nonempty values; hash wrappers accept arbitrary32-byte caller input. TheoremProvenance is a public descriptive enum, including caller-selectable VerifiedByComputation and unchecked TheoremBoundary, without authentication or theorem checking. Symmetric/positive-definite witnesses have private fields and crate-private unchecked constructors whose checked path is explicitly not wired here; metadata tests inspect those fields, not the mathematical predicate. No public ingress bypass is inferred solely from crate-private constructors, and no original execution occurred."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/regge_exact/bivector.rs",
+      "sha256": "b2491bec631a42c71a4593d123204c5524eada27e6c2d2c6f35e144b1d301c40",
+      "size_bytes": 7357,
+      "full_source_read": true,
+      "line_count": 222,
+      "reviewed_lines": [
+        [
+          1,
+          222
+        ]
+      ],
+      "assessment": "Direct full222-line body read. Six public coordinates describe arbitrary elements of wedge2 Q4; half-wedge uses correct ordered minors. Simplicity is pfaffian zero, equivalent decomposability over Q in4dimensions, includes zero; sum of simple bivectors need not remain simple and no type pretends otherwise. checked_add/scale are arbitrary-precision operations without typed resource refusal. Actual coordinate-wedge/nonsimple-complementary-plane test plus separately unrelated capacity-record tests fully read. Independent6561ternary wedge pairs validate Plucker identity, no physical area interpretation inferred."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/regge_exact/cayley_menger.rs",
+      "sha256": "208c8c000ef947cc0b1085c1153da6f15b1b6f6053e2ecb58cd084e591b21b93",
+      "size_bytes": 11119,
+      "full_source_read": true,
+      "line_count": 348,
+      "reviewed_lines": [
+        [
+          1,
+          348
+        ]
+      ],
+      "assessment": "Direct full348-line body read. Correct bordered determinant signs and factorial scaling for dimensions1..4; orientation-aware 4volume is coordinate determinant/24 and can be zero. Length-table admission checks only symmetry and zero diagonal, not positivity/Gram PSD/triangle inequalities, so returned volume_squared is a polynomial evaluation and can be negative (F16). Public result fields are not sealed certificates. Tests verify four reference volumes and dimension/asymmetry refusals; do not test nonrealizable positive-length inputs. Capacity suffix has no geometry role. Independent30scaled coordinate simplices validate formula and1,1,9 triangle gives-45/16."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/regge_exact/gaussian.rs",
+      "sha256": "6608cd861fa6d423d81d1911907ede8db0c5f703f0ad2e14cdc4951bd85dec66",
+      "size_bytes": 9183,
+      "full_source_read": true,
+      "line_count": 273,
+      "reviewed_lines": [
+        [
+          1,
+          273
+        ]
+      ],
+      "assessment": "Direct full273-line body read. Exact ordinary Gaussian elimination with maximum-absolute rational pivot, row-swap sign and unscaled diagonal product; singular det returns0 while singular solve refuses even consistent nonunique systems. ConstN0 det1/empty solve explicit. Backsubstitution is mathematically sound for canonical rational inputs, no independent Ax replay or bit/time/allocation budget; fixed arrays do not mean allocation-free. Actual swap, singular and identity tests read alongside irrelevant capacity-record tests. Uses prior determinant/solve reasoning, no original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/regge_exact/mod.rs",
+      "sha256": "09d8454cf54ff833ff021a8331fa4a34f0b8a23eee97044cb414df8040585387",
+      "size_bytes": 4655,
+      "full_source_read": true,
+      "line_count": 132,
+      "reviewed_lines": [
+        [
+          1,
+          132
+        ]
+      ],
+      "assessment": "Direct full132-line body read. Public rational geometry facade, dimension1..4 Cayley-Menger and unrestricted const-N Gaussian wrappers, i64-to-BigInt ratio conversion safely checks denominator0. Docs explicitly exclude floating point, allocation-free claims and transcendental deficit angles; array stack storage does not bound BigInt digits or general N stack resources. Public signatures historical frozen language is data, not audit instruction. Only literal Result inline control. Classical formula is conditional on supplied Euclidean squared lengths, whose actual admission is weaker."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/regge_exact/so4.rs",
+      "sha256": "5e0176c7f1524a22703f5666330018eb6a0ddcfc084c95cfad47f36c26dbbee8",
+      "size_bytes": 10494,
+      "full_source_read": true,
+      "line_count": 307,
+      "reviewed_lines": [
+        [
+          1,
+          307
+        ]
+      ],
+      "assessment": "Direct full307-line body read. try_new checks every Gram entry and det1 over BigRational; multiplication, transpose and exterior-square action are correct formulas under admitted SO4 premises, and defect is squared distance from identity rather than orthogonality defect. Public m permits arbitrary matrix construction/mutation after validation, so So4 type is not an invariant-bearing capability (F15). Actual reflection/stretch rejection and3-4-5rotation tests read; later count-admission suite unrelated. No angle/continuum or Regge dynamics theorem follows."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/row_constraint_implication.rs",
+      "sha256": "996e18fdcd0ef25eb453992904048d2155a11bb982f894d671ac5d1bb76e9a91",
+      "size_bytes": 6201,
+      "full_source_read": true,
+      "line_count": 181,
+      "reviewed_lines": [
+        [
+          1,
+          181
+        ]
+      ],
+      "assessment": "Read all181 lines. Classifier delegates solving D^T*c=row to exact-field elimination (owner now fully read and separately assessed), then separately replays either the complete row combination or a separating vector satisfying D*v=0 and row*v!=0. These are valid rational homogeneous-equation implication certificates for well-formed rationals. Public replay and denominator clearing do not themselves admit raw zero-denominator ratios; well-formed input is a necessary premise. Declared limits explicitly concern matrix allocation and solver operations, not scalar bit lengths, total heap or time. Denominator product is sufficient, not minimal. Sole inline mutation test checks literal Ok/Err and supplies no evidence for the implication owner; no native execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/scalars.rs",
+      "sha256": "0f931d158060c86fba23d0077ab6265e3feafff609601b9ffc40c9bddb8bba2b",
+      "size_bytes": 11298,
+      "full_source_read": true,
+      "line_count": 364,
+      "reviewed_lines": [
+        [
+          1,
+          364
+        ],
+        [
+          1,
+          115
+        ],
+        [
+          145,
+          180
+        ]
+      ],
+      "assessment": "Read all 364 lines. Public Semiring/Ring/Field/ExactRing interfaces specify operations but cannot enforce algebraic laws of user implementations. A separate sealed CheckedExactField admits only Rational64/BigRational and uses fallible arithmetic, explicitly excluding truncating integer division and floats. BigRational has unbounded exact scalar operations under dependency correctness and available resources. i64 is tagged ExactRing with raw add/mul/neg; integer interpretation requires representability of every intermediate and cannot be inferred from that marker alone. Test-only Z5 requires residues0..4 although its tuple constructor does not normalize; its small arithmetic tests stay in range. Capacity record only checks1<=items<=capacity, unrelated to field laws. Numerical computational-profile and mutation-count comments supply no new execution evidence."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/semiring_lumpability.rs",
+      "sha256": "8fcafc3a8d758182ffc345d94b23ccdc649aefe1948fe7fcf7a91662fe464a32",
+      "size_bytes": 10713,
+      "full_source_read": true,
+      "line_count": 305,
+      "reviewed_lines": [
+        [
+          1,
+          305
+        ]
+      ],
+      "assessment": "Read all305 lines. Generic ordered product uses only declared semiring operations. Membership validates exhaustive disjoint nonempty blocks, including the unique empty partition. Quotient reads one representative block sum and checks every other representative; MH=HB is exactly the length-one criterion, and associativity/distributivity inductively give M^nH=HB^n. This needs no subtraction or scalar multiplicative commutativity and preserves endpoint-block aggregates, not individual paths. Push-forward computes P*M*P^T for an admitted finite map, with loops/reverse arcs independent. Strong finite mathematical core with scalar-law and resource premises; substantive small tests plus unrelated capacity tests are retained. Independent162 small matrix/partition pairs give100 admissions checked through power5. No original execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/semiring_matrix.rs",
+      "sha256": "0b42adc9683669747f463f7a9691f52808012bffee0099adca5d521ac9c5de3a",
+      "size_bytes": 10616,
+      "full_source_read": true,
+      "line_count": 306,
+      "reviewed_lines": [
+        [
+          1,
+          306
+        ]
+      ],
+      "assessment": "Read all306 lines. Shape-checked semiring multiplication, repeated-squaring powers and exhaustive Boolean square roots for n<=3 are substantive bounded algorithms. Boolean OR/AND operations are lawful; enumeration visits every2^(n*n) candidate and returns no partial answer on over-cap n. Independent relational composition checks all512 Boolean3x3 candidates. Named MAX_SCALAR_OPERATIONS counts dot-product terms although each term calls mul and add;256x256 multiplication passes with2^24 terms but2^25 scalar method calls. Each power multiplication gets a fresh per-call bound, not a total exponentiation budget. to_rows has no element/row-output quota; a zero-column source can still request many empty rows. Generic scalar law/representability premises persist. Real finite root/power tests and unrelated capacity tests were read, not executed."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/smith_normal_form.rs",
+      "sha256": "fb1187bd88603019eb4dff390e906222fe1ab98d7512e809e3cd4c8db02e53dd",
+      "size_bytes": 40741,
+      "full_source_read": true,
+      "line_count": 1307,
+      "reviewed_lines": [
+        [
+          1,
+          430
+        ],
+        [
+          431,
+          850
+        ],
+        [
+          851,
+          1307
+        ]
+      ],
+      "assessment": "Direct full1307-line source/tests read in three contiguous chunks. Private positive divisibility-chain diagonal is separate from private full U,A,V construction. Minimum pivots, sign flips, shears and Bezout2x2 operations have unimodular determinants; stored row U/column V conventions are consistent. Submatrix divisibility repair forces later gcd reduction; per-pivot10000iteration ceiling is typed refusal, not time/bit/allocation bound. Final product U*A*V=D is replayed, but determinants of U,V are trusted from tracked operations. Sparse constructor enforces row/count/nonzero/duplicate rules; sparse column gcd is explicitly a non-invariant heuristic, not Smith. Integer rational conversion reduces spelling and rejects denominator0, but bounded Rational64 reduction retains representation premises. Tests cover actual conversion, divisibility, rectangular/rank cases, iteration refusal and sparse products, not universal algorithm correctness. Empty huge shapes and unchecked sparse dense product violate total typed-refusal expectations (F14)."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/tensor/mod.rs",
+      "sha256": "36a1e486a79d54a7a6253ee076426c7e819177f236dbceba9d02c346bc41cd9c",
+      "size_bytes": 2214,
+      "full_source_read": true,
+      "line_count": 78,
+      "reviewed_lines": [
+        [
+          1,
+          78
+        ]
+      ],
+      "assessment": "Direct full78-line body read: exports and separate KroneckerRankLaw check declared ranks<=positive dimensions and checked products. No matrices or field enter this witness, so it records the numeric product consequence of supplied rank assumptions rather than verifying rank(A tensor B). Source tests exercise count admission only; zero-dimensional factors are excluded here although coordinate tensor owner separately supports them."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/tensor/partial_transpose.rs",
+      "sha256": "f63e11aea0a577d1edb18ec50cb75e5af26ef33d1a36e75f35b864796bb567eb",
+      "size_bytes": 6441,
+      "full_source_read": true,
+      "line_count": 174,
+      "reviewed_lines": [
+        [
+          1,
+          174
+        ]
+      ],
+      "assessment": "Direct full174-line body read: checked factor product and nonzero factors bind square matrix shape; exact coordinate permutation (a,b;c,d)->(a,d;c,b) is an involution preserving trace and Hermiticity under lawful conjugation. It correctly disclaims positivity preservation. Actual index/trace/involution and wrongshape test plus unrelated capacity tests were read. Independent9-carrier controls and a rational Schmidt-rank2 negative quadratic direction confirm these bounded properties; no native execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/tensor/tensor.rs",
+      "sha256": "f57fc5b5b6c0614c5a5d189eb94e3522d01fa3db66c971bc9c3ab784ef6f3b1f",
+      "size_bytes": 28381,
+      "full_source_read": true,
+      "line_count": 812,
+      "reviewed_lines": [
+        [
+          1,
+          410
+        ],
+        [
+          411,
+          812
+        ]
+      ],
+      "assessment": "Direct full812-line body read in two chunks: private tensor-space shape stores checked dimension product, optional synthetic basis labels and a single lexicographic order; general tensors check buffer length, pure tensors check both factor lengths and actual coordinate products. Matrix Kronecker and rectangular left/right partial traces use correct strides with zero-area cases preserved. Numeric arithmetic remains ordinary caller scalar operations, no global resource or actual basis theorem. claim_authority always refuses locally, which does not constrain external callers. Partial-trace malformed-divisor diagnostic can overflow on an admitted huge zero-area matrix (F13); no large allocation needed. Substantive dimension/index/product/partialtrace asymmetry tests read, not run."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/tensor/tensor_view.rs",
+      "sha256": "255f901a159fc192f28e7c69b83475172607cf95f73adcaccb9c686d97bd7296",
+      "size_bytes": 2497,
+      "full_source_read": true,
+      "line_count": 84,
+      "reviewed_lines": [
+        [
+          1,
+          84
+        ]
+      ],
+      "assessment": "Read all 84 lines. Explicit TensorViewPlaceholder is just an order field. Separate private CheckedTensorShape validates nonempty positive u64 extents and checked product, stores extents/volume and exposes dimension count and volume. This establishes only shape arithmetic on the stated restricted carrier; zero-dimensional/scalar empty shape and zero extents are intentionally excluded. No data buffer, strides, aliasing or zero-copy view is implemented. Two tests check2x3x4 and zero refusal."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/vector/mod.rs",
+      "sha256": "bbcc901646808d2b0cc512aa97511804456c22d0fbde344c5976c60e925864e1",
+      "size_bytes": 2629,
+      "full_source_read": true,
+      "line_count": 89,
+      "reviewed_lines": [
+        [
+          1,
+          89
+        ]
+      ],
+      "assessment": "Direct full89-line body read: OrthogonalPairWitness admits nonempty equal-length nonzero integer vectors and replays dot0 using checked i128 accumulation. It retains only dimension, so is a historical admission result rather than a source-bound certificate for a later vector. Two actual owner tests distinguish orthogonal and positive dot cases. Finite independent model corroborates the exact predicate; fixed-width intermediate representability remains a refusal boundary."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/vector/row_vector.rs",
+      "sha256": "99ca625f1944cee2d4c6acb2cb41b63d53cf59e7d5983fd96998db153430b15a",
+      "size_bytes": 13401,
+      "full_source_read": true,
+      "line_count": 384,
+      "reviewed_lines": [
+        [
+          1,
+          384
+        ]
+      ],
+      "assessment": "Direct full384-line body read: private coordinate rows enforce domain descriptor length and exact same-descriptor evaluation pairing with columns; empty pairing is scalar zero. This is algebraic dual evaluation without conjugation, not a Hermitian inner product. Usual commutative-field laws justify linearity and scalar-action prose; trait signatures alone do not validate them. Checked names concern basis/shape and do not make generic arithmetic fallible. Metadata/shape/pairing positive and negative tests actually call owners; no native execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/vector/vector.rs",
+      "sha256": "6133e517dba1a989e251f6e139a8e25a40431fee2fc3162d0befdd5df0cfbeb4",
+      "size_bytes": 11909,
+      "full_source_read": true,
+      "line_count": 343,
+      "reviewed_lines": [
+        [
+          1,
+          343
+        ]
+      ],
+      "assessment": "Direct full343-line body read: private coordinate/basis fields preserve declared length, zero-dimensional vectors are valid, same-basis arithmetic compares entire descriptors and dimensions before zipping. Conversion explicitly loses basis metadata. verify_admissibility rechecks shape and returns only dimension/id, not a field/basis/linearity theorem. Generic checked arithmetic checks shape while raw Add/Sub/Mul may still overflow or panic; right scalar multiplication has ordinary commutative-field vector interpretation only under scalar laws. Meaningful shape/basis/zero tests, no native execution."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/vector/view.rs",
+      "sha256": "21f7e9be699341187188976e9dc766d09ceb5f651973df6928c4567a22366728",
+      "size_bytes": 8480,
+      "full_source_read": true,
+      "line_count": 279,
+      "reviewed_lines": [
+        [
+          1,
+          279
+        ]
+      ],
+      "assessment": "Direct full279-line body read: immutable slice view has actual Rust borrow semantics and no basis metadata; separate nonempty-window dot checks shared bounds, checked start/end and i128 products/sums. It retains window length and total without source binding. Two concrete window tests and separate capacity tests were read. Exact dot mechanism is useful on its stated integer carrier; capacity metadata does not certify the view arithmetic."
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/vector/view_mut.rs",
+      "sha256": "dc7fe359da1b41d856d792097c90399a2d0766d1548acac01be57ed1af1b64cc",
+      "size_bytes": 5150,
+      "full_source_read": true,
+      "line_count": 186,
+      "reviewed_lines": [
+        [
+          1,
+          186
+        ]
+      ],
+      "assessment": "Direct full186-line body read: mutable slice view obeys borrow exclusivity; prefix admission replays every supplied prefix both forward and backward with checked i64 operations. Reverse-tail representability is an additional restriction: [-MAX,MAX,MAX] has representable forward prefixes but reverse tail2MAX is refused. The output stores len/total and does not bind or freeze the subsequently mutable buffer. Two substantive prefix tests exist; no native execution."
+    }
+  ],
+  "remaining_unsupported_files": [
+    {
+      "path": "code/rust/core_linear_algebra/src/hermitian_eigen.rs",
+      "sha256": "b5a6ee9d3c125eeac4780294020d6e5808eae0f64355f238f0064cc329b05b6b",
+      "line_count": 748
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/complex_matrix.rs",
+      "sha256": "1afed6e017380bd2b0a6a5418924aa82bb58be2b61cda3bdf696f66e66b3620e",
+      "line_count": 546
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/density.rs",
+      "sha256": "2974c5ab99c4767cde13e2eb88e17f7b22834f5ece83090d0df82d3248fe0452",
+      "line_count": 1074
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/eigen.rs",
+      "sha256": "ef4bbbc39c7b36ea7686c23496f856fee9a3177fe9009ab0998dfe1af00b95e9",
+      "line_count": 251
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/gram_schmidt.rs",
+      "sha256": "90f1492187e61aa8bb9bb5593e319555bb773ce5e1de345cd91c324c9ffc8e9c",
+      "line_count": 612
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/hermitian_mul.rs",
+      "sha256": "015a4d8371a139bb99e38f5017d6be03734bd35ea3d7a4cbb9ee9f3f6357c217",
+      "line_count": 250
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/hermitian_mul_blocked.rs",
+      "sha256": "3cc4e6e9b0b2b0e5b586348fd79dd1083a6b061d1246c673aabbe47e5a07799d",
+      "line_count": 239
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/projector.rs",
+      "sha256": "f9d271c99dfa41a88330575b1d77ab8ecc1306b0890c050be04c8cd48e282629",
+      "line_count": 422
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/linear_algebra/sparse_operator.rs",
+      "sha256": "c1024d8ffa0300a1cf3323667ff89f716d6cc10ff2e734fc1d01772df646fae3",
+      "line_count": 412
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/packed_hermitian.rs",
+      "sha256": "020356aeeaf7f18c424934be80203b3ad8061ca905643744b4045cf2fe2e8bdf",
+      "line_count": 774
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/self_adjoint.rs",
+      "sha256": "8a7a70c5b1999a686a376d1ae5e76da875a60477c29212898951df862af95672",
+      "line_count": 701
+    },
+    {
+      "path": "code/rust/core_linear_algebra/src/similarity.rs",
+      "sha256": "036478e3019ade25547025fe2e41f00e67bb8de1679735d0d8dbd4c9543c5d2f",
+      "line_count": 258
+    }
+  ],
+  "claims": [
+    {
+      "id": "RLA-C01",
+      "statement": "The reviewed integer determinant and rational alternating-matrix Pfaffian routines implement substantive finite elimination algorithms, with square/alternation admission and explicit empty/singular conventions. Independent finite models agree with different reference expansions; arbitrary dimensions and scalar implementations still require their mathematical and representation premises.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/determinant.rs",
+          "sha256": "8b30282c01deb21fda285d5507af9691ededa346915fcb5d52789e092c15c00d",
+          "lines": [
+            25,
+            62
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_pfaffian.rs",
+          "sha256": "0f6b8f03c6b5dae5065a1d1e8055a98ccef0c5819e0a5950654769fb42a5cada",
+          "lines": [
+            24,
+            81
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P02",
+        "RLA-P03"
+      ],
+      "limits": "No original Rust execution; generic traits and dependency correctness are not certified by this finite panel."
+    },
+    {
+      "id": "RLA-C02",
+      "statement": "Basis and choice wrappers explicitly record declared coordinate conventions, not existence, independence or spanning of an actual basis. Their nonclaims and private descriptor invariants are useful and should be preserved.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/basis.rs",
+          "sha256": "01ac33717a4bb5b870f4886acc5435351f78f2f7abab024ddd2542b541584a04",
+          "lines": [
+            34,
+            90
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/choice.rs",
+          "sha256": "902a16f1b10022fc06c4e3e8c2658224b7bb129f8a293b31a2d7bda4e7c636b8",
+          "lines": [
+            39,
+            86
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RLA-C03",
+      "statement": "The sealed fallible exact-field protocol excludes integer truncation and floating equality, while the public scalar marker traits require lawful operations and representability as external premises. A marker or capacity record alone cannot establish exact mathematical arithmetic.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/scalars.rs",
+          "sha256": "0f931d158060c86fba23d0077ab6265e3feafff609601b9ffc40c9bddb8bba2b",
+          "lines": [
+            8,
+            87
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/scalars.rs",
+          "sha256": "0f931d158060c86fba23d0077ab6265e3feafff609601b9ffc40c9bddb8bba2b",
+          "lines": [
+            93,
+            177
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/scalars.rs",
+          "sha256": "0f931d158060c86fba23d0077ab6265e3feafff609601b9ffc40c9bddb8bba2b",
+          "lines": [
+            229,
+            267
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RLA-C04",
+      "statement": "The2x2 adjugate witness checks its actual four product entries with wide checked arithmetic and refuses an unrepresentable output. The tensor shape owner separately checks positive finite extent products; neither retained value binds an arbitrary semantic object or supplies a general tensor view.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/lib.rs",
+          "sha256": "b6a7f3c4cb28c0477d4340fd934af3cffafc1285dbc1de4509b07bc807373fdc",
+          "lines": [
+            82,
+            118
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/tensor/tensor_view.rs",
+          "sha256": "255f901a159fc192f28e7c69b83475172607cf95f73adcaccb9c686d97bd7296",
+          "lines": [
+            1,
+            59
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P01"
+      ]
+    },
+    {
+      "id": "RLA-C05",
+      "statement": "The matrix owner enforces rectangular storage and provides separately fallible arithmetic with preflight element and operation-count limits. Exact interpretation still requires lawful scalar operations, representable intermediates and available resources; its limits are not elapsed-time or arbitrary scalar-memory bounds.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/backend/basic_matrix.rs",
+          "sha256": "6adf8811c58b01cc1dcf3599c694f543e352ac309f4f43cfa5cb1457e393d7ac",
+          "lines": [
+            143,
+            167
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/backend/basic_matrix.rs",
+          "sha256": "6adf8811c58b01cc1dcf3599c694f543e352ac309f4f43cfa5cb1457e393d7ac",
+          "lines": [
+            238,
+            337
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/backend/basic_matrix.rs",
+          "sha256": "6adf8811c58b01cc1dcf3599c694f543e352ac309f4f43cfa5cb1457e393d7ac",
+          "lines": [
+            350,
+            394
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/backend/basic_matrix.rs",
+          "sha256": "6adf8811c58b01cc1dcf3599c694f543e352ac309f4f43cfa5cb1457e393d7ac",
+          "lines": [
+            846,
+            875
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/basic_matrix_serde.rs",
+          "sha256": "3e82317861433e8ea361363323c73e46aa56b5b7a65a40e28d7bac1abfd14622",
+          "lines": [
+            7,
+            29
+          ]
+        }
+      ],
+      "limits": "Source review only; no original execution or proof of external scalar implementations."
+    },
+    {
+      "id": "RLA-C06",
+      "statement": "The canonical exact image/kernel owner implements finite Gauss-Jordan reduction, basis extraction and a replayed particular image witness. Independent rational controls agree with determinant-minor rank and augmented-rank membership over the bounded panel.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/image_kernel.rs",
+          "sha256": "8ca0c5c63db3766ea70970f2947cfc00d3723687c81fc98f5c8aa9bef49946c9",
+          "lines": [
+            207,
+            279
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/image_kernel.rs",
+          "sha256": "8ca0c5c63db3766ea70970f2947cfc00d3723687c81fc98f5c8aa9bef49946c9",
+          "lines": [
+            308,
+            357
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/image_kernel.rs",
+          "sha256": "8ca0c5c63db3766ea70970f2947cfc00d3723687c81fc98f5c8aa9bef49946c9",
+          "lines": [
+            411,
+            477
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P04"
+      ],
+      "limits": "Finite independent model, not original Rust execution, a universal resource bound or a semantic natural-language certificate."
+    },
+    {
+      "id": "RLA-C07",
+      "statement": "The rational symmetric LDLT path supplies a substantive finite PSD decision under explicit shape, symmetry and exact-arithmetic premises. The private ExactRepair owner separately replays a supplied potential against its finite linear residual; neither mechanism infers its application semantics.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_ldlt.rs",
+          "sha256": "a145f112d28efb0cbd98cbbe1fc5883dbf47ad3b7538e0129043af325bd764d2",
+          "lines": [
+            30,
+            168
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_repair.rs",
+          "sha256": "d6a4f9c4683085fee65053a20de6e628c77334efeed451b1bb12c086475f6481",
+          "lines": [
+            66,
+            138
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P05"
+      ],
+      "limits": "Failed PSD paths can contain partial factors; independent finite controls are not original execution. ExactRepair does not assert a full cochain complex or optimization result."
+    },
+    {
+      "id": "RLA-C08",
+      "statement": "The checked basis-change constructor replays both inverse products and retains its matrices; typed linear-map composition checks both intermediate basis label and dimension. These enforce concrete coordinate relations under lawful exact scalar arithmetic, while provenance remains caller-supplied metadata.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/change_basis.rs",
+          "sha256": "b3cf23eafc9da6df0b6e0a43f90a1af5dba423e462cb55f918e0f9cf6e0965d6",
+          "lines": [
+            294,
+            338
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/change_basis.rs",
+          "sha256": "b3cf23eafc9da6df0b6e0a43f90a1af5dba423e462cb55f918e0f9cf6e0965d6",
+          "lines": [
+            392,
+            444
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_map.rs",
+          "sha256": "0d01e0c99049021335171d5bcfcb72b900aa5ddeeca176b35b048b3af6cf8c88",
+          "lines": [
+            174,
+            260
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/proof.rs",
+          "sha256": "b7e5a1c6f12255f95201c848b59e389f68950fed9ccb7a6cd49e9a2414f949f6",
+          "lines": [
+            146,
+            169
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P08"
+      ],
+      "limits": "No actual basis family, authenticated theorem or public kernel/image implementation is supplied by these wrappers; no original execution."
+    },
+    {
+      "id": "RLA-C09",
+      "statement": "The cochain window, map and homotopy owners check complete finite matrix equations: d1*d0=0, commuting squares and F-G=dH+Hd with shared endpoints. For lawful ring coefficients this makes the usual induced cohomology and homotopy reasoning available under the supplied presentation.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/finite_cochain_map.rs",
+          "sha256": "20901b3a403b1c99313cfb54150ed656c3297c2fb316cc30b8337df76f437d7b",
+          "lines": [
+            18,
+            75
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/finite_cochain_map.rs",
+          "sha256": "20901b3a403b1c99313cfb54150ed656c3297c2fb316cc30b8337df76f437d7b",
+          "lines": [
+            101,
+            133
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/finite_cochain_map.rs",
+          "sha256": "20901b3a403b1c99313cfb54150ed656c3297c2fb316cc30b8337df76f437d7b",
+          "lines": [
+            136,
+            218
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P12"
+      ],
+      "limits": "Semiring quotients require an explicit congruence; no semantic extraction, norm preservation or reflection of equality is implied. Independent finite F2 control only."
+    },
+    {
+      "id": "RLA-C10",
+      "statement": "Rational sensing is strengthened to a report on repair cosets exactly by checking R*d0=0. Its supplied blindspot witness is recomputed, and the homogeneous-equation implication wrapper separately replays row-combination or separating-vector evidence.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_observer_presentation.rs",
+          "sha256": "dae161c9201d44023d689455e6f023a56cb6189d5cb305c7aa4a235b44e95741",
+          "lines": [
+            26,
+            83
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_observer_presentation.rs",
+          "sha256": "dae161c9201d44023d689455e6f023a56cb6189d5cb305c7aa4a235b44e95741",
+          "lines": [
+            107,
+            155
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/row_constraint_implication.rs",
+          "sha256": "996e18fdcd0ef25eb453992904048d2155a11bb982f894d671ac5d1bb76e9a91",
+          "lines": [
+            52,
+            148
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P10"
+      ],
+      "limits": "Well-formed exact rationals and available resources are premises; the implication solver body is now fully read with separate finite controls. No memory, policy, physical or general answer-correctness interpretation is derived; no native execution."
+    },
+    {
+      "id": "RLA-C11",
+      "statement": "The lumpability owner validates an exhaustive partition and the exact intertwining equation MH=HB. Its induction genuinely preserves endpoint-block path aggregates for every length under lawful semiring operations. The separate Boolean square-root routine exhaustively enumerates its admitted n<=3 carrier.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/semiring_lumpability.rs",
+          "sha256": "8fcafc3a8d758182ffc345d94b23ccdc649aefe1948fe7fcf7a91662fe464a32",
+          "lines": [
+            1,
+            9
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/semiring_lumpability.rs",
+          "sha256": "8fcafc3a8d758182ffc345d94b23ccdc649aefe1948fe7fcf7a91662fe464a32",
+          "lines": [
+            62,
+            135
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/semiring_matrix.rs",
+          "sha256": "0b42adc9683669747f463f7a9691f52808012bffee0099adca5d521ac9c5de3a",
+          "lines": [
+            95,
+            143
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P09"
+      ],
+      "limits": "Endpoint-block aggregates are not individual paths or arbitrary-distribution preservation. Finite models corroborate the source reasoning; no native execution or universal runtime bound."
+    },
+    {
+      "id": "RLA-C12",
+      "statement": "The generic exact-field solver constructs either an affine solution family or a dual inconsistency witness, and separately replays its answer against the supplied matrix and right-hand side. Under lawful field operations these are concrete finite linear-algebra certificates, with explicit preflight limits for both branches.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/mod.rs",
+          "sha256": "13498e00565db34e3e621a418bc94b37e0eee2daea1d7857b104ab52819dedfd",
+          "lines": [
+            32,
+            54
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/elimination.rs",
+          "sha256": "dcd4c6d10cf4210edb74d047e17e625ac288eb58fa580f99b648dda3186e33fe",
+          "lines": [
+            237,
+            282
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/elimination.rs",
+          "sha256": "dcd4c6d10cf4210edb74d047e17e625ac288eb58fa580f99b648dda3186e33fe",
+          "lines": [
+            316,
+            476
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P13"
+      ],
+      "limits": "The independent exhaustive control covers2x2 systems over F2/F3, not native execution or arbitrary-field validation. Algebraic laws, well-formed scalar values and scalar resource behavior remain premises."
+    },
+    {
+      "id": "RLA-C13",
+      "statement": "The characteristic-polynomial owner implements a division-free Berkowitz recurrence over lawful commutative coefficients; its separate Krylov solver finds the first monic dependence over a lawful field. Finite independent checks compare the characteristic result with permutation determinants and minimality with exhaustive monic search.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/characteristic_polynomial.rs",
+          "sha256": "d2b41a2a270a7c308dbc05292e96545daa451e453b6895345edcdc38eda67d73",
+          "lines": [
+            39,
+            142
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/characteristic_polynomial.rs",
+          "sha256": "d2b41a2a270a7c308dbc05292e96545daa451e453b6895345edcdc38eda67d73",
+          "lines": [
+            202,
+            295
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P16"
+      ],
+      "limits": "1919 finite characteristic cases and616 finite-field minimal-polynomial cases, not original execution or a universal proof. Noncommutative rings are outside the valid extension; finite random tests do not establish mutation completeness."
+    },
+    {
+      "id": "RLA-C14",
+      "statement": "The centralizer owner builds the exact linear equations XG-GX=0 in row-major coordinates, obtains their kernel basis and replays every resulting matrix against all supplied generators. Under lawful field elimination this is a complete finite-dimensional common centralizer construction.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/commutant.rs",
+          "sha256": "0db3dd785dc6e17e27860d2b5c9160b29b4b059a0b537c2b9fc273f9d6be4ee6",
+          "lines": [
+            10,
+            21
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/commutant.rs",
+          "sha256": "0db3dd785dc6e17e27860d2b5c9160b29b4b059a0b537c2b9fc273f9d6be4ee6",
+          "lines": [
+            35,
+            111
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/commutant.rs",
+          "sha256": "0db3dd785dc6e17e27860d2b5c9160b29b4b059a0b537c2b9fc273f9d6be4ee6",
+          "lines": [
+            126,
+            140
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P17"
+      ],
+      "limits": "355 independent finite families; no native execution. Separate phase budgets do not provide the advertised whole-call scalar bound."
+    },
+    {
+      "id": "RLA-C15",
+      "statement": "The pseudoinverse owner replays its full-rank factorization and all four Penrose identities against the intact matrix. The adjoint owner implements the required involutive conjugation and matrix transpose; with a positive Hermitian norm, the Gram-factor construction gives a substantive exact Moore-Penrose inverse.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/pseudoinverse.rs",
+          "sha256": "defb30695bf8fc699a83af4167e9a4d9a20509eea5eee6bc6c9a7e631fb279fd",
+          "lines": [
+            1,
+            6
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/pseudoinverse.rs",
+          "sha256": "defb30695bf8fc699a83af4167e9a4d9a20509eea5eee6bc6c9a7e631fb279fd",
+          "lines": [
+            25,
+            121
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/involution.rs",
+          "sha256": "654ad5aff9dc27a84d6aef9cd81fdc955ab2d7547d77ac7b79b704bd82eed151",
+          "lines": [
+            24,
+            71
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P19"
+      ],
+      "limits": "Independent1560 rational inputs and1560 tampered-output refusals; not native execution or validation of every HermitianOrdered implementation. Involution alone supplies a Hermitian form, not positivity; the ordered owner explicitly states the additional universal laws without universally checking them."
+    },
+    {
+      "id": "RLA-C16",
+      "statement": "Congruence diagonalization tracks invertible elementary basis changes and offers a separate verifier of S*AS=diag(D). Under the explicit ordered-field or positive Hermitian-norm premises, the sign counts give inertia, while LDL returns either a reconstructing positive-semidefinite factorization or a concrete negative quadratic-form witness.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/congruence.rs",
+          "sha256": "ba50317cb238b16d2e539eef6b449a54fe8ad12b2b971733be68a24ec3768924",
+          "lines": [
+            37,
+            115
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/congruence.rs",
+          "sha256": "ba50317cb238b16d2e539eef6b449a54fe8ad12b2b971733be68a24ec3768924",
+          "lines": [
+            192,
+            306
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/ordered.rs",
+          "sha256": "5b86785889c0cb6a3e3e8fa8adf901ad0bc55e5c0a9cbd473bc920ce2b0df00b",
+          "lines": [
+            36,
+            131
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/ordered.rs",
+          "sha256": "5b86785889c0cb6a3e3e8fa8adf901ad0bc55e5c0a9cbd473bc920ce2b0df00b",
+          "lines": [
+            453,
+            590
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P21"
+      ],
+      "limits": "760 independent rational symmetric cases, including33 PSD,445 negative-pivot and282 zero-pivot/nonzero-column outcomes. No native execution or universal validation of open scalar traits. Congruence production and optional replay are distinct, and sign guards alone do not prove ordering laws."
+    },
+    {
+      "id": "RLA-C17",
+      "statement": "The scalar-law owners implement explicit finite field, involution and order checks and correctly distinguish sampled passes from universal trait proofs. Their arithmetic test carriers include exact rational quadratic extensions and deliberate negative controls; consumers still need the relevant complete set of premises.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/laws.rs",
+          "sha256": "693c3ae72fce742cb1e6b8f670eb1b8acf4d222be10172fbaa390943ca569965",
+          "lines": [
+            1,
+            29
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/laws.rs",
+          "sha256": "693c3ae72fce742cb1e6b8f670eb1b8acf4d222be10172fbaa390943ca569965",
+          "lines": [
+            42,
+            133
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/laws.rs",
+          "sha256": "693c3ae72fce742cb1e6b8f670eb1b8acf4d222be10172fbaa390943ca569965",
+          "lines": [
+            136,
+            260
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/test_support.rs",
+          "sha256": "7872900b48ba8e1a2eb70c4fb387b0bb2d6c61a588e56071ca84cff6a06a1a16",
+          "lines": [
+            239,
+            299
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/test_support.rs",
+          "sha256": "7872900b48ba8e1a2eb70c4fb387b0bb2d6c61a588e56071ca84cff6a06a1a16",
+          "lines": [
+            341,
+            425
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P22"
+      ],
+      "limits": "No retained tests executed; incomplete samples, missing combined checks, fixed-width fixture bounds and the derived-norm sign gap prevent blanket certification of arbitrary scalar implementations."
+    },
+    {
+      "id": "RLA-C18",
+      "statement": "A shared caller-owned rational budget composes canonical-value checks and fraction-free solving through final equation replay. On distinct rational nodes, Neville evaluation computes finite interpolants; Lagrange interval images are tight for the admitted independent sample box, while recursive interval propagation can be wider.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/rational_bareiss.rs",
+          "sha256": "a04f5e16e9792823507afb0353910acb03e55dc4d0977c9fdc040ea1221eb21a",
+          "lines": [
+            47,
+            158
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/rational_bareiss.rs",
+          "sha256": "a04f5e16e9792823507afb0353910acb03e55dc4d0977c9fdc040ea1221eb21a",
+          "lines": [
+            416,
+            439
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/neville_aitken.rs",
+          "sha256": "3f2885c855add1fe695a553b35fc2a2aed6017f4e509e5e24214772116ca32af",
+          "lines": [
+            1,
+            13
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/neville_aitken.rs",
+          "sha256": "3f2885c855add1fe695a553b35fc2a2aed6017f4e509e5e24214772116ca32af",
+          "lines": [
+            167,
+            306
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P23",
+        "RLA-P24"
+      ],
+      "limits": "Independent921 systems and900 interval cases only. Scalar-call fuel and exposed-value bit limits are not elapsed-time or total-heap bounds. No inconsistency certificate, function remainder, convergence theorem or original execution."
+    },
+    {
+      "id": "RLA-C19",
+      "statement": "The matrix jet owner implements the ordered second-derivative product rule with the factor2 on the cross term and a whole-product arithmetic preflight. Rational polynomial-curve controls agree with independent coefficient convolution.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/second_order_jet.rs",
+          "sha256": "6f53d865e6e2960e39491c2a470a8d2ee5b8b240a0af308d6e2f34f7f4bb0845",
+          "lines": [
+            1,
+            22
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/second_order_jet.rs",
+          "sha256": "6f53d865e6e2960e39491c2a470a8d2ee5b8b240a0af308d6e2f34f7f4bb0845",
+          "lines": [
+            33,
+            79
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P25"
+      ],
+      "limits": "64 independent rational2x2 jet pairs, no native execution or analytic existence theorem. Shape admission alone does not establish that arbitrary derivative triples arise from curves over every coefficient field."
+    },
+    {
+      "id": "RLA-C20",
+      "statement": "Coordinate row/column owners bind declared basis descriptors and dimensions before arithmetic or pairing. Separate integer orthogonality, shared-window dot and prefix owners replay concrete finite equations with checked integer arithmetic; their compact outputs retain limited summary data, not source ownership.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/vector/vector.rs",
+          "sha256": "6133e517dba1a989e251f6e139a8e25a40431fee2fc3162d0befdd5df0cfbeb4",
+          "lines": [
+            27,
+            118
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/vector/row_vector.rs",
+          "sha256": "99ca625f1944cee2d4c6acb2cb41b63d53cf59e7d5983fd96998db153430b15a",
+          "lines": [
+            246,
+            278
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/vector/mod.rs",
+          "sha256": "bbcc901646808d2b0cc512aa97511804456c22d0fbde344c5976c60e925864e1",
+          "lines": [
+            33,
+            65
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/vector/view_mut.rs",
+          "sha256": "dc7fe359da1b41d856d792097c90399a2d0766d1548acac01be57ed1af1b64cc",
+          "lines": [
+            70,
+            145
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P27"
+      ],
+      "limits": "Scalar laws, ordinary arithmetic representability and actual basis meaning remain premises. Prefix reverse-tail representability can safely refuse additional cases; no native execution."
+    },
+    {
+      "id": "RLA-C21",
+      "statement": "The symbolic Vec owners explicitly distinguish dimensions/names/endpoints from vector-space structure. Their fallible tensor bookkeeping checks dimension products and refuses overflow without claiming coherence, naturality or actual linear maps.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_types.rs",
+          "sha256": "326402bc7e20fd692ea77252bf29850af1b4316769fce50e3ba2a41d26179e45",
+          "lines": [
+            13,
+            125
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_monoidal.rs",
+          "sha256": "3e6a69cf0aaed6c755e244fbcdaccbb4ac54d6249483562643a581908da0c9ac",
+          "lines": [
+            23,
+            109
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_monoidal.rs",
+          "sha256": "3e6a69cf0aaed6c755e244fbcdaccbb4ac54d6249483562643a581908da0c9ac",
+          "lines": [
+            111,
+            183
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vector_space.rs",
+          "sha256": "c0d1039bb49f28f4038ea9f8c4914728d32872250d2e2c1eb4cab51a1db09d07",
+          "lines": [
+            109,
+            145
+          ]
+        }
+      ],
+      "limits": "The Category implementation is category-shaped only: identity equations fail actual equality (F11). FiniteVectorSpace and rank-nullity counts are declarations/arithmetic, not operator-specific certificates."
+    },
+    {
+      "id": "RLA-C22",
+      "statement": "Complex tensor balancing is an exact finite coefficient construction: realification, T(rr,ri,ir,ii)=(rr-ii,ri+ir), projector T^tT/2 and intertwiner-checked compression. It explicitly distinguishes operator normalization, product-state scaling and balanced lift, while refusing characteristic2 or invalid inverses of2.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/complex_tensor.rs",
+          "sha256": "ae14c1637f2534ac3f1630d5563c202e74f3690cb85d79d653394cabfc08913e",
+          "lines": [
+            37,
+            158
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/complex_tensor.rs",
+          "sha256": "ae14c1637f2534ac3f1630d5563c202e74f3690cb85d79d653394cabfc08913e",
+          "lines": [
+            174,
+            209
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/complex_tensor.rs",
+          "sha256": "ae14c1637f2534ac3f1630d5563c202e74f3690cb85d79d653394cabfc08913e",
+          "lines": [
+            256,
+            335
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/complex_tensor/tests.rs",
+          "sha256": "239b3e6ee55f826c336ac7071758a08e81dcf5a15fdceb5cff7ab2bc3010c9f4",
+          "lines": [
+            8,
+            200
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P30"
+      ],
+      "limits": "Lawful exact fields and a supplied complex structure are hypotheses. No derivation of positivity, density-state admission, complex scalars or physics from these coordinate identities; no native execution."
+    },
+    {
+      "id": "RLA-C23",
+      "statement": "Trace-one reference factors give a genuine direct-sum decomposition into reference and traceless sectors. The implemented product differential projects onto support0/1, its complement onto support>=2, and the separate highest-order projector onto all-traceless support; complete inclusion-exclusion has the correct sign and includes the full subset.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/tensor_projector.rs",
+          "sha256": "25ac8e619fa6b1cfd0c31af29aab0d562ae6a5270e2d6886c0245c37a0bd275f",
+          "lines": [
+            1,
+            18
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/tensor_projector.rs",
+          "sha256": "25ac8e619fa6b1cfd0c31af29aab0d562ae6a5270e2d6886c0245c37a0bd275f",
+          "lines": [
+            415,
+            609
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/tensor_projector.rs",
+          "sha256": "25ac8e619fa6b1cfd0c31af29aab0d562ae6a5270e2d6886c0245c37a0bd275f",
+          "lines": [
+            613,
+            687
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P31"
+      ],
+      "limits": "Reference-dependent algebraic projections over lawful fields, not necessarily orthogonal or positive maps. Full64 matrix-unit control uses a non-Hermitian trace-one reference; no universal implementation proof or original execution."
+    },
+    {
+      "id": "RLA-C24",
+      "statement": "Tensor coordinate products, rectangular partial traces and right partial transpose implement concrete finite index maps with checked shapes. Partial transpose preserves trace and is involutive while failing positivity, exactly as documented; numeric rank-product witnesses are separate declarations.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/tensor/tensor.rs",
+          "sha256": "f57fc5b5b6c0614c5a5d189eb94e3522d01fa3db66c971bc9c3ab784ef6f3b1f",
+          "lines": [
+            294,
+            395
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/tensor/tensor.rs",
+          "sha256": "f57fc5b5b6c0614c5a5d189eb94e3522d01fa3db66c971bc9c3ab784ef6f3b1f",
+          "lines": [
+            397,
+            488
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/tensor/partial_transpose.rs",
+          "sha256": "f63e11aea0a577d1edb18ec50cb75e5af26ef33d1a36e75f35b864796bb567eb",
+          "lines": [
+            1,
+            40
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/tensor/mod.rs",
+          "sha256": "36a1e486a79d54a7a6253ee076426c7e819177f236dbceba9d02c346bc41cd9c",
+          "lines": [
+            35,
+            56
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P32"
+      ],
+      "limits": "Generic Numeric operations may overflow or be inexact; source/basis metadata is declared. No physical entanglement interpretation or global authority is established by the coordinate formulas."
+    },
+    {
+      "id": "RLA-C25",
+      "statement": "Dense BigInt Smith construction tracks unimodular row and column operations, admits positive divisibility-chain invariants and independently replays U*A*V=D before returning its private full result. Sparse column gcd is explicitly a heuristic, not a Smith invariant.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/smith_normal_form.rs",
+          "sha256": "fb1187bd88603019eb4dff390e906222fe1ab98d7512e809e3cd4c8db02e53dd",
+          "lines": [
+            67,
+            179
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/smith_normal_form.rs",
+          "sha256": "fb1187bd88603019eb4dff390e906222fe1ab98d7512e809e3cd4c8db02e53dd",
+          "lines": [
+            258,
+            538
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/smith_normal_form.rs",
+          "sha256": "fb1187bd88603019eb4dff390e906222fe1ab98d7512e809e3cd4c8db02e53dd",
+          "lines": [
+            742,
+            792
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P33"
+      ],
+      "limits": "Unimodularity is construction-trusted; product replay alone would not prove it. Per-pivot iteration ceiling does not bound BigInt growth/allocation. Standalone diagonal admission does not bind any source matrix."
+    },
+    {
+      "id": "RLA-C26",
+      "statement": "At a supplied rational chain step, homology_basis checks d*d_next=0, extends the computed boundary basis by independent cycles, verifies rank-nullity for the quotient and replays each representative as a cycle. Incidence/Laplacian code separately implements the finite edge-coordinate identities.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/homology_basis.rs",
+          "sha256": "af4b176515985798f4924c270dcf3c5ef183c527492a173207ec0c45dc479b5e",
+          "lines": [
+            139,
+            265
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/incidence_matrix.rs",
+          "sha256": "8cf595b9c12698fecb069d66bb59bcc2c20ecdbc61bb2e764b5a934a292730a5",
+          "lines": [
+            23,
+            83
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/graph_laplacian.rs",
+          "sha256": "0c884f46ce7b6ff15daab8372fd54d3e85e986a65bd9730db313af1d459dc8a5",
+          "lines": [
+            69,
+            127
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P34"
+      ],
+      "limits": "Rational quotient dimensions and finite graph coordinates, not integral homology/torsion, inferred topology, or an authenticated provenance/degree. Arithmetic representation and reviewed RREF correctness are premises."
+    },
+    {
+      "id": "RLA-C27",
+      "statement": "The rank/norm/support interfaces distinguish exact rational reduction and weighted L1 calculation from absolute-threshold numerical rank/support. Shape bounds, threshold margins and tolerances are explicit limited diagnostics; they do not alone certify exact rank or approximation error.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/rank.rs",
+          "sha256": "8a8e05188bc011e2f4548630a9053ca070bc131132d22bfb6f1eed770b5c5e15",
+          "lines": [
+            32,
+            170
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/norm.rs",
+          "sha256": "8cafe725b4590268e6644e25a80711aa65c58f48a2af5e9a2afecd3d749adb10",
+          "lines": [
+            51,
+            146
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/support_operations.rs",
+          "sha256": "430fc664e449c0ba9ded76d761cac62b2014d84fa81e08119872b6703d5ad46c",
+          "lines": [
+            58,
+            175
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/l1_additivity.rs",
+          "sha256": "704ec17d7d394a2f6eb1e53f0ba64628a9d4cc7b2343a92a04b938ef9071f29b",
+          "lines": [
+            47,
+            112
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P35"
+      ],
+      "limits": "Finite representable arithmetic and lawful canonical rationals; external SVD behavior not executed. Approximate support is nonlinear, and floating L1 arithmetic can return NaN despite finite input."
+    },
+    {
+      "id": "RLA-C28",
+      "statement": "Exact gauge-table normalization retains diagonal/cycle data and, when repeated after every shared relabeling, yields a finite orbit representative. Total pair-table pushforward descends modulo all integer gradients precisely in the stated complete fiber-count cases, with replayable triangle obstructions otherwise.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/gauge_pair_table.rs",
+          "sha256": "47d99dabf296591b4ca58f95d07514eca95caeb2aa0bf0e4c94967d050d163ae",
+          "lines": [
+            25,
+            124
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/gauge_pair_transport.rs",
+          "sha256": "4ef34a6ca1331d2d12f3635891d7f77175b2ef4e5bcaa6082e575b61aa6ff22e",
+          "lines": [
+            72,
+            216
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/pair_table_canonical.rs",
+          "sha256": "1a1e122faa25dab7c21326a1592f5a3f83798ce57f662930bc7ef9d4dce3cc78",
+          "lines": [
+            34,
+            93
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P36"
+      ],
+      "limits": "Complete enumeration and lawful scalar/order premises; decoration equivariance/determinism is caller-owned. Finite full directed tables, not arbitrary sparse graph cohomology. Source/target cap256 does not bound coefficient bits. Independent499map panel is not universal implementation proof."
+    },
+    {
+      "id": "RLA-C29",
+      "statement": "The Regge helpers implement exact rational polynomial/linear-algebra identities: oriented determinant4volume, Cayley-Menger determinant scaling, four-dimensional Plucker simplicity and exterior-square action. Checked SO4 constructor proves its equations at that call.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/cayley_menger.rs",
+          "sha256": "208c8c000ef947cc0b1085c1153da6f15b1b6f6053e2ecb58cd084e591b21b93",
+          "lines": [
+            25,
+            134
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/bivector.rs",
+          "sha256": "b2491bec631a42c71a4593d123204c5524eada27e6c2d2c6f35e144b1d301c40",
+          "lines": [
+            23,
+            70
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/so4.rs",
+          "sha256": "5e0176c7f1524a22703f5666330018eb6a0ddcfc084c95cfad47f36c26dbbee8",
+          "lines": [
+            32,
+            123
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/gaussian.rs",
+          "sha256": "6608cd861fa6d423d81d1911907ede8db0c5f703f0ad2e14cdc4951bd85dec66",
+          "lines": [
+            15,
+            112
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P37"
+      ],
+      "limits": "Euclidean realizability is not admitted by length-table validation; So4 public storage permits bypass. No classical deficit-angle, curvature/dynamics, physical field or allocation-free conclusion."
+    },
+    {
+      "id": "RLA-C30",
+      "statement": "Contract symbol witnesses and repeated capacity/Result suffixes provide compilation or elementary count-admission evidence only. They do not verify rank-nullity of a concrete map, gauge descent, geometric formulas or the stated six mutation kills.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/contract_property_witnesses.rs",
+          "sha256": "05bb6abb483f2ca87867d5af433a603528629a63c9c778da093609c19a0000b5",
+          "lines": [
+            1,
+            97
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/contract_property_witnesses.rs",
+          "sha256": "05bb6abb483f2ca87867d5af433a603528629a63c9c778da093609c19a0000b5",
+          "lines": [
+            126,
+            184
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/pair_table_canonical.rs",
+          "sha256": "1a1e122faa25dab7c21326a1592f5a3f83798ce57f662930bc7ef9d4dce3cc78",
+          "lines": [
+            96,
+            111
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/gauge_pair_table.rs",
+          "sha256": "47d99dabf296591b4ca58f95d07514eca95caeb2aa0bf0e4c94967d050d163ae",
+          "lines": [
+            142,
+            253
+          ]
+        }
+      ],
+      "limits": "Source test adequacy assessment, not a claim that all external tests are absent or historical mutation runs never happened. Adjacent substantive owner tests assessed separately."
+    }
+  ],
+  "findings": [
+    {
+      "id": "RLA-F01",
+      "statement": "RankNullity admission accepts a reduced matrix and kernel from different matrices, and a declared column count different from the reduced width. Its count certificate cannot certify that the supplied vectors form the kernel of the supplied matrix.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/image_kernel.rs",
+          "sha256": "49e7665a68897228015ed1374233c4dc9a57e98ec5c1e6213cd5f7368a9d0c97",
+          "lines": [
+            1,
+            124
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/image_kernel.rs",
+          "sha256": "8ca0c5c63db3766ea70970f2947cfc00d3723687c81fc98f5c8aa9bef49946c9",
+          "lines": [
+            129,
+            177
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/image_kernel.rs",
+          "sha256": "8ca0c5c63db3766ea70970f2947cfc00d3723687c81fc98f5c8aa9bef49946c9",
+          "lines": [
+            207,
+            279
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P06"
+      ],
+      "limits": "Independent exact model of constructible outputs; no native execution. The rank-nullity theorem is unaffected.",
+      "recommended_action": "Derive both values from one admitted matrix, or bind and validate source dimensions/content plus kernel annihilation and independence before asserting a common-source certificate."
+    },
+    {
+      "id": "RLA-F02",
+      "statement": "ExactRepairSpace counts an arbitrary supplied vector list as rank without checking independence or rectangular shape. Two copies of (1,0) are stored with rank2 although their span has dimension1.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_repair.rs",
+          "sha256": "d6a4f9c4683085fee65053a20de6e628c77334efeed451b1bb12c086475f6481",
+          "lines": [
+            18,
+            44
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P07"
+      ],
+      "limits": "Public metadata path only. This does not bypass the separate private ExactRepair residual replay.",
+      "recommended_action": "Name these fields as declarations, or compute and check a basis for a bound source matrix before using them as mathematical rank or repair-space evidence."
+    },
+    {
+      "id": "RLA-F03",
+      "statement": "The semiring multiplication budget named MAX_SCALAR_OPERATIONS counts one unit per dot-product term although the body calls both mul and add. An admitted256-square multiplication therefore performs2^25 such scalar calls against the named2^24 limit.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/semiring_matrix.rs",
+          "sha256": "0b42adc9683669747f463f7a9691f52808012bffee0099adca5d521ac9c5de3a",
+          "lines": [
+            7,
+            28
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/semiring_matrix.rs",
+          "sha256": "0b42adc9683669747f463f7a9691f52808012bffee0099adca5d521ac9c5de3a",
+          "lines": [
+            52,
+            69
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P11"
+      ],
+      "limits": "Exact loop-count model, not a large runtime experiment. The term count is bounded and no elapsed-time guarantee is established or refuted.",
+      "recommended_action": "Rename the limit as a dot-product-term bound, or count both scalar calls consistently with the checked BasicMatrix owner and document per-call versus whole-power accounting."
+    },
+    {
+      "id": "RLA-F04",
+      "statement": "Empty-axis matrix helpers weaken their stated shape/index contract: row(2x0,99) and column(0x2,99) return an empty vector because no indexed element is visited; to_rows followed by from_rows turns0x3 into0x0 despite inverse wording.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/matrix.rs",
+          "sha256": "79c9c4419985b585bb27c0b2429a1689b51d3a7ba180afef840111a9dc713871",
+          "lines": [
+            85,
+            112
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/matrix.rs",
+          "sha256": "79c9c4419985b585bb27c0b2429a1689b51d3a7ba180afef840111a9dc713871",
+          "lines": [
+            144,
+            163
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P14"
+      ],
+      "limits": "Independent tiny control-flow and shape model; no native memory safety failure is asserted. Ordinary nonempty-axis accesses are checked.",
+      "recommended_action": "Validate the requested row/column before iteration and either carry shape metadata in row-list conversion or document its loss for zero-row matrices."
+    },
+    {
+      "id": "RLA-F05",
+      "statement": "Exact rational conversion relies on an unstated canonical-value admission at its boundary. Narrowing checks raw numerator and denominator before normalization, so raw2^63/2 is refused although its reduced value2^62 fits Rational64; raw zero denominators also reach constructors without a local validity gate.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/matrix.rs",
+          "sha256": "79c9c4419985b585bb27c0b2429a1689b51d3a7ba180afef840111a9dc713871",
+          "lines": [
+            165,
+            199
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P15"
+      ],
+      "limits": "Dependency num-rational0.4.2 raw/normal constructor and reduction excerpts are pinned in the control receipt. Canonical valid ratios avoid the mismatch; no native conversion or panic was executed. Generic field law premises do not by themselves validate raw values at this public conversion boundary.",
+      "recommended_action": "Explicitly reject zero denominators and normalize before representability checks, or make the valid canonical input precondition explicit and enforce it at ingress."
+    },
+    {
+      "id": "RLA-F06",
+      "statement": "The characteristic-polynomial documentation extends the division-free construction to rings of any kind, omitting the commutativity premise. Over M2(F2), take diagonal coefficient blocks a=E12,d=E21: the returned polynomial has coefficients(ad,-a-d,1), whose evaluation at the first diagonal block is ad-da=I, not zero.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/characteristic_polynomial.rs",
+          "sha256": "d2b41a2a270a7c308dbc05292e96545daa451e453b6895345edcdc38eda67d73",
+          "lines": [
+            1,
+            17
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/characteristic_polynomial.rs",
+          "sha256": "d2b41a2a270a7c308dbc05292e96545daa451e453b6895345edcdc38eda67d73",
+          "lines": [
+            77,
+            141
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/characteristic_polynomial.rs",
+          "sha256": "d2b41a2a270a7c308dbc05292e96545daa451e453b6895345edcdc38eda67d73",
+          "lines": [
+            615,
+            635
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P18"
+      ],
+      "limits": "Documentation-scope counterexample, not a failure under a lawful commutative field or the tested commutative ring Z/6. No native execution.",
+      "recommended_action": "State commutative rings explicitly for the division-free extension and distinguish that algebraic premise from the stronger Field trait signature."
+    },
+    {
+      "id": "RLA-F07",
+      "statement": "The centralizer-basis function and standalone Penrose verifier reset the scalar-operation allowance across phases. A1x1 generator[1] admits6 counted calls with cap4; verifying the1x1 identity inverse admits8 with cap2. These exceed the facade promise of a whole-operation worst-case bound before scalar work.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/mod.rs",
+          "sha256": "13498e00565db34e3e621a418bc94b37e0eee2daea1d7857b104ab52819dedfd",
+          "lines": [
+            47,
+            54
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/commutant.rs",
+          "sha256": "0db3dd785dc6e17e27860d2b5c9160b29b4b059a0b537c2b9fc273f9d6be4ee6",
+          "lines": [
+            24,
+            32
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/commutant.rs",
+          "sha256": "0db3dd785dc6e17e27860d2b5c9160b29b4b059a0b537c2b9fc273f9d6be4ee6",
+          "lines": [
+            85,
+            140
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/elimination.rs",
+          "sha256": "dcd4c6d10cf4210edb74d047e17e625ac288eb58fa580f99b648dda3186e33fe",
+          "lines": [
+            182,
+            191
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/matrix.rs",
+          "sha256": "79c9c4419985b585bb27c0b2429a1689b51d3a7ba180afef840111a9dc713871",
+          "lines": [
+            312,
+            321
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/pseudoinverse.rs",
+          "sha256": "defb30695bf8fc699a83af4167e9a4d9a20509eea5eee6bc6c9a7e631fb279fd",
+          "lines": [
+            87,
+            121
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P20"
+      ],
+      "limits": "Exact tiny source-correspondent models, not retained Rust execution. The top-level pseudoinverse constructor has its own conservative aggregate bound and is not refuted by this witness; no time or scalar-bit complexity claim is made.",
+      "recommended_action": "Preflight the sum of construction, elimination and replay costs, or pass a remaining budget across phases; document and name per-operation versus per-subcall limits explicitly."
+    },
+    {
+      "id": "RLA-F08",
+      "statement": "The LDL documentation suggests a matrix can be positive definite up to a permutation yet have a zero leading principal minor, and presents this routine as incomplete for PSD. Under its lawful ordered/Hermitian premises this cannot occur: positive definiteness is invariant under permutation and every principal restriction remains positive definite. The implemented zero-pivot/zero-column rule is the complete PSD rule, consistent with later source tests.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/ordered.rs",
+          "sha256": "5b86785889c0cb6a3e3e8fa8adf901ad0bc55e5c0a9cbd473bc920ce2b0df00b",
+          "lines": [
+            398,
+            405
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/ordered.rs",
+          "sha256": "5b86785889c0cb6a3e3e8fa8adf901ad0bc55e5c0a9cbd473bc920ce2b0df00b",
+          "lines": [
+            538,
+            571
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/ordered.rs",
+          "sha256": "5b86785889c0cb6a3e3e8fa8adf901ad0bc55e5c0a9cbd473bc920ce2b0df00b",
+          "lines": [
+            1238,
+            1283
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P21"
+      ],
+      "limits": "A mathematical documentation inconsistency, not a demonstrated algorithmic false rejection. The finite control corroborates cases; completeness reasoning comes from the stated factorization and negative-witness construction.",
+      "recommended_action": "Remove the impossible positive-definite example and state that LDL completes exactly for PSD under lawful coefficient and representability premises."
+    },
+    {
+      "id": "RLA-F09",
+      "statement": "The Hermitian-order sample checker validates sign range on supplied samples but accepts any nonnegative sign on a computed norm. A valid Gaussian arithmetic/involution with fixed_field_sign(17)=Some(2) passes samples0,1,-1,4+i even though the checker itself queries the invalid sign on norm(4+i)=17.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/laws.rs",
+          "sha256": "693c3ae72fce742cb1e6b8f670eb1b8acf4d222be10172fbaa390943ca569965",
+          "lines": [
+            202,
+            260
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P22"
+      ],
+      "limits": "Independent exact model of the full checker path. This concerns its treatment of a value it actually evaluates, not a demand that finite samples prove universal laws. Adding17 to the sample exposes the defect.",
+      "recommended_action": "Apply the same fixed-sign domain/range validation to every generated norm before checking positivity and zero equivalence."
+    },
+    {
+      "id": "RLA-F10",
+      "statement": "The rational-budget description overstates its bit bound as covering every intermediate integer. Its checks admit operands and returned normalized values, while num-rational arithmetic constructs temporary numerators first:3/2+3/2 creates6 before reducing to3, and the operation succeeds with max_bits=2.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/rational_bareiss.rs",
+          "sha256": "a04f5e16e9792823507afb0353910acb03e55dc4d0977c9fdc040ea1221eb21a",
+          "lines": [
+            1,
+            9
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/rational_bareiss.rs",
+          "sha256": "a04f5e16e9792823507afb0353910acb03e55dc4d0977c9fdc040ea1221eb21a",
+          "lines": [
+            82,
+            123
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/exact_field/rational_bareiss.rs",
+          "sha256": "a04f5e16e9792823507afb0353910acb03e55dc4d0977c9fdc040ea1221eb21a",
+          "lines": [
+            134,
+            156
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P26"
+      ],
+      "limits": "Pinned num-rational0.4.2 addition excerpts and exact arithmetic, not native allocation measurement. Accepted exposed values are bounded; the source already disclaims CPU/bit-operation accounting.",
+      "recommended_action": "Document the bound as applying to admitted and returned values, or use a scalar implementation that checks temporary-size growth before arithmetic if that stronger resource contract is needed."
+    },
+    {
+      "id": "RLA-F11",
+      "statement": "VecCategory composition concatenates names without identity normalization. For valid f:X->Y, composing id_X then f produces name id_X ; f and composing f then id_Y produces f ; id_Y, both unequal to f under derived VecMor equality. Tests named identity-composition-preserves-morphism only compare endpoints, so they miss this law failure.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_types.rs",
+          "sha256": "326402bc7e20fd692ea77252bf29850af1b4316769fce50e3ba2a41d26179e45",
+          "lines": [
+            69,
+            111
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_category.rs",
+          "sha256": "4e3e35442655aa4a31df8926fe40f90dd99a8b1b0f2ca0757a6970cc66a0f72c",
+          "lines": [
+            36,
+            57
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_category.rs",
+          "sha256": "4e3e35442655aa4a31df8926fe40f90dd99a8b1b0f2ca0757a6970cc66a0f72c",
+          "lines": [
+            93,
+            112
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vec_category.rs",
+          "sha256": "4e3e35442655aa4a31df8926fe40f90dd99a8b1b0f2ca0757a6970cc66a0f72c",
+          "lines": [
+            166,
+            204
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P28"
+      ],
+      "limits": "The source already calls this a category-shaped symbolic structure and disclaims stronger semantic equality. The defect is relying on its Category trait or test name as evidence of categorical unit laws, not failure of endpoint bookkeeping.",
+      "recommended_action": "Keep the explicit symbolic scope, or introduce normalized composition/equality and actual unit-law assertions before treating this as a lawful category."
+    },
+    {
+      "id": "RLA-F12",
+      "statement": "CoordinateTuple<f64>::checked_dot refuses nonfinite inputs but does not check computed products or their sum. Finite coordinates1e308 produce an infinite square; two opposite products produce NaN, both returned as Ok. The numerical-profile comment about monitored convergence/error bounds is not implemented by this input-only gate. The disjoint-support L1 checker likewise returns Ok(error=NaN,passed=false) for finite x=(1e308,0), y=(0,1e308), because both norm totals overflow.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vector_space.rs",
+          "sha256": "c0d1039bb49f28f4038ea9f8c4914728d32872250d2e2c1eb4cab51a1db09d07",
+          "lines": [
+            147,
+            187
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/vector_space.rs",
+          "sha256": "c0d1039bb49f28f4038ea9f8c4914728d32872250d2e2c1eb4cab51a1db09d07",
+          "lines": [
+            230,
+            235
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/linear_algebra/l1_additivity.rs",
+          "sha256": "704ec17d7d394a2f6eb1e53f0ba64628a9d4cc7b2343a92a04b938ef9071f29b",
+          "lines": [
+            63,
+            80
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P29",
+        "RLA-P35"
+      ],
+      "limits": "A floating-output admission boundary, not an exact-arithmetic theorem failure. No robust finite output or error bound is established by this method; no Rust execution.",
+      "recommended_action": "Document the input-only check or refuse nonfinite intermediate/final outputs when callers require a finite numerical result."
+    },
+    {
+      "id": "RLA-F13",
+      "statement": "The partial-trace refusal path computes expected=ceil(rows/traced_dim)*traced_dim with unchecked multiplication. A valid BasicMatrix of shape(usizeMAX,0) needs no scalar allocation; tracing factor2 takes the nondividing-row branch and computes usizeMAX+1, causing overflow rather than the intended typed shape refusal.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/tensor/tensor.rs",
+          "sha256": "f57fc5b5b6c0614c5a5d189eb94e3522d01fa3db66c971bc9c3ab784ef6f3b1f",
+          "lines": [
+            458,
+            487
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/backend/basic_matrix.rs",
+          "sha256": "6adf8811c58b01cc1dcf3599c694f543e352ac309f4f43cfa5cb1457e393d7ac",
+          "lines": [
+            143,
+            167
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P32"
+      ],
+      "limits": "Symbolic64-bit arithmetic and constructible zero-area shape, no native panic or huge allocation. Correct admitted divisible shapes and ordinary tensor formulas are unaffected.",
+      "recommended_action": "Avoid rounding an invalid dimension upward in diagnostics, or check/saturate the diagnostic multiplication separately."
+    },
+    {
+      "id": "RLA-F14",
+      "statement": "Smith and sparse conversion expose panic/resource boundaries despite checked-construction terminology: admitted BasicMatrix(usizeMAX,0) takes the empty Smith path and bigint_identity(usizeMAX) converts typed dimension failure into unreachable panic; SparseColMatrix(usizeMAX,2,[[],[]]) is admitted but to_dense multiplies rows*cols unchecked.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/smith_normal_form.rs",
+          "sha256": "fb1187bd88603019eb4dff390e906222fe1ab98d7512e809e3cd4c8db02e53dd",
+          "lines": [
+            132,
+            179
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/smith_normal_form.rs",
+          "sha256": "fb1187bd88603019eb4dff390e906222fe1ab98d7512e809e3cd4c8db02e53dd",
+          "lines": [
+            516,
+            531
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/smith_normal_form.rs",
+          "sha256": "fb1187bd88603019eb4dff390e906222fe1ab98d7512e809e3cd4c8db02e53dd",
+          "lines": [
+            620,
+            659
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/smith_normal_form.rs",
+          "sha256": "fb1187bd88603019eb4dff390e906222fe1ab98d7512e809e3cd4c8db02e53dd",
+          "lines": [
+            690,
+            698
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/backend/basic_matrix.rs",
+          "sha256": "6adf8811c58b01cc1dcf3599c694f543e352ac309f4f43cfa5cb1457e393d7ac",
+          "lines": [
+            143,
+            167
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P35"
+      ],
+      "limits": "Symbolic64-bit arithmetic and admitted empty buffers only; no native execution, huge allocation or false mathematical Smith result. General BigInt bit/time bounds are also absent.",
+      "recommended_action": "Propagate identity construction errors and use fallible checked sparse-to-dense shape/allocation conversion."
+    },
+    {
+      "id": "RLA-F15",
+      "statement": "So4 exposes pub m, so any caller can construct or mutate a So4 containing diag(2,1,1,1) without try_new. Methods then treat that value as their unchecked input and return So4; the type name does not preserve the documented M^tM=I,det=1 invariant.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/so4.rs",
+          "sha256": "5e0176c7f1524a22703f5666330018eb6a0ddcfc084c95cfad47f36c26dbbee8",
+          "lines": [
+            1,
+            53
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/so4.rs",
+          "sha256": "5e0176c7f1524a22703f5666330018eb6a0ddcfc084c95cfad47f36c26dbbee8",
+          "lines": [
+            56,
+            108
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P37"
+      ],
+      "limits": "try_new itself correctly refuses the example; raw multiplication and exterior action formulas remain valid for arbitrary matrices. Public construction bypass is static evidence, not executed Rust.",
+      "recommended_action": "Make matrix storage private and expose read-only access/checked replacement, or name/document the type as a raw candidate."
+    },
+    {
+      "id": "RLA-F16",
+      "statement": "Cayley-Menger admits symmetric zero-diagonal tables without Euclidean realizability. Positive squared edge lengths1,1,9 pass that admission but yield volume_squared=-45/16, so the returned value cannot serve as a certified Euclidean volume square.",
+      "evidence": [
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/mod.rs",
+          "sha256": "09d8454cf54ff833ff021a8331fa4a34f0b8a23eee97044cb414df8040585387",
+          "lines": [
+            79,
+            98
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/cayley_menger.rs",
+          "sha256": "208c8c000ef947cc0b1085c1153da6f15b1b6f6053e2ecb58cd084e591b21b93",
+          "lines": [
+            25,
+            76
+          ]
+        },
+        {
+          "path": "code/rust/core_linear_algebra/src/regge_exact/cayley_menger.rs",
+          "sha256": "208c8c000ef947cc0b1085c1153da6f15b1b6f6053e2ecb58cd084e591b21b93",
+          "lines": [
+            110,
+            134
+          ]
+        }
+      ],
+      "controls": [
+        "RLA-P37"
+      ],
+      "limits": "Formula evaluation is correct and docs explicitly list only symmetry/diagonal checks; this is an interpretation/admission boundary, not a determinant arithmetic defect. Zero/degenerate simplices also return zero.",
+      "recommended_action": "Explicitly label polynomial evaluation versus Euclidean admission, or check the anchored Gram matrix positive semidefinite before issuing geometric certification."
+    }
+  ],
+  "controls": [
+    {
+      "id": "RLA-P01",
+      "rule": "2x2 adjugate identity",
+      "cases": 625,
+      "limits": "Exact integer identity model; source checked i128 intermediates and i64 output have separate representability premises.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls01.json",
+        "sha256": "f141e1747ff4be8ca1d1fc6e6b11fa943d68a7029ad75e10b7591b73d6bb8c04"
+      }
+    },
+    {
+      "id": "RLA-P02",
+      "rule": "Bareiss algorithm versus independent permutation expansion",
+      "exhaustive_matrices_dimensions_0_to_3_entries_minus1_0_1": 19768,
+      "deterministic_random_4x4_cases": 128,
+      "all_divisions_exact": true,
+      "ragged_shape_refused": true,
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls01.json",
+        "sha256": "f141e1747ff4be8ca1d1fc6e6b11fa943d68a7029ad75e10b7591b73d6bb8c04"
+      }
+    },
+    {
+      "id": "RLA-P03",
+      "rule": "Paired Pfaffian elimination versus independent matching expansion and determinant square",
+      "exhaustive_alternating_dimensions_0_2_4_entries_minus1_0_1": 733,
+      "deterministic_random_6x6_cases": 128,
+      "odd_nonzero_diagonal_and_nonskew_refusals": true,
+      "field": "rationals",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls01.json",
+        "sha256": "f141e1747ff4be8ca1d1fc6e6b11fa943d68a7029ad75e10b7591b73d6bb8c04"
+      }
+    },
+    {
+      "id": "RLA-P04",
+      "rule": "Exact reduction/image/kernel models versus independent minor rank",
+      "matrices": 831,
+      "membership_cases": 729,
+      "limits": "Finite rational source models; rank reference uses determinant minors, not the reduction algorithm.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls02.json",
+        "sha256": "f00070cf7434799d92054aa290748235c64deea9226a5875a2863da542843c6b"
+      }
+    },
+    {
+      "id": "RLA-P05",
+      "rule": "PSD LDLT model versus all principal minors",
+      "symmetric_matrices": 759,
+      "successful_full_factorizations_replayed": 32,
+      "limits": "Rational symmetric input, sizes1..3; negative paths return partial factors, not a complete inertia decomposition.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls02.json",
+        "sha256": "f00070cf7434799d92054aa290748235c64deea9226a5875a2863da542843c6b"
+      }
+    },
+    {
+      "id": "RLA-P06",
+      "rule": "RankNullity count admission accepts mixed source witnesses",
+      "matrix_a": [
+        [
+          1,
+          0
+        ]
+      ],
+      "matrix_b": [
+        [
+          0,
+          1
+        ]
+      ],
+      "supplied_kernel_of_b": [
+        [
+          1,
+          0
+        ]
+      ],
+      "accepted_count_census": [
+        1,
+        1,
+        2
+      ],
+      "a_times_supplied_vector": [
+        1
+      ],
+      "also_accepts_columns3_for_rank1_of_a_1x1_and_kernel_of_zero_1x2": true,
+      "limits": "Independent exact model of public constructor outputs and count predicate, not a native run. Rank-nullity theorem itself is not refuted; missing common-source binding is exposed.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls02.json",
+        "sha256": "f00070cf7434799d92054aa290748235c64deea9226a5875a2863da542843c6b"
+      }
+    },
+    {
+      "id": "RLA-P07",
+      "rule": "ExactRepairSpace declared basis count is not matrix rank",
+      "basis": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "stored_rank_by_with_basis": 2,
+      "actual_rank": 1,
+      "limits": "Public metadata constructor only; this does not bypass private ExactRepair residual checking.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls02.json",
+        "sha256": "f00070cf7434799d92054aa290748235c64deea9226a5875a2863da542843c6b"
+      }
+    },
+    {
+      "id": "RLA-P08",
+      "rule": "Two-sided rational basis changes and conjugacy transport",
+      "invertible_matrices": 48,
+      "operator_conjugacies": 3888,
+      "limits": "Independent exact model on small matrices, not arbitrary scalar traits or original execution.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls03.json",
+        "sha256": "de7aa5d2952ae2752dc4e283812e670c5c13cc9fbd5c1fda4e4c4e1d0459e384"
+      }
+    },
+    {
+      "id": "RLA-P09",
+      "rule": "Lumpability commutation and bounded Boolean roots",
+      "matrix_partition_pairs": 162,
+      "admitted_quotients": 100,
+      "powers_checked_per_admission": 6,
+      "boolean_3x3_candidates": 512,
+      "distinct_squares": 185,
+      "limits": "Finite checks corroborate the source induction; relational composition is the separate Boolean-square reference.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls03.json",
+        "sha256": "de7aa5d2952ae2752dc4e283812e670c5c13cc9fbd5c1fda4e4c4e1d0459e384"
+      }
+    },
+    {
+      "id": "RLA-P10",
+      "rule": "R*d=0 exactly controls rational report invariance under supplied repair shifts",
+      "map_pairs": 81,
+      "shift_checks": 2187,
+      "limits": "Small exact model; no semantic or physical interpretation of the supplied maps.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls03.json",
+        "sha256": "de7aa5d2952ae2752dc4e283812e670c5c13cc9fbd5c1fda4e4c4e1d0459e384"
+      }
+    },
+    {
+      "id": "RLA-P11",
+      "rule": "Semiring multiply budget counts dot-product terms, not individual scalar method calls",
+      "dimension": 256,
+      "admitted_terms": 16777216,
+      "declared_max_scalar_operations": 16777216,
+      "actual_add_plus_mul_calls": 33554432,
+      "limits": "Exact loop-count calculation only; no large allocation or original execution. Per-call dot-product budget remains finite.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls03.json",
+        "sha256": "de7aa5d2952ae2752dc4e283812e670c5c13cc9fbd5c1fda4e4c4e1d0459e384"
+      }
+    },
+    {
+      "id": "RLA-P12",
+      "rule": "Cochain-map composition and homotopy-induced equality on degree-one cohomology",
+      "scalar_windows_over_f2": 3,
+      "maps": 38,
+      "compositions": 496,
+      "accepted_fillers": 152,
+      "limits": "One-dimensional F2 windows only; general theorem remains conditional on lawful ring operations and the checked equations.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls03.json",
+        "sha256": "de7aa5d2952ae2752dc4e283812e670c5c13cc9fbd5c1fda4e4c4e1d0459e384"
+      }
+    },
+    {
+      "id": "RLA-P13",
+      "rule": "Exact-field solve and inconsistency certificates against exhaustive finite-field solution sets",
+      "fields": [
+        2,
+        3
+      ],
+      "matrices": 97,
+      "systems": 793,
+      "consistent": 572,
+      "refusals": 221,
+      "limits": "Every2x2 matrix and right-hand side over F2/F3; particular-plus-kernel sets compared with exhaustive vector search. Independent model, not native execution or arbitrary-field proof.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls04.json",
+        "sha256": "8acbb031e509a7a854b07176cf0879fd5a5389d1c569c01136cf0ed6587ee8b9"
+      }
+    },
+    {
+      "id": "RLA-P14",
+      "rule": "Empty-axis extraction and row-list shape loss",
+      "row_shape": [
+        2,
+        0
+      ],
+      "row_index": 99,
+      "column_shape": [
+        0,
+        2
+      ],
+      "column_index": 99,
+      "both_source_loop_models_return": [],
+      "row_list_original_shape": [
+        0,
+        3
+      ],
+      "row_list_reconstructed_shape": [
+        0,
+        0
+      ],
+      "limits": "Tiny independent control-flow/shape model; no out-of-bounds native memory access is asserted.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls04.json",
+        "sha256": "8acbb031e509a7a854b07176cf0879fd5a5389d1c569c01136cf0ed6587ee8b9"
+      }
+    },
+    {
+      "id": "RLA-P15",
+      "rule": "Narrowing unreduced rational checks raw pair instead of mathematical representability",
+      "raw": [
+        9223372036854775808,
+        2
+      ],
+      "reduced": [
+        4611686018427387904,
+        1
+      ],
+      "raw_pair_fits_i64": false,
+      "reduced_pair_fits_i64": true,
+      "limits": "Exact arithmetic plus source/dependency inspection. Canonical nonzero-denominator inputs avoid this mismatch. No native panic or conversion was executed.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls04.json",
+        "sha256": "8acbb031e509a7a854b07176cf0879fd5a5389d1c569c01136cf0ed6587ee8b9"
+      }
+    },
+    {
+      "id": "RLA-P16",
+      "rule": "Berkowitz versus permutation determinant polynomials and Cayley-Hamilton; Krylov minimality versus exhaustive monic search",
+      "characteristic_cases": 1919,
+      "minimal_cases": 616,
+      "limits": "All matrices through n=3 over F2 and through n=2 over F3 and Z/6; minimality only on F2/F3. Independent exact models, not retained Rust execution.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls05.json",
+        "sha256": "5619d12902e1ce4539f714e10557160ddebf4951b8e4c549774a3a014728897e"
+      }
+    },
+    {
+      "id": "RLA-P17",
+      "rule": "Row-major commutator kernel spans exactly the direct finite centralizer",
+      "families": 355,
+      "candidate_membership_checks": 11010,
+      "limits": "Empty and singleton2x2 families over F2/F3, and all ordered pairs over F2; direct multiplication independently compared with full kernel span. No native execution or arbitrary-dimension proof.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls05.json",
+        "sha256": "5619d12902e1ce4539f714e10557160ddebf4951b8e4c549774a3a014728897e"
+      }
+    },
+    {
+      "id": "RLA-P18",
+      "rule": "Noncommutative coefficient ring invalidates unrestricted ring wording",
+      "ring": "2x2 matrices over F2",
+      "a": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "d": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "first_diagonal_polynomial_value": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "limits": "Exact finite counterexample to literal rings-of-any-kind extension, not to the lawful commutative-field contract or the commutative Z/6 example.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls05.json",
+        "sha256": "5619d12902e1ce4539f714e10557160ddebf4951b8e4c549774a3a014728897e"
+      }
+    },
+    {
+      "id": "RLA-P19",
+      "rule": "Exact rational full-rank factorization and all four Penrose identities, with tampered-result rejection",
+      "matrices": 1560,
+      "rank_distribution": {
+        "1": 258,
+        "0": 6,
+        "2": 1296
+      },
+      "tampered_refusals": 1560,
+      "limits": "All entries -1,0,1 in shapes1x1,1x2,2x1,2x2,2x3,3x2. Independent Fraction models; not native execution, arbitrary-field proof or HermitianOrdered admission validation.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls06.json",
+        "sha256": "3d75175f93ed0829745558b9f2e2a7f2ebd0333bd816b3690af7f11d09feebda"
+      }
+    },
+    {
+      "id": "RLA-P20",
+      "rule": "Separately reset scalar-call limits do not bound the composite call",
+      "commutant": {
+        "n": 1,
+        "generator": [
+          [
+            1
+          ]
+        ],
+        "max_scalar_ops": 4,
+        "actual_modeled_calls": 6
+      },
+      "standalone_penrose_verifier": {
+        "matrix": [
+          [
+            1
+          ]
+        ],
+        "proposed_inverse": [
+          [
+            1
+          ]
+        ],
+        "max_scalar_ops": 2,
+        "actual_modeled_calls": 8
+      },
+      "limits": "Tiny source-correspondent branch model. The top-level pseudoinverse constructor has its own conservative whole-call preflight; this witness concerns the standalone verifier and commutant-basis function.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls06.json",
+        "sha256": "3d75175f93ed0829745558b9f2e2a7f2ebd0333bd816b3690af7f11d09feebda"
+      }
+    },
+    {
+      "id": "RLA-P21",
+      "rule": "Congruence certificate replay, unit determinant, LDL outcomes and negative witnesses against all-principal-minor PSD oracle",
+      "symmetric_matrices": 760,
+      "branches": {
+        "positive_semidefinite": 33,
+        "negative": 445,
+        "zero_nonzero_column": 282
+      },
+      "limits": "Every symmetric rational matrix of dimension0..3 with entries -1,0,1. Congruence model uses complete elementary matrix products; all certificates replay against the intact input. Independent models, not native execution or generic Hermitian proof.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls07.json",
+        "sha256": "5a081b06b904fa717545de4d8041dc66aaa3619a29a3abc89b2fab2e94b60051"
+      }
+    },
+    {
+      "id": "RLA-P22",
+      "rule": "Hermitian sample checker accepts invalid sign2 on a computed norm",
+      "samples": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "norm_of_4_plus_i": 17,
+      "defective_norm_sign": 2,
+      "source_predicate_accepts": true,
+      "adding_norm_to_samples_refuses": true,
+      "limits": "All sampled values include0,1,-1 and a mixed complex value. Independent exact predicate model; universal trait satisfaction is not claimed.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls08.json",
+        "sha256": "0f53de470f5bd69c87059abd93ed0cd256aad6899906ec60dbb0372d088f5dd5"
+      }
+    },
+    {
+      "id": "RLA-P23",
+      "rule": "Neville scalar recurrence matches Lagrange; tight box image matches corners and lies inside propagated interval",
+      "interval_cases": 900,
+      "prefix_checks": 2412,
+      "strict_enclosure_example": {
+        "nodes": [
+          "-1",
+          "2",
+          "0"
+        ],
+        "at": "-2",
+        "samples": [
+          [
+            "-1",
+            "0"
+          ],
+          [
+            "-1",
+            "0"
+          ],
+          [
+            "-1",
+            "0"
+          ]
+        ],
+        "neville": [
+          "-11/3",
+          "8/3"
+        ],
+        "tight_lagrange": [
+          "-3",
+          "2"
+        ]
+      },
+      "limits": "Permutations of up to3 distinct rational nodes, three interval choices and four evaluation points. No function remainder, asymptotic limit or native execution.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls08.json",
+        "sha256": "0f53de470f5bd69c87059abd93ed0cd256aad6899906ec60dbb0372d088f5dd5"
+      }
+    },
+    {
+      "id": "RLA-P24",
+      "rule": "Fraction-free row-cleared systems versus independent rational Gauss-Jordan, with original-equation replay",
+      "systems": 921,
+      "consistent": 627,
+      "inconsistent": 294,
+      "exact_integer_divisions": 7558,
+      "limits": "All0..2 shapes over a three-element rational entry set and three right-hand-side values, plus60 larger deterministic cases. No original solver or budget implementation executed.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls08.json",
+        "sha256": "0f53de470f5bd69c87059abd93ed0cd256aad6899906ec60dbb0372d088f5dd5"
+      }
+    },
+    {
+      "id": "RLA-P25",
+      "rule": "Matrix derivative jets versus independent polynomial convolution",
+      "jet_pairs": 64,
+      "limits": "Rational2x2 polynomial matrix curves. Proves neither analytic realizability of arbitrary abstract jets nor native execution.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls08.json",
+        "sha256": "0f53de470f5bd69c87059abd93ed0cd256aad6899906ec60dbb0372d088f5dd5"
+      }
+    },
+    {
+      "id": "RLA-P26",
+      "rule": "Input/result bit admission does not bound dependency arithmetic temporaries",
+      "max_bits": 2,
+      "operands": [
+        "3/2",
+        "3/2"
+      ],
+      "result": "3",
+      "transient_numerator": 6,
+      "transient_bits": 3,
+      "limits": "Exact arithmetic plus pinned num-rational addition source; no native allocation measurement. Accepted exposed values remain within the declared bound.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls08.json",
+        "sha256": "0f53de470f5bd69c87059abd93ed0cd256aad6899906ec60dbb0372d088f5dd5"
+      }
+    },
+    {
+      "id": "RLA-P27",
+      "rule": "Finite integer orthogonality and forward/backward prefix consistency",
+      "status": "completed_bounded",
+      "pair_cases": 729,
+      "orthogonal_nonzero_pairs": 192,
+      "prefix_cases": 120,
+      "limits": "Own integers in {-1,0,1}^3 and lists length1..4 over {-2,0,3}; no original execution or arbitrary fixed-width overflow guarantee.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls09.json",
+        "sha256": "be8de11388672eb7823749b670be2027a801f8e1078615a47de086e5232d2170"
+      }
+    },
+    {
+      "id": "RLA-P28",
+      "rule": "Symbolic category unit composition differs under actual string equality",
+      "status": "counterexample_observed",
+      "left_identity_name": "id_X ; f",
+      "right_identity_name": "f ; id_Y",
+      "original_name": "f",
+      "limits": "Same valid endpoint labels/dimensions. Shape-only documentation is acknowledged; no upstream category implementation executed.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls09.json",
+        "sha256": "be8de11388672eb7823749b670be2027a801f8e1078615a47de086e5232d2170"
+      }
+    },
+    {
+      "id": "RLA-P29",
+      "rule": "Finite binary64 coordinates can produce nonfinite checked-dot output",
+      "status": "counterexample_observed",
+      "finite_input": "1e+308",
+      "squared_output": "inf",
+      "mixed_sum_output": "nan",
+      "limits": "Own IEEE754 Python scalar operations mirror the two multiply/add expressions only; not Rust execution or evidence about robust numerical owners.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls09.json",
+        "sha256": "be8de11388672eb7823749b670be2027a801f8e1078615a47de086e5232d2170"
+      }
+    },
+    {
+      "id": "RLA-P30",
+      "rule": "Complex balance projector and rectangular operator compression against direct component algebra",
+      "status": "completed_bounded",
+      "balance_cases": 9,
+      "rectangular_compressions": 12,
+      "limits": "Own rational models with dimensions1..3 and12 rectangular pairs; supplied complex structure and invertible2 are assumptions, not physical scalar selection.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls10.json",
+        "sha256": "d728dd359309f7c6006197cf6b86b5e10ac4f1b7ac00442774b4dd681a03b5b0"
+      }
+    },
+    {
+      "id": "RLA-P31",
+      "rule": "Reference support projectors on every matrix unit of a three-site carrier",
+      "status": "completed_bounded",
+      "matrix_units": 64,
+      "nonhermitian_reference_trace": "1",
+      "order2_vs_order3_distinguished": true,
+      "wrong_inclusion_exclusion_doubles_reference": true,
+      "limits": "Own exact8x8 rational carrier. Projections are reference-dependent algebraic maps; no positivity or orthogonality claimed.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls10.json",
+        "sha256": "d728dd359309f7c6006197cf6b86b5e10ac4f1b7ac00442774b4dd681a03b5b0"
+      }
+    },
+    {
+      "id": "RLA-P32",
+      "rule": "Partial transpose involution and explicit positivity failure; empty-axis diagnostic overflow",
+      "status": "completed_bounded_with_counterexample",
+      "transpose_cases": 9,
+      "negative_quadratic_value": "-4/5",
+      "u64_empty_axis_rows": "18446744073709551615",
+      "error_diagnostic_unrepresentable": "18446744073709551616",
+      "limits": "Own finite index/arithmetic models and symbolic64-bit bound; no native huge allocation or panic executed.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls10.json",
+        "sha256": "d728dd359309f7c6006197cf6b86b5e10ac4f1b7ac00442774b4dd681a03b5b0"
+      }
+    },
+    {
+      "id": "RLA-P33",
+      "rule": "Integer two-by-two determinantal-divisor invariance under elementary shears",
+      "status": "observed",
+      "matrices": 625,
+      "shears_per_matrix": 8,
+      "limits": "Independent integer characterization; not execution of Smith algorithm, termination proof or all-size certification.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls11.json",
+        "sha256": "d93a3ff1ad3161cf396a539ac2583c4f1f209976ff0419414bdaaba4f62f95a6"
+      }
+    },
+    {
+      "id": "RLA-P34",
+      "rule": "Rational chain-step quotient representatives and graph Laplacian quadratic identity",
+      "status": "observed",
+      "chain_steps": 129,
+      "graphs": 75,
+      "limits": "Q chain shapes1x2 and2x1, entries-2..2; simple graphs n<=4 and ternary coordinate vectors; no torsion or native execution.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls11.json",
+        "sha256": "d93a3ff1ad3161cf396a539ac2583c4f1f209976ff0419414bdaaba4f62f95a6"
+      }
+    },
+    {
+      "id": "RLA-P35",
+      "rule": "Admitted empty/sparse dimension arithmetic and finite-input L1 overflow",
+      "status": "counterexample_observed",
+      "smith_empty_identity_square": "340282366920938463426481119284349108225",
+      "sparse_dense_product": "36893488147419103230",
+      "l1_error": "NaN",
+      "l1_passed": false,
+      "limits": "64-bit symbolic size model and Python binary64; no large allocations or Rust execution.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls11.json",
+        "sha256": "d93a3ff1ad3161cf396a539ac2583c4f1f209976ff0419414bdaaba4f62f95a6"
+      }
+    },
+    {
+      "id": "RLA-P36",
+      "rule": "Root normalization, relabeling orbit and complete finite gradient-descent criterion",
+      "status": "observed",
+      "gauge_cases": 729,
+      "total_maps": 499,
+      "descending": 97,
+      "obstructed": 402,
+      "limits": "Root/gauge panel n2; maps source/target<=4. Complete unit-potential basis suffices for each tested integer-linear map; no retained enumeration dependency executed.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls12.json",
+        "sha256": "40610a2c3727b83a35aae45a6050c0b6ede2ea38fed1398047233513e0fdb1e1"
+      }
+    },
+    {
+      "id": "RLA-P37",
+      "rule": "Cayley-Menger formula versus Euclidean admission, and bivector Plucker identity",
+      "status": "observed",
+      "coordinate_simplices": 30,
+      "wedge_pairs": 6561,
+      "admitted_symmetric_positive_squared_lengths": [
+        1,
+        1,
+        9
+      ],
+      "nonrealizable_triangle_volume_squared": "-45/16",
+      "forged_so4_diagonal": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "forged_so4_first_gram_entry": 4,
+      "limits": "Independent exact rational formulas; constructor bypass is source-visible, not native execution. Polynomial correctness does not admit metric geometry.",
+      "receipt": {
+        "path": "dag/reviews/additional_rust_linear_algebra_remaining_controls12.json",
+        "sha256": "40610a2c3727b83a35aae45a6050c0b6ede2ea38fed1398047233513e0fdb1e1"
+      }
+    }
+  ],
+  "limits": [
+    "Source review and independent finite controls only; no original Rust/Cargo/native/provider execution.",
+    "Display receipts require separate manual substantive notes; metadata scans earn no full-source credit."
+  ]
+}

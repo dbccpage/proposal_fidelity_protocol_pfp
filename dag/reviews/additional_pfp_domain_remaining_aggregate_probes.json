@@ -1,0 +1,98 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/exceptions.py",
+      "sha256": "c0f7d4b1e65275d7604192e6cc8294d123a6f360e88c314a3eb63c3439429c69",
+      "removed_imports": []
+    },
+    {
+      "path": "pfp/domain/shared_kernel/canonical.py",
+      "sha256": "d7170c6f8f37d12489843dccd63162b471afea062d3df6b8bce1119e99ab7918",
+      "removed_imports": []
+    },
+    {
+      "path": "pfp/domain/aggregates/learning_policy.py",
+      "sha256": "74d17dc28832bc7f7e94504d11c155b2c2bc0543f22984f70375b87f569b268d",
+      "selected_unmodified_definitions": [
+        "FrozenCorpus",
+        "PolicyScore",
+        "RoutingPolicyProjector"
+      ]
+    },
+    {
+      "path": "pfp/domain/aggregates/research_claim.py",
+      "sha256": "85022c70441952fa7de5b017d69548908cf35e78f84c99a8ed0625cb2826e0c5",
+      "selected_unmodified_definitions": [
+        "ResearchSeedPacket",
+        "ResearchProposal",
+        "ResearchStepPacket"
+      ]
+    },
+    {
+      "path": "pfp/domain/aggregates/research_run_root.py",
+      "sha256": "19cb82e8d0fa40eace26475f982375fee34c8eda4b58e1dd2ab6565feb4cc8d6",
+      "removed_imports": [
+        {
+          "line": 21,
+          "module": "governance.contracts.ddc_packets"
+        },
+        {
+          "line": 26,
+          "module": "research_claim"
+        },
+        {
+          "line": 27,
+          "module": "research_claim"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C097",
+      "rule": "learning_corpus_digest_binds_create_metadata",
+      "status": "counterexample_observed",
+      "different_declared_corpus_hashes_and_sample_ids": true,
+      "same_digest": true,
+      "limit": "Metadata-only create API; populated runtime/label case records do participate in digest."
+    },
+    {
+      "id": "PFPDOMAIN-C098",
+      "rule": "routing_policy_terminalizer_definition",
+      "status": "counterexample_observed",
+      "observed": "NameError: TERMINALIZER_ID",
+      "limit": "Source has no definition/import of this global. No routing solve, solver proposal or local promotion attempted."
+    },
+    {
+      "id": "PFPDOMAIN-C099",
+      "rule": "legacy_research_aggregate_names_preserve_entity_validators",
+      "status": "counterexample_observed",
+      "accepted_empty_proposal_claims": true,
+      "accepted_parent_traversal": true,
+      "accepted_negative_budget_and_indices": true,
+      "accepted_granted_authority": true,
+      "limit": "These aggregate compatibility dataclasses lack post-init validation; stronger entities/research_packets owners are distinct classes and were not bypassed."
+    },
+    {
+      "id": "PFPDOMAIN-C100",
+      "rule": "semantic_float_tag_is_unambiguous",
+      "status": "counterexample_observed",
+      "float_input": 1.0,
+      "mapping_input": {
+        "$float_hex": "0x1.0000000000000p+0"
+      },
+      "identical_sanitized_value": true,
+      "limit": "Semantic evidence hash collision by representation, not SHA collision. Outer raw artifact hash can distinguish records; semantic root cannot."
+    },
+    {
+      "id": "PFPDOMAIN-C101",
+      "rule": "closed_research_terminal_requires_zero_residual",
+      "status": "counterexample_observed",
+      "accepted_terminal": "FINITE_RESIDUAL_CLOSED",
+      "final_declared_residual": 1,
+      "oesos_roots_required": false,
+      "limit": "Unchanged terminal guard only; native-chain source additionally requires E strict decrease/continuity and foreign DFA grammar. No foreign grammar or full artifact replay executed; no independent equation evaluator is called by this guard."
+    }
+  ]
+}

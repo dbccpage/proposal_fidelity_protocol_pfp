@@ -1,0 +1,824 @@
+--- PAGE 1 ---
+ℓ1-Native Cohomology of Finite Defect Fields
+Quotient Norms, Dual Circulations, Sparse Representatives, and the 𝐿𝑝 Geometric Family
+Jeremy H. Carroll
+2026-10-15
+License: Creative Commons Attribution 4.0 International (CC-BY-4.0)
+Scope: Finite-dimensional convex and combinatorial graph cohomology.
+V ersion: 6.5.2 (2026-10-15)
+Notation and Mathematical Setup
+We fix standard notation for finite cell complexes and convex analysis used throughout this monograph:
+• 𝐺 = (𝑉 , 𝐸): A finite directed graph with 𝑛 = |𝑉 |vertices and 𝑚 = |𝐸| edges. Edge orientations are fixed
+for bookkeeping.
+• 𝐶0 = ℝ 𝑉 , 𝐶1 = ℝ 𝐸: Finite-dimensional vector spaces of 0-cochains (vertex potentials) and 1-cochains
+(edge differences).
+• 𝑑0 ∶ 𝐶0 → 𝐶1: Incidence coboundary operator, (𝑑0𝑓)(𝑢, 𝑣) = 𝑓(𝑣) − 𝑓(𝑢)for directed edge 𝑒 = (𝑢, 𝑣) ∈ 𝐸,
+represented by the 𝑚 × 𝑛incidence matrix B.
+• 𝐵1 = im 𝑑0: The subspace of exact 1-cochains (pure gradient potentials).
+• 𝑄1 = 𝐶 1/𝐵1: The first cochain quotient space of dimension 𝛽 = 𝑚 − 𝑛 + 𝑐 , where 𝑐 is the number of
+connected components (the cycle rank or first Betti number of 𝐺).
+• w ∈ ℝ 𝐸
+>0: A strictly positive edge weight vector.
+• Φ𝑝([𝜔]) =inf𝑓∈𝐶 0 ‖𝜔 + 𝑑0𝑓‖𝑝,w: The weighted quotient 𝐿𝑝 norm for 𝑝 ∈ [1, ∞].
+• 𝑍1(𝐺; ℝ) =ker(B⊤): Real divergence-free circulations, used for the LP dual. Integral cycles 𝑍1(𝐺; ℤ) =
+ker(B⊤) ∩ ℤ𝐸 are used for branch-independent multiplicative holonomy.
+• For 2-simplicial complexes 𝐾 = (𝑉 , 𝐸, 𝐹 ), 𝑑1 ∶ 𝐶1 → 𝐶2 denotes the face coboundary operator, satisfying
+discrete Bianchi nilpotency 𝑑1 ∘ 𝑑0 = 0.
+Abstract
+For a finite directed graph with strictly positive edge weights, we study the family of weighted 𝐿𝑝 norms
+(𝑝 ∈ [1, ∞), complemented by the separate weighted Chebyshev endpoint norm at 𝑝 = ∞) induced on the
+first cochain quotient space 𝑄1 = 𝐶 1/ im 𝑑0. The quotient infimum is attained for all 𝑝 ∈ [1, ∞], defines a
+genuine quotient norm Φ𝑝, and satisfies Fenchel-Rockafellar duality with conjugate exponent 𝑞 = 𝑝/(𝑝 − 1),
+characterizing the quotient norm as a maximum circulation pairing subject to dual 𝐿𝑞 capacity bounds. We
+establish the geometric transition across regimes: (i) 𝑝 = 1 is polyhedral and non-strictly convex, may admit
+non-unique primal minimizers, exhibits sparse cycle-rank support bounds ( | supp(𝑟)| ≤ 𝛽), and admits exact
+rational linear programming duality; (ii) for 𝑝 ∈ (1, ∞)the weighted cochain normed space is uniformly
+convex, and the powered objective 𝐽𝑝(𝑓) =1
+𝑝 ∑𝑒 𝑤𝑒|𝜔𝑒 + (B𝑓)𝑒|𝑝 is strictly convex on gauge-fixed potentials
+(one zero potential per connected component), ensuring a strictly unique optimal residual r∗
+𝑝 = 𝜔 + Bf∗
+𝑝 and
+unique gauge-fixed potential f∗
+𝑝 characterized by nonlinear graph 𝑝-Laplacian optimality B⊤(w ⊙ |r|𝑝−1 ⊙
+sgn r) =0, r = 𝜔 + Bf; (iii) 𝑝 = 2 recovers classical Hilbertian Hodge-Helmholtz orthogonal decomposition
+with Moore-Penrose graph Laplacian solutions and weighted dual circulation witnesses z∗
+2 = Wr∗
+2/‖r∗
+2‖2,w,
+where W = diag(w), when r∗
+2 ≠ 0 (with z∗
+2 = 0 at zero residual); (iv) 𝑝 = ∞ corresponds to discrete
+1
+
+--- PAGE 2 ---
+Chebyshev approximation governed by active-edge subgradient pairing under its separate weighted endpoint
+convention ‖𝑥‖∞,w = max𝑒 𝑤𝑒|𝑥𝑒| (with the general Aronsson equation withdrawn for arbitrary cochains);
+and (v) the 𝑝 → 1+ limit is characterized via unconditional secondary entropy minimization over the optimal
+𝐿1 face. We also show that simplicial coboundary operators satisfy discrete Bianchi nilpotency with gauge-
+orbit circulation invariance, that off-diagonal quantum state coherence is bounded under Schatten trace
+norms, and that additive real flux Φ1([𝜔])of a chosen real lift is distinguished from branch-independent 𝑈 (1)
+phase holonomy and period-minimized quotient defect. These general finite-dimensional statements have
+prose proofs in the manuscript and are classified as classical background. Lean mechanizes the conditional
+finite integer certificate L1C-TG and the specified finite-model lemmas for L1C-T1, L1C-T2, L1C-T3, L1C-
+T4, L1C-T5, and L1C-T7; this formalization scope is distinct from mathematical proof and originality.
+Jiang, Lim, Yao, and Ye [9, preprint v2, §6.1] already formulate weighted 𝐿1 projection of edge flows onto
+gradients and its dual over bounded divergence-free flows. Here the contribution is a presentation through
+weighted finite-graph quotient optimization and exact, independently checkable certificates, a rational com-
+putational companion, and mechanization of specified finite integer certificate statements in Lean. The
+bounded-circulation dual is classical background.
+Why a researcher should care
+Least squares ( 𝑝 = 2 ) spreads error globally over all edges. 𝐿1 quotient minimization instead localizes
+defect on sparse cycle representatives while retaining an exact rational dual certificate. The complete 𝐿𝑝
+family connects sparse polyhedral localization ( 𝑝 = 1 ), strictly unique nonlinear 𝑝-Laplacian projections
+(𝑝 ∈ (1, ∞)), classical Hilbertian Hodge theory ( 𝑝 = 2), and maximal-error Chebyshev suppression ( 𝑝 = ∞,
+under its separate weighted endpoint convention). The certificate presentation connects these classical graph
+and convex constructions with machine-checkable finite witnesses.
+Falsifiability
+The prose propositions and the separately scoped Lean theorems have the hypotheses stated in their sections
+and claim records. A mathematical conclusion would fail if a positive-weight finite instance has no attained
+minimum for some 𝑝 ∈ [1, ∞], if primal and dual values differ for an optimal pair, if data satisfying all
+stated hypotheses of Theorem L1C-T4 or LpC-T3 fail their conclusions, if for 𝑝 ∈ (1, ∞)two distinct gauge-
+fixed potentials (one fixed vertex per component) both minimize the quotient objective, if the nonlinear
+𝑝-Laplacian Euler-Lagrange equation fails at an optimal potential, if some class lacks an 𝐿1 optimum with
+support at most the cycle rank, if an integral instance has no integral 𝐿1 optimum, if the 𝑝 → 1+ trajectory
+fails to converge to an 𝐿1 minimizer, if a 2-simplicial complex has non-vanishing field curvature 𝑑1(𝑑0𝑓) ≠ 0
+for a pure gauge potential, or if a finite quantum state violates the off-diagonal Schatten- 𝑝 or trace coherence
+bound. The companion code and tests check solver success, primal/dual conditions, support bounds, exact-
+shift invariance, nilpotency, and quantum coherence bounds across enumerated instances; it also includes an
+instance on which an 𝐿2 surrogate reports the wrong 𝐿1 value.
+1. Finite graph cochains and 𝐿𝑝 norms
+Let 𝐺 = (𝑉 , 𝐸)be a finite directed graph. Orientation is bookkeeping: reversing an edge negates its cochain
+coordinate. Put
+𝐶0 = ℝ 𝑉 , 𝐶 1 = ℝ 𝐸, and (𝑑0𝑓)(𝑢, 𝑣) = 𝑓(𝑣) − 𝑓(𝑢).
+When considering 1-dimensional graph carriers without higher faces, 𝑑1 = 0, so every edge cochain is closed,
+while exact cochains form 𝐵1 = im 𝑑0. The first cochain quotient is
+𝑄1 = 𝐶1/𝐵1.
+2
+
+--- PAGE 3 ---
+Fix weights 𝑤𝑒 > 0 for all 𝑒 ∈ 𝐸. For 𝑝 ∈ [1, ∞), the weighted 𝐿𝑝 norm on 𝐶1 is
+‖𝑥‖𝑝,w = (∑
+𝑒∈𝐸
+𝑤𝑒|𝑥𝑒|𝑝)
+1/𝑝
+,
+and for 𝑝 = ∞, the weighted 𝐿∞ norm is defined under the Chebyshev convention
+‖𝑥‖∞,w = max
+𝑒∈𝐸
+𝑤𝑒|𝑥𝑒|.
+Remark on the 𝑝 = ∞ endpoint weighting convention. For non-uniform weights w, the Chebyshev
+endpoint norm ‖𝑥‖∞,w = max𝑒∈𝐸 𝑤𝑒|𝑥𝑒| is a separate weighted endpoint convention chosen for maximal
+weighted coordinate error suppression (standard in discrete Chebyshev approximation and computational
+engineering). It does not coincide with the point-wise analytic limit lim 𝑝→∞ ‖𝑥‖𝑝,w = max𝑒∈𝐸 |𝑥𝑒| of the
+finite-𝑝 weighted norms (∑ 𝑤𝑒|𝑥𝑒|𝑝)1/𝑝. On an unweighted graph ( 𝑤𝑒 = 1 for all 𝑒), the two conventions
+coincide and the finite- 𝑝 norms interpolate continuously to ℓ∞. For non-uniform weights (for example, on
+a triangle with cycle flux 1 and weights (1, 2, 3), where lim 𝑝→∞ Φ𝑝 = 1/3 whereas the defined Chebyshev
+defect is Φ∞ = 6/11), the 𝑝 = ∞ problem is treated as a separate polyhedral endpoint convention with its
+own active-edge subgradient pairing (see §4.4).
+For 𝑝 = 1, this specializes to the polyhedral weighted 𝐿1 norm ‖𝑥‖1,w = ∑𝑒∈𝐸 𝑤𝑒|𝑥𝑒|. For a quotient class
+[𝜔] ∈ 𝑄1 and 𝑝 ∈ [1, ∞], set
+Φ𝑝([𝜔]) =inf
+𝑓∈𝐶 0
+‖𝜔 + 𝑑0𝑓‖𝑝,w.
+All results extend componentwise to disconnected graphs. For concise proofs we assume 𝐺 is connected and
+write 𝑛 = |𝑉 |, 𝑚 = |𝐸|, and 𝛽 = 𝑚 − 𝑛 + 1 =dim 𝑄1.
+2. Attainment and quotient norm
+Theorem LpC-T1 — Lp quotient attainment
+For every 𝑝 ∈ [1, ∞]and every 𝜔 ∈ 𝐶1, the infimum defining Φ𝑝([𝜔])is attained.
+Proof. Fix a root vertex 𝑣0 ∈ 𝑉 and restrict to the gauge-fixed subspace 𝐹 = {𝑓 ∈ 𝐶 0 ∶ 𝑓(𝑣𝑗) =
+0 for one root 𝑣𝑗 per component }. Connectedness makes 𝑑0|𝐹 injective. In finite dimension, all norms are
+equivalent and an injective linear map is bounded below: for any 𝑝 ∈ [1, ∞], there exists 𝑐𝑝 > 0 such that
+‖𝑑0𝑓‖𝑝,w ≥ 𝑐 𝑝‖𝑓‖ for all 𝑓 ∈ 𝐹 . Hence
+‖𝜔 + 𝑑0𝑓‖𝑝,w ≥ 𝑐 𝑝‖𝑓‖ − ‖𝜔‖𝑝,w,
+so the objective is coercive on 𝐹. Because 𝑓 ↦ ‖𝜔 + 𝑑0𝑓‖𝑝,w is continuous on the finite-dimensional space 𝐹,
+it attains its minimum. Attainment on 𝐹 implies attainment on 𝐶0 because 𝐶0 = 𝐹 ⊕ ker(𝑑0).
+□
+Theorem L1C-T1 — attainment (p = 1 base case)
+For every 𝜔 ∈ 𝐶1, the infimum defining Φ1([𝜔])is attained.
+Proof. Specializing the classical argument of Theorem LpC-T1 to 𝑝 = 1 yields coercivity of 𝑓 ↦ ‖𝜔+𝑑 0𝑓‖1,w
+on 𝐹. Lean 4 elaborates the integer 3-cycle bound in lean4/l1c_t01_attainment.lean.
+□
+3
+
+--- PAGE 4 ---
+Theorem LpC-T2 — Lp quotient norm
+For every 𝑝 ∈ [1, ∞], Φ𝑝 is a norm on 𝑄1 = 𝐶1/im 𝑑0.
+Proof. Independence of representative follows by translating 𝑓 ↦ 𝑓 + 𝑔 . Homogeneity holds because for
+𝜆 ∈ ℝ , Φ𝑝([𝜆𝜔]) =inf𝑓 ‖𝜆𝜔 + 𝑑0𝑓‖𝑝,w = |𝜆| inf𝑓 ′ ‖𝜔 + 𝑑0𝑓′‖𝑝,w = |𝜆|Φ 𝑝([𝜔]). Subadditivity follows from
+Minkowski’s inequality: for [𝜔1], [𝜔2] ∈ 𝑄1 with respective minimizers 𝑓1, 𝑓2,
+Φ𝑝([𝜔1 + 𝜔2]) ≤ ‖𝜔1 + 𝜔2 + 𝑑0(𝑓1 + 𝑓2)‖𝑝,w ≤ ‖𝜔1 + 𝑑0𝑓1‖𝑝,w + ‖𝜔2 + 𝑑0𝑓2‖𝑝,w = Φ 𝑝([𝜔1]) + Φ𝑝([𝜔2]).
+Positive definiteness: If Φ𝑝([𝜔]) = 0, attainment (Theorem LpC-T1) provides 𝑓∗ such that ‖𝜔 + 𝑑0𝑓∗‖𝑝,w = 0.
+Because each 𝑤𝑒 > 0, this implies 𝜔 + 𝑑0𝑓∗ = 0, so 𝜔 ∈ im 𝑑0, meaning [𝜔] = 0. Conversely, if 𝜔 ∈ im 𝑑0,
+taking 𝑓 = −𝑑 †
+0𝜔 gives norm zero.
+□
+Theorem L1C-T2 — quotient norm (p = 1 base case)
+Φ1 is a norm on 𝑄1.
+Proof. Specialize Theorem LpC-T2 to 𝑝 = 1 . Lean 4 separately elaborates the scoped ambient weighted-
+norm algebra in lean4/l1c_t02_quotient_norm.lean. Strict positivity of every 𝑤𝑒 is essential: allowing a zero
+weight permits a nonzero quotient class to register value zero.
+□
+3. Fenchel-Rockafellar Hölder duality
+Let B denote the 𝑚 × 𝑛incidence matrix representing 𝑑0. The primal problem for 𝑝 ∈ [1, ∞]is:
+inf
+f∈ℝ𝑛
+‖𝜔 + Bf‖𝑝,w.
+Define the conjugate exponent 𝑞 ∈ [1, ∞]by 1/𝑝 + 1/𝑞 = 1 (with 𝑞 = ∞ for 𝑝 = 1 , and 𝑞 = 1 for 𝑝 = ∞).
+The dual norm on 1-chains z ∈ ℝ 𝐸 is defined by:
+‖z‖𝑞,w∗ = (∑
+𝑒∈𝐸
+𝑤1−𝑞
+𝑒 |𝑧𝑒|𝑞)
+1/𝑞
+for 1 < 𝑞 < ∞,
+‖z‖∞,w∗ = max
+𝑒∈𝐸
+|𝑧𝑒|
+𝑤𝑒
+for 𝑞 = ∞ (𝑝 = 1),
+‖z‖1,w∗ = ∑
+𝑒∈𝐸
+|𝑧𝑒|
+𝑤𝑒
+for 𝑞 = 1 (𝑝 = ∞).
+Theorem LpC-T3 — Fenchel-Rockafellar Hölder duality
+For every 𝑝 ∈ [1, ∞]and conjugate exponent 𝑞 = 𝑝/(𝑝 − 1), strong duality holds:
+Φ𝑝([𝜔]) =max
+z∈ℝ𝐸
+{z⊤𝜔 ∶ B⊤z = 0, ‖ z‖𝑞,w∗ ≤ 1} .
+Both primal and dual extrema are attained.
+Proof. Use the gauge-fixed subspace for primal attainment (Theorem LpC-T1). Let 𝐹 (u) = ‖u‖𝑝,w denote
+the weighted norm and 𝐻(u) = 𝐹 (𝜔 +u). Its Fenchel conjugate is 𝐻 ∗(z) = 𝐹∗(z) −z⊤𝜔, where 𝐹∗ is the
+indicator function of the dual unit ball {z ∈ ℝ 𝐸 ∶ ‖ z‖𝑞,w∗ ≤ 1} . Because 𝐻 is finite and continuous on
+4
+
+--- PAGE 5 ---
+ℝ𝐸, finite-dimensional Fenchel-Rockafellar duality [1] equates the primal minimum over Bf with the dual
+maximum of z⊤𝜔 over B⊤z = 0 and ‖z‖𝑞,w∗ ≤ 1, using norm symmetry. Compactness of this dual feasible
+set yields attainment.
+□
+Theorem L1C-T3 — dual circulation formula (p = 1 base case)
+For 𝑝 = 1 , the dual norm constraint ‖z‖∞,w∗ ≤ 1 is equivalent to coordinate capacity bounds |𝑧𝑒| ≤ 𝑤 𝑒,
+yielding:
+Φ1([𝜔]) =max
+z
+{z⊤𝜔 ∶ B⊤z = 0, |𝑧 𝑒| ≤ 𝑤 𝑒 ∀𝑒 ∈ 𝐸} .
+Both extrema are attained.
+Proof. The specialization of Theorem LpC-T3 to 𝑝 = 1 gives strong LP duality over bounded circulations.
+Lean 4 elaborates the 3-cycle weak-duality inequality in lean4/l1c_t03_weak_duality.lean.
+□
+Corollary LpC-C1 — Lp exactness criterion
+For any 𝑝 ∈ [1, ∞], 𝜔 is exact if and only if every circulation pairs to zero with 𝜔.
+Proof. If 𝜔 = Bf, then for any z with B⊤z = 0, z⊤𝜔 = z⊤Bf = (B⊤z)⊤f = 0. Conversely, if z⊤𝜔 = 0 for
+all circulations, the maximum dual value is 0, which by Theorem LpC-T3 implies Φ𝑝([𝜔]) = 0. By Theorem
+LpC-T2, [𝜔] = 0, so 𝜔 ∈ im 𝑑0.
+□
+Corollary L1C-C1 — exactness criterion (p = 1 base case)
+𝜔 is exact if and only if every circulation pairs to zero with 𝜔.
+Proof. Specialize Corollary LpC-C1 to 𝑝 = 1.
+□
+4. Geometric transition across regimes
+The geometry of the quotient problem transitions across the parameter 𝑝 ∈ [1, ∞]. We classify these into
+distinct regimes:
+4.1 Polyhedral regime (p = 1)
+At 𝑝 = 1 , the objective is piecewise linear and non-strictly convex. Primal minimizers may be non-unique,
+forming a convex polyhedral set. Optimal pairs satisfy checkable certificate properties:
+Theorem L1C-T4 — primal-dual certificate
+Let r = 𝜔 + Bf. Suppose B⊤z = 0, |𝑧𝑒| ≤ 𝑤 𝑒, and:
+• 𝑧𝑒 = 𝑤 𝑒 sgn(𝑟𝑒)whenever 𝑟𝑒 ≠ 0;
+• 𝑧𝑒 ∈ [−𝑤𝑒, 𝑤𝑒] when 𝑟𝑒 = 0.
+Then r is primal optimal, z is dual optimal, and
+Φ1([𝜔]) =z⊤𝜔 = ‖r‖1,w.
+5
+
+--- PAGE 6 ---
+Proof. Feasibility gives z⊤𝜔 = z⊤(𝜔 +Bf) =z⊤r. The coordinate conditions give z⊤r = ∑𝑒∈𝐸 𝑤𝑒|𝑟𝑒|. Weak
+duality sandwiches this common value between dual and primal optima, establishing optimality of both.
+Lean 4 formalizes cycle3 complementary slackness in lean4/l1c_t04_complementary_slackness.lean.
+□
+Theorem L1C-TG — general finite matrix certificate
+Let 𝑚 ∈ ℕ be an arbitrary finite dimension, w ∈ ℕ 𝑚
+>0 positive integer weights, 𝜔 ∈ ℤ 𝑚 an input 1-cochain,
+and D ∶ ℤ 𝑘 → ℤ 𝑚 an arbitrary discrete coboundary operator. If a candidate potential p ∈ ℤ 𝑘, candidate
+dual vector z ∈ ℤ 𝑚, and candidate primal residual r ∈ ℤ 𝑚 satisfy:
+1. Primal feasibility: r = 𝜔 + Dp;
+2. Exact gauge annihilation: ⟨z, Dp′⟩ = 0 for all potentials p′ ∈ ℤ 𝑘;
+3. Capacity bounds: |𝑧𝑒| ≤ 𝑤 𝑒 for all 𝑒 ∈ {1, … , 𝑚};
+4. Zero duality gap: ‖r‖1,w = ⟨z, 𝜔⟩; Then r is globally optimal across all aﬀine gauge choices:
+‖r‖1,w ≤ ‖𝜔 + Dp′‖1,w ∀p′ ∈ ℤ 𝑘.
+Proof. For any p′ ∈ ℤ 𝑘, gauge annihilation yields ⟨z, 𝜔 +Dp′⟩ = ⟨ z, 𝜔⟩ + ⟨z, Dp′⟩ = ⟨ z, 𝜔⟩. The coordinate
+capacity bound |𝑧𝑒| ≤ 𝑤 𝑒 ensures ⟨z, y⟩ ≤ ‖ y‖1,w for all y ∈ ℤ 𝑚. Setting y = 𝜔 + Dp′, we obtain:
+‖r‖1,w = ⟨z, 𝜔⟩ = ⟨z, 𝜔 +Dp′⟩ ≤ ‖𝜔 + Dp′‖1,w.
+Mechanized in Lean 4 ( lean4/l1c_general_certificate.lean) for arbitrary dimension 𝑚 with zero sorry and
+kernel axioms {propext, Classical.choice, Quot.sound} .
+□
+4.2 Strictly and uniformly convex regime (p in (1, inf))
+For 𝑝 ∈ (1, ∞), the 𝐿𝑝 norm is strictly convex and uniformly convex by Clarkson’s inequalities.
+Theorem LpC-T4P — uniform convexity and nonlinear graph p-Laplacian
+For any 𝑝 ∈ (1, ∞)and 𝜔 ∈ 𝐶1:
+1. The primal minimizer is strictly unique on the gauge-fixed subspace 𝐹 = {𝑓 ∈ 𝐶 0 ∶ 𝑓(𝑣𝑗) =
+0 for one root 𝑣𝑗 per component }, yielding a strictly unique optimal residual r∗
+𝑝 = 𝜔 + Bf∗
+𝑝.
+2. The optimal potential f∗
+𝑝 is characterized by the nonlinear graph 𝑝-Laplacian equation:
+B⊤ (w ⊙ |Bf + 𝜔|𝑝−1 ⊙ sgn(Bf + 𝜔)) =0.
+3. When the optimal residual is nonzero, its normalized dual witness is uniquely determined by:
+z∗
+𝑝 = w ⊙ |r∗
+𝑝|𝑝−1 ⊙ sgn(r∗
+𝑝)
+‖r∗𝑝‖𝑝−1
+𝑝,w
+.
+Proof. For (1), uniform convexity of the 𝐿𝑝 norm on ℝ𝑚 for 𝑝 ∈ (1, ∞)establishes that for any x ≠ y with
+‖x‖𝑝,w = ‖ y‖𝑝,w = 1, ‖ x+y
+2 ‖𝑝,w < 1. The powered objective is strictly convex on the gauge-fixed space: the
+coboundary is injective there and each positive-weight scalar function |𝑥|𝑝 is strictly convex. Attainment
+therefore gives uniqueness. For (2), for 𝑝 ∈ (1, ∞), the function 𝐽𝑝(f) =1
+𝑝 ‖𝜔+Bf‖𝑝
+𝑝,w = 1
+𝑝 ∑𝑒∈𝐸 𝑤𝑒|(𝜔+Bf)𝑒|𝑝
+is strictly convex and continuously differentiable. Its gradient with respect to f is:
+∇𝐽𝑝(f) =B⊤ (w ⊙ |𝜔 + Bf|𝑝−1 ⊙ sgn(𝜔 +Bf)) .
+Setting ∇𝐽𝑝(f) =0 yields the nonlinear graph 𝑝-Laplacian Euler-Lagrange equation. For (3), setting z∗
+𝑝 as
+displayed, we observe B⊤z∗
+𝑝 = 0 (by the Euler-Lagrange equation), and direct evaluation confirms ‖z∗
+𝑝‖𝑞,w∗ =
+1 and ⟨z∗
+𝑝, 𝜔⟩ = ‖r∗
+𝑝‖𝑝,w, satisfying the Fenchel-Rockafellar optimality conditions with zero duality gap.
+□
+6
+
+--- PAGE 7 ---
+4.3 Classical Hilbertian regime (p = 2)
+At 𝑝 = 2, the 𝐿2 geometry coincides with the classical Hilbertian framework.
+Theorem LpC-T4H — Hilbertian L2 Hodge-Helmholtz decomposition
+For 𝑝 = 2 and uniform weights 𝑤𝑒 = 1:
+1. The cochain space admits an orthogonal Hodge-Helmholtz decomposition:
+𝐶1 = im 𝑑0 ⊕ ker(𝑑∗
+0) = 𝐵1 ⊕ 𝑍1.
+2. The primal minimizer is given explicitly by the Moore-Penrose pseudoinverse of the standard graph
+Laplacian L0 = B⊤B:
+f∗
+2 = −L†
+0B⊤𝜔.
+3. The optimal residual is the harmonic component r∗
+2 = (I − BL†
+0B⊤)𝜔. When r∗
+2 ≠ 0, the dual circulation
+witness is self-dual:
+z∗
+2 = r∗
+2
+‖r∗
+2‖2
+;
+when r∗
+2 = 0, the quotient norm vanishes Φ2([𝜔]) = 0and z∗
+2 = 0 trivially satisfies dual feasibility and
+zero duality gap.
+Proof. At 𝑝 = 2 , the 𝑝-Laplacian becomes linear: B⊤(Bf + 𝜔) = L0f + B⊤𝜔 = 0. Because B⊤𝜔 lies in
+the range of L0, the minimum-norm potential is f∗
+2 = − L†
+0B⊤𝜔. Orthogonality of im 𝑑0 and ker (𝑑∗
+0)gives
+Pythagoras’ theorem: ‖𝜔‖2
+2 = ‖Bf∗
+2‖2
+2 + ‖r∗
+2‖2
+2. The dual exponent is 𝑞 = 2, so dual circulations are measured
+in the same 𝐿2 norm, making the dual witness z∗
+2 a direct scalar multiple of the primal harmonic residual
+when r∗
+2 ≠ 0. If r∗
+2 = 0, the cochain is exact, Φ2([𝜔]) = 0, and z∗
+2 = 0 satisfies B⊤0 = 0 with ⟨0, 𝜔⟩ = 0.
+□
+Positive nonuniform weights. Put W = diag(𝑤𝑒)and Lw = B⊤WB. The minimum Euclidean-norm
+potential is −L†
+wB⊤W𝜔, and stationarity is B⊤W𝑟∗
+2 = 0. At nonzero residual the dual witness is
+𝑧∗
+2 = W𝑟∗
+2
+‖𝑟∗
+2‖2,w
+,
+with ∑𝑒(𝑧∗
+𝑒)2/𝑤𝑒 = 1 and ⟨𝑧∗
+2, 𝜔⟩ = ‖𝑟∗
+2‖2,w. At zero residual use 𝑧∗
+2 = 0. On the unit-flux directed triangle
+with weights (1, 2, 3), 𝑟∗
+2 = (6, 3, 2)/11is not a real circulation, whereas W𝑟∗
+2 = (6, 6, 6)/11is. The weight
+factor is essential.
+Contrast between L1 and L2 localization. While 𝐿2 minimization distributes error across the entire
+graph to minimize squared Euclidean length (variance), 𝐿1 minimization penalizes magnitude linearly, con-
+centrating error onto sparse topological cycles. Section 8 provides an explicit instance where 𝐿2 spreads
+defect across all edges while 𝐿1 confines it to a single edge.
+4.4 Chebyshev regime (p = inf)
+At 𝑝 = ∞, the quotient defect measures the minimal maximum-edge violation:
+Φ∞([𝜔]) =inf
+𝑓
+max
+𝑒∈𝐸
+𝑤𝑒|(𝑑0𝑓 + 𝜔)𝑒|.
+Theorem LpC-T4INF — discrete Chebyshev approximation and active-edge pairing
+1. Φ∞([𝜔])is attained and equals the Chebyshev approximation radius of 𝜔 on the subspace im 𝑑0.
+2. An optimum admits an active-edge subgradient z ∈ ℝ 𝐸 satisfying B⊤z = 0, ∑𝑒∈𝐸 |𝑧𝑒|/𝑤𝑒 ≤ 1 , and
+z⊤(𝜔 +Bf∗
+∞) = ‖𝜔 +Bf∗
+∞‖∞,w.
+7
+
+--- PAGE 8 ---
+Proof. Writing the weighted maximum norm in epigraph form reduces the problem to a finite linear pro-
+gram; the stated active-edge subgradient conditions are its LP dual and complementary slackness optimality
+conditions (Theorem LpC-T3 at 𝑝 = ∞, 𝑞 = 1 ). The earlier assertion of a discrete Aronsson equation for
+arbitrary offset cochains does not follow from this argument and remains omitted.
+□
+4.5 The 𝑝 → 1+ limit and secondary entropy minimization
+Because the polyhedral 𝐿1 quotient problem admits a non-strictly convex objective, the set of optimal primal
+potentials
+ℳ1 = arg min
+𝑓∈𝐹
+‖𝜔 + 𝑑0𝑓‖1,w
+is in general a convex polytope rather than a singleton. In contrast, for every 𝑝 ∈ (1, ∞), strict convexity
+ensures that the 𝐿𝑝 minimizer 𝑓∗
+𝑝 ∈ 𝐹 is strictly unique. This establishes a continuous primal trajectory
+𝑝 ↦ 𝑓 ∗
+𝑝 for 𝑝 > 1.
+Proposition LpC-P1 — secondary selection in the 𝑝 → 1+ limit
+Let 𝐺 = (𝑉 , 𝐸)be a connected finite graph with strictly positive weights w, and let ℳ1 ⊂ 𝐹 denote the
+non-empty compact convex set of gauge-fixed 𝐿1 minimizers. For each 𝑝 ∈ (1, 2], let 𝑓∗
+𝑝 ∈ 𝐹 be the unique
+minimizer of 𝐽𝑝(𝑓) =1
+𝑝 ‖𝜔 + 𝑑0𝑓‖𝑝
+𝑝,w. Then:
+1. Every accumulation point 𝑓∗
+1 = lim𝑘→∞ 𝑓∗
+𝑝𝑘
+as 𝑝𝑘 → 1+ belongs to ℳ1.
+2. On the relative interior of an optimal face where the active sign pattern sgn ((𝜔 + 𝑑0𝑓)𝑒)is invariant, the
+first-order asymptotic expansion of the objective as 𝑝 → 1+ is:
+1
+𝑝 ∑
+𝑒∈𝐸
+𝑤𝑒|𝑟𝑓 (𝑒)|𝑝 = ‖𝜔 + 𝑑0𝑓‖1,w + (𝑝 − 1) [𝐸(𝑓) − ‖𝜔 + 𝑑0𝑓‖1,w] + 𝑂((𝑝 − 1)2).
+3. Accordingly, the trajectory 𝑓∗
+𝑝 selects among 𝐿1 minimizers by minimizing the weighted entropy functional
+𝐸(𝑓) = ∑
+𝑒∈𝐸
+𝑤𝑒|𝑟𝑓 (𝑒)|log |𝑟𝑓 (𝑒)|
+(with the standard continuous convention 0log 0 = 0 ) over ℳ1. The functional 𝐸(𝑓)is strictly convex
+on ℳ1, ensuring that the entropy-selected minimizer 𝑓∗
+1 = lim𝑝→1+ 𝑓∗
+𝑝 is unconditionally unique and that
+the entire trajectory converges.
+Proof. Let 𝑊 = ∑ 𝑒 𝑤𝑒 and 𝑀0 = max𝑒 |𝜔𝑒| (the empty-edge case is trivial). Weighted Hölder and
+optimality give, uniformly for 1 < 𝑝 ≤ 2 ,
+‖𝑟∗
+𝑝‖1,w ≤ 𝑊 1−1/𝑝‖𝑟∗
+𝑝‖𝑝,w ≤ 𝑊 1−1/𝑝‖𝜔‖𝑝,w ≤ 𝑊 𝑀0.
+Thus ‖B𝑓∗
+𝑝‖1,w ≤ 𝑊 𝑀0 + ‖𝜔‖1,w. The fixed inverse bound for B|𝐹 controls ‖𝑓∗
+𝑝‖ independently of 𝑝. Together
+with compactness of ℳ1, this places the trajectory and the optimal face in a common compact set 𝐾 ⊂ 𝐹 .
+On 𝐾, the residuals 𝑟𝑓 = 𝜔 + 𝑑0𝑓 are uniformly bounded: |𝑟𝑓 (𝑒)| ≤ 𝑀 < ∞for all 𝑒 ∈ 𝐸, 𝑓 ∈ 𝐾 . For any
+fixed scalar 𝑥 ∈ [−𝑀 , 𝑀 ], the Taylor expansion of 𝑡 ↦ 1
+𝑝 |𝑥|𝑝 around 𝑝 = 1 gives:
+1
+𝑝|𝑥|𝑝 = |𝑥| + (𝑝 − 1) [|𝑥|log |𝑥| − |𝑥|] + 𝑅(𝑝, 𝑥),
+under the standard continuous convention 0log 0 = 0 , where the remainder satisfies |𝑅(𝑝, 𝑥)| ≤ 𝐶(𝑝 − 1)2
+uniformly for all 𝑥 ∈ [−𝑀 , 𝑀 ] for a uniform constant 𝐶 < ∞ . Summing over edges with weights 𝑤𝑒 > 0,
+the expansion is uniform on 𝐾:
+𝐽𝑝(𝑓) =1
+𝑝‖𝜔 + 𝑑0𝑓‖𝑝
+𝑝,w = ‖𝜔 + 𝑑0𝑓‖1,w + (𝑝 − 1) [𝐸(𝑓) − ‖𝜔 + 𝑑0𝑓‖1,w] + 𝑅𝑝(𝑓),
+8
+
+--- PAGE 9 ---
+where sup 𝑓∈𝐾 |𝑅𝑝(𝑓)| ≤ 𝐶′(𝑝 − 1)2 with 𝐶′ = 𝐶 ∑𝑒 𝑤𝑒 < ∞. Uniform convergence of ‖ ⋅ ‖ 𝑝,w → ‖ ⋅ ‖ 1,w as
+𝑝 → 1+ implies Γ-convergence of the objectives, which ensures that all cluster points of 𝑓∗
+𝑝 minimize the 𝐿1
+quotient norm, establishing (1). This uniform expansion on 𝐾 establishes (2).
+For (3), let 𝑔 ∈ ℳ 1 ⊂ 𝐾 be an arbitrary gauge-fixed 𝐿1 minimizer. By optimality of 𝑓∗
+𝑝 for 𝐽𝑝 on 𝐹, we
+have:
+𝐽𝑝(𝑓∗
+𝑝) ≤ 𝐽𝑝(𝑔).
+Substituting the uniform expansion for both 𝑓∗
+𝑝 and 𝑔:
+‖𝜔+𝑑0𝑓∗
+𝑝‖1,w+(𝑝−1) [𝐸(𝑓∗
+𝑝) − ‖𝜔 + 𝑑0𝑓∗
+𝑝‖1,w]+𝑅𝑝(𝑓∗
+𝑝) ≤ ‖𝜔+𝑑0𝑔‖1,w+(𝑝−1) [𝐸(𝑔) − ‖𝜔 + 𝑑0𝑔‖1,w]+𝑅𝑝(𝑔).
+Because 𝑔 ∈ ℳ 1, ‖𝜔 + 𝑑0𝑔‖1,w = Φ 1([𝜔]). Because Φ1([𝜔])is the minimum of ‖ ⋅ ‖1,w, we have ‖𝜔 + 𝑑0𝑓∗
+𝑝‖1,w ≥
+Φ1([𝜔]) = ‖𝜔+𝑑0𝑔‖1,w, so the zeroth-order term ‖𝜔+𝑑0𝑓∗
+𝑝‖1,w −‖𝜔+𝑑0𝑔‖1,w ≥ 0 is non-negative. Subtracting
+this non-negative quantity preserves the inequality:
+(𝑝 − 1) [𝐸(𝑓∗
+𝑝) − ‖𝜔 + 𝑑0𝑓∗
+𝑝‖1,w] + 𝑅𝑝(𝑓∗
+𝑝) ≤ (𝑝 − 1) [𝐸(𝑔) − Φ1([𝜔])] + 𝑅𝑝(𝑔).
+Dividing both sides by 𝑝 − 1 > 0:
+𝐸(𝑓∗
+𝑝) − ‖𝜔 + 𝑑0𝑓∗
+𝑝‖1,w + 𝑅𝑝(𝑓∗
+𝑝)
+𝑝 − 1 ≤ 𝐸(𝑔) − Φ1([𝜔]) +𝑅𝑝(𝑔)
+𝑝 − 1 .
+Because |𝑅𝑝(𝑓)| ≤ 𝐶′(𝑝 − 1)2 on 𝐾, the remainder quotients satisfy lim 𝑝→1+
+𝑅𝑝 (𝑓)
+𝑝−1 = 0. Now let 𝑝𝑘 → 1 +
+be any sequence such that 𝑓∗
+𝑝𝑘
+→ 𝑓 ∗
+1 ∈ 𝐾. By (1), 𝑓∗
+1 ∈ ℳ 1, so ‖𝜔 + 𝑑0𝑓∗
+1‖1,w = Φ 1([𝜔]). Taking the limit
+𝑘 → ∞ and using continuity of 𝐸(𝑓)and ‖ ⋅ ‖1,w on 𝐾:
+𝐸(𝑓∗
+1) − Φ1([𝜔]) ≤ 𝐸(𝑔) − Φ1([𝜔]).
+Adding Φ1([𝜔])to both sides yields:
+𝐸(𝑓∗
+1) ≤ 𝐸(𝑔)for all 𝑔 ∈ ℳ 1.
+Thus, every cluster point 𝑓∗
+1 minimizes 𝐸(𝑓)over the compact convex set ℳ1.
+Next, we establish unconditional strict convexity of 𝐸(𝑓)on ℳ1. No two 𝐿1-optimal residuals 𝑟1, 𝑟2 ∈ ℛ 1 =
+{𝜔 + 𝑑0𝑓 ∶ 𝑓 ∈ ℳ 1} can have opposite nonzero signs in any coordinate: if (𝑟1)𝑒 > 0 and (𝑟2)𝑒 < 0 , then
+| 1
+2 (𝑟1)𝑒 + 1
+2 (𝑟2)𝑒| < 1
+2 |(𝑟1)𝑒| + 1
+2 |(𝑟2)𝑒|. With strictly positive weights 𝑤𝑒 > 0, the midpoint 1
+2 (𝑟1 + 𝑟2)would
+satisfy ‖ 1
+2 (𝑟1 + 𝑟 2)‖1,w < Φ 1([𝜔]), contradicting the minimality of Φ1([𝜔]). Therefore, the entire optimal
+residual set ℛ1 lies within a single closed coordinate orthant. On this closed orthant, the scalar function
+𝜂(𝑡) = 𝑡log 𝑡 (with 0log 0 = 0) is strictly convex on [0, ∞)since 𝜂″(𝑡) = 1/𝑡 > 0for 𝑡 > 0. Because the aﬀine
+map 𝑓 ↦ 𝜔 + 𝑑0𝑓 is injective on the gauge-fixed subspace 𝐹, 𝐸(𝑓)is strictly convex on the compact convex
+set ℳ1. A strictly convex function on a non-empty compact convex set attains its minimum at a unique
+point 𝑓∗
+ent ∈ ℳ 1. Because every cluster point 𝑓∗
+1 satisfies 𝐸(𝑓∗
+1) ≤ 𝐸(𝑔)for all 𝑔 ∈ ℳ 1, all cluster points
+coincide with 𝑓∗
+ent. Because the trajectory {𝑓∗
+𝑝}𝑝∈(1,2]is contained in the compact set 𝐾 and has only one
+possible cluster point 𝑓∗
+ent, the entire trajectory converges: lim 𝑝→1+ 𝑓∗
+𝑝 = 𝑓 ∗
+ent.
+□
+5. Sparse optimal representatives
+Theorem L1C-T5 — cycle-rank support bound
+Every quotient class has an optimal representative r with |supp(r)| ≤ 𝛽.
+Proof. Choose a full-row-rank matrix A whose row space is ker (B⊤). Two cochains represent the same
+class exactly when Ar = A𝜔. The problem is therefore basis pursuit:
+9
+
+--- PAGE 10 ---
+min
+r+,r−
+w⊤(r+ + r−) subject to A(r+ − r−) =A𝜔, r+, r− ≥ 0.
+It has an optimal basic feasible solution. Since rank (A) = 𝛽, at most 𝛽 variables among r+ and r− are
+basic and positive. Positive weights exclude simultaneously positive 𝑟+
+𝑒 , 𝑟−
+𝑒 , since decreasing both preserves
+feasibility and lowers cost. Hence the resulting r has at most 𝛽 nonzero coordinates.
+□
+This is an existential bound, not a genericity statement and not uniqueness. Degenerate instances may have
+dense optima as well as a sparse one.
+Example — one directed cycle
+For a consistently oriented 𝑚-cycle, the invariant is 𝑆 = ∑𝑒∈𝐸 𝜔𝑒. Hence
+Φ1([𝜔]) = |𝑆|min
+𝑒∈𝐸
+𝑤𝑒.
+An optimum concentrates 𝑆 on any minimum-weight edge. In the unweighted case the value is |𝑆|, and the
+support bound 𝛽 = 1 is sharp.
+6. Integral cut-lattice optimum
+Theorem L1C-T6 — integral attainment
+If 𝜔 is integral and the weights are integral, there exists an optimal pair with integral f (after fixing one
+vertex gauge) and integral residual r = 𝜔 + Bf.
+Proof. Delete the root column of the incidence matrix. The resulting matrix is totally unimodular [2, 3].
+Adjoining signed identity columns and column negations preserves total unimodularity, so the standard-form
+constraint matrix for the primal LP is totally unimodular. With integral right-hand side, an optimal basic
+feasible solution may be chosen integral.
+□
+This is a cochain/cut-lattice statement. It is not the minimum homologous-chain problem, whose repair
+directions are boundaries from the next chain degree.
+7. Discrete physics and simplicial Bianchi nilpotency
+On a finite 2-dimensional simplicial complex 𝐾 = (𝑉 , 𝐸, 𝐹 ), edge cochains model discrete gauge connections,
+while face cochains model discrete field curvature. Let 𝐷1 ∶ 𝐶 1(𝐾) → 𝐶0(𝐾)and 𝐷2 ∶ 𝐶 2(𝐾) → 𝐶1(𝐾)
+denote the standard signed simplicial boundary operators with respect to chosen orientations, and let 𝑑0 =
+𝐷⊤
+1 ∶ 𝐶0(𝐾) → 𝐶1(𝐾)and 𝑑1 = 𝐷 ⊤
+2 ∶ 𝐶1(𝐾) → 𝐶2(𝐾)denote their algebraic coboundaries.
+Theorem L1C-T7 — simplicial Bianchi nilpotency
+Let 𝐾 = (𝑉 , 𝐸, 𝐹 )be a finite 2-simplicial complex.
+1. For every 0-cochain 𝑓 ∈ 𝐶 0(𝐾), the composite coboundary vanishes identically:
+𝑑1(𝑑0𝑓) = 0.
+Consequently, pure gauge cochains have zero field curvature and lie in the cocycle subspace 𝑍1(𝐾) =
+ker(𝑑1).
+10
+
+--- PAGE 11 ---
+2. For every 1-cycle 𝑧 ∈ 𝐶 1(𝐾)satisfying 𝐷1𝑧 = 0 (Kirchhoff circulation) and every 0-cochain 𝑓 ∈ 𝐶 0(𝐾),
+⟨𝑧, 𝑑0𝑓⟩ = 0.
+The quotient norm Φ1([𝜔])is invariant under aﬀine shifts along the gauge orbit: Φ1([𝜔 + 𝑑0𝑓]) = Φ1([𝜔]).
+Proof. For (1), by definition of the adjoint, (𝑑1 ∘ 𝑑0)⊤ = 𝐷 1 ∘ 𝐷 2. For each oriented triangular face
+𝜎 = (𝑢, 𝑣, 𝑤) ∈ 𝐹, the boundary is 𝐷2𝜎 = (𝑢, 𝑣) + (𝑣, 𝑤) − (𝑢, 𝑤). Applying 𝐷1 yields
+𝐷1(𝐷2𝜎) = (𝑣 − 𝑢) + (𝑤 − 𝑣) − (𝑤 − 𝑢) = 0.
+Because 𝐷1𝐷2 = 0, its transpose 𝑑1𝑑0 = (𝐷1𝐷2)⊤ = 0.
+For (2), the definition of the coboundary adjoint gives ⟨𝑧, 𝑑0𝑓⟩ = ⟨𝐷 1𝑧, 𝑓⟩. Because 𝐷1𝑧 = 0 , this pairing
+evaluates to zero. Invariance of Φ1 follows because 𝜔 + 𝑑0𝑓 + 𝑑0𝑔 = 𝜔 + 𝑑 0(𝑓 + 𝑔), which parametrizes the
+identical coset [𝜔] ∈ 𝑄1.
+□
+8. Quantum phase cocycles and Schatten-p operator extensions
+Let 𝐺 = (𝑉 , 𝐸)be a finite directed graph whose vertices index an orthonormal basis {|𝑣⟩}𝑣∈𝑉 of an 𝑛-
+dimensional Hilbert space ℋ = ℂ 𝑉 . Let 𝜔 ∈ 𝐶 1(𝐺, ℝ)denote a phase 1-cochain assigning phase difference
+𝜔(𝑢, 𝑣)to each directed edge (𝑢, 𝑣) ∈ 𝐸. A quantum state on ℋ is described by a density matrix 𝜌 =
+∑𝑢,𝑣∈𝑉 𝜌𝑢𝑣|𝑢⟩⟨𝑣| satisfying 𝜌 = 𝜌 †, Tr (𝜌) = 1, and 𝜌 ⪰ 0 . Let 𝜌diag = ∑𝑣∈𝑉 𝜌𝑣𝑣|𝑣⟩⟨𝑣| denote the dephased
+pointer state.
+For operators on ℋ, the Schatten- 𝑝 norm for 𝑝 ∈ [1, ∞)is ‖𝐴‖𝑝 = (Tr(|𝐴|𝑝))1/𝑝, and for 𝑝 = ∞, ‖𝐴‖∞ =
+‖𝐴‖op. For 𝑝 = 1, this specializes to the trace norm ‖𝐴‖1 = Tr |𝐴| = Tr
+√
+𝐴†𝐴.
+Theorem LpC-T8 — Schatten-p quantum defect and non-commutative Hölder
+bound
+1. For any operator-valued cochain 𝐻 ∈ 𝐶 1(𝐺, ℬ𝑝(ℋ)), the Schatten- 𝑝 quotient defect is:
+Φ𝑝([𝐻]) = inf
+𝐹 ∈𝐶0 (𝐺,ℬ𝑝 (ℋ))
+‖𝐻 − 𝑑0𝐹 ‖𝑝,w.
+It satisfies non-commutative Fenchel-Rockafellar Hölder duality:
+Φ𝑝([𝐻]) = max
+𝑍∈𝐶1 (𝐺,ℬ𝑞 (ℋ))
+{Re Tr⟨𝑍, 𝐻⟩ ∶ 𝑑∗
+0𝑍 = 0, ‖𝑍‖ 𝑞,w∗ ≤ 1} ,
+where 1/𝑝 + 1/𝑞 = 1 and non-commutative Hölder duality | Tr(𝐴†𝐵)| ≤ ‖𝐴‖𝑝‖𝐵‖𝑞 holds.
+2. Let 𝐴 = 𝜌 − 𝜌diag be a 𝑑 × 𝑑 off-diagonal matrix. For 1 ≤ 𝑝 ≤ 2 ,
+‖𝐴‖𝑆𝑝
+≤ (∑
+𝑢≠𝑣
+|𝐴𝑢𝑣|𝑝)
+1/𝑝
+;
+for 2 ≤ 𝑝 ≤ ∞,
+‖𝐴‖𝑆𝑝
+≤ 𝑑1−2/𝑝 (∑
+𝑢≠𝑣
+|𝐴𝑢𝑣|𝑝)
+1/𝑝
+.
+The factor is interpreted as 𝑑 at 𝑝 = ∞. At 𝑝 = 1 this recovers ‖𝜌 − 𝜌diag‖1 ≤ 𝐶𝑙1
+(𝜌).
+Proof. For (1), non-commutative 𝐿𝑝 spaces over finite-dimensional matrix algebras satisfy standard Clark-
+son inequalities and uniform convexity for 𝑝 ∈ (1, ∞). The dual space of the Schatten- 𝑝 class ℬ𝑝(ℋ)is
+isometrically isomorphic to ℬ𝑞(ℋ)under the trace pairing ⟨𝐴, 𝐵⟩ = Tr(𝐴†𝐵)(see Watrous [6]). For (2),
+the 1 ≤ 𝑝 ≤ 2 bound follows by interpolation between the entrywise ℓ1 → 𝑆 1 triangle inequality and the
+Frobenius identity. For 𝑝 ≥ 2, use ‖𝐴‖𝑆𝑝
+≤ ‖𝐴‖ 𝑆2
+= ‖𝐴‖ ℓ2 and ‖𝐴‖ℓ2 ≤ 𝑑1−2/𝑝‖𝐴‖ℓ𝑝 .
+□
+11
+
+--- PAGE 12 ---
+Theorem L1C-T8 — quantum phase cocycle defect bound (p = 1 base case)
+All phase lifts, gradients, cycles and phase pairings in this theorem use the support graph 𝐺𝜌 = (𝑉 , 𝐸𝜌),
+where 𝐸𝜌 = {(𝑢, 𝑣) ∈ 𝐸 ∶ 𝜌𝑢𝑣 ≠ 0}. Norms of the full density matrix and its coherence sum retain all matrix
+entries.
+1. Let 𝜌 be a density matrix with representation in the orthonormal basis {|𝑣⟩}𝑣∈𝑉 . Under the incidence
+convention (𝑑0𝜃)(𝑢, 𝑣) = 𝜃𝑣 − 𝜃𝑢, the local diagonal unitary operator 𝑈𝜃 = ∑𝑣∈𝑉 𝑒−𝑖𝜃𝑣 |𝑣⟩⟨𝑣| = diag(𝑒−𝑖𝜃𝑣 )
+acts on matrix entries as:
+(𝑈𝜃𝜌𝑈†
+𝜃 )𝑢𝑣 = ⟨𝑢|𝑈𝜃𝜌𝑈†
+𝜃 |𝑣⟩ = 𝑒−𝑖𝜃𝑢 𝜌𝑢𝑣𝑒𝑖𝜃𝑣 = 𝑒𝑖(𝜃𝑣 −𝜃𝑢 )𝜌𝑢𝑣 = 𝑒𝑖(𝑑0 𝜃)𝑢𝑣 𝜌𝑢𝑣.
+Thus, 𝑈𝜃 shifts each edge phase factor by +(𝑑0𝜃)𝑢𝑣. If 𝜌 admits a chosen real phase lift 𝜔 satisfying
+𝑑0𝜃 = −𝜔 (that is, [𝜔] = 0 ∈ 𝑄 1), the gauge rotation 𝑈𝜃 eliminates all relative phase angles, yielding
+(𝑈𝜃𝜌𝑈†
+𝜃 )𝑢𝑣 = |𝜌𝑢𝑣| without changing the spectrum or off-diagonal moduli |𝜌𝑢𝑣|.
+2. The trace distance ‖𝜌 − 𝜌diag‖tr = 1
+2 Tr |𝜌 − 𝜌diag| is bounded by the total off-diagonal 𝐿1 coherence:
+‖𝜌 − 𝜌diag‖tr ≤ ∑
+𝑢<𝑣
+|𝜌𝑢𝑣| = 1
+2𝐶𝑙1
+(𝜌),
+where 𝐶𝑙1
+(𝜌) = ∑𝑢≠𝑣 |𝜌𝑢𝑣| is the standard 𝑙1-norm of coherence [5, 6]. For every edge (𝑢, 𝑣) ∈ 𝐸, the
+2 × 2 principal minor condition of positive semidefiniteness enforces
+|𝜌𝑢𝑣| ≤ √𝜌𝑢𝑢𝜌𝑣𝑣 ≤ 1
+2(𝜌𝑢𝑢 + 𝜌𝑣𝑣).
+For any nonzero real circulation 𝐶 ∈ 𝑍1(𝐺; ℝ), define its maximum weight-normalized capacity:
+𝑀𝐶 = max
+𝑒∈𝐸∶𝐶𝑒 ≠0
+|𝐶𝑒|
+𝑤𝑒
+.
+Then the normalized circulation z = C/𝑀𝐶 is dual-feasible, establishing the lower bound:
+Φ1([𝜔]) ≥|⟨𝐶, 𝜔⟩|
+𝑀𝐶
+= |⟨𝐶, 𝜔⟩|
+max𝑒∶𝐶𝑒 ≠0(|𝐶𝑒|/𝑤𝑒).
+3. Explicit relationship between phase cochains and density operator 𝜌: Phase angle extraction is restricted
+to the support subgraph of non-vanishing coherences:
+𝐸𝜌 = {(𝑢, 𝑣) ∈ 𝐸 ∶ 𝜌𝑢𝑣 ≠ 0}.
+For (𝑢, 𝑣) ∈ 𝐸 ∖ 𝐸𝜌, the phase angle is undefined. On 𝐸𝜌, any matrix entry factors as 𝜌𝑢𝑣 = |𝜌𝑢𝑣|𝑒𝑖𝜔(𝑢,𝑣)
+for a chosen real lift 𝜔 ∈ 𝐶 1(𝐸𝜌; ℝ). Under diagonal unitary transformations 𝑈𝜃 = diag(𝑒−𝑖𝜃𝑣 ), entries
+transform as
+(𝑈𝜃𝜌𝑈†
+𝜃 )𝑢𝑣 = |𝜌𝑢𝑣|𝑒𝑖(𝜔(𝑢,𝑣)+(𝑑0 𝜃)𝑢𝑣 ).
+Crucially, taking principal arguments Arg (⋅) ∈ (−𝜋, 𝜋]edge-by-edge after a diagonal unitary rotation
+does not generally produce an exact gradient shift in ℝ𝐸, because branch wrapping introduces an integer
+period shift k ∈ ℤ 𝐸:
+Arg((𝑈𝜃𝜌𝑈†
+𝜃 )𝑢𝑣) = 𝜔(𝑢, 𝑣) + (𝑑0𝜃)𝑢𝑣 + 2𝜋𝑘𝑢𝑣.
+On a triangle, start with positive real off-diagonal entries 𝜌𝑢𝑣 > 0, so initial edge phases and real quotient
+norm vanish ( 𝜔 = 0, Φ1([𝜔]) = 0). Applying 𝑈𝜃 with 𝜃 = (0, 3𝜋/4, 3𝜋/2)gives potential differences 𝑑0𝜃 =
+(3𝜋/4, 3𝜋/4, −3𝜋/2). Taking principal branch arguments wraps the third edge phase to 𝜋/2 = −3𝜋/2+2𝜋 ,
+producing principal phases (3𝜋/4, 3𝜋/4, 𝜋/2). The sum around the directed cycle is 3𝜋/4 + 3𝜋/4 + 𝜋/2 =
+2𝜋, so the re-extracted real quotient norm is Φ1 = 2𝜋 , even though the state underwent only a local
+diagonal unitary rotation and the physical 𝑈 (1)holonomy around the cycle remains exp (𝑖 ⋅ 2𝜋) = 1.
+Therefore, three quantities must be distinguished:
+12
+
+--- PAGE 13 ---
+(a) Chosen real lift quotient norm: For a fixed real lift 𝜔 ∈ 𝐶1(𝐸𝜌; ℝ), Φ1([𝜔]) =inf𝑓∈𝐶 0 ‖𝜔 + 𝑑0𝑓‖1,w
+is invariant under real gradient shifts 𝜔 ↦ 𝜔 + 𝑑0𝑓, measuring minimal 𝐿1 effort to gauge-align that
+specific real lift.
+(b) Gauge-invariant 𝑈 (1)cycle holonomy: On the support graph 𝐺𝜌 = (𝑉 , 𝐸𝜌), for any integral
+cycle 𝐶 ∈ 𝑍 1(𝐺𝜌; ℤ), the multiplicative holonomy hol 𝑈(1)(𝐶) = ∏𝑒∈𝐸𝜌
+(𝜌𝑢𝑣/|𝜌𝑢𝑣|)𝐶𝑒 = exp(𝑖⟨𝐶, 𝜔⟩) ∈
+𝑈 (1)is strictly invariant under all diagonal unitary transformations 𝑈𝜃𝜌𝑈†
+𝜃 , since exp (𝑖⟨𝐶, 𝑑0𝜃⟩) =
+exp(𝑖⟨𝐷1𝐶, 𝜃⟩) = 1.
+(c) Branch-independent 𝑈 (1)quotient defect: To obtain a quotient distance from the identity on
+𝑈 (1)connections that is invariant under diagonal unitaries without branch-cut artifacts, one minimizes
+over both vertex potentials and integer edge branch shifts ( 2𝜋ℤ𝐸𝜌 ):
+Φ𝑈(1)
+1 (𝜌) = inf
+𝑓∈𝐶 0 (𝐺𝜌 ),k∈ℤ𝐸 𝜌
+‖𝜔 + 𝑑0𝑓 + 2𝜋k‖1,w.
+This is a length function on the quotient group ℝ𝐸𝜌 /(im 𝑑0 + 2𝜋ℤ𝐸𝜌 ), inducing the distance 𝑑([𝜔], [𝜂]) =
+Φ𝑈(1)
+1 ([𝜔 − 𝜂]). It is not a norm on a real vector space: on an unweighted cycle, flux 𝜋 has length 𝜋,
+while doubled flux 2𝜋 has length zero. Integral coeﬀicients in (b) ensure independence of phase lift; a
+real half-cycle changes holonomy by −1 after a 2𝜋 lift change on one edge. Real circulations remain the
+domain of the linear LP dual in (a). For the triangle counterexample above, choosing k = (0, 0, −1)and
+𝑓 = −𝜃 cancels the branch winding, giving Φ𝑈(1)
+1 (𝜌) = 0.
+Proof. Specializing Theorem LpC-T8 to 𝑝 = 1, direct evaluation under diagonal unitary conjugation yields
+(1). For (2), the triangle inequality across 2 × 2 off-diagonal blocks gives the trace distance bound. The
+capacity-normalized loop bound follows from weak LP duality with dual-feasible vector z = C/𝑀𝐶, tested in
+test_theorem_8_weighted_loop_bound_correction. For (3), restricting phase extraction to 𝐸𝜌 avoids undefined
+arguments at zero coherences. The sign +(𝑑0𝜃)𝑢𝑣 follows from (𝑈𝜃𝜌𝑈†
+𝜃 )𝑢𝑣 = 𝑒 −𝑖𝜃𝑢 𝜌𝑢𝑣𝑒𝑖𝜃𝑣 = 𝑒 𝑖(𝜃𝑣 −𝜃𝑢 )𝜌𝑢𝑣 =
+𝑒𝑖(𝑑0 𝜃)𝑢𝑣 𝜌𝑢𝑣. The branch-cut wrapping and the distinction between real lifts and 𝑈 (1)holonomy are validated
+on the triangle counterexample 𝜃 = (0, 3𝜋/4, 3𝜋/2)in test_quantum_phase_gauge_invariance_and_branch_wind-
+ing and test_quantum_phase_additive_flux_vs_u1_holonomy. In this finite discrete setting, we emphasize that
+these combinatorial bounds on off-diagonal matrix entries are static geometric inequalities, separate from
+continuous unitary Hamiltonian time evolution.
+□
+9. Cohomological classification and topological obstructions
+For a general cell complex, 𝐻 1(𝐾; ℝ) =ker(𝑑1)/im(𝑑0). The quotient norm Φ𝑝 is defined on 𝐶1/ im(𝑑0)and
+descends to 𝐻 1 only after restricting to closed cochains. On a graph, 𝐶2 = 0 and this distinction disappears:
+1. Exact 1-Cochains ( [𝜔] = 0): Φ𝑝([𝜔]) = 0if and only if 𝜔 ∈ 𝐵 1 = im 𝑑0. The cochain is a pure gradient
+potential ( 𝑟 = 0), corresponding to a trivial gauge connection with zero holonomy along all cycles.
+2. Closed Cohomology Defect ( [𝜔] ≠ 0 on 1-graphs): On a 1-dimensional graph complex ( 𝑑1 = 0 ),
+all cochains are cocycles ( 𝑍1 = 𝐶 1). When Φ𝑝([𝜔]) > 0, 𝜔 represents a non-trivial cohomology class in
+𝐻 1(𝐺; ℝ) ≅ ℝ𝛽. The defect represents a topological obstruction that cannot be eliminated by any choice
+of vertex potential.
+3. Simplicial Curvature Obstructions (2-complexes): On a 2-simplicial complex 𝐾, the face cobound-
+ary 𝑑1𝜔 ∈ 𝐶2(𝐾)measures discrete field curvature (magnetic flux). If 𝑑1𝜔 ≠ 0, 𝜔 is not closed ( 𝜔 ∉ 𝑍1),
+indicating localized curvature defect on 2-simplices. By Theorem L1C-T7 (simplicial Bianchi nilpotency),
+any exact gauge adjustment 𝑑0𝑓 has zero curvature ( 𝑑1(𝑑0𝑓) = 0), so the curvature 𝑑1𝜔 is strictly gauge-
+invariant.
+This taxonomy classifies discrete difference fields by their topological obstructions, distinguishing exact gauge
+transformations, non-contractible cycle circulations, and non-vanishing face curvatures.
+13
+
+--- PAGE 14 ---
+10. Computational companion & formal mechanization
+The companion software implementation provides exact rational arithmetic for all polyhedral and certificate
+decision paths ( 𝑝 = 1, 2, ∞, 𝐿𝐷𝐿† positive-semidefiniteness, and simplicial complexes) under the Zero-Float
+Law, avoiding numerical tolerances and floating-point ambiguities, while continuous interior- 𝑝 iterations and
+Schatten-𝑝 singular values are evaluated via binary64 numerical diagnostics:
+1. Exact T wo-Phase Simplex Solver : An exact rational linear programming solver over frac-
+tions.Fraction implementing Bland’s minimal-index pivot rule, guaranteeing cycle prevention for the
+𝑝 = 1 base case. It handles primal standard forms, artificial variable elimination, and dual variable
+extraction without floating-point error, and raises SolverIterationLimitError on budget exhaustion.
+2. Primal-Dual Certification : Checks primal feasibility 𝑟 = 𝜔 + 𝑑 0𝑓, dual divergence-free annihilation
+B⊤z = 0 , capacity bounds |𝑧𝑒| ≤ 𝑤 𝑒, and verifies exact zero duality gap Φ1([𝜔]) −z⊤𝜔 = 0 . Exposes
+standalone receipt validator check_certificate_receipt; its integrality flag concerns the primal potential
+and residual, not the dual. The Chebyshev path independently checks 𝑟 = ℎ − B𝑓, 𝑡 ≥ 0 , 𝑤𝑒|𝑟𝑒| ≤
+𝑡, B⊤𝑧 = 0 , ∑𝑒 |𝑧𝑒|/𝑤𝑒 ≤ 1 , and ⟨𝑧, ℎ⟩ = 𝑡 through check_linf_certificate_receipt before returning
+OPTIMAL_LINF. The opposite residual sign is a solver convention and preserves the gauge quotient.
+3. Simplicial Complex & Bianchi Operators : Implements boundary matrices 𝐷1, 𝐷2, coboundaries
+𝑑0, 𝑑1, and automated verification of 𝑑1(𝑑0𝑓) = 0, distinguishing closed graph residuals from curvature
+residuals.
+4. Quantum Density Matrix Engine : Pure standard-library module verifying Hermiticity, trace nor-
+malization, and exact positive semidefiniteness via rational 𝐿𝐷𝐿† decomposition with complete diagonal
+pivoting. Coherence values use exact fractions when all required complex moduli are rational, and bi-
+nary64 square roots otherwise. The 𝐿2 squared norm is exact; its displayed square root may be numerical.
+5. Interactive Notebooks : Dual-track Jupyter notebooks ( 001_conceptual_l1_cohomology.ipynb and 002_-
+formal_l1_cohomology.ipynb) provide pedagogical visualizations, defect injection sandboxes, and tableau
+inspections.
+6. F ormal Interactive Proof Mechanization: Lean 4 mechanizes general_finite_certificate_optimality
+and the named finite-model theorems for L1C-T1, L1C-T2, L1C-T3, L1C-T4, L1C-T5, and L1C-T7.
+Integer 3-cycle lemmas in l1c_lp_duality, l1c_lp_strict_uniqueness, and l1c_lp_hodge_decomposition do
+not mechanize the general real 𝐿𝑝 propositions. The Lean estate compiles offline with lake build , with
+proof-placeholder commands absent and axiom reports inside {propext, Classical.choice, Quot.sound} .
+The shipped pytest suite contains 91 test functions (producing 110 test cases) across trees, cycles, complete
+graphs, disconnected graphs, zero-weight refusal, integer lattices, simplex iteration limits, primal feasibility
+fault injections, exact 𝐿𝐷𝐿† PSD checks, quantum phase gauge invariance and branch-cut winding checks,
+and the 𝐿1/𝐿2 counterexample B = (1, 1, 1)⊤, 𝜔 = (0, 0, 10)⊤. Replay of the complete test suite and Lean
+proof verification is invoked explicitly via: python verify_deposit.py --run-tests --lean . Current replay of
+those tests requires the optional development dependencies pytest and pytest-cov; source compilation and
+Lean replay are recorded separately from any historical coverage receipt.
+11. Scope and concluding remarks
+This monograph investigates finite-dimensional quotient spaces of discrete cell complexes under the family
+of weighted 𝐿𝑝 norms. We summarize the precise boundaries of these results:
+1. Discrete vs. Continuum: The results herein apply to finite directed graphs and finite 2-simplicial
+complexes. They do not constitute an infinite-dimensional Hodge-de Rham theorem on manifolds, nor
+do they address continuous Sobolev or 𝐿𝑝 cohomology on non-compact domains.
+2. Static vs. Dynamical: The bounds on quantum density matrix coherence (Theorems LpC-T8 and L1C-
+T8) apply to fixed states in a chosen basis; they do not characterize continuous unitary time-evolution or
+open quantum system master equations.
+3. F ormal V erification: Lean 4 mechanizes general_finite_certificate_optimality and the named finite-
+model theorems for L1C-T1, L1C-T2, L1C-T3, L1C-T4, L1C-T5, and L1C-T7. The general 𝐿𝑝 results,
+exactness characterization, cycle-rank bound, total unimodularity, and Schatten statements have prose
+14
+
+--- PAGE 15 ---
+proofs and are classified as classical background. They are not mechanized at that generality. L1C-T2
+mechanizes ambient integer three-edge weighted-norm axioms and residual-addition compatibility, with-
+out defining a minimized quotient norm. The conditional finite integer certificate establishes optimality
+from its hypotheses; it does not establish certificate existence or verify the Python implementation. The
+earlier general Aronsson assertion for arbitrary cochains remains withdrawn.
+References
+1. R. T. Rockafellar, Convex Analysis , Princeton University Press, 1970.
+2. A. Schrijver, Theory of Linear and Integer Programming , Wiley, 1986.
+3. T. K. Dey, A. N. Hirani, and B. Krishnamoorthy, “Optimal homologous cycles, total unimodularity, and
+linear programming,” SIAM Journal on Computing 40(4), 2011, 1026–1044. https://doi.org/10.1137/10
+0800245
+4. S. Boyd and L. Vandenberghe, Convex Optimization , Cambridge University Press, 2004. https://web.st
+anford.edu/~boyd/cvxbook/
+5. T. Baumgratz, M. Cramer, and M. B. Plenio, “Quantifying Coherence,” Physical Review Letters 113(14),
+2014, 140401. https://doi.org/10.1103/PhysRevLett.113.140401
+6. J. Watrous, The Theory of Quantum Information , Cambridge University Press, 2018. https://doi.org/10
+.1017/9781316848142
+7. J. A. Clarkson, “Uniformly convex spaces,” Transactions of the American Mathematical Society 40(3),
+1936, 396–414. https://doi.org/10.1090/S0002-9947-1936-1501880-4
+8. G. Aronsson, “Extension of functions satisfying Lipschitz conditions,” Arkiv för Matematik 6(6), 1967,
+551–561. https://doi.org/10.1007/BF02591361
+9. X. Jiang, L.-H. Lim, Y. Yao, and Y. Ye, “Statistical ranking and combinatorial Hodge theory,” Mathe-
+matical Programming 127(1), 2011, 203–244. DOI (preprint: arXiv:0811.1067v2, §6.1).
+15

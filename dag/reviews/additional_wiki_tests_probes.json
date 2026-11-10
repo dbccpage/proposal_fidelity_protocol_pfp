@@ -1,0 +1,119 @@
+{
+  "source_pins": [
+    {
+      "path": "workflows/tasks/paper_run_rules/test_paper_run_domain_purity.py",
+      "sha256": "14acd46b69e32815f0450823bd5b24f539c2d2518cca76bdafe78b10b2e49a95"
+    },
+    {
+      "path": "workflows/tasks/oracle_fixture_freeze/freeze_json_acceptance.py",
+      "sha256": "d14dbd24f1ec7c31867713f0de51252c30f7846d31386a97049931e5486a9dac"
+    },
+    {
+      "path": "workflows/tasks/paper_run_rules/paperrun/transition_event.py",
+      "sha256": "aaff2f794682ca534bf65b8975a1c35cdbb1c4e6066fcf2a8b6be713bb8997a4"
+    }
+  ],
+  "controls": [
+    {
+      "id": "WIKIT-P01",
+      "kind": "actual scanner, synthetic source only",
+      "results": {
+        "positive_direct": {
+          "snippet": "def f(p):\n    return open(p).read()\n",
+          "scanner_result": [
+            [
+              2,
+              "open"
+            ]
+          ]
+        },
+        "alias_builtin": {
+          "snippet": "def f(p):\n    reader = open\n    return reader(p).read()\n",
+          "scanner_result": []
+        },
+        "path_open": {
+          "snippet": "from pathlib import Path\ndef f(p):\n    return Path(p).open().read()\n",
+          "scanner_result": []
+        },
+        "os_open": {
+          "snippet": "import os\ndef f(p):\n    return os.open(p, os.O_RDONLY)\n",
+          "scanner_result": []
+        },
+        "io_alias": {
+          "snippet": "from io import open as reader\ndef f(p):\n    return reader(p).read()\n",
+          "scanner_result": []
+        }
+      },
+      "conclusion": "The name scanner detects its direct positive control and misses four file-I/O spellings. It does not prove absence of disk I/O."
+    },
+    {
+      "id": "WIKIT-P02",
+      "kind": "exact full seeded population classification",
+      "seed": 480,
+      "count": 262144,
+      "counts": {
+        "normal": 261885,
+        "subnormal": 130,
+        "nan": 129
+      },
+      "absent": [
+        "infinity",
+        "positive_zero",
+        "negative_zero"
+      ],
+      "conclusion": "The seeded float stream contains NaNs and subnormals but neither infinity nor signed zero. Infinity has separate hard-coded special vectors; negative-zero truthiness is a separate RAWS example, not a float-rendering sample."
+    },
+    {
+      "id": "WIKIT-P03",
+      "kind": "finite-data nonidentifiability counterexample",
+      "observed_terms": 64,
+      "candidate": "a(n+1)-a(n)=0",
+      "observed_residuals_all_zero": true,
+      "extension_A_next_term": 1,
+      "extension_B_next_term": 2,
+      "extension_B_next_residual": 1,
+      "conclusion": "Any finite prefix/held-out agreement can be shared by an extension that violates the proposed all-n recurrence; additional generative premises are necessary."
+    },
+    {
+      "id": "WIKIT-P04",
+      "kind": "unanchored digest counterexample",
+      "frozen_external_pin_detects_change": true,
+      "co_rewritten_receipt_consistent": true,
+      "conclusion": "Changing data and its co-stored digest preserves local consistency. A hash detects drift relative to a separately retained expected digest; it does not prove historical immutability or time of origin."
+    },
+    {
+      "id": "WIKIT-P05",
+      "kind": "independent standard-library substitution control",
+      "data_contains_question_placeholder_differs": true,
+      "question_contains_data_placeholder_differs": false,
+      "conclusion": "The page's second suggested exercise only exposes a problem if replacement order is reversed; data-first then question preserves the inserted ${data} in the question."
+    },
+    {
+      "id": "WIKIT-P06",
+      "kind": "independent small exact worksheet controls",
+      "odd_cycle_global_solutions": 0,
+      "all_unit_cost_edge_repairs": [
+        0,
+        1,
+        2
+      ],
+      "integer_scalar_minimum": 1,
+      "integer_minimizers": [
+        0,
+        1
+      ],
+      "rational_zero_residual_witness": "1/2",
+      "equilateral_fan_deficits": {
+        "5": "1/6",
+        "6": "0",
+        "7": "-1/6"
+      },
+      "squared_sides_1_1_4_H": "0",
+      "limits": "Odd-cycle population is exhaustive. Integer optimality globally follows odd parity of 1-2c and witnesses0,1, not just the bounded enumeration. No production geometry or physics checker invoked."
+    }
+  ],
+  "limits": [
+    "Only the reviewed scanner function is loaded through an AST extraction. Planted code is parsed, never executed.",
+    "Other controls are independent finite calculations, not new production verifier/test-suite replays."
+  ]
+}

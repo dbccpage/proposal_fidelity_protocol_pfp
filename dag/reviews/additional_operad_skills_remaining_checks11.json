@@ -1,0 +1,124 @@
+{
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "retained_owner_execution": false,
+  "results": [
+    {
+      "id": "OPSKILL-CHECK-080",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-deep-paper-composition-hasher/hasher.py",
+        "sha256": "7a468ab0ea95213a7c3bd2d184d8dff190dccc3e0921d3e101fb36d13fb96570"
+      },
+      "observation": {
+        "raw_hex": "410d0a2478240d0a",
+        "normalized_text": "A\n$x$\n",
+        "reported_second_line_byte_start": 2,
+        "actual_start": 3
+      },
+      "limitations": "Reproduces universal-newline reading and offset formula only. Source bytes never changed."
+    },
+    {
+      "id": "OPSKILL-CHECK-081",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-deep-paper-composition-hasher/hasher.py",
+        "sha256": "7a468ab0ea95213a7c3bd2d184d8dff190dccc3e0921d3e101fb36d13fb96570"
+      },
+      "observation": {
+        "line": "Here $$x$$",
+        "display_matches": [
+          [
+            "",
+            "x"
+          ]
+        ],
+        "inline_matches": [
+          [
+            "x",
+            ""
+          ]
+        ],
+        "numeric_inline_1_excluded": true
+      },
+      "limitations": "Exact parser regexes demonstrate duplicate display/inline classification and numeric exclusion; not exhaustive grammar testing."
+    },
+    {
+      "id": "OPSKILL-CHECK-082",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-deep-paper-composition-hasher/hasher.py",
+        "sha256": "7a468ab0ea95213a7c3bd2d184d8dff190dccc3e0921d3e101fb36d13fb96570"
+      },
+      "observation": {
+        "different_display_equations": [
+          "x=1",
+          "x=2"
+        ],
+        "both_claim_statement": "Statement:",
+        "same_claim_statement_sha256": "760724982ceedd1fb2791cfa51df6ebd8df169e052c8bd8e36abda8084841cc4"
+      },
+      "limitations": "Reduced source control flow shows display formulas bypass claim buffer. Formula entries themselves still differ; this is a claim-statement binding gap, not a SHA collision."
+    },
+    {
+      "id": "OPSKILL-CHECK-083",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-deep-paper-composition-hasher/hasher.py",
+        "sha256": "7a468ab0ea95213a7c3bd2d184d8dff190dccc3e0921d3e101fb36d13fb96570"
+      },
+      "observation": {
+        "checksum_line": "00000000  code/check.py",
+        "archive_names": [
+          "unrelated/code/check.py"
+        ],
+        "membership_predicate_passes": true,
+        "digest_length_valid": false,
+        "bytes_compared": false
+      },
+      "limitations": "Exact name/suffix predicate and ignored checksum column; no ZIP or retained verifier invocation. Whole ZIP digest is still recorded by implementation."
+    },
+    {
+      "id": "OPSKILL-CHECK-084",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-deep-paper-composition-hasher/hasher.py",
+        "sha256": "7a468ab0ea95213a7c3bd2d184d8dff190dccc3e0921d3e101fb36d13fb96570"
+      },
+      "observation": {
+        "bound_modules": [],
+        "required_from_document_only": [
+          "docs/descriptions.md"
+        ],
+        "status": "PASS"
+      },
+      "limitations": "Reproduces required-list condition: an ancillary document or checksum list can defeat advertised no-bindings refusal."
+    },
+    {
+      "id": "OPSKILL-CHECK-085",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-deep-paper-composition-hasher/hasher.py",
+        "sha256": "7a468ab0ea95213a7c3bd2d184d8dff190dccc3e0921d3e101fb36d13fb96570"
+      },
+      "observation": {
+        "all_identity_fields_missing": true,
+        "identity_consistent": true
+      },
+      "limitations": "Missing identity values create no mismatches; no claim that metadata exists or author matches. Source also does not compare arbitrary full author identities."
+    },
+    {
+      "id": "OPSKILL-CHECK-086",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-commit-reveal-manifest-resealer/SKILL.md",
+        "sha256": "96f2e0f20878e1c43c2fa163357991a9353a3467f716e4b4cbca2ac63edda11e"
+      },
+      "observation": {
+        "manifest_exists": false,
+        "verification_events": [],
+        "exception_raised": false
+      },
+      "limitations": "Reduced snippet preserves missing-manifest branch. No historical commitment files read; assert-based comparisons additionally disappear under optimized Python."
+    }
+  ]
+}

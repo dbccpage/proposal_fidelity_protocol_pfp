@@ -1,0 +1,50 @@
+--- papers/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/pyproject.toml
++++ papers/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/pyproject.toml
+@@ -3,30 +3,37 @@
+ build-backend = "setuptools.build_meta"
+ 
+ [project]
+-name = "pfp-008-grammar-growth-and-evidence"
++name = "paper-009-reviewing-claims"
+ version = "0.1.0"
+-description = "PFP VIII: Conservative Grammar Growth and Source-Bound Evidence in the MSS Pipeline"
++description = "Reviewing claims against code and evidence: a review protocol with worked examples"
++readme = "README.md"
++requires-python = ">=3.12"
++license = { text = "PolyForm-Noncommercial-1.0.0" }
+ authors = [{ name = "Jeremy H. Carroll" }]
+-license = { text = "PolyForm-Noncommercial-1.0.0" }
+-readme = "README.md"
+-requires-python = ">=3.10"
+ dependencies = []
+ 
+ [project.optional-dependencies]
+-dev = ["pytest>=9.0.3", "ruff==0.14.13", "mypy==1.19.1"]
++dev = ["pytest>=9.0.3", "ruff>=0.9", "mypy>=1.0"]
++notebooks = ["nbclient>=0.8.0", "nbformat>=5.9.0", "ipykernel>=6.0.0"]
++
++[tool.setuptools]
++package-dir = { "" = "code" }
++py-modules = ["triangle_cycle_sum", "review_counts"]
+ 
+ [tool.pytest.ini_options]
+ testpaths = ["code/tests"]
+-addopts = "-q --strict-markers"
++pythonpath = ["code"]
++filterwarnings = ["error"]
+ 
+ [tool.ruff]
+-line-length = 140
+-target-version = "py310"
++target-version = "py312"
++line-length = 100
++src = ["code"]
+ 
+ [tool.ruff.lint]
+ select = ["E", "F", "W", "I"]
+ 
+ [tool.mypy]
+ python_version = "3.12"
+-files = ["code"]
++files = ["code/triangle_cycle_sum.py", "code/review_counts.py"]
+ warn_unused_ignores = true

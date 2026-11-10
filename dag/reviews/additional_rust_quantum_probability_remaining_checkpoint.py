@@ -1,0 +1,15 @@
+"""Assemble only manual semantic dispositions with complete reading receipts."""
+import hashlib,json,pathlib
+H=pathlib.Path(__file__).resolve().parent;R=H.parents[1];P='additional_rust_quantum_probability_remaining';sp=H/(P+'_scope.json');s=json.loads(sp.read_text());np=H/(P+'_notes.json');notes=json.loads(np.read_text())if np.exists()else{};lp=H/(P+'_read_ledger.json');ledger=json.loads(lp.read_text())if lp.exists()else{};rp=H/(P+'.json');r=json.loads(rp.read_text())if rp.exists()else{};reviews=[];remaining=[];prep=[]
+for i,f in enumerate(s['files']):
+ raw=(R/f['path']).read_bytes();assert hashlib.sha256(raw).hexdigest()==f['sha256'];assert len(raw)==f['size_bytes'];lines=raw.decode('utf-8-sig').splitlines();n=notes.get(str(i));prep.append({'index':i,**f,'lines':len(lines)})
+ if not n:remaining.append(f['path']);continue
+ full=n.get('full_source_read',True);transfers=ledger.get(f['path'],{}).get('template_transfers',[])
+ if full:
+  ranges=ledger[f['path']]['emitted_ranges']+[x['target_lines']for x in transfers];assert {k for a,b in ranges for k in range(a,b+1)}==set(range(1,len(lines)+1))
+  for t in transfers:
+   traw=(R/t['template_path']).read_bytes();assert hashlib.sha256(traw).hexdigest()==t['template_sha256'];a,b=t['template_lines'];chunk=b''.join(traw.splitlines(keepends=True)[a-1:b]);a,b=t['target_lines'];target=b''.join(raw.splitlines(keepends=True)[a-1:b])
+   for old,new in t['substitutions'].items():chunk=chunk.replace(old.encode(),new.encode())
+   assert chunk==target and hashlib.sha256(target).hexdigest()==t['target_chunk_sha256']
+ reviews.append({'path':f['path'],'sha256':f['sha256'],'size_bytes':len(raw),'line_count':len(lines),'full_source_read':full,'reviewed_lines':[[1,len(lines)]]if full and lines else n.get('reviewed_lines',[]),'reviewed_bytes_half_open':[[0,len(raw)]]if full else n.get('reviewed_bytes_half_open',[]),'assessment':n['assessment'],'limitations':n['limitations'],'review_level':'full_body_semantic'if full else'bounded_structured_artifact','read_method':'exact previously read template plus every complete semantic difference'if transfers else n.get('read_method','complete numbered text'),'template_transfers':transfers})
+r.update({'source_commit':s['source_commit'],'scope_sha256':hashlib.sha256(sp.read_bytes()).hexdigest(),'scope_count':len(s['files']),'scope_bytes':s['scope_bytes'],'status':'in_progress','full_source_read_count':sum(x['full_source_read']for x in reviews),'claims':r.get('claims',[]),'findings':r.get('findings',[]),'validation':r.get('validation',[]),'file_reviews':reviews,'remaining_work':remaining,'execution_limits':['No original source edits or native/Cargo execution','No providers, downloads, private benchmark/hidden answer/seed access','Source metadata and read transport alone grant no semantic credit']});rp.write_text(json.dumps(r,indent=2)+'\n');(H/(P+'_preparation.json')).write_text(json.dumps(prep,indent=2)+'\n');print(json.dumps({'full':r['full_source_read_count'],'bounded':len(reviews)-r['full_source_read_count'],'remaining':len(remaining),'lines':sum(x['lines']for x in prep)}))

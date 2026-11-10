@@ -1,0 +1,349 @@
+{
+  "qm-deepseek-critique-20261110:self_critique:000": {
+    "run_id": "qm-deepseek-critique-20261110:self_critique:000",
+    "run_sha256": "9f961bc5eca2d597df3bc8fc6384910917e0cd002de21e16f3645978c4737489",
+    "answer_sha256": "ab4786978b6419b19fc4e1bbe28c7b083c66a1267dd198a75104c4f5b0540ba8",
+    "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+    "evaluator_id": "audit_systems_independent_public_seed_evaluator_v1",
+    "method": "trusted_post_freeze_mathematical_review",
+    "rubric_sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+    "reference_provenance_sha256": "719d729c4a9c7e0bc6675a364feccd288c7e29e9baf2098748837eab13489f9f",
+    "points": {
+      "spectrum": 17,
+      "dynamics": 19,
+      "pure_entanglement": 19,
+      "thermal_entanglement": 24,
+      "checks": 9
+    },
+    "deductions": [
+      {
+        "criterion_id": "spectrum.coincident_energies",
+        "points": 2,
+        "reason": "The equation K=-K+/-2R identifies both possible crossings implicitly. It does not give K=+/-R with their rank3 merged projectors/eigenspaces; the summary again calls K doubly degenerate without an exception.",
+        "evidence": [
+          {
+            "quote": "Degeneracy:\n- \\(E=K\\) is doubly degenerate unless \\(K = -K \\pm 2R\\) (special cases).\n- \\(E_1\\) and \\(E_2\\) are non-degenerate in general.",
+            "character_range": [
+              2275,
+              2412
+            ],
+            "line_range": [
+              75,
+              77
+            ]
+          },
+          {
+            "quote": "### **1.5 Spectral projectors**\n\\[\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|, \\quad P_1 = |\\psi_1\\rangle\\langle\\psi_1|, \\quad P_2 = |\\psi_2\\rangle\\langle\\psi_2|\n\\]",
+            "character_range": [
+              3249,
+              3422
+            ],
+            "line_range": [
+              99,
+              102
+            ]
+          },
+          {
+            "quote": "1. **Spectrum**: \\(E=K\\) (doubly degenerate), \\(E_{\\pm} = -K \\pm 2\\sqrt{\\Delta^2+J^2}\\)",
+            "character_range": [
+              12291,
+              12378
+            ],
+            "line_range": [
+              368,
+              368
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              13229
+            ],
+            "line_range": [
+              1,
+              380
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "spectrum.zero_radius",
+        "points": 1,
+        "reason": "R=0 is handled with even/odd computational projectors and no division, but K=0 is not identified as a single rank4 zero-energy eigenspace. At that point the two claimed doubly degenerate energies coincide.",
+        "evidence": [
+          {
+            "quote": "### **1.6 Limit \\(J=\\Delta=0\\)**\nThen \\(R=0\\), so:\n\\[\nE_1 = E_2 = -K\n\\]\nThus eigenvalues: \\(K\\) (doubly degenerate: \\(|00\\rangle, |11\\rangle\\)) and \\(-K\\) (doubly degenerate: \\(|01\\rangle, |10\\rangle\\)).\n\nSpectral projectors:\n\\[\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|, \\quad P_{-K} = |01\\rangle\\langle 01| + |10\\rangle\\langle 10|\n\\]",
+            "character_range": [
+              3424,
+              3769
+            ],
+            "line_range": [
+              104,
+              114
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              13229
+            ],
+            "line_range": [
+              1,
+              380
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "dynamics.earliest_and_constant_branches",
+        "points": 1,
+        "reason": "Correct pi/(4R) for J!=0 and correctly recognizes constant probability for J=0, but the assertion that there is no unique earliest time is false on t>=0: the earliest maximizing time is0.",
+        "evidence": [
+          {
+            "quote": "### **2.4 Earliest time attaining supremum**\nAssuming \\(J \\neq 0\\) (so supremum > 0):\n\nMaximum occurs when \\(\\sin^2(2Rt) = 1 \\Rightarrow 2Rt = \\frac{\\pi}{2} + m\\pi\\). The earliest positive time:\n\\[\nt_{\\text{max}} = \\frac{\\pi}{4R} \\quad \\text{for } R>0\n\\]\n\nIf \\(J=0\\): probability is constantly 0, so no unique earliest time (any \\(t\\) gives the same value).",
+            "character_range": [
+              5424,
+              5781
+            ],
+            "line_range": [
+              165,
+              173
+            ]
+          },
+          {
+            "quote": "   Supremum = \\(J^2/(\\Delta^2+J^2)\\) (if \\(J\\neq 0\\)); earliest time = \\(\\pi/(4\\sqrt{\\Delta^2+J^2})\\) (if \\(J\\neq 0\\)).",
+            "character_range": [
+              12503,
+              12622
+            ],
+            "line_range": [
+              374,
+              374
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.entropy",
+        "points": 1,
+        "reason": "Correct binary entropy in bits, but no0log0=0 endpoint convention is supplied, including at the initial product state.",
+        "evidence": [
+          {
+            "quote": "### **3.2 Von Neumann entropy in bits**\n\\[\nS(\\rho_1(t)) = -p\\log_2 p - (1-p)\\log_2(1-p) \\quad \\text{bits}\n\\]",
+            "character_range": [
+              6310,
+              6418
+            ],
+            "line_range": [
+              191,
+              194
+            ]
+          },
+          {
+            "quote": "3. **Reduced state**: \\(\\rho_1(t) = \\text{diag}(1-p, p)\\) with \\(p\\) as above. Entropy = \\(-p\\log_2 p - (1-p)\\log_2(1-p)\\). Concurrence = \\(2\\sqrt{p(1-p)}\\). Max CHSH = \\(2\\sqrt{1+4p(1-p)}\\). Maximally entangled reachable iff \\(|J|\\geq|\\Delta|\\), earliest time given by solving \\(\\sin^2(2Rt)=R^2/(2J^2)\\).",
+            "character_range": [
+              12624,
+              12929
+            ],
+            "line_range": [
+              376,
+              376
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              13229
+            ],
+            "line_range": [
+              1,
+              380
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.CHSH",
+        "points": 3,
+        "reason": "The general formula and final summary correctly give2sqrt(1+C^2), earning formula credit. The proposed derivation is invalid and internally contradictory: Tyy has the wrong sign, phase-sensitive Txy/Tyx are dropped, and the derived expression215 gives2 for Delta=0 even when C=1. For J=1,Delta=K=0,t=pi/8 the exact T has singular values1,1,1 and the maximum is2sqrt2.",
+        "evidence": [
+          {
+            "quote": "### **3.4 Maximal CHSH expectation**\nFor a pure state with concurrence \\(C\\), the maximal CHSH expectation value is:\n\\[\nB_{\\max} = 2\\sqrt{1 + C^2} = 2\\sqrt{1 + 4p(1-p)}\n\\]\nThis can also be derived from the correlation matrix \\(T_{ij} = \\langle \\sigma_i\\otimes\\sigma_j\\rangle\\):\n\\[\nT = \\begin{pmatrix} 2\\text{Re}(a^*b) & 0 & 0 \\\\ 0 & -2\\text{Re}(a^*b) & 0 \\\\ 0 & 0 & -1 \\end{pmatrix}\n\\]\nin \\((x,y,z)\\) ordering. Then \\(\\lambda_1 = 1\\), \\(\\lambda_2 = 4[\\text{Re}(a^*b)]^2\\), and \\(B_{\\max} = 2\\sqrt{\\lambda_1 + \\lambda_2}\\).\n\nHere \\(\\text{Re}(a^*b) = \\frac{\\Delta J}{R^2}\\sin^2(2Rt)\\), so:\n\\[\nB_{\\max} = 2\\sqrt{1 + \\frac{4\\Delta^2 J^2}{R^4}\\sin^4(2Rt)}",
+            "character_range": [
+              6712,
+              7362
+            ],
+            "line_range": [
+              202,
+              215
+            ]
+          },
+          {
+            "quote": "Take \\(J=1, \\Delta=0, K=0\\):\n- \\(R=1\\)\n- \\(a(t) = \\cos(2t)\\), \\(b(t) = -i\\sin(2t)\\)\n- \\(P_{01\\to10}(t) = \\sin^2(2t)\\)\n- Concurrence \\(C = |\\sin(4t)|\\) (since \\(2|ab| = |\\sin(4t)|\\))\n- At \\(t=\\pi/8\\): \\(p=1/2\\), \\(C=1\\) (maximally entangled Bell state)",
+            "character_range": [
+              11967,
+              12218
+            ],
+            "line_range": [
+              356,
+              361
+            ]
+          },
+          {
+            "quote": "3. **Reduced state**: \\(\\rho_1(t) = \\text{diag}(1-p, p)\\) with \\(p\\) as above. Entropy = \\(-p\\log_2 p - (1-p)\\log_2(1-p)\\). Concurrence = \\(2\\sqrt{p(1-p)}\\). Max CHSH = \\(2\\sqrt{1+4p(1-p)}\\). Maximally entangled reachable iff \\(|J|\\geq|\\Delta|\\), earliest time given by solving \\(\\sin^2(2Rt)=R^2/(2J^2)\\).",
+            "character_range": [
+              12624,
+              12929
+            ],
+            "line_range": [
+              376,
+              376
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.maximal_entanglement_reachability",
+        "points": 1,
+        "reason": "Correct nonzero-coupling threshold |J|>=|Delta|, but the stated iff includes J=Delta=0, which preserves a product state. The missing requirement is J!=0.",
+        "evidence": [
+          {
+            "quote": "### **3.5 When is a maximally entangled state reachable?**\nMaximally entangled means \\(C=1 \\Rightarrow p(1-p) = 1/4 \\Rightarrow p = 1/2\\).\n\nThus we need:\n\\[\n\\frac{J^2}{R^2}\\sin^2(2Rt) = \\frac{1}{2}\n\\]\nThis requires \\(J^2/R^2 \\geq 1/2 \\Rightarrow 2J^2 \\geq \\Delta^2 + J^2 \\Rightarrow J^2 \\geq \\Delta^2 \\Rightarrow |J| \\geq |\\Delta|\\).\n\n**Condition**: Maximally entangled state is reachable iff \\(|J| \\geq |\\Delta|\\).",
+            "character_range": [
+              7367,
+              7782
+            ],
+            "line_range": [
+              218,
+              227
+            ]
+          },
+          {
+            "quote": "### **5.3 Decoupled limit \\(J=\\Delta=0\\)**\nHamiltonian reduces to \\(K Z_1Z_2\\). Initial state \\(|01\\rangle\\) is an eigenstate (\\(Z_1Z_2|01\\rangle = -|01\\rangle\\)), so no evolution: \\(|\\psi(t)\\rangle = e^{iKt}|01\\rangle\\). Then \\(P_{01\\to10}(t)=0\\), matching formula with \\(J=0\\).",
+            "character_range": [
+              11645,
+              11924
+            ],
+            "line_range": [
+              352,
+              353
+            ]
+          },
+          {
+            "quote": "3. **Reduced state**: \\(\\rho_1(t) = \\text{diag}(1-p, p)\\) with \\(p\\) as above. Entropy = \\(-p\\log_2 p - (1-p)\\log_2(1-p)\\). Concurrence = \\(2\\sqrt{p(1-p)}\\). Max CHSH = \\(2\\sqrt{1+4p(1-p)}\\). Maximally entangled reachable iff \\(|J|\\geq|\\Delta|\\), earliest time given by solving \\(\\sin^2(2Rt)=R^2/(2J^2)\\).",
+            "character_range": [
+              12624,
+              12929
+            ],
+            "line_range": [
+              376,
+              376
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.earliest_maximal_entanglement",
+        "points": 1,
+        "reason": "The principal-arcsine formula is correct on J!=0 and |J|>=|Delta|. However the explicit equality branch is wrong: |J|=|Delta|!=0 gives pi/(4sqrt2|J|), not pi/(8|J|). The formula also has no defined zero-coupling branch despite the preceding iff including it.",
+        "evidence": [
+          {
+            "quote": "### **3.6 Earliest time reaching maximal entanglement**\nFrom \\(p = \\frac{1}{2}\\):\n\\[\n\\sin^2(2Rt) = \\frac{R^2}{2J^2}\n\\]\nThe smallest positive solution:\n\\[\n2Rt = \\arcsin\\left(\\frac{R}{\\sqrt{2}|J|}\\right) \\quad \\text{(taking principal value)}\n\\]\nSo:\n\\[\nt_{\\text{ent}} = \\frac{1}{2R} \\arcsin\\left(\\frac{R}{\\sqrt{2}|J|}\\right)\n\\]\nprovided the argument \\(\\leq 1\\). This holds when \\(|J| \\geq |\\Delta|\\), since then \\(R^2/(2J^2) \\leq 1\\).\n\nSpecial cases:\n- If \\(|J| = |\\Delta| \\neq 0\\): \\(R = \\sqrt{2}|J|\\), then \\(R/(\\sqrt{2}|J|) = 1\\), so \\(t_{\\text{ent}} = \\pi/(8|J|)\\).\n- If \\(\\Delta = 0\\): \\(R = |J|\\), \\(t_{\\text{ent}} = \\pi/(8|J|)\\).",
+            "character_range": [
+              7784,
+              8417
+            ],
+            "line_range": [
+              229,
+              246
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "thermal.entanglement_criterion",
+        "points": 1,
+        "reason": "The final iff and strict inequality are correct and imply equality is separable. The displayed derivation incorrectly turns w>C into |w|>C; for J>0,beta>0, w<0 and the negative eigenvalue is(C+w)/Z, not(C-w)/Z. The result is recoverable from the correctly listed unordered eigenvalue pair, but the supplied sign argument is not valid as written.",
+        "evidence": [
+          {
+            "quote": "### **4.5 Condition for thermal entanglement**\nBy the Peres-Horodecki criterion, entanglement exists iff \\(\\rho_\\beta^{T_2}\\) has a negative eigenvalue. The most likely candidate is \\(\\lambda_4 = (C-w)/Z\\) if \\(w > C\\).\n\nNow:\n\\[\ncd = \\frac{J}{2R}, \\quad A-B = -2e^{\\beta K}\\sinh(2\\beta R)\n\\]\nSo:\n\\[\nw = cd(A-B) = -\\frac{J}{R} e^{\\beta K}\\sinh(2\\beta R)\n\\]\n\\[\n|w| = \\frac{|J|}{R} e^{\\beta K} |\\sinh(2\\beta R)|\n\\]\n\nThe condition \\(w > C\\) becomes (for \\(\\beta>0, R>0\\), \\(\\sinh(2\\beta R)>0\\)):\n\\[\n\\frac{|J|}{R} e^{\\beta K} \\sinh(2\\beta R) > e^{-\\beta K}\n\\]\nMultiply by \\(e^{\\beta K}\\):\n\\[\n\\frac{|J|}{R} e^{2\\beta K} \\sinh(2\\beta R) > 1\n\\]\n\n**Thermal entanglement condition** (for \\(\\beta>0, R>0\\)):\n\\[\n\\frac{|J|}{R} e^{2\\beta K} \\sinh(2\\beta R) > 1",
+            "character_range": [
+              10242,
+              10988
+            ],
+            "line_range": [
+              307,
+              333
+            ]
+          },
+          {
+            "quote": "4. **Thermal state**: \\(Z(\\beta)=2e^{-\\beta K}+2e^{\\beta K}\\cosh(2\\beta R)\\). Thermal entanglement exists iff \\(\\frac{|J|}{R}e^{2\\beta K}\\sinh(2\\beta R) > 1\\) (for \\(\\beta>0, R>0\\)).",
+            "character_range": [
+              12931,
+              13113
+            ],
+            "line_range": [
+              378,
+              378
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "checks.decoupled_limit",
+        "points": 1,
+        "reason": "The explicit dynamical consistency check covers only J=Delta=0. Other passages cover eigenvectors and zero transition probability for J=0, but the general Delta!=0 decoupled evolution and its consequences are not checked together.",
+        "evidence": [
+          {
+            "quote": "**Special cases**:\n- If \\(J=0\\) and \\(\\Delta \\neq 0\\): \\(R=|\\Delta|\\). Then \\(|\\psi_1\\rangle = |01\\rangle\\), \\(|\\psi_2\\rangle = |10\\rangle\\) when \\(\\Delta > 0\\), and swapped when \\(\\Delta < 0\\).\n- If \\(R+\\Delta = 0\\) (i.e., \\(\\Delta = -R \\leq 0\\), which requires \\(J=0\\)): Then \\(c\\) undefined, but \\(J=0\\) so eigenvectors are simply \\(|01\\rangle\\) and \\(|10\\rangle\\).",
+            "character_range": [
+              2879,
+              3247
+            ],
+            "line_range": [
+              95,
+              97
+            ]
+          },
+          {
+            "quote": "Special cases:\n- If \\(J=0\\): \\(P_{01\\to10}(t) = 0\\) for all \\(t\\), supremum = 0.\n- If \\(\\Delta=0\\): supremum = 1 (perfect oscillation).\n- If \\(R=0\\) (i.e., \\(J=\\Delta=0\\)): \\(P_{01\\to10}(t) = 0\\) (since \\(J=0\\)), supremum = 0.",
+            "character_range": [
+              5196,
+              5422
+            ],
+            "line_range": [
+              160,
+              163
+            ]
+          },
+          {
+            "quote": "### **5.3 Decoupled limit \\(J=\\Delta=0\\)**\nHamiltonian reduces to \\(K Z_1Z_2\\). Initial state \\(|01\\rangle\\) is an eigenstate (\\(Z_1Z_2|01\\rangle = -|01\\rangle\\)), so no evolution: \\(|\\psi(t)\\rangle = e^{iKt}|01\\rangle\\). Then \\(P_{01\\to10}(t)=0\\), matching formula with \\(J=0\\).",
+            "character_range": [
+              11645,
+              11924
+            ],
+            "line_range": [
+              352,
+              353
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              13229
+            ],
+            "line_range": [
+              1,
+              380
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 88
+  }
+}

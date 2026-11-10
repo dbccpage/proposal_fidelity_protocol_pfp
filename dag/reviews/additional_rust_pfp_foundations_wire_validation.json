@@ -1,0 +1,68 @@
+{
+  "probe_sha256": "533f33aede9c4231a3eced28978b62de5adba7d2d27caaa7916171af5eb949f9",
+  "cached_libraries": [
+    {
+      "path": "code/rust/target/debug/deps/libserde-065dc96d6ee672bf.rlib",
+      "sha256": "b5a0b71fdf86f00c4375641665bb4ddb6b163ac9e874fd9a5b12e144fde1feac"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libserde_json-0b8975ff4f3cbcfc.rlib",
+      "sha256": "c1052cf851745ff3b31c6648af3c61aadb6c6bb48c587b2623d09725757ac3f9"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libthiserror-6ce2fd6ad1e676a5.rlib",
+      "sha256": "695c32160f626dd5af1773cd4bfc1841c180a7e22b70f11f1bfa9a611dc88a8a"
+    }
+  ],
+  "runs": [
+    {
+      "overflow_checks": "yes",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-L",
+        "dependency=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps",
+        "--extern",
+        "serde=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde-065dc96d6ee672bf.rlib",
+        "--extern",
+        "serde_json=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde_json-0b8975ff4f3cbcfc.rlib",
+        "--extern",
+        "thiserror=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libthiserror-6ce2fd6ad1e676a5.rlib",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_wire_probe.rs",
+        "-C",
+        "overflow-checks=yes",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_wire_yes.exe"
+      ],
+      "compile_exit": 0,
+      "compile_output": "warning: unused import: `crate::node_id::NodeId`\n --> C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\..\\..\\code\\rust\\core_types\\src\\mcts_scheduler.rs:4:9\n  |\n4 | pub use crate::node_id::NodeId;\n  |         ^^^^^^^^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: 1 warning emitted\n\n",
+      "exit_code": 0,
+      "output": "negative_weight_wire_admitted=true\nnegative_weight_constructor_refused=true\nlevel_overflow_panics=true\nlevel_wraparound_certified=false\nunvalidated_ancestor_index_panics=true\nnan_bounds_admitted=true\nconflict_then_merge_admitted=true\nmerge_then_conflict_refused=true\n"
+    },
+    {
+      "overflow_checks": "no",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-L",
+        "dependency=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps",
+        "--extern",
+        "serde=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde-065dc96d6ee672bf.rlib",
+        "--extern",
+        "serde_json=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde_json-0b8975ff4f3cbcfc.rlib",
+        "--extern",
+        "thiserror=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libthiserror-6ce2fd6ad1e676a5.rlib",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_wire_probe.rs",
+        "-C",
+        "overflow-checks=no",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_wire_no.exe"
+      ],
+      "compile_exit": 0,
+      "compile_output": "warning: unused import: `crate::node_id::NodeId`\n --> C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\..\\..\\code\\rust\\core_types\\src\\mcts_scheduler.rs:4:9\n  |\n4 | pub use crate::node_id::NodeId;\n  |         ^^^^^^^^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: 1 warning emitted\n\n",
+      "exit_code": 0,
+      "output": "negative_weight_wire_admitted=true\nnegative_weight_constructor_refused=true\nlevel_overflow_panics=false\nlevel_wraparound_certified=true\nunvalidated_ancestor_index_panics=true\nnan_bounds_admitted=true\nconflict_then_merge_admitted=true\nmerge_then_conflict_refused=true\n"
+    }
+  ],
+  "initial_attempt": "Latest serde/json pair failed compilation with different serde_core artifact identities. Compatible libraries selected by fingerprint dependency identity; no product defect attributed to setup failure."
+}

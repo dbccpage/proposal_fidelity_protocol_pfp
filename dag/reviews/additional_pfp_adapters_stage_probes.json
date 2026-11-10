@@ -1,0 +1,559 @@
+{
+  "method": "Unchanged preamble and fully read stage source executed in isolated namespaces, bypassing package loader solely to avoid unrelated unavailable imports. No native/model/provider calls. Payloads independently authored, not copied from fixtures.",
+  "checks": [
+    {
+      "stage": 14,
+      "rule": "zero_atom_budget_still_enumerates_outer_quantifier",
+      "status": "observed",
+      "payload": {
+        "budget": 0,
+        "formula": [
+          "forall",
+          "x",
+          64,
+          [
+            "forall",
+            "y",
+            0,
+            [
+              "eq",
+              "x",
+              "x"
+            ]
+          ]
+        ],
+        "mask": [
+          "forall",
+          "forall"
+        ],
+        "value": "true"
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "eval_calls": 65,
+      "assessment": "All64 outer branches allocate/evaluate despite zero atom budget; small control only. No claim of false formula truth."
+    },
+    {
+      "stage": 33,
+      "rule": "valid_weaker_jump_bound_refused",
+      "status": "observed",
+      "payload": {
+        "reading": [
+          "0/1",
+          "2/1"
+        ],
+        "steps": [
+          [
+            [
+              0,
+              0
+            ],
+            "1/1"
+          ]
+        ],
+        "jumps": [
+          [
+            0,
+            1,
+            [
+              0,
+              0
+            ],
+            "2/1"
+          ]
+        ]
+      },
+      "observed": [
+        "REFUSED",
+        "R033_BOUND_NOT_COMPOSED"
+      ],
+      "assessment": "Actual sup error1 and step bound1 imply upper bound2 by weakening; policy rejects with R033_BOUND_NOT_COMPOSED."
+    },
+    {
+      "stage": 42,
+      "rule": "nonterminating_closed_branch_passes",
+      "status": "observed",
+      "payload": {
+        "left": {
+          "start": "s",
+          "final": [
+            "end"
+          ],
+          "moves": [
+            [
+              "s",
+              "send",
+              "finish",
+              "end"
+            ],
+            [
+              "s",
+              "send",
+              "loop",
+              "trap"
+            ],
+            [
+              "trap",
+              "send",
+              "loop",
+              "trap"
+            ]
+          ]
+        },
+        "right": {
+          "start": "s",
+          "final": [
+            "end"
+          ],
+          "moves": [
+            [
+              "s",
+              "receive",
+              "finish",
+              "end"
+            ],
+            [
+              "s",
+              "receive",
+              "loop",
+              "trap"
+            ],
+            [
+              "trap",
+              "receive",
+              "loop",
+              "trap"
+            ]
+          ]
+        }
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "assessment": "A final pair is reachable directly, while the reachable trap pair has only a self-loop and no route to final. This satisfies the implemented existential-end/deadlock predicate, not universal eventual termination."
+    },
+    {
+      "stage": 55,
+      "rule": "unnormalized_joint_weights_pass",
+      "status": "observed",
+      "payload": {
+        "shape": [
+          1,
+          1
+        ],
+        "row": [
+          [
+            "2/1",
+            "0/1"
+          ]
+        ],
+        "near": [
+          [
+            [
+              [
+                "1/1",
+                "0/1"
+              ]
+            ]
+          ]
+        ],
+        "far": [
+          [
+            [
+              [
+                [
+                  "1/1",
+                  "0/1"
+                ]
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                [
+                  "1/1",
+                  "0/1"
+                ]
+              ]
+            ]
+          ]
+        ],
+        "table": [
+          [
+            [
+              "4/1"
+            ]
+          ],
+          [
+            [
+              "4/1"
+            ]
+          ]
+        ],
+        "selection": null
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "assessment": "Each declared joint table totals4. Predicate proves equal unnormalized marginals, not probability normalization."
+    },
+    {
+      "stage": 63,
+      "rule": "vertex_singular_pseudomanifold_accepted_as_surface",
+      "status": "observed",
+      "payload": {
+        "triangles": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            0,
+            4,
+            5
+          ],
+          [
+            0,
+            4,
+            6
+          ],
+          [
+            0,
+            5,
+            6
+          ],
+          [
+            4,
+            5,
+            6
+          ]
+        ],
+        "lengths": [
+          [
+            0,
+            1,
+            "1/1"
+          ],
+          [
+            0,
+            2,
+            "1/1"
+          ],
+          [
+            0,
+            3,
+            "1/1"
+          ],
+          [
+            0,
+            4,
+            "1/1"
+          ],
+          [
+            0,
+            5,
+            "1/1"
+          ],
+          [
+            0,
+            6,
+            "1/1"
+          ],
+          [
+            1,
+            2,
+            "1/1"
+          ],
+          [
+            1,
+            3,
+            "1/1"
+          ],
+          [
+            2,
+            3,
+            "1/1"
+          ],
+          [
+            4,
+            5,
+            "1/1"
+          ],
+          [
+            4,
+            6,
+            "1/1"
+          ],
+          [
+            5,
+            6,
+            "1/1"
+          ]
+        ],
+        "terms": [
+          [
+            0,
+            [
+              0,
+              1,
+              2,
+              4,
+              5,
+              6
+            ],
+            "0/1"
+          ],
+          [
+            1,
+            [
+              0,
+              1,
+              3
+            ],
+            "1/2"
+          ],
+          [
+            2,
+            [
+              0,
+              2,
+              3
+            ],
+            "1/2"
+          ],
+          [
+            3,
+            [
+              1,
+              2,
+              3
+            ],
+            "1/2"
+          ],
+          [
+            4,
+            [
+              4,
+              5,
+              7
+            ],
+            "1/2"
+          ],
+          [
+            5,
+            [
+              4,
+              6,
+              7
+            ],
+            "1/2"
+          ],
+          [
+            6,
+            [
+              5,
+              6,
+              7
+            ],
+            "1/2"
+          ]
+        ],
+        "action": "3/1"
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "assessment": "Two tetrahedral sphere boundaries share only vertex0. Every edge has exactly two incident triangles, but the vertex0 link is two disconnected triangles, so the input is not a triangulated 2-manifold. Exact angle sums still agree."
+    },
+    {
+      "stage": 64,
+      "rule": "edge_derived_faces_need_order_and_connectors",
+      "status": "observed",
+      "payload": {
+        "labels": 3,
+        "cell": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "edges": [
+          [
+            0,
+            1,
+            [
+              1,
+              0,
+              2
+            ]
+          ],
+          [
+            0,
+            2,
+            [
+              0,
+              2,
+              1
+            ]
+          ],
+          [
+            0,
+            3,
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            1,
+            2,
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            1,
+            3,
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            2,
+            3,
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            [
+              0
+            ],
+            [
+              0,
+              1,
+              2,
+              0
+            ],
+            [
+              2,
+              0,
+              1
+            ]
+          ],
+          [
+            1,
+            [
+              0
+            ],
+            [
+              0,
+              3,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              2
+            ]
+          ],
+          [
+            2,
+            [
+              0
+            ],
+            [
+              0,
+              2,
+              3,
+              0
+            ],
+            [
+              0,
+              2,
+              1
+            ]
+          ],
+          [
+            3,
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              3,
+              2,
+              1
+            ],
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ]
+      },
+      "observed": [
+        "REFUSED",
+        "R064_NOT_CLOSED"
+      ],
+      "assessment": "Every supplied face value equals its actual edge-derived based loop and oriented boundary incidence is complete. Allowed order produces nonidentity closure, refuting prose that every edge-derived assignment closes without additional connector/order constraints."
+    },
+    {
+      "stage": 19,
+      "rule": "characteristic_against_independent_2x2_determinant",
+      "status": "passed_bounded",
+      "matrices": 625,
+      "evaluation_points": [
+        -3,
+        0,
+        4
+      ],
+      "assessment": "625 exact matrices,1875 scalar equalities; polynomial degree <=2 and three distinct points determine it. No unbounded test claim."
+    }
+  ],
+  "source_hashes": {
+    "pfp/infrastructure/adapters/mssn_research/checkers/preamble.py": "eda37af9d43d82c6fa49bfca46a81e2259d5e33438144265cf2a422193cbbfeb",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_014.py": "e7610f8c829aa01ebdeaaf3e3ceb210ee4ea8e816d0d28c6073226344cb6a83d",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_019.py": "b3e747b1c92a2dc7e75d8479cb2f207a57b6c4751e0ddfe28b82c7b18eb1c01d",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_033.py": "34bef9b78a196e4c059c6278c6fc936087888c490a98aba6e1bcf01c9d1a9b71",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_042.py": "88dbf9410be7185b6929c900ea9545b0cb5c6ed449964ef6700de5e8adc9cf1b",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_055.py": "a422b96cfb320dae6812d3026708d920855fb7e7393881a04faeba79ad43a6c7",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_063.py": "b729ab8dac4aa0d6f349c96ca6a8775a0a044f1706094fdf5de174024861d48f",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_064.py": "d95655d56ddab90a8bb2679f7fcecc95a3c119809cb6639a6570966574a1f292"
+  }
+}

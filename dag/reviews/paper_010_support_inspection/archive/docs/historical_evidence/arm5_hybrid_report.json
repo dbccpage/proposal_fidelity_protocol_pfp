@@ -1,0 +1,368 @@
+{
+  "arm": "Arm 5 (Full Hybrid)",
+  "cases_evaluated": [
+    {
+      "case_id": "pois_01_s3_commutator_trap",
+      "details": {
+        "algebraic_checker": {
+          "passed": true,
+          "reason": "NOT_FLAT certificate verified"
+        },
+        "independent_checker": {
+          "passed": true,
+          "reason": "Independent checker confirms NOT_FLAT"
+        }
+      },
+      "expected_verdict": "NOT_FLAT",
+      "meta": {
+        "cost": 0.0005987400000000001,
+        "in_tokens": 2352,
+        "latency": 24.42114543914795,
+        "out_tokens": 1055
+      },
+      "passed": true,
+      "reason": "Dual consensus achieved (both checkers passed)",
+      "solution": {
+        "holonomy": "r2",
+        "plaquette": [
+          "0,0",
+          "1,0",
+          "1,1",
+          "0,1"
+        ],
+        "scratchpad": {
+          "evaluated_plaquettes": [
+            {
+              "final_holonomy": "r2",
+              "is_flat": false,
+              "plaquette": [
+                "0,0",
+                "1,0",
+                "1,1",
+                "0,1"
+              ],
+              "steps": [
+                {
+                  "U": "e",
+                  "edge": "0,0->1,0",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "1,0->1,1",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "1,1->0,1",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "r2",
+                  "edge": "0,1->0,0",
+                  "g_in": "e",
+                  "g_out": "r2"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "SOLVED",
+        "verdict": "NOT_FLAT"
+      },
+      "verdict": "NOT_FLAT"
+    },
+    {
+      "case_id": "base_01_s3_open_nonflat",
+      "details": {
+        "algebraic_checker": {
+          "passed": true,
+          "reason": "NOT_FLAT certificate verified"
+        },
+        "independent_checker": {
+          "passed": true,
+          "reason": "Independent checker confirms NOT_FLAT"
+        }
+      },
+      "expected_verdict": "NOT_FLAT",
+      "meta": {
+        "cost": 0.0007160399999999999,
+        "in_tokens": 2537,
+        "latency": 32.071533203125,
+        "out_tokens": 1372
+      },
+      "passed": true,
+      "reason": "Dual consensus achieved (both checkers passed)",
+      "solution": {
+        "holonomy": "s",
+        "plaquette": [
+          "0,1",
+          "1,1",
+          "1,2",
+          "0,2"
+        ],
+        "scratchpad": {
+          "evaluated_plaquettes": [
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "0,0",
+                "1,0",
+                "1,1",
+                "0,1"
+              ],
+              "steps": [
+                {
+                  "U": "e",
+                  "edge": "0,0->1,0",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "1,0->1,1",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "1,1->0,1",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "0,1->0,0",
+                  "g_in": "e",
+                  "g_out": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "s",
+              "is_flat": false,
+              "plaquette": [
+                "0,1",
+                "1,1",
+                "1,2",
+                "0,2"
+              ],
+              "steps": [
+                {
+                  "U": "e",
+                  "edge": "0,1->1,1",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "1,1->1,2",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "1,2->0,2",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "s",
+                  "edge": "0,2->0,1",
+                  "g_in": "e",
+                  "g_out": "s"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "SOLVED",
+        "verdict": "NOT_FLAT"
+      },
+      "verdict": "NOT_FLAT"
+    },
+    {
+      "case_id": "base_02_s3_open_puregauge",
+      "details": {
+        "algebraic_checker": {
+          "passed": false,
+          "reason": "Plaquette holonomy mismatch: expected r2, computed e"
+        },
+        "independent_checker": {
+          "passed": false,
+          "reason": "Expected PURE_GAUGE, got NOT_FLAT"
+        }
+      },
+      "expected_verdict": "PURE_GAUGE",
+      "meta": {
+        "cost": 0.00057846,
+        "in_tokens": 3098,
+        "latency": 18.329256057739258,
+        "out_tokens": 689
+      },
+      "passed": false,
+      "reason": "Dual check failed: C1=Plaquette holonomy mismatch: expected r2, computed e | C2=Expected PURE_GAUGE, got NOT_FLAT",
+      "solution": {
+        "holonomy": "r2",
+        "plaquette": [
+          "0,0",
+          "1,0",
+          "1,1",
+          "0,1"
+        ],
+        "scratchpad": {
+          "evaluated_plaquettes": [
+            {
+              "final_holonomy": "r2",
+              "is_flat": false,
+              "plaquette": [
+                "0,0",
+                "1,0",
+                "1,1",
+                "0,1"
+              ],
+              "steps": [
+                {
+                  "U": "e",
+                  "edge": "0,0->1,0",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "sr2",
+                  "edge": "1,0->1,1",
+                  "g_in": "e",
+                  "g_out": "sr2"
+                },
+                {
+                  "U": "s",
+                  "edge": "1,1->0,1",
+                  "g_in": "sr2",
+                  "g_out": "r"
+                },
+                {
+                  "U": "r",
+                  "edge": "0,1->0,0",
+                  "g_in": "r",
+                  "g_out": "r2"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "SOLVED",
+        "verdict": "NOT_FLAT"
+      },
+      "verdict": "NOT_FLAT"
+    },
+    {
+      "case_id": "base_03_s3_periodic_torus",
+      "details": {
+        "algebraic_checker": {
+          "passed": false,
+          "reason": "Unexpected result status: PARSE_ERROR"
+        },
+        "independent_checker": {
+          "passed": false,
+          "reason": "Expected SOLVED, got PARSE_ERROR"
+        }
+      },
+      "expected_verdict": "FLAT_NONTRIVIAL",
+      "meta": {
+        "cost": 0.0008747999999999999,
+        "in_tokens": 4315,
+        "latency": 29.087828159332275,
+        "out_tokens": 1190
+      },
+      "passed": false,
+      "reason": "Dual check failed: C1=Unexpected result status: PARSE_ERROR | C2=Expected SOLVED, got PARSE_ERROR",
+      "solution": {
+        "raw": "To solve this problem, we need to follow the decision procedure step by step.\n\n### Step 1: Check edge anti-symmetry\n\nWe need to verify that for each edge `u->v`, there exists an edge `v->u` with element `U^{-1}`.\n\nAfter checking the edge connections, we can see that the edge anti-symmetry condition is satisfied.\n\n### Step 2: Check each canonical plaquette\n\nWe need to evaluate the holonomy of each ",
+        "status": "PARSE_ERROR"
+      },
+      "verdict": null
+    },
+    {
+      "case_id": "base_13_q8_open_nonflat",
+      "details": {
+        "algebraic_checker": {
+          "passed": true,
+          "reason": "NOT_FLAT certificate verified"
+        },
+        "independent_checker": {
+          "passed": true,
+          "reason": "Independent checker confirms NOT_FLAT"
+        }
+      },
+      "expected_verdict": "NOT_FLAT",
+      "meta": {
+        "cost": 0.0006013199999999999,
+        "in_tokens": 3266,
+        "latency": 93.55083131790161,
+        "out_tokens": 698
+      },
+      "passed": true,
+      "reason": "Dual consensus achieved (both checkers passed)",
+      "solution": {
+        "holonomy": "-i",
+        "plaquette": [
+          "0,0",
+          "1,0",
+          "1,1",
+          "0,1"
+        ],
+        "scratchpad": {
+          "evaluated_plaquettes": [
+            {
+              "final_holonomy": "-i",
+              "is_flat": false,
+              "plaquette": [
+                "0,0",
+                "1,0",
+                "1,1",
+                "0,1"
+              ],
+              "steps": [
+                {
+                  "U": "e",
+                  "edge": "0,0->1,0",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "1,0->1,1",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "e",
+                  "edge": "1,1->0,1",
+                  "g_in": "e",
+                  "g_out": "e"
+                },
+                {
+                  "U": "-i",
+                  "edge": "0,1->0,0",
+                  "g_in": "e",
+                  "g_out": "-i"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "SOLVED",
+        "verdict": "NOT_FLAT"
+      },
+      "verdict": "NOT_FLAT"
+    }
+  ],
+  "dry_run": false,
+  "model": "meta-llama/llama-3.3-70b-instruct",
+  "timestamp_utc": "2026-09-28T15:18:23.292508+00:00",
+  "total_cost_usd": 0.0033693599999999996
+}

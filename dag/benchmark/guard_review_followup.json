@@ -1,0 +1,583 @@
+{
+  "schema": "pfp.guard-adversarial-followup.v1",
+  "generated_at_utc": "2026-11-10T05:15:17.567538+00:00",
+  "status": "original_three_exploits_stopped_with_extreme_cost_overflow_limitation",
+  "review_scope": [
+    "GR-F01",
+    "GR-F02",
+    "GR-F03",
+    "Immediate failure-path regression controls"
+  ],
+  "reviewed_sources": [
+    {
+      "path": "dag/benchmark/openrouter_provider.py",
+      "sha256": "03e60d2e5ac28d16e7a852dd5be1924ff458cdd8e9e04481892421e430c777c1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          282
+        ]
+      ],
+      "matches_resolution_pin": true
+    },
+    {
+      "path": "dag/benchmark/campaign_ledger.py",
+      "sha256": "e369d63cd6849d568645e9745349aad25d15417e72be82ea30dd1d2ef8d6dc60",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          158
+        ]
+      ],
+      "matches_resolution_pin": true
+    },
+    {
+      "path": "dag/benchmark/reference_runner.py",
+      "sha256": "95f2efb046664163431aa1768e3ad911427e0e855438ed509289cb02a7b4c3f5",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          205
+        ]
+      ],
+      "matches_resolution_pin": true
+    },
+    {
+      "path": "dag/benchmark/budget_ledger.py",
+      "sha256": "07b20aa3d17f4e88d4e5e751a2b96daa54c0b83a66677122b0ffe53b809cbd2b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          122
+        ]
+      ],
+      "matches_resolution_pin": true
+    }
+  ],
+  "original_review_hashes_preserved": {
+    "guard_review.json": "0816f68b02392c9f921b07ea290f0a857d9605dd02bb501a5f084438c5881d56",
+    "guard_review.md": "4b37203047a777d14b6cec7e2f8d2ec67fe2ed537885411385dafc1b16527ebd"
+  },
+  "original_findings": [
+    {
+      "id": "GR-F01",
+      "status": "ORIGINAL_EXPLOIT_STOPPED",
+      "evidence": [
+        "GF-P01",
+        "GF-P02",
+        "GF-P03"
+      ],
+      "assessment": "Public evidence mutations no longer reach the actual wire; internal wire or original-message drift is refused before POST, and preparation is consumed."
+    },
+    {
+      "id": "GR-F02",
+      "status": "ORIGINAL_EXPLOIT_STOPPED",
+      "evidence": [
+        "GF-P04",
+        "GF-P10",
+        "GF-C01"
+      ],
+      "assessment": "An unfinished reserved admission survives reopen and blocks both repeated and next dispatch. A fully settled clean run permits only the next frozen run."
+    },
+    {
+      "id": "GR-F03",
+      "status": "ORIGINAL_EXPLOITS_STOPPED_WITH_BOUNDARY_LIMITATION",
+      "evidence": [
+        "GF-P05",
+        "GF-P06",
+        "GF-P07",
+        "GF-P08",
+        "GF-P09",
+        "GF-P10",
+        "GF-P11"
+      ],
+      "assessment": "Known normal-size charges, including the original 110000-microusd overrun, survive malformed tokens/text and response-write failure. Failed final receipt persistence leaves the bill durable in the run ledger and the campaign reservation blocking later admission. A mathematically valid charge beyond SQLite signed-64-bit capacity still cannot settle and is omitted from ledger spend."
+    }
+  ],
+  "remaining_findings": [
+    {
+      "id": "GF-F01",
+      "priority": "P2",
+      "title": "Retain an oversized reported charge when SQLite INTEGER binding overflows",
+      "path": "dag/benchmark/budget_ledger.py",
+      "finding": "The adapter accepts a finite exact charge of USD9223372036855 (9223372036855000000 microusd), but SQLite INTEGER binding in settle raises OverflowError. Runner receipt retains actual_microusd while run/campaign spent return zero and holds fall back to quote/run cap. Both ledgers remain blocked, so this probe did not permit another dispatch.",
+      "evidence": [
+        "GF-P11"
+      ],
+      "scope_limit": "This extreme reported amount is outside the advertised tariff/token premises and far above the USD0.10 run cap; it is a response-robustness/accounting-range issue, not evidence of an ordinary-price budget bypass.",
+      "fix_direction": "Bound and classify provider monetary values against the persistence representation while retaining the exact oversized liability in a durable representation, or use arbitrary-precision decimal/text accounting. Do not represent an already-known oversized charge as only an unknown quote.",
+      "line": 119,
+      "release_blocking_under_current_admission_premises": false
+    }
+  ],
+  "probes": [
+    {
+      "id": "GF-P01",
+      "finding": "GR-F01",
+      "scenario": "Mutate public evidence after quotation",
+      "status": "ORIGINAL_EXPLOIT_STOPPED",
+      "quote_microusd": 4800,
+      "posted_max_tokens": 4000,
+      "posted_only": [
+        "fixture/endpoint"
+      ],
+      "posted_allow_fallbacks": false,
+      "post_count": 1,
+      "actual_charge": 1000
+    },
+    {
+      "id": "GF-P02",
+      "finding": "GR-F01",
+      "scenario": "Mutate internal wire and then retry consumed preparation",
+      "status": "STOPPED_BEFORE_POST",
+      "error": {
+        "class": "ProviderError",
+        "message": "Prepared wire changed after quotation"
+      },
+      "retry_error": {
+        "class": "ProviderError",
+        "message": "No matching prepared request"
+      },
+      "post_count": 0
+    },
+    {
+      "id": "GF-P03",
+      "finding": "GR-F01",
+      "scenario": "Mutate original request message alias",
+      "status": "STOPPED_BEFORE_POST",
+      "error": {
+        "class": "ProviderError",
+        "message": "No matching prepared request"
+      },
+      "post_count": 0
+    },
+    {
+      "id": "GF-P04",
+      "finding": "GR-F02",
+      "scenario": "Reopen campaign after unfinished first admission",
+      "status": "ORIGINAL_EXPLOIT_STOPPED",
+      "next_run_error": {
+        "class": "BudgetError",
+        "message": "An unfinished run holds the campaign; reconciliation required"
+      },
+      "repeat_run_error": {
+        "class": "BudgetError",
+        "message": "Campaign run already admitted; dispatch cannot repeat"
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 0,
+        "held_microusd": 100000,
+        "blocked": false,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      },
+      "states": [
+        [
+          "synthetic-0",
+          "reserved"
+        ]
+      ]
+    },
+    {
+      "id": "GF-P05",
+      "finding": "GR-F03",
+      "scenario": "invalid_tokens; artifact fault=None; cost=0.11",
+      "status": "KNOWN_CHARGE_RETAINED",
+      "reported_microusd": 110000,
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "e97b72c511eb2d6c903ab56b002c818c7e2daa5cbf149a3411d25c9e7bd5dab9",
+        "cap_microusd": 100000,
+        "spent_microusd": 110000,
+        "held_microusd": 0,
+        "available_microusd": -10000,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 110000,
+        "held_microusd": 0,
+        "blocked": true,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      },
+      "call_states": [
+        [
+          4800,
+          110000,
+          "overrun"
+        ]
+      ],
+      "admission_states": [
+        [
+          "synthetic-0",
+          "uncertain"
+        ]
+      ],
+      "next_run_error": {
+        "class": "BudgetError",
+        "message": "Campaign blocked by an uncertain or overrun charge"
+      },
+      "runner_error": null,
+      "receipt_status": "provider_or_accounting_failure",
+      "recorded_error": "actual bill exceeded quote; recorded and run blocked",
+      "recorded_actual_microusd": 110000,
+      "post_count": 1
+    },
+    {
+      "id": "GF-P06",
+      "finding": "GR-F03",
+      "scenario": "invalid_tokens; artifact fault=None; cost=0.001",
+      "status": "KNOWN_CHARGE_RETAINED",
+      "reported_microusd": 1000,
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "e97b72c511eb2d6c903ab56b002c818c7e2daa5cbf149a3411d25c9e7bd5dab9",
+        "cap_microusd": 100000,
+        "spent_microusd": 1000,
+        "held_microusd": 0,
+        "available_microusd": 99000,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 1000,
+        "held_microusd": 99000,
+        "blocked": true,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      },
+      "call_states": [
+        [
+          4800,
+          1000,
+          "settled"
+        ]
+      ],
+      "admission_states": [
+        [
+          "synthetic-0",
+          "uncertain"
+        ]
+      ],
+      "next_run_error": {
+        "class": "BudgetError",
+        "message": "Campaign blocked by an uncertain or overrun charge"
+      },
+      "runner_error": null,
+      "receipt_status": "provider_or_accounting_failure",
+      "recorded_error": null,
+      "recorded_actual_microusd": 1000,
+      "post_count": 1
+    },
+    {
+      "id": "GF-P07",
+      "finding": "GR-F03",
+      "scenario": "invalid_message; artifact fault=None; cost=0.001",
+      "status": "KNOWN_CHARGE_RETAINED",
+      "reported_microusd": 1000,
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "e97b72c511eb2d6c903ab56b002c818c7e2daa5cbf149a3411d25c9e7bd5dab9",
+        "cap_microusd": 100000,
+        "spent_microusd": 1000,
+        "held_microusd": 0,
+        "available_microusd": 99000,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 1000,
+        "held_microusd": 99000,
+        "blocked": true,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      },
+      "call_states": [
+        [
+          4800,
+          1000,
+          "settled"
+        ]
+      ],
+      "admission_states": [
+        [
+          "synthetic-0",
+          "uncertain"
+        ]
+      ],
+      "next_run_error": {
+        "class": "BudgetError",
+        "message": "Campaign blocked by an uncertain or overrun charge"
+      },
+      "runner_error": null,
+      "receipt_status": "provider_or_accounting_failure",
+      "recorded_error": null,
+      "recorded_actual_microusd": 1000,
+      "post_count": 1
+    },
+    {
+      "id": "GF-P08",
+      "finding": "GR-F03",
+      "scenario": "surrogate_text; artifact fault=None; cost=0.001",
+      "status": "KNOWN_CHARGE_RETAINED",
+      "reported_microusd": 1000,
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "e97b72c511eb2d6c903ab56b002c818c7e2daa5cbf149a3411d25c9e7bd5dab9",
+        "cap_microusd": 100000,
+        "spent_microusd": 1000,
+        "held_microusd": 0,
+        "available_microusd": 99000,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 1000,
+        "held_microusd": 99000,
+        "blocked": true,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      },
+      "call_states": [
+        [
+          4800,
+          1000,
+          "settled"
+        ]
+      ],
+      "admission_states": [
+        [
+          "synthetic-0",
+          "uncertain"
+        ]
+      ],
+      "next_run_error": {
+        "class": "BudgetError",
+        "message": "Campaign blocked by an uncertain or overrun charge"
+      },
+      "runner_error": null,
+      "receipt_status": "provider_or_accounting_failure",
+      "recorded_error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed",
+      "recorded_actual_microusd": 1000,
+      "post_count": 1
+    },
+    {
+      "id": "GF-P09",
+      "finding": "GR-F03",
+      "scenario": "valid; artifact fault=response; cost=0.001",
+      "status": "KNOWN_CHARGE_RETAINED",
+      "reported_microusd": 1000,
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "e97b72c511eb2d6c903ab56b002c818c7e2daa5cbf149a3411d25c9e7bd5dab9",
+        "cap_microusd": 100000,
+        "spent_microusd": 1000,
+        "held_microusd": 0,
+        "available_microusd": 99000,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 1000,
+        "held_microusd": 99000,
+        "blocked": true,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      },
+      "call_states": [
+        [
+          4800,
+          1000,
+          "settled"
+        ]
+      ],
+      "admission_states": [
+        [
+          "synthetic-0",
+          "uncertain"
+        ]
+      ],
+      "next_run_error": {
+        "class": "BudgetError",
+        "message": "Campaign blocked by an uncertain or overrun charge"
+      },
+      "runner_error": null,
+      "receipt_status": "provider_or_accounting_failure",
+      "recorded_error": "Synthetic response-artifact persistence failure",
+      "recorded_actual_microusd": 1000,
+      "post_count": 1
+    },
+    {
+      "id": "GF-P10",
+      "finding": "GR-F03",
+      "scenario": "valid; artifact fault=run; cost=0.001",
+      "status": "KNOWN_CHARGE_RETAINED",
+      "reported_microusd": 1000,
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "e97b72c511eb2d6c903ab56b002c818c7e2daa5cbf149a3411d25c9e7bd5dab9",
+        "cap_microusd": 100000,
+        "spent_microusd": 1000,
+        "held_microusd": 0,
+        "available_microusd": 99000,
+        "blocked": false
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 0,
+        "held_microusd": 100000,
+        "blocked": false,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      },
+      "call_states": [
+        [
+          4800,
+          1000,
+          "settled"
+        ]
+      ],
+      "admission_states": [
+        [
+          "synthetic-0",
+          "reserved"
+        ]
+      ],
+      "next_run_error": {
+        "class": "BudgetError",
+        "message": "An unfinished run holds the campaign; reconciliation required"
+      },
+      "runner_error": {
+        "class": "OSError",
+        "message": "Synthetic run-receipt persistence failure"
+      },
+      "receipt_status": null,
+      "recorded_error": null,
+      "recorded_actual_microusd": null,
+      "post_count": 1
+    },
+    {
+      "id": "GF-P11",
+      "finding": "GR-F03",
+      "scenario": "valid; artifact fault=None; cost=9223372036855",
+      "status": "KNOWN_CHARGE_LOSS_REPRODUCED",
+      "reported_microusd": 9223372036855000000,
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "e97b72c511eb2d6c903ab56b002c818c7e2daa5cbf149a3411d25c9e7bd5dab9",
+        "cap_microusd": 100000,
+        "spent_microusd": 0,
+        "held_microusd": 4800,
+        "available_microusd": 95200,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 0,
+        "held_microusd": 100000,
+        "blocked": true,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      },
+      "call_states": [
+        [
+          4800,
+          null,
+          "uncertain"
+        ]
+      ],
+      "admission_states": [
+        [
+          "synthetic-0",
+          "uncertain"
+        ]
+      ],
+      "next_run_error": {
+        "class": "BudgetError",
+        "message": "Campaign blocked by an uncertain or overrun charge"
+      },
+      "runner_error": null,
+      "receipt_status": "provider_or_accounting_failure",
+      "recorded_error": "Python int too large to convert to SQLite INTEGER",
+      "recorded_actual_microusd": 9223372036855000000,
+      "post_count": 1
+    },
+    {
+      "id": "GF-C01",
+      "scenario": "Two sequential clean synthetic runs",
+      "status": "PASS",
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 2000,
+        "held_microusd": 0,
+        "blocked": false,
+        "manifest_sha256": "cdccc940e0bfaf000a59650001d9123630cbf72a03646a459e8a05c971536a79"
+      }
+    }
+  ],
+  "safety": {
+    "actual_protected_seed_read": false,
+    "private_or_key_access": false,
+    "network_requests": 0,
+    "real_provider_calls": 0,
+    "existing_seed_loading_tests_run": false,
+    "source_edits": false,
+    "original_review_preserved": true,
+    "temporary_contexts_deleted": true
+  },
+  "limits": [
+    "Provider tariff, routing and token-ceiling enforcement remains an external premise.",
+    "A crash before charge settlement can still leave charge reconciliation pending; a persisted unfinished campaign admission now blocks continuation.",
+    "The final-receipt persistence fault retained the exact charge in the run ledger but not yet in the campaign summary; cross-ledger reconciliation is still required before resumption.",
+    "The boundary is a local broker contract, not protection against arbitrary Python or direct ledger tampering.",
+    "No full existing test suite was run, and no seed or provider performance claim was evaluated."
+  ],
+  "synthetic_fixture_configuration": {
+    "seed_utf8": "Harmless synthetic input for bounded guard follow-up.\n",
+    "seed_sha256": "e97b72c511eb2d6c903ab56b002c818c7e2daa5cbf149a3411d25c9e7bd5dab9",
+    "seed_is_actual_benchmark": false,
+    "runner_context": "reference_runner.HERE rebound to TemporaryDirectory under dag/benchmark; synthetic commitment and four allowed source copies only",
+    "model": "fixture/model",
+    "endpoint": "fixture/endpoint",
+    "provider_name": "FixtureProvider",
+    "context_length": 8000,
+    "max_completion_tokens": 10000,
+    "max_output_tokens": 4000,
+    "prompt_usd_per_token": "0.0000001",
+    "completion_usd_per_token": "0.000001",
+    "expected_quote_microusd": 4800,
+    "run_cap_microusd": 100000,
+    "campaign_cap_microusd": 200000,
+    "campaign_runs": [
+      "synthetic-0",
+      "synthetic-1"
+    ],
+    "transport": "Local Fake.request only; actual HTTPTransport.request replaced with an assertion failure for the probe process",
+    "base_reply": {
+      "id": "synthetic-response",
+      "model": "fixture/model",
+      "provider": "FixtureProvider",
+      "usage": {
+        "cost": "0.001",
+        "prompt_tokens": 1,
+        "completion_tokens": 1
+      },
+      "choices": [
+        {
+          "message": {
+            "content": "Harmless synthetic answer."
+          },
+          "finish_reason": "stop"
+        }
+      ]
+    },
+    "fault_injection": "freeze_json raises OSError only for response artifacts or final run.json according to the per-probe scenario; malformed token/message/Unicode fields are named in each probe."
+  },
+  "validation": {
+    "all_original_review_hashes_preserved": true,
+    "current_source_hashes_match_resolution": true,
+    "probe_records": 12,
+    "original_exploit_findings_stopped": 3,
+    "known_charge_regression_variants_retained": 6,
+    "remaining_extreme_integer_range_findings": 1,
+    "new_admission_bypass_reproduced": false
+  }
+}

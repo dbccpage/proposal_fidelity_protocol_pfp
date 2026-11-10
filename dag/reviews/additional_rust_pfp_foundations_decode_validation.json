@@ -1,0 +1,56 @@
+{
+  "source_file": {
+    "path": "code/rust/pfp_runtime/src/decode_control.rs",
+    "sha256": "dc7afd9e4bf68c0b8cfff45f54034b1f359bb7bcadf8b5b7e80dbb678c31924b"
+  },
+  "library": {
+    "path": "code/rust/target/debug/deps/libserde-065dc96d6ee672bf.rlib",
+    "sha256": "b5a0b71fdf86f00c4375641665bb4ddb6b163ac9e874fd9a5b12e144fde1feac"
+  },
+  "probe_sha256": "aeb9f3766f23214ba6c2eb513ca89e4934f3513084a4bd5cefc2716af2666d92",
+  "runs": [
+    {
+      "overflow_checks": "yes",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-Awarnings",
+        "-C",
+        "overflow-checks=yes",
+        "-L",
+        "dependency=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps",
+        "--extern",
+        "serde=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde-065dc96d6ee672bf.rlib",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_decode_probe.rs",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_decode_probe_yes.exe"
+      ],
+      "compile_exit": 0,
+      "compile_output": "",
+      "exit_code": 0,
+      "output": "i32_min=panic\n\nthread 'main' (59004) panicked at /rustc/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/library\\core\\src\\num\\mod.rs:429:5:\nattempt to negate with overflow\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+    },
+    {
+      "overflow_checks": "no",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-Awarnings",
+        "-C",
+        "overflow-checks=no",
+        "-L",
+        "dependency=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps",
+        "--extern",
+        "serde=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde-065dc96d6ee672bf.rlib",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_decode_probe.rs",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_decode_probe_no.exe"
+      ],
+      "compile_exit": 0,
+      "compile_output": "",
+      "exit_code": 0,
+      "output": "i32_min=pass\n"
+    }
+  ],
+  "limits": "Entire original verifier included unchanged. Synthetic receipt only. No provider, decoder or full-crate run; tests signed boundary of declared bias validation."
+}

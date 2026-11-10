@@ -1,0 +1,71 @@
+{
+  "source_path": "code/rust/pfp_runtime/src/f2.rs",
+  "source_sha256": "52905228bb09e2e3ced9e65e53c9fda15e35c68e0d5e50bafd50a81e0516e012",
+  "probe_sha256": "c533b848e49d5efd494fc5f5490363dc06b1153b55cb7734b91f3694c4a77976",
+  "libraries": [
+    {
+      "path": "code/rust/target/debug/deps/libserde-065dc96d6ee672bf.rlib",
+      "sha256": "b5a0b71fdf86f00c4375641665bb4ddb6b163ac9e874fd9a5b12e144fde1feac"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libserde_json-0b8975ff4f3cbcfc.rlib",
+      "sha256": "c1052cf851745ff3b31c6648af3c61aadb6c6bb48c587b2623d09725757ac3f9"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libthiserror-6ce2fd6ad1e676a5.rlib",
+      "sha256": "695c32160f626dd5af1773cd4bfc1841c180a7e22b70f11f1bfa9a611dc88a8a"
+    }
+  ],
+  "runs": [
+    {
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-Awarnings",
+        "-L",
+        "dependency=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps",
+        "--extern",
+        "serde=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde-065dc96d6ee672bf.rlib",
+        "--extern",
+        "serde_json=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde_json-0b8975ff4f3cbcfc.rlib",
+        "--extern",
+        "thiserror=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libthiserror-6ce2fd6ad1e676a5.rlib",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_f2_probe.rs",
+        "-C",
+        "overflow-checks=yes",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_f2_yes.exe"
+      ],
+      "overflow_checks": "yes",
+      "compile_exit": 0,
+      "compile_output": "",
+      "exit_code": 0,
+      "output": "{\"overflow_constructor\":\"panic\",\"overflow_deserialization\":\"panic\",\"small_linear_systems\":5054,\"small_gauge_cases\":1024}\n"
+    },
+    {
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-Awarnings",
+        "-L",
+        "dependency=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps",
+        "--extern",
+        "serde=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde-065dc96d6ee672bf.rlib",
+        "--extern",
+        "serde_json=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde_json-0b8975ff4f3cbcfc.rlib",
+        "--extern",
+        "thiserror=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libthiserror-6ce2fd6ad1e676a5.rlib",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_f2_probe.rs",
+        "-C",
+        "overflow-checks=no",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_f2_no.exe"
+      ],
+      "overflow_checks": "no",
+      "compile_exit": 0,
+      "compile_output": "",
+      "exit_code": 0,
+      "output": "{\"overflow_constructor\":\"accepted_zero_storage\",\"overflow_deserialization\":\"accepted_zero_storage\",\"small_linear_systems\":5054,\"small_gauge_cases\":1024}\n"
+    }
+  ]
+}

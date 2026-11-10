@@ -1,0 +1,129 @@
+{
+  "status": "all_expected_observations_reproduced",
+  "probes": [
+    {
+      "id": "missing_key_still_overall_passed",
+      "result": {
+        "status": "PASSED",
+        "demo": "live_proposer_demo",
+        "constructed_cases": {
+          "claim_in_reasoning": "UNAVAILABLE_VERIFICATION",
+          "malformed_json": "DEFENSIVE_LOCKDOWN",
+          "unknown_move": "REJECT_UNKNOWN_MOVE:ILLEGAL_MUTATION",
+          "witness_batch": "UNAVAILABLE_VERIFICATION"
+        },
+        "live_acquisition": {
+          "live_requested": true,
+          "model": "anthropic/claude-3.5-sonnet",
+          "result": "NO_API_KEY"
+        },
+        "witness_verification": {
+          "route_status": "UNAVAILABLE_VERIFICATION",
+          "missing_seam": "NO_NATIVE_PORT"
+        }
+      }
+    },
+    {
+      "id": "failed_mock_acquisition_still_overall_passed",
+      "result": {
+        "status": "PASSED",
+        "demo": "live_proposer_demo",
+        "constructed_cases": {
+          "claim_in_reasoning": "UNAVAILABLE_VERIFICATION",
+          "malformed_json": "DEFENSIVE_LOCKDOWN",
+          "unknown_move": "REJECT_UNKNOWN_MOVE:ILLEGAL_MUTATION",
+          "witness_batch": "UNAVAILABLE_VERIFICATION"
+        },
+        "live_acquisition": {
+          "live_requested": true,
+          "model": "anthropic/claude-3.5-sonnet",
+          "result": "FAILED_QUERY"
+        },
+        "witness_verification": {
+          "route_status": "UNAVAILABLE_VERIFICATION",
+          "missing_seam": "NO_NATIVE_PORT"
+        }
+      },
+      "actual_network_calls": 0
+    },
+    {
+      "id": "nonfinite_payload_escapes_structural_gate",
+      "candidate": "{\"moves\":[{\"move_type\":\"PROPOSE_WITNESS\",\"payload\":{\"x\":NaN}}]}",
+      "parser_error": null,
+      "raised": "ValueError",
+      "message": "Out of range float values are not JSON compliant: nan"
+    },
+    {
+      "id": "no_output_limit_and_usage_discarded",
+      "body": {
+        "model": "mock/model",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You propose moves for a finite verification host. Respond with a single JSON object containing 'reasoning' and 'moves' (a list of objects with 'move_type' and 'payload'). Valid move_types: 'COVER_ELEMENT', 'PROPOSE_WITNESS', 'VERIFY'."
+          },
+          {
+            "role": "user",
+            "content": "public control only"
+          }
+        ],
+        "temperature": 0.2
+      },
+      "transport_options": {
+        "timeout": 30
+      },
+      "returned_value": "public-fixture-response",
+      "actual_network_calls": 0
+    },
+    {
+      "id": "declared_digest_not_full_state",
+      "digest": "f2cddff4874a473c6a485c620e3ebcf1790d7b84b9b99966b173e22861cc1f8b",
+      "fuels": [
+        0,
+        11
+      ],
+      "phases": [
+        "TERMINAL",
+        "COVERAGE"
+      ],
+      "interpretation": "Confirms an explicitly documented scope limit, not an undisclosed certificate forgery."
+    },
+    {
+      "id": "native_adapter_shape_trust_boundary",
+      "admitted_mock_payload": {
+        "decision": "TOLERATED",
+        "is_refusal": "false",
+        "disposition": "fixture",
+        "signal1_count": -10,
+        "signal2_severity": null,
+        "is_suppressed": false,
+        "rationale": "fixture"
+      },
+      "interpretation": "Malformed mocked backend output; no claim that the bundled Rust implementation produces it."
+    },
+    {
+      "id": "native_hex_unicode_boundary_panic",
+      "source_path": "papers/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/bin/solve_host_detector.rs",
+      "source_sha256": "ae643ee43ed1964d3b7529de5c94f8c562348d259a4d2c96596973afcf1c0e89",
+      "extracted_function_sha256": "64754195a3220fb70ecdfedfa735d5aa7b466f18981a9ba7eb94073b749d1288",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "stdout": "ascii_valid_pass; ascii_invalid_refused; odd_length_refused; utf8_even_length_panics\n",
+      "limit": "Exact dependency-free source function compiled in isolation; not a full native crate build or CLI integration test."
+    }
+  ],
+  "provider_calls": 0,
+  "private_answer_access": false,
+  "source_hashes": {
+    "papers/pfp/003_pfp_host_admitted_failure_detectors/code/live_proposer_demo.py": "efb3af3530bc68c69c1debd36cabce38bc29314ebc5b443f1cbb553b7b2330fa",
+    "papers/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py": "76df55eaefe09f8d3ac0ce99c6735badec5c3fb7c2c2f5dd4e1717b2ed963a25",
+    "papers/pfp/003_pfp_host_admitted_failure_detectors/code/native_host_detector.py": "10cbbe20e1e528fd0bc3d5f86db5ee306c5eca19add4f21295c77c3d26a7cf3f",
+    "papers/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/bin/solve_host_detector.rs": "ae643ee43ed1964d3b7529de5c94f8c562348d259a4d2c96596973afcf1c0e89"
+  },
+  "test_launch_setup": {
+    "initial_attempts": 3,
+    "collection_or_tests_executed": false,
+    "error": "Repository code/ shadows stdlib code during pytest configuration; pdb requires InteractiveConsole.",
+    "resolution": "Isolated interpreter preloads stdlib code before pytest changes sys.path; original source untouched."
+  }
+}

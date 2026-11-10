@@ -1,0 +1,717 @@
+{
+  "arm": "Arm 6 (Hierarchical Decimation)",
+  "cases_evaluated": [
+    {
+      "case_id": "pois_01_s3_commutator_trap",
+      "details": {
+        "algebraic_checker": {
+          "passed": true,
+          "reason": "NOT_FLAT certificate verified"
+        },
+        "independent_checker": {
+          "passed": true,
+          "reason": "Independent checker confirms NOT_FLAT"
+        }
+      },
+      "expected_verdict": "NOT_FLAT",
+      "meta": {
+        "cost": 0.0,
+        "in_tokens": 1807,
+        "latency": 10.90784239768982,
+        "out_tokens": 773
+      },
+      "passed": true,
+      "reason": "Dual consensus achieved (both checkers passed)",
+      "solution": {
+        "holonomy": "r2",
+        "plaquette": [
+          "0,0",
+          "1,0",
+          "1,1",
+          "0,1"
+        ],
+        "scratchpad": {
+          "active_plaquettes_evaluated": [
+            {
+              "final_holonomy": "r2",
+              "is_flat": false,
+              "plaquette": [
+                "0,0",
+                "1,0",
+                "1,1",
+                "0,1"
+              ],
+              "steps": [
+                {
+                  "accumulator_after": "e",
+                  "accumulator_before": "e",
+                  "edge": "0,0->1,0",
+                  "element": "e"
+                },
+                {
+                  "accumulator_after": "e",
+                  "accumulator_before": "e",
+                  "edge": "1,0->1,1",
+                  "element": "e"
+                },
+                {
+                  "accumulator_after": "e",
+                  "accumulator_before": "e",
+                  "edge": "1,1->0,1",
+                  "element": "e"
+                },
+                {
+                  "accumulator_after": "r2",
+                  "accumulator_before": "e",
+                  "edge": "0,1->0,0",
+                  "element": "r2"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "SOLVED",
+        "verdict": "NOT_FLAT"
+      },
+      "verdict": "NOT_FLAT"
+    },
+    {
+      "case_id": "base_01_s3_open_nonflat",
+      "details": {
+        "algebraic_checker": {
+          "passed": true,
+          "reason": "NOT_FLAT certificate verified"
+        },
+        "independent_checker": {
+          "passed": true,
+          "reason": "Independent checker confirms NOT_FLAT"
+        }
+      },
+      "expected_verdict": "NOT_FLAT",
+      "meta": {
+        "cost": 0.0,
+        "in_tokens": 1805,
+        "latency": 8.822579145431519,
+        "out_tokens": 582
+      },
+      "passed": true,
+      "reason": "Dual consensus achieved (both checkers passed)",
+      "solution": {
+        "holonomy": "s",
+        "plaquette": [
+          "0,1",
+          "1,1",
+          "1,2",
+          "0,2"
+        ],
+        "scratchpad": {
+          "active_plaquettes_evaluated": [
+            {
+              "final_holonomy": "s",
+              "is_flat": false,
+              "plaquette": [
+                "0,1",
+                "1,1",
+                "1,2",
+                "0,2"
+              ],
+              "steps": [
+                {
+                  "accumulated_holonomy": "e",
+                  "edge": "0,1->1,1",
+                  "element": "e"
+                },
+                {
+                  "accumulated_holonomy": "e",
+                  "edge": "1,1->1,2",
+                  "element": "e"
+                },
+                {
+                  "accumulated_holonomy": "e",
+                  "edge": "1,2->0,2",
+                  "element": "e"
+                },
+                {
+                  "accumulated_holonomy": "s",
+                  "edge": "0,2->0,1",
+                  "element": "s"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "SOLVED",
+        "verdict": "NOT_FLAT"
+      },
+      "verdict": "NOT_FLAT"
+    },
+    {
+      "case_id": "base_02_s3_open_puregauge",
+      "details": {
+        "algebraic_checker": {
+          "passed": false,
+          "reason": "Plaquette holonomy mismatch: expected r, computed e"
+        },
+        "independent_checker": {
+          "passed": false,
+          "reason": "Expected PURE_GAUGE, got NOT_FLAT"
+        }
+      },
+      "expected_verdict": "PURE_GAUGE",
+      "meta": {
+        "cost": 0.0,
+        "in_tokens": 4207,
+        "latency": 10.526758909225464,
+        "out_tokens": 1251
+      },
+      "passed": false,
+      "reason": "Dual check failed: C1=Plaquette holonomy mismatch: expected r, computed e | C2=Expected PURE_GAUGE, got NOT_FLAT",
+      "solution": {
+        "holonomy": "r",
+        "plaquette": [
+          "1,0",
+          "2,0",
+          "2,1",
+          "1,1"
+        ],
+        "scratchpad": {
+          "active_plaquettes_evaluated": [
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "0,0",
+                "1,0",
+                "1,1",
+                "0,1"
+              ],
+              "steps": [
+                "e * e = e",
+                "e * sr2 = sr2",
+                "sr2 * s = r2",
+                "r2 * r = e"
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "0,1",
+                "1,1",
+                "1,2",
+                "0,2"
+              ],
+              "steps": [
+                "e * s = s",
+                "s * r = sr2",
+                "sr2 * e = sr2",
+                "sr2 * sr2 = e"
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "0,2",
+                "1,2",
+                "1,3",
+                "0,3"
+              ],
+              "steps": [
+                "e * e = e",
+                "e * sr2 = sr2",
+                "sr2 * r2 = s",
+                "s * s = e"
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "0,3",
+                "1,3",
+                "1,4",
+                "0,4"
+              ],
+              "steps": [
+                "e * r = r",
+                "r * sr2 = s",
+                "s * r = sr2",
+                "sr2 * sr2 = e"
+              ]
+            },
+            {
+              "final_holonomy": "r",
+              "is_flat": false,
+              "plaquette": [
+                "1,0",
+                "2,0",
+                "2,1",
+                "1,1"
+              ],
+              "steps": [
+                "e * r2 = r2",
+                "r2 * r2 = r",
+                "r * sr = s",
+                "s * sr2 = r"
+              ]
+            }
+          ]
+        },
+        "status": "SOLVED",
+        "verdict": "NOT_FLAT"
+      },
+      "verdict": "NOT_FLAT"
+    },
+    {
+      "case_id": "base_03_s3_periodic_torus",
+      "details": {
+        "algebraic_checker": {
+          "passed": true,
+          "reason": "FLAT_NONTRIVIAL certificate verified"
+        },
+        "independent_checker": {
+          "passed": true,
+          "reason": "Independent checker confirms FLAT_NONTRIVIAL"
+        }
+      },
+      "expected_verdict": "FLAT_NONTRIVIAL",
+      "meta": {
+        "cost": 0.0,
+        "in_tokens": 3445,
+        "latency": 16.3199622631073,
+        "out_tokens": 2810
+      },
+      "passed": true,
+      "reason": "Dual consensus achieved (both checkers passed)",
+      "solution": {
+        "base": "0,0",
+        "hol_a": "r",
+        "hol_b": "r2",
+        "loop_a": [
+          "0,0",
+          "0,1",
+          "0,2",
+          "0,3",
+          "0,4",
+          "0,5",
+          "0,0"
+        ],
+        "loop_b": [
+          "0,0",
+          "1,0",
+          "2,0",
+          "3,0",
+          "4,0",
+          "0,0"
+        ],
+        "scratchpad": {
+          "active_plaquettes_evaluated": [
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "0,5",
+                "1,5",
+                "1,0",
+                "0,0"
+              ],
+              "steps": [
+                {
+                  "edge": "0,5->1,5",
+                  "element": "e",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "1,5->1,0",
+                  "element": "r",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "1,0->0,0",
+                  "element": "e",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "0,0->0,5",
+                  "element": "r2",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "1,5",
+                "2,5",
+                "2,0",
+                "1,0"
+              ],
+              "steps": [
+                {
+                  "edge": "1,5->2,5",
+                  "element": "e",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "2,5->2,0",
+                  "element": "r",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "2,0->1,0",
+                  "element": "e",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "1,0->1,5",
+                  "element": "r2",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "2,5",
+                "3,5",
+                "3,0",
+                "2,0"
+              ],
+              "steps": [
+                {
+                  "edge": "2,5->3,5",
+                  "element": "e",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "3,5->3,0",
+                  "element": "r",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "3,0->2,0",
+                  "element": "e",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "2,0->2,5",
+                  "element": "r2",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "3,5",
+                "4,5",
+                "4,0",
+                "3,0"
+              ],
+              "steps": [
+                {
+                  "edge": "3,5->4,5",
+                  "element": "e",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "4,5->4,0",
+                  "element": "r",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "4,0->3,0",
+                  "element": "e",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "3,0->3,5",
+                  "element": "r2",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "4,0",
+                "0,0",
+                "0,1",
+                "4,1"
+              ],
+              "steps": [
+                {
+                  "edge": "4,0->0,0",
+                  "element": "r2",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,0->0,1",
+                  "element": "e",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,1->4,1",
+                  "element": "r",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "4,1->4,0",
+                  "element": "e",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "4,1",
+                "0,1",
+                "0,2",
+                "4,2"
+              ],
+              "steps": [
+                {
+                  "edge": "4,1->0,1",
+                  "element": "r2",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,1->0,2",
+                  "element": "e",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,2->4,2",
+                  "element": "r",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "4,2->4,1",
+                  "element": "e",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "4,2",
+                "0,2",
+                "0,3",
+                "4,3"
+              ],
+              "steps": [
+                {
+                  "edge": "4,2->0,2",
+                  "element": "r2",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,2->0,3",
+                  "element": "e",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,3->4,3",
+                  "element": "r",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "4,3->4,2",
+                  "element": "e",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "4,3",
+                "0,3",
+                "0,4",
+                "4,4"
+              ],
+              "steps": [
+                {
+                  "edge": "4,3->0,3",
+                  "element": "r2",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,3->0,4",
+                  "element": "e",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,4->4,4",
+                  "element": "r",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "4,4->4,3",
+                  "element": "e",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "4,4",
+                "0,4",
+                "0,5",
+                "4,5"
+              ],
+              "steps": [
+                {
+                  "edge": "4,4->0,4",
+                  "element": "r2",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,4->0,5",
+                  "element": "e",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,5->4,5",
+                  "element": "r",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "4,5->4,4",
+                  "element": "e",
+                  "g_acc": "e"
+                }
+              ]
+            },
+            {
+              "final_holonomy": "e",
+              "is_flat": true,
+              "plaquette": [
+                "4,5",
+                "0,5",
+                "0,0",
+                "4,0"
+              ],
+              "steps": [
+                {
+                  "edge": "4,5->0,5",
+                  "element": "r2",
+                  "g_acc": "r2"
+                },
+                {
+                  "edge": "0,5->0,0",
+                  "element": "r",
+                  "g_acc": "e"
+                },
+                {
+                  "edge": "0,0->4,0",
+                  "element": "r",
+                  "g_acc": "r"
+                },
+                {
+                  "edge": "4,0->4,5",
+                  "element": "r2",
+                  "g_acc": "e"
+                }
+              ]
+            }
+          ],
+          "global_torus_loops": {
+            "commute": true,
+            "hol_a": "r",
+            "hol_b": "r2"
+          }
+        },
+        "status": "SOLVED",
+        "verdict": "FLAT_NONTRIVIAL"
+      },
+      "verdict": "FLAT_NONTRIVIAL"
+    },
+    {
+      "case_id": "base_13_q8_open_nonflat",
+      "details": {
+        "algebraic_checker": {
+          "passed": true,
+          "reason": "NOT_FLAT certificate verified"
+        },
+        "independent_checker": {
+          "passed": true,
+          "reason": "Independent checker confirms NOT_FLAT"
+        }
+      },
+      "expected_verdict": "NOT_FLAT",
+      "meta": {
+        "cost": 0.0,
+        "in_tokens": 2003,
+        "latency": 12.059598207473755,
+        "out_tokens": 651
+      },
+      "passed": true,
+      "reason": "Dual consensus achieved (both checkers passed)",
+      "solution": {
+        "holonomy": "-i",
+        "plaquette": [
+          "0,0",
+          "1,0",
+          "1,1",
+          "0,1"
+        ],
+        "scratchpad": {
+          "active_plaquettes_evaluated": [
+            {
+              "final_holonomy": "-i",
+              "is_flat": false,
+              "plaquette": [
+                "0,0",
+                "1,0",
+                "1,1",
+                "0,1"
+              ],
+              "steps": [
+                {
+                  "accumulator_after": "e",
+                  "edge": "0,0->1,0",
+                  "element": "e"
+                },
+                {
+                  "accumulator_after": "e",
+                  "edge": "1,0->1,1",
+                  "element": "e"
+                },
+                {
+                  "accumulator_after": "e",
+                  "edge": "1,1->0,1",
+                  "element": "e"
+                },
+                {
+                  "accumulator_after": "-i",
+                  "edge": "0,1->0,0",
+                  "element": "-i"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "SOLVED",
+        "verdict": "NOT_FLAT"
+      },
+      "verdict": "NOT_FLAT"
+    }
+  ],
+  "dry_run": false,
+  "model": "stealth/space-bunny-alpha",
+  "timestamp_utc": "2026-09-28T19:22:06.233805+00:00",
+  "total_cost_usd": 0.0
+}

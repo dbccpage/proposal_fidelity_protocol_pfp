@@ -1,0 +1,550 @@
+{
+  "agent_number": 7,
+  "focus": "Metamorphic checks, symmetries, and representation-preserving checking views with explicit bridges to an unchanged task",
+  "status": "proposed_not_evaluated",
+  "scope": {
+    "source_baseline": "Repository files inspected in this working tree; dag/FOUNDATIONS.md states baseline 8050c66900899771766f33e8f5fdd200b7dd9120 plus an unfinished audit.",
+    "seed_access": "Did not read or solve seed_prompt.txt. Did not access private benchmark storage, commitment contents, evaluator material, or any answer key. No task-specific correct answers appear here.",
+    "novelty_claim": "Proposed repository adaptations, not literature-wide novelty. Metamorphic testing, unit covariance, and tensor-coordinate naturality are established methods. Distinct contribution proposed here: executable necessary-condition checks with explicit task/view separation and bridge status.",
+    "implementation_boundary": "All three workflows and their bridges are proposals. Existing rational matrices, detector screening, mutation guards, and operadic signatures supply components, not an implemented graduate-QM verifier. Complex exact arithmetic, symbolic AST evaluators, dimensional sorts, tensor-axis adapters, and continuity certificates require implementation and independent checking.",
+    "benchmark_isolation": "Every future model call receives the exact original UTF-8 seed as a separate immutable message, with pre/post-construction byte hashes. Checking views are separately labelled artifacts with original-object hashes, transform IDs, inverse maps where applicable, and preservation obligations. They never replace the seed, omit requested parts, change physical assumptions, or redefine the target. The workflow broker has no repository-wide retrieval, shell, filesystem, or private-evaluator access. Outputs freeze before isolated trusted scoring; private scores and diagnostics never return to a workflow."
+  },
+  "primary_sources": [
+    {
+      "title": "T. Y. Chen, S. C. Cheung, S. M. Yiu, Metamorphic Testing: A New Approach for Generating Next Test Cases, HKUST-CS98-01 (1998; archived 2020)",
+      "url": "https://arxiv.org/abs/2002.12543",
+      "relevance": "Primary report proposing follow-up tests derived from existing tests when an output oracle is unavailable. Supports using relational failures to expose faults; this report does not interpret successful relations as correctness proofs. Abstract inspected; the PDF text extraction was garbled."
+    },
+    {
+      "title": "NIST Special Publication 811, Chapter 7, section 7.1: Value and numerical value of a quantity",
+      "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-7-rules-and-style-conventions-expressing-values",
+      "relevance": "Official distinction between a physical quantity, its unit, and its numerical value. Grounds reversible unit changes while preserving the same physical task; it does not justify changing physical parameters or taking singular limits."
+    },
+    {
+      "title": "John Watrous, The Theory of Quantum Information, author-hosted 2018 draft, section 2.1.3 and section 6.2.3",
+      "url": "https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf",
+      "relevance": "Author source defines partial trace through its action on product operators and explicit index contraction, and distinguishes partial transpose from arbitrary positive maps. Supports the separate tensor-coordinate checking paths; no benchmark formulas are taken from it."
+    },
+    {
+      "title": "Asher Peres, Separability Criterion for Density Matrices, Physical Review Letters 77, 1413-1415 (1996)",
+      "url": "https://arxiv.org/html/quant-ph/9604005v2",
+      "relevance": "Primary paper uses explicit subsystem indices and a necessary partial-transpose condition. Relevant to guarding basis and subsystem conventions. Passing a partial-transpose or covariance check is not promoted here to an unrestricted separability theorem or a correct task solution."
+    }
+  ],
+  "repository_evidence": [
+    {
+      "path": "dag/FOUNDATIONS.md",
+      "lines": "5-15,17-33,39-41",
+      "observation": "Separates relation/checker adequacy from protocol acceptance, finite detector evidence from completeness, protected mutation from learning, and operadic signatures from semantic preservation."
+    },
+    {
+      "path": "dag/benchmark/EXPERIMENT_PROTOCOL.md",
+      "lines": "5-9,13-19",
+      "observation": "Requires unchanged seed bytes, separated online checks and private scoring, matched resource comparisons, protected PCIV mutations, independent calibration, and one USD 0.10 reservation ledger."
+    },
+    {
+      "path": "pfp/use_cases/pfp_proposal.py",
+      "lines": "35-43,118-137",
+      "observation": "Repair guidance is host-authored; raw diagnostics must not cross the boundary. Judges are injected, and missing checkers, exceptions, and disagreement have distinct outcomes."
+    },
+    {
+      "path": "pfp/domain/exact/linalg.py",
+      "lines": "24-54",
+      "observation": "Matrix elements are exact rationals with shape checks, while actual linear-algebra algorithms require an injected port. Proposed complex-rational and symbolic transports are not existing general-purpose capabilities."
+    },
+    {
+      "path": "eis/domain/thymus.py",
+      "lines": "145-178,180-215",
+      "observation": "Screens the active version of the actual bound detector on every clean fixture and refuses an unbound matcher. Its successful outcome explicitly concerns only supplied fixtures."
+    },
+    {
+      "path": "eis/domain/danger_gate.py",
+      "lines": "1-21,111-117,142-153",
+      "observation": "Suppression requires separate signals; two related metamorphic failures or model assertions must not be relabelled as independent danger evidence."
+    },
+    {
+      "path": "pciv/use_cases/research_mutation.py",
+      "lines": "8-31",
+      "observation": "Protects canonical host experiment context while applying a candidate mutation and checks parent identity. This pattern can preserve the original seed while recording checking-view lineage; semantic bridge proofs still require new code."
+    },
+    {
+      "path": "pciv/use_cases/genealogy.py",
+      "lines": "101-143",
+      "observation": "Inheritance edges require a witness naming parent/child and reject cycles. Recording a transform lineage does not by itself establish the transform's mathematical validity."
+    },
+    {
+      "path": "operads/domain/operad/planar.py",
+      "lines": "34-61,85-95",
+      "observation": "Composition checks ordered input/output colours; the associativity witness is explicitly signature-level. View context, tensor partition, units, and residual obligations must become additional semantic contracts."
+    }
+  ],
+  "common_budget_policy": {
+    "formula": "For the complete run DAG, reserve C_max = sum over every dispatched model stage s of (I_s*p_in_s + O_s*p_out_s + F_s) + C_host_metered + R <= USD 0.10. I_s includes unchanged seed, all instructions, cached input at conservatively pinned rates, and prior artifacts. O_s bounds all billable output/reasoning tokens. Include all branches and failures; do not use the maximum single branch cost. At most two model calls total, including retries; these proposals allocate both calls and therefore allow zero retries.",
+    "conditional_example": "Admit only if p_in_s <= USD 0.000001/token, p_out_s <= USD 0.000005/token, F_s=0, C_host_metered=0, and R=USD 0.01 under the stated token bounds. These are conditional thresholds, not current prices. Each workflow separately fits; running several candidates is a campaign requiring its own authorized aggregate budget.",
+    "routing": "Pin actual endpoint, price snapshot, tokenizer, reasoning accounting, and hard completion limits before any paid execution. Reject the run if the actual seed plus wrappers exceeds input bounds, if a charge is unknown, or if provider-side retries/fallback cannot be disabled. A timeout consumes its full reservation until resolved; no automatic retry. If any retry is exceptionally reserved, it replaces the second planned call and still counts toward the two-call and USD 0.10 limits.",
+    "receipts": "Record request/seed/artifact hashes, tariff snapshot, reserved and actual tokens, billable reasoning/cache fields, wall time, unknown usage, model call count, and spend. No paid calls or benchmark execution occurred in this research.",
+    "host_compute": "Bound proposed host work to matrices of dimension <=16, at most 8 checking transforms, at most 3000 AST nodes per candidate, integer numerators/denominators <=4096 bits, 60 seconds CPU and 256 MiB per run. Unsupported or exhausted checks remain OPEN. Already provisioned local computation has no incremental provider charge; any metered host cost must enter the reservation."
+  },
+  "ideas": [
+    {
+      "id": "R07-I01",
+      "name": "Basis-orbit covariance with inverse and composition controls",
+      "systems": [
+        "PFP",
+        "EIS",
+        "PCIV",
+        "OPERADS"
+      ],
+      "mathematical_basis": {
+        "known_method": "Metamorphic testing by equivariance under a declared group action.",
+        "proposed_adaptation": "Obtain one original-task derivation with a restricted evaluable AST. The host evaluates candidate objects in the original coordinate context and in bounded checking views, instead of asking for new transformed tasks. Use exact permutation/phase transforms and rational orthogonal rotations; sample a pair g,h and check inverse and composed paths as well as individual relations. The second call may repair only original-answer claims named by failed public checks.",
+        "obligations": "For an admitted unitary U, define T_U(X)=U X U^dagger and T_U(v)=U v, with every operator, state, and measurement transformed consistently. U^dagger U=I gives T_U(XY)=T_U(X)T_U(Y); trace cyclicity gives tr(T_U(X))=tr(X). A candidate function F is checked against F(T_U(x))=T_U(F(x)) only when its signature and an independently admitted covariance rule license that relation. T_V(T_U(X))=T_(VU)(X) and T_(U^dagger)(T_U(X))=X supply transform implementation controls. Scalar invariants use the trivial output action; vector/eigenvector outputs require phase/subspace equivalence, not raw equality.",
+        "bounded_checker_fragment": "Exact finite matrix equality over a proposed complex-rational pair codec; current repository Q is rational only. Signed permutations and real rational rotations can first use the existing rational substrate. Symbolic or transcendental evaluation is unsupported unless an independently checked adapter is supplied. Numeric sampled covariance is labelled numerical evidence only.",
+        "nonvacuity": "Never construct both sides by transforming the same output and call the equality a test of the candidate. Re-evaluate the candidate AST on transformed source objects on one path; transport its original result on the other. A formula that does not expose a meaningful equivariant input signature is OPEN. Zero and identity functions may pass all orbit relations while being wrong; independent public structural predicates and later private scoring remain necessary."
+      },
+      "assumptions": [
+        "The original source-object extraction is bound to exact public seed spans and reviewed public conventions; unverified extraction remains an explicit residual rather than a trusted solution.",
+        "Transform registries and action proofs are frozen before observing candidate responses. No model invents a symmetry of the physical task.",
+        "Only coordinate covariances with declared output actions are used. Entanglement claims require local unitaries relative to the unchanged subsystem partition; global basis changes cannot silently preserve a fixed tensor-factor interpretation.",
+        "The restricted AST contains no arbitrary code, filesystem access, dynamic tool invocation, or unbounded evaluation."
+      ],
+      "hypothesis": "At equal two-call resources, independently evaluated orbit relations plus one bounded repair detect basis-order, missing-conjugation, and inconsistent-object transformations more effectively than generic consistency review, without reducing completion of the original requested derivation.",
+      "typed_inputs": [
+        "SeedBytes{utf8_bytes,sha256}",
+        "BoundObjectAST{source_spans,context_hash,sorts}",
+        "OrbitRegistry{actions,inverses,covariance_rules,proof_status}",
+        "BudgetReservation{max_input_tokens_total:15000,max_output_tokens_total:4800,max_calls:2}"
+      ],
+      "typed_outputs": [
+        "OriginalAnswer{prose,claim_asts,source_bindings}",
+        "OrbitReceipt{view_maps,bridge_status,exact_failures,numeric_checks,uncovered_claims}",
+        "FrozenOriginalResponse{answer,receipt,residuals,lineage,cost}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "PFP input binding and OPERADS context admission",
+          "input_types": [
+            "SeedBytes",
+            "OrbitRegistry",
+            "BudgetReservation"
+          ],
+          "output_type": "BoundOrbitRun",
+          "instruction": "Preserve seed bytes and full prompt hashes. Freeze action registry, exact/numerical labels, EIS clean/mutant calibration panel, requested-sink inventory and total reservation. PCIV protects seed, original task contract and registry.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "derive",
+          "kind": "model",
+          "role": "Original derivation and evaluable claim proposer",
+          "input_types": [
+            "BoundOrbitRun"
+          ],
+          "output_type": "OriginalAnswer",
+          "instruction": "Answer the unchanged task, with source-bound objects and bounded AST claims. State basis, tensor partition and output action for each checkable claim. All seed-requested parts remain required. Do not invent a host verdict.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 3300
+        },
+        {
+          "id": "orbit_check",
+          "kind": "host",
+          "role": "Independent view evaluation and finite EIS screening",
+          "input_types": [
+            "BoundOrbitRun",
+            "OriginalAnswer"
+          ],
+          "output_type": "OrbitReceipt",
+          "instruction": "Choose at most 8 transforms by a frozen answer-independent schedule; validate inverse/group-law controls and bridge premises. Evaluate candidate AST on transformed inputs separately from transport of outputs. Run calibrated detectors; emit only public failure class and affected claim IDs. Two correlated failures do not satisfy an independent EIS danger signal. Record PCIV view lineage without mutating seed.",
+          "depends_on": [
+            "bind",
+            "derive"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "repair",
+          "kind": "model",
+          "role": "One original-context patch",
+          "input_types": [
+            "OriginalAnswer",
+            "OrbitReceipt",
+            "SeedBytes"
+          ],
+          "output_type": "OriginalAnswerPatch",
+          "instruction": "Receive unchanged seed again. Repair named original-context claims or declare them unresolved. Never replace the task with a transformed view, remove requested parts, or silently change physical conventions. Only allowlisted artifact-local feedback is available.",
+          "depends_on": [
+            "orbit_check"
+          ],
+          "max_output_tokens": 1500
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Recheck changed dependencies and freeze",
+          "input_types": [
+            "OriginalAnswer",
+            "OriginalAnswerPatch",
+            "OrbitReceipt"
+          ],
+          "output_type": "FrozenOriginalResponse",
+          "instruction": "Recompute affected checks under original bindings, retain remaining residuals, render the patched original answer deterministically and freeze before private scoring. Store cost and lineage; any early failure follows the same terminal recording policy without another call.",
+          "depends_on": [
+            "derive",
+            "orbit_check",
+            "repair"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Same-model original derivation plus generic consistency review, identical total 4800 output-token cap and matched full input/cost accounting.",
+        "ablations": [
+          "Individual orbit checks without inverse/composition controls",
+          "Transform the output on both paths, as an explicitly vacuous negative control",
+          "Context labels without source binding",
+          "Orbit screening without second-call repair"
+        ],
+        "evaluation": "First calibrate EIS on unrelated exact synthetic matrices and deliberately corrupted basis/conjugation maps; include valid phases and degenerate subspaces. Measure mutant rejection, valid-control false rejection and uncovered AST claims. Then freeze paired benchmark outputs for independent scoring, reporting original-task completeness, accuracy, cost and failures. PCIV wrapper selection is offline on synthetic fixtures with fresh confirmation; never tune using the benchmark key."
+      },
+      "falsification": "A wrong conjugation, missing source transform, or mismatched inverse admitted as an exact covariance pass falsifies the checker contract. If zero/identity wrong functions receive a correctness label solely from equivariance, the semantic policy is falsified. No matched-budget improvement in convention-error detection or final completeness-adjusted accuracy falsifies the practical hypothesis.",
+      "risks": [
+        "Covariant wrong functions are a large undetected family; orbit consistency is necessary only.",
+        "Shared parsing or source-extraction errors can corrupt both paths.",
+        "Sampling a small transform set covers neither all bases nor all symbolic parameters.",
+        "Eigenvector phase and degeneracy freedom cause false rejection unless subspace outputs are supported.",
+        "Token overhead may displace requested derivation content."
+      ],
+      "budget_formula": "Full path bind->derive->orbit_check->repair->freeze: C_max <= 15000*p_in + (3300+1500)*p_out + F_1+F_2 + C_host_metered + R. With the common conditional thresholds, zero fees/metered host cost and R=0.01, reserve USD 0.049. Both model calls include the full unchanged seed; zero retries/fallback; refuse if actual input bounds or prices violate USD 0.10.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R07-I02",
+      "name": "Quantity-covariant reparameterization with guarded limit squares",
+      "systems": [
+        "PFP",
+        "EIS",
+        "PCIV",
+        "OPERADS"
+      ],
+      "mathematical_basis": {
+        "known_method": "Quantity calculus, dimensional homogeneity, reversible changes of units, and conditional commutation of continuous maps with limits.",
+        "proposed_adaptation": "Type every expression by a dimension vector and keep physical quantities separate from numerical coordinates. Construct nonzero unit-rescaling views of the same objects. Separately test any candidate-asserted limit with an explicit continuity/domain witness; a limit is a consequence check, never an equivalent replacement task. The second call repairs dimensional or limit-bridge failures in the original answer.",
+        "obligations": "If q=n*u and the basis units are changed by positive scales a_j, a quantity with dimension vector d has u'=a^d*u and n'=a^(-d)*n, where a^d=product_j a_j^(d_j). A numerical formula F of output dimension d_y must obey F(a^(-d_1)n_1,...)=a^(-d_y)F(n_1,...), with all dimensional constants transformed too. This follows from preserving each physical q. Sums require equal dimensions; products add dimension vectors; logarithms and exponentials require dimensionless arguments under the declared convention.",
+        "limit_bridge": "For a public family x(epsilon) in a declared domain, x(epsilon)->x0 and continuity of an admitted map T at x0 imply lim T(x(epsilon))=T(x0). Record the domain, approach direction, topology, witness and applicable branch. A nonzero coordinate scaling is invertible; sending a scale to zero is not that same bridge. Taking a limit through an inverse requires invertibility near the limit; eigenvector branches or earliest-attainment functionals cannot inherit continuity from their input matrices. Unsupported continuity claims remain OPEN.",
+        "bounded_checker_fragment": "Dimension vectors and positive rational scaling can be exact. A proposed rational-AST limit checker may cancel common polynomial factors only with a punctured-domain witness and retain a distinct extension value; substitution is valid only for denominators certified nonzero at the limit. General multivariate/transcendental or optimization limits require separately admitted proof rules. Finite numerical approach sequences are diagnostics, never certificates of existence or equality of limits."
+      },
+      "assumptions": [
+        "Dimension assignments follow explicit public conventions; a convention setting a physical constant to one must retain its original dimension metadata.",
+        "All positive unit scales are declared and reversible; no physically different coupling or boundary condition is substituted for the original task.",
+        "Limit probes are restricted to a preregistered public rule library and candidate-asserted families, without answer-key-selected limits.",
+        "Required original branches remain present even if a limiting branch is easier to check."
+      ],
+      "hypothesis": "Combining exact dimensional checks with explicitly guarded limiting relations reduces missing-scale factors and unjustified boundary substitutions more efficiently than asking the model to check dimensions and special cases in prose.",
+      "typed_inputs": [
+        "SeedBytes{utf8_bytes,sha256}",
+        "QuantityContext{symbol_dimensions,unit_basis,constants,convention_hash}",
+        "LimitRegistry{map_signatures,continuity_premises,domain_rules}",
+        "BudgetReservation{max_input_tokens_total:14000,max_output_tokens_total:4400,max_calls:2}"
+      ],
+      "typed_outputs": [
+        "DimensionedAnswer{quantity_asts,branches,claimed_limits}",
+        "ScaleLimitReceipt{unit_covariance,bridge_status,domain_failures,open_limits}",
+        "FrozenOriginalResponse{answer,residuals,lineage,cost}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "PFP quantity context binder",
+          "input_types": [
+            "SeedBytes",
+            "QuantityContext",
+            "LimitRegistry",
+            "BudgetReservation"
+          ],
+          "output_type": "BoundQuantityRun",
+          "instruction": "Keep original bytes as their own message. Freeze dimensions, permitted convention restoration, scaling schedule and limit-proof rules. OPERADS colours include dimension and branch context; PCIV protects them and the seed. Reserve both calls.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "derive",
+          "kind": "model",
+          "role": "Original derivation with dimensioned expressions",
+          "input_types": [
+            "BoundQuantityRun"
+          ],
+          "output_type": "DimensionedAnswer",
+          "instruction": "Answer the original task in its original conventions. Annotate candidate expressions with dimension vectors, branch guards and explicit limit claims. Do not assume a dimensionless numerical symbol means its physical quantity has no units.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 3000
+        },
+        {
+          "id": "check",
+          "kind": "host",
+          "role": "Unit covariance and continuity-obligation checking",
+          "input_types": [
+            "BoundQuantityRun",
+            "DimensionedAnswer"
+          ],
+          "output_type": "ScaleLimitReceipt",
+          "instruction": "Evaluate at most 8 positive rational unit changes and validate independent typed AST paths. For limits, check only admitted continuity/domain witnesses and label unsupported cases OPEN. EIS screens known dimensional/branch mutants with valid singular-looking controls. Record PCIV transformation lineage; never infer correctness from a vanishing diagnostic.",
+          "depends_on": [
+            "bind",
+            "derive"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "repair",
+          "kind": "model",
+          "role": "One dimension/limit repair",
+          "input_types": [
+            "SeedBytes",
+            "DimensionedAnswer",
+            "ScaleLimitReceipt"
+          ],
+          "output_type": "DimensionedAnswerPatch",
+          "instruction": "Receive the exact seed again. Repair affected original expressions, restore missing dimensional constants, or provide admitted domain/continuity evidence. Preserve every original requested branch and report unresolved obligations. No private evaluation feedback is available.",
+          "depends_on": [
+            "check"
+          ],
+          "max_output_tokens": 1400
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Recheck quantity and branch dependencies",
+          "input_types": [
+            "DimensionedAnswer",
+            "DimensionedAnswerPatch",
+            "ScaleLimitReceipt"
+          ],
+          "output_type": "FrozenOriginalResponse",
+          "instruction": "Recheck changed quantities and branches, deterministically render the original-context answer, and freeze all outputs before trusted scoring. Keep dimensional, exact-limit and numerical-limit evidence distinct; record missing parts and cost.",
+          "depends_on": [
+            "derive",
+            "check",
+            "repair"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Two-call derivation and prose review explicitly mentioning dimensions and limiting cases, with identical 4400 total output-token cap.",
+        "ablations": [
+          "Dimension typing alone",
+          "Numerical approach sequences without continuity certificates, labelled diagnostic-only",
+          "Scale checks without transforming dimensional constants",
+          "Limit checking without explicit branch/domain context"
+        ],
+        "evaluation": "Use unrelated synthetic quantity equations with incorrect exponents, missing constants, removable singularities, poles, branch switches and discontinuous attainment maps. Predeclare clean/mutant panels and report both false rejection and detection. Score frozen original benchmark answers separately; no feedback selects unit scales, limits or repairs. PCIV may select wrapper variations only on independent fixtures before the benchmark."
+      },
+      "falsification": "Reject a checker that treats zero scaling as an invertible unit change, accepts dimensionally inconsistent addition, or certifies a limit from finite numerical agreement alone. Reject the workflow advantage if matched-budget errors or completeness do not improve over prose review, or if valid convention choices are systematically rejected.",
+      "risks": [
+        "Dimensionally correct expressions can have arbitrary incorrect dimensionless coefficients or signs.",
+        "Natural-unit conventions can hide dimensions unless metadata is explicit.",
+        "Limit existence and interchange are stronger claims than pointwise consistency.",
+        "Small-parameter examples may not probe the required exceptional branch.",
+        "A restrictive checker can leave most analytic work OPEN and consume scarce response tokens."
+      ],
+      "budget_formula": "Full path bind->derive->check->repair->freeze: C_max <= 14000*p_in + (3000+1400)*p_out + F_1+F_2 + C_host_metered + R. At common conditional thresholds with zero extra charges and R=0.01, reserve USD 0.046. This includes both seeds, artifacts, all billable reasoning, failed calls and zero retries. Any excess estimate refuses dispatch.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R07-I03",
+      "name": "Tensor-layout commuting squares with partition-sensitive detectors",
+      "systems": [
+        "PFP",
+        "EIS",
+        "PCIV",
+        "OPERADS"
+      ],
+      "mathematical_basis": {
+        "known_method": "Naturality of linear tensor operations under explicit coordinate maps, with direct index definitions as independent checking paths.",
+        "proposed_adaptation": "Represent candidate bipartite objects both as a labelled four-index tensor and a flat matrix. Check partial-trace and partial-transpose operations through separately implemented index and matrix paths. Use factor-order permutations and local unitary views to expose axis, conjugation and flattening errors; never infer entanglement facts merely from schema or orbit agreement.",
+        "obligations": "Fix flat(i,alpha)=i*d_B+alpha. Define tr_B(X)_(i,j)=sum_alpha X_(i,alpha;j,alpha) and PT_B(X)_(i,alpha;j,beta)=X_(i,beta;j,alpha). Direct index substitution proves PT_B(PT_B(X))=X and tr_B(PT_B(X))=tr_B(X). For local U,V and X'=(U tensor V)X(U tensor V)^dagger, tr_B(X')=U tr_B(X)U^dagger and PT_B(X')=(U tensor conjugate(V))PT_B(X)(U tensor conjugate(V))^dagger. These are generic operator identities, not task answers.",
+        "bridge_proof": "Prove each rule first on matrix units E_ij tensor E_ab, then extend by linearity. For partial trace, tr(V E_ab V^dagger)=tr(E_ab); for transpose, (V E_ab V^dagger)^T=conjugate(V) E_ba V^T. A factor-swap S maps X on A tensor B to S X S^dagger on B tensor A and must also relabel the traced/transposed subsystem. Verify flatten/unflatten inverses over all index positions. These proofs are declared mathematical bridges; machine-checked runtime correspondence remains a separate implementation obligation.",
+        "scope_rule": "Arbitrary global unitaries do not preserve the fixed bipartition's reduction or partial-transpose invariants. PT is a linear map, not itself a unitary coordinate change, so only its commuting diagram under an admitted coordinate map is representation preserving. A PT positivity check is at most the predicate actually checked; no unrestricted separability conclusion is admitted. Involution and trace identities alone admit wrong functions, including identity-as-PT, so they cannot stand alone."
+      },
+      "assumptions": [
+        "Tensor dimensions, subsystem names, ordering and conjugation convention are explicit and bound to the public source object.",
+        "Exact controls include unequal subsystem dimensions and complex entries; real symmetric or maximally symmetric fixtures alone hide transpose mistakes.",
+        "The two computational paths do not call the same flattening or transpose helper; implementation diversity is recorded without claiming statistical independence.",
+        "Actual complex-rational pair arithmetic and typed tensor operations must be implemented; existing rational matrix port alone does not supply them."
+      ],
+      "hypothesis": "At matched cost, commuting tensor-index paths with anti-vacuity controls catch subsystem and conjugation mistakes that basis-invariant scalar spot checks miss, while preserving the original full answer.",
+      "typed_inputs": [
+        "SeedBytes{utf8_bytes,sha256}",
+        "TensorContext{factor_labels,dimensions,flat_index_map,conjugation_convention}",
+        "TensorBridgeRegistry{index_rules,local_actions,swap_maps,proof_status}",
+        "BudgetReservation{max_input_tokens_total:15000,max_output_tokens_total:4800,max_calls:2}"
+      ],
+      "typed_outputs": [
+        "TensorAnnotatedAnswer{answer,objects,reductions,operations,context_ids}",
+        "TensorSquareReceipt{path_pairs,bridge_premises,mutant_controls,open_claims}",
+        "FrozenOriginalResponse{answer,receipts,residuals,lineage,cost}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "PFP tensor-context binding and protected PCIV lineage",
+          "input_types": [
+            "SeedBytes",
+            "TensorContext",
+            "TensorBridgeRegistry",
+            "BudgetReservation"
+          ],
+          "output_type": "BoundTensorRun",
+          "instruction": "Preserve immutable original seed and requested outputs. Freeze factor-label conventions and independently calibrated EIS fixtures. OPERADS colours carry factor order, dimensions and operation type. Reserve both model calls.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "derive",
+          "kind": "model",
+          "role": "Original derivation with labelled tensor artifacts",
+          "input_types": [
+            "BoundTensorRun"
+          ],
+          "output_type": "TensorAnnotatedAnswer",
+          "instruction": "Answer the original task and expose typed tensor/matrix objects and claimed operations. Retain the original subsystem interpretation. Flag unsupported extraction or analytic steps. Do not supply a transformed problem in place of the requested answer.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 3300
+        },
+        {
+          "id": "square_check",
+          "kind": "host",
+          "role": "Independent index/matrix checking and EIS controls",
+          "input_types": [
+            "BoundTensorRun",
+            "TensorAnnotatedAnswer"
+          ],
+          "output_type": "TensorSquareReceipt",
+          "instruction": "Check all flatten/unflatten indices within bounds. Evaluate registered direct-index and separate matrix paths, local-unitary naturality and relabelled factor swaps. Use identity-as-PT, omitted conjugation, wrong traced axis and wrong flattening as answer-independent negative controls. Retain infrastructure failures separately. PCIV records each view and bridge lineage; no private data enters selection.",
+          "depends_on": [
+            "bind",
+            "derive"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "repair",
+          "kind": "model",
+          "role": "One original tensor-convention patch",
+          "input_types": [
+            "SeedBytes",
+            "TensorAnnotatedAnswer",
+            "TensorSquareReceipt"
+          ],
+          "output_type": "TensorAnswerPatch",
+          "instruction": "Receive unchanged seed again. Correct only implicated original-context tensor claims and downstream explanations or leave them OPEN. Keep the original partition, requested content and task conventions. Feedback contains public failure types and claim references only.",
+          "depends_on": [
+            "square_check"
+          ],
+          "max_output_tokens": 1500
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Partition-aware recheck and freeze",
+          "input_types": [
+            "TensorAnnotatedAnswer",
+            "TensorAnswerPatch",
+            "TensorSquareReceipt"
+          ],
+          "output_type": "FrozenOriginalResponse",
+          "instruction": "Recheck altered paths and dependants, deterministically produce the original answer, and freeze before private scoring. Label each check as exact instance, admitted identity, numerical or OPEN. Passing relations never produce an unqualified correct-answer label.",
+          "depends_on": [
+            "derive",
+            "square_check",
+            "repair"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Two-call original derivation and generic tensor-convention review with the same endpoint, total 4800 output-token cap and full input reservation.",
+        "ablations": [
+          "Only scalar trace and involution checks",
+          "Both paths sharing one indexing helper",
+          "Real equal-dimension fixtures only",
+          "Remove subsystem labels from operadic colours",
+          "Checks without bounded repair"
+        ],
+        "evaluation": "Calibrate against unrelated synthetic complex rational matrix units and valid density operators, with unequal-dimension cases and deliberately malformed axis maps. Measure path discrepancy detection, false rejection, identity-as-PT detection and unsupported rate. Compare frozen original-task correctness and completeness under matched budget; retain all failures. PCIV selects public fixture-tested wrapper changes offline, not via seed evaluator feedback."
+      },
+      "falsification": "If identity-as-PT or a wrong subsystem permutation passes the full calibrated detector panel, the proposed detector adequacy claim fails. Admission of an arbitrary entangling basis change as preserving fixed-partition invariants falsifies the bridge policy. No improvement over scalar checks/prose review at matched cost falsifies the workflow hypothesis.",
+      "risks": [
+        "A wrong original state can satisfy every tensor identity.",
+        "Two implementations may share a conceptual indexing mistake despite separate code.",
+        "Highly symmetric fixtures conceal axis errors; calibration must include asymmetric controls.",
+        "A declared algebraic proof does not prove the compiled checker implements it.",
+        "Tensor annotations and repair feedback can reduce tokens available for the full derivation."
+      ],
+      "budget_formula": "Full path bind->derive->square_check->repair->freeze: C_max <= 15000*p_in + (3300+1500)*p_out + F_1+F_2 + C_host_metered + R. Under common conditional thresholds, zero extra charges and R=0.01, reserve USD 0.049 for both calls together. Zero retries/fallback. Model outputs freeze even when a second stage cannot be admitted; failures remain in the denominator.",
+      "status": "proposed_not_evaluated"
+    }
+  ],
+  "recommended_reusable_primitive": {
+    "name": "CheckingViewBridgeReceiptV1",
+    "recommendation": "Implement a host-owned receipt binding each checking view to the unchanged original task, with a declared map and an explicit preservation obligation. Start with exact rational permutation/index checks and anti-vacuity controls before complex or analytic extensions.",
+    "schema": {
+      "binding": [
+        "seed_sha256",
+        "original_candidate_sha256",
+        "source_object_sha256",
+        "source_context_sha256",
+        "view_object_sha256",
+        "view_context_sha256",
+        "transform_id",
+        "checker_version"
+      ],
+      "obligation": [
+        "relation_id",
+        "input_action",
+        "output_action",
+        "inverse_or_one_way_implication",
+        "bridge_rule",
+        "premise_ids",
+        "dependency_ids",
+        "public_source_binding_status",
+        "independent_path_ids"
+      ],
+      "host_status": [
+        "PASS_FOR_DECLARED_RELATION",
+        "FAIL",
+        "OPEN_UNSUPPORTED",
+        "BRIDGE_NOT_ADMITTED",
+        "INFRASTRUCTURE_ERROR"
+      ],
+      "scope": [
+        "exact_finite_instance",
+        "admitted_algebraic_identity",
+        "conditional_limit",
+        "numerical_spot_check",
+        "unverified_source_extraction"
+      ],
+      "residuals": [
+        "unproved_preservation",
+        "shared_path_dependency",
+        "missing_domain_premise",
+        "unverified_task_binding",
+        "uncovered_requested_claim",
+        "unbounded_or_unknown_cost"
+      ]
+    },
+    "invariant": "The original seed and target persist across all stages. A view is never a replacement answer. Reversible coordinate equivalence, one-way limiting implication and numerical agreement are different types; composition cannot strengthen them or erase residuals. Host statuses concern registered relations only. A detector must reject deliberately wrong equivariant or involutive controls when it claims to distinguish them, or record that blind spot.",
+    "research_prompt_instruction": "Design the bounded bridge receipt, its typed ports and source-independent synthetic controls. Do not read seed_prompt.txt, private benchmark storage or an answer key. Do not supply any task-specific correct formula, state, spectrum, threshold, optimum or worked solution. Every future workflow receives the unchanged seed verbatim and isolates all transformed views and public checks from trusted private evaluation.",
+    "first_experiment": "Host-only rational index/permutation controls, including an intentionally identity-as-PT implementation, followed only after separate paid-run authorization by one preregistered R07-I03 pilot. No pilot or paid model call was performed."
+  }
+}

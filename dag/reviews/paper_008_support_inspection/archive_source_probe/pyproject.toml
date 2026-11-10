@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pfp-008-grammar-growth-and-evidence"
+version = "0.1.0"
+description = "PFP VIII: Conservative Grammar Growth and Source-Bound Evidence in the MSS Pipeline"
+authors = [{ name = "Jeremy H. Carroll" }]
+license = { text = "PolyForm-Noncommercial-1.0.0" }
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=9.0.3", "ruff==0.14.13", "mypy==1.19.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["code/tests"]
+addopts = "-q --strict-markers"
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.mypy]
+python_version = "3.12"
+files = ["code"]
+warn_unused_ignores = true

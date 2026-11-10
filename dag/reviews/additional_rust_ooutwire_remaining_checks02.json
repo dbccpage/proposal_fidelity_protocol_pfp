@@ -1,0 +1,139 @@
+{
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "native_execution": false,
+  "results": [
+    {
+      "id": "ROUT-CHECK-007",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/measure.rs",
+        "sha256": "2d655177f848d7c7ee389f4a5745d66b7d3cfab23cf04364eca1ceca6cc791c8"
+      },
+      "observation": {
+        "host_model": "64-bit usize; Rust as-i64 truncating cast",
+        "positive_arity": 9223372036854775808,
+        "source_mu2_second_coordinate": -9223372036854775808,
+        "ordinary_unary_coordinate": 1,
+        "wrong_lexicographic_preference": true,
+        "two_i64_MAX_arities_exact_sum": 18446744073709551614,
+        "sum_exceeds_i64": true
+      },
+      "limitations": "Exact independent fixed-width arithmetic model. No allocation/enumeration/native run. Public arity_sum accepts these Item values without requiring costly regime materialization; debug sum can panic and release overflow policy can wrap."
+    },
+    {
+      "id": "ROUT-CHECK-008",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/enumeration.rs",
+        "sha256": "976842f2d5bfcbfe8d9840c6441f4c638044a45d5571890c9cb00b3901a6606e"
+      },
+      "observation": {
+        "base": {
+          "data_count": 6,
+          "form_arities": [
+            1
+          ],
+          "instances": [
+            [
+              0,
+              [
+                0
+              ]
+            ]
+          ],
+          "uniform_rules": [],
+          "existing_requirements": [
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        },
+        "target": [
+          0,
+          1
+        ],
+        "bounds": {
+          "max_items": 2,
+          "max_arity": 1
+        },
+        "full_wellformed_two_item_count": 53,
+        "valid_full_deltas": [
+          [
+            [
+              "i",
+              0,
+              2
+            ],
+            [
+              "i",
+              0,
+              4
+            ]
+          ],
+          [
+            [
+              "i",
+              0,
+              2
+            ],
+            [
+              "i",
+              0,
+              5
+            ]
+          ],
+          [
+            [
+              "i",
+              0,
+              3
+            ],
+            [
+              "i",
+              0,
+              4
+            ]
+          ],
+          [
+            [
+              "i",
+              0,
+              3
+            ],
+            [
+              "i",
+              0,
+              5
+            ]
+          ]
+        ],
+        "valid_pruned_deltas": [],
+        "valid_below_two": false,
+        "rule_free_base": true,
+        "prior_requirements_unsatisfied": true
+      },
+      "limitations": "All candidates in a complete independent unary cost<=2 population checked. This exposes missing public preconditions, not a counterexample when engine maintains all prior requirements and challenges only collapsed pairs. No native implementation executed."
+    },
+    {
+      "id": "ROUT-CHECK-009",
+      "status": "observed_independent_model",
+      "source": {
+        "path": "code/rust/core_ooutwire_primitives/src/closure.rs",
+        "sha256": "ce793243ed3cdfa52d2ea77f3d73188dc625d782f06c987059fc2eb6fb617f3f"
+      },
+      "observation": {
+        "usize_bits": 64,
+        "n_data": 4294967297,
+        "exact_round_bound": 9223372039002259456,
+        "wrapped_multiplication_then_division": 2147483648,
+        "exact_answer_fits_usize": true
+      },
+      "limitations": "Pure integer control for unchecked arithmetic. Debug overflow would panic instead of wrap; no runtime overflow or allocation attempted. Divide-even-factor-first with checked multiplication preserves representable results."
+    }
+  ]
+}

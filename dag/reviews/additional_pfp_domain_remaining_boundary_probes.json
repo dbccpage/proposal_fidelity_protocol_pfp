@@ -1,0 +1,65 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/exceptions.py",
+      "sha256": "c0f7d4b1e65275d7604192e6cc8294d123a6f360e88c314a3eb63c3439429c69"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/authority_effect.py",
+      "sha256": "48a51a1cf08a0a446473582e391e813589c5f87a99ebbbd192e2d362d68199b7"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/id.py",
+      "sha256": "031d40063a492d3b744a43705e9ec682abcd6a6c77ca62a446525c0e79af886f"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/gate.py",
+      "sha256": "3997749961509c98f593500486defa8cac5e24c3374a4fccdce0128d8c056444"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/disposition.py",
+      "sha256": "9d9ed367291905918636372f55243090395aa6b74e35a48242645dc878c56c35"
+    },
+    {
+      "path": "pfp/domain/entities/gate_receipt.py",
+      "sha256": "b1fa3ff1bc0b829fe9273d60b52945937506257327e97aeb26421ffa27fc89cd"
+    },
+    {
+      "path": "pfp/domain/ports/__init__.py",
+      "sha256": "1af3a60da3657a851cea8e5b66a4601a7e63337e19e45c55b0b6a246c7819611"
+    },
+    {
+      "path": "pfp/domain/ports/decode_control_port.py",
+      "sha256": "6cb5320e805cb237c04c1a6f603928083c7e39dceadf05191d7ccb7e395e04d9"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C024",
+      "rule": "gate_receipt_factory_default_serialization",
+      "status": "counterexample_observed",
+      "retained_metrics_type": "Field",
+      "observed": "'Field' object is not iterable"
+    },
+    {
+      "id": "PFPDOMAIN-C025",
+      "rule": "declared_package_export_resolution",
+      "status": "counterexample_observed",
+      "symbol": "pfp.domain.ports.ILearningRepository",
+      "observed": "module 'pfp.domain.ports' has no attribute 'ILearningRepository'"
+    },
+    {
+      "id": "PFPDOMAIN-C026",
+      "rule": "v1_decode_honored_flag_custody",
+      "status": "counterexample_observed",
+      "different_flags": [
+        true,
+        false
+      ],
+      "same_wire": true,
+      "same_digest": true,
+      "limit": "V1 metadata-only record; V2 explicitly requires independent replay and is not implicated by this omitted field."
+    }
+  ]
+}

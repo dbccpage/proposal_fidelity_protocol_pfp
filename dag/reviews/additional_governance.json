@@ -1,0 +1,147 @@
+{
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "status": "bounded_governance_source_review",
+  "claims": [
+    {
+      "id": "GOVERNANCE-RECORD-FLOOR",
+      "claim": "The governance checker enforces declared grade arithmetic and byte bindings, with grandfather exemptions. It does not establish that supplied grades or cited evidence prove mathematical correctness.",
+      "kind": "full_source_assessment",
+      "evidence": [
+        "governance/tools/checker.py",
+        "governance/README.md"
+      ],
+      "dependencies": [
+        "Substantive independent review of grade bases and evidence"
+      ],
+      "limitations": [
+        "Source omitted from cited run inputs is currently accepted by the freshness check.",
+        "Unchanged baseline exemption can accept sources without complete grades."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "GOVERNANCE-MISSING-RUN-INPUT",
+      "priority": "P2",
+      "path": "governance/tools/checker.py",
+      "lines": [
+        388,
+        397
+      ],
+      "claim": "A valid cited run record with inputs=[] passes _run_problems for an arbitrary source digest. Only a present mismatched hash is rejected, so omitting the source bypasses the documented freshness binding.",
+      "reproduction": {
+        "omitted_source_problems": [],
+        "present_stale_source_problems": [
+          "evidence synthetic.run.json ran against different bytes of pfp_lab/mod.py (stale)"
+        ]
+      }
+    }
+  ],
+  "validation": [
+    {
+      "method": "synthetic record passed directly to current _run_problems; no actual external tool run claimed",
+      "result": "missing input accepted, present stale input rejected"
+    }
+  ],
+  "file_reviews": [
+    {
+      "path": "governance/README.md",
+      "sha256": "dadfc9165a7b5b5b4880095a0f24c21e7c7e2af3fe56cce875a5d458ec69154e",
+      "full_source_read": true,
+      "assessment": "Describes acceptance as byte-bound completed grade records rather than mathematical truth. Explicitly retains baseline exemptions. The claimed run/source freshness requirement is stronger than the missing-input branch actually enforces.",
+      "reviewed_lines": [
+        [
+          1,
+          79
+        ]
+      ]
+    },
+    {
+      "path": "governance/policy.json",
+      "sha256": "e4cebb9701d4fe237ca11e6f1e9512607afef384d354e86003b7d3ff7beb2a5d",
+      "full_source_read": true,
+      "assessment": "Exact glob populations, runtime L4D/test L2D floors, empty-init pin and byte-based imported baselines. These are declared process categories, not correctness theorems. The new dag audit tools are outside the listed source globs.",
+      "reviewed_lines": [
+        [
+          1,
+          160
+        ]
+      ]
+    },
+    {
+      "path": "governance/tools/checker.py",
+      "sha256": "fb43bf5c309599b09dd03db23a63d367908d5a4341a731c42a574c6d27ba2fce",
+      "full_source_read": true,
+      "assessment": "Full source: strict Pydantic admission, weakest-gate arithmetic, rational conservative mutation fraction, path/hash binding and baseline exemption. Grades themselves remain assertions. Reproduced _run_problems accepting a cited run that omits the source entirely. Empty evidence lists and arbitrary per-gate text are admitted; therefore evidence sufficiency requires external review.",
+      "reviewed_lines": [
+        [
+          1,
+          591
+        ]
+      ]
+    },
+    {
+      "path": "governance/tools/evidence.py",
+      "sha256": "54cc55ace3852d96c2042a6ff65d9d4acd379504ef6880e23084a1fa7b1ee964",
+      "full_source_read": true,
+      "assessment": "Full source: argv-only subprocess capture, timeout and start-error records, pre-run governed-source hashes and output hash. Combined stdout+stderr concatenation does not preserve interleaving. Snapshot hashes are taken before execution and do not prove no input changed during the command. Tool results remain recorded evidence, not mathematical proof.",
+      "reviewed_lines": [
+        [
+          1,
+          124
+        ]
+      ]
+    },
+    {
+      "path": "governance/__init__.py",
+      "sha256": "0dc6af99225c60eec6c809681a387fdfbae704816b29535e4bd39723d7baca3f",
+      "full_source_read": true,
+      "assessment": "pkgutil namespace extension shares installed governance domain with checkout tooling; import resolution depends on environment, not only this file.",
+      "reviewed_lines": [
+        [
+          1,
+          5
+        ]
+      ]
+    },
+    {
+      "path": "governance/tools/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "full_source_read": true,
+      "assessment": "Empty package marker, no mathematical or executable contribution beyond package discovery.",
+      "reviewed_lines": [
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "path": "governance/tools/tests/helpers.py",
+      "sha256": "079a8f82cfc0bf96a34a7b2adf1c84a0ecef35f034490365e345c4237501667a",
+      "full_source_read": true,
+      "assessment": "Finite test helpers produce synthetic grade/evidence records and temporary git commands. Synthetic labels intentionally exercise checker behavior; not real proof evidence.",
+      "reviewed_lines": [
+        [
+          1,
+          65
+        ]
+      ]
+    },
+    {
+      "path": "governance/tools/tests/test_checker.py",
+      "sha256": "469800ec6f34a3204c04ac79776c5c92c4ab14933a75c747f9e481542169ac1c",
+      "full_source_read": true,
+      "assessment": "Full source: finite policy, binding, stale-record, score arithmetic and mutation denominator tests. Covers mismatched input hash but lacks omitted-source-input case. The mutation report fixture can be empty JSON, demonstrating that count arithmetic is checked independently of report semantics.",
+      "reviewed_lines": [
+        [
+          1,
+          282
+        ]
+      ]
+    }
+  ],
+  "remaining_work": [
+    "Review the remaining metrics/mutation tools and evidence records; cited grades are not validated by this checkpoint."
+  ]
+}

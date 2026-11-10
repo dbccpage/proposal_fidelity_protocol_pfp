@@ -1,0 +1,57 @@
+--- papers/pfp/004_pfp_native_verification_and_evidence_custody/pyproject.toml
++++ papers/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/pyproject.toml
+@@ -3,42 +3,30 @@
+ build-backend = "setuptools.build_meta"
+ 
+ [project]
+-name = "pfp-iv-native-verification-finite-evidence"
++name = "pfp-008-grammar-growth-and-evidence"
+ version = "0.1.0"
+-description = "Companion code for PFP IV: Native Verification and the Custody of Finite Evidence"
++description = "PFP VIII: Conservative Grammar Growth and Source-Bound Evidence in the MSS Pipeline"
++authors = [{ name = "Jeremy H. Carroll" }]
++license = { text = "PolyForm-Noncommercial-1.0.0" }
+ readme = "README.md"
+-authors = [{ name = "Jeremy H. Carroll" }]
+-license = { file = "LICENSE-CODE" }
+ requires-python = ">=3.10"
+ dependencies = []
+ 
+ [project.optional-dependencies]
+-dev = [
+-    "pytest>=9.0.3",
+-    "ruff==0.14.13",
+-]
+-# Only code/attention_entropy_kv_norm_benchmark.py and its test use these.
+-attention = [
+-    "numpy>=1.24",
+-    "torch>=2.0",
+-    "transformers>=4.40",
+-    "httpx>=0.27",
+-]
+-
+-[tool.setuptools]
+-packages = []
+-py-modules = []
++dev = ["pytest>=9.0.3", "ruff==0.14.13", "mypy==1.19.1"]
+ 
+ [tool.pytest.ini_options]
+ testpaths = ["code/tests"]
+-pythonpath = ["code"]
+-addopts = "-ra -q"
++addopts = "-q --strict-markers"
+ 
+ [tool.ruff]
++line-length = 140
+ target-version = "py310"
+-line-length = 100
+-src = ["code"]
+ 
+ [tool.ruff.lint]
+ select = ["E", "F", "W", "I"]
+-ignore = ["E501"]
++
++[tool.mypy]
++python_version = "3.12"
++files = ["code"]
++warn_unused_ignores = true

@@ -1,0 +1,887 @@
+{
+  "status": "complete_bounded_controls",
+  "control_count": 16,
+  "runtime": {
+    "python_executable": "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\.venv\\Scripts\\python.exe",
+    "python_version": "3.14.2",
+    "execution": "Only audit-authored stdlib Python controls and receipt helpers. No retained Rust/native/Cargo/program execution, provider, credentials, external network/source or private answer access.",
+    "tests": "Inline Rust tests were substantively read, not executed. Own finite controls are not a native test-suite result.",
+    "helper_correction": "Checkpoint17 helper initially failed Python parsing before any statements ran; the delimiter was corrected and the helper completed. Original source untouched."
+  },
+  "controls": [
+    {
+      "id": "RFA-C001",
+      "rule": "scalar_finite_field_factorization_and_crt_independent_controls",
+      "status": "completed_bounded_with_counterexamples",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe01.py",
+        "sha256": "61b60b8dd869d6a2c092e66ff798ceefc9d9df755f5807e17953f7a894be7943"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe01.json",
+        "sha256": "180f21c16274809d5c354c482c333a88ec8211d08bbe806ad46fe3776b657cb1"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_number_theory/src/rational.rs",
+          "sha256": "49ce8730d2beb1fa9d272a1c157c963a071cd94c885bb062a70eaeaeca3527c0",
+          "lines": [
+            1,
+            621
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/finite_field.rs",
+          "sha256": "23eceeeeb33157f531554990d8b19c5e455968bc7ec3e171970c8745fde7b650",
+          "lines": [
+            1,
+            459
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/binary_field.rs",
+          "sha256": "7549563d8b3af98d07ee7edffa4c80c7c688fb03a343e976fc96763d60ee14b9",
+          "lines": [
+            1,
+            427
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/character_sums.rs",
+          "sha256": "3ec26b7e0b3f2ded88c7aa75e635386d989a959f2fc034f588fadae10f50963f",
+          "lines": [
+            1,
+            273
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/integer_factorization.rs",
+          "sha256": "b20c3c6e53044a5f215eeac01fd8e9c3eabb0eabe2f50347f63caf838162b81f",
+          "lines": [
+            1,
+            289
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/residue.rs",
+          "sha256": "ac0e61c5c4c4376901925c11b1d08d88249c687e806b8806b206518de09a7429",
+          "lines": [
+            1,
+            95
+          ]
+        }
+      ],
+      "limits": "Pure Python exact models and independent elementary oracles only; no original Rust imports/execution. All nine receipt checks have explicit rule/status fields."
+    },
+    {
+      "id": "RFA-C002",
+      "rule": "norm_circle_prefix_and_enclosure_independent_controls",
+      "status": "completed_bounded_with_counterexample",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe02.py",
+        "sha256": "b2035b9a4d06886ab661366e2eb46aba74830dd9ea426e21526507d798421b43"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe02.json",
+        "sha256": "5a3d8a6f449ccf0b2c7f444a9158a7fc29177d15a9aba9ec2577374cce0eadce"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_number_theory/src/gaussian_norm.rs",
+          "sha256": "280c87abd6d873ffcd3f2c44f0c52de7cbf334073c5e2c505571080435c7c075",
+          "lines": [
+            1,
+            264
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/gaussian_regular.rs",
+          "sha256": "ff5734f946814f8a904be331e9215a75ea614c7bcd8f66c85519f528a3c3165c",
+          "lines": [
+            1,
+            166
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/four_squares.rs",
+          "sha256": "886f8903ab2a97cc8a3f630168473e69512827ed86304f2f571c3906ea10b3a1",
+          "lines": [
+            1,
+            166
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/sums_of_squares.rs",
+          "sha256": "4ad80a76a41b852c210b7920ceb1fb65567ff11ac300357e37289ef2b79d279a",
+          "lines": [
+            1,
+            168
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/rational_circle.rs",
+          "sha256": "c9ad54faef3007a103422060e30153c06955013c4802e7fcf68a05bb5c4e9787",
+          "lines": [
+            1,
+            88
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/rational_turns.rs",
+          "sha256": "25b7c1379ab56c2e2570ec5d2dd795e7665ca190b8a3683dd5ea5f370fc92129",
+          "lines": [
+            1,
+            110
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/circle_haar.rs",
+          "sha256": "141b0a3eebc2cf2f809a154c5746f08cd5d53d61861fdb97a95c46b22e647ce1",
+          "lines": [
+            1,
+            251
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/certified_angles.rs",
+          "sha256": "a0fcb9fc43501ff03437f5300887c345b5a562ffc6b37efcb5a6cf1bbd6d2b5f",
+          "lines": [
+            1,
+            178
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/dyadic_presentation.rs",
+          "sha256": "510c44b8c2ce8525d5c4bd5394836b3e0249dc755833279fea6a830029e9d654",
+          "lines": [
+            1,
+            236
+          ]
+        }
+      ],
+      "limits": "Eight exact finite checks; pure Python3.14 rational/integer models only, no original/native execution."
+    },
+    {
+      "id": "RFA-C003",
+      "rule": "formal_series_and_shape_independent_controls",
+      "status": "completed_bounded_with_counterexample",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe03.py",
+        "sha256": "3eed78a028ef7f3e5a4bbe85ccf421abf620aa382f9af852bf89deba03762fff"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe03.json",
+        "sha256": "390924a9c51f6b7da54878d360d9181f4674e5df175312a3bf63c952fc36785a"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_number_theory/src/power_basis.rs",
+          "sha256": "6ee507c0195830579f5d7c819e03ea1b8364c743d07e35799e1d48b9bc13276f",
+          "lines": [
+            1,
+            163
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/power_series.rs",
+          "sha256": "7c8c4f185815295e119a89e842dade357eafc625cb84630f1e489b5fcfe35ac5",
+          "lines": [
+            1,
+            230
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/radical_sum.rs",
+          "sha256": "36b934ebfc6fc5594c120ce361e103056761abd8bafb78c589635ffcfea5e068",
+          "lines": [
+            1,
+            177
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/polynomial_map.rs",
+          "sha256": "b80cb1754515402a0a0f8657c1bfaa1bc5b62f3c360def3ff63a11643b78bf41",
+          "lines": [
+            1,
+            167
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/scalar.rs",
+          "sha256": "8b96c0bd84a8b6389cdf12d2f429be46a513483c176cb80a570e4a1dae2fa0c0",
+          "lines": [
+            1,
+            509
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/test_support.rs",
+          "sha256": "bd400420029c155e6158924a52057b956480261acacc718ee9d8c328115f8cf8",
+          "lines": [
+            1,
+            204
+          ]
+        }
+      ],
+      "limits": "Four exact independent controls. No original code/native execution."
+    },
+    {
+      "id": "RFA-C004",
+      "rule": "quadratic_roots_norms_and_sign_independent_controls",
+      "status": "completed_bounded",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe04.py",
+        "sha256": "fcbf756ee94fe82d4a4d3f6ecb638693e564b52f5df5e210a647260eec777603"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe04.json",
+        "sha256": "cf48ad7f3096acce135b5ae8a438d949cf926b7635143f28c8211690080c1244"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_number_theory/src/quadratic.rs",
+          "sha256": "78aebe31aeffd2a86c4dc4b555187b3ff55e400600bd03850492f6e52d1448d4",
+          "lines": [
+            1,
+            1937
+          ]
+        }
+      ],
+      "limits": "Pure Python rational pairs and independent rational sqrt brackets; no original Rust execution, no compile-fail validation."
+    },
+    {
+      "id": "RFA-C005",
+      "rule": "polynomial_sturm_and_root_boundary_independent_controls",
+      "status": "completed_bounded_with_counterexample",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe05.py",
+        "sha256": "0c80ef97577d654d1ef4f4436462908384765bd294483e698d55572a92e280ba"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe05.json",
+        "sha256": "7aa0a9f9088378a527639e39a6be86f02f74c1c3341eb777a8ac95398d964656"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_number_theory/src/polynomial.rs",
+          "sha256": "590eb032fb65b99d16572515f1fca20f03219f006132cfef2af2435cdcafe9c0",
+          "lines": [
+            1,
+            2281
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/polynomial_factorization.rs",
+          "sha256": "1fa6bd69cdbb0e6f8c198a654e2a5c978647a3c23e865403d3bf5b1f73162d30",
+          "lines": [
+            1,
+            631
+          ]
+        }
+      ],
+      "limits": "Exact Python elementary polynomial models/permutation determinant; no original/native execution. Product-only factor verification countercontrol confirms an explicitly documented limitation."
+    },
+    {
+      "id": "RFA-C006",
+      "rule": "fixed_cyclotomic_exact_models",
+      "status": "completed_bounded_with_counterexample",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe06.py",
+        "sha256": "17433e752611d1ee5aba5bb6313166e8c9eb4f05449685f68133789ad723c986"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe06.json",
+        "sha256": "8f4e24b0f20d7c6e2079b9213e1416141e0af3cc9414a482fb7efca69e3eda2d"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_number_theory/src/cyclotomic.rs",
+          "sha256": "1d120eac163f026e4b24d0da609823e6254193cb6e4d197f059725834a4b8699",
+          "lines": [
+            1,
+            1215
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/cyclotomic28.rs",
+          "sha256": "6b81a9c8bf01ceda0d43324029424d10ff3722ea7679e493679fddcfa428749e",
+          "lines": [
+            1,
+            350
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/cyclotomic44.rs",
+          "sha256": "f82eb3be0d3f82adef58b88bc8ac93ac422365ea96b680a08728810fb1d800e3",
+          "lines": [
+            1,
+            355
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/cyclotomic52.rs",
+          "sha256": "4ce4933e0bb9d24fab1a3d8b8b37af541d3694e5fbb1bc2fe84bc5ca984abb6e",
+          "lines": [
+            1,
+            349
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/cyclotomic120.rs",
+          "sha256": "d09b420e11f4473ad1cb43728b0eeb1579713d93f72ea0b54fd24eab513cc1a6",
+          "lines": [
+            1,
+            361
+          ]
+        }
+      ],
+      "limits": "Own exact stdlib Python quotient arithmetic; no original or native execution. Source-specific fields and exponent defect are pinned; analytic positivity not tested."
+    },
+    {
+      "id": "RFA-C007",
+      "rule": "field_inclusion_and_ordered_admission_controls",
+      "status": "completed_bounded_with_counterexamples",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe07.py",
+        "sha256": "f6ff6818b5c0bfd1a93d3ff66690bd6744804d3f0717230b8858ebca0ee519e0"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe07.json",
+        "sha256": "a0b5795f77f1f9f799d76b9e4a7c985dbfdd1cf2433f045c79a578a02cf3e11b"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_number_theory/src/cyclotomic_field.rs",
+          "sha256": "ab6d4eb5163ac7bb10b8d0b35ae5b6b295d3f7eaa01394f95a351cb62ce43183",
+          "lines": [
+            318,
+            380
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/algebraic_real.rs",
+          "sha256": "8b16f01f83d53cf85a6bd3743ea65d03045ddafd98ef0a42efdcfc9752c872f1",
+          "lines": [
+            274,
+            315
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/real_embedding.rs",
+          "sha256": "b2dbc497543e1414717f434db3201179e891aca5dac7ef27421eabedf912ceb3",
+          "lines": [
+            166,
+            258
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/cyclotomic_ordered.rs",
+          "sha256": "cca88bfde59478caa76b6e5492e597d7f070685640713585b08762244e757980",
+          "lines": [
+            152,
+            314
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/cyclotomic_ordered.rs",
+          "sha256": "cca88bfde59478caa76b6e5492e597d7f070685640713585b08762244e757980",
+          "lines": [
+            331,
+            447
+          ]
+        }
+      ],
+      "limits": "Own stdlib exact arithmetic and symbolic loop invariants; no original execution. Public-field counterexamples deliberately bypass constructor normalization."
+    },
+    {
+      "id": "RFA-C008",
+      "rule": "gf2_and_vanishing_sum_independent_controls",
+      "status": "completed_bounded_with_counterexample",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe08.py",
+        "sha256": "e2fdbddd7ebbd3e91a4e57895ee61c553d32a7be41321300a07e2b03b3970230"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe08.json",
+        "sha256": "a4bfa19c18e6645b44cb67eefd2cebe95a7febe82c56c61749e2238eab629d22"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_number_theory/src/gf2.rs",
+          "sha256": "39d6a9383a2f87759cc0d8fe837a220da96f3a5d0d806518854474a0533a00b9",
+          "lines": [
+            1,
+            957
+          ]
+        },
+        {
+          "path": "code/rust/core_number_theory/src/vanishing_sums.rs",
+          "sha256": "765d3f70c2fa266a9d12aa95d70363e25776d9aa3ed55a19873fbf223697bdab",
+          "lines": [
+            1,
+            428
+          ]
+        }
+      ],
+      "limits": "Own stdlib finite mathematical models, no retained/native execution. Invalid giant-axis example evaluated symbolically only."
+    },
+    {
+      "id": "RFA-C009",
+      "rule": "lie_and_cayley_exact_independent_controls",
+      "status": "completed_bounded_with_counterexamples",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe09.py",
+        "sha256": "ce270351cbcd7597d7a8d42f480f9c8d585f57baa25f5e73585b4ed809b12b8d"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe09.json",
+        "sha256": "f6f62bb6aaba193733e157a70bf79dce1741096e9bb03c0c35bc72652fef62bc"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_lie_theory/src/lie_algebra.rs",
+          "sha256": "afd50fc1f2328e9a9693426f6abfcae7c82f3df76d4e6359e7687ae0f79aa0ca",
+          "lines": [
+            1,
+            590
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/su2.rs",
+          "sha256": "149302c8432180bb3f11e7ddf9fe1381d76db63701a8e2d10fd4009ef3d85c7a",
+          "lines": [
+            319,
+            537
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/cayley.rs",
+          "sha256": "1d4e7dd29becef243b69b4c535b29c6c0136df9225d5c82ae3ecb37c7fd0785a",
+          "lines": [
+            201,
+            242
+          ]
+        }
+      ],
+      "limits": "Own exact rational matrices/exterior formulas and characteristic2model; no Rust/native execution. Explicitly invalid-complex control is a caller-premise boundary."
+    },
+    {
+      "id": "RFA-C010",
+      "rule": "group_and_cocycle_independent_controls",
+      "status": "completed_bounded_with_counterexamples",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe10.py",
+        "sha256": "7b235a7f0d5a00d6796546c1b62d21e662a450364927cbbe8aa69bdedf3d6174"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe10.json",
+        "sha256": "046bea9fe9caf6c179c2e88cb6fa5a0cdfffd5232941ed51436e466ba140a290"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_lie_theory/src/finite_group.rs",
+          "sha256": "d7ebe04efe35a4f3976016e84d3783642816cffdf9d3eb798c1db76690530a42",
+          "lines": [
+            139,
+            156
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/finite_group.rs",
+          "sha256": "d7ebe04efe35a4f3976016e84d3783642816cffdf9d3eb798c1db76690530a42",
+          "lines": [
+            879,
+            896
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/finite_order.rs",
+          "sha256": "061995d0253dceb91116996147b1e9d85b42582b2a7c2e747fda6ed5cd62f6ea",
+          "lines": [
+            139,
+            163
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/twisted_abelian_algebra.rs",
+          "sha256": "e6fc9c62da02de42eb5e3a888c69952ebd92c5d25abb294b6bda9b3ac09b49c7",
+          "lines": [
+            36,
+            112
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/finite_groupoid_algebra.rs",
+          "sha256": "1c03090f37adefde8c39605aa167cd8eecdd5ba59aabaf03a61c389240a4d5c5",
+          "lines": [
+            207,
+            237
+          ]
+        }
+      ],
+      "limits": "Own arithmetic and all512 normalized sign arrays on C2 squared; connected8-arrow groupoid example. No native/original execution or general runtime certification."
+    },
+    {
+      "id": "RFA-C011",
+      "rule": "weyl_symplectic_characteristic_and_real_form_controls",
+      "status": "completed_bounded_with_counterexamples",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe11.py",
+        "sha256": "53838b2993ce0774b596786dff99615e251a6950f4dccaf48c4f008cec306e70"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe11.json",
+        "sha256": "353f7f55165372b4392d423def2aa60c3404740b74c5c4fa3be72091a61ec3d8"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_lie_theory/src/heisenberg.rs",
+          "sha256": "58fc3142ab285e69f9dc3747af5ec1b806eb867085843aa2df8b726c7fe005c7",
+          "lines": [
+            152,
+            175
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/heisenberg.rs",
+          "sha256": "58fc3142ab285e69f9dc3747af5ec1b806eb867085843aa2df8b726c7fe005c7",
+          "lines": [
+            623,
+            690
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/pauli_symplectic.rs",
+          "sha256": "9b89d9878a665979c17cdf3c51e8c34522811fc1f48cf89d5b74367b97994e08",
+          "lines": [
+            195,
+            209
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/su_n.rs",
+          "sha256": "9a38043aa2cb8b44be93a1f35cb8ccd7916ae6920c901b9de71799ecd339bafa",
+          "lines": [
+            426,
+            439
+          ]
+        },
+        {
+          "path": "code/rust/core_lie_theory/src/lorentz.rs",
+          "sha256": "51a055a3bd057b32a6af62829894c735d0285ccfd2b17ead9d17e24629fd7015",
+          "lines": [
+            450,
+            482
+          ]
+        }
+      ],
+      "limits": "Own exact exponent/bit/integer models only, dimensions2..5,allbinary2x2/4x4matrices and five small primeCCRcases; no retained native execution."
+    },
+    {
+      "id": "RFA-C012",
+      "rule": "holonomy_carrier_hash_gauge_and_finite_orbit_controls",
+      "status": "completed_bounded_with_counterexamples",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe12.py",
+        "sha256": "9ccdd0fdd166de07ae34df42542cfbf573cde7d1f0c9acc34b19ad6bca2905ed"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe12.json",
+        "sha256": "0ac7ebaf65a2c338fc3f577fed7459ac4371ce6f6458bfe94c113228269d4cb9"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_holonomy/src/connection.rs",
+          "sha256": "12a7f27be85ea84ad41a892507959d04a3afbe14f1ecf6ff8c637c71a9bbbe05",
+          "lines": [
+            60,
+            125
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/connection.rs",
+          "sha256": "12a7f27be85ea84ad41a892507959d04a3afbe14f1ecf6ff8c637c71a9bbbe05",
+          "lines": [
+            185,
+            225
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/graph.rs",
+          "sha256": "ec8ae5aba841586cd21971277fda279a3d973ce20c4d8a123c0f3ef3e48eab3e",
+          "lines": [
+            233,
+            264
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/laplacian.rs",
+          "sha256": "d999d9737fb2c589138f2f7b6abc0904b0a5d9f087ba2065d5b70078edf8ce48",
+          "lines": [
+            41,
+            128
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/laplacian.rs",
+          "sha256": "d999d9737fb2c589138f2f7b6abc0904b0a5d9f087ba2065d5b70078edf8ce48",
+          "lines": [
+            196,
+            290
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/holonomy.rs",
+          "sha256": "90f5b1438a5ca6dab1819c20a79c8ea0376dd75bcb601a641e7c5539fa9c10c2",
+          "lines": [
+            127,
+            152
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/matrix.rs",
+          "sha256": "b190e9b65a14fdf29afff84e20e97b42b18afcd6e55b4fd0dbc8549350a431df",
+          "lines": [
+            215,
+            240
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/matrix.rs",
+          "sha256": "b190e9b65a14fdf29afff84e20e97b42b18afcd6e55b4fd0dbc8549350a431df",
+          "lines": [
+            665,
+            688
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/functional_graph.rs",
+          "sha256": "2d3d26191b1b72acb17fb2d8b68724192c6334883f6a1d132162ab6251ebd2c4",
+          "lines": [
+            26,
+            94
+          ]
+        }
+      ],
+      "limits": "Own exact finite matrices/phasefree rational countermodels and byte encodings; no Rust/native/original execution. Signed-weight and nested-scalar controls explicitly expose missing admission premises."
+    },
+    {
+      "id": "RFA-C013",
+      "rule": "complete_signed_graph_quotient_and_indexed_incidence_controls",
+      "status": "completed_bounded",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe13.py",
+        "sha256": "f4312aae011081ef73bb0fc8982b68200673d6a326c48ab8fd3a36bdc2c0f01b"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe13.json",
+        "sha256": "0be98fd05b7d6e0c3caf4503000707780628479eeaa7bff02e48bd28aa306fbf"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_holonomy/src/signed_transport.rs",
+          "sha256": "e4f053f601d75fd0074697ca1e0e60fc7a76f5d4859b827627ae3bdebfc02bbb",
+          "lines": [
+            153,
+            269
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/signed_transport.rs",
+          "sha256": "e4f053f601d75fd0074697ca1e0e60fc7a76f5d4859b827627ae3bdebfc02bbb",
+          "lines": [
+            335,
+            359
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/gauge_fixing.rs",
+          "sha256": "7bc7b2dd5af2da7279919e8cf5fecad5fd765f533c47ce64779fa9af6a5b8f7f",
+          "lines": [
+            517,
+            627
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/gauge_fixing.rs",
+          "sha256": "7bc7b2dd5af2da7279919e8cf5fecad5fd765f533c47ce64779fa9af6a5b8f7f",
+          "lines": [
+            1149,
+            1301
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/gauge_quotient.rs",
+          "sha256": "fc79543b48941c3d4f4cc897df0b524f5fb4f6444707b38011b329401dd73308",
+          "lines": [
+            149,
+            222
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/gauge_quotient.rs",
+          "sha256": "fc79543b48941c3d4f4cc897df0b524f5fb4f6444707b38011b329401dd73308",
+          "lines": [
+            287,
+            420
+          ]
+        },
+        {
+          "path": "code/rust/core_holonomy/src/gauge_quotient.rs",
+          "sha256": "fc79543b48941c3d4f4cc897df0b524f5fb4f6444707b38011b329401dd73308",
+          "lines": [
+            596,
+            684
+          ]
+        }
+      ],
+      "limits": "All729fourvertexsignedgraphs,125rationalrepresentatives625shifts,1000one-relationcycliccounts and validindexedLaplacianexample; independent finite models, no Rust/native execution."
+    },
+    {
+      "id": "RFA-C014",
+      "rule": "fusion_ring_exhaustive_small_tables_and_exponent_boundary",
+      "status": "completed_bounded_with_counterexample",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe14.py",
+        "sha256": "a8ccfbdbc942d3ecfd7ba0d289c1aa29ab7f49aa8600f3ac53c672c6e33c02d9"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe14.json",
+        "sha256": "31d4b556b77acff3252fdb8289cb4e55f7c5bfbc8cd37ba3601fe7467c52505d"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_fusion_categories/src/scalar.rs",
+          "sha256": "296a92e345edd7dd300c0d2c95c799c826dcaeff91741428c012da887b0d95f3",
+          "lines": [
+            63,
+            98
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/fusion_ring.rs",
+          "sha256": "54fa08118afef629c141f2a3cc2c7534d04db77abf673c5bb8ef2535219d1892",
+          "lines": [
+            304,
+            451
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/fusion_ring.rs",
+          "sha256": "54fa08118afef629c141f2a3cc2c7534d04db77abf673c5bb8ef2535219d1892",
+          "lines": [
+            498,
+            561
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/fusion_ring.rs",
+          "sha256": "54fa08118afef629c141f2a3cc2c7534d04db77abf673c5bb8ef2535219d1892",
+          "lines": [
+            916,
+            948
+          ]
+        }
+      ],
+      "limits": "Own512shape/unit/commutative rank3binarytables,SU2levels1..6,64Isingcounts and exacti64overflowmodel; no category realization or native execution."
+    },
+    {
+      "id": "RFA-C015",
+      "rule": "finite_cocycle_gauge_dimension_and_multiplicity_controls",
+      "status": "completed_bounded_with_counterexample",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe15.py",
+        "sha256": "1fc4d19beff985c0032de033013e11f3ce5e97f7be55e176d27c3f13754924c1"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe15.json",
+        "sha256": "7bd9e71783638d7885a6b37261ad44afc37ce5c21e4926e9a2a211efd7aa3940"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_fusion_categories/src/fusion_category.rs",
+          "sha256": "210428cf218c07beb25f108707011b41be0f656a9d02f62e4aede9259d5276ff",
+          "lines": [
+            471,
+            590
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/fusion_category.rs",
+          "sha256": "210428cf218c07beb25f108707011b41be0f656a9d02f62e4aede9259d5276ff",
+          "lines": [
+            1049,
+            1087
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/fusion_category.rs",
+          "sha256": "210428cf218c07beb25f108707011b41be0f656a9d02f62e4aede9259d5276ff",
+          "lines": [
+            1295,
+            1300
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/catalog.rs",
+          "sha256": "3cf82452b5eb56d1331874c8ef82075bcf4953822b6463f6d59317036953071a",
+          "lines": [
+            94,
+            101
+          ]
+        }
+      ],
+      "limits": "Own seven Z2 associator scalars,162 nonzero gauge coboundaries, exact Fibonacci field arithmetic and one valid rank4 multiplicity2 table; no native execution."
+    },
+    {
+      "id": "RFA-C016",
+      "rule": "closure_modular_Yang_Baxter_and_Racah_index_controls",
+      "status": "completed_bounded_with_counterexample",
+      "helper": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe16.py",
+        "sha256": "d1259beb8d42a86c146313d0799c16b25411f420996bb826f5c0143baf8d75a0"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_finite_algebra_remaining_probe16.json",
+        "sha256": "66caacfeceb7e70361a2ed5fac537d6afb6e947b2d363a278bf9ef6216711c12"
+      },
+      "evidence": [
+        {
+          "path": "code/rust/core_fusion_categories/src/braid_group.rs",
+          "sha256": "3d112297ddb2f2991a9e6619c170e4e2973dc5e3502f81f6009f847b03e2f8d6",
+          "lines": [
+            294,
+            360
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/modular.rs",
+          "sha256": "9d9a3a9046fa3b413ec220a356af603c1585bfea0a68ec0e7b80c3467bd7ed2e",
+          "lines": [
+            393,
+            447
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/su2_level.rs",
+          "sha256": "a120ee244427f238f160328c38fb67dfe0296a00e23e4f8239a70b0024377236",
+          "lines": [
+            60,
+            141
+          ]
+        },
+        {
+          "path": "code/rust/core_fusion_categories/src/yang_baxter.rs",
+          "sha256": "62eecc306dcaa11247bcc9cca781b8bf1bc610e296a33ed7bcdbc64e386fe2d0",
+          "lines": [
+            232,
+            396
+          ]
+        }
+      ],
+      "limits": "Own exact D12/projectiveD6 closure; all16 C2²bicharacters (8modular); VecC3 indicator counterexample;8Yang,8wrong-parameter,4Hecke,8six-vertex controls;2957 Racah index sextuples. No original/native execution or universal family claim."
+    }
+  ],
+  "native_tests_executed": false,
+  "original_sources_modified": false
+}

@@ -1,0 +1,1181 @@
+{
+  "review_id": "additional_paper_011_core",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "status": "complete",
+  "scope": {
+    "files": 51,
+    "full_source_reads": 50,
+    "full_source_lines": 16957,
+    "bounded_data_assessments": 1,
+    "pending": 0
+  },
+  "file_reviews": [
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/__init__.py",
+      "sha256": "58450686460b453e764070943ae67d07f5a8b6e2a0860228bc33a208e2faf12e",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1
+        ]
+      ],
+      "assessment": "Read the one-line module docstring. It labels reproduction/custody machinery and asserts no mathematical result."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/deposit_paths.py",
+      "sha256": "0bfa9675bda5ed53f2f1a0dc3bdbe07ab8382098437d8efdcb8c5386bc03fc6e",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          146
+        ]
+      ],
+      "assessment": "Read all 146 lines. Canonical relative paths reject traversal, drive/ADS syntax, reserved Windows names, trailing dots/spaces, links/junctions and case collisions; archive subtrees are exhaustively inventoried even when historical names resemble exclusions. Manifests require 64-hex digests, ordinal UTF-8 paths and no self/ZIP circular entries. This is path and inventory integrity under stable filesystem state, not authenticity, theorem verification or an atomic filesystem snapshot. No original archive walk was run."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/runtime_environment.py",
+      "sha256": "c6f1c6be114e3a4c24e4a589acdf7411dbb98dc9a5d06ec6b92234c93e083500",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          142
+        ]
+      ],
+      "assessment": "Read all 142 lines. Snapshots explicitly named installed distributions, declared non-pyc files and interpreter bytes, then checks cached directory identities; verify recaptures and demands whole-object equality. Explicitly excludes all OS/stdlib state and mathematical correctness. Distribution file inventory and selected executable are admitted: this does not prove imported dependencies are limited to those bytes or bind the running process to an arbitrary supplied interpreter. No package enumeration or execution of foreign binaries performed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_runtime_environment.py",
+      "sha256": "bb474b89ef718f4fba2ec0fb8fa8d2e97d4966ad9ed167a880ca77ef693976f6",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          72
+        ]
+      ],
+      "assessment": "Read all 72 lines. Synthetic distribution/interpreter fixture tests source drift, executable drift, version drift, missing and added declared files, and empty/duplicate names. It does not establish complete runtime dependency closure or hermetic execution. Suitable bounded offline controls; all writes use pytest temporary paths."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/source_custody.py",
+      "sha256": "817b021bb317c202fdcf512488b896753206d2607f5dc200242bf748056b34af",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          390
+        ]
+      ],
+      "assessment": "Read all 390 lines. Strict duplicate/nonfinite JSON parsing, manifest schema/census/bijection, ordinal path order, exact byte hashing, symlink/junction refusal and exhaustive archive inventory provide conditional copy integrity. Optional Git lookup binds path/mode/blob-OID metadata to the pinned tree; working source bytes are checked against manifest SHA256, but those bytes are never hashed as Git blobs and compared with that OID. Thus a declared Git head is not independently a content binding without trustworthy capture metadata. External manifest digest is optional and explicitly delegated to release verification when omitted. Checks narrow in-read metadata drift but are not an atomic multi-file snapshot or execution proof. No historical copies were opened."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_source_custody.py",
+      "sha256": "41333551f15697f3506e8ee5c772a22f815c249e1bb6c29a736575ff91d982da",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          221
+        ]
+      ],
+      "assessment": "Read all 221 lines. Synthetic arbitrary-byte archive and mutations exercise missing/corrupt/extra/directory files, untrusted paths/sizes/modes, external pins, duplicate keys/bijection, read failures, reparse ancestors, inventory mismatch and subprocess-time corruption. Git inventory is monkeypatched; tests do not compare manifest content with actual pinned Git blob bytes. No archived source is imported or executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/audit_findings.py",
+      "sha256": "d73cf916197522183518de14607f7e44cb918e2a39293d4b5da302795326677c",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          124
+        ]
+      ],
+      "assessment": "Read all 124 lines. Trusted inventory digest and current note bytes bind physical line/section hashes and referenced PRESENT source bytes; asserts 20 unique note paths, exactly C001-C060 and G01-G25, and 13 distinct aggregate IDs. No semantic completeness, theorem validity, current Git-head verification or execution is established; output correctly says NONE_SOURCE_AUDIT_ONLY. Aggregate family check counts unique IDs without requiring list length or prescribed identities, so it is not an exact family catalog validator. No historical notes were accessed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_findings_audit.py",
+      "sha256": "4a951b03bebee4ee1d244c2fdf8e5f7b1c82c704c43e181cc94e01f472187f31",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          84
+        ]
+      ],
+      "assessment": "Read all 84 lines. Uses 20 synthetic notes and generated C/G identifiers; exercises source/span/pin/duplicate-C-ID/conflicting-reference mutations. It tests physical source-only custody, not whether family semantics, histories or mathematical claims are correct. Safe synthetic-only tests are eligible for bounded execution."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/mechanism_recreations.py",
+      "sha256": "54d20602eb03cf0fa0caf4811e7ef73d0aa4eb6158acca37335521b0a81e1b1f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          656
+        ]
+      ],
+      "assessment": "Read all 656 lines. C001-C010 implement bounded tensor interventions, exact slot grammar, ledger retention, paired tallies and finite sampling summaries, while always declaring empirical_result=false and challenge_gate_satisfied=false with missing study obligations. C002 carrier mass rises under additive selected-score bias; C003 patch effects are constructed on two supplied heads; C008 mean difference and norm scaling are synthetic arithmetic, not learned model semantics. coverage_at_k is the exact probability of at least one success in a uniformly selected k-subset of n labeled draws, not a new empirical success rate. C004/C005/C006/C010 trust explicit native binary bytes and returned arithmetic; no binary executed. Native.call strictly binds envelope action/success for the generic host, but subprocess inherits environment and has no local network isolation; byte binding does not establish binary safety. verify_sources verifies only the supplied nonempty map, not the full MECHANISM_SPECS/captured dependency set or Git-head truth. Retained module loader executes those bound source bytes without independently binding imports. C005 deliberately demonstrates an old schema/checker false contradiction, not corrected certification. Terminal renderer hashes payload and cemetery entries; task/protected-edge metadata is not inside payload digest and no external cemetery head is checked. MUB6/Regge remains explicitly unresolved rather than replaced with an unrelated toy LP."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_mechanisms.py",
+      "sha256": "3d3d3b862710b5281f73a109d826627b2d1ec29614cd3389c0b960c6d43cc82b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          227
+        ]
+      ],
+      "assessment": "Read all 227 lines. Pure tests cover canonical grammar, paired Boolean verdicts, immutable ledger restatements, packet/chain tampering and declared missing obligations. Torch tests gate on installed version and use actual small tensors; native tests require an explicit capability and can execute external binaries/source. This audit will select only pure tests and independently test finite combinatorial arithmetic; no torch installation, retained scenario loading or capability-based native execution is authorized."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g01_lexical_supplement.py",
+      "sha256": "22c4625ad2dd434fdcafb618d6a8bd6ee5076fc28c0241352d246b25434bd2f0",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          63
+        ]
+      ],
+      "assessment": "Read all63lines. Raw regex policy deliberately rejects forbidden words even in comments/strings and adds any axiom word to the earlier line-only guard. Mathlib import detection recognizes only a line beginning import Mathlib, not every possible Lean import spelling/position. Lexical refusal is distinct from theorem/type/axiom checking. run() reads historical/native inputs and writes a fixed historical area; it was not executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_genesis_g01_lexical.py",
+      "sha256": "662f3fc15f66399efcfc086a374a1f8315194568dc6fa167c4f898e91f422266",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          21
+        ]
+      ],
+      "assessment": "Read all21lines. Five synthetic comment-token controls discriminate the new lexical policy; three positive checks read actual native Lean files and are outside this lane execution scope. Regex success is not Lean parsing or theorem certification."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g01_replay.py",
+      "sha256": "a7d9aa8141e86ff6910dea280479ac17754ebbf88f36e8285666328c58b3500f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          500
+        ]
+      ],
+      "assessment": "Read all500lines. Recovery checks Git blob content and immutable destination bytes; fixed source-manifest hash pins recovered definitions. Those linked sealed inputs were not opened or executed. Finite reconstruction compares original pruned/unpruned bounded grammar and refined/full-permutation partitions against a native second implementation; the declared bound is max_items=max_arity=2, and this does not establish the optional general completeness theorem. Normalization compares complete member partitions rather than demanding identical representative naming. Lean route checks candidate theorem type definitionally, collects actual axioms and requires the propext/Quot.sound whitelist; theorem target names/types are ultimately supplied by the separate native package. Runner retains raw subprocess bytes and checks source/toolchain/local compiled imports before/after, but subprocess environment is inherited and not an OS sandbox. Interpreter check hashes a fixed executable path plus Python major/minor, without matching the running executable to that path. The original lexical guard misses axiom words in comments; separate supplement addresses that policy gap. Output correctly keeps model, owner-PR, estate and F5+ gates false. No recovery/build/prove/finite routine run."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_genesis_g01.py",
+      "sha256": "fbe0809892c878c66f596ab26a29a399fd66f33f7713aac6f4f9244acba18356",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          155
+        ]
+      ],
+      "assessment": "Read all155lines. Mathematical tests depend on original sealed modules; native tests execute a historical binary; several tests only inspect retained receipt assertions. None of these were run. Synthetic lexical inputs and tampered stdout binding can be tested separately. Expected finite class counts and renamed-carrier behavior are regression claims here, not independently established by this test source read."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g02_mutation_custody.py",
+      "sha256": "72da7d915ac147f7b175ba8d34562d7cccc67bf4dcffc320810489a35a394dbb",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          117
+        ]
+      ],
+      "assessment": "Read all117lines. Supplemental mutation runner pins a baseline receipt/helper, verifies baseline inputs/imports, records generated Lean compiler inputs before and after each call and checks controls match baseline. It inherits the process environment apart from LEAN_PATH and is not a clean-environment sandbox. Crucially BASE_HELPER_SHA differs from the audited current genesis_g02_replay.py hash, so the current script cannot pass its baseline helper check; no historical artifact was repinned or opened. Interpreter directory comparison is weaker than equality with the actual running executable."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g02_replay.py",
+      "sha256": "25191e914baf0290dc1cd091b962c48871c6f8545a99cfa6f09dfe5104eb8bfb",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          400
+        ]
+      ],
+      "assessment": "Read all400lines. Git-blob-checked source recovery and literal definition slicing bind a declared cut-counting model; source files were not followed. General Lean targets require explicit hypotheses, with 13 named public reports and an axiom whitelist; Python report checker trusts compiled report content rather than checking proof terms itself. Finite run enumerates1014 declared n/a/b cases through n12 and compares original subset enumeration with bitmask host counts, plus two malformed/out-of-bound controls. This is bounded replay, not the general theorem; the latter depends on separate Lean modules and compiler. Mutation suite separates lexical bans, disallowed assumptions and narrowed hypotheses. Original runner snapshots generated compiled imports only after mutation execution; supplement adds pre/post actual generated source custody. Fresh build path is fixed by code/package assumptions; environment copies ambient variables. Full model/estate experiment gates remain false. No original/native/Lean execution performed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_genesis_g02.py",
+      "sha256": "0b49e30e2d5cd66cc09ce897145036f5678f886792ef62a3f6ceb7549c919631",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          186
+        ]
+      ],
+      "assessment": "Read all186lines. Independent finite formula for subsets containing a but excluding b is zero for outside a/equal pair, 2^(n-1) for outside b, and2^(n-2) for distinct inside endpoints; that combinatorial calculation is conditional on the declared subset model. Tests compare retained1014case data, theorem pin text, reported axioms, mutation results and process hashes; one test executes a retained native binary. Entire suite was not run. Current helper SHA is compared against historical custody in a test, exposing potential current-source drift rather than restoring historical evidence."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g03_adapter.py",
+      "sha256": "dacfa216af02e482d333e10a688f696a3aab7e0cb18f76d3444c2640a3b6838b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          62
+        ]
+      ],
+      "assessment": "Read all62lines. Explicit new finite chain presentation for n3..18: coordinate permutation places endpoints first, prefixes distinguish anchors, and bit-pattern requirements encode interior positions. All carriers/forms/marks/requirements are supplied, not derived from the primitive inscription. Reversal is a declared data permutation; fresh_mark is exact equality with a chosen two-event larger-end mark. Its domain and construction are finite and separate from the withdrawn historical map or general G4 theorem."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g03_pack.py",
+      "sha256": "b3216c5c304009f4edeff0f6baa96166f26c56e8e912aea3659be64da3f896bf",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          166
+        ]
+      ],
+      "assessment": "Read all166lines. Deterministic gzip/USTAR metadata and ordinal names package the listed raw evidence without deletion, checking compressed and member byte hashes/order/population. Manifest self-pins current packer but needs external authentication against coordinated replacement. verify checks archive-to-manifest equality, not that current raw directory inventory still matches it; packing checks listed raw files after writing but does not rescan for concurrently added files. This is representation identity, not proof or historical execution. Unpack refuses differing existing bytes and confines resolved paths to a declared workspace; link checks are not equivalent to the stronger reparse-point routine elsewhere. No actual archive was read or extracted."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g03_finalize.py",
+      "sha256": "837ae84fc60594b8b1dfbe9ebfa929e7840ca7bd89ee6cbaddcf5ca48d48ddc0",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          134
+        ]
+      ],
+      "assessment": "Read all134lines. Closure rechecks retained input/output hashes, fixed source-spec Git content and historical native-build receipt, reconstructs declared carriers, and tests a count-preserving permutation that changes pair correspondence, followed by restoration. This is a useful distinction between equal cardinality and relation preservation. It imports the runner and would execute sealed/native dependencies; no close routine run. Success remains a finite declared-adapter result with model/owner/estate gates false. Current before/after hashes do not retroactively supply the failed first worker absent runtime snapshot."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g03_validate.py",
+      "sha256": "8c0ece20343f175835bed3246196c304bc78dea36d00db8b2d7ec89c7abd4ee3",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          36
+        ]
+      ],
+      "assessment": "Read all36lines. Records focused pytest/lint subprocess status and raw stdout/stderr hashes under historical paths; no input/source/interpreter closure is bound here. It is process-test evidence only and inherits environment. Fixed pytest temp path would be reused by pytest, so this audit did not launch it."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g03_key_bridge.py",
+      "sha256": "e652c3a0871c81238701d371d7b285a63f5f8521b68c8cafd31f9de1820666d6",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          328
+        ]
+      ],
+      "assessment": "Read all328lines. Canonical keys are reconstructed as declared event structures; explicit data/form bijections are checked by serialization and mapped into source reference keys. Full member/representative/fresh-mark/raw-delta rows are compared after relabeling, so matching counts alone does not certify the result. Bridge verifies isomorphism witnesses, while canonicality/completeness still depend on trusted original reference computations and the admitted finite grammar. Retained population/call/control hashes are rechecked, including the original strict-label failure; no new min-response search is claimed in closure. Keys in this file are formal serialization schemas, not a sealed QM key; no referenced key data, source oracle or historical artifacts were opened. Interpreter argument is recorded/hashed but not checked against the actual running process. No closure or witness build executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g03_replay.py",
+      "sha256": "0588b3f8a1625cec4579493154ba15cc9580df6773ca21edbc5c3ed816111fb5",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          460
+        ]
+      ],
+      "assessment": "Read all460lines. Declares a new anchored finite adapter and explicitly disclaims recovering the withdrawn bare map. Original prefixes, all pair correspondence, per-target oracle calls, exact minimum-class memberships and weak/existential versus strong/universal class predicates are the checked objects. Scope is n3..18 with bounds2, not general G4 or empirical model performance. Source/native strict representative-label comparison is later supplemented by checked bijections. Source-port verification hardcodes a G07 helper digest different from the current frozen G07 source, making current replay fail before sealed imports. controls() shadows a Path mutation-file variable with a string key then calls relative_to in its intended stale-refusal branch; independently reproduced AttributeError with native transport stubbed. check_calls checks population and summary consistency, not member validity or class completeness alone; whole-row reference/bridge checks supply those additional obligations. Preregistration timing/no-prior-oracle field is self-declared, not independently evidenced by writing a file. Source recovery, builds and full/native/oracle calls were not run."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_genesis_g03.py",
+      "sha256": "3d37b3bcf625f1c8f8e1c8dd27fbb631d5b7a51d4477363d5791d2faf836b844",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          301
+        ]
+      ],
+      "assessment": "Read all301lines. Most tests inspect retained complete populations, current hashes, formal key witnesses, claimed failure history, and native mutation tapes; several load original sealed modules to recheck bijections/structures. They were not run in this audit. Two local packaging tests use synthetic files and discriminate UTF-8 order, top-level exclusions, manifest order and reordered tar members; those are representation controls, not execution or canonical-owner truth. The source-manifest mutation test assumes current source-port verification gets past its fixed historical digest, which the current hash mismatch prevents."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g04_poison.py",
+      "sha256": "1d6aa403bef2e4253f755985234b98f6ebdaf8962f5d16e70b1240ad49568cff",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          166
+        ]
+      ],
+      "assessment": "Read all166lines. Independently declared supplemental fixed-stake counterexample uses two histories and a common prefix isomorphism; fixed labels can differ under a data permutation while inverse-transported labels preserve the index. This covariance distinction is mathematical; the actual original model and native computation remain external dependencies not executed here. It explicitly preserves the original seven-stake finite verdict and does not claim to recover unavailable operator heldouts/length-five samples. Historical build/run/helper pins are verified before import, and synthetic inputs/native outputs are byte-bound. No original receipt or dependency opened."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g04_replay.py",
+      "sha256": "9a7f7adc495370094dc800f075a648927e0534833aacf879944026e0c7e710bf",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          572
+        ]
+      ],
+      "assessment": "Read all572lines. Declares a finite three-base rectangle and seven supplied stakes, preserving full history/prefix data and common data/form bijections that respect every prefix range. Token renaming preserves equality patterns; transported stake is pulled back by the inverse data permutation. Comparing source/native full rows/groups/relations supports only that admitted finite model, and endpoint equality cannot determine first-event index in general. Complete source rectangle depends on original enumerator/alphabet and native semantics; expected counts are checks, not a derivation of completeness. AST relocation removes any whole top-level If/For/Expr mentioning sys.path and checks equality only after removal, so mixed computational blocks can be lost while the receipt says bootstrap-only. Independently demonstrated with synthetic code. Native subprocesses inherit environment; fixed executable hash plus version does not alone bind running Python. No original, native or broad build execution performed; model/estate/owner and unavailable heldout gates remain false."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_genesis_g04.py",
+      "sha256": "fec6ae71a957c6f2b4708ef9821037556e6c518b92f5123157a941f2fc9fd289",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          193
+        ]
+      ],
+      "assessment": "Read all193lines. Four pure tests cover prefix permutation constraints, token equality patterns and a benign bootstrap relocation sample; all four passed in selected available-runtime checks. Remaining tests load original sealed histories or execute historical native binaries and inspect retained comparisons; not run. The benign relocation test preserves a function outside the removed block and does not catch computation nested inside a removed mixed sys.path block. Supplement tests distinguish fixed-stake counterexample, transported restoration, dimensional errors and declared history-length refusal without establishing arbitrary-history universality."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g07_quiet.py",
+      "sha256": "8fc1c3fd6c956230f542a57da8795620f09251934c7a86799bd8fb627fd3249c",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          147
+        ]
+      ],
+      "assessment": "Read all147lines. Supplements quiet trajectory states with width=None and no offered challenge, avoiding vacuous numerical zero-width claims. Reconstructs two bounded60-step source trajectories and compares identity/depth/state to a native response. Build/library/source hashes are checked, but compiler/executable are principally recorded after execution and mutation outputs are accepted solely on nonzero return code without requiring a typed refusal or expected reason. A crash/unrelated native failure can therefore count as a rejected quiet mutation. Full computation completion still leaves conjecture/model gates open. No source oracle, native compiler or historical artifact accessed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g07_replay.py",
+      "sha256": "3c5e466f5dd9ffc7e75dd0b4b6fe9b4ecb2b74da13463acd361da00721159a70",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          559
+        ]
+      ],
+      "assessment": "Read all559lines. Fixed Git content and manifest pins bind source identity; mathematical_gate remains false at capture. The original loader redirects declared imports but permits ordinary imports and removes every unboundedness top-level node except imports/functions/constant expressions; function bodies remain intact, but this is not a general semantics-preserving proof for removed apparatus. Four source trees through depth15 and two deterministic trajectories through60 use supplied mu2 Bounds(2,2) and selected challenge orbits. Native comparison checks complete ordered case IDs, state/count/cost/class-size summaries, literal naive-valid flags and tree statistics; it is not a full replay of every class member in Python. Quiet nodes are excluded from numerical width and tracked separately. Finite maximum becomes an explicitly OPEN conjecture with a falsifier; prove-unbounded requests return OUT_OF_SCOPE. Heldouts are queries into declared finite exports, not independent randomized model trials. Cargo build is offline/locked but inherits ambient env and remains code execution; not run. Explicit interpreter is hashed/reported without proving it is the running executable, and no full OS/stdlib closure is claimed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_genesis_g07.py",
+      "sha256": "e6bae614d2b37f3a80c553cbae6e0c7bbbc55d4887d3e0b951fd09020a3a7d6e",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          158
+        ]
+      ],
+      "assessment": "Read all158lines. Tests fixed source/raw-byte pins, retained3617case summaries, six response mutations, heldout query replay, histogram agreement, OPEN conjecture discipline and35quiet states. Most assertions depend on original/retained artifacts not consulted in this lane. Quiet mutation test repeats nonzero-exit criterion rather than verifying rejection classes. No suite execution here; these test bodies do not independently authenticate the claimed historical run."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g12_replay.py",
+      "sha256": "81ec954f9f930e3a9cc7d74af086ded921900e279e858a2ac40f5f2800cd2735",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          362
+        ]
+      ],
+      "assessment": "Read all362lines. Source recovery fixes the original Lean tree/gate closure and separately compares the older Iso declaration. Environment census and independent compiled constant walk select non-theorem constructors returning Iso; generated Prop wrappers and frozen signatures are checked by separately authored Lean modules. Python census comparison enforces selected-pair equality and per-module name consistency, but relies on declared module population and actual compiled audit for theorem typing/axioms. Final checks rerun four Lean audit modules and three original gates, retaining raw outputs; before/after covers prior inputs while allowing new control files. This is conditional proof/census custody, not the whole estate/model experiment. Public candidate-location helper is lexical and case-sensitive; no security sandbox claim inferred. Interpreter argument and direct argv files are hashed, but running-interpreter identity/import closure require separate support. No recovered/parked/sealed source, native proof or gate executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_genesis_g12.py",
+      "sha256": "8367dbea7d9bf7a72f99d2c1cec3d7612363e4d7364e4c40ec299d618dc885d2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          157
+        ]
+      ],
+      "assessment": "Read all157lines. Tests inspect retained5constructor/12module/141constant reports, exact Prop/axiom claims, old Iso equality, mutated census/output records and five wrapper-policy controls. They check preservation of48original report labels and explicit model/estate exclusions. They depend on historical/recovered/native files and were not run. Census data agreement alone is distinct from independently checking the Lean definitions or kernel proof terms."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/replay_dossier_homology.py",
+      "sha256": "0ae6e6d8c04b4e2f7c64c72235b5d39348b76ab7545509e46c692898b612ff5a",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          242
+        ]
+      ],
+      "assessment": "Read all242lines. Exact fixed digest list binds eight original YAML matrices/claims. Boundary keys must be contiguous; native results retain declared-versus-computed Betti comparisons instead of treating labels as truth. Python checks schema/ordered case IDs/literal success and four discriminating controls, while rank, multiplication and rational Betti values are delegated to native owner. Rational homology explicitly does not verify integral torsion. Build/source/executable and imported YAML bytes are recorded; digest equality alone does not establish the owner algorithm or geometric interpretations such as lattice/4-manifold. No historical dossiers, YAML payloads, native executable or build used here."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_dossier_homology.py",
+      "sha256": "1f4d7f8977181adf0dd48b3a0b02c540d78a932aa12b4de24fa51f7fe08c71d4",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          96
+        ]
+      ],
+      "assessment": "Read all96lines. Retained expected results explicitly include original claimed b1=2/4 versus computed0 and fourth-dimensional dossier b2/b3 mismatches, while torsion remains unverified. These are supplied regression expectations, not newly recomputed facts in this audit. Pure tests reject missing boundary degrees/claims, altered source-pin map, duplicate keys and nonfinite JSON; other tests read historical native streams and were not executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/replay_dossier_integral.py",
+      "sha256": "c0d5efcf9118573d96751ccdc60a987a3d0d00e31ce70e5a1d96dc8b417366de",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          240
+        ]
+      ],
+      "assessment": "Read all240lines. Pins helper before import, original signed carriers and declared dimensions, then asks existing native owners to compute integral homology and replay returned Smith certificates on identical matrices. Controls require exact nonunimodular/UAV/degree-carrier/integer/completeness error families rather than arbitrary failure. Python verifies envelope/population and specific torsion/UCT fields but does not itself recompute determinants, Smith divisibility, kernel quotients or UCT. YAML origin and actually loaded package are bound before parse; before/after input custody includes helper/native executable. Stronger integral claims still require the native certificate checker and exact supplied chain model, not dossier geometry names. No owner build, dataset or binary run performed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_dossier_integral.py",
+      "sha256": "4165ada0a5231b122c03cc88e1015c1f2978c9af4ed465f872b7b549715450e2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          204
+        ]
+      ],
+      "assessment": "Read all204lines. Tests preserve all signed boundary matrices,22supplied Smith certificates, determinant+/-1 report flags, degree/carrier binding, specific malformed errors and prior machinery snapshots. Additional tests execute retained native binary and read historical dossiers/receipts; those were not run. Duplicate/nonfinite build JSON tests are independently safe. Expected H2 torsionZ/2 and mod2dimensions are regression values here, not standalone evidence of a physical/topological interpretation."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/replay_native_mub.py",
+      "sha256": "f8e10cea520b52b346cfc0f5893630961ffe962a064b6320ec03b01d5c818077",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          261
+        ]
+      ],
+      "assessment": "Read all261lines. A fixed source digest and unique byte replacement constrain adaptation to one output destination; original line endings and mathematical source bytes otherwise remain exact. Runtime requires an explicit executable digest and checks tracked native source inventory, current source cleanliness, adaptation/control files and result equality with a retained seven-triple catalog. Strict schema/literal flags/counts guard report shape; Python does not re-evaluate the21transition matrices. The caller-supplied executable digest is not itself linked to an authenticated build of the checked source. Scope correctly excludes generic Conjecture2 or MUB(6) bounds. No external source tree, retained catalog, native executable or preparation/build invoked."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_native_mub.py",
+      "sha256": "3cb97099dc90bb11689871b7e626b85e22a95bdaa63cae56097fafe6e381fc80",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          122
+        ]
+      ],
+      "assessment": "Read all122lines. All report controls use synthetic seven-row fixtures and check missing/duplicate IDs, strict Booleans/counts, resealed disagreement, duplicate/nonfinite JSON and exact destination-only byte substitution. These tests establish transport/shape discrimination, not MUB mathematics; optional symlink test is environment-dependent. No owner source or retained data is required by these test bodies."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/demo_catalog.py",
+      "sha256": "ba2cb37050fea0f1443e4a361edeb772a3aada3df82b9f2cfee0e97295a2dba7",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          300
+        ]
+      ],
+      "assessment": "Read all300lines. AST-only dispatch discovery avoids importing original demos, but an unsorted constant compared with sorted discovered IDs rejects even the exact27declared entries (F08, synthetic control). Sixty challenge obligations are generated by package-name and checker/import heuristics; duplicate CIDs can overwrite, solver naming and recursive ImportFrom discovery do not prove evaluator independence, and absent spec lists are not mathematical specifications. Catalog labels and13finding/G01-G25families are obligations, not execution. Actual hidden/private cases were neither read nor executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/aggregate_original_recovery_obligations.py",
+      "sha256": "3b47efb03880cd3dbdece1bc8925c6b81ea6c209aba62dad847ee2cca8d15c92",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          66
+        ]
+      ],
+      "assessment": "Read all66lines including long literal rows. Self-hashed custody-closed JSON supports consistency only under trusted input. The five original physics residuals explicitly preserve missing exact carriers/parameters instead of attributing alternate native fixtures to them: free-fermion chain versus ring differs, attractive/repulsive Hubbard and triangle receipts lack licensed exact witnesses. Original Hamiltonian assignments are extracted by ASTliteral_eval, not provider replay. Dialogue role/template counts and synthetic eight-beat score/hash chains are labeled zero native measurements, not physical proof or live execution. No referenced historical data was opened."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/history_recovery.py",
+      "sha256": "6742c03ca797ab7e029c133a2f9e68bc3e7d64b357d141e1fc9afa96b2086808",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          416
+        ]
+      ],
+      "assessment": "Read all416lines. Recovery checks fixed commit/tree,28Gitblob identities and bytes, exact manifest inventory and path confinement; this provides conditional historical byte custody. The original harness is reduced to seven pinned unchanged definitions with subprocess blocked and external ground truth unavailable. Replay intentionally reconstructs75false-positive verifier controls, lexical danger-gate misses/false positives and permissive JSON wrappers. Those claims are implementation predictions here; neither original recovered specs nor historical reports were run/read. Current results are report-derived inputs, explicitly not missing original provider responses/Lean snippets; positive obligations, mathematical certificates and multi-arm model study remain false. No external sealed material is accessed by this audit."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/aggregate_original_recovery_v1.py",
+      "sha256": "70095795b0906b78563cf880aa96ffa332b87cfca0874a42bd58b73caf0db6d8",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          701
+        ]
+      ],
+      "assessment": "Read all701lines. Fixed Git objects and before/after regular-file checks support declared capture integrity; restricted sign-gauge repair explicitly leaves native Phi and physical admission absent. AST adaptation removes declared bootstrap nodes but uses runner line numbers for whole-if removal and does not prove general semantic preservation. Import allowlists/top-level urllib.urlopen monkeypatch are a limited offline composition boundary, not OS network isolation. Dialogue parser cannot represent required multiword speakers (F09); supplied historical metadata, rounded display and child-packet scores are otherwise compared without native measurement. Current canonical modules are executed from the supplied working tree and separately inventoried, not established identical to historical versions. Capture/receipt self-hashes are integrity records, not external authentication. No historical source/traces or runner executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/aggregate_original_recovery_progression_v1.py",
+      "sha256": "acf096d225e552c4564e57b3f717124bf8b6bbf60a4837aa900664e1a6d6d917",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          350
+        ]
+      ],
+      "assessment": "Read all350lines. Projects fixed historical runner score/candidate/terminal assignments and bounded range loops, restricts direct call names, and journals raw spans/adapted AST. This is explicitly synthetic source progression, not solver/controller/model execution. It joins supplied retained dialogue and candidate metadata and requires120equal role strings, while native measurement and mathematical admission stay false. The shared parse_rounds defect F09 blocks actual nonempty traces. Baseline selfhash and captured Git bytes are checked, but projected helper loading occurs before helper pin measurement and ambient capabilities remain caller-controlled; no general hostile-code sandbox claim. Source/runtime before/after snapshots detect stable drift only. No historical data read or execution performed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/aggregate_recreations.py",
+      "sha256": "fa093ac0a9f61460a76142277bb4e93ec1f38552771b57baceea573e3c4681c2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          2482
+        ]
+      ],
+      "assessment": "Read all2482lines. Thirteen family handlers preserve distinctions between historical counts, exact current transport, offline stubs, synthetic finite fixtures and owner/native certificates; every family success additionally requires nonempty asserted controls all passing with recursive type-strict equality. Native functional requests are replayed on the same carrier with damaged-certificate and changed-state controls; source AST four-stage fixture constructs different carriers, so no same-carrier descent or program behavioral equivalence follows. K4 controls explicitly show zeroing all claims can yield native zero while losing shared-edge fidelity. Symbolic MUB sums concern displayed affine ansatz only; sign/physics gates concern supplied finite matrices/parameters, not original missing Hamiltonian-to-functional adapters. Immune panel/idle-counter and pharmacy placeholder counts do not establish general efficacy or biological half-life. Meron and conditioning handlers reference retained/private inputs; none were opened/run here. The current catalog defectF08 blocks mutation handler. Dialogue regex captures only first word of multiword names and needs a compatible inventory or fails; no actual inventory consulted. Explicit control census separates unknown/refusal/negative/candidate and requires every mutation rejected by every checker, not crashes. Fresh caches, hash manifests and worker secret-name filtering give bounded custody; runtime/import/network guards depend on recreate_demos and supplied capability. Selfsealed receipts authenticate consistency only, historical provider authenticity remains unestablished. No aggregate family, original dataset, native binary or model executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/recreate_demos.py",
+      "sha256": "3e39167657e10575c3c0120af948523604cc4e23951e6418c76e8ce4d6fd8653",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          2305
+        ]
+      ],
+      "assessment": "Read all2305lines. Strict duplicate/nonfinite JSON and literal-checker interpretation, source snapshots, per-call native hashes/raw stdio and Lean workfiles improve bounded replay custody. Capabilities snapshot working-tree hashes under a named HEAD; verify_engine rechecks listed bytes, not Git content identity or completeness independently. Optional caller build receipts are content-bound metadata, not authenticated build attestations. Generic AST relocation overremoves computationF10; Python socket guard permits undeclared subprocessesF11. C041 exact two supplemental proposals remain separate from full case/mutation completion. C042 permits declared single checker; C060 counts crash kills separately and cannot promote them to dual rejection. Unknowns/refusals/negative claims/classifiers remain distinct from positive capability; no model accuracy/independence claim. Phi2/3/4 ports inspect native status/value/duality plus retained near-misses, but underlying carrier/proof correctness remains native-owner dependent; topology/cup-product claims explicitly unsupported. Native tape is raw bytes with decoded text view separate; .olean is recorded rather than itself proved sound. Global batches are blocked by catalogF08; coverage has duplicate-ID weaknessF12. Receipts establish self-consistency, not historic provider authenticity. No referenced original/native/private dataset or process was executed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_history_recovery.py",
+      "sha256": "623d571ff992adea47a5d46c4b25f08a53448d49f7c02047b7127821fa2e4924",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          156
+        ]
+      ],
+      "assessment": "Read all156lines. Most tests read recovered28blobs/reports and execute preserved harness definitions to expect75falseacceptances,11CHECKEDlabels with zero reported compilations and absent provider/snippet bytes; those were not run in this slice. Fixedblob, manifest/census, alteredreport, duplicateG-ID and harness substitution controls are source-reviewed expectations, not fresh historical evidence. Only four synthetic path-escape cases executed and passed; no external ground-truth source accessed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_original_recovery.py",
+      "sha256": "d7bc1d608773b032c155a5b4591a53430ee1a0cef4096c5e9c5f920730a6b6e9",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          130
+        ]
+      ],
+      "assessment": "Read all130lines. Four purely synthetic checks reject undeclared top-level effects, unknown sibling imports, source hash drift before execution and occupied output; all passed. Other tests depend on original dialogue/ledger or historical score source and were excluded. They assert an original terminal EXACT_REPAIR/PASS_TO_MASTER despite nonzero score and distinguish active-count descent, but no historical truth was inferred from those expectations. F09 blocks the nonempty narrative parser irrespective of these supplied tests."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_release_custody.py",
+      "sha256": "f76a8c1dde4b2fe2428f321d925e7d47aacab831043014889ceb28a3655be0b5",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          156
+        ]
+      ],
+      "assessment": "Read all156lines. Synthetic release tests check archive exceptions remain exhaustive, traversal errors, path/case collisions, Windows reparse metadata, altered payload/inventory, prefix/suffix ZIP bytes, same-byte symlink controls and deterministic byte builds. They do not test omitted SHA256SUMS envelope member, write-time races or authenticate external release provenance. Parent owns support helper review/probes; these tests were not executed by this slice and no support helper read credit claimed."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_aggregates.py",
+      "sha256": "d5abb50a1a7a6857e630126fd3d491d7eff76a61938ce74ebf83dd0b8d33d992",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          412
+        ]
+      ],
+      "assessment": "Read all412lines. Selected synthetic tests verify exact typed comparisons, observation-only versus asserted states, complete mutation rejection versus joint/partial detection, fail-closed native transport stubs, import-root binding, raw input custody, stale-cache exclusion and honest reclassification of prior receipts. Tests reading findings inventory/controller fixture were excluded; no aggregate dataset or native owner executed. A nonexistent ambient sibling import raising ModuleNotFoundError does not prove denial of existing ambient modules. All selected tests passed within115testfinalrun; general AST preservation and sandbox claims still limited byF10/F11."
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_recreations.py",
+      "sha256": "91ee75a22f7d46dca42ed856e598483d5da3c72050ea5230787f407c453051c5",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1012
+        ]
+      ],
+      "assessment": "Read all1012lines. Synthetic-only module tests source-routing shape, strict JSON/literal flags, mutation completeness, accepted refusal/classifier distinctions, single C042checker accounting, C060crash/detection separation, C041selectedproposal binding and native/Lean transport snapshots via stubs. Phi2/3/4 tests demonstrate envelope and near-miss accounting, not native math, topology or kernel correctness. Entire module executed with temps confined to audit prefix: the complete-catalog positive test failed onF08; all other selected module tests passed. Existing coverage test accepts87invented IDs, confirming that it tests receipt closure rather than exact catalog membership; independentF12adds duplicate collapse. Existing relocation positives do not cover mixed computation/bootstrap deletionF10."
+    }
+  ],
+  "automated_reviews": [
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/fixtures/c041_supplemental_candidates.json",
+      "sha256": "1c6a0a661246477468dd110be74774fa3c3379a6e53692dd8306892256433642",
+      "full_source_read": false,
+      "assessment_method": "schema_specific_bounded_parsing_and_exact_finite_arithmetic",
+      "checks": [
+        {
+          "rule": "strict_json_and_fixture_schema",
+          "status": "parsed",
+          "rows": 2,
+          "schema_version": "paper011.c041-supplemental-proposals.v1",
+          "declared_status": "UNVERIFIED_PROPOSALS"
+        },
+        {
+          "rule": "target_candidate_identity_and_kind",
+          "status": "observed",
+          "case_ids": [
+            "c041_base_16",
+            "c041_ctrl_08"
+          ]
+        },
+        {
+          "rule": "exact_arithmetic_countercontrols",
+          "status": "verified_for_declared_finite_domain",
+          "false_target_counterexample": {
+            "a": 39,
+            "b": 39,
+            "sum": 78,
+            "bound": 70
+          },
+          "true_target_domain": "Natural k<50",
+          "checked_values": 50,
+          "max_square": 2401,
+          "strict_bound": 2600
+        }
+      ],
+      "assessment": "Two explicitly UNVERIFIED_PROPOSALS with original-case SHA references. First refutes universal bounded sum via39+39=78; second proves k<=49 implies k^2<=2401<2600. Candidate Lean strings have the corresponding argument structure, but no Lean kernel/typecheck executed and referenced original case files/hashes were not independently rebound in this slice. No original solver outcomes overwritten. Parsed fixture/content examination is not counted as full_source_read.",
+      "limitations": [
+        "No Lean executable or imported proof library used.",
+        "Original target source SHA references remain dependency assertions, not newly authenticated here."
+      ]
+    }
+  ],
+  "remaining_unsupported_files": [],
+  "claims": [
+    {
+      "id": "P011CORE-C01",
+      "claim": "Under a trusted fixed manifest digest and stable regular-file snapshot, source-custody replay checks exhaustive declared archive inventory and exact byte equality. This is copy integrity, not mathematical correctness, execution or independent truth of historical provenance.",
+      "source_ranges": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/source_custody.py",
+          "sha256": "817b021bb317c202fdcf512488b896753206d2607f5dc200242bf748056b34af",
+          "lines": [
+            303,
+            362
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_custody_pytest.txt",
+      "limits": "31 synthetic custody/findings/runtime tests passed; they do not establish a complete adversarial filesystem model.",
+      "statement": "Under a trusted fixed manifest digest and stable regular-file snapshot, source-custody replay checks exhaustive declared archive inventory and exact byte equality. This is copy integrity, not mathematical correctness, execution or independent truth of historical provenance.",
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/source_custody.py",
+          "sha256": "817b021bb317c202fdcf512488b896753206d2607f5dc200242bf748056b34af",
+          "lines": [
+            303,
+            362
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/source_custody.py",
+          "sha256": "817b021bb317c202fdcf512488b896753206d2607f5dc200242bf748056b34af",
+          "lines": [
+            303,
+            362
+          ]
+        }
+      ],
+      "dependencies": [
+        "Trusted fixed external manifest digest",
+        "Stable regular-file snapshot",
+        "Truthful inventory assumptions; Git content bridge weaknessF01 retained"
+      ]
+    },
+    {
+      "id": "P011CORE-C02",
+      "statement": "For n labeled outcomes with s verified successes, uniform k-subset selection has probability 1-C(n-s,k)/C(n,k) of including a success. The implementation uses exact Fractions under strict integer bounds. This is a finite counting identity, not an empirical model-quality or independence result.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/mechanism_recreations.py",
+          "sha256": "54d20602eb03cf0fa0caf4811e7ef73d0aa4eb6158acca37335521b0a81e1b1f",
+          "lines": [
+            527,
+            530
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_boundary_probes.json:uniform_subset_coverage_formula",
+      "limits": "240 independent subset enumerations through n8 agree; the general identity follows by counting all-failure subsets.",
+      "dependencies": [
+        "Uniform choice among labeled k-subsets",
+        "Exactly s successes among n outcomes",
+        "Strict integer bounds1<=k<=n"
+      ]
+    },
+    {
+      "id": "P011CORE-C03",
+      "statement": "The two C041 supplemental target truth values follow from elementary exact natural arithmetic:39,39 refutes the sum<70 target; k<50 gives k<=49 and k^2<=2401<2600. This establishes arithmetic truth under the stated Nat domain, not Lean compilation or original-case provenance.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/fixtures/c041_supplemental_candidates.json",
+          "sha256": "1c6a0a661246477468dd110be74774fa3c3379a6e53692dd8306892256433642",
+          "lines": [
+            1,
+            43
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/fixtures/c041_supplemental_candidates.json",
+          "sha256": "1c6a0a661246477468dd110be74774fa3c3379a6e53692dd8306892256433642",
+          "lines": [
+            1,
+            43
+          ]
+        }
+      ],
+      "control": "Schema-specific fixture assessment in automated_reviews",
+      "limits": "Two parsed proposals and50enumerated values; no full source read credit for the data fixture, no kernel replay.",
+      "dependencies": [
+        "Natural-number interpretation",
+        "Stated thresholds40/70and50/2600",
+        "Original-case source binding and Lean replay remain external obligations"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "P011CORE-F01",
+      "claim": "Optional source-repository verification does not establish that captured working-tree bytes are the pinned Git blob: Git checks only path/mode/OID metadata, while source bytes compare only to manifest SHA256. Synthetic different-blob metadata with mutually matching source/copy/manifest is accepted as VERIFIED_BYTE_COPIES with source_inventory_checked=true.",
+      "source_ranges": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/source_custody.py",
+          "sha256": "817b021bb317c202fdcf512488b896753206d2607f5dc200242bf748056b34af",
+          "lines": [
+            324,
+            348
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_custody_probes.json:git_metadata_does_not_bind_captured_bytes",
+      "limits": "The Git inventory call is stubbed with explicit metadata for different bytes; no false real Git response or mathematical false acceptance claimed. A trusted external manifest can still establish the stated copy integrity.",
+      "statement": "Optional source-repository verification does not establish that captured working-tree bytes are the pinned Git blob: Git checks only path/mode/OID metadata, while source bytes compare only to manifest SHA256. Synthetic different-blob metadata with mutually matching source/copy/manifest is accepted as VERIFIED_BYTE_COPIES with source_inventory_checked=true.",
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/source_custody.py",
+          "sha256": "817b021bb317c202fdcf512488b896753206d2607f5dc200242bf748056b34af",
+          "lines": [
+            324,
+            348
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/source_custody.py",
+          "sha256": "817b021bb317c202fdcf512488b896753206d2607f5dc200242bf748056b34af",
+          "lines": [
+            324,
+            348
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P011CORE-F02",
+      "claim": "Findings auditor reports13 aggregate families for14rows containing one duplicate; its check enforces only13distinct identifiers, not exact row census or prescribed family identities.",
+      "source_ranges": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/audit_findings.py",
+          "sha256": "d73cf916197522183518de14607f7e44cb918e2a39293d4b5da302795326677c",
+          "lines": [
+            17,
+            29
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_custody_probes.json:aggregate_families_accepts_duplicate_rows",
+      "limits": "Synthetic inventory has a recomputed pin; does not bypass an independently fixed external inventory digest.",
+      "statement": "Findings auditor reports13 aggregate families for14rows containing one duplicate; its check enforces only13distinct identifiers, not exact row census or prescribed family identities.",
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/audit_findings.py",
+          "sha256": "d73cf916197522183518de14607f7e44cb918e2a39293d4b5da302795326677c",
+          "lines": [
+            17,
+            29
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/audit_findings.py",
+          "sha256": "d73cf916197522183518de14607f7e44cb918e2a39293d4b5da302795326677c",
+          "lines": [
+            17,
+            29
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P011CORE-F03",
+      "statement": "The G02 mutation-custody supplement pins helper SHA187ba1c0..., but the current inventoried replay helper is25191e91...; its baseline check therefore refuses the audited current source before mutation replay. This is current replay unavailability, not proof that the historical run failed.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g02_mutation_custody.py",
+          "sha256": "72da7d915ac147f7b175ba8d34562d7cccc67bf4dcffc320810489a35a394dbb",
+          "lines": [
+            16,
+            45
+          ]
+        },
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g02_replay.py",
+          "sha256": "25191e914baf0290dc1cd091b962c48871c6f8545a99cfa6f09dfe5104eb8bfb",
+          "lines": [
+            1,
+            400
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g02_mutation_custody.py",
+          "sha256": "72da7d915ac147f7b175ba8d34562d7cccc67bf4dcffc320810489a35a394dbb",
+          "lines": [
+            16,
+            45
+          ]
+        }
+      ],
+      "control": "Direct comparison of literal BASE_HELPER_SHA to frozen/current source SHA256; no baseline receipt read or script invocation.",
+      "limits": "Historical receipts preserved; no repinning or repair performed."
+    },
+    {
+      "id": "P011CORE-F04",
+      "statement": "G03 source verification requires G07 port SHAd14a646a..., but its current original-inventory SHA is3c5e466f...; the audited runner cannot pass G03_SOURCE_PORT_CHANGED. Historical evidence remains separate and was not repinned.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g03_replay.py",
+          "sha256": "0588b3f8a1625cec4579493154ba15cc9580df6773ca21edbc5c3ed816111fb5",
+          "lines": [
+            62,
+            74
+          ]
+        }
+      ],
+      "dependency_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g07_replay.py",
+          "sha256": "3c5e466f5dd9ffc7e75dd0b4b6fe9b4ecb2b74da13463acd361da00721159a70",
+          "assessment": "Current hash reconciled and owning G07 source fully read; no historical artifact followed."
+        }
+      ],
+      "control": "Literal source comparison against frozen/current digest; no historical manifest read.",
+      "limits": "Current replay unavailability, not a verdict about past successful runs."
+    },
+    {
+      "id": "P011CORE-F05",
+      "statement": "G03 controls() overwrites its Path variable with a registered-file string and calls path.relative_to in the expected stale-script exception branch, raising AttributeError instead of recording the refusal.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g03_replay.py",
+          "sha256": "0588b3f8a1625cec4579493154ba15cc9580df6773ca21edbc5c3ed816111fb5",
+          "lines": [
+            338,
+            350
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_boundary_probes.json:g03_stale_control_path_shadow",
+      "limits": "Actual unchanged function AST with synthetic native responses/serialization. Historical failure and later recovery are separate; no native binary or sealed oracle executed."
+    },
+    {
+      "id": "P011CORE-F06",
+      "statement": "G04 relocation accepts removal of an entire computational top-level block whenever that block also mentions sys.path. Its inverse-import AST check applies only to retained nodes and cannot establish the advertised bootstrap-only change. Synthetic value7 becomes0.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g04_replay.py",
+          "sha256": "9a7f7adc495370094dc800f075a648927e0534833aacf879944026e0c7e710bf",
+          "lines": [
+            104,
+            142
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_boundary_probes.json:relocation_can_remove_computational_body",
+      "limits": "Counterexample to the transformer boundary, not evidence that the pinned historical source contains this mixed block."
+    },
+    {
+      "id": "P011CORE-F07",
+      "statement": "G07 quiet mutation controls treat every nonzero subprocess exit as successful rejection, without checking the expected typed reason. An unrelated process failure or crash satisfies this criterion, and the completion receipt can still declare its finite gate true.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g07_quiet.py",
+          "sha256": "8fc1c3fd6c956230f542a57da8795620f09251934c7a86799bd8fb627fd3249c",
+          "lines": [
+            96,
+            105
+          ]
+        },
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/genesis_g07_quiet.py",
+          "sha256": "8fc1c3fd6c956230f542a57da8795620f09251934c7a86799bd8fb627fd3249c",
+          "lines": [
+            126,
+            134
+          ]
+        },
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/tests/test_paper011_genesis_g07.py",
+          "sha256": "e6bae614d2b37f3a80c553cbae6e0c7bbbc55d4887d3e0b951fd09020a3a7d6e",
+          "lines": [
+            125,
+            127
+          ]
+        }
+      ],
+      "control": "Source-level exact guard assessment; no native process was run.",
+      "limits": "Does not claim any retained mutation actually crashed. Identifies missing discrimination in the certification condition."
+    },
+    {
+      "id": "P011CORE-F08",
+      "statement": "build_catalog sorts discovered dispatch IDs then compares them to an unsorted DEMO_IDS tuple, whose demo_adversary_tribunal entry is appended last. Therefore even the exact declared27-IDdispatch is refused before challenge discovery.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/demo_catalog.py",
+          "sha256": "ba2cb37050fea0f1443e4a361edeb772a3aada3df82b9f2cfee0e97295a2dba7",
+          "lines": [
+            11,
+            39
+          ]
+        },
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/demo_catalog.py",
+          "sha256": "ba2cb37050fea0f1443e4a361edeb772a3aada3df82b9f2cfee0e97295a2dba7",
+          "lines": [
+            151,
+            160
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/demo_catalog.py",
+          "sha256": "ba2cb37050fea0f1443e4a361edeb772a3aada3df82b9f2cfee0e97295a2dba7",
+          "lines": [
+            11,
+            39
+          ]
+        },
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/demo_catalog.py",
+          "sha256": "ba2cb37050fea0f1443e4a361edeb772a3aada3df82b9f2cfee0e97295a2dba7",
+          "lines": [
+            151,
+            160
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_catalog_probes.json",
+      "limits": "Synthetic source-only27entryrunner reproduced ValueError. No original demos, hidden cases or provider execution; a reconstruction prerequisite defect, not mathematical false acceptance.",
+      "additional_control": "dag/reviews/additional_paper_011_core_final_pytest.txt: original test_complete_discovery_retains_spec_only_entries_and_real_checker_contract fails at catalog.py160."
+    },
+    {
+      "id": "P011CORE-F09",
+      "statement": "parse_rounds captures speaker with (\\w+) but requires an eight-role list containing multiword names. No matching group can equal Gauge Breaker or the other spaced names, so every nonempty round refuses COMPLETE_ORIGINAL_ROLE_ORDER_REQUIRED. This blocks baseline dialogue replay and progression replay that calls the same parser.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/aggregate_original_recovery_v1.py",
+          "sha256": "70095795b0906b78563cf880aa96ffa332b87cfca0874a42bd58b73caf0db6d8",
+          "lines": [
+            288,
+            324
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/aggregate_original_recovery_v1.py",
+          "sha256": "70095795b0906b78563cf880aa96ffa332b87cfca0874a42bd58b73caf0db6d8",
+          "lines": [
+            288,
+            324
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_dialogue_probes.json",
+      "limits": "Actual parser refused a synthetic exact eight-role trace. No historical retained trace was accessed; no statement about past runner versions."
+    },
+    {
+      "id": "P011CORE-F10",
+      "statement": "Generic relocation deletes whole top-level If/For/Expr nodes containing any sys.path attribute and whole If nodes whose test mentions __name__. Such nodes can contain ordinary computation, contradicting the unconditional never-math-nodes description. Actual relocation changed synthetic value7 to0 while journaling only bootstrap removal.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/recreate_demos.py",
+          "sha256": "3e39167657e10575c3c0120af948523604cc4e23951e6418c76e8ce4d6fd8653",
+          "lines": [
+            269,
+            361
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/recreate_demos.py",
+          "sha256": "3e39167657e10575c3c0120af948523604cc4e23951e6418c76e8ce4d6fd8653",
+          "lines": [
+            269,
+            361
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_runner_probes.json",
+      "limits": "Synthetic counterexample establishes overbroad transformation contract; no claim that every historical source contains this pattern."
+    },
+    {
+      "id": "P011CORE-F11",
+      "statement": "The worker network boundary replaces Python socket constructors but subprocess.run forwards every undeclared non-Cargo/Rust command to the original runner. Arbitrary subprocess capabilities are therefore outside the network guard; the implementation is not a process-wide offline sandbox.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/recreate_demos.py",
+          "sha256": "3e39167657e10575c3c0120af948523604cc4e23951e6418c76e8ce4d6fd8653",
+          "lines": [
+            434,
+            580
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/recreate_demos.py",
+          "sha256": "3e39167657e10575c3c0120af948523604cc4e23951e6418c76e8ce4d6fd8653",
+          "lines": [
+            434,
+            580
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_runner_probes.json",
+      "limits": "A stubbed original runner observed an undeclared helper command. No real helper, network request, provider or credential access occurred; this does not allege historical external calls."
+    },
+    {
+      "id": "P011CORE-F12",
+      "statement": "coverage_matrix checks primary run-list length87 but no exact or unique ID census, and overwrites selections by ID. A self-consistent synthetic batch with87copies of one C001receipt is accepted and returns one row while declaring87entries.",
+      "evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/recreate_demos.py",
+          "sha256": "3e39167657e10575c3c0120af948523604cc4e23951e6418c76e8ce4d6fd8653",
+          "lines": [
+            1977,
+            2015
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/recreate_demos.py",
+          "sha256": "3e39167657e10575c3c0120af948523604cc4e23951e6418c76e8ce4d6fd8653",
+          "lines": [
+            1977,
+            2015
+          ]
+        }
+      ],
+      "control": "dag/reviews/additional_paper_011_core_runner_probes.json",
+      "limits": "No trusted external digest bypass; artifact integrity remains internally consistent. all_recreations_completed remains false, but coverage census is not established."
+    }
+  ],
+  "controls": [
+    {
+      "path": "dag/reviews/additional_paper_011_core_custody_probes.json",
+      "sha256": "e126667e991eea6f4db6d7feba841cf07dc65469b35c780cd28026253d211842",
+      "status": "bounded_offline_controls",
+      "limits": "Synthetic bytes, two independent boundary controls,31 selected synthetic-only tests; no original or historical writes."
+    },
+    {
+      "path": "dag/reviews/additional_paper_011_core_boundary_probes.json",
+      "sha256": "ad9faf43d7157a62fe0d2baf23b40395dcb66539f5ae4bffbe6bb226382d991d",
+      "status": "bounded_offline_controls",
+      "limits": "Three independent pure controls plus17 selected pure tests. Available Python3.14.2, not pinned Python3.12 reproduction. No torch/native/model/provider/sealed execution."
+    },
+    {
+      "path": "dag/reviews/additional_paper_011_core_catalog_probes.json",
+      "sha256": "30544175f84e935f61f19134eaf1a3ba67da32178a7ab8794feae98cefd688d4",
+      "status": "observed",
+      "assessment": "Exact27-ID synthetic dispatch refused by actual catalog implementation; Python3.14.2 available-runtime probe, not pinned3.12 reproduction."
+    },
+    {
+      "path": "dag/reviews/additional_paper_011_core_dialogue_probes.json",
+      "sha256": "57abfb897aaba85319081a66a858c500ddeb90377613bed2eecf9557b690dcf7",
+      "status": "observed",
+      "assessment": "Actual parse_rounds rejected required eight-role synthetic trace; source regex proves incompatibility with required names. Python3.14.2 only."
+    },
+    {
+      "path": "dag/reviews/additional_paper_011_core_runner_probes.json",
+      "sha256": "68a549da4a2e3c431152595d7c396d2e4d7fb8bcbe663614ea49599dd30f2c7a",
+      "status": "observed",
+      "assessment": "Actual relocation/census/subprocess-wrapper functions exercised with synthetic inputs and stubbed process runner; no external original inputs/executables/network. Python3.14.2 only."
+    },
+    {
+      "path": "dag/reviews/additional_paper_011_core_final_test_control.json",
+      "sha256": "0506b4f71c7aaa970b8b64b8fe9139609baa34a8e54f82b2911335e0454e60bd",
+      "status": "executed_with_known_failure",
+      "assessment": "115 read-vetted synthetic tests:114passed and1failed. Failure is original complete-discovery regression forF08, independently matching synthetic catalog probe. No source repair performed; Python3.14.2 only."
+    }
+  ],
+  "external_dependencies_consulted": [],
+  "runtime_limit": "All audit controls so far ran on available workspace Python3.14.2; they are focused checks, not reproduction of the package declared Python3.12 dependency profile.",
+  "limitations": [
+    "Only this frozen Paper 011 core partition is covered; the repository-wide audit remains incomplete.",
+    "No providers, paid models, credentials, sealed QM key, broad native builds or unreviewed binary execution.",
+    "Source reading and bounded synthetic controls do not authenticate historical runs or external mathematical claims."
+  ],
+  "repository_wide_audit_complete": false,
+  "completion_scope": "Only the frozen51-file Paper011core partition; zero pending within this partition.",
+  "final_reconciliation": {
+    "path": "dag/reviews/additional_paper_011_core_final_reconciliation.json",
+    "sha256": "12772d0c61c5e3a21850d14efba43118b0265e32589f622543d6edfff8f8bcec"
+  },
+  "test_summary": {
+    "pytest_cases": 163,
+    "passed": 162,
+    "failed": 1,
+    "failure_finding": "P011CORE-F08",
+    "runtime": "Python3.14.2, available-runtime focused checks; not pinnedPython3.12 reproduction",
+    "independent_synthetic_boundary_controls": 10,
+    "data_arithmetic_controls": 2
+  },
+  "dependency_boundaries": [
+    {
+      "dependency": "Original engine/Git object archives, historical provider traces and findings inventories",
+      "status": "not_consulted_or_executed",
+      "limit": "Core source references and test expectations are not authentication of those bytes or runs."
+    },
+    {
+      "dependency": "Rust/Lean/native mathematics and compiled binary source linkage",
+      "status": "not_executed",
+      "limit": "Read wrappers and synthetic transport controls only; native partition separately owned."
+    },
+    {
+      "dependency": "Paper011release support helpers",
+      "status": "parent_owned",
+      "limit": "Release tests fully read here; parent owns support-source review and probes."
+    },
+    {
+      "dependency": "Sealed QM key/seed/answer, provider credentials and private benchmarks",
+      "status": "not_accessed",
+      "limit": "No sealed data or private benchmark payload read/solved, no provider/network access."
+    }
+  ]
+}

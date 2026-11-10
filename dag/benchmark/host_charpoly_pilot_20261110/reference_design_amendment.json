@@ -1,0 +1,34 @@
+{
+  "schema_version": "independent_host_charpoly_preoutput_design_amendment_v1",
+  "created_utc": "2026-11-10T20:24:29.736687+00:00",
+  "campaign_id": "qm-hostcharpoly-20261110",
+  "reference_provenance_sha256": "8af8bf1c7683bf9ddb5db4ee8e2188955341aff7247fa87d0667c8e94be6746d",
+  "mathematical_reference_or_rubric_changed": false,
+  "current_run_output_content_read": false,
+  "reason": "Parent expanded the planned two-arm design to three arms before dispatch to distinguish host public matrix context from additional host polynomial/certificate context.",
+  "supersedes": "The planned_arms and aggregate design assumptions in the initial reference provenance only; frozen mathematics and grading policy remain unchanged.",
+  "plans": [
+    "coverage_first_direct_v1",
+    "coverage_first_matrix_v1",
+    "coverage_first_charpoly_v1"
+  ],
+  "expected_run_ids": [
+    "qm-hostcharpoly-20261110:coverage_first_direct_v1:000",
+    "qm-hostcharpoly-20261110:coverage_first_matrix_v1:000",
+    "qm-hostcharpoly-20261110:coverage_first_charpoly_v1:000"
+  ],
+  "shared_constraints": {
+    "identical_coverage_instruction": true,
+    "max_model_calls": 1,
+    "max_output_tokens": 16000,
+    "same_model_endpoint": true,
+    "per_run_cap_microusd": 100000,
+    "campaign_cap_microusd": 300000
+  },
+  "arm_contexts": {
+    "coverage_first_direct_v1": "Unchanged seed only.",
+    "coverage_first_matrix_v1": "Unchanged seed plus host-derived public Pauli coefficient matrices.",
+    "coverage_first_charpoly_v1": "Same matrix context as matrix arm, plus host-derived and native-replayed polynomial coefficients with explicitly limited certificate scope."
+  },
+  "grading_policy": "Wait for each parent-confirmed frozen run; grade final answer_text only under unchanged25criteria. No input artifact or certificate earns delivered-solution credit."
+}

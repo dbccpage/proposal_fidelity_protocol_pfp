@@ -1,0 +1,310 @@
+[
+  {
+    "id": "C031-P-positive",
+    "case": {
+      "id": "truth",
+      "query": "complete",
+      "n": 5,
+      "bound": 10,
+      "fixed": [
+        -9,
+        -5,
+        -1,
+        7
+      ]
+    },
+    "result": {
+      "id": "truth",
+      "status": "SOLVED",
+      "completion": [
+        8
+      ]
+    },
+    "ground_truth": null,
+    "expected_mathematical_boundary": "Valid exact solution",
+    "actual": {
+      "verdict": "PASS",
+      "case_id": "truth",
+      "agreement": true,
+      "status": "SOLVED",
+      "is_refusal": false,
+      "valid_refusal": false,
+      "solved": true,
+      "checker1": {
+        "valid": true,
+        "message": "PASS: verified chiral completion for n=5, bound=10"
+      },
+      "checker2": {
+        "valid": true,
+        "message": "PASS: MITM verified chiral completion for n=5, bound=10"
+      }
+    }
+  },
+  {
+    "id": "C031-P-wrong_id",
+    "case": {
+      "id": "truth",
+      "query": "complete",
+      "n": 5,
+      "bound": 10,
+      "fixed": [
+        -9,
+        -5,
+        -1,
+        7
+      ]
+    },
+    "result": {
+      "id": "another_case",
+      "status": "SOLVED",
+      "completion": [
+        8
+      ]
+    },
+    "ground_truth": null,
+    "expected_mathematical_boundary": "Result ID does not bind input",
+    "actual": {
+      "verdict": "PASS",
+      "case_id": "truth",
+      "agreement": true,
+      "status": "SOLVED",
+      "is_refusal": false,
+      "valid_refusal": false,
+      "solved": true,
+      "checker1": {
+        "valid": true,
+        "message": "PASS: verified chiral completion for n=5, bound=10"
+      },
+      "checker2": {
+        "valid": true,
+        "message": "PASS: MITM verified chiral completion for n=5, bound=10"
+      }
+    }
+  },
+  {
+    "id": "C031-P-fixed_over_bound",
+    "case": {
+      "id": "truth",
+      "query": "complete",
+      "n": 5,
+      "bound": 8,
+      "fixed": [
+        -9,
+        -5,
+        -1,
+        7
+      ]
+    },
+    "result": {
+      "id": "truth",
+      "status": "SOLVED",
+      "completion": [
+        8
+      ]
+    },
+    "ground_truth": null,
+    "expected_mathematical_boundary": "Fixed -9 exceeds bound8: must not certify SOLVED",
+    "actual": {
+      "verdict": "PASS",
+      "case_id": "truth",
+      "agreement": true,
+      "status": "SOLVED",
+      "is_refusal": false,
+      "valid_refusal": false,
+      "solved": true,
+      "checker1": {
+        "valid": true,
+        "message": "PASS: verified chiral completion for n=5, bound=8"
+      },
+      "checker2": {
+        "valid": true,
+        "message": "PASS: MITM verified chiral completion for n=5, bound=8"
+      }
+    }
+  },
+  {
+    "id": "C031-P-fixed_zero",
+    "case": {
+      "id": "truth",
+      "query": "complete",
+      "n": 6,
+      "bound": 10,
+      "fixed": [
+        0,
+        -9,
+        -5,
+        -1,
+        7
+      ]
+    },
+    "result": {
+      "id": "truth",
+      "status": "SOLVED",
+      "completion": [
+        8
+      ]
+    },
+    "ground_truth": null,
+    "expected_mathematical_boundary": "Zero fixed charge is excluded by domain",
+    "actual": {
+      "verdict": "PASS",
+      "case_id": "truth",
+      "agreement": true,
+      "status": "SOLVED",
+      "is_refusal": false,
+      "valid_refusal": false,
+      "solved": true,
+      "checker1": {
+        "valid": true,
+        "message": "PASS: verified chiral completion for n=6, bound=10"
+      },
+      "checker2": {
+        "valid": true,
+        "message": "PASS: MITM verified chiral completion for n=6, bound=10"
+      }
+    }
+  },
+  {
+    "id": "C031-P-invented_witness",
+    "case": {
+      "id": "truth",
+      "query": "complete",
+      "n": 5,
+      "bound": 10,
+      "fixed": [
+        0
+      ]
+    },
+    "result": {
+      "id": "truth",
+      "status": "OUT_OF_SCOPE",
+      "witness": {
+        "kind": "fixed_charge_zero",
+        "index": 999,
+        "charge": 37
+      }
+    },
+    "ground_truth": null,
+    "expected_mathematical_boundary": "Global domain violation real; index/charge witness is false",
+    "actual": {
+      "verdict": "PASS",
+      "case_id": "truth",
+      "agreement": true,
+      "status": "OUT_OF_SCOPE",
+      "is_refusal": true,
+      "valid_refusal": true,
+      "solved": false,
+      "checker1": {
+        "valid": true,
+        "message": "VALID_OUT_OF_SCOPE"
+      },
+      "checker2": {
+        "valid": true,
+        "message": "VALID_OUT_OF_SCOPE"
+      }
+    }
+  },
+  {
+    "id": "C031-P-false_ground_truth",
+    "case": {
+      "id": "enum",
+      "query": "enumerate",
+      "n": 5,
+      "bound": 10
+    },
+    "result": {
+      "id": "enum",
+      "status": "SOLVED",
+      "count": 0,
+      "solutions": []
+    },
+    "ground_truth": {
+      "solutions": []
+    },
+    "expected_mathematical_boundary": "Two genuine solutions exist; trusted false ground truth bypasses completeness",
+    "actual": {
+      "verdict": "PASS",
+      "case_id": "enum",
+      "agreement": true,
+      "status": "SOLVED",
+      "is_refusal": false,
+      "valid_refusal": false,
+      "solved": true,
+      "checker1": {
+        "valid": true,
+        "message": "PASS: verified 0 chiral canonical solutions for n=5, bound=10"
+      },
+      "checker2": {
+        "valid": true,
+        "message": "PASS: MITM verified 0 chiral canonical solutions for n=5, bound=10"
+      }
+    }
+  },
+  {
+    "id": "C031-P-no_ground_truth",
+    "case": {
+      "id": "enum",
+      "query": "enumerate",
+      "n": 5,
+      "bound": 10
+    },
+    "result": {
+      "id": "enum",
+      "status": "SOLVED",
+      "count": 0,
+      "solutions": []
+    },
+    "ground_truth": null,
+    "expected_mathematical_boundary": "False empty enumeration must reject",
+    "actual": {
+      "verdict": "FAIL",
+      "case_id": "enum",
+      "agreement": true,
+      "status": "SOLVED",
+      "is_refusal": false,
+      "valid_refusal": false,
+      "solved": false,
+      "checker1": {
+        "valid": false,
+        "message": "FAIL: enumeration mismatch: missing 2, spurious 0"
+      },
+      "checker2": {
+        "valid": false,
+        "message": "FAIL: MITM enumeration mismatch: missing 2, spurious 0"
+      }
+    }
+  },
+  {
+    "id": "C031-P-case_id_refusal",
+    "case": {
+      "case_id": "wellformed",
+      "query": "enumerate",
+      "n": 5,
+      "bound": 10
+    },
+    "result": {
+      "id": "wellformed",
+      "status": "UNKNOWN",
+      "refusal_code": "MALFORMED_CASE_STRUCTURE"
+    },
+    "ground_truth": null,
+    "expected_mathematical_boundary": "Published case_id input is well formed",
+    "actual": {
+      "verdict": "PASS",
+      "case_id": "wellformed",
+      "agreement": true,
+      "status": "UNKNOWN",
+      "is_refusal": true,
+      "valid_refusal": true,
+      "solved": false,
+      "checker1": {
+        "valid": true,
+        "message": "VALID_REFUSAL_MALFORMED_CASE_STRUCTURE"
+      },
+      "checker2": {
+        "valid": true,
+        "message": "VALID_REFUSAL_MALFORMED_CASE_STRUCTURE"
+      }
+    }
+  }
+]

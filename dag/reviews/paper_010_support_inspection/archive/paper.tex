@@ -1,0 +1,1216 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{listings}
+\usepackage{seqsplit}
+\usepackage{needspace}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\small}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\emergencystretch=3em
+\AtBeginDocument{\Urlmuskip=0mu plus 2mu}
+\lstset{breaklines=true,basicstyle=\small\ttfamily,columns=fullflexible,keepspaces=true}
+\setlength{\tabcolsep}{4pt}
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{newunicodechar}
+  \makeatletter
+  \newcommand{\DeclareUnicodeCharacter}[2]{%
+    \begingroup
+    \uccode`\~="#1\relax
+    \uppercase{\def\temp{~}}%
+    \expandafter\endgroup
+    \expandafter\newunicodechar\expandafter{\temp}{#2}%
+  }
+  \makeatother
+\fi
+\ifdefined\DeclareUnicodeCharacter
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2190}{\ensuremath{\leftarrow}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{21D2}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{21A6}{\ensuremath{\mapsto}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2113}{\ensuremath{\ell}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{03A6}{\ensuremath{\Phi}}
+\DeclareUnicodeCharacter{0393}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{2209}{\ensuremath{\notin}}
+\DeclareUnicodeCharacter{211A}{\ensuremath{\mathbb{Q}}}
+\DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
+\DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb{Z}}}
+\DeclareUnicodeCharacter{2115}{\ensuremath{\mathbb{N}}}
+\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+\DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{03B4}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{00B9}{\ensuremath{^1}}
+\DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
+\DeclareUnicodeCharacter{2070}{\ensuremath{^0}}
+\DeclareUnicodeCharacter{2080}{\ensuremath{_0}}
+\DeclareUnicodeCharacter{2081}{\ensuremath{_1}}
+\DeclareUnicodeCharacter{2082}{\ensuremath{_2}}
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={PFP X: Exact Host Checking of Model Verdicts on Small Finite Algebraic Challenges --- Lattice Holonomy and Six Formal-Mathematics Pilots},
+  pdfauthor={Jeremy H. Carroll},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{PFP X: Exact Host Checking of Model Verdicts on Small Finite Algebraic Challenges — Lattice Holonomy and Six Formal-Mathematics Pilots}
+\author{Jeremy H. Carroll}
+\date{2026-10-02 · Version 0.1.0 · Research methods paper · Author-review revision}
+\begin{document}
+\makeatletter
+\begin{center}
+{\LARGE \@title\par}
+\vspace{0.8em}
+{\normalsize \@author\par}
+\vspace{0.5em}
+{\small \@date\par}
+\end{center}
+\makeatother
+Code baseline:
+\texttt{\seqsplit{a623568eb0f853b968bc419bf06dfc6af256ab02}}. Each model
+run discussed in Sections 3 and 4 is cited by its repository path and by
+the commit that recorded it; all of those commits precede this baseline.
+
+Version 0.1.0 designates the initial public preprint candidate. Earlier
+1.x and 2.x numbers in the change log identify internal drafts and
+corrections, not prior Zenodo publications. No DOI or external
+publication is claimed.
+
+\hypertarget{abstract}{%
+\subsection{Abstract}\label{abstract}}
+
+Exact host checking separates a model's proposed verdict from a verified
+certificate. For finite-group connections on square lattices, this paper
+provides a complete Python flatness checker over a validated
+multiplication table. It checks ordered plaquette products with inverses
+on reversed edges; on a torus, two cycle holonomies distinguish
+gauge-trivial from other flat connections. Skipping four-identity-link
+plaquettes is an optimization whose saving depends on the gauge. On five
+retained C017 cases, fresh host replay reproduces the expected verdicts
+and the historical harness decisions on all 15 retained solution
+records: 13 parsed certificates and two parser-error records, with 10
+accepted and 5 rejected overall. Ten further historical responses retain
+only labels and reasons. The five runs accepted 0, 0, 3, 3 and 4
+responses out of five under different models, prompts and budgets; they
+do not identify a causal prompt effect. Six formal-mathematics pilots
+report three models on ten cases per cell, with two C049 panels and two
+C050 runs. The author's case-by-case annotation identifies
+answer-bearing identifiers in 36 of 60 reconstructable panel cases. In
+two challenges a constant refusal passes all ten under the original
+checkers. These counts therefore do not measure unaided performance. The
+package supplies retained reports, offline table recounts, negative
+controls, and one narrowly scoped Lean identity-link lemma. Unsupported
+benchmark and effect claims from the initial internal draft are
+withdrawn. No model run is repeated for this revision.
+
+\hypertarget{problem-and-design}{%
+\subsection{1. Problem and design}\label{problem-and-design}}
+
+The Proposal Fidelity Protocol (PFP), developed in this collection under
+the legacy name Symbol Game, separates a candidate answer from the host
+check that decides whether the answer is accepted. This paper applies
+that separation to model answers about small finite algebraic objects.
+The model states a verdict and a certificate. A deterministic host
+program recomputes the property from the problem data using only exact
+operations: table lookups and integer arithmetic. The decision depends
+on the certificate, not on the model's explanation.
+
+Lattice holonomy is a useful test of this design. For a nonabelian
+group, the product around a plaquette depends on the order of
+multiplication and on the orientation, and an error in either gives a
+confident wrong answer. Checking is cheap: one pass over the plaquettes
+and, on a torus, two cycle products. The task therefore shows both
+whether a host catches order errors and what a harness must tell a model
+for its answer to be checkable at all.
+
+The paper makes three contributions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  a complete flatness check for finite-group connections on square
+  lattices, with tests (Section 2);
+\item
+  an exact replay of the five retained C017 lattice cases and of every
+  retained model solution record for them, with per-arm counts (Section
+  3);
+\item
+  a table of the retained formal-mathematics pilot runs for challenges
+  C045 to C050, with what the paired checkers accepted, what the prompts
+  disclosed and the limits the harness set (Section 4).
+\end{enumerate}
+
+No new model runs were made for this revision. The earlier internal
+revision numbered 2.0.1 added a replay, with no model call, of answers
+that need no mathematics against the C045 to C050 checkers as they were
+when the runs were recorded (Section 4.2).
+
+The initial internal draft of this paper (2026-09-28) also described a
+five-stage prompt filter whose stages were named after immune
+mechanisms, and it reported a 50 of 50 benchmark, a 40 per cent
+reduction in premature rollbacks, an 83.5 per cent reduction in prompt
+tokens and a 50 per cent accuracy gain. No run, runner or receipt for
+any of these is retained in the repository, so they are withdrawn; the
+change log lists every removed statement. In the initial internal
+draft's package the stages were simple functions. ``MHC peptide
+decomposition'' split an edge list into radius-one neighbourhoods.
+``Thymic selection'' tested membership in a supplied list. ``Kinetic
+proofreading'' compared two supplied fractions with two thresholds. The
+``Treg scratchpad'' check tested that four labelled lines appear in
+order. The ``allosteric quorum'' counted how many of five listed Unicode
+symbols occur in the prompt and compared the count with three. No effect
+of any of them on model answers was measured.
+
+\hypertarget{a-complete-flatness-check}{%
+\subsection{2. A complete flatness
+check}\label{a-complete-flatness-check}}
+
+\hypertarget{definitions}{%
+\subsubsection{2.1 Definitions}\label{definitions}}
+
+A finite group \(G\) is given by named elements, a full multiplication
+table and an inverse map. The package checks the identity law and the
+inverse law for every element and associativity for every triple before
+it uses a table, and it refuses a table that fails. It builds \(S_3\)
+from the permutations of \(\{0,1,2\}\) and the quaternion group \(Q_8\)
+from the unit quaternions \(\pm 1, \pm i, \pm j, \pm k\) with integer
+coordinates.
+
+An \(L \times M\) lattice has vertices \((r,c)\) with \(0 \le r < L\)
+and \(0 \le c < M\). Its positive edges are \((r,c) \to (r,c+1)\) and
+\((r,c) \to (r+1,c)\); on a torus the indices are taken modulo \(L\) and
+\(M\). An open lattice requires \(L,M \ge 2\) in this implementation. A
+torus requires \(L,M \ge 3\): at size two, distinct parallel edges would
+have the same endpoint names and need a different representation. A
+connection assigns an element \(U_{uv} \in G\) to each positive edge,
+and a reversed edge carries the inverse, \(U_{vu} = U_{uv}^{-1}\). The
+product along a path \(v_0 \to v_1 \to \cdots \to v_k\) is
+\[\operatorname{hol}(v_0 \to \cdots \to v_k) = U_{v_0 v_1} U_{v_1 v_2} \cdots U_{v_{k-1} v_k}.\]
+The plaquette \(P_{r,c}\) is listed as \(v_0 = (r,c)\),
+\(v_1 = (r+1,c)\), \(v_2 = (r+1,c+1)\), \(v_3 = (r,c+1)\), and its
+product is
+\[\operatorname{hol}(P_{r,c}) = U_{v_0 v_1} U_{v_1 v_2} U_{v_2 v_3} U_{v_3 v_0}.\]
+The last two factors traverse positive edges backwards, so they are the
+inverses of the stored links. A connection is flat when every plaquette
+product is the identity \(e\).
+
+A gauge \(g\) assigns an element to each vertex and acts by
+\(U'_{uv} = g_u U_{uv} g_v^{-1}\). The product around a closed path
+based at \(v_0\) becomes \(g_{v_0} \operatorname{hol} g_{v_0}^{-1}\).
+Flatness is therefore unchanged by a gauge transformation. On a torus,
+let \(A\) be the product around
+\((0,0) \to (0,1) \to \cdots \to (0,M-1) \to (0,0)\) and \(B\) the
+product around \((0,0) \to (1,0) \to \cdots \to (L-1,0) \to (0,0)\). A
+gauge transformation conjugates \(A\) and \(B\) by the same element.
+
+We use four standard facts {[}1, 2, 3{]}. Reversing a closed path
+inverts its product. Starting the same closed path at \(v_1\) instead of
+\(v_0\) conjugates its product by \(U_{v_0 v_1}^{-1}\). If a connection
+is flat, the product along a closed path depends only on the path's
+homotopy class, so on an open lattice, which is simply connected, a
+gauge built along a spanning tree makes every link the identity. On the
+torus, whose fundamental group \(\mathbb{Z}^2\) is abelian, a flat
+connection has commuting \(A\) and \(B\), and it is gauge-trivial
+exactly when \(A = B = e\).
+
+\hypertarget{the-check}{%
+\subsubsection{2.2 The check}\label{the-check}}
+
+The checker in \texttt{code/\allowbreak{}holonomy.py} returns one of
+three verdicts.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  It reads the group table and refuses it unless it is a group. It reads
+  the links and refuses them unless every edge is listed in both
+  directions with \(U_{vu} = U_{uv}^{-1}\) and no other edge is listed.
+  Every value must be a declared group element; duplicate parsed edges
+  are refused even if alternate strings such as
+  \texttt{0,0-\allowbreak{}>0,1} and \texttt{00,0-\allowbreak{}>0,1}
+  carry equal values.
+\item
+  It computes every plaquette product in the order of Section 2.1. If
+  any is not \(e\), it returns \texttt{NOT\_\allowbreak{}FLAT} with the
+  first such plaquette in row-major order and its product.
+\item
+  On an open lattice it returns \texttt{FLAT\_\allowbreak{}TRIVIAL} with
+  the gauge \(g_{(0,0)} = e\), \(g_v = g_u U_{uv}\) along a
+  breadth-first spanning tree, after verifying that this gauge makes
+  every link the identity.
+\item
+  On a torus it computes \(A\) and \(B\) and stops with an error if they
+  do not commute, which cannot happen for a flat connection. If
+  \(A = B = e\) it returns \texttt{FLAT\_\allowbreak{}TRIVIAL} with the
+  verified tree gauge; otherwise it returns
+  \texttt{FLAT\_\allowbreak{}NONTRIVIAL} with \(A\) and \(B\).
+\end{enumerate}
+
+\texttt{FLAT\_\allowbreak{}TRIVIAL} is the verdict that challenge C017
+calls \texttt{PURE\_\allowbreak{}GAUGE}.
+
+A separate function checks a stated verdict and its certificate. For
+\texttt{NOT\_\allowbreak{}FLAT} the four listed vertices must bound a
+plaquette, in either orientation and from any starting vertex, and the
+stated product must equal the product in the listed order and differ
+from \(e\). For \texttt{FLAT\_\allowbreak{}NONTRIVIAL} every plaquette
+must be flat and at least one stated closed loop must have the stated,
+non-identity product. In a flat connection every contractible loop has
+product \(e\), so such a loop is non-contractible. For
+\texttt{FLAT\_\allowbreak{}TRIVIAL} the stated gauge must make every
+link the identity. Any other answer, including an answer that could not
+be parsed, is rejected with a reason.
+
+A gauge certificate must cover each vertex once after parsing; an alias
+may not silently replace a conflicting value. These checks concern
+parsed mappings; raw JSON duplicate-key handling is the responsibility
+of the caller's JSON decoder.
+
+\textbf{Correctness and cost.} A nonidentity plaquette directly
+witnesses non-flatness. If all plaquettes are identity, deleting an
+immediate backtrack or replacing a path segment by the other sides of a
+plaquette preserves its product. On the open rectangle these moves
+contract every closed path, so root-to-vertex products are
+path-independent and the tree gauge trivializes all edges. On the torus,
+closed paths reduce to the two generators with the commutator relation:
+their products commute, and all closed products are identity exactly
+when both generators are. This proves the three-way decision for the
+declared rectangular cell complexes using the standard facts of Section
+2.1; it is not a formal proof of the Python implementation. Table
+validation costs \(O(|G|^3)\) operations and \(O(|G|^2)\) table storage.
+Once the group is validated, the lattice decision costs \(O(LM)\) table
+operations and storage. A certificate check costs \(O(LM+k)\), where
+\(k\) is the total number of submitted loop edges; malformed inputs
+receive a typed refusal rather than a flatness verdict.
+
+\hypertarget{remark-skipping-plaquettes-with-four-identity-links}{%
+\subsubsection{2.3 Remark: skipping plaquettes with four identity
+links}\label{remark-skipping-plaquettes-with-four-identity-links}}
+
+If the four links of a plaquette are the identity, its product is the
+identity. This uses only the identity law and \(e^{-1} = e\); the
+package records the one-line proof in Lean
+(\texttt{identity\_\allowbreak{}links\_\allowbreak{}give\_\allowbreak{}identity\_\allowbreak{}product}
+in \texttt{lean4/\allowbreak{}LatticeDecimation.lean}). The initial
+internal draft called this observation a theorem. It is a direct
+consequence of the group axioms.
+
+The checker may skip such plaquettes. It then performs fewer
+multiplications and reaches the same result, which the tests confirm on
+every connection they build. The saving depends on the gauge. If
+\(U = e\) and \(g\) is a gauge, then \(U'_{uv} = g_u g_v^{-1}\) is the
+identity only when \(g_u = g_v\). A gauge that differs on neighbouring
+vertices therefore leaves no plaquette with four identity links, while
+the connection stays flat and gauge-trivial. One retained C017 case,
+\texttt{base\_\allowbreak{}02}, has this form: 28 of its 31 links are
+not the identity, none of its 12 plaquettes can be skipped, and it is
+gauge-trivial. Skipping is an optimization. It cannot replace the
+products of the remaining plaquettes, and it cannot show flatness on its
+own.
+
+\hypertarget{tests}{%
+\subsubsection{2.4 Tests}\label{tests}}
+
+The tests in
+\texttt{code/\allowbreak{}tests/\allowbreak{}test\_\allowbreak{}holonomy\_\allowbreak{}checker.py}
+check the following on \(S_3\) and \(Q_8\):
+
+\begin{itemize}
+\tightlist
+\item
+  the trivial connection is \texttt{FLAT\_\allowbreak{}TRIVIAL} on open
+  and periodic lattices;
+\item
+  a connection that is a gauge transformation of the trivial one, with
+  no plaquette of four identity links, is
+  \texttt{FLAT\_\allowbreak{}TRIVIAL};
+\item
+  a torus connection with a constant non-identity product around one
+  cycle is \texttt{FLAT\_\allowbreak{}NONTRIVIAL};
+\item
+  a single non-identity link away from the boundary gives
+  \texttt{NOT\_\allowbreak{}FLAT} with exactly two non-flat plaquettes;
+\item
+  for every pair \((a,b) \in G \times G\), the \(3 \times 4\) torus
+  connection whose links from the last column to the first carry \(a\),
+  whose links from the last row to the first carry \(b\), and whose
+  other links are \(e\), is flat exactly when \(ab = ba\); when it is
+  flat its cycle products are \((a, b)\), or their conjugates by one
+  element after a gauge transformation, and when it is not flat its only
+  non-flat plaquette has product \(b a b^{-1} a^{-1}\);
+\item
+  on seeded random connections, reversing a plaquette inverts its
+  product, changing the starting vertex conjugates it, and some products
+  differ from their inverses;
+\item
+  skipping plaquettes with four identity links never changes the result;
+\item
+  malformed group tables, lattices and link lists are refused, and the
+  certificate check accepts a correct plaquette in either orientation
+  and rejects a wrong product, a flat plaquette, a four-cycle that is
+  not a plaquette and a contractible loop.
+\end{itemize}
+
+The seam family is small, but it is exhaustive over \(G \times G\), and
+in it a flat connection with non-commuting cycle products never
+occurred, as the theory requires. The family contains 100 connections:
+18 commuting S3 pairs and 40 commuting Q8 pairs. It tests 58 flat and 42
+non-flat cases, not all connections on a lattice.
+
+\hypertarget{the-c017-pilot}{%
+\subsection{3. The C017 pilot}\label{the-c017-pilot}}
+
+\hypertarget{what-was-run}{%
+\subsubsection{3.1 What was run}\label{what-was-run}}
+
+Challenge C017 asks for \texttt{NOT\_\allowbreak{}FLAT},
+\texttt{PURE\_\allowbreak{}GAUGE} or
+\texttt{FLAT\_\allowbreak{}NONTRIVIAL} verdicts with certificates for
+connections with values in \(S_3\), \(Q_8\) and
+\(\mathrm{SL}(2, \mathbb{F}_3)\) on square lattices. Its specification
+calls for open-weight models of at most 70B parameters and 36 hidden
+base cases. The retained runs are smaller pilots. They used five cases
+from the challenge's judge packet (Table 1), one reply per case, and one
+model outside that specification. The five case files are copied into
+\texttt{code/\allowbreak{}data/\allowbreak{}c017/\allowbreak{}} with
+their SHA-256 digests and source paths.
+
+Each arm sent one prompt per case and parsed a JSON object from the
+reply. Two checkers in the harness scored the certificate, and a case
+passed only when both accepted it.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Arm 1.} The lattice, the group table and inverses, all
+  directed links, the four verdict definitions and the JSON format.
+  Model
+  \texttt{meta-\allowbreak{}llama/\allowbreak{}llama-\allowbreak{}3.3-\allowbreak{}70b-\allowbreak{}instruct};
+  temperature 0.1; at most 2,000 completion tokens.
+\item
+  \textbf{Arm 2.} Arm 1 plus four written constraints: multiply in
+  traversal order; test the product, not a sign or determinant; on a
+  torus a flat connection need not be gauge-trivial; refuse inverse
+  mismatches. Same model and settings.
+\item
+  \textbf{Arm 5.} The Arm 2 constraints plus the full list of plaquettes
+  in the vertex order that the checker accepts, an instruction to
+  multiply step by step by table lookup, the two cycle paths on a torus
+  and a decision procedure. Run with
+  \texttt{meta-\allowbreak{}llama/\allowbreak{}llama-\allowbreak{}3.3-\allowbreak{}70b-\allowbreak{}instruct}
+  (temperature 0.05, at most 3,500 completion tokens) and with
+  \texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+  (temperature 0.05; the runner's default limit is 6,000 completion
+  tokens, can be changed on the command line, and is not recorded in the
+  report).
+\item
+  \textbf{Arm 6.} Arm 5, except that the harness listed only the
+  plaquettes that contain a non-identity link and stated that the others
+  were flat. Run with
+  \texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+  (temperature 0.05; runner default limit 4,000 completion tokens).
+\end{itemize}
+
+No C017 runs are retained for Arms 3 and 4. The model
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+is a new free ``stealth'' model offered on OpenRouter as of 2026-09-28;
+the provider does not disclose its identity, size or training. Results
+with it are exploratory. They fall outside the challenge protocol, SG-CP
+v1, whose §2 admits only open-weight models of at most 70B parameters
+(\texttt{omega\_\allowbreak{}engine\_\allowbreak{}projects/\allowbreak{}mssn\_\allowbreak{}sn\_\allowbreak{}symgam/\allowbreak{}challenges/\allowbreak{}01\_\allowbreak{}challenge\_\allowbreak{}protocol.md}),
+and they may not be reproducible once the stealth period ends. The
+reports record costs computed by the harness from configured per-token
+prices, not provider bills, so we do not report costs.
+
+\Needspace{18\baselineskip}
+
+Table 1. The five retained C017 cases and the host verdicts computed by
+the package. ``Skippable'' counts plaquettes whose four links are the
+identity. The case files name the elements of \(S_3\) as \texttt{e},
+\texttt{r}, \texttt{r2}, \texttt{s}, \texttt{sr}, \texttt{sr2}, where
+\texttt{r2} is \(r^2 = r^{-1}\), and the elements of \(Q_8\) as
+\texttt{e}, \texttt{-\allowbreak{}e}, \texttt{i},
+\texttt{-\allowbreak{}i}, \texttt{j}, \texttt{-\allowbreak{}j},
+\texttt{k}, \texttt{-\allowbreak{}k}. The case
+\texttt{pois\_\allowbreak{}01} comes from the challenge's poisoned set:
+its non-flat product is a 3-cycle, which has sign \(+1\), so a test of
+the sign alone would call the connection flat.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1200}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2400}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2600}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Case
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Group and lattice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Non-identity links
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Plaquettes (skippable)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Host verdict
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{pois\_\allowbreak{}01} & \(S_3\), \(3 \times 3\) open & 1 of 12
+& 4 (3) & \texttt{NOT\_\allowbreak{}FLAT}, \(P_{0,0}\) has product
+\texttt{r2} \\
+\texttt{base\_\allowbreak{}01} & \(S_3\), \(3 \times 4\) open & 1 of 17
+& 6 (5) & \texttt{NOT\_\allowbreak{}FLAT}, \(P_{0,1}\) has product
+\texttt{s} \\
+\texttt{base\_\allowbreak{}02} & \(S_3\), \(4 \times 5\) open & 28 of 31
+& 12 (0) & \texttt{FLAT\_\allowbreak{}TRIVIAL} \\
+\texttt{base\_\allowbreak{}03} & \(S_3\), \(5 \times 6\) torus & 11 of
+60 & 30 (20) & \texttt{FLAT\_\allowbreak{}NONTRIVIAL}, \(A\) =
+\texttt{r}, \(B\) = \texttt{r2} \\
+\texttt{base\_\allowbreak{}13} & \(Q_8\), \(4 \times 5\) open & 1 of 31
+& 12 (11) & \texttt{NOT\_\allowbreak{}FLAT}, \(P_{0,0}\) has product
+\texttt{-\allowbreak{}i} \\
+\end{longtable}
+
+The host verdicts agree with the verdicts that the harness expected for
+all five cases. The \(S_3\) table in the case files is isomorphic to the
+permutation group (the tests find all six isomorphisms), and the \(Q_8\)
+table equals the package's quaternion table.
+
+\hypertarget{outcomes}{%
+\subsubsection{3.2 Outcomes}\label{outcomes}}
+
+Table 2 gives, for each arm and case, what the model stated and whether
+the harness accepted the certificate. ``70B'' denotes
+\texttt{meta-\allowbreak{}llama/\allowbreak{}llama-\allowbreak{}3.3-\allowbreak{}70b-\allowbreak{}instruct}
+and ``stealth'' denotes
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}.
+``Reversed order'' means that the answer named the correct non-flat
+plaquette with its vertices in the opposite orientation.
+
+\Needspace{20\baselineskip}
+
+Table 2. Harness outcomes for the five C017 cases (one reply per cell).
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Case
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Arm 1, 70B
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Arm 2, 70B
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Arm 5, 70B
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Arm 5, stealth
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Arm 6, stealth
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{pois\_\allowbreak{}01} & reversed order & reversed order &
+accepted & accepted & accepted \\
+\texttt{base\_\allowbreak{}01} & reversed order & stated
+\texttt{PURE\_\allowbreak{}GAUGE} & accepted & accepted & accepted \\
+\texttt{base\_\allowbreak{}02} & no parsable JSON & stated
+\texttt{NOT\_\allowbreak{}FLAT} & flat plaquette stated as \texttt{r2} &
+flat plaquette stated as \texttt{r} & flat plaquette stated as
+\texttt{r} \\
+\texttt{base\_\allowbreak{}03} & loop product misstated & loop product
+misstated & no parsable JSON & reply cut off & accepted \\
+\texttt{base\_\allowbreak{}13} & reversed order & no parsable JSON &
+accepted & accepted & accepted \\
+Accepted & 0 of 5 & 0 of 5 & 3 of 5 & 3 of 5 & 4 of 5 \\
+Verdict label equal to host & 4 of 5 & 2 of 5 & 3 of 5 & 3 of 5 & 4 of
+5 \\
+\end{longtable}
+
+For the 15 solution records retained in Arms 5 and 6, the package agrees
+with the historical harness: 10 accepted and 5 rejected. These records
+contain 13 parsed certificate objects and two
+\texttt{PARSE\_\allowbreak{}ERROR} wrappers for replies whose JSON could
+not be parsed; rejecting a wrapper is not verification of an absent
+mathematical certificate. For Arms 1 and 2 the reports retain only the
+stated verdict and the checkers' reasons, not the certificates.
+
+\textbf{Vertex order.} The Arm 1 and Arm 2 prompts defined a plaquette
+product as \(U_{01} U_{12} U_{23} U_{30}\) but did not say in which
+order the checker lists a plaquette's vertices. The checker accepted
+only \((r,c), (r+1,c), (r+1,c+1), (r,c+1)\). Three Arm 1 answers named
+the correct non-flat plaquette in the order
+\((r,c), (r,c+1), (r+1,c+1), (r+1,c)\) and were rejected on that ground
+before any product was compared. The reports do not retain the stated
+products, so we cannot say whether they were right for the reversed
+order. Arm 1 therefore scored 0 of 5, although its verdict label matched
+the host in 4 of 5 cases. Two Arm 2 answers were rejected on the same
+ground; one of them also had the wrong verdict. The Arm 5 prompt listed
+the accepted order, and the three open non-flat cases were accepted for
+both models. Arm 5 also added the step-by-step instruction and the cycle
+paths, so these runs do not separate the effect of stating the
+convention from the other additions. The certificate check of Section 2
+accepts either orientation.
+
+\textbf{The gauge-trivial case.} \texttt{base\_\allowbreak{}02} is flat
+and gauge-trivial, and 28 of its 31 links are not the identity. All
+three Arm 5 and Arm 6 answers for it stated
+\texttt{NOT\_\allowbreak{}FLAT} with a plaquette whose product is \(e\),
+stating the product as \texttt{r2} or \texttt{r}; each was rejected
+because the stated product disagrees with the table. The initial
+internal draft also stated that an instruction to build a gauge along a
+spanning tree biased models towards \texttt{PURE\_\allowbreak{}GAUGE}.
+No retained run supports this, and the statement is withdrawn. The only
+retained \texttt{PURE\_\allowbreak{}GAUGE} answer is the Arm 2 answer
+for \texttt{base\_\allowbreak{}01}, a non-flat case, whose stated gauge
+fails on the edge \((0,1) \to (0,2)\).
+
+\textbf{The torus case.} In \texttt{base\_\allowbreak{}03}, 20 of the 30
+plaquettes have four identity links, and each of the other 10 contains
+at least one of the 11 non-identity links. With Arm 5, the reply of
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+stopped at 8,000 completion tokens with its JSON unfinished; the
+retained start of the reply already carried the label
+\texttt{FLAT\_\allowbreak{}NONTRIVIAL}. With Arm 6, where the harness
+listed only the 10 plaquettes with a non-identity link, the same model
+returned all 10 products (each \(e\)), \(A\) = \texttt{r}, \(B\) =
+\texttt{r2} and the label \texttt{FLAT\_\allowbreak{}NONTRIVIAL} in
+2,810 completion tokens, and both checkers accepted the answer. This is
+one case with one reply per arm. It shows that the shorter prompt fitted
+within the limit on this case; it does not measure a general saving. The
+Arm 6 listing relies on identity links, which a gauge transformation can
+remove (Section 2.3). The initial internal draft stated that 24
+plaquettes were skipped and that the model evaluated only the two
+cycles. Recomputing the Arm 6 plaquette list from the case file gives 20
+skipped plaquettes, and the retained reply evaluates the other 10
+plaquettes and the two cycles.
+
+\textbf{The harness checkers.} The two checkers in the C017 harness are
+not independent implementations. Both import the plaquette list and the
+path product from the challenge's reference solver. The check in this
+package shares no code with them, and on the retained solution records
+it reaches the same decisions. Agreement on these cases does not certify
+independence from shared mathematical assumptions or establish the
+soundness of either implementation beyond the checked scope.
+
+\hypertarget{data-sources-for-section-3}{%
+\subsubsection{3.3 Data sources for Section
+3}\label{data-sources-for-section-3}}
+
+All paths are relative to the repository root.
+
+\begin{itemize}
+\tightlist
+\item
+  Challenge specification:
+  \texttt{omega\_\allowbreak{}engine\_\allowbreak{}projects/\allowbreak{}mssn\_\allowbreak{}sn\_\allowbreak{}symgam/\allowbreak{}challenges/\allowbreak{}b\_\allowbreak{}cohomology/\allowbreak{}c017\_\allowbreak{}nonabelian\_\allowbreak{}lattice\_\allowbreak{}holonomy.md}.
+\item
+  Arms 1 and 2:
+  \texttt{.../\allowbreak{}c017\_\allowbreak{}nonabelian\_\allowbreak{}lattice\_\allowbreak{}holonomy/\allowbreak{}results/\allowbreak{}immune\_\allowbreak{}transfer\_\allowbreak{}report.json},
+  added in commit
+  \texttt{\seqsplit{7e639a0be573f6affc4d84a2aacb5573da92bc79}}; runner
+  \texttt{eval\_\allowbreak{}epistemic\_\allowbreak{}immune\_\allowbreak{}transfer.py}
+  at that commit.
+\item
+  Arm 5 with
+  \texttt{meta-\allowbreak{}llama/\allowbreak{}llama-\allowbreak{}3.3-\allowbreak{}70b-\allowbreak{}instruct}:
+  \texttt{results/\allowbreak{}arm5\_\allowbreak{}hybrid\_\allowbreak{}report.json}
+  as committed in
+  \texttt{\seqsplit{9e45ee501e6a48086aaabd2381632eef6f7ed7a2}}. The file
+  at that path was later overwritten by a one-case run, so this report
+  is retained only in the repository history.
+\item
+  Arm 5 with
+  \texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}:
+  \texttt{results/\allowbreak{}arm5\_\allowbreak{}stealth\_\allowbreak{}space\_\allowbreak{}bunny\_\allowbreak{}alpha\_\allowbreak{}report.json},
+  commit \texttt{\seqsplit{5327cfcb7ee3622e79f7d0cd884dfa37ef4eef56}}.
+\item
+  Arm 6:
+  \texttt{results/\allowbreak{}arm6\_\allowbreak{}stealth\_\allowbreak{}space\_\allowbreak{}bunny\_\allowbreak{}alpha\_\allowbreak{}report.json},
+  commit \texttt{\seqsplit{eb5fc971ae44320ff8183f09343d547f830d9d56}}.
+\end{itemize}
+
+The historical report digests are recorded with their original receipts.
+The byte copies in
+\texttt{docs/\allowbreak{}historical\_\allowbreak{}evidence/\allowbreak{}}
+have pinned source commits, Git blob SHAs and SHA-256 digests in their
+provenance file. The package file
+\texttt{code/\allowbreak{}data/\allowbreak{}c017/\allowbreak{}model\_\allowbreak{}claims.json}
+holds the verdicts, certificates, checker reasons and completion lengths
+extracted from these reports.
+\texttt{code/\allowbreak{}recount\_\allowbreak{}pilots.py} freshly
+compares all 25 extraction entries with those source reports. That
+comparison does not recover the ten missing certificate payloads or
+generate new responses.
+
+\hypertarget{six-formal-mathematics-pilots}{%
+\subsection{4. Six formal-mathematics
+pilots}\label{six-formal-mathematics-pilots}}
+
+\hypertarget{what-was-run-1}{%
+\subsubsection{4.1 What was run}\label{what-was-run-1}}
+
+For each of challenges C045 to C050, a runner script defines a ten-case
+panel, separate from the challenge's 64 hidden cases (for C049 panel B
+the script is not retained; see below), and sends each case once to
+three models through OpenRouter at temperature 0:
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+(the undisclosed stealth model described in Section 3.1),
+\texttt{meta-\allowbreak{}llama/\allowbreak{}llama-\allowbreak{}3.3-\allowbreak{}70b-\allowbreak{}instruct}
+and
+\texttt{meta-\allowbreak{}llama/\allowbreak{}llama-\allowbreak{}3.1-\allowbreak{}8b-\allowbreak{}instruct}.
+The reports do not record which provider served each model. A case
+passed only when both of the challenge's checkers, an exact checker and
+a second checker, accepted the answer.
+
+The harness set the completion limits. In C045 and C046 the limit was
+4,096 tokens for
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+and 2,048 for the other two models. In C047 and C049 panel A it was
+4,096 tokens and in C048 and C050 2,048 tokens for all three. The limit
+for C049 panel B is not recorded.
+
+\Needspace{25\baselineskip}
+
+Table 3. Cases passed, out of 10 per cell, one reply per case. SBA, 70B
+and 8B refer to the three model identifiers above, in that order.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4200}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Challenge
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Task
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+SBA
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+70B
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+8B
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+C045 & knot invariants from planar diagrams & 2 & 8 & 3 \\
+C046 & Knuth--Bendix completion and normal forms {[}4{]} & 4 & 7 & 8 \\
+C047 & linear recurrences or certified absence & 4 & 2 & 0 \\
+C048 & rational point or local obstruction for a ternary quadratic form
+& 10 & 8 & 5 \\
+C049, panel A & limits, colimits and adjunctions in finite categories &
+5 & 6 & 4 \\
+C049, panel B & the same topics, a different set of ten cases & 9 & 6 &
+6 \\
+C050, run 1 & equational rewriting proof or two-element countermodel & 7
+& 4 & 1 \\
+C050, run 2 & the same ten cases, run again & 6 & 3 & 1 \\
+\end{longtable}
+
+The offline recount uses the per-case recorded flags. One C045 8B entry
+records \texttt{JSON\_\allowbreak{}ERROR} without a pass flag; it is
+counted as an unaccepted response. This recount does not re-execute the
+historical certificate checkers.
+
+C049 has two retained runs on different ten-case panels with the same
+three models, committed together on 2026-09-28. Panel A was produced by
+the runner script retained in the repository; the script that produced
+panel B is not retained. For
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+the two panels give 5 and 9 passes. C050 was run twice with the same
+committed runner and the same ten cases; the recorded start times are 98
+seconds apart. The second report overwrote the first, which is retained
+in the repository history. For
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha},
+five of the ten cases changed outcome between the two runs, two of them
+because one run received an API error instead of a reply. The initial
+internal draft reported only C049 panel B and C050 run 2.
+
+\textbf{What the prompts disclosed.} Each runner sent a case as the line
+\texttt{Case ID: <id>} followed by the case data (lines 219, 270, 221,
+163, 264 and 236 of the C045 to C050 runners, unchanged from the commits
+that recorded the runs to the code baseline). The challenge authors
+wrote the identifiers, and many name the expected result.
+\texttt{c045\_\allowbreak{}m02\_\allowbreak{}trefoil\_\allowbreak{}identify}
+asks for the identification of a knot that its identifier names.
+\texttt{c045\_\allowbreak{}m09\_\allowbreak{}refusal\_\allowbreak{}corrupt\_\allowbreak{}edge}
+and
+\texttt{c046\_\allowbreak{}m08\_\allowbreak{}refusal\_\allowbreak{}commutativity}
+name a refusal and its reason.
+\texttt{c046\_\allowbreak{}m05\_\allowbreak{}check\_\allowbreak{}non\_\allowbreak{}confluent\_\allowbreak{}group}
+names the confluence verdict.
+\texttt{c047\_\allowbreak{}m07\_\allowbreak{}prand\_\allowbreak{}decoy}
+and
+\texttt{c047\_\allowbreak{}m08\_\allowbreak{}order9\_\allowbreak{}decoy}
+mark the cases with no recurrence within the bounds.
+\texttt{c048\_\allowbreak{}m01\_\allowbreak{}solv\_\allowbreak{}11\_\allowbreak{}m2}
+and
+\texttt{c048\_\allowbreak{}m02\_\allowbreak{}solv\_\allowbreak{}pyth}
+mark solvable forms, and
+\texttt{c048\_\allowbreak{}m05\_\allowbreak{}obstr\_\allowbreak{}inf\_\allowbreak{}111}
+names both the obstruction and its place.
+\texttt{c049\_\allowbreak{}m05\_\allowbreak{}no\_\allowbreak{}product\_\allowbreak{}disc2}
+names the verdict that no product exists. The C045, C046, C049 and C050
+runners also sent the whole case record, including the \texttt{note} of
+the poisoned cases C049 m10 and C050 m09, whose identifiers call the
+note bait or fake; the C047 and C048 runners sent only the terms or
+coefficients and the bounds. Table 4 counts the identifiers of the six
+panels whose runner is retained. Which identifiers name the result is
+one reader's classification, the author's; it is published identifier by
+identifier with the replay listed in Section 4.4, so that another reader
+can check or dispute each case.
+
+\Needspace{16\baselineskip}
+
+Table 4. What the case identifiers name, in the author's classification,
+and the most passes that an answer needing no mathematics obtains under
+the same rule (both checkers accept), out of 10 per panel. The answers
+tried were an empty object, a bare abstention, a refusal or out-of-scope
+answer with each reason the prompt lists, and a constant verdict where
+the output format allows one (Section 4.2).
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1579}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2105}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2105}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2105}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2105}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Challenge
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Names the verdict or answer
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Names the object
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Neither
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Best baseline passes
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+C045 & 7 & 3 & 0 & 10 \\
+C046 & 5 & 3 & 2 & 10 \\
+C047 & 4 & 6 & 0 & 0 \\
+C048 & 10 & 0 & 0 & 3 \\
+C049, panel A & 5 & 5 & 0 & 2 \\
+C050 & 5 & 5 & 0 & 1 \\
+\end{longtable}
+
+In C045 and C046 the best such answer is a refusal of every case: both
+checkers accept a refusal with any of the listed reasons on every case,
+so it passes 10 of 10, more than any model in Table 3. In C048 a
+constant local obstruction at the place 2 passes 3 cases, and in C049 a
+constant ``does not exist'' passes 2. The identifiers of the C049 panel
+B report have the same form (for example
+\texttt{c049\_\allowbreak{}m07\_\allowbreak{}no\_\allowbreak{}product\_\allowbreak{}discrete}),
+but its runner is not retained, so what its prompts contained cannot be
+checked and its cases cannot be replayed.
+
+The counts in Table 3 are therefore counts under leaked labels. These
+counts describe responses under the disclosed prompts and checker rules;
+they do not estimate or bound unaided performance. In C045 and C046 they
+do not separate any model from an answer that refuses every case. The
+models' own passes there include refusals only on the cases whose
+identifiers name a refusal (C045 m09 and m10; C046 m08 to m10), and the
+checkers accepted those refusals without comparing the stated reason
+with the input.
+
+We do not add counts across challenges and we make no comparison between
+models. The tasks differ, the panels were written by the challenge
+authors, each cell has n = 10 and one reply per case, and no statistical
+test was run. The initial internal draft's totals over 80 cases and its
+conclusion that absence proofs remain a capability of symbolic
+algorithms alone are withdrawn; the evidence is 10 cases per cell on one
+day.
+
+\hypertarget{observations}{%
+\subsubsection{4.2 Observations}\label{observations}}
+
+\textbf{Harness limits.} In C045 all 8 failures of
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+returned no answer object, with recorded token counts (prompt and
+completion together) of 4,751 to 4,845, consistent with the reply
+reaching the 4,096-token completion limit. In C046, 5 of its 6 failures
+were of the same kind, at 4,624 to 4,747 tokens. The reports do not
+record prompt and completion counts separately. These cases most likely
+show replies that did not fit the harness limit; they do not measure
+what the model could compute.
+
+\textbf{The second checkers.} For those empty answers in C045 and C046
+the second checker reported acceptance and only the exact checker
+rejected them. In C047 case m06, whose terms after the first are the
+Fibonacci numbers,
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+returned a certificate that no recurrence exists within the bounds; the
+second checker accepted it, and the exact checker rejected it because
+its minor used rows below the smallest index that the exact checker
+allows.
+
+A replay of answers that need no mathematics, against the checkers as
+they were when the runs were recorded, shows how far this goes. It
+imports each challenge's two checkers from those commits, reads the
+panel from the runner without running it, and calls no model. The second
+checkers of C045 and C046 accept the empty object \texttt{\{\}}, a bare
+abstention, and any refusal that carries a reason and a witness, on all
+ten cases. The second checker of C047 accepts a recurrence with an empty
+coefficient list, and an absence certificate with an empty list of minor
+rows, on 9 of the 10 cases, because the determinant of an empty matrix
+is 1; on the tenth, whose terms include a non-integer, it raises an
+error. The second checker of C048 accepts any out-of-scope answer on all
+ten cases, and that of C049 accepts a constant ``does not exist'' on 8
+of 10. A pass required both checkers. For the cited empty or malformed
+answers rejected by the exact checker, permissive acceptance by the
+second checker did not turn a rejection into a pass. This does not prove
+that the second checker adds no constraint on every possible answer.
+Table 3 remains a historical record of the original paired rule. In C045
+and C046 even that rule accepts the constant refusals of Table 4.
+
+The repository documents later harness corrections in commits
+\texttt{\seqsplit{e6fbc15cf011121597a82a1d199626063bedf7c0}} and
+\texttt{\seqsplit{e2f7a3500413af960c6001832a1ab096a7a14af8}}. The
+following is a historical summary of those changes, not a fresh checker
+execution in this review. The C045 and C046 second checkers now
+recompute the answer independently, so a refusal of every case,
+\texttt{\{\}} and an answer without content fail them; the C047 second
+checker no longer accepts an empty coefficient list or an empty list of
+minor rows; the C048 second checker accepts an out-of-scope answer only
+when a coefficient is not an integer; and the C043 to C050 runners
+replace the descriptive identifiers with opaque tokens drawn for each
+run. The C045 and C046 exact checkers still accept a refusal with any
+reason, so the pair now depends on the second checker for that case.
+None of this changes Table 3, which was produced with the checkers of
+the run commits.
+
+\textbf{Absence certificates.} C047 certifies that no recurrence exists
+within the bounds by a nonsingular minor, whose determinant the exact
+checker computes by fraction-free elimination {[}5{]}. On the three
+panel cases that the runner marks as having no recurrence within the
+bounds (m07, m08, m10), no model returned a certificate that both
+checkers accepted.
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+returned no answer content for all three; the other two models stated
+recurrences or malformed certificates.
+
+\textbf{Other failures.} In each C050 run, one failure of
+\texttt{stealth/\allowbreak{}space-\allowbreak{}bunny-\allowbreak{}alpha}
+was an API error with no reply. In C048, the two failures of
+\texttt{llama-\allowbreak{}3.3-\allowbreak{}70b-\allowbreak{}instruct}
+were integer points that do not satisfy the form's equation.
+
+\hypertarget{what-the-checkers-and-mutation-suites-show}{%
+\subsubsection{4.3 What the checkers and mutation suites
+show}\label{what-the-checkers-and-mutation-suites-show}}
+
+Each challenge's judge packet retains 64 hidden cases and 48 mutated
+certificates for testing the checkers, 512 and 384 in total over C043 to
+C050. Scoring receipts are retained for C043 and C044 only. Each records
+the reference solver passing all 64 hidden cases, the two checkers
+agreeing on all of them, and all 48 mutations rejected. No scoring
+receipt is retained for C045 to C050, so the initial internal draft's
+statement that 512 cases were verified and 384 mutations rejected is
+narrowed to these 128 cases and 96 mutations. The receipts concern the
+reference solvers and checkers, not the models.
+
+Challenges C043 and C044 were also run with the same three models. The
+C043 runner wrote its report to a directory that the repository's ignore
+rules exclude. The C044 runner wrote its report outside the repository,
+to a directory it reaches six levels above its own file. Neither report
+is under version control, and the counts appear only in narrative
+findings documents, so we do not report them. They would not measure
+identification in any case: the C044 runner sent each example file
+whole, including its \texttt{note}, which names the group or the
+expected verdict (for example ``Quaternion group Q8'', ``C4 against
+Klein four group V4'' and ``S5 has order 120 which exceeds max allowed
+order 64''). The C043 prompts were built from the case fields and
+carried no note. An earlier internal review reported an external file
+with the C044 report's name (SHA-256
+\texttt{\seqsplit{5fecd63f08dc1b5b2094fe6b722c236f284567b52a9a140f62d4825e63e8648b}});
+it was not under version control when the run was recorded. Its presence
+and bytes were not independently checked in this review, and we do not
+report its counts. In the corrected harness the C044 runner no longer
+sends the \texttt{note} or reads a credentials file, and it writes its
+report into the repository's run store.
+
+\hypertarget{data-sources-for-section-4}{%
+\subsubsection{4.4 Data sources for Section
+4}\label{data-sources-for-section-4}}
+
+All paths are relative to
+\texttt{omega\_\allowbreak{}engine\_\allowbreak{}projects/\allowbreak{}mssn\_\allowbreak{}sn\_\allowbreak{}symgam/\allowbreak{}challenges/\allowbreak{}e\_\allowbreak{}formal\_\allowbreak{}math/\allowbreak{}}.
+
+\begin{itemize}
+\tightlist
+\item
+  C045 run report:
+  \texttt{c045\_\allowbreak{}knot\_\allowbreak{}polynomials\_\allowbreak{}from\_\allowbreak{}pd/\allowbreak{}empirical\_\allowbreak{}results/\allowbreak{}c045\_\allowbreak{}space\_\allowbreak{}bunny\_\allowbreak{}matrix\_\allowbreak{}report.json},
+  commit \texttt{\seqsplit{ea2b55d841bdbe283f2f6ac77abe8a1677cbf0f8}}.
+\item
+  C046, C047 and C048 run reports: the files with the same pattern in
+  their challenge folders, commit
+  \texttt{\seqsplit{46bd1dec156260f073b77caa07d8a453f8efad30}}.
+\item
+  C049 panel B:
+  \texttt{c049\_\allowbreak{}finite\_\allowbreak{}category\_\allowbreak{}universal\_\allowbreak{}constructions/\allowbreak{}empirical\_\allowbreak{}results/\allowbreak{}c049\_\allowbreak{}space\_\allowbreak{}bunny\_\allowbreak{}matrix\_\allowbreak{}report.json};
+  panel A: the three files \texttt{results\_\allowbreak{}*.json} in the
+  same folder; both in commit
+  \texttt{\seqsplit{46bd1dec156260f073b77caa07d8a453f8efad30}}.
+\item
+  C050 run 1:
+  \texttt{c050\_\allowbreak{}equational\_\allowbreak{}theorem\_\allowbreak{}proving/\allowbreak{}empirical\_\allowbreak{}results/\allowbreak{}c050\_\allowbreak{}space\_\allowbreak{}bunny\_\allowbreak{}matrix\_\allowbreak{}report.json}
+  as committed in
+  \texttt{\seqsplit{46bd1dec156260f073b77caa07d8a453f8efad30}}; run 2:
+  the same path as committed in
+  \texttt{\seqsplit{5a256c6e8d088c612332362a8abc53138806ac7a}}.
+\item
+  Runner scripts, which set the panels, the prompts and the completion
+  limits: \texttt{run\_\allowbreak{}c045\_\allowbreak{}matrix.py} to
+  \texttt{run\_\allowbreak{}c050\_\allowbreak{}matrix.py} in the
+  challenge folders.
+\item
+  The replay behind Table 4 and Section 4.2 (paths relative to the
+  repository root): the collection's script
+  \texttt{omega\_\allowbreak{}engine\_\allowbreak{}atlas/\allowbreak{}coda\_\allowbreak{}atlas/\allowbreak{}omega\_\allowbreak{}engine\_\allowbreak{}symbol\_\allowbreak{}game/\allowbreak{}tools/\allowbreak{}replay\_\allowbreak{}formal\_\allowbreak{}math\_\allowbreak{}baselines.py}
+  and its record
+  \texttt{omega\_\allowbreak{}engine\_\allowbreak{}atlas/\allowbreak{}coda\_\allowbreak{}atlas/\allowbreak{}omega\_\allowbreak{}engine\_\allowbreak{}symbol\_\allowbreak{}game/\allowbreak{}verification/\allowbreak{}formal\_\allowbreak{}math\_\allowbreak{}baselines.json}.
+  It reads the runners and checkers from commits
+  \texttt{\seqsplit{ea2b55d841bdbe283f2f6ac77abe8a1677cbf0f8}} (the C045
+  runner) and
+  \texttt{\seqsplit{46bd1dec156260f073b77caa07d8a453f8efad30}} (C046 to
+  C050). The C045 checkers are read from commit
+  \texttt{\seqsplit{c568c20062697b54ddb8729e2476d4cfdb5c4982}}, which
+  differs from the run commit in that folder only by one import line
+  that Python 3.12 needs to load the exact checker.
+\item
+  Scoring receipts:
+  \texttt{c043\_\allowbreak{}ramsey\_\allowbreak{}vdw\_\allowbreak{}constructions/\allowbreak{}commit\_\allowbreak{}reveal/\allowbreak{}c043\_\allowbreak{}l41\_\allowbreak{}scoring\_\allowbreak{}receipt.json}
+  (commit \texttt{\seqsplit{50197478726e5ecb791e519760cee9a79af2af27}})
+  and
+  \texttt{c044\_\allowbreak{}finite\_\allowbreak{}group\_\allowbreak{}identification/\allowbreak{}commit\_\allowbreak{}reveal/\allowbreak{}c044\_\allowbreak{}l41\_\allowbreak{}scoring\_\allowbreak{}receipt.json}
+  (commit \texttt{\seqsplit{999b36c1afed0f905f634f83adc1c646da7b975e}}).
+\end{itemize}
+
+\hypertarget{limitations}{%
+\subsection{5. Limitations}\label{limitations}}
+
+The C017 pilot has five cases, one reply per case and arm, two models,
+and arms that change several things at once. The formal-mathematics
+pilots have ten cases per cell and one reply per case, and their prompts
+named the expected result for 36 of the 60 cases whose prompts can be
+reconstructed (Table 4). Neither pilot supports a claim that one prompt
+or model is better than another, or any claim about unaided capability,
+and none is made. Replies from hosted models can vary between calls even
+at temperature 0.
+
+One of the three models is undisclosed and may not remain available. Two
+reports (C017 Arm 5 with
+\texttt{meta-\allowbreak{}llama/\allowbreak{}llama-\allowbreak{}3.3-\allowbreak{}70b-\allowbreak{}instruct}
+and C050 run 1) were overwritten in the repository history; byte copies
+are now included in this package. The C043 and C044 model reports and
+the C049 panel B runner remain unavailable in the version-controlled
+evidence reviewed here. The repeated C050 panel shows that a single
+reply per case can change between runs; C049 instead compares different
+panels.
+
+The package freshly replays the C017 cases and 15 retained solution
+records. Its offline recount verifies source custody, extraction and
+table arithmetic: Table 3 retains original acceptance flags, while Table
+4 retains author annotations and the prior checker replay record. Fresh
+C045--C050 checker execution still requires a repository checkout with
+the cited commits. The C017 harness checkers share reference-solver
+code. Lean formalizes only the Section 2.3 remark; the complete host is
+tested, not mechanically formalized. This review did not execute the
+pinned Lean compiler; historical Lean reports are retained without being
+presented as fresh evidence.
+
+This paper assigns no authorization and changes no jurisdiction. It
+carries no operational authority or institutional standing.
+
+\hypertarget{reproduction}{%
+\subsection{6. Reproduction}\label{reproduction}}
+
+From the package root with Python 3.12 or later, install the development
+tools and run the offline checks (on Windows, substitute
+\texttt{py -\allowbreak{}3.12} for \texttt{python}):
+
+\begin{lstlisting}
+python -m pip install -e '.[dev]'
+python -m pytest code/tests
+python -m ruff check code tools/study_capstone.py tools/render_paper.py
+python -m mypy code
+python code/replay_c017.py
+python code/recount_pilots.py
+python tools/study_capstone.py --output /tmp/paper010-capstone.json
+python tools/render_paper.py
+python verify_deposit.py
+python tools/rebuild_release.py --check
+\end{lstlisting}
+
+Choose a writable capstone output path on Windows. The development extra
+lists pytest 9 or later, ruff 0.14.13 and mypy 1.19.1; the current
+receipt records the versions actually used. Runtime algebra and the
+replay/recount scripts use only the standard library and packaged data.
+They make no provider or network call.
+
+The deposited renderer uses Pandoc and XeLaTeX to regenerate both
+\texttt{paper.tex} and \texttt{paper.pdf}. To rebuild release custody
+after an intentional edit, run
+\texttt{python tools/\allowbreak{}rebuild\_\allowbreak{}release.py},
+then both deposit checks again. Digest agreement establishes file
+custody, not the truth of all manuscript claims.
+
+With the exact toolchain in
+\texttt{lean4/\allowbreak{}lean-\allowbreak{}toolchain} (Lean
+4.34.0-rc1), run \texttt{lake build} in \texttt{lean4/\allowbreak{}},
+then
+\texttt{python tools/\allowbreak{}replay\_\allowbreak{}lean\_\allowbreak{}axiom\_\allowbreak{}census.py -\allowbreak{}-\allowbreak{}replay .}
+from the package root. A static
+\texttt{-\allowbreak{}-\allowbreak{}check .} only compares the generated
+census source with the retained named report. The separate full-module
+report includes generated structure declarations; it is not a second
+mathematical theorem or a proof of the complete checker. The historical
+C045--C050 checker replay needs the collection folder and cited Git
+commits:
+\texttt{python tools/\allowbreak{}replay\_\allowbreak{}formal\_\allowbreak{}math\_\allowbreak{}baselines.py -\allowbreak{}-\allowbreak{}check}.
+That operation is distinct from this package's offline report recount.
+
+\hypertarget{verification-for-this-revision}{%
+\subsection{Verification for this
+revision}\label{verification-for-this-revision}}
+
+\texttt{docs/\allowbreak{}v01\_\allowbreak{}review\_\allowbreak{}2026\_\allowbreak{}10\_\allowbreak{}02.json}
+records the reviewed repository baseline, commands, actual tool
+versions, exit statuses and scope. Current tests, lint, type checking,
+C017 replay, source/extraction/table recount, capstone, PDF rendering
+and deposit custody checks were executed. The pinned Lean build and
+fresh C045--C050 checker execution were not run in this environment, and
+no model trial was made. The earlier
+\texttt{docs/\allowbreak{}release\_\allowbreak{}validation\_\allowbreak{}*.json}
+files and Lean reports retain their original dates and scope; they are
+historical records. The current review record makes these limits
+explicit rather than treating a retained report as execution.
+
+\hypertarget{references}{%
+\subsection{References}\label{references}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  K. G. Wilson, ``Confinement of quarks,'' \emph{Physical Review D}
+  \textbf{10}(8), 2445--2459 (1974).
+  \href{https://doi.org/10.1103/PhysRevD.10.2445}{doi:10.1103/PhysRevD.10.2445}
+\item
+  J. B. Kogut, ``An introduction to lattice gauge theory and spin
+  systems,'' \emph{Reviews of Modern Physics} \textbf{51}(4), 659--713
+  (1979).
+  \href{https://doi.org/10.1103/RevModPhys.51.659}{doi:10.1103/RevModPhys.51.659}
+\item
+  A. Hatcher, \emph{Algebraic Topology}. Cambridge University Press,
+  2002, Chapter 1.
+  \href{https://pi.math.cornell.edu/~hatcher/AT/ATpage.html}{Author's
+  book page}
+\item
+  D. E. Knuth and P. B. Bendix, ``Simple word problems in universal
+  algebras,'' in J. Leech (ed.), \emph{Computational Problems in
+  Abstract Algebra}, pp.~263--297. Pergamon Press, 1970.
+  \href{https://doi.org/10.1016/B978-0-08-012975-4.50028-X}{doi:10.1016/B978-0-08-012975-4.50028-X}
+\item
+  E. H. Bareiss, ``Sylvester's identity and multistep integer-preserving
+  Gaussian elimination,'' \emph{Mathematics of Computation}
+  \textbf{22}(103), 565--578 (1968).
+  \href{https://doi.org/10.1090/S0025-5718-1968-0226829-0}{doi:10.1090/S0025-5718-1968-0226829-0}
+\end{enumerate}
+
+\end{document}

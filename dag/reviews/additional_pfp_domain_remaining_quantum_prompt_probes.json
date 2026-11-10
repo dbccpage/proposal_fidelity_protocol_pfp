@@ -1,0 +1,115 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/quantum/pauli.py",
+      "sha256": "a24c7c671d761405761ccf8fb513fe2f6332f9aa2e371ba3e2b73764cbbdecc8"
+    },
+    {
+      "path": "pfp/domain/quantum/hamiltonian.py",
+      "sha256": "356aa5c29ce0d831b1c8054af674684487b18cf9ba76f1779c5e45dd634c0977"
+    },
+    {
+      "path": "pfp/domain/quantum/c029_coset.py",
+      "sha256": "c656e310e2926c20fa54cf26a6cec50dedab226fa5d549bdd9a0f91c8bfc02e7"
+    },
+    {
+      "path": "pfp/domain/prompts/packets.py",
+      "sha256": "96e00050f8ea185bc2e4fe8339e7ab2ad6236a34e6b24927d82e4817538e9365"
+    },
+    {
+      "path": "pfp/domain/exceptions.py",
+      "sha256": "c0f7d4b1e65275d7604192e6cc8294d123a6f360e88c314a3eb63c3439429c69"
+    },
+    {
+      "path": "pfp/domain/exact/errors.py",
+      "sha256": "c5b3480bc566982069e759d397033779091da76ceba2c50b647226f0c4e53b0f"
+    },
+    {
+      "path": "pfp/domain/exact/q.py",
+      "sha256": "624890e7595b5ceb1def401d7b16f559e143e1408751259e6237711ef95bff32"
+    },
+    {
+      "path": "pfp/domain/evaluator.py",
+      "sha256": "28567553810ec4773e24e317665754c977131c26be05d97a201dbe8f9f9de52c"
+    },
+    {
+      "path": "pfp/domain/prompt_representations/common.py",
+      "sha256": "d686590cfa1d63b7b57c6bc1b839dac20ae71c3c6da3db4032f486dbd9b0d786"
+    },
+    {
+      "path": "pfp/domain/prompts/compression.py",
+      "sha256": "03f0b6c7559e88c9cee672b7368af1e0303dd3714f884799965f7da765c335d8"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C078",
+      "rule": "finite_pauli_multiplication_phase_and_commutation",
+      "status": "bounded_positive_controls_observed",
+      "two_qubit_pairs": 256,
+      "independent_representation": "explicit4x4 tensor matrices with entries0,+/-1,+/-i; all operations exact on these small values"
+    },
+    {
+      "id": "PFPDOMAIN-C079",
+      "rule": "GF2_kernel_coset_minimum_independent_enumeration",
+      "status": "bounded_positive_controls_observed",
+      "matrices": 64,
+      "candidates_per_matrix": 8,
+      "cases": 512,
+      "limit": "Tiny internal algebra owners only; no retained challenge examples, native matching certificates or physical code geometry evaluated."
+    },
+    {
+      "id": "PFPDOMAIN-C080",
+      "rule": "symplectic_input_is_binary",
+      "status": "counterexample_observed",
+      "supplied_vector": [
+        0.5,
+        0
+      ],
+      "accepted_word": "Z"
+    },
+    {
+      "id": "PFPDOMAIN-C081",
+      "rule": "explicit_and_implicit_hamiltonian_term_id_uniqueness",
+      "status": "counterexample_observed",
+      "accepted_term_ids": [
+        0,
+        0
+      ],
+      "limit": "Parser identity boundary; certificate consumers not executed."
+    },
+    {
+      "id": "PFPDOMAIN-C082",
+      "rule": "packet_seal_and_authority_survive_mutation",
+      "status": "counterexample_observed",
+      "payload_before": 1,
+      "payload_after": 2,
+      "hash_unchanged": true,
+      "authority_after": "Granted",
+      "nonfinite_encoding": "{\"x\":NaN}",
+      "limit": "Construction-time validator does check original hash and None authority; no dispatched request or downstream revalidation was executed."
+    },
+    {
+      "id": "PFPDOMAIN-C083",
+      "rule": "proposal_evaluator_strict_descent_and_exactness",
+      "status": "counterexample_observed",
+      "equal_mass_admissible": true,
+      "equal_mass_details": "Strict descent verified",
+      "require_exactness": true,
+      "float_initial": "1e-12",
+      "retained_initial": "0",
+      "zero_max_proposals_selects": true
+    },
+    {
+      "id": "PFPDOMAIN-C084",
+      "rule": "prompt_compression_byte_span_and_use_time_integrity",
+      "status": "bounded_positive_and_negative_controls_observed",
+      "unicode_user_roundtrip": true,
+      "shared_environment_count": 1,
+      "schema_override_preserved": true,
+      "nested_mutation_refused": true,
+      "provider_token_savings_claim": null
+    }
+  ]
+}

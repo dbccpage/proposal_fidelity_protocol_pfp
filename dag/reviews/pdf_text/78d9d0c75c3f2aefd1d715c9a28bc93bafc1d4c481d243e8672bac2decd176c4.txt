@@ -1,0 +1,2165 @@
+--- PAGE 1 ---
+PFP: Glyphs, rewrites, logits, and attention as checked proposal
+channels
+Jeremy H. Carroll
+2026-10-23
+Code baseline: 59dde95a7860063c25d75db37f40af556e9f28ee
+Abstract
+PFP can accept candidates from natural-language prompts, glyph games, coloured-operad prompt
+decompositions, or model-internal logit and attention interventions. These channels can change
+which candidates are proposed while leaving the host’s validity obligation fixed. We state and prove
+twelve finite results governing this architecture: (1) channel-independent host checking soundness,
+(2) exact prompt-to-cochain ℓ1 primal-dual coboundary repair on directed cycles, (3) two-sided
+congruence-ideal absorption ( 0 / NullTree) in the quotient coloured operad of prompt trees, (4)
+BPE prefix-automaton logit-mask viability with F-null token identity, (5) guarded Stage-1 slot
+retry with NullTree abstention (admission rate, conditional Stage-2 precision, and expected Stage-2
+call savings), (6) the single-cycle partial-guard visibility gap showing that omitting the global cycle-
+sum equation leaves an infinite false-green kernel 𝒦false(𝑥) ≅ ℤ ∖ {0}, (7) triangular chord-induced
+cycle decoupling on multi-cycle graphs (dim 𝐻1(𝐺) = 𝑏1 ≥ 2) with a rank- (|𝑉 |−1+𝑏1)partial-guard
+visibility gap 𝒦C006
+false (𝑥) ≅ ℤ|𝑉 |−1+𝑏1 ∖ {0}, (8) two-stage tree-then-chord P* factorization reducing
+maximum per-turn integer-slot arity on higher-Betti graphs ( 𝑏1 ∈ {4, … , 8}) from |𝑉 | − 1 + 2𝑏1
+to max (|𝑉 | − 1, 𝑏1)while closing the two-stage false-green kernel, (9) elimination of the lazy false-
+refusal attractor on dichotomic exactness-vs-holonomy verification ( C005) via a Fredholm-alternative
+Stage-1 guard 𝐺Fredholm, (10) cohomological syndrome decoding r∗ = 𝑆 c across verdict, single-edge
+repair (for both chord and spanning-tree perturbations), and audit modes on distractor-filtered
+4-digit rank-difference graphs ( C001), (11) elimination of tree-coboundary defect migration on retry
+via path-integrated 𝐵−1
+𝑇 guard diagnostics, and (12) independent exact certificate verification across
+all ten cohomology challenges ( C011–C020, b_cohomology) closing the status-label false- SOLVED kernel.
+For historical context, we retain unverified summaries of six bounded paired C004 mechanism trials
+(including the held-out 40-case ladder C004-S6 across 𝑘 ∈ {3, … , 12}), three bounded paired C006
+multi-cycle trials ( 𝐾4 at 𝑏1 = 3 , higher-Betti 𝐾3,3, 𝑄3, 𝐾5, Petersen, 𝑊7 at 𝑏1 ∈ {4, 5, 6, 7}, and
+the held-out 60-board multi-cycle campaign C006-S8 at 𝑏1 ∈ {3, … , 8}), one bounded paired C005
+dichotomic Fredholm trial ( pub_cons_01..pub_cons_08), one bounded paired C001 distractor-filtered
+syndrome trial ( 12 public and adversarial poisoned cases across verdict, repair, and audit, 𝑏1 ∈ {5,
+7}), and one multi-stage P* cohomology certificate campaign ( B-COH-S1 across C011–C020) across
+a pinned local checkpoint (Qwen/Qwen2.5- 0.5B- Instruct, rev 7ae557604adf67be50417f59
+c2c2f167def9a775) and accounted OpenRouter (openai/gpt- 4o- mini and qwen/qwen- 2.5- 7b-
+instruct), together with an accounted Anthropic claude- fable- 5- 1 theorem-derivation receipt
+(msg_011Cg74HxZqarY627LKcRzQa).
+The historical model-receipt files are unavailable in this revision. Their reported counts are not
+revalidated evidence. The finite examples and the new harness protocol have separate checks; the
+new paid campaign is NOT_RUN.
+Mechanism inventory
+1
+
+--- PAGE 2 ---
+Mechanism Evidence
+Mathematical statements (Theorems 1–3,
+Proposition 4, Theorems 5–12)
+Written proofs under declared finite hypotheses
++ accounted claude-fable-5-1 derivation
+(fable_5_1_guard_theorem_receipt.json)
+Finite example & theorem checks Standard-library replay (code/replay.py) of
+glyph round trips, single-cycle and 𝐾4 /
+higher-Betti ( 𝑏1 ∈ {4..8}) cochain duality,
+operad NullTree absorption, BPE
+prefix-automaton states, partial-
+vs. complete-guard kernel checks, dichotomic
+Fredholm-alternative guard closure, C001
+cohomological syndrome decoding r∗ = 𝑆 c,
+path-integrated 𝐵−1
+𝑇 vs. edge-local 𝐵𝑇 retry
+diagnostics, and b_cohomology (C011–C020)
+independent exact certificate verification
+Bounded C001, C004, C005, C006 &
+b_cohomology (C011–C020) mechanism trials
+(Panel 1 local + Panel 2 OpenRouter +
+Anthropic claude-fable-5-1)
+Thirteen committed JSON receipts replayed
+offline with zero network calls
+(c004_paired_benchmark_receipt.json,
+operad_cochain_ablation_receipt.json,
+p_star_operad_materialization_receipt.json,
+p_star_4slot_binding_receipt.json,
+p_star_verified_guard_receipt.json,
+fable_5_1_guard_theorem_receipt.json,
+c004_40case_hidden_p_star_receipt.json,
+c006_overlap_basis_p_star_receipt.json,
+c006_higher_betti_p_star_receipt.json,
+c006_60board_hidden_p_star_receipt.json, c0
+05_dichotomic_fredholm_p_star_receipt.json,
+c001_distractor_cochain_p_star_receipt.json,
+b_cohomology_p_star_receipt.json)
+Lean verification No new formalization claimed in this draft
+Authorization None supplied
+1. Proposal channels and the Three-Layer PFP host boundary
+Fix a finite task 𝑃 , a candidate language 𝑊 , a solution relation 𝑅(𝑃 , 𝑤), and a deterministic host
+checker 𝐶. A proposal channel 𝜇 is any distribution on raw messages produced by a prompt template,
+a multi-turn staged protocol, a local logit mask, or an external model provider. A separately supplied
+decoder maps well-formed messages to 𝑊 and refuses malformed messages. The host replays the
+decoded witness against the original task 𝑃 .
+In the Omega Engine PFP runtime, this separation is organized into three non-collapsing layers:
+1. Layer 1 (Compositional Prompt Operad): Typed prompt assembly and slot-grafting
+(∘𝑖) over immutable source spans and congruence ideals.
+2. Layer 2 (T oken-F rontier Grammar Projection): BPE prefix-automaton logit masking
+(gbnf_slots=k) or strict response-schema projection restricting surface emission to a regular
+language ℒ𝑘 ⊂ Σ ∗.
+2
+
+--- PAGE 3 ---
+3. Layer 3 (Independent Host Cochain & Domain Oracles): Exact rational cochain eval-
+uation ( Φ1, Γ2) and independent domain judges that certify or refuse the decoded candidate
+without consulting the proposal channel’s internal scores.
+2. Theorem 1: Channel-independent host checking soundness
+Theorem 1 (Channel-Independent Soundness). Let 𝐷 ∶ Σ ∗ ⇀ 𝑊 be a partial decoder
+that binds every admitted raw reply 𝑚 ∈ Σ ∗ to the fixed task 𝑃 , and suppose the host checker
+𝐶 ∶ {𝑃 } × 𝑊 → {accept, refuse} satisfies the soundness implication
+𝐶(𝑃 , 𝑤) =accept ⟹ 𝑅(𝑃 , 𝑤).
+Then for every proposal channel 𝜇 on Σ∗, the event of an accepted invalid candidate is empty:
+{𝑚 ∈ Σ∗ ∶ 𝐷(𝑚) = 𝑤is defined , 𝐶(𝑃 , 𝑤) =accept, ¬𝑅(𝑃 , 𝑤)} = ∅,
+and therefore has probability zero under 𝜇. No acceptance-rate lower bound or search-completeness
+guarantee follows from soundness alone.
+Proof. Fix any raw message 𝑚 ∈ Σ ∗ accepted by the host pipeline. By definition of admission,
+𝑤 = 𝐷(𝑚) ∈ 𝑊is defined and bound to 𝑃 , and 𝐶(𝑃 , 𝑤) =accept. By the soundness hypothesis on
+𝐶, 𝑅(𝑃 , 𝑤)holds. Because the deduction is pointwise in 𝑚 and does not reference 𝜇, no message 𝑚
+can simultaneously satisfy 𝐶(𝑃 , 𝐷(𝑚)) =accept and ¬𝑅(𝑃 , 𝐷(𝑚)). Thus the bad set is empty and
+𝜇(∅) = 0for every probability measure or empirical run 𝜇. Conversely, a channel 𝜇 concentrating all
+mass on a single malformed string 𝑚0 ∉ dom(𝐷)satisfies Theorem 1 vacuously with zero accepted
+solutions, demonstrating that validity and search success are independent obligations. □
+3. Exact glyph transport
+For the Boolean task 𝑥 + 𝑦 = 1, encode (𝑥, 𝑦)by the string <xy>. The four domain values have four
+distinct strings: <00>, <01>, <10>, <11>. The decoder checks the brackets, length, and binary digits;
+it is inverse to the encoder on this declared domain. Hence checking a decoded string and checking
+its assignment are the same mathematical obligation. The strings use only a subset of A–Z, 0–9,
+and angle brackets.
+More generally, a finite domain admits an injective finite-word code with a declared partial inverse.
+Proof is by indexing its elements and assigning distinct fixed-length binary words (with a separate
+empty-domain case). This is representation capacity. It does not show that an LLM can recover the
+desired word, solve every encoded question, or supply a missing domain interpretation. The typed
+prompt and required response matter because they fix that interpretation and the host’s checking
+obligation.
+4. Theorem 2: Exact prompt-to-cochain duality and single-cycle lightest-edge ℓ1
+projection
+When a prompt task specifies local edge transitions or consistency claims across a finite
+2-dimensional cell complex (𝑉 , 𝐸, 𝐹 )over ℚ, the host evaluates the candidate claim vector
+𝑐 ∈ 𝐶 1 = ℚ 𝐸 through the cochain complex
+𝐶0 = ℚ 𝑉 𝑑0
+− → 𝐶1 = ℚ 𝐸 𝑑1
+− → 𝐶2 = ℚ 𝐹 , 𝑑 1 ∘ 𝑑0 = 0,
+3
+
+--- PAGE 4 ---
+where (𝑑0𝑎)(𝑢,𝑣)= 𝑎𝑣−𝑎𝑢 for node potentials 𝑎 ∈ ℚ𝑉 , and (𝑑1𝑐)𝑓 = ∑𝑒∈𝜕𝑓 𝜎𝑓,𝑒𝑐𝑒 is the oriented cycle
+holonomy around 2-cell 𝑓 ∈ 𝐹 . Define the coboundary compatibility residual and the curvature
+residual by
+Φ1(𝑐) ∶=min
+𝑎∈ℚ𝑉
+‖𝑐 − 𝑑0𝑎‖1, Γ 2(𝑐) ∶= ‖𝑑1𝑐‖1.
+Theorem 2 (Single-Cycle Exact Coboundary Duality & W eighted ℓ1 Repair). Let 𝐺 =
+(𝑉 , 𝐸, 𝐹 )be a single directed 𝑘-cycle ( 𝑘 ≥ 3 ) with vertices 𝑣0, … , 𝑣𝑘−1, directed edges 𝑒𝑖 = (𝑣𝑖 →
+𝑣(𝑖+1)mod 𝑘), a single oriented 𝑘-gon face 𝑓0, edge claims 𝑐 ∈ ℚ 𝑘, positive edge weights 𝑤 ∈ ℚ𝑘
+>0, and
+cycle holonomy sum 𝑠 ∶= (𝑑1𝑐)𝑓0
+= ∑
+𝑘−1
+𝑖=0 𝑐𝑖. Then:
+1. Exactness and ℓ1 Duality: im(𝑑0) =ker(𝑑1) = {𝑐′ ∈ ℚ 𝑘 ∶ ∑
+𝑘−1
+𝑖=0 𝑐′
+𝑖 = 0}, and
+Φ1(𝑐) = Γ2(𝑐) = |𝑠| = max
+𝑧∈ℚ𝑘 ∶𝜕1 𝑧=0, ‖𝑧‖∞≤1
+⟨𝑧, 𝑐⟩.
+Whenever ∑
+𝑘−1
+𝑖=0 𝑐′
+𝑖 = 0 , the node potential 𝑎 ∈ ℚ 𝑘 defined by 𝑎0 = 0 and 𝑎𝑚 = ∑
+𝑚−1
+𝑗=0 𝑐′
+𝑗
+(1 ≤ 𝑚 < 𝑘) satisfies 𝑑0𝑎 = 𝑐 ′ identically.
+2. W eighted ℓ1-Optimal Repair: For any repaired cochain 𝑐′ = 𝑐 + Δ satisfying 𝑑1𝑐′ = 0
+(equivalently ∑
+𝑘−1
+𝑖=0 Δ𝑖 = −𝑠), the weighted modification cost satisfies the lower bound
+‖𝑐′ − 𝑐‖1,𝑤 ∶=
+𝑘−1
+∑
+𝑖=0
+𝑤𝑖|Δ𝑖| ≥ 𝑤min|𝑠|, 𝑤 min ∶= min
+0≤𝑖<𝑘
+𝑤𝑖.
+Equality is attained by the single-edge coboundary repair at any lightest edge 𝑖∗ ∈ arg min𝑖 𝑤𝑖:
+𝑐′
+𝑖 = {𝑐𝑖∗ − 𝑠 if 𝑖 = 𝑖∗,
+𝑐𝑖 if 𝑖 ≠ 𝑖∗,
+and is certified with zero duality gap by the dual circulation witness 𝑧∗ = sgn(𝑠)𝑤min1 ∈
+ker(𝜕1).
+Proof. (1) Since 𝑒𝑖 = (𝑣𝑖 → 𝑣(𝑖+1)mod 𝑘), every telescopic sum around the cycle yields ∑
+𝑘−1
+𝑖=0 (𝑑0𝑎)𝑖 =
+∑
+𝑘−1
+𝑖=0 (𝑎(𝑖+1)mod 𝑘 − 𝑎𝑖) = 0, so 𝑑1𝑑0 = 0 and im (𝑑0) ⊆ker(𝑑1). Conversely, if ∑
+𝑘−1
+𝑖=0 𝑐′
+𝑖 = 0, setting
+𝑎0 = 0 and 𝑎𝑚 = ∑
+𝑚−1
+𝑗=0 𝑐′
+𝑗 gives 𝑎𝑚+1−𝑎𝑚 = 𝑐 ′
+𝑚 for 0 ≤ 𝑚 < 𝑘−1 and 𝑎0−𝑎𝑘−1 = − ∑
+𝑘−2
+𝑗=0 𝑐′
+𝑗 = 𝑐 ′
+𝑘−1,
+so 𝑑0𝑎 = 𝑐 ′. For any 𝑎 ∈ ℚ𝑘, the triangle inequality gives
+‖𝑐 − 𝑑0𝑎‖1 =
+𝑘−1
+∑
+𝑖=0
+|𝑐𝑖 − (𝑑0𝑎)𝑖| ≥ ∣
+𝑘−1
+∑
+𝑖=0
+(𝑐𝑖 − (𝑑0𝑎)𝑖)∣ = |𝑠|,
+and subtracting 𝑠 from a single edge achieves ‖𝑐 − 𝑑0𝑎‖1 = |𝑠| using the potential 𝑎 of the resulting
+zero-sum vector. The dual cycle space ker (𝜕1) = {𝑧 ∈ ℚ𝑘 ∶ 𝑧0 = 𝑧1 = ⋯ = 𝑧 𝑘−1} is spanned by 1, so
+max𝜕1 𝑧=0,‖𝑧‖∞≤1⟨𝑧, 𝑐⟩ = max𝛼∈[−1,1]𝛼𝑠 = |𝑠|.
+(2) For any Δ ∈ ℚ 𝑘 with ∑
+𝑘−1
+𝑖=0 Δ𝑖 = −𝑠,
+𝑘−1
+∑
+𝑖=0
+𝑤𝑖|Δ𝑖| ≥ 𝑤min
+𝑘−1
+∑
+𝑖=0
+|Δ𝑖| ≥ 𝑤min ∣
+𝑘−1
+∑
+𝑖=0
+Δ𝑖∣ = 𝑤min|𝑠|.
+Setting Δ𝑖∗ = −𝑠 and Δ𝑗 = 0 (𝑗 ≠ 𝑖 ∗) satisfies ∑𝑖(𝑐𝑖 + Δ 𝑖) = 𝑠 − 𝑠 = 0 and achieves
+∑𝑖 𝑤𝑖|Δ𝑖| = 𝑤𝑖∗|𝑠| = 𝑤min|𝑠|. □
+4
+
+--- PAGE 5 ---
+5. Theorem 3 & Proposition 4: Coloured operad ideal absorption and BPE
+prefix-automaton projection
+5.1 Theorem 3: Coloured operad quotient and two-sided NullTree absorption
+Let 𝒞 be the finite set of prompt semantic colours ( RawTextSpan, IsolatedVariable, Equation,
+SubstitutionStep, RationalValue, InvariantWitness, TargetResult), and let 𝒪 be the free
+𝒞-coloured operad of syntax trees generated by typed 𝑛-ary operators 𝑓 ∈ 𝒪 +(𝑐1, … , 𝑐𝑛; 𝑐out)and
+leaf spans [𝑖, 𝑗]extracted from a source document 𝐷. Let ℐ ⊂ 𝒪 be the subset of trees containing
+any of the following defects: (i) a non-exact or boolean-coerced numeric value (I D E A L _ R A
+TIONAL_DOMAIN), (ii) a leaf span whose content or SHA-256 digest does not match 𝐷[𝑖 ∶ 𝑗]
+(IDEAL_SPAN_IMMUTABILITY), (iii) a slot-grafting operation 𝑓 ∘𝑚 𝑔 whose child output colour
+out(𝑔)does not equal the 𝑚-th input colour in 𝑚(𝑓)or whose slot index 𝑚 ∉ {0, … ,arity(𝑓) − 1},
+or (iv) a candidate binding neutralized by an active AnnihilatorDecoy witness ( 𝒪−).
+Theorem 3 (T wo-Sided Ideal Absorption in 𝒪/ℐ). The subset ℐ is a two-sided operad ideal:
+for every tree 𝑡 ∈ ℐ and every tree 𝑢 ∈ 𝒪, both 𝑢 ∘𝑚 𝑡 ∈ ℐ and 𝑡 ∘𝑚 𝑢 ∈ ℐ. Consequently, the quotient
+coloured operad 𝒪/ℐ ∶= (𝒪 ∖ ℐ) ⊔ {0} with distinguished null element 0 (NullTree) satisfies the
+two-sided absorption law
+𝑓 ∘𝑚 0 = 0, 0 ∘𝑚 𝑔 = 0,
+and any composite tree 𝑇 ∈ 𝒪/ℐ satisfies 𝑇 ≠ 0 if and only if every leaf span is byte-identical to its
+declared slice in 𝐷, every parameter belongs to ℚ, every internal graft matches its declared colour
+signature, and no active decoy witness is triggered.
+Proof. By induction on tree depth. A single leaf or operator violation places the local node in ℐ,
+which projects to 0 ∈ 𝒪/ℐ. Because containing a defect in ℐ is hereditary under subtree inclusion—
+if a subtree 𝑡 contains a malformed span, non-rational parameter, or colour mismatch, then any
+larger tree 𝑢 ∘𝑚 𝑡 or 𝑡 ∘𝑚 𝑢 containing 𝑡 also contains that defect— ℐ is closed under both left and
+right partial composition ∘𝑚. Collapsing ℐ to a single point 0 therefore makes ∘𝑚 well-defined on
+𝒪/ℐ with 𝑓 ∘𝑚 0 = 0 and 0 ∘𝑚 𝑔 = 0. □
+5.2 Proposition 4: BPE prefix-automaton logit mask viability and F-null identity
+Let ℒ𝑘 ⊂ Σ ∗ be the regular language of 𝑘 space-separated signed ASCII integers (integer_slots_gb
+nf(k)):
+ℒ𝑘 = {𝑤1 ‖ " " ‖ 𝑤2 ‖ … ‖ " " ‖ 𝑤𝑘 ∣ 𝑤𝑗 ∈ {"0"} ∪ ({𝜀,"-"} ⋅ {1..9} ⋅ {0..9}∗)} ,
+and let Pref (ℒ𝑘) = {𝑢 ∈ Σ∗ ∶ ∃𝑣 ∈ Σ ∗, 𝑢 ‖ 𝑣 ∈ ℒ 𝑘} be its set of viable prefixes, recognized by the
+six-component prefix-state DF A 𝛿DF A(𝑢) = (viable, complete, slots_seen, in_number, after_minus,
+after_zero).
+Proposition 4 (BPE T oken-F rontier Projection & F-null Identity). For any BPE tokenizer
+vocabulary 𝑉 ⊂ Σ + with end-of-sequence token 𝜏eos ∉ 𝑉 and any viable prefix 𝑆𝑡 ∈ Pref(ℒ𝑘)at
+generation step 𝑡, define the admissible token frontier
+𝑉valid(𝑆𝑡) ∶= {𝜏 ∈ 𝑉 ∶ 𝑆𝑡 ‖ 𝜏 ∈ Pref(ℒ𝑘)} ∪ {𝜏eos ∶ 𝑆 𝑡 ∈ ℒ 𝑘},
+and define the masked logit vector ̃ℓ(𝑡)
+𝑣 = ℓ(𝑡)
+𝑣 if 𝑣 ∈ 𝑉valid(𝑆𝑡)and −∞otherwise. Then:
+1. Prefix Viability & Complete-W ord Soundness: If 𝑆0 = 𝜀 and at each step 𝑡 < 𝑇 the
+sampled token 𝜏𝑡 has finite masked logit ( 𝜏𝑡 ∈ 𝑉valid(𝑆𝑡)), then 𝑆𝑡 ∈ Pref(ℒ𝑘)for all 𝑡 ≥ 0, and
+5
+
+--- PAGE 6 ---
+if generation terminates via 𝜏𝑇 = 𝜏 eos, then 𝑆𝑇 ∈ ℒ 𝑘 (parse_integer_slots(S_T, k) succeeds).
+2. BPE Multi-Character Boundary Completeness: A merged BPE token 𝜏 ∈ 𝑉 spanning
+a slot boundary (such as 𝜏 = " -" or " 12" ) belongs to 𝑉valid(𝑆𝑡)whenever 𝑆𝑡 ends a valid
+integer slot with slots_seen (𝑆𝑡) < 𝑘, because 𝛿DF A(𝑆𝑡 ‖𝜏 )transitions across the space character
+and opens slot slots_seen (𝑆𝑡) + 1.
+3. F-null T oken Identity: When the logit processor is instantiated with the full vocabulary
+frontier 𝑉 null
+valid(𝑆𝑡) = 𝑉 ∪ {𝜏eos}, ̃ℓ(𝑡)= ℓ (𝑡)at every step 𝑡, so greedy or fixed-seed decoding
+produces a token sequence identical to unhooked decoding.
+Proof. (1) follows by induction on 𝑡: 𝑆0 = 𝜀 ∈ Pref(ℒ𝑘), and 𝜏𝑡 ∈ 𝑉 valid(𝑆𝑡) ∖ {𝜏eos} implies
+𝑆𝑡+1 = 𝑆 𝑡 ‖ 𝜏 𝑡 ∈ Pref(ℒ𝑘)by definition of 𝑉valid(𝑆𝑡), while 𝜏eos ∈ 𝑉 valid(𝑆𝑇 )holds if and only if
+𝑆𝑇 ∈ ℒ 𝑘. (2) follows because 𝛿DF A advances character-by-character over the concatenation 𝑆𝑡 ‖ 𝜏 :
+after a completed slot 𝑚 < 𝑘 , ' ' transitions to (slots_seen = 𝑚, in_number = false), and '-'
+then transitions to (slots_seen = 𝑚 + 1,in_number = true, after_minus = true), which is a viable
+prefix of ℒ𝑘. (3) is immediate because adding 0 to every coordinate of ℓ(𝑡)leaves arg max𝑣 ℓ(𝑡)
+𝑣 and
+softmax(ℓ(𝑡))invariant. □
+5.3 Theorem 5: Guarded Stage-1 slot retry with NullTree abstention
+Consider a 2-stage P* operad pipeline 𝑋
+𝑓1
+− → 𝑍1
+𝑓2 ∘𝑖 𝑧1
+− − − − → 𝑌where Stage 1 proposes a 4-slot invariant
+tuple 𝑧1 = ( ̂ 𝑠,̂𝑖∗, ̂ 𝑐𝑖∗, ̂ 𝑐′
+𝑖∗) ∈ ℤ4 for a directed 𝑘-cycle 𝑥 = (𝑐, 𝑤)with unique canonical truth tuple
+𝑧∗
+1(𝑥) = (𝑠(𝑐), 𝑖∗(𝑤), 𝑐𝑖∗, 𝑐 𝑖∗ − 𝑠(𝑐)) , 𝑖 ∗(𝑤) ∶=min arg min
+0≤𝑗<𝑘
+𝑤𝑗.
+Let 𝐺1 ∶ 𝒳 × ℤ4 → {0, 1}be a deterministic Stage-1 host guard, let 𝜋ℐ project any rejected Stage-1
+output ( 𝐺1(𝑥, 𝑧1) = 0) to NullTree (0), and let 𝑅 ≥ 1 be a bounded Stage-1 retry cap (1 initial
+attempt + at most 𝑅 − 1 diagnostic retries).
+Theorem 5 (Guarded Stage-1 Slot Retry with Ideal Abstention — derived with claude-
+fable-5-1, msg_011Cg74HxZqarY627LKcRzQa). Suppose the Stage-1 guard 𝐺1 is sound
+and complete for 𝑧∗
+1(𝑥), meaning 𝐺1(𝑥, 𝑧1) = 1 ⟺ 𝑧 1 = 𝑧 ∗
+1(𝑥). Let 𝑝1(𝑥) ∶= ℙ(𝑍(1)
+1 = 𝑧 ∗
+1(𝑥) ∣ 𝑥)
+be the Attempt-1 exact Stage-1 probability, and under the conditional independence assumption
+that each diagnostic retry 𝑟 ∈ {2, … , 𝑅}given prior failure succeeds with probability 𝑝1,retry(𝑥) ∶=
+ℙ(𝑍(𝑟)
+1 = 𝑧 ∗
+1(𝑥) ∣ 𝑥, 𝐺1(𝑥, 𝑍(𝑟−1)
+1 ) = 0), let 𝑝2(𝑦∗ ∣ 𝑥, 𝑧1)denote the Stage-2 probability of emitting
+the exact ℓ1-optimal cochain repair 𝑦∗(𝑥)when 𝑧1 is grafted into 𝑓2. Then:
+1. Stage-1 Admission Probability: The probability that Stage 1 is admitted to Stage 2 within
+𝑅 bounded attempts is
+𝑞𝐺1 ,𝑅(𝑥) = 1 − (1 − 𝑝1(𝑥))(1 − 𝑝1,retry(𝑥))
+𝑅−1
+.
+2. Admission-Conditional Stage-2 Precision: Because 𝐺1(𝑥, 𝑧1) = 1 ⟺ 𝑧 1 = 𝑧 ∗
+1(𝑥)and
+𝜋ℐ absorbs all 𝐺1 = 0 terminations into NullTree (𝑓2 ∘𝑖 0 = 0 by Theorem 3), conditioning on
+Stage-2 admission eliminates all corrupted Stage-1 grafts:
+ℙver,𝑅(𝑌 = 𝑦∗(𝑥) | 𝑥,Stage 2 admitted ) = 𝑝2(𝑦∗(𝑥) | 𝑥, 𝑧∗
+1(𝑥)) .
+3. Unconditional Exact Repair Rate vs. Unverified Grafting: Under unverified 1-shot
+grafting ( 𝑅 = 1, no guard), the unconditional optimal repair rate is
+ℙunv(𝑌 = 𝑦∗(𝑥) ∣ 𝑥) = 𝑝1(𝑥) 𝑝2(𝑦∗(𝑥) ∣ 𝑥, 𝑧∗
+1(𝑥)) + ∑
+𝑧1 ≠𝑧∗
+1 (𝑥)
+ℙ(𝑍1 = 𝑧1 ∣ 𝑥) 𝑝2(𝑦∗(𝑥) ∣ 𝑥, 𝑧1),
+whereas under guarded retry with NullTree abstention,
+ℙver,𝑅(𝑌 = 𝑦∗(𝑥) ∣ 𝑥) = 𝑞𝐺1 ,𝑅(𝑥) 𝑝2(𝑦∗(𝑥) ∣ 𝑥, 𝑧∗
+1(𝑥)).
+6
+
+--- PAGE 7 ---
+In particular, whenever 𝑝2(𝑦∗(𝑥) ∣ 𝑥, 𝑧1) = 0 for all corrupted tuples 𝑧1 ≠ 𝑧 ∗
+1(𝑥)(faithful
+Stage-2 slot substitution), guarded retry improves unconditional optimal repair by the exact
+gain
+ℙver,𝑅(𝑌 = 𝑦∗(𝑥) ∣ 𝑥) − ℙunv(𝑌 = 𝑦∗(𝑥) ∣ 𝑥) = (1 − 𝑝1(𝑥))[1 − (1 − 𝑝1,retry(𝑥))
+𝑅−1
+] 𝑝2(𝑦∗(𝑥) ∣ 𝑥, 𝑧∗1(𝑥)) ≥ 0.
+4. Expected Stage-2 Call Savings: If a Stage-2 call costs 𝑐2 > 0 , NullTree abstention on
+persistent Stage-1 guard failure saves
+𝔼[Δ𝐶2 ∣ 𝑥] = (1 − 𝑞𝐺1 ,𝑅(𝑥)) 𝑐2
+in expected Stage-2 expenditure compared to unverified Stage-2 dispatch.
+Proof. (1) Stage 1 fails admission across all 𝑅 attempts if and only if Attempt 1 fails ( 1 − 𝑝1(𝑥))
+and each of the 𝑅 − 1 retries fails ( (1 − 𝑝1,retry(𝑥))𝑅−1); taking the complement gives 𝑞𝐺1 ,𝑅(𝑥). (2)
+On the event of Stage-2 admission, the admitted tuple ̂ 𝑧1 satisfies 𝐺1(𝑥, ̂ 𝑧1) = 1, which by soundness
+and completeness of 𝐺1 implies ̂ 𝑧1 = 𝑧 ∗
+1(𝑥)deterministically; thus the Stage-2 law conditioned on
+admission is 𝑝2(⋅ ∣ 𝑥, 𝑧∗
+1(𝑥)). (3) follows by the law of total probability over 𝑧1 ∈ ℤ 4 and substituting
+𝑞𝐺1 ,𝑅(𝑥) − 𝑝1(𝑥) = (1 − 𝑝1(𝑥))[1 − (1 − 𝑝1,retry(𝑥))𝑅−1]. (4) Unverified grafting dispatches Stage
+2 with probability 1, whereas guarded grafting dispatches Stage 2 with probability 𝑞𝐺1 ,𝑅(𝑥)and
+projects the remaining 1 − 𝑞𝐺1 ,𝑅(𝑥)mass to NullTree at zero Stage-2 cost. □
+5.4 Theorem 6: Partial-guard visibility gap and false-green kernel 𝒦false(𝑥) ≅ ℤ ∖ {0}
+Suppose a Stage-1 guard checks only the local slot invariants on 𝑧1 = ( ̂ 𝑠,̂𝑖∗, ̂ 𝑐𝑖∗, ̂ 𝑐′
+𝑖∗) ∈ ℤ4—namely
+canonical minimum-weight index selection, exact edge-claim lookup, and the linear subtraction
+relation—without checking the global cycle-sum equation ̂ 𝑠 = ∑
+𝑘−1
+𝑗=0 𝑐𝑗:
+𝐺partial(𝑥, 𝑧1) = 1 ⟺ ( ̂𝑖∗ = 𝑖∗(𝑤)) ∧ ( ̂ 𝑐𝑖∗ = 𝑐 ̂𝑖∗) ∧ ( ̂ 𝑐′
+𝑖∗ + ̂ 𝑠 = ̂ 𝑐𝑖∗),
+whereas the complete guard adjoins the global cycle-sum check:
+𝐺complete(𝑥, 𝑧1) = 1 ⟺ 𝐺 partial(𝑥, 𝑧1) = 1 ∧ ( ̂ 𝑠 =
+𝑘−1
+∑
+𝑗=0
+𝑐𝑗) .
+Theorem 6 (Partial-Guard Visibility Gap & F alse-Green Kernel — derived with claude-
+fable-5-1, msg_011Cg74HxZqarY627LKcRzQa). For every directed 𝑘-cycle 𝑥 = (𝑐, 𝑤):
+1. Infinite F alse-Green Kernel under 𝐺partial: The set of false-green Stage-1 tuples admitted
+by 𝐺partial is
+𝒦false(𝑥) ∶= {𝑧1 ∈ ℤ 4 ∶ 𝐺partial(𝑥, 𝑧1) = 1 ∧ 𝑧 1 ≠ 𝑧∗
+1(𝑥)} ≅ ℤ ∖ {0},
+parameterized bijectively by the non-zero cycle-sum error Δ𝑠 ∶= ̂ 𝑠 − 𝑠(𝑐) ∈ ℤ ∖ {0}via
+𝑧1(Δ𝑠) = (𝑠(𝑐) + Δ𝑠, 𝑖∗(𝑤), 𝑐𝑖∗, 𝑐 𝑖∗ − 𝑠(𝑐) − Δ𝑠) .
+2. Induced Stage-2 Cochain Residual (Local Green / Global Red): If Stage 2 substitutes
+a false-green tuple 𝑧1(Δ𝑠) ∈ 𝒦false(𝑥)into edge 𝑖∗ = 𝑖∗(𝑤)while preserving 𝑐′
+𝑗 = 𝑐 𝑗 for 𝑗 ≠ 𝑖∗,
+the resulting Stage-2 edge cochain 𝑐′(Δ𝑠)has non-zero cycle holonomy
+𝑘−1
+∑
+𝑗=0
+𝑐′
+𝑗(Δ𝑠) = −Δ𝑠 ≠ 0, Γ 2(𝑐′(Δ𝑠)) = |Δ𝑠| > 0, Φ 1,𝑤(𝑐′(Δ𝑠)) = 𝑤𝑖∗|Δ𝑠| > 0,
+and is therefore rejected by the Layer-3 cochain verifier as NonClosedEdgeData / ClosedNo
+nExactClass.
+3. Kernel Closure under 𝐺complete: Adjoining ̂ 𝑠 = ∑
+𝑘−1
+𝑗=0 𝑐𝑗 forces Δ𝑠 = 0 , collapsing the
+false-green kernel to the empty set ( 𝒦complete
+false (𝑥) = ∅) and making 𝐺complete(𝑥, 𝑧1) = 1 ⟺
+7
+
+--- PAGE 8 ---
+𝑧1 = 𝑧∗
+1(𝑥).
+Proof. (1) Any 𝑧1 = ( ̂ 𝑠,̂𝑖∗, ̂ 𝑐𝑖∗, ̂ 𝑐′
+𝑖∗) ∈ ℤ4 satisfying 𝐺partial(𝑥, 𝑧1) = 1 has ̂𝑖∗ = 𝑖 ∗(𝑤)and ̂ 𝑐𝑖∗ = 𝑐 𝑖∗
+uniquely fixed, while ̂ 𝑐′
+𝑖∗ = 𝑐 𝑖∗ − ̂ 𝑠 is uniquely determined by ̂ 𝑠 ∈ ℤ. Setting Δ𝑠 = ̂ 𝑠 − 𝑠(𝑐) ∈ ℤgives
+the bijection Δ𝑠 ↦ 𝑧 1(Δ𝑠), with Δ𝑠 = 0 ⟺ 𝑧 1 = 𝑧 ∗
+1(𝑥). (2) Substituting 𝑐′
+𝑖∗ = 𝑐 𝑖∗ − 𝑠(𝑐) − Δ𝑠
+into 𝑐 yields cycle sum ∑𝑗≠𝑖∗ 𝑐𝑗 + (𝑐𝑖∗ − 𝑠(𝑐) − Δ𝑠) = 𝑠(𝑐) − 𝑠(𝑐) − Δ𝑠 = −Δ𝑠 ≠ 0, so Theorem 2
+gives Γ2(𝑐′(Δ𝑠)) = |Δ𝑠| > 0and Φ1,𝑤(𝑐′(Δ𝑠)) = 𝑤𝑖∗|Δ𝑠| > 0 . (3) Adding ̂ 𝑠 = 𝑠(𝑐)forces Δ𝑠 = 0 .
+□
+5.5 Theorem 7: T riangular chord-induced cycle decoupling and multi-cycle partial-
+guard visibility gap 𝒦C006
+false (𝑥) ≅ ℤ|𝑉 |−1+𝑏1 ∖ {0}
+Let 𝐺 = (𝑉 , 𝐸)be a finite connected directed graph with |𝑉 | vertices, |𝐸| edges, spanning tree
+𝑇 ⊂ 𝐸 (|𝑇 | = |𝑉 | − 1) rooted at 𝑣0 ∈ 𝑉 , and first Betti number 𝑏1 ∶= dim 𝐻1(𝐺; ℚ) = |𝐸 ∖ 𝑇 | ≥ 2
+chords 𝑔1, … , 𝑔𝑏1
+∈ 𝐸 ∖ 𝑇 , where 𝑔𝑚 = (𝑢𝑚 → 𝑣𝑚). Each chord 𝑔𝑚 closes a unique chord-induced
+oriented cycle 𝛾𝑚 whose support lies in 𝑇 ∪ {𝑔𝑚} with +1 orientation on 𝑔𝑚 and signed tree path
+−𝜋𝑇 (𝑢𝑚 → 𝑣 𝑚), even when multiple cycles 𝛾1, … , 𝛾𝑏1
+share high-incidence tree edges 𝑒shared ∈ 𝑇
+(for example, on 𝐾4 with a non-star spanning tree 𝑇, |𝑉 | = 4, |𝐸| = 6, 𝑏 1 = 3, and a shared tree
+edge traversed by all 3 chord-induced cycles).
+For any edge claim vector 𝑐 ∈ ℤ 𝐸, define the unique tree-integrated vertex potential 𝑝∗
+𝑇 ∈ ℤ 𝑉 by
+𝑝∗
+𝑇 (𝑣0) = 0and 𝑝∗
+𝑇 (𝑣)−𝑝∗
+𝑇 (𝑢) = 𝑐(𝑢,𝑣)for every tree edge (𝑢, 𝑣) ∈ 𝑇, and define the canonical Stage-1
+(|𝑉 | − 1 + 2𝑏1)-slot tuple ( 9 slots on 𝐾4) in causal dependency order:
+𝑧∗
+1(𝑥) ∶= ((𝑝∗
+𝑇 (𝑣𝑗))
+|𝑉 |−1
+𝑗=1 , (𝑐′∗
+𝑔𝑚
+)
+𝑏1
+𝑚=1, (𝑟∗
+𝑚)
+𝑏1
+𝑚=1) ∈ ℤ|𝑉 |−1+2𝑏1 ,
+where 𝑐′∗
+𝑔𝑚
+∶= 𝑝 ∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚)and 𝑟∗
+𝑚 ∶= ∑𝑒∈𝛾𝑚
+𝜎𝑚,𝑒𝑐𝑒 = 𝑐 𝑔𝑚
+− 𝑐 ′∗
+𝑔𝑚
+. Compare the partial
+chord-subtraction guard
+𝐺C006
+partial(𝑥, 𝑧1) = 1 ⟺
+𝑏1
+⋀
+𝑚=1
+( ̂ 𝑐′
+𝑔𝑚
++ ̂ 𝑟𝑚 = 𝑐 𝑔𝑚
+)
+against the complete triangular-basis guard
+𝐺C006
+complete(𝑥, 𝑧1) = 1 ⟺ ⋀
+(𝑢,𝑣)∈𝑇
+( ̂ 𝑝(𝑣) − ̂ 𝑝(𝑢) = 𝑐(𝑢,𝑣)) ∧
+𝑏1
+⋀
+𝑚=1
+( ̂ 𝑐′𝑔𝑚 = ̂ 𝑝(𝑣𝑚) − ̂ 𝑝(𝑢𝑚)) ∧
+𝑏1
+⋀
+𝑚=1
+( ̂ 𝑐′𝑔𝑚 + ̂ 𝑟𝑚 = 𝑐𝑔𝑚 ).
+Theorem 7 (T riangular Chord-Induced Cycle Decoupling & Multi-Cycle Visibility
+Gap). For every connected graph 𝐺 = (𝑉 , 𝐸)with spanning tree 𝑇 and 𝑏1 = |𝐸 ∖ 𝑇 | ≥ 2
+chords:
+1. Exact T riangular Chord Decoupling: The cycle-chord incidence matrix of the chord-
+induced cycle basis {𝛾1, … , 𝛾𝑏1
+} restricted to the chord coordinates {𝑔1, … , 𝑔𝑏1
+} = 𝐸 ∖ 𝑇 is
+the 𝑏1 × 𝑏1 identity matrix 𝐼𝑏1
+(𝜎𝑚,𝑔ℓ
+= 𝛿 𝑚,ℓ). Consequently, regardless of how many cycles
+𝛾𝑚 overlap on shared spanning-tree edges 𝑒 ∈ 𝑇 , fixing the tree claims 𝑐′
+𝑒 = 𝑐 𝑒 (𝑒 ∈ 𝑇 ) and
+setting 𝑐′
+𝑔𝑚
+= 𝑐 ′∗
+𝑔𝑚
+= 𝑝 ∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚) = 𝑐 𝑔𝑚
+− 𝑟∗
+𝑚 for each chord 𝑚 ∈ {1, … , 𝑏1} yields
+an exact coboundary 𝑐′ = 𝑑 0𝑝∗
+𝑇 ∈ im(𝑑0)with zero defect across all cycles simultaneously
+(Φ1,𝑤(𝑐′) = 0and Γ2(𝑐′) = 0). Moreover, if each tree edge weight satisfies 𝑤𝑒 ≥ ∑𝑚∶𝑒∈𝛾𝑚
+𝑤𝑔𝑚
+(the tree-dominant weight regime), then 𝑐′ is a global minimum-weight ℓ1 coboundary repair
+of 𝑐 with ‖𝑐′ − 𝑐‖1,𝑤 = ∑
+𝑏1
+𝑚=1 𝑤𝑔𝑚
+|𝑟∗
+𝑚|.
+8
+
+--- PAGE 9 ---
+2. Rank-(|𝑉 |−1+𝑏1)Partial-Guard Visibility Gap: The false-green kernel of tuples passing
+𝐺C006
+partial while failing 𝐺C006
+complete is canonically isomorphic to the punctured free ℤ-module of rank
+|𝑉 | − 1 + 𝑏1 (= 2𝑏1 = 6 on 𝐾4):
+𝒦C006
+false (𝑥) ∶= {𝑧1 ∈ ℤ |𝑉 |−1+2𝑏1 ∶ 𝐺C006
+partial(𝑥, 𝑧1) = 1 ∧ 𝑧 1 ≠ 𝑧∗
+1(𝑥)} ≅ ℤ|𝑉 |−1+𝑏1 ∖ {0},
+parameterized bijectively by (Δ𝑝, Δ𝑟) ∈ ℤ|𝑉 |−1 × ℤ𝑏1 ∖ {(0, 0)}via
+̂ 𝑝(𝑣𝑗) = 𝑝∗
+𝑇 (𝑣𝑗) + Δ𝑝𝑗, ̂ 𝑟 𝑚 = 𝑟∗
+𝑚 + Δ𝑟𝑚, ̂ 𝑐 ′
+𝑔𝑚
+= 𝑐 𝑔𝑚
+− 𝑟∗
+𝑚 − Δ𝑟𝑚 = 𝑐 ′∗
+𝑔𝑚
+− Δ𝑟𝑚.
+In particular, any non-zero chord-residual error Δ𝑟 ≠ 0 induces non-zero post-repair cycle
+holonomy (𝑑1𝑐′(Δ𝑟))𝛾𝑚
+= −Δ𝑟 𝑚 (Γ2(𝑐′(Δ𝑟)) = ‖Δ𝑟‖1 > 0 ), while any non-zero potential
+error Δ𝑝 ≠ 0 with Δ𝑟 = 0 causes Stage-2 VERIFY to fail on the tree-edge coboundary check
+̂ 𝑝(𝑣) − ̂ 𝑝(𝑢) = 𝑐′
+(𝑢,𝑣).
+3. Complete-Guard Closure: 𝐺C006
+complete(𝑥, 𝑧1) = 1 ⟺ 𝑧 1 = 𝑧∗
+1(𝑥), collapsing 𝒦C006
+false to ∅ and
+ensuring that every Stage-2 admitted session plan ( ASSERT → CUT → VERIFY) carries an exact
+zero-defect coboundary 𝑐′ = 𝑑0 ̂ 𝑝and its matching vertex potential ̂ 𝑝 = 𝑝∗
+𝑇 .
+Proof. (1) By construction of the spanning-tree cycle basis, chord 𝑔ℓ belongs to 𝛾𝑚 if and only
+if ℓ = 𝑚 . Since 𝑝∗
+𝑇 integrates 𝑐 along the unique path in 𝑇 from 𝑣0, for every tree edge 𝑒 = (𝑢,
+𝑣) ∈ 𝑇we have 𝑐′
+𝑒 = 𝑐 𝑒 = 𝑝 ∗
+𝑇 (𝑣) − 𝑝∗
+𝑇 (𝑢), and for every chord 𝑔𝑚 = (𝑢𝑚, 𝑣𝑚) ∈ 𝐸 ∖ 𝑇we have 𝑐′
+𝑔𝑚
+=
+𝑝∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚). Thus 𝑐′ = 𝑑0𝑝∗
+𝑇 , so Φ1,𝑤(𝑐′) = 0and Γ2(𝑐′) = 0. For any alternative potential
+𝑝 = 𝑝 ∗
+𝑇 + 𝛿𝑝, ‖𝑐 − 𝑑0𝑝‖1,𝑤 = ∑𝑒∈𝑇 𝑤𝑒|(𝑑0𝛿𝑝)𝑒| + ∑
+𝑏1
+𝑚=1 𝑤𝑔𝑚
+|𝑟∗
+𝑚 − (𝑑0𝛿𝑝)𝑔𝑚
+|. Expanding (𝑑0𝛿𝑝)𝑔𝑚
+=
+∑𝑒∈𝛾𝑚 ∩𝑇 𝜎𝑚,𝑒(𝑑0𝛿𝑝)𝑒 and applying the triangle inequality shows that whenever 𝑤𝑒 ≥ ∑𝑚∶𝑒∈𝛾𝑚
+𝑤𝑔𝑚
+for all 𝑒 ∈ 𝑇 , setting 𝑑0𝛿𝑝 = 0 on 𝑇 (𝛿𝑝 = const) achieves the global minimum ∑
+𝑏1
+𝑚=1 𝑤𝑔𝑚
+|𝑟∗
+𝑚|.
+(2) Under 𝐺C006
+partial, the |𝑉 | − 1 tree-potential slots ̂ 𝑝 = 𝑝∗
+𝑇 + Δ𝑝 ∈ ℤ |𝑉 |−1 and the 𝑏1 residual slots
+̂ 𝑟 = 𝑟∗ +Δ𝑟 ∈ ℤ 𝑏1 are arbitrary integers, and ̂ 𝑐′
+𝑔𝑚
+= 𝑐 𝑔𝑚
+− ̂ 𝑟𝑚 = 𝑐 ′∗
+𝑔𝑚
+−Δ𝑟𝑚 is uniquely determined by
+̂ 𝑟𝑚. Thus (Δ𝑝, Δ𝑟) ↦ 𝑧1(Δ𝑝, Δ𝑟)is a bijection from ℤ|𝑉 |−1+𝑏1 ∖ {0}onto 𝒦C006
+false (𝑥). Around cycle
+𝛾𝑚, the repaired cochain 𝑐′(Δ𝑟)sums to (𝑝∗
+𝑇 (𝑢𝑚) − 𝑝∗
+𝑇 (𝑣𝑚)) + 𝑐′
+𝑔𝑚
+= −𝑐 ′∗
+𝑔𝑚
++ (𝑐′∗
+𝑔𝑚
+− Δ𝑟𝑚) = −Δ𝑟𝑚.
+(3) Under 𝐺C006
+complete, tree-edge integration forces ̂ 𝑝(𝑣𝑗) = 𝑝∗
+𝑇 (𝑣𝑗)(Δ𝑝 = 0 ) by induction along 𝑇 from
+𝑝(𝑣0) = 0; chord potential difference then forces ̂ 𝑐′
+𝑔𝑚
+= ̂ 𝑝(𝑣𝑚) − ̂ 𝑝(𝑢𝑚) = 𝑐′∗
+𝑔𝑚
+; and chord subtraction
+forces ̂ 𝑟𝑚 = 𝑐 𝑔𝑚
+− ̂ 𝑐′
+𝑔𝑚
+= 𝑟∗
+𝑚 (Δ𝑟 = 0). □
+5.6 Theorem 8: T wo-stage tree-then-chord P* factorization and slot-arity reduction on
+higher-Betti graphs ( 𝑏1 ∈ {4, … , 7})
+On higher-Betti graphs ( 𝑏1 = |𝐸 ∖𝑇 | ≥ 4, such as 𝐾3,3 with 𝑏1 = 4, 𝑄3 with 𝑏1 = 5, 𝐾5 and Petersen
+with 𝑏1 = 6 , and 𝑊7 with 𝑏1 = 7 ), single-stage triangular basis materialization requires emitting
+𝐴1-stage(𝐺) ∶= (|𝑉 | − 1) + 2𝑏1 ∈ {13, 17, 16, 21, 21}signed integer slots in a single autoregressive turn
+while tracking multi-hop spanning-tree paths and chord subtractions simultaneously.
+Instead, we factorize the exact sequence
+0 ⟶ 𝐶0
+root=0(𝐺; ℤ)
+𝑑0 |𝑇
+− − − →
+≅
+𝐶1(𝑇 ; ℤ) ⟶ 0, 𝐶 1(𝐺; ℤ) = 𝐶1(𝑇 ; ℤ) ⊕ 𝐶1(𝐸 ∖ 𝑇 ; ℤ),
+into two sequential guarded P* Stage-1 cuts before Stage 2: - Stage 1a (Spanning-T ree Potential
+Materialization, slot arity 𝐴1𝑎 = |𝑉 | − 1): Proposes ̂ 𝑝𝑇 = ( ̂ 𝑝(𝑣1), … , ̂ 𝑝(𝑣|𝑉 |−1)) ∈ ℤ|𝑉 |−1 under
+gbnf_slots = |V|-1 , checked by the deterministic tree-integration guard
+𝐺𝑇 (𝑥, ̂ 𝑝𝑇 ) = 1 ⟺ ⋀
+𝑒=(𝑢,𝑣)∈𝑇
+( ̂ 𝑝(𝑣) − ̂ 𝑝(𝑢) = 𝑐𝑒), ̂ 𝑝(𝑣 0) ∶= 0.
+If 𝐺𝑇 = 0 after at most 𝑅1𝑎 ≥ 1 attempts, 𝜋ℐ projects the pipeline to NullTree (0), saving both
+9
+
+--- PAGE 10 ---
+Stage 1b and all 3 Stage-2 turns. - Stage 1b (Grafted Chord-Coboundary Materialization,
+slot arity 𝐴1𝑏 = 𝑏 1): Conditioned on 𝐺𝑇 (𝑥, ̂ 𝑝𝑇 ) = 1 (so ̂ 𝑝𝑇 = 𝑝 ∗
+𝑇 is verified), the host grafts
+𝑝∗
+𝑇 as an immutable LeafTextSpan (PromptColour.SubstitutionStep) into the Stage-1b prompt,
+listing for each chord 𝑔𝑚 = (𝑢𝑚 → 𝑣 𝑚) ∈ 𝐸 ∖ 𝑇 its already-verified endpoint potentials 𝑝∗
+𝑇 (𝑣𝑚)
+and 𝑝∗
+𝑇 (𝑢𝑚), and proposes ̂ 𝑐′
+𝐸∖𝑇 = ( ̂ 𝑐′
+𝑔1
+, … , ̂ 𝑐′
+𝑔𝑏 1
+) ∈ ℤ𝑏1 under gbnf_slots = b_1 , checked by the
+chord-coboundary guard
+𝐺𝐶(𝑥, 𝑝∗
+𝑇 , ̂ 𝑐′
+𝐸∖𝑇 ) = 1 ⟺
+𝑏1
+⋀
+𝑚=1
+( ̂ 𝑐′
+𝑔𝑚
+= 𝑝 ∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚)).
+Theorem 8 (T wo-Stage T ree-Then-Chord P* Slot-Arity Reduction & Kernel Closure).
+For every connected graph 𝐺 = (𝑉 , 𝐸)with spanning tree 𝑇 (|𝑇 | = |𝑉 | − 1) and 𝑏1 = |𝐸 ∖ 𝑇 | ≥ 1
+chords:
+1. Per-T urn Slot-Arity Reduction: The maximum integer-slot arity across Stage 1a and
+Stage 1b satisfies
+𝐴2-stage(𝐺) ∶=max(|𝑉 | − 1, 𝑏1) ≤ (|𝑉 | − 1) + 2𝑏1 − min(|𝑉 | − 1, 𝑏1) − 𝑏1 < 𝐴 1-stage(𝐺),
+yielding strict arity reductions of 2𝑏1 slots in Stage 1a and |𝑉 | − 1 + 𝑏 1 slots in Stage 1b
+(specifically (13, 17, 16, 21, 21) → (5, 7, 6, 9, 7)across 𝐾3,3, 𝑄3, 𝐾5, Petersen, 𝑊7).
+2. Depth-1 Chord F actorization Conditioned on 𝐺𝑇 = 1 : Once Stage 1a passes 𝐺𝑇 (𝑥,
+̂ 𝑝𝑇 ) = 1, ̂ 𝑝𝑇 = 𝑝 ∗
+𝑇 = (𝑑0|𝑇 )−1(𝑐|𝑇 )is uniquely fixed in the Stage-1b prompt context. Con-
+sequently, each Stage-1b slot ̂ 𝑐′
+𝑔𝑚
+depends only on a single depth-1 two-integer subtraction
+𝑝∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚)of literals already present in the Stage-1b prompt, with zero multi-hop path
+accumulation and zero cross-chord coupling.
+3. T wo-Stage F alse-Green Kernel Closure: The joint two-stage guard satisfies
+𝐺𝑇 (𝑥, ̂ 𝑝𝑇 ) = 1 ∧ 𝐺 𝐶(𝑥, ̂ 𝑝𝑇 , ̂ 𝑐′
+𝐸∖𝑇 ) = 1 ⟺ ( ̂ 𝑝𝑇 , ̂ 𝑐′
+𝐸∖𝑇 ) = (𝑝∗
+𝑇 , 𝑑0|𝐸∖𝑇 𝑝∗
+𝑇 ),
+so the two-stage false-green kernel is empty ( 𝒦2-stage
+false (𝑥) = ∅), and every pair admitted to
+Stage 2 defines an exact zero-defect coboundary 𝑐′ = 𝑐| 𝑇 ⊕ ̂ 𝑐′
+𝐸∖𝑇 = 𝑑 0𝑝∗
+𝑇 with Φ1,𝑤(𝑐′) = 0
+and Γ2(𝑐′) = 0.
+Proof. (1) Since |𝑉 |−1 ≥ 1 and 𝑏1 ≥ 1, both |𝑉 |−1 ≤ (|𝑉 |−1)+2𝑏1 −2 and 𝑏1 ≤ (|𝑉 |−1)+2𝑏1 −2,
+so max (|𝑉 | − 1, 𝑏1) < (|𝑉 | − 1) + 2𝑏1. (2)–(3) Because 𝑇 is a spanning tree rooted at 𝑣0 with
+𝑝(𝑣0) = 0, the restriction 𝑑0|𝑇 ∶ 𝐶0
+root=0(𝐺; ℤ) → 𝐶1(𝑇 ; ℤ)is a ℤ-module isomorphism; hence 𝐺𝑇 (𝑥,
+̂ 𝑝𝑇 ) = 1 ⟺ 𝑑 0|𝑇 ̂ 𝑝𝑇 = 𝑐| 𝑇 ⟺ ̂ 𝑝 𝑇 = 𝑝 ∗
+𝑇 . Conditioned on ̂ 𝑝𝑇 = 𝑝 ∗
+𝑇 , 𝐺𝐶(𝑥, 𝑝∗
+𝑇 , ̂ 𝑐′
+𝐸∖𝑇 ) = 1holds if
+and only if ̂ 𝑐′
+𝑔𝑚
+= 𝑝 ∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚) = (𝑑0𝑝∗
+𝑇 )𝑔𝑚
+for each 𝑚 ∈ {1, … , 𝑏1} independently. Combining
+𝑐′|𝑇 = 𝑐| 𝑇 = 𝑑0|𝑇 𝑝∗
+𝑇 and 𝑐′|𝐸∖𝑇 = 𝑑0|𝐸∖𝑇 𝑝∗
+𝑇 gives 𝑐′ = 𝑑0𝑝∗
+𝑇 , so Φ1,𝑤(𝑐′) = 0and Γ2(𝑐′) = 0. □
+5.7 Theorem 9: Dichotomic F redholm-alternative P* guarding and elimination of the
+lazy false-refusal attractor ( C005)
+Consider the dichotomic relational consistency task ( C005): given a finite connected directed graph
+𝐺 = (𝑉 , 𝐸)with integer edge differences 𝑑 ∈ ℤ 𝐸, a participant must decide whether the system
+𝑛𝑣−𝑛𝑢 = 𝑑(𝑢,𝑣)((𝑢, 𝑣) ∈ 𝐸) is CONSISTENT (returning an exact vertex potential 𝑛 ∈ ℤ𝑉 with 𝑑0𝑛 = 𝑑)
+or INCONSISTENT (returning a simple directed cycle 𝛾 whose signed edge sum ⟨𝛾, 𝑑⟩ = ∑𝑒∈𝛾 𝜎𝛾,𝑒𝑑𝑒 ≠
+0).
+In un-staged one-shot generation, small and medium language models exhibit a systematic lazy
+false-refusal ( INCONSISTENT) attractor : whenever a model makes a single sign or addition mistake
+while integrating potentials along 𝐺, it encounters a chord 𝑔𝑚 = (𝑢𝑚 → 𝑣 𝑚)where its erroneous
+10
+
+--- PAGE 11 ---
+potentials fail ̂ 𝑛𝑣𝑚
+− ̂ 𝑛𝑢𝑚
+= 𝑑𝑔𝑚
+, and therefore declares INCONSISTENT on consistent boards ( 0/4 =
+0.0% accuracy on consistent boards in both Panel 1 and un-staged Panel 2; see Subsection 6.6).
+To eliminate this failure mode, fix a rooted spanning tree 𝑇 ⊂ 𝐸 (|𝑇 | = |𝑉 | − 1) and 𝑏1 = |𝐸 ∖ 𝑇 |
+chords 𝑔1, … , 𝑔𝑏1
+, and require Stage 1 to materialize the (|𝑉 | − 1 + 𝑏1)-slot tuple 𝑧1 = ( ̂ 𝑝𝑇 , ̂ 𝑟𝐸∖𝑇 ) ∈
+ℤ|𝑉 |−1 × ℤ𝑏1 subject to the Dichotomic F redholm-Alternative Guard:
+𝐺Fredholm(𝑥, ̂ 𝑝𝑇 , ̂ 𝑟𝐸∖𝑇) = 1 ⟺ ⋀
+𝑒=(𝑢,𝑣)∈𝑇
+( ̂ 𝑝𝑇 (𝑣) − ̂ 𝑝𝑇 (𝑢) = 𝑑𝑒) ∧
+𝑏1
+⋀
+𝑚=1
+( ̂ 𝑟𝑚 = 𝑑𝑔𝑚 − ( ̂ 𝑝𝑇 (𝑣𝑚) − ̂ 𝑝𝑇 (𝑢𝑚))).
+Theorem 9 (Dichotomic F redholm-Alternative P* Guard & F alse-V erdict Elimination).
+For every connected directed graph 𝐺 = (𝑉 , 𝐸)with spanning tree 𝑇, chords 𝑔1, … , 𝑔𝑏1
+∈ 𝐸 ∖ 𝑇 ,
+and edge differences 𝑑 ∈ ℤ 𝐸:
+1. Discrete F redholm Alternative on (𝑇 , 𝐸 ∖ 𝑇 ): Let 𝑝∗
+𝑇 = (𝑑0|𝑇 )−1(𝑑|𝑇 ) ∈ ℤ𝑉 (𝑝∗
+𝑇 (𝑣0) = 0)
+and let 𝑟∗
+𝑚 ∶= ⟨𝛾𝑚, 𝑑⟩ = 𝑑𝑔𝑚
+− (𝑝∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚))be the holonomy of the 𝑚-th chord-induced
+cycle 𝛾𝑚. Then:
+𝑑 ∈ im(𝑑0) ⟺ 𝑟 ∗
+1 = ⋯ = 𝑟 ∗
+𝑏1
+= 0 ⟺ 𝑑 = 𝑑 0𝑝∗
+𝑇 ,
+and conversely 𝑑 ∉ im(𝑑0)if and only if there exists 𝑚∗ ∈ {1, … , 𝑏1} with 𝑟∗
+𝑚∗ ≠ 0, in which
+case 𝛾𝑚∗ is an explicit simple-cycle contradiction witness with ⟨𝛾𝑚∗, 𝑑⟩ = 𝑟∗
+𝑚∗ ≠ 0.
+2. Elimination of the Lazy F alse-Refusal Attractor ( 𝒦C005
+false-verdict(𝑥) = ∅): For every
+proposal 𝑧1 = ( ̂ 𝑝𝑇 , ̂ 𝑟𝐸∖𝑇 ) ∈ ℤ|𝑉 |−1+𝑏1 ,
+𝐺Fredholm(𝑥, ̂ 𝑝𝑇 , ̂ 𝑟𝐸∖𝑇 ) = 1 ⟺ ( ̂ 𝑝𝑇 , ̂ 𝑟𝐸∖𝑇 ) = (𝑝∗
+𝑇 , 𝑟∗
+𝐸∖𝑇 ).
+Consequently, under the deterministic Stage-2 branch map
+ℬ( ̂ 𝑝𝑇 , ̂ 𝑟𝐸∖𝑇 ) ∶= {(CONSISTENT, ̂ 𝑝𝑇 ) if ̂ 𝑟𝐸∖𝑇 = 0,
+(INCONSISTENT, 𝛾 𝑚∗, ̂ 𝑟𝑚∗) if 𝑚∗ = min{𝑚 ∶ ̂ 𝑟𝑚 ≠ 0},
+no Stage-1 proposal admitted by 𝐺Fredholm = 1 can emit a false INCONSISTENT verdict on a
+consistent board or a false CONSISTENT verdict on an inconsistent board: the admitted false-
+verdict set is empty ( 𝒦C005
+false-verdict(𝑥) = ∅).
+Proof. (1) Because {𝛾1, … , 𝛾𝑏1
+} is a ℤ-basis for 𝐻1(𝐺; ℤ) =ker(𝜕1), 𝑑 ∈ im(𝑑0) =ker(𝑑1)holds if
+and only if ⟨𝛾𝑚, 𝑑⟩ = 0 for every 𝑚 = 1, … , 𝑏1. Along 𝛾𝑚 = 𝑔𝑚 − 𝜋𝑇 (𝑢𝑚 → 𝑣𝑚), telescoping 𝑑|𝑇 =
+𝑑0|𝑇 𝑝∗
+𝑇 along the unique tree path 𝜋𝑇 (𝑢𝑚 → 𝑣𝑚)gives ∑𝑒∈𝜋𝑇 (𝑢𝑚 →𝑣𝑚 )𝜎𝑒𝑑𝑒 = 𝑝 ∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚), so
+⟨𝛾𝑚, 𝑑⟩ = 𝑑 𝑔𝑚
+− (𝑝∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚)) = 𝑟∗
+𝑚. Thus 𝑟∗
+𝐸∖𝑇 = 0 ⟺ 𝑑 = 𝑑 0𝑝∗
+𝑇 , and if 𝑟∗
+𝑚∗ ≠ 0 then
+𝛾𝑚∗ is a simple cycle in 𝑇 ∪ {𝑔𝑚∗} with non-zero signed sum 𝑟∗
+𝑚∗. (2) Under 𝐺Fredholm = 1 , the
+first conjunction forces ̂ 𝑝𝑇 = 𝑝 ∗
+𝑇 by tree-path induction from 𝑣0, and substituting ̂ 𝑝𝑇 = 𝑝 ∗
+𝑇 into
+the second conjunction forces ̂ 𝑟𝑚 = 𝑑𝑔𝑚
+− (𝑝∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚)) = 𝑟∗
+𝑚 for every 𝑚 = 1, … , 𝑏1. Hence
+̂ 𝑟𝐸∖𝑇 = 0 ⟺ 𝑟 ∗
+𝐸∖𝑇 = 0 ⟺ 𝑑 ∈ im(𝑑0), so ℬ( ̂ 𝑝𝑇 , ̂ 𝑟𝐸∖𝑇 )agrees with the exact cohomological truth
+on every admitted instance. □
+5.8 Theorem 10: Cohomological syndrome decoding r ∗ = 𝑆 c across V erdict, Single-Edge
+Repair, and Audit ( C001)
+Consider the distractor-contaminated rank-difference witness game ( C001): a natural-language
+prompt contains bracketed distractor notes ( [Note k: ...] , which belong to the congruence ideal
+ℐdistractor) mixed with directed integer rank-difference claims 𝑐𝑢,𝑣 ∈ ℤ (B - A = c_{A,B} , |𝑉 | ∈ {8,
+… , 11}, |𝐸| ∈ {12, … , 16}, 𝑏1 ∈ {5, 7}, 𝑐𝑢,𝑣 ∈ [−5000, 5000]) and one of three task obligations: -
+verdict: emit CONSISTENT with an exact potential 𝑝 ∶ 𝑉 → ℤ , or CONTRADICTION with an
+explicit simple cycle whose signed edge sum is non-zero; - repair: identify a single corrupted
+11
+
+--- PAGE 12 ---
+edge 𝑒∗ ∈ 𝐸 , its replacement value 𝑐′
+𝑒∗ ∈ ℤ , and the resulting exact potential 𝑝′ ∶ 𝑉 → ℤ on
+(𝐸 ∖ {𝑒∗}) ∪ {(𝑒∗, 𝑐′
+𝑒∗)}; - audit: inspect a proposed submission (which may contain adversarial
+off-by-one cycle claims, flipped edge orientations, or deceptive CONTRADICTION claims on
+consistent graphs) and emit ACCEPT or REJECT with a verified correction witness.
+Fix a rooted spanning tree 𝑇 ⊂ 𝐸 (|𝑇 | = |𝑉 |−1) and chord set 𝐸∖𝑇 = {𝑒1, … , 𝑒𝑏1
+} (𝑒𝑚 = 𝑢𝑚 → 𝑣𝑚).
+For each chord 𝑒𝑚 ∈ 𝐸 ∖ 𝑇 and each tree edge 𝑒 ∈ 𝑇 , define the signed tree-path incidence
+𝑆𝑚,𝑒 ∶=
+⎧{
+⎨{⎩
++1 if 𝑒 is traversed forward along the unique path 𝜋𝑇 (𝑢𝑚 → 𝑣𝑚),
+−1 if 𝑒 is traversed backward along 𝜋𝑇 (𝑢𝑚 → 𝑣𝑚),
+0 if 𝑒 ∉ 𝜋𝑇 (𝑢𝑚 → 𝑣𝑚),
+and form the chord-induced cycle-edge incidence matrix
+𝑆 ∶= [ 𝑆𝑇 ∣ − 𝐼 𝑏1
+] ∈ {−1, 0, +1}𝑏1 ×|𝐸|,
+whose 𝑚-th row 𝑆𝑚,⋅ is the signed indicator of the chord-induced simple cycle 𝒞𝑇 (𝑒𝑚) = 𝜋𝑇 (𝑢𝑚 →
+𝑣𝑚) ∪ {𝑣𝑚 → 𝑢𝑚}.
+Theorem 10 (Cohomological Syndrome Decoding Across V erdict, Single-Edge Repair,
+and Audit). Suppose Stage 1a materializes ̂ 𝑝𝑇 ∈ ℤ |𝑉 |−1 passing 𝐺𝑇 (c, ̂ 𝑝𝑇 ) = 1 (so ̂ 𝑝𝑇 = 𝑝 ∗
+𝑇 =
+𝐵−1
+𝑇 c|𝑇 ), and Stage 1b materializes ̂c𝐸∖𝑇 ∈ ℤ 𝑏1 passing 𝐺𝐶(𝑝∗
+𝑇 , ̂c𝐸∖𝑇 ) = 1(so ̂ 𝑐𝑚 = ̂ 𝑐∗
+𝑚 ∶= 𝑝 ∗
+𝑇 (𝑣𝑚) −
+𝑝∗
+𝑇 (𝑢𝑚)for 𝑚 = 1, … , 𝑏1). Define the cohomological syndrome vector
+r∗ ∶= ̂c∗ − c|𝐸∖𝑇 ∈ ℤ 𝑏1 .
+Then:
+1. Exact Cycle-Space Parity Check: r ∗ = 𝑆 c identically, and ker (𝑆) =im(𝑑0) = {c ∈ ℤ 𝐸 ∶
+Φ1(c) = 0}. Consequently, for verdict tasks, r∗ = 0 ⟺ Φ 1(c) = 0(CONSISTENT with exact
+potential 𝑝∗
+𝑇 ), and r∗ ≠ 0 ⟺ Φ 1(c) > 0(CONTRADICTION, where any 𝑚∗ with 𝑟∗
+𝑚∗ ≠ 0
+yields the certified simple cycle 𝒞𝑇 (𝑒𝑚∗)with signed discrepancy 𝑟∗
+𝑚∗ ≠ 0).
+2. Single-Edge Syndrome Decoding (Chord & Spanning-T ree Perturbations): Let
+c = ctrue + 𝛿e𝑒∗ be obtained from a consistent cochain ctrue = 𝑑0𝑝true ∈ im(𝑑0)by corrupting a
+single edge 𝑒∗ ∈ 𝐸 by 𝛿 = 𝑐 𝑒∗ −𝑐 true
+𝑒∗ ≠ 0. Then a candidate single-edge replacement (𝑒, 𝑐′
+𝑒)with
+shift ̂𝛿 ∶= 𝑐 𝑒 − 𝑐′
+𝑒 ∈ ℤ ∖ {0}yields a globally consistent repaired cochain c′ = c − ̂𝛿e𝑒 ∈ im(𝑑0)
+if and only if the syndrome r∗ is the ̂𝛿-scaled 𝑒-th column of 𝑆:
+r∗ = ̂𝛿 𝑆⋅,𝑒.
+In particular:
+• Case 2a (Chord Perturbation, 𝑒∗ = 𝑒𝑚 ∈ 𝐸 ∖ 𝑇): Since 𝑆⋅,𝑒𝑚
+= −e𝑚 ∈ ℤ 𝑏1 , a chord
+corruption has unit Hamming support supp (r∗) = {𝑚}with 𝑟∗
+𝑚 = −𝛿 , and is repaired
+by 𝑐′
+𝑒𝑚
+= 𝑐 𝑒𝑚
++ 𝑟∗
+𝑚 = ̂ 𝑐∗
+𝑚 with unchanged potential 𝑝′ = 𝑝 ∗
+𝑇 .
+• Case 2b (Spanning-T ree Perturbation, 𝑒∗ ∈ 𝑇 ): A tree-edge corruption propagates
+across the tree-cut incidence set supp (r∗) = {𝑚 ∈ {1, … , 𝑏1} ∶ 𝑒∗ ∈ 𝜋𝑇 (𝑢𝑚 → 𝑣𝑚)}with
+𝑟∗
+𝑚 = 𝛿𝑆 𝑚,𝑒∗ ∈ {±𝛿}, and is decoded by matching r∗ = ̂𝛿𝑆⋅,𝑒∗ (𝑐′
+𝑒∗ = 𝑐 𝑒∗ − ̂𝛿) and shifting
+the subtree potential 𝑝′ = 𝐵 −1
+𝑇 (c|𝑇 − ̂𝛿e𝑒∗).
+3. Adversarial Audit Completeness: For any audit submission proposing a potential, con-
+tradiction cycle, or single-edge repair, re-evaluating the proposal against (𝑝∗
+𝑇 , r∗ = 𝑆 c)rejects
+all off-by-one cycle claims, flipped-sign edge traversals, and deceptive CONTRADICTION
+claims on r∗ = 0 graphs.
+Proof. (1) Along each chord 𝑒𝑚 = (𝑢𝑚 → 𝑣𝑚), telescoping 𝑑0𝑝∗
+𝑇 = c|𝑇 along 𝜋𝑇 (𝑢𝑚 → 𝑣𝑚)gives
+12
+
+--- PAGE 13 ---
+̂ 𝑐∗
+𝑚 = 𝑝 ∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚) = ∑𝑒∈𝑇 𝑆𝑚,𝑒𝑐𝑒 = (𝑆𝑇 c|𝑇 )𝑚. Subtracting 𝑐𝑒𝑚
+gives 𝑟∗
+𝑚 = (𝑆𝑇 c|𝑇 )𝑚 − 𝑐𝑒𝑚
+=
+(𝑆c)𝑚. Since the rows of 𝑆 form a basis of the cycle space 𝑍1(𝐺; ℤ), 𝑆c = 0 ⟺ c ∈ im(𝑑0). (2)
+By linearity of 𝑆, for c′ = c − ̂𝛿e𝑒, we have 𝑆c′ = 𝑆 c − ̂𝛿𝑆⋅,𝑒 = r∗ − ̂𝛿𝑆⋅,𝑒. Thus c′ ∈ im(𝑑0) =
+ker(𝑆) ⟺ r∗ = ̂𝛿𝑆⋅,𝑒. When 𝑒 = 𝑒 𝑚 ∈ 𝐸 ∖ 𝑇 , column 𝑆⋅,𝑒𝑚
+= − e𝑚, so r∗ = − ̂𝛿e𝑚 and
+𝑐′
+𝑒𝑚
+= 𝑐 𝑒𝑚
+− ̂𝛿 = 𝑐 𝑒𝑚
++ 𝑟∗
+𝑚 = ̂ 𝑐∗
+𝑚. When 𝑒 ∈ 𝑇 , column 𝑆⋅,𝑒 has non-zero entries ±1 on every chord
+cycle whose tree path traverses 𝑒. (3) follows immediately from (1) and (2). □
+5.9 Theorem 11: T ree-coboundary defect migration vs. path-integrated 𝐵−1
+𝑇 guard
+diagnostics
+Why does Stage 1a require a path-integrated diagnostic guard rather than an edge-local cobound-
+ary diagnostic on multi-hop spanning trees with 4-digit claims? Order the non-root vertices 𝑉 ∖
+{𝑣0} = {𝑣1, … , 𝑣|𝑉 |−1} in BFS topological order along the rooted spanning tree 𝑇, and let 𝐵𝑇 ∶=
+𝑑0|𝑇 ∈ {−1, 0, +1}(|𝑉 |−1)×(|𝑉 |−1)be the rooted tree coboundary matrix. Its inverse 𝐵−1
+𝑇 ∈ {0,
++1}(|𝑉 |−1)×(|𝑉 |−1)is the lower-triangular root-to-vertex path-incidence matrix :
+(𝐵−1
+𝑇 )𝑤,𝑒 = 𝟙[𝑒 ∈ 𝜋𝑇 (𝑣0 → 𝑤)], 𝑝 ∗
+𝑇 (𝑤) = (𝐵−1
+𝑇 c|𝑇 )𝑤 = ∑
+𝑒∈𝜋𝑇 (𝑣0 →𝑤)
+𝑐𝑒.
+For any Attempt-1 proposal ̂ 𝑝(1)
+𝑇 ∈ ℤ |𝑉 |−1, define its edge-local coboundary residual e (1)
+𝑇 ∈ ℤ |𝑉 |−1
+and its path-integrated potential residual 𝛿(1)
+𝑇 ∈ ℤ |𝑉 |−1 by
+e(1)
+𝑇 ∶= 𝐵 𝑇 ̂ 𝑝(1)
+𝑇 − c|𝑇 , 𝛿 (1)
+𝑇 ∶= ̂ 𝑝(1)
+𝑇 − 𝐵−1
+𝑇 c|𝑇 = 𝐵 −1
+𝑇 e(1)
+𝑇 .
+Theorem 11 (T ree-Coboundary Defect Migration Under Edge-Local Retry vs. One-
+Step Convergence Under Path-Integrated 𝐵−1
+𝑇 Diagnostics). Suppose Attempt 1 commits
+a single arithmetic integration error Δ𝑣∗ ≠ 0 at an internal tree edge 𝑒∗ = (parent(𝑣∗) → 𝑣∗) ∈ 𝑇
+while integrating all remaining tree edges accurately: (e(1)
+𝑇 )𝑒∗ = Δ 𝑣∗ ≠ 0 and (e(1)
+𝑇 )𝑒 = 0 for all
+𝑒 ∈ 𝑇 ∖ {𝑒∗}. Let Subtree 𝑇 (𝑣∗) ∶= {𝑤 ∈ 𝑉 ∖ {𝑣0} ∶ 𝑒 ∗ ∈ 𝜋𝑇 (𝑣0 → 𝑤)}be the descendant subtree
+rooted at 𝑣∗, and suppose | Subtree𝑇 (𝑣∗)| ≥ 2(so 𝑣∗ has at least one child in 𝑇). Then:
+1. Subtree Shift vs. Single-Edge Local Syndrome: Although the potential error 𝛿(1)
+𝑇 (𝑤) =
+(𝐵−1
+𝑇 e(1)
+𝑇 )𝑤 = Δ 𝑣∗ ≠ 0 is non-zero at every descendant 𝑤 ∈ Subtree𝑇 (𝑣∗), the edge-local
+coboundary residual e(1)
+𝑇 is non-zero only at 𝑒∗: for every strict descendant edge 𝑒 = (𝑢 → 𝑤)
+inside Subtree 𝑇 (𝑣∗), both endpoints are shifted by +Δ𝑣∗, so the local difference cancels:
+̂ 𝑝(1)
+𝑇 (𝑤) − ̂ 𝑝(1)
+𝑇 (𝑢) = (𝑝∗
+𝑇 (𝑤) + Δ𝑣∗) − (𝑝∗
+𝑇 (𝑢) + Δ𝑣∗) = 𝑐𝑒 ⟹ (e(1)
+𝑇 )𝑒 = 0.
+2. Coboundary Defect Migration Under Coordinate-Local Retry: If a retry diagnostic
+reports only the coordinates where e(1)
+𝑇 ≠ 0 (namely slot 𝑣∗) and the model updates only
+the flagged slot ̂ 𝑝(2)
+𝑇 (𝑣∗) = 𝑝 ∗
+𝑇 (𝑣∗)while retaining its unflagged slots ̂ 𝑝(2)
+𝑇 (𝑤) = ̂ 𝑝(1)
+𝑇 (𝑤) =
+𝑝∗
+𝑇 (𝑤) + Δ𝑣∗ for 𝑤 ∈ Subtree𝑇 (𝑣∗) ∖ {𝑣∗}, then Retry 1 fails 𝐺𝑇 : the coboundary defect
+migrates from 𝑒∗ to every child edge 𝑒child = (𝑣∗ → 𝑤)of 𝑣∗:
+(e(2)
+𝑇 )𝑒∗ = 0, ( e(2)
+𝑇 )(𝑣∗→𝑤)= (𝑝∗
+𝑇 (𝑤) + Δ𝑣∗) − 𝑝∗
+𝑇 (𝑣∗) − 𝑐(𝑣∗→𝑤)= Δ 𝑣∗ ≠ 0.
+More generally, coordinate-local repair of e𝑇 ≠ 0 requires at least depth (Subtree𝑇 (𝑣∗)) + 1
+sequential rounds to push the coboundary defect off the leaves of 𝑇.
+3. One-Retry Convergence Under Path-Integrated 𝐵−1
+𝑇 Diagnostics: Because
+supp(𝛿(1)
+𝑇 ) = Subtree𝑇 (𝑣∗), the path-integrated guard diagnostic ̂ 𝑝(1)
+𝑇 (𝑤) ≠ (𝐵−1
+𝑇 c|𝑇 )𝑤 flags
+𝑣∗ and all of its affected descendants 𝑤 ∈ Subtree𝑇 (𝑣∗)simultaneously in a single diagnostic
+turn, eliminating subtree defect migration.
+13
+
+--- PAGE 14 ---
+Proof. (1) Since e(1)
+𝑇 = Δ 𝑣∗e𝑒∗, multiplying by 𝐵−1
+𝑇 gives 𝛿(1)
+𝑇 (𝑤) = (𝐵−1
+𝑇 )𝑤,𝑒∗Δ𝑣∗ = Δ 𝑣∗𝟙[𝑤 ∈
+Subtree𝑇 (𝑣∗)]. Applying 𝐵𝑇 recovers e(1)
+𝑇 = 𝐵 𝑇 𝛿(1)
+𝑇 = Δ 𝑣∗e𝑒∗, which vanishes on every edge 𝑒 ≠ 𝑒∗.
+(2) Updating only coordinate 𝑣∗ sets 𝛿(2)
+𝑇 (𝑣∗) = 0while leaving 𝛿(2)
+𝑇 (𝑤) = Δ𝑣∗ for 𝑤 ∈ Subtree𝑇 (𝑣∗) ∖
+{𝑣∗}. Applying 𝐵𝑇 to 𝛿(2)
+𝑇 gives (e(2)
+𝑇 )(𝑢→𝑤)= 𝛿 (2)
+𝑇 (𝑤) − 𝛿(2)
+𝑇 (𝑢), which equals Δ𝑣∗ − 0 = Δ 𝑣∗ ≠ 0 for
+every child edge (𝑣∗ → 𝑤)with 𝑤 ∈ Subtree𝑇 (𝑣∗). By induction on subtree depth, each coordinate-
+local retry advances the zero-error wavefront by one tree level, requiring depth (Subtree𝑇 (𝑣∗)) + 1
+rounds. (3) Directly from supp (𝛿(1)
+𝑇 ) = {𝑤 ∶ ̂ 𝑝(1)
+𝑇 (𝑤) ≠ 𝑝∗
+𝑇 (𝑤)} =Subtree𝑇 (𝑣∗). □
+5.10 Theorem 12: Independent exact cohomology certificate verification across C011–
+C020 and elimination of status-label false- SOLVED admissions
+Consider the ten-challenge cohomology suite b_cohomology (C011–C020: ℓ1 cycle-rank coboundary
+repair C011, cellular sheaf cohomology C012, simplicial Smith Normal Form torsion C013, weighted
+2-complex discrete Hodge decomposition C014, 𝔽2 persistent homology 𝑅 = 𝐷 ⋅ 𝑉 C015, Alexander–
+Whitney cup-product ring C016, non-abelian lattice gauge holonomy C017, signed-graph switching
+frustration C018, 𝐻 2 cochain extension obstruction C019, and 𝔽2 double-complex spectral sequences
+C020). For each challenge 𝑚 ∈ {11, … , 20}and instance 𝑥, a candidate JSON certificate 𝑧 = ( ̂ 𝜎, ̂ 𝑤)
+pairs a self-reported status label ̂ 𝜎 ∈ {SOLVED, OUT_OF_SCOPE, UNKNOWN} with a structured
+witness payload ̂ 𝑤.
+Let 𝐺status(𝑥, 𝑧) ∶= 𝟙[ ̂ 𝜎 =SOLVED]be the status-label guard that trusts the model’s self-reported
+"status": "SOLVED" field once JSON schema parsing succeeds, and let 𝐺(𝑚)
+cert(𝑥, 𝑧) ∈ {0, 1}(check_
+certificate) be the independent exact certificate guard that recomputes the defining algebraic
+identities of challenge 𝑚 from (𝑥, ̂ 𝑤)over ℚ, ℤ, 𝔽2, or finite group tables without calling the solver
+and without trusting ̂ 𝜎.
+Theorem 12 (Status-Label F alse- SOLVED Kernel vs. Independent Exact Certificate Clo-
+sure Across C011–C020). For every cohomology challenge 𝑚 ∈ {11, … , 20}and valid solvable
+instance 𝑥 ∈ 𝒟 (𝑚)
+solved:
+1. Unbounded Status-Label F alse- SOLVED Kernel: The set of schema-valid JSON replies
+that pass 𝐺status(𝑥, 𝑧) = 1while violating the algebraic witness relation 𝑅(𝑚)(𝑥, ̂ 𝑤),
+𝒦(𝑚)
+false-status(𝑥) ∶= {𝑧 = (SOLVED, ̂ 𝑤) ∶ 𝐺status(𝑥, 𝑧) = 1 ∧ ¬𝑅(𝑚)(𝑥, ̂ 𝑤)},
+is non-empty (and infinite whenever ̂ 𝑤carries integer or rational cochain fields). On accounted
+7B open-weight evaluation ( B-COH-S1, qwen/qwen- 2.5- 7b- instruct), Attempt 1 lands in
+𝒦(𝑚)
+false-status(𝑥)on 10/10 (100.0%) of challenges C011–C020.
+2. Exact Certificate Guard Closure: Under the independent verifier 𝐺(𝑚)
+cert(𝑥, 𝑧) = 1 ⟺ ̂ 𝜎 =
+SOLVED ∧ 𝑅(𝑚)(𝑥, ̂ 𝑤)(and for out-of-scope inputs 𝑥 ∈ 𝒟 (𝑚)
+oos , ̂ 𝜎 =OUT_OF_SCOPE ∧ 𝑅(𝑚)
+oos (𝑥,
+̂ 𝑤)), the admitted false- SOLVED kernel is empty:
+{𝑧 ∶ 𝐺(𝑚)
+cert(𝑥, 𝑧) = 1 ∧ ¬𝑅(𝑚)(𝑥, ̂ 𝑤)} = ∅,
+and any persistent certificate failure after 𝑅 ≥ 1 bounded diagnostic attempts is absorbed by
+𝜋ℐ into NullTree (0) with zero false SOLVED admissions to Stage 2.
+Proof. (1) Changing any numerical coordinate of a valid witness 𝑤∗ (e.g., replacing 𝑅 = 𝐷 ⋅ 𝑉
+(mod 2)by 𝑅 = 0 in C015, or reporting frustration_index = 0 with an unbalanced switching
+assignment 𝜎 ∈ {±1}𝑉 in C018) while keeping "status": "SOLVED" preserves 𝐺status(𝑥, 𝑧) = 1and
+violates 𝑅(𝑚)(𝑥, ̂ 𝑤). (2) By definition of check_certificate, 𝐺(𝑚)
+cert(𝑥, 𝑧) = 1holds only when every
+defining equation of 𝑅(𝑚)(𝑥, ̂ 𝑤)holds identically; if 𝐺(𝑚)
+cert = 0 on all 𝑅 attempts, Theorem 3’s ideal
+14
+
+--- PAGE 15 ---
+absorption maps the Stage-2 graft to NullTree. □
+6. Historical mechanism results: causal slot-factorization and guarded retry
+across six C004 trials, three C006 multi-cycle trials, one C005 dichotomic trial,
+one C001 syndrome trial, and one b_cohomology (C011–C020) campaign
+Current evidence status (2026-10-23): The original mechanism receipt files referenced by the
+companion are unavailable in this checkout and the original working directory. The values retained
+in this section and the empirical conclusions below are historical assertions, not revalidated measur
+ements. They supply no evidence for the new harness campaign. The finite examples can be checked
+separately with code/replay.py --finite-only ; that command reports internal_interventions:
+NOT_REPLAYED. Missing historical evidence is not a pass.
+6.1 Why single-turn zero-scratchpad operad prompts fail and P* cuts help
+Consider an autoregressive transformer 𝑃𝜃 tasked with emitting the 𝑘-slot repaired cochain 𝑦 = (𝑐′
+0,
+… , 𝑐′
+𝑘−1) ∈ ℒ𝑘 for a directed 𝑘-cycle 𝑥 = (𝑐, 𝑤). Under Theorem 2, computing 𝑦 requires latent
+intermediate invariants 𝑧 = (𝑠, 𝑖∗, 𝑐𝑖∗, 𝑐′
+𝑖∗)where 𝑠 = ∑𝑖 𝑐𝑖, 𝑖∗ = arg min𝑖 𝑤𝑖, 𝑐𝑖∗ = 𝑐[𝑖∗], and 𝑐′
+𝑖∗ =
+𝑐𝑖∗ − 𝑠.
+• Single-T urn Zero-Scratchpad Regime (operad_grafted_grammar_projection):
+When the entire operad tree is rendered in a single turn under Layer-2 grammar mask ℒ𝑘
+(gbnf_slots=k), the first output token 𝑦0 = 𝑐 ′
+0 must be emitted before any token of 𝑧 has been
+written to the causal context:
+𝑃1-turn(𝑦 ∣ 𝑥) = 𝑃𝜃(𝑦0 ∣ 𝑥)
+𝑘−1
+∏
+𝑡=1
+𝑃𝜃(𝑦𝑡 ∣ 𝑥, 𝑦<𝑡).
+Whenever 𝑖∗ = 0, 𝑦0 = 𝑐 0 − 𝑠 already depends on the global cycle sum 𝑠 and minimum-weight
+index 𝑖∗, forcing the model to compute both inside a single forward pass while decoding an
+ASCII operad tree container.
+• Multi-T urn P* Staged Operad Materialization (p_star_operad_slot_materiali
+zation): Cutting the operad tree at an intermediate SubstitutionStep operator 𝑓1 (Stage 1,
+grammar ℒ𝑚) and grafting the materialized output 𝑧 as an immutable LeafTextSpan into Stage
+2 ( 𝑓2 ∘𝑖 𝑧, grammar ℒ𝑘) factorizes the conditional generation law in topological dependency
+order:
+𝑃P*(𝑧, 𝑦 ∣ 𝑥) = 𝑃𝜃(𝑧0 ∣ 𝑥)
+𝑚−1
+∏
+𝑗=1
+𝑃𝜃(𝑧𝑗 ∣ 𝑥, 𝑧<𝑗) ⋅ 𝟙[𝑧 ∉ ℐ] ⋅
+𝑘−1
+∏
+𝑡=0
+𝑃𝜃(𝑦𝑡 ∣ 𝑥, 𝑓2 ∘𝑖 𝑧, 𝑦<𝑡).
+Each intermediate slot 𝑧𝑗 is conditioned via causal self-attention on the already-emitted prefix
+𝑧<𝑗, and Stage 2 reduces to substituting the grafted value 𝑐′
+𝑖∗ at index 𝑖∗ while copying 𝑐𝑡 for
+𝑡 ≠ 𝑖∗.
+6.2 Empirical results across five bounded C004 trials
+We evaluated this hierarchy across 𝑁 = 8 deterministic C004 directed 𝑘-cycle cases ( 𝑘 ∈ {3, 4, 5, 6},
+two cases per slot count) on two strictly separated panels (never pooled):
+• Panel 1 (Local HF Checkpoint): Pinned Q w e n / Q w e n 2 .5 - 0 . 5B - I n s t r u ct (revision
+7ae557604adf67be50417f59c2c2f167def9a775, CPU torch.float32, 0 provider calls, $0).
+• Panel 2 (Accounted OpenRouter): openai/gpt-4o-mini at temperature=0.0 under strict
+json_schema regex slot projection and native Rust verify_decode_receipt attestation.
+15
+
+--- PAGE 16 ---
+T able 1: Panel 1 — Pinned local Qwen/Qwen2.5-0.5B-Instruct ( 𝑁 = 8 C004 cases)
+Trial & Arm
+Layer-2 Parseable
+(parse_integer_sl
+ots)
+Certified
+ExactCoboundary
+(Φ1 = 0, Γ2 = 0)
+Exact ℓ1-Optimal
+Repair
+Key Mechanism
+Observation
+T rial 1
+(c004_paired_
+benchmark_re
+ceipt.json)
+free
+(unconstrained
+greedy)
+0/8 (0.0%) 0/8 (0.0%) 0/8 (0.0%) Emits prose
+explanations
+(To find the
+minimum...).
+f_null (no-op
+logit hook)
+0/8 (0.0%) 0/8 (0.0%) 0/8 (0.0%) 8/8 (100.0%)
+token-for-token
+identical to free
+(Proposition 4.3).
+carrier ([0-9\- ]
+vocab filter)
+6/8 (75.0%) 0/8 (0.0%) 0/8 (0.0%) Fails slot count on
+2/8 cases ( 15 slots
+for 𝑘 = 3; 20 slots
+for 𝑘 = 6).
+grammar
+(gbnf_slots=k
+DF A mask)
+8/8 (100.0%) 0/8 (0.0%) 0/8 (0.0%) 100% syntax
+admissibility
+(Proposition 4.1);
+0/8 zero
+holonomy.
+T rial 2
+(operad_cocha
+in_ablation_re
+ceipt.json)
+operad_grafted
+_grammar_proje
+ction (1-turn)
+8/8 (100.0%) 0/8 (0.0%) 0/8 (0.0%) Zero-scratchpad
+1-turn operad tree
+(0/8 coboundary).
+T rial 3 (p_star
+_operad_mate
+rialization_rece
+ipt.json)
+multi_turn_p_s
+tar_operad_slot_
+materialization
+(3-slot Stage 1 (s,
+i*, c'_{i*}) )
+8/8 (100.0%) 1/8 (12.5%) 1/8 (12.5%) Solved c004_k3_01
+(-1 -1 2 , Φ1 = 0,
+optimal cost 5).
+T rial 4 (p_star
+_4slot_binding
+_receipt.json)
+16
+
+--- PAGE 17 ---
+Trial & Arm
+Layer-2 Parseable
+(parse_integer_sl
+ots)
+Certified
+ExactCoboundary
+(Φ1 = 0, Γ2 = 0)
+Exact ℓ1-Optimal
+Repair
+Key Mechanism
+Observation
+p_star_4slot_ind
+ex_value_bindi
+ng (4-slot Stage 1
+(s, i*, c_{i*},
+c'_{i*}))
+8/8 (100.0%) 0/8 (0.0%) 0/8 (0.0%) 0.5B model failed
+cycle-sum
+arithmetic in slot
+0 ( 0/8 sum exact).
+T rial 5 (p_star
+_verified_guar
+d_receipt.json,
+C004-S5)
+p_star_verified_
+stage1_complete_
+guard ( 𝐺complete +
+1 retry +
+NullTree
+abstention)
+8/8 Stage 1 ( 0/8
+Stage 2 admitted)
+0/8 (0.0%) 0/8 (0.0%) Prevented 8/8
+(100%) wasted
+Stage-2 calls via
+STAGE1_GUA
+RD_NULL_TR
+EE_ABSTENT
+ION (Theorem
+5.4).
+no_model_exact
+_cochain_baselin
+e ( NO_LLM oracle)
+8/8 (100.0%) 8/8 (100.0%) 8/8 (100.0%) Deterministic host
+lightest-edge
+coboundary
+control (Theorem
+2).
+T able 2: Panel 2 — Accounted OpenRouter openai/gpt-4o-mini ( 𝑁 = 8 C004 cases)
+17
+
+--- PAGE 18 ---
+Trial & Arm Calls / Settled Spend Parseable
+Stage-1 Invariant
+Accuracy
+Certified
+ExactCoboundary
+(Φ1 = 0, Γ2 = 0)
+Exact ℓ1-Optimal
+Repair
+T rial 1 (c004_paire
+d_benchmark_rece
+ipt.json)
+hosted_unconstrained 8 calls / $0.0011 0/8 (0.0%) N/A 0/8 (0.0%) 0/8 (0.0%)
+hosted_slot_constrai
+ned ( gbnf_slots=k)
+8 calls / $0.0012 8/8 (100.0%) N/A 2/8 (25.0%) 0/8 (0.0%)
+T rial 2 (operad_coc
+hain_ablation_rece
+ipt.json)
+plain_grammar_proj
+ection (1-turn)
+8 calls / $0.0011 8/8 (100.0%) N/A 5/8 (62.5%) 1/8 (12.5%)
+operad_grafted_gra
+mmar_projection
+(1-turn, 0 intermediate
+slots)
+8 calls / $0.0018 8/8 (100.0%) N/A (0 intermediate
+slots)
+0/8 (0.0%) 0/8 (0.0%)
+T rial 3 (p_star_ope
+rad_materializatio
+n_receipt.json)
+plain_grammar_proj
+ection (1-turn matched
+control)
+8 calls / $0.0011 8/8 (100.0%) N/A 6/8 (75.0%) 1/8 (12.5%)
+multi_turn_p_star_
+operad_slot_material
+ization (2-turn P*,
+3-slot
+(s, i*, c'_{i*}) )
+16 calls / $0.0031 8/8 (100.0%) s: 7/8 (87.5%), i*:
+5/8 (62.5%), c'_{i*}:
+2/8 (25.0%), all 3: 2/8
+(25.0%)
+3/8 (37.5%) 2/8 (25.0%)
+T rial 4
+(p_star_4slot_bin
+ding_receipt.json)
+p_star_4slot_index_v
+alue_binding (2-turn
+P*, 4-slot (s, i*, c_{
+i*}, c'_{i*}) ,
+unverified)
+16 calls / $0.002994 8/8 (100.0%) s: 7/8 (87.5%), i*:
+5/8 (62.5%), c_{i*}:
+5/8 (62.5%), c'_{i*}:
+4/8 (50.0%), all 4: 3/8
+(37.5%)
+5/8 (62.5%) 3/8 (37.5%)
+18
+
+--- PAGE 19 ---
+Trial & Arm Calls / Settled Spend Parseable
+Stage-1 Invariant
+Accuracy
+Certified
+ExactCoboundary
+(Φ1 = 0, Γ2 = 0)
+Exact ℓ1-Optimal
+Repair
+T rial 5
+(p_star_verified_
+guard_receipt.json,
+C004-S5)
+p_star_verified_st
+age1_complete_gu
+ard ( 𝐺complete + 1
+diagnostic retry ,
+𝑅 = 2)
+7 incremental calls /
+$0.001472
+5/5 admitted ( 3
+abstained via
+NullTree)
+s: 7/8 (87.5%), i*:
+7/8 (87.5%), c_{i*}:
+7/8 (87.5%), c'_{i*}:
+5/8 (62.5%), all 4:
+5/8 (62.5%)
+5/8 (62.5%) (5/5 =
+100% of admitted )
+5/8 (62.5%) (5/5 =
+100% conditional
+precision)
+19
+
+--- PAGE 20 ---
+6.3 Diagnostic analysis of the 5-trial C004 progression
+1. Layer 2 ( gbnf_slots=k) is necessary for syntax admissibility but insuﬀicient for
+mathematical validity: Across both local Qwen2.5-0.5B-Instruct and hosted openai/g
+pt- 4o- mini, unconstrained decoding ( free / hosted_unconstrained) achieved 0/8 (0.0%
+) parseable integer-slot tuples, whereas Layer-2 grammar projection achieved 8/8 (100.0%)
+parseable tuples. However, grammar compliance alone yielded 0/8 ℓ1-optimal repairs in Trial
+1, confirming Theorem 1’s separation between surface decoding ( 𝐷) and Layer-3 mathematical
+checking (𝐶).
+2. Single-turn zero-scratchpad operad trees induce a causal ordering failure: In Trial
+2, rendering a 6-operator C o l o u r e d O p e r a d P r o m pt tree inside a single zero-scratchpad
+turn (operad_grafted_grammar_projection) collapsed openai/gpt- 4o- mini from 5/8
+ExactCoboundary ( 1/8 optimal) down to 0/8 ExactCoboundary ( 0/8 optimal), with 4/8 cases
+copying the unrepaired input claims verbatim ( weighted_l1 = 0 ).
+3. 2-turn P* staged operad slot materialization ( (s, i*, c'_{i*}) ) restores and doubles
+ℓ1-optimal repair: In Trial 3, cutting the operad tree so Stage 1 materializes (s, i*, c'
+_{i*}) (gbnf_slots=3) before host slot-grafting ( ∘𝑖) into Stage 2 ( gbnf_slots=k) raised op
+enai/gpt- 4o- mini from 0/8 -> 3/8 ExactCoboundary and 0/8 -> 2/8 (25.0%) ℓ1-optimal
+(c004_k3_02, c004_k4_02), and raised local Qwen2.5-0.5B-Instruct from 0/8 -> 1/8 (12.5%
+) optimal ( c004_k3_01). Crucially, Stage-1 grading exposed the exact remaining bottleneck:
+openai/gpt- 4o- mini computed 𝑠 accurately on 7/8 (87.5%) cases and 𝑖∗ accurately on 5/8
+(62.5%) cases, but failed on slot 2 ( 𝑐′
+𝑖∗ = 𝑐 𝑖∗ − 𝑠) on 3/5 of the exact- (s, i*) cases because it
+had to dereference 𝑐𝑖∗ at the just-emitted index 𝑖∗ and subtract 𝑠 in a single token step.
+4. 4-slot Stage-1 index-value binding ( (s, i*, c_{i*}, c'_{i*}) ) resolves the derefer-
+ence bottleneck and raises ℓ1-optimality to 3/8 (37.5%): In Trial 4, inserting an explicit
+slot for the looked-up claim value 𝑐𝑖∗ (gbnf_slots=4) yielded 5/5 (100%) exact lookup of 𝑐𝑖∗
+whenever 𝑖∗ was exact (and 8/8 / 100% consistent dereferencing 𝑐[ ̂𝑖∗] at the model’s chosen
+index ̂𝑖∗). This doubled Stage-1 𝑐′
+𝑖∗ accuracy from 2/8 (25.0%) to 4/8 (50.0%), raised Stage-2
+ExactCoboundary certification from 3/8 (37.5%) to 5/8 (62.5%), and raised exact ℓ1-optimal
+repair from 2/8 (25.0%) to 3/8 (37.5%) ( c004_k4_01, c004_k4_02, c004_k5_01), with 3/3 (100%)
+Stage-2 ℓ1-optimality whenever Stage 1 materialized all 4 slots accurately.
+5. Evaluator-verified Stage-1 guard filtering + 1 diagnostic retry ( C004-S5) raises
+exact ℓ1-optimality to 5/8 (62.5%) with 5/5 (100%) conditional precision and witnesses
+Theorem 6: In Trial 5 (p_star_verified_guard_receipt.json), applying the deterministic
+complete Stage-1 guard 𝐺complete with 𝑅 = 2 (at most 1 diagnostic retry on the 5 cases that
+failed Attempt 1):
+• Repaired c004_k3_01 from Attempt 1 5 1 -1 -6 (GUARD_FAIL_MIN_WEIGHT_
+INDEX) to Retry 1 5 0 4 -1 , whose admitted Stage-2 graft emitted -1 -1 2 (certified
+ExactCoboundary and ℓ1-optimal at cost 5).
+• Repaired c004_k3_02 from Attempt 1 4 1 6 -2 (GUARD_FAIL_SUBTRACTION_I
+NVARIANT: −2 + 4 = 2 ≠ 6) to Retry 1 4 1 6 2 , whose admitted Stage-2 graft emitted
+-3 2 1 (certified ExactCoboundary and ℓ1-optimal at cost 4).
+• Raised Stage-1 all-4-slot accuracy from 3/8 (37.5%) to 5/8 (62.5%), achieved 5/5 (100.0%
+) conditional ℓ1-optimal precision across all admitted Stage-2 grafts (Theorem 5.2),
+raised unconditional ℓ1-optimal repair from 3/8 (37.5%) to 5/8 (62.5%) (Theorem 5.3),
+and abstained via NullTree on the remaining 3/8 Panel-2 cases and 8/8 Panel-1 cases,
+preventing 3 and 8 wasted Stage-2 calls respectively (Theorem 5.4).
+• Concrete Local Green / Global Red Witness for Theorem 6 ( c004_k6_01 retry):
+20
+
+--- PAGE 21 ---
+On c004_k6_01 (𝑐 = (3, −2, 4, −1, 2, −3), 𝑤 = (3, 2, 1, 2, 3, 2), true sum 𝑠(𝑐) = 3, 𝑖∗ = 2,
+𝑐2 = 4 ), Attempt 1 emitted -1 1 -2 1 (failing GUARD_FAIL_MIN_WEIGHT_IN
+DEX, GUARD_FAIL_SUBTRACTION_INVARIANT, and GUARD_FAIL_C
+YCLE_SUM). On Retry 1, openai/gpt- 4o- mini emitted z_1 = (0, 2, 4, 4) , which
+passed the partial guard 𝐺partial(𝑥, 𝑧1) = 1 (since 𝑤2 = 1 = min𝑗 𝑤𝑗, ̂ 𝑐2 = 4 = 𝑐 2,
+and ̂ 𝑐′
+2 + ̂ 𝑠 = 4 + 0 = 4 = 𝑐 2), yet belonged to the false-green kernel 𝒦false(𝑥)at
+Δ𝑠 = 0 − 3 = −3 ≠ 0 (Theorem 6.1)! Because 𝐺complete checked ̂ 𝑠 = ∑𝑗 𝑐𝑗 = 3, it caught
+GUARD_FAIL_CYCLE_SUM and projected Retry 1 to NullTree before Stage 2.
+6.4 T rial 6 ( C006-S6): Paired multi-cycle overlap-basis cochain repair on 𝐾4 (𝑏1 = 3 ≥ 2)
+To test whether P* staged slot materialization and complete Stage-1 guard filtering extend from
+single cycles ( 𝑏1 = 1) to overlapping multi-cycle complexes ( 𝑏1 = dim 𝐻1(𝐺) ≥ 2), we executed a
+bounded paired trial (c006_overlap_basis_p_star_receipt.json) across 𝑁 = 4 deterministic
+𝐾4 multi-cycle overlap boards (round5-K4-diagnostic at Φ1 = 6, C006-v2-r3-s6030 at Φ1 = 16,
+C006-v2-r3-s6031 at Φ1 = 9 , and weighted board C006-v2-r3-s6032-weighted at Φ1 = 12 with
+𝑤𝑇 = 3, 𝑤𝐸∖𝑇 = 1). Each board has |𝑉 | = 4, |𝐸| = 6, 𝑏1 = 3, and an explicit non-star spanning tree
+𝑇 whose central edge is shared by all 3 chord-induced cycles ( max_tree_edge_cycle_incidence = 3 ).
+T able 3: T rial 6 ( C006-S6, 𝑁 = 4 𝐾 4 multi-cycle overlap boards, 𝑏1 = 3)
+21
+
+--- PAGE 22 ---
+Panel & Arm
+Calls / Reserved
+Spend
+Stage-1 𝐺C006
+partial
+Pass ( Att 1 )
+Stage-1 𝐺C006
+complete
+Pass ( Att 1 ->
+Retry 1 )
+Stage-2 NullTree
+Abstentions /
+Saved Turns
+Solved
+ACCEPTED_ZER
+O_DEFECT
+(Φ1 = 0)
+Conditional Stage-2
+Solve Rate
+Panel 1
+(Qwen/Qwen2
+.5-0.5B-Instruct,
+local)
+c006_unstaged_ac
+tion_generation
+(3-turn session)
+0 provider calls /
+$0
+N/A N/A 0/4 (0 turns saved) 0/4 (0.0%) 0/4 (12/12 turns
+failed TASK_ENV
+ELOPE)
+c006_p_star_stag
+ed_guarded_overl
+ap_repair ( P* +
+𝐺C006
+complete, 𝑅 = 2)
+0 provider calls /
+$0
+0/4 (0.0%) 0/4 -> 0/4 (0.0%) 4/4 (12 Stage-2
+turns saved)
+0/4 (0.0%) N/A ( 0 corrupted
+Stage-2 admits)
+no_model_exact
+_c006_baseline
+(NO_LLM oracle)
+0 provider calls /
+$0
+4/4 (100.0%) 4/4 (100.0%) 0/4 4/4 (100.0%) 4/4 (100.0%, 4/4
+replay verified)
+Panel 2
+(openai/gpt-4o-
+mini,
+OpenRouter)
+c006_unstaged_ac
+tion_generation
+(3-turn session)
+12 calls / $0.0044 N/A N/A 0/4 (0 turns saved) 0/4 (0.0%) 0/4 (12/12
+rejected: NO_STR
+ICT_DESCENT /
+AM-4-STATIONA
+RY-REPEAT)
+c006_p_star_st
+aged_guarded
+_overlap_repair
+(P* + 𝐺C006
+complete,
+𝑅 = 2)
+14 calls / $0.0049
+($0.009252 total
+reserved)
+2/4 (50.0%
+false-green
+witnesses)
+0/4 -> 2/4
+(50.0%)
+2/4 (6 Stage-2
+turns saved)
+2/4 (50.0%) 2/2 (100.0%, 2/2
+replay verified)
+22
+
+--- PAGE 23 ---
+Key multi-cycle findings from T rial 6 ( C006-S6):
+1. Un-staged multi-cycle action generation ( 0/4 solved) stalls in stationary repetition:
+Without a Stage-1 basis-materialization turn, openai/gpt-4o-mini emitted {"move": "CUT",
+"claims": <unchanged initial claims>} on all 12 turns across all 4 𝐾4 boards, triggering
+NO_STRICT_DESCENT and AM-4-STATIONARY-REPEAT at Φ1 ∈ {6, 16, 9, 12}.
+2. Three empirical multi-cycle Local Green / Global Red witnesses for Theorem 7.2:
+On Attempt 1, openai/gpt-4o-mini produced two 9-slot tuples in the partial-guard visibility
+gap 𝒦C006
+false (𝑥) ≅ ℤ6∖{0}that satisfied ̂ 𝑐′
+𝑔𝑚
++ ̂ 𝑟𝑚 = 𝑐 𝑔𝑚
+on all 3 chords ( 𝐺C006
+partial = 1) while failing
+𝐺C006
+complete: round5-K4-diagnostic Attempt 1 ( "1 3 5 -2 -2 -4 5 3 6" ) and C006-v2-r3-s6030
+Attempt 1 ( "28 -27 16 16 27 12 8 -23 8" ). Moreover, on round5-K4-diagnostic Retry 1, it
+emitted "1 3 4 -2 -1 -3 5 2 5" , where the tree potentials (1, 3, 4)were exact ( Δ𝑝 = (0, 0, 0))
+and ̂ 𝑐′
+𝑔𝑚
++ ̂ 𝑟𝑚 = 𝑐 𝑔𝑚
+held on all 3 chords ( −2 + 5 = 3, −1 + 2 = 1, −3 + 5 = 2, so 𝐺C006
+partial = 1),
+yet Δ𝑟 = (−1, 4, −1) ≠ 0so ̂ 𝑐′
+𝑔𝑚
+≠ ̂ 𝑝(𝑣𝑚) − ̂ 𝑝(𝑢𝑚)! Checking 𝐺C006
+complete caught all 3 false-green
+tuples before Stage 2.
+3. T riangular chord decoupling + 1 diagnostic retry lifts multi-cycle zero-defect re-
+pair from 0/4 to 2/4 (50.0%) with 2/2 (100%) conditional Stage-2 precision: On Retry 1,
+openai/gpt-4o-mini repaired its sign-subtraction errors on both C006-v2-r3-s6031 ( "-4 0 -2
+4 2 2 -1 5 1" → "-4 0 -2 0 -2 2 3 -5 1" ) and weighted board C006-v2-r3-s6032-weighted
+("2 1 3 1 3 2 3 -1 1" → "2 1 3 -1 3 1 5 -5 2" ). Both passed 𝐺C006
+complete, were grafted via ∘𝑖
+into Stage 2 ( ASSERT → CUT → VERIFY), and achieved certified ACCEPTED_ZERO_DEFECT
+(Φ1 = 0 , primal-dual certificate verified, zero-send replay_session verified), while NullTree
+abstention prevented 6 hosted ( 12 local) wasted Stage-2 turns.
+6.5 T rial 7 ( C006-S7): Higher-Betti ( 𝑏1 ∈ {4, 5, 6, 7}) two-stage tree-then-chord P* factor-
+ization across 𝐾3,3, 𝑄3, 𝐾5, Petersen, 𝑊7
+To test Theorem 8 across non-planar and higher-Betti multi-cycle topologies, we executed a bounded
+paired trial (c006_higher_betti_p_star_receipt.json) across 𝑁 = 5 deterministic boards from
+c006.panels.v2: - C006-v2-r4-s6040 ( 𝐾3,3, |𝑉 | = 6, |𝐸| = 9, 𝑏 1 = 4, initial Φ1 = 14, single-stage
+arity 13 → two-stage max arity 5) - C006- v2- r5- s6050 ( 𝑄3, |𝑉 | = 8, |𝐸| = 12, 𝑏 1 = 5 , initial
+Φ1 = 22 , single-stage arity 17 → two-stage max arity 7) - C 006 - v2- r6 - s6 06 0 ( 𝐾5, |𝑉 | = 5,
+|𝐸| = 10, 𝑏1 = 6, initial Φ1 = 18, single-stage arity 16 → two-stage max arity 6) - C006-v2-r6-s6061
+(Petersen, |𝑉 | = 10, |𝐸| = 15, 𝑏1 = 6, initial Φ1 = 24, single-stage arity 21 → two-stage max arity 9)
+- C006-v2-r7-s6070 ( 𝑊7, |𝑉 | = 8, |𝐸| = 14, 𝑏1 = 7, initial Φ1 = 28, single-stage arity 21 → two-stage
+max arity 7)
+T able 4: T rial 7 ( C006-S7, 𝑁 = 5 higher-Betti boards, 𝑏1 ∈ {4, 5, 6, 7})
+23
+
+--- PAGE 24 ---
+Panel & Arm
+Calls / Reserved
+Spend
+Stage-1a 𝐺𝑇 Pass
+(Att 1 -> Retry
+1)
+Stage-1b 𝐺𝐶 Pass
+(Att 1 )
+NullTree
+Abstentions /
+Saved Turns
+Solved
+ACCEPTED_ZER
+O_DEFECT
+(Φ1 = 0)
+Conditional Stage-2
+Solve Rate
+Panel 1
+(Qwen/Qwen2
+.5-0.5B-Instruct,
+local)
+c006_unstaged_ac
+tion_generation
+(3-turn session)
+0 provider calls /
+$0
+N/A N/A 0/5 (0 turns saved) 0/5 (0.0%) 0/5 (0.0%)
+c006_p_star_2sta
+ge_tree_chord_gu
+arded_repair
+(C006-S7, 𝑅1𝑎 = 2,
+𝑅1𝑏 = 2)
+0 provider calls /
+$0
+0/5 -> 0/5 (0.0%) 0/0 5/5 (20
+downstream
+turns saved)
+0/5 (0.0%) N/A ( 0 corrupted
+admits)
+no_model_exact
+_c006_higher_bet
+ti_baseline
+(NO_LLM oracle)
+0 provider calls /
+$0
+5/5 (100.0%) 5/5 (100.0%) 0/5 5/5 (100.0%) 5/5 (100.0%, 5/5
+replay verified)
+Panel 2
+(openai/gpt-4o-
+mini,
+OpenRouter)
+c006_unstaged_ac
+tion_generation
+(3-turn session)
+15 calls N/A N/A 0/5 (0 turns saved) 0/5 (0.0%, final
+Φ1 = (14, 22, 18, 24,
+28))
+0/5 (0.0%)
+c006_p_star_2s
+tage_tree_chor
+d_guarded_repa
+ir ( C006-S7,
+𝑅1𝑎 = 2, 𝑅1𝑏 = 2)
+26 calls ( $0.02294
+total reserved
+≤ $0.050 cap)
+4/5 -> 5/5
+(100.0%; Petersen
+recovered on
+Retry 1)
+5/5 (100.0% on
+Attempt 1, 0
+retries)
+0/5 (5/5
+admitted)
+5/5 (100.0%
+across 𝐾3,3, 𝑄3,
+𝐾5, Petersen, 𝑊7)
+5/5 (100.0%, 5/5
+replay verified)
+24
+
+--- PAGE 25 ---
+Key higher-Betti findings from T rial 7 ( C006-S7):
+1. T wo-stage tree-then-chord factorization lifts higher-Betti solve rate from 0/5 (0.0%
+) to 5/5 (100.0%) on openai/gpt-4o-mini: In un-staged action generation, openai/gpt-4o-
+mini solved 0/5 boards across 𝑏1 ∈ {4, 5, 6, 7}, leaving every board at its initial compatibility
+defect Φ1 ∈ {14, 22, 18, 24, 28}. Under two-stage P* factorization (Theorem 8.1), Stage 1a ( G_T,
+arity |𝑉 | − 1 ∈ {5, 7, 4, 9, 7}) passed on Attempt 1 for 𝐾3,3, 𝑄3, 𝐾5, and 𝑊7 (4/5 = 80.0% ),
+and on the 10-vertex Petersen cage (C006-v2-r6-s6061, 9 tree-potential slots) a single targeted
+tree-edge retry (build_c006_stage1a_retry_turn) repaired the failed tree-edge slots to pass
+𝐺𝑇 (5/5 = 100.0% ).
+2. 100% Attempt-1 chord-coboundary accuracy once verified tree potentials
+are grafted (Theorem 8.2): Once 𝑝∗
+𝑇 was verified by 𝐺𝑇 and grafted into Stage
+1b, o p e n a i / g pt - 4o - m i ni computed all 𝑏1 ∈ {4, 5, 6, 6, 7} repaired chord claims
+̂ 𝑐′
+𝑔𝑚
+= 𝑝 ∗
+𝑇 (𝑣𝑚) − 𝑝∗
+𝑇 (𝑢𝑚)with 5/5 (100.0%) exactness on Attempt 1 (0 Stage-1b retries
+needed), and all 5/5 (100.0%) Stage-2 3-turn sessions ( ASSERT → CUT → VERIFY) terminated
+in certified ACCEPTED_ZERO_DEFECT ( Φ1 = 0).
+6.6 T rial 8 ( C005-S1): Dichotomic F redholm-alternative P* guarded separation across 8
+public difference boards
+To test Theorem 9 on dichotomic ( CONSISTENT vs. INCONSISTENT) verification, we executed a bounded
+paired trial (c005_dichotomic_fredholm_p_star_receipt.json) across all 𝑁 = 8 public C005
+difference boards ( pub_cons_01..pub_cons_08, 4 CONSISTENT and 4 INCONSISTENT, |𝑉 | ∈ {4, 5, 6},
+𝑏1 ∈ {1, 2}).
+T able 5: T rial 8 ( C005-S1, 𝑁 = 8 public C005 difference boards, 4 consistent + 4 incon-
+sistent)
+25
+
+--- PAGE 26 ---
+Panel & Arm
+Calls /
+Reserved
+Spend
+Stage-1
+𝐺Fredholm Pass
+(Att 1 ->
+Retry 1 )
+Consistent
+Solved ( 4
+boards)
+Inconsistent
+Solved ( 4
+boards)
+Total Solved
+(8 boards)
+Lazy False
+INCONSISTENT
+Count
+Admitted
+False Verdicts
+Conditional
+Stage-2
+Precision
+Panel 1
+(Qwen/Qwe
+n2.5-0.5B-
+Instruct,
+local)
+c005_unstage
+d_consistenc
+y_verdict
+0 calls / $0 N/A 0/4 (0.0%) 4/4 (100.0%) 4/8 (50.0%) 4/4 (100.0%) 4/8 (50.0%) 4/8 (50.0%)
+c005_p_star_
+dichotomic_f
+redholm_guar
+ded ( C005-S1,
+𝑅 = 2)
+0 calls / $0 0/8 -> 0/8
+(0.0%)
+0/4 (4/4
+NullTree)
+0/4 (4/4
+NullTree)
+0/8 0 (0.0%) 0 (0.0%) N/A ( 8/8
+NullTree
+abstentions)
+no_model_e
+xact_c005_ba
+seline ( NO_LLM
+oracle)
+0 calls / $0 8/8 (100.0%) 4/4 (100.0%) 4/4 (100.0%) 8/8 (100.0%) 0 0 8/8 (100.0%)
+Panel 2
+(openai/gpt-
+4o-mini,
+Open-
+Router)
+c005_unstage
+d_consistenc
+y_verdict
+8 calls N/A 0/4 (0.0%) 3/4 (75.0%) 3/8 (37.5%) 3 (75.0% of
+consistent
+boards)
+5/8 (62.5%) 3/8 (37.5%)
+c005_p_sta
+r_dichotom
+ic_fredhol
+m_guarded
+(C005-S1,
+𝑅 = 2)
+21 calls
+($0.003636
+total reserved
+≤ $0.050 cap)
+1/8 -> 6/8
+(75.0%; 2/8
+NullTree)
+3/4 (75.0%) 3/4 (75.0%) 6/8 (75.0%) 0 (0.0%) 0 (0.0%) 6/6 (100.0%,
+6/6 replay
+verified)
+26
+
+--- PAGE 27 ---
+Key dichotomic findings from T rial 8 ( C005-S1):
+1. Empirical confirmation of the lazy false-refusal attractor in un-staged generation:
+In un-staged generation, both Qwen/Qwen2.5-0.5B-Instruct ( 0/4 consistent, 4/4 lazy false
+INCONSISTENT) and openai/gpt-4o-mini ( 0/4 consistent, 3/4 lazy false INCONSISTENT) solved
+0.0% of consistent boards , defaulting to INCONSISTENT whenever their unverified mental tree
+integration encountered a chord discrepancy.
+2. Elimination of admitted false verdicts and 2x overall solve-rate improvement under
+𝐺F redholm (Theorem 9): Enforcing 𝐺Fredholm with at most 1 equation-specific diagnostic
+retry lifted o p e n a i / g pt - 4o - m i ni’s Stage-1 pass rate from 1/8 (12.5%) on Attempt 1 to
+6/8 (75.0%) after Retry 1 ( 3 consistent + 3 inconsistent boards admitted; 2/8 projected to
+NullTree), raised consistent board accuracy from 0/4 (0.0%) to 3/4 (75.0%), doubled overall
+accuracy from 3/8 (37.5%) to 6/8 (75.0%) (6/6 = 100.0% conditional precision), and reduced
+both lazy_false_inconsistent_count and admitted_false_verdict_count to 0 across both
+panels.
+6.7 T rial 9 ( C001-S1): Distractor-filtered cochain & cohomological syndrome P* factor-
+ization across 12 public and poisoned cases
+To test Theorems 10 and 11 on larger graphs with 4-digit integer claims ( 𝑐𝑢,𝑣 ∈ [−5000, 5000],
+|𝑉 | ∈ {8, 9, 10, 11}, |𝐸| ∈ {12, … , 16}, 𝑏1 ∈ {5, 7}) and bracketed natural-language distractors ( [
+Note k: ...] ), we executed a bounded paired trial (c001_distractor_cochain_p_star_receipt.json)
+across 𝑁 = 12 cases from c 0 0 1 / p u b l i c _ c a s e s . j s on and c 0 0 1 / p o i s o n e d _ c a s e s . j s on: -4
+public verdict cases (c001_verdict_1000.. 1003: 2 CONSISTENT, 2 CONTRADICTION), - 3
+public repair cases (c001_repair_1100.. 1102: chord perturbations ['H','C'] -> -30 and ['A
+','G'] -> -3387 , plus spanning-tree perturbation ['D','C'] -> 2408 propagating across 4 chord
+cycles), - 2 public audit cases (c 0 0 1 _ a u d i t _ 1 2 0 0ACCEPT, c 0 0 1 _ a u d i t _ 1 2 0 1REJECT), and
+- 3 adversarial poisoned cases (c 0 0 1 _ p o i s o n e d _ a l m o s t _ v a l i d _ 4 0 0 0 with an off-by-one+1
+cycle discrepancy, c001_poisoned_flipped_sign_4100 with a flipped edge orientation, and
+c001_poisoned_deceptive_verdict_4200 with a deceptive CONTRADICTION claim on a
+consistent graph).
+T able 6: T rial 9 (C001-S1, 𝑁 = 12 distractor-filtered 4-digit rank-difference cases, 𝑏1 ∈ {5,
+7})
+27
+
+--- PAGE 28 ---
+Panel & Arm
+Calls /
+Reserved
+Spend
+Stage-1a 𝐺𝑇
+Pass (Att 1
+-> Retry 1 )
+Stage-1b 𝐺𝐶
+Pass (Att 1
+-> Retry 1 )
+Solved
+Verdict (6)
+Solved
+Repair ( 3)
+Solved Audit
+(3)
+Solved
+Public ( 9) /
+Poisoned ( 3)
+Total Solved
+(12)
+False SOLVED
+Verdicts
+Panel 1
+(Qwen/Q
+wen2.5-
+0.5B-
+Instruct,
+local)
+c001_unsta
+ged_witnes
+s_generation
+(1-shot
+JSON)
+0 calls / $0 N/A N/A 0/6 0/3 0/3 0/9 / 0/3 0/12 (0.0%) 1/12 (8.3%)
+c001_p_sta
+r_carrier_co
+chain_synd
+rome_guard
+ed ( C001-S1,
+𝑅1𝑎 = 2,
+𝑅1𝑏 = 2)
+0 calls / $0 0/12 ->
+0/12
+0/0 (12
+saved)
+0/6 0/3 0/3 0/9 / 0/3 0/12 (12/12
+NullTree)
+0/12 (0.0%)
+no_model_e
+xact_c001_
+baseline
+(NO_LLM
+oracle)
+0 calls / $0 12/12 (100%) 12/12 (100%) 6/6 (100%) 3/3 (100%) 3/3 (100%) 9/9 / 3/3
+(100%)
+12/12
+(100.0%)
+0/12 (0.0%)
+Panel 2
+(openai/g
+pt-4o-mini,
+Open-
+Router)
+c001_unsta
+ged_witnes
+s_generation
+(1-shot
+JSON)
+12 calls N/A N/A 0/6 (0.0%) 0/3 (0.0%) 1/3 (33.3%) 1/9 (11.1%)
+/ 0/3 (0.0%)
+1/12 (8.3%) 11/12
+(91.7%)
+28
+
+--- PAGE 29 ---
+Panel & Arm
+Calls /
+Reserved
+Spend
+Stage-1a 𝐺𝑇
+Pass (Att 1
+-> Retry 1 )
+Stage-1b 𝐺𝐶
+Pass (Att 1
+-> Retry 1 )
+Solved
+Verdict (6)
+Solved
+Repair ( 3)
+Solved Audit
+(3)
+Solved
+Public ( 9) /
+Poisoned ( 3)
+Total Solved
+(12)
+False SOLVED
+Verdicts
+c001_p_s
+tar_carrie
+r_cochai
+n_syndro
+me_guard
+ed
+(C001-S1,
+𝑅1𝑎 = 2,
+𝑅1𝑏 = 2)
+41 calls
+($0.012427
+total
+reserved
+≤ $0.050
+cap)
+1/12 ->
+12/12
+(100.0%)
+6/12 ->
+12/12
+(100.0%)
+6/6
+(100.0%)
+3/3
+(100.0%)
+3/3
+(100.0%)
+9/9
+(100.0%) /
+3/3
+(100.0%)
+12/12
+(100.0%)
+0/12 (0.0%)
+29
+
+--- PAGE 30 ---
+Key findings from T rial 9 ( C001-S1):
+1. Collapse of un-staged 1-shot witness generation under 4-digit arithmetic and ad-
+versarial distractors ( 1/12 = 8.3% ): In un-staged generation, openai/gpt-4o-mini solved
+0/6 verdict cases, 0/3 repair cases, and 0/3 adversarial poisoned cases ( 1/12 = 8.3% over-
+all, solving only c001_audit_1200), emitting 11/12 (91.7%) false SOLVED verdicts whose
+potentials failed 𝐵p = c or whose cycles failed simple-cycle non-zero holonomy verification.
+2. Empirical verification of Theorem 11 (Edge-local coboundary defect migration
+vs. path-integrated 𝐵−1
+𝑇 retry convergence): Because the spanning-tree claims 𝑐𝑢,𝑣 ∈
+[−5000, 5000]are 4-digit signed integers across 7 to 10 tree hops, openai/gpt-4o-mini passed
+Stage 1a ( 𝐺𝑇 ) on Attempt 1 on only 1/12 (8.3%) cases (c001_poisoned_almost_valid_4000).
+Under an initial edge-local retry diagnostic ( 𝐵𝑇 ̂ 𝑝(1)
+𝑇 ≠ c|𝑇 ), fixing a flagged parent slot 𝑣∗
+while retaining its unflagged descendants 𝑤 ∈ Subtree𝑇 (𝑣∗) ∖ {𝑣∗} caused the coboundary
+defect to migrate to the child edges (𝑣∗ → 𝑤)(2/12 = 16.7% convergence). Switching to
+the path-integrated diagnostic ̂ 𝑝(1)
+𝑇 (𝑤) ≠ (𝐵−1
+𝑇 c|𝑇 )𝑤 (Theorem 11.3) flagged the entire shifted
+subtree simultaneously and lifted Stage-1a retry convergence from 1/12 (8.3%) on Attempt 1
+(and 2/12 under edge-local retry) to 12/12 (100.0%) on Retry 1!
+3. Cohomological syndrome decoding r ∗ = 𝑆 c solves 12/12 (100.0%) across verdict,
+chord/tree repair, audit, and poisoned traps (Theorem 10): Stage 1b ( 𝐺𝐶) converged
+from 6/12 (50.0%) on Attempt 1 to 12/12 (100.0%) after Retry 1. From the verified pair (𝑝∗
+𝑇 ,
+̂c∗), the syndrome r∗ = ̂c∗ − c|𝐸∖𝑇 = 𝑆 c decoded:
+• all 6/6 verdict cases (including c001_poisoned_almost_valid_4000 and c001_poisone
+d_deceptive_verdict_4200),
+• all 3/3 single-edge repair cases—both unit-support chord perturbations (c001_repair_
+1100: ['H', 'C'] -> -30 ; c001_repair_1102: ['A', 'G'] -> -3387 , Theorem 10.2a)
+and the multi-cycle spanning-tree perturbation (c001_repair_1101: ['D', 'C'] -> 2408
+with cutset support of size 4, Theorem 10.2b), and
+• all 3/3 audit cases (including c001_poisoned_flipped_sign_4100), with 0/12 false
+SOLVED verdicts across both panels.
+6.8 T rial 10 ( C004-S6): Held-out 40-case directed cycle ladder ( 𝑘 ∈ {3, … , 12})
+To test Theorem 5 and Theorem 6 beyond 𝑘 ≤ 6 on a held-out 7B open-weight checkpoint (qwen/q
+wen-2.5-7b-instruct on OpenRouter, with local hardware VRAM boundary recorded at 4.0 GB RTX
+3050 vs. 15.24 GB bf16 requirement alongside local Qwen/Qwen2.5-0.5B-Instruct), we executed the
+held-out 40-case C004 ladder (c004_40case_hidden_p_star_receipt.json, 4 cases per cycle length
+𝑘 ∈ {3, … , 12}):
+• NO_LLM exact baseline (no_model_exact_c004_40case_baseline): 40/40 (100.0%)
+certified ExactCoboundary and ℓ1-optimal ( 16/16 in 𝑘 ∈ {3..6}, 16/16 in 𝑘 ∈ {7..10}, 8/8 in
+𝑘 ∈ {11, 12}).
+• Panel 1 (Qwen/Qwen2.5-0.5B-Instruct, local): Un-staged slot-constrained decoding
+admitted all 40/40 proposals with 3/40 (7.5%) ExactCoboundary and 1/40 (2.5%) ℓ1-optimal
+(39/40 suboptimal admissions). Under P* complete guard 𝐺complete, all 40/40 failed Stage 1
+after 1 retry and abstained via NullTree (0 suboptimal Stage-2 admissions).
+• Panel 2 (qwen/qwen- 2.5- 7b- instruct, OpenRouter, 121 calls at $0.018452): Un-
+staged slot-constrained decoding admitted all 40/40 proposals with 9/40 (22.5%) ExactCobou
+ndary and 0/40 (0.0%) ℓ1-optimal. Under P* complete guard 𝐺complete, Attempt 1 produced
+4 partial-guard passes ( 𝐺partial = 1), of which 3 were concrete Local Green / Global Red
+30
+
+--- PAGE 31 ---
+witnesses ( ̂ 𝑠 ≠ ∑𝑗 𝑐𝑗, Theorem 6) caught only by 𝐺complete. After 1 diagnostic retry, 2/40
+cases passed 𝐺complete and were admitted to Stage 2, and both ( 2/2 = 100.0% conditional
+Stage-2 precision) achieved certified ExactCoboundary and exact ℓ1-optimality ( 38/40
+NullTree abstentions, 0 suboptimal admissions).
+6.9 T rial 11 ( C006-S8): Held-out 60-board multi-cycle campaign ( 𝑏1 ∈ {3, … , 8}across 7
+graph families)
+To test Theorem 8 across 60 held-out multi-cycle boards spanning cycle ranks 𝑏1 ∈ {3, 4, 5, 6, 7, 8}
+(10 boards per cycle rank across K4, K3,3, cube-Q3, K5, Petersen, wheel-7-rim, and wheel-8-rim), we
+executed c006_60board_hidden_p_star_receipt.json:
+• NO_LLM exact baseline (no_model_exact_c006_60board_baseline): 60/60 (100.0%)
+ACCEPTED_ZERO_DEFECT ( Φ1 = 0) and 60/60 zero-send replay_session verified across
+all 6 cycle ranks and 7 graph families.
+• Panel 1 (Qwen/Qwen2.5- 0.5B- Instruct, local 6-board stratified anchor panel
+across 𝑏1 ∈ {3..8}): Un-staged 3-turn session solved 0/6 (0.0%); Two-Stage Tree-Then-Chord
+P* abstained at Stage 1a via NullTree on 6/6, preventing 24 wasted downstream turns (0
+corrupted Stage-2 admissions).
+• Panel 2 (qwen/qwen-2.5-7b-instruct, OpenRouter, all 60 hidden boards, 301 calls
+at $0.097765): Un-staged 3-turn action generation solved 0/60 (0.0%) across all cycle ranks
+𝑏1 ∈ {3..8}. Under Two-Stage Tree-Then-Chord P*, Stage 1a ( 𝐺𝑇 ) passed on 8/60 boards
+(4/10 on 𝐾4 at 𝑏1 = 3, 1/10 on wheel-7-rim at 𝑏1 = 7, and 3/10 on wheel-8-rim at 𝑏1 = 8) and
+abstained via NullTree on 52/60, preventing 208 wasted downstream turns ( 52 \times 4 ).
+Stage 1b ( 𝐺𝐶) passed on 7/8 on Attempt 1 and 8/8 (100.0%) after 1 retry. All 8/8 admitted
+boards ( 100.0% conditional Stage-2 precision; 8/60 = 13.3% unconditional) terminated
+in certified ACCEPTED_ZERO_DEFECT ( Φ1 = 0) and passed zero-send replay_session.
+6.10 T rial 12 (B-COH-S1): Multi-stage P* cohomology certificate verification across C011–
+C020
+To test Theorem 12 across all ten cohomology challenges ( C011–C020), we extended check_certificate
+in omega_engine_pfp/domain/cohomology/ to independently verify all 328 JSON benchmark cases
+(278/278 SOLVED, 36/36 OUT_OF_SCOPE, 14/14 UNKNOWN rejected) and executed the paired multi-stage
+P* campaign (b_cohomology_p_star_receipt.json):
+• NO_LLM exact baseline (n o _ m o d e l _ e x a c t _ b _ c o h o m o l o g y _ b a s e l i ne):10/10
+(100.0%) SOLVED certificates verified + 10/10 (100.0%) OUT_OF_SCOPE certificates verified across
+C011–C020.
+• Panel 1 (Qwen/Qwen2.5-0.5B-Instruct, local): Un-staged 0/10 verified; P* certificate-
+guarded caught 1 false SOLVED claim on Attempt 1 and abstained via NullTree on 10/10 (0
+admitted false SOLVED verdicts).
+• Panel 2 (qwen/qwen-2.5-7b-instruct, OpenRouter, 30 calls at $0.020035): On At-
+tempt 1, qwen/qwen-2.5-7b-instruct emitted well-formed JSON with "status": "SOLVED" on
+10/10 (100.0%) of challenges C011–C020, every one of which violated the exact algebraic iden-
+tities of its challenge (confirming Theorem 12.1). Independent check_certificate caught all
+10/10 false SOLVED claims on Attempt 1, triggered 1 diagnostic retry, and projected all 10 persis-
+tent failures to NullTree (admitted_false_solved_count = 0 , conditional_stage2_precision
+= 1.0 ).
+31
+
+--- PAGE 32 ---
+7. Executable replay and limitations
+The replay script uses only the Python standard library and executes twelve deterministic verifica-
+tion suites with zero model calls:
+1. Glyph code round trips and rejection controls: Verifies all four Boolean code/assignm
+ent round trips ( <00>, <01>, <10>, <11>), refuses malformed strings, and confirms that only
+<01> and <10> satisfy 𝑥 + 𝑦 = 1.
+2. Cochain primal-dual identity (Theorem 2): Verifies 𝑑1𝑑0 = 0, Φ1(𝑐) = Γ2(𝑐) = |𝑠|, node-
+potential integration 𝑑0𝑎 = 𝑐 ′, and lightest-edge weighted ℓ1 optimality across all 8 C004 cycle
+cases.
+3. Coloured operad NullTree absorption (Theorem 3): Verifies that valid colour-matched
+grafts succeed while colour mismatches, out-of-bounds slot indices, and NullTree children or
+parents are absorbed to NullTree (𝑓 ∘𝑖 0 = 0 and 0 ∘𝑖 𝑔 = 0).
+4. BPE prefix-automaton viability (Proposition 4): Verifies that the integer-slot prefix
+DF A admits multi-character BPE boundary tokens ( ' -' ), blocks premature <eos> before slot
+𝑘, and accepts completed 𝑘-slot tuples.
+5. Single-cycle guarded Stage-1 retry and partial-guard false-green kernel (Theo-
+rems 5 & 6): Verifies the exact bijection Δ𝑠 ↦ 𝑧 1(Δ𝑠) ∈ 𝒦false(𝑥)with Stage-2 residual
+Φ1,𝑤(𝑐′(Δ𝑠)) = 𝑤𝑖∗|Δ𝑠| > 0, confirms the c004_k6_01 retry witness (0, 2, 4, 4) at Δ𝑠 = −3,
+and checks that 𝐺complete closes the false-green kernel to ∅.
+6. Multi-cycle 𝐾4 triangular chord decoupling and rank-6 visibility gap (Theorem 7):
+Verifies across all 4 𝐾4 multi-cycle overlap boards ( 𝑏1 = 3, shared tree edge incidence 3) that
+𝐺C006
+complete implies exact zero cochain defect ( 𝑐′ = 𝑑 0𝑝∗
+𝑇 , Φ1(𝑐′) = 0, Γ2(𝑐′) = 0), and verifies
+the 3 empirical multi-cycle Local Green / Global Red witnesses in 𝒦C006
+false (𝑥) ≅ ℤ6 ∖ {0}.
+7. Higher-Betti ( 𝑏1 ∈ {4, … , 8}) two-stage tree-then-chord slot-arity reduction and
+kernel closure (Theorem 8): Verifies across 𝐾3,3, 𝑄3, 𝐾5, Petersen, and 𝑊7 that two-stage
+factorization strictly reduces maximum integer-slot arity from (|𝑉 | − 1) + 2𝑏1 ∈ {13, 17, 16,
+21, 21}to max (|𝑉 | − 1, 𝑏1) ∈ {5, 7, 6, 9, 7}and that 𝐺𝑇 ∧ 𝐺𝐶 = 1 ⟺ ( ̂ 𝑝 𝑇 , ̂ 𝑐′
+𝐸∖𝑇 ) = (𝑝∗
+𝑇 ,
+𝑑0|𝐸∖𝑇 𝑝∗
+𝑇 ).
+8. Dichotomic F redholm-alternative guard closure and false-verdict elimination
+(Theorem 9): Verifies across all 8 public C005 difference boards ( pub_cons_01..pub_cons_08)
+that 𝐺Fredholm = 1 uniquely determines ( ̂ 𝑝𝑇 , ̂ 𝑟𝐸∖𝑇 ) = (𝑝 ∗
+𝑇 , 𝑟∗
+𝐸∖𝑇 ) and rejects lazy
+false-INCONSISTENT and false- CONSISTENT perturbations.
+9. Cohomological syndrome decoding r ∗ = 𝑆 c across V erdict, Single-Edge
+Chord/T ree Repair, and Audit (Theorem 10): Verifies on C001 rank-difference graphs
+that r∗ = 𝑆 c vanishes if and only if c ∈ im(𝑑0)and decodes both chord perturbations
+(r∗ = − ̂𝛿e𝑚) and spanning-tree perturbations ( r∗ = ̂𝛿𝑆⋅,𝑒∗, including c001_repair_1101
+['D','C'] -> 2408 across 4 chord cycles).
+10. T ree-coboundary defect migration vs. path-integrated 𝐵−1
+𝑇 guard diagnostics (The-
+orem 11): Verifies on rooted spanning trees of depth ≥ 2 that an internal tree-edge integra-
+tion error Δ𝑣∗ ≠ 0 shifts Subtree 𝑇 (𝑣∗)while leaving descendant edge-local residuals zero, so
+updating only 𝑣∗ migrates the coboundary defect to child edges (𝑣∗ → 𝑤), whereas 𝛿𝑇 = 𝐵 −1
+𝑇 e𝑇
+flags the entire subtree Subtree 𝑇 (𝑣∗)simultaneously.
+11. Independent exact cohomology certificate verification ( C011–C020, Theorem 12):
+Verifies on finite C015 (𝔽2 persistence 𝑅 = 𝐷 ⋅ 𝑉 ) and C018 (signed-graph switching frustra-
+tion) instances that status-label-only acceptance admits invalid "status": "SOLVED" payloads
+whereas independent algebraic recomputation rejects them.
+32
+
+--- PAGE 33 ---
+12. Offline recount of all 13 committed C001, C004, claude-fable-5-1, C005, C006,
+and b_cohomology receipts: Replays all six committed C004 benchmark receipts (including
+the 40-case hidden ladder C004-S6), the accounted claude-fable-5-1 theorem-derivation receipt,
+all three C006 receipts ( C006-S6 𝐾4, C006-S7 higher-Betti, and C006-S8 60-board hidden cam-
+paign), the C005-S1 dichotomic Fredholm receipt, the C001-S1 distractor-filtered syndrome
+receipt, and the B-COH-S1 (C011–C020) cohomology certificate receipt from disk (when run
+inside the repository checkout) with zero network or provider calls.
+Claim hygiene summary
+1. What this paper supports:
+• Theorem 1 (channel-independent host checking soundness), Theorem 2 (single-cycle
+prompt-to-cochain ℓ1 primal-dual coboundary identity), Theorem 3 (two-sided NullTree
+ideal absorption in 𝒪/ℐ), Proposition 4 (BPE prefix-automaton logit-mask viability
+and F-null token identity), Theorem 5 (guarded Stage-1 slot retry admission rate,
+conditional precision, and Stage-2 call savings), Theorem 6 (single-cycle partial-guard
+visibility gap 𝒦false(𝑥) ≅ ℤ ∖ {0}), Theorem 7 (multi-cycle triangular chord decoupling
+and rank- (|𝑉 | − 1 + 𝑏 1) partial-guard visibility gap 𝒦C006
+false (𝑥) ≅ ℤ|𝑉 |−1+𝑏1 ∖ {0}),
+Theorem 8 (two-stage tree-then-chord P* slot-arity reduction from |𝑉 | − 1 + 2𝑏 1 to
+max(|𝑉 | − 1, 𝑏1) and two-stage false-green kernel closure), Theorem 9 (dichotomic
+Fredholm-alternative P* guard closure and elimination of the lazy false-refusal attractor),
+Theorem 10 (cohomological syndrome decoding r∗ = 𝑆 c across verdict, chord/tree
+single-edge repair, and audit), Theorem 11 (tree-coboundary defect migration
+under coordinate-local retry vs. one-step subtree identification under path-integrated
+𝐵−1
+𝑇 diagnostics), and Theorem 12 (independent exact certificate verification across
+C011–C020 closing the status-label false- SOLVED kernel) under their declared finite
+assumptions.
+• Across all 12 empirical mechanism and cohomology trials ( C004-S1..S6, C006-S6..S8, C005
+-S1, C001-S1, and B-COH-S1 across C011–C020), P* staged slot materialization with com-
+plete deterministic Stage-1 guards and NullTree abstention achieved 40/40 (100.0%)
+conditional Stage-2 precision (0 admitted false SOLVED verdicts across 242 guarded
+board/challenge evaluations), caught 3 additional Local Green / Global Red witnesses
+on the 40-case hidden C004 ladder and 10/10 false SOLVED status claims on B-COH-S1, and
+prevented 208 wasted downstream turns on the 60-board hidden C006 campaign.
+2. What this paper does not support:
+• Does not claim that Coloured Operad slot-grafting, Layer-2 grammar projection, or a
+single Stage-1 retry gives small or 7B models general symbolic competence: on the 40-
+case hidden C004 ladder ( C004-S6), qwen/qwen-2.5-7b-instruct passed G_complete on
+2/40 (5.0%) cases; on the 60-board hidden C006 campaign ( C006-S8), it passed 𝐺𝑇 ∧ 𝐺𝐶
+on 8/60 (13.3%) boards; and on B-COH-S1 (C011–C020), it passed check_certificate on
+0/10 (0.0%) challenges ( 10/10 abstained via NullTree).
+• Does not claim that local 15.24 GB bf16 7B execution fits within 4.0 GB laptop GPU
+VRAM without quantized GGUF/A WQ backends or remote provider routing.
+3. The narrowest defensible claim:
+• Decomposing multi-constraint algebraic and cohomological tasks into bounded-arity P*
+Stage-1 slot-materialization cuts guarded by complete deterministic linear/coboundary,
+path-integrated 𝐵−1
+𝑇 , and independent certificate predicates ( 𝐺complete, 𝐺C006
+complete, 𝐺𝑇 ∧𝐺𝐶,
+𝐺Fredholm, 𝐺(𝑚)
+cert) with NullTree abstention enforces 100% conditional Stage-2 precision
+33
+
+--- PAGE 34 ---
+(40/40 across all admitted grafts in C004-S5, C004-S6, C006-S6, C006-S7, C006-S8, C005-S1,
+C001-S1, and B-COH-S1, with 0 admitted false verdicts) while converting unrecoverable
+model arithmetic or witness failures into zero-downstream-cost NullTree abstentions.
+4. The next test needed:
+• Evaluate whether per-challenge multi-stage P* operator decomposition for C012 (sheaf
+coboundary matrix 𝑑0 materialization before 𝐻 0/𝐻 1 kernel/cokernel extraction) and
+C015 (column-by-column 𝔽2 pivot reduction 𝑅 = 𝐷 ⋅ 𝑉 ) lifts 7B/frontier verified solve
+rates above 0/10 under the same fail-closed check_certificate gate.
+8. Sources and relation to the programme
+This draft builds on the WDP manuscript , Paper 021 (source and execution audit) , Corrected
+challenge findings, Paper 022 (frontier research) , the Categorical Operad Prompt Architecture , and
+the bounded C001/C004/C005/C006/ b_cohomology mechanism sessions . The two-level teaching
+packet is retained as an unexecuted structural example. Genesis and MSS-N presentation stages do
+not license a new mathematical or physical carrier.
+Research extension: evolving the proposal harness
+Prompt, workflow, search-policy and context-policy rewrites are additional proposal-channel inte
+rventions. The host’s task and checking obligations remain fixed. A strategy label, root-cause
+explanation or compressed context can change the distribution of submitted candidates without
+changing what a valid certificate must satisfy. This is the operational use of channel-independent
+checking; it does not establish a theorem about empirical improvement.
+The new campaign uses named Anthropic deployments with frozen role configurations. Its interface
+supplies adaptive-thinking and output limits; it does not expose provider seeds, arbitrary logit
+interventions or attention weights. Local seeds reproduce scheduling choices only. Every paid
+attempt, including an unusable response, is bound to the original budget and retained raw evidence.
+Changed candidate code is executed only within the declared isolated surface.
+The historical mechanism trials and finite proofs above retain their own source and evidence iden-
+tities. They are not training data or measured outcomes for the new held-out panel. Paper 029
+supplies the separate protocol, ablations and exploratory ignition design. Those new model effects
+remain NOT_MEASURED pending the verified remote host.
+The source and page references for this extension are collected in Paper 029 and its source-to-claim
+map. The author-review rendering does not replace a historical deposit or archive.
+34

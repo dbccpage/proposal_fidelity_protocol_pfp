@@ -7,6 +7,8 @@ field. Publish the working path first; put theory and large contracts in referen
 
 **Recipe ID/version:** [stable ID and version]
 
+**DAG ID and Wiki page:** [exact node ID, page URL and publication status]
+
 **Base family:** [WF1–WF5]
 
 **Status:** [documented / fixture-tested / measured / experimental / retired]
@@ -67,3 +69,6 @@ operation and a finite check from a general theorem.]
 </details>
 
 **Next:** [One useful next page, or an explicit stop point.]
+
+Before marking the implementation complete, publish its entry and navigation
+links using the [Wiki completion checklist](Workflow-Authoring.md#completion-and-wiki-publication).

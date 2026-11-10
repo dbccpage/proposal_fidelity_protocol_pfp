@@ -1,0 +1,52 @@
+{
+  "python": "3.14.2",
+  "source_pins": {
+    "pfp/infrastructure/trace/provider_dispatch.py": "9db59c2ecaebaccef870607f66688627b422d50a1354ccea59ff9260456ef8eb",
+    "pfp/infrastructure/trace/traced_gateway.py": "bc04db58a3d723fbaad26c9a99e6adc3440cf8ef26cee316a115911543431828",
+    "pfp/infrastructure/workflow_runtime.py": "c240660d91a6391a2b3283423c58e02cdf99e5d49d46dc1659c53bbbb2671401"
+  },
+  "method": "Fully read named AST definitions with synthetic dependencies; no production imports, network/native/private reads.",
+  "controls": [
+    {
+      "id": "PFPINFRA-P025",
+      "name": "gate_exception_type_mislabels_after_dispatch_failure",
+      "observed": [
+        {
+          "event": "SyntheticDispatchAlreadyOccurred"
+        },
+        {
+          "event": "ProviderDispatchRefusedPreflight",
+          "payload": {
+            "provider": "synthetic",
+            "model": "synthetic",
+            "refusal_type": "SyntheticBudgetExceeded",
+            "refusal": "downstream error",
+            "dispatched": false
+          }
+        }
+      ],
+      "result": "reproduced",
+      "limit": "Injected gateway simulates a downstream listed exception; no actual provider call. Concrete transport permits exceptions to propagate, but current external gateway class behavior is not newly replayed."
+    },
+    {
+      "id": "PFPINFRA-P026",
+      "name": "provider_wire_absence_skips_response_binding",
+      "observed": {
+        "returned": true
+      },
+      "result": "reproduced",
+      "limit": "Helper used for provider records in replay; no original run edited."
+    },
+    {
+      "id": "PFPINFRA-P027",
+      "name": "provider_wire_hash_claim_not_checked",
+      "observed": {
+        "returned": true,
+        "claimed_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "actual_hash": "350a9e2d32a4af0081025dc9d79b74964f8b83752ebefc7573859bbbe3663764"
+      },
+      "result": "reproduced",
+      "limit": "Only local helper; manifests bind files but do not themselves validate this internal hash relation."
+    }
+  ]
+}

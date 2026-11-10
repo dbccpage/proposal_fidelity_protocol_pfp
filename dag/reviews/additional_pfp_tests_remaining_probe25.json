@@ -1,0 +1,63 @@
+{
+  "runtime": "3.14.2",
+  "status": "bounded_observed",
+  "source_pins": [
+    {
+      "path": "pfp/tests/fixtures/retired_quantum_reference/stabilizer_solver.py.txt",
+      "sha256": "e3576b60daf259f09e67d2c964308c5083e8736df228cd9fde2dd499222aa131"
+    },
+    {
+      "path": "pfp/tests/fixtures/retired_quantum_reference/certificate_checker.py.txt",
+      "sha256": "e6f484dae02b13bd4da90dd2ba9dd0eb6611cc2fa6cb05002e685d17cb664d53"
+    }
+  ],
+  "finite_one_qubit_census": {
+    "cases": 273,
+    "solved": 177,
+    "out_of_scope": 96,
+    "checked_pass": 273
+  },
+  "controls": [
+    {
+      "label": "wrong_energy_control",
+      "verdict": "FAIL",
+      "status": null,
+      "error": "Reported energy 1 != true ground energy 0"
+    },
+    {
+      "label": "unicode_isdigit_nondecimal",
+      "exception": "ValueError",
+      "message": "invalid literal for int() with base 10: '²'"
+    },
+    {
+      "label": "oversized_decimal_reference",
+      "exception": "ValueError",
+      "message": "Exceeds the limit (4300 digits) for integer string conversion: value has 5000 digits; use sys.set_int_max_str_digits() to increase the limit"
+    },
+    {
+      "label": "ignored_auxiliary_identity_and_basis_aliases",
+      "verdict": "PASS",
+      "status": "SOLVED",
+      "error": null
+    },
+    {
+      "label": "unresolved_secondary_decomposition_id",
+      "verdict": "PASS",
+      "status": "SOLVED",
+      "error": null
+    },
+    {
+      "label": "floating_sign_one",
+      "verdict": "PASS",
+      "status": "SOLVED",
+      "error": null
+    },
+    {
+      "label": "unknown_arbitrary_nonempty_refusal",
+      "verdict": "PASS",
+      "status": "UNKNOWN",
+      "error": null
+    }
+  ],
+  "limits": "AST-extracted full reviewed functions with an independent injected one-qubit Pauli/parser boundary. Original retired parser/Pauli modules and any live/native provider never imported. Counts validate these finite controls only, not original parser compatibility, multi-qubit phases or current production behavior."
+}

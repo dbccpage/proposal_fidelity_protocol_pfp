@@ -1,0 +1,37 @@
+{
+  "tests": [
+    {
+      "edition": "current",
+      "returncode": 1,
+      "command": [
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8=0",
+        "-c",
+        "import dag.reviews.additional_paper_010_validate as v;raise SystemExit(v.tests())"
+      ],
+      "log": "dag/reviews/paper_010_support_inspection/current_tests.txt",
+      "log_sha256": "327d98e4d4f0542df866dcfe1f4a5cc103f0666d399c18b1f0f7cb4783ef0bab",
+      "summary": [
+        "FAILED papers\\pfp\\010_pfp_holonomy_checks_and_model_pilots\\code\\tests\\test_render_paper.py::test_render_keeps_section_sign_from_pandoc_body"
+      ]
+    },
+    {
+      "edition": "archive",
+      "returncode": 1,
+      "command": [
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8=0",
+        "-c",
+        "import dag.reviews.additional_paper_010_validate as v;v.BASE=v.OUT/'archive';v.OUT=v.OUT/'archive_test';v.OUT.mkdir(exist_ok=True);raise SystemExit(v.tests())"
+      ],
+      "log": "dag/reviews/paper_010_support_inspection/archive_tests.txt",
+      "log_sha256": "8b9fd59688e694ab4c924ebb4ea37188a2f0a02291f6f9c0f242b966cdb7d335",
+      "summary": [
+        "FAILED dag\\reviews\\paper_010_support_inspection\\archive\\code\\tests\\test_render_paper.py::test_render_keeps_section_sign_from_pandoc_body"
+      ]
+    }
+  ],
+  "limits": "Fresh Python tests only. UTF-8 mode disabled to avoid known uncaptured-stdout recursive test branch; no Lean/provider/real Pandoc/XeLaTeX execution."
+}

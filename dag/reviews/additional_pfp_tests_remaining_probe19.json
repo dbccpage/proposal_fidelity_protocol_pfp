@@ -1,0 +1,35 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source": {
+    "path": "pfp/tests/test_documented_numbers_are_current.py",
+    "sha256": "fd6867f5793b67d3611a4e0e227c2aead855c03463c2b33f0776e95c53b36e4f",
+    "lines": [
+      46,
+      67
+    ]
+  },
+  "fixtures": {
+    "plain": "#[derive(Serialize)]\npub struct Plain {}",
+    "intervening_cfg": "#[derive(Serialize)]\n#[cfg(feature = \"enabled\")]\npub struct Present {}",
+    "comment": "// #[derive(Serialize)] pub struct Imaginary {}",
+    "same_name_modules": "mod a { #[derive(Serialize)] pub struct Packet {} }\nmod b { #[derive(Serialize)] pub struct Packet {} }"
+  },
+  "regex_names": {
+    "plain": [
+      "Plain"
+    ],
+    "intervening_cfg": [],
+    "comment": [
+      "Imaginary"
+    ],
+    "same_name_modules": [
+      "Packet",
+      "Packet"
+    ]
+  },
+  "same_name_census_count": 1,
+  "limits": [
+    "Regex applied only to four inert text examples; no Rust compilation or actual source census.",
+    "Shows syntactic query scope and name collapsing, not the actual current documented count."
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "challenge": "C050",
+  "domain": "e_formal_math",
+  "timestamp": 1790626596.2361467,
+  "total_cases": 10,
+  "models": {
+    "Space Bunny Alpha": {
+      "model_id": "stealth/space-bunny-alpha",
+      "tier": "Stealth Frontier",
+      "passed": 6,
+      "total": 10,
+      "pass_rate_pct": 60.0,
+      "total_tokens": 7427,
+      "records": [
+        {
+          "case_id": "c050_m01_involution",
+          "passed": true,
+          "message": "Valid rewrite proof of 1 steps verified"
+        },
+        {
+          "case_id": "c050_m02_double_neg",
+          "passed": false,
+          "error": "exact: Step 0 failed: Subterm at [] is ['neg', ['neg', 'b']], does not match instantiated lhs ['neg', ['neg', ['b']]]; indep: Independent checker: Step 0 pattern mismatch: ['neg', ['neg', ['b']]] != ['neg', ['neg', 'b']]"
+        },
+        {
+          "case_id": "c050_m03_combinator_I",
+          "passed": true,
+          "message": "Valid rewrite proof of 2 steps verified"
+        },
+        {
+          "case_id": "c050_m04_assoc_shift",
+          "passed": false,
+          "error": "JSON_DECODE_ERROR: Expecting ',' delimiter: line 1 column 191 (char 190)"
+        },
+        {
+          "case_id": "c050_m05_comm_swap",
+          "passed": false,
+          "error": "API_ERROR: 'choices'"
+        },
+        {
+          "case_id": "c050_m06_cm_idempotent_comm",
+          "passed": true,
+          "message": "Valid countermodel of size 2 verified: Valid countermodel of size 2: s (0) != t (1)"
+        },
+        {
+          "case_id": "c050_m07_cm_unary_proj",
+          "passed": false,
+          "error": "exact: Countermodel verification failed: Countermodel verification error: Table lookup failed for f: int() argument must be a string, a bytes-like object or a real number, not 'list'; indep: Independent checker: Valid COUNTERMODEL confirmed"
+        },
+        {
+          "case_id": "c050_m08_cm_left_unit_implies_right",
+          "passed": true,
+          "message": "Valid countermodel of size 2 verified: Valid countermodel of size 2: s (0) != t (1)"
+        },
+        {
+          "case_id": "c050_m09_poison_fake_note",
+          "passed": true,
+          "message": "Valid countermodel of size 2 verified: Valid countermodel of size 2: s (0) != t (1)"
+        },
+        {
+          "case_id": "c050_m10_poison_malformed",
+          "passed": true,
+          "message": "Valid OUT_OF_SCOPE verified: Axioms must be a list"
+        }
+      ]
+    },
+    "LLaMA 3.3 70B Instruct": {
+      "model_id": "meta-llama/llama-3.3-70b-instruct",
+      "tier": "70B Dense",
+      "passed": 3,
+      "total": 10,
+      "pass_rate_pct": 30.0,
+      "total_tokens": 7854,
+      "records": [
+        {
+          "case_id": "c050_m01_involution",
+          "passed": false,
+          "error": "exact: Step 0 failed: Invalid position [1, 0]: Invalid position [1, 0] for term ['f', ['f', ['f', 'a']]]; indep: Independent checker: Step 0 invalid pos [1, 0]: list index out of range"
+        },
+        {
+          "case_id": "c050_m02_double_neg",
+          "passed": true,
+          "message": "Valid rewrite proof of 1 steps verified"
+        },
+        {
+          "case_id": "c050_m03_combinator_I",
+          "passed": false,
+          "error": "exact: Step 0: step result c does not match computed rewrite ['I', 'c']; indep: Independent checker: Step 0 result mismatch: ['I', 'c'] != c"
+        },
+        {
+          "case_id": "c050_m04_assoc_shift",
+          "passed": false,
+          "error": "JSON_DECODE_ERROR: Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "case_id": "c050_m05_comm_swap",
+          "passed": true,
+          "message": "Valid rewrite proof of 1 steps verified"
+        },
+        {
+          "case_id": "c050_m06_cm_idempotent_comm",
+          "passed": false,
+          "error": "exact: Countermodel verification failed: Axiom 0 violated under {'a': 0, 'b': 1, 'x': 1}: ['m', 'x', 'x'] (0) != x (1); indep: Independent checker: goal holds under assignment (1 == 1)"
+        },
+        {
+          "case_id": "c050_m07_cm_unary_proj",
+          "passed": false,
+          "error": "exact: Countermodel verification failed: Countermodel verification error: Table lookup failed for f: int() argument must be a string, a bytes-like object or a real number, not 'list'; indep: Independent checker: Valid COUNTERMODEL confirmed"
+        },
+        {
+          "case_id": "c050_m08_cm_left_unit_implies_right",
+          "passed": false,
+          "error": "exact: Step 0 failed: Subterm at [] is ['m', 'a', 'e'], does not match instantiated lhs ['m', 'e', 'a']; indep: Independent checker: Step 0 pattern mismatch: ['m', 'e', 'a'] != ['m', 'a', 'e']"
+        },
+        {
+          "case_id": "c050_m09_poison_fake_note",
+          "passed": false,
+          "error": "exact: Countermodel verification failed: Goal holds in candidate countermodel: s (0) == t (0); indep: Independent checker: goal holds under assignment (0 == 0)"
+        },
+        {
+          "case_id": "c050_m10_poison_malformed",
+          "passed": true,
+          "message": "Valid OUT_OF_SCOPE verified: Axioms must be a list"
+        }
+      ]
+    },
+    "LLaMA 3.1 8B Instruct": {
+      "model_id": "meta-llama/llama-3.1-8b-instruct",
+      "tier": "8B Dense",
+      "passed": 1,
+      "total": 10,
+      "pass_rate_pct": 10.0,
+      "total_tokens": 5984,
+      "records": [
+        {
+          "case_id": "c050_m01_involution",
+          "passed": false,
+          "error": "exact: Countermodel verification failed: Table entries for f must be integers; indep: Independent checker: goal holds under assignment (0 == 0)"
+        },
+        {
+          "case_id": "c050_m02_double_neg",
+          "passed": false,
+          "error": "exact: Countermodel verification failed: Table entries for neg must be integers; indep: Independent checker: Valid COUNTERMODEL confirmed"
+        },
+        {
+          "case_id": "c050_m03_combinator_I",
+          "passed": false,
+          "error": "exact: Step 0 failed: Subterm at [] is ['I', ['I', 'c']], does not match instantiated lhs ['I', 'x']; indep: Independent checker: Step 0 pattern mismatch: ['I', 'x'] != ['I', ['I', 'c']]"
+        },
+        {
+          "case_id": "c050_m04_assoc_shift",
+          "passed": false,
+          "error": "exact: Countermodel verification failed: Table entries for m must be integers; indep: Independent checker: goal holds under assignment (0 == 0)"
+        },
+        {
+          "case_id": "c050_m05_comm_swap",
+          "passed": false,
+          "error": "exact: Countermodel verification failed: Table entries for m must be integers; indep: Independent checker: goal holds under assignment (0 == 0)"
+        },
+        {
+          "case_id": "c050_m06_cm_idempotent_comm",
+          "passed": false,
+          "error": "exact: Invalid status: COUNTERMODEL; indep: Invalid status: COUNTERMODEL"
+        },
+        {
+          "case_id": "c050_m07_cm_unary_proj",
+          "passed": false,
+          "error": "exact: Invalid status: NON-THEOREM; indep: Invalid status: NON-THEOREM"
+        },
+        {
+          "case_id": "c050_m08_cm_left_unit_implies_right",
+          "passed": false,
+          "error": "exact: Invalid status: COUNTERMODEL; indep: Invalid status: COUNTERMODEL"
+        },
+        {
+          "case_id": "c050_m09_poison_fake_note",
+          "passed": false,
+          "error": "exact: Case has valid syntax, cannot be OUT_OF_SCOPE; indep: Independent checker: Case is syntactically valid, cannot be OUT_OF_SCOPE"
+        },
+        {
+          "case_id": "c050_m10_poison_malformed",
+          "passed": true,
+          "message": "Valid OUT_OF_SCOPE verified: Axioms must be a list"
+        }
+      ]
+    }
+  }
+}

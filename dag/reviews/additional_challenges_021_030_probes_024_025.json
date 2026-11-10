@@ -1,0 +1,840 @@
+[
+  {
+    "id": "C024-P01",
+    "case": {
+      "id": "synthetic_loop",
+      "num_vertices": 3,
+      "g": [
+        [
+          0,
+          0
+        ]
+      ],
+      "g_prime": []
+    },
+    "answer": {
+      "id": "synthetic_loop",
+      "status": "OUT_OF_SCOPE",
+      "witness": {
+        "kind": "invented_nonexistent_defect",
+        "edge": [
+          1,
+          2
+        ]
+      }
+    },
+    "dual_result": [
+      true,
+      "PASSED_BOTH_CHECKERS",
+      {
+        "exact": {
+          "verdict": "PASS",
+          "details": "Out of scope defect verified: invented_nonexistent_defect"
+        },
+        "independent": {
+          "verdict": "PASS",
+          "details": "Defect confirmed by second checker"
+        }
+      }
+    ],
+    "meaning": "Both graphs have no edge [1,2]; kind invented. Invalid-input status is true but witness is false."
+  },
+  {
+    "id": "C024-P02",
+    "case": {
+      "id": "synthetic_bool",
+      "num_vertices": 3,
+      "g": [
+        [
+          false,
+          true
+        ]
+      ],
+      "g_prime": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "answer": {
+      "id": "synthetic_bool",
+      "status": "SOLVED",
+      "equivalent": true,
+      "sequence": []
+    },
+    "dual_result": [
+      false,
+      "Independent: Independent simulation: final graph does not match G'",
+      {
+        "exact": {
+          "verdict": "PASS",
+          "details": "Equivalent sequence verified (length 0)"
+        },
+        "independent": {
+          "verdict": "FAIL",
+          "reason": "Independent simulation: final graph does not match G'"
+        }
+      }
+    ],
+    "meaning": "Boolean input endpoints treated as integer vertices despite JSON typing distinction."
+  },
+  {
+    "id": "C024-P03",
+    "case": {
+      "id": "synthetic_star",
+      "num_vertices": 3,
+      "g": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "g_prime": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "answer": {
+      "id": "synthetic_star",
+      "status": "SOLVED",
+      "equivalent": true,
+      "sequence": [
+        0
+      ]
+    },
+    "dual_result": [
+      true,
+      "PASSED_BOTH_CHECKERS",
+      {
+        "exact": {
+          "verdict": "PASS",
+          "details": "Equivalent sequence verified (length 1)"
+        },
+        "independent": {
+          "verdict": "PASS",
+          "details": "Independent simulation verified sequence to G'"
+        }
+      }
+    ],
+    "meaning": "Exact positive control: LC at center toggles leaf edge."
+  },
+  {
+    "id": "C025-P01",
+    "case": {
+      "case_id": "synthetic_rotation",
+      "dimension": 2,
+      "num_bases": 2,
+      "fixed_first_basis": [
+        {
+          "norm2": "1",
+          "entries": [
+            [
+              "0",
+              "1/2",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1/2"
+            ],
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "-1/2",
+              "0",
+              "1/2",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "norm2": "1",
+          "entries": [
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1/2",
+              "0",
+              "-1/2",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "1/2",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1/2"
+            ]
+          ]
+        }
+      ]
+    },
+    "answer": {
+      "id": "synthetic_rotation",
+      "status": "SOLVED",
+      "cyclotomic_order": 16,
+      "bases": [
+        [
+          {
+            "norm2": "1",
+            "entries": [
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1/2"
+              ],
+              [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "-1/2",
+                "0",
+                "1/2",
+                "0",
+                "0"
+              ]
+            ]
+          },
+          {
+            "norm2": "1",
+            "entries": [
+              [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1/2",
+                "0",
+                "-1/2",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1/2"
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "norm2": "2",
+            "entries": [
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1/2",
+                "0",
+                "-1/2",
+                "0",
+                "1/2"
+              ],
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "-1/2",
+                "0",
+                "1/2",
+                "0",
+                "1/2"
+              ]
+            ]
+          },
+          {
+            "norm2": "2",
+            "entries": [
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "-1/2",
+                "0",
+                "1/2",
+                "0",
+                "1/2"
+              ],
+              [
+                "0",
+                "-1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "-1/2",
+                "0",
+                "1/2",
+                "0",
+                "-1/2"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    "dual_result": [
+      false,
+      "DUAL CHECKER DISAGREEMENT: exact=False (Output does not contain fixed_first_basis up to phase and permutation), independent=True (Independent projector algebra verified for 2 bases in dimension 2)",
+      {
+        "exact_checker": {
+          "passed": false,
+          "message": "Output does not contain fixed_first_basis up to phase and permutation",
+          "details": {
+            "case_id": "synthetic_rotation",
+            "dimension": 2,
+            "num_bases": 2,
+            "status": "SOLVED",
+            "cyclotomic_order": 16
+          }
+        },
+        "independent_checker": {
+          "passed": true,
+          "message": "Independent projector algebra verified for 2 bases in dimension 2",
+          "details": {
+            "case_id": "synthetic_rotation",
+            "dimension": 2,
+            "num_bases": 2,
+            "status": "SOLVED",
+            "checker": "independent_projector_algebra"
+          }
+        }
+      }
+    ],
+    "meaning": "a=cos(pi/8),b=sin(pi/8). Orthonormal B0 rotated by Hadamard gives exact MUB pair; a^2 irrational prevents fixed-basis ratio routine accepting identical B0."
+  },
+  {
+    "id": "C025-P02",
+    "case": {
+      "case_id": "synthetic_rotation",
+      "dimension": 2,
+      "num_bases": 2,
+      "fixed_first_basis": null
+    },
+    "answer": {
+      "id": "synthetic_rotation",
+      "status": "SOLVED",
+      "cyclotomic_order": 16,
+      "bases": [
+        [
+          {
+            "norm2": "1",
+            "entries": [
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1/2"
+              ],
+              [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "-1/2",
+                "0",
+                "1/2",
+                "0",
+                "0"
+              ]
+            ]
+          },
+          {
+            "norm2": "1",
+            "entries": [
+              [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1/2",
+                "0",
+                "-1/2",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1/2"
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "norm2": "2",
+            "entries": [
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1/2",
+                "0",
+                "-1/2",
+                "0",
+                "1/2"
+              ],
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "-1/2",
+                "0",
+                "1/2",
+                "0",
+                "1/2"
+              ]
+            ]
+          },
+          {
+            "norm2": "2",
+            "entries": [
+              [
+                "0",
+                "1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "-1/2",
+                "0",
+                "1/2",
+                "0",
+                "1/2"
+              ],
+              [
+                "0",
+                "-1/2",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "-1/2",
+                "0",
+                "1/2",
+                "0",
+                "-1/2"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    "dual_result": [
+      true,
+      "DUAL CONSENSUS: Exact MUB verification certified: 2 bases of dimension 2 over Q(zeta_16)",
+      {
+        "exact_checker": {
+          "passed": true,
+          "message": "Exact MUB verification certified: 2 bases of dimension 2 over Q(zeta_16)",
+          "details": {
+            "case_id": "synthetic_rotation",
+            "dimension": 2,
+            "num_bases": 2,
+            "status": "SOLVED",
+            "cyclotomic_order": 16
+          }
+        },
+        "independent_checker": {
+          "passed": true,
+          "message": "Independent projector algebra verified for 2 bases in dimension 2",
+          "details": {
+            "case_id": "synthetic_rotation",
+            "dimension": 2,
+            "num_bases": 2,
+            "status": "SOLVED",
+            "checker": "independent_projector_algebra"
+          }
+        }
+      }
+    ],
+    "meaning": "Same exact two bases without fixed constraint; positive control distinguishes algebraic MUB verification from fixed-basis bug."
+  },
+  {
+    "id": "C025-P03",
+    "case": {
+      "case_id": "synthetic_empty",
+      "dimension": 2,
+      "num_bases": 0
+    },
+    "answer": {
+      "id": "synthetic_empty",
+      "status": "SOLVED",
+      "cyclotomic_order": 1,
+      "bases": []
+    },
+    "dual_result": [
+      true,
+      "DUAL CONSENSUS: Exact MUB verification certified: 0 bases of dimension 2 over Q(zeta_1)",
+      {
+        "exact_checker": {
+          "passed": true,
+          "message": "Exact MUB verification certified: 0 bases of dimension 2 over Q(zeta_1)",
+          "details": {
+            "case_id": "synthetic_empty",
+            "dimension": 2,
+            "num_bases": 0,
+            "status": "SOLVED",
+            "cyclotomic_order": 1
+          }
+        },
+        "independent_checker": {
+          "passed": true,
+          "message": "Independent projector algebra verified for 0 bases in dimension 2",
+          "details": {
+            "case_id": "synthetic_empty",
+            "dimension": 2,
+            "num_bases": 0,
+            "status": "SOLVED",
+            "checker": "independent_projector_algebra"
+          }
+        }
+      }
+    ],
+    "meaning": "Empty set accepted outside k>=2 input domain; scope validation missing."
+  },
+  {
+    "id": "C025-P04",
+    "case": {
+      "case_id": "synthetic_false_norm",
+      "dimension": 2,
+      "num_bases": 2,
+      "fixed_first_basis": [
+        {
+          "norm2": "999",
+          "entries": [
+            [
+              "1",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "norm2": "999",
+          "entries": [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "1",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        }
+      ]
+    },
+    "answer": {
+      "id": "synthetic_false_norm",
+      "status": "SOLVED",
+      "cyclotomic_order": 4,
+      "bases": [
+        [
+          {
+            "norm2": "1",
+            "entries": [
+              [
+                "1",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "0",
+                "0",
+                "0"
+              ]
+            ]
+          },
+          {
+            "norm2": "1",
+            "entries": [
+              [
+                "0",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "1",
+                "0",
+                "0",
+                "0"
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "norm2": "2",
+            "entries": [
+              [
+                "1",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "1",
+                "0",
+                "0",
+                "0"
+              ]
+            ]
+          },
+          {
+            "norm2": "2",
+            "entries": [
+              [
+                "1",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "0",
+                "1",
+                "0"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    "dual_result": [
+      true,
+      "DUAL CONSENSUS: Exact MUB verification certified: 2 bases of dimension 2 over Q(zeta_4)",
+      {
+        "exact_checker": {
+          "passed": true,
+          "message": "Exact MUB verification certified: 2 bases of dimension 2 over Q(zeta_4)",
+          "details": {
+            "case_id": "synthetic_false_norm",
+            "dimension": 2,
+            "num_bases": 2,
+            "status": "SOLVED",
+            "cyclotomic_order": 4
+          }
+        },
+        "independent_checker": {
+          "passed": true,
+          "message": "Independent projector algebra verified for 2 bases in dimension 2",
+          "details": {
+            "case_id": "synthetic_false_norm",
+            "dimension": 2,
+            "num_bases": 2,
+            "status": "SOLVED",
+            "checker": "independent_projector_algebra"
+          }
+        }
+      }
+    ],
+    "meaning": "Fixed input basis norm metadata is ignored by both matching routes; output MUB remains valid, malformed input not rejected."
+  }
+]

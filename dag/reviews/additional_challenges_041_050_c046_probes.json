@@ -1,0 +1,428 @@
+{
+  "controls": [
+    {
+      "name": "idempotence control",
+      "case": {
+        "case_id": "probe",
+        "equations": [
+          [
+            "f(f(x))",
+            "f(x)"
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "probe",
+        "status": "SOLVED",
+        "task": "COMPLETE",
+        "converged": true,
+        "steps": 2,
+        "rules_count": 1,
+        "rules": [
+          {
+            "lhs": "f(f(x))",
+            "rhs": "f(x)"
+          }
+        ],
+        "joinability_certificates_count": 1,
+        "joinability_certificates": [
+          {
+            "equation": [
+              "f(f(r0_x))",
+              "f(f(r0_x))"
+            ],
+            "joined_normal_form": "f(r0_x)"
+          }
+        ],
+        "ddc_trace": {
+          "case_id": "probe",
+          "trace_string": "ELambdaDCIMT",
+          "step_count": 7,
+          "steps": [
+            {
+              "step_index": 0,
+              "op": "E",
+              "detail": "Received task COMPLETE for case probe",
+              "meta": {}
+            },
+            {
+              "step_index": 1,
+              "op": "Lambda",
+              "detail": "Initialized TermOrder with 10 precedence levels",
+              "meta": {}
+            },
+            {
+              "step_index": 2,
+              "op": "D",
+              "detail": "Starting completion saturation with max_steps=200",
+              "meta": {}
+            },
+            {
+              "step_index": 3,
+              "op": "C",
+              "detail": "Generated and joined 1 critical pairs",
+              "meta": {}
+            },
+            {
+              "step_index": 4,
+              "op": "I",
+              "detail": "Canonical convergent TRS reached with 1 rules",
+              "meta": {}
+            },
+            {
+              "step_index": 5,
+              "op": "M",
+              "detail": "All critical pairs validated joinable",
+              "meta": {}
+            },
+            {
+              "step_index": 6,
+              "op": "T",
+              "detail": "Emitted completion result",
+              "meta": {}
+            }
+          ]
+        }
+      },
+      "result": [
+        true,
+        "Consensus PASS: Convergent TRS verified with 1 rules and 0 unjoinable critical pairs",
+        {
+          "case_id": "probe",
+          "exact_passed": true,
+          "exact_msg": "Convergent TRS verified with 1 rules and 0 unjoinable critical pairs",
+          "independent_passed": true,
+          "independent_msg": "Independent audit: 1 LPO-decreasing rules, locally confluent, join every input equation, and each rule follows from the input",
+          "consensus": true
+        }
+      ]
+    },
+    {
+      "name": "fabricated budget exhaustion",
+      "case": {
+        "case_id": "probe",
+        "equations": [
+          [
+            "f(f(x))",
+            "f(x)"
+          ]
+        ],
+        "max_steps": 1000000
+      },
+      "answer": {
+        "case_id": "probe",
+        "status": "REFUSED",
+        "reason": "MAX_STEPS_EXCEEDED",
+        "witness": {}
+      },
+      "result": [
+        true,
+        "Consensus PASS: Valid refusal with reason: MAX_STEPS_EXCEEDED",
+        {
+          "case_id": "probe",
+          "exact_passed": true,
+          "exact_msg": "Valid refusal with reason: MAX_STEPS_EXCEEDED",
+          "independent_passed": true,
+          "independent_msg": "MAX_STEPS_EXCEEDED under the declared budget 1000000 (not replayed)",
+          "consensus": true
+        }
+      ]
+    },
+    {
+      "name": "invented join count no paths",
+      "case": {
+        "case_id": "probe",
+        "equations": [
+          [
+            "f(f(x))",
+            "f(x)"
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "probe",
+        "status": "SOLVED",
+        "task": "COMPLETE",
+        "converged": true,
+        "steps": 2,
+        "rules_count": 1,
+        "rules": [
+          {
+            "lhs": "f(f(x))",
+            "rhs": "f(x)"
+          }
+        ],
+        "joinability_certificates_count": 999,
+        "ddc_trace": {
+          "case_id": "probe",
+          "trace_string": "ELambdaDCIMT",
+          "step_count": 7,
+          "steps": [
+            {
+              "step_index": 0,
+              "op": "E",
+              "detail": "Received task COMPLETE for case probe",
+              "meta": {}
+            },
+            {
+              "step_index": 1,
+              "op": "Lambda",
+              "detail": "Initialized TermOrder with 10 precedence levels",
+              "meta": {}
+            },
+            {
+              "step_index": 2,
+              "op": "D",
+              "detail": "Starting completion saturation with max_steps=200",
+              "meta": {}
+            },
+            {
+              "step_index": 3,
+              "op": "C",
+              "detail": "Generated and joined 1 critical pairs",
+              "meta": {}
+            },
+            {
+              "step_index": 4,
+              "op": "I",
+              "detail": "Canonical convergent TRS reached with 1 rules",
+              "meta": {}
+            },
+            {
+              "step_index": 5,
+              "op": "M",
+              "detail": "All critical pairs validated joinable",
+              "meta": {}
+            },
+            {
+              "step_index": 6,
+              "op": "T",
+              "detail": "Emitted completion result",
+              "meta": {}
+            }
+          ]
+        }
+      },
+      "result": [
+        true,
+        "Consensus PASS: Convergent TRS verified with 1 rules and 0 unjoinable critical pairs",
+        {
+          "case_id": "probe",
+          "exact_passed": true,
+          "exact_msg": "Convergent TRS verified with 1 rules and 0 unjoinable critical pairs",
+          "independent_passed": true,
+          "independent_msg": "Independent audit: 1 LPO-decreasing rules, locally confluent, join every input equation, and each rule follows from the input",
+          "consensus": true
+        }
+      ]
+    },
+    {
+      "name": "stronger identity unsound under constant0 finite model",
+      "case": {
+        "case_id": "probe",
+        "equations": [
+          [
+            "f(f(x))",
+            "f(x)"
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "probe",
+        "status": "SOLVED",
+        "converged": true,
+        "rules_count": 1,
+        "rules": [
+          {
+            "lhs": "f(x)",
+            "rhs": "x"
+          }
+        ],
+        "joinability_certificates_count": 0
+      },
+      "result": [
+        false,
+        "Consensus FAIL: exact: Unsound completion: rule f(x) -> x is not an equational consequence of the input | independent: A submitted rule is not an equational consequence of the input equations",
+        {
+          "case_id": "probe",
+          "exact_passed": false,
+          "exact_msg": "Unsound completion: rule f(x) -> x is not an equational consequence of the input",
+          "independent_passed": false,
+          "independent_msg": "A submitted rule is not an equational consequence of the input equations",
+          "consensus": false
+        }
+      ]
+    },
+    {
+      "name": "two distinct reachable irreducible normal forms",
+      "case": {
+        "case_id": "probe",
+        "task": "REDUCE",
+        "rules": [
+          [
+            "a",
+            "b"
+          ],
+          [
+            "a",
+            "c"
+          ]
+        ],
+        "term": "a"
+      },
+      "answer": {
+        "case_id": "probe",
+        "status": "SOLVED",
+        "task": "REDUCE",
+        "term": "a",
+        "normal_form": "b",
+        "ddc_trace": {
+          "case_id": "probe",
+          "trace_string": "ERT",
+          "step_count": 3,
+          "steps": [
+            {
+              "step_index": 0,
+              "op": "E",
+              "detail": "Received task REDUCE for case probe",
+              "meta": {}
+            },
+            {
+              "step_index": 1,
+              "op": "R",
+              "detail": "Normalizing term a",
+              "meta": {}
+            },
+            {
+              "step_index": 2,
+              "op": "T",
+              "detail": "Reached normal form: b",
+              "meta": {}
+            }
+          ]
+        }
+      },
+      "result": [
+        true,
+        "Consensus PASS: Term reduced to unique normal form b",
+        {
+          "case_id": "probe",
+          "exact_passed": true,
+          "exact_msg": "Term reduced to unique normal form b",
+          "independent_passed": true,
+          "independent_msg": "Independent audit: normal form is irreducible and reachable",
+          "consensus": true
+        }
+      ]
+    },
+    {
+      "name": "unbound echoed target term",
+      "case": {
+        "case_id": "probe",
+        "task": "REDUCE",
+        "rules": [
+          [
+            "a",
+            "b"
+          ],
+          [
+            "a",
+            "c"
+          ]
+        ],
+        "term": "a"
+      },
+      "answer": {
+        "case_id": "probe",
+        "status": "SOLVED",
+        "task": "REDUCE",
+        "term": "unrelated",
+        "normal_form": "b",
+        "ddc_trace": {
+          "case_id": "probe",
+          "trace_string": "ERT",
+          "step_count": 3,
+          "steps": [
+            {
+              "step_index": 0,
+              "op": "E",
+              "detail": "Received task REDUCE for case probe",
+              "meta": {}
+            },
+            {
+              "step_index": 1,
+              "op": "R",
+              "detail": "Normalizing term a",
+              "meta": {}
+            },
+            {
+              "step_index": 2,
+              "op": "T",
+              "detail": "Reached normal form: b",
+              "meta": {}
+            }
+          ]
+        }
+      },
+      "result": [
+        true,
+        "Consensus PASS: Term reduced to unique normal form b",
+        {
+          "case_id": "probe",
+          "exact_passed": true,
+          "exact_msg": "Term reduced to unique normal form b",
+          "independent_passed": true,
+          "independent_msg": "Independent audit: normal form is irreducible and reachable",
+          "consensus": true
+        }
+      ]
+    },
+    {
+      "name": "cyclic system confluence normalization exception",
+      "case": {
+        "case_id": "probe",
+        "task": "CHECK_CONFLUENCE",
+        "rules": [
+          [
+            "a",
+            "b"
+          ],
+          [
+            "a",
+            "c"
+          ],
+          [
+            "b",
+            "a"
+          ],
+          [
+            "c",
+            "a"
+          ]
+        ]
+      },
+      "answer": null,
+      "result": {
+        "exception": "RuntimeError",
+        "message": "Rewrite normalization exceeded max steps (1000) for term b"
+      }
+    }
+  ],
+  "ground_acyclic_relations": {
+    "systems": 64,
+    "mismatches": []
+  },
+  "independent_unsoundness_model": {
+    "universe": [
+      0,
+      1
+    ],
+    "f": [
+      0,
+      0
+    ],
+    "equation_f_f_x_equals_f_x": true,
+    "f_x_equals_x_at1": false
+  },
+  "limits": "Finite ground confluence enumeration does not prove arbitrary first-order completion correct."
+}

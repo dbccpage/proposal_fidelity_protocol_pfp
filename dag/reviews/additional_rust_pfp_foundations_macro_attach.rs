@@ -1,0 +1,2 @@
+#[path="C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/code/rust/core_contracts/src/enforcement_macros.rs"] mod owner;
+struct Contract; fn assert_law<T>() {panic!("law violated")} attach_contract_laws!(Implementation,Contract,assert_law); fn main() {println!("law assertion not executed");}

@@ -1,0 +1,77 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/dual_witness/models.py",
+      "sha256": "6ec1d752cdf73cfe3b116957fa0b0a286bbd0aeb4d0964614f01c0b99f5dc3aa"
+    },
+    {
+      "path": "pfp/domain/tower_lift/models.py",
+      "sha256": "d0029c623a748c5937a350669ce87471dce63d39d0d593503d67a3a3793d4377"
+    },
+    {
+      "path": "pfp/domain/biochem/errors.py",
+      "sha256": "c635b280c11cc8abde553d60df948fbfd7f98faf774fcd5e50d7326fc9c16549"
+    },
+    {
+      "path": "pfp/domain/biochem/proofreading.py",
+      "sha256": "b43424bfbe5ad2990c49cfeee42e96d79e7050857e6e0778635f7cc21b120d8a"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C027",
+      "rule": "exact_weighted_l1_primal_dual_equations",
+      "status": "bounded_positive_and_negative_controls_observed",
+      "valid_optimum2_accepted": true,
+      "wrong_annihilator_refused": true,
+      "zero_weight_nonzero_residual_accepted": true,
+      "limit": "Zero-weight example correctly solves a seminorm objective; zero optimum alone does not imply zero residual. No source/carrier semantics or external solver certified."
+    },
+    {
+      "id": "PFPDOMAIN-C028",
+      "rule": "finite_distinct_vertex_relation_lower_bounds",
+      "status": "bounded_exhaustion_observed",
+      "cases": [
+        {
+          "carrier_size": 1,
+          "relations_tested": 2,
+          "counts": {
+            "irreflexive_witnessed": 0,
+            "distinct_path2": 0,
+            "distinct_cycle3": 0
+          }
+        },
+        {
+          "carrier_size": 2,
+          "relations_tested": 16,
+          "counts": {
+            "irreflexive_witnessed": 3,
+            "distinct_path2": 0,
+            "distinct_cycle3": 0
+          }
+        }
+      ],
+      "limit": "All2 and16 relations checked only on explicit canonical1/2-element carriers. This verifies predicate-level lower bounds, not stored digest preimages, target witnesses or any ontological stage necessity."
+    },
+    {
+      "id": "PFPDOMAIN-C029",
+      "rule": "proofreading_admission_vs_actual_proof",
+      "status": "counterexample_observed",
+      "without_equation_status": "DISSOCIATED_DURING_DELAY",
+      "with_false_equation_status": "CATALYTIC_ADMISSION",
+      "false_equation": "1=2",
+      "executed_mathematical_validator": false
+    },
+    {
+      "id": "PFPDOMAIN-C030",
+      "rule": "proofreading_negative_input_consistency",
+      "status": "counterexample_observed",
+      "deformation_factor": "-1",
+      "observed_delta": "-1",
+      "reason_claims_positive": true,
+      "negative_initial_input": "-1",
+      "reported_initial_after_admission": "0"
+    }
+  ]
+}

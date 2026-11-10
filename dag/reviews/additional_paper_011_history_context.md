@@ -1,0 +1,13 @@
+# Paper011 historical-context review
+
+The29-file context slice is complete:24 full source/prose bodies and5 bounded datasets. The planned tasks contain useful mechanisms—fixed-statement proofs, exact finite census, replayable paths, quotient/fiber checks, explicit translations and matched-budget ablations. They do not implement those mechanisms merely by describing them, and their historical per-arm budgets do not satisfy the new0.10USD whole-workflow ceiling.
+
+The retained batch harness is a negative control. Fresh isolated calls reproduce75 empty, wrong-task and UNKNOWN submissions all receiving artifact success. Wording gates and permissive JSON extraction also fail their intended boundaries. CHECKED survives failed or absent Lean; process success alone is labeled core_clean without an axiom census. The budget ledger accepts overspend and negative token counts in isolated controls. No provider was invoked.
+
+All25 historical result rows were reconciled. Eleven CHECKED labels have6 Lean timeouts,2 failures and3 absent proofs, with zero compiled proofs. Reported34,537 input/9,460 output tokens reproduce the old0.00698244USD tariff to floating-point precision, not provider-billed spend. Raw responses and submitted proof snippets were not retained. Six claimed demo-input source locations refer outside the present checkout and were not reopened; this is not evidence of a failed migration.
+
+G22 contains a mathematical direction error: every valid path is already an upper bound on the global shortest path. An outside shortcut invalidates equality, not that bound. The small graph control records restricted distance3 and unrestricted distance2. G18's useful foundation is the classical finite factorization criterion: a target descends to an observable signature exactly when it is constant on each fiber.
+
+Current recovered files differ from their historical byte records:0/28 raw and1/28 LF-normalized matches. All28 corresponding ZIP members match the recorded original hashes. Ninety-five changed line pairs consist of naming/path substitutions, including retained result text. They do not erase the harness defects, but rewritten copies must not be represented as untouched historical artifacts. All75 cited specification sections and169 external-reference line anchors remain locatable. External Git objects, proofs and runtimes were not replayed.
+
+These reviews preserve useful test designs and explicit counterexamples; they supply no evidence that PFP/EIS/PCIV/operads improve model performance. The other Paper011 partitions and the repository-wide review remain open.

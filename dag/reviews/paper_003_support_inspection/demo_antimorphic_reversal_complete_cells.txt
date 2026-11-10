@@ -1,0 +1,118 @@
+ROOT_METADATA {"metadata": {"language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 4}
+CELL 0
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+# Demonstration: Antimorphic Reversal, Contravariance & Epistemic Quarantine
+
+**The Symbol Game Research Estate · Zenodo Release Demo**
+
+This notebook demonstrates:
+1. **The Involution Law**: $((e)^\dagger)^\dagger = e$ for all reversible transitions.
+2. **Contravariant Path Composition**: $(e_1 \cdot e_2)^\dagger = e_2^\dagger \cdot e_1^\dagger$.
+3. **Conservative Retraction across Stratum Boundaries**: $d_n(u_n(x)) = x$.
+4. **Protected Distinctions & Fail-Stop Refusal**: Erasure of fermion sign parity triggers typed `DownMapObstruction`.
+5. **Epistemic Quarantine Ledger**: Isolation of ungrounded models into append-only Stage 10+ ledgers.
+SOURCE_END
+CELL 1
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 1, "metadata": {}, "outputs": []}
+SOURCE_START
+from demo_antimorphic_reversal import (
+    build_triangle_parity_model,
+    run_antimorphism_scenarios,
+)
+from ddd.shared_kernel.value_objects import StageLevel
+
+model = build_triangle_parity_model(8)
+print(f"Model ID: {model.model_id}")
+print(f"Stage Level: {model.stage_level.level}")
+print(f"States: {sorted(model.states)}")
+print(f"Edges: {sorted(model.edges)}")
+print(f"Protected Distinctions: {[d.label for d in model.protected_distinctions]}")
+SOURCE_END
+CELL 2
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### 1. Involutive Edge Reversal & Contravariant Path Reversal
+SOURCE_END
+CELL 3
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 2, "metadata": {}, "outputs": []}
+SOURCE_START
+# Edge Involution
+rev1 = model.reverse_edge("a->b").unwrap()
+rev2 = model.reverse_edge(rev1).unwrap()
+print(f"Edge 'a->b' -> Reversed: '{rev1}' -> Involuted: '{rev2}'")
+assert rev2 == "a->b"
+
+# Path Contravariance
+path = ["a->b", "b->c"]
+rev_path = model.reverse_path(path).unwrap()
+print(f"Forward Path: {path} -> Contravariant Reverse: {rev_path}")
+assert rev_path == ("c->b", "b->a")
+SOURCE_END
+CELL 4
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### 2. Stage Lift & Down-Map Retraction
+Lifting from Stage 8 to 9 and down-mapping back satisfies $d_n(u_n(x)) = x$.
+SOURCE_END
+CELL 5
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 3, "metadata": {}, "outputs": []}
+SOURCE_START
+lifted_9 = model.lift(StageLevel(9))
+identity_map = {s: s for s in model.states}
+retracted_8 = lifted_9.down_map(StageLevel(8), identity_map).unwrap()
+
+print(f"Lifted to Stage: {lifted_9.stage_level.level}")
+print(f"Retracted to Stage: {retracted_8.stage_level.level}")
+assert retracted_8.states == model.states
+SOURCE_END
+CELL 6
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### 3. Fail-Stop Refusal on Protected Distinction Erasure
+Attempting to map both `sector_plus` and `sector_minus` to `sector_neutral` collapses a protected distinction and is refused with `DownMapObstruction`.
+SOURCE_END
+CELL 7
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 4, "metadata": {}, "outputs": []}
+SOURCE_START
+erasure_projection = {
+    "a": "a", "b": "b", "c": "c",
+    "sector_plus": "sector_neutral",
+    "sector_minus": "sector_neutral",
+}
+res = model.down_map(StageLevel(7), erasure_projection)
+assert res.is_err()
+obs = res.error
+print(f"Refusal Class: {obs.__class__.__name__}")
+print(f"Obstructed Distinction: {obs.obstructed_distinction.label}")
+print(f"Message: {obs.message}")
+SOURCE_END
+CELL 8
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### 4. Committing Obstruction to Epistemic Quarantine Ledger
+SOURCE_END
+CELL 9
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 5, "metadata": {}, "outputs": []}
+SOURCE_START
+from ddd.grammar.entities import EpistemicQuarantineLedger
+
+ledger = EpistemicQuarantineLedger(ledger_id="ledger/notebook_quarantine")
+updated_ledger, shadow_pkt = ledger.commit_obstruction(obs, target_theorem="thm_parity_quarantine")
+
+print(f"Ledger Entry Count: {updated_ledger.entry_count}")
+print(f"Shadow Packet Theorem: {shadow_pkt.target_theorem}")
+print(f"Permanent Quarantine: {shadow_pkt.is_permanent_quarantine}")
+print(f"Can Promote to Core: {shadow_pkt.can_promote_to_core()}")
+SOURCE_END
+CELL 10
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### 5. Running Full Scenario Suite
+SOURCE_END
+CELL 11
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 6, "metadata": {}, "outputs": []}
+SOURCE_START
+full_results = run_antimorphism_scenarios()
+print("Receipt SHA-256:", full_results["receipt_sha256"])
+SOURCE_END

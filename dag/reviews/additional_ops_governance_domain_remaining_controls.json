@@ -1,0 +1,658 @@
+{
+  "review_id": "additional_ops_governance_domain_remaining",
+  "scope_sha256": "c68c6e94776473c2a759da43724b5a6c74fc33dfc07927e1fc6ece096b535ea9",
+  "summary": {
+    "independent_controls": 20,
+    "passed": 20,
+    "failed": 0,
+    "original_modules_executed": 0,
+    "original_functions_executed": 0
+  },
+  "method": "Manual source-correspondent, finite stdlib reconstructions; assertions test the named witnesses, not production runtime correctness. No retained runners or native/provider calls.",
+  "controls": [
+    {
+      "id": "OGD-T01",
+      "title": "Byte ceiling is not an iteration ceiling",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "limit_bytes": 1,
+        "iterations": 10001,
+        "retained_bytes": 1
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/ingress/limits.py",
+          "sha256": "90b6c920c24dd7b2e514c49ebe7656a0fa82ed3e566676e865142506c45ac620",
+          "lines": [
+            239,
+            268
+          ]
+        },
+        {
+          "path": "ops/governance/domain/ingress/http_boundary.py",
+          "sha256": "8fdcf7f6683d9e1b14154c61def462b9006a4de627629b3e88c83c48891d4ca8",
+          "lines": [
+            145,
+            182
+          ]
+        }
+      ],
+      "limits": "Finite example only; no infinite stream, ASGI port or original iterator executed.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T02",
+      "title": "Distinct mutation records have identical prehash bytes",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "first": [
+          "a\u0000CREATE",
+          "CREATE",
+          "",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        ],
+        "second": [
+          "a",
+          "CREATE",
+          "CREATE\u0000",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        ],
+        "preimage_hex": "610043524541544500435245415445000062626262626262626262626262626262626262626262626262626262626262626262626262626262006363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636300",
+        "sha256": "2fadcc954f1cbd6c9af2191e74bbb5e5695d1fe59dc68182f877d9e40120485c"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/shared_kernel/value_objects/mutation_item_v1.py",
+          "sha256": "faeddea1730839112f44fc1cb76942ab54e8b656364c17a026deb6c0ec560a1c",
+          "lines": [
+            35,
+            61
+          ]
+        },
+        {
+          "path": "ops/governance/domain/shared_kernel/value_objects/mutation_manifest_v1.py",
+          "sha256": "6937fdac1dfa1c0ad8c621942aeec04e72c57b44b040652eb80749c695fc6a67",
+          "lines": [
+            16,
+            29
+          ]
+        },
+        {
+          "path": "ops/governance/domain/shared_kernel/value_objects/path.py",
+          "sha256": "3dcbf1c49f5e429ed6a36e7490cc6bb216e4029efb28d8f822b3dde74437289d",
+          "lines": [
+            23,
+            41
+          ]
+        }
+      ],
+      "limits": "CREATE unused old field and NUL path admission are source-level facts; real filesystems may refuse NUL. No filesystem mutation or SHA collision claimed.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T03",
+      "title": "Repository-path constructor admits nonportable forms",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "admitted": {
+          "'C:/x'": "C:/x",
+          "'\\\\root\\\\x'": "root/x",
+          "'a\\x00CREATE'": "a\u0000CREATE"
+        },
+        "ordinary_parent_refused": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/shared_kernel/value_objects/path.py",
+          "sha256": "3dcbf1c49f5e429ed6a36e7490cc6bb216e4029efb28d8f822b3dde74437289d",
+          "lines": [
+            23,
+            41
+          ]
+        }
+      ],
+      "limits": "Lexical model only; no actual path resolution, sandbox escape or filesystem read.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T04",
+      "title": "Admitted odd-width signature digest cannot decode to bytes",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "hex_length": 65,
+        "shape_accepts": true,
+        "bytes_fromhex_rejects": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/shared_kernel/value_objects/digest.py",
+          "sha256": "10f14edc6c0fb517da93fcf33b249e2990a501d36dc9feb95dc26f72ee9900f9",
+          "lines": [
+            29,
+            60
+          ]
+        },
+        {
+          "path": "ops/governance/domain/shared_kernel/value_objects/digest.py",
+          "sha256": "10f14edc6c0fb517da93fcf33b249e2990a501d36dc9feb95dc26f72ee9900f9",
+          "lines": [
+            120,
+            121
+          ]
+        }
+      ],
+      "limits": "Alphabet/width model; no signature verification or crypto provider.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T05",
+      "title": "NaN expiry evades ordinary expired comparison",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "nan_expiry_is_expired": false,
+        "normal_past_expiry_is_expired": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/cas_land_license.py",
+          "sha256": "a72de76fb66b4b082ae0c2e69011b1dc3b32e70953dfbc126f6813d181135aee",
+          "lines": [
+            28,
+            29
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/cas_land_license.py",
+          "sha256": "a72de76fb66b4b082ae0c2e69011b1dc3b32e70953dfbc126f6813d181135aee",
+          "lines": [
+            89,
+            107
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/merge_mutex.py",
+          "sha256": "00fdc29ca168f503c76a2ed0e55ab7b1f4d88fe8e397f81d943c964dd2c94371",
+          "lines": [
+            73,
+            112
+          ]
+        }
+      ],
+      "limits": "Demonstrates missing finite-number admission, not acquisition of real merge authority.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T06",
+      "title": "Presented lease can outlive and exceed stored grant",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "stored": {
+          "id": "L",
+          "owner": "O",
+          "epoch": 1,
+          "fence": 2,
+          "expiry": 10,
+          "scope": [
+            "a"
+          ]
+        },
+        "presented": {
+          "id": "L",
+          "owner": "O",
+          "epoch": 1,
+          "fence": 3,
+          "expiry": 100,
+          "scope": [
+            "a",
+            "b"
+          ]
+        },
+        "now": 20,
+        "stored_accepts": false,
+        "altered_accepts": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/n1_lease_registry.py",
+          "sha256": "6d9457960a3f610e696a3996bb0bdcf68127460ef700122bacc0e4ea6d53d0c1",
+          "lines": [
+            96,
+            119
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/n1_lease.py",
+          "sha256": "7c9daee8700244fbce53277152edba609e273bae5085d4d44fe485b97b4e8523",
+          "lines": [
+            44,
+            79
+          ]
+        }
+      ],
+      "limits": "Unrevoked same-ID/owner/epoch preconditions are fixed. No original registry or concurrency exercised.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T07",
+      "title": "Repeated candidate IDs exceed list admission ceiling",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "ceiling": 2,
+        "active_dictionary_keys": 1,
+        "admitted_records": 20
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/conflict_graph_admission.py",
+          "sha256": "7d4d20d844000dbe80c3bfc5ef2f435f20c117011099f795838f166f7984a862",
+          "lines": [
+            71,
+            130
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/swarm_n10_skeleton.py",
+          "sha256": "d96acd068abbafce883124918c6a9d413c5b9f06849527722c6940e8eaf5ba69",
+          "lines": [
+            65,
+            78
+          ]
+        }
+      ],
+      "limits": "Admission fragment only; retained N10 harness/land/mutex programs not executed. Unique IDs would block this witness.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T08",
+      "title": "Conflict graph compares exact strings, not ancestor paths",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "parent_child_admitted": true,
+        "identical_path_refused": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/conflict_graph_admission.py",
+          "sha256": "7d4d20d844000dbe80c3bfc5ef2f435f20c117011099f795838f166f7984a862",
+          "lines": [
+            95,
+            120
+          ]
+        },
+        {
+          "path": "ops/governance/domain/shared_kernel/value_objects/path.py",
+          "sha256": "3dcbf1c49f5e429ed6a36e7490cc6bb216e4029efb28d8f822b3dde74437289d",
+          "lines": [
+            59,
+            79
+          ]
+        }
+      ],
+      "limits": "Only a gap if declared write sets may denote directories; canonical file-only sets are a narrower admissible use.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T09",
+      "title": "Postmerge equality is exact on strings but collapses missing/null",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "valid_domain_pairs_checked": 81,
+        "invalid_domain_expected": {
+          "a": null
+        },
+        "invalid_domain_observed": {},
+        "invalid_pair_accepted": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/postmerge_content_witness.py",
+          "sha256": "f3d2bf7af7cfd7c443fefdd622d920ea9fd061b696d6198b9bebed62c00267b2",
+          "lines": [
+            50,
+            78
+          ]
+        }
+      ],
+      "limits": "No Git reads; direct calls can violate annotations, so runtime type admission is required at this boundary.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T10",
+      "title": "Shallow copied mapping retains mutable nested values",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "nested_value_after_mutation": [
+          "before",
+          "after"
+        ]
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/candidate_binding.py",
+          "sha256": "e4c5d47b212030106a4261efaca1e8d8a58dc68fa54ce947fd692c77851e81c2",
+          "lines": [
+            26,
+            33
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/candidate_binding.py",
+          "sha256": "e4c5d47b212030106a4261efaca1e8d8a58dc68fa54ce947fd692c77851e81c2",
+          "lines": [
+            124,
+            148
+          ]
+        }
+      ],
+      "limits": "List-valued blobs violate the intended string annotation, but the constructor has no value-type validation; no original CandidateBinding was executed.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T11",
+      "title": "Independent identity slots omit evidence-after-execution invariant",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "constructor_states": [
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ]
+        ],
+        "builder_order_states": [
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ]
+        ],
+        "counterexample": [
+          false,
+          true
+        ]
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/identity_links_v1.py",
+          "sha256": "3d6e5db228386926717475da46e942274a5916f7121c78e1c48fb9ab36209e6e",
+          "lines": [
+            74,
+            123
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/identity_links_v1.py",
+          "sha256": "3d6e5db228386926717475da46e942274a5916f7121c78e1c48fb9ab36209e6e",
+          "lines": [
+            259,
+            309
+          ]
+        }
+      ],
+      "limits": "Abstract created/uncreated states with correctly typed domain/slot references. No hashes or original constructor executed.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T12",
+      "title": "Lease overwrite loses old scope and stacking bypass is caller-selected",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "after_regrant": {
+          "p": [
+            "b"
+          ]
+        },
+        "old_path_unprotected": true,
+        "stacked_parent_skipped": [
+          "parent"
+        ]
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/path_lease_registry.py",
+          "sha256": "68ad10a0214acf6365b43acbdefd3a06916dc410d9f1b2c2602f02ade518d029",
+          "lines": [
+            32,
+            69
+          ]
+        }
+      ],
+      "limits": "Equal/ancestor checks elsewhere remain useful; this finite model assumes distinct canonical paths and does not resolve actual paths.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T13",
+      "title": "git add -- . is admitted by broad-staging predicate",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "argv": [
+          "git",
+          "add",
+          "--",
+          "."
+        ],
+        "predicate_allows": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/git_hygiene_policy.py",
+          "sha256": "e6b6561a9ef0eabd93d3a3b586e17735d6c8a2602bee3cb9fd7bc5aaf12af75b",
+          "lines": [
+            105,
+            119
+          ]
+        }
+      ],
+      "limits": "No Git command run. Attached -C handling is an additional source-level parser gap, not tested here.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T14",
+      "title": "Ownership changes the three-way reconciliation policy",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "owned_branch_unchanged": "OWNED",
+        "unowned_branch_unchanged": "TAKE_MAIN",
+        "foreign_branch_only_edit": "TAKE_MAIN",
+        "unowned_concurrent": "UNRESOLVED"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/reconciliation_classifier.py",
+          "sha256": "ad8788165fd5ab01d20909cb7c2c36c5c4d3924115f9d2c0cb0cb693a557d54c",
+          "lines": [
+            88,
+            177
+          ]
+        }
+      ],
+      "limits": "Conditional policy difference, not an incorrect theorem if exclusive ownership is the intended authoritative premise.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T15",
+      "title": "Empty portable-reference allow pattern suppresses all lines",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "lines": [
+          "C:\\Users\\alice\\x",
+          "/home/alice/x",
+          "plain"
+        ],
+        "suppressed": 3
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/portable_reference_scanner.py",
+          "sha256": "d2ea40ed28f2630b08e4abd5d890e69205d55032e149818d3eaab20f0cda94af",
+          "lines": [
+            75,
+            118
+          ]
+        }
+      ],
+      "limits": "Does not assert universal coverage of the four regex profiles or execute the scanner.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T16",
+      "title": "Path spelling information is lost before prefix reasoning",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "parent_escape_normalized": "a",
+        "absolute_normalized": "a",
+        "posix_root_prefix_contains_child": false
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/path_canon.py",
+          "sha256": "c0f0b64bf359665aae6a1e6bfc870c3a2b148763f13baa0c521c4aa84f0930de",
+          "lines": [
+            34,
+            62
+          ]
+        }
+      ],
+      "limits": "Pure lexical fragment only; actual canonicalize_path uses ambient filesystem and platform state and was not executed.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T17",
+      "title": "Transport refuses absent digests but accepts empty present labels",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "none_pair": "REFUSED",
+        "empty_pair": "VERIFIED_PATH_ONLY",
+        "unequal_label_pair": "VERIFIED_CONTENT_CHANGED"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/universal_transport_receipt.py",
+          "sha256": "df052095c3af382507c55b265b4345d99f6f997d0b414be890ac5c83cacb7576",
+          "lines": [
+            109,
+            149
+          ]
+        }
+      ],
+      "limits": "Different-path branch only. Actual byte measurement, digest shape and mutation semantics remain external.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T18",
+      "title": "DIRECT zero count can disagree with its open-number list",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "source": "DIRECT",
+        "count": 0,
+        "open_numbers": [
+          17
+        ],
+        "zero_open_predicate": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/census_result.py",
+          "sha256": "8821dbd5463d7a86bc30b3063faa54ae4134572d959a114f2c32c3caddd42354",
+          "lines": [
+            10,
+            28
+          ]
+        }
+      ],
+      "limits": "Caller-constructed record witness only; no claim that an actual direct API adapter emitted this inconsistency.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T19",
+      "title": "Work-packet sequence shape does not establish valid write scope",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "write_paths": [
+          ""
+        ],
+        "forbidden_paths": [
+          ""
+        ],
+        "ignored_input_schema": "unexpected"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/work_packet_v1.py",
+          "sha256": "2d327ffaa3955bc553d0636aeed93ca103680478615bb94e0da1e3d05a47bb23",
+          "lines": [
+            36,
+            46
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/work_packet_v1.py",
+          "sha256": "2d327ffaa3955bc553d0636aeed93ca103680478615bb94e0da1e3d05a47bb23",
+          "lines": [
+            64,
+            114
+          ]
+        }
+      ],
+      "limits": "Primary required labels assumed valid; no actual parser/module call. Unknown schema is ignored by the mapping function, while direct construction is weaker still.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    },
+    {
+      "id": "OGD-T20",
+      "title": "Equality-based enum normalization preserves raw string",
+      "status": "PASS: stated control assertion holds",
+      "observed": {
+        "stored_type": "str",
+        "equal_to_enum": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/governance/domain/swarm_control/semantic_contract.py",
+          "sha256": "f3ed4b1997379f70775ab2318abd3aa4340fc7340824eeba92105a583ac33292",
+          "lines": [
+            24,
+            31
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/window_declaration.py",
+          "sha256": "8de459ab089d021df64ca206385f6717c033a54a1872c9d85ababf22a1341e3d",
+          "lines": [
+            29,
+            34
+          ]
+        },
+        {
+          "path": "ops/governance/domain/swarm_control/work_packet_v1.py",
+          "sha256": "2d327ffaa3955bc553d0636aeed93ca103680478615bb94e0da1e3d05a47bb23",
+          "lines": [
+            64,
+            69
+          ]
+        }
+      ],
+      "limits": "Representation inconsistency only: NONE remains the only admitted effect. WorkPacket uses identity comparison and normalizes correctly.",
+      "execution_kind": "independent finite reconstruction; original functions/modules not executed"
+    }
+  ]
+}

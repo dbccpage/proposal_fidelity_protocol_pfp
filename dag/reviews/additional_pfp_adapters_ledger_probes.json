@@ -1,0 +1,39 @@
+{
+  "checks": [
+    {
+      "rule": "missing_audit_defaults_clean_despite_violation",
+      "status": "observed",
+      "flag_pi": true,
+      "check_pi": true,
+      "quarantine_verdict": true,
+      "limits": "Packet remains permanently quarantined; clean label is not an allowed promotion."
+    },
+    {
+      "rule": "malformed_flags_escape_typed_result",
+      "status": "observed",
+      "exception": "AttributeError"
+    },
+    {
+      "rule": "canonical_encoder_accepts_non_JSON_NaN",
+      "status": "observed",
+      "encoded": "{\"x\":NaN}",
+      "assessment": "Python deterministic dumps is not a strict canonical JSON encoder."
+    },
+    {
+      "rule": "self_contained_header_rewrite_allows_truncation_and_rename",
+      "status": "observed",
+      "accepted_entry_count": 1,
+      "accepted_ledger_id": "renamed",
+      "assessment": "No externally pinned head/id is required; detection covers inconsistent truncation, not coordinated header rewrite."
+    },
+    {
+      "rule": "safe_id_collides_with_hashed_id_namespace",
+      "status": "observed",
+      "same_path": true,
+      "unsafe_id": "a/b",
+      "safe_id": "c14cddc033f64b9dea80ea675cf280a015e672516090a5626781153dc68fea11",
+      "assessment": "Literal safe hex digest name aliases the filename for a non-safe id. Repository does not verify requested id against loaded header. No save/overwrite performed."
+    }
+  ],
+  "limits": "Actual ledger modules only, synthetic payloads and files confined to audit-owned temp prefix; no original/source/historical ledger writes."
+}

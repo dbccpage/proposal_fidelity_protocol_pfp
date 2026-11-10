@@ -1,0 +1,496 @@
+--- PAGE 1 ---
+The Theoretical Minimum Study Guide: Paper
+001
+Discrete Cochain Retraction, Primal-Dual Obstruction,
+and Toy Involutions
+AuthorityEffect: None.
+Presiding T ribunal: The Woland Retinue & Lev Davidovich Landau
+(“Dau”).
+Author of Baseline Paper: Jeremy H. Carroll.
+Location: Moscow, Sadovaya 302-bis, Apartment 50.
+Companion Documents: - Staging and Tribunal Lore: 00_pref-
+ace_at_apartment_50.md - Examination Paper: quiz.md - Core Paper:
+paper.md
+0. The Landau Warning: Why Proposing Is Not Proving
+Before you sit for the examination in quiz.md, you must discard the most per-
+vasive and dangerous fallacy in modern computational science: confusing an
+optimization proposal with an exact certificate .
+Professor Landau stands before the blackboard, snapping his chalk against the
+slate:
+*“Look at how an amateur approaches an optimization problem! He
+takes a function, guesses an input vector, runs twenty iterations of an
+approximation heuristic, and when the objective value stops moving,
+he proudly declares: ‘The minimum is 3!’
+That is not mathematics; that is astrology. A proposed candidate
+vector gives you only an upper bound on the minimum: Φ ≤ 𝐷(𝑠).
+If you tell me you found a potential that costs 3, you have established
+that the minimum cannot exceed 3. But how do you know there
+is not another potential—perhaps fractional, perhaps subtle—that
+achieves cost 2.99 or 1?
+Heuristic failure does not prove a minimum. In this examination,
+construct an independent lower-bound witness : an object from
+the dual space that puts an immovable geometric floor underneath
+the cost function. When your upper bound from the primal proposal
+matches your lower bound from the dual certificate, the duality gap
+collapses to zero. The matching bounds prove optimality by weak
+duality. A complete exact search can also prove a minimum when
+a theorem justifies its search set; the native spanning-forest solver
+uses that route. Here, dual witnesses make the lower bound inde-
+pendently checkable. ”*
+1
+
+--- PAGE 2 ---
+This study guide develops the exact discrete geometry, linear algebra, and com-
+binatorial graph theory needed to pass the Paper 001 Theoretical Minimum.
+1. The Discrete Graph Model
+1.1 V ertices, Edges, and Cochains
+Let 𝐺 = (𝑉 , 𝐸)be a finite, connected or disconnected directed graph without
+self-loops. - V ertices (0-cells): Finite set 𝑉 = {𝑣1, 𝑣2, … , 𝑣𝑛} with |𝑉 | = 𝑛. -
+Edges (1-cells): Finite set 𝐸 = {𝑒1, 𝑒2, … , 𝑒𝑚} with |𝐸| = 𝑚. Each directed
+edge 𝑒 = 𝑢 → 𝑣 has source 𝑢 ∈ 𝑉 and target 𝑣 ∈ 𝑉 with 𝑢 ≠ 𝑣. - 0-cochains
+𝐶0(𝐺; ℚ): Rational functions assigning a height or level to each vertex: 𝑠 ∶ 𝑉 →
+ℚ, represented as a column vector 𝑠 ∈ ℚ 𝑉 . - 1-cochains 𝐶1(𝐺; ℚ): Rational
+functions assigning a value to each directed edge: 𝑐 ∶ 𝐸 → ℚ , represented as a
+column vector 𝑐 ∈ ℚ 𝐸. - Absence of 2-cells ( 𝐶2 = 0): The graph contains no
+filled polygonal faces. Therefore, there is no discrete 2-form curvature 𝑑1𝑐. All
+obstruction in Paper 001 lives entirely in 1-cycles (the 1-homology 𝐻1(𝐺; ℚ)).
+1.2 The Discrete Boundary and Coboundary
+The geometry of 𝐺 is governed by the edge-by-vertex incidence matrix 𝐵 ∈
+{−1, 0, 1}|𝐸|×|𝑉 |. For each directed edge 𝑒 = 𝑢 → 𝑣 and each vertex 𝑥 ∈ 𝑉 :
+𝐵𝑒,𝑥 =
+⎧{
+⎨{⎩
+−1 if 𝑥 = 𝑢 (source),
++1 if 𝑥 = 𝑣 (target),
+0 otherwise.
+When 𝐵 acts on a vertex potential vector 𝑠 ∈ ℚ 𝑉 , it computes the directed
+difference across each edge:
+(𝐵𝑠)𝑢→𝑣 = 𝑠𝑣 − 𝑠𝑢
+The transpose 𝐵𝑇 ∈ {−1, 0, 1}|𝑉 |×|𝐸| acts as the discrete divergence operator on
+edge flows 𝜆 ∈ ℚ 𝐸:
+(𝐵𝑇 𝜆)𝑥 = ∑
+𝑒=𝑢→𝑥
+𝜆𝑒 − ∑
+𝑒=𝑥→𝑣
+𝜆𝑒
+which computes the net inflow into vertex 𝑥.
+2
+
+--- PAGE 3 ---
+2. The Two Costs: Proposal Cost vs. Quotient Minimum
+In Paper 001, we are given: 1. Edge Reports 𝑐 ∈ ℚ 𝐸: Inconsistent pair-
+wise measurements (e.g. clock offsets, height differences, ranking advantages).
+2. Penalties / W eights 𝑤 ∈ ℚ 𝐸
+>0: Strictly positive rational penalties for
+disagreeing with each edge report.
+2.1 The Proposal Cost 𝐷𝑐(𝑠)
+Given a proposed vertex potential 𝑠 ∈ ℚ 𝑉 , the residual 1-cochain 𝑟 ∈ ℚ 𝐸
+measures the discrepancy between the report 𝑐 and the exact potential difference
+𝐵𝑠:
+𝑟 = 𝑐 − 𝐵𝑠 ∈ ℚ 𝐸, 𝑟 𝑢→𝑣 = 𝑐𝑢→𝑣 − (𝑠𝑣 − 𝑠𝑢)
+The proposal cost 𝐷𝑐(𝑠)is the weighted ℓ1 norm of the residual:
+𝐷𝑐(𝑠) = ∑
+𝑒∈𝐸
+𝑤𝑒|𝑟𝑒| = ∑
+𝑒=𝑢→𝑣
+𝑤𝑒|𝑐𝑢→𝑣 − (𝑠𝑣 − 𝑠𝑢)|
+Key properties of 𝐷𝑐(𝑠): - 𝐷𝑐(𝑠) ≥ 0 for all 𝑠 ∈ ℚ 𝑉 . - If 𝐺 has connected
+components 𝐺1, … , 𝐺𝑘, shifting 𝑠 by an additive constant on any component
+leaves 𝐵𝑠, and hence 𝐷𝑐(𝑠), completely invariant. Potentials have an irrelevant
+gauge freedom ℚ𝑘.
+2.2 The Quotient Minimum Φ(𝑐)
+The quotient minimum Φ(𝑐)(also denoted Φ1(𝑐)) is the intrinsic topological
+obstruction of the fixed edge reports 𝑐:
+Φ(𝑐) =min
+𝑠∈ℚ𝑉
+𝐷𝑐(𝑠) =min
+𝑠∈ℚ𝑉
+∑
+𝑒∈𝐸
+𝑤𝑒|𝑐𝑒 − (𝐵𝑠)𝑒|
+• 𝐷𝑐(𝑠)is a property of a specific candidate proposal 𝑠.
+• Φ(𝑐)is a property of the fixed edge dataset 𝑐.
+• By definition, for every proposed potential 𝑠:
+Φ(𝑐) ≤ 𝐷𝑐(𝑠)
+A proposal 𝑠 provides an upper bound on Φ(𝑐).
+3
+
+--- PAGE 4 ---
+3. Gauge Invariance under Coboundary Shifts
+Theorem: Exact Coboundary Invariance
+Let 𝜙 ∈ ℚ 𝑉 be any vertex potential. If we shift the edge reports 𝑐 by the exact
+coboundary 𝐵𝜙:
+𝑐′ = 𝑐 + 𝐵𝜙
+then the quotient minimum is strictly invariant:
+Φ(𝑐′) = Φ(𝑐)
+Proof of Exact Coboundary Invariance
+For any test potential 𝑠 ∈ ℚ 𝑉 :
+𝐷𝑐′(𝑠) = ∑
+𝑒
+𝑤𝑒|𝑐′
+𝑒−(𝐵𝑠)𝑒| = ∑
+𝑒
+𝑤𝑒|(𝑐𝑒+(𝐵𝜙)𝑒)−(𝐵𝑠)𝑒| = ∑
+𝑒
+𝑤𝑒|𝑐𝑒−(𝐵(𝑠−𝜙))𝑒|
+Setting 𝑓 = 𝑠 − 𝜙 , as 𝑠 ranges over all of ℚ𝑉 , 𝑓 also ranges over all of ℚ𝑉 .
+Therefore:
+min
+𝑠∈ℚ𝑉
+𝐷𝑐′(𝑠) =min
+𝑓∈ℚ 𝑉
+𝐷𝑐(𝑓) = Φ(𝑐)
+■
+Consequence: Edge reports that differ only by a coboundary belong to the
+same cohomology class in 𝐶1/ im 𝐵. For the same graph and weights, they have
+the same mathematical quotient minimum. Any physical interpretation needs
+a separately justified modeling map.
+4. Primal-Dual Witness Certification
+How do we certify that a candidate potential 𝑠∗ is globally optimal without
+exhaustive search over all of ℚ𝑉 ? We construct a dual circulation witness .
+4
+
+--- PAGE 5 ---
+4.1 The Dual Linear Program
+The primal problem is:
+min
+𝑠∈ℚ𝑉
+∑
+𝑒∈𝐸
+𝑤𝑒|𝑐𝑒 − (𝐵𝑠)𝑒|
+We introduce the dual variable 𝜆 ∈ ℚ 𝐸, which represents an edge flow or circu-
+lation.
+Definition: F easible Dual Witness
+A vector 𝜆 ∈ ℚ 𝐸 is a feasible dual witness if and only if it satisfies two con-
+ditions: 1. Flow Conservation (Circulation Condition): At every vertex
+𝑥 ∈ 𝑉 , the net divergence is zero:
+𝐵𝑇 𝜆 = 0 ⟺ ∑
+𝑒=𝑢→𝑥
+𝜆𝑒 = ∑
+𝑒=𝑥→𝑣
+𝜆𝑒 ∀𝑥 ∈ 𝑉
+2. Capacity Bounds: On every edge 𝑒 ∈ 𝐸, the flow does not exceed the edge
+penalty:
+|𝜆𝑒| ≤ 𝑤𝑒 ∀𝑒 ∈ 𝐸
+The dual objective value is the standard inner product of the circulation with
+the reports:
+⟨𝜆, 𝑐⟩ = ∑
+𝑒∈𝐸
+𝜆𝑒𝑐𝑒
+4.2 Theorem: W eak Duality (The Iron Floor)
+For any proposed vertex potential 𝑠 ∈ ℚ 𝑉 and any feasible dual witness 𝜆 ∈ ℚ 𝐸:
+⟨𝜆, 𝑐⟩ ≤ 𝐷𝑐(𝑠)
+Proof of W eak Duality
+Since 𝐵𝑇 𝜆 = 0, taking the dot product with the potential vector 𝑠 gives:
+𝑠𝑇 (𝐵𝑇 𝜆) = 0 ⟺ (𝐵𝑠)𝑇 𝜆 = ∑
+𝑒∈𝐸
+(𝐵𝑠)𝑒𝜆𝑒 = 0
+Therefore, we can subtract zero without changing the value:
+⟨𝜆, 𝑐⟩ = ∑
+𝑒∈𝐸
+𝜆𝑒𝑐𝑒 − ∑
+𝑒∈𝐸
+𝜆𝑒(𝐵𝑠)𝑒 = ∑
+𝑒∈𝐸
+𝜆𝑒(𝑐𝑒 − (𝐵𝑠)𝑒) = ∑
+𝑒∈𝐸
+𝜆𝑒𝑟𝑒
+5
+
+--- PAGE 6 ---
+Applying the triangle inequality and the capacity bound |𝜆𝑒| ≤ 𝑤𝑒:
+⟨𝜆, 𝑐⟩ = ∑
+𝑒∈𝐸
+𝜆𝑒𝑟𝑒 ≤ ∑
+𝑒∈𝐸
+|𝜆𝑒||𝑟𝑒| ≤ ∑
+𝑒∈𝐸
+𝑤𝑒|𝑟𝑒| = 𝐷 𝑐(𝑠)
+■
+4.3 Theorem: Certificate of Optimality (Zero Duality Gap)
+If a proposer exhibits a candidate potential 𝑠∗ ∈ ℚ 𝑉 and a referee exhibits a
+feasible dual witness 𝜆∗ ∈ ℚ 𝐸 such that:
+⟨𝜆∗, 𝑐⟩ = 𝐷𝑐(𝑠∗)
+then 𝑠∗ is certified by weak duality to be an exact global minimizer ,
+and the quotient minimum is:
+Φ(𝑐) = 𝐷𝑐(𝑠∗) = ⟨𝜆∗, 𝑐⟩
+Proof of Optimality Certificate
+By weak duality, for every potential 𝑠 ∈ ℚ 𝑉 :
+𝐷𝑐(𝑠) ≥ ⟨𝜆∗, 𝑐⟩ = 𝐷𝑐(𝑠∗)
+Thus no potential can achieve a cost strictly less than 𝐷𝑐(𝑠∗).
+■
+5. The Manuscript Triangle: Complete Worked Example
+Let us work through the foundational test case of Paper 001: the Manuscript
+T riangle.
+5.1 The Graph Specification
+• V ertices: 𝑉 = {𝑎, 𝑏, 𝑐}.
+• Edges: Three directed edges forming a cycle:
+– 𝑒1 = 𝑎 → 𝑏
+– 𝑒2 = 𝑏 → 𝑐
+– 𝑒3 = 𝑐 → 𝑎
+6
+
+--- PAGE 7 ---
+• Reports: 𝑐 = (𝑐1, 𝑐2, 𝑐3) = (1, 1, 1).
+• W eights: 𝑤 = (𝑤1, 𝑤2, 𝑤3) = (1, 2, 3).
+The incidence matrix 𝐵 ∈ {−1, 0, 1}3×3 is:
+𝐵 = ⎛⎜
+⎝
+−1 1 0
+0 −1 1
+1 0 −1
+⎞⎟
+⎠
+The cycle sum of reports is:
+∑
+𝑒∈cycle
+𝑐𝑒 = 𝑐1 + 𝑐2 + 𝑐3 = 1 + 1 + 1 = 3 ≠ 0
+Because the cycle sum is nonzero, no potential 𝑠 can make all residuals zero.
+There is an intrinsic obstruction.
+5.2 Evaluating Candidate Proposals
+Candidate 1: The All-Zero Potential 𝑠(0)= (0, 0, 0)
+• Differences: 𝐵𝑠(0)= (0 − 0, 0 − 0, 0 − 0) = (0, 0, 0).
+• Residual: 𝑟 = 𝑐 − 𝐵𝑠 (0)= (1, 1, 1).
+• Cost:
+𝐷𝑐(𝑠(0)) = 1|1| + 2|1| + 3|1| = 1 + 2 + 3 = 6
+Candidate 2: The Optimal Potential 𝑠∗ = (0, −2, −1)
+• Differences:
+– (𝐵𝑠∗)𝑎→𝑏 = 𝑠𝑏 − 𝑠𝑎 = −2 − 0 = −2
+– (𝐵𝑠∗)𝑏→𝑐 = 𝑠𝑐 − 𝑠𝑏 = −1 − (−2) = 1
+– (𝐵𝑠∗)𝑐→𝑎 = 𝑠𝑎 − 𝑠𝑐 = 0 − (−1) = 1
+• Residuals:
+– 𝑟1 = 𝑐1 − (𝑠𝑏 − 𝑠𝑎) = 1 − (−2) = 3
+– 𝑟2 = 𝑐2 − (𝑠𝑐 − 𝑠𝑏) = 1 − 1 = 0
+– 𝑟3 = 𝑐3 − (𝑠𝑎 − 𝑠𝑐) = 1 − 1 = 0
+𝑟 = (3, 0, 0)
+• Cost:
+𝐷𝑐(𝑠∗) = 𝑤1|𝑟1| + 𝑤2|𝑟2| + 𝑤3|𝑟3| = 1(3) + 2(0) + 3(0) = 3
+We now have an upper bound: Φ(𝑐) ≤ 3.
+7
+
+--- PAGE 8 ---
+5.3 Constructing the Dual Witness 𝜆∗
+We require a circulation 𝜆 = (𝜆1, 𝜆2, 𝜆3)such that: 1. Flow conservation at each
+vertex: - At 𝑎: incoming 𝑒3, outgoing 𝑒1 ⟹ 𝜆 3 − 𝜆1 = 0 ⟹ 𝜆 1 = 𝜆 3. - At 𝑏:
+incoming 𝑒1, outgoing 𝑒2 ⟹ 𝜆 1 − 𝜆2 = 0 ⟹ 𝜆 2 = 𝜆 1. - At 𝑐: incoming 𝑒2,
+outgoing 𝑒3 ⟹ 𝜆 2 − 𝜆3 = 0. Therefore, any circulation on a simple directed
+cycle must have uniform flow:
+𝜆 = (𝑘, 𝑘, 𝑘)for some 𝑘 ∈ ℚ
+2. Capacity constraints |𝜆𝑒| ≤ 𝑤𝑒: - |𝜆1| ≤ 1 ⟹ |𝑘| ≤ 1 - |𝜆2| ≤ 2 ⟹ |𝑘| ≤ 2
+- |𝜆3| ≤ 3 ⟹ |𝑘| ≤ 3 The bottleneck capacity is the minimum edge weight :
+|𝑘| ≤ min(1, 2, 3) = 1
+To maximize the dual objective ⟨𝜆, 𝑐⟩ = 𝑘(1) + 𝑘(1) + 𝑘(1) = 3𝑘, we choose the
+largest feasible flow:
+𝑘 = 1 ⟹ 𝜆 ∗ = (1, 1, 1)
+3. Evaluate the Dual Objective:
+⟨𝜆∗, 𝑐⟩ = 1(1) + 1(1) + 1(1) = 3
+4. Duality Gap Verification:
+𝐷𝑐(𝑠∗) − ⟨𝜆∗, 𝑐⟩ = 3 − 3 = 0
+The duality gap is zero! The candidate 𝑠∗ = (0, −2, −1)is mathematically
+certified as an exact global minimizer, and the true quotient obstruction is
+Φ(𝑐) = 3.
+6. The Directed Cycle Formula
+The result on the Manuscript Triangle generalizes to any single directed cycle.
+Theorem: Single Directed Cycle Obstruction
+Let 𝐶 = (𝑉𝐶, 𝐸𝐶)be a simple directed cycle with edge reports 𝑐𝑒 and positive
+penalties 𝑤𝑒 > 0. Then:
+Φ(𝑐) = (min
+𝑒∈𝐸𝐶
+𝑤𝑒) ∣ ∑
+𝑒∈𝐸𝐶
+𝑐𝑒∣
+8
+
+--- PAGE 9 ---
+Proof of Directed Cycle F ormula
+1. Lower Bound (Dual): Any circulation 𝜆 on a simple cycle must be a
+constant flow along the cycle: 𝜆𝑒 = 𝑘 for all 𝑒 ∈ 𝐸 𝐶. Capacity requires
+|𝜆𝑒| ≤ 𝑤𝑒 for all 𝑒 ∈ 𝐸𝐶, which forces:
+|𝑘| ≤ min
+𝑒∈𝐸𝐶
+𝑤𝑒
+The dual value is:
+⟨𝜆, 𝑐⟩ = ∑
+𝑒∈𝐸𝐶
+𝑘𝑐𝑒 = 𝑘 ∑
+𝑒∈𝐸𝐶
+𝑐𝑒
+Choosing 𝑘 = sgn (∑𝑒∈𝐸𝐶
+𝑐𝑒)min𝑒∈𝐸𝐶
+𝑤𝑒, we obtain the lower bound:
+Φ(𝑐) ≥ (min
+𝑒∈𝐸𝐶
+𝑤𝑒) ∣ ∑
+𝑒∈𝐸𝐶
+𝑐𝑒∣
+2. Upper Bound (Primal): Let 𝑒∗ = 𝑢 ∗ → 𝑣 ∗ be the bottleneck edge
+that achieves the minimum penalty: 𝑤𝑒∗ = min𝑒∈𝐸𝐶
+𝑤𝑒. Remove 𝑒∗ from
+the cycle. The remaining edges 𝐸𝐶 ∖ {𝑒∗} form a spanning tree (a path).
+On any tree, edge reports can be matched exactly by a vertex potential
+(𝑟𝑒 = 0 for all 𝑒 ≠ 𝑒 ∗). Solving for the potential on the path dumps the
+entire cycle discrepancy onto the single bottleneck edge 𝑒∗:
+|𝑟𝑒∗ | = ∣ ∑
+𝑒∈𝐸𝐶
+𝑐𝑒∣
+The cost of this potential is:
+𝐷𝑐(𝑠∗) = 𝑤𝑒∗ |𝑟𝑒∗ | = ( min
+𝑒∈𝐸𝐶
+𝑤𝑒) ∣ ∑
+𝑒∈𝐸𝐶
+𝑐𝑒∣
+Since the upper bound equals the lower bound, the formula is exact.
+■
+7. Sparsity and Uniqueness
+7.1 Sparsity of Optimal Residuals
+In linear programming over polyhedra, extreme points (basic feasible solutions)
+exhibit structural sparsity.
+9
+
+--- PAGE 10 ---
+Theorem: Residual Support Bound For any finite graph 𝐺 = (𝑉 , 𝐸),
+there exists an optimal potential 𝑠∗ whose residual 𝑟∗ = 𝑐 − 𝐵𝑠 ∗ has support
+size bounded by:
+| supp(𝑟∗)| ≤ |𝐸| −rank(𝐵)
+Since rank (𝐵) = |𝑉 | − 𝑘(where 𝑘 is the number of connected components):
+| supp(𝑟∗)| ≤ |𝐸| − |𝑉 | + 𝑘 =dim 𝐻1(𝐺; ℚ)
+The number of nonzero residual edges in a basic optimal solution is at most the
+first Betti number (the cycle rank of the graph).
+• For the Manuscript Triangle: |𝐸| = 3 , |𝑉 | = 3 , 𝑘 = 1 ⟹ dim 𝐻1 =
+3 − 3 + 1 = 1.
+• Indeed, the optimal residual 𝑟∗ = (3, 0, 0)has | supp(𝑟∗)| = 1 ≤ 1.
+7.2 Uniqueness and the W eighted Null-Space Property
+A potential always has additive freedom on each connected component. Unique-
+ness here means a unique residual, or a unique potential after one vertex per
+component has been fixed.
+Let 𝑆 = supp(𝑟∗). The relevant residual perturbations lie in im 𝐵, because
+changing a potential changes a residual by a vector 𝐵ℎ. A suﬀicient condition
+is
+∑
+𝑒∈𝑆
+𝑤𝑒|𝑧𝑒| < ∑
+𝑒∉𝑆
+𝑤𝑒|𝑧𝑒| for every 0 ≠ 𝑧 ∈ im 𝐵.
+Then any distinct feasible residual 𝑟∗ + 𝑧 satisfies
+‖𝑟∗ + 𝑧‖1,𝑤 ≥ ‖𝑟 ∗‖1,𝑤 − ‖𝑧𝑆‖1,𝑤 + ‖𝑧𝑆𝑐 ‖1,𝑤 > ‖𝑟 ∗‖1,𝑤.
+This condition is suﬀicient for the particular residual. Its failure alone does
+not prove nonuniqueness. The dual witnesses instead lie in ker (𝐵𝑇 ); these two
+spaces serve different roles.
+On the equal-weight triangle with reports (1, 1, 1)and weights (2, 2, 2), the resid-
+uals (3, 0, 0)and (0, 3, 0)both cost 6. They correspond to potentials (0, −2, −1)
+and (0, 1, −1). The feasible dual (2, 2, 2)has objective 6, proving both are opti-
+mal. For 𝑆 = {𝑒1}, the cut vector 𝑧 = (1, −1, 0) = 𝐵(0, 1, 0)gives equality in
+the two weighted sums, so the suﬀicient condition fails.
+10
+
+--- PAGE 11 ---
+A useful error detector: every circulation on this directed triangle is 𝑡(1, 1, 1).
+Substituting circulations into the displayed condition would give 2|𝑡| < 4|𝑡| and
+incorrectly predict uniqueness. Always check the perturbation space.
+7.3 A sparse optimum does not make every optimum sparse
+With equal weights and positive cycle sum ℎ, every same-sign residual split
+with ∑ 𝑟𝑒 = ℎ is optimal. On the triangle this is a two-dimensional simplex. It
+contains the three single-edge residuals and the dense residual (1, 1, 1). Thus
+cycle rank 1 bounds the support of some optimum, while the optimal face can
+have dimension 2.
+8. Halting Pitfalls and Zeno’s Trap
+8.1 The Counterexample: Strict Descent Without T ermination
+Consider a single edge with report 𝑐 = 1, weight 𝑤 = 1. Suppose an optimization
+routine generates a sequence of potential differences such that the cost at step
+𝑡 is:
+𝐷𝑡 = 2−𝑡
+Notice: 1. Strict Monotonic Descent: At every single step, 𝐷𝑡+1 = 2−(𝑡+1)<
+2−𝑡 = 𝐷 𝑡. 2. Infinite Rational Sequence: The sequence strictly decreases
+for all 𝑡 ∈ ℕ without ever reaching the infimum 0 at any finite 𝑡.
+The Cardinal Halting Law:
+Strict rational descent alone does NOT imply finite termi-
+nation.
+To make a stopping argument, state which quantity is bounded and which calls
+must return:
+• If all costs lie on a fixed lattice 𝛿ℤ with 𝛿 > 0 , are bounded below, and
+each admitted step strictly decreases cost, there are finitely many admitted
+descents from a finite starting cost. Rejected attempts still need their own
+limit.
+• A finite exhaustive search terminates if it visits its finite candidate set
+without repetition and every candidate check returns. Searching extreme
+points without these conditions is not a halting proof.
+• A finite fuel wrapper bounds attempted transitions. A timeout or a proved
+bound is separately needed for each parser, solver, or external call. Fuel
+exhaustion means an unfinished computation, not convergence.
+11
+
+--- PAGE 12 ---
+In the supplied SymbolGameGovernor, turn counts calls; the class has no fuel
+limit. Demo 1 enforces fuel in its outer for loop and reports UNFINISHED while
+cost is still positive. There is no FUEL_EXHAUSTED member in the governor’s
+verdict enum. The native adapter has a separate 30-second subprocess timeout.
+Its forest cap counts complete forests, not every recursive branch or elapsed
+time.
+9. Software Implementations and the 100,000 Forest Cap
+Paper 001 provides two reference implementations:
+9.1 The Native Rust Solver ( code/rust/src/graph_phi1.rs)
+• Algorithm: Bounded exact exhaustive enumeration over spanning
+forests.
+• Safety Ceiling: Capped strictly at 100,000 forests.
+• Behavior:
+– If the graph has ≤ 100, 000 spanning forests, it computes the
+exact rational minimum Φ1(𝑐)and returns phi1, gauge, and
+forests_checked.
+– If the search exceeds 100,000 forests, it refuses when the next
+complete forest would exceed the cap , with typed error
+EnumerationLimit. It does not return a partial or approximate
+minimum.
+• Limitation: Exponential in graph size; returns the primal potential, but
+does not construct the dual circulation certificate.
+9.2 The Paper-Local Python Reference ( code/symbol_game_governor.py)
+• Constructs both the primal potential 𝑠∗ and the dual circulation 𝜆∗.
+• Independently verifies the zero duality gap: ⟨𝜆∗, 𝑐⟩ = 𝐷𝑐(𝑠∗).
+• Implements a governor whose CUT admission rule requires strict cost de-
+scent. ASSERT changes reports and RETRACT restores a state; neither is
+covered by the fixed-report descent rule.
+10. Lean 4 Toy Involutions and Claim Hygiene
+The manuscript describes these narrowly scoped local statements:
+1. OddCycleObstruction.lean: no assignment of signs ±1 to the three ver-
+tices of a triangle makes every edge product equal to −1.
+2. InvolutionLaws.lean: a configuration and its image under a supplied
+sign-reversing, weight-preserving map have signed natural-number weights
+summing to zero. The map and its hypotheses are supplied.
+12
+
+--- PAGE 13 ---
+3. NonAuthority.lean: a declared policy is encoded as a type with one value.
+Its theorem holds by construction and checks no runtime behavior.
+These descriptions do not establish a general graph LP, production implemen-
+tation correctness, termination of arbitrary rational descent, a polynomial-time
+algorithm, or a physical fermion sign-problem solution. Read the actual theo-
+rem statements, pinned toolchain, and axiom report before claiming a successful
+formal replay. Those files must travel with the deposit.
+To bridge a finite cochain model to a physical representation, specify the physical
+carrier, the representation, the map to the graph data, and a theorem stating
+exactly what signs, weights, or observables the map preserves. Any runtime or
+complexity claim needs its own correspondence proof and cost model.
+11. Triangle recap and complete instructor key
+These lines recap the Manuscript Triangle. The worked derivation is in section
+5. The separate instructor key covers all thirteen examination problems, a 100-
+point rubric, and the optional final challenges.
+1. The coeﬀicients are rational, the edge order is ab, bc, ca, and this graph
+has no declared 2-cells. A displayed cycle does not attach a face.
+2. For 𝑓 = (0, −2, −1), 𝑑𝑓 = 𝐵𝑠 ∗ = (−2, 1, 1), the residual is (3, 0, 0), and
+the weighted cost is 3. A feasible potential gives an upper bound on the
+minimum.
+3. 𝜆 = (1, 1, 1)has zero divergence and satisfies |𝜆| ≤ 𝑤 for 𝑤 = (1, 2, 3). Its
+objective is 3, matching the candidate. With 𝑤 = (2, 2, 2), 𝜆 = (2, 2, 2)
+gives objective 6 and the same 𝑓 has cost 6. The answer 2 is impossible.
+4. Translating the potential variable leaves the quotient minimum unchanged.
+Replacing 𝑐 with 𝑑𝑓 changes its cohomology class when the original cycle
+sum is nonzero; that is a different instance, not gauge erasure.
+5. A physical modeling bridge, an independently checked carrier interpreta-
+tion, and any requested complexity theorem are still owed. No general
+fermion sign-problem solution follows.
+The manuscript section A certificate for optimality supplies the coeﬀicient sys-
+tem and move grammar. The package deposit verifier checks file custody rather
+than the truth of every answer. The standalone companion needs no external
+worksheet to define its assessed graph model. If the shared repository work-
+sheet is included later, use a release-pinned link and verify it from the exported
+package.
+13

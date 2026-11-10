@@ -1,0 +1,512 @@
+{
+  "agent_number": 3,
+  "focus": "PCIV protected prompt mutations, witnessed lineage, exact Pareto selection, and bounded within-item adaptation",
+  "status": "proposed_not_evaluated",
+  "scope": {
+    "source_baseline": "8050c66900899771766f33e8f5fdd200b7dd9120 plus the in-progress dag audit",
+    "seed_access": "Only the public seed's SHA-256 was read; its text was not opened or solved. Observed SHA-256: 9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7. No answer-key path, private storage, grader output, or paid model call was accessed.",
+    "novelty_claim": "These are proposed repository-specific compositions of established prompt search, multiobjective selection, typed composition, and restricted feedback; no literature-wide novelty or measured performance is claimed.",
+    "implementation_boundary": "The workflow policies, public metric schema, byte-preserving transport adapter, exact multidimensional selector, and replayable mutation receipt below are proposals. Existing PCIV components are reusable only within their checked limits. The singleton Pareto bug and protected-span offset bug must not be silently inherited.",
+    "benchmark_isolation": "Every model request contains a separate seed message whose decoded content re-encodes to the exact original UTF-8 bytes. Do not normalize line endings, Unicode, whitespace, or assumptions. Preserve the raw seed and hash the full serialized request separately. Wrapper mutations operate on separate instruction artifacts; they never replace or omit the seed. Only public inputs, fixed host predicates, and candidate artifacts enter online checks. Outputs and policies are frozen before trusted private evaluation; no private score, verdict, diagnostic, rubric deduction, key-selected example, or derived hint returns to a workflow.",
+    "adaptation_boundary": "Preseed policy means the mutation grammar, public detectors, branch table, candidate cap, tie rule, and stopping rule are committed before any target response or target grader result. I01 fixes both wrappers before solving; I02 adapts once to public artifact checks under a fixed transition rule; I03 adapts a plan to the public input under a fixed grammar. These differ from choosing future prompts after observing the target's trusted score, which is exploratory tuning on this item. Even fresh stochastic confirmations on the same item are not held-out task transfer. Transfer requires a new preregistered problem sample with task/family separation; none is claimed here."
+  },
+  "primary_sources": [
+    {
+      "title": "Fernando et al., Promptbreeder: Self-Referential Self-Improvement via Prompt Evolution, ICML 2024",
+      "url": "https://proceedings.mlr.press/v235/fernando24a.html",
+      "relevance": "Primary proceedings describe task-prompt mutation, training-set fitness evaluation, and evolving mutation-prompts. Motivates explicit mutation lineage and separates an evolving policy from our fixed, two-call policies. Reported results on their tasks do not predict this benchmark."
+    },
+    {
+      "title": "Dwork et al., Generalization in Adaptive Data Analysis and Holdout Reuse, 2015",
+      "url": "https://arxiv.org/abs/1506.02629",
+      "relevance": "Primary author paper explains why adaptive reuse can overfit a holdout and supplies specialized validity mechanisms. Motivates strict separation of online public checks from frozen-output evaluation. This proposal does not implement its reusable-holdout algorithms or claim their guarantees."
+    }
+  ],
+  "repository_evidence": [
+    {
+      "path": "dag/README.md",
+      "lines": "3-11",
+      "observation": "Inventory, proof review, proposed workflows, and measured effectiveness are distinct; immutable seed and aggregate USD 0.10 reservation are required."
+    },
+    {
+      "path": "dag/benchmark/EXPERIMENT_PROTOCOL.md",
+      "lines": "5-19",
+      "observation": "Online checks cannot consult the key. Same-item repeats have only within-item scope; PCIV mutation policies must be fixed; target-score-driven future prompt choices are exploratory tuning."
+    },
+    {
+      "path": "dag/reviews/systems_audit.md",
+      "lines": "9-23",
+      "observation": "SYS-BUG-001 records singleton Pareto failure; SYS-BUG-004 records silent event-log disk failure; SYS-BUG-005 records order-dependent taint; SYS-BUG-006 records protected-span offset failure. Proposed execution must fail closed on persistence and replay, rather than assuming existing adapters certify those properties."
+    },
+    {
+      "path": "pciv/use_cases/forge.py",
+      "lines": "33-78",
+      "observation": "PromptMutationEngineV1 checks byte edit bounds, overlapping edits, and interior zero-width insertions. Boundary insertions are allowed. It returns bytes but does not relocate protected-span offsets or independently establish semantic preservation."
+    },
+    {
+      "path": "pciv/use_cases/lamarckian_loop.py",
+      "lines": "194-217",
+      "observation": "Post-mutation slice checking shifts only the protected end offset when an edit precedes a span, matching the audited false rejection. These proposals keep the seed in a separate immutable message and do not call that relocation path."
+    },
+    {
+      "path": "pciv/use_cases/fitness.py",
+      "lines": "210-278",
+      "observation": "Existing selector supports correctness/cost and lexicographic ties. _to_fraction is defined inside the pairwise loop yet used by the tie key; a singleton has no pair and fails. New selectors must explicitly handle zero, one, duplicates, ties, and partially measured candidates, and must not rename public proxy metrics as correctness."
+    },
+    {
+      "path": "pciv/use_cases/research_selection.py",
+      "lines": "9-40,44-87",
+      "observation": "Research selection computes exact private-pass fractions, checks paired rows and provenance, rejects incomplete/infrastructure rows, and requires fresh confirmation. This is evaluator-side code; calling it during online solving would create a private-feedback channel. Same-item confirmation is not new-task validation."
+    },
+    {
+      "path": "pciv/domain/models.py",
+      "lines": "258-297,318-352,365-373",
+      "observation": "Immutable genome construction binds declared fields and protected spans; create_verified checks generation from supplied parents; unchanged-prompt executions have distinct ExecutionOccurrenceV1 records. Genome identity and execution identity must remain distinct."
+    },
+    {
+      "path": "pciv/use_cases/genealogy.py",
+      "lines": "39-46,101-143",
+      "observation": "Inheritance edges require a SealedCausalWitness naming the parent and child, and cycle checks. Matching objectives alone do not authorize inheritance. A host must record actual byte transformations for operational lineage."
+    },
+    {
+      "path": "pciv/domain/causal_witness.py",
+      "lines": "22-44",
+      "observation": "A seal checks a hash against a caller-supplied canonical body. This establishes content binding, not independent authenticity or evidence that the asserted transformation happened."
+    },
+    {
+      "path": "pciv/use_cases/research_mutation.py",
+      "lines": "8-30",
+      "observation": "bind_mutation protects the host experiment contract and checks candidate.parent; suitable design precedent for separating immutable context from candidate edits, but it does not itself construct or inspect the benchmark's executed seed message."
+    },
+    {
+      "path": "pfp/use_cases/pfp_proposal.py",
+      "lines": "35-47",
+      "observation": "Host-authored repair classes exist because raw judge messages may contain answers. Use a newly scoped public-only allowlist; do not forward task-specific judge messages or assume existing task-specific rules apply."
+    },
+    {
+      "path": "eis/documentation/oeeis_residual_obligations.md",
+      "lines": "34-38,50-56",
+      "observation": "Finite detectors do not establish completeness or observer independence; clean reports do not admit candidates. Fixture coverage and analytic correctness stay distinct."
+    },
+    {
+      "path": "operads/domain/operad/operad.py",
+      "lines": "85-124",
+      "observation": "Partial composition enforces arity and colour-slot compatibility and retains residual effects; proposed prompt scaffold colours must have explicit operational semantics. Type compatibility alone is not a mathematical validity proof."
+    }
+  ],
+  "common_budget_policy": {
+    "formula": "For a run reserve C_max = sum_s(I_s*p_in_s + O_s*p_out_s + F_s) + R <= USD 0.10 before any paid dispatch. I_s includes seed, wrapper, schema, prior artifacts and protocol overhead; O_s caps every billable output/reasoning token. Use current pinned per-token prices and exact endpoint semantics. Additional metered host/tool charges belong in F_s. Unbounded hidden reasoning, unknown fees, or unknown input bounds cause refusal.",
+    "conditional_example": "Illustrative admission thresholds only: p_in <= USD 0.000001/token, p_out <= USD 0.000005/token, F_s=0 and R=USD 0.01. They are not a current tariff quotation or a model recommendation. All three proposed run envelopes fit individually under these conditions; they are separate experiments, not permission to spend their sum.",
+    "routing": "At most two model calls and zero retries per idea. One shared reservation ledger covers both candidates, rejected/truncated outputs, timeouts and checker-caused failures. Disable automatic retry/fallback. If usage is unavailable, retain the reservation and stop; a failed branch is not replaced for free.",
+    "receipts": "Record policy hash, model/provider/version, tariff observation, request/response hashes, maximum completion token settings, actual input/output/reasoning/cache fields when available, provider duration, wall time, and charged cost. A genome is not an occurrence. No paid calls or experimental claims were made in this research task.",
+    "host_compute": "Bound host runs to at most 32 obligation IDs, 64 edges, 3 plan candidates or 2 answer candidates, 64 public predicates, 1 MiB per artifact, and 2 seconds per checker invocation on already provisioned local CPU. Timeout or unsupported analytic checking produces OPEN/INFRASTRUCTURE_ERROR, never a pass. Incremental metered compute must be added to the reservation."
+  },
+  "ideas": [
+    {
+      "id": "R03-I01",
+      "name": "Precommitted sibling wrappers with a public exact Pareto gate",
+      "systems": [
+        "PCIV",
+        "PFP",
+        "EIS",
+        "OPERADS"
+      ],
+      "mathematical_basis": {
+        "known_method": "Finite prompt variation and exact multiobjective dominance over measured records. For vectors v=(coverage, -public_defects, -completion_tokens), x dominates y iff every coordinate of v(x) is at least v(y) and at least one is strictly greater.",
+        "proposed_adaptation": "Construct exactly two sibling wrappers from one fixed parent before any model response: a dependency-first outline and a branch-first outline. The seed message remains byte-identical. Obtain two separate answer artifacts, compute a public obligation/detector vector, and choose from the exact nondominated set using a preregistered lexicographic tie rule. Preserve both candidates, all failures, and both execution costs.",
+        "composition_rule": "Compile immutable SeedBytes x WrapperPolicy -> Request; Request -> CandidateArtifact; CandidateArtifact x PublicPredicateRegistry -> PublicMetricVector; vector records -> FrontReceipt -> selected artifact. Host replay witnesses each wrapper edit. Both candidates descend from the template, not from one another, and a shared task ID does not create an inheritance edge. Exact dominance is exact only for the declared proxies."
+      },
+      "assumptions": [
+        "A public obligation inventory and detector registry are frozen before model outputs. Coverage counts only required IDs with nonempty bound artifact sections; it is labeled structural coverage, not mathematical correctness.",
+        "Both wrappers preserve every requested obligation. Their only differences are instruction order and explicit scaffold. They contain no target solution, guessed branch answer, or private-grader material.",
+        "Eligibility requires valid encoding, preserved seed, bounded size, and declared schema. Unsupported mathematical checks remain OPEN; public_defects counts only calibrated public predicate failures, not arbitrary prose judgments.",
+        "An independently specified exact vector comparator is implemented and validated before execution. Do not call the audited ParetoFrontSelectorV1 unmodified; this three-coordinate extension is not already supplied by it.",
+        "The two responses are separate provider samples, but their errors can be correlated. Shared provider, model, prompt library, and detectors do not establish statistical independence."
+      ],
+      "hypothesis": "At matched total dollar and output-token budgets, two distinct frozen scaffolds plus public selection reduce missing requested sections and improve blinded final score relative to two samples of one fixed scaffold; the effect is explicitly within this single item.",
+      "typed_inputs": [
+        "SeedBytes{raw_utf8,sha256}",
+        "FrozenSiblingPolicy{parent_wrapper,edit_A,edit_B,policy_sha256,obligation_ids,checker_versions,tie_order}",
+        "BudgetReservation{max_calls:2,max_input_tokens_total:10000,max_output_tokens_total:6000}"
+      ],
+      "typed_outputs": [
+        "SiblingLineage{parent_wrapper_sha256,child_wrapper_hashes,actual_edit_receipts,request_hashes}",
+        "CandidatePair{occurrence_ids,candidate_hashes,artifacts,statuses,cost_receipts}",
+        "PublicFrontReceipt{metric_definition_hash,exact_vectors,dominance_edges,fronts,selection_reason,unmeasured_fields}",
+        "FrozenFinalResponse{selected_candidate_or_incomplete,all_candidate_hashes,residuals}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Frozen policy compiler and shared budget gate",
+          "instruction": "Freeze both wrapper byte strings, mutation edits, fixed public detector definitions and lexicographic rule. Validate immutable seed-message round trip and request hashes. Reserve the worst-case cost of both calls before dispatch. A wrapper edit is host-recorded; hashes alone do not authorize lineage.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "solve_A",
+          "kind": "model",
+          "role": "Dependency-first sibling",
+          "instruction": "Answer the complete unchanged seed. Organize the derivation by prerequisite dependencies; include every declared obligation ID, explicit assumptions and unresolved steps. Supply only candidate-side evidence requested by the public schema. Do not self-score or claim host acceptance.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 3000
+        },
+        {
+          "id": "solve_B",
+          "kind": "model",
+          "role": "Branch-first sibling",
+          "instruction": "Answer the complete unchanged seed independently of sibling A, which is not supplied. Organize the derivation by parameter and boundary cases before common conclusions. Include every declared obligation ID, explicit assumptions and unresolved steps. Do not self-score or claim host acceptance.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 3000
+        },
+        {
+          "id": "observe",
+          "kind": "host",
+          "role": "Bounded public checking",
+          "instruction": "Record both attempts including failures. Run the frozen public schema, dependency, and independently calibrated consistency predicates without private evaluation. Compute structural coverage, public defect count and billed completion tokens as exact integers. Missing cost or invalid artifact is ineligible; preserve the failure receipt.",
+          "depends_on": [
+            "solve_A",
+            "solve_B"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "select",
+          "kind": "host",
+          "role": "Exact frontier and fixed tie rule",
+          "instruction": "Using the separately validated comparator, compute the nondominated eligible set. Sort that front by public_defects ascending, structural coverage descending, completion tokens ascending, then preassigned wrapper ID ascending. Empty set emits INCOMPLETE; singleton returns that element without pairwise code. Selection does not create a new genome or causal improvement claim. Charge both calls regardless of the selected answer.",
+          "depends_on": [
+            "observe"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Final response and evidence freeze",
+          "instruction": "Freeze selected answer bytes, both raw candidates, policy and ledger. Trusted mathematical scoring occurs afterward in an isolated evaluator with no return channel. Report accuracy/cost/time frontier separately from the public-proxy frontier.",
+          "depends_on": [
+            "select"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Two independent direct same-model answers with the identical aggregate budget and the same public selector, differing only by use of one fixed wrapper; also report a single-call baseline with the same total output budget when feasible.",
+        "ablations": [
+          "Choose wrapper A by preregistered ID without public selection",
+          "Use two identical wrapper strings but distinct occurrence IDs",
+          "Remove one public detector family at a time, retaining the same eligibility and budget rules",
+          "Use exact Pareto set without the final lexicographic choice and report the entire set"
+        ],
+        "evaluation": "Pre-register paired run blocks and independent provider sampling, randomize arm order, keep every failure in the denominator, and freeze all configurations before the campaign. Evaluate selected and unselected artifacts only after freezing, to measure selection regret. Public detector sensitivity/false rejection is measured on independent positive and corrupted synthetic fixtures. Repeated samples measure this item's response variability, not a population of tasks."
+      },
+      "falsification": [
+        "A public synthetic fixture has a dominated candidate selected, inconsistent permutation results, singleton failure, missing-token defaulted to zero, or a duplicate occurrence counted as a new genome: selection implementation fails its claim.",
+        "The chosen answer has lower trusted score than the discarded answer often enough to reverse the preregistered benefit margin: the proxy selector is counterproductive even when exact.",
+        "Sibling wrappers do not improve the preregistered within-item paired score/completeness criterion relative to identical-wrapper sampling at matched budgets: proposed diversity mechanism is unsupported.",
+        "Any request omits or changes seed bytes, or any private diagnostic influences selection before output freeze, invalidates the blind run."
+      ],
+      "risks": [
+        "Structural coverage is easy to satisfy with incorrect prose; public Pareto membership is not a correctness certificate.",
+        "Lexicographic order expresses a preference and can discard meaningful tradeoffs; the complete frontier and both costs must remain visible.",
+        "Protected seed bytes do not prevent a wrapper from semantically contradicting the seed; wrapper invariance still needs a frozen allowlist and review.",
+        "Known event-log disk failure means successful append alone is insufficient; freeze must verify durable readback before reporting a complete receipt."
+      ],
+      "budget_formula": "C_max <= 10000*p_in + 6000*p_out + sum(F_s) + R; two calls, no retries. At the conditional thresholds and R=0.01 this is USD 0.050. The selected candidate's individual cost must never replace total run cost.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R03-I02",
+      "name": "One-step public-failure repair with replayable mutation lineage",
+      "systems": [
+        "PCIV",
+        "EIS",
+        "PFP",
+        "OPERADS"
+      ],
+      "mathematical_basis": {
+        "known_method": "A bounded deterministic controller over public observations, unrolled into an acyclic execution. With draft x, detector vector d(x), and frozen branch table T, the repair prompt is P1=T(P0,d(x)); one repair produces y, then execution stops.",
+        "proposed_adaptation": "Use one complete draft and one targeted patch call. The host maps only public artifact-local failures to a fixed instruction table, mutates a separate repair-wrapper message, and records exactly which observation and edit caused the child request. Repair feedback contains allowlisted classes and candidate IDs, never raw judge text. Retain the draft and patch so the host can choose a nonregressing result without another model call.",
+        "composition_rule": "ObservationReceipt binds candidate hash, checker/version and public failure IDs. MutationReceipt binds parent request, frozen transition table, observation receipt, edited wrapper bytes and child request. OPERADS types enforce that only PublicObservation can enter the RepairPrompt slot; PrivateEvaluation has no outgoing edge. Exact status comparison is over the same fixed obligation set, never model-declared success."
+      },
+      "assumptions": [
+        "Public detectors are fixed before drafting and have independent calibration fixtures, including correct but nonstandard forms. A numeric spot check is labeled numerical evidence and cannot certify an analytic claim.",
+        "The transition table permits at most four neutral classes: SCHEMA, MISSING_OBLIGATION, UNBOUND_ASSUMPTION, and FAILED_PUBLIC_IDENTITY. Each has fixed answer-free instructions; only public candidate-local pointers vary.",
+        "Repair output is a bounded patch over stable artifact IDs. Host rendering is deterministic, untouched sections retain their hashes, and changed sections plus dependencies are rechecked.",
+        "At most one repair is permitted. With no failures the second node is skipped and emits a host no-op receipt; unused reservation is released only after usage is known. No failure triggers a third call.",
+        "Parent-child operational lineage requires replay of the actual observed edit and occurrence, not merely a caller-sealed assertion. Lineage is not evidence that repair caused a score improvement."
+      ],
+      "hypothesis": "A fixed public-failure repair controller reduces structural omissions and independently detected inconsistencies per billed token relative to whole-answer self-critique, while preserving all original requested obligations; trusted-score benefit remains an empirical within-item question.",
+      "typed_inputs": [
+        "SeedBytes{raw_utf8,sha256}",
+        "RepairPolicy{transition_table_sha256,public_checker_versions,obligation_ids,patch_schema,stopping_rule}",
+        "BudgetReservation{max_calls:2,max_input_tokens_total:12000,max_output_tokens_total:4300}"
+      ],
+      "typed_outputs": [
+        "DraftArtifact{occurrence_id,artifact_sha256,sections,claim_dependencies}",
+        "PublicObservationReceipt{draft_hash,checker_bindings,allowlisted_failures,open_checks}",
+        "MutationReplayReceipt{parent_request,child_request,edit_script,observation_hash,policy_hash,seed_hash}",
+        "PatchArtifact{replaced_ids,replacement_sections,changed_dependencies,residuals}",
+        "FrozenFinalResponse{draft_or_patched_hash,selection_receipt,total_cost}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Frozen controller and budget binding",
+          "instruction": "Freeze public predicates, neutral feedback table, patch IDs and nonregression rule before the draft. Preserve the seed message independently of wrappers and verify bytes at dispatch. Reserve both calls; load no private evaluation data.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "draft",
+          "kind": "model",
+          "role": "Complete initial proposer",
+          "instruction": "Answer every part of the unchanged seed with explicit assumptions and dependency-linked sections. Use the public artifact schema and distinguish exact derivations, numerical checks and open obligations. The host, not you, determines public check outcomes.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 2700
+        },
+        {
+          "id": "observe_and_mutate",
+          "kind": "host",
+          "role": "Public observation and wrapper mutation",
+          "instruction": "Run frozen bounded checks. Encode at most four allowlisted failure classes and artifact-local IDs; never include raw diagnostics. Apply the frozen table to append a separate repair-wrapper message, record byte edits and actual parent occurrence, and verify immutable seed round trip. If there are no actionable public failures, record a no-op and skip repair.",
+          "depends_on": [
+            "draft"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "repair",
+          "kind": "model",
+          "role": "One bounded local patch",
+          "instruction": "If dispatched, use only the unchanged seed, your draft, and the public allowlisted failure receipt. Patch the indicated sections and any explicitly listed dependent references. Recompute candidate-supplied identities; do not invent checker outcomes, remove requested obligations, alter the detector registry, or turn an unsupported claim into a certified one. Return unresolved fields if a repair cannot be made.",
+          "depends_on": [
+            "observe_and_mutate"
+          ],
+          "max_output_tokens": 1600
+        },
+        {
+          "id": "recheck_and_select",
+          "kind": "host",
+          "role": "Patch validation and conservative selection",
+          "instruction": "If skipped, retain draft. Otherwise render the patch and recheck all affected dependencies. Child is eligible only if it loses no previously satisfied fixed predicate and improves at least one public predicate or required-section status. Compute the exact frontier on structural coverage, negative public defects and negative artifact-generation tokens; apply fixed priority of fewer defects, more coverage, then fewer tokens, retaining the draft on ties. A costlier child may be nondominated, not dominant. Report total draft-plus-repair cost regardless of the retained candidate.",
+          "depends_on": [
+            "repair"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Replay validation and final freeze",
+          "instruction": "Replay lineage from raw request and wrapper bytes, reject stale receipts, verify durable readback, and freeze both alternatives plus the chosen output. Offline trusted scoring may compare them afterward but cannot trigger another repair or future prompt selection in this blind run.",
+          "depends_on": [
+            "recheck_and_select"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Draft plus whole-answer self-critique using the same model, aggregate token cap, seed and public checks; include draft-only as a cost reference.",
+        "ablations": [
+          "Replace specific public failure classes with one generic review instruction",
+          "Supply the same public failures but ask for a whole-answer rewrite",
+          "Use patch generation with no nonregression gate",
+          "Use replay-verified host lineage versus declarative receipts on synthetic corruption fixtures; this tests custody, not mathematical quality"
+        ],
+        "evaluation": "Track public defect removal, new-defect introduction, patch size, restored obligation coverage, false rejection on valid synthetic artifacts, and final isolated trusted score. Pair repeats by seed/model/configuration and count skipped repairs, incomplete patches and infrastructure failures. A fixed feedback policy is still within-item adaptation; repeated private-score-informed redesign must be labeled a separate exploratory campaign."
+      },
+      "falsification": [
+        "An unchanged valid synthetic artifact is rejected beyond a preregistered false-rejection tolerance, or a mutated required section bypasses rechecking.",
+        "Repair creates a new public failure or removes a previously covered obligation but is nevertheless selected: the nonregression contract is violated.",
+        "Swapping the observation receipt or parent occurrence leaves a replay receipt accepted: lineage binding is inadequate.",
+        "Whole-answer critique matches or exceeds the repair controller's preregistered paired score and defect-removal criterion at the same budget: targeted repair has no established advantage.",
+        "Any raw private-feedback text or key-derived failure class reaches the repair prompt invalidates the blind interpretation."
+      ],
+      "risks": [
+        "Neutral failure classes still encode information about public tests; adapting to them can overfit those tests.",
+        "An incorrect draft can pass every finite detector; absence of actionable failure is not correctness.",
+        "Hash sealing is not authentication of the event source; broker-captured request/response evidence and replay are extra requirements.",
+        "The current taint implementation is order-dependent. Do not use it to clear ancestry; compute any required reachability/taint conservatively in a separately validated topological pass."
+      ],
+      "budget_formula": "C_max <= 12000*p_in + 4300*p_out + sum(F_s) + R; at most two calls and no retry. Conditional thresholds with R=0.01 give USD 0.0435. The no-op path uses one call but reserves the two-call worst case until the branch is known.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R03-I03",
+      "name": "Typed scaffold evolution before solving with exact plan selection",
+      "systems": [
+        "OPERADS",
+        "PCIV",
+        "PFP",
+        "EIS"
+      ],
+      "mathematical_basis": {
+        "known_method": "Finite typed program synthesis and partial-order scheduling: a plan is a DAG over a frozen operation grammar, with edge compatibility target(g)=source(f)[i], acyclicity, and explicit requested sinks. Structural validity is decidable for a finite plan but does not prove the semantics of the later answer.",
+        "proposed_adaptation": "The first small model call proposes up to three plan-only scaffold candidates. Each is a sequence/DAG of IDs from a fixed neutral grammar, not a rewritten task or mathematical answer. The host rejects plans that omit obligations, introduce undeclared assumptions or fail coloured composition. It compiles the survivors into wrapper messages and chooses an exact Pareto plan using structural check placement, auxiliary node count and actual wrapper-token cost. A second call solves the complete unchanged seed under the selected scaffold.",
+        "composition_rule": "Plan grammar atoms are inventory_assumptions, split_public_domains, derive_required_result, declare_dependencies, check_candidate_identity, label_numeric_evidence, state_residual, and render_requested_answer. Slots carry SeedRef, ObligationRef, CandidateClaim, CheckRequest and RenderableSection colours. Every requested sink is represented and connected; checker nodes only consume already-produced candidate claims. Typed composition retains unsupported semantic obligations as residuals."
+      },
+      "assumptions": [
+        "The grammar, maximum three candidates, maximum 16 nodes/32 edges per plan, obligation inventory and exact selector are committed before any target response. The first call may inspect the public seed but receives no target-score history.",
+        "Only operation IDs and references are accepted from the planner. Free-form mathematical assertions, numerical results, new assumptions and edits to seed text make a plan ineligible; the host renders all instruction prose from frozen templates.",
+        "All required derivation and rendering nodes are mandatory. Optional check requests are deduplicated by obligation/checker ID, so adding repeated checks cannot inflate the objective.",
+        "Structural check coverage is the fraction of required claims assigned an applicable registered public check kind. An unsupported symbolic claim is OPEN and gains no check-coverage credit; assigning a kind does not mean that the later claim passes.",
+        "The baseline scaffold is a frozen feasible fallback. If all plans fail, the solve stage uses that fallback within the same reservation; no replanning or extra model call occurs.",
+        "Typed plan correctness, wrapper byte integrity, and final mathematical correctness are separate claims. Selection on public plan proxies is adaptive to this item, not evidence of task-general learning."
+      ],
+      "hypothesis": "Allocating a small planning call to a typed scaffold, then selecting a compact complete plan, improves final obligation completeness and reduces unsupported-check claims compared with unconstrained plan-and-solve at equal total budget.",
+      "typed_inputs": [
+        "SeedBytes{raw_utf8,sha256}",
+        "PlanGrammar{atom_ids,ordered_colours,template_hashes,allowed_assumption_refs,checker_applicability,mandatory_sinks}",
+        "FrozenPlanPolicy{candidate_cap:3,node_cap:16,edge_cap:32,exact_objectives,tie_rule,fallback_plan}",
+        "BudgetReservation{max_calls:2,max_input_tokens_total:10000,max_output_tokens_total:4000}"
+      ],
+      "typed_outputs": [
+        "PlanCandidateSet{planner_occurrence,candidates:[plan_id,nodes,edges,obligation_refs]}",
+        "CompiledScaffoldSet{wrapper_hashes,typed_composition_receipts,residuals,plan_vectors}",
+        "SelectedScaffoldReceipt{front,selection_reason,parent_template_hash,planner_artifact_hash,compiler_version}",
+        "FrozenFinalResponse{answer_artifact,public_check_receipt,plan_adherence_residuals,total_cost}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Grammar freeze and request binding",
+          "instruction": "Freeze grammar templates, legal colours, requested sink inventory, comparator and fallback plan. Verify all plan candidates must use the same unchanged seed reference. Reserve both calls and pass only public inputs to the planner.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "plan",
+          "kind": "model",
+          "role": "Bounded scaffold proposer",
+          "instruction": "Propose at most three typed plan DAGs using only the allowed operation IDs and public obligation references. Cover every requested part, name dependencies, and place checks only after their candidate claims. Return plan structure only: no derivation, formula, numerical answer, new assumption, or edited seed text.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 900
+        },
+        {
+          "id": "compile_and_select",
+          "kind": "host",
+          "role": "Typed compilation and exact Pareto selection",
+          "instruction": "Reject free-form assertions, invalid IDs, cycles, unbound assumptions and missing requested sinks. Compile legal plans using frozen template text. Calculate exact structural check coverage, negative auxiliary-node count and negative tokenized wrapper length. Compute a validated exact nondominated set and choose by coverage descending, wrapper tokens ascending, auxiliary nodes ascending, plan ID ascending. Empty set uses the frozen fallback. Record planner-to-scaffold derivation as a host transformation, not evidence of efficacy.",
+          "depends_on": [
+            "plan"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "solve",
+          "kind": "model",
+          "role": "Solver under selected scaffold",
+          "instruction": "Answer the complete unchanged seed using the selected scaffold. Supply all requested results and explicit premises. A planned check is only an obligation until evidence is actually supplied and checked; mark unsupported mathematics OPEN. Do not treat plan acceptance as mathematical approval.",
+          "depends_on": [
+            "compile_and_select"
+          ],
+          "max_output_tokens": 3100
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Public verification and output freeze",
+          "instruction": "Check schema, coverage and plan adherence under bounded public predicates. Preserve all proposed plans, rejected-plan reasons, fallback use, final answer and cost ledger. Do not silently repair the answer. Freeze artifacts before isolated trusted scoring; no grader feedback can evolve the plan grammar or templates inside the run.",
+          "depends_on": [
+            "solve"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Unconstrained plan-and-solve with a 900-token plan and 3100-token solution under the same model and input limits; also compare one 4000-token direct solve as a call-overhead baseline.",
+        "ablations": [
+          "Fixed fallback scaffold with no planner call",
+          "Accept first eligible plan rather than exact Pareto selection",
+          "Check only plan acyclicity, removing colour compatibility",
+          "Keep typed structure but remove checker-applicability filtering; evaluate unsupported-check claims explicitly"
+        ],
+        "evaluation": "Pre-register within-item completeness, trusted score, unsupported-check assertions, typed-plan refusal rate, fallback rate, and plan/solve token split. Synthetic malformed plans test omitted sinks, type mismatch, cycles, duplicate check inflation and invented premises before any paid run. Do not count proposed plan diversity or compiler acceptance as solver accuracy."
+      },
+      "falsification": [
+        "A compiled plan omits a mandatory sink, consumes a check before the claim exists, gains duplicate check credit or includes a new assumption: the structural admission claim fails.",
+        "The typed compiler rejects independently reviewed valid alternative plans at an unacceptable preregistered rate, or its overhead erases any score/completeness benefit under the same spend cap.",
+        "The final solver treats planned checks as passed without witnesses more often than the unconstrained baseline: the scaffold is inducing unjustified confidence.",
+        "Target trusted scores are used to revise the grammar, choose the fallback, or reprioritize plan objectives while reporting a held-out result: the comparison is invalid."
+      ],
+      "risks": [
+        "A too-small grammar may suppress useful reasoning routes; refused plans and fallback frequency must be reported.",
+        "Model-proposed plan variants within one response are not independent samples and are not three solver attempts.",
+        "Exact structural metrics can prefer a concise but ineffective plan; no mathematical or causal guarantee follows from the frontier.",
+        "OPERADS colour checking validates declared interfaces only. Semantic preservation needs explicit host templates and review, and final mathematical claims remain evaluator obligations."
+      ],
+      "budget_formula": "C_max <= 10000*p_in + 4000*p_out + sum(F_s) + R; two calls, no retry. At the conditional thresholds with R=0.01 this is USD 0.040. The full cost includes rejected plans and fallback use.",
+      "status": "proposed_not_evaluated"
+    }
+  ],
+  "recommended_reusable_primitive": {
+    "name": "ProtectedMutationSelectionReceiptV1",
+    "recommendation": "Implement one host-owned transaction binding immutable seed transport, actual wrapper mutation, observed occurrence, public metric provenance and exact selection. This is reusable across fixed siblings, one-step repair and typed-plan evolution; implementation and validation are prerequisites, not completed work.",
+    "schema": {
+      "binding": [
+        "seed_sha256",
+        "raw_seed_length",
+        "request_sha256",
+        "parent_wrapper_sha256",
+        "child_wrapper_sha256",
+        "policy_sha256",
+        "checker_registry_sha256",
+        "occurrence_id",
+        "parent_occurrence_ids"
+      ],
+      "mutation": [
+        "relationship_kind",
+        "edit_script",
+        "source_artifact_hashes",
+        "public_observation_receipt_hash",
+        "compiler_version",
+        "replay_result"
+      ],
+      "metrics": [
+        "metric_schema_id",
+        "exact_rational_or_integer_values",
+        "directions",
+        "missing_fields",
+        "measurement_scope",
+        "candidate_hash"
+      ],
+      "selection": [
+        "eligible_candidate_hashes",
+        "dominance_witness_pairs",
+        "nondominated_front",
+        "tie_rule_id",
+        "selected_hash_or_incomplete"
+      ],
+      "cost": [
+        "reservation_id",
+        "all_stage_reservations",
+        "usage_receipt_ids",
+        "total_run_cost",
+        "unknown_usage_status"
+      ],
+      "residuals": [
+        "semantic_wrapper_preservation_unproved",
+        "public_detector_incompleteness",
+        "lineage_authentication_scope",
+        "open_analytic_checks",
+        "within_item_only"
+      ]
+    },
+    "invariant": "The receipt is issued only after host replay, exact seed-message round trip, deterministic dominance validation and durable readback. Missing metrics are not zeros. Empty and singleton fronts are total operations; duplicate genomes remain distinct occurrences. A receipt never upgrades proxy fitness to correctness, declaration sealing to causal proof, or within-item adaptation to transfer.",
+    "research_prompt_instruction": "Design and test this primitive using independent synthetic bytes, malformed plans and small exact metric vectors. Do not solve the public QM seed, read private evaluator storage, or make paid calls. Keep the original seed file unchanged. Freeze every policy and prohibit a PrivateEvaluation -> Workflow edge.",
+    "first_experiment": "Host-only finite tests: empty/singleton/tied/dominated fronts and input permutations; UTF-8 multibyte protected segments and boundary edits; stale parent/observation substitution; duplicate occurrences; simulated persistence failure; typed-plan cycles and omitted sinks. After these pass and a paid campaign is separately authorized, run the two-call sibling ablation with frozen policies. No implementation or model experiment was executed here."
+  }
+}

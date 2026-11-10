@@ -1,0 +1,337 @@
+{
+  "method": "Whitelisted AST definitions from fully read hash-pinned source, standard-library-only synthetic values; no production module imports, database/file effects, native calls, provider calls or private reads. Two signer Result wrappers use inert tuples; serialization uses documented duck-typed fixtures.",
+  "sources": [
+    {
+      "path": "operads/domain/value_objects/byte_span.py",
+      "sha256": "91cd104f24c3ea73bcdfc6ab6d112d5c15c764f9399f404d232f62f7ce9c79b9",
+      "lines": [
+        [
+          8,
+          60
+        ]
+      ],
+      "definitions": [
+        "SourceByteSpan"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/application/dtos/success_dtos.py",
+      "sha256": "635e3ce9f1324cc1117bd43ad07b73429a193c364f0c01677c0e1460bd322414",
+      "lines": [
+        [
+          36,
+          46
+        ]
+      ],
+      "definitions": [
+        "SignedManifestEnvelopeDTO"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/infrastructure/providers/manifest_signature_provider.py",
+      "sha256": "2ba43e47f55a4a198b6e17fd2499c479bcfee31f94006dfa705820c94d86149a",
+      "lines": [
+        [
+          13,
+          98
+        ]
+      ],
+      "definitions": [
+        "ManifestSignatureProvider"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/infrastructure/skill_garden/skill_memory.py",
+      "sha256": "3b51e0b400dbea9d8ec03906c8f24fb691bdce1dd56bdea08debd3b60c722864",
+      "lines": [
+        [
+          157,
+          166
+        ]
+      ],
+      "definitions": [
+        "_trim"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/application/mssn_sn_demos/antimorphism_farm/judge_suite_export.py",
+      "sha256": "95efc1c2ab518fd50ce9f264ad9b7f8c19ac8f374bdd19820b40f8f8d6359e2d",
+      "lines": [
+        [
+          22,
+          42
+        ],
+        [
+          57,
+          66
+        ],
+        [
+          69,
+          127
+        ]
+      ],
+      "definitions": [
+        "HarvestRowV2",
+        "verify_am_fsp_4_orbit_sum",
+        "reclassify_harvest"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/domain/prompt_hierarchy/models.py",
+      "sha256": "83feab106aa916d686f2c1068c3c9e77ed91d4930b591cfcb7e2d5594d049aac",
+      "lines": [
+        [
+          125,
+          173
+        ]
+      ],
+      "definitions": [
+        "OperadPromptBinding"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/domain/prompt_hierarchy/evaluator.py",
+      "sha256": "91181c63b22adbafc0d99c083acde27c4e33ab5e97994d90a1e4c467f9787800",
+      "lines": [
+        [
+          60,
+          160
+        ]
+      ],
+      "definitions": [
+        "_evaluate_operad_dof_locks"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/tests/architecture/test_clean_architecture_ast_boundaries.py",
+      "sha256": "e9e3d0821257a973be31adc88821c8670c5399a7a1c3254df723f928b1ef0ceb",
+      "lines": [
+        [
+          103,
+          110
+        ]
+      ],
+      "definitions": [
+        "_foreign_infrastructure"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/infrastructure/storage/sqlite_unit_of_work.py",
+      "sha256": "a84c914b65af124a84705c85bc8ce986adfffa51c822cf429406336cee963674",
+      "lines": [
+        [
+          515,
+          561
+        ]
+      ],
+      "definitions": [
+        "_serialize_catalog"
+      ],
+      "source_was_fully_reviewed": true
+    },
+    {
+      "path": "operads/infrastructure/skill_garden/usage_ledger.py",
+      "sha256": "581d494016d9659783245bcd4d6941fb9a497ab734f04afadbc8a13e795b66c0",
+      "lines": [
+        [
+          72,
+          73
+        ],
+        [
+          134,
+          141
+        ],
+        [
+          144,
+          186
+        ]
+      ],
+      "definitions": [
+        "_canonical_bytes",
+        "make_usage_event",
+        "UsageLedgerError"
+      ],
+      "source_was_fully_reviewed": true
+    }
+  ],
+  "probes": [
+    {
+      "id": "OCR-P01",
+      "claim": "Multiline negative end column accepted",
+      "observed": {
+        "start_byte": 0,
+        "end_byte": 1,
+        "start_line": 1,
+        "start_col": 0,
+        "end_line": 2,
+        "end_col": -1
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual extracted dataclass constructor, no parser ingress claim."
+    },
+    {
+      "id": "OCR-P02",
+      "claim": "Manifest ID and algorithm alterations retain valid signature",
+      "observed": {
+        "original_manifest": "m",
+        "changed_manifest": "different",
+        "changed_algorithm": "fictional",
+        "verifies": true
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual extracted signer/verifier and DTO; Result constructors replaced by inert tuple constructors. Public test key only."
+    },
+    {
+      "id": "OCR-P03",
+      "claim": "Colon-separated header permits distinct typed field tuples with same HMAC",
+      "observed": {
+        "original": [
+          "c:1",
+          2,
+          "x"
+        ],
+        "changed": [
+          "c",
+          1,
+          "2:x"
+        ],
+        "same_signable_bytes": true,
+        "verifies": true
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "DTO accepts unrestricted strings; no claim an external ingress permits these exact headers."
+    },
+    {
+      "id": "OCR-P04",
+      "claim": "Memory trim preserves oldest50 and drops newest",
+      "observed": {
+        "retained_lines": 50,
+        "newest_present": false
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual trim function; write path not invoked."
+    },
+    {
+      "id": "OCR-P05",
+      "claim": "Write-time newline can exceed4096-byte cap",
+      "observed": {
+        "trim_bytes": 4096,
+        "written_expression_bytes": 4097
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual trim plus exact append write expression; no filesystem writes."
+    },
+    {
+      "id": "OCR-P06",
+      "claim": "Correct nonzero response is labelled confirmed hallucination",
+      "observed": {
+        "response": "1 - 3/2 = -1/2, so cancellation is not zero.",
+        "disposition": "HALLUCINATION_DETECTED",
+        "confirmed": true
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Synthetic public arithmetic only; no historical harvest/hidden-suite records or models."
+    },
+    {
+      "id": "OCR-P07",
+      "claim": "Classifier result changes with prior different-probe row order",
+      "observed": {
+        "first_meron": "HALLUCINATION_DETECTED",
+        "meron_after_other": "GROUNDED_WITNESS"
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Response-only cache in a batch is deterministic for fixed order, not context-independent."
+    },
+    {
+      "id": "OCR-P08",
+      "claim": "Nonempty source signature with no slot map clears all locks on empty payload",
+      "observed": {
+        "result": [
+          0,
+          null,
+          null
+        ]
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual extracted binding constructor and lock predicate; does not invoke outer anti-operation gate."
+    },
+    {
+      "id": "OCR-P09",
+      "claim": "Caller-supplied equal arbitrary pin clears pin obligation",
+      "observed": {
+        "result": [
+          0,
+          null,
+          null
+        ],
+        "value": 999,
+        "free_parameter_count_omitted": true
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Confirms equality bookkeeping, not independent pin provenance or scientific correctness."
+    },
+    {
+      "id": "OCR-P10",
+      "claim": "Empty list clears boundary witness obligation",
+      "observed": {
+        "result": [
+          0,
+          null,
+          null
+        ],
+        "boundary_witness": []
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual presence predicate accepts values other than its four rejected sentinels; no witness checker."
+    },
+    {
+      "id": "OCR-P11",
+      "claim": "Architecture predicate misses import its own regression expects to catch",
+      "observed": {
+        "import": "pfp.infrastructure.adapters.x",
+        "caught": false
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual helper only; full architecture suite not run."
+    },
+    {
+      "id": "OCR-P12",
+      "claim": "Catalog serializer discards distinct operand/leaf/root/slice data",
+      "observed": {
+        "different_ignored_fields": [
+          "operands",
+          "leaf_nodes",
+          "proven_root_operation_id",
+          "capability_slices"
+        ],
+        "same_serialized_payload": true
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual serializer on duck-typed fixture with empty operation map; no SQLite roundtrip or domain-constructor validation claimed."
+    },
+    {
+      "id": "OCR-P13",
+      "claim": "Usage timestamp accepts traversal text used as shard filename",
+      "observed": {
+        "accepted_timestamp": "../../oops",
+        "relative_destination": "oops.jsonl",
+        "escapes_usage_directory": true
+      },
+      "status": "counterexample_confirmed",
+      "ceiling": "Actual pure event constructor and exact append path expression; no file opened or written."
+    }
+  ],
+  "counts": {
+    "finite_probes": 13,
+    "confirmed": 13,
+    "full_suites_run": 0
+  }
+}

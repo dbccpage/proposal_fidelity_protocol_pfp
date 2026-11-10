@@ -1,0 +1,23 @@
+# Additional native systems audit — checkpoint 02
+
+Pinned source: `8050c66900899771766f33e8f5fdd200b7dd9120`. This disjoint continuation fully reads **20 additional Rust files / 6,389 lines**, including every remaining EIS production module, PCIV fitness/convergence/evidence, and operad kernel model/capability/trace/reindex/obligation exports. Across the two native checkpoints, **54 of 153 scoped files** have full reads; **99 remain unread**. The JSON records hashes, exact reviewed ranges, mathematical contributions, limitations and the complete backlog. Hashing is not counted as semantic review.
+
+The EIS legacy records enforce local status and regex conditions, while independent observations and authenticated custody remain host obligations. Pharmacy search checks supplied catalog/candidate bytes and declared scope; retrieval does not activate a rule or establish its efficacy. Host checks implement bounded syntactic detectors. No new empirical detector-quality claim is supported.
+
+PCIV has substantive finite mathematics: coordinatewise Pareto sorting, a stopping monitor with a decreasing natural observation budget, and a greatest food-generated autocatalytic reaction subset computed by finite closure and monotone deletion. These are source-derived arguments under supplied finite data. They are not mechanized Rust proofs, population convergence, causal learning or generalization evidence. The independence helper checks actor names, lineage and the presence of any external anchor; it does not establish statistical independence or independent anchoring of every branch.
+
+The estate operad kernel remains distinct from the foundation architecture. Reindexing uses private checked bijections and explicit occurrence order. Capability checks operate over supplied declarations. Foundation tensor witnesses check input arity/colours, not tensor outputs or monoidal coherence. The Lean-obligation export emits generic **Open** prose statements; it neither runs Lean nor enumerates and proves all substitutions/coherence diagrams. Execution events are canonical metadata, not authenticated execution proofs.
+
+Fresh synthetic probes reproduced five implementation/contract defects:
+
+1. **Quorum threshold:** `activation_ports.rs:82–113` accepts `aa×3, bb×2, k=2`, despite its unique-threshold-winner contract. It counts only ties at the maximum.
+2. **Anti-skill ID framing:** `anti_skill.rs:90–95` gives different pattern/scope pairs the same `ab_4092a86992000b74` ID. This is an unframed encoding collision, not a cryptographic break.
+3. **Entry nesting:** `kernel/capability.rs:108–128` authorizes `Entry(Discipline(Entry(...)))`; it forgets an entry ancestor across a discipline node. The broader containment wording and intended policy need reconciliation.
+4. **Operation license keys:** `kernel/model.rs:348–350` maps `(a@b,c)` and `(a,b@c)` to `a@b@c`; `kernel/capability.rs:199–214` authorizes the second under the first key. Other executor/effect checks still apply.
+5. **Budget record validation:** `kernel/trace.rs:180–221` accepts a public `BudgetTransition { before:1, after:2 }` that its own constructor rejects. This is record acceptance, not demonstrated host resource spending.
+
+Two additional boundary risks were reproduced: `SpanOperand::new` accepts invalid digest/length metadata that `verify_integrity` subsequently rejects (`foundation/span_operand.rs:34–113`); the outcome reducer returns `TaskPass` for an empty mandatory list and accepts an unknown mandatory label in a refusal branch (`fitness.rs:114–149`). The latter does not itself grant fitness credit and needs an explicit host/specification policy before being treated as an operational failure.
+
+Validation: `additional_native_systems_02_probes.py` builds current libraries offline/locked and runs seven public API cases; exit code **0**, empty stderr, Rust **1.99.0**. It replaces the earlier probe program rather than rerunning prior cases. No full suite or Python parity suite was rerun. Earlier compile blocks and stale fixture failures remain in the first native report. All 119 source hashes match that pinned checkpoint, and scoped `git diff HEAD` is empty.
+
+Only the new report pair and probe script were written. No production repairs, historical evidence changes, paid calls, private benchmark access or incoming pilot-corpus review occurred. The next audit priorities are kernel cells/observer, PCIV forge/lamarckian/ecology/pharmacy/metabolism, core_operads estate/workflow/graph, remaining mathematical tiers, and the unread tests/fixtures. The broader every-file audit remains unfinished.

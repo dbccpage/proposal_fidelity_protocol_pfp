@@ -1,0 +1,192 @@
+{
+  "schema_version": "independent_qm_evaluator_rubric_v1",
+  "created_utc": "2026-11-10T17:52:12.441801+00:00",
+  "purpose": "Post-freeze independent trusted mathematical evaluation only; never supply this artifact or evaluator reasoning to workflow requests.",
+  "method": {
+    "reference_basis": "Independently derived from public seed_prompt.txt and EXPERIMENT_PROTOCOL.md; parent independently agreed with formulas and exceptional branches.",
+    "private_answer_key_access": false,
+    "private_storage_access": false,
+    "model_output_access_before_freeze": false,
+    "all_five_outputs_frozen_at_creation": false,
+    "source_execution": "No original/native/provider code executed by evaluator; one independent floating matrix-series check supports specified formulas only."
+  },
+  "public_sources": [
+    {
+      "path": "dag/benchmark/seed_prompt.txt",
+      "sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7"
+    },
+    {
+      "path": "dag/benchmark/EXPERIMENT_PROTOCOL.md",
+      "sha256": "6eeb2068cf555b32623d48994b44794f13a514947ff6fd61df0d50f5500e9918"
+    }
+  ],
+  "total_points": 100,
+  "sections": [
+    {
+      "id": "spectrum",
+      "max_points": 20,
+      "criteria": [
+        {
+          "id": "spectrum.block_reduction",
+          "max_points": 4,
+          "criterion": "Correct invariant even/odd subspaces and Hamiltonian restriction, with a derivation."
+        },
+        {
+          "id": "spectrum.energies",
+          "max_points": 4,
+          "criterion": "All four eigenvalues including multiplicities, consistent with the seed Hamiltonian."
+        },
+        {
+          "id": "spectrum.projectors",
+          "max_points": 6,
+          "criterion": "Correct normalized orthogonal spectral projectors, resolving identity and reconstructing H."
+        },
+        {
+          "id": "spectrum.coincident_energies",
+          "max_points": 4,
+          "criterion": "All nonzero-radius even/odd coincidences are identified and equal-energy eigenspaces merged or equivalently explained."
+        },
+        {
+          "id": "spectrum.zero_radius",
+          "max_points": 2,
+          "criterion": "J=Delta=0 is handled without undefined divisions; K=0 complete degeneracy is explicit."
+        }
+      ]
+    },
+    {
+      "id": "dynamics",
+      "max_points": 20,
+      "criteria": [
+        {
+          "id": "dynamics.state",
+          "max_points": 8,
+          "criterion": "Correct evolved state and phase/sign conventions derived from the odd block, including zero-radius evolution."
+        },
+        {
+          "id": "dynamics.probability",
+          "max_points": 4,
+          "criterion": "Correct exact transition probability and valid denominator branches."
+        },
+        {
+          "id": "dynamics.supremum",
+          "max_points": 4,
+          "criterion": "Correct supremum over t>=0 for all parameters."
+        },
+        {
+          "id": "dynamics.earliest_and_constant_branches",
+          "max_points": 4,
+          "criterion": "Earliest maximizing time is correct; constant-probability cases identify t=0 and avoid applying an oscillatory time formula."
+        }
+      ]
+    },
+    {
+      "id": "pure_state",
+      "max_points": 25,
+      "criteria": [
+        {
+          "id": "pure_state.reduced_density",
+          "max_points": 4,
+          "criterion": "Correct first-spin reduced state and trace."
+        },
+        {
+          "id": "pure_state.entropy",
+          "max_points": 4,
+          "criterion": "Von Neumann entropy in bits, with endpoint convention0log0=0."
+        },
+        {
+          "id": "pure_state.concurrence",
+          "max_points": 4,
+          "criterion": "Correct pure-state concurrence with reasoning."
+        },
+        {
+          "id": "pure_state.CHSH",
+          "max_points": 6,
+          "criterion": "Correct maximal CHSH value over local dichotomic projective spin measurements, with a sufficient self-contained derivation or correlation-matrix optimization."
+        },
+        {
+          "id": "pure_state.maximal_entanglement_reachability",
+          "max_points": 4,
+          "criterion": "Necessary and sufficient parameter condition, excluding the zero-coupling/zero-radius exceptional case."
+        },
+        {
+          "id": "pure_state.earliest_maximal_entanglement",
+          "max_points": 3,
+          "criterion": "Correct earliest time, including equality and unreachable cases."
+        }
+      ]
+    },
+    {
+      "id": "thermal",
+      "max_points": 25,
+      "criteria": [
+        {
+          "id": "thermal.Gibbs_state",
+          "max_points": 6,
+          "criterion": "Correct normalized Gibbs matrix in the stated basis with derivation."
+        },
+        {
+          "id": "thermal.partition_function",
+          "max_points": 4,
+          "criterion": "Correct partition function with degeneracies."
+        },
+        {
+          "id": "thermal.partial_transpose",
+          "max_points": 7,
+          "criterion": "All four eigenvalues of the partial transpose on spin2, with correct block/sign handling."
+        },
+        {
+          "id": "thermal.entanglement_criterion",
+          "max_points": 5,
+          "criterion": "Necessary and sufficient thermal entanglement condition; strict inequality and equality/separability are correct."
+        },
+        {
+          "id": "thermal.thermal_limits",
+          "max_points": 3,
+          "criterion": "beta=0 and J=Delta=0 correctly treated without undefined expressions."
+        }
+      ]
+    },
+    {
+      "id": "checks",
+      "max_points": 10,
+      "criteria": [
+        {
+          "id": "checks.conventions",
+          "max_points": 2,
+          "criterion": "Consistent Pauli, basis, Hamiltonian, log-base and partial-transpose conventions."
+        },
+        {
+          "id": "checks.normalization",
+          "max_points": 2,
+          "criterion": "An explicit independent normalization/trace or equivalent consistency check."
+        },
+        {
+          "id": "checks.initial_condition",
+          "max_points": 2,
+          "criterion": "An explicit t=0 state/probability consistency check."
+        },
+        {
+          "id": "checks.decoupled_limit",
+          "max_points": 2,
+          "criterion": "An explicit J=0/decoupled consistency check covering the stated formulas."
+        },
+        {
+          "id": "checks.nontrivial_numerical_example",
+          "max_points": 2,
+          "criterion": "At least one correct nontrivial numerical example, clearly distinguished from proof of identities."
+        }
+      ]
+    }
+  ],
+  "grading_rules": [
+    "Read outputs only after parent confirms all five final responses frozen.",
+    "Grade final response only; do not credit drafts or intermediate stages for missing final material.",
+    "Accept equivalent exact formulas, projector bases, phase conventions and unordered partial-transpose eigenvalue listings when mathematically equivalent and Hamiltonian-consistent.",
+    "Record each partial-credit deduction with exact final-response evidence, omitted branch, invalid step or supporting counterexample.",
+    "Do not treat numeric substitution as proof of a universal analytic claim; do not use a model self-score as accuracy.",
+    "For truncated JSON, score mathematically readable raw final solver content rather than automatically assigning zero; report unusable envelope/truncation separately.",
+    "The fixed suballocation was agreed before any model output access. Do not change weights after seeing outputs.",
+    "Report raw section/criterion scores and total; the one-seed result does not establish general graduate-QM performance."
+  ],
+  "derivation_custody": "Reference derivation remains outside workflow-facing configuration. No evaluator feedback channel into the five live workflows."
+}

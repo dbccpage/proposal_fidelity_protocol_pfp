@@ -1,0 +1,45 @@
+{
+  "source_path": "code/rust/pfp_runtime/src/homology_holonomy.rs",
+  "source_sha256": "545a3c8bda7ce41b04671625f908b8e4161d7cca9e550eff9e34fa65ff7b04fe",
+  "extracted_lines": [
+    19,
+    31
+  ],
+  "function_sha256": "344584aa1b8fad39ea7993edcbeb2c44b1dcbe59928def7ce9b74367783fe188",
+  "probe_sha256": "169adfb0097c591dfd0234040fc52ba6c3623e106ab81ff278f9b39d47772494",
+  "limits": "Complete original function copied without changes; other homology module functions/dependencies are not compiled by this probe. Two signed edge terms only, no large allocation.",
+  "runs": [
+    {
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "overflow-checks=yes",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_boundary_probe.rs",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_boundary_yes.exe"
+      ],
+      "overflow_checks": "yes",
+      "compile_exit": 0,
+      "compile_output": "",
+      "exit_code": 0,
+      "output": "checked_boundary_panicked=true\n"
+    },
+    {
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "overflow-checks=no",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_boundary_probe.rs",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_boundary_no.exe"
+      ],
+      "overflow_checks": "no",
+      "compile_exit": 0,
+      "compile_output": "",
+      "exit_code": 0,
+      "output": "false_boundary_closed=true\n"
+    }
+  ]
+}

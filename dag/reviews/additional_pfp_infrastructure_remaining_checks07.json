@@ -1,0 +1,56 @@
+{
+  "python": "3.14.2",
+  "source_pins": {
+    "pfp/infrastructure/formal_matrix.py": "8e87cde7ee5476b14ff0e6cbd05485296a868ac4f257b55daf9ae4f40cadf76f",
+    "pfp/infrastructure/release_gate.py": "ec76978d1c84e586591d6e9126378b127a7f5a00f9cca909f277381561d470b9",
+    "pfp/infrastructure/sampling_frontier.py": "611394f80e5565762b96fe088160d395b9fda2913d3c5d88a1c6b08c1fba62be"
+  },
+  "method": "Fully read AST functions and synthetic data/callables, with independent finite combinatorial oracle. No production imports/providers/native/private data.",
+  "controls": [
+    {
+      "id": "PFPINFRA-P036",
+      "name": "nested_answer_field_survives_participant_view",
+      "observed": {
+        "case_id": "opaque",
+        "context": {
+          "expected": "SYNTHETIC_REFERENCE"
+        }
+      },
+      "result": "reproduced",
+      "limit": "Synthetic data only; demonstrates helper boundary, not actual leakage from a specific historical corpus."
+    },
+    {
+      "id": "PFPINFRA-P037",
+      "name": "host_parity_empty_success_is_satisfied",
+      "observed": {
+        "outcome": "SATISFIED",
+        "checked": 0,
+        "total": 0
+      },
+      "result": "reproduced",
+      "limit": "Synthetic runner; real overall gate remains blocked by Lean UNVERIFIABLE."
+    },
+    {
+      "id": "PFPINFRA-P038",
+      "name": "layer_exception_prevents_later_layer_checks",
+      "observed": [
+        "wire"
+      ],
+      "result": "reproduced",
+      "limit": "Synthetic layer callables; no corpus mutation or external subprocess."
+    },
+    {
+      "id": "PFPINFRA-P039",
+      "name": "coverage_estimator_matches_finite_without_replacement_count",
+      "observed": {
+        "parameter_triples": 240,
+        "n_range": [
+          1,
+          8
+        ]
+      },
+      "result": "reproduced",
+      "limit": "Finite combinatorial control; not proof of empirical sampling independence or model effectiveness."
+    }
+  ]
+}

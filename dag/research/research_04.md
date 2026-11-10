@@ -1,0 +1,29 @@
+# Research 04: typed composition and effect laws
+
+Status: **proposed_not_evaluated**. Three ideas, no paid calls, no seed solving, no private evaluator access. The JSON is the complete machine-readable report, including proposed signatures covering WF1–WF49 and the three ideas.
+
+The actual compiler checks pinned declarations, exact ordered port contracts and capability ceilings, then returns an **Unadmitted** candidate. It rejects shared producer outputs and lowers a single-consumer tree. Its five-field port equality includes colour, schema reference/digest and validator reference/digest. These checks establish neither operation semantics nor a QM checker. Callable composition separately depends on effects and residual accumulation; the systems audit documents a NaN counterexample in the current floating-point residual implementation.
+
+The distinction between wiring syntax and its interpretation follows the operadic architecture in [Spivak's wiring-diagram paper](https://arxiv.org/abs/1305.0297). Conditional transformation laws follow the approach of [Kammar and Plotkin's effect-dependent optimisations](https://denotational.co.uk/publications/kammar-plotkin-algebraic-foundations-for-effect-dependent-optimisations.pdf). Both primary papers were opened. The proposals below are adaptations, not literature-wide novelty claims.
+
+| Idea | Proposed mechanism | Decisive failure or control | Complete-execution conditional cap |
+|---|---|---|---|
+| R04-I01: context-indexed adapter diamonds | Bind task, assumptions, candidate, evidence scope and full port contracts; compare two declared representation routes through public preservation predicates. | Changed assumptions, missing branches or stale evidence must never pass. Two agreeing routes may still share a faulty parser. | 2 calls; 14,000 total input and 4,400 total output tokens; USD 0.046. |
+| R04-I02: law-carrying residual folds | Append-only events, exact integer cost, finite risk buckets and effect sets; discharge requires an artifact-bound independently checked event. | An unequal admitted reassociation or forged discharge falsifies the contract. Compare full traces, not only scalar risk. | 2 calls; 13,000 input and 4,200 output tokens; USD 0.044. |
+| R04-I03: typed order squares | Compare screen→rewrite and rewrite→screen from one frozen draft, with isolated branches and fresh final checks. | No matched-budget improvement, lost completeness, answer-bearing feedback or stale annotation acceptance defeats the proposed advantage. | 3 calls across both arms; 18,000 input and 5,400 output tokens; USD 0.055. |
+
+These figures assume input ≤ USD 0.000001/token, output including billable reasoning ≤ USD 0.000005/token, zero fixed fees, and a USD 0.01 reserve. They are conditional admission examples, not observed prices. All branches share one reservation ledger; unknown charges or unsupported bounds cause refusal. No retries or paid model judges are included. Campaign spending requires its own frozen aggregate authorization.
+
+## Finite enumeration recommendation
+
+Freeze a descriptor registry containing all 49 existing family IDs and new idea IDs, finite parameter choices, explicit bridges, resource bounds and refusal paths. The JSON defines the state types and each family's proposed external signature. Solver-like families have `RunContext → Outcome` envelopes preserving their original domain restrictions; campaigns, detector calibration, checker construction, transfer datasets, custody audits and claim receipts have distinct types. These envelopes are proposed adapters, not assertions about existing native ports.
+
+Enumerate ordered typed trees with **2–6 macro occurrences**, at least two distinct family IDs, an actual producer-consumer edge, at most **16 expanded nodes**, depth **8**, arity **4**, **4 paid calls**, **2 branches**, one repair per macro and two re-entry steps overall. Unroll every bounded repair; decrement shared fuel. The finite grammar is `T[Y,n] = op(T[X1,n1],...,T[Xk,nk])`, subject to matching registered contracts and `n = 1 + sum(ni)`. Dynamic programming over types, size, depth, fuel and cost gives a finite enumeration; any unfinished traversal must report partial coverage.
+
+Explicit bridges are necessary to carry an outcome into another run context, construct a translation/claim/rewrite task, attach detector annotations, or package run plans into campaigns. Every bridge preserves immutable seed/context/claim inventory and retains scope limitations. There is no automatic `CheckerCandidate → sound checker`, `GateReceipt → correct answer`, or `single seed → held-out dataset` conversion. LP, stabilizer, integer-sum and finite certificate presets do not become general QM checkers through packaging.
+
+Canonicalize occurrence names and serialization. Remove only genuinely pure administrative identities. Reassociate only the same ordered occurrences under admitted laws. Deduplicate schedule swaps only after an explicit noninterference and commutation justification preserving the selected observations. Preserve stochastic call multiplicity, prompt order, screening/rewriting order and different effect traces. Input-slot permutations are not free operations in the current planar compiler.
+
+For the paired order experiment, shared-prefix branching needs an external immutable snapshot executor and a shared ledger; native fan-out is unsupported. The two arm trees can be compiled separately, but that does not itself implement the coordinating executor.
+
+Track `descriptor_proposed`, `typed_candidate`, `compiled_unadmitted`, `runnable_public_only`, `evaluated_frozen_seed`, and rejection/unresolved states separately. Exhaustiveness is only relative to the frozen registry and finite grammar; it is never a claim that every arbitrary permutation composes. No enumeration, bridge implementation or benchmark execution was performed in this report.

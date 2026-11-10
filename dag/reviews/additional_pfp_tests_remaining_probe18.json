@@ -1,0 +1,41 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "sources": [
+    {
+      "path": "pfp/tests/test_pfp_clean_arch.py",
+      "sha256": "498c55d8f6e17e07ff7fad1675711e6084031ef916f676fbe69d611182148849"
+    },
+    {
+      "path": "pfp/tests/test_domain_layer_purity.py",
+      "sha256": "bd1e53d900ca4c9f8c61cf54e7510745fb2be59664f4884be89f00e248c37489"
+    }
+  ],
+  "alias_source": "from pfp import infrastructure\nfrom ... import ffi\n",
+  "alias_violations": {
+    "clean_arch": [],
+    "layer_purity": []
+  },
+  "direct_source": "from pfp.infrastructure import storage\n",
+  "direct_violations": {
+    "clean_arch": [
+      "domain/cohomology/direct.py:1 imports from pfp.infrastructure"
+    ],
+    "layer_purity": [
+      "domain\\cohomology\\direct.py:1 illegally imports infrastructure 'pfp.infrastructure'"
+    ]
+  },
+  "fixture_pins": [
+    {
+      "path": "dag/reviews/additional_pfp_tests_remaining_probe18_inputs/pfp/domain/cohomology/alias.py",
+      "sha256": "abe917a32c90715e772ff4bd16deb6240c50c224db0a8b25a0513576c5dae260"
+    },
+    {
+      "path": "dag/reviews/additional_pfp_tests_remaining_probe18_inputs/pfp/domain/cohomology/direct.py",
+      "sha256": "8aba99d727c0310916cb8c4557a210e162345fec93b172013ddb96e9fa4cf796"
+    }
+  ],
+  "limits": [
+    "Only two read-vetted local test classes executed; no scanned text imported.",
+    "All fixture writes confined to dedicated dag/reviews prefix, retained inertly; no original corpus scan, source edit or native execution."
+  ]
+}

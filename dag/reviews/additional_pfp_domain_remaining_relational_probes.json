@@ -1,0 +1,139 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/normal_forms/relational.py",
+      "sha256": "9238df7ef4d0d152831c16029afc319114f40ec320d2b5052dc680f2f678dab1",
+      "execution": "unchanged body"
+    },
+    {
+      "path": "pfp/domain/normal_forms/tower_forms.py",
+      "sha256": "933b2c69040761a2489257c8d8f7b7ec5106a220d5040b9e16ab057582649792",
+      "execution": "AST removed only pfp.domain.tower.parser import; parser-dependent function not invoked"
+    },
+    {
+      "path": "pfp/domain/normal_forms/relational_extensions.py",
+      "sha256": "a772b1d78e4827528fc0282f51d2c83bac661b1fafca2e3304afc5a59b0629d7",
+      "execution": "unchanged body"
+    },
+    {
+      "path": "pfp/domain/normal_forms/relational_advanced.py",
+      "sha256": "f5a21448c9fe8c326796d4a612efa6269c526775e1284c3de3ebc0ea12f880d1",
+      "execution": "unchanged body"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C064",
+      "rule": "5nf_projection_synthesis_requires_declared_join_dependency",
+      "status": "counterexample_observed",
+      "declared_keys": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "declared_join_dependencies": null,
+      "returned_projections": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "original_rows": 4,
+      "spurious_join_rows": 4,
+      "all_declared_keys_hold": true
+    },
+    {
+      "id": "PFPDOMAIN-C065",
+      "rule": "relational_heading_and_decomposition_coverage",
+      "status": "counterexample_observed",
+      "out_of_heading_determinant": "Z",
+      "heading": [
+        "A",
+        "B"
+      ],
+      "accepted_chase": true,
+      "single_projection": [
+        "A"
+      ],
+      "accepted_lossless": true
+    },
+    {
+      "id": "PFPDOMAIN-C066",
+      "rule": "mvd_chase_budget_is_not_nonimplication",
+      "status": "counterexample_observed",
+      "same_lossless_decomposition": [
+        "AB",
+        "BC"
+      ],
+      "declared_fd": "B -> C",
+      "budget_one_implied": false,
+      "budget_two_implied": true,
+      "fd_only_zero_budget_status": "BudgetUnknown"
+    },
+    {
+      "id": "PFPDOMAIN-C067",
+      "rule": "temporal_decomposition_attribute_preservation",
+      "status": "counterexample_observed",
+      "original_heading": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "candidate_keys": [
+        [
+          "A"
+        ],
+        [
+          "B"
+        ]
+      ],
+      "output_headings": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ]
+      ],
+      "dropped_attributes": [
+        "B"
+      ],
+      "limit": "Temporal key argument also unused; no actual intervals or application state mutated."
+    },
+    {
+      "id": "PFPDOMAIN-C068",
+      "rule": "minimal_cover_and_3nf_synthesis_finite_equivalence",
+      "status": "bounded_positive_controls_observed",
+      "theories": 64,
+      "heading": [
+        "A",
+        "B",
+        "C"
+      ],
+      "fd_pool": "six single-attribute nontrivial FDs",
+      "subsets_per_closure_comparison": 8,
+      "limit": "Cross-checks use reviewed closure/chase/projection owners and are not independent formal proof or all-arity enumeration."
+    }
+  ]
+}

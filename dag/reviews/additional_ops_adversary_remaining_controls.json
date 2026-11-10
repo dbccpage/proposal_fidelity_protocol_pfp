@@ -1,0 +1,559 @@
+{
+  "schema_version": 1,
+  "scope_manifest": "dag/reviews/additional_ops_adversary_remaining_scope.json",
+  "scope_sha256": "047118a48840275364d08a02023377a8c073ec43bda8fd75a5e92065ec6154eb",
+  "controls": [
+    {
+      "id": "OAC01",
+      "title": "Closed directed-cycle residual need not be a coboundary",
+      "status": "confirmed",
+      "method": "independent finite countermodel",
+      "result": {
+        "edges": [
+          "A->B",
+          "B->C",
+          "A->C"
+        ],
+        "residual": [
+          3,
+          3,
+          3
+        ],
+        "phi1": "9",
+        "gamma2": "0",
+        "native_class": "ClosedResidual",
+        "mapped_label": "COBOUNDARY_EXACT",
+        "contradiction": "b-a=3,c-b=3 imply c-a=6, but third edge requires 3"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/stage/domain/cochain/metrics_evaluator.py",
+          "sha256": "5218b2867f2f9ccbbf72db32f985c691330a34c5f657f5e6318d100882fe46ab",
+          "lines": [
+            28,
+            56
+          ]
+        },
+        {
+          "path": "ops/adversary/stage/domain/cochain/metrics_evaluator.py",
+          "sha256": "5218b2867f2f9ccbbf72db32f985c691330a34c5f657f5e6318d100882fe46ab",
+          "lines": [
+            81,
+            107
+          ]
+        },
+        {
+          "path": "ops/adversary/stage/domain/cochain/metrics_evaluator.py",
+          "sha256": "5218b2867f2f9ccbbf72db32f985c691330a34c5f657f5e6318d100882fe46ab",
+          "lines": [
+            173,
+            209
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC02",
+      "title": "Hermitian trace normalization does not admit a density matrix",
+      "status": "confirmed",
+      "method": "independent finite countermodel",
+      "result": {
+        "diagonal": [
+          2,
+          -1
+        ],
+        "trace": 1,
+        "negative_eigenvalue": -1,
+        "purity": 5,
+        "reported_entropy_bits": -2.0
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/stage/domain/quantum/density_matrix.py",
+          "sha256": "471d4c0741d11fd0c6191a26217c591287560bd9dcc401ef8aca68d9fb3cbcbb",
+          "lines": [
+            52,
+            65
+          ]
+        },
+        {
+          "path": "ops/adversary/stage/domain/quantum/density_matrix.py",
+          "sha256": "471d4c0741d11fd0c6191a26217c591287560bd9dcc401ef8aca68d9fb3cbcbb",
+          "lines": [
+            103,
+            121
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC03",
+      "title": "Licensing proposal checks positive mass rather than exact zero",
+      "status": "confirmed",
+      "method": "extracted pure predicate with synthetic declared witness; no kernel or authority",
+      "result": [
+        {
+          "phi_1": "-1.0",
+          "nonzero_other_residuals": true,
+          "proposal_admitted": true
+        },
+        {
+          "phi_1": "nan",
+          "nonzero_other_residuals": true,
+          "proposal_admitted": true
+        },
+        {
+          "phi_1": "0.0",
+          "nonzero_other_residuals": true,
+          "proposal_admitted": true
+        }
+      ],
+      "source_evidence": [
+        {
+          "path": "ops/adversary/domain/residual_algebra/licensing_boundary.py",
+          "sha256": "bce69104cdb313dc975be8041177b0fa031e7a3eca5f0ea8b49784ab8a8703ad",
+          "lines": [
+            125,
+            175
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC04",
+      "title": "Seat decoder calls an unsupported exact_object keyword",
+      "status": "confirmed",
+      "method": "extracted pure helper call and source call-site",
+      "result": "exact_object() got an unexpected keyword argument 'allow_missing'",
+      "source_evidence": [
+        {
+          "path": "ops/adversary/stage/domain/canonical.py",
+          "sha256": "cd6b10bd9af32e19cad31e7d97d8a367e2449a617e2e6d0f747acca7c06df6bd",
+          "lines": [
+            19,
+            29
+          ]
+        },
+        {
+          "path": "ops/adversary/stage/domain/topology.py",
+          "sha256": "faa778a12fb36a34525bfc221c25d218fe3360a8ac8cdcb17b683d1fc633a3c1",
+          "lines": [
+            80,
+            94
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC05",
+      "title": "Legacy tree encoding has distinct tree preimages",
+      "status": "confirmed",
+      "method": "independent finite countermodel",
+      "result": {
+        "tree1": {
+          "a": "bc"
+        },
+        "tree2": {
+          "ab": "c"
+        },
+        "encoded_hex": "616263",
+        "equal_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "cryptographic_collision": false
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/intelligence_digestion/corpora_scraper.py",
+          "sha256": "409d1c8a3deb6829b5c25a26a472577200ff76e12eea4ff5e62433742b892354",
+          "lines": [
+            44,
+            50
+          ]
+        },
+        {
+          "path": "ops/adversary/use_cases/intelligence_digestion/corpora_scraper.py",
+          "sha256": "409d1c8a3deb6829b5c25a26a472577200ff76e12eea4ff5e62433742b892354",
+          "lines": [
+            360,
+            385
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC06",
+      "title": "F0 textual matching can credit unrelated or negated claims",
+      "status": "confirmed",
+      "method": "extracted pure text-matching helpers",
+      "result": {
+        "empty_failed_host_finding_set": [
+          "unrelated defect"
+        ],
+        "negated_host_finding": "no overflow was observed",
+        "claim_credited": "overflow"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/teamwork.py",
+          "sha256": "ac372f724b2dee3194452af2dff8129bdfad7f20bd1dc11310786eb4462fe1ce",
+          "lines": [
+            2424,
+            2465
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC07",
+      "title": "Bundle configuration digest ignores objective and turns",
+      "status": "confirmed",
+      "method": "extracted pure configuration digest; no workflow replay",
+      "result": {
+        "different_payloads": true,
+        "same_config_digest": "ad943a7f14bba5c4d4f29d7cbc48c1ec3b159a325b5701354db823d3dd679b62"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/yardstick.py",
+          "sha256": "3e0c44a5512713035f571eb8177bb252260259f82c247d3185e72d0f44a6df11",
+          "lines": [
+            404,
+            419
+          ]
+        },
+        {
+          "path": "ops/adversary/use_cases/teamwork.py",
+          "sha256": "ac372f724b2dee3194452af2dff8129bdfad7f20bd1dc11310786eb4462fe1ce",
+          "lines": [
+            4305,
+            4362
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC08",
+      "title": "Reference blind cohort shallow copy shares nested mutations",
+      "status": "confirmed",
+      "method": "independent finite countermodel",
+      "result": {
+        "second_reviewer_sees": [
+          "first reviewer"
+        ]
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/teamwork.py",
+          "sha256": "ac372f724b2dee3194452af2dff8129bdfad7f20bd1dc11310786eb4462fe1ce",
+          "lines": [
+            4137,
+            4172
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC09",
+      "title": "Provider schema recursion alters literal const and enum values",
+      "status": "confirmed",
+      "method": "extracted pure schema projection; no API interaction",
+      "result": {
+        "original": {
+          "const": {
+            "minimum": 5,
+            "normal": 7
+          },
+          "enum": [
+            {
+              "pattern": "a"
+            }
+          ]
+        },
+        "projected": {
+          "const": {
+            "normal": 7
+          },
+          "enum": [
+            {}
+          ]
+        },
+        "local_full_schema_still_stronger": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/infrastructure/providers/anthropic_messages.py",
+          "sha256": "8e738dfd13da4c1f4a148ae88116108e2cc452739cc9f31b1e51a5b718285130",
+          "lines": [
+            24,
+            56
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC10",
+      "title": "Yardstick Trial decoder coerces false text to true and accepts negative costs",
+      "status": "confirmed",
+      "method": "extracted pure decoder; no stored trial input",
+      "result": {
+        "success": true,
+        "cost_usd": "-1",
+        "wall_seconds": -2.0,
+        "tokens": -3
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/yardstick.py",
+          "sha256": "3e0c44a5512713035f571eb8177bb252260259f82c247d3185e72d0f44a6df11",
+          "lines": [
+            75,
+            96
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC11",
+      "title": "Statistical arithmetic matches bounded independent controls",
+      "status": "confirmed",
+      "method": "extracted pure formula checks against exact finite tails; not trial efficacy",
+      "result": {
+        "wilson_cases": 66,
+        "mcnemar_cases": 36,
+        "limits": "descriptive Bernoulli/pairing assumptions remain external"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/yardstick.py",
+          "sha256": "3e0c44a5512713035f571eb8177bb252260259f82c247d3185e72d0f44a6df11",
+          "lines": [
+            230,
+            240
+          ]
+        },
+        {
+          "path": "ops/adversary/use_cases/yardstick.py",
+          "sha256": "3e0c44a5512713035f571eb8177bb252260259f82c247d3185e72d0f44a6df11",
+          "lines": [
+            290,
+            330
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC12",
+      "title": "Operand promotion admits infinite caller-supplied yield",
+      "status": "confirmed",
+      "method": "extracted pure threshold policy",
+      "result": {
+        "promoted": true,
+        "trial_yield": "inf",
+        "disposition": "ADMITTED_OPERAND",
+        "sample_or_checker_inputs": false
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/yardstick.py",
+          "sha256": "3e0c44a5512713035f571eb8177bb252260259f82c247d3185e72d0f44a6df11",
+          "lines": [
+            497,
+            516
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC13",
+      "title": "Research dispatch crash window retains resend-eligible PENDING state",
+      "status": "confirmed",
+      "method": "AST ordering plus independent crash-state model; native host not executed",
+      "result": {
+        "modeled_send_count_before_crash": 1,
+        "durable_state_at_send": "PENDING",
+        "same_occurrence_retry_eligible": true,
+        "stronger_completion_writeahead_line": 85
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/researcher/researcher_swarm.py",
+          "sha256": "eb7144c71bfafb187d3e1cfa979f8c0bd62739d6a8ac491c0e04c99486c435db",
+          "lines": [
+            195,
+            239
+          ]
+        },
+        {
+          "path": "ops/adversary/use_cases/providers/completion.py",
+          "sha256": "efd54722c9623220db5a76b18d30093f070ad4bc084dd08863740edfbd1c371b",
+          "lines": [
+            76,
+            90
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC14",
+      "title": "Markdown review mining ignores negative precedence and chronology",
+      "status": "confirmed",
+      "method": "independent exact branch transcription",
+      "result": {
+        "text": "Previously PASSED. Current release BLOCKED.",
+        "derived_status": "PASS"
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/intelligence_digestion/paper_review_miner.py",
+          "sha256": "c3be2c1d03ab173b9c8b1e95b75a5799d57283976f75939a39b0b2aad5e899fa",
+          "lines": [
+            183,
+            194
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC15",
+      "title": "Event mirror line counts cannot authenticate retained prefix",
+      "status": "confirmed",
+      "method": "independent finite countermodel",
+      "result": {
+        "same_newline_count": 1,
+        "different_prefix_bytes": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/infrastructure/researcher/run_custody_store.py",
+          "sha256": "c7606817c08e35447930204004ceb97311dbcc800227cb85816c6804c2896882",
+          "lines": [
+            85,
+            160
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC16",
+      "title": "Size and mtime native hash cache permits stale digest under preserved metadata",
+      "status": "confirmed",
+      "method": "independent finite countermodel",
+      "result": {
+        "same_cache_key": true,
+        "different_equal_length_bytes": true,
+        "requires_metadata_preserving_mutation": true
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/infrastructure/teamwork_native_gates.py",
+          "sha256": "cd6e9165b72817973fd47ddb3a6193cbaca67957b24357f31e6850abbd714982",
+          "lines": [
+            89,
+            96
+          ]
+        },
+        {
+          "path": "ops/adversary/infrastructure/teamwork_native_gates.py",
+          "sha256": "cd6e9165b72817973fd47ddb3a6193cbaca67957b24357f31e6850abbd714982",
+          "lines": [
+            344,
+            360
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC17",
+      "title": "Eager blind cohort can execute replies that merge then discards",
+      "status": "confirmed",
+      "method": "finite control-flow model; no executor or retained runner called",
+      "result": {
+        "dispatched": [
+          "r1",
+          "r2",
+          "r3"
+        ],
+        "after_first_reply_quorum_or_allowance_reached": true,
+        "retained_in_run": [
+          "r1"
+        ],
+        "lost_from_run": [
+          "r2",
+          "r3"
+        ]
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/use_cases/teamwork.py",
+          "sha256": "ac372f724b2dee3194452af2dff8129bdfad7f20bd1dc11310786eb4462fe1ce",
+          "lines": [
+            4217,
+            4293
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC18",
+      "title": "Request equality and hashed canonicalization disagree",
+      "status": "confirmed",
+      "method": "independent finite countermodel",
+      "result": {
+        "dict_equal": true,
+        "hash_inputs_differ": true,
+        "left_hash_input": [
+          [
+            "x",
+            "1"
+          ]
+        ],
+        "right_hash_input": [
+          [
+            "x",
+            "True"
+          ]
+        ]
+      },
+      "source_evidence": [
+        {
+          "path": "ops/adversary/domain/models.py",
+          "sha256": "56a60e64e0b01687e9c37fd4aafebe689038e893290cd2b034460bb0a6f3875a",
+          "lines": [
+            112,
+            124
+          ]
+        },
+        {
+          "path": "ops/adversary/domain/models.py",
+          "sha256": "56a60e64e0b01687e9c37fd4aafebe689038e893290cd2b034460bb0a6f3875a",
+          "lines": [
+            316,
+            336
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OAC19",
+      "title": "Whole Python population parses without importing modules",
+      "status": "confirmed",
+      "method": "whole-population static AST parse; no source-reading credit",
+      "result": {
+        "python_files": 304,
+        "syntax_errors": [],
+        "not_runtime_or_type_validation": true
+      },
+      "source_evidence": []
+    }
+  ],
+  "summary": {
+    "controls": 19,
+    "confirmed": 19,
+    "retained_runners_executed": 0,
+    "native_or_provider_calls": 0
+  },
+  "limits": [
+    "All inputs are synthetic/public source predicates. No repository packages imported.",
+    "Extracted pure predicates and independent finite models are distinguished; no broad test or end-to-end claim.",
+    "No private benchmark/credential/seed contents read. Only this prefix receives output."
+  ]
+}

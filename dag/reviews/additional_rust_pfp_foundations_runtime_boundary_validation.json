@@ -1,0 +1,116 @@
+{
+  "source_files": [
+    {
+      "path": "code/rust/pfp_runtime/src/research_evidence.rs",
+      "sha256": "1d6298cfa08577f1792bfe7a3009f2ba61ea07a47783b46053e66ba25c899c7c"
+    },
+    {
+      "path": "code/rust/pfp_runtime/src/synthesis_dag.rs",
+      "sha256": "1a7deedc731ccf757df5803669df415aedf2ac8a73540163dd64ab36e956bd0f"
+    },
+    {
+      "path": "code/rust/pfp_runtime/src/diff_parser.rs",
+      "sha256": "2cd4042cacd27cbe4725c06764175cbc4d116daa727712363ca1270b5ccc140f"
+    },
+    {
+      "path": "code/rust/pfp_runtime/src/lean_verify.rs",
+      "sha256": "00395fa443f8fccd631f9bb07b4639817bcf469801ab068ba3acdc2d351dff6c"
+    },
+    {
+      "path": "code/rust/pfp_runtime/src/jcs.rs",
+      "sha256": "902aa1cb4dd5392cceda5b3c73b5176fca39eb593cbd0a9f56b9803a629dba9d"
+    }
+  ],
+  "libraries": [
+    {
+      "path": "code/rust/target/debug/deps/libserde-065dc96d6ee672bf.rlib",
+      "sha256": "b5a0b71fdf86f00c4375641665bb4ddb6b163ac9e874fd9a5b12e144fde1feac"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libserde_json-0b8975ff4f3cbcfc.rlib",
+      "sha256": "c1052cf851745ff3b31c6648af3c61aadb6c6bb48c587b2623d09725757ac3f9"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libthiserror-6ce2fd6ad1e676a5.rlib",
+      "sha256": "695c32160f626dd5af1773cd4bfc1841c180a7e22b70f11f1bfa9a611dc88a8a"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libsha2-bbafeebb75850b50.rlib",
+      "sha256": "dcddb9221b2defd4ae43964a55b0abd46f1b73830022c72a05107a3bfcd863e7"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libhex-305ed8d2ac9fec7f.rlib",
+      "sha256": "bbaa2b4eb3c971409997679e96afdc374ac8d9a3a2dca1397c4b3cf2e5b85536"
+    },
+    {
+      "path": "code/rust/target/debug/deps/libryu-99d82d3016cb65b1.rlib",
+      "sha256": "610c42580906fc9ef05d0009fef844b021981df24bedae00b5697a714167c783"
+    }
+  ],
+  "probe_sha256": "660106856dba515cf915776292074099b7c9b31e15e3a24dd40142041d60424f",
+  "runs": [
+    {
+      "overflow_checks": "yes",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-Awarnings",
+        "-C",
+        "overflow-checks=yes",
+        "-L",
+        "dependency=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps",
+        "--extern",
+        "serde=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde-065dc96d6ee672bf.rlib",
+        "--extern",
+        "serde_json=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde_json-0b8975ff4f3cbcfc.rlib",
+        "--extern",
+        "thiserror=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libthiserror-6ce2fd6ad1e676a5.rlib",
+        "--extern",
+        "sha2=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libsha2-bbafeebb75850b50.rlib",
+        "--extern",
+        "hex=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libhex-305ed8d2ac9fec7f.rlib",
+        "--extern",
+        "ryu=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libryu-99d82d3016cb65b1.rlib",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_runtime_boundary_probe.rs",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_runtime_boundary_probe_yes.exe"
+      ],
+      "compile_exit": 0,
+      "compile_output": "",
+      "exit_code": 0,
+      "output": "research_manifest_omits_identity_and_verifier_accepts_inconsistent_receipt=true\nsynthesis_freezes_missing_dependency_without_oracle=true\ndiff_accepts_nonnumeric_hunk_position=[\"x\"]\ndiff_accepts_unsafe_binary_metadata=[\"x\"]\ndiff_accepts_header_only_second_section=[\"x\", \"y\"]\nlean_comment_boundary_hides_sorry=true\nlean_duplicate_declaration_overwrites_disallowed_axiom=true\njcs_raw=\"01\": jcs=Ok(\"1\"); strict=false\njcs_raw=\"1.\": jcs=Ok(\"1\"); strict=false\njcs_raw=\"1e01\": jcs=Ok(\"10\"); strict=true\njcs_raw=\"\\\\u000bnull\": jcs=Err(SyntaxError(\"Unexpected character: '\\u{b}'\")); strict=false\njcs_accepts_raw_newline_in_string=true\njcs_skips_integer_ceiling_beyond_i128=true\njcs_i64_min=Err(Any { .. })\njcs_public_serializer_keeps_unsorted_duplicate_keys=true\n\nthread 'main' (34840) panicked at /rustc/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/library\\core\\src\\num\\mod.rs:454:5:\nattempt to negate with overflow\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+    },
+    {
+      "overflow_checks": "no",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-Awarnings",
+        "-C",
+        "overflow-checks=no",
+        "-L",
+        "dependency=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps",
+        "--extern",
+        "serde=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde-065dc96d6ee672bf.rlib",
+        "--extern",
+        "serde_json=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libserde_json-0b8975ff4f3cbcfc.rlib",
+        "--extern",
+        "thiserror=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libthiserror-6ce2fd6ad1e676a5.rlib",
+        "--extern",
+        "sha2=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libsha2-bbafeebb75850b50.rlib",
+        "--extern",
+        "hex=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libhex-305ed8d2ac9fec7f.rlib",
+        "--extern",
+        "ryu=C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\target\\debug\\deps\\libryu-99d82d3016cb65b1.rlib",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_runtime_boundary_probe.rs",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_runtime_boundary_probe_no.exe"
+      ],
+      "compile_exit": 0,
+      "compile_output": "",
+      "exit_code": 0,
+      "output": "research_manifest_omits_identity_and_verifier_accepts_inconsistent_receipt=true\nsynthesis_freezes_missing_dependency_without_oracle=true\ndiff_accepts_nonnumeric_hunk_position=[\"x\"]\ndiff_accepts_unsafe_binary_metadata=[\"x\"]\ndiff_accepts_header_only_second_section=[\"x\", \"y\"]\nlean_comment_boundary_hides_sorry=true\nlean_duplicate_declaration_overwrites_disallowed_axiom=true\njcs_raw=\"01\": jcs=Ok(\"1\"); strict=false\njcs_raw=\"1.\": jcs=Ok(\"1\"); strict=false\njcs_raw=\"1e01\": jcs=Ok(\"10\"); strict=true\njcs_raw=\"\\\\u000bnull\": jcs=Err(SyntaxError(\"Unexpected character: '\\u{b}'\")); strict=false\njcs_accepts_raw_newline_in_string=true\njcs_skips_integer_ceiling_beyond_i128=true\njcs_i64_min=Ok(Ok(\"-9223372036854776000\"))\njcs_public_serializer_keeps_unsorted_duplicate_keys=true\n"
+    }
+  ],
+  "limits": "Complete original modules included unchanged. Only synthetic in-memory inputs; no patch application, filesystem source changes, Lean compiler, provider or full-crate test. serde_json comparison checks parser discrepancy only; no claim of complete RFC conformance testing."
+}

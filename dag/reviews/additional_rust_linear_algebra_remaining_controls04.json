@@ -1,0 +1,86 @@
+{
+  "status": "finite_controls_pass",
+  "controls": [
+    {
+      "id": "RLA-P13",
+      "rule": "Exact-field solve and inconsistency certificates against exhaustive finite-field solution sets",
+      "fields": [
+        2,
+        3
+      ],
+      "matrices": 97,
+      "systems": 793,
+      "consistent": 572,
+      "refusals": 221,
+      "limits": "Every2x2 matrix and right-hand side over F2/F3; particular-plus-kernel sets compared with exhaustive vector search. Independent model, not native execution or arbitrary-field proof."
+    },
+    {
+      "id": "RLA-P14",
+      "rule": "Empty-axis extraction and row-list shape loss",
+      "row_shape": [
+        2,
+        0
+      ],
+      "row_index": 99,
+      "column_shape": [
+        0,
+        2
+      ],
+      "column_index": 99,
+      "both_source_loop_models_return": [],
+      "row_list_original_shape": [
+        0,
+        3
+      ],
+      "row_list_reconstructed_shape": [
+        0,
+        0
+      ],
+      "limits": "Tiny independent control-flow/shape model; no out-of-bounds native memory access is asserted."
+    },
+    {
+      "id": "RLA-P15",
+      "rule": "Narrowing unreduced rational checks raw pair instead of mathematical representability",
+      "raw": [
+        9223372036854775808,
+        2
+      ],
+      "reduced": [
+        4611686018427387904,
+        1
+      ],
+      "raw_pair_fits_i64": false,
+      "reduced_pair_fits_i64": true,
+      "limits": "Exact arithmetic plus source/dependency inspection. Canonical nonzero-denominator inputs avoid this mismatch. No native panic or conversion was executed."
+    }
+  ],
+  "dependency_evidence": {
+    "path": "C:\\Users\\a343o\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\num-rational-0.4.2\\src\\lib.rs",
+    "sha256": "6ce781e573521fb81f5ca47c1e6dab64e4eafc7f7d8e85094161fca5bb39c015",
+    "reviewed_lines": [
+      [
+        73,
+        111
+      ],
+      [
+        132,
+        166
+      ]
+    ],
+    "full_source_read": false,
+    "assessment": "Only the raw constructor, normal constructor and reduction preconditions were inspected. new_raw preserves arbitrary numerator/denominator; new/reduce explicitly panic on zero denominator.",
+    "lock_path": "code/rust/Cargo.lock",
+    "lock_sha256": "1b29852d26bbb5b4f02ceef14c045ee1e023560e10b1aa8b63f461aee0d5835b",
+    "lock_reviewed_lines": [
+      [
+        1632,
+        1640
+      ]
+    ],
+    "lock_full_source_read": false
+  },
+  "helper_sha256": "3d19c379f2ab43a43526fc9317d5218b0f996bc5418d4b7d5971e9866e7cae86",
+  "limits": [
+    "No original module, native tool, provider or private benchmark executed; external dependency excerpts earn no whole-file corpus credit."
+  ]
+}

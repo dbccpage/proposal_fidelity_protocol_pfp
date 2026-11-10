@@ -1,0 +1,389 @@
+{
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "python": "3.14.2",
+  "source_pins": {
+    "pfp/infrastructure/normal_forms/sn_forms.py": "efb85188f13fb43eac698efc12033b3290686ee925bb34e6313f66f79f391c1a",
+    "pfp/infrastructure/normal_forms/sn_dispatch.py": "cadfac5587d3ec7d262c0b305a5c889d93d41a1d04024ae1922474c0a6355ae1",
+    "pfp/infrastructure/yaml/normal_forms/nf.derivation.rpnf.yaml": "6e4495178b280680aa29396b4a8f1886cc2e7eb0c5ee7035249a3c978248f2da",
+    "pfp/infrastructure/yaml/normal_forms/nf.derivation.scnf.yaml": "2d862119edd6c7c6e70369f0afbf91191362463c27c8796868feaf890cdb682d",
+    "pfp/infrastructure/yaml/normal_forms/nf.derivation.pdnf.yaml": "282523816c22c7c4cdf9be3d2dc4961e02cb9b06edce9dc3495735bbb4c885a2",
+    "pfp/infrastructure/yaml/normal_forms/nf.epistemic.state.yaml": "50337425c7bb8f7d0fe9c106b828fe97fb2a9906e637bb3df61966658218afa6",
+    "pfp/infrastructure/yaml/normal_forms/nf.epistemic.pvnf.yaml": "bfa8ac2fb6fffdd5e714b854b0a391eb947b8b59ae2c3d64fdc0b661dc4290c8",
+    "pfp/infrastructure/normal_forms/contract_model.py": "1483b357e7e0ad243f87754b6ea8da17367b7f06ab3bd78009496c2956fae51e",
+    "pfp/infrastructure/normal_forms/validate_v1.py": "98c9962fbfd2e6b976e20b39b7f6e94cd10851e4e6b88baa24975f442cc5b4dd",
+    "pfp/infrastructure/normal_forms/migrate_contract.py": "64348c153b1f8a82d2398b1738fd9a58a5e2d9b8412ced7602b2f1774d29b397",
+    "pfp/infrastructure/yaml/normal_forms/_golden_nfs/normal_forms_schema.sql": "bedee2998193dce7eebe01896d72c85c5286e20f37553de3a53d55e64f946d01",
+    "pfp/infrastructure/normal_forms/bqnf_repair.py": "5efed2d92fa0b857a4f7ec9ba6c19896bc859267f4d28d5a9fecd88514896f07",
+    "pfp/infrastructure/normal_forms/relational_eval.py": "130be758fb2ec5ce166802d7ddbb36bfec2824b42ec164daf6583431122dca18"
+  },
+  "method": "Read-vetted AST function/class fragments, injected filesystem resolver reading only the five fully reviewed public normal-form declarations; standard YAML decoder. Full read-vetted golden SQL executed only in a disposable in-memory SQLite database. No production initializer/native/provider/private source access.",
+  "controls": [
+    {
+      "id": "PFPINFRA-P001",
+      "name": "rpnf_accepts_target_without_fold",
+      "input": {
+        "history": [],
+        "target_regime": {
+          "unreplayed": "synthetic"
+        }
+      },
+      "observed": {
+        "local_terminal": "AcceptCertifiedRegime",
+        "reason": "Regime certified by deterministic fold along admitted history.",
+        "history_length": 0,
+        "certified_regime": {
+          "unreplayed": "synthetic"
+        },
+        "contract_id": "nf.derivation.rpnf",
+        "canonical_terminal": "Preserve",
+        "terminal_route_map": {
+          "AcceptCertifiedRegime": "Preserve",
+          "RejectUncertifiedRegime": "Reject",
+          "RequireHistoryDeclaration": "Refuse",
+          "RejectPresentationAsChange": "Reject",
+          "Recompute": "Preserve"
+        },
+        "admitted": true
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P002",
+      "name": "rpnf_recompute_maps_to_admission",
+      "input": {
+        "history": [],
+        "genesis_quiescent": false,
+        "target_regime": "synthetic"
+      },
+      "observed": {
+        "local_terminal": "Recompute",
+        "reason": "Non-quiescent genesis produced nonempty regime without history; must recompute.",
+        "contract_id": "nf.derivation.rpnf",
+        "canonical_terminal": "Preserve",
+        "terminal_route_map": {
+          "AcceptCertifiedRegime": "Preserve",
+          "RejectUncertifiedRegime": "Reject",
+          "RequireHistoryDeclaration": "Refuse",
+          "RejectPresentationAsChange": "Reject",
+          "Recompute": "Preserve"
+        },
+        "admitted": true
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P003",
+      "name": "scnf_certifies_without_candidate_values",
+      "input": {
+        "measure_name": "synthetic measure"
+      },
+      "observed": {
+        "local_terminal": "AcceptUniqueMinimizer",
+        "reason": "Unique minimizer certified under declared measure.",
+        "measure": "synthetic measure",
+        "contract_id": "nf.derivation.scnf",
+        "canonical_terminal": "Preserve",
+        "terminal_route_map": {
+          "AcceptUniqueMinimizer": "Preserve",
+          "RecordTie": "Preserve",
+          "RequireMeasureDeclaration": "Refuse",
+          "RejectUnmeasuredMinimum": "Reject",
+          "Escalate": "Preserve"
+        },
+        "admitted": true
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P004",
+      "name": "scnf_obstruction_escalation_maps_to_admission",
+      "input": {
+        "measure_name": "synthetic",
+        "obstruction_present": true
+      },
+      "observed": {
+        "local_terminal": "Escalate",
+        "reason": "Contraction ratio k=None >= 1 or structural obstruction detected; escalated.",
+        "contract_id": "nf.derivation.scnf",
+        "canonical_terminal": "Preserve",
+        "terminal_route_map": {
+          "AcceptUniqueMinimizer": "Preserve",
+          "RecordTie": "Preserve",
+          "RequireMeasureDeclaration": "Refuse",
+          "RejectUnmeasuredMinimum": "Reject",
+          "Escalate": "Preserve"
+        },
+        "admitted": true
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P005",
+      "name": "pdnf_duplicates_and_outside_relation",
+      "input": {
+        "carrier": [
+          "a",
+          "a"
+        ],
+        "irreflexivity_declared": true,
+        "asserted_relation": [
+          [
+            "outside",
+            "other"
+          ]
+        ],
+        "witness_map": {
+          "outside,other": 1
+        }
+      },
+      "observed": {
+        "local_terminal": "AcceptWitnessedIrreflexive",
+        "reason": "Asserted differences are witnessed and irreflexive on declared carrier.",
+        "carrier_size": 2,
+        "asserted_pairs_count": 1,
+        "contract_id": "nf.derivation.pdnf",
+        "canonical_terminal": "Preserve",
+        "terminal_route_map": {
+          "AcceptWitnessedIrreflexive": "Preserve",
+          "RejectSelfDifference": "Reject",
+          "RejectUnwitnessedAssertion": "Reject",
+          "RequireCarrierDeclaration": "Refuse",
+          "RequireIrreflexivityDeclaration": "Refuse",
+          "Undetermined": "Abstain"
+        },
+        "admitted": true
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P006",
+      "name": "state_local_accept_with_missing_fields_but_canonical_escalates",
+      "input": {
+        "value": 42,
+        "authority_source": "synthetic assertion"
+      },
+      "observed": {
+        "local_terminal": "Accept",
+        "reason": "Epistemic state carries complete value, version, causal context, freshness, and authority.",
+        "authority_source": "synthetic assertion",
+        "contract_id": "nf.epistemic.state",
+        "canonical_terminal": "Escalate",
+        "terminal_route_map": {
+          "Accept": "Escalate",
+          "Stale": "Escalate",
+          "CausalGap": "Escalate",
+          "AuthorityUnknown": "BudgetUnknown",
+          "ConfidenceBelowThreshold": "Refuse",
+          "Refuse": "Refuse"
+        },
+        "admitted": false
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P007",
+      "name": "pvnf_trace_label_without_replay",
+      "input": {
+        "model_version": null,
+        "source_facts": [
+          "unbound assertion"
+        ],
+        "lineage_parent_ids": []
+      },
+      "observed": {
+        "local_terminal": "ProvenanceTraced",
+        "reason": "Complete provenance chain traced to source facts with deterministic replayability.",
+        "facts_count": 1,
+        "contract_id": "nf.epistemic.pvnf",
+        "canonical_terminal": "Preserve",
+        "terminal_route_map": {
+          "ProvenanceTraced": "Preserve",
+          "NonReplayableFlagged": "Escalate",
+          "AuthorityHallucinationViolation": "Reject",
+          "LineageLost": "Refuse",
+          "Refuse": "Refuse"
+        },
+        "admitted": true
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P008",
+      "name": "machine_checked_declaration_and_wrong_shapes_pass_metadata_validator",
+      "input": {
+        "schema_version": "smplx.nf.contract.v1",
+        "contract_kind": "not_a_contract_kind",
+        "identity": {
+          "id": "synthetic",
+          "name": "synthetic",
+          "short_name": "synthetic",
+          "version": "synthetic",
+          "family": "synthetic",
+          "theory_status": "synthetic",
+          "contract_status": "synthetic",
+          "verification_status": "machine_checked"
+        },
+        "classification": null,
+        "purpose": {
+          "excludes_anomaly": "synthetic",
+          "preserves_invariant": "synthetic",
+          "protected_skeleton": "synthetic",
+          "non_claims": "synthetic"
+        },
+        "declarations_required": null,
+        "validation_criteria": null,
+        "terminal_routes": [
+          "Preserve"
+        ],
+        "terminal_route_map": {},
+        "certification": {},
+        "authorization": {
+          "certified_implies_authorized": false
+        },
+        "evidence_required": [
+          "TODO: produce a proof"
+        ]
+      },
+      "observed_findings": [],
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P009",
+      "name": "migration_truthiness_and_omitted_evidence",
+      "input": {
+        "quadrilateral": {
+          "qualifies_as_true_normal_form": "false"
+        },
+        "proof_obligations": [
+          "retain proof"
+        ],
+        "references": [
+          "retain reference"
+        ],
+        "obstruction_substrate": {
+          "retain": "carrier"
+        }
+      },
+      "observed": {
+        "schema_version": "smplx.nf.contract.v1",
+        "contract_kind": "normal_form_contract",
+        "identity": {
+          "theory_status": "established",
+          "contract_status": "draft",
+          "verification_status": "absent"
+        },
+        "classification": {
+          "hierarchy_level": "normal_form",
+          "subject_kind": [
+            "relational_schema"
+          ],
+          "data_posture": "at_rest",
+          "mathematical_posture": "operational"
+        },
+        "purpose": {
+          "excludes_anomaly": "",
+          "preserves_invariant": "",
+          "protected_skeleton": [
+            "relational_schema"
+          ],
+          "erased_structure": [],
+          "non_claims": [
+            "does not imply external authorization"
+          ]
+        },
+        "declarations_required": [],
+        "evidence_required": [],
+        "validation_criteria": [],
+        "terminal_routes": [],
+        "terminal_route_map": {},
+        "certification": {
+          "certificate_required": false,
+          "certificate_kind": null,
+          "obstruction_class_required": false,
+          "loss_ledger_required": false,
+          "loss_ledger_trigger_id": null,
+          "verifier_required": false
+        },
+        "authorization": {
+          "authorized_by": null,
+          "certified_implies_authorized": false
+        },
+        "extensions": {
+          "quadrilateral": {
+            "qualifies_as_true_normal_form": "false"
+          }
+        }
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P010",
+      "name": "parity_keys_do_not_imply_join_dependency_positive_control",
+      "observed": {
+        "parity_counterexample_4tuple": 4,
+        "parity_joined": 8,
+        "parity_spurious_tuples": 4
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P011",
+      "name": "idle_cache_audit_accepts_corrupted_median",
+      "observed": {
+        "terminal": "Preserve",
+        "events_processed": 0,
+        "verified_consistent": true,
+        "cached_state": {
+          "synthetic": [
+            10.0,
+            1
+          ]
+        },
+        "cached_extrema": {
+          "synthetic": [
+            10.0,
+            10.0
+          ]
+        },
+        "cached_medians": {
+          "synthetic": 999999.0
+        },
+        "extrema_repairs": 0,
+        "fallback_recomputations": 0,
+        "quantile_repairs": 0,
+        "quantile_fallback_recomputations": 0
+      },
+      "actual_median": 10,
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P012",
+      "name": "storage_accepts_inconsistent_zero_gap_certificate_fields",
+      "observed": {
+        "certificate_id": "synthetic",
+        "primal_flow_hash": "unbound primal",
+        "dual_circulation_hash": "unbound dual",
+        "primal_obj_num": 1,
+        "primal_obj_den": 1,
+        "dual_obj_num": 2,
+        "dual_obj_den": 1,
+        "duality_gap_num": 0,
+        "duality_gap_den": 1,
+        "phi1_defect_num": 0,
+        "phi1_defect_den": 1,
+        "gamma2_defect_num": 0,
+        "gamma2_defect_den": 1,
+        "xi_tie_break_resolved": 0
+      },
+      "result": "reproduced",
+      "limit": "Raw declared SQL schema only; does not bypass a separate mathematical verifier or external totality-fence implementation."
+    },
+    {
+      "id": "PFPINFRA-P013",
+      "name": "inner_commit_defeats_outer_rollback",
+      "observed_rows_after_abort": 1,
+      "result": "reproduced"
+    }
+  ],
+  "limitations": "These finite controls refute the identified predicates/label implications. They do not establish universal runtime reachability, full test-suite behavior or a replacement mathematical checker."
+}

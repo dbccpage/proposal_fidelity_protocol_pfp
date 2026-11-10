@@ -1,5 +1,26 @@
 # Workflow results: what the first comparison shows
 
+The results below concern integer addition. The [frozen QM benchmark](Workflow-QM-Benchmark.md)
+has a separate [six-attempt live pilot](Workflow-QM-Pilot-2026-11-10.md), including
+one repair: none produced a complete solution. The earlier results below are not QM evidence.
+
+A subsequent [eight-run matrix-check comparison](Workflow-QM-Hamiltonian.md) separates
+exact intermediate acceptance from final-answer correctness. It also produced no
+complete solution; two checked attempts safely refused synthesis.
+
+Further [larger-model and output-allowance results](Workflow-QM-Hamiltonian.md#exploratory-larger-model-comparison)
+retain all attempts. The [five-section allocation control](Workflow-QM-Sections.md)
+scored 26/100 versus 62/100 for the longer direct answer and cost more. A subsequent
+DeepSeek direct answer scored 83/100 with remaining errors. Its [self-critique
+comparison](Workflow-QM-Controls.md#deepseek-direct-versus-self-critique) scored
+88/100, costing about 84% more and still containing false mathematics. These
+single-item observations do not establish a PFP workflow advantage.
+
+The [native polynomial-check comparison](Workflow-QM-Charpoly.md) adds a checked
+refusal and a truncated unchecked response. Both initial candidates failed format
+admission before native computation. The exact arithmetic software was tested,
+but this pilot did not produce a live intermediate certificate.
+
 **All five accepted paths produced the correct total. None saved total tokens,
 dollars or time over this plain seed.** Added structure bought explicit
 contracts, operation records and checks; it did not pay for itself on addition.

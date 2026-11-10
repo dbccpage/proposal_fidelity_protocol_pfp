@@ -1,0 +1,24 @@
+"""Manual notes for documentation bodies read before context checkpoint."""
+import json,pathlib
+p=pathlib.Path(__file__).with_name('additional_pfp_application_remaining_notes.json');n=json.loads(p.read_text())
+rows={
+0:('Complete threat model read: adversarial model, untrusted text and contract inventory.','Historical inventory count is not current enforcement or detector adequacy.'),
+1:('Complete braid tournament documentation read, separating deterministic offline examples and bounded live comparison.','Finite refutations are not target-gate equivalence or device performance; estimated cost is not vendor cap. No live replay.'),
+2:('All Stage A lock fields and four pins read.','Historical declared source custody, not fresh mathematical certification; pinned owners checked separately.'),
+3:('All Stage B lock fields and eight pins read, with 800 paired items and explicit call/token/cost bounds.','Historical approval and model identifiers do not authorize or establish fresh effectiveness.'),
+4:('Entire 393-line preregistration and amendments read. D0 forests force all cochains to be coboundaries; D1 cancellation and D2 disjoint cycles encode supplied defects. Per-family confidence bounds and held-out conditions state finite sampling claims. Stage B amendment restricts local extractor to avoid outcome rederivation.','Recomputing a shared defect relation is not independent prediction. Confidence claims depend on sampling/model assumptions; numerical implementation is not symbolic exact CP. Witness support tests are not full dual feasibility proofs. No provider run.'),
+5:('Complete exploratory local-detector README read; explicitly post-held-out and not certified.','Historical evidence does not establish current replay, whose red branch has the separately reproduced undefined-core defect.'),
+6:('Every local summary JSON value read, including all three detector/family tables and 4500-row totals.','Historical finite aggregate evidence only, not all raw trace bodies or independent detector adequacy.'),
+7:('Complete Stage A README read, including failure/refusal distinctions and finite certification scope.','4500 historical traces and confidence labels do not imply general detector completeness; refusal is not a red certificate.'),
+8:('Both SHA256SUMS records read.','Rows pin matches current file; summary pin differs. Population checks examine newline representations before assigning custody severity.'),
+10:('Every Stage A summary value read, including D0/D1/D2, per-family counts and non-good-detector controls.','LGGR field alone is not adequacy: 300 non-good-detector controls remain. Historical aggregate only.'),
+11:('Complete Stage B README read: DROPPED outcome, primary/OOf AUC, failed minimum events and schema-invalid responses.','Historical negative result, no provider replay. Text reports 358 max_tokens while listed breakdown sums to359; population check needed.'),
+13:('All Stage B summary fields read: 1600 calls, total cost9978961/10000000 and dropped detector outcome.','Historical estimated accounting and analysis, not current vendor invoice or fresh bootstrap reproduction.'),
+15:('Entire empirical gate play page read; finite examples and provider evidence limits stated.','External references not fetched; no current provider or physical effectiveness asserted.'),
+16:('Entire empirical observations page read, including 74-call historical outcomes, injection controls and raw-report digests.','Raw reports described in an operator workspace are not supplied here; digest alone cannot independently replay observations.'),
+26:('Both historical custody-test output lines read:34 passed.','No command/environment body or fresh execution; not mathematical proof.'),
+28:('Both historical metadata-test output lines read:44 passed.','No command/environment body or fresh execution; not mathematical proof.'),
+36:('Entire 2102-line architecture monograph read. Lines1361-1724 exactly transfer the already fully read reference.yaml body, with linewise equality and source pins in the read ledger; all surrounding caller text and differences read. Conditional operad/DPO laws, cocycles versus sections, density/partial trace/GKSL premises, rational primal-dual equality, integer relaxation gap and finite-termination delta are distinguished carefully. Embedded Pydantic validators enforce metadata custody; embedded Rust traits merely declare interfaces.','Proposed architecture and historical inventory do not establish current enforcement. Source owner paths are metadata; declarations and unsigned receipts do not prove confluence, PSD, naturality, physical selection, or provider calibration. Strict rational descent does not imply finite termination. Earlier read-or-parsed inventory does not receive semantic credit here.'),
+}
+for i,(a,l)in rows.items():n[str(i)]={'assessment':a,'limits':l}
+p.write_text(json.dumps(n,indent=2)+'\n')

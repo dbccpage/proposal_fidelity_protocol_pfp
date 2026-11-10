@@ -1,0 +1,267 @@
+{
+  "checks": [
+    {
+      "id": "g01_challenges_full_values",
+      "status": "pass",
+      "result": "Fresh bounded Python computation matches every stored challenge JSON value; no historical execution authentication or Lean replay implied."
+    },
+    {
+      "id": "fresh_token_collision",
+      "status": "counterexample_confirmed",
+      "input": {
+        "data": [
+          "w2",
+          "x"
+        ],
+        "forms": [
+          2
+        ],
+        "target": [
+          0,
+          1
+        ],
+        "delta": [
+          "NewDatum",
+          "NewInst(0,(0,2))"
+        ]
+      },
+      "fast": true,
+      "naive_error": "instance arguments out of range: (0, 2)",
+      "limit": "Public arbitrary-base API; controlled engine histories avoid this reserved-name collision."
+    },
+    {
+      "id": "raw_orbit_representatives",
+      "status": "counterexample_confirmed",
+      "selected_before": [
+        [
+          0,
+          1
+        ]
+      ],
+      "selected_after": [
+        [
+          0,
+          1
+        ]
+      ],
+      "transported_selected": [
+        [
+          0,
+          2
+        ]
+      ],
+      "limit": "Disproves raw representative-set equivariance wording; does not refute quotient-level invariance or orbit enumeration."
+    },
+    {
+      "id": "g02_independent_bitmask_domain",
+      "status": "pass",
+      "cases": 1014,
+      "n": [
+        0,
+        12
+      ],
+      "label_domain": "0..n+1 inclusive",
+      "limit": "Independent Python reconstruction checks finite counts and outside/equal-label branches, not the Rust binary or all-n Lean kernel proof."
+    },
+    {
+      "id": "g04_exhibited_history_counts",
+      "status": "pass",
+      "first_counts": [
+        2,
+        3,
+        2
+      ],
+      "procedure_comparisons": 21,
+      "limit": "Three concrete histories; written Lean countermodels not kernel-replayed."
+    },
+    {
+      "id": "g04_small_rectangle",
+      "status": "pass",
+      "results": [
+        {
+          "base": "EMPTY",
+          "nodes": 13,
+          "distinct_regimes": 6
+        },
+        {
+          "base": "L",
+          "nodes": 24,
+          "distinct_regimes": 12
+        },
+        {
+          "base": "F",
+          "nodes": 34,
+          "distinct_regimes": 15
+        }
+      ],
+      "limit": "Depth2,one form,three data,two fresh token names; not full historical length4 rectangle or original test suite."
+    },
+    {
+      "id": "g04_stake_name_cache_admission",
+      "status": "counterexample_confirmed",
+      "cached_apart": false,
+      "uncached_apart": true,
+      "limit": "Outside unique-name seven-stake discipline: new caller-defined stakes must bind names to immutable rules."
+    },
+    {
+      "id": "g04_invalid_suffix_domain",
+      "status": "domain_difference_confirmed",
+      "forward": 0,
+      "reverse_refuses": true,
+      "limit": "Enumerated histories are admitted throughout; equivalence must not be exported to arbitrary invalid-tail histories."
+    },
+    {
+      "id": "g04_retained_partition_arithmetic",
+      "status": "pass",
+      "stake_base_partitions": 21,
+      "limit": "Arithmetic consistency of stored aggregates only, not fresh historical receipt regeneration."
+    },
+    {
+      "id": "g12_legacy_boundary_wrong_dimension",
+      "status": "pass",
+      "method": "fresh independent stdlib arithmetic reconstruction; no Lean/native execution",
+      "cases": [
+        {
+          "cell": [
+            0,
+            1,
+            2
+          ],
+          "legacy_query_faces": [
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "signless_legacy_queries": [
+            0,
+            0,
+            0
+          ],
+          "correct_codimension_two_faces": [
+            {
+              "face": [
+                2
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            },
+            {
+              "face": [
+                1
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            },
+            {
+              "face": [
+                0
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            }
+          ]
+        },
+        {
+          "cell": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "legacy_query_faces": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              3
+            ],
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "signless_legacy_queries": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "correct_codimension_two_faces": [
+            {
+              "face": [
+                2,
+                3
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            },
+            {
+              "face": [
+                1,
+                3
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            },
+            {
+              "face": [
+                1,
+                2
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            },
+            {
+              "face": [
+                0,
+                3
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            },
+            {
+              "face": [
+                0,
+                2
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            },
+            {
+              "face": [
+                0,
+                1
+              ],
+              "signless_coefficient": 2,
+              "signed_coefficient": 0
+            }
+          ]
+        }
+      ],
+      "limit": "Two minimal cases expose signless false confidence in the first two legacy conjuncts; not a fresh kernel check or exhaustive audit of all cells."
+    }
+  ],
+  "native_builds": 0,
+  "provider_calls": 0,
+  "original_source_edits": 0,
+  "all_original_imports_previously_full_read": true
+}

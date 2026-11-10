@@ -1,0 +1,104 @@
+{
+  "status": "bounded_offline_controls_complete",
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    "code/genesis_alpha/sign_graph.py": "9488ed63c65089af3086dafa3e01a9af948fb5d3c88505103e376f0590f0b3e1",
+    "code/native_sign_graph.py": "dd21fe331fc95f1bf239fb2bf11c7c3dc60d6d96f01841da06a6d1d9bcc6c876",
+    "code/genesis_alpha/frontier_search.py": "d3529c2150f6b5d43be46a34c46bcde07ee2c082dc9f18ad522114977c417bc9",
+    "code/rust/src/bin/solve_sign_graph.rs": "809f83854d3188d0135a996ae61e33e972516f445dbc59f3ca8f5d7123e09b46",
+    "jupyter_notebooks/signed_exchange_and_frontier.ipynb": "dd11e37d0911c97aff21968c3b5d717602cbac2c0937de211b1751686d888363"
+  },
+  "exhaustive_graph_control": {
+    "graph_count": 4165,
+    "counts": {
+      "gauge": 199,
+      "odd_walk": 3966
+    },
+    "by_vertex_count": {
+      "0": {
+        "gauge": 1
+      },
+      "1": {
+        "gauge": 2,
+        "odd_walk": 2
+      },
+      "2": {
+        "gauge": 12,
+        "odd_walk": 52
+      },
+      "3": {
+        "gauge": 184,
+        "odd_walk": 3912
+      }
+    },
+    "scope": "All 0-3 vertex graphs with each unordered pair/loop absent, even, odd or both; no arbitrary-size completeness claim from enumeration."
+  },
+  "native_diagnostic_control": {
+    "expected_detail": "matrix must be symmetric",
+    "actual_exception": "native solve_sign_graph refused (exit 0): ",
+    "typed_refusal_preserved": true,
+    "detail_lost": true
+  },
+  "native_trust_boundary": {
+    "shape_valid_false_gauge_constructed": true,
+    "independent_python_verifier_rejects": true,
+    "actual_rust_backend_exercised": false,
+    "classification": "documented_native_trust_boundary_not_proof_of_backend_defect"
+  },
+  "demo_main_controls": [
+    {
+      "file": "demo1_signed_gauge.py",
+      "false_return_observed": true,
+      "main_block_returns_normally": true,
+      "scope": "Original final main block with controlled run_demo; full demo not mutated."
+    },
+    {
+      "file": "demo2_frontier_search.py",
+      "false_return_observed": true,
+      "main_block_returns_normally": true,
+      "scope": "Original final main block with controlled run_demo; full demo not mutated."
+    },
+    {
+      "file": "demo3_fock_obstruction.py",
+      "false_return_observed": true,
+      "main_block_returns_normally": true,
+      "scope": "Original final main block with controlled run_demo; full demo not mutated."
+    }
+  ],
+  "notebook_code_cells": [
+    {
+      "cell_index": 1,
+      "passed": true,
+      "stdout_matches_stored": true,
+      "stdout": "Loaded finite checkers from: code/genesis_alpha\n"
+    },
+    {
+      "cell_index": 3,
+      "passed": true,
+      "stdout_matches_stored": true,
+      "stdout": "Free swap: gauge bits {'left': 0, 'right': 1}\nAdded odd self-loop: verified odd closed walk ((1, 'left', 'left'),)\n"
+    },
+    {
+      "cell_index": 5,
+      "passed": true,
+      "stdout_matches_stored": true,
+      "stdout": "Positive path: exact sign gauge (0, 1, 0)\nPositive triangle: verified odd cycle ((0, '1', '0'), (1, '0', '2'), (2, '2', '1'))\n"
+    },
+    {
+      "cell_index": 7,
+      "passed": true,
+      "stdout_matches_stored": true,
+      "stdout": "First: UNKNOWN next untested index 3 receipt 7bd3521ede7c\nSecond: UNKNOWN next untested index 6 receipt 7d48a636cec5\nFinal: RESTRICTED_OBSTRUCTION covered 8 of 8 candidate gauges\nFinal odd cycle: ((0, '1', '0'), (1, '0', '2'), (2, '2', '1'))\n"
+    },
+    {
+      "cell_index": 9,
+      "passed": true,
+      "stdout_matches_stored": true,
+      "stdout": "Tampered resume refused: prior receipts do not form a verified UNKNOWN chain\n"
+    }
+  ],
+  "notebook_limit": "Ordinary Python namespace source replay and stdout equality; no Jupyter kernel/display/transport verification.",
+  "provider_calls": 0,
+  "network_calls": 0,
+  "private_answer_access": false
+}

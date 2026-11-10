@@ -1,0 +1,99 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/ddc/complex.py",
+      "sha256": "48f863a22512161b3cd0d5887ca01f2b128e251d19e9fa44607abeb87425801f"
+    },
+    {
+      "path": "pfp/domain/ddc/cochains.py",
+      "sha256": "15e25854ca13b582a75ed157ab91437e6f967708574fca8a72bd52ee64ab813f"
+    },
+    {
+      "path": "pfp/domain/ddc/coboundary.py",
+      "sha256": "e0e94b330ec8796fcbbd9d03542ca282e1f7d82d3335a62574a7a669a05e1659"
+    },
+    {
+      "path": "pfp/domain/ddc/triad.py",
+      "sha256": "094a170ecd8b609358d9d2ea3e13fa13d9f47932185eb830f729b3610c4724f2"
+    },
+    {
+      "path": "pfp/domain/ddc/dda.py",
+      "sha256": "849a27384cf0fc140a9a632f4d0c18e4a1bb51772ac88d4a54fb0f4288b0f627"
+    },
+    {
+      "path": "pfp/domain/value_objects/base.py",
+      "sha256": "4602c4fac9f97dbbb24c0e6a88153212d542a4102c5dba2f96a1bdddabe07ccd"
+    },
+    {
+      "path": "pfp/domain/value_objects/numerics.py",
+      "sha256": "06e0a4fe07dfea4acb67ab1b17988ce2114fbd220bebdad4ad1c99a041af64fd"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C043",
+      "rule": "fixed_triangle_coboundary_nilpotency",
+      "status": "bounded_positive_control_observed",
+      "vertex_bases_checked": 3,
+      "face_basis_evaluations": 3,
+      "nilpotent": true,
+      "limit": "One triangle carrier with a reversed boundary edge; source telescoping proves the conditional linear identity. No physical/semantic interpretation."
+    },
+    {
+      "id": "PFPDOMAIN-C044",
+      "rule": "d1_incidence_declared_edge_carrier",
+      "status": "counterexample_observed",
+      "declared_edge_keys": [
+        [
+          "v0",
+          "v1"
+        ],
+        [
+          "v1",
+          "v2"
+        ],
+        [
+          "v2",
+          "v0"
+        ]
+      ],
+      "incidence_keys_outside_edge_carrier": [
+        [
+          "v0",
+          "v2"
+        ]
+      ],
+      "direct_d1_handles_reverse_orientation": true
+    },
+    {
+      "id": "PFPDOMAIN-C045",
+      "rule": "lyapunov_total_energy_and_lambda_enforcement",
+      "status": "counterexample_observed",
+      "energy_sequence": [
+        "1",
+        "10",
+        "19"
+      ],
+      "letters": [
+        "C",
+        "E",
+        "Lambda"
+      ],
+      "is_strictly_monotonic": true,
+      "cascade_compute_fail_closed": true,
+      "limit": "Trace methods consume explicit synthetic passive triad values; no disabled functional implementation substituted or native calculator executed."
+    },
+    {
+      "id": "PFPDOMAIN-C046",
+      "rule": "exact_and_bounded_scalar_ingress",
+      "status": "counterexamples_observed",
+      "decimal_usd": "9007199254.740993",
+      "expected_micro_usd": 9007199254740993,
+      "actual_micro_usd": 9007199254740994,
+      "negative_tiny_usd_becomes_zero": true,
+      "temperature_nan_accepted": true,
+      "cochain_float_1e_minus12_becomes_zero": true
+    }
+  ]
+}

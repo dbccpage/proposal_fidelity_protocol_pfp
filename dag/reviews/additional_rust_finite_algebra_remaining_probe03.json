@@ -1,0 +1,98 @@
+{
+  "status": "complete_bounded_controls",
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "original_program_execution": false,
+  "sources": [
+    {
+      "path": "code/rust/core_number_theory/src/power_basis.rs",
+      "sha256": "6ee507c0195830579f5d7c819e03ea1b8364c743d07e35799e1d48b9bc13276f",
+      "lines": [
+        1,
+        163
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/power_series.rs",
+      "sha256": "7c8c4f185815295e119a89e842dade357eafc625cb84630f1e489b5fcfe35ac5",
+      "lines": [
+        1,
+        230
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/radical_sum.rs",
+      "sha256": "36b934ebfc6fc5594c120ce361e103056761abd8bafb78c589635ffcfea5e068",
+      "lines": [
+        1,
+        177
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/polynomial_map.rs",
+      "sha256": "b80cb1754515402a0a0f8657c1bfaa1bc5b62f3c360def3ff63a11643b78bf41",
+      "lines": [
+        1,
+        167
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/scalar.rs",
+      "sha256": "8b96c0bd84a8b6389cdf12d2f429be46a513483c176cb80a570e4a1dae2fa0c0",
+      "lines": [
+        1,
+        509
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/test_support.rs",
+      "sha256": "bd400420029c155e6158924a52057b956480261acacc718ee9d8c328115f8cf8",
+      "lines": [
+        1,
+        204
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "rule": "formal_series_inverse_exp_log",
+      "status": "bounded_identities_verified",
+      "tails": 81,
+      "order": 4
+    },
+    {
+      "rule": "formal_derivative_truncation",
+      "status": "bounded_identities_verified",
+      "pairs": 6561,
+      "valid_degrees": [
+        0,
+        3
+      ],
+      "top_degree_counterexample": "N4: derivative(x*x^4)=0 but derivative(x)*x^4+x*derivative(x^4)=5x^4",
+      "limits": "Owner explicitly documents this truncated derivative ceiling; not a finding."
+    },
+    {
+      "rule": "power_basis_dimension_product",
+      "status": "counterexample_found",
+      "word_bits": 64,
+      "dimension": 4294967296,
+      "mathematical_square": 18446744073709551616,
+      "wrapped_square": 0,
+      "limits": "Source dim*dim before BasicMatrix shape admission; only exact integer model, no allocation or Rust panic run."
+    },
+    {
+      "rule": "non_affinity_sample_ceiling",
+      "status": "observed",
+      "polynomial": "x^3",
+      "samples": [
+        -1,
+        1
+      ],
+      "derivative_values": [
+        3,
+        3
+      ],
+      "actual_nonaffine": true,
+      "limits": "Owner correctly describes equal samples as inconclusive, not proof of affinity."
+    }
+  ]
+}

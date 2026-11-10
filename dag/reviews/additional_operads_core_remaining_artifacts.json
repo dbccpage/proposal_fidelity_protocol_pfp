@@ -1,0 +1,590 @@
+{
+  "method": "Strict duplicate-key JSON decoding and bounded all-record predicates, stdlib only; no referenced source imports, native execution or network",
+  "summary": {
+    "skills": 237,
+    "agents": 12,
+    "anti_skills": 93,
+    "colours": {
+      "Audit": "Symmetry audit, red-team diagnostic, compliance report, or defect escalation",
+      "Code": "Rust/Python implementation, AST, solver module, or Pydantic schema",
+      "Contract": "Nomos governance contract, prime rule YAML, or API boundary specification",
+      "Diagram": "DIME figure, quick-start card, AST graph, or visualization artifact",
+      "Ledger": "Claim queue row, refusal store, hypothesis tree, or issue register entry",
+      "Paper": "OEARS paper package, LaTeX source, Pandoc AST, or claim ledger",
+      "Post": "Public math post, Glossa dialect draft, or forum cadence item",
+      "Proof": "Lean 4 formal proof term, math derivation, or step-truth assertion",
+      "Receipt": "Evidence receipt, CI report, GTLA swarm review, or SHA256 manifest",
+      "State": "Repository, session worktree, git ref, or execution environment state"
+    },
+    "identities": [
+      {
+        "skill_id": "id_audit",
+        "name": "Identity Audit Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Audit"
+        ],
+        "target_colour": "Audit",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_code",
+        "name": "Identity Code Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Code"
+        ],
+        "target_colour": "Code",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_contract",
+        "name": "Identity Contract Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Contract"
+        ],
+        "target_colour": "Contract",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_diagram",
+        "name": "Identity Diagram Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Diagram"
+        ],
+        "target_colour": "Diagram",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_ledger",
+        "name": "Identity Ledger Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Ledger"
+        ],
+        "target_colour": "Ledger",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_paper",
+        "name": "Identity Paper Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Paper"
+        ],
+        "target_colour": "Paper",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_post",
+        "name": "Identity Post Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Post"
+        ],
+        "target_colour": "Post",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_proof",
+        "name": "Identity Proof Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Proof"
+        ],
+        "target_colour": "Proof",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_receipt",
+        "name": "Identity Receipt Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "Receipt"
+        ],
+        "target_colour": "Receipt",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      },
+      {
+        "skill_id": "id_state",
+        "name": "Identity State Pass-Through",
+        "arity": 1,
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "equivariant": true,
+        "agent_scope": [
+          "all"
+        ],
+        "residual_effect": "residual_unknown"
+      }
+    ],
+    "checks": {
+      "unique_skill_ids": true,
+      "unique_agent_ids": true,
+      "unique_anti_skill_ids": true,
+      "projection_operation_ids_equal": true,
+      "signature_projection_all_present_fields_equal": true,
+      "all_arities_exact_and_match": true,
+      "all_nonnull_colours_in_vocabulary": true,
+      "identity_signatures_one_per_colour": true,
+      "role_slices_equal_catalog": true,
+      "role_licenses_exact_colour_subset": true,
+      "all_anti_candidates_unbound": true,
+      "bound_has_host_and_hex_digest": true,
+      "resource_shapes_nonnegative_exact_lengths": true,
+      "catalog_digest_recomputes": true,
+      "catalog_raw_bytes_canonical": true,
+      "agent_license_digests_recompute": true
+    },
+    "anti_missing_source_colours": [
+      "AP_MATH_001_global_groebner_50var_fallacy",
+      "AP_MATH_002_off_variety_separating_point",
+      "AP_MATH_003_tensor_factorization_on_indecomposable_chm",
+      "AP_MATH_004_tao_universal_conflation",
+      "AP_MATH_005_groebner_incomplete_truncation",
+      "AP_MATH_006_finite_matrix_promotion_fallacy",
+      "AP_MATH_007_tao_slice_non_membership_conflation",
+      "AP_MATH_008_bisection_explosion",
+      "AP_MATH_009_gauge_loss_fallacy",
+      "AP_MATH_010_premature_fiber_exclusion",
+      "AP_MATH_011_krawczyk_float_leak",
+      "AP_MATH_012_cusp_smoothness_fallacy",
+      "AP_MATH_013_discrete_bianchi_violation",
+      "AP_MATH_014_alternating_cochain_parity",
+      "AP_MATH_015_vector_basis_gap",
+      "AP_MATH_016_atlas_overlap_gauge_trap",
+      "AP_MATH_017_contractibility_hallucination",
+      "AP_MATH_018_realification_fallacy",
+      "AP_MATH_019_moment_degree_blowup",
+      "AP_MATH_020_fourth_root_fourier_confabulation",
+      "AP_MATH_021_monolithic_kernel_overflow",
+      "AP_MATH_022_premature_triumph_promotion"
+    ],
+    "anti_missing_target_colours": [
+      "AP_MATH_001_global_groebner_50var_fallacy",
+      "AP_MATH_002_off_variety_separating_point",
+      "AP_MATH_003_tensor_factorization_on_indecomposable_chm",
+      "AP_MATH_004_tao_universal_conflation",
+      "AP_MATH_005_groebner_incomplete_truncation",
+      "AP_MATH_006_finite_matrix_promotion_fallacy",
+      "AP_MATH_007_tao_slice_non_membership_conflation",
+      "AP_MATH_008_bisection_explosion",
+      "AP_MATH_009_gauge_loss_fallacy",
+      "AP_MATH_010_premature_fiber_exclusion",
+      "AP_MATH_011_krawczyk_float_leak",
+      "AP_MATH_012_cusp_smoothness_fallacy",
+      "AP_MATH_013_discrete_bianchi_violation",
+      "AP_MATH_014_alternating_cochain_parity",
+      "AP_MATH_015_vector_basis_gap",
+      "AP_MATH_016_atlas_overlap_gauge_trap",
+      "AP_MATH_017_contractibility_hallucination",
+      "AP_MATH_018_realification_fallacy",
+      "AP_MATH_019_moment_degree_blowup",
+      "AP_MATH_020_fourth_root_fourier_confabulation",
+      "AP_MATH_021_monolithic_kernel_overflow",
+      "AP_MATH_022_premature_triumph_promotion"
+    ],
+    "anti_summary_declared": {
+      "anti_skills": 93,
+      "typed": 71,
+      "reciprocal_pairs": 90,
+      "one_sided_pairs": 3,
+      "unresolved_duals": 0
+    },
+    "anti_pairing": {
+      "\"reciprocal\"": 90,
+      "\"one_sided\"": 3
+    },
+    "anti_detection_signature": {
+      "false": 26,
+      "true": 67
+    },
+    "skill_residuals": {
+      "\"neutral\"": 23,
+      "\"unknown\"": 206,
+      "\"contractive\"": 1,
+      "\"ExactRationalCertificate\"": 1,
+      "\"diagnostic\"": 5,
+      "\"exact\"": 1
+    },
+    "executor_states": {
+      "BOUND": 30,
+      "UNBOUND": 207
+    },
+    "bound_executors": [
+      {
+        "skill_id": "adversarial-receipt-audit",
+        "host_executor_id": "op_inventory:adversarial-receipt-audit",
+        "implementation_digest": "69c51bc63f789432b24238ce077291e5a15811e38982b9981adf10c395128533",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "auto-anti-pattern-lint",
+        "host_executor_id": "script:operads/skills/auto-anti-pattern-lint/scripts/anti_pattern_lint.py",
+        "implementation_digest": "2d308c29a81309c6d1e47890f990d58df18c8629bacf61cc8256ebc73351ecec",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "auto-code-anti-pattern-hunter",
+        "host_executor_id": "script:operads/skills/auto-code-anti-pattern-hunter/scripts/hunt_antipatterns.py",
+        "implementation_digest": "4921b5576391f2802b04978328f450763adfb96bc1e429c4ebe6d0aa4455186f",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "auto-learn",
+        "host_executor_id": "script:operads/skills/auto-learn/scripts/auto_learn.py",
+        "implementation_digest": "7bdd562a42a8dce80e08b256794caab2061ab74d870b438f6e73a4b89e3dac82",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "auto-obstruction-hunter",
+        "host_executor_id": "script:operads/skills/auto-obstruction-hunter/scripts/ast_cochain_obstruction_scanner.py",
+        "implementation_digest": "50c31dc247dfbe50ca2f1dc1961a089484240dad50737f479d6743bd2115c64e",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "auto-oe-autop",
+        "host_executor_id": "script:operads/skills/auto-oe-autop/scripts/orchestrate_autop.py",
+        "implementation_digest": "8cdea620f8390804517a297ac2f7721ec5c98822c80842e333dcdc640f1e8d74",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "auto-review-agents",
+        "host_executor_id": "script:operads/skills/auto-review-agents/scripts/agents_audit.py",
+        "implementation_digest": "78783115cddcd5ba540bd2a01cfcd6f26fc9e51d18947e0454e065427733e182",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "auto-review-skills",
+        "host_executor_id": "script:operads/skills/auto-review-skills/scripts/check_skill_usage.py",
+        "implementation_digest": "358e14e01e4e80cab2d7aa76ddaf42173b38ffe711a85241267bd32bda3b3801",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "core-prompt",
+        "host_executor_id": "script:operads/skills/core-prompt/scripts/core_prompt.py",
+        "implementation_digest": "ff43bfdc199f799a23927fda81f83460428f96d82ddcbde685c223101100a7d3",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "declared-vs-actual-gate",
+        "host_executor_id": "script:operads/skills/declared-vs-actual-gate/scripts/check_declared_programs.py",
+        "implementation_digest": "7edd818c786280e45c9be9ea4f4501c424b1c41f363f664af125364e6281985e",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "glossa-claim-hygiene-linter",
+        "host_executor_id": "op_inventory:glossa-claim-hygiene-linter",
+        "implementation_digest": "f174d1ffb7fb9f2a5932b0f21e7a20224c397cd4476974e8f2085db1f81676ff",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "governance-clean-arch",
+        "host_executor_id": "script:operads/skills/governance-clean-arch/scripts/check_inward_dependencies.py",
+        "implementation_digest": "69e9cf43f8c5a044936c9bcd862f003d0bc8074b1382e69ca8999f98a6c1deed",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "governance-exact-solvers",
+        "host_executor_id": "script:operads/skills/governance-exact-solvers/scripts/check_exact_solvers.py",
+        "implementation_digest": "4645132a5de206e9fe42785c2c88c27b9a743ea5dd3d372963018e606442c17e",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "governance-lean4-estate",
+        "host_executor_id": "script:operads/skills/governance-lean4-estate/scripts/check_lean4_estate.py",
+        "implementation_digest": "871fa847153fa9130c188078c5743279fd0eea397af47a1a86f395c305f2f9cb",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "governance-pedagogy",
+        "host_executor_id": "script:operads/skills/governance-pedagogy/scripts/check_lesson_folders.py",
+        "implementation_digest": "2de359e4133eb40faa6aa2461837d259c2a8d91e3f43fb6b0ef7f4ee0aa4929b",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "governance-pfp",
+        "host_executor_id": "script:operads/skills/governance-pfp/scripts/check_pfp.py",
+        "implementation_digest": "1a9f05a7ed7f480b280c2507078666c3edb948845317a75f2b97c35508d4040a",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "governance-test-isolation",
+        "host_executor_id": "op_inventory:governance-test-isolation",
+        "implementation_digest": "46749ac65b9b53fd5dac78ddeb26f601ca572273d641c7b27a0358197ad8b904",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "governance-wdp",
+        "host_executor_id": "script:operads/skills/governance-wdp/scripts/scan_genesis_lexicon.py",
+        "implementation_digest": "d007d3838d051581f82b04c50c9ca9c24c05edfb80d139649b0ab0f2ece4ba6b",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "meta-no-comments",
+        "host_executor_id": "op_inventory:meta-no-comments",
+        "implementation_digest": "9b68119ff7f7f955f29e3a43dd629bb6908e7a70bd20646f8af467b842ad3aeb",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-inspector",
+        "host_executor_id": "script:operads/skills/techne-code-inspector/scripts/check_exact_type_equality.py",
+        "implementation_digest": "56dc08f7ea56582369d3cd6d95cc5064e4924609f928a328f680f10972f2a172",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-lean4-anti-patterns",
+        "host_executor_id": "script:operads/skills/techne-code-lean4-anti-patterns/scripts/lean4_anti_pattern_auditor.py",
+        "implementation_digest": "006b41e8960a4b6c0371ed7239c708b4eb14096625db22e9793bd9ded62cda44",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-principal-architect",
+        "host_executor_id": "script:operads/skills/techne-code-principal-architect/scripts/check_clean_arch.py",
+        "implementation_digest": "e0d0f00b1072242e0cbe64e9316e9f2fb75b632508a89ad191fc631875aec5f2",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-python-anti-patterns",
+        "host_executor_id": "script:operads/skills/techne-code-python-anti-patterns/scripts/python_anti_pattern_auditor.py",
+        "implementation_digest": "7705c4d9f432595a2a67d830e1c5be16a8457c5ac1bfb624c1823f34a75cc9a0",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-python-code-reviewer",
+        "host_executor_id": "script:operads/skills/techne-code-python-code-reviewer/scripts/python_antipattern_scanner.py",
+        "implementation_digest": "edc0bc6da86fe4f76497500ce45c053132ffde83fd139de6b62a85813dd4db8d",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-python-principal-developer",
+        "host_executor_id": "script:operads/skills/techne-code-python-principal-developer/scripts/python_antipattern_scanner.py",
+        "implementation_digest": "680def6d35c761213aee1c90ab1036f8102532f5d543af6ffd9191a8c58f223d",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-python-tester",
+        "host_executor_id": "script:operads/skills/techne-code-python-tester/scripts/run_python_tests.py",
+        "implementation_digest": "049ad4ae1e680f0a440c24ab92426710da83125640692ba4416e0a7975e565f8",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-rust-anti-patterns",
+        "host_executor_id": "script:operads/skills/techne-code-rust-anti-patterns/scripts/rust_anti_pattern_auditor.py",
+        "implementation_digest": "f558d47c7b0e3ef505a30b200147e24312b4d19111303fbc4fcb3bb1ae0402a9",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-rust-code-reviewer",
+        "host_executor_id": "script:operads/skills/techne-code-rust-code-reviewer/scripts/rust_crate_reviewer.py",
+        "implementation_digest": "fc97a75e263445551397f4f2e8ff608cd32862356d6ab39c97e1c9fa5bbddf4c",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-code-sql-anti-patterns",
+        "host_executor_id": "script:operads/skills/techne-code-sql-anti-patterns/scripts/sql_anti_pattern_auditor.py",
+        "implementation_digest": "392e8c4d13dc94de4685013c7a746ef331f4938a562be69c539a73b01e9b37e6",
+        "state": "BOUND"
+      },
+      {
+        "skill_id": "techne-silent-failure-hunter",
+        "host_executor_id": "op_inventory:techne-silent-failure-hunter",
+        "implementation_digest": "9945047ccb1931ae89ecec486a02dbf9b6d97ba01b1195d3e136a2ebe322db45",
+        "state": "BOUND"
+      }
+    ],
+    "agent_counts": {
+      "auto-invariants-manager": 73,
+      "blackrod": 68,
+      "code-testing": 132,
+      "database": 35,
+      "devops-git": 35,
+      "dime-pedagogy": 18,
+      "frontend-designer": 65,
+      "math-prof": 65,
+      "paper-builder": 12,
+      "python-dev": 66,
+      "rust-dev": 52,
+      "thanatos": 164
+    },
+    "resource_count": 601,
+    "schemas": {
+      "skill_keys": [
+        [
+          "agent_scope",
+          "arity",
+          "authority_effect",
+          "declared_dependencies",
+          "declared_triggers",
+          "description",
+          "entrypoint_state",
+          "equivariant",
+          "executor",
+          "families",
+          "invocation",
+          "invocation_explicit",
+          "name",
+          "package_resources",
+          "residual_effect",
+          "skill_id",
+          "source_colours",
+          "source_digest",
+          "source_path",
+          "target_colour"
+        ]
+      ],
+      "agent_keys": [
+        [
+          "agent_id",
+          "authority_effect",
+          "description",
+          "entrypoint_state",
+          "license_digest",
+          "licensed_colour_ids",
+          "licensed_skill_ids",
+          "model",
+          "name",
+          "source_digest",
+          "source_path",
+          "standalone",
+          "tools"
+        ]
+      ],
+      "anti_keys": [
+        [
+          "anti_skill_id",
+          "authority_effect",
+          "detection_signature",
+          "detector",
+          "dual_path",
+          "dual_pattern",
+          "failure_class",
+          "language",
+          "name",
+          "pairing",
+          "residual_effect",
+          "source_colours",
+          "source_path",
+          "source_sha256",
+          "status",
+          "target_colour"
+        ]
+      ]
+    }
+  },
+  "file_reviews": [
+    {
+      "path": "operads/skill_operad/json/agent_capability_slices.json",
+      "sha256": "9783c5aa58eedde7805b934555e42c867e26ad762d053d5e1c8b75f96b7dec50",
+      "full_source_read": false,
+      "reviewed_lines": [],
+      "parsed_value_read": true,
+      "review_level": "bounded_automated_parsed_artifact_review",
+      "reading_method": "every JSON value parsed; representative complete row schemas inspected; all-record arithmetic/projection checks; no full raw text reading claimed",
+      "source_line_count": 900,
+      "automated_ranges": [
+        [
+          1,
+          900
+        ]
+      ],
+      "assessment": "All12 agents parsed and compared exactly to catalog colour/skill lists; every license recomputed by colour-subset predicate. sub_operad denotes nominal capability slice, with no composition/unit closure certificate. Complete arrays processed automatically; individual skill descriptions were not fully read here."
+    },
+    {
+      "path": "operads/skill_operad/json/anti_skill_catalog.v1.json",
+      "sha256": "85583af69054b68de9d505782d4d3ade9af00abbd4826efb121ddd869954672c",
+      "full_source_read": false,
+      "reviewed_lines": [],
+      "parsed_value_read": true,
+      "review_level": "bounded_automated_parsed_artifact_review",
+      "reading_method": "every JSON value parsed; representative complete row schemas inspected; all-record arithmetic/projection checks; no full raw text reading claimed",
+      "source_line_count": 1830,
+      "automated_ranges": [
+        [
+          1,
+          1830
+        ]
+      ],
+      "assessment": "All93 records processed for ID uniqueness, field shapes, nonnull colour membership, status/detector and pairing distributions:71 have typed colours;22 retain null source/target colours,90 reciprocal and3 one-sided links. Every record is Candidate/UNBOUND despite residual labels. Reciprocal dual-path metadata and regex-presence booleans do not establish a detector, complement law or validated negative selection. Referenced source prose not reopened by this helper."
+    },
+    {
+      "path": "operads/skill_operad/json/capability_catalog.v1.json",
+      "sha256": "948c52215a5e3533bddac2d110eff0adb318c6f503409f4065f4675442a9958a",
+      "full_source_read": false,
+      "reviewed_lines": [],
+      "parsed_value_read": true,
+      "review_level": "bounded_automated_parsed_artifact_review",
+      "reading_method": "every JSON value parsed; representative complete row schemas inspected; all-record arithmetic/projection checks; no full raw text reading claimed",
+      "source_line_count": 1,
+      "automated_ranges": [
+        [
+          1,
+          1
+        ]
+      ],
+      "assessment": "All237 skills,12 agents and every package-resource row processed. Role licenses equal exact nominal colour subsets; signatures/arity and BOUND shape guards checked. Resource hashes are declarations only here: external resource bytes and executable health not verified. Descriptions and named families do not certify capability efficacy or operad laws. Catalog and all12 license digests independently recompute under the declared newline/ASCII/domain-separated JSON profile; this does not authenticate external resource contents."
+    },
+    {
+      "path": "operads/skill_operad/json/operad_signature.json",
+      "sha256": "46e1f83285d48e15a91664554b3fff594d94da9af0e15d1d756d50f657893efc",
+      "full_source_read": false,
+      "reviewed_lines": [],
+      "parsed_value_read": true,
+      "review_level": "bounded_automated_parsed_artifact_review",
+      "reading_method": "every JSON value parsed; representative complete row schemas inspected; all-record arithmetic/projection checks; no full raw text reading claimed",
+      "source_line_count": 2925,
+      "automated_ranges": [
+        [
+          1,
+          2925
+        ]
+      ],
+      "assessment": "All237 operation projections compared field-for-field to capability catalog; ten unary identity signatures and ten-colour closure checked. IDs/residual/equivariant labels are not implementations or unit/equivariance proof. This is a generated signature inventory, not a complete operad with a composition table."
+    }
+  ],
+  "limits": [
+    "All catalog JSON parsed, not all free prose strings substantively read.",
+    "Cross-projection agreement is not independent semantic correctness or a mathematical proof.",
+    "No downstream source files, target papers, hidden benchmarks or model calls."
+  ]
+}

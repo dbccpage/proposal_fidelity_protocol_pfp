@@ -1,0 +1,9 @@
+# Rational panel adapter review
+
+The checker keeps exact rational counterexamples separate from universal proof and quantum-mechanical correctness. Guard failure, undefined guards, undefined admitted claims, resource exhaustion and finite successes retain distinct outcomes. Blind routing withholds solver artifacts from challenger requests; it establishes no provider-side or statistical independence.
+
+Five findings are now repaired and independently re-probed: nonencodable answer extraction, pre-validation hashing, incomplete execution-source pins, provider-metadata receipt poisoning and summary ingestion of stale-hash/negative-cost records. Original failure artifacts are preserved. Normal guarded synthetic runs settle82 microusd; malformed metadata now freezes an explicit failure after41 microusd, with the remaining99959 held and campaign blocked. These are fabricated accounting controls, not real spending.
+
+All seven requested files, three billing dependencies and the summary test file were substantively read, including full repair differences. Independent execution passed44 original algebra tests,51 repaired algebra tests, then80 unchanged tests across the three focused modules with all task reads redirected to a fabricated fixture. An initial combined run failed only at JUnit's local hostname lookup because the socket guard refused it; the successful rerun uses a synthetic hostname label and preserves network denial. No private files, keys, paid calls or implementation edits occurred. Parent broader-suite counts are not represented as independent reviewer execution.
+
+No actionable issue remains from these five bounded counterexamples. This is not a proof of defect absence, universal mathematical validity, provider isolation, live cost enforcement, or model performance. Source hashes and exact ranges are in the JSON; all validation artifacts retain their scope.

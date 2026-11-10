@@ -1,0 +1,54 @@
+{
+  "matrix_controls": {
+    "matrices": 1201,
+    "singular": 467,
+    "failures": [],
+    "domain": "625 integer2x2 matrices,512 binary3x3 matrices,64 seeded rational4x4 matrices; determinant by independent permutation sum."
+  },
+  "controls": {
+    "non_object": {
+      "exception": "AttributeError",
+      "message": "'NoneType' object has no attribute 'get'"
+    },
+    "above_dimension_bound": {
+      "dimension": 31,
+      "answer_kind": "SINGULAR",
+      "owner_verdict": [
+        [
+          true,
+          "Verified exact singular certificate: det=0, A*null_vector=0 with v != 0"
+        ],
+        [
+          true,
+          "Independent verification passed: singular rank 0 < 31"
+        ]
+      ],
+      "independent_kernel_valid": {
+        "valid": true,
+        "reason": "direct nonzero kernel witness"
+      },
+      "limits": "Mathematically valid singular witness beyond the TASK n<=30 contract."
+    },
+    "historic_scalar_spoof_now_rejected": {
+      "owner_verdict": [
+        [
+          false,
+          "Determinant mismatch: claimed 5, det(A) = 1"
+        ],
+        [
+          false,
+          "Determinant mismatch: solver=5, independent=1"
+        ]
+      ],
+      "independent": {
+        "valid": false,
+        "reason": "Leibniz determinant and exact product identities"
+      }
+    }
+  },
+  "null_vector_loop_assessment": "The r-=1 assignment does not alter Python for iteration. No invalid first-free-column null vector was reproduced: the earliest skipped column is zero below preceding pivots, so later skipped-row logic need not corrupt that particular vector. Do not promote this code smell to an unsupported mathematical failure.",
+  "limits": [
+    "Finite algebra checks do not establish a general implementation theorem.",
+    "Both judges share canonical-rational syntax but use different determinant calculations."
+  ]
+}

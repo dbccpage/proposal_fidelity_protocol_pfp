@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "source_pins": [
+    {
+      "path": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
+      "sha256": "46ea7b9b44bffdff538354a523474e487cf96812571988c0c0a7d3730aa32be8"
+    },
+    {
+      "path": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/exact_fock_gap.py",
+      "sha256": "8fc09a9ae7d74eadd890a7827f0f3c9b53cc77cab09c9c16c0efde31fe2c2d67"
+    },
+    {
+      "path": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/live_adversarial_demo.py",
+      "sha256": "12b4eab721eca39e2ad8a933ae5dc166908707f26b5747a1b8735dd8f42b2612"
+    },
+    {
+      "path": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+      "sha256": "c195e4d676c513f7a22690cc9b4a48084e9e21cde1f3c745e8dccb52df7139b3"
+    },
+    {
+      "path": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/rust/Cargo.toml",
+      "sha256": "51946192702a60c1cce884aeb66933d9f578fd82d33afdb819e12bcce4129b67"
+    }
+  ],
+  "probes": [
+    {
+      "id": "GRAPH-SOURCE-BINDING",
+      "manual_certificate_passes": true,
+      "same_certificate_changed_reports_passes": false,
+      "scope": "One exact rational primal/dual witness and one changed-source countercontrol."
+    },
+    {
+      "id": "EXACT-C3-GAP",
+      "result": {
+        "authority_effect": "None",
+        "scope": "rooted hopping sequences after ordered times are integrated out",
+        "total_3hop_paths": 192,
+        "positive_3hop_paths": 96,
+        "negative_3hop_paths": 96,
+        "target_absolute_weight_symbolic": "exp(-1)/384",
+        "target_lower": "99825438535083000620222109084897031/104199811425742637946218332815360000000",
+        "target_upper": "3122594362778744887436077703535391/3259427141372203728522958602240000000",
+        "zero_hop_lower": "444888763655018821711818549578297067160287740699565130642626888998219695254899929855416106512015241/1993853109588912344872817600141180858030579019964846452967544747753381547431903730073600000000000000",
+        "two_hop_lower": "444888763655018821711818549578297067160287740699565130642626888998219695254899929855416106512015241/63803299506845195035930163204517787456978528638875086494961431928108209517820919362355200000000000000",
+        "positive_three_hop_lower": "45240594461112932804123439361923013846880375489/28642226068667632799473686164327347613859840000000",
+        "four_or_more_hop_upper": "1/6144",
+        "gap_certified": true,
+        "physical_sign_problem_classification": false
+      },
+      "scope": "Fixed t=1,U=2,beta=1/4,mu=0 integrated sequence carrier; not general physical sign classification."
+    },
+    {
+      "id": "POSITIVITY-BETA-DOMAIN",
+      "cases": [
+        {
+          "supplied_beta": -1,
+          "response": {
+            "valid": true,
+            "status": "Positivity",
+            "reason": "Checked nonnegative weights in the declared carrier.",
+            "condition_checks": {
+              "positivity": true
+            },
+            "hallucination_detected": false,
+            "details": {}
+          }
+        },
+        {
+          "supplied_beta": "not-a-temperature",
+          "response": {
+            "valid": true,
+            "status": "Positivity",
+            "reason": "Checked nonnegative weights in the declared carrier.",
+            "condition_checks": {
+              "positivity": true
+            },
+            "hallucination_detected": false,
+            "details": {}
+          }
+        }
+      ],
+      "independent_calculation": "For zero diagonal energy and unit -H hopping on the triangle, a rooted three-hop term has weight beta^3/3!. At beta=-1 this is -1/6. A nonnegative-beta premise is therefore necessary for the worldline-positivity interpretation.",
+      "negative_beta_three_hop_term": "-1/6",
+      "scope": "The gate checks the off-diagonal matrix predicate and ignores beta. Any workflow interpreting that predicate as thermal worldline positivity must admit the parameter domain separately."
+    },
+    {
+      "id": "LIVE-REFUSAL-RELABELLED-AS-OBSTRUCTION",
+      "proposer_move": {
+        "move_type": "VERIFY_SIGN_FREE",
+        "representation": "determinant",
+        "route": "determinantal_positivity"
+      },
+      "gate_status": "Refused_MissingDeterminantHypotheses",
+      "gate_reason": "Supply U and explicit real symmetric spin matrices; attractive squaring also requires equal chemical potentials.",
+      "gate_admitted": false,
+      "terminal_state": "OpenSignObstruction",
+      "governor_verdict": "Adjudicated to OpenSignObstruction via Adversary Challenge",
+      "hallucination_label": true,
+      "scope": "A mock adversary challenge cannot turn missing host matrices into a checked sign obstruction. No model was called."
+    },
+    {
+      "id": "LIVE-PARTIAL-BOUT-LOSS",
+      "synthetic_query_calls": [
+        "fixture-proposer",
+        "fixture-adversary"
+      ],
+      "trace": [
+        {
+          "lattice_key": "c5_pentagon",
+          "u_val": 0,
+          "transport_error": "synthetic second-call failure"
+        }
+      ],
+      "receipt_status": "INCOMPLETE",
+      "total_trials": 0,
+      "first_response_persisted": false,
+      "artifacts": "dag/reviews/additional_paper_001_failed_bout_tzs3d9kr",
+      "scope": "On a second-call failure the first successful provider response is not retained. A cost/token/time benchmark needs per-call persistence and accounting."
+    },
+    {
+      "id": "NATIVE-DEPENDENCY-PATH",
+      "manifest": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/rust/Cargo.toml",
+      "declared_path": "../../../../../../../../engine/crates_rs/core_solvers",
+      "resolved_path": "C:\\Users\\a343o\\engine\\crates_rs\\core_solvers",
+      "resolved_path_exists": false,
+      "actual_repository_owner": "code/rust/core_solvers/Cargo.toml",
+      "scope": "Filesystem/path verification only; no Cargo build or dependency download."
+    }
+  ],
+  "limits": [
+    "Offline controls only; synthetic provider responses never left this process.",
+    "No credentials were resolved, no provider/native process ran, and no sealed QM answer was read.",
+    "All probe artifacts are separate from source package history."
+  ]
+}

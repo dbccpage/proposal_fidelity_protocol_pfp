@@ -1,0 +1,386 @@
+{
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "scope_sha256": "bd4e36d7bf874f066864c5c0ba879a608b7c6b46e48341f8fa95b32c56d93cfa",
+  "scope_count": 70,
+  "scope_bytes": 961791,
+  "status": "in_progress",
+  "full_source_read_count": 12,
+  "claims": [
+    {
+      "id": "ROUT-C001",
+      "claim": "The finite core admits a declared five-field regime and six-event grammar: Supply is value-inert, token re-admission designates, forms have positive arity, instances reference admitted forms/marks, and impositions add ordered persistent pairs. Replay is a Result-valued deterministic fold; certification checks exact presented-state equality with that replay.",
+      "evidence": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/regime.rs",
+          "sha256": "cd59448bba2ae1403c2c0838bf059d7fde1711e4a5e7d96d560cc8d768a3c1ed",
+          "lines": [
+            51,
+            114
+          ]
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/event.rs",
+          "sha256": "796fb27cab33f930fc8fda9aaf2e7cb790271bf310f45dc0f35cf95962842f6c",
+          "lines": [
+            18,
+            34
+          ]
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/admission.rs",
+          "sha256": "18934e9988e9427942295fb8b73d78100ee26d4ad745749355e239b3be2ce852",
+          "lines": [
+            25,
+            78
+          ]
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/imposition.rs",
+          "sha256": "718821a5078d53315030a00c3075209f7c9042031e8e86be7ca80278242d4f2b",
+          "lines": [
+            22,
+            31
+          ]
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/replay.rs",
+          "sha256": "7293aba928954adeb6a24356307fe4ac025fb6d1c8e27563c94333c99aab5e63",
+          "lines": [
+            24,
+            37
+          ]
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/certification.rs",
+          "sha256": "0650dc36252cbda64ebbe14e7d9f12c85fa3151674a9fdbb210684e3e64eb31c",
+          "lines": [
+            20,
+            27
+          ]
+        }
+      ],
+      "dependencies": [
+        "Valid admitted base regime; successful finite memory operations",
+        "Designation, positive arity and external imposition are chosen semantics",
+        "Existing compiler/runtime semantics, not executed in this review"
+      ],
+      "limitations": [
+        "These are source-defined objects, not a derivation from primitive cut or a unique foundational model",
+        "Replay determinism/append law follows by induction on the declared fold; existing test source is separate finite evidence and was not run",
+        "Certification does not establish authenticity, task truth, canonical equivalence or exhaustive search"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "ROUT-F001",
+      "severity": "high",
+      "title": "GateReceipt unit test has ownership and trait requirements unsatisfied by its types",
+      "finding": "lib.rs:287 maps a receipt to(receipt.fuel_after(),receipt.licensed()); both accessors consume self and GateReceipt is not Copy. The second access uses a moved value. assert_eq! on Result additionally requires GateError PartialEq and Debug, neither derived nor implemented in the scoped source. This is a source-established test-compilation obstruction, not an observed compiler run.",
+      "evidence": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/lib.rs",
+          "sha256": "a9f3ceb42008f2601b5ca6f4597f9ec9deb040e6d8b1f30cd04e5eecedfd8618",
+          "lines": [
+            242,
+            277
+          ]
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/lib.rs",
+          "sha256": "a9f3ceb42008f2601b5ca6f4597f9ec9deb040e6d8b1f30cd04e5eecedfd8618",
+          "lines": [
+            280,
+            296
+          ]
+        }
+      ],
+      "recommended_action": "Borrow receipt in read-only accessors or destructure it once, and compare error variants by matches or provide suitable traits. Run the actual test target after a separately authorized repair.",
+      "validation": "Entire lib.rs read plus rg of GateError/GateReceipt definitions and impls in scoped src; no native or Cargo execution."
+    }
+  ],
+  "validation": [],
+  "file_reviews": [
+    {
+      "path": "code/rust/core_ooutwire_primitives/Cargo.toml",
+      "sha256": "b69b662437adfa838aa4c1fd17481d8f44ecb622dcf2efa2dfa003676a1df76c",
+      "size_bytes": 1532,
+      "line_count": 54,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          54
+        ]
+      ],
+      "assessment": "Complete54-line Cargo manifest read: dependency-free library, three explicit bins and five external integration-test targets.",
+      "limitations": "Workspace version/license and Rust std remain external build inputs. autotests=false limits auto integration discovery; inline tests still compile. This manifest is not evidence the targets build/pass; no Cargo run.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/admission.rs",
+      "sha256": "18934e9988e9427942295fb8b73d78100ee26d4ad745749355e239b3be2ce852",
+      "size_bytes": 9261,
+      "line_count": 243,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          243
+        ]
+      ],
+      "assessment": "All243 admission lines read: six cases, argument/form/rule validation, idempotent sets, repeated token designation, tests and wrapper.",
+      "limitations": "Deterministic partial event algebra preserves basic invariants given a valid base; nullary forms refused by convention, arity unboundedusize and no resource guard. Publicstep accepts token admission without priorSupply; impositions may add unsatisfied obligations rather than enforce separation. No native replay.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/certification.rs",
+      "sha256": "0650dc36252cbda64ebbe14e7d9f12c85fa3151674a9fdbb210684e3e64eb31c",
+      "size_bytes": 6050,
+      "line_count": 168,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          168
+        ]
+      ],
+      "assessment": "All168-line replay certification implementation and tests read.",
+      "limitations": "Certifies exactly presented Regime equality against successful replay, not canonical equivalence, authentic history, exhaustive search or witness truth. Empty/supply-only histories can certify genesis by design; generic counter wrapper does not strengthen this relation.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/event.rs",
+      "sha256": "796fb27cab33f930fc8fda9aaf2e7cb790271bf310f45dc0f35cf95962842f6c",
+      "size_bytes": 8487,
+      "line_count": 232,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          232
+        ]
+      ],
+      "assessment": "Complete232-line Event enum, classifiers, display/error and tests read.",
+      "limitations": "Closed six-variant grammar and explicit lexical-scan limitation useful. Classification admission does not imply strict state change: duplicate instance/rule/token admissions are idempotent. Display is not unambiguous serialization/authentication; grammar excludes removal by design rather than theorem.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/imposition.rs",
+      "sha256": "718821a5078d53315030a00c3075209f7c9042031e8e86be7ca80278242d4f2b",
+      "size_bytes": 6501,
+      "line_count": 172,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          172
+        ]
+      ],
+      "assessment": "Complete172-line imposition body/tests read.",
+      "limitations": "Revalidates publicPair order/admitted membership beforepersistent set insertion and keeps requirement distinct from exhaustive obstruction. Does not prove requirement satisfiable or preserve separation automatically; repeated requirement is idempotent and currentrecord only.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/lib.rs",
+      "sha256": "a9f3ceb42008f2601b5ca6f4597f9ec9deb040e6d8b1f30cd04e5eecedfd8618",
+      "size_bytes": 12347,
+      "line_count": 324,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          324
+        ]
+      ],
+      "assessment": "Full324-line facade read: all exports, explicit reading/nonfoundational fence, bounded-counter wrapper and GateReceipt implementation/tests.",
+      "limitations": "Finite budget/license gate is only a local value computation; cloned/copy caller inputs need actual transition ownership. Test line287 consumes receipt twice and Result equality requires missing GateError traits. BoundaryRecord proves1<=n<=cap for its own private fields, not any exported module invariant; mutation comments are not execution receipts.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/mark.rs",
+      "sha256": "a2e209b3f6c614121ec9575cc31a8bad865194bc6e8c7395ee6e1253b6ac5450",
+      "size_bytes": 8199,
+      "line_count": 242,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          242
+        ]
+      ],
+      "assessment": "Full242-line Mark/Pair, helper, bounded wrapper and tests read.",
+      "limitations": "Pair::new sorts distinct indices; publicfields permit forged diagonal/reversed/out-of-range pairs, so consumers must validate. Pair::of panics on diagonal through unreachable helper. Bounded wrapper is separate and does not validate marks or enforce finite admitted universe.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/regime.rs",
+      "sha256": "cd59448bba2ae1403c2c0838bf059d7fde1711e4a5e7d96d560cc8d768a3c1ed",
+      "size_bytes": 9246,
+      "line_count": 264,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          264
+        ]
+      ],
+      "assessment": "All264-line Regime/Inst and tests read.",
+      "limitations": "Five finite collections are externally read-only, crate-writable; genesis is an admitted empty record, not derivation from primitive cut. Inst has public unchecked fields. Exact destructuring guards added fields only in that test, not all observers; generic boundary count does not validate regime invariants or history.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/replay.rs",
+      "sha256": "7293aba928954adeb6a24356307fe4ac025fb6d1c8e27563c94333c99aab5e63",
+      "size_bytes": 6955,
+      "line_count": 197,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          197
+        ]
+      ],
+      "assessment": "Complete197-line replay fold and four semantic test bodies read.",
+      "limitations": "Result-valued leftfold propagates first AdmissionError and supports empty/append/determinism laws under valid-base semantics. Those laws follow structurally/inductively, whereas source tests are finite witnesses not run here. No uniqueness/freshness/history authenticity follows from equality.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/retention.rs",
+      "sha256": "e9db1b6860ae156c3194c7121c266158b7424249cdeeb6ad5de326a3882f931f",
+      "size_bytes": 6449,
+      "line_count": 183,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          183
+        ]
+      ],
+      "assessment": "Full183-line retention helpers and tests read.",
+      "limitations": "History is mutableVec<Event>, not append-only authenticated provenance. mentioned/supplied/admitted are syntactic event projections into sets, not validated-history outcomes; order/count information intentionally lost. Bounded wrapper and test counts do not establish custody.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/supply.rs",
+      "sha256": "685c35a17613273b7e34d87571f8d83eb2c31883f8b7e25aac859fce1a1ab52a",
+      "size_bytes": 6819,
+      "line_count": 184,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          184
+        ]
+      ],
+      "assessment": "Full184-line supply implementation, reached-state/supply-history tests and boundary wrapper read.",
+      "limitations": "Body clones regime and ignores token, so value-level inertia follows under successful allocation. Signature alone permits other behavior; finite examples do not prove all worlds or derivation. No supply-before-admission requirement enforced by step; template wrapper is unrelated.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    },
+    {
+      "path": "code/rust/core_ooutwire_primitives/src/token.rs",
+      "sha256": "84fc906c5e71062c8299de396455c1520dc0f042c7f1acb05603630a1564ffe4",
+      "size_bytes": 5113,
+      "line_count": 148,
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          148
+        ]
+      ],
+      "assessment": "Complete148-line token carrier and presentation-log implementation/tests read.",
+      "limitations": "Token identity remains public metatheoreticString; designation convention is admitted, not forced. Checked counter update with private BTreeSet preserves distinct<=presentations; cloning/allocation can fail outside typed error. canonical text count is not structural canonicalization, and structural-token erasure depends on later owner.",
+      "review_level": "full_body_semantic",
+      "read_method": "complete numbered text",
+      "template_transfers": []
+    }
+  ],
+  "remaining_work": [
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/cochain_presentation.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/covering_edge.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/derivative_bound.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/family_bound.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/gauge_coupling_bridge.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/main.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/matrix.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/mod.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/numeric.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/observer_carriers.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/projection_factor.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/quantum_lattice.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/rational.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/replica_hierarchy.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/retraction_geometry.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/transfer.rs",
+    "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/verify.rs",
+    "code/rust/core_ooutwire_primitives/src/automorphism.rs",
+    "code/rust/core_ooutwire_primitives/src/bin/genesis_replay.rs",
+    "code/rust/core_ooutwire_primitives/src/bin/verify_po000.rs",
+    "code/rust/core_ooutwire_primitives/src/boundary.rs",
+    "code/rust/core_ooutwire_primitives/src/bounds.rs",
+    "code/rust/core_ooutwire_primitives/src/budget.rs",
+    "code/rust/core_ooutwire_primitives/src/candidate.rs",
+    "code/rust/core_ooutwire_primitives/src/canonical.rs",
+    "code/rust/core_ooutwire_primitives/src/census.rs",
+    "code/rust/core_ooutwire_primitives/src/certificate.rs",
+    "code/rust/core_ooutwire_primitives/src/closure.rs",
+    "code/rust/core_ooutwire_primitives/src/context.rs",
+    "code/rust/core_ooutwire_primitives/src/engine.rs",
+    "code/rust/core_ooutwire_primitives/src/enumeration.rs",
+    "code/rust/core_ooutwire_primitives/src/export.rs",
+    "code/rust/core_ooutwire_primitives/src/hash.rs",
+    "code/rust/core_ooutwire_primitives/src/hidden.rs",
+    "code/rust/core_ooutwire_primitives/src/judgment.rs",
+    "code/rust/core_ooutwire_primitives/src/license.rs",
+    "code/rust/core_ooutwire_primitives/src/main.rs",
+    "code/rust/core_ooutwire_primitives/src/measure.rs",
+    "code/rust/core_ooutwire_primitives/src/menu.rs",
+    "code/rust/core_ooutwire_primitives/src/minima.rs",
+    "code/rust/core_ooutwire_primitives/src/observer.rs",
+    "code/rust/core_ooutwire_primitives/src/obstruction.rs",
+    "code/rust/core_ooutwire_primitives/src/outside.rs",
+    "code/rust/core_ooutwire_primitives/src/panel.rs",
+    "code/rust/core_ooutwire_primitives/src/profile.rs",
+    "code/rust/core_ooutwire_primitives/src/reading.rs",
+    "code/rust/core_ooutwire_primitives/src/refusal.rs",
+    "code/rust/core_ooutwire_primitives/src/renaming.rs",
+    "code/rust/core_ooutwire_primitives/src/repair.rs",
+    "code/rust/core_ooutwire_primitives/src/response.rs",
+    "code/rust/core_ooutwire_primitives/src/role.rs",
+    "code/rust/core_ooutwire_primitives/src/scope.rs",
+    "code/rust/core_ooutwire_primitives/src/separability.rs",
+    "code/rust/core_ooutwire_primitives/src/support.rs",
+    "code/rust/core_ooutwire_primitives/src/terminal.rs",
+    "code/rust/core_ooutwire_primitives/src/testkit.rs",
+    "code/rust/core_ooutwire_primitives/src/tree.rs",
+    "code/rust/core_ooutwire_primitives/src/world.rs"
+  ],
+  "execution_limits": [
+    "No original source edits or native/Cargo execution",
+    "No providers, downloads, private benchmark/hidden answer/seed access",
+    "Source metadata and read transport alone grant no semantic credit"
+  ]
+}

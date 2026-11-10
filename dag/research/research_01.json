@@ -1,0 +1,359 @@
+{
+  "agent_number": 1,
+  "focus": "Typed mathematical certificates, proof-obligation decomposition, and checked interfaces between representations",
+  "status": "proposed_not_evaluated",
+  "scope": {
+    "source_baseline": "8050c66900899771766f33e8f5fdd200b7dd9120 plus the in-progress dag audit",
+    "seed_access": "Read only dag/benchmark/seed_prompt.txt to classify required proof obligations. No seed solution, derived seed formula, answer-key material, or paid-model output is included in this report.",
+    "novelty_claim": "These are proposed adaptations to this repository and benchmark, not claims of literature-wide novelty. Proof-carrying artifacts, skeptical checking, case splitting, and compositional validation are established methods.",
+    "implementation_boundary": "The certificate schemas, claim-scope lattice, obligation compiler, and symbolic adapters below are proposals. Existing exact rational and univariate polynomial code does not certify arbitrary multivariate, transcendental, or quantum statements.",
+    "benchmark_isolation": "Every workflow sends the unchanged UTF-8 seed as its own message, with its exact original byte sequence preserved and hashed before and after request construction. Instructions and artifacts occupy separate messages. Never normalize or rewrite seed bytes. Host checks use only public input, frozen checker definitions, and model artifacts. Freeze all candidate outputs before separate trusted answer-key evaluation. Never feed private scores, labels, diagnostics, key-derived examples, or key-selected repair hints into any workflow stage."
+  },
+  "primary_sources": [
+    {
+      "title": "George C. Necula, Proof-Carrying Code, POPL 1997",
+      "url": "https://www.cs.tufts.edu/comp/150CMP/papers/necula97pcc.pdf",
+      "relevance": "Established separation between an untrusted producer supplying evidence and a consumer checking that evidence against a declared policy. Motivates binding each certificate to an exact proposition and explicit assumptions; does not establish semantic adequacy of our proposed mathematical policies."
+    },
+    {
+      "title": "Armand et al., A Modular Integration of SAT/SMT Solvers to Coq through Proof Witnesses, CPP 2011",
+      "url": "https://www-sop.inria.fr/marelle/Laurent.Thery/pub1.pdf",
+      "relevance": "Established skeptical use of external solvers via independently rechecked witnesses and modular certified checking. Motivates separate certificate kinds and explicit unsupported-theory residuals rather than one general correctness flag."
+    },
+    {
+      "title": "SMTCoq project documentation",
+      "url": "https://smtcoq.github.io/",
+      "relevance": "Documents proof-witness checking and small compositional certifying preprocessing transformations. Useful precedent for checked representation changes; this report does not claim SMTCoq is installed or supports the benchmark's analytic theories."
+    },
+    {
+      "title": "OpenRouter API: List all models and their properties",
+      "url": "https://openrouter.ai/docs/api/api-reference/models/list-all-models-and-their-properties",
+      "relevance": "Documents model pricing, supported parameters, and completion limits. Execution must fetch and pin current endpoint prices; the numerical costs here are conditional admission examples, not current model-price quotations."
+    }
+  ],
+  "repository_evidence": [
+    {
+      "path": "dag/README.md",
+      "lines": "3-11",
+      "observation": "Separates inventory, proof review, and executable evaluation; requires immutable seed, isolated key, bounded workflows, and aggregate USD 0.10 reservations."
+    },
+    {
+      "path": "dag/reviews/pfp_audit.json",
+      "lines": "7-12",
+      "observation": "PFP acceptance is relative to injected judges; envelope validity, judge agreement, and predicate adequacy are distinct."
+    },
+    {
+      "path": "pfp/use_cases/pfp_proposal.py",
+      "lines": "35-43,118-129",
+      "observation": "Host-authored feedback classes exist because raw judge messages may contain answers; judges are injected and their failures are recorded. A new repair stage must preserve that information boundary."
+    },
+    {
+      "path": "pfp/domain/exact/q.py",
+      "lines": "22-43,134-142,161-177",
+      "observation": "Q refuses floats and booleans, canonicalizes an explicit rational representation, and refuses inversion of zero. Supplies a bounded arithmetic substrate, not a symbolic analytic proof engine."
+    },
+    {
+      "path": "pfp/domain/exact/poly.py",
+      "lines": "13,52-66,103-127",
+      "observation": "Implements univariate rational polynomial division and Sturm root counting with a stated half-open interval convention. This supports some branch certificates only after symbolic scope and endpoint conventions are fixed."
+    },
+    {
+      "path": "pfp/domain/exact/wire.py",
+      "lines": "30-54,79-87",
+      "observation": "RationalWire uses bare integers for unit denominators, unlike q.py's p/q codec. RationalDualityGap computes equality of objective values; feasibility remains an additional obligation. New witnesses must version their codecs and retain premise obligations."
+    },
+    {
+      "path": "pfp/domain/exact/linalg.py",
+      "lines": "24-54",
+      "observation": "Exact matrix input is shape/type checked, and computational operations require an injected port; an unbound port is an infrastructure failure, not a mathematical refutation."
+    },
+    {
+      "path": "operads/domain/operad/operad.py",
+      "lines": "85-124",
+      "observation": "Partial composition checks arity and colour compatibility and records residual effects. Proposed proof-interface obligations can attach to these existing typed boundaries, but colour equality alone does not prove semantic compatibility."
+    },
+    {
+      "path": "eis/documentation/oeeis_residual_obligations.md",
+      "lines": "34-38,50-56",
+      "observation": "Finite detectors do not establish semantic completeness or observer independence; clean reports do not admit candidates. Proposed mutations are finite controls, not soundness proofs."
+    },
+    {
+      "path": "pciv/use_cases/research_selection.py",
+      "lines": "18-40,44-87",
+      "observation": "Experimental selection requires paired records, rejects incomplete/infrastructure states, checks provenance, and requires fresh confirmation. It is suitable for offline evaluation after freezing outputs, never for leaking private feedback into seed-solving stages."
+    },
+    {
+      "path": "workflows/wf11_dual_certificate_synthesis/README.md",
+      "lines": "5-18",
+      "observation": "Certificate synthesis and independent checking already exist as workflow ideas. The proposals below extend obligation closure, branch coverage, and representation transport rather than rebranding certificate synthesis."
+    }
+  ],
+  "common_budget_policy": {
+    "formula": "Reserve C_max = sum_s(I_s*p_in_s + O_s*p_out_s + F_s) + R before dispatch, with prices in USD/token. I_s includes the unchanged seed, schema, system instructions, and prior artifacts; O_s includes all billable reasoning and response tokens. Require C_max <= 0.10. R covers any explicitly priced additional fees; unknown charges or uncapped billable reasoning cause refusal.",
+    "conditional_example": "With each admitted endpoint at p_in <= 0.000001 and p_out <= 0.000005, F_s=0, R=0.01, all three specified token envelopes fit. These are admissibility thresholds, not asserted current prices or a selected model.",
+    "routing": "OpenRouter or direct Anthropic is admissible only after current endpoint prices, actual input token bounds, completion caps, and billable-token semantics are pinned. Disable automatic model fallback and retries. Timeouts retain the full reservation; unknown usage stops the run. A second planned stage is not an unbounded repair loop.",
+    "receipts": "Record endpoint/model/version, price snapshot, exact request hashes, maximum completion tokens, provider usage, actual charged cost, and remaining reservation. No paid calls were made for this report.",
+    "host_compute": "Host checking has explicit degree, AST-size, node-count, integer-bit-size, memory, and time bounds. Provider spend ceiling excludes already provisioned local CPU with zero incremental monetary charge; any metered host charge must also be reserved or execution refused."
+  },
+  "ideas": [
+    {
+      "id": "R01-I01",
+      "name": "Dependency-closed certificate shards with selective repair",
+      "systems": ["PFP", "OPERADS", "EIS", "PCIV"],
+      "mathematical_basis": {
+        "known_method": "Proof-carrying artifacts and modular skeptical checking: each admitted inference consumes propositions with explicit contexts and produces a proposition with a checked local witness.",
+        "proposed_adaptation": "Represent a mathematical response as a bounded DAG of certificate shards. Every shard carries statement-AST hash, assumption-context hash, branch scope, checker kind/version, witness, and dependency IDs. The host computes the backward closure of each requested conclusion and refuses a global certified label if any required shard is open, stale, ill-scoped, or merely numerical. Spend the second model call on the smallest deterministic failed dependency frontier, while preserving all unaffected shards.",
+        "composition_rule": "For a checked rule Gamma |- (P1 and ... and Pk) implies Q, Q can be closed only if all Pi are closed under compatible Gamma and branch scope. Residual(Q) includes every unclosed dependency and every explicit rule premise. Graph closure by itself is bookkeeping; the inference rule and semantic encoding still require a trusted checker or a residual marker."
+      },
+      "assumptions": [
+        "The public requested-conclusion inventory is separately fixed; the model may not delete requested sinks to improve apparent coverage.",
+        "A frozen finite inference-rule registry and parsers exist. New symbolic or analytic rules remain OPEN rather than inheriting a stronger label.",
+        "Exact checking is sound for its implemented fragment, and certificate/hash binding uses the intended serialization.",
+        "Initial pilot cap: at most 24 shards, 48 dependency edges, and 4 branch scopes; out-of-bound artifacts are incomplete rather than silently truncated."
+      ],
+      "hypothesis": "At matched total token and dollar budgets, dependency-closed shards plus one frontier repair reduce accepted-but-unsupported conclusions relative to a whole-answer critique, without a material loss of final answer completeness.",
+      "typed_inputs": [
+        "SeedBytes{utf8_bytes,sha256}; original seed bytes repeated unchanged in each model call",
+        "PublicObligationRegistry{requested_sink_ids,allowed_rule_ids,checker_versions,scope_schema}",
+        "BudgetReservation{max_input_tokens_total:14000,max_output_tokens_total:4400,max_calls:2}"
+      ],
+      "typed_outputs": [
+        "ShardDAG{nodes:[id,statement_ast,context,branch,rule_id,dependencies,witness],sink_map}",
+        "HostClosureReceipt{closed,open,invalid,infrastructure_errors,dependency_paths,artifact_hash}",
+        "FinalResponse{answer_text,claim_to_shard_map,residual_obligations}; mathematical content is generated only in a future experiment"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Public-input binder and budget gate",
+          "instruction": "Hash seed bytes; preserve them as a separate unchanged message. Freeze requested sinks, inference registry, resource caps, and price metadata. Read no private evaluator material.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "propose",
+          "kind": "model",
+          "role": "Certificate-shard proposer",
+          "instruction": "Produce the requested derivation and bounded typed shard DAG. State every assumption, domain condition, and dependency. Supply witnesses only in the allowed kinds. Label unsupported analytic claims OPEN; never declare your own host verdict. Preserve all requested conclusion IDs.",
+          "depends_on": ["bind"],
+          "max_output_tokens": 3000
+        },
+        {
+          "id": "close",
+          "kind": "host",
+          "role": "Exact local checking and residual propagation",
+          "instruction": "Check schema, binding, acyclicity, contexts, local witnesses, and conclusion closure. Compute the first failed frontier in deterministic sink/ID order. Return only allowlisted public failure classes and artifact-local pointers, never private diagnostic text or expected answers.",
+          "depends_on": ["propose"],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "repair",
+          "kind": "model",
+          "role": "Bounded frontier repairer",
+          "instruction": "Patch only named failed shards and downstream prose references. Do not change immutable seed, requested sink inventory, registry, or untouched shard hashes. Provide explicit residuals if the frontier cannot be closed within the allowed rule set.",
+          "depends_on": ["close"],
+          "max_output_tokens": 1400
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Recheck, render, and freeze",
+          "instruction": "Recheck changed shards and their descendants; never accept stale receipts. Freeze final output and cost receipt. Separate exact identities, admitted theorem applications, numerical checks, and open obligations. Trusted private evaluation occurs only after freezing and cannot trigger another stage.",
+          "depends_on": ["repair"],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Two-call draft plus whole-answer self-critique with the same total output cap, model endpoint, immutable seed, and public checking budget.",
+        "ablations": ["Typed shards without dependency/context closure", "Full-answer rewrite instead of frontier repair", "Closure ledger without a second call"],
+        "evaluation": "Freeze paired configurations before runs. On public synthetic certificate fixtures, measure corrupted-parent propagation, missing-premise detection, and valid-control preservation. On separately scored final answers, record completeness, unsupported certification, aggregate cost, and abstention. PCIV selection/confirmation is an offline experiment step; no seed feedback returns to model calls."
+      },
+      "falsification": "Reject the claimed advantage if matched-budget final correctness does not improve, if completeness declines beyond the preregistered tolerance, or if any deliberately corrupted required parent still produces a closed requested sink. A common-mode checker bug is a falsification of the checker contract, not evidence against the underlying mathematics.",
+      "risks": [
+        "The model can omit a semantic premise even when its graph is syntactically complete; a host sink/rule inventory is necessary.",
+        "Token overhead can crowd out the derivation. Coverage must be measured alongside false-acceptance reduction.",
+        "A shared erroneous parser can validate both the claim and witness. Positive/negative controls do not prove parser adequacy.",
+        "Public host feedback may reveal mathematical structure; this is allowed only when derived from declared public predicates, never the answer key."
+      ],
+      "budget_formula": "C_max <= 14000*p_in + 4400*p_out + sum(F_s) + R, two calls and zero retries. At the conditional thresholds p_in=0.000001, p_out=0.000005, F_s=0, R=0.01, reserve USD 0.046. Refuse if actual tokenization or current prices exceed the reservation.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R01-I02",
+      "name": "Definedness certificates with exhaustive branch coverage",
+      "systems": ["PFP", "EIS", "OPERADS"],
+      "mathematical_basis": {
+        "known_method": "Partial-function definedness obligations, proof by cases, and exact Boolean/polynomial reasoning.",
+        "proposed_adaptation": "Make every division, logarithm, square root, inverse, and earliest-attainment assertion produce a typed domain obligation before it can contribute to a global answer. Require an explicit complement branch for any guarded formula. The host separately checks coverage, branch compatibility, and local definedness; it does not infer branch correctness from prose saying 'by continuity'.",
+        "obligations": "For public domain D and branch guards B_i, certify D implies OR_i B_i and pairwise disjointness, or provide overlap-agreement certificates. For expression e_i, certify D and B_i implies Defined(e_i). A limit-extension is a distinct witness kind and cannot be replaced by substitution into an undefined term.",
+        "bounded_checker_fragment": "Boolean partitions over at most 8 declared atoms can be enumerated exactly. Such enumeration proves propositional coverage for every valuation, not real feasibility. Algebraic implications require an independently checked witness; univariate rational cases may use Sturm certificates with explicit endpoints. Multivariate/transcendental implications remain residual unless an additional verified checker is supplied."
+      },
+      "assumptions": [
+        "A strict expression AST exposes every partial operator and rejects unsupported function syntax rather than treating it as total.",
+        "The public domain and variable sorts are fixed from the seed without adding answer-derived restrictions.",
+        "The pilot admits at most 8 domain atoms and 16 branches; more complex answers are reported incomplete.",
+        "Global answer correctness includes requested exceptional cases, not merely the generic branch."
+      ],
+      "hypothesis": "One-call derivation with mechanically extracted definedness obligations and explicit complement branches reduces exceptional-case and undefined-expression errors more efficiently than a generic 'check edge cases' instruction.",
+      "typed_inputs": [
+        "SeedBytes{utf8_bytes,sha256}",
+        "PartialOperatorRegistry{operator_id,sort_signature,domain_predicate,witness_kinds}",
+        "BranchPolicy{max_atoms:8,max_branches:16,coverage_required:true}",
+        "BudgetReservation{max_input_tokens_total:10000,max_output_tokens_total:4000,max_calls:1}"
+      ],
+      "typed_outputs": [
+        "BranchCertificate{public_domain,guard_asts,expression_asts,definedness_witnesses,coverage_witness,overlap_witnesses}",
+        "DomainReceipt{coverage_status,undefined_nodes,unsupported_obligations,branch_local_status}",
+        "FinalResponse{answer_text,branch_to_claim_map,residuals}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Seed binder and domain registry gate",
+          "instruction": "Preserve exact seed bytes in a separate message. Supply only operator semantics, schema, and public assumptions. Pin prices and the single-call reservation.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "derive",
+          "kind": "model",
+          "role": "Branch-aware derivation proposer",
+          "instruction": "Return the requested derivation with typed guards and definedness witnesses. For each partial operator, state its domain. Every excluded guard requires a complement branch or an explicit unresolved obligation. Distinguish substitution from a proved limiting extension. Separate existence of an optimum from a claim about the earliest attaining argument.",
+          "depends_on": ["bind"],
+          "max_output_tokens": 4000
+        },
+        {
+          "id": "check",
+          "kind": "host",
+          "role": "Coverage and definedness checker",
+          "instruction": "Extract partial operators from ASTs, check declared branches cover the public domain, and dispatch only supported exact witnesses. Flag missing or incompatible branches and unsupported implication proofs. Generate synthetic mutations of these public artifacts by dropping a complement, weakening a guard, or changing an endpoint; do not mutate the seed and do not use private benchmark labels.",
+          "depends_on": ["derive"],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Scoped output freezer",
+          "instruction": "Freeze answer, branch receipt, mutation-control results, and usage receipt. Certification labels describe only checked coverage and definedness. Private answer evaluation remains separate with no repair feedback.",
+          "depends_on": ["check"],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Single call with the same 4000-token cap and explicit natural-language edge-case instructions but no typed branch schema.",
+        "ablations": ["Branch list without host coverage check", "Coverage check without extracted partial-operator obligations", "Definedness checks without complement branches"],
+        "evaluation": "Use answer-independent synthetic fixtures with removable and non-removable singularities, empty attainment sets, constant functions, and overlapping branches. Measure missed undefined nodes, missing-domain regions, false rejection of valid branch encodings, final completeness, and per-run cost. The seed is one separately frozen evaluation target, not enough evidence for a general improvement claim."
+      },
+      "falsification": "A dropped required complement branch accepted as globally covered falsifies the coverage checker. No matched-budget improvement on exceptional-case error rate, or a completeness loss that cancels the gains, falsifies the workflow hypothesis. Passing Boolean coverage cannot count as verifying a real-arithmetic guard implication.",
+      "risks": [
+        "A generic symbolic simplifier may silently cancel a denominator and erase the original definedness requirement.",
+        "Atom explosion exceeds the finite partition cap; fail explicitly rather than prune cases without evidence.",
+        "Analytic continuations, extrema, and transcendental signs need more than rational arithmetic.",
+        "The model may place important formulas only in prose, bypassing AST checks; unlinked prose must remain unchecked."
+      ],
+      "budget_formula": "C_max <= 10000*p_in + 4000*p_out + F_1 + R, one call and zero retries. Conditional thresholds give USD 0.040 including the USD 0.01 reserve.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R01-I03",
+      "name": "Witnessed representation transport at proof interfaces",
+      "systems": ["OPERADS", "PFP", "EIS", "PCIV"],
+      "mathematical_basis": {
+        "known_method": "Compositional certifying transformations and preservation proofs between mathematical representations.",
+        "proposed_adaptation": "Require an explicit transport witness whenever a derivation changes coordinate convention, basis ordering, tensor-factor order, polynomial encoding, or exact-number codec. A second bounded model call produces only missing transport witnesses from the first candidate. A host checks a commuting relation between source and destination representations and binds every downstream claim to the verified convention context.",
+        "transport_rule": "For source object x, destination object y, and declared map T, check y=T(x), the map's admitted properties, and the theorem justifying transport of predicate P to P'. If a reversible change is claimed, also check an inverse witness. For finite rational matrix examples, check dimensions, exact equalities, and the required inverse or orthogonality identities. Predicate preservation is separate from equality of serialization hashes.",
+        "effect_rule": "Each operad edge consumes a ConventionContext hash and produces one; unproved convention changes produce residual obligations. Scope cannot strengthen from numeric spot-check to exact identity, from exact instance to universal parameter claim, or from representation equivalence to physical interpretation."
+      },
+      "assumptions": [
+        "Source objects and conventions must be bound to the public task, not merely to two mutually consistent model artifacts.",
+        "A finite transport registry is fixed in advance; the pilot accepts only explicit permutations, declared exact codec maps, and bounded rational matrix identities.",
+        "Any required complex, multivariate, or analytic transport without an implemented checker is reported open.",
+        "Different syntactic representations and two model calls do not imply independent errors."
+      ],
+      "hypothesis": "At matched two-call cost, transport witnesses detect convention drift and invalid claim reuse more reliably than asking a second model pass to judge whether the answer looks consistent.",
+      "typed_inputs": [
+        "SeedBytes{utf8_bytes,sha256}",
+        "TransportRegistry{source_type,target_type,map_kind,preservation_rule,checker_version}",
+        "ConventionContext{basis_order,tensor_order,units,symbol_bindings,number_codec_version}",
+        "BudgetReservation{max_input_tokens_total:12000,max_output_tokens_total:4000,max_calls:2}"
+      ],
+      "typed_outputs": [
+        "CandidateDerivation{answer_text,typed_objects,convention_contexts,transport_edges}",
+        "TransportWitness{source_hash,target_hash,map_ast,inverse_witness,preservation_rule,scope}",
+        "InterfaceReceipt{checked_edges,open_edges,invalid_edges,downstream_claims_invalidated}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Convention and seed binder",
+          "instruction": "Keep the exact seed bytes as a separate message. Freeze the public convention schema, admitted transport registry, and two-call reservation. Do not provide solved seed objects or private formulas.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "derive",
+          "kind": "model",
+          "role": "Representation-explicit derivation proposer",
+          "instruction": "Produce the requested derivation. Give every object its dimensions, variable sorts, and convention-context ID. Mark each representation change as an edge with source and target hashes; identify the mathematical property that must survive that change.",
+          "depends_on": ["bind"],
+          "max_output_tokens": 2800
+        },
+        {
+          "id": "request_transport",
+          "kind": "host",
+          "role": "Deterministic interface selector",
+          "instruction": "Type-check the candidate and select at most four unresolved transport edges by fixed source order. Provide source/target artifacts and required witness schema only. No private scores or expected corrected expressions enter the request.",
+          "depends_on": ["derive"],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "witness",
+          "kind": "model",
+          "role": "Transport-witness proposer",
+          "instruction": "Supply explicit maps, inverse witnesses where needed, and preservation-rule applications for the selected edges. Do not approve the answer by agreement. Do not silently alter source objects. Return OPEN when no admitted witness applies.",
+          "depends_on": ["request_transport"],
+          "max_output_tokens": 1200
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Exact interface checking and freeze",
+          "instruction": "Check every claimed transport under its context and scope; invalidate dependent reuse when an edge fails. Use public synthetic permutation/codec/transpose mutations as finite controls. Freeze final answer, open interfaces, and cost receipts before separate private scoring.",
+          "depends_on": ["witness"],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Two-call derivation plus consistency review at equal 4000-token total output cap and identical endpoint configuration.",
+        "ablations": ["Context IDs with no transport witness", "Witness equality checks without predicate-preservation obligations", "Transport checks without source-to-public-task binding"],
+        "evaluation": "Pair runs by task and repetition; include public synthetic changes of basis order, tensor-factor order, exact-number codec, and matrix transposition. Measure convention-error detection, false rejection, complete final correctness, and cost. Offline PCIV selection uses frozen receipts and an independent confirmation split."
+      },
+      "falsification": "The mechanism fails if a source/target pair with a deliberately incorrect transport map is admitted, or if a correct transport of the wrong public-task object is promoted to a correct task answer. The practical hypothesis fails if transport overhead does not improve matched-budget final accuracy or convention-error detection.",
+      "risks": [
+        "Two incorrect encodings may agree; explicit source-task binding is still required.",
+        "A map can preserve algebraic form while changing semantic interpretation; the preservation theorem must match the intended predicate.",
+        "Existing RationalWire and Q codecs differ, so implicit parser interchange would create false agreement or unnecessary rejection.",
+        "The bounded four-edge witness budget can leave interfaces open; an honest partial receipt is not a complete solution."
+      ],
+      "budget_formula": "C_max <= 12000*p_in + 4000*p_out + sum(F_s) + R, two calls and zero retries. Conditional thresholds give USD 0.042 including the USD 0.01 reserve.",
+      "status": "proposed_not_evaluated"
+    }
+  ],
+  "recommended_reusable_primitive": {
+    "name": "ScopedObligationReceiptV1",
+    "recommendation": "Implement this host-owned primitive before any particular workflow: it is shared by shard closure, branch definedness, and representation transport.",
+    "schema": {
+      "binding": ["seed_sha256", "candidate_sha256", "statement_ast_sha256", "context_sha256", "branch_scope_sha256", "checker_id", "checker_version"],
+      "obligation": ["obligation_id", "kind", "dependency_ids", "witness_sha256", "public_assumption_ids"],
+      "host_status": ["PASS_FOR_DECLARED_PREDICATE", "FAIL", "OPEN_UNSUPPORTED", "INFRASTRUCTURE_ERROR"],
+      "scope": ["exact_instance", "exact_identity_in_declared_theory", "numerical_check", "admitted_theorem_application", "unverified_prose"],
+      "residuals": ["missing_premises", "unsupported_theories", "unbound_public_semantics", "unreplayed_dependencies"]
+    },
+    "invariant": "Only the host issues statuses. Composition cannot erase inherited residuals, change seed/candidate binding, or strengthen scope without a separately checked rule. Distinct statement, candidate, and codec hashes are mandatory; no universal VERIFIED bit.",
+    "research_prompt_instruction": "Design the ScopedObligationReceiptV1 schema, bounded checker dispatch, and synthetic positive/negative controls. Do not solve the benchmark seed. Do not include any seed-specific derived formula, spectral value, state, optimum, entanglement condition, or worked seed example in this research report. You may describe obligation categories required by the public seed. Never read an answer key or private benchmark storage. Preserve the seed's exact bytes and keep it separate from instructions.",
+    "first_experiment": "A host-only synthetic receipt test suite followed by one matched-budget R01-I02 pilot. This starts with an observable gap, requires only one paid model call in any later authorized run, and makes unsupported analytic obligations visible. No such pilot was executed here."
+  }
+}

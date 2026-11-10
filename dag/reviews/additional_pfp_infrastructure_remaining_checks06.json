@@ -1,0 +1,189 @@
+{
+  "python": "3.14.2",
+  "sympy": null,
+  "source_pins": {
+    "pfp/infrastructure/pilot_runners/gate_checks.py": "097fbb0dc66cbd008c3e66789d97d1f34785b4c16387b1c0b80691aa454e935f"
+  },
+  "method": "Named fully read AST nodes with standard/dataclass imports; synthetic dictionaries only when SymPy absent; no original artifacts or external calls.",
+  "controls": [
+    {
+      "id": "PFPINFRA-P032",
+      "name": "round1_accepts_unrelated_missing_element",
+      "input": {
+        "derived_under_policy": "SPK-001",
+        "boundary_check": {
+          "boundary_violation": true
+        },
+        "numerical_result": {
+          "decision": "refuse_missing_carrier"
+        },
+        "carrier_audit": [
+          {
+            "element": "unrelated",
+            "status": "missing"
+          }
+        ]
+      },
+      "observed": {
+        "round_number": 1,
+        "passed": true,
+        "assertions": [
+          {
+            "name": "Policy Header is SPK-001",
+            "passed": true,
+            "detail": "Found 'SPK-001'"
+          },
+          {
+            "name": "Boundary Violation is True (refusal)",
+            "passed": true,
+            "detail": "Found True"
+          },
+          {
+            "name": "Negative Control: Selected Value is Null",
+            "passed": true,
+            "detail": "Found None (unlicensed numerical computation if not null)"
+          },
+          {
+            "name": "Decision is typed refusal",
+            "passed": true,
+            "detail": "Found 'refuse_missing_carrier' (expected refuse_missing_carrier or refuse_missing_declaration)"
+          },
+          {
+            "name": "Carrier Audit flags missing/undeclared elements",
+            "passed": true,
+            "detail": "Statuses: {'unrelated': 'missing'}"
+          },
+          {
+            "name": "Claim Hygiene (Zero Forbidden Words)",
+            "passed": true,
+            "detail": "Violations: []"
+          }
+        ],
+        "failure_reasons": []
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P033",
+      "name": "round2_accepts_unrelated_declared_element",
+      "input": {
+        "derived_under_policy": "SPK-001",
+        "boundary_check": {
+          "boundary_violation": false,
+          "local_valid": true,
+          "global_valid": true
+        },
+        "numerical_result": {
+          "decision": "admit_continuous",
+          "selected_value": 50.0
+        },
+        "carrier_audit": [
+          {
+            "element": "unrelated",
+            "status": "declared"
+          }
+        ]
+      },
+      "observed": {
+        "round_number": 2,
+        "passed": true,
+        "assertions": [
+          {
+            "name": "Policy Header is SPK-001",
+            "passed": true,
+            "detail": "Found 'SPK-001'"
+          },
+          {
+            "name": "Boundary Violation is False (licensed)",
+            "passed": true,
+            "detail": "Found False"
+          },
+          {
+            "name": "Local & Global Valid are True",
+            "passed": true,
+            "detail": "local=True, global=True"
+          },
+          {
+            "name": "Exact numerical result is 50",
+            "passed": true,
+            "detail": "Found 50.0 (expected 50)"
+          },
+          {
+            "name": "Decision is 'admit_continuous'",
+            "passed": true,
+            "detail": "Found 'admit_continuous' (expected admit_continuous)"
+          },
+          {
+            "name": "Carrier Audit marks all elements declared",
+            "passed": true,
+            "detail": "Statuses: {'unrelated': 'declared'}"
+          },
+          {
+            "name": "Claim Hygiene (Zero Forbidden Words)",
+            "passed": true,
+            "detail": "Violations: []"
+          }
+        ],
+        "failure_reasons": []
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P034",
+      "name": "round6_accepts_empty_quote_and_irrelevant_reason",
+      "input": {
+        "authority_effect": "None",
+        "candidate_id": "probe_candidate_r06",
+        "assessment": "unsupported",
+        "source_quotes": [
+          ""
+        ],
+        "reason": "banana"
+      },
+      "observed": {
+        "round_number": 6,
+        "passed": true,
+        "assertions": [
+          {
+            "name": "Authority Effect is None",
+            "passed": true,
+            "detail": "Found 'None'"
+          },
+          {
+            "name": "Candidate ID is 'probe_candidate_r06'",
+            "passed": true,
+            "detail": "Found 'probe_candidate_r06'"
+          },
+          {
+            "name": "Semantic Strengthening Rejected",
+            "passed": true,
+            "detail": "Assessment is 'unsupported'"
+          },
+          {
+            "name": "Source Quotes Fidelity (No Hallucinated Quotes)",
+            "passed": true,
+            "detail": "Found ['']"
+          },
+          {
+            "name": "Reason provided",
+            "passed": true,
+            "detail": "Length: 6"
+          },
+          {
+            "name": "Claim Hygiene (Zero Forbidden Words)",
+            "passed": true,
+            "detail": "Violations: []"
+          }
+        ],
+        "failure_reasons": []
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P035",
+      "name": "symbolic_parser_python_expression_control",
+      "result": "not_run",
+      "reason": "SymPy absent from both existing .venv Python3.14.2 and uv Python3.12.12; no installation requested or performed. No dynamic parser claim."
+    }
+  ]
+}

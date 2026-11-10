@@ -1,0 +1,94 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/exceptions.py",
+      "sha256": "c0f7d4b1e65275d7604192e6cc8294d123a6f360e88c314a3eb63c3439429c69"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/authority_effect.py",
+      "sha256": "48a51a1cf08a0a446473582e391e813589c5f87a99ebbbd192e2d362d68199b7"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/exact.py",
+      "sha256": "c9d2d9c957f05c728b195c015408cb2391153a726d7fd8a2b369d29f52586e8e"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/path.py",
+      "sha256": "52d3a210912f167b5c6e29916440f70264ab0b0938d7062b444b5703de0d792d"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/residual_colour.py",
+      "sha256": "ae320f91fa0a3ede049d26c2069f7bbf88cdb713148de28f17f2dcf0dc98d2ea"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/residual_drop.py",
+      "sha256": "6d2fae4a032f39d30b8860a893a2ab53344b8ae6c810c96194704ff2e96f8862"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/coboundary_score.py",
+      "sha256": "fbf0173f1a07d86c6b3c164e5323e3af483ff7ab5cb67897ab0943d8365dfa4e"
+    },
+    {
+      "path": "pfp/domain/errors/errors.py",
+      "sha256": "b192ede252f0ada044e04090ef5a94d13740038f0d08a16f05a337ce895402a6"
+    },
+    {
+      "path": "pfp/domain/errors/__init__.py",
+      "sha256": "61e91c029b2dcee98405f5adaa10e2fbd808a807555094919a19794c6944182f"
+    },
+    {
+      "path": "pfp/domain/validation/validation.py",
+      "sha256": "b2e32517e4a2438392b3a8e005d3001858fd656eb1671606d984babe168f3278"
+    },
+    {
+      "path": "pfp/domain/validation/__init__.py",
+      "sha256": "f53b8a79704587d694987dfc66f0e0f73d0d3626ff47024da0a52a1b8fae5a69"
+    },
+    {
+      "path": "pfp/domain/entities/coboundary_score.py",
+      "sha256": "842d7bb043a79b1e0b206a128a976df36fe4a287ffb2134e738d1271d2c86bd7"
+    }
+  ],
+  "import_context": "Only explicitly loaded, fully reviewed modules and Python stdlib; inert parent namespace packages. No provider or native execution.",
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C012",
+      "rule": "shared_score_positive_residual_preservation",
+      "status": "counterexample_observed",
+      "input_phi1": "1e-12 float",
+      "output": {
+        "phi1": "0",
+        "gamma2": "0",
+        "xi": "0",
+        "combined_score": "0",
+        "is_exact": true,
+        "refusals": [],
+        "residual_colour": "Open",
+        "authority_effect": "None"
+      },
+      "limit": "Shared-kernel class only; native ScoringPort imports the separate stronger entity class."
+    },
+    {
+      "id": "PFPDOMAIN-C013",
+      "rule": "entity_score_literal_boolean_wire_admission",
+      "status": "counterexample_observed",
+      "input_is_legal": "false string",
+      "input_is_exact_candidate": "false string",
+      "output_is_legal": true,
+      "output_is_exact_candidate": true,
+      "limit": "Constructor still enforces exact zero post-norm and digest syntax; no host workflow execution or verified witness is inferred."
+    },
+    {
+      "id": "PFPDOMAIN-C014",
+      "rule": "score_residual_drop_arithmetic_binding",
+      "status": "counterexample_observed",
+      "prior": "5",
+      "post": "4",
+      "claimed_drop": "999",
+      "actual_difference": "1",
+      "normalized_efficiency": "999",
+      "limit": "The record trusts host-computed fields; this demonstrates its own admission boundary, not an error in an unexecuted scoring evaluator."
+    }
+  ]
+}

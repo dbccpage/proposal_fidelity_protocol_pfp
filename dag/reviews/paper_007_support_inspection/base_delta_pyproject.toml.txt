@@ -1,0 +1,58 @@
+--- paper004/pyproject.toml
++++ paper007/pyproject.toml
+@@ -3,26 +3,22 @@
+ build-backend = "setuptools.build_meta"
+ 
+ [project]
+-name = "pfp-iv-native-verification-finite-evidence"
++name = "companion-007-executable-lessons"
+ version = "0.1.0"
+-description = "Companion code for PFP IV: Native Verification and the Custody of Finite Evidence"
++description = "Designing executable lessons with explicit evidence boundaries"
++authors = [{ name = "Jeremy H. Carroll" }]
+ readme = "README.md"
+-authors = [{ name = "Jeremy H. Carroll" }]
+-license = { file = "LICENSE-CODE" }
+-requires-python = ">=3.10"
++license = { text = "PolyForm-Noncommercial-1.0.0" }
++requires-python = ">=3.12"
+ dependencies = []
+ 
+ [project.optional-dependencies]
+ dev = [
+     "pytest>=9.0.3",
+     "ruff==0.14.13",
+-]
+-# Only code/attention_entropy_kv_norm_benchmark.py and its test use these.
+-attention = [
+-    "numpy>=1.24",
+-    "torch>=2.0",
+-    "transformers>=4.40",
+-    "httpx>=0.27",
++    "nbclient==0.10.2",
++    "nbformat==5.10.4",
++    "ipykernel==7.3.0",
+ ]
+ 
+ [tool.setuptools]
+@@ -31,14 +27,16 @@
+ 
+ [tool.pytest.ini_options]
+ testpaths = ["code/tests"]
+-pythonpath = ["code"]
+-addopts = "-ra -q"
++addopts = "-q"
+ 
+ [tool.ruff]
+-target-version = "py310"
++target-version = "py312"
+ line-length = 100
+-src = ["code"]
+ 
+ [tool.ruff.lint]
+ select = ["E", "F", "W", "I"]
+ ignore = ["E501"]
++
++[tool.mypy]
++python_version = "3.12"
++files = ["code"]

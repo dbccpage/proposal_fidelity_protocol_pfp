@@ -1,0 +1,26 @@
+"""Synthetic local composition and evidence-accounting controls; no I/O owners invoked."""
+import sys,types,importlib.util,json,hashlib
+from pathlib import Path
+sys.dont_write_bytecode=True
+ROOT=Path(__file__).resolve().parents[2];bindings=[]
+for name in ['pfp','pfp.domain','pfp.domain.operad','pfp.domain.contracts']:
+ m=types.ModuleType(name);m.__path__=[];sys.modules[name]=m
+def load(name,path):
+ p=ROOT/path;bindings.append({'path':path,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()});s=importlib.util.spec_from_file_location(name,p);m=importlib.util.module_from_spec(s);sys.modules[name]=m;s.loader.exec_module(m);return m
+glyph=load('pfp.domain.glyph_calculus','pfp/domain/glyph_calculus.py');receipt=load('pfp.domain.calculus_receipt','pfp/domain/calculus_receipt.py');pins=load('pfp.domain.presentation_pins','pfp/domain/presentation_pins.py');row=load('pfp.domain.row_rederivation','pfp/domain/row_rederivation.py');prompt=load('pfp.domain.operad.prompt','pfp/domain/operad/prompt.py');stage=load('pfp.domain.contracts.staged_operad','pfp/domain/contracts/staged_operad.py')
+decoy=prompt.AnnihilatorDecoy('d','tiny',{'x':'1'},{'evaluation':'1 != 2'});neutralized=decoy.evaluate({'x':'1'},{'evaluation':'1 != 1'});assert neutralized['disposition']=='Neutralized'
+op=prompt.PromptOperator('f',(prompt.PromptColour.RationalValue,),prompt.PromptColour.TargetResult,1);tree=prompt.OperadTreeNode(op,());null=prompt.NullTree('bad','tiny',prompt.PromptColour.RationalValue);grafted=tree.graft(99,null);assert grafted.output_colour!=tree.output_colour
+carrier=glyph.Carrier.from_wire([{'symbol':'a','codepoint':'U+0061'}]);one=receipt.ReceiptRow(1,'REDUCE','1 mod 2 = 1','tiny',True,receipt.RowOutcome.REDERIVED,'1');dup=receipt.CalculusReceipt.over(carrier,[one,one],declared_row_count=2,carrier_authored_by=receipt.CarrierAuthority.HOST);assert dup.terminal==receipt.Terminal.PASS
+openrow=receipt.ReceiptRow(1,'SHOW','unknown','tiny',True,receipt.RowOutcome.UNCHECKABLE,missing_fields=('host_decider',));openreceipt=receipt.CalculusReceipt.over(carrier,[openrow],declared_row_count=1,carrier_authored_by=receipt.CarrierAuthority.HOST);assert openreceipt.terminal==receipt.Terminal.OPEN_RESIDUAL and len(openreceipt.hallucinations)==0
+seed={'task':'synthetic'};results=(stage.StageResult(stage=1,data={'stage':1,'demo_id':'tiny','authority_effect':'None'},controller_continue=False),stage.StageResult(stage=2,data={'stage':2,'demo_id':'tiny','authority_effect':'None','candidates':[{'candidate_id':'c','value':1}]},controller_continue=True),stage.StageResult(stage=4,data={'stage':4,'demo_id':'tiny','authority_effect':'None','candidate_id':'c','candidate':{'candidate_id':'c','value':999}},controller_continue=True))
+frame=stage.StageFrame(stages=(1,2,4),completed_count=3,demo_id='tiny',original_seed=seed,original_seed_sha256=stage.json_digest(seed),prior_results=results,continue_pipeline=True);assert frame.stage4_candidate['value']==999
+perm=pins.PinnedPresentation('tiny',tuple('abcde'),tuple(pins.PinnedRule(str(i),x,y) for i,(x,y) in enumerate(zip('abcde','badec'))));assert perm.period==6
+context=row.DeciderContext(pins=pins.PresentationPins({'tiny':perm}));checks=[row.rederive_statement(s,context) for s in ['REDUCE -17 mod 5 = 3','REDUCE -17 mod 5 = -2','REDUCE 1 mod 0 = 0','PROVE period(tiny) = 6','SHOW undecidable prose']];assert [x.outcome for x in checks]==[receipt.RowOutcome.REDERIVED,receipt.RowOutcome.CONTRADICTED,receipt.RowOutcome.REFUSED,receipt.RowOutcome.REDERIVED,receipt.RowOutcome.UNCHECKABLE]
+out={'runtime':sys.version,'source_bindings':bindings,'controls':[
+ {'id':'PFPDOMAIN-C047','rule':'annihilator_refutation_truth','status':'counterexample_observed','stored_refutation':'1 != 2','supplied_false_refutation':'1 != 1','disposition':neutralized['disposition']},
+ {'id':'PFPDOMAIN-C048','rule':'null_graft_slot_and_output_colour','status':'counterexample_observed','parent_output':tree.output_colour.value,'null_result_output':grafted.output_colour.value,'accepted_out_of_bounds_slot':99},
+ {'id':'PFPDOMAIN-C049','rule':'receipt_original_row_coverage','status':'counterexample_observed','declared_rows':2,'represented_indices':[1,1],'terminal':dup.terminal.value,'positive_uncertainty_control':openreceipt.terminal.value,'uncheckable_hallucination_count':0},
+ {'id':'PFPDOMAIN-C050','rule':'stage_frame_candidate_and_continuation_binding','status':'counterexample_observed','stage2_candidate_value':1,'stage4_candidate_same_id_value':999,'earlier_controller_continue':False,'accepted_frame_continue_pipeline':True,'limit':'Schema boundary only; outer runner/native owner may impose additional requirements, not executed here.'},
+ {'id':'PFPDOMAIN-C051','rule':'finite_pinned_permutation_and_modular_deciders','status':'bounded_positive_and_negative_controls_observed','cycle_sizes':[2,3],'permutation_order':perm.period,'outcomes':[x.outcome.value for x in checks],'limit':'Exact tiny supplied host pin and explicit arithmetic; no theorem/general prose or governance authentication proved.'}
+]}
+(ROOT/'dag/reviews/additional_pfp_domain_remaining_composition_probes.json').write_text(json.dumps(out,indent=2)+'\n',encoding='utf8');print(json.dumps(out['controls'],indent=2))

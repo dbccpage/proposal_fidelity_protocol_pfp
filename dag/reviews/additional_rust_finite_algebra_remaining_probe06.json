@@ -1,0 +1,44 @@
+{
+  "id": "RFA-C006",
+  "checks": [
+    {
+      "rule": "fixed_polynomials_match_divisor_recurrence",
+      "status": "passed_bounded",
+      "fields": [
+        5,
+        8,
+        12,
+        24,
+        28,
+        44,
+        52,
+        120
+      ]
+    },
+    {
+      "rule": "root_products_and_exact_inverse_replays",
+      "status": "passed_bounded",
+      "root_products": 1758,
+      "inverse_cases": 24
+    },
+    {
+      "rule": "quadratic_gauss_and_explicit_square_root_identities",
+      "status": "passed_bounded",
+      "gauss_primes": [
+        7,
+        11,
+        13
+      ],
+      "other_square_identities": 4
+    },
+    {
+      "rule": "zeta3_pow_i32_overflow",
+      "status": "counterexample",
+      "input_k": 536870912,
+      "exact_exponent_mod24": 16,
+      "wrapping_exponent_mod24": 0,
+      "debug_behavior": "checked overflow panic"
+    }
+  ],
+  "limits": "Own integer/Fraction quotient-ring models; no Rust compilation or execution. Irreducibility of cyclotomic polynomials and positivity in the intended complex embedding remain mathematical premises; square identities do not establish positive-root order. Finite exact inverse replays do not establish every possible operand."
+}

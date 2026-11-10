@@ -1,0 +1,105 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "sources": [
+    {
+      "path": "pfp/tests/normal_forms/test_tranche8_epistemic_and_authority.py",
+      "sha256": "844ff8aa4d8b648423ff2ba9d060188217ac04fb5a3833e9f7dfd359f7f72393"
+    },
+    {
+      "path": "pfp/tests/normal_forms/test_tranche9_evidence_and_transport.py",
+      "sha256": "8cdd8675cc67dc9586d56e563f15c7a187a979cceddf980e8e44fcdfa3af503f"
+    }
+  ],
+  "extracted_ranges": [
+    [
+      "evaluate_claim",
+      98,
+      102
+    ],
+    [
+      "LossLedgerEntry",
+      37,
+      54
+    ],
+    [
+      "compute_root",
+      167,
+      173
+    ],
+    [
+      "run",
+      277,
+      278
+    ]
+  ],
+  "authority": {
+    "forged_signature": [
+      true,
+      "Admitted"
+    ],
+    "numeric_verified_without_signature": [
+      true,
+      "Admitted"
+    ]
+  },
+  "loss_ledger": {
+    "different_entries_same_preimage": "1:a:b:c:d",
+    "same_sha256": true
+  },
+  "constant_interpreter": {
+    "programs": [
+      [
+        [
+          "exec",
+          "x=1"
+        ]
+      ],
+      [
+        [
+          "exec",
+          "x=999"
+        ]
+      ]
+    ],
+    "both_return": 2
+  },
+  "range_commitment": {
+    "enumerated_candidate_count": 48,
+    "recovered_age": 25,
+    "digest_contains_decimal_age": false,
+    "proof_object_or_verifier_present": false
+  },
+  "standalone_bundle": {
+    "events": [
+      [
+        "unknown_opcode",
+        1
+      ],
+      [
+        "delete",
+        2
+      ]
+    ],
+    "final_count": 3,
+    "original_expected_digest_still_matches": true
+  },
+  "snapshot_countermodel": {
+    "initial": {
+      "A": 100,
+      "B": 100
+    },
+    "each_snapshot_guard_200_ge_150": true,
+    "disjoint_write_targets": true,
+    "both_commit_final": {
+      "A": -50,
+      "B": -50
+    },
+    "global_sum": -100,
+    "limits": "Arithmetic model of disjoint snapshot writes; no database execution or isolation-level implementation claim."
+  },
+  "limits": [
+    "Only fully read local helpers extracted; no production imports, real certificates, private fixtures or external services.",
+    "Synthetic fixed test literals only; no secret access.",
+    "Hash collision is serialization ambiguity, not a SHA256 collision."
+  ]
+}

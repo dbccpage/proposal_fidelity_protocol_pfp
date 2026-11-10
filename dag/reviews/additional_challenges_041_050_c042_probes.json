@@ -1,0 +1,278 @@
+{
+  "independent_truth_table_formulas": 512,
+  "accepted_rat_additions_checked_for_equisatisfiability": 3828,
+  "failures": [],
+  "controls": [
+    {
+      "label": "wrong_id_accepted",
+      "case": {
+        "case_id": "audit",
+        "family": "coloring",
+        "n": 2,
+        "k": 2,
+        "edges": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "wrong",
+        "status": "SOLVED",
+        "kind": "SAT",
+        "solution": {
+          "colour": [
+            0,
+            1
+          ]
+        }
+      },
+      "verdict": [
+        true,
+        "CONSENSUS_PASS: SAT certificate verified: Problem solution verified: Valid graph colouring",
+        {
+          "solution_valid": true
+        }
+      ]
+    },
+    {
+      "label": "negative_vertex_python_indexing",
+      "case": {
+        "case_id": "audit",
+        "family": "coloring",
+        "n": 2,
+        "k": 2,
+        "edges": [
+          [
+            -1,
+            0
+          ]
+        ]
+      },
+      "answer": {
+        "status": "SOLVED",
+        "kind": "SAT",
+        "solution": {
+          "colour": [
+            0,
+            1
+          ]
+        }
+      },
+      "verdict": [
+        true,
+        "CONSENSUS_PASS: SAT certificate verified: Problem solution verified: Valid graph colouring",
+        {
+          "solution_valid": true
+        }
+      ]
+    },
+    {
+      "label": "header_mismatch_and_nonterminal_empty_clause_accepted",
+      "case": {
+        "case_id": "audit",
+        "family": "coloring",
+        "n": 2,
+        "k": 2,
+        "edges": [
+          [
+            0,
+            1
+          ]
+        ],
+        "cnf_text": "p cnf 1 999\n1 0\n-1 0\n"
+      },
+      "answer": {
+        "case_id": "wrong",
+        "status": "SOLVED",
+        "kind": "UNSAT",
+        "proof_format": "DRAT",
+        "proof_text": "0\n1 0",
+        "cnf_sha256": "826187ba83979d12e98a1a2a531ca7bd882c5123e19affd78d647369a421bfc7"
+      },
+      "verdict": [
+        true,
+        "CONSENSUS_PASS (TRIVIAL UNIT_PROPAGATION): UNSAT DRAT certificate verified: DRAT proof verified: DRAT proof verified successfully: empty clause derived via RUP/RAT.",
+        {
+          "cnf_sha256": "826187ba83979d12e98a1a2a531ca7bd882c5123e19affd78d647369a421bfc7",
+          "drat_valid": true,
+          "trivial_refutation": "UNIT_PROPAGATION"
+        }
+      ]
+    },
+    {
+      "label": "genuine_header_mismatch_refusal_rejected",
+      "case": {
+        "case_id": "audit",
+        "family": "coloring",
+        "cnf_text": "p cnf 1 999\n1 0\n-1 0\n"
+      },
+      "answer": {
+        "case_id": "audit",
+        "status": "OUT_OF_SCOPE",
+        "witness": {
+          "field": "cnf_header",
+          "reason": "CLAUSE_COUNT_MISMATCH",
+          "line": 1
+        },
+        "ddc_trace": "CM"
+      },
+      "verdict": [
+        false,
+        "OUT_OF_SCOPE on a well-formed case with a canonical CNF",
+        {}
+      ]
+    },
+    {
+      "label": "nonpositive_dimensions_refusal_rejected",
+      "case": {
+        "case_id": "audit",
+        "family": "php",
+        "pigeons": 0,
+        "holes": 0
+      },
+      "answer": {
+        "case_id": "audit",
+        "status": "OUT_OF_SCOPE",
+        "witness": {
+          "field": "pigeons_holes",
+          "reason": "NON_POSITIVE_DIMENSION"
+        },
+        "ddc_trace": "CM"
+      },
+      "verdict": [
+        false,
+        "OUT_OF_SCOPE on a well-formed case with a canonical CNF",
+        {}
+      ]
+    },
+    {
+      "label": "raw_satisfiable_cnf_decoder_missing",
+      "case": {
+        "case_id": "audit",
+        "family": "coloring",
+        "n": 2,
+        "k": 2,
+        "edges": [
+          [
+            0,
+            1
+          ]
+        ],
+        "cnf_text": "p cnf 4 1\n1 0\n"
+      },
+      "exception": "TypeError",
+      "message": "'NoneType' object is not subscriptable"
+    },
+    {
+      "label": "blocked_tile_unconstrained_decoder",
+      "case": {
+        "case_id": "audit",
+        "family": "tiling",
+        "rows": 1,
+        "cols": 2,
+        "blocked": [
+          [
+            0,
+            0
+          ]
+        ],
+        "tiles": [
+          [
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ]
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "audit",
+        "status": "SOLVED",
+        "kind": "SAT",
+        "solution": {
+          "selected_tiles": [
+            0,
+            1
+          ]
+        },
+        "ddc_trace": "CIΛDET"
+      },
+      "verdict": [
+        false,
+        "REJECTED by SAT checker: Problem solution check failed: Tile 0 covers blocked square (0, 0)",
+        {}
+      ]
+    },
+    {
+      "label": "false_refusal_witness_accepted",
+      "case": {
+        "case_id": "audit",
+        "family": "fiction"
+      },
+      "answer": {
+        "status": "OUT_OF_SCOPE",
+        "witness": {
+          "reason": "VERTEX_OUT_OF_RANGE",
+          "field": "imaginary"
+        }
+      },
+      "verdict": [
+        true,
+        "OUT_OF_SCOPE warranted: the case has no canonical CNF (VERTEX_OUT_OF_RANGE)",
+        {
+          "witness": {
+            "reason": "VERTEX_OUT_OF_RANGE",
+            "field": "imaginary"
+          }
+        }
+      ]
+    },
+    {
+      "label": "nonbinary_charges_accepted",
+      "case": {
+        "case_id": "audit",
+        "family": "tseitin",
+        "vertices": 2,
+        "edges": [
+          [
+            0,
+            1
+          ]
+        ],
+        "charges": [
+          2,
+          2
+        ]
+      },
+      "answer": {
+        "status": "SOLVED",
+        "kind": "SAT",
+        "solution": {
+          "edge_values": [
+            0
+          ]
+        }
+      },
+      "verdict": [
+        true,
+        "CONSENSUS_PASS: SAT certificate verified: Problem solution verified: Valid Tseitin parity solution",
+        {
+          "solution_valid": true
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "All512 clause-set formulas over2 variables; not a proof for arbitrary formulas.",
+    "CNF/problem equivalence is a trusted generator premise when cnf_text is supplied; contradictory supplied representations expose that admission.",
+    "No CaDiCaL, drat-trim, LRAT, network, or provider calls."
+  ]
+}

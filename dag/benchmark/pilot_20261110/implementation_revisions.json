@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "status": "targeted_delta_tested",
+  "historical_review": "dag/benchmark/rational_panel_review.json",
+  "validation": {
+    "test_count": 249,
+    "subtests": 48,
+    "test_exit_code": 0,
+    "independent_review": "dag/benchmark/hamiltonian_workflows_review.json",
+    "live_results": "dag/benchmark/results_summary.json",
+    "scope": "Targeted current-state tests and live observations do not retroactively extend the historical review.",
+    "junit": "dag/benchmark/section_validation.xml",
+    "resource_group_delta": {
+      "tests": 15,
+      "exit_code": 0,
+      "command": "pytest dag/benchmark/test_summarize_runs.py -q -p no:cacheprovider",
+      "scope": "Reporting-only delta; the prior171-test suite applies to the preceding runtime snapshot."
+    },
+    "section_delta": "13 focused specification/assembly controls plus5 end-to-end runner controls; no provider/evaluator access. Prior independent review remains historical.",
+    "native_workflow_delta": {
+      "review": "dag/benchmark/charpoly_workflows_review.json",
+      "junit": [
+        "dag/benchmark/charpoly_validation.xml",
+        "dag/benchmark/charpoly_helper_validation.xml"
+      ],
+      "fresh_rebuild": "dag/benchmark/charpoly_rebuild_validation.json",
+      "scope": "235 whole-benchmark tests plus14 helper tests; same frozen implementation; synthetic providers only."
+    }
+  },
+  "revisions": [
+    {
+      "path": "dag/benchmark/rational_workflows.py",
+      "reviewed_sha256": "34d5512a41ead409a830b28dc484093aeaf58ca89b56c3ed90fc8a07ea8754c3",
+      "current_sha256": "77af6294793e6a6e3e39fc478646dc56e14d26e04a448c0e464ca459cd51546e",
+      "scope": "Historical review remains pinned to its prior bytes; this delta is separate.",
+      "change": "Add fixed-panel v2 explicit root keys and response budgeting; retain v1 instructions and exact checker."
+    },
+    {
+      "path": "dag/benchmark/summarize_runs.py",
+      "reviewed_sha256": "1dc5dc5f0ada5902c06962ae24dcd7e4301768ff6000ccec58e4f7ebb445b438",
+      "current_sha256": "2ba7648938ffe93e5215ef962e3adb31fd7d4fb216697fa8412361b6f4147eb1",
+      "scope": "Historical review remains pinned to its prior bytes; this delta is separate.",
+      "change": "Expose truncation finish reasons and counts without using them as mathematical scores. Separate configurable control output allowances in reported groups; regression proves 4000/16000 runs are not pooled. Include total input+output tokens in four-objective Pareto comparison; unavailable usage excludes Pareto membership only."
+    },
+    {
+      "path": "dag/benchmark/test_rational_workflows.py",
+      "reviewed_sha256": "566dc90aa762dd34575eea2d8c6eabe50d1298bae5eb42063a89e421aaf1513e",
+      "current_sha256": "1352d76a5f1c0b7f51a44a222157edb245e332b29836e618283f1e175f808c62",
+      "scope": "Historical review remains pinned to its prior bytes; this delta is separate.",
+      "change": "Exercise v2 with the existing seed/visibility/cap/preservation contract."
+    },
+    {
+      "path": "dag/benchmark/test_summarize_runs.py",
+      "reviewed_sha256": "d7d70d0e8af6d7049cced783991dcf7ef536b44bdf15e363cf32f25bdb62c51b",
+      "current_sha256": "1ec1b74cb8fec671b502448ebb60c60a4f980d9d685e4d8939f6b1bc17f6838b",
+      "scope": "Historical review remains pinned to its prior bytes; this delta is separate.",
+      "change": "Add a completed-transport but truncated-draft reporting regression. Separate configurable control output allowances in reported groups; regression proves 4000/16000 runs are not pooled. Verify that cheaper/faster but more-token answers do not dominate."
+    },
+    {
+      "path": "dag/benchmark/reference_runner.py",
+      "reviewed_sha256": "a7930e9091f2edc88e5bdb54709e46185295aee1d0aa20841553d2610b3574d2",
+      "current_sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+      "scope": "Historical review remains at its original hashes; separate exact-representation workflow delta.",
+      "change": "Add bounded matrix proposal/check/one-correction/synthesis and ungated/host controls, retaining the shared cost ledger and prior recipes. Add five isolated public-task sections and deterministic partial-preserving raw assembly under the existing whole-run ledger. Add native characteristic-polynomial proposal/check/one-repair/synthesis and ungated control, intermediate-only certification, custody preflight and host-failure stops."
+    },
+    {
+      "path": "dag/benchmark/live_campaign.py",
+      "reviewed_sha256": "57890ad244ea5842259af6d5b47cf811a37639f5436c9cb85accaba240832d08",
+      "scope": "Historical review stays pinned; this later delta is separately tested.",
+      "change": "Make direct/control output allowance configurable while preserving exact manifest binding and the USD0.10 ledger.",
+      "current_sha256": "80f6a136f6b29314904b46365d65096777749b9b91a197e75509a5af6311a548"
+    }
+  ]
+}
