@@ -1,0 +1,68 @@
+{
+  "schema": "pfp.qm-native-charpoly.validation.v1",
+  "status": "PASS",
+  "tests_run": 12,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 0.2604882000014186,
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "provider_calls": 0,
+  "native_calls": 2,
+  "registered_seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+  "observations": {
+    "public_transport": {
+      "entries": 48,
+      "independent_method": "computational-basis Pauli bit flips/phases",
+      "public_packet_sha256": "052334035b5206aee706d24dcc830f9e0d56fef054cab2dd7d17c384fc58e92b",
+      "native_public_input_sha256": "f04cf965bda6fa68652e2b3625a486a94ae0814a4a187a1d6ed47590d993e8fc"
+    },
+    "wrong_charpoly": {
+      "status": "REFUTED_IDENTITY",
+      "witness": {
+        "parameters": {
+          "J": -2,
+          "Delta": -2,
+          "K": -2
+        },
+        "lambda_power": 0,
+        "claimed": "-111",
+        "native": "-112",
+        "difference": "1"
+      },
+      "native_calls": 1
+    },
+    "binding_refusals": [
+      "PAULI_PUBLIC_INPUT_MISMATCH",
+      "PAULI_PUBLIC_INPUT_MISMATCH",
+      "PUBLIC_BASIS_OR_CONVENTION_MISMATCH",
+      "PUBLIC_BASIS_OR_CONVENTION_MISMATCH",
+      "PUBLIC_PACKET_SEED_MISMATCH",
+      "PAULI_PUBLIC_INPUT_MISMATCH",
+      "PUBLIC_AFFINE_TRANSPORT_MISMATCH",
+      "PUBLIC_AFFINE_TRANSPORT_MISMATCH",
+      "PUBLIC_AFFINE_TRANSPORT_MISMATCH",
+      "PUBLIC_AFFINE_TRANSPORT_MISMATCH",
+      "PAULI_PUBLIC_INPUT_MISMATCH",
+      "PUBLIC_PROVENANCE_MISMATCH",
+      "PUBLIC_PROVENANCE_MISMATCH",
+      "PUBLIC_PACKET_DIGEST_MISMATCH"
+    ],
+    "isospectral_sign_control": "J coefficient sign reversal leaves charpoly unchanged, but exact Pauli input replay refuses it.",
+    "unknown_seed_controls": 5
+  },
+  "files": {
+    "dag\\benchmark\\qm_native_charpoly.py": "73af367aa213f9822fe63e4373773914172f65735b652e2376e1edfad786f394",
+    "dag\\benchmark\\test_qm_native_charpoly.py": "b23f8941f4953cce936684fa8824de85694ac486a772df9198a545e016a25066",
+    "dag\\benchmark\\hamiltonian_artifact.py": "bf28b8371f11d2ac34256d3699a1653a2e44562e9d7b4a60e12221c750938925",
+    "dag\\benchmark\\native_sidecar.py": "67feada49e7e73a45897c81b1353aed7251964ed43bb463767cc2434b9c0fc3c",
+    "dag\\benchmark\\test_native_sidecar.py": "6c8f3920b0f90522e97426ecbf9b95aef4df5c4bdd04b448f7bc12ff77a6152d",
+    "dag\\benchmark\\qm_native_charpoly_public_fixture.json": "b64692ceb7217f3e7a2de69e7259d79622d0addac5afeeabe799a312c4085d04",
+    "dag\\benchmark\\qm_native_charpoly_native_receipt.json": "e79aba91e88c0ae50a1a6cfb555b8da0a0a535cdcb7f24af25a6907fb1f1a988"
+  },
+  "limits": [
+    "Actual public seed bytes are checked by the calling runtime, not this adapter.",
+    "Only the one registered digest and its existing public Pauli interpretation are admitted.",
+    "Only characteristic-polynomial identity is certified; projectors/dynamics/whole-task acceptance remain unresolved.",
+    "No evaluator, hidden/reference solution, private or live-output files were accessed; existing public/checker/runtime source files were not changed."
+  ]
+}

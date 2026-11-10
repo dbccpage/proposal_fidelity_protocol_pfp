@@ -1,0 +1,610 @@
+{
+  "schema_version": "pfp.charpoly-workflows.independent-review.v1",
+  "created_utc": "2026-11-10T20:02:11.491574+00:00",
+  "status": "PASS_WITH_EXPLICIT_LIMITS",
+  "blocking_findings_remaining": 0,
+  "scope": "Independent design and implementation review of qm_charpoly_checked_v1 and qm_charpoly_ungated_v1, plus targeted token-aware Pareto reporting change. No original corpus expansion.",
+  "checked_sources": [
+    {
+      "path": "dag/benchmark/charpoly_workflows.py",
+      "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          332
+        ]
+      ],
+      "line_count": 332
+    },
+    {
+      "path": "dag/benchmark/reference_runner.py",
+      "sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          368
+        ]
+      ],
+      "line_count": 368
+    },
+    {
+      "path": "dag/benchmark/test_charpoly_workflows.py",
+      "sha256": "38029bca3816276fafc098dafc147db8c929dddc7f66e4dac2a3c09c2e9c886e",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          227
+        ]
+      ],
+      "line_count": 227
+    },
+    {
+      "path": "dag/benchmark/test_charpoly_runner.py",
+      "sha256": "9d8b520c8e856a2c9ddbb72b4f2e1f76f2bc512cfcf67f5b429d1590025504f2",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          206
+        ]
+      ],
+      "line_count": 206
+    },
+    {
+      "path": "dag/benchmark/qm_native_charpoly.py",
+      "sha256": "73af367aa213f9822fe63e4373773914172f65735b652e2376e1edfad786f394",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          174
+        ]
+      ],
+      "line_count": 174
+    },
+    {
+      "path": "dag/benchmark/native_sidecar.py",
+      "sha256": "67feada49e7e73a45897c81b1353aed7251964ed43bb463767cc2434b9c0fc3c",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          287
+        ]
+      ],
+      "line_count": 287
+    },
+    {
+      "path": "dag/benchmark/test_qm_native_charpoly.py",
+      "sha256": "b23f8941f4953cce936684fa8824de85694ac486a772df9198a545e016a25066",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          212
+        ]
+      ],
+      "line_count": 212
+    },
+    {
+      "path": "dag/benchmark/test_native_sidecar.py",
+      "sha256": "6c8f3920b0f90522e97426ecbf9b95aef4df5c4bdd04b448f7bc12ff77a6152d",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          306
+        ]
+      ],
+      "line_count": 306
+    },
+    {
+      "path": "dag/benchmark/native_sidecar_manifest.json",
+      "sha256": "3eda1acd88377edc6b2f2cbe67e3d60a8c5100edf8ea045b750846f5b7e66ea4",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          36
+        ]
+      ],
+      "line_count": 36
+    },
+    {
+      "path": "dag/benchmark/qm_native_charpoly_manifest.json",
+      "sha256": "9e9b857c7cf0b946883fc2923082738b025544205132936424afdaea40996b58",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          38
+        ]
+      ],
+      "line_count": 38
+    },
+    {
+      "path": "dag/benchmark/charpoly_rebuild_validation.json",
+      "sha256": "1e7185e6700486f171bcb66f0eaa0180c1dc24cbdc910b134f5878016cc77578",
+      "review_level": "full_source_read",
+      "reviewed_lines": [
+        [
+          1,
+          105
+        ]
+      ],
+      "line_count": 105
+    },
+    {
+      "path": "dag/benchmark/summarize_runs.py",
+      "sha256": "2ba7648938ffe93e5215ef962e3adb31fd7d4fb216697fa8412361b6f4147eb1",
+      "review_level": "targeted_reporting_delta",
+      "reviewed_lines": [
+        [
+          93,
+          184
+        ]
+      ],
+      "line_count": 196
+    },
+    {
+      "path": "dag/benchmark/test_summarize_runs.py",
+      "sha256": "1ec1b74cb8fec671b502448ebb60c60a4f980d9d685e4d8939f6b1bc17f6838b",
+      "review_level": "targeted_reporting_delta",
+      "reviewed_lines": [
+        [
+          1,
+          24
+        ]
+      ],
+      "line_count": 119
+    }
+  ],
+  "findings": [
+    {
+      "id": "CPWF-R001",
+      "severity": "high",
+      "status": "resolved_before_live",
+      "title": "Helper and runner registry contracts initially disagreed",
+      "original_evidence": {
+        "helper_sha256": "c224c8edde8602eecf081aeda91f5c5bf7f8ef33a753cedfdd7aa824014c2dcf",
+        "helper_lines": [
+          42,
+          57
+        ],
+        "runner_sha256": "9b387d3496a3180ba4944c904d2b79340d9548a47a362bd211804cbde9f3e77e",
+        "runner_lines": [
+          105,
+          108
+        ]
+      },
+      "finding": "Initial helper lacked source_pins/checked/scope and used name instead of id; runner would fail before dispatch.",
+      "resolution": "Aligned stage IDs and plan metadata, with process-frozen source/build/binary pins. Actual runner failure-path tests now load and execute the plans.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            27,
+            55
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            69,
+            109
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            328,
+            332
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CPWF-R002",
+      "severity": "high",
+      "status": "resolved_before_live",
+      "title": "Returned infrastructure status could bypass the stop condition",
+      "finding": "Initial helper returned host_infrastructure_failure but runner stopped only on INFRASTRUCTURE_REFUSAL. After other API repairs, a returned native failure could have caused a paid repair or ungated synthesis. The original raised-exception test did not cover this path.",
+      "resolution": "The helper now emits canonical INFRASTRUCTURE_REFUSAL. Both actual-helper-returned failure tests pass with one settled proposal charge, no further calls and answerNone.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            263,
+            267
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+          "lines": [
+            232,
+            247
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_charpoly_runner.py",
+          "sha256": "9d8b520c8e856a2c9ddbb72b4f2e1f76f2bc512cfcf67f5b429d1590025504f2",
+          "lines": [
+            140,
+            154
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CPWF-R003",
+      "severity": "medium",
+      "status": "resolved_before_live",
+      "title": "Runner initially bypassed bounded raw repair context",
+      "finding": "Initial runner forwarded the original proposal verbatim rather than using helper.stage_request; a response rejected for size could have entered repair without the declared8192-byte forwarding bound. Accounting still applied; no overspend was demonstrated.",
+      "resolution": "Runner now uses stage_request for actual charpoly message material. Independent actual-runner control retained40000raw bytes, forwarded8192bytes, then refused two invalid proposals with no synthesis.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+          "lines": [
+            176,
+            192
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            124,
+            136
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            297,
+            325
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_charpoly_runner.py",
+          "sha256": "9d8b520c8e856a2c9ddbb72b4f2e1f76f2bc512cfcf67f5b429d1590025504f2",
+          "lines": [
+            88,
+            95
+          ]
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "CPWF-C001",
+      "claim": "The native acceptance result is an exact polynomial identity within the admitted carrier, not a finite-sample probability statement.",
+      "basis": "Each coefficient polynomial has per-variable degree<=4. A full Cartesian product of five distinct nodes per variable suffices by repeated univariate polynomial interpolation. Native values use exact rational arithmetic; the registered public Pauli transport fixes basis and input semantics.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/native_sidecar.py",
+          "sha256": "67feada49e7e73a45897c81b1353aed7251964ed43bb463767cc2434b9c0fc3c",
+          "lines": [
+            108,
+            137
+          ]
+        },
+        {
+          "path": "dag/benchmark/native_sidecar.py",
+          "sha256": "67feada49e7e73a45897c81b1353aed7251964ed43bb463767cc2434b9c0fc3c",
+          "lines": [
+            246,
+            287
+          ]
+        },
+        {
+          "path": "dag/benchmark/qm_native_charpoly.py",
+          "sha256": "73af367aa213f9822fe63e4373773914172f65735b652e2376e1edfad786f394",
+          "lines": [
+            23,
+            91
+          ]
+        }
+      ],
+      "limits": [
+        "Depends on native arithmetic/source custody and registered public input interpretation.",
+        "Certifies only the characteristic polynomial, not eigenvectors, projectors, evolution or whole-task prose."
+      ]
+    },
+    {
+      "id": "CPWF-C002",
+      "claim": "Candidate coefficients, host-created assertion, public matrix and native-build evidence are bound, while the final solve answer is explicitly uncertified.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            207,
+            251
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+          "lines": [
+            273,
+            286
+          ]
+        }
+      ],
+      "limits": [
+        "The assertion checksum binds an intermediate machine-readable statement, not a semantic interpretation of arbitrary later prose.",
+        "A correct polynomial can coexist with an incorrect synthesized answer."
+      ]
+    },
+    {
+      "id": "CPWF-C003",
+      "claim": "The paired arms expose identical proposal/solve instructions and verdict-free solver context for an identical candidate. Only checked flow allows one bounded repair and requires acceptance before synthesis.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            38,
+            55
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            225,
+            226
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            297,
+            325
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+          "lines": [
+            162,
+            197
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_charpoly_runner.py",
+          "sha256": "9d8b520c8e856a2c9ddbb72b4f2e1f76f2bc512cfcf67f5b429d1590025504f2",
+          "lines": [
+            98,
+            115
+          ]
+        }
+      ],
+      "limits": [
+        "The intervention bundles one repair opportunity with gating; this is not a separate causal estimate of each component.",
+        "Checked and ungated worst-case output allocations differ16800versus14400tokens, and successful paths can use two or three calls. Report actual cost/tokens/time and all attempts.",
+        "A single run per arm on one item cannot establish general efficacy."
+      ]
+    },
+    {
+      "id": "CPWF-C004",
+      "claim": "Preflight precedes candidate dispatch; unknown billing and host infrastructure failure stop progression; known paid charges remain settled.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+          "lines": [
+            144,
+            154
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+          "lines": [
+            190,
+            247
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            69,
+            109
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_charpoly_runner.py",
+          "sha256": "9d8b520c8e856a2c9ddbb72b4f2e1f76f2bc512cfcf67f5b429d1590025504f2",
+          "lines": [
+            118,
+            177
+          ]
+        }
+      ],
+      "limits": [
+        "Money caps depend on the guarded provider quote/enforcement premises; these tests do not authenticate an external provider.",
+        "Native preflight/hash custody is local integrity evidence, not protection against coordinated source/receipt/binary replacement by a trusted host operator."
+      ]
+    },
+    {
+      "id": "CPWF-C005",
+      "claim": "Model requests carry public inputs/schema and candidate-derived content; repair receives only one bounded public arithmetic mismatch or schema code, not a full native coefficient response, evaluator rubric or hidden solution.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            112,
+            123
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            179,
+            203
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            252,
+            267
+          ]
+        },
+        {
+          "path": "dag/benchmark/charpoly_workflows.py",
+          "sha256": "fead6de9b1edb693be6765930026cd29dc229f5f266d87d77eb1c0d8af707e6b",
+          "lines": [
+            297,
+            325
+          ]
+        }
+      ],
+      "limits": [
+        "The repair witness intentionally reveals a native value at one public input point. It is permitted public computation, not statistical independence or secrecy from the model provider.",
+        "Untrusted raw text remains model context; this labeling is not a proof that an LLM will ignore embedded instructions. Tools and retries remain disabled at dispatch."
+      ]
+    },
+    {
+      "id": "CPWF-C006",
+      "claim": "Observed Pareto dominance now includes total provider-reported input+output tokens in addition to score, money and wall time.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/summarize_runs.py",
+          "sha256": "2ba7648938ffe93e5215ef962e3adb31fd7d4fb216697fa8412361b6f4147eb1",
+          "lines": [
+            101,
+            109
+          ]
+        },
+        {
+          "path": "dag/benchmark/summarize_runs.py",
+          "sha256": "2ba7648938ffe93e5215ef962e3adb31fd7d4fb216697fa8412361b6f4147eb1",
+          "lines": [
+            147,
+            150
+          ]
+        },
+        {
+          "path": "dag/benchmark/summarize_runs.py",
+          "sha256": "2ba7648938ffe93e5215ef962e3adb31fd7d4fb216697fa8412361b6f4147eb1",
+          "lines": [
+            177,
+            184
+          ]
+        }
+      ],
+      "limits": [
+        "Unavailable token usage excludes only Pareto eligibility, not raw reporting.",
+        "Reasoning tokens are not added a second time. Descriptive within-item frontier membership is not an established population advantage."
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "id": "CPWF-V001",
+      "performed_by": "this independent reviewer",
+      "passed": true,
+      "tests_passed": 6,
+      "provider_calls": 0,
+      "native_executions": 0,
+      "method": "Selected existing actual-runner pytest cases, with NativeHost.compute replaced by a fail-fast sentinel and verified never called. Network already forbidden by the test fixture.",
+      "tests": [
+        "preflight_failure_prevents_every_model_call",
+        "native_failure_after_paid_proposal_keeps_charge_and_stops[both arms]",
+        "real_helper_returned_infrastructure_failure_stops_both_arms[both arms]",
+        "unknown_billing_stops_without_further_call[proposal]"
+      ],
+      "receipt_directory": "dag/benchmark/charpoly_workflows_review_test_temp"
+    },
+    {
+      "id": "CPWF-V002",
+      "performed_by": "this independent reviewer",
+      "passed": true,
+      "method": "Actual runner with two invalid offline proposals, native execution disabled.",
+      "input_raw_bytes": 40000,
+      "forwarded_repair_raw_bytes": 8192,
+      "full_original_response_preserved": true,
+      "offline_calls": 2,
+      "provider_calls": 0,
+      "native_executions": 0,
+      "answer_text": null,
+      "status": "certificate_refused",
+      "receipt_path": "dag/benchmark/charpoly_workflows_review_oversized/run.json",
+      "receipt_sha256": "7a95479ec7fd75d402cd078b3045142dbaa3d4c186d9d4e6ce7f89c964251f01"
+    },
+    {
+      "id": "CPWF-V003",
+      "performed_by": "this independent reviewer",
+      "passed": true,
+      "method": "Five pure-Python dominance controls: extra tokens block cheaper/faster dominance; reverse tradeoff blocks; equal tokens permit cost dominance; unknown tokens block eligibility; identical points do not strictly dominate.",
+      "provider_calls": 0,
+      "native_executions": 0
+    },
+    {
+      "id": "CPWF-V004",
+      "performed_by": "parent; reported test outcome and full test source reviewed here",
+      "passed": true,
+      "tests_passed": 33,
+      "tests": "test_charpoly_runner.py and test_summarize_runs.py",
+      "scope": "Includes actual native success/refutation, correction and ungated context equality, billing/cap failures, guarded synthetic campaign and token-aware reporting. This reviewer independently reran only the six listed no-native cases."
+    },
+    {
+      "id": "CPWF-V005",
+      "performed_by": "helper owner; reported test outcome and full test source reviewed here",
+      "passed": true,
+      "tests_passed": 14,
+      "tests": "test_charpoly_workflows.py",
+      "scope": "Public fixture and one native mutation, parsing, degree and rational admission, visibility, repair count, source drift and infrastructure controls. Not rerun by this reviewer."
+    },
+    {
+      "id": "CPWF-V006",
+      "performed_by": "parent; frozen validation artifact fully read here",
+      "passed": true,
+      "receipt_path": "dag/benchmark/charpoly_rebuild_validation.json",
+      "receipt_sha256": "1e7185e6700486f171bcb66f0eaa0180c1dc24cbdc910b134f5878016cc77578",
+      "scope": "Fresh source-only Windows native rebuild with preserved lock, fresh READY preflight and1x1polynomial[-1,1]. New binary digest differs: reproducible registration of a fresh verified build, not bit-identical binary reproducibility."
+    }
+  ],
+  "evaluator_preparation": {
+    "path": "dag/benchmark/charpoly_pilot_20261110/reference_provenance.json",
+    "sha256": "b2679b9ba498f4ed26533908ac7d1c7be5e0a3112d85cfb54f42b80d7dad79b6",
+    "rubric_unchanged": true,
+    "new_output_content_read": false,
+    "instructions_or_runtime_edits_by_reviewer": false
+  },
+  "limits": [
+    "No source-corpus review expansion or source/runtime edits by this reviewer.",
+    "No provider calls, new native execution, private answer/storage access or live campaign outputs read during this review.",
+    "Existing native/public checker and test sources reviewed; original broad Rust stack was not rebuilt or universally proved.",
+    "The workflow integration can be exercised, but its final-answer benefit remains an empirical question for post-freeze grading.",
+    "An unexpected plain RuntimeError from the standalone helper propagates; the registered runner catches it and stops both arms as INFRASTRUCTURE_REFUSAL. The executed failure controls cover that runner boundary."
+  ],
+  "review_validation": {
+    "all_checked_source_hashes_match": true,
+    "all_evidence_ranges_valid": true,
+    "resolved_findings": 3,
+    "remaining_blockers": 0,
+    "source_pins": 13,
+    "native_executions_by_reviewer": 0,
+    "provider_calls_by_reviewer": 0
+  }
+}

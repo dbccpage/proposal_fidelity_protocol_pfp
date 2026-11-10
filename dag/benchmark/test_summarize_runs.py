@@ -6,12 +6,19 @@ from summarize_runs import RUBRIC, dominates, validate_grade, summarize, sha
 from reference_runner import HERE
 
 def test_cost_accuracy_tradeoff_is_not_declared_improvement():
-    a = {'score': 90, 'money_usd': .08, 'wall_time_seconds': 40}
-    b = {'score': 85, 'money_usd': .02, 'wall_time_seconds': 15}
+    a = {'score': 90, 'money_usd': .08, 'wall_time_seconds': 40, 'total_tokens': 1000}
+    b = {'score': 85, 'money_usd': .02, 'wall_time_seconds': 15, 'total_tokens': 500}
     assert not dominates(a, b) and not dominates(b, a)
     assert not dominates(a, a)
     assert not dominates({**a, 'money_usd': None}, b)
     assert dominates({**b, 'score': 95}, a)
+
+def test_cheaper_faster_answer_with_more_tokens_does_not_dominate():
+    a = {'score': 90, 'money_usd': .08, 'wall_time_seconds': 40, 'total_tokens': 1000}
+    b = {'score': 90, 'money_usd': .02, 'wall_time_seconds': 15, 'total_tokens': 1001}
+    assert not dominates(b, a) and not dominates(a, b)
+    assert not dominates({**b, 'total_tokens': None}, a)
+    assert dominates({**b, 'total_tokens': 1000}, a)
 
 def test_grade_cannot_follow_an_answer_or_seed_change():
     receipt = {'run_id': 'r', 'seed_sha256': 'a'*64, 'answer_sha256': 'b'*64}

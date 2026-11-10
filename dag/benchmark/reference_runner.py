@@ -20,6 +20,8 @@ from rational_panel import check_panel
 from hamiltonian_workflows import MATRIX_PLANS
 from hamiltonian_artifact import public_contract as matrix_contract, check_artifact, public_input_artifact
 from section_workflows import SECTION_PLANS, assemble_sections
+from charpoly_workflows import (CHARPOLY_PLANS, preflight as charpoly_preflight,
+                               stage_request as charpoly_stage_request, check_candidate as check_charpoly)
 
 HERE = Path(__file__).resolve().parent
 PLANS = {
@@ -34,6 +36,7 @@ PLANS = {
 PLANS.update(EXPERIMENTS)
 PLANS.update(MATRIX_PLANS)
 PLANS.update(SECTION_PLANS)
+PLANS.update(CHARPOLY_PLANS)
 
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -99,7 +102,7 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     """
     if plan not in PLANS:
         raise ValueError('Unsupported plan; proposed research hosts are not generic executable stages')
-    specification = EXPERIMENTS.get(plan) or MATRIX_PLANS.get(plan) or SECTION_PLANS.get(plan)
+    specification = EXPERIMENTS.get(plan) or MATRIX_PLANS.get(plan) or SECTION_PLANS.get(plan) or CHARPOLY_PLANS.get(plan)
     if specification:
         for name, expected in specification['source_pins'].items():
             if sha((HERE / name).read_bytes()) != expected:
@@ -131,12 +134,23 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     experiment = EXPERIMENTS.get(plan)
     matrix_plan = MATRIX_PLANS.get(plan)
     section_plan = SECTION_PLANS.get(plan)
+    charpoly_plan = CHARPOLY_PLANS.get(plan)
+    charpoly_checks = []
+    charpoly_custody = None
     matrix_checks = []
     stages = specification['stages'] if specification else [
         {'id': f'control_{index}', 'instruction': instruction, 'max_output_tokens': max_output_tokens,
          'visible_artifacts': [f'control_{index - 1}'] if index else []}
         for index, instruction in enumerate(PLANS[plan])]
     try:
+        if charpoly_plan:
+            try:
+                charpoly_custody = charpoly_preflight(sha(seed))
+                freeze_json(output / 'native_preflight.json', charpoly_custody)
+            except Exception as exc:
+                status = 'host_infrastructure_failure'
+                records.append({'error_class': type(exc).__name__, 'error': str(exc)[:300], 'dispatched': False})
+                stages = []
         if matrix_plan and matrix_plan['host_matrix']:
             artifact = public_input_artifact(sha(seed))
             responses['matrix_context'] = canonical(artifact).decode('utf-8')
@@ -146,6 +160,11 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
             matrix_checks.append({'stage_id': 'host_matrix', **checked})
             freeze_json(output / 'host_matrix.json', {'artifact': artifact, 'check': matrix_checks[-1]})
         for index, stage in enumerate(stages):
+            if charpoly_plan and stage['id'] == 'charpoly_repair' and charpoly_checks[-1]['accepted']:
+                continue
+            if charpoly_plan and stage['id'] == 'solve' and charpoly_plan['checked'] and not charpoly_checks[-1]['accepted']:
+                status = 'certificate_refused'
+                break
             if matrix_plan and stage['id'] == 'matrix_repair' and matrix_checks[-1]['accepted']:
                 continue
             if matrix_plan and stage['id'] == 'solve' and matrix_plan['checked'] and not matrix_checks[-1]['accepted']:
@@ -155,10 +174,18 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
             messages = [{'role': 'system', 'content': stage['instruction']}, {'role': 'user', 'content': seed_text}]
             if experiment:
                 messages.append({'role': 'user', 'content': 'Frozen public contract:\n' + canonical(public_context(sha(seed))).decode('utf-8')})
+            if charpoly_plan:
+                material = charpoly_stage_request(plan, stage['id'], seed_text, sha(seed),
+                    {name: json.loads(responses[name]) if name == 'charpoly_feedback' else responses[name]
+                     for name in stage['visible_artifacts']})
+                messages.append({'role': 'user', 'content': 'Public characteristic-polynomial input contract:\n' + canonical(material['public_context']).decode('utf-8')})
+                for value in material['visible_artifacts'].values():
+                    messages.append({'role': 'user', 'content': 'Untrusted previous candidate follows. It is not the answer key.\n' + canonical(value).decode('utf-8')})
             if matrix_plan and stage['id'] != 'solve':
                 messages.append({'role': 'user', 'content': 'Public representation contract:\n' + canonical(matrix_contract(sha(seed))).decode('utf-8')})
-            for visible in stage['visible_artifacts']:
-                messages.append({'role': 'user', 'content': 'Untrusted previous candidate follows. It is not the answer key.\n' + responses[visible]})
+            if not charpoly_plan:
+                for visible in stage['visible_artifacts']:
+                    messages.append({'role': 'user', 'content': 'Untrusted previous candidate follows. It is not the answer key.\n' + responses[visible]})
             request = {'messages': messages, 'max_output_tokens': min(max_output_tokens, stage['max_output_tokens']), 'tools': [], 'retries': 0}
             request_hash = sha(canonical(request))
             call_id = f'{run_id}:call:{index}'
@@ -202,6 +229,22 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
                     break
                 previous = reply.text
                 responses[stage['id']] = reply.text
+                if charpoly_plan and stage['id'] != 'solve':
+                    try:
+                        checked = check_charpoly(reply.text, sha(seed))
+                    except Exception as exc:
+                        # Billing is already settled. A host failure must not be
+                        # relabeled as an unknown provider charge or model error.
+                        checked = {'accepted': False, 'status': 'INFRASTRUCTURE_REFUSAL',
+                                   'solver_context': reply.text, 'feedback': {},
+                                   'reason': type(exc).__name__}
+                    charpoly_checks.append({'stage_id': stage['id'], **checked})
+                    freeze_json(output / 'calls' / f'{index:03d}.charpoly_check.json', charpoly_checks[-1])
+                    responses['charpoly_context'] = checked['solver_context']
+                    responses['charpoly_feedback'] = canonical(checked['feedback']).decode('utf-8')
+                    if checked['status'] == 'INFRASTRUCTURE_REFUSAL':
+                        status = 'host_infrastructure_failure'
+                        break
                 if matrix_plan and stage['id'] != 'solve':
                     checked = check_artifact(reply.text, sha(seed))
                     matrix_checks.append({'stage_id': stage['id'], **checked})
@@ -228,6 +271,18 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
         summary = ledger.summary(run_id)
         ledger.close()
     host_receipt = None
+    if charpoly_plan:
+        previous = responses.get('solve')  # A certificate alone is never a final answer.
+        accepted = bool(charpoly_checks and charpoly_checks[-1]['accepted'])
+        host_receipt = {'checker': 'registered_qm_native_charpoly_v1',
+                        'status': 'HOST_INFRASTRUCTURE_FAILURE' if status == 'host_infrastructure_failure' else 'CHECKED_INTERMEDIATE_ONLY',
+                        'checked_gate': charpoly_plan['checked'], 'certificate_accepted': accepted,
+                        'native_preflight': charpoly_custody, 'stage_checks': charpoly_checks,
+                        'artifact_errors': {} if accepted else {'charpoly': 'UNACCEPTED_OR_MISSING'},
+                        'claims': [{'status': 'EXACT_INTERMEDIATE_CHARPOLY_IDENTITY'}] if accepted else [],
+                        'final_answer_certified': False, 'all_requested_obligations_remain_uncertified': True,
+                        'scope': charpoly_plan['scope']}
+        freeze_json(output / 'host_checks.json', host_receipt)
     if section_plan:
         assembled = assemble_sections(responses)
         previous = assembled['answer_text']
@@ -288,9 +343,12 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
                'implementation_sha256': {name: sha((HERE / name).read_bytes()) for name in
                                          ('reference_runner.py', 'budget_ledger.py', 'campaign_ledger.py', 'openrouter_provider.py',
                                           'rational_panel.py', 'rational_workflows.py', 'hamiltonian_artifact.py', 'hamiltonian_workflows.py',
-                                          'section_workflows.py')},
+                                          'section_workflows.py', 'charpoly_workflows.py', 'qm_native_charpoly.py', 'native_sidecar.py')},
                'scope': 'Orchestration/checker fixture only. No live model performance observation.' if offline else
                         'One frozen-seed provider run. Cost bound is conditional on recorded provider premises; accuracy requires independent post-freeze review.'}
+    if charpoly_plan:
+        receipt['implementation_sha256'].update({name: sha((HERE / name).read_bytes())
+                                                 for name in charpoly_plan['source_pins']})
     receipt_hash = freeze_json(output / 'run.json', receipt)
     (output / 'run.sha256').write_text(receipt_hash + '\n', encoding='ascii')
     if not offline:
@@ -304,7 +362,7 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--run-id', required=True)
     args = parser.parse_args()
-    spec = EXPERIMENTS.get(args.plan) or MATRIX_PLANS.get(args.plan) or SECTION_PLANS.get(args.plan)
+    spec = EXPERIMENTS.get(args.plan) or MATRIX_PLANS.get(args.plan) or SECTION_PLANS.get(args.plan) or CHARPOLY_PLANS.get(args.plan)
     count = len(spec['stages']) if spec else len(PLANS[args.plan])
     receipt = run(args.plan, OfflineTape(['Synthetic fixture; no QM answer supplied.'] * count), args.output, args.run_id)
     print(json.dumps({k: receipt[k] for k in ('run_id', 'status', 'accuracy_status', 'offline')}))

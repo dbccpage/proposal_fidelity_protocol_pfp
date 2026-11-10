@@ -99,12 +99,13 @@ def validate_grade(grade, receipt, receipt_hash):
     return sum(grade['points'].values())
 
 def dominates(a, b):
-    """Strict Pareto dominance: score up, dollars and wall time down."""
-    keys = ('score', 'money_usd', 'wall_time_seconds')
+    """Strict Pareto dominance across accuracy, money, total tokens and wall time."""
+    keys = ('score', 'money_usd', 'total_tokens', 'wall_time_seconds')
     if any(a.get(k) is None or b.get(k) is None for k in keys):
         return False
-    weak = a['score'] >= b['score'] and a['money_usd'] <= b['money_usd'] and a['wall_time_seconds'] <= b['wall_time_seconds']
-    strict = a['score'] > b['score'] or a['money_usd'] < b['money_usd'] or a['wall_time_seconds'] < b['wall_time_seconds']
+    costs = ('money_usd', 'total_tokens', 'wall_time_seconds')
+    weak = a['score'] >= b['score'] and all(a[k] <= b[k] for k in costs)
+    strict = a['score'] > b['score'] or any(a[k] < b[k] for k in costs)
     return weak and strict
 
 def summarize(paths, grades):
@@ -145,6 +146,8 @@ def summarize(paths, grades):
                'sum_provider_duration_seconds': receipt['sum_provider_duration_seconds'],
                'input_tokens': receipt.get('input_tokens'), 'output_tokens': receipt.get('output_tokens'),
                'reasoning_tokens': receipt.get('reasoning_tokens'),
+               'total_tokens': (receipt['input_tokens'] + receipt['output_tokens']
+                                if receipt.get('input_tokens') is not None and receipt.get('output_tokens') is not None else None),
                'finish_reason_counts': dict(finishes),
                'truncated_call_count': finishes.get('length', 0),
                'host_artifact_errors': host_checks.get('artifact_errors', {}),
@@ -171,11 +174,13 @@ def summarize(paths, grades):
                           'host_infrastructure_failure_attempts': sum(r['host_infrastructure_failure'] for r in group),
                           'encoded_refutation_attempts_not_accuracy_scores': sum(r['encoded_claim_status_counts'].get('REFUTED_ENCODED_EQUALITY', 0) > 0 for r in group),
                           'sum_known_spent_usd': sum(r['known_spent_usd'] for r in group)})
-    eligible = [r for r in rows if all(r[k] is not None for k in ('score', 'money_usd', 'wall_time_seconds'))]
+    eligible = [r for r in rows if all(r[k] is not None for k in ('score', 'money_usd', 'total_tokens', 'wall_time_seconds'))]
     front = [r['run_id'] for r in eligible if not any(dominates(other, r) for other in eligible)]
     return {'schema_version': '1.0', 'status': 'observed_live_receipts' if rows else 'no_live_results',
             'offline_fixture_ids_excluded': offline, 'raw_runs': rows, 'groups': summaries,
             'pareto_front_run_ids': front,
+            'pareto_objectives': {'score': 'maximize', 'money_usd': 'minimize', 'total_tokens': 'minimize', 'wall_time_seconds': 'minimize'},
+            'token_definition': 'Provider-reported input plus output tokens. Reasoning tokens are not added again; unavailable usage excludes a run from Pareto comparison but not the raw results.',
             'interpretation': 'Descriptive within-item results only. Run and answer hashes, budget bindings, arithmetic and metric types are checked; local hashes do not authenticate a provider or prevent coordinated replacement of both data and digest. Failure attempts remain in counts; ungraded outcomes are not silently scored zero or dropped from an all-attempt mean. Pareto membership is observed, not a statistically established advantage. Provider duration sums are a serial-time proxy, not measured compute time.'}
 
 if __name__ == '__main__':
