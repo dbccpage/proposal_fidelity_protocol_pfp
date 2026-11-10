@@ -1,0 +1,75 @@
+{
+  "python": "3.14.2",
+  "source_pins": {
+    "pfp/infrastructure/pilot_runners/mssn_models.py": "e4e82a5a2b98ce19ab9f6a93d571212d73deb4ede58841b3ebe196817e6bfd97"
+  },
+  "method": "Full reviewed class AST plus existing Pydantic runtime, no production module imports/providers/native/private data.",
+  "controls": [
+    {
+      "id": "PFPINFRA-P040",
+      "name": "rational_model_coerces_boolean_and_allows_invalid_assignment",
+      "observed": {
+        "before": {
+          "num": 1,
+          "den": 2
+        },
+        "after": {
+          "num": 1,
+          "den": 0
+        }
+      },
+      "result": "reproduced",
+      "limit": "Actual isolated Pydantic class, synthetic DTO only; no claim that the stricter deciding seed checker accepts the same payload."
+    },
+    {
+      "id": "PFPINFRA-P041",
+      "name": "nilpotent_model_accepts_ragged_unchecked_column",
+      "observed": {
+        "d_k": [
+          [
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "d_k_minus_1": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "result": "reproduced",
+      "limit": "Actual isolated Pydantic class, synthetic DTO only; no claim that the stricter deciding seed checker accepts the same payload."
+    },
+    {
+      "id": "PFPINFRA-P042",
+      "name": "css_model_accepts_ragged_rows",
+      "observed": {
+        "h_x": [
+          [
+            0,
+            0
+          ],
+          [
+            1
+          ]
+        ],
+        "h_z": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "result": "reproduced",
+      "limit": "Actual isolated Pydantic class, synthetic DTO only; no claim that the stricter deciding seed checker accepts the same payload."
+    }
+  ]
+}

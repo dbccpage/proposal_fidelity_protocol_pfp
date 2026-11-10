@@ -1,0 +1,128 @@
+{
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "retained_owner_execution": false,
+  "results": [
+    {
+      "id": "OPSKILL-CHECK-015",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/auto-learn/scripts/auto_learn.py",
+        "sha256": "05b8d030f8b366ce93a1abf3ff2c6f637ff6443bbec760c46ad67219c3a5f860"
+      },
+      "observation": {
+        "args_action_read_lines": [],
+        "declared_actions": [
+          "repair",
+          "check",
+          "inspect"
+        ]
+      },
+      "limitations": "Structural confirmation after full semantic source reading. No retained CLI invoked; ignored action still reaches execute_auto_learn_repair with only args.dry_run controlling writes."
+    },
+    {
+      "id": "OPSKILL-CHECK-016",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/auto-learn/scripts/auto_learn.py",
+        "sha256": "05b8d030f8b366ce93a1abf3ff2c6f637ff6443bbec760c46ad67219c3a5f860"
+      },
+      "observation": {
+        "verifier_exit": 2,
+        "parsed_file_findings": 0,
+        "rollback": false,
+        "result_status": "VERIFIED_CLEAN"
+      },
+      "limitations": "Minimal isolated branch reproduction; representative missing-parser/crash output. Does not launch linter or mypy."
+    },
+    {
+      "id": "OPSKILL-CHECK-017",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/auto-learn/scripts/auto_learn.py",
+        "sha256": "05b8d030f8b366ce93a1abf3ff2c6f637ff6443bbec760c46ad67219c3a5f860"
+      },
+      "observation": {
+        "root": "C:\\repo",
+        "reported_file": "C:/outside/file.md",
+        "normalized": "C:/outside/file.md",
+        "selected_path": "C:\\outside\\file.md",
+        "within_root": false
+      },
+      "limitations": "Pure path calculation only; no outside file is read, created or modified."
+    },
+    {
+      "id": "OPSKILL-CHECK-018",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/auto-learn/scripts/auto_learn.py",
+        "sha256": "05b8d030f8b366ce93a1abf3ff2c6f637ff6443bbec760c46ad67219c3a5f860"
+      },
+      "observation": {
+        "raw_hex": "2a206974656d0aff",
+        "text_snapshot_roundtrip_hex": "2a206974656d0aefbfbd",
+        "byte_exact": false
+      },
+      "limitations": "In-memory counterexample to byte-exact rollback via replacement-decoded text; no source write."
+    },
+    {
+      "id": "OPSKILL-CHECK-019",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/auto-learn/scripts/auto_learn.py",
+        "sha256": "05b8d030f8b366ce93a1abf3ff2c6f637ff6443bbec760c46ad67219c3a5f860"
+      },
+      "observation": {
+        "original_line_repr": "'* \\n'",
+        "repaired_line_repr": "'- '",
+        "retains_line_ending": false
+      },
+      "limitations": "Exact regex control shows whitespace includes newline; the repair can concatenate an empty bullet with the following line. Not a full Markdown semantics test."
+    },
+    {
+      "id": "OPSKILL-CHECK-020",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/auto-obstruction-hunter/scripts/ast_cochain_obstruction_scanner.py",
+        "sha256": "8a1d6b24b9898069a7e86bca9f39cf1cff58a7837cbaab14d39c75254d16d167"
+      },
+      "observation": {
+        "edges": [
+          "A->B",
+          "B->C",
+          "A->C"
+        ],
+        "directed_acyclic": true,
+        "incidence_matrix": [
+          [
+            -1,
+            0,
+            -1
+          ],
+          [
+            1,
+            -1,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ]
+        ],
+        "nonzero_cycle": [
+          -1,
+          -1,
+          1
+        ],
+        "boundary": [
+          0,
+          0,
+          0
+        ],
+        "incidence_rank": 2,
+        "one_skeleton_H1_dimension_over_Q": 1
+      },
+      "limitations": "Exact finite graph counterexample separating absence of directed import cycles from vanishing simplicial H1. The wrapper never defines faces/differentials or the cochain whose exactness it labels; imported detector not executed."
+    }
+  ]
+}

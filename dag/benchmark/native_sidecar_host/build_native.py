@@ -1,0 +1,103 @@
+"""Build only this isolated, offline native experiment and retain exact custody."""
+from __future__ import annotations
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+OWNER = ROOT / "code/rust/pfp_runtime/src/rational.rs"
+OWNER_SHA = "9d78981a19c942a70d4d4262f1df9538024754b2b87c0e0288a46d377cd3916c"
+PREFIX = b"// Verbatim production owner lines 291..353; see source_binding.json.\nimpl RationalMatrix {\n"
+SUFFIX = b"}\n"
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+def main():
+    owner = OWNER.read_bytes()
+    if hashlib.sha256(owner).hexdigest() != OWNER_SHA:
+        raise RuntimeError("SOURCE_OWNER_CHANGED")
+    fragment = b"".join(owner.splitlines(keepends=True)[290:353])
+    generated = HERE / "src/production_charpoly.rs"
+    generated.write_bytes(PREFIX + fragment + SUFFIX)
+    binding = {"owner": OWNER.relative_to(ROOT).as_posix(), "owner_sha256": OWNER_SHA,
+        "lines": [291, 353], "transfer": "verbatim bytes, including original line endings",
+        "fragment_sha256": hashlib.sha256(fragment).hexdigest(),
+        "generated_path": "src/production_charpoly.rs", "generated_sha256": sha(generated),
+        "prefix_bytes": len(PREFIX), "fragment_bytes": len(fragment),
+        "scope": "Only these four arithmetic methods are reused; carrier and admission are new wrapper code."}
+    (HERE / "source_binding.json").write_text(json.dumps(binding, indent=2) + "\n", encoding="utf-8")
+    cargo = shutil.which("cargo")
+    rustc = shutil.which("rustc")
+    if not cargo or not rustc:
+        raise RuntimeError("NATIVE_TOOLCHAIN_UNAVAILABLE")
+    # Build tools inherit only ordinary process/cache paths, never provider credentials.
+    allow = {"PATH", "SYSTEMROOT", "WINDIR", "COMSPEC", "PATHEXT", "TEMP", "TMP",
+             "USERPROFILE", "HOMEDRIVE", "HOMEPATH", "CARGO_HOME", "RUSTUP_HOME"}
+    env = {k: v for k, v in os.environ.items() if k.upper() in allow}
+    env.update(CARGO_NET_OFFLINE="true", CARGO_TARGET_DIR=str(HERE / "target"), CARGO_BUILD_JOBS="1")
+    # Explicit installed MSVC/SDK paths, without running environment scripts.
+    linker = Path("C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe")
+    sdk = Path("C:/Program Files (x86)/Windows Kits/10/Lib/10.0.26100.0")
+    if linker.is_file():
+        env["PATH"] = str(linker.parent) + os.pathsep + env.get("PATH", "")
+        env["LIB"] = os.pathsep.join(str(p) for p in
+            [linker.parents[3] / "lib/x64", sdk / "ucrt/x64", sdk / "um/x64"])
+    commands = []
+    def run(args, timeout=120):
+        result = subprocess.run(args, cwd=HERE, env=env, capture_output=True, text=True,
+                                encoding="utf-8", errors="replace", timeout=timeout)
+        commands.append({"args": args, "returncode": result.returncode,
+                         "stdout": result.stdout, "stderr": result.stderr})
+        return result
+    receipt = {"schema": "pfp.native-sidecar.build.v1", "status": "INFRASTRUCTURE_REFUSAL",
+               "commands": commands, "source_binding": binding, "provider_calls": 0,
+               "scope": "Standalone exact arithmetic extraction only; not the full PFP host."}
+    if linker.is_file():
+        receipt["linker"] = {"path": str(linker), "sha256": sha(linker), "library_paths": env["LIB"]}
+    try:
+        for args in ([rustc, "--version", "--verbose"], [cargo, "--version", "--verbose"]):
+            if run(args).returncode: raise RuntimeError("TOOLCHAIN_QUERY_FAILED")
+        sysroot = run([rustc, "--print", "sysroot"])
+        if sysroot.returncode: raise RuntimeError("TOOLCHAIN_QUERY_FAILED")
+        toolroot = Path(sysroot.stdout.strip()) / "bin"
+        receipt["toolchain"] = {name: {"path": str(toolroot / name), "sha256": sha(toolroot / name)}
+                                for name in ("rustc.exe", "cargo.exe")}
+        receipt["launcher_hashes"] = {cargo: sha(cargo), rustc: sha(rustc)}
+        lock_path = HERE / "Cargo.lock"
+        if lock_path.exists():
+            receipt["lock_policy"] = "preserved_existing"
+        else:
+            receipt["lock_policy"] = "generated_only_when_absent"
+            if run([cargo, "generate-lockfile", "--offline"]).returncode:
+                raise RuntimeError("OFFLINE_DEPENDENCY_LOCK_FAILED")
+        receipt["lock_sha256_before_build"] = sha(lock_path)
+        if run([cargo, "build", "--offline", "--locked", "--jobs", "1"], timeout=180).returncode:
+            raise RuntimeError("ISOLATED_NATIVE_BUILD_FAILED")
+        receipt["lock_sha256_after_build"] = sha(lock_path)
+        if receipt["lock_sha256_after_build"] != receipt["lock_sha256_before_build"]:
+            raise RuntimeError("DEPENDENCY_LOCK_CHANGED")
+        binary = HERE / "target/debug/pfp-native-sidecar-host.exe"
+        receipt.update(status="BUILT", binary={"path": str(binary.relative_to(ROOT)),
+                        "sha256": sha(binary), "bytes": binary.stat().st_size})
+    except (RuntimeError, OSError, subprocess.TimeoutExpired) as exc:
+        receipt["reason"] = str(exc)
+    receipt["files"] = {str(p.relative_to(HERE)): sha(p) for p in
+        [HERE / "Cargo.toml", HERE / "Cargo.lock", HERE / "src/main.rs", generated,
+         HERE / "source_binding.json", Path(__file__)] if p.exists()}
+    output = HERE / "build_receipt.json"
+    if output.exists():
+        attempt = len(list(HERE.glob("build_attempt_*.json"))) + 1
+        (HERE / f"build_attempt_{attempt:03d}.json").write_bytes(output.read_bytes())
+    output.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"status": receipt["status"], "reason": receipt.get("reason"),
+                      "receipt_sha256": sha(output), "binary": receipt.get("binary")}))
+    return 0 if receipt["status"] == "BUILT" else 2
+
+if __name__ == "__main__":
+    sys.exit(main())

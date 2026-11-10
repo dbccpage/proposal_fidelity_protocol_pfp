@@ -1,0 +1,36 @@
+import json,pathlib
+H=pathlib.Path(__file__).resolve().parent;P='additional_pfp_infrastructure_remaining';p=H/(P+'_notes.json');n=json.loads(p.read_text())
+rows={
+56:('L021 exact4x4 rotations Rx/Ry, noncommuting commutator and inverse/fourth-power loops; Gram/rotation/closure controls.','Finite ordered matrix holonomy, not scalar-angle closure or Regge geometric realization of arbitrary prescribed matrices.'),
+57:('L022 contravariant two-element fibres, identity and f/g/h composite tables; partial/wrong-fibre/nonfunctorial/base-gap controls.','Finite presheaf instance, not a universal category or all restriction coherence outside supplied base.'),
+58:('L023 compatible point-valued sections on patches12/23 and explicit global union, coverage/domain/overlap/glue controls.','Unique gluing for supplied ordinary functions; not unique joint probability distribution from marginals.'),
+59:('L024 two-stage restriction family, downward labels and subfamily pullback controls.','Finite subobject-classifier illustration; not a topos construction or universal classifier proof.'),
+60:('L025 complete tiny category identities/composition, weak arrows and two typed roofs with inverse/closure controls.','Typed roofs do not establish calculus-of-fractions hypotheses, quotient equivalence or universal localization.'),
+61:('L026 two-colour arity-bound2 partial-operad table with units, all displayed substitutions and kind/gap/unit/bracketing controls.','Bounded truncated substitution carrier; no arbitrary-arity operad or unchecked higher coherence. Distinct from other constructor reviewed by parent.'),
+62:('L027 complete Z2 cubed associator table, nontrivial111 cocycle and gap/coherence/coboundary controls.','Tiny finite cohomological coherence class, not all monoidal categories or physical associators.'),
+63:('L028 explicit rational chain complexes/maps/homotopies with zero-dimensional blocks and left/right identity controls.','Finite chain-homotopy equivalence conditional on supplied matrices and convention; no general space equivalence.'),
+64:('L029 oriented boundary matrices for filled triangle with tail, closure/degree/boundary-square controls.','Finite simplicial chain complex, not arbitrary differential graded geometry.'),
+65:('L030 filtered triangle pages and three degree2 cancellation arrows, filtration/square/page/resurrection controls.','Finite declared reduction and page accounting; not convergence of arbitrary spectral sequences or completeness beyond fixture.'),
+66:('L031 RP2 triangulation mod2 cocycle, cup-like term formula and three maps; representative/naturality/cocycle controls.','Naturality checked against listed finite maps/representatives only; not a universal cohomology operation.'),
+67:('L032 six-to-three quotient map with exact lost-pair ledger and explicit protected-erasure permissions; padding/missing/escalation controls.','Finite pair accounting makes loss visible but does not authorize erasures or prove domain fidelity.'),
+68:('L033 two averaging/coarsening steps and composite jump with rational additive1/2+1 bound; composition/understatement controls.','Supplied norm/reading and bound arithmetic, not arbitrary abstraction or guaranteed sharp error bound.'),
+69:('L034 categorical simplex family at(1/3,1/3) and Fisher[[6,3],[3,6]], normalization/PSD/mismatch controls.','Local rational Fisher information under declared statistical family, not causal/physical identification.'),
+70:('L035 exact2-state Markov kernel with nonnegative entries and stochastic-row controls.','Stochasticity alone implies neither irreducibility, mixing nor stationarity of a claimed law.'),
+71:('L036 sequential rational Bayes updates, normalized prior, likelihood ranges, zero evidence and posterior controls.','Conditional arithmetic given likelihood model; no calibration or empirical warrant for prior/observations.'),
+72:('L037 Boolean confounded structural equations with distinct observational and forced effects, acyclicity/effect controls.','Causal interpretation is admitted by equations/intervention semantics, not derived from correlation.'),
+73:('L038 Boolean twin-network counterfactual fixture preserving abducted backgrounds, answer-set and background-redraw controls.','Finite counterfactual semantics conditional on supplied SCM; not identified physical counterfactuals.'),
+74:('L039 complete2x2 rational game payoff table and defined-profile/payoff lookup controls.','Table evaluation, not equilibrium or real-agent utility validation.'),
+75:('L040 prisoner-dilemma pure equilibrium DD with unilateral-deviation/table/profile controls.','Pure finite equilibrium check, not mixed-strategy completeness, dynamics or welfare guarantee.'),
+76:('L041 typed resource term with explicit duplication permission for C, unused/duplicate/untyped/mismatch controls.','Chosen linear typing discipline; no runtime resource enforcement or general theorem-prover completeness.'),
+77:('L042 dual send/receive finite state machines with loop and optional end, stuck/unmatched/no-end controls.','Compatibility/reachable end does not ensure all executions terminate or fair scheduling.'),
+78:('L043 nested scope grants and operation effects, unknown operation/outside grant/escalation controls.','Finite declared capability checker, not OS sandbox or verification of actual operation effects.'),
+79:('L044 finite-domain Hoare-style claims with complete PROVED witness, concrete REFUTED example and explicit PENDING state.','Finite integer interval enumeration, not symbolic proof over unbounded programs; pending correctly separate.'),
+80:('L045 explicit P and P->Q axioms, digest-bound modus ponens derivation and rule/reference/conclusion controls.','Conditional syntactic proof in tiny calculus; axiom truth/consistency and trusted implementation remain assumptions.'),
+81:('L046 simple decreasing recurrence output6 with interpreter/checker digest-shaped placeholders and measure/confirmation controls.','Different opaque hashes do not demonstrate independent implementations, executed confirmation or actual source custody.'),
+82:('L047 exact Gaussian-rational sum/product/conjugation with decimal/untyped/mismatch controls.','Exact arithmetic under admitted complex-pair carrier, not derivation of that carrier or physical selection.'),
+83:('L048 rational-complex two-component unit vector and duplicate/empty frame controls.','Normalization in supplied Euclidean/Hermitian metric, not derivation of Hilbert structure.'),
+84:('L049 named orthonormal rational frame transform, complex coordinates and reconstructed row with carrier/unit/row controls.','Finite basis change conditional on supplied mirror-pair carrier and metric; no physical identification.'),
+85:('L050 rational Hermitian involution with two exact spectral projectors and nonreal/nonsymmetric/incomplete/spectral controls.','Finite2x2 spectral witness; fixture rejects legitimate general observables outside its involution scope.'),
+}
+for i,(a,l)in rows.items():n[str(i)]={'assessment':'Full baseline and every complete case difference read; exact raw-byte reconstruction verified. '+a,'limits':l+' Expected PASS/REFUSED labels are test specifications, not new runtime results.'}
+p.write_text(json.dumps(n,indent=2)+'\n')

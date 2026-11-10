@@ -97,7 +97,7 @@ stateDiagram-v2
     Verifying --> [*]: Terminal Accepted (Phi_1 = 0)
 ```
 
-![The Four Legal Moves of The Symbol Game](assets/03_four_legal_moves.svg)
+![The Four Legal Moves of The Symbol Game](../../../pilots/education/symbol_game/assets/03_four_legal_moves.svg)
 
 ---
 
@@ -147,7 +147,7 @@ $$c'(u \to v) = c(u \to v) + \big( f(v) - f(u) \big)$$
   $$\Phi_1(S') < \Phi_1(S)$$
 - **Refusal on Violation:** If $\Phi_1(S') \ge \Phi_1(S)$, the move is rejected with `REFUSED_MONOTONICITY_VIOLATION`. The proposed changes are atomically discarded, but turn fuel is consumed.
 
-![Strict Lyapunov Descent Trajectory](assets/04_strict_lyapunov_descent.svg)
+![Strict Lyapunov Descent Trajectory](../../../pilots/education/symbol_game/assets/04_strict_lyapunov_descent.svg)
 
 ---
 

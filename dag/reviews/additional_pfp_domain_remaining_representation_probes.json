@@ -1,0 +1,112 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/prompt_representations/common.py",
+      "sha256": "d686590cfa1d63b7b57c6bc1b839dac20ae71c3c6da3db4032f486dbd9b0d786"
+    },
+    {
+      "path": "pfp/domain/prompt_representations/structured_prompt_representation.py",
+      "sha256": "93615f3fa6a3b1d6855f9e7830b7e1efb3f4310715b04288ba91d235be4182be"
+    },
+    {
+      "path": "pfp/domain/prompt_representations/relational_prompt_representation.py",
+      "sha256": "7823447afa2a1f1c2d9b38e35a0313e064bc76cc972b70ff10c85212beec44dc"
+    },
+    {
+      "path": "pfp/domain/prompt_representations/symbolic_prompt_representation.py",
+      "sha256": "aa214361174785900e54b54bf9c8483f7082cb16e06e5be165eaba481aa9331a"
+    },
+    {
+      "path": "pfp/domain/prompt_representations/operadic_prompt_representation.py",
+      "sha256": "b7047c55b966cb46a992ddcc9c25d3e581702528abaeeb2fa31b433493fdee9e"
+    },
+    {
+      "path": "pfp/domain/prompt_representations/egraph_prompt_representation.py",
+      "sha256": "ab56ac950cb2acd714b6549bf407c4ff3975c2a8735353a96917be179db1b7fb"
+    },
+    {
+      "path": "pfp/domain/prompt_representations/diagram_prompt_representation.py",
+      "sha256": "cfcc1da09e80004643869bb45b01e9d0a8fe46ed00ec55803fa65f0feaddc4e2"
+    },
+    {
+      "path": "pfp/domain/prompt_representations/cochain_prompt_representation.py",
+      "sha256": "3fc89ab325feacc5eadc71f3fe0be5eff77e259e24f81f3ed161cc33aaa9d6e4"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C085",
+      "rule": "structured_span_text_and_UTF8_binding",
+      "status": "counterexample_observed",
+      "source": "\u03b1",
+      "declared_complete_span": [
+        0,
+        2
+      ],
+      "accepted_segment_text": "changed",
+      "accepted_middle_codepoint_boundary": 1,
+      "limit": "Source digest itself is recomputed correctly; segment content and UTF8 boundaries are not compared."
+    },
+    {
+      "id": "PFPDOMAIN-C086",
+      "rule": "symbolic_and_relational_source_digest_binding",
+      "status": "counterexample_observed",
+      "arbitrary_source_digest_accepted": true,
+      "symbolic_changed_legend_accepted": true,
+      "relational_arbitrary_digest_accepted": true,
+      "limit": "Caller may separately compare a protected ordered query; these representation models do not."
+    },
+    {
+      "id": "PFPDOMAIN-C087",
+      "rule": "egraph_equivalence_disjointness_and_sequence",
+      "status": "counterexample_observed",
+      "classes": {
+        "e9": [
+          "1",
+          "2"
+        ],
+        "e10": [
+          "1"
+        ]
+      },
+      "accepted": true,
+      "limit": "No equation proof, saturation run or constraint-before/after comparison is performed by this schema."
+    },
+    {
+      "id": "PFPDOMAIN-C088",
+      "rule": "diagram_port_wiring_and_boundary_direction",
+      "status": "counterexample_observed",
+      "accepted_undeclared_box_input": "missing",
+      "accepted_wire": [
+        "OUT",
+        "IN"
+      ],
+      "limit": "No planarity, acyclicity or morphism semantics inferred."
+    },
+    {
+      "id": "PFPDOMAIN-C089",
+      "rule": "cochain_representation_carrier_and_reference_binding",
+      "status": "counterexample_observed",
+      "accepted_degenerate_face": [
+        "v",
+        "v",
+        "v"
+      ],
+      "declared_edges": [],
+      "accepted_undeclared_edge_cochain": true,
+      "accepted_undeclared_face_cochain": true,
+      "accepted_undeclared_span_simplex": true,
+      "limit": "Exact rational spelling is checked; coboundaries, nilpotency and harmonic equations are not computed."
+    },
+    {
+      "id": "PFPDOMAIN-C090",
+      "rule": "host_rendered_sqlite_v2_lossless_text",
+      "status": "bounded_positive_control_observed",
+      "quotes_unicode_NUL_preserved": true,
+      "rows": 1,
+      "sqlite_version": "3.50.4",
+      "limit": "Only host-rendered synthetic SQL executed in isolated memory database. No model SQL, external database or provider accessed."
+    }
+  ]
+}

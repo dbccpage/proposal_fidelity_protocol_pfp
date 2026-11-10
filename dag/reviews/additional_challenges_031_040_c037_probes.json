@@ -1,0 +1,1461 @@
+{
+  "exploits": [
+    {
+      "label": "positive",
+      "case": {
+        "id": "synthetic",
+        "model": "su2",
+        "k": 1
+      },
+      "answer": {
+        "id": "synthetic",
+        "status": "SOLVED",
+        "central_charge": "1",
+        "primaries": [
+          {
+            "label": [
+              0
+            ],
+            "h": "0"
+          },
+          {
+            "label": [
+              1
+            ],
+            "h": "1/4"
+          }
+        ],
+        "fusion": [
+          [
+            [
+              0
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ],
+            1
+          ],
+          [
+            [
+              0
+            ],
+            [
+              1
+            ],
+            [
+              1
+            ],
+            1
+          ],
+          [
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              0
+            ],
+            1
+          ]
+        ]
+      },
+      "result": {
+        "case_id": "synthetic",
+        "verdict": "PASS",
+        "agreed": true,
+        "checker1_verlinde_cyclotomic": {
+          "ok": true,
+          "message": "PASS (C1): valid SU(2)_k Verlinde certificate"
+        },
+        "checker2_combinatorial_fusion": {
+          "ok": true,
+          "message": "PASS (C2): valid SU(2)_k combinatorial certificate"
+        }
+      }
+    },
+    {
+      "label": "wrong_id",
+      "case": {
+        "id": "synthetic",
+        "model": "su2",
+        "k": 1
+      },
+      "answer": {
+        "id": "wrong",
+        "status": "SOLVED",
+        "central_charge": "1",
+        "primaries": [
+          {
+            "label": [
+              0
+            ],
+            "h": "0"
+          },
+          {
+            "label": [
+              1
+            ],
+            "h": "1/4"
+          }
+        ],
+        "fusion": [
+          [
+            [
+              0
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ],
+            1
+          ],
+          [
+            [
+              0
+            ],
+            [
+              1
+            ],
+            [
+              1
+            ],
+            1
+          ],
+          [
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              0
+            ],
+            1
+          ]
+        ]
+      },
+      "result": {
+        "case_id": "synthetic",
+        "verdict": "PASS",
+        "agreed": true,
+        "checker1_verlinde_cyclotomic": {
+          "ok": true,
+          "message": "PASS (C1): valid SU(2)_k Verlinde certificate"
+        },
+        "checker2_combinatorial_fusion": {
+          "ok": true,
+          "message": "PASS (C2): valid SU(2)_k combinatorial certificate"
+        }
+      }
+    },
+    {
+      "label": "malformed_fraction",
+      "case": {
+        "id": "synthetic",
+        "model": "su2",
+        "k": 1
+      },
+      "answer": {
+        "id": "synthetic",
+        "status": "SOLVED",
+        "central_charge": "--1/2",
+        "primaries": [
+          {
+            "label": [
+              0
+            ],
+            "h": "0"
+          },
+          {
+            "label": [
+              1
+            ],
+            "h": "1/4"
+          }
+        ],
+        "fusion": [
+          [
+            [
+              0
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ],
+            1
+          ],
+          [
+            [
+              0
+            ],
+            [
+              1
+            ],
+            [
+              1
+            ],
+            1
+          ],
+          [
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              0
+            ],
+            1
+          ]
+        ]
+      },
+      "result": {
+        "exception": "ValueError",
+        "message": "invalid literal for int() with base 10: '--1'"
+      }
+    },
+    {
+      "label": "boolean_early_exit",
+      "case": {
+        "model": "su2",
+        "k": true
+      },
+      "answer": {
+        "status": "UNKNOWN",
+        "arbitrary": "anything"
+      },
+      "result": {
+        "case_id": "unknown_case",
+        "verdict": "PASS",
+        "agreed": true,
+        "checker1_verlinde_cyclotomic": {
+          "ok": true,
+          "message": "PASS (C1): boolean injection correctly refused"
+        },
+        "checker2_combinatorial_fusion": {
+          "ok": true,
+          "message": "PASS (C2): boolean injection correctly refused"
+        }
+      }
+    },
+    {
+      "label": "wrong_refusal_code",
+      "case": {
+        "id": "bad",
+        "model": "other"
+      },
+      "answer": {
+        "id": "unrelated",
+        "status": "UNKNOWN",
+        "refusal_code": "FABRICATED"
+      },
+      "result": {
+        "case_id": "bad",
+        "verdict": "PASS",
+        "agreed": true,
+        "checker1_verlinde_cyclotomic": {
+          "ok": true,
+          "message": "PASS (C1): invalid model refused"
+        },
+        "checker2_combinatorial_fusion": {
+          "ok": true,
+          "message": "PASS (C2): invalid model refused"
+        }
+      }
+    },
+    {
+      "label": "invalid_pprime_witness",
+      "case": {
+        "id": "badpp",
+        "model": "minimal",
+        "p": 3,
+        "p_prime": 1
+      },
+      "answer": {
+        "id": "badpp",
+        "status": "OUT_OF_SCOPE",
+        "witness": {
+          "kind": "invalid_p_prime",
+          "p_prime": 999
+        }
+      },
+      "result": {
+        "case_id": "badpp",
+        "verdict": "PASS",
+        "agreed": true,
+        "checker1_verlinde_cyclotomic": {
+          "ok": true,
+          "message": "PASS (C1): valid OUT_OF_SCOPE invalid_p_prime witness"
+        },
+        "checker2_combinatorial_fusion": {
+          "ok": true,
+          "message": "PASS (C2): valid OUT_OF_SCOPE invalid_p_prime witness"
+        }
+      }
+    }
+  ],
+  "all_allowed_model_controls": [
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 1
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 2
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 3
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 4
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 5
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 6
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 7
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 8
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 9
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 10
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 11
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 12
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 13
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 14
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 15
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 16
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 17
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 18
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 19
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "su2",
+        "k": 20
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 3,
+        "p_prime": 2
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 4,
+        "p_prime": 3
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 5,
+        "p_prime": 2
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 5,
+        "p_prime": 3
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 5,
+        "p_prime": 4
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 6,
+        "p_prime": 5
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 7,
+        "p_prime": 2
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 7,
+        "p_prime": 3
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 7,
+        "p_prime": 4
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 7,
+        "p_prime": 5
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 7,
+        "p_prime": 6
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 8,
+        "p_prime": 3
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 8,
+        "p_prime": 5
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 8,
+        "p_prime": 7
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 9,
+        "p_prime": 2
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 9,
+        "p_prime": 4
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 9,
+        "p_prime": 5
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 9,
+        "p_prime": 7
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 9,
+        "p_prime": 8
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 10,
+        "p_prime": 3
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 10,
+        "p_prime": 7
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 10,
+        "p_prime": 9
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 2
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 3
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 4
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 5
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 6
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 7
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 8
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 9
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 11,
+        "p_prime": 10
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 12,
+        "p_prime": 5
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 12,
+        "p_prime": 7
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 12,
+        "p_prime": 11
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 2
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 3
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 4
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 5
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 6
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 7
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 8
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 9
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 10
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 11
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    },
+    {
+      "case": {
+        "id": "matrix",
+        "model": "minimal",
+        "p": 13,
+        "p_prime": 12
+      },
+      "independent": {
+        "status": "independent_path_graph_Chebyshev_recurrence",
+        "labels_match": true,
+        "central_charge_match": true,
+        "weights_match": true,
+        "fusion_match": true,
+        "id_matches": true,
+        "ignored_case_fields": [],
+        "scope": "All coefficients from integer path adjacency recurrence; minimal Kac quotient and conformal formulas are admitted model premises, not a CFT existence or unitarity proof."
+      }
+    }
+  ],
+  "minimal_trace_note": "Reference emits factored_su2_verlinde_descent and ring_axioms_satisfied flags without executing a minimal-model cyclotomic sum or ring audit; dual checker is separate."
+}

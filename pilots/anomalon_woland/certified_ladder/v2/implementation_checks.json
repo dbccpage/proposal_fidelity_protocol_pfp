@@ -1,0 +1,271 @@
+{
+  "kernel": {
+    "environment": "PYTHONPATH=.; PYTHONUTF8=1; PYTHONDONTWRITEBYTECODE=1; PYTEST_DISABLE_PLUGIN_AUTOLOAD=1; TEMP/TMP=<repo>/.scratch/oewas012; OMEGA_SYMBOL_GAME_HOST=<repo>/.scratch/oewas012/oewas012-native.exe",
+    "python": "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\venv\\Scripts\\python.exe",
+    "native_host": "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\oewas012-native.exe",
+    "native_host_sha256": "1e83ec688a73cea703b945c27b25d7cd51d9a267bc1ff8a7c24de206e9819364",
+    "build": {
+      "command": "cargo build --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --bin omega_symbol_game --offline -j 1",
+      "env": "CARGO_TARGET_DIR=<repo>/.scratch/oewas012/native-target; CARGO_INCREMENTAL=0",
+      "exit": 0,
+      "log": ".scratch/oewas012/native-build.stderr.txt"
+    },
+    "checks": [
+      {
+        "command": "python -m pytest omega_engine_operads/tests/integration/test_operad_native_runtime.py omega_engine_operads/skill_operad/resolver/tests/test_resolver.py -q --basetemp .scratch/oewas012/kernel-native-final",
+        "passed": 23,
+        "exit": 0,
+        "scope": "4 native integration cases include all26 one-colour binary trees of height<=3, ordered leaves/native values/normal-form IDs, wrong colour/overflow/identity, no Python interpreter dispatch; plus19 resolver cases"
+      },
+      {
+        "command": "python -m pytest omega_engine_operads/skill_operad/resolver/tests/test_resolver_run_refusals.py omega_engine_operads/skill_operad/tests/test_operad_laws_on_values.py omega_engine_operads/skill_operad/skill_compiler/tests/test_op_inventory.py -q --basetemp .scratch/oewas012/kernel-laws",
+        "passed": 23,
+        "exit": 0
+      },
+      {
+        "command": "python -m pytest omega_engine_operads/tests/unit/test_operad_clean_arch.py omega_engine_operads/tests/unit/test_operad_sequential_associativity_witness.py omega_engine_operads/skill_operad/tests/test_domain_clean_arch.py -q --basetemp .scratch/oewas012/kernel-registry-final",
+        "passed": 21,
+        "exit": 0
+      },
+      {
+        "command": "python -m pytest omega_engine_operads/skill_operad/tests/test_coloured_operad_premiere.py omega_engine_operads/skill_operad/tests/test_evidence_observation_quarantine.py omega_engine_operads/skill_operad/tests/test_operad_hardening.py -q --basetemp .scratch/oewas012/kernel-offline-registry",
+        "passed": 42,
+        "skipped": 2,
+        "exit": 0,
+        "skips": "pre-existing Python homotopy_type_theory/higher_category_theory moved to Rust"
+      },
+      {
+        "command": "python -m pytest omega_engine_operads/tests/ddc_execution/test_execution_refusals.py omega_engine_operads/tests/ddc_execution/test_meta_operad_engine.py -o addopts= -q --basetemp .scratch/oewas012/kernel-meta-green",
+        "passed": 25,
+        "exit": 0,
+        "scope": "Actual meta script and all24 existing script dry-runs; no evaluator/admission conflation"
+      },
+      {
+        "command": "python -m pytest omega_engine_operads/tests/unit/test_operad_registry_defects.py omega_engine_operads/skill_operad/tests/test_operad_hardening.py omega_engine_operads/skill_operad/tests/test_evidence_observation_quarantine.py -o addopts= -q --basetemp .scratch/oewas012/kernel-symbolic-green",
+        "passed": 17,
+        "skipped": 2,
+        "exit": 0,
+        "scope": "Overlaps offline batch; adds package import, no self-repair and table-versus-law evidence controls"
+      },
+      {
+        "command": "cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_operads --lib operad_runtime::tests --offline -j 1",
+        "passed": 1,
+        "exit": 0,
+        "scope": "4 nested substitution slot combinations; disjoint-slot interchange; wrong-index counterexample; left and right structural units"
+      },
+      {
+        "command": "cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_providers --test anthropic_fixture --offline -j 1",
+        "passed": 19,
+        "exit": 0
+      },
+      {
+        "command": "python -m omega_engine_operads.skill_operad.skill_compiler.op_inventory",
+        "exit": 0,
+        "observed": "PASS: 5 skills, 15 ops, 8 anti-ops; 23 declared BOUND, 0 PROSE; registered EXECUTABLE: 15/15 ops, 8/8 guards, 5/5 skills (bounded host adapters; declared PFP bindings require injected executors)"
+      },
+      {
+        "command": "python .agents/skills/meta-goo-proof-to-audit-verifier/scripts/execute.py",
+        "exit": 1,
+        "observed": "[OPERAD_REFUSED] NOT_EXECUTABLE: Declared operation has no bound evaluator",
+        "expected_refusal": true
+      }
+    ],
+    "red_controls": [
+      {
+        "case": "initial resolver/planar defects",
+        "failed": 5
+      },
+      {
+        "case": "unadmitted guard previouslycleared",
+        "failed": 1
+      },
+      {
+        "case": "actual meta boundary+empty registry",
+        "failed": 2
+      },
+      {
+        "case": "package import+unit law evidence gap",
+        "failed": 2
+      }
+    ],
+    "limits": [
+      "Finite selected checks only; no general operad law proof.",
+      "Offline coloured_operad registry retained for distinct symbolic catalog API. Its validation is table consistency only, unit_law_evidence UNAVAILABLE, exposed by existing CLI.",
+      "Python planar evaluator retained as differential oracle. Runtime dispatch executes Rust emitted postorder plan through explicitly injected host/PFP callbacks.",
+      "No historical bytes modified. No broad test suite or Lean proof claimed.",
+      "The external cleanup removed earlier tool caches/log files; final successful build and checks used repo-local scratch."
+    ]
+  },
+  "woland": {
+    "worker": "/root/o12_woland current IDE",
+    "source_context": "codex/oewas-012-complete",
+    "commands": [
+      {
+        "files": [
+          "omega_engine_woland/tests/spine/test_op_term_binding.py",
+          "omega_engine_woland/tests/spine/test_skill_reference_resolution.py"
+        ],
+        "result": "PASS; one actual-native check was skipped before the fresh host existed, then passed in the native integration batch"
+      },
+      {
+        "files": [
+          "omega_engine_woland/tests/test_teamwork_v3.py",
+          "omega_engine_epistemic_immune_system/tests/unit/test_regulated_guard_state.py",
+          "omega_engine_operads/tests/unit/test_operad_treg_checked_controls.py"
+        ],
+        "exit_code": 0,
+        "checks": 22
+      },
+      {
+        "files": [
+          "omega_engine_woland/tests/research/test_stage_route_binding.py",
+          "omega_engine_woland/tests/test_software_dev_bout_use_case.py"
+        ],
+        "exit_code": 0,
+        "scope": "Fresh native host selected; fixture gateway only, zero paid sends"
+      },
+      {
+        "files": [
+          "omega_engine_epistemic_immune_system/tests/unit/test_immune_system.py"
+        ],
+        "selection": "-k treg",
+        "exit_code": 0,
+        "checks": 2
+      },
+      {
+        "files": [
+          "omega_engine_pfp/tests/test_pilot_suite.py"
+        ],
+        "exit_code": 0,
+        "scope": "Complete owning file; corrected moved pilot fixture path"
+      }
+    ],
+    "historical_meron": {
+      "revision": "9149ccbeda59079e119ea0389f984e96c3bab3c1",
+      "path": "_ic/woland/working/meron_plain_seed_20261013_01/state.json",
+      "sha256": "746a325cbe13b5c2b5d82876997a989b8d3ba5c213746a0edc49127156d7f1d3",
+      "unchanged": true
+    },
+    "absent_at_current_git_index": [
+      "test_typed_matrix_cases.py",
+      "test_pilots_complex_skilltypes.py",
+      "test_certified_ladder_items.py"
+    ],
+    "authority_effect": "None"
+  },
+  "independent_final": {
+    "scope": "Independent final changed-boundary batches, separate from blocked original-task checker",
+    "checks": [
+      {
+        "command": [
+          "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\venv\\Scripts\\python.exe",
+          "-B",
+          "-m",
+          "pytest",
+          "omega_engine_pfp/tests/test_anthropic_accounted_turn.py",
+          "omega_engine_pfp/tests/test_management_ladder.py",
+          "omega_engine_woland/tests/test_model_backend_budget_reservation.py",
+          "-q",
+          "-o",
+          "addopts=",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\root-final-0"
+        ],
+        "exit_code": 0,
+        "log_sha256": "01579f25462313d9ff4297f639fa4de2304bd336519b3b9470fccd5d2ff2542b",
+        "output": "..............................                                           [100%]\n30 passed in 6.37s\n"
+      },
+      {
+        "command": [
+          "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\venv\\Scripts\\python.exe",
+          "-B",
+          "-m",
+          "pytest",
+          "omega_engine_operads/tests/ddc_execution/test_execution_refusals.py",
+          "omega_engine_operads/tests/unit/test_operad_registry_defects.py",
+          "-q",
+          "-o",
+          "addopts=",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\root-final-1"
+        ],
+        "exit_code": 0,
+        "log_sha256": "8bb6176f265343ffd7d03238004328727092a3379d288b66800755f12bb10c79",
+        "output": "...................                                                      [100%]\n19 passed in 3.07s\n"
+      },
+      {
+        "command": [
+          "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\venv\\Scripts\\python.exe",
+          "-B",
+          "-m",
+          "pytest",
+          "omega_engine_pfp/tests/test_prompt_environment_compression.py",
+          "omega_engine_operads/tests/unit/test_operad_treg_checked_controls.py",
+          "-q",
+          "-o",
+          "addopts=",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\root-final-2"
+        ],
+        "exit_code": 0,
+        "log_sha256": "d9ddb6a596f8daa9d208b9d3cc2a3fef1aaf309da370424dedc542078e4e2778",
+        "output": ".................                                                        [100%]\n17 passed in 1.06s\n"
+      },
+      {
+        "command": [
+          "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\venv\\Scripts\\python.exe",
+          "-B",
+          "-m",
+          "pytest",
+          "omega_engine_operads/tests/integration/test_operad_native_runtime.py",
+          "omega_engine_woland/tests/spine/test_op_term_binding.py",
+          "-q",
+          "-o",
+          "addopts=",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\root-final-3"
+        ],
+        "exit_code": 0,
+        "log_sha256": "5ac628248a9abcbf2e9bb0c36b2baf567f6efa4ba1a550e0305bbc991a8dd037",
+        "output": "...................................                                      [100%]\n35 passed in 3.72s\n"
+      }
+    ],
+    "tracked_source_changes": [],
+    "native_host_sha256": "1e83ec688a73cea703b945c27b25d7cd51d9a267bc1ff8a7c24de206e9819364",
+    "authority_effect": "None"
+  },
+  "scope": "Small owning batches; overlapping counts are not summed. No whole-suite, general theorem or live experiment PASS.",
+  "authority_effect": "None",
+  "postmerge": {
+    "scope": "After integration of main fb153dbe5885ce26e1acc73875fd9d478394b61d; only /woland-only specialization, resolved routes and term bindings rechecked",
+    "command": [
+      "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\venv\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "pytest",
+      "omega_engine_woland/tests/spine/test_swarm_specialization_gate.py",
+      "omega_engine_woland/tests/spine/test_skill_reference_resolution.py",
+      "omega_engine_woland/tests/spine/test_op_term_binding.py",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "--basetemp",
+      "C:\\Users\\a343o\\.codex\\worktrees\\eed0\\the_symbol_game\\.scratch\\oewas012\\postmerge-checks"
+    ],
+    "exit_code": 0,
+    "output": "........................................................                 [100%]\r\n56 passed in 46.00s\r\n",
+    "changed_tracked_python": [],
+    "native_host_sha256": "1e83ec688a73cea703b945c27b25d7cd51d9a267bc1ff8a7c24de206e9819364",
+    "authority_effect": "None"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "RFA-C008",
+  "checks": [
+    {
+      "rule": "all_gf2_matrices_up_to_3_by_3",
+      "status": "passed_bounded",
+      "matrices": 689,
+      "affine_systems": 5054
+    },
+    {
+      "rule": "incremental_span_coset_reduction",
+      "status": "passed_bounded",
+      "ordered_generator_triples": 512
+    },
+    {
+      "rule": "residue_shortest_path_vs_weight_dynamic_program",
+      "status": "passed_bounded",
+      "cases": 15480
+    },
+    {
+      "rule": "primitive_root_minimal_conductor_rational_phase",
+      "status": "passed_bounded",
+      "orders": 128
+    },
+    {
+      "rule": "gf2_zero_axis_augmentation_overflow",
+      "status": "counterexample",
+      "word_bits": 64,
+      "rows": 0,
+      "cols": "usize::MAX",
+      "empty_input_storage_words": 0,
+      "checked_build_behavior": "self.cols+1 overflow panic before typed error",
+      "wrapping_build_behavior": "augmented width wraps0; later vector allocation gate returns TooLarge"
+    }
+  ],
+  "limits": "Own bitmask/exhaustive and integer shortest-path models; no native execution or huge allocations. Lam-Leung necessity and full roots-of-unity field theorem remain external mathematical premises, not established by DP or rational phase arithmetic."
+}

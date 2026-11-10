@@ -1,0 +1,419 @@
+{
+  "agent_number": 6,
+  "focus": "Adaptive compute, early stopping, abstention, model escalation, and cost-versus-accuracy measurement",
+  "status": "proposed_not_evaluated",
+  "scope": {
+    "source_baseline": "8050c66900899771766f33e8f5fdd200b7dd9120 plus the in-progress dag audit",
+    "seed_access": "No seed contents, seed solution, answer key, private benchmark storage, credentials, or paid-model outputs were read for this report.",
+    "novelty_claim": "Three proposed repository adaptations of established cascade and selective-prediction ideas; no literature-wide novelty claim.",
+    "implementation_boundary": "The durable benchmark ledger exists and is locally tested according to ACCOUNTING.md; the proposed policy compiler, checker registry, and live provider admission are not implemented or admitted here. An accounting cap is not a mathematical acceptance test.",
+    "benchmark_isolation": "Each model call must include the exact original UTF-8 seed bytes as a separate message, with no normalization, substitution, truncation, or assumption changes. Hash both the seed and actual rendered request, and verify decoded seed content matches original bytes. Other instructions and artifacts occupy separate messages. Public fixed predicates may guide routing; private scores, key-derived examples, and expected answers may not. Freeze outputs before separate trusted evaluation; no evaluator feedback can trigger another call."
+  },
+  "primary_sources": [
+    {
+      "title": "Chen, Zaharia, and Zou, FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance (2023)",
+      "url": "https://arxiv.org/abs/2305.05176",
+      "relevance": "Primary cascade precedent: combining model calls can trade cost against accuracy. The reported benchmark improvements do not imply that any proposed gate, model pair, or physics answer here is accurate."
+    },
+    {
+      "title": "Geifman and El-Yaniv, SelectiveNet: A Deep Neural Network with an Integrated Reject Option, ICML 2019",
+      "url": "https://proceedings.mlr.press/v97/geifman19a.html",
+      "relevance": "Defines selective prediction through a prediction function and selection function, with risk and coverage reported together. Our host-rule rejection policy is an adaptation, not SelectiveNet training or a calibrated statistical guarantee."
+    },
+    {
+      "title": "OpenRouter Usage Accounting",
+      "url": "https://openrouter.ai/docs/cookbook/administration/usage-accounting",
+      "relevance": "Documents response token, reasoning, cache, and charged-cost fields. Observed usage supports reconciliation after dispatch; it is not an advance guarantee that an external charge fits a local reservation."
+    }
+  ],
+  "repository_evidence": [
+    {
+      "path": "dag/benchmark/EXPERIMENT_PROTOCOL.md",
+      "observation": "Requires identical seed bytes, isolated private evaluation, failed-run denominators, separate equal-money/token/time comparisons, and aggregate USD 0.10 per execution."
+    },
+    {
+      "path": "dag/benchmark/ACCOUNTING.md",
+      "observation": "Ledger is implemented/tested, live adapters unadmitted; unknown fees or uncertain bounds cause refusal. Byte estimates do not establish guaranteed input bounds."
+    },
+    {
+      "path": "dag/benchmark/budget_ledger.py",
+      "lines": "1-7,12-29,84-117",
+      "observation": "Quotes use integer microusd; duplicate call identities are refused; uncertain charges retain reservations and block the run; observed overruns remain recorded."
+    },
+    {
+      "path": "workflows/wf09_bounded_check_and_repair/README.md",
+      "observation": "Bounds repair attempts, returns typed residuals, and stops on accepted predicates or exhaustion. Its finite parity/cochain checks are not general analytic validators."
+    },
+    {
+      "path": "workflows/wf22_certified_cost_ladder/README.md",
+      "observation": "Pre-registers model/stage arms, unresolved outputs, and paired item comparisons. Boosted arms are separate pre-registered arms rather than mid-campaign changes."
+    },
+    {
+      "path": "workflows/wf33_recursive_re_entry_with_shared_fuel/README.md",
+      "observation": "Requires parent binding and one original budget for every prefix. The proposals prohibit reset through restart or escalation."
+    },
+    {
+      "path": "workflows/wf40_restart_boundary_after_exhausted_repair/README.md",
+      "observation": "Exhausted repair terminates in a typed boundary outcome; changing requested claims is a new problem. These proposals choose terminal unresolved, without seed change or automatic lift."
+    },
+    {
+      "path": "pfp/infrastructure/adapters/harness_budget.py",
+      "observation": "Binds a campaign specification and phase to a shared provider ledger, rejects unreconciled cost, and limits phase spending; reusable accounting precedent, not benchmark adapter admission."
+    },
+    {
+      "path": "pfp/infrastructure/openrouter_seat_gateway.py",
+      "lines": "195-253",
+      "observation": "Legacy gateway computes input_upper_bound from message UTF-8 lengths, can reserve fewer output tokens than transport max_output_tokens, and retains an uncertainty reservation on transport failure. These paths must not be taken as a proved hard cap for the new benchmark."
+    },
+    {
+      "path": "pfp/infrastructure/seat_transport/openrouter_turn_executor.py",
+      "lines": "1-5,70-77",
+      "observation": "Raw duplicate sender is retired and refuses on invocation; it is not a usable benchmark transport."
+    },
+    {
+      "path": "pfp/infrastructure/seat_transport/anthropic_messages.py",
+      "lines": "1-9,51-54,71-115",
+      "observation": "Wrapper delegates accounting and dispatch to Rust, disables its own retries, and distinguishes NOT_SENT, OUTCOME_UNKNOWN, and REPLIED. This read did not audit the Rust billing bound or admit the wrapper for the benchmark."
+    }
+  ],
+  "common_budget_policy": {
+    "formula": "For every complete path pi reserve C_max(pi)=sum_s(I_s*p_in_s+O_s*p_out_s+F_s)+R <= USD 0.10 before dispatch. I_s bounds the entire rendered request, including seed/framing/artifacts; O_s bounds all billable output including hidden reasoning under verified provider semantics. F_s includes all additional metered fees. R is a non-dispatchable USD 0.01 margin in conditional examples, not permission to assume unknown fees are covered.",
+    "admission": "Pin endpoint/model/version, current tariff and overrides, supported output caps, trustworthy input bounds, and charge semantics. Unknown billing components, unsupported caps, or bounds exceeding envelopes cause refusal. Conditional prices below are admissibility thresholds, not actual current price quotes. Byte count alone is not an external billing bound.",
+    "routing": "One run identity and shared durable ledger; at most two sequential model calls, no hidden retries, model fallbacks, paid judges, tools, or paid retrieval. Reserve the worst planned branch upfront. Do not release uncertain reservations or restart under a fresh identity. Stop on any uncertain charge or overrun.",
+    "settlement": "Retain usage and cost receipts, unavailable fields explicitly, seed/request/output hashes, model/provider identity, reservation, wall time, and sum of provider durations. A cancelled request is not presumed free. Local host checks use bounded already provisioned compute; reserve any incremental metered host/evaluator charge or refuse.",
+    "evaluation": "Freeze policies and thresholds before runs. Start with direct same-model baselines, randomize order, and retain every attempted run including refusal, timeout, truncation, and incomplete accounting. Report raw final rubric scores, claimed-part coverage, errors among asserted parts, costs, and nondominated frontiers. Use separate money/token/time constraints. Repeated samples of this seed do not establish cross-problem generalization. No paid calls were made."
+  },
+  "ideas": [
+    {
+      "id": "R06-I01",
+      "name": "Predicate-scoped early exit with one reserved continuation",
+      "systems": [
+        "PFP",
+        "EIS",
+        "OPERADS"
+      ],
+      "mathematical_basis": {
+        "known_method": "Finite-horizon stopping and explicit shared-fuel accounting.",
+        "proposed_adaptation": "Compile a fixed two-call graph with one host decision after a complete first response. Stop if all declared public predicates pass; continue only for an allowlisted repairable residual; otherwise stop unresolved. The stop reason is scoped predicate closure, never correctness or confidence.",
+        "rule": "Let G be the finite frozen predicate set and r the host residual vector. Continue iff usage is settled, a second call is already reserved, r contains an allowlisted repairable failure, and no blocking infrastructure/unsupported condition holds. Otherwise freeze. All G passing proves only conjunction of G under its declared semantics; adequacy for the requested theorem remains separate.",
+        "termination": "Number of dispatched calls N <= 2 by construction, independent of any real-valued progress score. Decreasing a heuristic residual is not used as a termination or correctness proof."
+      },
+      "assumptions": [
+        "Public predicates and repair classes are frozen independently of private answers.",
+        "At most 24 requested slots and 48 public checks; bounded checker time and artifact size are pinned before dispatch.",
+        "A closed public predicate set may miss mathematical errors; final score is independently evaluated.",
+        "Only completed responses with reconciled usage can reach the continuation gate; streaming cancellation cannot release budget."
+      ],
+      "hypothesis": "Against an always-two-call same-model draft/repair arm, early exit lowers mean cost without decreasing mean final rubric score by more than a preregistered 2/100 noninferiority margin on repeated runs of this item. An inconclusive interval supports no advantage claim.",
+      "typed_inputs": [
+        "SeedBytes{utf8,sha256}",
+        "FrozenPolicy{predicate_registry,repair_allowlist,requested_slot_ids,max_calls:2}",
+        "Reservation{input_caps:[6000,9000],output_caps:[2600,1800],run_id}"
+      ],
+      "typed_outputs": [
+        "PublicCheckReceipt{candidate_hash,predicate_id,status,scope,residual_code}",
+        "StopReceipt{reason:PREDICATE_SCOPE_CLOSED|UNRESOLVED|COST_UNCERTAIN|EXHAUSTED,run_id,parent_hash}",
+        "FrozenResponse{all_requested_slots,claims,unresolved_slots,cost_receipt}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Freeze and reserve",
+          "instruction": "Preserve seed bytes, freeze predicates and ordered requested slots, bind one run identity, and admit worst-case two-call cost using verified provider bounds. Refuse unsupported billing.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "draft",
+          "kind": "model",
+          "role": "Bounded initial solver",
+          "instruction": "Address every requested slot using the unchanged seed. State assumptions, dependencies, and explicit unresolved cases. Supply only declared witness types; do not self-certify correctness or select a routing outcome.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 2600
+        },
+        {
+          "id": "gate",
+          "kind": "host",
+          "role": "Scoped stopping decision",
+          "instruction": "Reconcile first-call usage. Run only public frozen checks. Stop on uncertainty, unsupported theories, or full declared-predicate closure. Continue once only for allowlisted repairable residuals, providing codes and artifact pointers without private diagnostic content.",
+          "depends_on": [
+            "draft"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "continue",
+          "kind": "model",
+          "role": "One conditional continuation",
+          "instruction": "Execute only on CONTINUE. With original seed unchanged, repair the named public residuals while preserving all requested slots. Retain unclosed obligations explicitly. No new attempts or task changes.",
+          "depends_on": [
+            "gate"
+          ],
+          "max_output_tokens": 1800
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Terminal recheck",
+          "instruction": "Join either the stopped draft or single continuation, replay applicable public checks, and freeze bytes and accounting. Exhausted repairs stay unresolved. Independent private review happens afterward and cannot reopen the run.",
+          "depends_on": [
+            "gate",
+            "continue"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Always-two-call draft/repair with the same endpoint, total caps, checking rules, and seed.",
+        "ablations": [
+          "One direct call with the combined output allowance",
+          "Continue after every public residual, without the repairability allowlist",
+          "Early exit on schema completion alone, explicitly a weak control"
+        ],
+        "evaluation": "Report call count and spend with raw rubric score, missing-slot count, unsupported assertion count, and stopping reason. Compare score differences and cost differences separately; no saving alone counts as success."
+      },
+      "falsification": "Falsify the noninferiority claim if the prespecified paired score interval excludes differences above -2 points; do not claim cost advantage if costs are not lower. Any lost requested slot, private-feedback routing, third call, or restart fuel reset falsifies the implementation contract.",
+      "risks": [
+        "An incomplete public checker can stop an incorrect answer early.",
+        "A conservative unsupported-theory block can stop almost every run; report coverage and score.",
+        "Repair overhead may exceed savings or regress valid content.",
+        "The join must distinguish an intentionally skipped conditional stage from a missing response."
+      ],
+      "budget_formula": "C_max <= 6000*p_in_1+2600*p_out_1+9000*p_in_2+1800*p_out_2+sum(F_s)+R. If each p_in<=USD0.000001/token, p_out<=USD0.000005/token, F_s=0 and R=0.01, reserve USD0.047 for the complete two-call path; early-exit path <=USD0.029. Refuse if verified input bounds exceed caps.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R06-I02",
+      "name": "Public-residual cascade with independent escalation",
+      "systems": [
+        "PFP",
+        "PCIV",
+        "EIS",
+        "OPERADS"
+      ],
+      "mathematical_basis": {
+        "known_method": "A fixed model cascade with cost-sensitive routing, motivated by FrugalGPT.",
+        "proposed_adaptation": "Use a cheaper endpoint first and allow one predetermined higher-price endpoint only for a frozen public residual class. Escalation receives the immutable seed, requested-slot inventory, and public residual classes but not the cheap answer, reducing direct anchoring. It must produce a full replacement response; no unverified prose merge.",
+        "rule": "For draft cost C_L, escalation cost C_H, and escalation indicator e, C=C_L+e*C_H. If e occurs with probability q over repeated provider samples, E[C]=E[C_L]+E[e*C_H]; replacing the second term by q times a constant is valid only for fixed C_H. This identity implies no accuracy ordering between endpoints.",
+        "selection": "Final output is the cheap response when e=0 and the complete escalated response when e=1. Host predicates decide routing, not mathematical truth. Pricing tier is never evidence of higher correctness."
+      },
+      "assumptions": [
+        "Both endpoint identities, tariffs, settings, and the escalation-class table are frozen before any run; no adaptive arm change as results arrive.",
+        "Escalation classes arise solely from public candidate checks, such as missing required slots or malformed supported witnesses, and contain no expected formulas.",
+        "A higher-price endpoint may be worse; independent post-freeze evaluation is mandatory.",
+        "No statistical confidence calibration or difficulty predictor is learned from this seed's private results."
+      ],
+      "hypothesis": "The registered cascade has lower mean cost than always using the escalation endpoint while its paired final rubric score stays within a preregistered 2-point noninferiority margin; compare also with cheap-only to quantify whether escalation adds measured value.",
+      "typed_inputs": [
+        "SeedBytes{utf8,sha256}",
+        "CascadeSpec{low_endpoint,high_endpoint,residual_class_table,requested_slot_ids,max_calls:2}",
+        "Reservation{input_caps:[6000,8500],output_caps:[2000,2600],run_id}"
+      ],
+      "typed_outputs": [
+        "RoutingReceipt{public_class,selected_endpoint,policy_hash,seed_hash,reason}",
+        "FrozenResponse{source_endpoint,full_response_bytes,unresolved_slots}",
+        "AggregateCostReceipt{both_calls,retained_reservations}"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Pre-register cascade",
+          "instruction": "Pin both endpoints and the residual routing table. Preserve exact seed message. Reserve the two-call maximum in one ledger, including all conditional fees; refuse if either endpoint lacks enforceable bounds.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "cheap",
+          "kind": "model",
+          "role": "Initial full answer",
+          "instruction": "Attempt all requested parts and mark unresolved parts. Provide declared public-check artifacts and assumptions. Do not predict your accuracy, choose escalation, or alter the seed.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 2000
+        },
+        {
+          "id": "route",
+          "kind": "host",
+          "role": "Public residual router",
+          "instruction": "Settle usage and run frozen public checks. Stop on uncertain accounting or infrastructure failure. Escalate once only if a frozen residual class matches; build a separate prompt with original seed, slot inventory, and allowlisted public class codes, excluding the cheap answer and private material.",
+          "depends_on": [
+            "cheap"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "escalate",
+          "kind": "model",
+          "role": "Independent replacement answer",
+          "instruction": "Execute only when routed. Independently address the unchanged full request with explicit assumptions, derivation, and unresolved cases. Public residual class codes indicate checks to address, not known answers. Return a full answer within the cap.",
+          "depends_on": [
+            "route"
+          ],
+          "max_output_tokens": 2600
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Deterministic source selection",
+          "instruction": "Freeze the cheap answer on non-escalation or the complete replacement on escalation; no best-answer selection by private score and no cross-model blending. Keep both artifacts for later independent paired analysis. Refusal or truncation stays in the denominator.",
+          "depends_on": [
+            "route",
+            "escalate"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Always-high endpoint with its matched permitted budget; cheap-only direct baseline is also required.",
+        "ablations": [
+          "Same second call uses the cheap endpoint",
+          "Escalation receives the cheap response as well as public codes",
+          "Always escalate, with the same total path caps"
+        ],
+        "evaluation": "Measure escalation frequency, score gain conditional on escalation, overall score/cost, full-answer completeness, and regressions. Report equal-money and equal-token experiments separately; do not compare dissimilar budgets under a single efficiency label."
+      },
+      "falsification": "No supported advantage if cost saving is absent, final score falls beyond the registered margin, or confidence intervals remain inconclusive. A more expensive endpoint consistently reducing score refutes the proposed endpoint pair. Any fallback after uncertain usage or unregistered route is a contract violation.",
+      "risks": [
+        "Residual classes may correlate poorly with actual mathematical difficulty.",
+        "Cheap-call overhead can make always-high cheaper on frequently escalated runs.",
+        "Removing the draft may lose useful work; providing it may cause anchoring, hence the ablation.",
+        "Routing conditioned on draft output creates selection bias; overall paired score and all-run denominator remain primary."
+      ],
+      "budget_formula": "C_max <=6000*p_in_L+2000*p_out_L+8500*p_in_H+2600*p_out_H+sum(F_s)+R. Conditional thresholds p_in_L<=0.000001, p_out_L<=0.000005, p_in_H<=0.000003, p_out_H<=0.000015 USD/token, F_s=0, R=0.01 yield USD0.0905 for both calls. This is a conditional envelope, not a live price quote or external billing guarantee.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R06-I03",
+      "name": "One-call selective publication with explicit coverage",
+      "systems": [
+        "PFP",
+        "EIS",
+        "PCIV"
+      ],
+      "mathematical_basis": {
+        "known_method": "Selective prediction measures error among asserted outputs together with coverage, rather than rewarding abstention alone.",
+        "proposed_adaptation": "After one model call, a frozen host policy maps every requested slot to ASSERTED_UNVERIFIED, PREDICATE_SUPPORTED, or UNRESOLVED. The strict experimental arm publishes only predicate-supported claim blocks and an explicit unresolved marker for every withheld slot; retain the full raw draft for offline scoring. No retry or hidden completion is allowed.",
+        "metrics": "For n fixed requested slots across recorded runs, let g_i indicate a published answer and let loss_i be independently adjudicated error afterward. Coverage=sum(g_i)/n; selective_error=sum(g_i*loss_i)/sum(g_i), undefined when sum(g_i)=0. Also report full 100-point rubric scores with withheld slots unfulfilled. These empirical descriptors do not imply an IID distribution over physics problems or formal correctness.",
+        "premise_boundary": "The host's publication gate uses public predicate receipts with explicit scope, never confidence, apparent reasoning length, cost, or private correctness labels. Predicate-supported remains weaker than globally correct."
+      },
+      "assumptions": [
+        "Requested slots are frozen independently of the candidate; they cannot be deleted to improve coverage.",
+        "Claim blocks have explicit slot/dependency bindings; a withheld premise forces dependent claims unresolved.",
+        "Frozen acceptance policies and any coverage target are registered before execution and not tuned using this seed's private scores.",
+        "Checker inadequacy and false rejection are evaluated on independent public synthetic fixtures before any model pilot."
+      ],
+      "hypothesis": "At one-call cost, the strict publication policy lowers adjudicated error among asserted parts while retaining at least 80% of the raw draft's attempted-slot coverage; full rubric score loss and all abstentions remain visible. If the coverage target is unmet, no quality improvement is claimed from a lower conditional error alone.",
+      "typed_inputs": [
+        "SeedBytes{utf8,sha256}",
+        "PublicationPolicy{requested_slot_ids,public_check_registry,dependency_rules,coverage_floor:0.8}",
+        "Reservation{input_cap:9000,output_cap:4500,max_calls:1,run_id}"
+      ],
+      "typed_outputs": [
+        "DraftSlots{slot_id,claim_block,assumptions,dependency_ids,witnesses,unresolved}",
+        "PublicationReceipt{published_ids,withheld_ids,public_reasons,claim_scope,raw_hash}",
+        "FrozenPair{raw_draft,selective_response,aggregate_cost}; post-freeze scores are separate"
+      ],
+      "stages": [
+        {
+          "id": "bind",
+          "kind": "host",
+          "role": "Freeze publication policy",
+          "instruction": "Keep the unchanged seed as its own message, fix the complete requested-slot inventory and public predicates, and reserve the single call. Refuse uncertain provider bounds or unsupported fees.",
+          "depends_on": [],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "draft",
+          "kind": "model",
+          "role": "Structured one-call derivation",
+          "instruction": "Address every requested slot, separating assumptions, dependencies, claim blocks, and permitted witnesses. Mark unsupported conclusions unresolved. Do not omit difficult parts or claim your confidence establishes correctness.",
+          "depends_on": [
+            "bind"
+          ],
+          "max_output_tokens": 4500
+        },
+        {
+          "id": "select",
+          "kind": "host",
+          "role": "Scoped publication and abstention",
+          "instruction": "Reconcile cost; stop on uncertainty. Check only frozen public predicates, propagate withheld dependency status, and retain raw bytes. Publish each passing claim block with its actual predicate scope; insert UNRESOLVED for every other requested slot. Make no new mathematical claims and issue no second model call.",
+          "depends_on": [
+            "draft"
+          ],
+          "max_output_tokens": 0
+        },
+        {
+          "id": "freeze",
+          "kind": "host",
+          "role": "Freeze paired outputs",
+          "instruction": "Freeze raw and selective outputs with the same run/cost provenance before independent review. Report coverage, score and error jointly; zero asserted answers makes selective error undefined, not zero. Any later tuning is exploratory and a different experiment.",
+          "depends_on": [
+            "select"
+          ],
+          "max_output_tokens": 0
+        }
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Same frozen raw one-call draft evaluated alongside its selective rendering; paired transformation isolates publication effects without another provider sample.",
+        "ablations": [
+          "Schema-only publication filter",
+          "No dependency propagation",
+          "Pre-registered permissive arm publishes unsupported claims explicitly as unverified"
+        ],
+        "evaluation": "Independent evaluator scores raw and selective outputs after freezing. Report error among published slots, slot coverage, full rubric score, false rejections, and unchanged provider cost. Pairing cannot establish broader population calibration."
+      },
+      "falsification": "Reject the proposed improvement if asserted error does not fall, if coverage is below 80% of raw attempted coverage, or if deletion creates a false impression of full completion. Any unsupported dependent claim surviving withheld premises falsifies the publication contract.",
+      "risks": [
+        "Abstention can game selective error; coverage floor and full rubric score are required.",
+        "A narrow exact checker may withhold correct analytic arguments.",
+        "Granularity of requested slots affects metrics and must stay fixed.",
+        "Host rendering can accidentally change meaning; preserve claim bytes, scope annotations, and raw-output hashes."
+      ],
+      "budget_formula": "C_max <=9000*p_in+4500*p_out+F+R. Conditional thresholds p_in<=USD0.000001/token, p_out<=USD0.000005/token, F=0, R=0.01 yield USD0.0415 for the complete one-call workflow. No paid judge or repair is included; a metered evaluator would require an additional explicit reservation.",
+      "status": "proposed_not_evaluated"
+    }
+  ],
+  "recommended_reusable_primitive": {
+    "name": "BoundedContinuationPermitV1",
+    "recommendation": "Implement the host-owned continuation/stop primitive before a live pilot; it joins existing durable budget reservations to a frozen branch policy without treating either as a correctness certificate.",
+    "schema": {
+      "binding": [
+        "run_id",
+        "parent_call_id",
+        "seed_sha256",
+        "request_sha256",
+        "candidate_sha256",
+        "policy_sha256",
+        "predicate_registry_sha256"
+      ],
+      "accounting": [
+        "reservation_microusd",
+        "settled_charge_microusd_or_unknown",
+        "remaining_call_slots",
+        "next_call_quote",
+        "price_snapshot_hash"
+      ],
+      "decision": [
+        "STOP_PREDICATE_SCOPE",
+        "CONTINUE_PUBLIC_RESIDUAL",
+        "STOP_UNRESOLVED",
+        "STOP_EXHAUSTED",
+        "STOP_COST_UNCERTAIN"
+      ],
+      "residual": [
+        "predicate_id",
+        "scope",
+        "host_status",
+        "allowlisted_failure_class"
+      ]
+    },
+    "invariant": "A permit authorizes at most one already-reserved successor under the same run and unchanged seed. An uncertain charge, stale parent, exhausted call count, or unbound tariff prohibits dispatch. A terminal receipt cannot be reopened as a repair or new wallet. No permit asserts mathematical correctness.",
+    "research_prompt_instruction": "Implement only schemas, pure policy evaluation, and synthetic receipt controls first. Test stale-parent refusal, duplicate dispatch prevention, frozen-seed mismatch, uncertainty retention, conditional-join semantics, and all-abstain metrics. Do not solve the benchmark seed, read private evaluator storage, or make paid calls.",
+    "first_experiment": "Host-only synthetic policy replay, then a separately authorized paired one-call R06-I03 pilot if provider admission becomes defensible. No such pilot was executed."
+  }
+}

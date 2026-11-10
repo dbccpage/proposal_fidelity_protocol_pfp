@@ -1,0 +1,148 @@
+pilot_id: pilot_0000203
+prompt_id: pilot_0000203:po035:loop02:v2
+loop: 2
+raw_reply_sha256: bdf4cf3a505361e5dfe264d8e59681bc4fd2231ffb19a221e8ee9942081eb7d6
+authority_effect: None
+source_packet_status: REFUSED
+execution_kind: LIVE
+candidate_artifacts:
+- pilot_id: pilot_0000203
+  prompt_id: pilot_0000203:po035:loop02:v2
+  loop: 2
+  raw_reply_sha256: bdf4cf3a505361e5dfe264d8e59681bc4fd2231ffb19a221e8ee9942081eb7d6
+  authority_effect: None
+  source_packet_status: REFUSED
+  execution_kind: LIVE
+  kind: skill
+  text: "Write exact rational witnesses (e.g., \u03B1, dual as rational strings) to\
+    \ avoid tolerance-induced false zero authorization."
+  failure_or_gain: gain
+  json_pointer: /sections/0/rows/0/learning/0
+  artifact_id: pilot_0000203:v2:loop02:skill:00
+  prompt_text_sha256: 859b76d2484ec5adac7895cd68fd879a5aef93435d2c3624b643873831451b60
+  original_seed_sha256: 0d2bb7a2921b1df661d607153d701cb994349178bc12424d74f73ffba80c22dc
+  status: CANDIDATE
+  admitted: false
+  analytical_status: UNVERIFIED
+  observed_certificate_status: NOT_CHECKED
+  negative_control: &id001
+    kind: MALFORMED_ENVELOPE
+    checked: true
+    rejected: true
+    baseline_certificate_accepted: false
+- pilot_id: pilot_0000203
+  prompt_id: pilot_0000203:po035:loop02:v2
+  loop: 2
+  raw_reply_sha256: bdf4cf3a505361e5dfe264d8e59681bc4fd2231ffb19a221e8ee9942081eb7d6
+  authority_effect: None
+  source_packet_status: REFUSED
+  execution_kind: LIVE
+  kind: pattern
+  text: "A certificate \u03B1 with exact nonzero dual value y\xB7\u03B4 distinguishes\
+    \ static non-repairability from dynamical halting; policy_halts flag separates\
+    \ the two cases."
+  failure_or_gain: gain
+  json_pointer: /sections/0/rows/0/learning/1
+  artifact_id: pilot_0000203:v2:loop02:pattern:01
+  prompt_text_sha256: 859b76d2484ec5adac7895cd68fd879a5aef93435d2c3624b643873831451b60
+  original_seed_sha256: 0d2bb7a2921b1df661d607153d701cb994349178bc12424d74f73ffba80c22dc
+  status: CANDIDATE
+  admitted: false
+  analytical_status: UNVERIFIED
+  observed_certificate_status: NOT_CHECKED
+  negative_control: *id001
+- pilot_id: pilot_0000203
+  prompt_id: pilot_0000203:po035:loop02:v2
+  loop: 2
+  raw_reply_sha256: bdf4cf3a505361e5dfe264d8e59681bc4fd2231ffb19a221e8ee9942081eb7d6
+  authority_effect: None
+  source_packet_status: REFUSED
+  execution_kind: LIVE
+  kind: rule
+  text: The host validates finite primal/dual feasibility and equality; do not promote
+    speculative claims about universal halting.
+  failure_or_gain: gain
+  json_pointer: /sections/0/rows/0/learning/2
+  artifact_id: pilot_0000203:v2:loop02:rule:02
+  prompt_text_sha256: 859b76d2484ec5adac7895cd68fd879a5aef93435d2c3624b643873831451b60
+  original_seed_sha256: 0d2bb7a2921b1df661d607153d701cb994349178bc12424d74f73ffba80c22dc
+  status: CANDIDATE
+  admitted: false
+  analytical_status: UNVERIFIED
+  observed_certificate_status: NOT_CHECKED
+  negative_control: *id001
+next_context:
+  parent_prompt_id: pilot_0000203:po035:loop02:v2
+  granted_lifts:
+  - EXACT_RATIONAL
+  - REFINEMENT_HYPOTHESES
+  feedback:
+    schema_status: REFUSED
+    certificate_status: NOT_CHECKED
+    analytical_status: UNVERIFIED
+    code: SCHEMA_VIOLATION
+    schema_path:
+    - sections
+    - 0
+    - rows
+    - 0
+    schema_validator: required
+  guidance:
+  - artifact_id: pilot_0000203:v2:loop02:skill:00
+    kind: skill
+    text: "Write exact rational witnesses (e.g., \u03B1, dual as rational strings)\
+      \ to avoid tolerance-induced false zero authorization."
+    failure_or_gain: gain
+  - artifact_id: pilot_0000203:v2:loop02:pattern:01
+    kind: pattern
+    text: "A certificate \u03B1 with exact nonzero dual value y\xB7\u03B4 distinguishes\
+      \ static non-repairability from dynamical halting; policy_halts flag separates\
+      \ the two cases."
+    failure_or_gain: gain
+  - artifact_id: pilot_0000203:v2:loop02:rule:02
+    kind: rule
+    text: The host validates finite primal/dual feasibility and equality; do not promote
+      speculative claims about universal halting.
+    failure_or_gain: gain
+  previous_proposal:
+    derivation:
+      assumptions:
+      - d0 = [[-1,1,0],[0,-1,1],[1,0,-1]] defines a circulation matrix with row sums
+        zero.
+      - "\u03B4 = (1/100000000, 1/100000000, 1/100000000) is an exact nonzero tolerance\
+        \ vector."
+      - The L1 primal norm is the sum of absolute row sums of d0.
+      - "Dual variables y are rational vectors; dual value is y\xB7\u03B4."
+      - "The continuing transition [0,1] models an unbounded counter n\u2192n+1 on\
+        \ nonnegative integers."
+      - The policy_halts flag is false because the certificate does not enforce a
+        terminal halt.
+      claim: "Finite L1 quotient dual certification for d0 and \u03B4; static non-repairability\
+        \ distinguished from dynamical halting."
+      limitations:
+      - The derivation assumes a fixed circulation matrix and does not generalize
+        to arbitrary d0.
+      - "Exact rational witnesses avoid tolerance-induced false zero authorization\
+        \ because 1/100000000 \u2260 0 in \u211A."
+      - The host checks finite primal/dual feasibility and equality; no assertion
+        is made about arbitrary systems or physics halting.
+      open_obligations:
+      - Request the EXACT_RATIONAL lift to guarantee exact rational arithmetic in
+        future derivations.
+      - Request the REFINEMENT_HYPOTHESES lift to formalize the weak-duality argument
+        across parameterized families.
+      steps:
+      - Construct the primal circulation d0 and compute its L1 norm as ||d0||_1 =
+        3.
+      - "Set dual variables y = (0, -1/100000000, 1/100000000) to obtain dual value\
+        \ y\xB7\u03B4 = 1/100000000."
+      - "Verify exact rational arithmetic: \u03B1\xB7d0 + y\xB7\u03B4 = 0 holds componentwise\
+        \ with \u03B1 = (-1/100000000, 1/100000000, 0)."
+      - "Confirm that the continuing transition [0,1] permits n\u2192n+1 without policy-enforced\
+        \ termination."
+      - "Distinguish static non-repairability (certificate \u03B1 exists but policy\
+        \ does not halt) from dynamical halting (a separate policy with policy_halts\
+        \ = true would terminate on this obstruction)."
+    json_pointer: /sections/0/rows/0/derivation
+    prompt_id: pilot_0000203:po035:loop02:v2
+    raw_reply_sha256: bdf4cf3a505361e5dfe264d8e59681bc4fd2231ffb19a221e8ee9942081eb7d6

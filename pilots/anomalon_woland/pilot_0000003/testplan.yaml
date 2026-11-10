@@ -1,0 +1,1519 @@
+schema: pfp.rewrite-test-plan.v1
+authority_effect: 'None'
+pilot_id: pilot_0000003
+spec: spec.yaml
+responses: misc
+description: Fifty capsules for the retained refusal seed. Historical rows keep recorded files. Planned
+  rows were not dispatched.
+prompt_template:
+  path: prompt_template.yaml
+  shared_by_all_tests: true
+seed:
+  path: seed.yaml
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  instantiated_template: tests/test_11/input.yaml
+  prompt_id: pilot_0000003_pstar_baseline
+  signature: raw_prose
+expected_outcome:
+  answer:
+    code: MAP_UNDEFINED
+  status: ACCEPTED
+counts:
+  unique_cases: 50
+  rewrite_files: 50
+  tests: 50
+cases:
+- case_id: plain_prose
+  rewrite_id: null
+  name: Plain prose
+  signature: plain_prose
+  dialect_tier: Plain prose
+  semantic_carrier: refusal
+  rewritten_seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge
+    set. Refuse. Do not invent a length.
+  tests:
+  - plain_prose
+- case_id: tier_h_headword
+  rewrite_id: tier_h_headword
+  name: Tier H - Head-Word Presentation
+  signature: tier_h_headword
+  dialect_tier: Tier H - Head-Word Presentation
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    query<
+      carrier<edges<pair<0, 1>>>,
+      ask<length<pair<2, 3>>>,
+      absent<pair<2, 3>>,
+      act<refuse>,
+      forbid<invented_length>
+    >
+  tests:
+  - tier_h_headword
+- case_id: tier_d_directive
+  rewrite_id: tier_d_directive
+  name: Tier D - Directive Form
+  signature: tier_d_directive
+  dialect_tier: Tier D - Directive Form
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    <assume edges <0 1>>
+    <assume absent <2 3>>
+    <goal <refuse length <2 3>>>
+    <forbid <invented length>>
+  tests:
+  - tier_d_directive
+- case_id: tier_s_strict
+  rewrite_id: tier_s_strict
+  name: Tier S - Strict Boundary Wire
+  signature: tier_s_strict
+  dialect_tier: Tier S - Strict Boundary Wire
+  semantic_carrier: refusal
+  rewritten_seed_prompt: <<edges>><<e><0><1>><<query><length><2><3>><<absent><2><3>><<act><refuse>><<forbid><invented_length>>
+  tests:
+  - tier_s_strict
+- case_id: tier_s_carrier
+  rewrite_id: tier_s_carrier
+  name: Tier S - Carrier-Declared Role-Typed Packet
+  signature: tier_s_carrier
+  dialect_tier: Tier S - Carrier-Declared Role-Typed Packet
+  semantic_carrier: refusal
+  rewritten_seed_prompt: <<decl>><<alph><gamma38>><<terms><edge_set>><<rules><no_invented_length>><<obst><absent_edge>><<term><refusal_record>>>><<task>><<edges><0><1>><<query><2><3>><<act><refuse>>
+  tests:
+  - tier_s_carrier
+- case_id: tier_s_quarantine
+  rewrite_id: tier_s_quarantine
+  name: Tier S - Quarantined Proposal Envelope
+  signature: tier_s_quarantine
+  dialect_tier: Tier S - Quarantined Proposal Envelope
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    <<p><v1><<q><s0>><<c><s1>>>
+    codebook:
+      s0: Edges {0-1}.
+      s1: The query asks for the length of edge 2-3, which is not in the edge set. Refuse. Do not invent a length.
+  tests:
+  - tier_s_quarantine
+- case_id: sn_obfuscated
+  rewrite_id: sn_obfuscated
+  name: S(n) Obfuscated
+  signature: sn_obfuscated
+  dialect_tier: S(n) Obfuscated
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    sn_edges<
+      r_1<0-1>,
+      query<r_1<2-3>>,
+      retract<refuse the length query because 2-3 is not an inscribed edge>
+    >
+    Do not invent a length.
+  tests:
+  - sn_obfuscated
+- case_id: matrix_vector
+  rewrite_id: matrix_vector
+  name: Matrix/Vector Presentation
+  signature: matrix_vector
+  dialect_tier: Matrix/Vector Presentation
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Known undirected pairs: (0, 1).
+    Query pair: (2, 3). That pair is not in the known list.
+    Do not invent a length. Refuse.
+  tests:
+  - matrix_vector
+- case_id: retraction_downmap
+  rewrite_id: retraction_downmap
+  name: Retraction Down-Map
+  signature: retraction_downmap
+  dialect_tier: Retraction Down-Map
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Carrier E is the edge set {0-1}.
+    Retraction r keeps that edge and does not add 2-3.
+    The query asks for the length of 2-3. Down-map that query to a refusal. Do not invent a length.
+  tests:
+  - retraction_downmap
+- case_id: operator_licensing
+  rewrite_id: operator_licensing
+  name: Operator Licensing
+  signature: operator_licensing
+  dialect_tier: Operator Licensing
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Licensed operators, this carrier only:
+    - reading the edge set {0-1}
+    - noticing that 2-3 is not in that set
+    - refusing the length query
+    Unlicensed: inventing a length for an absent edge, and adding 2-3 to the edge set.
+  tests:
+  - operator_licensing
+- case_id: pregenesis
+  rewrite_id: pregenesis
+  name: Pre-Genesis Inscription
+  signature: pregenesis
+  dialect_tier: Pre-Genesis Inscription
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    {<>, <0-1>, <query 2-3 absent>}
+    The inscribed edge set does not contain 2-3. Refuse the length query. Do not invent a length.
+  tests:
+  - pregenesis
+- case_id: pstar_baseline
+  rewrite_id: null
+  name: Stage-2 P* baseline
+  signature: pstar_baseline
+  dialect_tier: Stage-2 P* baseline
+  semantic_carrier: refusal
+  rewritten_seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge
+    set. Refuse. Do not invent a length.
+  tests:
+  - pstar_baseline
+- case_id: genesis_delta
+  rewrite_id: genesis_delta
+  name: Genesis Delta Candidate
+  signature: genesis_delta
+  dialect_tier: Genesis Delta Candidate
+  semantic_carrier: refusal
+  rewritten_seed_prompt: delta<NewDatum edges 0 1; NewDatum query 2 3 absent; NewInst refuse; NewRule
+    do not invent a length>
+  tests:
+  - genesis_delta
+- case_id: cross_cosmos
+  rewrite_id: cross_cosmos
+  name: Cross-Cosmos Passage
+  signature: cross_cosmos
+  dialect_tier: Cross-Cosmos Passage
+  semantic_carrier: refusal
+  rewritten_seed_prompt: <<passage>><<pregen><{<>, <0-1>, <query 2-3 absent>}>><<gen><regime<edges 0-1,
+    query 2-3>><<sn><r_1<0-1> query<2-3>><<mssn><<act><refuse>><<forbid><invented_length>>>>
+  tests:
+  - cross_cosmos
+- case_id: operator_licensing_scoped
+  rewrite_id: operator_licensing_scoped
+  name: Operator Licensing Scoped To The Carrier
+  signature: operator_licensing_scoped
+  dialect_tier: Operator Licensing Scoped To The Carrier
+  semantic_carrier: refusal
+  rewritten_seed_prompt: Scoped license. The only licensed edge is 0-1. The length query on 2-3 is licensed
+    only as a refusal. A numeric length for an absent edge is not licensed.
+  tests:
+  - operator_licensing_scoped
+- case_id: matrix_columns
+  rewrite_id: matrix_columns
+  name: Matrix/Vector Column Presentation
+  signature: matrix_columns
+  dialect_tier: Matrix/Vector Column Presentation
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Incidence columns over vertex labels 0,1,2,3 for the known edge 0-1 only.
+    Column of edge 0-1: endpoints 0 and 1.
+    There is no column for 2-3. The query still asks for the length of 2-3. Refuse. Do not invent a length.
+  tests:
+  - matrix_columns
+- case_id: retraction_composed
+  rewrite_id: retraction_composed
+  name: Retraction Down-Map Composed Twice
+  signature: retraction_composed
+  dialect_tier: Retraction Down-Map Composed Twice
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Let r keep the edge 0-1. Let s refuse to image the absent pair 2-3 as an edge.
+    Compose s after r. The length query has no edge to land on. Refuse. Do not invent a length.
+  tests:
+  - retraction_composed
+- case_id: tier_h_record
+  rewrite_id: tier_h_record
+  name: Tier H - Record Form
+  signature: tier_h_record
+  dialect_tier: Tier H - Record Form
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    task<record<
+      key<edges>, val<0-1>,
+      key<query>, val<length of 2-3>,
+      key<membership>, val<2-3 is absent>,
+      key<act>, val<refuse without an invented length>
+    >>
+  tests:
+  - tier_h_record
+- case_id: tier_d_goalsplit
+  rewrite_id: tier_d_goalsplit
+  name: Tier D - Split Goals
+  signature: tier_d_goalsplit
+  dialect_tier: Tier D - Split Goals
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    <assume edge <0 1>>
+    <assume not_edge <2 3>>
+    <goal <refuse>>
+    <forbid <numeric length for 2 3>>
+  tests:
+  - tier_d_goalsplit
+- case_id: sn_named_cut
+  rewrite_id: sn_named_cut
+  name: S(n) Named Cut
+  signature: sn_named_cut
+  dialect_tier: S(n) Named Cut
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    section<name<cut_known>, keep<0-1>>
+    section<name<cut_query>, keep<2-3 is not in cut_known>>
+    retract<cut_query onto cut_known>
+    ask<refuse the length>
+    forbid<invented length>
+  tests:
+  - sn_named_cut
+- case_id: tier_s_codebook_v2
+  rewrite_id: tier_s_codebook_v2
+  name: Tier S - Codebook Generation 2
+  signature: tier_s_codebook_v2
+  dialect_tier: Tier S - Codebook Generation 2
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    <<p><v2><<q><slot_edges>><<c><slot_query>>>
+    codebook_v2:
+      slot_edges: {0-1}
+      slot_query: length of absent edge 2-3; refuse; do not invent a length
+  tests:
+  - tier_s_codebook_v2
+- case_id: adjacency_vector
+  rewrite_id: adjacency_vector
+  name: Matrix/Vector Upper Triangle
+  signature: adjacency_vector
+  dialect_tier: Matrix/Vector Upper Triangle
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Vertex labels mentioned by the query are 0,1,2,3.
+    The only stored undirected pair is (0,1).
+    Pair (2,3) has no stored length. Refuse. Do not invent a length.
+  tests:
+  - adjacency_vector
+- case_id: retraction_quotient
+  rewrite_id: retraction_quotient
+  name: Retraction Quotient Down-Map
+  signature: retraction_quotient
+  dialect_tier: Retraction Quotient Down-Map
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Quotient nothing on the known edge 0-1.
+    The down-map has no image edge for 2-3.
+    Ask the refusal of the length query. Do not invent a length.
+  tests:
+  - retraction_quotient
+- case_id: plain_sentence_order_b
+  rewrite_id: plain_sentence_order_b
+  name: Plain prose sentence order B
+  signature: plain_sentence_order_b
+  dialect_tier: Plain prose sentence order B
+  semantic_carrier: refusal
+  rewritten_seed_prompt: Do not invent a length. Refuse. The length query names edge 2-3, and that edge
+    is not in the edge set. The edge set is {0-1}.
+  tests:
+  - plain_sentence_order_b
+- case_id: operator_witness_slots
+  rewrite_id: operator_witness_slots
+  name: Operator Licensing With Witness Slots
+  signature: operator_witness_slots
+  dialect_tier: Operator Licensing With Witness Slots
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Licensed witness slots, values not supplied in this prompt: the known edge set, the query pair, and the refusal record.
+    Carrier: edges {0-1}. Query: length of 2-3, which is absent. Do not invent a length.
+  tests:
+  - operator_witness_slots
+- case_id: span_witness_names
+  rewrite_id: span_witness_names
+  name: Span Witness Names
+  signature: span_witness_names
+  dialect_tier: Span Witness Names
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Span names only. This prompt does not fill them: span.known_edges, span.query_pair, span.refusal.
+    Carrier text: Edges {0-1}. The length query names 2-3, which is not in the edge set. Do not invent a length.
+  tests:
+  - span_witness_names
+- case_id: pstar_tier_h_headword
+  rewrite_id: pstar_tier_h_headword
+  name: Stage-2 P* - Tier H - Head-Word Presentation
+  signature: pstar_tier_h_headword
+  dialect_tier: Stage-2 P* - Tier H - Head-Word Presentation
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    query<
+      carrier<edges<pair<0, 1>>>,
+      ask<length<pair<2, 3>>>,
+      absent<pair<2, 3>>,
+      act<refuse>,
+      forbid<invented_length>
+    >
+  tests:
+  - pstar_tier_h_headword
+- case_id: pstar_tier_d_directive
+  rewrite_id: pstar_tier_d_directive
+  name: Stage-2 P* - Tier D - Directive Form
+  signature: pstar_tier_d_directive
+  dialect_tier: Stage-2 P* - Tier D - Directive Form
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    <assume edges <0 1>>
+    <assume absent <2 3>>
+    <goal <refuse length <2 3>>>
+    <forbid <invented length>>
+  tests:
+  - pstar_tier_d_directive
+- case_id: pstar_tier_s_strict
+  rewrite_id: pstar_tier_s_strict
+  name: Stage-2 P* - Tier S - Strict Boundary Wire
+  signature: pstar_tier_s_strict
+  dialect_tier: Stage-2 P* - Tier S - Strict Boundary Wire
+  semantic_carrier: refusal
+  rewritten_seed_prompt: <<edges>><<e><0><1>><<query><length><2><3>><<absent><2><3>><<act><refuse>><<forbid><invented_length>>
+  tests:
+  - pstar_tier_s_strict
+- case_id: pstar_tier_s_carrier
+  rewrite_id: pstar_tier_s_carrier
+  name: Stage-2 P* - Tier S - Carrier-Declared Role-Typed Packet
+  signature: pstar_tier_s_carrier
+  dialect_tier: Stage-2 P* - Tier S - Carrier-Declared Role-Typed Packet
+  semantic_carrier: refusal
+  rewritten_seed_prompt: <<decl>><<alph><gamma38>><<terms><edge_set>><<rules><no_invented_length>><<obst><absent_edge>><<term><refusal_record>>>><<task>><<edges><0><1>><<query><2><3>><<act><refuse>>
+  tests:
+  - pstar_tier_s_carrier
+- case_id: pstar_tier_s_quarantine
+  rewrite_id: pstar_tier_s_quarantine
+  name: Stage-2 P* - Tier S - Quarantined Proposal Envelope
+  signature: pstar_tier_s_quarantine
+  dialect_tier: Stage-2 P* - Tier S - Quarantined Proposal Envelope
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    <<p><v1><<q><s0>><<c><s1>>>
+    codebook:
+      s0: Edges {0-1}.
+      s1: The query asks for the length of edge 2-3, which is not in the edge set. Refuse. Do not invent a length.
+  tests:
+  - pstar_tier_s_quarantine
+- case_id: pstar_sn_obfuscated
+  rewrite_id: pstar_sn_obfuscated
+  name: Stage-2 P* - S(n) Obfuscated
+  signature: pstar_sn_obfuscated
+  dialect_tier: Stage-2 P* - S(n) Obfuscated
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    sn_edges<
+      r_1<0-1>,
+      query<r_1<2-3>>,
+      retract<refuse the length query because 2-3 is not an inscribed edge>
+    >
+    Do not invent a length.
+  tests:
+  - pstar_sn_obfuscated
+- case_id: pstar_matrix_vector
+  rewrite_id: pstar_matrix_vector
+  name: Stage-2 P* - Matrix/Vector Presentation
+  signature: pstar_matrix_vector
+  dialect_tier: Stage-2 P* - Matrix/Vector Presentation
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Known undirected pairs: (0, 1).
+    Query pair: (2, 3). That pair is not in the known list.
+    Do not invent a length. Refuse.
+  tests:
+  - pstar_matrix_vector
+- case_id: pstar_retraction_downmap
+  rewrite_id: pstar_retraction_downmap
+  name: Stage-2 P* - Retraction Down-Map
+  signature: pstar_retraction_downmap
+  dialect_tier: Stage-2 P* - Retraction Down-Map
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Carrier E is the edge set {0-1}.
+    Retraction r keeps that edge and does not add 2-3.
+    The query asks for the length of 2-3. Down-map that query to a refusal. Do not invent a length.
+  tests:
+  - pstar_retraction_downmap
+- case_id: pstar_operator_licensing
+  rewrite_id: pstar_operator_licensing
+  name: Stage-2 P* - Operator Licensing
+  signature: pstar_operator_licensing
+  dialect_tier: Stage-2 P* - Operator Licensing
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Licensed operators, this carrier only:
+    - reading the edge set {0-1}
+    - noticing that 2-3 is not in that set
+    - refusing the length query
+    Unlicensed: inventing a length for an absent edge, and adding 2-3 to the edge set.
+  tests:
+  - pstar_operator_licensing
+- case_id: pstar_pregenesis
+  rewrite_id: pstar_pregenesis
+  name: Stage-2 P* - Pre-Genesis Inscription
+  signature: pstar_pregenesis
+  dialect_tier: Stage-2 P* - Pre-Genesis Inscription
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    {<>, <0-1>, <query 2-3 absent>}
+    The inscribed edge set does not contain 2-3. Refuse the length query. Do not invent a length.
+  tests:
+  - pstar_pregenesis
+- case_id: pstar_genesis_delta
+  rewrite_id: pstar_genesis_delta
+  name: Stage-2 P* - Genesis Delta Candidate
+  signature: pstar_genesis_delta
+  dialect_tier: Stage-2 P* - Genesis Delta Candidate
+  semantic_carrier: refusal
+  rewritten_seed_prompt: delta<NewDatum edges 0 1; NewDatum query 2 3 absent; NewInst refuse; NewRule
+    do not invent a length>
+  tests:
+  - pstar_genesis_delta
+- case_id: pstar_cross_cosmos
+  rewrite_id: pstar_cross_cosmos
+  name: Stage-2 P* - Cross-Cosmos Passage
+  signature: pstar_cross_cosmos
+  dialect_tier: Stage-2 P* - Cross-Cosmos Passage
+  semantic_carrier: refusal
+  rewritten_seed_prompt: <<passage>><<pregen><{<>, <0-1>, <query 2-3 absent>}>><<gen><regime<edges 0-1,
+    query 2-3>><<sn><r_1<0-1> query<2-3>><<mssn><<act><refuse>><<forbid><invented_length>>>>
+  tests:
+  - pstar_cross_cosmos
+- case_id: pstar_operator_licensing_scoped
+  rewrite_id: pstar_operator_licensing_scoped
+  name: Stage-2 P* - Operator Licensing Scoped To The Carrier
+  signature: pstar_operator_licensing_scoped
+  dialect_tier: Stage-2 P* - Operator Licensing Scoped To The Carrier
+  semantic_carrier: refusal
+  rewritten_seed_prompt: Scoped license. The only licensed edge is 0-1. The length query on 2-3 is licensed
+    only as a refusal. A numeric length for an absent edge is not licensed.
+  tests:
+  - pstar_operator_licensing_scoped
+- case_id: pstar_matrix_columns
+  rewrite_id: pstar_matrix_columns
+  name: Stage-2 P* - Matrix/Vector Column Presentation
+  signature: pstar_matrix_columns
+  dialect_tier: Stage-2 P* - Matrix/Vector Column Presentation
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Incidence columns over vertex labels 0,1,2,3 for the known edge 0-1 only.
+    Column of edge 0-1: endpoints 0 and 1.
+    There is no column for 2-3. The query still asks for the length of 2-3. Refuse. Do not invent a length.
+  tests:
+  - pstar_matrix_columns
+- case_id: pstar_retraction_composed
+  rewrite_id: pstar_retraction_composed
+  name: Stage-2 P* - Retraction Down-Map Composed Twice
+  signature: pstar_retraction_composed
+  dialect_tier: Stage-2 P* - Retraction Down-Map Composed Twice
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Let r keep the edge 0-1. Let s refuse to image the absent pair 2-3 as an edge.
+    Compose s after r. The length query has no edge to land on. Refuse. Do not invent a length.
+  tests:
+  - pstar_retraction_composed
+- case_id: pstar_tier_h_record
+  rewrite_id: pstar_tier_h_record
+  name: Stage-2 P* - Tier H - Record Form
+  signature: pstar_tier_h_record
+  dialect_tier: Stage-2 P* - Tier H - Record Form
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    task<record<
+      key<edges>, val<0-1>,
+      key<query>, val<length of 2-3>,
+      key<membership>, val<2-3 is absent>,
+      key<act>, val<refuse without an invented length>
+    >>
+  tests:
+  - pstar_tier_h_record
+- case_id: pstar_tier_d_goalsplit
+  rewrite_id: pstar_tier_d_goalsplit
+  name: Stage-2 P* - Tier D - Split Goals
+  signature: pstar_tier_d_goalsplit
+  dialect_tier: Stage-2 P* - Tier D - Split Goals
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    <assume edge <0 1>>
+    <assume not_edge <2 3>>
+    <goal <refuse>>
+    <forbid <numeric length for 2 3>>
+  tests:
+  - pstar_tier_d_goalsplit
+- case_id: pstar_sn_named_cut
+  rewrite_id: pstar_sn_named_cut
+  name: Stage-2 P* - S(n) Named Cut
+  signature: pstar_sn_named_cut
+  dialect_tier: Stage-2 P* - S(n) Named Cut
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    section<name<cut_known>, keep<0-1>>
+    section<name<cut_query>, keep<2-3 is not in cut_known>>
+    retract<cut_query onto cut_known>
+    ask<refuse the length>
+    forbid<invented length>
+  tests:
+  - pstar_sn_named_cut
+- case_id: pstar_tier_s_codebook_v2
+  rewrite_id: pstar_tier_s_codebook_v2
+  name: Stage-2 P* - Tier S - Codebook Generation 2
+  signature: pstar_tier_s_codebook_v2
+  dialect_tier: Stage-2 P* - Tier S - Codebook Generation 2
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    <<p><v2><<q><slot_edges>><<c><slot_query>>>
+    codebook_v2:
+      slot_edges: {0-1}
+      slot_query: length of absent edge 2-3; refuse; do not invent a length
+  tests:
+  - pstar_tier_s_codebook_v2
+- case_id: pstar_adjacency_vector
+  rewrite_id: pstar_adjacency_vector
+  name: Stage-2 P* - Matrix/Vector Upper Triangle
+  signature: pstar_adjacency_vector
+  dialect_tier: Stage-2 P* - Matrix/Vector Upper Triangle
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Vertex labels mentioned by the query are 0,1,2,3.
+    The only stored undirected pair is (0,1).
+    Pair (2,3) has no stored length. Refuse. Do not invent a length.
+  tests:
+  - pstar_adjacency_vector
+- case_id: pstar_retraction_quotient
+  rewrite_id: pstar_retraction_quotient
+  name: Stage-2 P* - Retraction Quotient Down-Map
+  signature: pstar_retraction_quotient
+  dialect_tier: Stage-2 P* - Retraction Quotient Down-Map
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Quotient nothing on the known edge 0-1.
+    The down-map has no image edge for 2-3.
+    Ask the refusal of the length query. Do not invent a length.
+  tests:
+  - pstar_retraction_quotient
+- case_id: pstar_plain_sentence_order_b
+  rewrite_id: pstar_plain_sentence_order_b
+  name: Stage-2 P* - Plain prose sentence order B
+  signature: pstar_plain_sentence_order_b
+  dialect_tier: Stage-2 P* - Plain prose sentence order B
+  semantic_carrier: refusal
+  rewritten_seed_prompt: Do not invent a length. Refuse. The length query names edge 2-3, and that edge
+    is not in the edge set. The edge set is {0-1}.
+  tests:
+  - pstar_plain_sentence_order_b
+- case_id: pstar_operator_witness_slots
+  rewrite_id: pstar_operator_witness_slots
+  name: Stage-2 P* - Operator Licensing With Witness Slots
+  signature: pstar_operator_witness_slots
+  dialect_tier: Stage-2 P* - Operator Licensing With Witness Slots
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Licensed witness slots, values not supplied in this prompt: the known edge set, the query pair, and the refusal record.
+    Carrier: edges {0-1}. Query: length of 2-3, which is absent. Do not invent a length.
+  tests:
+  - pstar_operator_witness_slots
+- case_id: pstar_span_witness_names
+  rewrite_id: pstar_span_witness_names
+  name: Stage-2 P* - Span Witness Names
+  signature: pstar_span_witness_names
+  dialect_tier: Stage-2 P* - Span Witness Names
+  semantic_carrier: refusal
+  rewritten_seed_prompt: |-
+    Span names only. This prompt does not fill them: span.known_edges, span.query_pair, span.refusal.
+    Carrier text: Edges {0-1}. The length query names 2-3, which is not in the edge set. Do not invent a length.
+  tests:
+  - pstar_span_witness_names
+tests:
+- test_id: plain_prose
+  kind: plain_seed
+  rewrite_id: null
+  signature: plain_prose
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge
+    set. Refuse. Do not invent a length.
+  artifact: tests/test_00/input.yaml
+  request_id: pilot_0000003_req_test_00
+  prompt_id: pilot_0000003_plain_prose
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: plain_prose
+- test_id: tier_h_headword
+  kind: rewritten_seed
+  rewrite_id: tier_h_headword
+  signature: tier_h_headword
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    query<
+      carrier<edges<pair<0, 1>>>,
+      ask<length<pair<2, 3>>>,
+      absent<pair<2, 3>>,
+      act<refuse>,
+      forbid<invented_length>
+    >
+  artifact: tests/test_01/input.yaml
+  request_id: pilot_0000003_req_test_01
+  prompt_id: pilot_0000003_tier_h_headword
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: tier_h_headword
+- test_id: tier_d_directive
+  kind: rewritten_seed
+  rewrite_id: tier_d_directive
+  signature: tier_d_directive
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    <assume edges <0 1>>
+    <assume absent <2 3>>
+    <goal <refuse length <2 3>>>
+    <forbid <invented length>>
+  artifact: tests/test_02/input.yaml
+  request_id: pilot_0000003_req_test_02
+  prompt_id: pilot_0000003_tier_d_directive
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: tier_d_directive
+- test_id: tier_s_strict
+  kind: rewritten_seed
+  rewrite_id: tier_s_strict
+  signature: tier_s_strict
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: <<edges>><<e><0><1>><<query><length><2><3>><<absent><2><3>><<act><refuse>><<forbid><invented_length>>
+  artifact: tests/test_03/input.yaml
+  request_id: pilot_0000003_req_test_03
+  prompt_id: pilot_0000003_tier_s_strict
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: tier_s_strict
+- test_id: tier_s_carrier
+  kind: rewritten_seed
+  rewrite_id: tier_s_carrier
+  signature: tier_s_carrier
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: <<decl>><<alph><gamma38>><<terms><edge_set>><<rules><no_invented_length>><<obst><absent_edge>><<term><refusal_record>>>><<task>><<edges><0><1>><<query><2><3>><<act><refuse>>
+  artifact: tests/test_04/input.yaml
+  request_id: pilot_0000003_req_test_04
+  prompt_id: pilot_0000003_tier_s_carrier
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: tier_s_carrier
+- test_id: tier_s_quarantine
+  kind: rewritten_seed
+  rewrite_id: tier_s_quarantine
+  signature: tier_s_quarantine
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    <<p><v1><<q><s0>><<c><s1>>>
+    codebook:
+      s0: Edges {0-1}.
+      s1: The query asks for the length of edge 2-3, which is not in the edge set. Refuse. Do not invent a length.
+  artifact: tests/test_05/input.yaml
+  request_id: pilot_0000003_req_test_05
+  prompt_id: pilot_0000003_tier_s_quarantine
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: tier_s_quarantine
+- test_id: sn_obfuscated
+  kind: rewritten_seed
+  rewrite_id: sn_obfuscated
+  signature: sn_obfuscated
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    sn_edges<
+      r_1<0-1>,
+      query<r_1<2-3>>,
+      retract<refuse the length query because 2-3 is not an inscribed edge>
+    >
+    Do not invent a length.
+  artifact: tests/test_06/input.yaml
+  request_id: pilot_0000003_req_test_06
+  prompt_id: pilot_0000003_sn_obfuscated
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: sn_obfuscated
+- test_id: matrix_vector
+  kind: rewritten_seed
+  rewrite_id: matrix_vector
+  signature: matrix_vector
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Known undirected pairs: (0, 1).
+    Query pair: (2, 3). That pair is not in the known list.
+    Do not invent a length. Refuse.
+  artifact: tests/test_07/input.yaml
+  request_id: pilot_0000003_req_test_07
+  prompt_id: pilot_0000003_matrix_vector
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: matrix_vector
+- test_id: retraction_downmap
+  kind: rewritten_seed
+  rewrite_id: retraction_downmap
+  signature: retraction_downmap
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Carrier E is the edge set {0-1}.
+    Retraction r keeps that edge and does not add 2-3.
+    The query asks for the length of 2-3. Down-map that query to a refusal. Do not invent a length.
+  artifact: tests/test_08/input.yaml
+  request_id: pilot_0000003_req_test_08
+  prompt_id: pilot_0000003_retraction_downmap
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: retraction_downmap
+- test_id: operator_licensing
+  kind: rewritten_seed
+  rewrite_id: operator_licensing
+  signature: operator_licensing
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Licensed operators, this carrier only:
+    - reading the edge set {0-1}
+    - noticing that 2-3 is not in that set
+    - refusing the length query
+    Unlicensed: inventing a length for an absent edge, and adding 2-3 to the edge set.
+  artifact: tests/test_09/input.yaml
+  request_id: pilot_0000003_req_test_09
+  prompt_id: pilot_0000003_operator_licensing
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: operator_licensing
+- test_id: pregenesis
+  kind: rewritten_seed
+  rewrite_id: pregenesis
+  signature: pregenesis
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    {<>, <0-1>, <query 2-3 absent>}
+    The inscribed edge set does not contain 2-3. Refuse the length query. Do not invent a length.
+  artifact: tests/test_10/input.yaml
+  request_id: pilot_0000003_req_test_10
+  prompt_id: pilot_0000003_pregenesis
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: pregenesis
+- test_id: pstar_baseline
+  kind: instantiated_template
+  rewrite_id: null
+  signature: pstar_baseline
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge
+    set. Refuse. Do not invent a length.
+  artifact: tests/test_11/input.yaml
+  request_id: pilot_0000003_req_test_11
+  prompt_id: pilot_0000003_pstar_baseline
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_baseline
+- test_id: genesis_delta
+  kind: rewritten_seed
+  rewrite_id: genesis_delta
+  signature: genesis_delta
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: delta<NewDatum edges 0 1; NewDatum query 2 3 absent; NewInst refuse; NewRule
+    do not invent a length>
+  artifact: tests/test_12/input.yaml
+  request_id: pilot_0000003_req_test_12
+  prompt_id: pilot_0000003_genesis_delta
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: genesis_delta
+- test_id: cross_cosmos
+  kind: rewritten_seed
+  rewrite_id: cross_cosmos
+  signature: cross_cosmos
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: <<passage>><<pregen><{<>, <0-1>, <query 2-3 absent>}>><<gen><regime<edges 0-1,
+    query 2-3>><<sn><r_1<0-1> query<2-3>><<mssn><<act><refuse>><<forbid><invented_length>>>>
+  artifact: tests/test_13/input.yaml
+  request_id: pilot_0000003_req_test_13
+  prompt_id: pilot_0000003_cross_cosmos
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: cross_cosmos
+- test_id: operator_licensing_scoped
+  kind: rewritten_seed
+  rewrite_id: operator_licensing_scoped
+  signature: operator_licensing_scoped
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: Scoped license. The only licensed edge is 0-1. The length query on 2-3 is licensed
+    only as a refusal. A numeric length for an absent edge is not licensed.
+  artifact: tests/test_14/input.yaml
+  request_id: pilot_0000003_req_test_14
+  prompt_id: pilot_0000003_operator_licensing_scoped
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: operator_licensing_scoped
+- test_id: matrix_columns
+  kind: rewritten_seed
+  rewrite_id: matrix_columns
+  signature: matrix_columns
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Incidence columns over vertex labels 0,1,2,3 for the known edge 0-1 only.
+    Column of edge 0-1: endpoints 0 and 1.
+    There is no column for 2-3. The query still asks for the length of 2-3. Refuse. Do not invent a length.
+  artifact: tests/test_15/input.yaml
+  request_id: pilot_0000003_req_test_15
+  prompt_id: pilot_0000003_matrix_columns
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: matrix_columns
+- test_id: retraction_composed
+  kind: rewritten_seed
+  rewrite_id: retraction_composed
+  signature: retraction_composed
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Let r keep the edge 0-1. Let s refuse to image the absent pair 2-3 as an edge.
+    Compose s after r. The length query has no edge to land on. Refuse. Do not invent a length.
+  artifact: tests/test_16/input.yaml
+  request_id: pilot_0000003_req_test_16
+  prompt_id: pilot_0000003_retraction_composed
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: retraction_composed
+- test_id: tier_h_record
+  kind: rewritten_seed
+  rewrite_id: tier_h_record
+  signature: tier_h_record
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    task<record<
+      key<edges>, val<0-1>,
+      key<query>, val<length of 2-3>,
+      key<membership>, val<2-3 is absent>,
+      key<act>, val<refuse without an invented length>
+    >>
+  artifact: tests/test_17/input.yaml
+  request_id: pilot_0000003_req_test_17
+  prompt_id: pilot_0000003_tier_h_record
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: tier_h_record
+- test_id: tier_d_goalsplit
+  kind: rewritten_seed
+  rewrite_id: tier_d_goalsplit
+  signature: tier_d_goalsplit
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    <assume edge <0 1>>
+    <assume not_edge <2 3>>
+    <goal <refuse>>
+    <forbid <numeric length for 2 3>>
+  artifact: tests/test_18/input.yaml
+  request_id: pilot_0000003_req_test_18
+  prompt_id: pilot_0000003_tier_d_goalsplit
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: tier_d_goalsplit
+- test_id: sn_named_cut
+  kind: rewritten_seed
+  rewrite_id: sn_named_cut
+  signature: sn_named_cut
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    section<name<cut_known>, keep<0-1>>
+    section<name<cut_query>, keep<2-3 is not in cut_known>>
+    retract<cut_query onto cut_known>
+    ask<refuse the length>
+    forbid<invented length>
+  artifact: tests/test_19/input.yaml
+  request_id: pilot_0000003_req_test_19
+  prompt_id: pilot_0000003_sn_named_cut
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: sn_named_cut
+- test_id: tier_s_codebook_v2
+  kind: rewritten_seed
+  rewrite_id: tier_s_codebook_v2
+  signature: tier_s_codebook_v2
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    <<p><v2><<q><slot_edges>><<c><slot_query>>>
+    codebook_v2:
+      slot_edges: {0-1}
+      slot_query: length of absent edge 2-3; refuse; do not invent a length
+  artifact: tests/test_20/input.yaml
+  request_id: pilot_0000003_req_test_20
+  prompt_id: pilot_0000003_tier_s_codebook_v2
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: tier_s_codebook_v2
+- test_id: adjacency_vector
+  kind: rewritten_seed
+  rewrite_id: adjacency_vector
+  signature: adjacency_vector
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Vertex labels mentioned by the query are 0,1,2,3.
+    The only stored undirected pair is (0,1).
+    Pair (2,3) has no stored length. Refuse. Do not invent a length.
+  artifact: tests/test_21/input.yaml
+  request_id: pilot_0000003_req_test_21
+  prompt_id: pilot_0000003_adjacency_vector
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: adjacency_vector
+- test_id: retraction_quotient
+  kind: rewritten_seed
+  rewrite_id: retraction_quotient
+  signature: retraction_quotient
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Quotient nothing on the known edge 0-1.
+    The down-map has no image edge for 2-3.
+    Ask the refusal of the length query. Do not invent a length.
+  artifact: tests/test_22/input.yaml
+  request_id: pilot_0000003_req_test_22
+  prompt_id: pilot_0000003_retraction_quotient
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: retraction_quotient
+- test_id: plain_sentence_order_b
+  kind: rewritten_seed
+  rewrite_id: plain_sentence_order_b
+  signature: plain_sentence_order_b
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: Do not invent a length. Refuse. The length query names edge 2-3, and that edge
+    is not in the edge set. The edge set is {0-1}.
+  artifact: tests/test_23/input.yaml
+  request_id: pilot_0000003_req_test_23
+  prompt_id: pilot_0000003_plain_sentence_order_b
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: plain_sentence_order_b
+- test_id: operator_witness_slots
+  kind: rewritten_seed
+  rewrite_id: operator_witness_slots
+  signature: operator_witness_slots
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Licensed witness slots, values not supplied in this prompt: the known edge set, the query pair, and the refusal record.
+    Carrier: edges {0-1}. Query: length of 2-3, which is absent. Do not invent a length.
+  artifact: tests/test_24/input.yaml
+  request_id: pilot_0000003_req_test_24
+  prompt_id: pilot_0000003_operator_witness_slots
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: operator_witness_slots
+- test_id: span_witness_names
+  kind: rewritten_seed
+  rewrite_id: span_witness_names
+  signature: span_witness_names
+  grammar: null
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Span names only. This prompt does not fill them: span.known_edges, span.query_pair, span.refusal.
+    Carrier text: Edges {0-1}. The length query names 2-3, which is not in the edge set. Do not invent a length.
+  artifact: tests/test_25/input.yaml
+  request_id: pilot_0000003_req_test_25
+  prompt_id: pilot_0000003_span_witness_names
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: false
+  case_id: span_witness_names
+- test_id: pstar_tier_h_headword
+  kind: instantiated_template
+  rewrite_id: pstar_tier_h_headword
+  signature: pstar_tier_h_headword
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    query<
+      carrier<edges<pair<0, 1>>>,
+      ask<length<pair<2, 3>>>,
+      absent<pair<2, 3>>,
+      act<refuse>,
+      forbid<invented_length>
+    >
+  artifact: tests/test_26/input.yaml
+  request_id: pilot_0000003_req_test_26
+  prompt_id: pilot_0000003_pstar_tier_h_headword
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_tier_h_headword
+- test_id: pstar_tier_d_directive
+  kind: instantiated_template
+  rewrite_id: pstar_tier_d_directive
+  signature: pstar_tier_d_directive
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    <assume edges <0 1>>
+    <assume absent <2 3>>
+    <goal <refuse length <2 3>>>
+    <forbid <invented length>>
+  artifact: tests/test_27/input.yaml
+  request_id: pilot_0000003_req_test_27
+  prompt_id: pilot_0000003_pstar_tier_d_directive
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_tier_d_directive
+- test_id: pstar_tier_s_strict
+  kind: instantiated_template
+  rewrite_id: pstar_tier_s_strict
+  signature: pstar_tier_s_strict
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: <<edges>><<e><0><1>><<query><length><2><3>><<absent><2><3>><<act><refuse>><<forbid><invented_length>>
+  artifact: tests/test_28/input.yaml
+  request_id: pilot_0000003_req_test_28
+  prompt_id: pilot_0000003_pstar_tier_s_strict
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_tier_s_strict
+- test_id: pstar_tier_s_carrier
+  kind: instantiated_template
+  rewrite_id: pstar_tier_s_carrier
+  signature: pstar_tier_s_carrier
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: <<decl>><<alph><gamma38>><<terms><edge_set>><<rules><no_invented_length>><<obst><absent_edge>><<term><refusal_record>>>><<task>><<edges><0><1>><<query><2><3>><<act><refuse>>
+  artifact: tests/test_29/input.yaml
+  request_id: pilot_0000003_req_test_29
+  prompt_id: pilot_0000003_pstar_tier_s_carrier
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_tier_s_carrier
+- test_id: pstar_tier_s_quarantine
+  kind: instantiated_template
+  rewrite_id: pstar_tier_s_quarantine
+  signature: pstar_tier_s_quarantine
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    <<p><v1><<q><s0>><<c><s1>>>
+    codebook:
+      s0: Edges {0-1}.
+      s1: The query asks for the length of edge 2-3, which is not in the edge set. Refuse. Do not invent a length.
+  artifact: tests/test_30/input.yaml
+  request_id: pilot_0000003_req_test_30
+  prompt_id: pilot_0000003_pstar_tier_s_quarantine
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_tier_s_quarantine
+- test_id: pstar_sn_obfuscated
+  kind: instantiated_template
+  rewrite_id: pstar_sn_obfuscated
+  signature: pstar_sn_obfuscated
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    sn_edges<
+      r_1<0-1>,
+      query<r_1<2-3>>,
+      retract<refuse the length query because 2-3 is not an inscribed edge>
+    >
+    Do not invent a length.
+  artifact: tests/test_31/input.yaml
+  request_id: pilot_0000003_req_test_31
+  prompt_id: pilot_0000003_pstar_sn_obfuscated
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_sn_obfuscated
+- test_id: pstar_matrix_vector
+  kind: instantiated_template
+  rewrite_id: pstar_matrix_vector
+  signature: pstar_matrix_vector
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Known undirected pairs: (0, 1).
+    Query pair: (2, 3). That pair is not in the known list.
+    Do not invent a length. Refuse.
+  artifact: tests/test_32/input.yaml
+  request_id: pilot_0000003_req_test_32
+  prompt_id: pilot_0000003_pstar_matrix_vector
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_matrix_vector
+- test_id: pstar_retraction_downmap
+  kind: instantiated_template
+  rewrite_id: pstar_retraction_downmap
+  signature: pstar_retraction_downmap
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Carrier E is the edge set {0-1}.
+    Retraction r keeps that edge and does not add 2-3.
+    The query asks for the length of 2-3. Down-map that query to a refusal. Do not invent a length.
+  artifact: tests/test_33/input.yaml
+  request_id: pilot_0000003_req_test_33
+  prompt_id: pilot_0000003_pstar_retraction_downmap
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_retraction_downmap
+- test_id: pstar_operator_licensing
+  kind: instantiated_template
+  rewrite_id: pstar_operator_licensing
+  signature: pstar_operator_licensing
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Licensed operators, this carrier only:
+    - reading the edge set {0-1}
+    - noticing that 2-3 is not in that set
+    - refusing the length query
+    Unlicensed: inventing a length for an absent edge, and adding 2-3 to the edge set.
+  artifact: tests/test_34/input.yaml
+  request_id: pilot_0000003_req_test_34
+  prompt_id: pilot_0000003_pstar_operator_licensing
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_operator_licensing
+- test_id: pstar_pregenesis
+  kind: instantiated_template
+  rewrite_id: pstar_pregenesis
+  signature: pstar_pregenesis
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    {<>, <0-1>, <query 2-3 absent>}
+    The inscribed edge set does not contain 2-3. Refuse the length query. Do not invent a length.
+  artifact: tests/test_35/input.yaml
+  request_id: pilot_0000003_req_test_35
+  prompt_id: pilot_0000003_pstar_pregenesis
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_pregenesis
+- test_id: pstar_genesis_delta
+  kind: instantiated_template
+  rewrite_id: pstar_genesis_delta
+  signature: pstar_genesis_delta
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: delta<NewDatum edges 0 1; NewDatum query 2 3 absent; NewInst refuse; NewRule
+    do not invent a length>
+  artifact: tests/test_36/input.yaml
+  request_id: pilot_0000003_req_test_36
+  prompt_id: pilot_0000003_pstar_genesis_delta
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_genesis_delta
+- test_id: pstar_cross_cosmos
+  kind: instantiated_template
+  rewrite_id: pstar_cross_cosmos
+  signature: pstar_cross_cosmos
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: <<passage>><<pregen><{<>, <0-1>, <query 2-3 absent>}>><<gen><regime<edges 0-1,
+    query 2-3>><<sn><r_1<0-1> query<2-3>><<mssn><<act><refuse>><<forbid><invented_length>>>>
+  artifact: tests/test_37/input.yaml
+  request_id: pilot_0000003_req_test_37
+  prompt_id: pilot_0000003_pstar_cross_cosmos
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_cross_cosmos
+- test_id: pstar_operator_licensing_scoped
+  kind: instantiated_template
+  rewrite_id: pstar_operator_licensing_scoped
+  signature: pstar_operator_licensing_scoped
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: Scoped license. The only licensed edge is 0-1. The length query on 2-3 is licensed
+    only as a refusal. A numeric length for an absent edge is not licensed.
+  artifact: tests/test_38/input.yaml
+  request_id: pilot_0000003_req_test_38
+  prompt_id: pilot_0000003_pstar_operator_licensing_scoped
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_operator_licensing_scoped
+- test_id: pstar_matrix_columns
+  kind: instantiated_template
+  rewrite_id: pstar_matrix_columns
+  signature: pstar_matrix_columns
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Incidence columns over vertex labels 0,1,2,3 for the known edge 0-1 only.
+    Column of edge 0-1: endpoints 0 and 1.
+    There is no column for 2-3. The query still asks for the length of 2-3. Refuse. Do not invent a length.
+  artifact: tests/test_39/input.yaml
+  request_id: pilot_0000003_req_test_39
+  prompt_id: pilot_0000003_pstar_matrix_columns
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_matrix_columns
+- test_id: pstar_retraction_composed
+  kind: instantiated_template
+  rewrite_id: pstar_retraction_composed
+  signature: pstar_retraction_composed
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Let r keep the edge 0-1. Let s refuse to image the absent pair 2-3 as an edge.
+    Compose s after r. The length query has no edge to land on. Refuse. Do not invent a length.
+  artifact: tests/test_40/input.yaml
+  request_id: pilot_0000003_req_test_40
+  prompt_id: pilot_0000003_pstar_retraction_composed
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_retraction_composed
+- test_id: pstar_tier_h_record
+  kind: instantiated_template
+  rewrite_id: pstar_tier_h_record
+  signature: pstar_tier_h_record
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    task<record<
+      key<edges>, val<0-1>,
+      key<query>, val<length of 2-3>,
+      key<membership>, val<2-3 is absent>,
+      key<act>, val<refuse without an invented length>
+    >>
+  artifact: tests/test_41/input.yaml
+  request_id: pilot_0000003_req_test_41
+  prompt_id: pilot_0000003_pstar_tier_h_record
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_tier_h_record
+- test_id: pstar_tier_d_goalsplit
+  kind: instantiated_template
+  rewrite_id: pstar_tier_d_goalsplit
+  signature: pstar_tier_d_goalsplit
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    <assume edge <0 1>>
+    <assume not_edge <2 3>>
+    <goal <refuse>>
+    <forbid <numeric length for 2 3>>
+  artifact: tests/test_42/input.yaml
+  request_id: pilot_0000003_req_test_42
+  prompt_id: pilot_0000003_pstar_tier_d_goalsplit
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_tier_d_goalsplit
+- test_id: pstar_sn_named_cut
+  kind: instantiated_template
+  rewrite_id: pstar_sn_named_cut
+  signature: pstar_sn_named_cut
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    section<name<cut_known>, keep<0-1>>
+    section<name<cut_query>, keep<2-3 is not in cut_known>>
+    retract<cut_query onto cut_known>
+    ask<refuse the length>
+    forbid<invented length>
+  artifact: tests/test_43/input.yaml
+  request_id: pilot_0000003_req_test_43
+  prompt_id: pilot_0000003_pstar_sn_named_cut
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_sn_named_cut
+- test_id: pstar_tier_s_codebook_v2
+  kind: instantiated_template
+  rewrite_id: pstar_tier_s_codebook_v2
+  signature: pstar_tier_s_codebook_v2
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    <<p><v2><<q><slot_edges>><<c><slot_query>>>
+    codebook_v2:
+      slot_edges: {0-1}
+      slot_query: length of absent edge 2-3; refuse; do not invent a length
+  artifact: tests/test_44/input.yaml
+  request_id: pilot_0000003_req_test_44
+  prompt_id: pilot_0000003_pstar_tier_s_codebook_v2
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_tier_s_codebook_v2
+- test_id: pstar_adjacency_vector
+  kind: instantiated_template
+  rewrite_id: pstar_adjacency_vector
+  signature: pstar_adjacency_vector
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Vertex labels mentioned by the query are 0,1,2,3.
+    The only stored undirected pair is (0,1).
+    Pair (2,3) has no stored length. Refuse. Do not invent a length.
+  artifact: tests/test_45/input.yaml
+  request_id: pilot_0000003_req_test_45
+  prompt_id: pilot_0000003_pstar_adjacency_vector
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_adjacency_vector
+- test_id: pstar_retraction_quotient
+  kind: instantiated_template
+  rewrite_id: pstar_retraction_quotient
+  signature: pstar_retraction_quotient
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Quotient nothing on the known edge 0-1.
+    The down-map has no image edge for 2-3.
+    Ask the refusal of the length query. Do not invent a length.
+  artifact: tests/test_46/input.yaml
+  request_id: pilot_0000003_req_test_46
+  prompt_id: pilot_0000003_pstar_retraction_quotient
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_retraction_quotient
+- test_id: pstar_plain_sentence_order_b
+  kind: instantiated_template
+  rewrite_id: pstar_plain_sentence_order_b
+  signature: pstar_plain_sentence_order_b
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: Do not invent a length. Refuse. The length query names edge 2-3, and that edge
+    is not in the edge set. The edge set is {0-1}.
+  artifact: tests/test_47/input.yaml
+  request_id: pilot_0000003_req_test_47
+  prompt_id: pilot_0000003_pstar_plain_sentence_order_b
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_plain_sentence_order_b
+- test_id: pstar_operator_witness_slots
+  kind: instantiated_template
+  rewrite_id: pstar_operator_witness_slots
+  signature: pstar_operator_witness_slots
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Licensed witness slots, values not supplied in this prompt: the known edge set, the query pair, and the refusal record.
+    Carrier: edges {0-1}. Query: length of 2-3, which is absent. Do not invent a length.
+  artifact: tests/test_48/input.yaml
+  request_id: pilot_0000003_req_test_48
+  prompt_id: pilot_0000003_pstar_operator_witness_slots
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_operator_witness_slots
+- test_id: pstar_span_witness_names
+  kind: instantiated_template
+  rewrite_id: pstar_span_witness_names
+  signature: pstar_span_witness_names
+  grammar: mss-n
+  seed_prompt: Edges {0-1}. The query asks for the length of edge 2-3, which is not in the edge set. Refuse.
+    Do not invent a length.
+  prompt_template: prompt_template.yaml
+  rewritten_seed_prompt: |-
+    Span names only. This prompt does not fill them: span.known_edges, span.query_pair, span.refusal.
+    Carrier text: Edges {0-1}. The length query names 2-3, which is not in the edge set. Do not invent a length.
+  artifact: tests/test_49/input.yaml
+  request_id: pilot_0000003_req_test_49
+  prompt_id: pilot_0000003_pstar_span_witness_names
+  parent_prompt_id: prompt_0000003
+  user_prompt_equals_rewritten_seed: true
+  case_id: pstar_span_witness_names

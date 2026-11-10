@@ -3,6 +3,31 @@
 **Start with [WF1](Workflow-WF1.md): one task, one reply, one independent check.**
 Add another mechanism when your work needs it. You can stop at any workflow.
 
+**QM benchmark:** [five recipes and one repair](Workflow-QM-Benchmark.md) cover
+a direct solver, self-critique, and rational counterexample panels. The
+[first live pilot](Workflow-QM-Pilot-2026-11-10.md) cost USD 0.008398 across six
+attempts; none produced a complete solution. Implementation is in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58); raw receipts remain in
+the working checkout, pending publication to main. The WF1–WF5 measurements below
+concern the earlier integer-addition task.
+
+The [Hamiltonian workflows](Workflow-QM-Hamiltonian.md) now add an exact public-input
+matrix check, one bounded correction, and ungated/host-computation controls. Their
+eight-run comparison demonstrates refusal of incorrect representations, not a
+complete or more accurate final solution.
+
+The [output-allowance comparison](Workflow-QM-Hamiltonian.md#output-allowance-control)
+scored 62/100 for a longer direct response. A subsequent [five-section control](Workflow-QM-Sections.md)
+scored 26/100 at higher cost. Another model's direct answer scored 83/100;
+[self-critique](Workflow-QM-Controls.md#deepseek-direct-versus-self-critique) scored
+88/100 at greater money, token and time cost. None is fully correct, and these
+single-item observations do not establish a system-level advantage.
+Implementation is reviewable in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58).
+
+The new [native polynomial-check workflows](Workflow-QM-Charpoly.md) connect exact
+Rust arithmetic to proposal, optional repair and synthesis. Their first comparison
+delivered no answer in the checked arm and an incomplete answer in the unchecked
+arm; this provides no evidence of a performance improvement.
+
 ## Where the files are
 
 Every workflow has one folder in the repository, numbered the same as here:
@@ -67,7 +92,8 @@ workflows solve arbitrary research problems or eliminate hallucinations.
 
 ## Find the next thing
 
-- [Workflow DAG](Workflow-DAG.md): WF1–WF23, their dependencies, teams and boost steps.
+- [Workflow DAG](Workflow-DAG.md): WF1–WF49, their dependencies, teams and boost steps.
+- [Frozen QM benchmark](Workflow-QM-Benchmark.md): controls, rational panels, budgets and evidence limits.
 - [Workflow library](Workflow-Library.md): base families and versioned recipes.
 - [Troubleshooting](Workflow-Troubleshooting.md): what a refusal means and what to do.
 - [Results and costs](Workflow-Results.md): successful paths **and** failed attempts.

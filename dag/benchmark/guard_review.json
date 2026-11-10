@@ -1,0 +1,315 @@
+{
+  "schema": "pfp.guard-adversarial-review.v1",
+  "generated_at_utc": "2026-11-10T04:57:10.369356+00:00",
+  "status": "three_reproduced_findings_before_fixes",
+  "reviewed_files": [
+    {
+      "path": "dag/benchmark/openrouter_provider.py",
+      "sha256": "43f5a4a8d2a36fe997302864a9f7ce8c0c5f64263154de0136bbd189d5ed9f2f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          260
+        ]
+      ]
+    },
+    {
+      "path": "dag/benchmark/campaign_ledger.py",
+      "sha256": "ad8227cac9c025bfc7d012d733cda407b9e94272c947425f8f1cd3695261382a",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          156
+        ]
+      ]
+    },
+    {
+      "path": "dag/benchmark/reference_runner.py",
+      "sha256": "26bae3c3fa7e9c4b6f3daa0ecdabf428dc371673977adef2310882b3d6f60a2f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          196
+        ]
+      ]
+    },
+    {
+      "path": "dag/benchmark/live_campaign.py",
+      "sha256": "ae2316cc30c727022fd486419886ded796cc151454db366ea6ff165f47f832d2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          95
+        ]
+      ]
+    },
+    {
+      "path": "dag/benchmark/budget_ledger.py",
+      "sha256": "07b20aa3d17f4e88d4e5e751a2b96daa54c0b83a66677122b0ffe53b809cbd2b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          122
+        ]
+      ]
+    },
+    {
+      "path": "dag/benchmark/test_live_admission.py",
+      "sha256": "bfcfb735ec99c9d90ddf1cb1ed84b47cc598528f93454f456dc75944643024c1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          214
+        ]
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "GR-F01",
+      "priority": "P1",
+      "title": "Bind the actual prepared wire before dispatch",
+      "paths": [
+        "dag/benchmark/openrouter_provider.py:199",
+        "dag/benchmark/openrouter_provider.py:216",
+        "dag/benchmark/openrouter_provider.py:221"
+      ],
+      "finding": "request_evidence returns the same mutable dictionary containing Prepared.wire. complete validates only the original high-level request hash. Mutating wire max_tokens or provider routing after upper_quote sends the altered request without a new reservation or a wire-integrity check.",
+      "evidence": [
+        "GR-P01"
+      ],
+      "impact": "The dispatched request can exceed the reserved output ceiling or re-enable fallback while the stored wire_request_sha256 still describes the old request.",
+      "fix_direction": "Return an independent evidence snapshot; retain immutable serialized wire bytes or recompute/verify a separately stored wire digest immediately before dispatch. Ensure mutations cannot alter prepared input through aliases.",
+      "scope_limit": "This reproduction mutates the public in-process evidence object; no remote model path to that object was demonstrated."
+    },
+    {
+      "id": "GR-F02",
+      "priority": "P1",
+      "title": "Block the next run while a prior campaign admission is unfinished",
+      "paths": [
+        "dag/benchmark/campaign_ledger.py:106",
+        "dag/benchmark/campaign_ledger.py:118"
+      ],
+      "finding": "An admission remains reserved if the process dies after dispatch or before finish. On reopening, blocked is still false, and admit chooses the next not-yet-admitted id without requiring earlier admissions to be settled. The next run is admitted despite unknown prior charge status.",
+      "evidence": [
+        "GR-P02"
+      ],
+      "impact": "A crash bypasses the documented stop-on-uncertain-charge policy and permits additional dispatch. Holding the previous full run cap still bounds planned reservations under the stated honest-provider premise; this finding does not claim that cap arithmetic alone was exceeded.",
+      "fix_direction": "Serialize campaign admission against all unfinished/reserved/uncertain earlier runs, with explicit reviewed reconciliation before continuation."
+    },
+    {
+      "id": "GR-F03",
+      "priority": "P1",
+      "title": "Durably retain known charges before fallible response processing",
+      "paths": [
+        "dag/benchmark/openrouter_provider.py:230",
+        "dag/benchmark/openrouter_provider.py:234",
+        "dag/benchmark/reference_runner.py:139",
+        "dag/benchmark/reference_runner.py:144"
+      ],
+      "finding": "A valid reported charge is discarded if later usage-field validation throws before Reply is returned. Separately, the runner persists the response artifact before settlement, so an artifact write failure downgrades an already-known bill to a quoted uncertain hold.",
+      "evidence": [
+        "GR-P03",
+        "GR-P04",
+        "GR-C02"
+      ],
+      "impact": "Both probes received a 110000-microusd cost but recorded spent=0 and only a 4800-microusd run hold; campaign accounting held 100000 and recorded no known spend. The artifact-failure receipt itself still records actual_microusd=110000, contradicting its budget summary.",
+      "fix_direction": "Keep valid billing information when other reply fields are invalid; settle or retain known liability durably before artifact writes or answer/token validation can fail. Preserve uncertainty for any additional unknown charge without replacing known spend."
+    }
+  ],
+  "probes": [
+    {
+      "id": "GR-P01",
+      "scenario": "Mutate exposed wire after quote while original request stays unchanged",
+      "reproduced": true,
+      "quote_microusd": 4800,
+      "posted_max_tokens": 100000,
+      "posted_only": [
+        "unadmitted/endpoint"
+      ],
+      "posted_allow_fallbacks": true,
+      "evidence_hash_still_equals_actual_wire": false,
+      "reply_accounting_error": null
+    },
+    {
+      "id": "GR-P02",
+      "scenario": "Reopen campaign with unfinished first run then admit next run",
+      "reproduced": true,
+      "campaign_summary": {
+        "cap_microusd": 200000,
+        "spent_microusd": 0,
+        "held_microusd": 200000,
+        "blocked": false,
+        "manifest_sha256": "b445eefba2a0d24ccbeaf7403c1d3986568319473e1e6c7a456e8330b9e85e37"
+      },
+      "admission_states": [
+        [
+          "synthetic-0",
+          "reserved"
+        ],
+        [
+          "synthetic-1",
+          "reserved"
+        ]
+      ]
+    },
+    {
+      "id": "GR-P03",
+      "scenario": "Provider reports valid cost 110000 microusd but invalid usage token",
+      "reproduced": true,
+      "provider_reported_microusd": 110000,
+      "status": "provider_or_accounting_failure",
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "bb7a55220cf512d259f69d121c99f6c50e34f41c3d0b51b46429e84df24ec2c2",
+        "cap_microusd": 100000,
+        "spent_microusd": 0,
+        "held_microusd": 4800,
+        "available_microusd": 95200,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 0,
+        "held_microusd": 100000,
+        "blocked": true,
+        "manifest_sha256": "b445eefba2a0d24ccbeaf7403c1d3986568319473e1e6c7a456e8330b9e85e37"
+      },
+      "posts": 1,
+      "recorded_actual": null,
+      "recorded_error": "BudgetError"
+    },
+    {
+      "id": "GR-P04",
+      "scenario": "Valid known overrun followed by response artifact write failure",
+      "reproduced": true,
+      "provider_reported_microusd": 110000,
+      "status": "provider_or_accounting_failure",
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "bb7a55220cf512d259f69d121c99f6c50e34f41c3d0b51b46429e84df24ec2c2",
+        "cap_microusd": 100000,
+        "spent_microusd": 0,
+        "held_microusd": 4800,
+        "available_microusd": 95200,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 0,
+        "held_microusd": 100000,
+        "blocked": true,
+        "manifest_sha256": "b445eefba2a0d24ccbeaf7403c1d3986568319473e1e6c7a456e8330b9e85e37"
+      },
+      "posts": 1,
+      "recorded_actual": 110000,
+      "recorded_error": "OSError"
+    },
+    {
+      "id": "GR-C01",
+      "scenario": "Positive control: ordinary synthetic success",
+      "passed": true,
+      "status": "completed",
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "bb7a55220cf512d259f69d121c99f6c50e34f41c3d0b51b46429e84df24ec2c2",
+        "cap_microusd": 100000,
+        "spent_microusd": 41,
+        "held_microusd": 0,
+        "available_microusd": 99959,
+        "blocked": false
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 41,
+        "held_microusd": 0,
+        "blocked": false,
+        "manifest_sha256": "b445eefba2a0d24ccbeaf7403c1d3986568319473e1e6c7a456e8330b9e85e37"
+      },
+      "posts": 1,
+      "recorded_actual": 41,
+      "recorded_error": null
+    },
+    {
+      "id": "GR-C02",
+      "scenario": "Positive control: intact known overrun remains billed and blocked",
+      "passed": true,
+      "status": "provider_or_accounting_failure",
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "bb7a55220cf512d259f69d121c99f6c50e34f41c3d0b51b46429e84df24ec2c2",
+        "cap_microusd": 100000,
+        "spent_microusd": 110000,
+        "held_microusd": 0,
+        "available_microusd": -10000,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 110000,
+        "held_microusd": 0,
+        "blocked": true,
+        "manifest_sha256": "b445eefba2a0d24ccbeaf7403c1d3986568319473e1e6c7a456e8330b9e85e37"
+      },
+      "posts": 1,
+      "recorded_actual": 110000,
+      "recorded_error": "BudgetError"
+    },
+    {
+      "id": "GR-C03",
+      "scenario": "Positive control: caught transport uncertainty blocks and retains hold",
+      "passed": true,
+      "status": "provider_or_accounting_failure",
+      "run_budget": {
+        "run_id": "synthetic-0",
+        "seed_sha256": "bb7a55220cf512d259f69d121c99f6c50e34f41c3d0b51b46429e84df24ec2c2",
+        "cap_microusd": 100000,
+        "spent_microusd": 0,
+        "held_microusd": 4800,
+        "available_microusd": 95200,
+        "blocked": true
+      },
+      "campaign_budget": {
+        "cap_microusd": 200000,
+        "spent_microusd": 0,
+        "held_microusd": 100000,
+        "blocked": true,
+        "manifest_sha256": "b445eefba2a0d24ccbeaf7403c1d3986568319473e1e6c7a456e8330b9e85e37"
+      },
+      "posts": 1,
+      "recorded_actual": null,
+      "recorded_error": "TimeoutError"
+    }
+  ],
+  "verification": {
+    "candidate_reproductions": 4,
+    "positive_controls_passed": 3,
+    "source_files_unchanged": true,
+    "real_provider_calls": 0,
+    "real_key_reads": 0,
+    "actual_benchmark_seed_reads": 0,
+    "existing_test_suite_executed": false,
+    "synthetic_fixture_seed_sha256": "bb7a55220cf512d259f69d121c99f6c50e34f41c3d0b51b46429e84df24ec2c2",
+    "temporary_files_removed": true
+  },
+  "positive_observations": [
+    "Fixed HTTPS destination, disabled proxy routing and redirect refusal prevent the reviewed transport from intentionally forwarding its credential elsewhere.",
+    "No SDK retry loop, tools or streaming path is present. Prepared calls are consumed before transport and call/run identities cannot repeat within their existing ledgers.",
+    "Ordinary caught timeouts retain liability and block; intact known overrun settlement records the full charge and blocks.",
+    "Quotation uses the entire advertised input context as requested; this was not treated as an estimation defect."
+  ],
+  "limits": [
+    "Source and synthetic fixture review only; no actual seed, private storage, credentials, metadata network or paid calls.",
+    "Provider enforcement of advertised limits, routing and tariffs remains an explicit external premise.",
+    "The guard is not a defense against arbitrary Python code with authority to bypass the guard entirely.",
+    "Real crash durability, SQLite power-loss behavior, provider billing semantics and production credentials were not exercised.",
+    "test_live_admission.py was read but not executed; some tests load the actual benchmark seed."
+  ],
+  "reproduction_method": "Inline Python under the repository .venv, temporary directories strictly within dag/benchmark, reference_runner.HERE rebound to harmless synthetic seed and commitment, inert fake transport only; actual HTTPTransport.request replaced with an assertion failure. No implementation source edits."
+}

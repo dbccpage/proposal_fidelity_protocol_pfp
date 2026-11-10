@@ -1,0 +1,76 @@
+{
+  "exact_base_transfers": [
+    {
+      "path": "papers/pfp/000_pfp_introduction/LICENSE",
+      "fully_read_base": "papers/pfp/013_pfp_task_bound_claims_and_hallucination_control/LICENSE",
+      "byte_equal": true
+    },
+    {
+      "path": "papers/pfp/000_pfp_introduction/LICENSE-CODE",
+      "fully_read_base": "papers/pfp/013_pfp_task_bound_claims_and_hallucination_control/LICENSE-CODE",
+      "byte_equal": true
+    },
+    {
+      "path": "papers/pfp/000_pfp_introduction/code/deposit_paths.py",
+      "fully_read_base": "papers/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/deposit_paths.py",
+      "byte_equal": true
+    },
+    {
+      "path": "papers/pfp/000_pfp_introduction/tools/rebuild_release.py",
+      "fully_read_base": "papers/pfp/013_pfp_task_bound_claims_and_hallucination_control/tools/rebuild_release.py",
+      "byte_equal": true
+    },
+    {
+      "path": "papers/pfp/000_pfp_introduction/docs/descriptions.md",
+      "fully_read_base": "papers/pfp/000_pfp_introduction/docs/description.md",
+      "byte_equal": true
+    }
+  ],
+  "probes": [
+    {
+      "id": "INTRO-ALPHABET",
+      "input": {
+        "schema": "symbol-game-basic-packet/v1",
+        "carrier": [
+          "Ω",
+          "🙂"
+        ],
+        "relation_label": "Separated!",
+        "goal": [
+          "Ω",
+          "🙂"
+        ],
+        "candidate": [
+          "Ω",
+          "Separated!",
+          "🙂"
+        ]
+      },
+      "receipt": {
+        "status": "CHECKED",
+        "property": "declared-directed-separation",
+        "scope": "symbol-game-basic-packet/v1"
+      },
+      "interpretation": "The teaching carrier/label allows arbitrary nonempty Unicode strings; no Sigma_Examiner parser is enforced."
+    },
+    {
+      "id": "INTRO-CURRENT-TYPE-PRECEDENCE",
+      "receipt": {
+        "status": "REFUSED",
+        "reason": "ANSWER_TYPE",
+        "scope": "finite-teaching-contract-only",
+        "checked_value": null
+      },
+      "interpretation": "Current collapsed-table Boolean is REFUSED/ANSWER_TYPE, contrary to old instructor key Q19 and guide paragraph."
+    }
+  ],
+  "tests": {
+    "command": ".venv/Scripts/python.exe -B -X utf8 -m pytest -c papers/pfp/000_pfp_introduction/pyproject.toml -p no:cacheprovider -o addopts= --import-mode=importlib papers/pfp/000_pfp_introduction/code/tests/test_basic_packets.py papers/pfp/000_pfp_introduction/code/tests/test_lesson_packets.py -q",
+    "exit_code": 0,
+    "passed": 28,
+    "seconds_pytest": 0.47
+  },
+  "limits": [
+    "Two pure local controls and 28 focused tests; no native/provider/notebook execution or historical receipt authentication."
+  ]
+}

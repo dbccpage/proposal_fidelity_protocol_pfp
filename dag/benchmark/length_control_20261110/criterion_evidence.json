@@ -1,0 +1,956 @@
+{
+  "run_id": "qm-length-20261110:direct:000",
+  "run_sha256": "ac77cbf6a6486715ce146b8c4568742dc673b0430051d1cb0ad6b4e7cb5d748b",
+  "answer_sha256": "2a69e0b747904235b40a098b1e7c3cf06c4151dc16f84ab8d467c8d05a46e4e1",
+  "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+  "rubric_sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+  "reference_provenance_sha256": "7a74b3dc3769e562d1195b1965f8d82f3b3a141f1bbfe9eddd1b519d10536959",
+  "full_final_body_read": true,
+  "reviewed_character_ranges": [
+    [
+      0,
+      26199
+    ]
+  ],
+  "criteria": [
+    {
+      "criterion_id": "spectrum.block_reduction",
+      "points": 4,
+      "assessment": "The tensor-product derivation gives the correct even/odd invariant blocks and Hamiltonian matrix, including both factors of 2.",
+      "evidence": [
+        {
+          "quote": "H = \\begin{pmatrix}\nK & 0 & 0 & 0 \\\\\n0 & -K + 2\\Delta & 2J & 0 \\\\\n0 & 2J & -K - 2\\Delta & 0 \\\\\n0 & 0 & 0 & K\n\\end{pmatrix}\n$$\n\nThis matrix is block-diagonal: the $ |00\\rangle $ and $ |11\\rangle $ states are decoupled from the $ |01\\rangle, |10\\rangle $ subspace.",
+          "character_range": [
+            3656,
+            3918
+          ],
+          "line_range": [
+            164,
+            172
+          ]
+        },
+        {
+          "quote": "H_{\\text{mid}} = \\begin{pmatrix}\n-K + 2\\Delta & 2J \\\\\n2J & -K - 2\\Delta\n\\end{pmatrix}",
+          "character_range": [
+            4119,
+            4204
+          ],
+          "line_range": [
+            181,
+            184
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "spectrum.energies",
+      "points": 4,
+      "assessment": "The quadratic calculation yields K twice and -K +/- 2 sqrt(J^2+Delta^2).",
+      "evidence": [
+        {
+          "quote": "Eigenvalues: $ \\lambda_{\\pm} = \\frac{A + B}{2} \\pm \\frac{1}{2} \\sqrt{(A - B)^2 + 4C^2} $\n\nCompute:\n\n- $ A + B = -2K $\n- $ A - B = 4\\Delta $\n- $ C = 2J $\n\nSo:\n\n$$\n\\lambda_{\\pm} = -K \\pm \\sqrt{(2\\Delta)^2 + (2J)^2} = -K \\pm 2\\sqrt{J^2 + \\Delta^2}",
+          "character_range": [
+            4302,
+            4546
+          ],
+          "line_range": [
+            191,
+            202
+          ]
+        },
+        {
+          "quote": "- $ E_1 = K $ (from $ |00\\rangle $)\n- $ E_2 = K $ (from $ |11\\rangle $)\n- $ E_+ = -K + 2\\sqrt{J^2 + \\Delta^2} $\n- $ E_- = -K - 2\\sqrt{J^2 + \\Delta^2} $\n\nNote: $ E_1 = E_2 = K $, so unless $ K $ coincides with $ E_\\pm $, there is a **two-fold degeneracy** at energy $ K $.",
+          "character_range": [
+            4586,
+            4857
+          ],
+          "line_range": [
+            207,
+            212
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "spectrum.projectors",
+      "points": 4,
+      "assessment": "The displayed orthonormal eigenvectors and their outer products give a complete spectral resolution on the valid angle domain. Deduct 2: theta in [0,pi] with sin(theta)=J/D does not exist for J<0; thus the claimed general-real-parameter projectors are undefined there. The explicit eigenvector verification is credited on its admitted domain.",
+      "evidence": [
+        {
+          "quote": "Define $ \\theta \\in [0, \\pi] $ such that:\n\n$$\n\\cos \\theta = \\frac{\\Delta}{D}, \\quad \\sin \\theta = \\frac{J}{D}",
+          "character_range": [
+            7003,
+            7112
+          ],
+          "line_range": [
+            277,
+            280
+          ]
+        },
+        {
+          "quote": "So yes, $ H' |\\psi_+\\rangle = 2D |\\psi_+\\rangle $\n\nSimilarly, $ |\\psi_-\\rangle = -\\sin(\\theta/2) |01\\rangle + \\cos(\\theta/2) |10\\rangle $ gives eigenvalue $ -2D $\n\nSo:\n\n- $ |\\psi_+\\rangle = \\cos(\\theta/2) |01\\rangle + \\sin(\\theta/2) |10\\rangle $\n- $ |\\psi_-\\rangle = -\\sin(\\theta/2) |01\\rangle + \\cos(\\theta/2) |10\\rangle $\n\nwith $ \\cos\\theta = \\Delta / D $, $ \\sin\\theta = J / D $, $ D = \\sqrt{J^2 + \\Delta^2} $, $ \\theta \\in [0, \\pi] $",
+          "character_range": [
+            7961,
+            8398
+          ],
+          "line_range": [
+            301,
+            310
+          ]
+        },
+        {
+          "quote": "- $ P_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11| $\n- $ P_{E_+} = |\\psi_+\\rangle\\langle \\psi_+| $\n- $ P_{E_-} = |\\psi_-\\rangle\\langle \\psi_-| $",
+          "character_range": [
+            8678,
+            8827
+          ],
+          "line_range": [
+            323,
+            325
+          ]
+        }
+      ],
+      "max_points": 6,
+      "deducted_points": 2
+    },
+    {
+      "criterion_id": "spectrum.coincident_energies",
+      "points": 4,
+      "assessment": "Both K=D and K=-D crossings and the resulting three-dimensional equal-energy eigenspace are explained. The rubric allows this equivalent degeneracy explanation without an explicit merged-projector matrix.",
+      "evidence": [
+        {
+          "quote": "Degeneracy occurs if $ -K \\pm 2D = K \\Rightarrow \\pm 2D = 2K \\Rightarrow K = \\pm D $\n\nSo:\n\n- If $ K = D $, then $ E_- = -K - 2D = -3K $, $ E_+ = -K + 2D = K $, so $ E_+ = K $, so total degeneracy 3 at $ K $\n- If $ K = -D $, then $ E_+ = -K + 2D = D + 2D = 3D $, $ E_- = -K - 2D = D - 2D = -D = K $, so $ E_- = K $, degeneracy 3\n- If $ K = 0 $, $ E_\\pm = \\pm 2D $, so $ E_\\pm \\ne 0 $ unless $ D=0 $, so degeneracy 2 at 0",
+          "character_range": [
+            8961,
+            9380
+          ],
+          "line_range": [
+            332,
+            338
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "spectrum.zero_radius",
+      "points": 2,
+      "assessment": "The D=0 block is treated directly, with K and -K each twice and explicit complete degeneracy at K=0.",
+      "evidence": [
+        {
+          "quote": "**Special case: $ J = \\Delta = 0 $**\n\nThen $ D = 0 $, so $ H_{\\text{mid}} = \\begin{pmatrix} -K & 0 \\\\ 0 & -K \\end{pmatrix} $, so all four diagonal entries are $ K $ for $ |00\\rangle, |11\\rangle $, and $ -K $ for $ |01\\rangle, |10\\rangle $\n\nSo spectrum: $ K $ (twice), $ -K $ (twice)\n\nSo if $ K \\ne 0 $, two levels: $ K $ (deg 2), $ -K $ (deg 2)\n\nIf $ K = 0 $, all energies zero — completely degenerate\n\nSpectral projectors:\n\n- $ P_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11| $\n- $ P_{-K} = |01\\rangle\\langle 01| + |10\\rangle\\langle 10| $\n\nSo in this limit, $ H = K Z \\otimes Z $, which is diagonal.",
+          "character_range": [
+            9382,
+            9986
+          ],
+          "line_range": [
+            340,
+            355
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "dynamics.state",
+      "points": 7,
+      "assessment": "The spectral evolution, computational-basis expansion, signed beta amplitude, and D=0 phase are correct. Deduct 1 for the remaining invalid negative-J theta restriction in the state representation. The correct explicit signed beta and the equivalent half-angle-square alpha earn substantial credit; this is not treated as a wrong transition probability.",
+      "evidence": [
+        {
+          "quote": "|\\psi(t)\\rangle = e^{-i E_+ t} \\cos(\\theta/2) |\\psi_+\\rangle - e^{-i E_- t} \\sin(\\theta/2) |\\psi_-\\rangle\n$$\n\nWith $ E_\\pm = -K \\pm 2D $, $ D = \\sqrt{J^2 + \\Delta^2} $\n\nLet $ \\omega = E_+ - E_- = 4D $\n\nThen:\n\n$$\n|\\psi(t)\\rangle = e^{-i(-K + 2D)t} \\cos(\\theta/2) |\\psi_+\\rangle - e^{-i(-K - 2D)t} \\sin(\\theta/2) |\\psi_-\\rangle\n= e^{iK t} \\left[ e^{-i 2D t} \\cos(\\theta/2) |\\psi_+\\rangle - e^{i 2D t} \\sin(\\theta/2) |\\psi_-\\rangle \\right]",
+          "character_range": [
+            10775,
+            11211
+          ],
+          "line_range": [
+            395,
+            406
+          ]
+        },
+        {
+          "quote": "\\langle 10 | \\psi(t) \\rangle = \\frac{J}{2D} \\cdot e^{iK t} (-2i \\sin(2D t)) = -i e^{iK t} \\frac{J}{D} \\sin(2D t)",
+          "character_range": [
+            12401,
+            12513
+          ],
+          "line_range": [
+            450,
+            450
+          ]
+        },
+        {
+          "quote": "But if $ J = \\Delta = 0 $, then $ H = K Z \\otimes Z $, so $ |01\\rangle $ is energy eigenstate with energy $ -K $, so $ |\\psi(t)\\rangle = e^{iKt} |01\\rangle $, so $ \\langle 10 | \\psi(t) \\rangle = 0 $, so $ P = 0 $",
+          "character_range": [
+            12984,
+            13196
+          ],
+          "line_range": [
+            471,
+            471
+          ]
+        },
+        {
+          "quote": "= \\left[ e^{-i E_+ t} c^2 + e^{-i E_- t} s^2 \\right] |01\\rangle + \\left[ e^{-i E_+ t} c s - e^{-i E_- t} s c \\right] |10\\rangle\n$$\n\nSimplify:\n\nLet $ \\alpha(t) = e^{-i E_+ t} \\cos^2(\\theta/2) + e^{-i E_- t} \\sin^2(\\theta/2) $\n\n$ \\beta(t) = c s \\left( e^{-i E_+ t} - e^{-i E_- t} \\right) $\n\nNote $ c s = \\frac{1}{2} \\sin\\theta = \\frac{J}{2D} $\n\nBut earlier we had $ \\langle 10 | \\psi(t) \\rangle = \\beta(t) $, which we computed.\n\nNow, $ |\\psi(t)\\rangle = \\alpha(t) |01\\rangle + \\beta(t) |10\\rangle $, since $ |00\\rangle, |11\\rangle $ components are zero (initial state in $ \\text{span}\\{|01\\rangle, |10\\rangle\\} $, and $ H $ preserves this subspace)",
+          "character_range": [
+            14600,
+            15246
+          ],
+          "line_range": [
+            518,
+            531
+          ]
+        },
+        {
+          "quote": "with $ \\cos\\theta = \\Delta / D $, $ \\sin\\theta = J / D $, $ D = \\sqrt{J^2 + \\Delta^2} $, $ \\theta \\in [0, \\pi] $",
+          "character_range": [
+            8286,
+            8398
+          ],
+          "line_range": [
+            310,
+            310
+          ]
+        }
+      ],
+      "max_points": 8,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "dynamics.probability",
+      "points": 4,
+      "assessment": "Correct transition probability, with J=0 and D=0 separately assigned zero.",
+      "evidence": [
+        {
+          "quote": "P_{01 \\to 10}(t) = \\frac{J^2}{J^2 + \\Delta^2} \\sin^2\\left(2 \\sqrt{J^2 + \\Delta^2} \\, t\\right)\n$$\n\n**Special cases:**\n\n- If $ J = 0 $, then $ P = 0 $ for all $ t $ — no transition\n- If $ \\Delta = 0 $, $ D = |J| $, so $ P = \\sin^2(2|J| t) $\n- If $ J = \\Delta = 0 $, $ D = 0 $, expression undefined — need limit\n\nBut if $ J = \\Delta = 0 $, then $ H = K Z \\otimes Z $, so $ |01\\rangle $ is energy eigenstate with energy $ -K $, so $ |\\psi(t)\\rangle = e^{iKt} |01\\rangle $, so $ \\langle 10 | \\psi(t) \\rangle = 0 $, so $ P = 0 $\n\nSo we define $ P_{01 \\to 10}(t) = 0 $ when $ J = \\Delta = 0 $",
+          "character_range": [
+            12674,
+            13259
+          ],
+          "line_range": [
+            462,
+            473
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "dynamics.supremum",
+      "points": 4,
+      "assessment": "Correct J^2/(J^2+Delta^2) for D>0 and the constant zero-radius value from the explicit constant branch.",
+      "evidence": [
+        {
+          "quote": "\\sup_{t \\ge 0} P_{01 \\to 10}(t) = \\frac{J^2}{J^2 + \\Delta^2}",
+          "character_range": [
+            13312,
+            13372
+          ],
+          "line_range": [
+            478,
+            478
+          ]
+        },
+        {
+          "quote": "If $ D = 0 $, i.e., $ J = \\Delta = 0 $, then $ P(t) = 0 $ for all $ t $ — constant probability.\n\nSo:\n\n- If $ J = \\Delta = 0 $: $ P(t) = 0 $, constant\n- Else: $ \\sup P = \\frac{J^2}{J^2 + \\Delta^2} $, attained at $ t = \\frac{\\pi}{4\\sqrt{J^2 + \\Delta^2}} $",
+          "character_range": [
+            13589,
+            13842
+          ],
+          "line_range": [
+            487,
+            492
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "dynamics.earliest_and_constant_branches",
+      "points": 2,
+      "assessment": "Correct earliest oscillatory maximum for J!=0. Deduct 2: the stated condition D>0 wrongly includes J=0, Delta!=0, for which every time maximizes zero probability and the earliest is t=0. The D=0 branch says constant but does not give earliest t=0.",
+      "evidence": [
+        {
+          "quote": "- If $ J = 0 $, then $ P = 0 $ for all $ t $ — no transition",
+          "character_range": [
+            12792,
+            12852
+          ],
+          "line_range": [
+            467,
+            467
+          ]
+        },
+        {
+          "quote": "This supremum is attained when $ \\sin^2(2D t) = 1 $, i.e., $ 2D t = \\frac{\\pi}{2} + n\\pi $, so earliest time:\n\n$$\nt_{\\min} = \\frac{\\pi}{4D} = \\frac{\\pi}{4 \\sqrt{J^2 + \\Delta^2}}, \\quad \\text{provided } D > 0\n$$\n\nIf $ D = 0 $, i.e., $ J = \\Delta = 0 $, then $ P(t) = 0 $ for all $ t $ — constant probability.\n\nSo:\n\n- If $ J = \\Delta = 0 $: $ P(t) = 0 $, constant\n- Else: $ \\sup P = \\frac{J^2}{J^2 + \\Delta^2} $, attained at $ t = \\frac{\\pi}{4\\sqrt{J^2 + \\Delta^2}} $",
+          "character_range": [
+            13377,
+            13842
+          ],
+          "line_range": [
+            481,
+            492
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 2
+    },
+    {
+      "criterion_id": "pure_state.reduced_density",
+      "points": 4,
+      "assessment": "The final corrected partial trace is diag(|alpha|^2,|beta|^2), with unit trace. Earlier erroneous off-diagonal attempts are explicitly retracted within the final answer and receive no separate credit or penalty.",
+      "evidence": [
+        {
+          "quote": "So $ \\rho_1 = \\begin{pmatrix} |\\alpha|^2 & 0 \\\\ 0 & |\\beta|^2 \\end{pmatrix} $\n\nAh! I see — I made a mistake earlier. The off-diagonal elements are zero because the two terms are orthogonal.\n\nSo:\n\n$$\n\\rho_1(t) = \\begin{pmatrix}\n|\\alpha(t)|^2 & 0 \\\\\n0 & |\\beta(t)|^2\n\\end{pmatrix}\n$$\n\nSimilarly, $ \\rho_2 $ would be diagonal.\n\nNow $ |\\alpha(t)|^2 + |\\beta(t)|^2 = 1 $",
+          "character_range": [
+            19142,
+            19507
+          ],
+          "line_range": [
+            628,
+            643
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "pure_state.entropy",
+      "points": 3,
+      "assessment": "Correct binary entropy in bits. Deduct 1 for omitting the required 0 log 0 = 0 endpoint convention; the initial and decoupled states have zero eigenvalues.",
+      "evidence": [
+        {
+          "quote": "$ S(\\rho_1) = - |\\alpha|^2 \\log_2 |\\alpha|^2 - |\\beta|^2 \\log_2 |\\beta|^2 $ bits",
+          "character_range": [
+            20191,
+            20271
+          ],
+          "line_range": [
+            667,
+            667
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "pure_state.concurrence",
+      "points": 4,
+      "assessment": "The final concurrence is correct and has a correct reduced-purity calculation. Full criterion credit is retained despite the contradictory, false phase qualifications at lines 685-687 and 709; those qualifications are separately recorded as explanatory defects and are not needed for the valid purity derivation.",
+      "evidence": [
+        {
+          "quote": "Note that for a pure state of two qubits, the concurrence is $ C = \\sqrt{2(1 - \\text{Tr} \\rho_1^2)} $\n\n$ \\text{Tr} \\rho_1^2 = |\\alpha|^4 + |\\beta|^4 = (|\\alpha|^2)^2 + (|\\beta|^2)^2 $\n\nLet $ p = |\\alpha|^2 $, then $ \\text{Tr} \\rho_1^2 = p^2 + (1-p)^2 = 2p^2 - 2p + 1 $\n\nThen $ 1 - \\text{Tr} \\rho_1^2 = 1 - (2p^2 - 2p + 1) = -2p^2 + 2p = 2p(1-p) $\n\nSo $ C = \\sqrt{2 \\cdot 2p(1-p)} = 2 \\sqrt{p(1-p)} = 2 |\\alpha| |\\beta| $\n\nYes, so $ C(t) = 2 |\\alpha(t)| |\\beta(t)| $\n\nNow $ |\\beta(t)|^2 = \\left| \\frac{J}{D} \\sin(2D t) \\right|^2 = \\frac{J^2}{D^2} \\sin^2(2D t) $\n\nAnd $ |\\alpha(t)|^2 = 1 - |\\beta(t)|^2 = 1 - \\frac{J^2}{D^2} \\sin^2(2D t) $\n\nSo $ C(t) = 2 \\sqrt{ |\\alpha|^2 |\\beta|^2 } = 2 \\sqrt{ \\left(1 - \\frac{J^2}{D^2} \\sin^2(2D t)\\right) \\frac{J^2}{D^2} \\sin^2(2D t) } $",
+          "character_range": [
+            21346,
+            22118
+          ],
+          "line_range": [
+            691,
+            707
+          ]
+        },
+        {
+          "quote": "But actually, since $ |\\alpha \\beta| = |\\alpha| |\\beta| $ only if phases are such, but in the expression for $ C $, it's the magnitude, so yes.\n\nBut in this case, because the state is real up to phase, but anyway, $ C(t) = 2 |\\alpha(t)| |\\beta(t)| $",
+          "character_range": [
+            22120,
+            22369
+          ],
+          "line_range": [
+            709,
+            711
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "pure_state.CHSH",
+      "points": 3,
+      "assessment": "Correct final maximal value 2 sqrt(1+C^2) and connection to Schmidt weights. Deduct 3: no self-contained correlation-matrix or measurement optimization proves the maximum; the intermediate lambda_1/lambda_2 statement is also inconsistent. Recollection of a formula does not fulfill the derivation half of this criterion.",
+      "evidence": [
+        {
+          "quote": "Standard: for a pure state, the maximum of $ |\\langle A \\otimes B \\rangle + \\langle A \\otimes B' \\rangle + \\langle A' \\otimes B \\rangle - \\langle A' \\otimes B' \\rangle| $ is $ 2\\sqrt{2} $ for maximally entangled, and for general, it's $ 2\\sqrt{1 + C^2} $? I think it's $ 2\\sqrt{1 + C^2} $ is not correct.\n\nActually, for a pure state with Schmidt coefficients $ \\lambda_1, \\lambda_2 $, the maximum CHSH is $ 2\\sqrt{1 + 4\\lambda_1\\lambda_2} = 2\\sqrt{1 + C^2} $ since $ C = 2\\lambda_1\\lambda_2 $ for pure states.\n\nFor two qubits, if $ |\\psi\\rangle = \\sqrt{\\lambda} |00\\rangle + \\sqrt{1-\\lambda} |11\\rangle $, then $ C = 2\\sqrt{\\lambda(1-\\lambda)} $, and max CHSH = 2\\sqrt{1 + C^2} = 2\\sqrt{1 + 4\\lambda(1-\\lambda)} $\n\nBut in our case, the state is $ \\alpha |01\\rangle + \\beta |10\\rangle $, which is like $ \\sqrt{p} |01\\rangle + \\sqrt{1-p} e^{i\\phi} |10\\rangle $, so Schmidt coefficients are $ |\\alpha|, |\\beta| $, so $ C = 2 |\\alpha| |\\beta| $, and max CHSH = 2\\sqrt{1 + C^2} = 2\\sqrt{1 + 4 |\\alpha|^2 |\\beta|^2} $\n\nYes.\n\nSo $ \\langle \\text{CHSH} \\rangle_{\\max} = 2\\sqrt{1 + C(t)^2} = 2\\sqrt{1 + 4 |\\alpha(t)|^2 |\\beta(t)|^2} $",
+          "character_range": [
+            22921,
+            24045
+          ],
+          "line_range": [
+            719,
+            729
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 6,
+      "deducted_points": 3
+    },
+    {
+      "criterion_id": "pure_state.maximal_entanglement_reachability",
+      "points": 4,
+      "assessment": "Correct necessary and sufficient condition |Delta|<=|J| with J!=0, derived from requiring transition probability 1/2 and explicitly excluding the zero-coupling case.",
+      "evidence": [
+        {
+          "quote": "\\frac{J^2}{J^2 + \\Delta^2} \\sin^2(2D t) = \\frac{1}{2}\n$$\n\nSo $ \\sin^2(2D t) = \\frac{1}{2} \\frac{J^2 + \\Delta^2}{J^2} = \\frac{1}{2} (1 + \\frac{\\Delta^2}{J^2}) $\n\nThis is $ \\le 1 $ only if $ \\frac{1}{2} (1 + (\\Delta/J)^2) \\le 1 \\Rightarrow (\\Delta/J)^2 \\le 1 \\Rightarrow |\\Delta| \\le |J| $\n\nAnd then $ \\sin^2(2D t) = \\frac{1}{2} (1 + (\\Delta/J)^2) \\le 1 $, and equality when $ |\\Delta| = |J| $",
+          "character_range": [
+            24404,
+            24795
+          ],
+          "line_range": [
+            742,
+            749
+          ]
+        },
+        {
+          "quote": "And then $ \\sin^2(2D t) = \\frac{1}{2} (1 + (\\Delta/J)^2) \\le 1 $, and since $ \\sin^2 $ can achieve any value in [0,1], as long as the right-hand side $ \\le 1 $, which it is when $ |\\Delta| \\le |J| $, and then there exists $ t $ such that it equals.\n\nBut when $ |\\Delta| > |J| $, the right-hand side >1, so impossible.",
+          "character_range": [
+            25019,
+            25336
+          ],
+          "line_range": [
+            753,
+            755
+          ]
+        },
+        {
+          "quote": "If $ J = 0 $, then $ |\\beta(t)|^2 = 0 $, so never maximally entangled.\n\nIf $ J = \\Delta = 0 $, same.\n\nSo summary: maximally entangled state reachable iff $ |\\Delta| \\le |J| $ and $ J \\ne 0 $",
+          "character_range": [
+            25919,
+            26109
+          ],
+          "line_range": [
+            775,
+            779
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "pure_state.earliest_maximal_entanglement",
+      "points": 3,
+      "assessment": "The stated principal-arcsine formula is the earliest time on the reachable branch. It includes the equality case, and unreachable/zero-coupling cases are explicitly excluded.",
+      "evidence": [
+        {
+          "quote": "And then $ \\sin^2(2D t) = \\frac{1}{2} (1 + (\\Delta/J)^2) \\le 1 $, and equality when $ |\\Delta| = |J| $",
+          "character_range": [
+            24693,
+            24795
+          ],
+          "line_range": [
+            749,
+            749
+          ]
+        },
+        {
+          "quote": "But when $ |\\Delta| > |J| $, the right-hand side >1, so impossible.",
+          "character_range": [
+            25269,
+            25336
+          ],
+          "line_range": [
+            755,
+            755
+          ]
+        },
+        {
+          "quote": "Let $ r = \\Delta/J $, assume $ J \\ne 0 $, $ |r| \\le 1 $\n\nThen $ \\sin^2(2D t) = \\frac{1}{2} (1 + r^2) $\n\nSo $ \\sin(2D t) = \\sqrt{ \\frac{1}{2} (1 + r^2) } $, take smallest positive solution.\n\n$ 2D t = \\arcsin\\left( \\sqrt{ \\frac{1}{2} (1 + r^2) } \\right) $\n\nBut since $ \\sin^2 \\theta = k $, smallest $ \\theta = \\arcsin(\\sqrt{k}) $\n\nSo $ t = \\frac{1}{2D} \\arcsin\\left( \\sqrt{ \\frac{1}{2} (1 + (\\Delta/J)^2) } \\right) $\n\nBut only if $ |\\Delta| \\le |J| $\n\nIf $ J = 0 $, then $ |\\beta(t)|^2 = 0 $, so never maximally entangled.\n\nIf $ J = \\Delta = 0 $, same.\n\nSo summary: maximally entangled state reachable iff $ |\\Delta| \\le |J| $ and $ J \\ne 0 $\n\nEarliest time as above.",
+          "character_range": [
+            25469,
+            26134
+          ],
+          "line_range": [
+            761,
+            781
+          ]
+        }
+      ],
+      "max_points": 3,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "thermal.Gibbs_state",
+      "points": 0,
+      "assessment": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+      "evidence": [
+        {
+          "quote": "Due to length, we pause here and continue in next message.",
+          "character_range": [
+            26141,
+            26199
+          ],
+          "line_range": [
+            785,
+            785
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 6,
+      "deducted_points": 6
+    },
+    {
+      "criterion_id": "thermal.partition_function",
+      "points": 0,
+      "assessment": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+      "evidence": [
+        {
+          "quote": "Due to length, we pause here and continue in next message.",
+          "character_range": [
+            26141,
+            26199
+          ],
+          "line_range": [
+            785,
+            785
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 4
+    },
+    {
+      "criterion_id": "thermal.partial_transpose",
+      "points": 0,
+      "assessment": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+      "evidence": [
+        {
+          "quote": "Due to length, we pause here and continue in next message.",
+          "character_range": [
+            26141,
+            26199
+          ],
+          "line_range": [
+            785,
+            785
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 7,
+      "deducted_points": 7
+    },
+    {
+      "criterion_id": "thermal.entanglement_criterion",
+      "points": 0,
+      "assessment": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+      "evidence": [
+        {
+          "quote": "Due to length, we pause here and continue in next message.",
+          "character_range": [
+            26141,
+            26199
+          ],
+          "line_range": [
+            785,
+            785
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 5,
+      "deducted_points": 5
+    },
+    {
+      "criterion_id": "thermal.thermal_limits",
+      "points": 0,
+      "assessment": "Omitted from the delivered final answer. It stops after Part 3 and requests continuation; there is no thermal calculation to grade.",
+      "evidence": [
+        {
+          "quote": "Due to length, we pause here and continue in next message.",
+          "character_range": [
+            26141,
+            26199
+          ],
+          "line_range": [
+            785,
+            785
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 3,
+      "deducted_points": 3
+    },
+    {
+      "criterion_id": "checks.conventions",
+      "points": 1,
+      "assessment": "Correct Pauli/basis/Hamiltonian and entropy log-base conventions. Deduct 1 because the spin-2 partial-transpose convention is never instantiated or checked in the omitted thermal part.",
+      "evidence": [
+        {
+          "quote": "We are given a Hamiltonian for two distinguishable spin-1/2 systems in the computational basis $ \\{|00\\rangle, |01\\rangle, |10\\rangle, |11\\rangle\\} $, where $ Z|0\\rangle = |0\\rangle $, $ Z|1\\rangle = -|1\\rangle $. The Pauli matrices are defined as usual:\n\n$$\nX = \\begin{pmatrix}0 & 1 \\\\ 1 & 0\\end{pmatrix},\\quad\nY = \\begin{pmatrix}0 & -i \\\\ i & 0\\end{pmatrix},\\quad\nZ = \\begin{pmatrix}1 & 0 \\\\ 0 & -1\\end{pmatrix},\\quad\nI = \\begin{pmatrix}1 & 0 \\\\ 0 & 1\\end{pmatrix}\n$$\n\nThe Hamiltonian is:\n\n$$\nH = J (X \\otimes X + Y \\otimes Y) + \\Delta (Z \\otimes I - I \\otimes Z) + K (Z \\otimes Z)\n$$\n\nwith real parameters $ J, \\Delta, K $. The initial state is $ |\\psi(0)\\rangle = |01\\rangle $. We set $ \\hbar = k_B = 1 $.",
+          "character_range": [
+            0,
+            709
+          ],
+          "line_range": [
+            1,
+            16
+          ]
+        },
+        {
+          "quote": "$ S(\\rho_1) = - |\\alpha|^2 \\log_2 |\\alpha|^2 - |\\beta|^2 \\log_2 |\\beta|^2 $ bits",
+          "character_range": [
+            20191,
+            20271
+          ],
+          "line_range": [
+            667,
+            667
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "checks.normalization",
+      "points": 2,
+      "assessment": "The explicit squared-amplitude expansions together with the unit-trace statement supply an equivalent normalization consistency check: using a=c^2,b=s^2, their sum reduces to (a+b)^2=1. This is credited independently of merely declaring a normalized ket.",
+      "evidence": [
+        {
+          "quote": "Now $ |\\alpha(t)|^2 + |\\beta(t)|^2 = 1 $",
+          "character_range": [
+            19467,
+            19507
+          ],
+          "line_range": [
+            643,
+            643
+          ]
+        },
+        {
+          "quote": "$ |\\alpha(t)|^2 = \\left| \\cos^2(\\theta/2) e^{-i E_+ t} + \\sin^2(\\theta/2) e^{-i E_- t} \\right|^2 $\n\nLet $ a = \\cos^2(\\theta/2) $, $ b = \\sin^2(\\theta/2) $, $ \\omega = E_+ - E_- = 4D $\n\nThen:\n\n$ |\\alpha(t)|^2 = a^2 + b^2 + 2ab \\cos((E_+ - E_-)t) = a^2 + b^2 + 2ab \\cos(4D t) $\n\nSimilarly, $ |\\beta(t)|^2 = |c s (e^{-i E_+ t} - e^{-i E_- t})|^2 = c^2 s^2 |e^{-i E_+ t} - e^{-i E_- t}|^2 = c^2 s^2 \\cdot 4 \\sin^2(2D t) $\n\nBut since $ |\\alpha|^2 + |\\beta|^2 = 1 $, we can use that.",
+          "character_range": [
+            19686,
+            20163
+          ],
+          "line_range": [
+            653,
+            663
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "checks.initial_condition",
+      "points": 2,
+      "assessment": "The explicit reconstruction c psi_plus - s psi_minus = |01> verifies the initial condition of the subsequent spectral evolution at t=0.",
+      "evidence": [
+        {
+          "quote": "|01\\rangle = c |\\psi_+\\rangle - s |\\psi_-\\rangle\n$$\n\nCheck:\n\n$ c (c |01\\rangle + s |10\\rangle) - s (-s |01\\rangle + c |10\\rangle) = c^2 |01\\rangle + c s |10\\rangle + s^2 |01\\rangle - s c |10\\rangle = (c^2 + s^2)|01\\rangle = |01\\rangle $\n\nYes.\n\nSo:\n\n$$\n|\\psi(0)\\rangle = \\cos(\\theta/2) |\\psi_+\\rangle - \\sin(\\theta/2) |\\psi_-\\rangle\n$$\n\nTime evolution:\n\n$$\n|\\psi(t)\\rangle = e^{-i E_+ t} \\cos(\\theta/2) |\\psi_+\\rangle - e^{-i E_- t} \\sin(\\theta/2) |\\psi_-\\rangle",
+          "character_range": [
+            10419,
+            10880
+          ],
+          "line_range": [
+            377,
+            395
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "checks.decoupled_limit",
+      "points": 1,
+      "assessment": "The explicit J=0 no-transition check and D=0 eigenstate evolution earn partial credit. Deduct 1: there is no complete general J=0 state/entanglement/thermal consistency check, and the earliest-time claim contradicts the constant branch.",
+      "evidence": [
+        {
+          "quote": "- If $ J = 0 $, then $ P = 0 $ for all $ t $ — no transition\n- If $ \\Delta = 0 $, $ D = |J| $, so $ P = \\sin^2(2|J| t) $\n- If $ J = \\Delta = 0 $, $ D = 0 $, expression undefined — need limit\n\nBut if $ J = \\Delta = 0 $, then $ H = K Z \\otimes Z $, so $ |01\\rangle $ is energy eigenstate with energy $ -K $, so $ |\\psi(t)\\rangle = e^{iKt} |01\\rangle $, so $ \\langle 10 | \\psi(t) \\rangle = 0 $, so $ P = 0 $\n\nSo we define $ P_{01 \\to 10}(t) = 0 $ when $ J = \\Delta = 0 $",
+          "character_range": [
+            12792,
+            13259
+          ],
+          "line_range": [
+            467,
+            473
+          ]
+        },
+        {
+          "quote": "t_{\\min} = \\frac{\\pi}{4D} = \\frac{\\pi}{4 \\sqrt{J^2 + \\Delta^2}}, \\quad \\text{provided } D > 0",
+          "character_range": [
+            13491,
+            13584
+          ],
+          "line_range": [
+            484,
+            484
+          ]
+        },
+        {
+          "quote": "If $ J = 0 $, then $ |\\beta(t)|^2 = 0 $, so never maximally entangled.\n\nIf $ J = \\Delta = 0 $, same.",
+          "character_range": [
+            25919,
+            26019
+          ],
+          "line_range": [
+            775,
+            777
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "checks.nontrivial_numerical_example",
+      "points": 0,
+      "assessment": "No nontrivial numerical parameter example or numerical cross-check occurs in the full delivered body.",
+      "evidence": [
+        {
+          "quote": "Due to length, we pause here and continue in next message.",
+          "character_range": [
+            26141,
+            26199
+          ],
+          "line_range": [
+            785,
+            785
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            26199
+          ],
+          "line_range": [
+            1,
+            785
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 2
+    }
+  ],
+  "counterexamples": [
+    {
+      "id": "LC-CE-01",
+      "issue": "Negative-J angle domain",
+      "parameters": {
+        "J": -1,
+        "Delta": 0,
+        "K": 0
+      },
+      "argument": "D=1 requires sin(theta)=-1 although theta is restricted to [0,pi]. No such theta exists. If theta=pi/2 were selected from cos(theta)=0 alone, v=(1,1) would have odd-block eigenvalue -2, not the claimed +2.",
+      "exact_unnormalized_control": {
+        "odd_block": [
+          [
+            0,
+            -2
+          ],
+          [
+            -2,
+            0
+          ]
+        ],
+        "v": [
+          1,
+          1
+        ],
+        "Hv": [
+          -2,
+          -2
+        ],
+        "claimed_plus_energy_times_v": [
+          2,
+          2
+        ]
+      },
+      "evidence": [
+        {
+          "quote": "Define $ \\theta \\in [0, \\pi] $ such that:\n\n$$\n\\cos \\theta = \\frac{\\Delta}{D}, \\quad \\sin \\theta = \\frac{J}{D}\n$$\n\nThen the eigenvector for $ +2D $ is:\n\n$$\n|\\psi_+\\rangle = \\cos\\left(\\frac{\\theta}{2}\\right) |01\\rangle + \\sin\\left(\\frac{\\theta}{2}\\right) |10\\rangle",
+          "character_range": [
+            7003,
+            7266
+          ],
+          "line_range": [
+            277,
+            286
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LC-CE-02",
+      "issue": "Earliest maximum of a constant function",
+      "parameters": {
+        "J": 0,
+        "Delta": 1,
+        "K": 0
+      },
+      "argument": "P(t)=0 for every t>=0. The first maximizing time is 0, while the answer gives pi/4 because D=1>0.",
+      "evidence": [
+        {
+          "quote": "- If $ J = 0 $, then $ P = 0 $ for all $ t $ — no transition",
+          "character_range": [
+            12792,
+            12852
+          ],
+          "line_range": [
+            467,
+            467
+          ]
+        },
+        {
+          "quote": "t_{\\min} = \\frac{\\pi}{4D} = \\frac{\\pi}{4 \\sqrt{J^2 + \\Delta^2}}, \\quad \\text{provided } D > 0",
+          "character_range": [
+            13491,
+            13584
+          ],
+          "line_range": [
+            484,
+            484
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LC-CE-03",
+      "issue": "False phase qualification in the explanation",
+      "parameters": {
+        "alpha": "1/sqrt(2)",
+        "beta": "i/sqrt(2)"
+      },
+      "argument": "|alpha beta|=1/2=|alpha||beta| regardless of their relative phase. In general |zw|^2=|z|^2|w|^2. The answer ultimately uses the correct concurrence and valid purity derivation; this explanatory defect is recorded without an additional point deduction.",
+      "evidence": [
+        {
+          "quote": "Now $ |\\alpha|^2 + |\\beta|^2 = 1 $, so $ C = 2 \\sqrt{ |\\alpha|^2 (1 - |\\alpha|^2) } $ only if no phase, but here there is phase.\n\nActually, $ |\\alpha \\beta| $ is not necessarily $ \\sqrt{ |\\alpha|^2 |\\beta|^2 } $ because of phases, but in this case, since we have explicit expressions, but for concurrence, it's $ 2 |\\alpha \\beta| $, and $ \\alpha, \\beta $ are complex, so $ |\\alpha \\beta| $ is magnitude.",
+          "character_range": [
+            20894,
+            21297
+          ],
+          "line_range": [
+            685,
+            687
+          ]
+        },
+        {
+          "quote": "But actually, since $ |\\alpha \\beta| = |\\alpha| |\\beta| $ only if phases are such, but in the expression for $ C $, it's the magnitude, so yes.\n\nBut in this case, because the state is real up to phase, but anyway, $ C(t) = 2 |\\alpha(t)| |\\beta(t)| $",
+          "character_range": [
+            22120,
+            22369
+          ],
+          "line_range": [
+            709,
+            711
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Final-answer content only; no draft or checker credit.",
+    "One length-control attempt on one item; no general ranking."
+  ]
+}

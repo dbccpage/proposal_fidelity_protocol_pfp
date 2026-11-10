@@ -1,0 +1,61 @@
+# Rust linear-algebra audit
+
+{"files": 83, "full_source_reads": 37, "full_source_lines": 18416, "pending": 46}
+
+**RLA-C01** The reviewed integer determinant and rational alternating-matrix Pfaffian routines implement substantive finite elimination algorithms, with square/alternation admission and explicit empty/singular conventions. Independent finite models agree with different reference expansions; arbitrary dimensions and scalar implementations still require their mathematical and representation premises.
+
+**RLA-C02** Basis and choice wrappers explicitly record declared coordinate conventions, not existence, independence or spanning of an actual basis. Their nonclaims and private descriptor invariants are useful and should be preserved.
+
+**RLA-C03** The sealed fallible exact-field protocol excludes integer truncation and floating equality, while the public scalar marker traits require lawful operations and representability as external premises. A marker or capacity record alone cannot establish exact mathematical arithmetic.
+
+**RLA-C04** The2x2 adjugate witness checks its actual four product entries with wide checked arithmetic and refuses an unrepresentable output. The tensor shape owner separately checks positive finite extent products; neither retained value binds an arbitrary semantic object or supplies a general tensor view.
+
+**RLA-C05** The matrix owner enforces rectangular storage and provides separately fallible arithmetic with preflight element and operation-count limits. Exact interpretation still requires lawful scalar operations, representable intermediates and available resources; its limits are not elapsed-time or arbitrary scalar-memory bounds.
+
+**RLA-C06** The canonical exact image/kernel owner implements finite Gauss-Jordan reduction, basis extraction and a replayed particular image witness. Independent rational controls agree with determinant-minor rank and augmented-rank membership over the bounded panel.
+
+**RLA-C07** The rational symmetric LDLT path supplies a substantive finite PSD decision under explicit shape, symmetry and exact-arithmetic premises. The private ExactRepair owner separately replays a supplied potential against its finite linear residual; neither mechanism infers its application semantics.
+
+**RLA-C08** The checked basis-change constructor replays both inverse products and retains its matrices; typed linear-map composition checks both intermediate basis label and dimension. These enforce concrete coordinate relations under lawful exact scalar arithmetic, while provenance remains caller-supplied metadata.
+
+**RLA-C09** The cochain window, map and homotopy owners check complete finite matrix equations: d1*d0=0, commuting squares and F-G=dH+Hd with shared endpoints. For lawful ring coefficients this makes the usual induced cohomology and homotopy reasoning available under the supplied presentation.
+
+**RLA-C10** Rational sensing is strengthened to a report on repair cosets exactly by checking R*d0=0. Its supplied blindspot witness is recomputed, and the homogeneous-equation implication wrapper separately replays row-combination or separating-vector evidence.
+
+**RLA-C11** The lumpability owner validates an exhaustive partition and the exact intertwining equation MH=HB. Its induction genuinely preserves endpoint-block path aggregates for every length under lawful semiring operations. The separate Boolean square-root routine exhaustively enumerates its admitted n<=3 carrier.
+
+**RLA-C12** The generic exact-field solver constructs either an affine solution family or a dual inconsistency witness, and separately replays its answer against the supplied matrix and right-hand side. Under lawful field operations these are concrete finite linear-algebra certificates, with explicit preflight limits for both branches.
+
+**RLA-C13** The characteristic-polynomial owner implements a division-free Berkowitz recurrence over lawful commutative coefficients; its separate Krylov solver finds the first monic dependence over a lawful field. Finite independent checks compare the characteristic result with permutation determinants and minimality with exhaustive monic search.
+
+**RLA-C14** The centralizer owner builds the exact linear equations XG-GX=0 in row-major coordinates, obtains their kernel basis and replays every resulting matrix against all supplied generators. Under lawful field elimination this is a complete finite-dimensional common centralizer construction.
+
+**RLA-C15** The pseudoinverse owner replays its full-rank factorization and all four Penrose identities against the intact matrix. The adjoint owner implements the required involutive conjugation and matrix transpose; with a positive Hermitian norm, the Gram-factor construction gives a substantive exact Moore-Penrose inverse.
+
+**RLA-C16** Congruence diagonalization tracks invertible elementary basis changes and offers a separate verifier of S*AS=diag(D). Under the explicit ordered-field or positive Hermitian-norm premises, the sign counts give inertia, while LDL returns either a reconstructing positive-semidefinite factorization or a concrete negative quadratic-form witness.
+
+**RLA-C17** The scalar-law owners implement explicit finite field, involution and order checks and correctly distinguish sampled passes from universal trait proofs. Their arithmetic test carriers include exact rational quadratic extensions and deliberate negative controls; consumers still need the relevant complete set of premises.
+
+**RLA-C18** A shared caller-owned rational budget composes canonical-value checks and fraction-free solving through final equation replay. On distinct rational nodes, Neville evaluation computes finite interpolants; Lagrange interval images are tight for the admitted independent sample box, while recursive interval propagation can be wider.
+
+**RLA-C19** The matrix jet owner implements the ordered second-derivative product rule with the factor2 on the cross term and a whole-product arithmetic preflight. Rational polynomial-curve controls agree with independent coefficient convolution.
+
+**RLA-F01** RankNullity admission accepts a reduced matrix and kernel from different matrices, and a declared column count different from the reduced width. Its count certificate cannot certify that the supplied vectors form the kernel of the supplied matrix.
+
+**RLA-F02** ExactRepairSpace counts an arbitrary supplied vector list as rank without checking independence or rectangular shape. Two copies of (1,0) are stored with rank2 although their span has dimension1.
+
+**RLA-F03** The semiring multiplication budget named MAX_SCALAR_OPERATIONS counts one unit per dot-product term although the body calls both mul and add. An admitted256-square multiplication therefore performs2^25 such scalar calls against the named2^24 limit.
+
+**RLA-F04** Empty-axis matrix helpers weaken their stated shape/index contract: row(2x0,99) and column(0x2,99) return an empty vector because no indexed element is visited; to_rows followed by from_rows turns0x3 into0x0 despite inverse wording.
+
+**RLA-F05** Exact rational conversion relies on an unstated canonical-value admission at its boundary. Narrowing checks raw numerator and denominator before normalization, so raw2^63/2 is refused although its reduced value2^62 fits Rational64; raw zero denominators also reach constructors without a local validity gate.
+
+**RLA-F06** The characteristic-polynomial documentation extends the division-free construction to rings of any kind, omitting the commutativity premise. Over M2(F2), take diagonal coefficient blocks a=E12,d=E21: the returned polynomial has coefficients(ad,-a-d,1), whose evaluation at the first diagonal block is ad-da=I, not zero.
+
+**RLA-F07** The centralizer-basis function and standalone Penrose verifier reset the scalar-operation allowance across phases. A1x1 generator[1] admits6 counted calls with cap4; verifying the1x1 identity inverse admits8 with cap2. These exceed the facade promise of a whole-operation worst-case bound before scalar work.
+
+**RLA-F08** The LDL documentation suggests a matrix can be positive definite up to a permutation yet have a zero leading principal minor, and presents this routine as incomplete for PSD. Under its lawful ordered/Hermitian premises this cannot occur: positive definiteness is invariant under permutation and every principal restriction remains positive definite. The implemented zero-pivot/zero-column rule is the complete PSD rule, consistent with later source tests.
+
+**RLA-F09** The Hermitian-order sample checker validates sign range on supplied samples but accepts any nonnegative sign on a computed norm. A valid Gaussian arithmetic/involution with fixed_field_sign(17)=Some(2) passes samples0,1,-1,4+i even though the checker itself queries the invalid sign on norm(4+i)=17.
+
+**RLA-F10** The rational-budget description overstates its bit bound as covering every intermediate integer. Its checks admit operands and returned normalized values, while num-rational arithmetic constructs temporary numerators first:3/2+3/2 creates6 before reducing to3, and the operation succeeds with max_bits=2.

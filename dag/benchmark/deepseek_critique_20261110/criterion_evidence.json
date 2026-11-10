@@ -1,0 +1,971 @@
+{
+  "run_id": "qm-deepseek-critique-20261110:self_critique:000",
+  "run_sha256": "9f961bc5eca2d597df3bc8fc6384910917e0cd002de21e16f3645978c4737489",
+  "answer_sha256": "ab4786978b6419b19fc4e1bbe28c7b083c66a1267dd198a75104c4f5b0540ba8",
+  "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+  "rubric_sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+  "reference_provenance_sha256": "719d729c4a9c7e0bc6675a364feccd288c7e29e9baf2098748837eab13489f9f",
+  "full_final_body_read": true,
+  "reviewed_character_ranges": [
+    [
+      0,
+      13229
+    ]
+  ],
+  "criteria": [
+    {
+      "criterion_id": "spectrum.block_reduction",
+      "points": 4,
+      "assessment": "Correct tensor products, factor2 in both odd-block terms, and invariant even/odd reduction derived in the stated basis.",
+      "evidence": [
+        {
+          "quote": "- \\(X\\otimes X\\) and \\(Y\\otimes Y\\) in basis order \\(|00\\rangle, |01\\rangle, |10\\rangle, |11\\rangle\\):\n  \\[\n  X\\otimes X = \\begin{pmatrix}0&0&0&1\\\\0&0&1&0\\\\0&1&0&0\\\\1&0&0&0\\end{pmatrix}, \\quad\n  Y\\otimes Y = \\begin{pmatrix}0&0&0&-1\\\\0&0&1&0\\\\0&1&0&0\\\\-1&0&0&0\\end{pmatrix}\n  \\]\n  Therefore:\n  \\[\n  X\\otimes X + Y\\otimes Y = \\begin{pmatrix}0&0&0&0\\\\0&0&2&0\\\\0&2&0&0\\\\0&0&0&0\\end{pmatrix}\n  \\]\n\n- \\(Z_1 - Z_2 = Z\\otimes I - I\\otimes Z\\):\n  \\[\n  Z\\otimes I = \\text{diag}(1,1,-1,-1), \\quad I\\otimes Z = \\text{diag}(1,-1,1,-1)\n  \\]\n  So:\n  \\[\n  Z_1 - Z_2 = \\text{diag}(0, 2, -2, 0)\n  \\]\n\n- \\(Z_1Z_2 = Z\\otimes Z = \\text{diag}(1,-1,-1,1)\\)\n\nThus total Hamiltonian matrix:\n\\[\nH = \\begin{pmatrix}\nK & 0 & 0 & 0 \\\\\n0 & -K+2\\Delta & 2J & 0 \\\\\n0 & 2J & -K-2\\Delta & 0 \\\\\n0 & 0 & 0 & K\n\\end{pmatrix}\n\\]",
+          "character_range": [
+            655,
+            1445
+          ],
+          "line_range": [
+            21,
+            50
+          ]
+        },
+        {
+          "quote": "### **1.2 Diagonalization**\nThe matrix is block-diagonal:\n- Block 1 (1×1): \\(|00\\rangle\\), eigenvalue \\(E_{00} = K\\)\n- Block 4 (1×1): \\(|11\\rangle\\), eigenvalue \\(E_{11} = K\\)\n- Block 2×2: subspace spanned by \\(|01\\rangle, |10\\rangle\\):\n  \\[\n  H_{\\text{middle}} = \\begin{pmatrix} -K+2\\Delta & 2J \\\\ 2J & -K-2\\Delta \\end{pmatrix}\n  \\]\n  This can be written as:\n  \\[\n  H_{\\text{middle}} = -K I + 2\\Delta\\sigma_z + 2J\\sigma_x\n  \\]\n  where \\(\\sigma_x, \\sigma_z\\) act in the \\(\\{|01\\rangle, |10\\rangle\\}\\) basis.\n\nDefine \\(R = \\sqrt{\\Delta^2 + J^2}\\) (non-negative real). The eigenvalues of \\(2\\Delta\\sigma_z + 2J\\sigma_x\\) are \\(\\pm 2R\\). Therefore eigenvalues of \\(H_{\\text{middle}}\\):\n\\[\nE_1 = -K + 2R, \\quad E_2 = -K - 2R",
+          "character_range": [
+            1447,
+            2167
+          ],
+          "line_range": [
+            52,
+            68
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "spectrum.energies",
+      "points": 4,
+      "assessment": "Correct four eigenvalues K,K,-K+2R,-K-2R; the generic multiplicities are stated. Coincident-energy completeness is scored separately.",
+      "evidence": [
+        {
+          "quote": "Define \\(R = \\sqrt{\\Delta^2 + J^2}\\) (non-negative real). The eigenvalues of \\(2\\Delta\\sigma_z + 2J\\sigma_x\\) are \\(\\pm 2R\\). Therefore eigenvalues of \\(H_{\\text{middle}}\\):\n\\[\nE_1 = -K + 2R, \\quad E_2 = -K - 2R\n\\]\n\n### **1.3 Full spectrum**\n\\[\nE_{00} = K, \\quad E_{11} = K, \\quad E_1 = -K + 2R, \\quad E_2 = -K - 2R\n\\]\nDegeneracy:\n- \\(E=K\\) is doubly degenerate unless \\(K = -K \\pm 2R\\) (special cases).\n- \\(E_1\\) and \\(E_2\\) are non-degenerate in general.",
+          "character_range": [
+            1956,
+            2412
+          ],
+          "line_range": [
+            66,
+            77
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "spectrum.projectors",
+      "points": 6,
+      "assessment": "The real c,d basis is normalized and orthogonal for R+Delta>0, including negative J. Its rank-one projectors plus the even projector resolve identity and reconstruct H. J=0,Delta<0 is explicitly handled by swapped computational eigenvectors. Equal-energy merging is scored separately.",
+      "evidence": [
+        {
+          "quote": "**For the middle block**:\nNormalized eigenvectors of \\(H_{\\text{middle}}\\):\n\nDefine \\(c = \\frac{\\Delta + R}{\\sqrt{2R(R+\\Delta)}}\\), \\(d = \\frac{J}{\\sqrt{2R(R+\\Delta)}}\\) for \\(R+\\Delta > 0\\).\n\nThen:\n\\[\n|\\psi_1\\rangle = c|01\\rangle + d|10\\rangle, \\quad E_1 = -K + 2R\n\\]\n\\[\n|\\psi_2\\rangle = -d|01\\rangle + c|10\\rangle, \\quad E_2 = -K - 2R\n\\]\n\n**Special cases**:\n- If \\(J=0\\) and \\(\\Delta \\neq 0\\): \\(R=|\\Delta|\\). Then \\(|\\psi_1\\rangle = |01\\rangle\\), \\(|\\psi_2\\rangle = |10\\rangle\\) when \\(\\Delta > 0\\), and swapped when \\(\\Delta < 0\\).\n- If \\(R+\\Delta = 0\\) (i.e., \\(\\Delta = -R \\leq 0\\), which requires \\(J=0\\)): Then \\(c\\) undefined, but \\(J=0\\) so eigenvectors are simply \\(|01\\rangle\\) and \\(|10\\rangle\\).\n\n### **1.5 Spectral projectors**\n\\[\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|, \\quad P_1 = |\\psi_1\\rangle\\langle\\psi_1|, \\quad P_2 = |\\psi_2\\rangle\\langle\\psi_2|\n\\]",
+          "character_range": [
+            2538,
+            3422
+          ],
+          "line_range": [
+            82,
+            102
+          ]
+        },
+        {
+          "quote": "### **1.6 Limit \\(J=\\Delta=0\\)**\nThen \\(R=0\\), so:\n\\[\nE_1 = E_2 = -K\n\\]\nThus eigenvalues: \\(K\\) (doubly degenerate: \\(|00\\rangle, |11\\rangle\\)) and \\(-K\\) (doubly degenerate: \\(|01\\rangle, |10\\rangle\\)).\n\nSpectral projectors:\n\\[\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|, \\quad P_{-K} = |01\\rangle\\langle 01| + |10\\rangle\\langle 10|\n\\]",
+          "character_range": [
+            3424,
+            3769
+          ],
+          "line_range": [
+            104,
+            114
+          ]
+        }
+      ],
+      "max_points": 6,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "spectrum.coincident_energies",
+      "points": 2,
+      "assessment": "The equation K=-K+/-2R identifies both possible crossings implicitly. It does not give K=+/-R with their rank3 merged projectors/eigenspaces; the summary again calls K doubly degenerate without an exception.",
+      "evidence": [
+        {
+          "quote": "Degeneracy:\n- \\(E=K\\) is doubly degenerate unless \\(K = -K \\pm 2R\\) (special cases).\n- \\(E_1\\) and \\(E_2\\) are non-degenerate in general.",
+          "character_range": [
+            2275,
+            2412
+          ],
+          "line_range": [
+            75,
+            77
+          ]
+        },
+        {
+          "quote": "### **1.5 Spectral projectors**\n\\[\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|, \\quad P_1 = |\\psi_1\\rangle\\langle\\psi_1|, \\quad P_2 = |\\psi_2\\rangle\\langle\\psi_2|\n\\]",
+          "character_range": [
+            3249,
+            3422
+          ],
+          "line_range": [
+            99,
+            102
+          ]
+        },
+        {
+          "quote": "1. **Spectrum**: \\(E=K\\) (doubly degenerate), \\(E_{\\pm} = -K \\pm 2\\sqrt{\\Delta^2+J^2}\\)",
+          "character_range": [
+            12291,
+            12378
+          ],
+          "line_range": [
+            368,
+            368
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            13229
+          ],
+          "line_range": [
+            1,
+            380
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 2
+    },
+    {
+      "criterion_id": "spectrum.zero_radius",
+      "points": 1,
+      "assessment": "R=0 is handled with even/odd computational projectors and no division, but K=0 is not identified as a single rank4 zero-energy eigenspace. At that point the two claimed doubly degenerate energies coincide.",
+      "evidence": [
+        {
+          "quote": "### **1.6 Limit \\(J=\\Delta=0\\)**\nThen \\(R=0\\), so:\n\\[\nE_1 = E_2 = -K\n\\]\nThus eigenvalues: \\(K\\) (doubly degenerate: \\(|00\\rangle, |11\\rangle\\)) and \\(-K\\) (doubly degenerate: \\(|01\\rangle, |10\\rangle\\)).\n\nSpectral projectors:\n\\[\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|, \\quad P_{-K} = |01\\rangle\\langle 01| + |10\\rangle\\langle 10|\n\\]",
+          "character_range": [
+            3424,
+            3769
+          ],
+          "line_range": [
+            104,
+            114
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            13229
+          ],
+          "line_range": [
+            1,
+            380
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "dynamics.state",
+      "points": 8,
+      "assessment": "Correct odd-block exponential, global phase and signs. The otherwise singular R=0 evolution is explicitly supplied later as exp(iKt)|01>.",
+      "evidence": [
+        {
+          "quote": "The time evolution operator in this subspace:\n\\[\nU_{\\text{middle}}(t) = e^{-i H_{\\text{middle}} t} = e^{iKt} e^{-i(2\\Delta\\sigma_z + 2J\\sigma_x)t}\n\\]\nFactor \\(e^{iKt}\\) comes from \\(-K I\\) term commuting with the rest.\n\nLet \\(\\mathbf{n} = (J/R, 0, \\Delta/R)\\) for \\(R>0\\), then:\n\\[\ne^{-i(2\\Delta\\sigma_z + 2J\\sigma_x)t} = \\cos(2Rt) I - i\\sin(2Rt)(n_x\\sigma_x + n_z\\sigma_z)\n\\]\nwhere \\(n_x = J/R\\), \\(n_z = \\Delta/R\\).\n\nApply to initial state \\((1,0)^T\\):\n\\[\n\\begin{pmatrix} a(t) \\\\ b(t) \\end{pmatrix} = e^{iKt}\\left[ \\cos(2Rt)\\begin{pmatrix}1\\\\0\\end{pmatrix} - i\\sin(2Rt)\\begin{pmatrix}n_z \\\\ n_x\\end{pmatrix} \\right]\n\\]\nThus:\n\\[\na(t) = e^{iKt}\\left[\\cos(2Rt) - i\\frac{\\Delta}{R}\\sin(2Rt)\\right]\n\\]\n\\[\nb(t) = -i e^{iKt} \\frac{J}{R}\\sin(2Rt)",
+          "character_range": [
+            4172,
+            4912
+          ],
+          "line_range": [
+            125,
+            146
+          ]
+        },
+        {
+          "quote": "### **5.3 Decoupled limit \\(J=\\Delta=0\\)**\nHamiltonian reduces to \\(K Z_1Z_2\\). Initial state \\(|01\\rangle\\) is an eigenstate (\\(Z_1Z_2|01\\rangle = -|01\\rangle\\)), so no evolution: \\(|\\psi(t)\\rangle = e^{iKt}|01\\rangle\\). Then \\(P_{01\\to10}(t)=0\\), matching formula with \\(J=0\\).",
+          "character_range": [
+            11645,
+            11924
+          ],
+          "line_range": [
+            352,
+            353
+          ]
+        }
+      ],
+      "max_points": 8,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "dynamics.probability",
+      "points": 4,
+      "assessment": "Correct J^2/R^2 sin^2(2Rt), with J=0 and R=0 assigned probability0.",
+      "evidence": [
+        {
+          "quote": "### **2.2 Transition probability**\n\\[\nP_{01\\to10}(t) = |b(t)|^2 = \\frac{J^2}{R^2} \\sin^2(2Rt)\n\\]\n\n### **2.3 Supremum over \\(t\\geq 0\\)**\nSince \\(0 \\leq \\sin^2(2Rt) \\leq 1\\):\n\\[\n\\sup_{t\\geq 0} P_{01\\to10}(t) = \\frac{J^2}{\\Delta^2 + J^2} \\quad \\text{(provided denominator > 0)}\n\\]\n\nSpecial cases:\n- If \\(J=0\\): \\(P_{01\\to10}(t) = 0\\) for all \\(t\\), supremum = 0.\n- If \\(\\Delta=0\\): supremum = 1 (perfect oscillation).\n- If \\(R=0\\) (i.e., \\(J=\\Delta=0\\)): \\(P_{01\\to10}(t) = 0\\) (since \\(J=0\\)), supremum = 0.",
+          "character_range": [
+            4917,
+            5422
+          ],
+          "line_range": [
+            149,
+            163
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "dynamics.supremum",
+      "points": 4,
+      "assessment": "Correct nonzero-radius supremum and explicit zero-coupling/zero-radius supremum0. The Delta=0 perfect-oscillation bullet is read with the more specific zero-radius exception stated immediately below it.",
+      "evidence": [
+        {
+          "quote": "### **2.3 Supremum over \\(t\\geq 0\\)**\nSince \\(0 \\leq \\sin^2(2Rt) \\leq 1\\):\n\\[\n\\sup_{t\\geq 0} P_{01\\to10}(t) = \\frac{J^2}{\\Delta^2 + J^2} \\quad \\text{(provided denominator > 0)}\n\\]\n\nSpecial cases:\n- If \\(J=0\\): \\(P_{01\\to10}(t) = 0\\) for all \\(t\\), supremum = 0.\n- If \\(\\Delta=0\\): supremum = 1 (perfect oscillation).\n- If \\(R=0\\) (i.e., \\(J=\\Delta=0\\)): \\(P_{01\\to10}(t) = 0\\) (since \\(J=0\\)), supremum = 0.",
+          "character_range": [
+            5015,
+            5422
+          ],
+          "line_range": [
+            154,
+            163
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "dynamics.earliest_and_constant_branches",
+      "points": 3,
+      "assessment": "Correct pi/(4R) for J!=0 and correctly recognizes constant probability for J=0, but the assertion that there is no unique earliest time is false on t>=0: the earliest maximizing time is0.",
+      "evidence": [
+        {
+          "quote": "### **2.4 Earliest time attaining supremum**\nAssuming \\(J \\neq 0\\) (so supremum > 0):\n\nMaximum occurs when \\(\\sin^2(2Rt) = 1 \\Rightarrow 2Rt = \\frac{\\pi}{2} + m\\pi\\). The earliest positive time:\n\\[\nt_{\\text{max}} = \\frac{\\pi}{4R} \\quad \\text{for } R>0\n\\]\n\nIf \\(J=0\\): probability is constantly 0, so no unique earliest time (any \\(t\\) gives the same value).",
+          "character_range": [
+            5424,
+            5781
+          ],
+          "line_range": [
+            165,
+            173
+          ]
+        },
+        {
+          "quote": "   Supremum = \\(J^2/(\\Delta^2+J^2)\\) (if \\(J\\neq 0\\)); earliest time = \\(\\pi/(4\\sqrt{\\Delta^2+J^2})\\) (if \\(J\\neq 0\\)).",
+          "character_range": [
+            12503,
+            12622
+          ],
+          "line_range": [
+            374,
+            374
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "pure_state.reduced_density",
+      "points": 4,
+      "assessment": "Correct partial trace diag(1-p,p); its diagonal entries sum to1. The vanished cross terms are correctly associated with orthogonal second-spin basis states.",
+      "evidence": [
+        {
+          "quote": "### **3.1 Reduced density matrix of first spin**\nFrom \\(|\\psi(t)\\rangle = a(t)|01\\rangle + b(t)|10\\rangle\\):\n\\[\n\\rho_1(t) = \\text{Tr}_2(|\\psi(t)\\rangle\\langle\\psi(t)|) = |a(t)|^2 |0\\rangle\\langle 0| + |b(t)|^2 |1\\rangle\\langle 1|\n\\]\nsince there are no off-diagonal coherences (state has no \\(|00\\rangle\\) or \\(|11\\rangle\\) components).\n\nLet \\(p(t) = |b(t)|^2 = \\frac{J^2}{R^2}\\sin^2(2Rt)\\). Then:\n\\[\n\\rho_1(t) = \\begin{pmatrix} 1-p(t) & 0 \\\\ 0 & p(t) \\end{pmatrix}",
+          "character_range": [
+            5841,
+            6305
+          ],
+          "line_range": [
+            179,
+            188
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "pure_state.entropy",
+      "points": 3,
+      "assessment": "Correct binary entropy in bits, but no0log0=0 endpoint convention is supplied, including at the initial product state.",
+      "evidence": [
+        {
+          "quote": "### **3.2 Von Neumann entropy in bits**\n\\[\nS(\\rho_1(t)) = -p\\log_2 p - (1-p)\\log_2(1-p) \\quad \\text{bits}\n\\]",
+          "character_range": [
+            6310,
+            6418
+          ],
+          "line_range": [
+            191,
+            194
+          ]
+        },
+        {
+          "quote": "3. **Reduced state**: \\(\\rho_1(t) = \\text{diag}(1-p, p)\\) with \\(p\\) as above. Entropy = \\(-p\\log_2 p - (1-p)\\log_2(1-p)\\). Concurrence = \\(2\\sqrt{p(1-p)}\\). Max CHSH = \\(2\\sqrt{1+4p(1-p)}\\). Maximally entangled reachable iff \\(|J|\\geq|\\Delta|\\), earliest time given by solving \\(\\sin^2(2Rt)=R^2/(2J^2)\\).",
+          "character_range": [
+            12624,
+            12929
+          ],
+          "line_range": [
+            376,
+            376
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            13229
+          ],
+          "line_range": [
+            1,
+            380
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "pure_state.concurrence",
+      "points": 4,
+      "assessment": "Correct spin-flip definition and specialization C=2|ab|=2sqrt(p(1-p)).",
+      "evidence": [
+        {
+          "quote": "### **3.3 Pure-state concurrence**\nFor a two-qubit pure state \\(|\\psi\\rangle\\), concurrence \\(C = |\\langle\\psi|\\tilde{\\psi}\\rangle|\\) where \\(|\\tilde{\\psi}\\rangle = (\\sigma_y\\otimes\\sigma_y)|\\psi^*\\rangle\\). For \\(|\\psi\\rangle = a|01\\rangle + b|10\\rangle\\):\n\\[\nC = 2|ab| = 2\\sqrt{p(1-p)}\n\\]",
+          "character_range": [
+            6420,
+            6710
+          ],
+          "line_range": [
+            196,
+            200
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "pure_state.CHSH",
+      "points": 3,
+      "assessment": "The general formula and final summary correctly give2sqrt(1+C^2), earning formula credit. The proposed derivation is invalid and internally contradictory: Tyy has the wrong sign, phase-sensitive Txy/Tyx are dropped, and the derived expression215 gives2 for Delta=0 even when C=1. For J=1,Delta=K=0,t=pi/8 the exact T has singular values1,1,1 and the maximum is2sqrt2.",
+      "evidence": [
+        {
+          "quote": "### **3.4 Maximal CHSH expectation**\nFor a pure state with concurrence \\(C\\), the maximal CHSH expectation value is:\n\\[\nB_{\\max} = 2\\sqrt{1 + C^2} = 2\\sqrt{1 + 4p(1-p)}\n\\]\nThis can also be derived from the correlation matrix \\(T_{ij} = \\langle \\sigma_i\\otimes\\sigma_j\\rangle\\):\n\\[\nT = \\begin{pmatrix} 2\\text{Re}(a^*b) & 0 & 0 \\\\ 0 & -2\\text{Re}(a^*b) & 0 \\\\ 0 & 0 & -1 \\end{pmatrix}\n\\]\nin \\((x,y,z)\\) ordering. Then \\(\\lambda_1 = 1\\), \\(\\lambda_2 = 4[\\text{Re}(a^*b)]^2\\), and \\(B_{\\max} = 2\\sqrt{\\lambda_1 + \\lambda_2}\\).\n\nHere \\(\\text{Re}(a^*b) = \\frac{\\Delta J}{R^2}\\sin^2(2Rt)\\), so:\n\\[\nB_{\\max} = 2\\sqrt{1 + \\frac{4\\Delta^2 J^2}{R^4}\\sin^4(2Rt)}",
+          "character_range": [
+            6712,
+            7362
+          ],
+          "line_range": [
+            202,
+            215
+          ]
+        },
+        {
+          "quote": "Take \\(J=1, \\Delta=0, K=0\\):\n- \\(R=1\\)\n- \\(a(t) = \\cos(2t)\\), \\(b(t) = -i\\sin(2t)\\)\n- \\(P_{01\\to10}(t) = \\sin^2(2t)\\)\n- Concurrence \\(C = |\\sin(4t)|\\) (since \\(2|ab| = |\\sin(4t)|\\))\n- At \\(t=\\pi/8\\): \\(p=1/2\\), \\(C=1\\) (maximally entangled Bell state)",
+          "character_range": [
+            11967,
+            12218
+          ],
+          "line_range": [
+            356,
+            361
+          ]
+        },
+        {
+          "quote": "3. **Reduced state**: \\(\\rho_1(t) = \\text{diag}(1-p, p)\\) with \\(p\\) as above. Entropy = \\(-p\\log_2 p - (1-p)\\log_2(1-p)\\). Concurrence = \\(2\\sqrt{p(1-p)}\\). Max CHSH = \\(2\\sqrt{1+4p(1-p)}\\). Maximally entangled reachable iff \\(|J|\\geq|\\Delta|\\), earliest time given by solving \\(\\sin^2(2Rt)=R^2/(2J^2)\\).",
+          "character_range": [
+            12624,
+            12929
+          ],
+          "line_range": [
+            376,
+            376
+          ]
+        }
+      ],
+      "max_points": 6,
+      "deducted_points": 3
+    },
+    {
+      "criterion_id": "pure_state.maximal_entanglement_reachability",
+      "points": 3,
+      "assessment": "Correct nonzero-coupling threshold |J|>=|Delta|, but the stated iff includes J=Delta=0, which preserves a product state. The missing requirement is J!=0.",
+      "evidence": [
+        {
+          "quote": "### **3.5 When is a maximally entangled state reachable?**\nMaximally entangled means \\(C=1 \\Rightarrow p(1-p) = 1/4 \\Rightarrow p = 1/2\\).\n\nThus we need:\n\\[\n\\frac{J^2}{R^2}\\sin^2(2Rt) = \\frac{1}{2}\n\\]\nThis requires \\(J^2/R^2 \\geq 1/2 \\Rightarrow 2J^2 \\geq \\Delta^2 + J^2 \\Rightarrow J^2 \\geq \\Delta^2 \\Rightarrow |J| \\geq |\\Delta|\\).\n\n**Condition**: Maximally entangled state is reachable iff \\(|J| \\geq |\\Delta|\\).",
+          "character_range": [
+            7367,
+            7782
+          ],
+          "line_range": [
+            218,
+            227
+          ]
+        },
+        {
+          "quote": "### **5.3 Decoupled limit \\(J=\\Delta=0\\)**\nHamiltonian reduces to \\(K Z_1Z_2\\). Initial state \\(|01\\rangle\\) is an eigenstate (\\(Z_1Z_2|01\\rangle = -|01\\rangle\\)), so no evolution: \\(|\\psi(t)\\rangle = e^{iKt}|01\\rangle\\). Then \\(P_{01\\to10}(t)=0\\), matching formula with \\(J=0\\).",
+          "character_range": [
+            11645,
+            11924
+          ],
+          "line_range": [
+            352,
+            353
+          ]
+        },
+        {
+          "quote": "3. **Reduced state**: \\(\\rho_1(t) = \\text{diag}(1-p, p)\\) with \\(p\\) as above. Entropy = \\(-p\\log_2 p - (1-p)\\log_2(1-p)\\). Concurrence = \\(2\\sqrt{p(1-p)}\\). Max CHSH = \\(2\\sqrt{1+4p(1-p)}\\). Maximally entangled reachable iff \\(|J|\\geq|\\Delta|\\), earliest time given by solving \\(\\sin^2(2Rt)=R^2/(2J^2)\\).",
+          "character_range": [
+            12624,
+            12929
+          ],
+          "line_range": [
+            376,
+            376
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "pure_state.earliest_maximal_entanglement",
+      "points": 2,
+      "assessment": "The principal-arcsine formula is correct on J!=0 and |J|>=|Delta|. However the explicit equality branch is wrong: |J|=|Delta|!=0 gives pi/(4sqrt2|J|), not pi/(8|J|). The formula also has no defined zero-coupling branch despite the preceding iff including it.",
+      "evidence": [
+        {
+          "quote": "### **3.6 Earliest time reaching maximal entanglement**\nFrom \\(p = \\frac{1}{2}\\):\n\\[\n\\sin^2(2Rt) = \\frac{R^2}{2J^2}\n\\]\nThe smallest positive solution:\n\\[\n2Rt = \\arcsin\\left(\\frac{R}{\\sqrt{2}|J|}\\right) \\quad \\text{(taking principal value)}\n\\]\nSo:\n\\[\nt_{\\text{ent}} = \\frac{1}{2R} \\arcsin\\left(\\frac{R}{\\sqrt{2}|J|}\\right)\n\\]\nprovided the argument \\(\\leq 1\\). This holds when \\(|J| \\geq |\\Delta|\\), since then \\(R^2/(2J^2) \\leq 1\\).\n\nSpecial cases:\n- If \\(|J| = |\\Delta| \\neq 0\\): \\(R = \\sqrt{2}|J|\\), then \\(R/(\\sqrt{2}|J|) = 1\\), so \\(t_{\\text{ent}} = \\pi/(8|J|)\\).\n- If \\(\\Delta = 0\\): \\(R = |J|\\), \\(t_{\\text{ent}} = \\pi/(8|J|)\\).",
+          "character_range": [
+            7784,
+            8417
+          ],
+          "line_range": [
+            229,
+            246
+          ]
+        }
+      ],
+      "max_points": 3,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "thermal.Gibbs_state",
+      "points": 6,
+      "assessment": "Correct spectral Gibbs construction and computational-basis matrix, with normalized weights. The c,d matrix representation is explicitly restricted to R+Delta>0; the earlier swapped computational eigenvectors and the stated R=0 diagonal branch supply the exceptional spectral basis.",
+      "evidence": [
+        {
+          "quote": "### **4.2 Gibbs density matrix**\nIn the eigenbasis:\n\\[\n\\rho_\\beta = \\frac{1}{Z}\\left[ e^{-\\beta K}(|00\\rangle\\langle 00| + |11\\rangle\\langle 11|) + e^{\\beta K-2\\beta R}|\\psi_1\\rangle\\langle\\psi_1| + e^{\\beta K+2\\beta R}|\\psi_2\\rangle\\langle\\psi_2| \\right]\n\\]\n\n### **4.3 Partial transpose w.r.t. second spin**\nWrite \\(\\rho_\\beta\\) in computational basis. Let:\n\\[\nC = e^{-\\beta K}, \\quad A = e^{\\beta K - 2\\beta R}, \\quad B = e^{\\beta K + 2\\beta R}\n\\]\n\\[\nc = \\frac{\\Delta+R}{\\sqrt{2R(R+\\Delta)}}, \\quad d = \\frac{J}{\\sqrt{2R(R+\\Delta)}} \\quad \\text{(for } R+\\Delta>0\\text{)}\n\\]\nThen:\n\\[\n\\rho_\\beta = \\frac{1}{Z}\\begin{pmatrix}\nC & 0 & 0 & 0 \\\\\n0 & Ac^2+Bd^2 & cd(A-B) & 0 \\\\\n0 & cd(A-B) & Ad^2+Bc^2 & 0 \\\\\n0 & 0 & 0 & C\n\\end{pmatrix}\n\\]",
+          "character_range": [
+            8765,
+            9499
+          ],
+          "line_range": [
+            261,
+            283
+          ]
+        },
+        {
+          "quote": "**Special cases**:\n- If \\(J=0\\) and \\(\\Delta \\neq 0\\): \\(R=|\\Delta|\\). Then \\(|\\psi_1\\rangle = |01\\rangle\\), \\(|\\psi_2\\rangle = |10\\rangle\\) when \\(\\Delta > 0\\), and swapped when \\(\\Delta < 0\\).\n- If \\(R+\\Delta = 0\\) (i.e., \\(\\Delta = -R \\leq 0\\), which requires \\(J=0\\)): Then \\(c\\) undefined, but \\(J=0\\) so eigenvectors are simply \\(|01\\rangle\\) and \\(|10\\rangle\\).",
+          "character_range": [
+            2879,
+            3247
+          ],
+          "line_range": [
+            95,
+            97
+          ]
+        },
+        {
+          "quote": "### **4.6 Special limits**\n- \\(\\beta=0\\) (infinite temperature): \\(\\rho_\\beta = I/4\\), separable ⇒ no entanglement.\n- \\(J=\\Delta=0\\): \\(R=0\\), \\(H=K Z_1Z_2\\). Then \\(\\rho_\\beta\\) is diagonal in computational basis, separable ⇒ no entanglement for any \\(\\beta\\).",
+          "character_range": [
+            10993,
+            11254
+          ],
+          "line_range": [
+            336,
+            338
+          ]
+        }
+      ],
+      "max_points": 6,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "thermal.partition_function",
+      "points": 4,
+      "assessment": "Correct degeneracy-weighted partition function2exp(-beta K)+2exp(beta K)cosh(2beta R).",
+      "evidence": [
+        {
+          "quote": "### **4.1 Partition function**\nFrom eigenvalues: \\(E=K\\) (degeneracy 2), \\(E_1 = -K+2R\\), \\(E_2 = -K-2R\\):\n\\[\nZ(\\beta) = 2e^{-\\beta K} + e^{-\\beta(-K+2R)} + e^{-\\beta(-K-2R)} = 2e^{-\\beta K} + e^{\\beta K}(e^{-2\\beta R} + e^{2\\beta R})\n\\]\n\\[\nZ(\\beta) = 2e^{-\\beta K} + 2e^{\\beta K}\\cosh(2\\beta R)",
+          "character_range": [
+            8465,
+            8760
+          ],
+          "line_range": [
+            252,
+            258
+          ]
+        }
+      ],
+      "max_points": 4,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "thermal.partial_transpose",
+      "points": 7,
+      "assessment": "Correct spin2 partial transpose, two scalar eigenvalues and unordered pair(C+/-w)/Z. The pair need not use |w| to be a correct eigenvalue multiset.",
+      "evidence": [
+        {
+          "quote": "Partial transpose w.r.t. second qubit swaps \\(\\rho_{01,10}\\) with \\(\\rho_{00,11}\\):\n\\[\n\\rho_\\beta^{T_2} = \\frac{1}{Z}\\begin{pmatrix}\nC & 0 & 0 & cd(A-B) \\\\\n0 & Ac^2+Bd^2 & 0 & 0 \\\\\n0 & 0 & Ad^2+Bc^2 & 0 \\\\\ncd(A-B) & 0 & 0 & C\n\\end{pmatrix}\n\\]\n\n### **4.4 Eigenvalues of \\(\\rho_\\beta^{T_2}\\)**\nThe matrix is block-diagonal:\n- Two 1×1 blocks: \\(\\lambda_1 = (Ac^2+Bd^2)/Z\\), \\(\\lambda_2 = (Ad^2+Bc^2)/Z\\)\n- One 2×2 block: \\(\\begin{pmatrix}C & w \\\\ w & C\\end{pmatrix}/Z\\) with \\(w = cd(A-B)\\)\n\nEigenvalues of 2×2 block: \\(\\lambda_3 = (C+w)/Z\\), \\(\\lambda_4 = (C-w)/Z\\).\n\nThus the four eigenvalues are:\n\\[\n\\lambda_1 = \\frac{Ac^2+Bd^2}{Z}, \\quad \\lambda_2 = \\frac{Ad^2+Bc^2}{Z}, \\quad \\lambda_3 = \\frac{C+w}{Z}, \\quad \\lambda_4 = \\frac{C-w}{Z}\n\\]",
+          "character_range": [
+            9501,
+            10240
+          ],
+          "line_range": [
+            285,
+            305
+          ]
+        }
+      ],
+      "max_points": 7,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "thermal.entanglement_criterion",
+      "points": 4,
+      "assessment": "The final iff and strict inequality are correct and imply equality is separable. The displayed derivation incorrectly turns w>C into |w|>C; for J>0,beta>0, w<0 and the negative eigenvalue is(C+w)/Z, not(C-w)/Z. The result is recoverable from the correctly listed unordered eigenvalue pair, but the supplied sign argument is not valid as written.",
+      "evidence": [
+        {
+          "quote": "### **4.5 Condition for thermal entanglement**\nBy the Peres-Horodecki criterion, entanglement exists iff \\(\\rho_\\beta^{T_2}\\) has a negative eigenvalue. The most likely candidate is \\(\\lambda_4 = (C-w)/Z\\) if \\(w > C\\).\n\nNow:\n\\[\ncd = \\frac{J}{2R}, \\quad A-B = -2e^{\\beta K}\\sinh(2\\beta R)\n\\]\nSo:\n\\[\nw = cd(A-B) = -\\frac{J}{R} e^{\\beta K}\\sinh(2\\beta R)\n\\]\n\\[\n|w| = \\frac{|J|}{R} e^{\\beta K} |\\sinh(2\\beta R)|\n\\]\n\nThe condition \\(w > C\\) becomes (for \\(\\beta>0, R>0\\), \\(\\sinh(2\\beta R)>0\\)):\n\\[\n\\frac{|J|}{R} e^{\\beta K} \\sinh(2\\beta R) > e^{-\\beta K}\n\\]\nMultiply by \\(e^{\\beta K}\\):\n\\[\n\\frac{|J|}{R} e^{2\\beta K} \\sinh(2\\beta R) > 1\n\\]\n\n**Thermal entanglement condition** (for \\(\\beta>0, R>0\\)):\n\\[\n\\frac{|J|}{R} e^{2\\beta K} \\sinh(2\\beta R) > 1",
+          "character_range": [
+            10242,
+            10988
+          ],
+          "line_range": [
+            307,
+            333
+          ]
+        },
+        {
+          "quote": "4. **Thermal state**: \\(Z(\\beta)=2e^{-\\beta K}+2e^{\\beta K}\\cosh(2\\beta R)\\). Thermal entanglement exists iff \\(\\frac{|J|}{R}e^{2\\beta K}\\sinh(2\\beta R) > 1\\) (for \\(\\beta>0, R>0\\)).",
+          "character_range": [
+            12931,
+            13113
+          ],
+          "line_range": [
+            378,
+            378
+          ]
+        }
+      ],
+      "max_points": 5,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "thermal.thermal_limits",
+      "points": 3,
+      "assessment": "Correct beta=0 maximally mixed state and R=0 diagonal/separable state for every beta, stated separately from the divided formulas.",
+      "evidence": [
+        {
+          "quote": "### **4.6 Special limits**\n- \\(\\beta=0\\) (infinite temperature): \\(\\rho_\\beta = I/4\\), separable ⇒ no entanglement.\n- \\(J=\\Delta=0\\): \\(R=0\\), \\(H=K Z_1Z_2\\). Then \\(\\rho_\\beta\\) is diagonal in computational basis, separable ⇒ no entanglement for any \\(\\beta\\).",
+          "character_range": [
+            10993,
+            11254
+          ],
+          "line_range": [
+            336,
+            338
+          ]
+        },
+        {
+          "quote": "### **1.6 Limit \\(J=\\Delta=0\\)**\nThen \\(R=0\\), so:\n\\[\nE_1 = E_2 = -K\n\\]\nThus eigenvalues: \\(K\\) (doubly degenerate: \\(|00\\rangle, |11\\rangle\\)) and \\(-K\\) (doubly degenerate: \\(|01\\rangle, |10\\rangle\\)).\n\nSpectral projectors:\n\\[\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|, \\quad P_{-K} = |01\\rangle\\langle 01| + |10\\rangle\\langle 10|\n\\]",
+          "character_range": [
+            3424,
+            3769
+          ],
+          "line_range": [
+            104,
+            114
+          ]
+        },
+        {
+          "quote": "### **4.2 Gibbs density matrix**\nIn the eigenbasis:\n\\[\n\\rho_\\beta = \\frac{1}{Z}\\left[ e^{-\\beta K}(|00\\rangle\\langle 00| + |11\\rangle\\langle 11|) + e^{\\beta K-2\\beta R}|\\psi_1\\rangle\\langle\\psi_1| + e^{\\beta K+2\\beta R}|\\psi_2\\rangle\\langle\\psi_2| \\right]",
+          "character_range": [
+            8765,
+            9020
+          ],
+          "line_range": [
+            261,
+            264
+          ]
+        }
+      ],
+      "max_points": 3,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "checks.conventions",
+      "points": 2,
+      "assessment": "Pauli/basis and Hamiltonian conventions, entropy log base and second-spin partial transpose are stated consistently. The separate CHSH algebra defect is deducted under its owning criterion.",
+      "evidence": [
+        {
+          "quote": "## **Hamiltonian and Notation**\nWe have two distinguishable spin-1/2 particles with computational basis:\n\\[|00\\rangle, |01\\rangle, |10\\rangle, |11\\rangle\\]\nwhere \\(Z|0\\rangle = |0\\rangle\\), \\(Z|1\\rangle = -|1\\rangle\\). Pauli matrices \\(X, Y, Z\\) act as usual.\n\nThe Hamiltonian:\n\\[\nH = J(X_1X_2 + Y_1Y_2) + \\Delta(Z_1 - Z_2) + K Z_1Z_2\n\\]\nwith real parameters \\(J, \\Delta, K\\). Initial state: \\(|\\psi(0)\\rangle = |01\\rangle\\).",
+          "character_range": [
+            81,
+            506
+          ],
+          "line_range": [
+            3,
+            12
+          ]
+        },
+        {
+          "quote": "- \\(X\\otimes X\\) and \\(Y\\otimes Y\\) in basis order \\(|00\\rangle, |01\\rangle, |10\\rangle, |11\\rangle\\):\n  \\[\n  X\\otimes X = \\begin{pmatrix}0&0&0&1\\\\0&0&1&0\\\\0&1&0&0\\\\1&0&0&0\\end{pmatrix}, \\quad\n  Y\\otimes Y = \\begin{pmatrix}0&0&0&-1\\\\0&0&1&0\\\\0&1&0&0\\\\-1&0&0&0\\end{pmatrix}\n  \\]\n  Therefore:\n  \\[\n  X\\otimes X + Y\\otimes Y = \\begin{pmatrix}0&0&0&0\\\\0&0&2&0\\\\0&2&0&0\\\\0&0&0&0\\end{pmatrix}\n  \\]\n\n- \\(Z_1 - Z_2 = Z\\otimes I - I\\otimes Z\\):\n  \\[\n  Z\\otimes I = \\text{diag}(1,1,-1,-1), \\quad I\\otimes Z = \\text{diag}(1,-1,1,-1)\n  \\]\n  So:\n  \\[\n  Z_1 - Z_2 = \\text{diag}(0, 2, -2, 0)\n  \\]\n\n- \\(Z_1Z_2 = Z\\otimes Z = \\text{diag}(1,-1,-1,1)\\)\n\nThus total Hamiltonian matrix:\n\\[\nH = \\begin{pmatrix}\nK & 0 & 0 & 0 \\\\\n0 & -K+2\\Delta & 2J & 0 \\\\\n0 & 2J & -K-2\\Delta & 0 \\\\\n0 & 0 & 0 & K\n\\end{pmatrix}",
+          "character_range": [
+            655,
+            1442
+          ],
+          "line_range": [
+            21,
+            49
+          ]
+        },
+        {
+          "quote": "### **3.2 Von Neumann entropy in bits**\n\\[\nS(\\rho_1(t)) = -p\\log_2 p - (1-p)\\log_2(1-p) \\quad \\text{bits}\n\\]",
+          "character_range": [
+            6310,
+            6418
+          ],
+          "line_range": [
+            191,
+            194
+          ]
+        },
+        {
+          "quote": "Partial transpose w.r.t. second qubit swaps \\(\\rho_{01,10}\\) with \\(\\rho_{00,11}\\):\n\\[\n\\rho_\\beta^{T_2} = \\frac{1}{Z}\\begin{pmatrix}\nC & 0 & 0 & cd(A-B) \\\\\n0 & Ac^2+Bd^2 & 0 & 0 \\\\\n0 & 0 & Ad^2+Bc^2 & 0 \\\\\ncd(A-B) & 0 & 0 & C\n\\end{pmatrix}",
+          "character_range": [
+            9501,
+            9740
+          ],
+          "line_range": [
+            285,
+            292
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "checks.normalization",
+      "points": 2,
+      "assessment": "Explicit evolved-state norm identity is a valid independent consistency check; thermal normalization is also identified.",
+      "evidence": [
+        {
+          "quote": "### **5.1 Normalization**\nFor time evolution: \\(|a(t)|^2 + |b(t)|^2 = \\cos^2(2Rt) + \\frac{\\Delta^2}{R^2}\\sin^2(2Rt) + \\frac{J^2}{R^2}\\sin^2(2Rt) = 1\\) since \\(\\Delta^2+J^2=R^2\\).\n\nFor thermal state: \\(\\text{Tr}(\\rho_\\beta) = 1\\) by construction.",
+          "character_range": [
+            11296,
+            11541
+          ],
+          "line_range": [
+            344,
+            347
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "checks.initial_condition",
+      "points": 2,
+      "assessment": "Explicit a(0)=1,b(0)=0 check recovers the given initial state.",
+      "evidence": [
+        {
+          "quote": "### **5.2 Initial condition**\nAt \\(t=0\\): \\(a(0)=1\\), \\(b(0)=0\\) ⇒ \\(|\\psi(0)\\rangle = |01\\rangle\\).",
+          "character_range": [
+            11543,
+            11643
+          ],
+          "line_range": [
+            349,
+            350
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 0
+    },
+    {
+      "criterion_id": "checks.decoupled_limit",
+      "points": 1,
+      "assessment": "The explicit dynamical consistency check covers only J=Delta=0. Other passages cover eigenvectors and zero transition probability for J=0, but the general Delta!=0 decoupled evolution and its consequences are not checked together.",
+      "evidence": [
+        {
+          "quote": "**Special cases**:\n- If \\(J=0\\) and \\(\\Delta \\neq 0\\): \\(R=|\\Delta|\\). Then \\(|\\psi_1\\rangle = |01\\rangle\\), \\(|\\psi_2\\rangle = |10\\rangle\\) when \\(\\Delta > 0\\), and swapped when \\(\\Delta < 0\\).\n- If \\(R+\\Delta = 0\\) (i.e., \\(\\Delta = -R \\leq 0\\), which requires \\(J=0\\)): Then \\(c\\) undefined, but \\(J=0\\) so eigenvectors are simply \\(|01\\rangle\\) and \\(|10\\rangle\\).",
+          "character_range": [
+            2879,
+            3247
+          ],
+          "line_range": [
+            95,
+            97
+          ]
+        },
+        {
+          "quote": "Special cases:\n- If \\(J=0\\): \\(P_{01\\to10}(t) = 0\\) for all \\(t\\), supremum = 0.\n- If \\(\\Delta=0\\): supremum = 1 (perfect oscillation).\n- If \\(R=0\\) (i.e., \\(J=\\Delta=0\\)): \\(P_{01\\to10}(t) = 0\\) (since \\(J=0\\)), supremum = 0.",
+          "character_range": [
+            5196,
+            5422
+          ],
+          "line_range": [
+            160,
+            163
+          ]
+        },
+        {
+          "quote": "### **5.3 Decoupled limit \\(J=\\Delta=0\\)**\nHamiltonian reduces to \\(K Z_1Z_2\\). Initial state \\(|01\\rangle\\) is an eigenstate (\\(Z_1Z_2|01\\rangle = -|01\\rangle\\)), so no evolution: \\(|\\psi(t)\\rangle = e^{iKt}|01\\rangle\\). Then \\(P_{01\\to10}(t)=0\\), matching formula with \\(J=0\\).",
+          "character_range": [
+            11645,
+            11924
+          ],
+          "line_range": [
+            352,
+            353
+          ]
+        },
+        {
+          "kind": "full_final_body_review_for_omission",
+          "character_range": [
+            0,
+            13229
+          ],
+          "line_range": [
+            1,
+            380
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 1
+    },
+    {
+      "criterion_id": "checks.nontrivial_numerical_example",
+      "points": 2,
+      "assessment": "The example J=1,Delta=K=0,t=pi/8 correctly gives p=1/2 and C=1, with exact amplitudes. It is presented separately from the general derivation. Its omitted CHSH check does not cure the CHSH contradiction.",
+      "evidence": [
+        {
+          "quote": "### **5.4 Nontrivial numerical example**\nTake \\(J=1, \\Delta=0, K=0\\):\n- \\(R=1\\)\n- \\(a(t) = \\cos(2t)\\), \\(b(t) = -i\\sin(2t)\\)\n- \\(P_{01\\to10}(t) = \\sin^2(2t)\\)\n- Concurrence \\(C = |\\sin(4t)|\\) (since \\(2|ab| = |\\sin(4t)|\\))\n- At \\(t=\\pi/8\\): \\(p=1/2\\), \\(C=1\\) (maximally entangled Bell state)\n- These match general formulas.",
+          "character_range": [
+            11926,
+            12250
+          ],
+          "line_range": [
+            355,
+            362
+          ]
+        }
+      ],
+      "max_points": 2,
+      "deducted_points": 0
+    }
+  ],
+  "counterexamples": [
+    {
+      "id": "DSC-CE-01",
+      "criterion": "pure_state.CHSH",
+      "parameters": {
+        "J": 1,
+        "Delta": 0,
+        "K": 0,
+        "t": "pi/8"
+      },
+      "state": "(|01>-i|10>)/sqrt2",
+      "actual_T": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "actual_CHSH_max": "2sqrt2",
+      "displayed_derived_CHSH": "2",
+      "evidence": [
+        {
+          "quote": "This can also be derived from the correlation matrix \\(T_{ij} = \\langle \\sigma_i\\otimes\\sigma_j\\rangle\\):\n\\[\nT = \\begin{pmatrix} 2\\text{Re}(a^*b) & 0 & 0 \\\\ 0 & -2\\text{Re}(a^*b) & 0 \\\\ 0 & 0 & -1 \\end{pmatrix}\n\\]\nin \\((x,y,z)\\) ordering. Then \\(\\lambda_1 = 1\\), \\(\\lambda_2 = 4[\\text{Re}(a^*b)]^2\\), and \\(B_{\\max} = 2\\sqrt{\\lambda_1 + \\lambda_2}\\).\n\nHere \\(\\text{Re}(a^*b) = \\frac{\\Delta J}{R^2}\\sin^2(2Rt)\\), so:\n\\[\nB_{\\max} = 2\\sqrt{1 + \\frac{4\\Delta^2 J^2}{R^4}\\sin^4(2Rt)}",
+          "character_range": [
+            6884,
+            7362
+          ],
+          "line_range": [
+            207,
+            215
+          ]
+        },
+        {
+          "quote": "Take \\(J=1, \\Delta=0, K=0\\):\n- \\(R=1\\)\n- \\(a(t) = \\cos(2t)\\), \\(b(t) = -i\\sin(2t)\\)\n- \\(P_{01\\to10}(t) = \\sin^2(2t)\\)\n- Concurrence \\(C = |\\sin(4t)|\\) (since \\(2|ab| = |\\sin(4t)|\\))\n- At \\(t=\\pi/8\\): \\(p=1/2\\), \\(C=1\\) (maximally entangled Bell state)",
+          "character_range": [
+            11967,
+            12218
+          ],
+          "line_range": [
+            356,
+            361
+          ]
+        }
+      ],
+      "scope": "Direct Pauli expectations and Gram multiplication; no provider or source execution."
+    },
+    {
+      "id": "DSC-CE-02",
+      "criterion": "pure_state.earliest_maximal_entanglement",
+      "parameters": {
+        "J": 1,
+        "Delta": 1,
+        "K": 0
+      },
+      "claimed_earliest_time": "pi/8",
+      "actual_earliest_time": "pi/(4sqrt2)",
+      "probability_at_claimed_time": "(1/2)sin^2(pi sqrt2/4)<1/2",
+      "evidence": [
+        {
+          "quote": "t_{\\text{ent}} = \\frac{1}{2R} \\arcsin\\left(\\frac{R}{\\sqrt{2}|J|}\\right)\n\\]\nprovided the argument \\(\\leq 1\\). This holds when \\(|J| \\geq |\\Delta|\\), since then \\(R^2/(2J^2) \\leq 1\\).\n\nSpecial cases:\n- If \\(|J| = |\\Delta| \\neq 0\\): \\(R = \\sqrt{2}|J|\\), then \\(R/(\\sqrt{2}|J|) = 1\\), so \\(t_{\\text{ent}} = \\pi/(8|J|)\\).\n- If \\(\\Delta = 0\\): \\(R = |J|\\), \\(t_{\\text{ent}} = \\pi/(8|J|)\\).",
+          "character_range": [
+            8034,
+            8417
+          ],
+          "line_range": [
+            240,
+            246
+          ]
+        }
+      ],
+      "scope": "Exact branch substitution;0<pi sqrt2/4<pi/2 gives a strict failure to attain maximal entanglement."
+    },
+    {
+      "id": "DSC-CE-03",
+      "criterion": "pure_state.maximal_entanglement_reachability",
+      "parameters": {
+        "J": 0,
+        "Delta": 0,
+        "K": 1
+      },
+      "asserted_reachable": true,
+      "state": "exp(it)|01>",
+      "actual_concurrence": 0,
+      "evidence": [
+        {
+          "quote": "This requires \\(J^2/R^2 \\geq 1/2 \\Rightarrow 2J^2 \\geq \\Delta^2 + J^2 \\Rightarrow J^2 \\geq \\Delta^2 \\Rightarrow |J| \\geq |\\Delta|\\).\n\n**Condition**: Maximally entangled state is reachable iff \\(|J| \\geq |\\Delta|\\).",
+          "character_range": [
+            7568,
+            7782
+          ],
+          "line_range": [
+            225,
+            227
+          ]
+        },
+        {
+          "quote": "### **5.3 Decoupled limit \\(J=\\Delta=0\\)**\nHamiltonian reduces to \\(K Z_1Z_2\\). Initial state \\(|01\\rangle\\) is an eigenstate (\\(Z_1Z_2|01\\rangle = -|01\\rangle\\)), so no evolution: \\(|\\psi(t)\\rangle = e^{iKt}|01\\rangle\\). Then \\(P_{01\\to10}(t)=0\\), matching formula with \\(J=0\\).",
+          "character_range": [
+            11645,
+            11924
+          ],
+          "line_range": [
+            352,
+            353
+          ]
+        }
+      ],
+      "scope": "Exact diagonal Hamiltonian; no entanglement is generated."
+    },
+    {
+      "id": "DSC-CE-04",
+      "criterion": "dynamics.earliest_and_constant_branches",
+      "parameters": {
+        "J": 0,
+        "Delta": 1,
+        "K": 0
+      },
+      "probability_all_times": 0,
+      "set_of_maximizers": "[0,infinity)",
+      "actual_earliest_maximizer": 0,
+      "evidence": [
+        {
+          "quote": "If \\(J=0\\): probability is constantly 0, so no unique earliest time (any \\(t\\) gives the same value).",
+          "character_range": [
+            5680,
+            5781
+          ],
+          "line_range": [
+            173,
+            173
+          ]
+        }
+      ],
+      "scope": "The ordered time domain has minimum0 even though all times maximize."
+    },
+    {
+      "id": "DSC-CE-05",
+      "criterion": "thermal.entanglement_criterion",
+      "parameters": {
+        "J": 1,
+        "Delta": 0,
+        "K": 0,
+        "beta": 1
+      },
+      "w": "-sinh2",
+      "C": 1,
+      "w_greater_C": false,
+      "absolute_w_greater_C": true,
+      "negative_eigenvalue": "(1-sinh2)/Z",
+      "evidence": [
+        {
+          "quote": "### **4.5 Condition for thermal entanglement**\nBy the Peres-Horodecki criterion, entanglement exists iff \\(\\rho_\\beta^{T_2}\\) has a negative eigenvalue. The most likely candidate is \\(\\lambda_4 = (C-w)/Z\\) if \\(w > C\\).\n\nNow:\n\\[\ncd = \\frac{J}{2R}, \\quad A-B = -2e^{\\beta K}\\sinh(2\\beta R)\n\\]\nSo:\n\\[\nw = cd(A-B) = -\\frac{J}{R} e^{\\beta K}\\sinh(2\\beta R)\n\\]\n\\[\n|w| = \\frac{|J|}{R} e^{\\beta K} |\\sinh(2\\beta R)|\n\\]\n\nThe condition \\(w > C\\) becomes (for \\(\\beta>0, R>0\\), \\(\\sinh(2\\beta R)>0\\)):\n\\[\n\\frac{|J|}{R} e^{\\beta K} \\sinh(2\\beta R) > e^{-\\beta K}",
+          "character_range": [
+            10242,
+            10793
+          ],
+          "line_range": [
+            307,
+            324
+          ]
+        }
+      ],
+      "scope": "Refutes the intermediate equivalence w>C iff |w|>C, not the final entanglement inequality."
+    }
+  ],
+  "limits": [
+    "Final-answer content only; no draft, critique, provider reasoning or earlier-answer credit.",
+    "One self-critique attempt on one item; no general ranking."
+  ]
+}

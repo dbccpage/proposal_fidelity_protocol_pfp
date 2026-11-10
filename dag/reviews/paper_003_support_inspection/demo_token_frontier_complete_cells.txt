@@ -1,0 +1,101 @@
+ROOT_METADATA {"metadata": {"language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 4}
+CELL 0
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+# Demonstration: TokenFrontier Dynamic Logit Masking & Bayesian Conditioning
+
+**The Symbol Game Research Estate · Zenodo Release Demo**
+
+This notebook demonstrates incremental token generation frontier evaluation under grammar and safety constraints.
+
+### Core Invariants
+1. **Vocabulary Support Partitioning**: For vocabulary $V$ and admitted candidate set $S \subseteq V$, masked tokens equal $|V| - |S|$.
+2. **Retained Probability Mass Conservation**:
+   $$M = \sum_{t \in S} P_{\text{base}}(t)$$
+3. **Bayesian Conditioning**:
+   $$P_{\text{constrained}}(t) = \frac{P_{\text{base}}(t)}{M} \implies \sum_{t \in S} P_{\text{constrained}}(t) = 1$$
+4. **Fail-Stop Boundary Refusal**: When $M = 0$, the system returns `Refusal(ZeroRetainedMassError)`.
+SOURCE_END
+CELL 1
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 1, "metadata": {}, "outputs": []}
+SOURCE_START
+from fractions import Fraction
+from pathlib import Path
+import sys
+
+# Import demo module
+from demo_token_frontier import (
+    MockModelLogits,
+    evaluate_token_frontier_step,
+    run_frontier_scenarios,
+)
+
+vocab = ("0", "1", "2", "3", "<", ">", "op", "diff")
+weights = (10, 20, 15, 5, 25, 10, 10, 5)  # Sum = 100
+logits = MockModelLogits(vocabulary=vocab, unnormalized_weights=weights)
+print(f"Vocabulary size: {logits.vocabulary_size}")
+print(f"Total unnormalized weight: {logits.total_weight()}")
+SOURCE_END
+CELL 2
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### Scenario 1: Grammar Mask Admitting Digits Only
+Tokens `0`, `1`, `2`, `3` have weights 10, 20, 15, 5 summing to 50/100 ($M = 1/2$).
+SOURCE_END
+CELL 3
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 2, "metadata": {}, "outputs": []}
+SOURCE_START
+step1 = evaluate_token_frontier_step(logits, [0, 1, 2, 3], parser_state_label="parse_digits")
+assert step1.is_ok()
+frontier = step1.unwrap()
+
+print(f"Support width: {frontier.support_width}")
+print(f"Masked tokens: {frontier.masked_token_count}")
+print(f"Retained mass: {frontier.retained_mass.mass.numerator}/{frontier.retained_mass.mass.denominator}")
+for c in frontier.candidates:
+    t_str = vocab[c.token_id]
+    print(f"Token '{t_str}' (ID {c.token_id}): Base={c.base_probability.to_wire()} -> Constrained={c.constrained_probability.to_wire()}")
+SOURCE_END
+CELL 4
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### Scenario 2: Single-Token Support (Deterministic Collapse)
+Admitting only closing delimiter `>` (index 5) collapses constrained probability mass to 1.0.
+SOURCE_END
+CELL 5
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 3, "metadata": {}, "outputs": []}
+SOURCE_START
+step2 = evaluate_token_frontier_step(logits, [5], parser_state_label="parse_close")
+f2 = step2.unwrap()
+print(f"Support width: {f2.support_width}")
+print(f"Constrained probability: {f2.candidates[0].constrained_probability.to_wire()}")
+SOURCE_END
+CELL 6
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### Scenario 3: Zero Retained Mass Fail-Stop Refusal
+When no tokens are admitted by the active grammar, the engine halts immediately and returns a typed domain refusal.
+SOURCE_END
+CELL 7
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 4, "metadata": {}, "outputs": []}
+SOURCE_START
+from ddd.shared_kernel.result import Refusal
+
+step3 = evaluate_token_frontier_step(logits, [], parser_state_label="empty")
+assert step3.is_refusal()
+assert isinstance(step3, Refusal)
+print(f"Refusal Code: {step3.refusal.code.name}")
+print(f"Refusal Message: {step3.refusal.message}")
+SOURCE_END
+CELL 8
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+### Scenario 4: Complete Scenario Suite & Cryptographic Receipt
+SOURCE_END
+CELL 9
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 5, "metadata": {}, "outputs": []}
+SOURCE_START
+results = run_frontier_scenarios()
+print("Receipt SHA-256:", results["receipt_sha256"])
+print("Scenario 4 Trajectory:", results["scenarios"]["scenario_4_packet_trajectory"]["terminal_packet"])
+SOURCE_END

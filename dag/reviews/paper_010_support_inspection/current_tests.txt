@@ -1,0 +1,104 @@
+F.....................................F...F                              [100%]
+================================== FAILURES ===================================
+___________________ test_case_files_match_recorded_digests ____________________
+
+    def test_case_files_match_recorded_digests() -> None:
+        provenance = load("provenance.json")
+        assert [entry["file"] for entry in provenance["cases"]] == [f"{n}.json" for n in CASES]
+        for entry in provenance["cases"]:
+            data = (DATA / entry["file"]).read_bytes()
+>           assert b"\r\n" not in data  # The packaged copies are the original Git LF bytes.
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           assert b'\r\n' not in b'{\r\n  "id": "pois_01_inv_mismatch_S3",\r\n  "L": 3,\r\n  "M": 3,\r\n  "boundary": "open",\r\n  "group": {\r\n    "n...>1,2": "e",\r\n    "2,0->2,1": "e",\r\n    "2,1->2,0": "e",\r\n    "2,1->2,2": "e",\r\n    "2,2->2,1": "e"\r\n  }\r\n}'
+
+papers\pfp\010_pfp_holonomy_checks_and_model_pilots\code\tests\test_c017_replay.py:48: AssertionError
+______ test_historical_sources_and_c017_extraction_match_original_bytes _______
+
+    def test_historical_sources_and_c017_extraction_match_original_bytes() -> None:
+>       assert recount_pilots.verify_source_bytes() == 15
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+papers\pfp\010_pfp_holonomy_checks_and_model_pilots\code\tests\test_pilot_evidence.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def verify_source_bytes() -> int:
+        """Check the SHA-256 and Git blob SHA of every bundled historical file."""
+        files = load("provenance.json")["files"]
+        if len({entry["file"] for entry in files}) != len(files):
+            raise ValueError("duplicate historical source path")
+        for entry in files:
+            data = (EVIDENCE / entry["file"]).read_bytes()
+            git_digest = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
+            if (hashlib.sha256(data).hexdigest(), git_digest) != (
+                entry["sha256"], entry["git_blob_sha"]
+            ):
+>               raise ValueError(f"historical source hash mismatch: {entry['file']}")
+E               ValueError: historical source hash mismatch: c045.json
+
+papers\pfp\010_pfp_holonomy_checks_and_model_pilots\code\recount_pilots.py:37: ValueError
+_______________ test_render_keeps_section_sign_from_pandoc_body _______________
+
+tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/reviews/paper_010_support_inspection/pytest_temp/test_render_keeps_section_sign0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001E822158B00>
+
+    def test_render_keeps_section_sign_from_pandoc_body(tmp_path: Path, monkeypatch) -> None:
+        """A section sign in the manuscript body survives into the emitted TeX.
+    
+        The default text encoding on this host is the ANSI code page once UTF-8
+        mode is off. The check runs in that mode so a locale read is visible.
+        """
+        if sys.flags.utf8_mode:
+            env = dict(os.environ)
+            env["PYTHONUTF8"] = "0"
+            completed = subprocess.run(
+                [
+                    sys.executable, "-X", "utf8=0", "-m", "pytest",
+                    str(Path(__file__).resolve()), "-s", "--tb=short", "-p", "no:cacheprovider",
+                ],
+                cwd=Path(__file__).resolve().parents[2],
+                env=env,
+                check=False,
+                text=True,
+            )
+            sys.stdout.write(completed.stdout)
+            sys.stderr.write(completed.stderr)
+            assert completed.returncode == 0
+            return
+        package = Path(__file__).resolve().parents[2]
+        root = tmp_path / "pkg"
+        (root / "tools").mkdir(parents=True)
+        shutil.copy(package / "tools" / "paper_preamble.tex", root / "tools" / "paper_preamble.tex")
+        shutil.copy(package / "tools" / "latex_inline_code.lua", root / "tools" / "latex_inline_code.lua")
+        (root / "paper.md").write_text(
+            "# Holonomy checks\n\nJeremy Carroll\n\n2026-10-02\n\n</div>\n\nwhose §2 admits a loop.\n",
+            encoding="utf-8",
+        )
+        stub = tmp_path / "xelatex.bat"
+        stub.write_text(
+            "@echo off\r\necho.>paper.log\r\necho.>paper.pdf\r\nexit /b 0\r\n",
+            encoding="ascii",
+        )
+        monkeypatch.setattr(render_paper, "ROOT", root)
+>       render_paper.render("pandoc", str(stub))
+
+papers\pfp\010_pfp_holonomy_checks_and_model_pilots\code\tests\test_render_paper.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pandoc = 'pandoc'
+xelatex = 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\paper_010_support_inspection\\pytest_temp\\test_render_keeps_section_sign0\\xelatex.bat'
+
+    def render(pandoc: str, xelatex: str) -> None:
+        manuscript = (ROOT / "paper.md").read_text(encoding="utf-8")
+        title = re.search(r"^# (.+)$", manuscript, re.M).group(1)
+        header = manuscript.split("</div>", 1)[0]
+>       author = next(line.rstrip("\\") for line in header.splitlines() if line.startswith("Bare Metal Anchor"))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+papers\pfp\010_pfp_holonomy_checks_and_model_pilots\tools\render_paper.py:28: StopIteration
+=========================== short test summary info ===========================
+FAILED papers\pfp\010_pfp_holonomy_checks_and_model_pilots\code\tests\test_c017_replay.py::test_case_files_match_recorded_digests
+FAILED papers\pfp\010_pfp_holonomy_checks_and_model_pilots\code\tests\test_pilot_evidence.py::test_historical_sources_and_c017_extraction_match_original_bytes
+FAILED papers\pfp\010_pfp_holonomy_checks_and_model_pilots\code\tests\test_render_paper.py::test_render_keeps_section_sign_from_pandoc_body
+
+STDERR

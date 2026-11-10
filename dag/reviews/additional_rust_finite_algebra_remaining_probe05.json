@@ -1,0 +1,127 @@
+{
+  "status": "complete_bounded_controls",
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "original_program_execution": false,
+  "sources": [
+    {
+      "path": "code/rust/core_number_theory/src/polynomial.rs",
+      "sha256": "590eb032fb65b99d16572515f1fca20f03219f006132cfef2af2435cdcafe9c0",
+      "lines": [
+        1,
+        2281
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/polynomial_factorization.rs",
+      "sha256": "1fa6bd69cdbb0e6f8c198a654e2a5c978647a3c23e865403d3bf5b1f73162d30",
+      "lines": [
+        1,
+        631
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "rule": "euclidean_division_reconstruction",
+      "status": "bounded_identities_verified",
+      "pairs": 702
+    },
+    {
+      "rule": "resultant_vs_independent_permutation_determinant",
+      "status": "bounded_identities_verified",
+      "pairs": 676,
+      "maximum_degree": 2
+    },
+    {
+      "rule": "sturm_half_open_counts_vs_known_distinct_roots",
+      "status": "bounded_identities_verified",
+      "cases": 728,
+      "roots": [
+        -1,
+        0,
+        2
+      ],
+      "multiplicities": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "rule": "cyclotomic_divisor_products_and_totient_degrees",
+      "status": "bounded_identities_verified",
+      "conductors": 64,
+      "limits": "Exact polynomial factor-product identities and elementary totient enumeration; no universal irreducibility proof or Rust execution."
+    },
+    {
+      "rule": "refinement_record_boundaries",
+      "status": "counterexample_found",
+      "valid_isolating_rational_case": {
+        "polynomial": [
+          -1,
+          2
+        ],
+        "interval": [
+          0,
+          1
+        ],
+        "tolerance": 1,
+        "output": "Isolated([0,1])",
+        "root": "1/2 is rational"
+      },
+      "untrusted_multi_root_case": {
+        "polynomial": [
+          0,
+          -1,
+          0,
+          1
+        ],
+        "interval": [
+          -2,
+          2
+        ],
+        "tolerance": 4,
+        "output": "Isolated([-2,2])",
+        "distinct_roots": [
+          -1,
+          0,
+          1
+        ]
+      },
+      "untrusted_exact_record": {
+        "polynomial": [
+          -2,
+          0,
+          1
+        ],
+        "input_root": 123,
+        "multiplicity": 0,
+        "output": "Exact(123), multiplicity0 unchanged"
+      },
+      "limits": "First case meets actual isolating/simple-root premise and contradicts Isolated irrationality documentation. Other cases violate documented caller premises and show missing admission, not failure of isolate_real_roots."
+    },
+    {
+      "rule": "factor_product_vs_irreducibility",
+      "status": "observed",
+      "input": [
+        -1,
+        0,
+        1
+      ],
+      "submitted_factors": [
+        [
+          [
+            -1,
+            0,
+            1
+          ],
+          1
+        ]
+      ],
+      "unit": 1,
+      "product_replay_accepts": true,
+      "factor_reducible": true,
+      "limits": "verify_product explicitly disclaims irreducibility verification; this is expected contract separation, not an algorithm defect."
+    }
+  ]
+}

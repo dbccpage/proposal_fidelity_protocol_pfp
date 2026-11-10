@@ -1,0 +1,134 @@
+--- PAGE 1 ---
+PFP: Task-bound claims and the scope of hallucination control
+Jeremy H. Carroll
+2026-10-21
+Version 0.2.0
+Code baseline: 6d9da6fa7919ae2a8b99b704e784e5a4f422aed2
+Abstract
+A certificate establishes a declared property of a declared task. It need not establish surrounding
+prose. We give a finite claim-scoping rule that admits only the claims actually discharged by
+independent checks, and a counterexample to promoting a correct witness into a correct explanation.
+This supplies a precise PFP response to some hallucinations while retaining the boundary around
+unchecked natural-language claims and source quotations.
+Mechanism inventory
+Slot Value / Description
+Primitive Differences Distinct candidate answers / witnesses
+𝑤, 𝑤′ ∈ 𝐷 and predicate value discrepancies
+𝑅𝑗(𝑃 , 𝑤) ≠ 𝑅𝑗(𝑃 , 𝑤′)
+Carriers / Structure Finite task tuple 𝑃 = (𝐷, 𝑅, 𝐻) with finite
+candidate domain 𝐷, solution predicate 𝑅, and
+declared assumptions 𝐻
+Cochain complex Finite claim indicator complex 𝐶 0 𝑑0
+− → 𝐶1
+indexing claim obligations 𝑗 ∈ 𝐽 and evaluation
+receipts
+Coboundary maps Verification indicator map assigning evaluation
+outcomes {0, 1} or error residuals across
+declared claim indices 𝐽
+ZeroRel Exact satisfaction of all declared task predicates
+𝑅𝑗(𝑃 , 𝑤) = true for 𝑗 ∈ 𝐽checked
+Licensed repairs Finite candidate substitution 𝑤 ↦ 𝑤 ′ or prompt
+re-specification under declared prompt protocol
+Quotient / Q1 Quotient of accepted candidate claims modulo
+unchecked surrounding prose or unsupported
+universal generalizations
+Residuals Unchecked prose assertions, invented citations,
+or unverified universal claims outside 𝐽checked
+Witnesses Submitted candidate witness 𝑤 ∈ 𝐷
+accompanied by typed receipt certifying the
+admitted subset 𝐽checked
+Observers / profiles Independent checker functions
+𝐶𝑗(𝑃 , 𝑤) ∈ {accept, reject} evaluating declared
+predicates
+1
+
+--- PAGE 2 ---
+Slot Value / Description
+Anomalons OPEN: Semantic drift between natural language
+explanations and formal predicate specifications
+CompletionLaw Finite checker evaluation exhaustion over the
+declared claim index set 𝐽
+T erminal / route Receipt emission with exact admitted scope
+𝐽checked, or rejection/refusal on failed required
+claims
+Authorization None supplied. Receipts concern specific checker
+results and confer no permission to act.
+1. Task, claim, and evidence
+A task is a tuple 𝑃 = (𝐷, 𝑅, 𝐻) : a finite candidate domain, a solution predicate, and supplied
+assumptions. Its identity includes all three. A claim index 𝐽 names predicates 𝑅𝑗(𝑃 , 𝑤) with
+separately supplied checkers 𝐶𝑗. A receipt contains the original task identity, submitted witness,
+checker identities, and exactly the set 𝐽checked for which those checks accepted. An admission schema
+checks this binding; it does not decide every predicate. Authorization to use the result remains an
+independent input.
+2. Scope theorem
+Theorem. Assume each invoked checker is sound on its declared input: 𝐶𝑗(𝑃 , 𝑤) = accept ⇒
+𝑅𝑗(𝑃 , 𝑤). A receipt admitting only 𝐽checked establishes ⋀𝑗∈𝐽checked
+𝑅𝑗(𝑃 , 𝑤). It establishes no sup-
+plied predicate for a different task, assumption set, witness, or uninvoked claim index without an
+additional checked implication.
+Proof. Apply the corresponding soundness implication to each checked index and form their
+finite conjunction. No implication to another index is among the premises. A countermodel can
+keep every checked predicate true and make an unchecked predicate false, disproving that further
+inference. This last argument is a limitation of these premises, not a claim that every pair of
+mathematical predicates is independent. An actual proved implication can of course transport a
+claim when its assumptions and task bindings are checked.
+3. A correct witness with a false surrounding claim
+Let 𝐷 = {0, 1} 2 and 𝑅(𝑥, 𝑦) mean 𝑥 + 𝑦 = 1 . Both (0, 1) and (1, 0) solve the task. The witness
+(1, 0) passes the equation checker, but the sentence “every solution has 𝑥 = 1 ” is false. A receipt
+for equation satisfaction cannot validate that sentence. The companion independently checks the
+universal claim against all four assignments and rejects it.
+An invented source quotation is a third obligation. Its check needs supplied source bytes, their
+identity, and a span or other declared matching rule. The equation witness supplies none of those.
+Missing quotation evidence therefore leaves the quotation unverified even when the equation is
+solved.
+2
+
+--- PAGE 3 ---
+4. Two-level PFP exchange
+The shared system prompt describes proposing, checking, repair, and refusal, with a worked example.
+The user instance supplies 𝑃 , its permitted witness language, required claims, and response schema.
+The model returns a candidate; the host chooses the relevant declared checkers and replays that
+candidate. The packet can contain an explanation, but the receipt records its exact checked scope. A
+failed required claim prevents full acceptance; an optional unchecked explanation remains explicitly
+outside the accepted scope.
+5. Rejection tests and executable evidence
+Run the finite replay. It checks a valid equation witness, an invalid witness, a wrong-task submission,
+a false universal statement, and a missing source quotation. It never replaces a rejected candidate
+with a separately computed solution. Its enumeration checks the supplied universal claim; it is not
+a model’s answer. There are no provider calls or performance measurements. The proof is written;
+no new Lean formalization is claimed.
+6. What this contributes and what remains open
+The logical conjunction rule is elementary. PFP’s contribution here is the operational requirement
+that claim scope, task identity, and independent checking survive prompt and packet handling. It
+prevents these particular forms of unsupported promotion under the sound-checker assumptions. It
+does not make all language true, resolve inconsistent assumptions, or establish the soundness of an
+arbitrary checker solely on the basis of a checker returning PASS. General extraction of prose into
+faithful mathematical obligations remains a separate research and implementation problem.
+The two-level teaching packet includes shared system rules, this typed user instance, a different
+worked example and a required candidate response schema. It keeps provider system/user roles
+separate. It is a saved example, not a schema-admission or model-run receipt; the local replay
+checks the mathematical or protocol obligations stated above.
+7. Claim scope in the operadic implementation
+The current implementation separates capability composition from execution, immune screening,
+and lineage. OEOP supplies typed operation declarations and source-bound instructions; Woland
+executes configured callbacks; OEEIS supplies the immune observation; Prompt Civilization records
+lineage. Generated host instructions are discovery views, not additional claim authorities.
+The bounded DDC repair study applies this paper’s distinction to one supplied code patch. A
+successful typed composition is not an executed repair. A REPAIRED outcome means the declared
+baseline failures were removed without breaking the supplied passing controls; it does not establish
+correctness on untested inputs. An immune result of NOT_MEASURED cannot be read as clearance. A
+recorded lineage is not detector admission, and the example does not apply the patch to the original
+source.
+These are implementation correspondences to the scope theorem’s premises, not new consequences
+of the finite Boolean replay. The original proof and example are unchanged. No model-performance
+measurement or new Lean proof is reported by this revision.
+3
+
+--- PAGE 4 ---
+Sources and relation to the programme
+This draft builds on the WDP manuscript , Paper 021’s source-and-execution distinctions , and the
+corrected findings notices. Paper 022 supplies a research design whose live-model and offline-strategy
+claims require their own source-bound scrutiny. These drafts do not adopt its empirical tables as
+new measurements. The PFP collection provides the shared- system/typed- instance protocol.
+Genesis and MSS-N presentation stages do not license a new mathematical or physical carrier.
+4

@@ -1,0 +1,54 @@
+{
+  "status": "nine_bounded_observations_reproduced",
+  "cases": [
+    {
+      "name": "valid_carrier",
+      "json_schema_accepts": true,
+      "runtime_admission_accepts": true
+    },
+    {
+      "name": "negative_weight",
+      "json_schema_accepts": true,
+      "runtime_admission_accepts": false
+    },
+    {
+      "name": "duplicate_vertices",
+      "json_schema_accepts": true,
+      "runtime_admission_accepts": false
+    },
+    {
+      "name": "unknown_endpoint",
+      "json_schema_accepts": true,
+      "runtime_admission_accepts": false
+    },
+    {
+      "name": "invalid_rational",
+      "json_schema_accepts": true,
+      "runtime_admission_accepts": false
+    },
+    {
+      "name": "unknown_field",
+      "json_schema_accepts": false,
+      "runtime_admission_accepts": false
+    },
+    {
+      "name": "resealed_invented_final_state",
+      "json_schema_accepts": true,
+      "runtime_model_accepts": true,
+      "replay_accepts": false
+    },
+    {
+      "name": "resealed_invented_core_version",
+      "replay_accepts": true,
+      "interpretation": "Replay establishes agreement with the current implementation, not authenticity of the claimed historic version."
+    },
+    {
+      "name": "cached_frozen_pack_nested_mutation",
+      "pack_id": "section-repair",
+      "nested_dictionary_write_succeeded": true,
+      "next_get_pack_exposes_mutation": true,
+      "interpretation": "Pydantic frozen is shallow for a dict; cached pack state can be changed through the public returned object in this process."
+    }
+  ],
+  "scope": "Synthetic public cases only. Cached mutation restored before exit. No source edits, provider calls, private benchmark access or full-suite claim."
+}

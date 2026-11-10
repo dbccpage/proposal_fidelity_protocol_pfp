@@ -1,0 +1,769 @@
+--- a/omega_engine_woland/infrastructure/research/harness_tasks.py
++++ b/omega_engine_woland/infrastructure/research/harness_tasks.py
+@@ -6,24 +6,54 @@
+ import re
+ 
+ from omega_engine_operads.domain.autopoiesis.learning import canonical, digest
+-from omega_engine_woland.tests.pilots.c052_maxflow_mincut_certificates.judge_packet.exact_checker import (
+-    check_solution as flow_exact,
+-)
+-from omega_engine_woland.tests.pilots.c052_maxflow_mincut_certificates.judge_packet.independent_checker import (
+-    check_solution as flow_independent,
+-)
+-from omega_engine_woland.tests.pilots.c054_exact_linear_systems.judge_packet.exact_checker import (
+-    check_exact as linear_exact,
+-)
+-from omega_engine_woland.tests.pilots.c054_exact_linear_systems.judge_packet.independent_checker import (
+-    independent_check as linear_independent,
+-)
+-from omega_engine_woland.tests.pilots.c059_sql_null_total_query_synthesis.judge_packet.exact_checker import (
+-    verify_candidate as sql_exact,
+-)
+-from omega_engine_woland.tests.pilots.c059_sql_null_total_query_synthesis.judge_packet.independent_checker import (
+-    independent_check as sql_independent,
+-)
++
++class HarnessCheckerUnavailable(ValueError):
++    """The historical calibration checker corpus is not installed locally."""
++
++
++CHECKER_MODULES = {
++    "flow": (
++        ("c052_maxflow_mincut_certificates.judge_packet.exact_checker", "check_solution"),
++        ("c052_maxflow_mincut_certificates.judge_packet.independent_checker", "check_solution"),
++    ),
++    "linear": (
++        ("c054_exact_linear_systems.judge_packet.exact_checker", "check_exact"),
++        ("c054_exact_linear_systems.judge_packet.independent_checker", "independent_check"),
++    ),
++    "sql": (
++        ("c059_sql_null_total_query_synthesis.judge_packet.exact_checker", "verify_candidate"),
++        ("c059_sql_null_total_query_synthesis.judge_packet.independent_checker", "independent_check"),
++    ),
++}
++
++
++def _checker_pair(kind):
++    """Resolve only legacy local owners; never substitute unbound external judges."""
++    from importlib import import_module
++
++    pairs = []
++    for suffix, entrypoint in CHECKER_MODULES[kind]:
++        module = "omega_engine_woland.tests.pilots." + suffix
++        try:
++            owner = import_module(module)
++        except ModuleNotFoundError as error:
++            # Preserve internal checker dependency defects as their original error.
++            if error.name and (error.name == module or module.startswith(error.name + ".")):
++                raise HarnessCheckerUnavailable(
++                    "HARNESS_CHECKER_CORPUS_UNAVAILABLE:" + kind
++                    + "; historical pilots moved to proposal_fidelity_protocol_pfp/"
++                    "pilots/anomalon_woland; live campaigns require a separately bound checker adapter"
++                ) from error
++            raise
++        pairs.append(getattr(owner, entrypoint))
++    return tuple(pairs)
++
++
++def require_checkers(kinds=("flow", "linear", "sql")):
++    """Fail before execution or billing when a requested corpus checker is absent."""
++    for kind in kinds:
++        if kind in CHECKER_MODULES:
++            _checker_pair(kind)
+ 
+ 
+ CONTRACTS = {
+@@ -179,14 +209,16 @@
+ 
+ 
+ def judge(kind, case, result):
++    if kind in CHECKER_MODULES:
++        exact, independent = _checker_pair(kind)
+     if type(result) is not dict:
+         return False, "OBJECT_REQUIRED"
+     if kind == "flow":
+         if any(type(x) is not int for x in result.get("cut_S", [])):
+             return False, "EXACT_INDEX_REQUIRED"
+-        first, second = flow_exact(case, result), flow_independent(case, result)
++        first, second = exact(case, result), independent(case, result)
+     elif kind == "linear":
+-        first, second = linear_exact(case, result), linear_independent(case, result)
++        first, second = exact(case, result), independent(case, result)
+     elif kind == "sql":
+         # This finite panel is single-table SELECT. Disallow resource-expanding
+         # SQL before either independent judge opens its private in-memory DB.
+@@ -203,7 +235,7 @@
+                 r";|--|/\*|\b(attach|pragma|with|load_extension|randomblob|join|union)\b", sql, re.I
+             ):
+                 return False, "SQL_SURFACE_REFUSED"
+-        first, second = sql_exact(case, result), sql_independent(case, result)
++        first, second = exact(case, result), independent(case, result)
+     else:
+         if kind == "exact_type":
+             expected = {"accepted": type(case["value"]) is int}
+@@ -235,6 +267,7 @@
+ 
+ 
+ def execute_cases(runner, code, task, cases, store):
++    require_checkers((task["kind"],))
+     observed = []
+     for case in cases:
+         inputs = {k: v for k, v in case.items() if k != "test_databases"}
+--- a/omega_engine_woland/infrastructure/research/harness_evaluator.py
++++ b/omega_engine_woland/infrastructure/research/harness_evaluator.py
+@@ -15,6 +15,7 @@
+ from omega_engine_woland.infrastructure.research.harness_tasks import (
+     execute_cases,
+     participant_task,
++    require_checkers,
+ )
+ from omega_engine_woland.infrastructure.research.reference_harness import POLICY_ENTRYPOINT
+ from omega_engine_woland.infrastructure.research.typed_harness_check import typed_check
+@@ -93,6 +94,7 @@
+         return tuple(rows)
+ 
+     def trial(self, candidate, task, phase, name, repetition):
++        require_checkers((task["kind"],))
+         self.store.load(candidate.candidate_id)
+         self.store.record(
+             name + "/assigned",
+--- a/omega_engine_woland/entrypoints/research/harness_cli.py
++++ b/omega_engine_woland/entrypoints/research/harness_cli.py
+@@ -25,6 +25,7 @@
+ from omega_engine_woland.infrastructure.research.harness_protocol import PLAN, prepare
+ from omega_engine_woland.infrastructure.research.harness_replay import markdown_report, replay
+ from omega_engine_woland.infrastructure.research.harness_store import HarnessStore
++from omega_engine_woland.infrastructure.research.harness_tasks import require_checkers
+ from omega_engine_woland.infrastructure.research.reference_harness import (
+     POLICY_ENTRYPOINT,
+     reference,
+@@ -32,9 +33,6 @@
+ from omega_engine_woland.use_cases.research.harness_campaign import HarnessCampaign
+ 
+ ROOT = Path(__file__).resolve().parents[3]
+-DEFAULT_PRICES = (
+-    ROOT / "omega_engine_woland/documentation/harness_evolution/pricing_observation.json"
+-)
+ 
+ 
+ def controls(candidate, *, runner, store, spec):
+@@ -188,9 +186,13 @@
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("command", choices=("preflight", "run", "resume", "replay", "report"))
+     parser.add_argument("--output", type=Path, required=True)
+-    parser.add_argument("--prices", type=Path, default=DEFAULT_PRICES)
+-    parser.add_argument(
+-        "--pricing-evidence", type=Path, default=DEFAULT_PRICES.with_name("pricing_evidence.json")
++    parser.add_argument(
++        "--prices", type=Path, required=True,
++        help="Explicit pricing observations: current for live runs, frozen for historical replay",
++    )
++    parser.add_argument(
++        "--pricing-evidence", type=Path, required=True,
++        help="Evidence bytes whose SHA-256 is bound by every supplied pricing row"
+     )
+     parser.add_argument(
+         "--image", help="Local Podman image ID, sha256:..., required for live execution"
+@@ -218,6 +220,8 @@
+         from omega_engine_operating_system.adapters.research_windows import WindowsResearchRunner
+ 
+         windows = WindowsResearchRunner(args.windows_runtime, args.windows_runtime_sha256)
++    if args.command in ("run", "resume") or (args.command == "preflight" and args.live):
++        require_checkers()
+     store = HarnessStore(args.output)
+     prices = json.loads(args.prices.read_text(encoding="utf-8"))
+     pricing_evidence = args.pricing_evidence.read_bytes()
+--- /dev/null
++++ b/omega_engine_woland/tests/research/harness_fixtures.py
+@@ -0,0 +1,36 @@
++"""Synthetic rates for offline harness tests; these are not market-price observations."""
++
++import hashlib
++import json
++from pathlib import Path
++
++PRICING_EVIDENCE = b'{"kind":"offline-test-fixture","market_quote":false}\n'
++
++
++def pricing_fixture():
++    """Fresh mapping so mutation tests cannot alter another test's rates."""
++    rows = {}
++    for model, input_rate, output_rate in (
++        ("claude-haiku-5-5", 100_000, 500_000),
++        ("claude-sonnet-5-5", 2_000_000, 10_000_000),
++    ):
++        rows[model] = {
++            "model_deployment_id": model,
++            "input_microusd_per_mtok": input_rate,
++            "output_microusd_per_mtok": output_rate,
++            "effective_from_utc": "2026-10-23T14:50:07.000000Z",
++            "observed_at_utc": "2026-10-23T14:50:07.000000Z",
++            "stale_after_utc": "2026-10-24T14:50:07.000000Z",
++            "evidence_digest": "sha256:" + hashlib.sha256(PRICING_EVIDENCE).hexdigest(),
++        }
++    return rows
++
++
++def pricing_cli_args(directory):
++    directory = Path(directory)
++    directory.mkdir(parents=True, exist_ok=False)
++    prices = directory / "synthetic-prices.json"
++    evidence = directory / "synthetic-evidence.json"
++    prices.write_text(json.dumps(pricing_fixture()), encoding="utf-8")
++    evidence.write_bytes(PRICING_EVIDENCE)
++    return ["--prices", str(prices), "--pricing-evidence", str(evidence)]
+--- a/omega_engine_woland/tests/research/test_frozen_review_replay.py
++++ /dev/null
+@@ -1,162 +0,0 @@
+-"""Extraction and offline-execution controls for the historical review handoff."""
+-
+-import json
+-import os
+-import stat
+-import subprocess
+-import sys
+-import zipfile
+-from types import SimpleNamespace
+-
+-import pytest
+-
+-from omega_engine_woland.documentation.harness_evolution import replay_review_archive as replay
+-
+-
+-def archive_at(tmp_path, members):
+-    archive = tmp_path / "fixture.zip"
+-    with zipfile.ZipFile(archive, "w") as output:
+-        for name, mode in members:
+-            item = zipfile.ZipInfo(name)
+-            # ZipInfo normalizes Windows separators during construction; retain
+-            # the hostile wire spelling so the extraction boundary sees it.
+-            item.filename = name
+-            item.external_attr = mode << 16
+-            output.writestr(item, b"retained bytes")
+-    return archive
+-
+-
+-@pytest.mark.parametrize("name", [
+-    "../escape", "/absolute", "foreign/file", "pfp_harness_author_review/../escape",
+-    "pfp_harness_author_review/a\\b", "pfp_harness_author_review/x:stream",
+-    "pfp_harness_author_review/CON.txt", "pfp_harness_author_review/trailing.",
+-])
+-def test_unsafe_members_are_refused_before_any_extraction(tmp_path, name):
+-    archive = archive_at(tmp_path, [(name, stat.S_IFREG | 0o644)])
+-    target = tmp_path / "output"
+-    with pytest.raises(ValueError, match="UNSAFE_ARCHIVE_MEMBER"):
+-        replay.extract(archive, target, replay.sha(archive))
+-    assert not target.exists()
+-
+-
+-@pytest.mark.parametrize("members,reason", [
+-    ([(replay.PACKAGE + "/link", stat.S_IFLNK | 0o777)], "NONREGULAR"),
+-    ([(replay.PACKAGE + "/A", stat.S_IFREG), (replay.PACKAGE + "/a", stat.S_IFREG)], "DUPLICATE"),
+-])
+-def test_link_and_case_collisions_fail_closed(tmp_path, members, reason):
+-    archive = archive_at(tmp_path, members)
+-    with pytest.raises(ValueError, match=reason):
+-        replay.extract(archive, tmp_path / "output", replay.sha(archive))
+-    assert not (tmp_path / "output").exists()
+-
+-
+-def test_digest_is_checked_and_existing_work_is_preserved(tmp_path):
+-    archive = archive_at(tmp_path, [(replay.PACKAGE + "/payload", stat.S_IFREG | 0o644)])
+-    target = tmp_path / "output"
+-    with pytest.raises(ValueError, match="DIGEST_MISMATCH"):
+-        replay.extract(archive, target, "0" * 64)
+-    assert not target.exists()
+-    package = replay.extract(archive, target, replay.sha(archive))
+-    (package / "payload").write_text("user changes")
+-    with pytest.raises(ValueError, match="DESTINATION_EXISTS"):
+-        replay.extract(archive, target, replay.sha(archive))
+-    assert (package / "payload").read_text() == "user changes"
+-
+-
+-@pytest.mark.parametrize("probe", [
+-    "import socket; socket.socket()",
+-    "import subprocess, sys; subprocess.run([sys.executable, '-c', 'pass'], check=True)",
+-])
+-def test_replay_child_refuses_network_and_process_execution(tmp_path, probe):
+-    (tmp_path / "tools").mkdir()
+-    (tmp_path / "tools/rebuild_release.py").write_text(probe)
+-    result = subprocess.run(
+-        [sys.executable, "-I", "-S", "-B", "-c", replay.CHILD, str(tmp_path), "[]"],
+-        capture_output=True, text=True, check=False,
+-    )
+-    assert result.returncode != 0
+-    assert "OFFLINE_REPLAY_EXTERNAL_EXECUTION_REFUSED" in result.stderr
+-
+-
+-def test_extraction_uses_authenticated_bytes_after_path_replacement(tmp_path, monkeypatch):
+-    archive = archive_at(tmp_path, [(replay.PACKAGE + "/payload", stat.S_IFREG | 0o644)])
+-    expected = replay.sha(archive)
+-    original_zip = zipfile.ZipFile
+-
+-    def swap_path(source, *args, **kwargs):
+-        with original_zip(archive, "w") as replacement:
+-            replacement.writestr(replay.PACKAGE + "/payload", b"substituted code")
+-        return original_zip(source, *args, **kwargs)
+-
+-    monkeypatch.setattr(replay.zipfile, "ZipFile", swap_path)
+-    package = replay.extract(archive, tmp_path / "output", expected)
+-    assert (package / "payload").read_bytes() == b"retained bytes"
+-
+-
+-def test_same_byte_archive_under_linked_parent_is_refused(tmp_path):
+-    real = tmp_path / "real"
+-    real.mkdir()
+-    archive = archive_at(real, [(replay.PACKAGE + "/payload", stat.S_IFREG | 0o644)])
+-    alias = tmp_path / "alias"
+-    if os.name == "nt":
+-        def quote(path):
+-            return "'" + str(path).replace("'", "''") + "'"
+-        subprocess.run(
+-            ["powershell.exe", "-NoProfile", "-Command",
+-             f"New-Item -ItemType Junction -Path {quote(alias)} -Target {quote(real)} | Out-Null"],
+-            check=True, capture_output=True,
+-        )
+-    else:
+-        alias.symlink_to(real, target_is_directory=True)
+-    with pytest.raises(ValueError, match="NONREGULAR_ARCHIVE_PATH"):
+-        replay.extract(alias / archive.name, tmp_path / "output", replay.sha(archive))
+-    assert not (tmp_path / "output").exists()
+-
+-
+-@pytest.mark.parametrize("mode,reason", [
+-    ("timeout", "REPLAY_TIMEOUT"), ("start", "REPLAY_START_FAILED"),
+-    ("missing", "REPLAY_REPORT_INVALID"), ("malformed", "REPLAY_REPORT_INVALID"),
+-    ("bool", "REPLAY_REPORT_INVALID"), ("paid", "REPLAY_REPORT_INVALID"),
+-    ("valid", None),
+-])
+-def test_interrupted_or_invalid_replay_has_failure_receipt(tmp_path, monkeypatch, mode, reason):
+-    output = tmp_path / "output"
+-    package = output / replay.PACKAGE
+-    archive = tmp_path / "fixture.zip"
+-    archive.write_bytes(b"fixture")
+-    monkeypatch.setattr(replay, "ARCHIVE", archive)
+-    monkeypatch.setattr(sys, "argv", ["replay", "--output", str(output)])
+-    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-secret-must-not-reach-child")
+-
+-    def fixture_extract(*args):
+-        package.mkdir(parents=True)
+-        return package
+-
+-    def execute(*args, **kwargs):
+-        assert "ANTHROPIC_API_KEY" not in kwargs["env"]
+-        assert kwargs["env"]["OMEGA_CREDENTIAL_DISCOVERY"] == "off"
+-        if mode == "timeout":
+-            raise subprocess.TimeoutExpired("fixture", 300, output=b"partial output", stderr=b"partial error")
+-        if mode == "start":
+-            raise OSError("fixture failure")
+-        if mode != "missing":
+-            report = package / "repository/omega_engine_woland/documentation/harness_evolution/campaign/report.json"
+-            report.parent.mkdir(parents=True)
+-            body = {"status": "NOT_RUN", "independent_provider_calls": 0,
+-                    "assigned_trials": 0, "spent_microusd": 0, "held_microusd": 0}
+-            if mode == "bool":
+-                body["assigned_trials"] = False
+-            if mode == "paid":
+-                body["spent_microusd"] = 1
+-            report.write_text("invalid" if mode == "malformed" else json.dumps(body))
+-        return SimpleNamespace(returncode=0, stdout="completed", stderr="")
+-
+-    monkeypatch.setattr(replay, "extract", fixture_extract)
+-    monkeypatch.setattr(replay.subprocess, "run", execute)
+-    assert replay.main() == (0 if reason is None else 1)
+-    receipt = json.loads((output / "replay_receipt.json").read_text())
+-    assert receipt["failure"] == reason
+-    assert receipt["status"] == ("PASS" if reason is None else "FAIL")
+-    if mode == "timeout":
+-        assert (output / "replay.stdout.txt").read_text() == "partial output"
+-        assert (output / "replay.stderr.txt").read_text() == "partial error"
+--- a/omega_engine_woland/tests/test_calibration_tasks.py
++++ /dev/null
+@@ -1,83 +0,0 @@
+-"""Calibration task bank: checkers accept the reference and refuse planted mistakes.
+-
+-Each review task's truth is computed by its checker; these controls pin that the computed
+-reference passes and that a miss, a false alarm, a fenced reply and a drifted prompt fail.
+-"""
+-
+-import json
+-import re
+-import shutil
+-import subprocess
+-import sys
+-from pathlib import Path
+-
+-import pytest
+-
+-TASKS = Path(__file__).resolve().parents[1] / "program_profiles" / "calibration"
+-REVIEW_TASKS = ("review_graph_claims", "review_hodge_claims", "review_code_claims")
+-
+-
+-def run_checker(task_dir: Path, *args: str) -> subprocess.CompletedProcess:
+-    return subprocess.run([sys.executable, "-I", str(task_dir / "check.py"), *args],
+-        capture_output=True, text=True, check=False, timeout=60)
+-
+-
+-def reference(task_dir: Path) -> list[str]:
+-    done = run_checker(task_dir, "--reference")
+-    assert done.returncode == 0, done.stderr
+-    return json.loads(done.stdout)["flagged_claims"]
+-
+-
+-@pytest.mark.parametrize("task", REVIEW_TASKS)
+-def test_reference_passes_and_each_planted_mistake_fails(tmp_path, task):
+-    task_dir = TASKS / task
+-    flagged = reference(task_dir)
+-    assert flagged, "a review task must plant at least one fault"
+-    cases = {
+-        "ok": ({"flagged_claims": flagged}, 0),
+-        "miss": ({"flagged_claims": flagged[1:]}, 1),
+-        "false_alarm": ({"flagged_claims": [*flagged, "c1"] if "c1" not in flagged else [*flagged, "c3"]}, 1),
+-        "extra_key": ({"flagged_claims": flagged, "notes": "x"}, 1),
+-    }
+-    for name, (answer, expected) in cases.items():
+-        path = tmp_path / f"{name}.json"
+-        path.write_text(json.dumps(answer), encoding="utf-8")
+-        assert run_checker(task_dir, str(path)).returncode == expected, name
+-    fenced = tmp_path / "fenced.json"
+-    fenced.write_text("```json\n" + json.dumps({"flagged_claims": flagged}) + "\n```", encoding="utf-8")
+-    assert run_checker(task_dir, str(fenced)).returncode == 1
+-
+-
+-@pytest.mark.parametrize("task", REVIEW_TASKS)
+-def test_prompt_lists_every_claim_and_leaks_no_answer(task):
+-    task_dir = TASKS / task
+-    prompt = (task_dir / "prompt.md").read_text(encoding="utf-8")
+-    spec_text = (task_dir / "check.py").read_text(encoding="utf-8")
+-    claims = dict(re.findall(r'^    "(c\d+)": [\'"](.+?)[\'"],$', spec_text, flags=re.MULTILINE))
+-    assert claims and all(f"`{cid}`: {text}" in prompt for cid, text in claims.items())
+-    example = re.search(r'\{"flagged_claims": \[(.*?)\]\}', prompt).group(1)
+-    assert not re.search(r'"c\d+"', example), "the format example must not name a claim id"
+-
+-
+-def test_code_checker_refuses_a_prompt_that_drifted_from_its_source(tmp_path):
+-    copy = tmp_path / "calibration"
+-    shutil.copytree(TASKS, copy)
+-    prompt = copy / "review_code_claims" / "prompt.md"
+-    prompt.write_text(prompt.read_text(encoding="utf-8").replace("lower()", "upper()"), encoding="utf-8")
+-    answer = tmp_path / "answer.json"
+-    answer.write_text(json.dumps({"flagged_claims": reference(TASKS / "review_code_claims")}), encoding="utf-8")
+-    done = run_checker(copy / "review_code_claims", str(answer))
+-    assert done.returncode == 1 and "does not show the checked data or claims" in done.stdout
+-
+-
+-@pytest.mark.parametrize("task,answer_key", [("graph_cycle_rank", None), ("hodge_split", "--reference")])
+-def test_exact_tasks_accept_their_reference(tmp_path, task, answer_key):
+-    task_dir = TASKS / task
+-    if answer_key:
+-        answer = run_checker(task_dir, "--reference").stdout
+-    else:
+-        answer = json.dumps({"vertices": 12, "edges": 16, "components": 3, "component_sizes": [7, 4, 1],
+-            "cycle_rank": 7, "spanning_forest_edge_ids": [0, 1, 3, 4, 5, 7, 11, 12, 13]})
+-    path = tmp_path / "answer.json"
+-    path.write_text(answer, encoding="utf-8")
+-    assert run_checker(task_dir, str(path)).returncode == 0
+--- a/omega_engine_woland/tests/research/test_harness_execution.py
++++ b/omega_engine_woland/tests/research/test_harness_execution.py
+@@ -1,4 +1,4 @@
+-"""Offline orchestration doubles, adversarial receipt replay, and frozen-task calibration.
++"""Offline orchestration doubles, adversarial receipt replay, and runtime task checks.
+ 
+ No generated candidate program is executed by these tests. The runner double
+ interprets two explicit fixture programs; live isolation needs the Linux preflight.
+@@ -22,18 +22,14 @@
+ from omega_engine_woland.infrastructure.research.harness_protocol import prepare, source_manifest
+ from omega_engine_woland.infrastructure.research.harness_replay import replay
+ from omega_engine_woland.infrastructure.research.harness_store import HarnessStore
+-from omega_engine_woland.infrastructure.research.harness_tasks import freeze_tasks, judge
+ from omega_engine_woland.infrastructure.research.reference_harness import CONTEXT, SEARCH, reference
++from omega_engine_woland.tests.research.harness_fixtures import pricing_fixture
+ from omega_engine_woland.tests.research.test_harness_contracts import receipt
+ from omega_engine_woland.tests.research.test_harness_contracts import spec as fixture_spec
+ from omega_engine_woland.use_cases.research.harness_campaign import HarnessCampaign
+ 
+ ROOT = Path(__file__).resolve().parents[3]
+-PRICES = json.loads(
+-    (
+-        ROOT / "omega_engine_woland/documentation/harness_evolution/pricing_observation.json"
+-    ).read_text()
+-)
++PRICES = pricing_fixture()
+ CODE = "import json,sys\nx=json.load(sys.stdin)\nprint(json.dumps({'accepted':isinstance(x['value'],int)}))\n"
+ 
+ 
+@@ -251,26 +247,6 @@
+         replay(ROOT, store)
+ 
+ 
+-def test_three_independent_judged_families_calibrate():
+-    from omega_engine_woland.tests.pilots.c052_maxflow_mincut_certificates.reference_solver.solver import (
+-        solve as flow,
+-    )
+-    from omega_engine_woland.tests.pilots.c054_exact_linear_systems.reference_solver.solver import (
+-        solve as linear,
+-    )
+-    from omega_engine_woland.tests.pilots.c059_sql_null_total_query_synthesis.reference_solver.solver import (
+-        solve as sql,
+-    )
+-
+-    count = 0
+-    for task in freeze_tasks():
+-        if task["kind"] in ("flow", "linear", "sql"):
+-            for case in task["public"] + task["private"]:
+-                output = {"flow": flow, "linear": linear, "sql": sql}[task["kind"]](case)
+-                assert judge(task["kind"], case, output)[0]
+-                assert not judge(task["kind"], case, {})[0]
+-                count += 1
+-    assert count == 158
+ 
+ 
+ def test_loop_reenters_only_selected_bytes_and_resumes(tmp_path):
+--- a/omega_engine_woland/tests/providers/test_harness_anthropic_budget.py
++++ b/omega_engine_woland/tests/providers/test_harness_anthropic_budget.py
+@@ -1,6 +1,5 @@
+ import json
+ from concurrent.futures import ThreadPoolExecutor
+-from pathlib import Path
+ 
+ import pytest
+ 
+@@ -26,12 +25,9 @@
+ )
+ from omega_engine_woland.infrastructure.research.harness_store import HarnessStore
+ 
+-ROOT = Path(__file__).resolve().parents[3]
+-PRICES = json.loads(
+-    (
+-        ROOT / "omega_engine_woland/documentation/harness_evolution/pricing_observation.json"
+-    ).read_text()
+-)
++from omega_engine_woland.tests.research.harness_fixtures import pricing_fixture
++
++PRICES = pricing_fixture()
+ 
+ 
+ def spec():
+--- a/omega_engine_woland/tests/research/test_harness_review_regressions.py
++++ b/omega_engine_woland/tests/research/test_harness_review_regressions.py
+@@ -1,8 +1,6 @@
+ """Offline regression controls for review defects; no Linux or provider execution."""
+ 
+ import json
+-import os
+-import subprocess
+ from types import SimpleNamespace
+ 
+ import pytest
+@@ -10,7 +8,6 @@
+ from omega_engine_operads.domain.autopoiesis.research import HarnessCandidateV1
+ from omega_engine_operations.domain.rop.result import Ok
+ from omega_engine_pfp.infrastructure.adapters.harness_provider import ModelCall
+-from omega_engine_woland.documentation.harness_evolution import build_review_package as package
+ from omega_engine_woland.entrypoints.research import harness_cli
+ from omega_engine_woland.infrastructure.research.harness_evaluator import (
+     HarnessEvaluator,
+@@ -19,6 +16,7 @@
+ from omega_engine_woland.infrastructure.research.harness_store import HarnessStore
+ from omega_engine_woland.infrastructure.research.harness_tasks import freeze_tasks
+ from omega_engine_woland.infrastructure.research.reference_harness import reference
++from omega_engine_woland.tests.research.harness_fixtures import pricing_cli_args
+ from omega_engine_woland.tests.research.test_harness_contracts import spec as fixture_spec
+ from omega_engine_woland.tests.research.test_harness_execution import CODE, Runner
+ 
+@@ -102,6 +100,7 @@
+             "", "TYPED_REFUSAL" if role == "inner" else "PROVIDER_COMPLETED", 0, 0, 0, "0" * 64
+         )
+ 
++    monkeypatch.setattr(harness_cli, "require_checkers", lambda: None)
+     monkeypatch.setattr(harness_cli, "prepare", lambda *a: fixture_spec())
+     monkeypatch.setattr(
+         harness_cli,
+@@ -115,49 +114,14 @@
+     monkeypatch.setattr(harness_cli, "replay", lambda *a: {"status": "NOT_RUN"})
+     monkeypatch.setattr(harness_cli, "markdown_report", lambda value: "Fixture only")
+     with pytest.raises(ValueError, match="PROVIDER_COMPATIBILITY_FAILED"):
+-        harness_cli.main(["preflight", "--live", "--image", "fixture", "--output", str(store.root)])
++        harness_cli.main(["preflight", "--live", "--image", "fixture", "--output", str(store.root),
++                          *pricing_cli_args(tmp_path / "pricing")])
+     assert roles == ["inner"]
+     assert store.lookup("preflight/live") is None
+ 
+ 
+-def test_package_refuses_linked_payload_directories(tmp_path):
+-    source, external = tmp_path / "source", tmp_path / "external"
+-    source.mkdir()
+-    external.mkdir()
+-    (external / "evidence.json").write_bytes(b'{"result":"same bytes"}')
+-    linked = source / "receipts"
+-    if os.name == "nt":
+-        quote = lambda p: "'" + str(p).replace("'", "''") + "'"
+-        subprocess.run(
+-            [
+-                "powershell",
+-                "-NoProfile",
+-                "-Command",
+-                f"New-Item -ItemType Junction -Path {quote(linked)} -Target {quote(external)} | Out-Null",
+-            ],
+-            check=True,
+-            capture_output=True,
+-        )
+-    else:
+-        linked.symlink_to(external, target_is_directory=True)
+-    try:
+-        with pytest.raises(ValueError, match="NONREGULAR_PACKAGE_PATH"):
+-            package.copy_tree(source, tmp_path / "output")
+-    finally:
+-        if os.name == "nt":
+-            linked.rmdir()
+-        else:
+-            linked.unlink()
+-
+-
+-def test_package_traversal_errors_are_fatal(tmp_path, monkeypatch):
+-    def unreadable(*args, **kwargs):
+-        kwargs["onerror"](PermissionError("retained directory unreadable"))
+-        return iter(())
+-
+-    monkeypatch.setattr(os, "walk", unreadable)
+-    with pytest.raises(PermissionError, match="unreadable"):
+-        package.copy_tree(tmp_path, tmp_path / "destination")
++
++
+ 
+ 
+ @pytest.mark.parametrize(
+--- a/omega_engine_woland/tests/test_ddc_code_repair.py
++++ b/omega_engine_woland/tests/test_ddc_code_repair.py
+@@ -19,13 +19,24 @@
+ from omega_engine_operads.infrastructure.ddc_code_repair import load_code_repair_family
+ from omega_engine_operads.skill_operad.skill_compiler.op_inventory import check_inventory
+ from omega_engine_prompt_civilization.infrastructure.genealogy_adapter import FileGenealogyAdapter
+-from omega_engine_woland.documentation.examples.code_repair import CHECK, PATCH, SOURCE
+ from omega_engine_woland.entrypoints.code_repair_cli import main
+ from omega_engine_woland.infrastructure.ddc_code_repair import CodeRepairRuntime
+ from omega_engine_woland.infrastructure.estates.oeeis_immune import OeeisImmuneAdapter
+ from omega_engine_woland.infrastructure.estates.prompt_civ_genealogy import (
+     PromptCivGenealogyAdapter,
+ )
++
++# Test-owned toy inputs. Runtime coverage does not import the archived example CLI.
++SOURCE = b"def adjust(n):\n    return n if n < 0 else n - 1\n"
++CHECK = b"import app, sys\nassert app.adjust(int(sys.argv[1])) == int(sys.argv[2])\n"
++PATCH = """diff --git a/app.py b/app.py
++--- a/app.py
+++++ b/app.py
++@@ -1,2 +1,2 @@
++ def adjust(n):
++-    return n if n < 0 else n - 1
+++    return n if n < 0 else n + 1
++"""
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+ 
+--- a/omega_engine_woland/tests/research/test_windows_harness.py
++++ b/omega_engine_woland/tests/research/test_windows_harness.py
+@@ -123,6 +123,10 @@
+                 command,
+                 "--output",
+                 str(tmp_path),
++                "--prices",
++                "unused-prices.json",
++                "--pricing-evidence",
++                "unused-evidence.json",
+                 "--windows-runtime",
+                 str(runner.runtime),
+                 "--windows-runtime-sha256",
+--- /dev/null
++++ b/omega_engine_woland/tests/research/test_harness_corpus_boundary.py
+@@ -0,0 +1,90 @@
++"""Offline import and pre-dispatch boundaries after historical corpus migration."""
++
++import importlib
++from types import SimpleNamespace
++
++import pytest
++
++from omega_engine_woland.entrypoints.research import harness_cli
++from omega_engine_woland.infrastructure.research import harness_tasks
++from omega_engine_woland.infrastructure.research.harness_evaluator import HarnessEvaluator
++
++
++def missing_corpus(monkeypatch):
++    def missing(name):
++        raise ModuleNotFoundError("missing historical corpus", name="omega_engine_woland.tests.pilots")
++
++    monkeypatch.setattr(importlib, "import_module", missing)
++
++
++@pytest.mark.parametrize("kind", ["flow", "linear", "sql"])
++def test_missing_corpus_is_an_explicit_infrastructure_refusal(monkeypatch, kind):
++    missing_corpus(monkeypatch)
++    with pytest.raises(harness_tasks.HarnessCheckerUnavailable, match="CORPUS_UNAVAILABLE:" + kind):
++        harness_tasks.judge(kind, {}, {})
++    # Empty cases must not hide the unavailable checker or run the runner.
++    with pytest.raises(harness_tasks.HarnessCheckerUnavailable):
++        harness_tasks.execute_cases(None, "never executed", {"kind": kind}, [], None)
++
++
++def test_builtin_checks_do_not_import_the_relocated_corpus(monkeypatch):
++    def forbidden(name):
++        pytest.fail("built-in checks must not import corpus checkers")
++
++    monkeypatch.setattr(importlib, "import_module", forbidden)
++    harness_tasks.require_checkers(("exact_type", "stale_input", "workflow_sum", "workflow_prefix"))
++    assert harness_tasks.judge("exact_type", {"value": 1}, {"accepted": True})[0]
++    assert not harness_tasks.judge("exact_type", {"value": True}, {"accepted": True})[0]
++    assert harness_tasks.judge("workflow_sum", {"values": [1, 2], "factor": 2, "offset": 1}, {"result": 8})[0]
++
++
++def test_internal_checker_dependency_failure_is_not_hidden(monkeypatch):
++    original = ModuleNotFoundError("broken checker dependency", name="internal_dependency")
++
++    def broken(name):
++        raise original
++
++    monkeypatch.setattr(importlib, "import_module", broken)
++    with pytest.raises(ModuleNotFoundError) as error:
++        harness_tasks.require_checkers(("flow",))
++    assert error.value is original
++
++
++def test_checker_entrypoint_error_is_not_hidden(monkeypatch):
++    monkeypatch.setattr(importlib, "import_module", lambda name: SimpleNamespace())
++    with pytest.raises(AttributeError):
++        harness_tasks.require_checkers(("flow",))
++
++
++@pytest.mark.parametrize("kind", ["flow", "linear", "sql"])
++def test_missing_checker_refuses_trial_before_any_side_effect(monkeypatch, kind):
++    missing_corpus(monkeypatch)
++    # Every remaining dependency is absent: even a store lookup would fail this test.
++    evaluator = HarnessEvaluator(spec=None, store=None, provider=None, runner=None, tasks=[], repo=None)
++    with pytest.raises(harness_tasks.HarnessCheckerUnavailable):
++        evaluator.trial(None, {"kind": kind}, "discovery", "never-assigned", 0)
++
++
++@pytest.mark.parametrize("command,extra", [("run", []), ("resume", []), ("preflight", ["--live"])])
++def test_cli_missing_checker_refuses_before_store_provider_or_pricing_reads(monkeypatch, tmp_path, command, extra):
++    missing_corpus(monkeypatch)
++
++    def forbidden(*args, **kwargs):
++        pytest.fail("missing corpus must refuse before resource construction")
++
++    monkeypatch.setattr(harness_cli, "HarnessStore", forbidden)
++    monkeypatch.setattr(harness_cli, "HarnessProvider", forbidden)
++    monkeypatch.setattr(harness_cli, "RootlessContainerRunner", forbidden)
++    with pytest.raises(harness_tasks.HarnessCheckerUnavailable):
++        harness_cli.main([command, "--output", str(tmp_path / "campaign"),
++                          "--prices", "absent-prices.json", "--pricing-evidence", "absent-evidence.json",
++                          *extra])
++    assert not list(tmp_path.iterdir())
++
++
++@pytest.mark.parametrize("supplied", [["--prices", "absent.json"], ["--pricing-evidence", "absent.json"]])
++def test_cli_requires_both_explicit_pricing_inputs(tmp_path, supplied):
++    with pytest.raises(SystemExit) as error:
++        harness_cli.main(["preflight", "--output", str(tmp_path / "campaign"), *supplied])
++    assert error.value.code == 2
++    assert not list(tmp_path.iterdir())

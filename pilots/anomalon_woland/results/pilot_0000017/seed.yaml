@@ -1,0 +1,34 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000017
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000017_req_0
+rewrite_metadata:
+  rewrite_id: idea_08
+  name: Idea 08 - Paired Abstention Wording
+  governing_specification: IDEAS.md#paired-abstention-wording
+  governing_strategy: Strategy I8 (Oracle Grounded Abstention)
+  target_stratum: Stratum 4 (Epistemic Refusal & Evidence Sufficiency)
+  explanation: Varies instruction about insufficient evidence against a finite known-answer
+    oracle.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*'}
+  syntactic_category: PairedAbstentionProposal
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) with Decision/Abstention
+    Branches
+  dialect_tier: Tier S (Abstention Contract)
+  boundary_format: pfp-abstention-v1
+seed_prompt: '<evidence_rule: "If evidence uniquely determines solution over Q, return
+  numeric answer. If insufficient, return ABSTAIN.">
+
+  <system: "x + 2y = 5, 3x - y = 1">
+
+  <target: "x + y">
+
+  <return: {"answer": x + y}>
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

@@ -1,0 +1,140 @@
+{
+  "status": "complete_bounded_controls",
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "original_program_execution": false,
+  "sources": [
+    {
+      "path": "code/rust/core_number_theory/src/gaussian_norm.rs",
+      "sha256": "280c87abd6d873ffcd3f2c44f0c52de7cbf334073c5e2c505571080435c7c075",
+      "lines": [
+        1,
+        264
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/gaussian_regular.rs",
+      "sha256": "ff5734f946814f8a904be331e9215a75ea614c7bcd8f66c85519f528a3c3165c",
+      "lines": [
+        1,
+        166
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/four_squares.rs",
+      "sha256": "886f8903ab2a97cc8a3f630168473e69512827ed86304f2f571c3906ea10b3a1",
+      "lines": [
+        1,
+        166
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/sums_of_squares.rs",
+      "sha256": "4ad80a76a41b852c210b7920ceb1fb65567ff11ac300357e37289ef2b79d279a",
+      "lines": [
+        1,
+        168
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/rational_circle.rs",
+      "sha256": "c9ad54faef3007a103422060e30153c06955013c4802e7fcf68a05bb5c4e9787",
+      "lines": [
+        1,
+        88
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/rational_turns.rs",
+      "sha256": "25b7c1379ab56c2e2570ec5d2dd795e7665ca190b8a3683dd5ea5f370fc92129",
+      "lines": [
+        1,
+        110
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/circle_haar.rs",
+      "sha256": "141b0a3eebc2cf2f809a154c5746f08cd5d53d61861fdb97a95c46b22e647ce1",
+      "lines": [
+        1,
+        251
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/certified_angles.rs",
+      "sha256": "a0fcb9fc43501ff03437f5300887c345b5a562ffc6b37efcb5a6cf1bbd6d2b5f",
+      "lines": [
+        1,
+        178
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/dyadic_presentation.rs",
+      "sha256": "510c44b8c2ce8525d5c4bd5394836b3e0249dc755833279fea6a830029e9d654",
+      "lines": [
+        1,
+        236
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "rule": "two_square_construction_vs_complete_search",
+      "status": "bounded_identities_verified",
+      "integers": 1001,
+      "limits": "Independent trial factor oracle and small Cornacchia reconstruction; not Rust or complete factorization backend execution."
+    },
+    {
+      "rule": "normalized_rational_gaussian_norms",
+      "status": "bounded_identities_verified",
+      "rational_inputs": 900,
+      "limits": "Reduced positive num/den1..30; obstruction parity and constructed quotient norm replay."
+    },
+    {
+      "rule": "unreduced_gaussian_norm_false_negative",
+      "status": "counterexample_found",
+      "raw_numerator": 3,
+      "raw_denominator": 3,
+      "value": "1",
+      "norm_class": [],
+      "proposed_obstruction": null,
+      "source_realize_norm": null,
+      "actual_witness": [
+        "1",
+        "0"
+      ],
+      "limits": "Well-defined but unreduced BigRational::new_raw(3,3); normalized BigRational::new(3,3) avoids defect. Source refuses before final replay."
+    },
+    {
+      "rule": "four_squares_and_rational_splits",
+      "status": "bounded_identities_verified",
+      "integers": 501,
+      "rational_inputs": 240,
+      "zero_minimum_loop_budget": 3,
+      "limits": "Complete descending finite search and exact replay; no universal runtime claim."
+    },
+    {
+      "rule": "nearest_circle_root_vs_exhaustive_lattice",
+      "status": "bounded_identities_verified",
+      "cases": 9180
+    },
+    {
+      "rule": "finite_dyadic_dual_prefix_extensions",
+      "status": "bounded_identities_verified",
+      "last_level": 7,
+      "last_prefix_count": 128,
+      "limits": "Exact finite compatible residues only; no infinite character or topology certified."
+    },
+    {
+      "rule": "dyadic_sqrt_enclosure",
+      "status": "bounded_identities_verified",
+      "cases": 820,
+      "limits": "Exact rational squares and widths; no transcendental oracle."
+    },
+    {
+      "rule": "alternating_atan_enclosure_nesting",
+      "status": "bounded_identities_verified",
+      "cases": 238,
+      "limits": "Exact coarse/fine alternating bounds within [0,1/2]. Containment uses alternating-series theorem; pi/Machin branch identity and external Interval arithmetic not executed."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "RFA-C007",
+  "checks": [
+    {
+      "rule": "cyclotomic_inclusion_and_phase_normalization",
+      "status": "passed_bounded",
+      "degree_cases": 4096,
+      "admitted_phase_cases": 356
+    },
+    {
+      "rule": "valid_precision_request_can_hit_guard",
+      "status": "counterexample_by_exact_iteration_bound",
+      "iterations": 50000,
+      "last_checked_bits": 399992,
+      "requested_bits_relative_to_initial_width": 400000
+    },
+    {
+      "rule": "public_ordered_root_point_forgery",
+      "status": "counterexample",
+      "conductor": 8,
+      "point": -1,
+      "polynomial_at_point": -1,
+      "reported_theta_sign": -1,
+      "actual_standard_theta_sign": 1
+    },
+    {
+      "rule": "raw_fplus_addition_truncates_semantic_value",
+      "status": "counterexample",
+      "raw_coefficients": [
+        0,
+        0,
+        1
+      ],
+      "conductor": 8,
+      "represented_value": 2,
+      "add_zero_result": [
+        0,
+        0
+      ]
+    },
+    {
+      "rule": "nonpositive_bound_width_lacks_termination",
+      "status": "counterexample_by_invariant",
+      "finite_bisections_observed": 128,
+      "invariant": "irrational sqrt2 is never a rational midpoint; positive rational width remains greater than nonpositive target at every finite iteration"
+    },
+    {
+      "rule": "quadratic_interval_membership",
+      "status": "passed_bounded",
+      "cases": 10296
+    }
+  ],
+  "limits": "Own rational/integer models and symbolic iteration invariant; no native execution and no 50000-step expensive run. Inclusion degree comparison uses the classical full-cyclotomic compositum criterion as an explicit mathematical premise, while phase equality is exact rational arithmetic. Forged ordered records are admitted by public fields/derived deserialization, not by normalizing constructors."
+}

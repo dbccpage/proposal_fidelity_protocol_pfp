@@ -1,0 +1,68 @@
+[TAU_SG_V1 | turn=8 | authority_effect=None]
+[CARRIER]
+  graph: op<<11>op<<1><a>>op<<1><b>>op<<1><c>>op<<1><d>>op<<10><a><b>>op<<10><b><c>>op<<10><c><a>>op<<10><b><d>>op<<10><d><a>>op<<10><c><d>>>
+  edge_weights: a->b=1  b->c=2  c->a=3  b->d=1  d->a=2  c->d=1
+  cycle_1: a->b->c->a  cycle_2: a->b->d->a  cycle_3: a->b->c->d->a
+  shared: a->b (C1,C2,C3)  b->c (C1,C3)  d->a (C2,C3)
+  unique_chords: c->a (C1)  b->d (C2)  c->d (C3)
+[/CARRIER]
+
+[SYSTEM: GOVERNOR CONTRACT]
+You are a proposer with no verification authority. Emit exactly one JSON move
+object per turn (schema TAU_SG_V1). Do not emit prose, apologies, or
+self-certification. The host re-derives every step; "verified" claims are ignored.
+
+[K: CARRIER SPECIFICATION]
+carrier: [a, b, c, d]
+CarrierDigest: SHA256:<host-filled>
+
+[VOCABULARY]
+relations: [R]
+operators: [PROVE, SHOW, DECIDE, EXHAUST, REDUCE, LAND, PIN, REFUSE, OPEN]
+
+[GLYPH CALCULUS]
+# every ledger row begins with one operator above; an unpriced rewrite is refused
+
+[LAWS/AXIOMS]
+# the declared production rules R1/R2 the host will replay against
+
+[REFUSALS]
+# FW-CARRIER, FW-OP, FW-MOVE, FW-SCOPE, FW-CHAIN, FW-REPLAY, FW-LEAD
+
+[D: ACTIVE DEMAND]
+Reduce the L1 holonomy defect to zero on ALL THREE cycles of the K4 complete graph.
+Cycle 1: a->b->c->a    Cycle 2: a->b->d->a    Cycle 3: a->b->c->d->a
+Shared edges: a->b (in all 3 cycles), b->c (in C1 & C3), d->a (in C2 & C3).
+Unique chord edges: c->a (C1), b->d (C2), c->d (C3).
+Host dynamically reports assertion coverage, cycle basis residuals, and decoupling guidance.
+ASSERT all 6 edges first (in order), then propose a CUT adjusting unique chord edges independently, then VERIFY.
+Fuel=12 turns. AuthorityEffect: None.
+
+[TAU]
+# return one TAU_SG_V1 move object: move_type in [ASSERT, CUT, VERIFY, RETRACT]
+
+Return EXACTLY ONE JSON move object per turn and nothing else. Move schemas:
+  ASSERT : {"move_type":"ASSERT","u":"a","v":"b","value":<int>}
+  CUT    : {"move_type":"CUT","proposed_claims":{"a->b":<int>,"b->c":<int>,...}}
+  VERIFY : {"move_type":"VERIFY","obligation":"ZERO_OBSTRUCTION"}
+  RETRACT: {"move_type":"RETRACT","to_step":"step_NNN"}
+A CUT is admitted only if it strictly lowers the host's Phi_1 and adds no defect.
+
+Declared edges: a->b (weight 1), b->c (weight 2), c->a (weight 3), b->d (weight 1), d->a (weight 2), c->d (weight 1)
+Host state: Phi_1 = 8 (defect remains — drive it down with a CUT, then VERIFY).
+Host assertion coverage: Edges asserted: [a->b, b->c, c->a, b->d, d->a, c->d]. All 6 declared edges asserted. Next action: propose CUT to lower Phi_1 (or VERIFY if Phi_1=0).
+Active cycle holonomy residuals:
+  Cycle 1 (a->b->c->a): holonomy sum = 6 (from c(a->b)=1, c(b->c)=2, c(c->a)=3)
+  Cycle 2 (a->b->d->a): holonomy sum = 4 (from c(a->b)=1, c(b->d)=1, c(d->a)=2)
+  Cycle 3 (a->b->c->d->a): holonomy sum = 6 (from c(a->b)=1, c(b->c)=2, c(c->d)=1, c(d->a)=2)
+Coboundary condition: Phi_1 = 0 requires EVERY cycle holonomy sum to equal EXACTLY 0.
+Decoupling guidance: qualitative
+
+Turn 1: ASSERT -> Asserted. Phi_1=1.
+Turn 2: ASSERT -> Asserted. Phi_1=1.
+Turn 3: ASSERT -> Asserted. Phi_1=5.
+Turn 4: ASSERT -> Asserted. Phi_1=14.
+Turn 5: ASSERT -> Asserted. Phi_1=13.
+Turn 6: ASSERT -> Asserted. Phi_1=9.
+Turn 7: ASSERT -> Asserted. Phi_1=8.
+Emit the next move.

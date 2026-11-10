@@ -1,0 +1,140 @@
+{
+  "at_utc": "2026-11-10T12:08:50.299632+00:00",
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/value_objects/base.py",
+      "sha256": "4602c4fac9f97dbbb24c0e6a88153212d542a4102c5dba2f96a1bdddabe07ccd"
+    },
+    {
+      "path": "pfp/domain/value_objects/task_family_tokens.py",
+      "sha256": "8b2be05ce34097c7c056585c94ce9d7c45e29fabfee6176a19e954c899fb7b17"
+    },
+    {
+      "path": "pfp/domain/value_objects/taxonomy.py",
+      "sha256": "a478edc394eaf180f89eed741a316b95a161ddafae875fcc0758cf028bb2c808"
+    },
+    {
+      "path": "pfp/domain/value_objects/identifiers.py",
+      "sha256": "3bc11f01315c8a4c95321b58339c63359ebbb1e01abf64c8db55acdae21719ed"
+    },
+    {
+      "path": "pfp/domain/value_objects/cycle_balance.py",
+      "sha256": "fdaf931bd404ef9866ec955f4193439e6ed3ff6c3e01d00141d99287672c239a"
+    },
+    {
+      "path": "pfp/domain/entities/base.py",
+      "sha256": "a99826e4fe408eccab28d9ef345c20a6f20d75f1aa3eafa9009abb8228687e58"
+    },
+    {
+      "path": "pfp/domain/entities/cycle_balance.py",
+      "sha256": "2de5c0ce63ea1df18daea2b8e8c284fa684afec6223f7930134a35afd28c6482"
+    },
+    {
+      "path": "pfp/domain/aggregates/base.py",
+      "sha256": "a394433d95eb3451ab1430666ad60b0f03e95083213383590e41aa185857b1c2"
+    },
+    {
+      "path": "pfp/domain/kernel/result.py",
+      "sha256": "d33fbf1395041d4736f73c15347d58d937080d9753a01aa63d7728bdf6f315ff"
+    },
+    {
+      "path": "pfp/domain/aggregates/cycle_balance_aggregate.py",
+      "sha256": "01b2eac1d6e58588d9b8ea78413d2f417a1abb9b19d3a7f236442968a12e8b15"
+    },
+    {
+      "path": "pfp/domain/homology/cochain.py",
+      "sha256": "0806de070dfb7a11ce7200b7efb1c7a69212180fc148472a7e13708638d77166"
+    },
+    {
+      "path": "pfp/domain/homology/ddc.py",
+      "sha256": "3eb969ed19db2a08cc84e890766d5ea90df9f67dd04b28338c414c34da4df2a6"
+    }
+  ],
+  "import_context": "Read-vetted exact files loaded under inert namespace parents; no application, Pydantic hook, provider or native import/execution.",
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C005",
+      "rule": "empty_matrix_transpose_preserves_swapped_shape",
+      "status": "counterexample_observed",
+      "result": {
+        "input": [
+          0,
+          2
+        ],
+        "expected_transpose": [
+          2,
+          0
+        ],
+        "actual_transpose": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "PFPDOMAIN-C006",
+      "rule": "candidate_replacement_invalidates_bound_verification",
+      "status": "counterexample_observed",
+      "result": {
+        "submit_ok": true,
+        "is_complete": true,
+        "receipt_binds_current_candidate": false
+      }
+    },
+    {
+      "id": "PFPDOMAIN-C007",
+      "rule": "verifier_replacement_invalidates_bound_verification",
+      "status": "counterexample_observed",
+      "result": {
+        "bind_ok": true,
+        "is_complete": true,
+        "receipt_binds_current_verifier": false
+      }
+    },
+    {
+      "id": "PFPDOMAIN-C008",
+      "rule": "constructor_binds_verifier_to_same_problem",
+      "status": "counterexample_observed",
+      "result": {
+        "constructor_accepted": true,
+        "is_complete": true,
+        "verifier_binds_problem": false
+      }
+    },
+    {
+      "id": "PFPDOMAIN-C009",
+      "rule": "complete_receipt_self_digest_and_witness_assurance",
+      "status": "counterexample_observed",
+      "result": {
+        "is_complete": true,
+        "supplied_receipt_digest_matches": false,
+        "terminal_status": null,
+        "exact_witness": null
+      },
+      "limit": "Aggregate demonstrates reference-binding/status trust only; no native verification was claimed or performed."
+    },
+    {
+      "id": "PFPDOMAIN-C010",
+      "rule": "fuel_summary_does_not_certify_stepwise_replay",
+      "status": "scope_boundary_observed",
+      "result": {
+        "endpoint_fuel_conserved": true,
+        "local_monotone": true,
+        "first_step_expected_fuel": 7,
+        "first_step_recorded_fuel": 9,
+        "carrier_continuity": false,
+        "default_status": "PASS"
+      }
+    },
+    {
+      "id": "PFPDOMAIN-C011",
+      "rule": "canonical_identifier_rejects_trailing_newline",
+      "status": "counterexample_observed",
+      "result": {
+        "sha256_value_length": 65,
+        "normal_form_value": "nf.test.example\n"
+      }
+    }
+  ]
+}

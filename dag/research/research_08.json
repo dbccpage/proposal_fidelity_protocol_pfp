@@ -1,0 +1,248 @@
+{
+  "agent_number": 8,
+  "focus": "Checker mutation, extractor anti-vacuity, independently seeded faults, and finite synthetic detector adequacy",
+  "status": "proposed_not_evaluated",
+  "scope": {
+    "source_baseline": "dag/FOUNDATIONS.md baseline 8050c66900899771766f33e8f5fdd200b7dd9120 plus current working-tree source inspection",
+    "seed_access": "Did not read seed_prompt.txt, private benchmark storage, answer key, or worked solution. No task-specific answer or paid-model output is included.",
+    "novelty_claim": "Mutation analysis, positive/negative controls, independent replay, and fault injection are established techniques. The proposed contribution is their bounded composition across PFP/EIS/PCIV/OPERADS with explicit checker-versus-candidate fault attribution and finite claim scope; literature-wide novelty is not claimed.",
+    "implementation_boundary": "All three workflows are proposals. Existing synthetic rational-linear trace detectors and tests provide components and known blind spots, not an end-to-end checker for the frozen benchmark. No implementation, runtime test campaign, Lean build, or paid call was performed.",
+    "benchmark_isolation": "At future execution, send the original immutable UTF-8 seed in a separate message without normalization, bind its hash before and after request construction, and protect it from every mutation. Online checkers use only public predicates and separate synthetic controls. The private evaluator receives frozen answers afterward; private scores, key-derived fixtures, expected benchmark expressions, and repair hints never return to any online stage. No tuning on evaluation-key feedback. Public synthetic confirmation data are separately generated after candidate/checker freeze and cannot be reused for selection in that experiment."
+  },
+  "primary_sources": [
+    {
+      "title": "Just et al., Are Mutants a Valid Substitute for Real Faults in Software Testing?, FSE 2014",
+      "url": "https://homes.cs.washington.edu/~rjust/publ/mutants_real_faults_fse_2014.pdf",
+      "relevance": "Primary empirical study of mutation testing and real developer faults. Supports investigating mutation sensitivity as an empirical proxy, while its uncoupled faults preclude treating a high mutation score as general semantic adequacy. It does not validate our mathematical-answer domain."
+    },
+    {
+      "title": "Ojdanic et al., Syntactic Vs. Semantic similarity of Artificial and Real Faults in Mutation Testing Studies, 2021",
+      "url": "https://arxiv.org/abs/2112.14508",
+      "relevance": "Primary study distinguishes syntactic resemblance from semantic fault resemblance. Motivates independently labelled behavioral fault families and explicit checks that a mutation changes the intended relation; surface variation alone is insufficient."
+    },
+    {
+      "title": "Petrovic et al., Practical Mutation Testing at Scale, 2021",
+      "url": "https://arxiv.org/abs/2102.11378",
+      "relevance": "Primary account of bounded and filtered mutation analysis in an industrial workflow. Motivates a frozen, small mutation inventory under compute limits. Our confirmation inventory is fixed rather than adaptively selected from benchmark outcomes."
+    }
+  ],
+  "repository_evidence": [
+    {
+      "path": "lean4/FidelityAdequacy.lean",
+      "lines": "146-180",
+      "observation": "Positive and negative controls, protected distinctions, and recorded blind spots imply rejection of both constant Boolean detectors. This is finite structural evidence; the definition does not prove unrestricted semantic completeness."
+    },
+    {
+      "path": "pciv/profile/cochain_profile.py",
+      "lines": "132-158",
+      "observation": "Admission rejects nonzero d1*d0 and returns its l1 norm as phi1. Therefore phi1 is zero for admitted complexes; this channel alone cannot discriminate semantic faults among admitted inputs."
+    },
+    {
+      "path": "pfp/use_cases/detector_adequacy/detectors.py",
+      "lines": "230-243,251-299",
+      "observation": "Lenient extractors skip failed relation extraction, a tree retains only a first citation, and the disjoint-triangle extractor instead computes all admitted relation defects strictly. Extraction choice determines which distinctions survive."
+    },
+    {
+      "path": "pfp/use_cases/detector_adequacy/detectors.py",
+      "lines": "303-324",
+      "observation": "The inspected run_detector distinguishes refusal, GREEN and obstruction verdicts. Its obstruction branch references core.items() without an assignment in this function; that apparent runtime defect must be checked before reusing the component. An exception is infrastructure failure, never a successful mutation kill."
+    },
+    {
+      "path": "pfp/use_cases/detector_adequacy/witness_replay.py",
+      "lines": "56-101",
+      "observation": "Step witnesses are independently re-derived and empty witnesses refused; final answer checking is separate. These are synthetic rational-linear procedures and must not be represented as a benchmark oracle. Shared parsers/helpers remain common-mode dependencies."
+    },
+    {
+      "path": "pfp/tests/test_detector_adequacy_battery.py",
+      "lines": "26-52,88-98",
+      "observation": "Tests explicitly retain a tree detector green on mutant families, citation-deletion misses, drifted-given misses, and upstream faults missed by a restricted local detector. These existing examples motivate extractor and composition controls. Tests were read, not executed in this research task."
+    },
+    {
+      "path": "pfp/tests/test_detector_adequacy_stage_b.py",
+      "lines": "86-96,107-117",
+      "observation": "A planted upstream error can coexist with a green read-relation detector; malformed input is noncertifying and transport failure is kept separate. Proposed reports preserve these distinctions."
+    },
+    {
+      "path": "eis/domain/thymus.py",
+      "lines": "1-16,145-178",
+      "observation": "The clean panel screens the actual bound matcher, forces an inactive rule active during screening, and refuses matcher mismatch. Passing describes only supplied clean fixtures, so negative fault controls and nonempty-panel requirements must be added explicitly."
+    },
+    {
+      "path": "eis/domain/danger_gate.py",
+      "lines": "184-222",
+      "observation": "The independent gate checks signal provenance and the conjunction gate rejects derived/model-only second signals. Two detector assertions cannot substitute for an independently justified host signal."
+    },
+    {
+      "path": "pciv/use_cases/research_mutation.py",
+      "lines": "8-31",
+      "observation": "Protected host experiment bytes are retained through mutation and the parent identity is checked. Adapt this to protecting public predicates, panels, budgets and seed bytes while recording checker/extractor mutation lineage."
+    },
+    {
+      "path": "operads/domain/operad/operad.py",
+      "lines": "85-124",
+      "observation": "Partial composition checks slot bounds and colour compatibility and accumulates residual metadata. It does not establish executable preservation, so proposed receipt validity must be replayed after substitution."
+    }
+  ],
+  "common_budget_policy": {
+    "formula": "Reserve C_max=sum_s(I_s*p_in_s+O_s*p_out_s+F_s)+R <= USD 0.10 before any dispatch. I includes immutable seed, schemas, instructions and prior artifacts in every request; O includes every billable reasoning and response token. All conditional branches, planned repair calls and retries share one ledger. The proposed paths allow at most two paid calls and zero retries/fallbacks.",
+    "conditional_example": "Require pinned endpoint prices p_in <= USD 0.000001/token, p_out <= USD 0.000005/token, zero per-call fees and R=USD 0.01 for fully bounded other charges. These are admission thresholds, not current price quotations or a selected model. Reject endpoints with unknown fees or unbounded billable reasoning. Unused reserve is not permission for another call.",
+    "routing": "Freeze actual model/provider, price observation, input tokenizer and total-output cap before execution. Input envelope overflow refuses execution. Disable provider retries and model fallbacks. Timeout/unknown usage retains the entire call reservation and stops the run; no attempt is silently removed from the denominator. A paid campaign also requires its own finite aggregate spend authorization.",
+    "receipts": "Retain price snapshot, request hashes, provider/model/version, reserved and actual cost, billable input/output/reasoning/cache fields, wall time, failures and remaining balance. Record unavailable fields explicitly. No paid calls were made.",
+    "host_compute": "Use already provisioned unmetered local CPU only, with at most 32 checker variants, 128 fixtures per panel, 64 trace nodes, exact-rational numerator/denominator bit size <=256 and 5 seconds per fixture. A timeout is a separate incomplete result. If host compute is metered, include its upper bound inside R or refuse; never omit paid synthesis/calibration from the run cost."
+  },
+  "ideas": [
+    {
+      "id": "R08-I01",
+      "name": "Two-axis checker assurance before evidence-guided repair",
+      "systems": ["PFP", "EIS", "PCIV", "OPERADS"],
+      "mathematical_basis": {
+        "known_method": "Mutation analysis of executable checkers, fault seeding in candidate artifacts, positive/negative controls and skeptical witness replay.",
+        "proposed_adaptation": "Cross artifact faults with checker faults rather than measuring only rejection of mutated answers. PFP supplies an exact declared relation and replay witness; PCIV records protected checker-policy mutation lineage; EIS admits only a checker that preserves clean controls and detects seeded bad controls; OPERADS prevents unchecked calibration output from being substituted for a checked receipt.",
+        "obligations": "For synthetic labelled panel P={(x_i,y_i)} with y_i in {VALID,INVALID}, original checker V must agree with every required y_i. For executable non-equivalent checker mutants V_j, K_ij=1 exactly when V_j(x_i) differs from the reference label while V(x_i) agrees. Publish the full K matrix, clean rejection rate, faulty-artifact acceptance rate and mutant-kill rate. A crash or unsupported result has its own column and is not K_ij=1. Establish mutation non-equivalence by a separately replayed counterexample, otherwise retain UNKNOWN_EQUIVALENCE.",
+        "bounded_checker_fragment": "Public small exact-rational linear identities, shape constraints and binding predicates only. Checker operators include inverted comparisons, omitted feasibility conjunct, stale binding acceptance, and skip-on-parse-error. Artifact faults are generated independently from checker operators and independently labelled by a small reference implementation. No transfer from this finite panel to analytic benchmark correctness is asserted."
+      },
+      "assumptions": [
+        "The synthetic relation and reference implementation are fixed before checker selection and do not import the mutated checker, its normalizer or private evaluator.",
+        "Development and confirmation fixture random seeds are sampled separately by the host; distinct seeds alone do not prove semantic or statistical independence of implementations.",
+        "A mandatory nonempty clean panel, nonempty invalid panel and constant-accept/constant-reject mutants prevent empty or constant success.",
+        "An independently implemented reference can still share a mistaken specification; this remains a stated assumption and risk."
+      ],
+      "hypothesis": "At equal two-call money/token limits, the two-axis gate reduces false certification under injected checker faults relative to ordinary candidate-only mutation checks, without increasing rejection of supported clean artifacts by more than two percentage points on the preregistered synthetic confirmation panel.",
+      "typed_inputs": [
+        "SeedBytes{immutable_utf8,sha256}",
+        "CheckerBundle{checker_hash,relation_id,parser_hash,supported_fragment}",
+        "SyntheticPanels{development_seed,confirmation_seed,independent_reference_hash,clean_cases,fault_cases}",
+        "CheckerMutationPlan{frozen_operator_ids,max_variants:32,protected_policy_hash}",
+        "BudgetReservation{max_input_tokens_total:14000,max_output_tokens_total:4200,max_calls:2,retries:0}"
+      ],
+      "typed_outputs": [
+        "CalibrationReceipt{checker_hash,panel_hash,kill_matrix,clean_errors,fault_misses,unknown_equivalence,infrastructure_errors}",
+        "ScopedFinding{candidate_hash,public_predicate_id,witness,failure_class,scope:finite_supported_relation}",
+        "FrozenResponse{answer_text,checked_claims,unchecked_claims,residuals,cost_receipt}"
+      ],
+      "stages": [
+        {"id":"bind","kind":"host","role":"SeedBytes x CheckerBundle x MutationPlan -> FrozenRunContract","instruction":"Bind original seed bytes and reserve both calls. Freeze synthetic relation, reference, mutation operators, development fixtures and confirmation generation rule; no benchmark-key access.","depends_on":[],"max_output_tokens":0},
+        {"id":"assure","kind":"host","role":"FrozenRunContract -> CalibrationReceipt","instruction":"Evaluate original and mutated checkers on independent synthetic controls. EIS screens the actual executable matcher against clean cases. Require mandatory constant-detector and omitted-predicate controls to be killed without treating exceptions as kills. Freeze chosen checker before confirmation; confirmation failure ends certification and triggers no in-run tuning. Failed preflight ends this branch with a noncertifying receipt and zero paid calls.","depends_on":["bind"],"max_output_tokens":0},
+        {"id":"draft","kind":"model","role":"SeedBytes x AdmittedCalibrationReceipt -> CandidateArtifact","instruction":"Produce the complete requested answer with explicit supported checkable artifacts and separate prose claims. Calibration establishes only finite control performance, not validity of your answer.","depends_on":["assure"],"max_output_tokens":2800},
+        {"id":"check","kind":"host","role":"CandidateArtifact x CheckerBundle -> ScopedFindingList","instruction":"Replay only public supported predicates and bind every witness to candidate/checker hashes. Emit allowlisted failure classes and artifact pointers; a checker exception is infrastructure failure. Never consult key-derived expected values.","depends_on":["draft"],"max_output_tokens":0},
+        {"id":"repair","kind":"model","role":"CandidateArtifact x ScopedFindingList -> CandidateArtifact","instruction":"Use one bounded repair call on public witnessed findings only. Preserve the immutable seed and every requested part. Mark unsupported obligations open; checker disagreement does not authorize changing the task.","depends_on":["check"],"max_output_tokens":1400},
+        {"id":"freeze","kind":"host","role":"CandidateArtifact -> FrozenResponse","instruction":"Recheck changed artifacts, propagate residuals and freeze response plus full ledger. Trusted private evaluation happens later with no return edge.","depends_on":["repair"],"max_output_tokens":0}
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Same-model two-call draft/review, same 4200 total output cap and full-path reservation, with candidate-only controls and no checker mutation admission.",
+        "ablations": ["Remove checker mutations but keep clean and faulty artifact panels", "Remove clean controls while retaining faulty artifacts", "Count crashes as kills to expose misleading mutation scores", "Use the checker itself as reference labels"],
+        "evaluation": "Preregister 64 clean and 64 invalid synthetic confirmation cases, at most 32 checker variants, operator/family strata and mandatory controls. Report raw paired outcomes, clean rejections, semantic misses, infrastructure failures and unknown equivalence separately. Compare final frozen benchmark scores only offline; no optimization or stopping based on the hidden key. A denominator of zero is undefined, not perfect performance."
+      },
+      "falsification": "Any constant checker admitted, omitted mandatory feasibility check surviving its dedicated counterexample, or exception counted as a semantic kill falsifies the assurance contract. No improvement in false certification on the fixed confirmation panel, or clean rejection rising beyond two percentage points, falsifies the practical hypothesis.",
+      "risks": ["A checker and reference may encode the same wrong relation.", "A high score on hand-selected checker mutants may not predict genuine defects.", "Calibration overhead may reduce answer completeness within the token cap.", "Existing obstruction-branch runtime errors must be resolved or reported before claiming a completed calibration."],
+      "budget_formula": "Full longest path: 14000*p_in + 4200*p_out + F_1+F_2+R, including both draft and repair, zero retries. At the stated conditional thresholds and zero F: USD 0.014+0.021+0.010=0.045 <=0.10. All calibration is bounded local computation; paid generation of controls is prohibited in this path.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R08-I02",
+      "name": "Protected-distinction challenges for non-vacuous extractors",
+      "systems": ["PFP", "EIS", "PCIV", "OPERADS"],
+      "mathematical_basis": {
+        "known_method": "Positive/negative controls, observational equivalence and counterexample-guided specification testing.",
+        "proposed_adaptation": "Test the semantic information retained by an extractor before interpreting its obstruction score. Freeze independent synthetic valid/invalid pairs and require the extractor-detector composition to separate declared protected distinctions. PCIV mutates only extraction policies, EIS checks valid variants, PFP replays a label-changing witness, and OPERADS propagates UNSEPARATED_PAIR residuals into every dependent claim.",
+        "obligations": "For extractor E:X->Z and detector D:Z->{PASS,FAIL,OPEN}, if E(x)=E(y) but public relation labels R(x) and R(y) differ, no deterministic D on Z alone can classify both correctly. Record this collision as an impossibility witness for that interface. Separately test nonconstant D on explicit valid/invalid controls; nonconstancy alone is necessary but insufficient. A zero value forced by d1*d0=0 on admitted inputs conveys no additional semantic distinction.",
+        "bounded_checker_fragment": "Pairs from public synthetic trace families: copied input drift, omitted citation, unsupported-node deletion, changed value with unchanged well-formed shape, and a semantics-preserving reordering control. Validate whether each mutation actually changes the declared relation using an independently frozen reference; reject mislabeled mutations rather than counting them as detector misses."
+      },
+      "assumptions": [
+        "Protected distinctions are defined by public mathematical predicates rather than model confidence, key-derived labels or a desired score.",
+        "Equality of bounded extractor outputs is canonical and checked exactly; hashing alone is not a semantic equivalence proof.",
+        "A finite collision-free panel does not establish global injectivity or semantic adequacy.",
+        "The independent fault author/generator sees the public relation but is not driven by extractor implementation; source overlap is disclosed."
+      ],
+      "hypothesis": "A frozen protected-distinction screen identifies semantic information loss that ordinary nonconstant-output controls miss, reducing false claims of certified correctness on untouched synthetic fault families at equal total model budget.",
+      "typed_inputs": [
+        "SeedBytes{immutable_utf8,sha256}",
+        "ExtractorPolicy{ast_schema,extraction_hash,scope,protected_fields}",
+        "DistinctionPanel{public_relation_id,pair_ids,label_witnesses,development_families,confirmation_families}",
+        "BudgetReservation{max_input_tokens_total:12000,max_output_tokens_total:4000,max_calls:2,retries:0}"
+      ],
+      "typed_outputs": [
+        "CollisionWitness{left_artifact_hash,right_artifact_hash,equal_extraction,label_difference_witness}",
+        "DistinctionReceipt{separated_pairs,collisions,unknown_pairs,nonconstant_controls,known_blind_spots}",
+        "FrozenResponse{answer_text,claim_scopes,unseparated_residuals,cost_receipt}"
+      ],
+      "stages": [
+        {"id":"lock","kind":"host","role":"ExtractorPolicy x DistinctionPanel -> FrozenInterfaceContract","instruction":"Bind immutable seed and price reservation. Freeze the extractor, supported public relation, independently seeded development pairs, confirmation family inventory, and exact output codec. No seed-specific solutions are generated or supplied.","depends_on":[],"max_output_tokens":0},
+        {"id":"challenge","kind":"host","role":"FrozenInterfaceContract -> DistinctionReceipt","instruction":"Replay both labels independently; check extractor equality and detector separation. Mandatory pairs include a semantically wrong admitted cochain case whose algebraic channel remains zero. Record structural admission and semantic relation separately. Reject global certification for any known collision; a failed required control ends this branch without paid calls. Freeze the candidate policy before confirmation and do not tune on confirmation results.","depends_on":["lock"],"max_output_tokens":0},
+        {"id":"draft","kind":"model","role":"SeedBytes x DistinctionReceipt -> CandidateArtifact","instruction":"Produce the complete requested derivation with explicit assumptions and supported artifacts. Treat known blind spots as unverified obligations, not as permission to omit requested parts. Do not infer correctness from a zero diagnostic.","depends_on":["challenge"],"max_output_tokens":2800},
+        {"id":"local_check","kind":"host","role":"CandidateArtifact x FrozenInterfaceContract -> ScopedFindingList","instruction":"Evaluate only supported public relations. Every claim depending on a collision-prone projection inherits its unresolved distinction; preserve unparsed prose as unchecked. Emit public failure types and candidate-local witnesses only.","depends_on":["draft"],"max_output_tokens":0},
+        {"id":"repair","kind":"model","role":"CandidateArtifact x ScopedFindingList -> CandidateArtifact","instruction":"One bounded repair may add missing explicit artifacts or correct a publicly witnessed violation. It cannot modify the extractor policy, confirmation panel, seed or certification meaning.","depends_on":["local_check"],"max_output_tokens":1200},
+        {"id":"freeze","kind":"host","role":"CandidateArtifact -> FrozenResponse","instruction":"Replay changed artifacts and retain unresolved collision scopes. Freeze final text before separate trusted evaluation; no private feedback edge exists.","depends_on":["repair"],"max_output_tokens":0}
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Two-call draft/review with the same 4000 total output cap and an extractor checked only for valid syntax and nonconstant outputs.",
+        "ablations": ["Remove protected semantic pairs but retain constant-detector controls", "Remove independent label replay", "Drop unknown nodes during extraction", "Use phi1=0 alone as a semantic acceptance criterion"],
+        "evaluation": "Use separate public development and confirmation families, not merely new random values of the same template. Publish pair-level labels, collision witnesses, separation outcomes, valid-control rejection and unsupported counts. Primary endpoint is false certification of relation-invalid synthetic artifacts; separately measure final-answer completeness and offline benchmark score. Repeated trials concern this fixed panel/item only."
+      },
+      "falsification": "A verified unequal-label/equal-extraction pair admitted as universally certified falsifies the scope contract immediately. If protected-distinction screening does not reduce false certification relative to nonconstant-only controls on the frozen family confirmation panel, the empirical hypothesis fails.",
+      "risks": ["Fault families may not represent mathematical reasoning failures.", "Input drift may be invisible to both a detector and a shared reference parser.", "Artificially adding distinguishing metadata can game the screen unless the detector consumes the intended semantic field.", "A pairwise screen can still miss failures involving three or more interacting claims."],
+      "budget_formula": "Full longest path: 12000*p_in + 4000*p_out + F_1+F_2+R. Conditional thresholds give USD 0.012+0.020+0.010=0.042, two calls, zero retries. Separate synthetic controls are host-generated with no paid calibration call; unknown additional cost refuses dispatch.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R08-I03",
+      "name": "Compositional fault propagation with receipt-level canaries",
+      "systems": ["PFP", "EIS", "PCIV", "OPERADS"],
+      "mathematical_basis": {
+        "known_method": "End-to-end fault injection, dependency tracking, fail-closed validation and controlled component substitution.",
+        "proposed_adaptation": "Mutate public synthetic artifacts at typed edges, then also mutate checker receipts and routing operations to test whether local detections survive workflow composition. PFP binds witnesses to exact artifacts, PCIV preserves mutation lineage, EIS calibrates valid-control behavior, and OPERADS requires unresolved parent effects to persist into final outputs. A one-call answer path consumes this separately calibrated pipeline.",
+        "obligations": "For DAG G, required dependency edge u->v propagates unresolved residuals: U(v) contains U(u) unless a checked repair discharges the specific obligation under new artifact hashes. An injected fault is detected only when a replayable finding reaches every required dependent sink or the sink becomes OPEN. A local red verdict erased downstream is an end-to-end miss. For detector-stage j and injected fault i record B_ij in {DETECTED,PASS,OPEN,ERROR}; measure sink escape, not merely any local red.",
+        "bounded_checker_fragment": "Synthetic pipelines of at most 64 nodes with exact-rational identities and host-owned receipt fields. Faults include stale parent hash, bypassed checker edge, invalid receipt substitution of the same type, dropped residual, incompatible codec interpretation, duplicated correlated signal and two cancelling intermediate value faults. A final true relation with a false intermediate claimed step is labelled by the declared proof-trace property, separately from final-value correctness."
+      },
+      "assumptions": [
+        "The trusted host scheduler, receipt signature/binding code and mutation harness are outside the mutated boundary; this trust boundary is explicit rather than inferred from types.",
+        "The independent host health signal is a replayed control failure or custody failure, not a second paraphrase of model agreement.",
+        "Compound mutation labels are independently replayed; cancelling output errors are not automatically labelled wrong final answers.",
+        "Confirmation fault locations and random seeds are committed after the pipeline is frozen, with no access to benchmark evaluation feedback."
+      ],
+      "hypothesis": "On a fixed confirmation panel, receipt-level canaries reduce the fraction of injected faults escaping to certified dependent sinks relative to local-only checking, including same-type component substitutions and cancelling faults, while all supported clean controls remain accepted.",
+      "typed_inputs": [
+        "SeedBytes{immutable_utf8,sha256}",
+        "WorkflowDAG{typed_ports,required_edges,checker_hashes,receipt_schema,sink_scope}",
+        "CanaryPlan{public_synthetic_cases,independent_fault_seed,max_nodes:64,max_checker_variants:32}",
+        "BudgetReservation{max_input_tokens_total:9000,max_output_tokens_total:4000,max_calls:1,retries:0}"
+      ],
+      "typed_outputs": [
+        "PropagationMatrix{fault_ids,stage_ids,outcomes,sink_escapes,clean_controls}",
+        "BoundReceipt{artifact_hash,parent_hashes,checker_hash,scope,unresolved_obligations,witness_hash}",
+        "FrozenResponse{answer_text,per_claim_scope,uncleared_dependency_ids,cost_receipt}"
+      ],
+      "stages": [
+        {"id":"bind","kind":"host","role":"WorkflowDAG x CanaryPlan -> FrozenPipelineContract","instruction":"Bind original seed bytes, frozen DAG, public synthetic relation, mutation/custody policy and one-call ledger. Protect seed, budget and reference labels from PCIV mutation.","depends_on":[],"max_output_tokens":0},
+        {"id":"inject","kind":"host","role":"FrozenPipelineContract -> PropagationMatrix","instruction":"In isolated local copies inject fixed artifact, receipt and routing faults. Run clean controls and separately authored compound cases; calculate which required sinks remain certified. Exercise same-type substitution, stale hashes, residual deletion and correlated-signal duplication. Exceptions and timeouts remain ERROR, not successful detection.","depends_on":["bind"],"max_output_tokens":0},
+        {"id":"gate","kind":"host","role":"PropagationMatrix -> AdmittedPipelineReceipt","instruction":"Require no escape for mandatory fault controls and no rejection of supported clean controls. Freeze pipeline before independent confirmation; failure ends this branch with zero paid calls and no in-run retuning. Admission says only that the finite panel passed.","depends_on":["inject"],"max_output_tokens":0},
+        {"id":"derive","kind":"model","role":"SeedBytes x AdmittedPipelineReceipt -> CandidateArtifact","instruction":"Produce the full requested answer with explicit dependency IDs and separately checkable public artifacts. Do not claim that synthetic canary success certifies the mathematical answer. No additional model checker or calibration call is allowed.","depends_on":["gate"],"max_output_tokens":4000},
+        {"id":"compose","kind":"host","role":"CandidateArtifact x FrozenPipelineContract -> BoundReceiptDAG","instruction":"Check supported predicates, replay receipt bindings and propagate unresolved parent effects. Require a verified discharge before clearing a residual. Unsupported prose and theories remain unchecked. EIS may record a finding without an independent danger signal; it cannot invent a second signal to force a suppression label.","depends_on":["derive"],"max_output_tokens":0},
+        {"id":"freeze","kind":"host","role":"CandidateArtifact x BoundReceiptDAG -> FrozenResponse","instruction":"Freeze complete answer text with scoped checking receipts, residuals and ledger. No retry or model repair. Trusted benchmark evaluation occurs after this terminal stage without a return edge.","depends_on":["compose"],"max_output_tokens":0}
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Same-model single-call response with 4000 output tokens and local checks, lacking end-to-end residual/receipt propagation.",
+        "ablations": ["Typed ports without replayed semantic receipts", "Single faults only, omitting independently labelled compound faults", "Any local red counts as end-to-end success", "Allow receipt reuse after parent hash changes"],
+        "evaluation": "Preregister up to 128 synthetic cases per panel and distinguish final-value validity from proof-trace validity. Publish local and sink-level detection matrices, supported clean-control acceptance, infrastructure failures, false scope strengthening and host time. Separate configuration selection on development panels from untouched family/location confirmation. Benchmark scoring is a later frozen-output comparison only; no key-guided canaries."
+      },
+      "falsification": "Any required corrupted dependency whose sink retains a stronger certified scope without a checked discharge falsifies propagation. A same-type but invalid receipt admitted after substitution falsifies the host contract. No reduced sink escape rate or loss of clean-control acceptance falsifies the practical hypothesis.",
+      "risks": ["The scheduler or receipt verifier can be a common-mode single point of failure.", "Real semantic dependency extraction may omit a premise despite perfect receipt propagation.", "Fault injection can overstate robustness if only easy edges are selected.", "Rejecting a proof trace with a coincidentally correct final value is valid only when the declared target includes trace validity; reports must keep both labels."],
+      "budget_formula": "Full path: 9000*p_in + 4000*p_out + F_1+R = USD 0.009+0.020+0.010=0.039 at conditional thresholds. One paid model call, no paid checker/calibration model and zero retries. Include any metered host charge in R before admission.",
+      "status": "proposed_not_evaluated"
+    }
+  ],
+  "recommended_reusable_primitive": {
+    "name": "FiniteAdequacyReceiptV1",
+    "recommendation": "Implement a host-owned receipt shared by checker mutation, extractor distinction and end-to-end propagation before adding any model stage.",
+    "schema": {
+      "binding": ["public_relation_id", "checker_hash", "extractor_hash", "reference_hash", "panel_hash", "mutation_plan_hash", "artifact_hash", "parent_hashes"],
+      "obligation": ["control_id", "fault_family", "label_witness_hash", "mutation_equivalence_status", "required_sink_ids"],
+      "host_status": ["PASS_ON_FINITE_PANEL", "CONTROL_FAILURE", "OPEN_UNSUPPORTED", "INFRASTRUCTURE_ERROR"],
+      "scope": ["synthetic_relation", "exact_supported_instance", "proof_trace_validity", "final_value_validity", "unverified_benchmark_claim"],
+      "residuals": ["known_blind_spots", "unseparated_pairs", "undetected_checker_mutants", "sink_escapes", "unlabelled_mutations", "shared_reference_dependencies"]
+    },
+    "invariant": "No green/zero diagnostic or finite panel receipt implies global semantic adequacy. Nonempty valid and invalid controls are mandatory. Unknown-equivalent mutants, parser refusal, timeout and exceptions never silently become successful semantic kills. Every inherited residual survives composition until an independently checked discharge binds it to updated artifacts.",
+    "research_prompt_instruction": "Develop the receipt and a public synthetic control harness only. Do not read or solve the frozen benchmark seed or access its private storage/key. Do not add task-specific formulas, solved examples or model outputs. Freeze independent fault-generation rules and confirmation splits before selection; no key feedback enters any online checker or prompt mutation.",
+    "first_experiment": "Host-only 2x2 anti-vacuity controls followed by the R08-I01 two-axis mutation matrix on public exact-rational synthetic relations. Resolve or explicitly classify current runtime failures before any paid experiment. Any later authorized benchmark pilot retains the unchanged seed and at most two bounded model calls; none was executed here."
+  }
+}

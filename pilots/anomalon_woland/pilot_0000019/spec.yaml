@@ -1,0 +1,53 @@
+# Proposal Fidelity Protocol (PFP) - Pilot Specification
+# AuthorityEffect: None.
+
+schema: pfp.pilot-spec.v1
+authority_effect: None
+pilot_id: pilot_0000019
+prompt_id: prompt_0000019
+parent_prompt_id: null
+generation_id: 0
+phase: phase_0_bedrock
+split: development
+coordinates:
+  task_family: refusal
+  difficulty_rung: 5
+  representation_rewrite: structured_spans
+  rewrite_count: 0
+  legend_present: false
+  mode: mode_20
+  stage_count: 1
+  pass_count: 1
+  single_shot: true
+  antibody_active: false
+  antibody_ids: []
+  model_class: 70B
+  model_id: meta-llama/llama-3.3-70b-instruct:free
+  temperature: 0.0
+  target_spend_usd: 0.0010
+ingress:
+  task_mode_fidelity: finite_deduction
+  variable_identifier_permutation: canonical
+  floating_point_approximation_risk: exact_modular
+  arm_template: A1
+  missing_premise: unanswerable
+  cohomology_defect_class: none
+  magma_associativity_type: none
+host_gate:
+  checker_id: PFP-14-TYPED-REFUSAL
+  response_schema: PromptResponse.v1
+  residual_logging: true
+  structure_delta_metric: gate_boolean
+  expected_outcome: ACCEPTED
+models:
+  - meta-llama/llama-3.3-70b-instruct:free
+  - deepseek/deepseek-v4.1-flash
+# Folder pointers. PilotSpec ignores unknown keys.
+test_plan:
+  path: testplan.yaml
+  mode_id: 20
+  packet: packet.yaml
+  seed: seed.yaml
+  variations: 3
+responses:
+  directory: results

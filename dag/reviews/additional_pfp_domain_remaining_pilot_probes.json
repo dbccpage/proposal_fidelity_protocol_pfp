@@ -1,0 +1,101 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/pilots/fail_closed_gate.py",
+      "sha256": "59d9dfd9736307ae142f19e70ed3910a22ff2b38b2b0d5e16ce89f7c19ec9ca8"
+    },
+    {
+      "path": "pfp/domain/kernel/result.py",
+      "sha256": "d33fbf1395041d4736f73c15347d58d937080d9753a01aa63d7728bdf6f315ff"
+    },
+    {
+      "path": "pfp/domain/types/base.py",
+      "sha256": "4ba9a33d5a0b04a111512bd64e54f65c32c4e7569b8675fedb93b4e8603ff307"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/__init__.py",
+      "sha256": "e72761212049d9f6c58fe3ace568c3da7d6ce2a1a1a0d334abb62d8482e67a6b"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/yaml_strict.py",
+      "sha256": "53a3203f3275a4c6b9c95d2f739d3da8716bfff607e4693321a03bc7bac80a1a"
+    },
+    {
+      "path": "pfp/domain/types/prompt_templates.py",
+      "sha256": "6b086d7d7828f04eda87497baa4afc16524e0c877e8be51085f66ec9d1fd6731"
+    },
+    {
+      "path": "pfp/domain/types/seed_prompts.py",
+      "sha256": "e173b6e37640362c4edee1eb216f4398a44c3653de36bbedaea1bd102434fbbd"
+    },
+    {
+      "path": "pfp/domain/value_objects/__init__.py",
+      "sha256": "b1d7a16773f11a79c14ad636523bed3575c1205a9673880ab158575ede9d8d9b"
+    },
+    {
+      "path": "pfp/domain/value_objects/numerics.py",
+      "sha256": "06e0a4fe07dfea4acb67ab1b17988ce2114fbd220bebdad4ad1c99a041af64fd"
+    },
+    {
+      "path": "pfp/domain/value_objects/base.py",
+      "sha256": "4602c4fac9f97dbbb24c0e6a88153212d542a4102c5dba2f96a1bdddabe07ccd"
+    },
+    {
+      "path": "pfp/domain/value_objects/identifiers.py",
+      "sha256": "3bc11f01315c8a4c95321b58339c63359ebbb1e01abf64c8db55acdae21719ed"
+    },
+    {
+      "path": "pfp/domain/aggregates/pilot_aggregate.py",
+      "sha256": "71a39799c6f21abe7a5e80826797cdf8261592b89d7718ccad7effc0beb91e32",
+      "selected_unmodified_method": "PilotAggregate._answer_matches"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C107",
+      "rule": "prompt_audit_checks_actual_singularity_and_grammar",
+      "status": "counterexample_observed",
+      "nonsingular_system_refused": "x+y=5; 2*x+4*y=10",
+      "nonsingular_determinant": 2,
+      "singular_system_unflagged": "x+2*y=5; 3*x+6*y=15",
+      "singular_determinant": 0,
+      "balanced_reversed_delimiters_unflagged": true,
+      "limit": "Heuristic audit only, not actual solving; supplied expected-answer checks are independent."
+    },
+    {
+      "id": "PFPDOMAIN-C108",
+      "rule": "intermediate_witness_is_semantically_verified",
+      "status": "counterexample_observed",
+      "negated_bindings_accepted": true,
+      "unknown_checker_accepted": true,
+      "limit": "Regex presence is not substitution, entailment or actual model reasoning."
+    },
+    {
+      "id": "PFPDOMAIN-C109",
+      "rule": "graph_oracle_field_types_are_exact",
+      "status": "counterexample_observed",
+      "boolean_and_integer_fields_swapped": true,
+      "accepted": true,
+      "limit": "Python dictionary equality, not a graph recomputation or typed certificate comparison."
+    },
+    {
+      "id": "PFPDOMAIN-C110",
+      "rule": "determinant_sign_inversion_diagnostic",
+      "status": "counterexample_observed",
+      "ad_minus_bc": 1,
+      "bc_minus_ad": -1,
+      "actual_inverse_code": "ARITHMETIC_ERROR",
+      "minus11_code": "DETERMINANT_SIGN_FLIP",
+      "limit": "Both wrong values refused; defect is diagnosis/fixture mathematics, not acceptance of -11."
+    },
+    {
+      "id": "PFPDOMAIN-C111",
+      "rule": "pilot_aggregate_preserves_checker_integer_type_rule",
+      "status": "counterexample_observed",
+      "aggregate_comparison_true_equals_one": true,
+      "checker_refuses_boolean": true,
+      "limit": "Unchanged comparison method on synthetic field carrier; aggregate constructor and state transitions not executed."
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": "independent_model_control_reference_provenance_v1",
+  "created_utc": "2026-11-10T19:14:40.399001+00:00",
+  "run_id": null,
+  "frozen_output_confirmation_received": true,
+  "current_run_output_content_read": false,
+  "method": "Reuse the unchanged independently derived public-seed reference and original25-criterion rubric. Prior experiments have been graded, but no model-control response/receipt content has been read. No private answer key/storage access. No mathematical weights or formulas changed.",
+  "rubric": {
+    "path": "dag/benchmark/pilot_20261110/evaluator_rubric.json",
+    "sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+    "criteria": 25,
+    "total_points": 100
+  },
+  "public_sources": [
+    {
+      "path": "dag/benchmark/seed_prompt.txt",
+      "sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7"
+    },
+    {
+      "path": "dag/benchmark/EXPERIMENT_PROTOCOL.md",
+      "sha256": "5e8894044ce222300983a51355232e53f6b9d903abafca806e05f084b3707343",
+      "original_sha256_at_rubric_freeze": "6eeb2068cf555b32623d48994b44794f13a514947ff6fd61df0d50f5500e9918",
+      "assessment": "Current public protocol was fully read before this run output. Its current bytes differ from the original rubric-time pin; the same 20/20/25/25/10 allocation and post-freeze evaluator boundary remain. Original rubric and reference formulas are unchanged."
+    }
+  ],
+  "reference": {
+    "definitions": "r=sqrt(J^2+Delta^2); Qe=|00><00|+|11><11|; Qo=I-Qe; B=J(|01><10|+|10><01|)+Delta(|01><01|-|10><10|).",
+    "spectrum": "H=K Qe-K Qo+2B. For r>0: energies K (rank2), -K+/-2r with Q+/-=(Qo+/-B/r)/2. At K=+r merge Qe with Q+; at K=-r merge Qe with Q-. At r=0: K Qe-K Qo; K=0 gives sole projector I.",
+    "dynamics": "For r>0 psi(t)=exp(iKt)[(cos(2rt)-i Delta sin(2rt)/r)|01>-i J sin(2rt)/r |10>]. For r=0: exp(iKt)|01>. p=J^2 sin^2(2rt)/r^2. If J=0, p=0 always and earliest maximizing time0; otherwise supremum J^2/r^2 and earliest maximizing time pi/(4r).",
+    "pure_state": "rho1=diag(1-p,p); S=-p log2 p-(1-p)log2(1-p), endpoint0log0=0; C=2sqrt(p(1-p)); CHSHmax=2sqrt(1+C^2) with correlation-matrix/measurement derivation required. Maximal entanglement iff J!=0 and |J|>=|Delta|; first time arcsin(r/(sqrt(2)|J|))/(2r).",
+    "thermal": "For r>0 set c=cosh(2 beta r),s=sinh(2 beta r),Z=2 exp(-beta K)+2 exp(beta K)c. Gibbs diagonal u,v,w,u with u=exp(-beta K)/Z,v=exp(beta K)(c-Delta s/r)/Z,w=exp(beta K)(c+Delta s/r)/Z and off-diagonal z=-exp(beta K)J s/(rZ) only between01,10. PT eigenvalues v,w,u+/-|z|. Entangled iff exp(2 beta K)|J|s/r>1; equality separable. beta0 gives I/4. r0 gives diag(exp(-beta K),exp(beta K),exp(beta K),exp(-beta K))/(4 cosh(beta K)), separable.",
+    "checks": "Normalization, t=0, J=0 and a correct nontrivial numerical example must be actually evaluated; identity derivations and finite numerical checks remain distinct."
+  },
+  "grading_policy": [
+    "Wait for parent confirmation that run.json and run.sha256 are frozen.",
+    "Read final answer_text only for mathematical content; no drafts, checker labels or provider evidence credit.",
+    "All25 original criterion maxima remain fixed; partial credits require exact evidence/omissions.",
+    "No evaluator reference or corrections are supplied to any workflow request.",
+    "Grade only the delivered final answer after freeze confirmation. No delivered answer receives0delivered-solution points, with infrastructure failure distinguished from model mathematical error."
+  ],
+  "limits": [
+    "Reference derivation is human-readable mathematics, not a formal proof assistant artifact.",
+    "One model-control attempt on one fixed item does not establish a general model or workflow ranking."
+  ],
+  "preceding_public_reference_provenance": {
+    "path": "dag/benchmark/section_control_20261110/reference_provenance.json",
+    "sha256": "c30b87a99adb31e1676b85b329af642c12b19e2750287d6ec20d3bcce7e17f60"
+  },
+  "prior_experiment_outputs_previously_reviewed": true,
+  "experiment_directory": "dag/benchmark/model_control_20261110",
+  "run_binding_status": "Exact run identifier/path will be bound from parent freeze notification and verified receipt without modifying this mathematical reference.",
+  "parent_report_at_preparation": "First orchestration attempt was frozen admission_failure,0dispatches,0cost,answerNone; this is an infrastructure failure, not a model mathematics failure."
+}

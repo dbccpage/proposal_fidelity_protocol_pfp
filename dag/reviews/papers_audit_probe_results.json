@@ -1,0 +1,52 @@
+{
+  "python": "3.12.12 (main, Jan 27 2026, 23:45:36) [MSC v.1944 64 bit (AMD64)]",
+  "scope": "Four finite PFP replay scripts plus isolated PFP020 target predicate and documented import",
+  "checks": [
+    {
+      "path": "papers/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py",
+      "sha256": "a422e451ab28343ce7ba93879347e5668e7b2f77b5723f6217bd3d1e621da63b",
+      "returncode": 0,
+      "stdout": "{\"status\": \"PASS\", \"checks\": {\"valid_witness\": true, \"wrong_witness_refused\": true, \"wrong_task_refused\": true, \"false_prose_claim_refused\": true, \"unbound_quote_refused\": true, \"mandatory_task_claim_retained\": true}, \"provider_calls\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "path": "papers/pfp/014_pfp_recursive_reentry_and_evidence_scope/code/replay.py",
+      "sha256": "fe4e4537a87f2feed5c3a337f4329d5a0498e4f6ced290e9596daf61620af0a6",
+      "returncode": 0,
+      "stdout": "{\"status\": \"PASS\", \"checks\": {\"two_charged_steps\": true, \"changed_task_refused\": true, \"stale_parent_refused\": true, \"fuel_reset_refused\": true, \"budget_reset_refused\": true, \"changed_checker_refused\": true, \"boolean_cost_refused\": true, \"negative_prior_fuel_refused\": true, \"source_antibody_sound\": true, \"target_antibody_unsound\": true, \"empty_target_loses_coverage\": true}, \"provider_calls\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "path": "papers/pfp/015_pfp_local_to_global_agent_composition/code/replay.py",
+      "sha256": "1d26980b2dd7a1b46a738e11b25b8c72b044c810db62ea59e8fb39d2c264d91b",
+      "returncode": 0,
+      "stdout": "{\"status\": \"PASS\", \"checks\": {\"every_local_relation_nonempty\": true, \"incompatible_cycle_has_no_global_solution\": true, \"submitted_disagreement_refused\": true, \"compatible_family_decoded\": true, \"two_original_solutions\": true}, \"provider_calls\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "path": "papers/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+      "sha256": "fc1e5286bf09042e964dcd6a63f54132198784980f63bbe64f656841140c7bfc",
+      "returncode": 0,
+      "stdout": "{\"status\": \"PASS\", \"checks\": {\"same_current_report\": true, \"future_cost_requires_split\": true, \"two_steps_cheaper_than_one\": true, \"positive_loop_cannot_improve\": true, \"submitted_route_is_independently_optimal\": true, \"submitted_cost_checked\": true, \"wrong_claimed_cost_refused\": true, \"expensive_route_is_not_optimal\": true, \"unfinished_route_refused\": true, \"unknown_operation_refused\": true, \"stable_refinement\": true}, \"optimal_example_cost\": \"2\", \"provider_calls\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "probe": "double-CNOT-is-identity",
+      "isolated_source_method": "papers\\pfp\\020_pfp_frontier_research\\code\\l8_n4_cross_validation.py",
+      "actual_acceptance": true,
+      "scope": "Executed actual AST-extracted method without unavailable project import. Gate names interpreted by their claimed standard semantics."
+    },
+    {
+      "probe": "GHZ-missing-two-entanglers",
+      "isolated_source_method": "papers\\pfp\\020_pfp_frontier_research\\code\\l8_n4_cross_validation.py",
+      "actual_acceptance": true,
+      "scope": "Executed actual AST-extracted method without unavailable project import. Gate names interpreted by their claimed standard semantics."
+    },
+    {
+      "probe": "documented-cross-validation-entrypoint",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\papers\\pfp\\020_pfp_frontier_research\\code\\l8_n4_cross_validation.py\", line 54, in <module>\n    from majorana_multiqubit_noise import (\nModuleNotFoundError: No module named 'majorana_multiqubit_noise'\n"
+    }
+  ]
+}

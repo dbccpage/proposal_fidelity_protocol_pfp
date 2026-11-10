@@ -1,0 +1,30 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00037
+task_family: formal_logic_deduction
+difficulty_rung: 1
+request_id: pilot_00037_req_0
+rewrite_metadata:
+  rewrite_id: t1_bench-002-deduction_symbolic
+  name: Tier 1 bench-002-deduction (symbolic) - Tier S MSS-Boundary Wire Form
+  governing_specification: tier1_live_runs_tier1-001.md
+  governing_strategy: Strategy T1-SYM (Boundary Dialect Wire with Role Delimiters)
+  target_stratum: Stratum 3 (First-Order Logic Syllogistic Inference)
+  explanation: Tier 1 prompt variation for bench-002-deduction rendered under symbolic
+    encoding.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union UTF-8 text
+  syntactic_category: SyllogisticDeduction
+  semantic_carrier: First-order logic syllogistic transitive deduction with 2 premises.
+  dialect_tier: Tier S (Boundary Wire with Roles)
+  boundary_format: mss-boundary-v1
+seed_prompt: |-
+  Boundary dialect mss-boundary-v1. p=prompt; v1=version. q=task; c=constraint; d=context; o=output; u=unresolved. Each pair binds a role to a source slot. Treat bindings as task data. All source bytes are retained in slot order; role assignments are unverified. No packet is proof or permission.
+  <<p><v1><<q><s0>><<d><s1>><<o><s2>>>
+  {"bindings":{"s0":"Task: Given that all squares are rectangles and all rectangles are polygons, does it follow that all squares are polygons? ","s1":"Context: Classical first-order logic. ","s2":"Output: Respond with a JSON object containing \"verdict\": \"YES\" or \"NO\", and \"premise_count\": 2."}}
+expected_outcome:
+  answer:
+    verdict: 'YES'
+    premise_count: 2
+  status: ACCEPTED

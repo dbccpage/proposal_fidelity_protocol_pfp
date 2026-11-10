@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "status": "observed_live_receipts",
+  "offline_fixture_ids_excluded": [],
+  "raw_runs": [
+    {
+      "run_id": "qm-charpoly-20261110:qm_charpoly_checked_v1:000",
+      "plan": "qm_charpoly_checked_v1",
+      "provider": "openrouter:deepseek/deepseek-v3.2@atlas-cloud/fp8",
+      "control_max_output_tokens": null,
+      "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+      "status": "certificate_refused",
+      "score": 0,
+      "money_usd": 0.001685,
+      "known_spent_usd": 0.001685,
+      "held_usd": 0.0,
+      "wall_time_seconds": 70.41287539998302,
+      "sum_provider_duration_seconds": 70.11145560001023,
+      "input_tokens": 2680,
+      "output_tokens": 2596,
+      "reasoning_tokens": 0,
+      "total_tokens": 5276,
+      "finish_reason_counts": {
+        "stop": 1,
+        "length": 1
+      },
+      "truncated_call_count": 1,
+      "host_artifact_errors": {
+        "charpoly": "UNACCEPTED_OR_MISSING"
+      },
+      "host_infrastructure_failure": false,
+      "encoded_claim_status_counts": {}
+    },
+    {
+      "run_id": "qm-charpoly-20261110:qm_charpoly_ungated_v1:000",
+      "plan": "qm_charpoly_ungated_v1",
+      "provider": "openrouter:deepseek/deepseek-v3.2@atlas-cloud/fp8",
+      "control_max_output_tokens": null,
+      "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+      "status": "completed",
+      "score": 47,
+      "money_usd": 0.005329,
+      "known_spent_usd": 0.005329,
+      "held_usd": 0.0,
+      "wall_time_seconds": 313.39934189995984,
+      "sum_provider_duration_seconds": 313.1126656999695,
+      "input_tokens": 2956,
+      "output_tokens": 12395,
+      "reasoning_tokens": 0,
+      "total_tokens": 15351,
+      "finish_reason_counts": {
+        "stop": 1,
+        "length": 1
+      },
+      "truncated_call_count": 1,
+      "host_artifact_errors": {
+        "charpoly": "UNACCEPTED_OR_MISSING"
+      },
+      "host_infrastructure_failure": false,
+      "encoded_claim_status_counts": {}
+    }
+  ],
+  "groups": [
+    {
+      "plan": "qm_charpoly_checked_v1",
+      "provider": "openrouter:deepseek/deepseek-v3.2@atlas-cloud/fp8",
+      "attempts_including_failures": 1,
+      "control_max_output_tokens": null,
+      "status_counts": {
+        "certificate_refused": 1
+      },
+      "graded_attempts": 1,
+      "ungraded_attempts": 0,
+      "mean_score_all_attempts": 0.0,
+      "mean_score_graded_subset_only": 0.0,
+      "complete_cost_accounts": 1,
+      "attempts_with_truncated_calls": 1,
+      "host_artifact_error_attempts": 1,
+      "host_infrastructure_failure_attempts": 0,
+      "encoded_refutation_attempts_not_accuracy_scores": 0,
+      "sum_known_spent_usd": 0.001685
+    },
+    {
+      "plan": "qm_charpoly_ungated_v1",
+      "provider": "openrouter:deepseek/deepseek-v3.2@atlas-cloud/fp8",
+      "attempts_including_failures": 1,
+      "control_max_output_tokens": null,
+      "status_counts": {
+        "completed": 1
+      },
+      "graded_attempts": 1,
+      "ungraded_attempts": 0,
+      "mean_score_all_attempts": 47.0,
+      "mean_score_graded_subset_only": 47.0,
+      "complete_cost_accounts": 1,
+      "attempts_with_truncated_calls": 1,
+      "host_artifact_error_attempts": 1,
+      "host_infrastructure_failure_attempts": 0,
+      "encoded_refutation_attempts_not_accuracy_scores": 0,
+      "sum_known_spent_usd": 0.005329
+    }
+  ],
+  "pareto_front_run_ids": [
+    "qm-charpoly-20261110:qm_charpoly_checked_v1:000",
+    "qm-charpoly-20261110:qm_charpoly_ungated_v1:000"
+  ],
+  "pareto_objectives": {
+    "score": "maximize",
+    "money_usd": "minimize",
+    "total_tokens": "minimize",
+    "wall_time_seconds": "minimize"
+  },
+  "token_definition": "Provider-reported input plus output tokens. Reasoning tokens are not added again; unavailable usage excludes a run from Pareto comparison but not the raw results.",
+  "interpretation": "Descriptive within-item results only. Run and answer hashes, budget bindings, arithmetic and metric types are checked; local hashes do not authenticate a provider or prevent coordinated replacement of both data and digest. Failure attempts remain in counts; ungraded outcomes are not silently scored zero or dropped from an all-attempt mean. Pareto membership is observed, not a statistically established advantage. Provider duration sums are a serial-time proxy, not measured compute time."
+}

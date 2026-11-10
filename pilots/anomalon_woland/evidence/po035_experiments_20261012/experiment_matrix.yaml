@@ -1,0 +1,659 @@
+schema: pfp.po035-experiment-matrix.v1
+authority_effect: None
+date: '2026-10-12'
+source_revision: 5452a476dd88d05d19de60c3ea7e6607ac14ede0
+tests:
+- pilot_id: pilot_0000199
+  original_seed_sha256: 42c14c02d2e28ac9efa8a5b5b061ce57bcde4f9e8a9addeb7b6fd34df62e04ff
+  task_family: causal_refinement_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: SP199
+  kind: scratchpad
+  status: PLANNED
+  max_provider_calls: 4
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  stages:
+  - rewritten_typed_hinted_single_shot_control
+  - typed_public_workpad_draft
+  - typed_public_workpad_audit
+  - typed_final
+  output_caps:
+  - 2500
+  - 1000
+  - 1000
+  - 2500
+  temperature: 0
+  carry_forward: Only treatment draft/audit from this test, never control output
+  hypothesis: A small set of typed public work records improves the final result under a shared cap
+  attribution_limit: Bundle versus single shot; number of calls differs, so no isolated scratchpad-format
+    causal claim
+- pilot_id: pilot_0000199
+  original_seed_sha256: 42c14c02d2e28ac9efa8a5b5b061ce57bcde4f9e8a9addeb7b6fd34df62e04ff
+  task_family: causal_refinement_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: T199
+  kind: temperature
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  temperatures:
+  - 0
+  - 0.7
+  stages:
+  - typed_single_shot_T0
+  - typed_single_shot_T07
+  output_caps:
+  - 2500
+  - 2500
+  fixed:
+  - rewrite
+  - template
+  - typed_schema
+  - antibody_hints
+  - seed
+  - licenses
+  - model_route
+  hypothesis: Temperature changes finite and analytical outcomes on this task; no best-of sampling
+- pilot_id: pilot_0000199
+  original_seed_sha256: 42c14c02d2e28ac9efa8a5b5b061ce57bcde4f9e8a9addeb7b6fd34df62e04ff
+  task_family: causal_refinement_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: LG199
+  kind: logit
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: qwen/qwen-2.5-72b-instruct
+  temperature: 0.7
+  stages:
+  - empty_bias_control
+  - format_only_bias_variant
+  output_caps:
+  - 2500
+  - 2500
+  logit_bias_arms:
+  - {}
+  - '63': -5
+    '13874': -5
+    '73594': -5
+  requested_control: Bias standalone backtick tokens only; no answer digits or mathematical values
+  enforcement: PROVIDER_REQUESTED_NOT_INTERNALLY_ATTESTED
+  hypothesis: Limited logit steering reduces fencing/format failures without reducing substantive correctness
+- pilot_id: pilot_0000199
+  original_seed_sha256: 42c14c02d2e28ac9efa8a5b5b061ce57bcde4f9e8a9addeb7b6fd34df62e04ff
+  task_family: causal_refinement_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: AH199
+  kind: attention_head
+  status: EXECUTION_UNAVAILABLE
+  max_provider_calls: 0
+  provider_retries: 0
+  model_candidate: Qwen/Qwen2.5-0.5B-Instruct
+  planned_provider_calls: 2
+  control: All head output scales equal one
+  intervention:
+    layer_fraction: 0.0
+    query_head_index: 0
+    head_output_scale: 0
+  location: One selected attention head context slice before output projection, across prefill and decode
+  required_controls:
+  - identity_hook_numerical_equivalence
+  - nonzero_preintervention_head
+  - changed_selected_head_only
+  - hook_removed_after_case
+  reason: Torch/Transformers are absent; existing C001 key masking is not per-head manipulation
+  local_token_ceiling: 120000
+  local_wall_seconds: 180
+  hypothesis: A verified head intervention changes results; improve/degrade/unchanged all retained
+- pilot_id: pilot_0000200
+  original_seed_sha256: 001166fd0b63e77f677d8b063736f226f648729c32cf85b6cb2e25b7b93a86ef
+  task_family: microscopic_defect_current_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: SP200
+  kind: scratchpad
+  status: PLANNED
+  max_provider_calls: 4
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  stages:
+  - rewritten_typed_hinted_single_shot_control
+  - typed_public_workpad_draft
+  - typed_public_workpad_audit
+  - typed_final
+  output_caps:
+  - 2500
+  - 1000
+  - 1000
+  - 2500
+  temperature: 0
+  carry_forward: Only treatment draft/audit from this test, never control output
+  hypothesis: A small set of typed public work records improves the final result under a shared cap
+  attribution_limit: Bundle versus single shot; number of calls differs, so no isolated scratchpad-format
+    causal claim
+- pilot_id: pilot_0000200
+  original_seed_sha256: 001166fd0b63e77f677d8b063736f226f648729c32cf85b6cb2e25b7b93a86ef
+  task_family: microscopic_defect_current_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: T200
+  kind: temperature
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  temperatures:
+  - 0
+  - 0.7
+  stages:
+  - typed_single_shot_T0
+  - typed_single_shot_T07
+  output_caps:
+  - 2500
+  - 2500
+  fixed:
+  - rewrite
+  - template
+  - typed_schema
+  - antibody_hints
+  - seed
+  - licenses
+  - model_route
+  hypothesis: Temperature changes finite and analytical outcomes on this task; no best-of sampling
+- pilot_id: pilot_0000200
+  original_seed_sha256: 001166fd0b63e77f677d8b063736f226f648729c32cf85b6cb2e25b7b93a86ef
+  task_family: microscopic_defect_current_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: LG200
+  kind: logit
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: qwen/qwen-2.5-72b-instruct
+  temperature: 0.7
+  stages:
+  - empty_bias_control
+  - format_only_bias_variant
+  output_caps:
+  - 2500
+  - 2500
+  logit_bias_arms:
+  - {}
+  - '63': -5
+    '13874': -5
+    '73594': -5
+  requested_control: Bias standalone backtick tokens only; no answer digits or mathematical values
+  enforcement: PROVIDER_REQUESTED_NOT_INTERNALLY_ATTESTED
+  hypothesis: Limited logit steering reduces fencing/format failures without reducing substantive correctness
+- pilot_id: pilot_0000200
+  original_seed_sha256: 001166fd0b63e77f677d8b063736f226f648729c32cf85b6cb2e25b7b93a86ef
+  task_family: microscopic_defect_current_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: AH200
+  kind: attention_head
+  status: EXECUTION_UNAVAILABLE
+  max_provider_calls: 0
+  provider_retries: 0
+  model_candidate: Qwen/Qwen2.5-0.5B-Instruct
+  planned_provider_calls: 2
+  control: All head output scales equal one
+  intervention:
+    layer_fraction: 0.25
+    query_head_index: 1
+    head_output_scale: 0
+  location: One selected attention head context slice before output projection, across prefill and decode
+  required_controls:
+  - identity_hook_numerical_equivalence
+  - nonzero_preintervention_head
+  - changed_selected_head_only
+  - hook_removed_after_case
+  reason: Torch/Transformers are absent; existing C001 key masking is not per-head manipulation
+  local_token_ceiling: 120000
+  local_wall_seconds: 180
+  hypothesis: A verified head intervention changes results; improve/degrade/unchanged all retained
+- pilot_id: pilot_0000201
+  original_seed_sha256: 766afede940fc3f3e812b19b267af868bbe721c8946db56f271c72545df5c621
+  task_family: covariant_relational_spine_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: SP201
+  kind: scratchpad
+  status: PLANNED
+  max_provider_calls: 4
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  stages:
+  - rewritten_typed_hinted_single_shot_control
+  - typed_public_workpad_draft
+  - typed_public_workpad_audit
+  - typed_final
+  output_caps:
+  - 2500
+  - 1000
+  - 1000
+  - 2500
+  temperature: 0
+  carry_forward: Only treatment draft/audit from this test, never control output
+  hypothesis: A small set of typed public work records improves the final result under a shared cap
+  attribution_limit: Bundle versus single shot; number of calls differs, so no isolated scratchpad-format
+    causal claim
+- pilot_id: pilot_0000201
+  original_seed_sha256: 766afede940fc3f3e812b19b267af868bbe721c8946db56f271c72545df5c621
+  task_family: covariant_relational_spine_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: T201
+  kind: temperature
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  temperatures:
+  - 0
+  - 0.7
+  stages:
+  - typed_single_shot_T0
+  - typed_single_shot_T07
+  output_caps:
+  - 2500
+  - 2500
+  fixed:
+  - rewrite
+  - template
+  - typed_schema
+  - antibody_hints
+  - seed
+  - licenses
+  - model_route
+  hypothesis: Temperature changes finite and analytical outcomes on this task; no best-of sampling
+- pilot_id: pilot_0000201
+  original_seed_sha256: 766afede940fc3f3e812b19b267af868bbe721c8946db56f271c72545df5c621
+  task_family: covariant_relational_spine_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: LG201
+  kind: logit
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: qwen/qwen-2.5-72b-instruct
+  temperature: 0.7
+  stages:
+  - empty_bias_control
+  - format_only_bias_variant
+  output_caps:
+  - 2500
+  - 2500
+  logit_bias_arms:
+  - {}
+  - '63': -5
+    '13874': -5
+    '73594': -5
+  requested_control: Bias standalone backtick tokens only; no answer digits or mathematical values
+  enforcement: PROVIDER_REQUESTED_NOT_INTERNALLY_ATTESTED
+  hypothesis: Limited logit steering reduces fencing/format failures without reducing substantive correctness
+- pilot_id: pilot_0000201
+  original_seed_sha256: 766afede940fc3f3e812b19b267af868bbe721c8946db56f271c72545df5c621
+  task_family: covariant_relational_spine_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: AH201
+  kind: attention_head
+  status: EXECUTION_UNAVAILABLE
+  max_provider_calls: 0
+  provider_retries: 0
+  model_candidate: Qwen/Qwen2.5-0.5B-Instruct
+  planned_provider_calls: 2
+  control: All head output scales equal one
+  intervention:
+    layer_fraction: 0.5
+    query_head_index: 2
+    head_output_scale: 0
+  location: One selected attention head context slice before output projection, across prefill and decode
+  required_controls:
+  - identity_hook_numerical_equivalence
+  - nonzero_preintervention_head
+  - changed_selected_head_only
+  - hook_removed_after_case
+  reason: Torch/Transformers are absent; existing C001 key masking is not per-head manipulation
+  local_token_ceiling: 120000
+  local_wall_seconds: 180
+  hypothesis: A verified head intervention changes results; improve/degrade/unchanged all retained
+- pilot_id: pilot_0000202
+  original_seed_sha256: 93a73509508395462376ecad0fb7c85cab177fec7d690bfe4b0cce2caa0be116
+  task_family: metric_cochain_bridge_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: SP202
+  kind: scratchpad
+  status: PLANNED
+  max_provider_calls: 4
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  stages:
+  - rewritten_typed_hinted_single_shot_control
+  - typed_public_workpad_draft
+  - typed_public_workpad_audit
+  - typed_final
+  output_caps:
+  - 2500
+  - 1000
+  - 1000
+  - 2500
+  temperature: 0
+  carry_forward: Only treatment draft/audit from this test, never control output
+  hypothesis: A small set of typed public work records improves the final result under a shared cap
+  attribution_limit: Bundle versus single shot; number of calls differs, so no isolated scratchpad-format
+    causal claim
+- pilot_id: pilot_0000202
+  original_seed_sha256: 93a73509508395462376ecad0fb7c85cab177fec7d690bfe4b0cce2caa0be116
+  task_family: metric_cochain_bridge_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: T202
+  kind: temperature
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  temperatures:
+  - 0
+  - 0.7
+  stages:
+  - typed_single_shot_T0
+  - typed_single_shot_T07
+  output_caps:
+  - 2500
+  - 2500
+  fixed:
+  - rewrite
+  - template
+  - typed_schema
+  - antibody_hints
+  - seed
+  - licenses
+  - model_route
+  hypothesis: Temperature changes finite and analytical outcomes on this task; no best-of sampling
+- pilot_id: pilot_0000202
+  original_seed_sha256: 93a73509508395462376ecad0fb7c85cab177fec7d690bfe4b0cce2caa0be116
+  task_family: metric_cochain_bridge_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: LG202
+  kind: logit
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: qwen/qwen-2.5-72b-instruct
+  temperature: 0.7
+  stages:
+  - empty_bias_control
+  - format_only_bias_variant
+  output_caps:
+  - 2500
+  - 2500
+  logit_bias_arms:
+  - {}
+  - '63': -5
+    '13874': -5
+    '73594': -5
+  requested_control: Bias standalone backtick tokens only; no answer digits or mathematical values
+  enforcement: PROVIDER_REQUESTED_NOT_INTERNALLY_ATTESTED
+  hypothesis: Limited logit steering reduces fencing/format failures without reducing substantive correctness
+- pilot_id: pilot_0000202
+  original_seed_sha256: 93a73509508395462376ecad0fb7c85cab177fec7d690bfe4b0cce2caa0be116
+  task_family: metric_cochain_bridge_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: AH202
+  kind: attention_head
+  status: EXECUTION_UNAVAILABLE
+  max_provider_calls: 0
+  provider_retries: 0
+  model_candidate: Qwen/Qwen2.5-0.5B-Instruct
+  planned_provider_calls: 2
+  control: All head output scales equal one
+  intervention:
+    layer_fraction: 0.75
+    query_head_index: 3
+    head_output_scale: 0
+  location: One selected attention head context slice before output projection, across prefill and decode
+  required_controls:
+  - identity_hook_numerical_equivalence
+  - nonzero_preintervention_head
+  - changed_selected_head_only
+  - hook_removed_after_case
+  reason: Torch/Transformers are absent; existing C001 key masking is not per-head manipulation
+  local_token_ceiling: 120000
+  local_wall_seconds: 180
+  hypothesis: A verified head intervention changes results; improve/degrade/unchanged all retained
+- pilot_id: pilot_0000203
+  original_seed_sha256: 0d2bb7a2921b1df661d607153d701cb994349178bc12424d74f73ffba80c22dc
+  task_family: obstruction_terminal_policy_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: SP203
+  kind: scratchpad
+  status: PLANNED
+  max_provider_calls: 4
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  stages:
+  - rewritten_typed_hinted_single_shot_control
+  - typed_public_workpad_draft
+  - typed_public_workpad_audit
+  - typed_final
+  output_caps:
+  - 2500
+  - 1000
+  - 1000
+  - 2500
+  temperature: 0
+  carry_forward: Only treatment draft/audit from this test, never control output
+  hypothesis: A small set of typed public work records improves the final result under a shared cap
+  attribution_limit: Bundle versus single shot; number of calls differs, so no isolated scratchpad-format
+    causal claim
+- pilot_id: pilot_0000203
+  original_seed_sha256: 0d2bb7a2921b1df661d607153d701cb994349178bc12424d74f73ffba80c22dc
+  task_family: obstruction_terminal_policy_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: T203
+  kind: temperature
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: nvidia/nemotron-3.5-lightning:free
+  temperatures:
+  - 0
+  - 0.7
+  stages:
+  - typed_single_shot_T0
+  - typed_single_shot_T07
+  output_caps:
+  - 2500
+  - 2500
+  fixed:
+  - rewrite
+  - template
+  - typed_schema
+  - antibody_hints
+  - seed
+  - licenses
+  - model_route
+  hypothesis: Temperature changes finite and analytical outcomes on this task; no best-of sampling
+- pilot_id: pilot_0000203
+  original_seed_sha256: 0d2bb7a2921b1df661d607153d701cb994349178bc12424d74f73ffba80c22dc
+  task_family: obstruction_terminal_policy_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: LG203
+  kind: logit
+  status: PLANNED
+  max_provider_calls: 2
+  provider_retries: 0
+  model: qwen/qwen-2.5-72b-instruct
+  temperature: 0.7
+  stages:
+  - empty_bias_control
+  - format_only_bias_variant
+  output_caps:
+  - 2500
+  - 2500
+  logit_bias_arms:
+  - {}
+  - '63': -5
+    '13874': -5
+    '73594': -5
+  requested_control: Bias standalone backtick tokens only; no answer digits or mathematical values
+  enforcement: PROVIDER_REQUESTED_NOT_INTERNALLY_ATTESTED
+  hypothesis: Limited logit steering reduces fencing/format failures without reducing substantive correctness
+- pilot_id: pilot_0000203
+  original_seed_sha256: 0d2bb7a2921b1df661d607153d701cb994349178bc12424d74f73ffba80c22dc
+  task_family: obstruction_terminal_policy_derivation
+  budget_scope: all_arms_rounds_and_host_stages_share_one_run_cap
+  max_cost_microusd: 50000
+  max_total_provider_tokens: 120000
+  max_seconds: 180
+  expected_answers_in_prompts: false
+  judge: original_independent_PO035_predicates
+  full_analytical_review_separate: true
+  test_id: AH203
+  kind: attention_head
+  status: EXECUTION_UNAVAILABLE
+  max_provider_calls: 0
+  provider_retries: 0
+  model_candidate: Qwen/Qwen2.5-0.5B-Instruct
+  planned_provider_calls: 2
+  control: All head output scales equal one
+  intervention:
+    layer_fraction: 1.0
+    query_head_index: 4
+    head_output_scale: 0
+  location: One selected attention head context slice before output projection, across prefill and decode
+  required_controls:
+  - identity_hook_numerical_equivalence
+  - nonzero_preintervention_head
+  - changed_selected_head_only
+  - hook_removed_after_case
+  reason: Torch/Transformers are absent; existing C001 key masking is not per-head manipulation
+  local_token_ceiling: 120000
+  local_wall_seconds: 180
+  hypothesis: A verified head intervention changes results; improve/degrade/unchanged all retained
+counts:
+  scratchpad: 5
+  temperature: 5
+  logit: 5
+  attention_head_unavailable: 5
+runnable_provider_calls_max: 40
+runnable_shared_cap_runs: 15
+runnable_aggregate_cost_ceiling_microusd: 750000
+runnable_aggregate_token_ceiling: 1800000
+runnable_aggregate_serial_seconds: 2700
+all_caps_are_ceiling_not_expected_spend: true
+original_neutral_guided_plan: Review design only, not additionally dispatched in this execution
+results: ../po035_experiments_20261012/results.json
+automatic_retries_model_escalations_or_head_installations: false

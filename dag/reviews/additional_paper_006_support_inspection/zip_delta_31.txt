@@ -1,0 +1,103 @@
+--- archive/paper.md
++++ current/paper.md
+@@ -3,7 +3,7 @@
+ # PFP VI: Retained Failure Evidence and Controlled Reuse
+ 
+ Jeremy H. Carroll\
+-2026-10-02 · Version 0.1.0 · Systems methods preprint · First-publication candidate
++2026-10-23 · Version 0.2.0 · Author-review extension
+ 
+ </div>
+ 
+@@ -263,7 +263,7 @@
+ 
+ ```python
+ from pathlib import Path
+-from omega_engine_symbol_game.infrastructure.persistence import cemetery_sink
++from pfp.infrastructure.persistence import cemetery_sink
+ 
+ CemeterySink = cemetery_sink.CemeterySink
+ 
+@@ -463,10 +463,10 @@
+ using Python 3.12 (on Windows, `py -3.12` in place of `python`):
+ 
+ ```powershell
+-python -m pytest omega_engine_symbol_game/tests/test_cemetery_sink.py --collect-only -q
+-python -m pytest omega_engine_symbol_game/tests/test_cemetery_sink.py -q
+-python -m pytest omega_engine_symbol_game/tests/test_immune_defect_regressions.py --collect-only -q
+-python -m pytest omega_engine_symbol_game/tests/test_immune_defect_regressions.py -q
++python -m pytest pfp/tests/test_cemetery_sink.py --collect-only -q
++python -m pytest pfp/tests/test_cemetery_sink.py -q
++python -m pytest pfp/tests/test_immune_defect_regressions.py --collect-only -q
++python -m pytest pfp/tests/test_immune_defect_regressions.py -q
+ ```
+ 
+ The first suite tests the production sink; the second targets concrete rule
+@@ -543,6 +543,44 @@
+ package keep their original dates and scope and are not current execution
+ evidence.
+ 
++## Research extension: rejected branches as experimental evidence
++
++The harness campaign retains a parent for every proposed candidate, a strategy
++label and mutation description, assigned evaluations, rejected branches and any
++confirmed incumbent change. A branch can be rejected by an edit-surface control,
++by execution, by private grading, by family regression, or by failure to confirm.
++These reasons have different meanings. None licenses erasing the branch or
++rewriting a failed attempt as an unassigned trial. Provider failures remain
++separate from failures produced by executing a candidate.
++
++Memory construction consumes a scoped observation with its reproducer and benign
++control. The reference policy gates guidance at a 15% execution-error fraction
++and retains at most three deduplicated signatures, following an explicitly
++heuristic design in the external AIDE2 paper (p. 9). The observation population
++and denominator are retained. A signature is not a mathematical characterization
++of all future failures, and a control from another task scope cannot silently
++substitute for the required benign control.
++
++Private selection feedback can help the next outer rewrite. This makes it useful
++optimization data and unsuitable as untouched transfer evidence. A public-only
++improvement that fails private grading stays in the rejected branch history.
++The disagreement count and benign-control false-positive count are separate
++measurements. An ensemble label does not authorize unrecorded calls: every inner
++and outer request uses the same original ledger and contributes its usage or
++retained liability.
++
++The earlier JSONL store's limits remain historical facts. The new campaign uses
++content-addressed objects and a durable ordered journal, but its hashes are not
++independent producer authentication. Existing OEEIS custody and activation gates
++are not replaced. Diagnostic memory remains candidate material, and a confirmed
++experimental incumbent is not an admitted production operator. Current campaign
++performance remains unmeasured because the remote host is unavailable.
++
++The source and page references for this extension are collected in
++[Paper 029](../029_pfp_evidence_bound_harness_evolution/paper.md) and its
++[source-to-claim map](../029_pfp_evidence_bound_harness_evolution/docs/source_to_claim_map.md).
++The author-review rendering does not replace a historical deposit or archive.
++
+ ## References
+ 
+ - Schneier, B., and Kelsey, J. (1999).
+@@ -567,13 +605,13 @@
+ [ct]: https://www.rfc-editor.org/rfc/rfc9162.html
+ [reflexion]: https://arxiv.org/abs/2303.11366v4
+ [jcs]: https://www.rfc-editor.org/rfc/rfc8785.html
+-[sink]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/infrastructure/persistence/cemetery_sink.py
+-[entries]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/entities/cemetery_entry.py
+-[sink-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/tests/test_cemetery_sink.py
+-[clonal]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/immune/clonal_selection.py
+-[immune-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/tests/test_immune_defect_regressions.py
+-[treg]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/immune/treg.py
++[sink]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/infrastructure/persistence/cemetery_sink.py
++[entries]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/entities/cemetery_entry.py
++[sink-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_cemetery_sink.py
++[clonal]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/immune/clonal_selection.py
++[immune-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_immune_defect_regressions.py
++[treg]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/immune/treg.py
+ [catalog]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/_intelligence/_antibodies/pharmacy_catalog.json
+-[seeder]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/domain/symbol_game_bridge/pharmacy_seeder.py
+-[seeder-run]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_moscow/domain/immune/seeder.py
+-[prompt-doctor]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_external_application/prompt_doctor/use_cases/repair_service.py
++[seeder]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/domain/symbol_game_bridge/pharmacy_seeder.py
++[seeder-run]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/adversary/domain/immune/seeder.py
++[prompt-doctor]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/external_application/prompt_doctor/use_cases/repair_service.py

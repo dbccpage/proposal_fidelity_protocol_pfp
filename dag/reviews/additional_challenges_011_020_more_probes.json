@@ -1,0 +1,2162 @@
+{
+  "scope": "Independent synthetic probes C015-C020",
+  "probes": [
+    {
+      "id": "C015-valid-isolated-pair",
+      "family": 15,
+      "case": {
+        "id": "audit15",
+        "simplices": [
+          {
+            "dim": 0,
+            "vertices": [
+              0
+            ],
+            "val": "0"
+          },
+          {
+            "dim": 0,
+            "vertices": [
+              1
+            ],
+            "val": "1"
+          }
+        ]
+      },
+      "certificate": {
+        "id": "audit15",
+        "status": "SOLVED",
+        "pairs": [],
+        "essential": [
+          "0",
+          "1"
+        ],
+        "barcode": {
+          "0": [
+            [
+              "0",
+              "inf"
+            ],
+            [
+              "1",
+              "inf"
+            ]
+          ]
+        },
+        "R_columns": {},
+        "V_columns": {}
+      },
+      "expectation": "PASS control",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Dual consensus achieved (both checkers passed)",
+        "details": {
+          "algebraic_checker": {
+            "passed": true,
+            "reason": "Algebraic reduction certificate verified over F2"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent persistent homology check passed"
+          }
+        }
+      }
+    },
+    {
+      "id": "C015-decreasing-filtration",
+      "family": 15,
+      "case": {
+        "id": "audit15",
+        "simplices": [
+          {
+            "dim": 0,
+            "vertices": [
+              0
+            ],
+            "val": "1"
+          },
+          {
+            "dim": 0,
+            "vertices": [
+              1
+            ],
+            "val": "0"
+          }
+        ]
+      },
+      "certificate": {
+        "id": "audit15",
+        "status": "SOLVED",
+        "pairs": [],
+        "essential": [
+          "0",
+          "1"
+        ],
+        "barcode": {
+          "0": [
+            [
+              "0",
+              "inf"
+            ],
+            [
+              "1",
+              "inf"
+            ]
+          ]
+        },
+        "R_columns": {},
+        "V_columns": {}
+      },
+      "expectation": "Reject SOLVED: filtration decreases; unchanged sorted barcode cannot repair invalid input order",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Dual consensus achieved (both checkers passed)",
+        "details": {
+          "algebraic_checker": {
+            "passed": true,
+            "reason": "Algebraic reduction certificate verified over F2"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent persistent homology check passed"
+          }
+        }
+      }
+    },
+    {
+      "id": "C015-invented-face-witness",
+      "family": 15,
+      "case": {
+        "id": "bad_face",
+        "simplices": [
+          {
+            "dim": 0,
+            "vertices": [
+              0
+            ],
+            "val": "0"
+          },
+          {
+            "dim": 1,
+            "vertices": [
+              0,
+              1
+            ],
+            "val": "1"
+          }
+        ]
+      },
+      "certificate": {
+        "status": "OUT_OF_SCOPE",
+        "witness": {
+          "simplex": "invented",
+          "missing_earlier_face": "[999]"
+        }
+      },
+      "expectation": "Reject fabricated witness even when some other face defect exists",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Dual consensus achieved (both checkers passed)",
+        "details": {
+          "algebraic_checker": {
+            "passed": true,
+            "reason": "Valid OUT_OF_SCOPE witness verified"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent checker confirms OUT_OF_SCOPE"
+          }
+        }
+      }
+    },
+    {
+      "id": "C015-pair-outside-range",
+      "family": 15,
+      "case": {
+        "id": "audit15",
+        "simplices": [
+          {
+            "dim": 0,
+            "vertices": [
+              0
+            ],
+            "val": "0"
+          },
+          {
+            "dim": 0,
+            "vertices": [
+              1
+            ],
+            "val": "1"
+          }
+        ]
+      },
+      "certificate": {
+        "id": "audit15",
+        "status": "SOLVED",
+        "pairs": [
+          [
+            "0",
+            "999"
+          ]
+        ],
+        "essential": [
+          "0",
+          "1"
+        ],
+        "barcode": {
+          "0": [
+            [
+              "0",
+              "inf"
+            ],
+            [
+              "1",
+              "inf"
+            ]
+          ]
+        },
+        "R_columns": {},
+        "V_columns": {}
+      },
+      "expectation": "Reject malformed pair without an exception",
+      "observed": {
+        "exception_type": "IndexError",
+        "exception": "list index out of range"
+      }
+    },
+    {
+      "id": "C016-valid-circle-pair",
+      "family": 16,
+      "case": {
+        "id": "audit16",
+        "deg_p": 1,
+        "deg_q": 1,
+        "X": {
+          "maximal_simplices": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        "Y": {
+          "maximal_simplices": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "id": "audit16",
+        "status": "SOLVED",
+        "verdict": "NOT_DISTINGUISHED_BY_THIS_PRODUCT",
+        "X": {
+          "rank": "0",
+          "basis_p": [
+            {
+              "[0, 1]": "1"
+            }
+          ],
+          "basis_q": [
+            {
+              "[0, 1]": "1"
+            }
+          ],
+          "nonzero": [],
+          "primitives": []
+        },
+        "Y": {
+          "rank": "0",
+          "basis_p": [
+            {
+              "[0, 1]": "1"
+            }
+          ],
+          "basis_q": [
+            {
+              "[0, 1]": "1"
+            }
+          ],
+          "nonzero": [],
+          "primitives": []
+        }
+      },
+      "expectation": "PASS control",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Dual consensus achieved (both checkers passed)",
+        "details": {
+          "algebraic_checker": {
+            "passed": true,
+            "reason": "Algebraic cup product certificate verified"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent cup product rank and verdict verified"
+          }
+        }
+      }
+    },
+    {
+      "id": "C016-empty-cohomology-bases",
+      "family": 16,
+      "case": {
+        "id": "audit16",
+        "deg_p": 1,
+        "deg_q": 1,
+        "X": {
+          "maximal_simplices": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        "Y": {
+          "maximal_simplices": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "id": "audit16",
+        "status": "SOLVED",
+        "verdict": "NOT_DISTINGUISHED_BY_THIS_PRODUCT",
+        "X": {
+          "rank": "0",
+          "basis_p": [],
+          "basis_q": [],
+          "nonzero": [],
+          "primitives": []
+        },
+        "Y": {
+          "rank": "0",
+          "basis_p": [],
+          "basis_q": [],
+          "nonzero": [],
+          "primitives": []
+        }
+      },
+      "expectation": "Reject incomplete H1 bases; H1(circle)=Q, despite correct zero product rank",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Dual consensus achieved (both checkers passed)",
+        "details": {
+          "algebraic_checker": {
+            "passed": true,
+            "reason": "Algebraic cup product certificate verified"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent cup product rank and verdict verified"
+          }
+        }
+      }
+    },
+    {
+      "id": "C016-warranted-invalid-degree-refusal",
+      "family": 16,
+      "case": {
+        "id": "audit16",
+        "deg_p": 3,
+        "deg_q": 2,
+        "X": {
+          "maximal_simplices": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        "Y": {
+          "maximal_simplices": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "id": "audit16",
+        "status": "UNKNOWN",
+        "refusal": "INVALID_DEGREES",
+        "refusal_code": "INVALID_DEGREES",
+        "details": "deg_p=3, deg_q=2 must satisfy p, q >= 0 and p+q <= 4"
+      },
+      "expectation": "Accept reference warranted INVALID_DEGREES refusal",
+      "observed": {
+        "verdict": "FAIL",
+        "reason": "Dual check failed: C1=Expected SOLVED, got UNKNOWN | C2=Independent checker confirms the refusal",
+        "details": {
+          "algebraic_checker": {
+            "passed": false,
+            "reason": "Expected SOLVED, got UNKNOWN"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent checker confirms the refusal"
+          }
+        }
+      }
+    },
+    {
+      "id": "C016-degree4-times-unit",
+      "family": 16,
+      "case": {
+        "id": "s4",
+        "deg_p": 4,
+        "deg_q": 0,
+        "X": {
+          "maximal_simplices": [
+            [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              0,
+              1,
+              2,
+              3,
+              5
+            ],
+            [
+              0,
+              1,
+              2,
+              4,
+              5
+            ],
+            [
+              0,
+              1,
+              3,
+              4,
+              5
+            ],
+            [
+              0,
+              2,
+              3,
+              4,
+              5
+            ],
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          ]
+        },
+        "Y": {
+          "maximal_simplices": [
+            [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              0,
+              1,
+              2,
+              3,
+              5
+            ],
+            [
+              0,
+              1,
+              2,
+              4,
+              5
+            ],
+            [
+              0,
+              1,
+              3,
+              4,
+              5
+            ],
+            [
+              0,
+              2,
+              3,
+              4,
+              5
+            ],
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "id": "s4",
+        "status": "SOLVED",
+        "verdict": "NOT_DISTINGUISHED_BY_THIS_PRODUCT",
+        "X": {
+          "rank": "1",
+          "basis_p": [
+            {
+              "[0, 1, 2, 3, 4]": "1"
+            }
+          ],
+          "basis_q": [
+            {
+              "[0]": "1",
+              "[1]": "1",
+              "[2]": "1",
+              "[3]": "1",
+              "[4]": "1",
+              "[5]": "1"
+            }
+          ],
+          "nonzero": [
+            {
+              "i": "0",
+              "j": "0",
+              "cycle": {
+                "[0, 1, 2, 3, 4]": "-1",
+                "[0, 1, 2, 3, 5]": "1",
+                "[0, 1, 2, 4, 5]": "-1",
+                "[0, 1, 3, 4, 5]": "1",
+                "[0, 2, 3, 4, 5]": "-1",
+                "[1, 2, 3, 4, 5]": "1"
+              },
+              "value": "-1"
+            }
+          ],
+          "primitives": []
+        },
+        "Y": {
+          "rank": "1",
+          "basis_p": [
+            {
+              "[0, 1, 2, 3, 4]": "1"
+            }
+          ],
+          "basis_q": [
+            {
+              "[0]": "1",
+              "[1]": "1",
+              "[2]": "1",
+              "[3]": "1",
+              "[4]": "1",
+              "[5]": "1"
+            }
+          ],
+          "nonzero": [
+            {
+              "i": "0",
+              "j": "0",
+              "cycle": {
+                "[0, 1, 2, 3, 4]": "-1",
+                "[0, 1, 2, 3, 5]": "1",
+                "[0, 1, 2, 4, 5]": "-1",
+                "[0, 1, 3, 4, 5]": "1",
+                "[0, 2, 3, 4, 5]": "-1",
+                "[1, 2, 3, 4, 5]": "1"
+              },
+              "value": "-1"
+            }
+          ],
+          "primitives": []
+        }
+      },
+      "expectation": "Accept valid degree4 cup unit certificate without KeyError on absent degree5",
+      "observed": {
+        "exception_type": "KeyError",
+        "exception": "5"
+      }
+    },
+    {
+      "id": "C017-valid-trivial-connection",
+      "family": 17,
+      "case": {
+        "id": "audit17",
+        "L": 2,
+        "M": 2,
+        "boundary": "open",
+        "group": {
+          "name": "S3",
+          "order": 6,
+          "identity": "e",
+          "elements": [
+            "e",
+            "r",
+            "r2",
+            "s",
+            "sr",
+            "sr2"
+          ],
+          "table": {
+            "e": {
+              "e": "e",
+              "r": "r",
+              "r2": "r2",
+              "s": "s",
+              "sr": "sr",
+              "sr2": "sr2"
+            },
+            "r": {
+              "e": "r",
+              "r": "r2",
+              "r2": "e",
+              "s": "sr",
+              "sr": "sr2",
+              "sr2": "s"
+            },
+            "r2": {
+              "e": "r2",
+              "r": "e",
+              "r2": "r",
+              "s": "sr2",
+              "sr": "s",
+              "sr2": "sr"
+            },
+            "s": {
+              "e": "s",
+              "r": "sr2",
+              "r2": "sr",
+              "s": "e",
+              "sr": "r2",
+              "sr2": "r"
+            },
+            "sr": {
+              "e": "sr",
+              "r": "s",
+              "r2": "sr2",
+              "s": "r",
+              "sr": "e",
+              "sr2": "r2"
+            },
+            "sr2": {
+              "e": "sr2",
+              "r": "sr",
+              "r2": "s",
+              "s": "r2",
+              "sr": "r",
+              "sr2": "e"
+            }
+          },
+          "inverses": {
+            "e": "e",
+            "r": "r2",
+            "r2": "r",
+            "s": "s",
+            "sr": "sr",
+            "sr2": "sr2"
+          }
+        },
+        "edges": {
+          "0,0->1,0": "e",
+          "1,0->0,0": "e",
+          "0,0->0,1": "e",
+          "0,1->0,0": "e",
+          "0,1->1,1": "e",
+          "1,1->0,1": "e",
+          "1,0->1,1": "e",
+          "1,1->1,0": "e"
+        }
+      },
+      "certificate": {
+        "id": "audit17",
+        "status": "SOLVED",
+        "verdict": "PURE_GAUGE",
+        "gauge": {
+          "0,0": "e",
+          "1,0": "e",
+          "0,1": "e",
+          "1,1": "e"
+        }
+      },
+      "expectation": "PASS control",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Dual consensus achieved (both checkers passed)",
+        "details": {
+          "algebraic_checker": {
+            "passed": true,
+            "reason": "PURE_GAUGE certificate verified"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent checker confirms PURE_GAUGE"
+          }
+        }
+      }
+    },
+    {
+      "id": "C017-group-outside-named-domain",
+      "family": 17,
+      "case": {
+        "id": "audit17",
+        "L": 2,
+        "M": 2,
+        "boundary": "open",
+        "group": {
+          "name": "not_an_allowed_group",
+          "order": 1,
+          "elements": [
+            "e"
+          ],
+          "identity": "e",
+          "inverses": {
+            "e": "e"
+          },
+          "table": {
+            "e": {
+              "e": "e"
+            }
+          }
+        },
+        "edges": {
+          "0,0->1,0": "e",
+          "1,0->0,0": "e",
+          "0,0->0,1": "e",
+          "0,1->0,0": "e",
+          "0,1->1,1": "e",
+          "1,1->0,1": "e",
+          "1,0->1,1": "e",
+          "1,1->1,0": "e"
+        }
+      },
+      "certificate": {
+        "id": "audit17",
+        "status": "SOLVED",
+        "verdict": "PURE_GAUGE",
+        "gauge": {
+          "0,0": "e",
+          "1,0": "e",
+          "0,1": "e",
+          "1,1": "e"
+        }
+      },
+      "expectation": "Reject SOLVED outside G in S3,Q8,SL2F3; generic group arithmetic remains valid",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Dual consensus achieved (both checkers passed)",
+        "details": {
+          "algebraic_checker": {
+            "passed": true,
+            "reason": "PURE_GAUGE certificate verified"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent checker confirms PURE_GAUGE"
+          }
+        }
+      }
+    },
+    {
+      "id": "C017-extra-diagonal-edge",
+      "family": 17,
+      "case": {
+        "id": "audit17",
+        "L": 2,
+        "M": 2,
+        "boundary": "open",
+        "group": {
+          "name": "S3",
+          "order": 6,
+          "identity": "e",
+          "elements": [
+            "e",
+            "r",
+            "r2",
+            "s",
+            "sr",
+            "sr2"
+          ],
+          "table": {
+            "e": {
+              "e": "e",
+              "r": "r",
+              "r2": "r2",
+              "s": "s",
+              "sr": "sr",
+              "sr2": "sr2"
+            },
+            "r": {
+              "e": "r",
+              "r": "r2",
+              "r2": "e",
+              "s": "sr",
+              "sr": "sr2",
+              "sr2": "s"
+            },
+            "r2": {
+              "e": "r2",
+              "r": "e",
+              "r2": "r",
+              "s": "sr2",
+              "sr": "s",
+              "sr2": "sr"
+            },
+            "s": {
+              "e": "s",
+              "r": "sr2",
+              "r2": "sr",
+              "s": "e",
+              "sr": "r2",
+              "sr2": "r"
+            },
+            "sr": {
+              "e": "sr",
+              "r": "s",
+              "r2": "sr2",
+              "s": "r",
+              "sr": "e",
+              "sr2": "r2"
+            },
+            "sr2": {
+              "e": "sr2",
+              "r": "sr",
+              "r2": "s",
+              "s": "r2",
+              "sr": "r",
+              "sr2": "e"
+            }
+          },
+          "inverses": {
+            "e": "e",
+            "r": "r2",
+            "r2": "r",
+            "s": "s",
+            "sr": "sr",
+            "sr2": "sr2"
+          }
+        },
+        "edges": {
+          "0,0->1,0": "e",
+          "1,0->0,0": "e",
+          "0,0->0,1": "e",
+          "0,1->0,0": "e",
+          "0,1->1,1": "e",
+          "1,1->0,1": "e",
+          "1,0->1,1": "e",
+          "1,1->1,0": "e",
+          "0,0->1,1": "e",
+          "1,1->0,0": "e"
+        }
+      },
+      "certificate": {
+        "id": "audit17",
+        "status": "SOLVED",
+        "verdict": "PURE_GAUGE",
+        "gauge": {
+          "0,0": "e",
+          "1,0": "e",
+          "0,1": "e",
+          "1,1": "e"
+        }
+      },
+      "expectation": "Reject non-nearest-neighbour extra lattice edge under declared square-grid carrier",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Dual consensus achieved (both checkers passed)",
+        "details": {
+          "algebraic_checker": {
+            "passed": true,
+            "reason": "PURE_GAUGE certificate verified"
+          },
+          "independent_checker": {
+            "passed": true,
+            "reason": "Independent checker confirms PURE_GAUGE"
+          }
+        }
+      }
+    },
+    {
+      "id": "C017-unhashable-group-element",
+      "family": 17,
+      "case": {
+        "id": "audit17",
+        "L": 2,
+        "M": 2,
+        "boundary": "open",
+        "group": {
+          "name": "S3",
+          "order": 6,
+          "identity": "e",
+          "elements": [
+            []
+          ],
+          "table": {
+            "e": {
+              "e": "e",
+              "r": "r",
+              "r2": "r2",
+              "s": "s",
+              "sr": "sr",
+              "sr2": "sr2"
+            },
+            "r": {
+              "e": "r",
+              "r": "r2",
+              "r2": "e",
+              "s": "sr",
+              "sr": "sr2",
+              "sr2": "s"
+            },
+            "r2": {
+              "e": "r2",
+              "r": "e",
+              "r2": "r",
+              "s": "sr2",
+              "sr": "s",
+              "sr2": "sr"
+            },
+            "s": {
+              "e": "s",
+              "r": "sr2",
+              "r2": "sr",
+              "s": "e",
+              "sr": "r2",
+              "sr2": "r"
+            },
+            "sr": {
+              "e": "sr",
+              "r": "s",
+              "r2": "sr2",
+              "s": "r",
+              "sr": "e",
+              "sr2": "r2"
+            },
+            "sr2": {
+              "e": "sr2",
+              "r": "sr",
+              "r2": "s",
+              "s": "r2",
+              "sr": "r",
+              "sr2": "e"
+            }
+          },
+          "inverses": {
+            "e": "e",
+            "r": "r2",
+            "r2": "r",
+            "s": "s",
+            "sr": "sr",
+            "sr2": "sr2"
+          }
+        },
+        "edges": {
+          "0,0->1,0": "e",
+          "1,0->0,0": "e",
+          "0,0->0,1": "e",
+          "0,1->0,0": "e",
+          "0,1->1,1": "e",
+          "1,1->0,1": "e",
+          "1,0->1,1": "e",
+          "1,1->1,0": "e"
+        }
+      },
+      "certificate": {
+        "id": "audit17",
+        "status": "SOLVED",
+        "verdict": "PURE_GAUGE",
+        "gauge": {
+          "0,0": "e",
+          "1,0": "e",
+          "0,1": "e",
+          "1,1": "e"
+        }
+      },
+      "expectation": "Reject malformed group without an uncaught exception",
+      "observed": {
+        "exception_type": "TypeError",
+        "exception": "cannot use 'list' as a set element (unhashable type: 'list')"
+      }
+    },
+    {
+      "id": "C018-negative-triangle",
+      "family": 18,
+      "case": {
+        "id": "audit18",
+        "vertices": [
+          "a",
+          "b",
+          "c"
+        ],
+        "edges": [
+          [
+            "a",
+            "b",
+            -1
+          ],
+          [
+            "b",
+            "c",
+            1
+          ],
+          [
+            "a",
+            "c",
+            1
+          ]
+        ]
+      },
+      "certificate": {
+        "id": "audit18",
+        "status": "SOLVED",
+        "l": "1",
+        "switching": {},
+        "deleted": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "lower_bound": {
+          "kind": "exhaustive"
+        }
+      },
+      "expectation": "PASS control, minimum1 by one negative cycle",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Both checkers passed",
+        "details": {
+          "checker1_passed": true,
+          "checker1_reason": "SOLVED certificate verified via exhaustive search",
+          "checker2_passed": true,
+          "checker2_reason": "Independent checker confirms SOLVED"
+        }
+      }
+    },
+    {
+      "id": "C018-vertex-bound201",
+      "family": 18,
+      "case": {
+        "id": "too_many",
+        "vertices": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "40",
+          "41",
+          "42",
+          "43",
+          "44",
+          "45",
+          "46",
+          "47",
+          "48",
+          "49",
+          "50",
+          "51",
+          "52",
+          "53",
+          "54",
+          "55",
+          "56",
+          "57",
+          "58",
+          "59",
+          "60",
+          "61",
+          "62",
+          "63",
+          "64",
+          "65",
+          "66",
+          "67",
+          "68",
+          "69",
+          "70",
+          "71",
+          "72",
+          "73",
+          "74",
+          "75",
+          "76",
+          "77",
+          "78",
+          "79",
+          "80",
+          "81",
+          "82",
+          "83",
+          "84",
+          "85",
+          "86",
+          "87",
+          "88",
+          "89",
+          "90",
+          "91",
+          "92",
+          "93",
+          "94",
+          "95",
+          "96",
+          "97",
+          "98",
+          "99",
+          "100",
+          "101",
+          "102",
+          "103",
+          "104",
+          "105",
+          "106",
+          "107",
+          "108",
+          "109",
+          "110",
+          "111",
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "118",
+          "119",
+          "120",
+          "121",
+          "122",
+          "123",
+          "124",
+          "125",
+          "126",
+          "127",
+          "128",
+          "129",
+          "130",
+          "131",
+          "132",
+          "133",
+          "134",
+          "135",
+          "136",
+          "137",
+          "138",
+          "139",
+          "140",
+          "141",
+          "142",
+          "143",
+          "144",
+          "145",
+          "146",
+          "147",
+          "148",
+          "149",
+          "150",
+          "151",
+          "152",
+          "153",
+          "154",
+          "155",
+          "156",
+          "157",
+          "158",
+          "159",
+          "160",
+          "161",
+          "162",
+          "163",
+          "164",
+          "165",
+          "166",
+          "167",
+          "168",
+          "169",
+          "170",
+          "171",
+          "172",
+          "173",
+          "174",
+          "175",
+          "176",
+          "177",
+          "178",
+          "179",
+          "180",
+          "181",
+          "182",
+          "183",
+          "184",
+          "185",
+          "186",
+          "187",
+          "188",
+          "189",
+          "190",
+          "191",
+          "192",
+          "193",
+          "194",
+          "195",
+          "196",
+          "197",
+          "198",
+          "199",
+          "200"
+        ],
+        "edges": []
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "l": "0",
+        "switching": {},
+        "deleted": [],
+        "lower_bound": {
+          "kind": "packing",
+          "cycles": []
+        }
+      },
+      "expectation": "Reject outside CHALLENGE vertex<=200 contract",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Both checkers passed",
+        "details": {
+          "checker1_passed": true,
+          "checker1_reason": "SOLVED certificate verified via negative cycle packing",
+          "checker2_passed": true,
+          "checker2_reason": "Independent checker confirms SOLVED via packing"
+        }
+      }
+    },
+    {
+      "id": "C018-nonsimple-graph",
+      "family": 18,
+      "case": {
+        "id": "duplicate_edge",
+        "vertices": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          [
+            "a",
+            "b",
+            1
+          ],
+          [
+            "a",
+            "b",
+            1
+          ]
+        ]
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "l": "0",
+        "switching": {},
+        "deleted": [],
+        "lower_bound": {
+          "kind": "packing",
+          "cycles": []
+        }
+      },
+      "expectation": "Reject duplicate edge under declared simple-graph contract",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Both checkers passed",
+        "details": {
+          "checker1_passed": true,
+          "checker1_reason": "SOLVED certificate verified via negative cycle packing",
+          "checker2_passed": true,
+          "checker2_reason": "Independent checker confirms SOLVED"
+        }
+      }
+    },
+    {
+      "id": "C019-false-phi2-optimum",
+      "family": 19,
+      "case": {
+        "id": "two_cavities",
+        "vertices": [
+          "v"
+        ],
+        "edges": [
+          "e"
+        ],
+        "faces": [
+          "f0",
+          "f1"
+        ],
+        "d1": {},
+        "d2": {},
+        "mode": "Q",
+        "B": {
+          "f0": "1",
+          "f1": "1"
+        },
+        "weights": {
+          "f0": "1",
+          "f1": "1"
+        }
+      },
+      "certificate": {
+        "id": "two_cavities",
+        "status": "SOLVED",
+        "mode": "Q",
+        "verdict": "OBSTRUCTED",
+        "cycle": {
+          "f0": "1"
+        },
+        "pairing": "1",
+        "phi2": "1",
+        "primal_A": {},
+        "dual_y": {
+          "f0": "1"
+        }
+      },
+      "expectation": "Reject phi2=1: d2=0 makes every residual B, so exact optimum=sum |B|=2; producer gives first-basis-vector lower bound",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Both checkers passed",
+        "details": {
+          "checker1_passed": true,
+          "checker1_reason": "Valid OBSTRUCTED certificate verified over Q",
+          "checker2_passed": true,
+          "checker2_reason": "Independent checker confirms OBSTRUCTED"
+        }
+      }
+    },
+    {
+      "id": "C019-ignored-primal-certificate",
+      "family": 19,
+      "case": {
+        "id": "two_cavities",
+        "vertices": [
+          "v"
+        ],
+        "edges": [
+          "e"
+        ],
+        "faces": [
+          "f0",
+          "f1"
+        ],
+        "d1": {},
+        "d2": {},
+        "mode": "Q",
+        "B": {
+          "f0": "1",
+          "f1": "1"
+        },
+        "weights": {
+          "f0": "1",
+          "f1": "1"
+        }
+      },
+      "certificate": {
+        "id": "two_cavities",
+        "status": "SOLVED",
+        "mode": "Q",
+        "verdict": "OBSTRUCTED",
+        "cycle": {
+          "f0": "1"
+        },
+        "pairing": "1",
+        "phi2": "1",
+        "primal_A": {
+          "e": "this is not a rational"
+        },
+        "dual_y": {
+          "f0": "1"
+        }
+      },
+      "expectation": "Reject malformed primal and nonzero duality gap",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Both checkers passed",
+        "details": {
+          "checker1_passed": true,
+          "checker1_reason": "Valid OBSTRUCTED certificate verified over Q",
+          "checker2_passed": true,
+          "checker2_reason": "Independent checker confirms OBSTRUCTED"
+        }
+      }
+    },
+    {
+      "id": "C019-negative-weight-input",
+      "family": 19,
+      "case": {
+        "id": "two_cavities",
+        "vertices": [
+          "v"
+        ],
+        "edges": [
+          "e"
+        ],
+        "faces": [
+          "f0"
+        ],
+        "d1": {},
+        "d2": {},
+        "mode": "Q",
+        "B": {
+          "f0": "0"
+        },
+        "weights": {
+          "f0": "-1"
+        }
+      },
+      "certificate": {
+        "id": "two_cavities",
+        "status": "SOLVED",
+        "mode": "Q",
+        "verdict": "EXTENDS",
+        "A": {},
+        "phi2": "0"
+      },
+      "expectation": "Reject nonpositive face weight outside convex weighted-L1 contract",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Both checkers passed",
+        "details": {
+          "checker1_passed": true,
+          "checker1_reason": "Valid EXTENDS certificate verified over Q",
+          "checker2_passed": true,
+          "checker2_reason": "Independent checker confirms EXTENDS"
+        }
+      }
+    },
+    {
+      "id": "C019-integral-solution-missed",
+      "family": 19,
+      "case": {
+        "id": "integral_available",
+        "vertices": [
+          "v"
+        ],
+        "edges": [
+          "e0",
+          "e1"
+        ],
+        "faces": [
+          "f"
+        ],
+        "d1": {},
+        "d2": {
+          "f": {
+            "e0": 2,
+            "e1": 1
+          }
+        },
+        "mode": "Z",
+        "B": {
+          "f": "1"
+        }
+      },
+      "certificate": {
+        "id": "integral_available",
+        "status": "UNKNOWN",
+        "refusal": "TORSION_UNCERTIFIED"
+      },
+      "expectation": "Reference should find integer A=(0,1); free-variable-zero rational particular A=(1/2,0) does not establish integral obstruction",
+      "observed": {
+        "verdict": "FAIL",
+        "reason": "Checker 1 rejected: Unexpected status: UNKNOWN",
+        "details": {
+          "checker1_passed": false,
+          "checker1_reason": "Unexpected status: UNKNOWN",
+          "checker2_passed": false,
+          "checker2_reason": "Expected SOLVED, got UNKNOWN"
+        }
+      }
+    },
+    {
+      "id": "C019-integral-solution-positive-control",
+      "family": 19,
+      "case": {
+        "id": "integral_available",
+        "vertices": [
+          "v"
+        ],
+        "edges": [
+          "e0",
+          "e1"
+        ],
+        "faces": [
+          "f"
+        ],
+        "d1": {},
+        "d2": {
+          "f": {
+            "e0": 2,
+            "e1": 1
+          }
+        },
+        "mode": "Z",
+        "B": {
+          "f": "1"
+        }
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "mode": "Z",
+        "verdict": "EXTENDS_INTEGRAL",
+        "A": {
+          "e1": "1"
+        }
+      },
+      "expectation": "PASS control for same available integer solution",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "Both checkers passed",
+        "details": {
+          "checker1_passed": true,
+          "checker1_reason": "Valid EXTENDS_INTEGRAL verified",
+          "checker2_passed": true,
+          "checker2_reason": "Independent checker confirms EXTENDS_INTEGRAL"
+        }
+      }
+    },
+    {
+      "id": "C020-worked-zigzag-both",
+      "family": 20,
+      "case": {
+        "id": "audit20",
+        "filtration": "both",
+        "dims": {
+          "2,0": 1,
+          "1,0": 1,
+          "1,1": 1,
+          "0,1": 1
+        },
+        "d_h": {
+          "2,0": [
+            [
+              1
+            ]
+          ],
+          "1,1": [
+            [
+              1
+            ]
+          ]
+        },
+        "d_v": {
+          "1,1": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "filtration": "both",
+        "columns": {
+          "E2": {
+            "0,1": "1",
+            "2,0": "1"
+          },
+          "differentials": [
+            {
+              "r": "2",
+              "from": "2,0",
+              "rank": "1"
+            }
+          ],
+          "Einf": {}
+        },
+        "rows": {
+          "E2": {},
+          "differentials": [],
+          "Einf": {}
+        },
+        "tot_homology": {}
+      },
+      "expectation": "PASS control: nonzero column d2, zero row E2, zero total homology",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "PASSED_BOTH_CHECKERS",
+        "details": {
+          "exact": {
+            "verdict": "PASS",
+            "details": "All pages, differentials, page recursions, and abutments verified"
+          },
+          "independent": {
+            "verdict": "PASS",
+            "details": "independent filtered-complex computation verified"
+          }
+        }
+      }
+    },
+    {
+      "id": "C020-stalk-dimension5",
+      "family": 20,
+      "case": {
+        "id": "dim5",
+        "filtration": "columns",
+        "dims": {
+          "0,0": 5
+        },
+        "d_h": {},
+        "d_v": {}
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "filtration": "columns",
+        "E2": {
+          "0,0": "5"
+        },
+        "differentials": [],
+        "Einf": {
+          "0,0": "5"
+        },
+        "tot_homology": {
+          "0": "5"
+        }
+      },
+      "expectation": "Reject dimension5 outside n(p,q)<=4",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "PASSED_BOTH_CHECKERS",
+        "details": {
+          "exact": {
+            "verdict": "PASS",
+            "details": "All pages, differentials, page recursions, and abutments verified"
+          },
+          "independent": {
+            "verdict": "PASS",
+            "details": "independent filtered-complex computation verified"
+          }
+        }
+      }
+    },
+    {
+      "id": "C020-silently-ignored-outside-cell",
+      "family": 20,
+      "case": {
+        "id": "outside",
+        "filtration": "columns",
+        "dims": {
+          "6,0": 1
+        },
+        "d_h": {},
+        "d_v": {}
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "filtration": "columns",
+        "E2": {},
+        "differentials": [],
+        "Einf": {},
+        "tot_homology": {}
+      },
+      "expectation": "Reject nonzero cell outside 0<=p,q<=5 instead of silently dropping it",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "PASSED_BOTH_CHECKERS",
+        "details": {
+          "exact": {
+            "verdict": "PASS",
+            "details": "All pages, differentials, page recursions, and abutments verified"
+          },
+          "independent": {
+            "verdict": "PASS",
+            "details": "independent filtered-complex computation verified"
+          }
+        }
+      }
+    },
+    {
+      "id": "C020-nondict-certificate",
+      "family": 20,
+      "case": {
+        "id": "audit20",
+        "filtration": "both",
+        "dims": {
+          "2,0": 1,
+          "1,0": 1,
+          "1,1": 1,
+          "0,1": 1
+        },
+        "d_h": {
+          "2,0": [
+            [
+              1
+            ]
+          ],
+          "1,1": [
+            [
+              1
+            ]
+          ]
+        },
+        "d_v": {
+          "1,1": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "certificate": [],
+      "expectation": "Reject malformed certificate without an uncaught exception",
+      "observed": {
+        "exception_type": "AttributeError",
+        "exception": "'list' object has no attribute 'get'"
+      }
+    },
+    {
+      "id": "C020-noninteger-rank",
+      "family": 20,
+      "case": {
+        "id": "audit20",
+        "filtration": "both",
+        "dims": {
+          "2,0": 1,
+          "1,0": 1,
+          "1,1": 1,
+          "0,1": 1
+        },
+        "d_h": {
+          "2,0": [
+            [
+              1
+            ]
+          ],
+          "1,1": [
+            [
+              1
+            ]
+          ]
+        },
+        "d_v": {
+          "1,1": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "filtration": "both",
+        "columns": {
+          "E2": {
+            "0,1": "1",
+            "2,0": "1"
+          },
+          "differentials": [
+            {
+              "r": "2",
+              "from": "2,0",
+              "rank": "wrong"
+            }
+          ],
+          "Einf": {}
+        },
+        "rows": {
+          "E2": {},
+          "differentials": [],
+          "Einf": {}
+        },
+        "tot_homology": {}
+      },
+      "expectation": "Reject malformed differential rank without an exception",
+      "observed": {
+        "verdict": "FAIL",
+        "reason": "Exact: [columns] Differentials mismatch: expected [{'r': '2', 'from': '2,0', 'rank': '1'}], got [{'r': '2', 'from': '2,0', 'rank': 'wrong'}] | Independent: independent columns differentials mismatch",
+        "details": {
+          "exact": {
+            "verdict": "FAIL",
+            "reason": "[columns] Differentials mismatch: expected [{'r': '2', 'from': '2,0', 'rank': '1'}], got [{'r': '2', 'from': '2,0', 'rank': 'wrong'}]"
+          },
+          "independent": {
+            "verdict": "FAIL",
+            "reason": "independent columns differentials mismatch"
+          }
+        }
+      }
+    },
+    {
+      "id": "C020-explicit-d3-zigzag",
+      "family": 20,
+      "case": {
+        "id": "audit_d3",
+        "filtration": "both",
+        "dims": {
+          "3,0": 1,
+          "2,0": 1,
+          "2,1": 1,
+          "1,1": 1,
+          "1,2": 1,
+          "0,2": 1
+        },
+        "d_h": {
+          "3,0": [
+            [
+              1
+            ]
+          ],
+          "2,1": [
+            [
+              1
+            ]
+          ],
+          "1,2": [
+            [
+              1
+            ]
+          ]
+        },
+        "d_v": {
+          "2,1": [
+            [
+              1
+            ]
+          ],
+          "1,2": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "filtration": "both",
+        "columns": {
+          "E2": {
+            "3,0": "1",
+            "0,2": "1"
+          },
+          "differentials": [
+            {
+              "r": "3",
+              "from": "3,0",
+              "rank": "1"
+            }
+          ],
+          "Einf": {}
+        },
+        "rows": {
+          "E2": {},
+          "differentials": [],
+          "Einf": {}
+        },
+        "tot_homology": {}
+      },
+      "expectation": "PASS independent hand-derived length-r staircase: total differential invertible, column d_r rank1 and row E2 zero",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "PASSED_BOTH_CHECKERS",
+        "details": {
+          "exact": {
+            "verdict": "PASS",
+            "details": "All pages, differentials, page recursions, and abutments verified"
+          },
+          "independent": {
+            "verdict": "PASS",
+            "details": "independent filtered-complex computation verified"
+          }
+        }
+      }
+    },
+    {
+      "id": "C020-explicit-d4-zigzag",
+      "family": 20,
+      "case": {
+        "id": "audit_d4",
+        "filtration": "both",
+        "dims": {
+          "4,0": 1,
+          "3,0": 1,
+          "3,1": 1,
+          "2,1": 1,
+          "2,2": 1,
+          "1,2": 1,
+          "1,3": 1,
+          "0,3": 1
+        },
+        "d_h": {
+          "4,0": [
+            [
+              1
+            ]
+          ],
+          "3,1": [
+            [
+              1
+            ]
+          ],
+          "2,2": [
+            [
+              1
+            ]
+          ],
+          "1,3": [
+            [
+              1
+            ]
+          ]
+        },
+        "d_v": {
+          "3,1": [
+            [
+              1
+            ]
+          ],
+          "2,2": [
+            [
+              1
+            ]
+          ],
+          "1,3": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "filtration": "both",
+        "columns": {
+          "E2": {
+            "4,0": "1",
+            "0,3": "1"
+          },
+          "differentials": [
+            {
+              "r": "4",
+              "from": "4,0",
+              "rank": "1"
+            }
+          ],
+          "Einf": {}
+        },
+        "rows": {
+          "E2": {},
+          "differentials": [],
+          "Einf": {}
+        },
+        "tot_homology": {}
+      },
+      "expectation": "PASS independent hand-derived length-r staircase: total differential invertible, column d_r rank1 and row E2 zero",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "PASSED_BOTH_CHECKERS",
+        "details": {
+          "exact": {
+            "verdict": "PASS",
+            "details": "All pages, differentials, page recursions, and abutments verified"
+          },
+          "independent": {
+            "verdict": "PASS",
+            "details": "independent filtered-complex computation verified"
+          }
+        }
+      }
+    },
+    {
+      "id": "C020-explicit-d5-zigzag",
+      "family": 20,
+      "case": {
+        "id": "audit_d5",
+        "filtration": "both",
+        "dims": {
+          "5,0": 1,
+          "4,0": 1,
+          "4,1": 1,
+          "3,1": 1,
+          "3,2": 1,
+          "2,2": 1,
+          "2,3": 1,
+          "1,3": 1,
+          "1,4": 1,
+          "0,4": 1
+        },
+        "d_h": {
+          "5,0": [
+            [
+              1
+            ]
+          ],
+          "4,1": [
+            [
+              1
+            ]
+          ],
+          "3,2": [
+            [
+              1
+            ]
+          ],
+          "2,3": [
+            [
+              1
+            ]
+          ],
+          "1,4": [
+            [
+              1
+            ]
+          ]
+        },
+        "d_v": {
+          "4,1": [
+            [
+              1
+            ]
+          ],
+          "3,2": [
+            [
+              1
+            ]
+          ],
+          "2,3": [
+            [
+              1
+            ]
+          ],
+          "1,4": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "certificate": {
+        "status": "SOLVED",
+        "filtration": "both",
+        "columns": {
+          "E2": {
+            "5,0": "1",
+            "0,4": "1"
+          },
+          "differentials": [
+            {
+              "r": "5",
+              "from": "5,0",
+              "rank": "1"
+            }
+          ],
+          "Einf": {}
+        },
+        "rows": {
+          "E2": {},
+          "differentials": [],
+          "Einf": {}
+        },
+        "tot_homology": {}
+      },
+      "expectation": "PASS independent hand-derived length-r staircase: total differential invertible, column d_r rank1 and row E2 zero",
+      "observed": {
+        "verdict": "PASS",
+        "reason": "PASSED_BOTH_CHECKERS",
+        "details": {
+          "exact": {
+            "verdict": "PASS",
+            "details": "All pages, differentials, page recursions, and abutments verified"
+          },
+          "independent": {
+            "verdict": "PASS",
+            "details": "independent filtered-complex computation verified"
+          }
+        }
+      }
+    }
+  ]
+}

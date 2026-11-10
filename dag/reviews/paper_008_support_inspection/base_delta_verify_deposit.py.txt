@@ -1,0 +1,52 @@
+--- papers/pfp/004_pfp_native_verification_and_evidence_custody/verify_deposit.py
++++ papers/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/verify_deposit.py
+@@ -23,6 +23,8 @@
+ 
+ ROOT = Path(__file__).resolve().parent
+ MANIFEST = ROOT / "SHA256SUMS"
++sys.path.insert(0, str(ROOT / "tools"))
++from replay_lean_axiom_census import _declarations, check_census, parse_report  # noqa: E402
+ 
+ EXCLUDED_DIRS = {
+     ".git", ".venv", "venv", "__pycache__", ".pytest_cache",
+@@ -135,6 +137,18 @@
+     if not (lean_dir / "lakefile.lean").is_file() and not (lean_dir / "lakefile.toml").is_file():
+         return ["Missing lean4/lakefile.lean or lakefile.toml"]
+     errors: list[str] = []
++    try:
++        check_census(ROOT)
++        expected = parse_report(ROOT)
++        if not expected:
++            return ["Empty expected Lean declaration census"]
++        for declaration in expected:
++            if declaration.axioms - AXIOM_WHITELIST:
++                errors.append(f"Unauthorized expected axioms for {declaration.name}: {sorted(declaration.axioms)}")
++    except (OSError, ValueError) as error:
++        return [str(error)]
++    if errors:
++        return errors
+     build_result = subprocess.run(
+         ["lake", "build"], cwd=str(lean_dir), capture_output=True, text=True, encoding="utf-8", timeout=60, check=False
+     )
+@@ -159,15 +173,12 @@
+             errors.append(f"axiom census failed:\n{census_result.stdout}\n{census_result.stderr}")
+             return errors
+ 
+-        for line in census_result.stdout.splitlines():
+-            line = line.strip()
+-            if "depends on axioms:" in line:
+-                axioms_part = line.split("depends on axioms:")[1].strip()
+-                axioms_part = axioms_part.strip("[]")
+-                for ax in axioms_part.split(","):
+-                    ax_name = ax.strip()
+-                    if ax_name and ax_name not in AXIOM_WHITELIST:
+-                        errors.append(f"Unauthorized axiom dependency: {ax_name} in '{line}'")
++        try:
++            actual = _declarations(census_result.stdout, target_lean)
++        except ValueError as error:
++            return [str(error)]
++        if actual != expected:
++            errors.append("Fresh Lean census differs from the expected declaration names or axiom sets")
+ 
+     return errors
+ 

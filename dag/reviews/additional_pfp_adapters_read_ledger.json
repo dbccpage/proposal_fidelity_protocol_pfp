@@ -1,0 +1,1862 @@
+[
+  {
+    "path": "pfp/infrastructure/adapters/__init__.py",
+    "sha256": "d359f3a231eee9421bf2fb84a91a6ed781acbe8bba531656bea12402ebcbf5ee",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        32
+      ]
+    ],
+    "assessment": "Read all 32 lines. Lazy name-to-module exports load optional research/CEC adapters only on attribute use, cache the result and reject unknown attributes. This is import routing, not mathematical verification; optional dependencies can still fail at first use."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/cec_bridge_adapter.py",
+    "sha256": "bb5e987a39e58a2639ba4a7c91b23cc808d27cb7532634f739c940097802cc01",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        27
+      ]
+    ],
+    "assessment": "Read all 27 lines. Explicitly refuses every metric with score None and CEC_EVALUATOR_UNAVAILABLE; no target/context contents can manufacture a passing measured score. context.keys assumes a dictionary and malformed context can raise. AuthorityEffect metadata is not a measurement."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/ddc_plot_adapter.py",
+    "sha256": "70ac8b70f79f384ce0335325155aed78c858f0ccff8fc6f112f215c44e9136e2",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        56
+      ]
+    ],
+    "assessment": "Read all 56 lines. Renders supplied tracker arrays and labels V as Phi1+Gamma2, but performs no descent, positivity or equality check. Missing Matplotlib returns None; array consistency and file-save errors propagate. No plot or theorem certification was inferred, and no plot writer executed."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/harness_budget.py",
+    "sha256": "53c76547b35af0d7dd8f09440d677750143ceb727857bda3ca017985a1e1583a",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        55
+      ]
+    ],
+    "assessment": "Read all 55 lines. Extends the existing provider wallet with campaign binding under BEGIN IMMEDIATE, rejects foreign budget IDs and changed specifications, enforces pending-state/concurrency/phase caps using settled or reserved charges. Correct atomic enforcement depends on parent transaction/guard invocation and authentic settlement data. No actual wallet, credentials or provider path was opened."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/obstruction_adapter.py",
+    "sha256": "683da16d20bf0833cb6753bf83ba4cea9170e46292e3371446803ff388f40143",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        37
+      ]
+    ],
+    "assessment": "Read all 37 lines. Appends caller-supplied transition events and returns a tuple snapshot. It does not independently verify a lattice transition, witness, magnitude or step ordering. Entity construction may impose separate constraints; a recorded event alone is not a proof."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/oesos_evidence_adapter.py",
+    "sha256": "74878c88c9386f8eb2ea852a175b8fe607fa93e1d879a07d1258588ebe46767e",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        41
+      ]
+    ],
+    "assessment": "Read all 41 lines. Hashes JSON serialization of selected event fields, returns mutable dictionaries, and leaves metadata outside the chain digest. It neither validates previous_digest links nor authenticates event provenance. The immutable/content-addressed docstring overstates the returned receipt: only the selected events serialization is addressed."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/pfp_proposals.py",
+    "sha256": "4674972eefbd8696eb8b922a2b0f1f8d9d0dfa9a135e4b9eca6fe58fa03d6ffa",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        19
+      ]
+    ],
+    "assessment": "Read all 19 lines. Parses the raw proposal then delegates case and answer directly to host.stabilizer_check, preserving the complete host result rather than translating refusal into success. Host behavior and proposal parser are trust boundaries; this adapter adds no theorem or local certificate check."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/qddc_rust_adapter.py",
+    "sha256": "46a8167f25193a31f3aab11ce5b4958577ed97f28cc0d8793bd6fd31380b041b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        73
+      ]
+    ],
+    "assessment": "Read all 73 lines. Seven typed operations serialize Pydantic request contracts, invoke canonical native math, and JSON-validate typed results. Invalid result schemas become NativeMathRefusal carrying outcome. This checks wire structure rather than recomputing Hodge/Lindblad/projector mathematics. Canonical operating_system dependency is absent in current interpreter, so no native execution claim."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/reply_control_adapter.py",
+    "sha256": "fad545cb12bc2d73630c5a56e2c836eedff6ff5e60b558621ecd4ba71eef9f25",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        17
+      ]
+    ],
+    "assessment": "Read all 17 lines. Thin injected/default host delegation of reply_control payload, preserving Result. It does not validate action-result mathematics locally and adds no fallback acceptance. Default host dependency unavailable here; no host process was invoked."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/rust_cohomology_adapter.py",
+    "sha256": "63309bff5d93b9e307749ee5cb0419245c2181cbd8d0208bb05df088f271fd7d",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        111
+      ]
+    ],
+    "assessment": "Read all 111 lines. Validates exact C011/C012 scope, refuses unavailable operations, constructs incidence matrix and invokes exact L1 native solver. Only exact Boolean certificate_verified=True admits SOLVED; dimensions/canonical rationals are checked. Numerical primal/dual equalities and action/request binding are trusted to the host, not rechecked. Suspected self-loop row overwrite is blocked by scope_violation (supporting validator lines 99–112), so not a public-route finding. Import cannot complete without operating_system."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/scoring_rust.py",
+    "sha256": "bb56dc715acc4a9f64259cdcadb0492671d8f60b1d174a48ab5d108f802d7d50",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        38
+      ]
+    ],
+    "assessment": "Read all 38 lines. Preserves last native outcome and checks action plus exact Boolean success before returning result; typed transport/refusal paths remain errors. Result payload mathematics and schema are delegated. A falsey injected host is replaced because constructor access uses or; malformed Result objects can raise. No scores were measured."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/stabilizer_rust_adapter.py",
+    "sha256": "f3cc2b8b5cb5cd56cd7ecbe8f34d38c18efc47660caf9faea24975da4238b7c1",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        81
+      ]
+    ],
+    "assessment": "Read all 81 lines. Keeps deep-copied successful railway envelopes, maps native Pass/Fail variants and rejects unknown result shapes. It does not bind returned action or Pass.case_id to the request, and Err transport outcomes return before being appended despite the complete-outcomes docstring. These are adapter custody/binding limits, not evidence of a faulty native checker. Missing native package prevents ordinary import here."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/exact_rust_adapter.py",
+    "sha256": "66757c91644116284d5987fca0437a996d2b7223c565a1063015e643068febfd",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        346
+      ]
+    ],
+    "assessment": "Read all 346 lines. Marshals Q rationals to native wire, parses returned rationals, and delegates determinant/rank/positive-definite/boundary/closure/functionals. Several advertised ports explicitly raise NotImplementedError. Multiple methods coerce native Booleans with bool and rank with int, accept truthy success without exact typing, and do not bind result action/dimensions; malformed injected outcomes can become positive predicates. Functional receipt construction retains domain checks but does not reconstruct certificate equations. Digest explicitly uses local sorted ASCII JSON, not RFC 8785. Native mathematics remains a trust boundary."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/research_solvers.py",
+    "sha256": "a1c5e96cc50f039c35150cf1ff2ec08ecf3403a02286f14cbe8039caf0a07d0d",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        237
+      ]
+    ],
+    "assessment": "Read all 237 lines. Bounded floating complex Newton solves lambda(z²−1)=0 per labeled slot, checks finite residual/derivative, then snaps to an exact ±1 candidate that must be independently reprojected. It does not prove convergence or enumerate all mathematical roots/multiplicities; labeled duplicates are retained. Coda proposes the zero residual vector, not a proof that a repair preserves original data or causal interpretation. Proposal validity flags are claims; projector/application admission must verify them."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/decode_controls/__init__.py",
+    "sha256": "e4aef11ab6143a910ab35d3345d36f9c3815361fdb021066f6d4e607fa9bb23e",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        15
+      ]
+    ],
+    "assessment": "Read all 15 lines. Eagerly imports both local and vLLM adapter exports, so an optional backend dependency may prevent importing even the unused sibling. AuthorityEffect metadata does not certify intervention execution."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/decode_controls/vllm_decode_adapter.py",
+    "sha256": "844587fb2e7b94a1b21db903f4af131a16a03b5991cd626161cd2c4a23a06790",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        125
+      ]
+    ],
+    "assessment": "Read all 125 lines. Builds request dictionaries for JSON/GBNF/logit biases, uses an explicit injected runner or opt-in fixture, and otherwise refuses execution. Carrier-mask control is not encoded in its request and allowed_tokens is always empty. honored is runner-supplied; V1 receipt records metadata, not output bytes or independently validated grammar membership. Native verifier extraction ignores success/action envelope checks and depends on external host. No runner/provider/native call was made in this source reading."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/harness_provider.py",
+    "sha256": "31c318ab54314afd6de70328cfc03d09092c9c0d5055a58e98134043c5046a38",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        210
+      ]
+    ],
+    "assessment": "Read all 210 lines. Text-only admitted calls bind role, model, phase, occurrence, budget and retained body; resumed settled trials reuse recorded data. Dispatch preserves raw success/failure bytes, observes identifiable billed usage, settles once and distinguishes incomplete/refused/completed statuses. Provider-completed is not mathematical acceptance. Runtime depends on external gateway/credential/store contracts; source was not imported or executed, and no credential values or provider endpoints accessed."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/representation/glyph_packet_representation.py",
+    "sha256": "43d279c8c7b8877d7443704db1f79f5ee1e26baee7cc7a9c812ca561ca118c39",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        69
+      ]
+    ],
+    "assessment": "Read all 69 lines. JSON render preserves named fields but uses indented JSON despite compact docstring. Parse checks header then int-coerces metrics/decided values and str-coerces regime before TurnView validation, allowing truncation/Boolean conversion rather than strict wire-domain rejection. The downstream exact nonnegative-int checks cannot recover the original types."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/representation/plain_text_representation.py",
+    "sha256": "86496f32e246d0b5d74c424d9e91beffc7067f7182b2cdebe39345341f98cb43",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        135
+      ]
+    ],
+    "assessment": "Read all 135 lines. Renderer inserts unescaped names/values/newlines into section syntax; parser strips whitespace, splits first equals/colon and defaults absent header metrics to zero. Exact information equivalence therefore requires an unstated restricted alphabet and mandatory-field grammar. Empty or arbitrary text becomes a zero-metric TurnView rather than a parse refusal; this is representation behavior, not direct terminal certification."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/finite_gauge/__init__.py",
+    "sha256": "09f0c1f55336173b38140ab2661f8f556e85412325a9be51e556e03417439a5c",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        5
+      ]
+    ],
+    "assessment": "Read five lines. Explicitly scopes historical exact graph checkers to finite sign gauges and disclaims physical Hamiltonian certification. Byte preservation is an inventory/hash matter, not theorem provenance."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/finite_gauge/sign_graph.py",
+    "sha256": "9488ed63c65089af3086dafa3e01a9af948fb5d3c88505103e376f0590f0b3e1",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        201
+      ]
+    ],
+    "assessment": "Read all 201 lines. Exact Z2 edge equations and independently checked odd closed walks establish complementary finite witnesses: summing gauge equations around an odd walk is contradictory; BFS transports labels along a spanning forest and constructs a conflict walk. Self-loops and parallel constraints are covered. Exact real symmetric matrix adapter constrains positive off-diagonals to odd gauge differences, proving fixed-basis stoquasticity only. Independent brute force agrees for all 729 three-vertex graphs with each unordered edge/self-loop absent/even/odd."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/finite_gauge/frontier_search.py",
+    "sha256": "d3529c2150f6b5d43be46a34c46bcde07ee2c082dc9f18ad522114977c417bc9",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        423
+      ]
+    ],
+    "assessment": "Read all 423 lines, including a separate untruncated reread of lines 324–423. Full presentation keys separate retrieval from certification; bounded deterministic batches enumerate explicit bit assignments. UNKNOWN continuation must replay a contiguous prior chain; final obstruction includes a checked odd walk. Digest and witness fields are recomputed. Control with odd triangle replays three UNKNOWN segments then obstruction, rejecting missing history and tampered digest. Completeness is only finite diagonal Z2 grammar, not alternative representations or physics; zero budget gives no progress."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/finite_gauge/input_yaml.py",
+    "sha256": "98e8cd9a6aba763b0eef2ce44e77ed0a15638615177a460f1ddbc5e2146f50e8",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        44
+      ]
+    ],
+    "assessment": "Read all 44 lines. SafeLoader rejects aliases/anchors/merge keys and duplicate or non-string mapping keys, caps source at 16,384 characters, then delegates typed fields to RunConfig. Character cap is not a byte or recursive-depth cap; YAML parser/runtime exceptions outside YAMLError can propagate. No malicious or external resource YAML was executed."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/finite_gauge/paper002_checker.py",
+    "sha256": "ee425543d3b3ac7cd34995c1d1665f23f414e5eeb203ca63778051d2ce66ecad",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        145
+      ]
+    ],
+    "assessment": "Read all 145 lines. Hashes current checker source, translates GraphSpec into exact SignedRewrite records, converts witnesses, and requires receipt replay. Default presentation explicitly has unspecified physical fields and zero placeholder digests; graph digest still binds declared graph. Replay callback is injectable and is a trust boundary. The domain conversion omits start_index/frontier graph digest because this adapter only starts at zero; native receipt hash refers to the fuller source representation."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/finite_gauge/run_store.py",
+    "sha256": "c3154c09c1ac980b8a40590eb32ac2c158145ff0a620b2f4b8aff23842dbf181",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        47
+      ]
+    ],
+    "assessment": "Read all 47 lines. Lock protects process-local capacity and registry; asynchronous daemon thread starts after insertion. Completed runs are never evicted, so capacity is lifetime run count, not concurrent-active count. Thread-start failure can leave an inserted run. Runtime owns mathematical admission; this store is not a proof or durable replay log."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/bqnf_zero.py",
+    "sha256": "97c72a64e61024562981541cd402c1bc8b06b127690d44222fb7a58f28ef40a9",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        124
+      ]
+    ],
+    "assessment": "Read all 124 lines. Exact rational shape checks establish d1*d0=0 with positive C1 dimension; supplied alpha proves d0*alpha=c1, and a normalized left-null row y*d0=0, y*c1=1 proves no such alpha. No functional values are computed: retired zero-defect solver validates shape then explicitly raises FunctionalAdapterUnavailable. Dataclass CochainPacket can be directly constructed without these checks, so witness helpers require the documented validated-packet precondition."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/assemble.py",
+    "sha256": "771570b5dea1bd0cf1cb4dafec7ab7841df3abcf64b7a6c61b475fded63a4ad5",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        26
+      ]
+    ],
+    "assessment": "Read all 26 lines. Prepends shared preamble unless its byte marker occurs anywhere in the supplied obligation. Integrity therefore depends on the loader hash pin; marker presence alone is not structural proof that the preamble is intact. Does not run external code or validate an untrusted arbitrary checker in isolation."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/preamble.py",
+    "sha256": "eda37af9d43d82c6fa49bfca46a81e2259d5e33438144265cf2a422193cbbfeb",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        118
+      ]
+    ],
+    "assessment": "Read all 118 lines. Generic gate rejects empty/malformed payloads, verdict-named keys, all-Boolean data, floating values and non-exact rational syntax; requires exact field names. Rationals are reduced canonical num/den strings. check catches declared refusals and common schema exceptions, then returns PASS after stage _decide. PASS means that finite stage predicate only. Resource bounds, authenticity and broader prose-to-predicate binding must be supplied separately; individual stage bodies remain to be reviewed."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/loader.py",
+    "sha256": "a32beb42046fddb302e3c87b4e0f7daad02b37b55096bc7facb536558a5e3d31",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        93
+      ]
+    ],
+    "assessment": "Read all 93 lines. Registry, checker, fixture and shared preamble bytes are checked against released SHA256 pins; stage/row/clause metadata is then checked after execution. Resource paths reject traversal components. Reduced builtins and import allowlist are not a security sandbox against arbitrary Python; pinned code integrity is the actual trust boundary. No claim that stage predicates fully realize the crosswalk follows from matching metadata."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/pins.py",
+    "sha256": "9092a5cc8ed67c446f441296b6eaad790a1e759075c81584b7512af31e190c8d",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        4
+      ]
+    ],
+    "assessment": "Read four lines containing registry and preamble release hashes. A local package writer can replace pins and resources together, explicitly outside loader trust. Actual registry/prelude hash matches will be assessed in bounded data reconciliation."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/decode_controls/local_hf_mechanism.py",
+    "sha256": "9ea6673f1511d1c7b6fcc5466f8498a0255a067e0e923b14f5e50a25d18b2f2b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        385
+      ]
+    ],
+    "assessment": "Read all 385 lines, with separate untruncated reread of final 340–385. Legacy adapter observes emitted token membership and accepts explicit fixture/generator injection; it does not itself implement model generation masking. HfLocalRunner accepts an externally loaded eager model/tokenizer, installs removable attention/head/residual hooks, records actual readouts, and supports finite token-prefix tries. Finally blocks remove hooks. Declared revision/model identity and vocab hash do not independently authenticate weights/tokenizer behavior. Max-token cutoff can stop a permitted prefix before a complete finite reply, so downstream validation remains required. Cache parity is a bounded greedy comparison along generated tokens, not arbitrary cache equivalence. No model, torch build, download or generation was run."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/egglog_prompt_rewriter.py",
+    "sha256": "044d521a400c2b8314a9b8839c8c94d81ed46413341222c02e768b90c9298a13",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        345
+      ]
+    ],
+    "assessment": "Read all 345 lines, including separate reread of initial 1–38 after tool truncation. Pinned Egglog version performs finite role/payload/slot rewrites with bounded nodes/iterations and deterministic extraction cost. Independently parses extracted AST and compares ordered occurrence fields, multiplicities and original UTF-8 bytes; shared e-classes alone do not prove preservation. Hex payload encoding prevents source text becoming Egglog syntax. Retained replay checks diagnostic consistency and explicitly disclaims authenticated engine execution. Fifty cases are needed for complete suite payload; fewer are PARTIAL. No arbitrary semantic equivalence, performance result or provider output follows from these representation identities."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_000.py",
+    "sha256": "7c5e954b0f86c7505d71ce2d6a26edb5f499cdfe128a18b1001ebcfb3422b4d3",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        43
+      ]
+    ],
+    "assessment": "Read all 43 lines. Exact closed schema accepts only literal packet <>. This establishes byte identity of an admitted inscription, not a derivation of difference, irreflexivity or semantics."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_001.py",
+    "sha256": "4c9ecc5fd31468215d71830a11283a61d78b547201ff9cc4f7c45785ed5b9ea5",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        58
+      ]
+    ],
+    "assessment": "Read all 58 lines. Binary packet grammar checks an opcode, a unique fixed source operand and the two declared probe operands; the down projection recovers that first operand. It does not derive binary generators or select one opcode."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_002.py",
+    "sha256": "8b984a9562957aff3cb2c553d4aa6809a1935c22a836af8b770b8b0e114ee463",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        80
+      ]
+    ],
+    "assessment": "Read all 80 lines. Unique finite vertices, valid edges, exact self-loop index list, injective vertex inclusion and edge multiset containment are checked. Irreflexivity is a declared admission under which listed loops are obstructions; it is not a consequence of stage 000."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_003.py",
+    "sha256": "e549e83ece9908abffc2dadd3833cdb78766f30bfc604ec7b278088c41c06f58",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        60
+      ]
+    ],
+    "assessment": "Read all 60 lines. Sorted distinct vertices and declared higher cells obey immediate-face closure; induction yields all lower faces. Duplicate and malformed cells refuse. Generic nonempty gate excludes the entirely empty complex, a narrower scope than all finite simplicial complexes."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_004.py",
+    "sha256": "a2431b7eba471a4a8d0a1acd036bd60f173ba1a4e022c733c5e18cd1d49b9359",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        84
+      ]
+    ],
+    "assessment": "Read all 84 lines. A single arc per undirected pair and a global vertex order that places every arc forward prove acyclicity. Explicit triangle-cycle checks are redundant under that order. Higher-cell face closure is not checked here; orientation and ordering are supplied admissions."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_005.py",
+    "sha256": "ea39d42e497e234cd4e6d3593141189dfd7526cf40a26c866ddef1cdb8953724",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        148
+      ]
+    ],
+    "assessment": "Read all 148 lines. Exact rational squared lengths and positive leading Gram minors establish Euclidean nondegeneracy per declared cell. Hinge-angle support is restricted to triangles and four rational cosine-squared values, allowing exact rational turns. Claimed deficit equals one minus the sum of listed incident angles. Completeness of each listed hinge star is not enforced, so the deficit is conditional on the supplied around list being the intended complete incidence."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_006.py",
+    "sha256": "76b74e8350011f3663c7caf18cb5b86bf0429c5449b834461c3a746c69ecfa22",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        118
+      ]
+    ],
+    "assessment": "Read all 118 lines. Union-find computes equality closures of generator-equation presentations and checks preservation/reflection on all old generators under a total embedding. Noninjectivity on generators is harmless when old equations already identify them. A separate finite arrow/path check enforces composability and common endpoints, not full higher-category axioms or general conservativity."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_007.py",
+    "sha256": "a0c72b626e230c5f92c06238b5131fb4db7016b757dbbeca04971a065e101744",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        95
+      ]
+    ],
+    "assessment": "Read all 95 lines. Validates exact rotation-orbit partition, minimal periods, least representatives and exhaustive coverage of periodic words for a memory-one shift of finite type. Length is capped at twelve but alphabet size is unbounded; materializing the full alphabet-power product has no useful general resource cap. Finite periodic language evidence is not a limiting dynamical theorem."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_008.py",
+    "sha256": "5bffb6d3d4d15ecd359372c876c09051f87d0290378b25b7dde05bc02a5186aa",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        143
+      ]
+    ],
+    "assessment": "Read all 143 lines. Positive rational edge weights, dual capacities and zero divergence plus primal-dual equality establish an exact weighted L1 coboundary optimum by weak duality. The other component constructs the free pointed-set unit/counit and checks both finite triangular identities; it is this concrete adjunction instance, not arbitrary categorical structure or naturality across an unrestricted category."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_009.py",
+    "sha256": "ea1f2a515c41349053481f5c10f1474a6a366458dad46042a1a82ae1efabb241",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        80
+      ]
+    ],
+    "assessment": "Read all 80 lines. Checks a typed involutive dagger on named arrows and closure of a supplied composition relation under reversal, preserving marked arrows. It does not check identities, associativity, totality or functional composition, so PASS describes this finite typed relation rather than a complete dagger category or profunctor."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_010.py",
+    "sha256": "098bf95ef7877942f6ebc9f7782340189bdd8493ea155889aa0afcd6ac1f1cef",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        76
+      ]
+    ],
+    "assessment": "Read all 76 lines. Exact rational elimination checks det(I-uA)=0 for a finite nonnegative integer adjacency matrix under an explicit reciprocal-pole claim. Since det(I-uA) has constant term one, this is a genuine pole of its reciprocal rational function at the supplied rational u. It is not a continuum zeta-function or analytic-continuation statement."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_011.py",
+    "sha256": "a7a50bf844eb78cd2df16d79e7ac13f3a770f739fef364750754d3661bf9fa95",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        78
+      ]
+    ],
+    "assessment": "Read all 78 lines. Replays a specified two-step string-rewrite peak and both supplied arms exactly to the same target. This proves joinability of that one peak, not termination, all critical-pair joinability or global confluence."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_012.py",
+    "sha256": "f7e29a8331b59923aacf585a5a966974ccbdc88e6f340af2290f5f754b6b9f2b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        109
+      ]
+    ],
+    "assessment": "Read all 109 lines. Replays a deterministic supplied finite transition table, canonical event hashes and parent linkage. Bounded BFS returns TRUE on a found goal, FALSE only on exhaustion, and UNKNOWN when remaining expansion exceeds budget. Event hashes do not authenticate external events or bind the entire transition table; reachability is relative to the supplied table."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_013.py",
+    "sha256": "951baad93a0fb2bcbb0dc1cc4b3465938b734c402f4d853186ab05a3aede42d5",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        108
+      ]
+    ],
+    "assessment": "Read all 108 lines. Exact matrix arithmetic checks d1*d0=0 and each supplied exact, closed-nonexact or open cochain certificate. Trace equality uses full cochain and route at two indices. No transition law is enforced between trace entries, so repeated state proves repetition in the supplied list rather than a demonstrated algorithmic cycle or a general no-progress theorem."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_014.py",
+    "sha256": "e7610f8c829aa01ebdeaaf3e3ceb210ee4ea8e816d0d28c6073226344cb6a83d",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        98
+      ]
+    ],
+    "assessment": "Read all 98 lines. Scans closed scoped formula syntax, rejects every unbounded quantifier before evaluation, recomputes preorder mask and full atomic evaluation count, and evaluates finite quantifiers exactly. The 100000 atom cap and declared budget do not bound structural work: an arbitrarily large outer quantifier containing an empty inner quantifier has zero counted atoms yet allocates and evaluates every outer branch. No unbounded truth claim is accepted; this is a resource-accounting gap."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_015.py",
+    "sha256": "58247588f64d574f2f7bad6843afabe8c627bfb6501e0e73a83b6a6b849cbfae",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        88
+      ]
+    ],
+    "assessment": "Read all 88 lines. Host recomputes an exact nonempty natural-number sum and derives GREEN or RED; both correct terminals can PASS. Scope and output digest are checked. HOST_VERIFIER_SHA256 hashes an identifying string, not the implementation body; code provenance comes from the separate loader pin. PASS does not necessarily mean the sum claim is true and grants no authority."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_016.py",
+    "sha256": "e9d6acd7157a428a999de71ffab3b886582887daff83b39b7ad95d1887be0e0b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        103
+      ]
+    ],
+    "assessment": "Read all 103 lines. Each finite generator-equation presentation is quotiented by union-find. Maps preserve and reflect equality, consecutive transitions must exist, and declared shortcuts agree literally on generators with declared two-leg composites. This is a coherent restricted diagram, not arbitrary algebraic relations or coherence of undeclared maps. Literal generator agreement is stronger than equality modulo target relations."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_017.py",
+    "sha256": "48916d5413231c164344bffffe77cc4d1f3de597377b416765b33fb8c9929ac6",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        83
+      ]
+    ],
+    "assessment": "Read all 83 lines. Closed local dialect dispatch decodes naturals or nonempty binary words, round-trips the body, then hashes canonical tag-plus-body bytes. No unknown-tag fallback. Digest recomputation detects accidental/body changes against a supplied digest, but does not establish external authenticity because a producer can recompute both."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_018.py",
+    "sha256": "fe92e290f13461ab6b7d61e006efeced48f5f050afab20656dd3f87922f1e73a",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        84
+      ]
+    ],
+    "assessment": "Read all 84 lines. Nonempty rational d0, dimension-compatible d1, d1*d0=0, harmonic kernel equations and exact reconstruction certify a finite standard-inner-product Hodge decomposition. Orthogonality follows from the checked matrix identities and is also recomputed. Empty d1 is supported; no arbitrary metric, data provenance or functional differential is inferred."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_019.py",
+    "sha256": "b3e747b1c92a2dc7e75d8479cb2f207a57b6c4751e0ddfe28b82c7b18eb1c01d",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        93
+      ]
+    ],
+    "assessment": "Read all 93 lines. Faddeev-LeVerrier recurrence computes exact characteristic coefficients; rational roots must vanish exactly and enclosures require strict endpoint sign change. Sign change certifies at least one real root, not uniqueness or irrationality. Root lists need not be exhaustive; zero eigenvalues have no finite reciprocal pole. Finite-matrix scope is explicit."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_020.py",
+    "sha256": "700a3cea61ebd674faa401aa5ce6d099b09d7a76f858726cfa8a924b9ca48ad8",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        80
+      ]
+    ],
+    "assessment": "Read all 80 lines. Full recursive canonical keys distinguish states and require each latest repeated occurrence to be declared; extra genuine repeated pairs are allowed. The sum measure can include negative integers despite the prose saying nonnegative, and full-state equality already forces equal measure. No transition semantics or productive-recursion theorem is checked; decreasing measure alone is not a termination proof."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_021.py",
+    "sha256": "27b779ee13df8ec329c06d56d01d3d5faec16588c297a44cb34f2c4dcd4a60cf",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        135
+      ]
+    ],
+    "assessment": "Read all 135 lines. Exact leading Gram minors certify a rational squared-length 4-simplex; each independently declared rational matrix lies in SO(4), and loop words are multiplied in order. Noncommutative closure is distinguished from zero exponent sums. Rotation matrices are not derived from simplex lengths or geometric connection data; this changed assumption is explicit. Hinge membership checks three simplex vertices only."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_022.py",
+    "sha256": "c835c732a04adcd0bc4f10c0bea78baab8c1ec29216cdd0466e2c96241f3f9c0",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        118
+      ]
+    ],
+    "assessment": "Read all 118 lines. Total contravariant finite fibre maps, identity tables, declared composition equations and closure for nonidentity composable pairs are checked. Associativity of the base is explicitly outside scope. Multiple named composites with identical reindexing maps can coexist, so this is a finite table consistency predicate rather than certification of a base category."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_023.py",
+    "sha256": "4cc7b6b39b98fad180a911ec5f8fbbf6b50926298de9e025973f4b9dea0b2d65",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        82
+      ]
+    ],
+    "assessment": "Read all 82 lines. Exact patch domains, full cover, pairwise agreement and a global assignment restricting to all patches prove unique gluing for ordinary finite functions. Values are opaque nonempty strings. Twisted transport, sheaf conditions over all covers, and external meaning are explicitly outside scope."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_024.py",
+    "sha256": "8146769dfbd9618cf6b5b1ae2c0a75c73bf6f8ff2addafade2ec22ffff0504fb",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        135
+      ]
+    ],
+    "assessment": "Read all 135 lines. Computes transitive closure of a strict finite poset and rejects cycles; validates total composable restrictions and subfamily stability. Truth labels are recomputed as downward restrictions landing in the subfamily, and full labels pull back exactly to that subfamily. This realizes the finite-poset presheaf subobject classifier instance; it does not classify arbitrary categories or independently authenticate supplied carriers."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_025.py",
+    "sha256": "bc7f5bd55f7a9bb388a29aff543f795b235fcc6b201181516bdc4e09cbb7b966",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        109
+      ]
+    ],
+    "assessment": "Read all 109 lines. Full typed composition table, identities and all associativity triples establish a finite category. The chosen weak class contains identities and is composition closed, and roofs have the correct shared-source/endpoints. Two-out-of-three, Ore conditions and localized hom-set equality are not checked; the source explicitly restricts its weak-class and roof claims."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_026.py",
+    "sha256": "e32dc0a7c47baf7926c093432ba90c39cb3240623628967329fea086cf9faf69",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        109
+      ]
+    ],
+    "assessment": "Read all 109 lines. Checks coloured non-nullary operations, complete substitutions within an arity bound, units and both nested/disjoint associativity forms. Arity cannot decrease because nullary operations are excluded, so in-bound triple composites have in-bound intermediate composites. No symmetric group action is given: this is a truncated nonsymmetric coloured operad table, not unrestricted or symmetric operadic certification."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_027.py",
+    "sha256": "56ccb8e40e38b5d610aed5b5eeccc23233b102d813c9eb463fc9bc0abbdf2b0e",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        83
+      ]
+    ],
+    "assessment": "Read all 83 lines. Exhaustively checks the cyclic-group trivial-action pentagon and whether the supplied associator is a coboundary of a two-cochain on that same skeletal presentation. The word strictifiability must be limited to this fixed-presentation gauge criterion. m^(n*n)<=4096 does not bound n when m=1, leaving triple/quadruple loops unbounded; exponent computation itself precedes refusal. No large input was run."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_028.py",
+    "sha256": "069fc8f71afd4a0e512f49c4cdf1186cc2256a1f51b72bd1d2324d69a4ec046b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        117
+      ]
+    ],
+    "assessment": "Read all 117 lines. Explicit dimensions preserve zero-dimensional matrices; exact rational arithmetic checks both complexes, both chain-map equations and both homotopies gf-I=dh+hd and fg-I=dk+kd. These supplied witnesses establish finite chain homotopy equivalence. Groupoids, univalence and homotopy search are explicitly not decided."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_029.py",
+    "sha256": "f94e8cf906a6908cea8902bbc223437e66bc049edec0e22ec63fa6f50366bea0",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        91
+      ]
+    ],
+    "assessment": "Read all 91 lines. Derives signed simplicial boundaries from ordered faces, requires face closure, matrix shapes, boundary-square-zero and equality with every declared matrix entry. Thus arbitrary square-zero matrices cannot stand in for the declared complex. Rational checking accepts only the derived integer boundaries. Derived-limit statements in prose are not established by this predicate."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_030.py",
+    "sha256": "3c4de2513054e8e59a1b99a8c29ea13950ae8bd15a9769b865aaa521704fe6c3",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        133
+      ]
+    ],
+    "assessment": "Read all 133 lines. Recomputes persistence column reduction over F2 with deterministic filtered cell order, pairs cells and uses filtration gaps as differential/page labels. Declared bidegrees, d_r square-zero and exact pair/page sets are checked. Interpretation is restricted to the reduced basis; no explicit change-of-basis witnesses or arbitrary-basis transport is returned, and no infinite convergence result follows."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_031.py",
+    "sha256": "e4ef40bd34635deee9586a87459f4cdbd8961040c925cf08706c22404ae55e1e",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        164
+      ]
+    ],
+    "assessment": "Read all 164 lines. Exact F2 bit elimination tests representative independence against every zero-cochain for each supplied test cocycle, and naturality for each supplied simplicial self-map/test pair. Empty cocycle or map lists can make those obligations vacuous. This is explicitly sampled in cohomology classes/maps and does not identify the operation or prove a universal cohomology operation."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_032.py",
+    "sha256": "68b43fe4b23716e3267fabdd02be72cc1ef2b0cfa262e6e3540179ada9da7472",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        82
+      ]
+    ],
+    "assessment": "Read all 82 lines. Checks a total surjective finite block map, recomputes every merged pair, requires an exact loss ledger and an erasure entry for every protected lost pair. Producer-supplied erasures are treated as explicit permission without authenticating an external authorizer. No cycle, torsion, physical defect or semantic preservation follows from pair bookkeeping."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_033.py",
+    "sha256": "34bef9b78a196e4c059c6278c6fc936087888c490a98aba6e1bcf01c9d1a9b71",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        89
+      ]
+    ],
+    "assessment": "Read all 89 lines. Recomputes successive block averages, composed point maps and exact sup errors. Each declared bound must dominate actual error. Additionally requires jump bound <= sum of step bounds; its prose says a larger bound does not follow from those bounds, which reverses logical weakening. Larger bounds are valid consequences of a smaller proven upper bound and are unnecessarily refused under this declared policy. Success remains sound for the directly recomputed error."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_034.py",
+    "sha256": "74bcc99d6e9abc0179d9e3626066b859642df55dfaec52e26dd2343f34ae5753",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        130
+      ]
+    ],
+    "assessment": "Read all 130 lines. Checks polynomial normalization identically, strict positive outcome probabilities at the supplied rational point, all principal minors of a symmetric matrix with dimension <=6, and exact Fisher entries from derivatives divided by probabilities. This proves a local finite polynomial likelihood calculation; continuity supplies a positive neighborhood, but no global parameter domain, identifiability or empirical likelihood is established."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_035.py",
+    "sha256": "afaa92f789a0baefaeaad6636d331cb061c3f42d5284ab1a18e5f138ee9b6c33",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        47
+      ]
+    ],
+    "assessment": "Read all 47 lines. Unique nonempty finite states index a square exact rational matrix; every entry is nonnegative and each row sums exactly to one. This is exactly a row-stochastic finite kernel, not stationarity, convergence or a data-derived model."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_036.py",
+    "sha256": "cc11c1fcae4d4d0aed0ac89852f30c0d3efbfa5b8c4cb89d77b625de15926593",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        66
+      ]
+    ],
+    "assessment": "Read all 66 lines. Checks normalized nonnegative prior, likelihood values in [0,1], nonzero evidence at every step and exact Bayesian posterior recurrence. Supplied sequential likelihood columns must have the intended conditional interpretation; independence and external likelihood validity are not derived."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_037.py",
+    "sha256": "37cd288f5140a436678d045266a3b7e326a6f6def77550a3bb2be8f913687a7a",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        110
+      ]
+    ],
+    "assessment": "Read all 110 lines. Validates a Boolean acyclic structural model, enumerates all <=12 independent uniform exogenous bits, computes observed risk differences and replaces the treatment equation for interventions. Distinguishes unavailable conditioning from causal effect. This is exact causal arithmetic conditional on the supplied structural equations and latent law, not causal identification from observations."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_038.py",
+    "sha256": "37137f547f0373b309998c7656b493980831113f97c12167890295a70ae3d38c",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        122
+      ]
+    ],
+    "assessment": "Read all 122 lines. Recomputes the entire set of exogenous assignments consistent with observations and requires each factual/counterfactual twin to reuse the same assignment. Exact intervention query values form a set, preserving ambiguity. Inconsistent observation permits the empty answer set; no posterior probabilities, real-world model validation or unique hidden state is certified."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_039.py",
+    "sha256": "267038f8ca3d4fa80570854b76dc61945ffd6f72caf85c1c9f0510418b2e75ab",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        82
+      ]
+    ],
+    "assessment": "Read all 82 lines. Checks complete finite rational payoff tables over declared player moves and each claimed profile payoff against that table. Empty claims are allowed. Equilibrium or strategic stability is explicitly not checked, and payoff truth remains an input assumption."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_040.py",
+    "sha256": "047842b63b46b6e26bdf440e9e5255818567b3b5d3880b822dba2a854e1ebc8c",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        83
+      ]
+    ],
+    "assessment": "Read all 83 lines. Rechecks complete exact payoff tables and all unilateral deviations for each claimed pure profile. PASS certifies each listed profile is a weak pure Nash equilibrium for this game. Empty lists can pass and do not prove existence, completeness, uniqueness or mixed equilibrium."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_041.py",
+    "sha256": "d2000bba85e03d8e5c0bc8f1f229f72d9f11182994e9e1c0fd29a56c7557121d",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        110
+      ]
+    ],
+    "assessment": "Read all 110 lines. Recursively types variables/pairs and consumes every contextual or fresh contraction variable exactly once; duplication/weakening require an admitted duplicable kind. Scope and retired-name tracking prevent escape/reuse of bound names. This checks the specified finite linear syntax, not resource effects in an executable system or authorization to declare kinds duplicable."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_042.py",
+    "sha256": "88dbf9410be7185b6929c900ea9545b0cb5c6ed449964ef6700de5e8adc9cf1b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        90
+      ]
+    ],
+    "assessment": "Read all 90 lines. Exhaustively explores the synchronous product, requires each send to have a matching receive, rejects nonterminal deadlock and requires at least one reachable joint final state. It does not require all executions to terminate or even every reachable state to have a path to a final state; a live closed cycle can coexist with a separate terminating branch."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_043.py",
+    "sha256": "0280397c561403ec8e736ad87079d039ce450aa3a69f2623bb0c3752937ee921",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        90
+      ]
+    ],
+    "assessment": "Read all 90 lines. Checks a finite rooted scope tree, monotone narrowing of declared grants and inclusion of the union of declared operation effects for each listed edge. The root grant and effect annotations are producer inputs, not externally authenticated capabilities or proof of actual runtime side effects."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_044.py",
+    "sha256": "c18d5f6f95d5ac45bd44722cfda2d0baf73d1460ab4d97c18d42ce6538a6d806",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        87
+      ]
+    ],
+    "assessment": "Read all 87 lines. Replays finite interval Hoare claims for natural increments: complete enumeration for PROVED, one actual counterexample for REFUTED, or null witness for PENDING. Domain width <=10000 bounds each enumeration; witnesses must be in sorted domain order. PASS can mean only acceptable pending/refuted declarations and must not be upgraded to theorem truth or universal program verification."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_045.py",
+    "sha256": "6d90039e9d9634044617aca53b4d5a574da28d562daeba4e92014c90050f4217",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        100
+      ]
+    ],
+    "assessment": "Read all 100 lines. Hashes the supplied axiom list, validates implicational formulas and replays only axiom citations/modus ponens with earlier references. Sound derivability is relative to those supplied axioms; arbitrary producer axioms can include any conclusion. Digest equality is content consistency, not an external trust policy or proof that axioms are true."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_046.py",
+    "sha256": "b3460d86b15f2f092b695858ab4aa157058123bd28511db3ddd30f663041bcdf",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        94
+      ]
+    ],
+    "assessment": "Read all 94 lines. Bounded natural recursion is evaluated iteratively with strict affine-measure decrease at each call; outputs and all confirmation values must match. A different syntactically valid digest suffices as external checker identity. Source explicitly admits that this proves digest inequality only, not independent implementation execution or authenticity."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_047.py",
+    "sha256": "cb09a98c09d9c912571e3a043538dd881ff65ffcdf9ce111702f8c894c08de04",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        75
+      ]
+    ],
+    "assessment": "Read all 75 lines. Canonical rational pairs implement Gaussian rational addition, multiplication and conjugation exactly; decimal/complex-literal strings refuse rather than round. One payload checks these four operations on two operands. No physical phase interpretation or derivation of the complex field from prior inscriptions is established."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_048.py",
+    "sha256": "86fa77ac553e640f14b567dc7c6f6aa83a73fac5ace819fd94c950c66e6b54c6",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        46
+      ]
+    ],
+    "assessment": "Read all 46 lines. Distinct named slots index a nonempty Gaussian-rational vector with exact Hermitian squared norm one. The standard orthonormal metric is adopted rather than derived from slot names; no quantum-state ontology, measurement probabilities or arbitrary basis metric is checked."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_049.py",
+    "sha256": "db3ad727baf8b734828886b82a5efb669fd752ac9a0a2c2c490de233c9a14b9c",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        109
+      ]
+    ],
+    "assessment": "Read all 109 lines. Rechecks every supplied 2x2 frame for U*U=I, enforces declared real/Gaussian-rational carrier, exact unit coordinate norm and the selected-frame change-of-coordinates equality. Frame naming removes representation ambiguity. This is finite linear algebra, not external measurement calibration or field selection."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_050.py",
+    "sha256": "206293c675b48479f5d0fa7033074924ff192cd544cd969824a3057b9bd8a8be",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        109
+      ]
+    ],
+    "assessment": "Read all 109 lines. Exact 2x2 Gaussian-rational trace/discriminant, Hermitian and involution equations are checked, followed by Hermitian orthogonal idempotents summing to identity and spectral reconstruction. Zero projectors are allowed with arbitrary eigenvalue labels, so not every listed scalar must be an actual eigenvalue. Physical observables and measurement semantics are admitted interpretations."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_051.py",
+    "sha256": "bb8c423b5cfda3144bde8f82e7faafad7400ca782f00b4d1c6937b3b5d70de75",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        125
+      ]
+    ],
+    "assessment": "Read all 125 lines. Rechecks exact unit vector and complete orthogonal Hermitian projectors, then computes each squared projected norm. Nonnegativity and total one follow from these identities. Explicitly checks an adopted quadratic weight rule and does not claim to force that rule or its physical meaning."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_052.py",
+    "sha256": "35d6e5a8e06f6c30cb5a7e4d5d8a77a0528a63f3b0fd1ec2736786f29475e380",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        153
+      ]
+    ],
+    "assessment": "Read all 153 lines. Rechecks two complete projective families and exact unit vector; computes both sequential orders and divides first-order weights only for positive first-outcome weights, requiring null for zero events. This proves finite sequential projection arithmetic under the update rule, not independently justified measurement dynamics."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_053.py",
+    "sha256": "669e04c427d3b4646d412b2a2f3880c4cc9134d9bd746c7917546c114e277d5f",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        87
+      ]
+    ],
+    "assessment": "Read all 87 lines. Recomputes tensor product entries and dimensions in a fixed lexicographic factor order, requiring the exact exchange permutation when the slow factor changes. Factors need not be unit; this is representation/product consistency rather than a normalized state theorem."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_054.py",
+    "sha256": "238007ad7b65542488aaa9a3d5f845fad4a2d6a391b237777d18bd7af32d484a",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        89
+      ]
+    ],
+    "assessment": "Read all 89 lines. Exact Gaussian-rational elimination computes reshaped matrix rank after shape and unit checks. Nonzero rank-one matrices factor over the same field, but unit normalization of both factors in Q(i) is a separate issue. Source appropriately limits interpretation to matrix rank."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_055.py",
+    "sha256": "a422b96cfb320dae6812d3026708d920855fb7e7393881a04faeba79ad43a6c7",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        141
+      ]
+    ],
+    "assessment": "Read all 141 lines. Complete local projectors and every tensor-product projected squared norm are recomputed; postselection is explicit and normalized per remote choice. Without selection there is no unit-row check: a one-slot row2 and identical complete splits PASS with table totals4. Thus non-signalling of unnormalized weights is checked, not probability normalization. Duplicate selected indices are silently treated as a set."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_056.py",
+    "sha256": "8c2665353e5cf41132c6d29acb254ad561274c7794cdbc1cccdd2617ecc29dc1",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        108
+      ]
+    ],
+    "assessment": "Read all 108 lines. Exact unit pure tensor row, Hermitian trace-one reduced matrix, Schur-complement PSD test with zero-pivot condition and actual partial-trace formula all checked. This is a pure-state finite reduction; mixed joined states are explicitly outside input scope. Hermitian preconditions make the no-pivot PSD recursion sound."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_057.py",
+    "sha256": "ce44dba3a337db1ccd3850cecc948b75dd52d0d8c00a6743191d8d4d99eedf7e",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        76
+      ]
+    ],
+    "assessment": "Read all 76 lines. Recomputes both U*U and UU* on the full finite square table, then all supplied images. Therefore norm preservation is established on every vector in the declared space, not merely sampled rows. Table data is explicitly distinguished from native execution or physical evolution."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_058.py",
+    "sha256": "fa7b7491cbaced0d1efd4e1fdfa8e93f2d528394ac3a7e06d5741bbb9b627157",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        84
+      ]
+    ],
+    "assessment": "Read all 84 lines. Checks exact local families against finite equal/differ rules and all overlapping item assignments. Establishes a supplied compatible global labeling when accepted; failure of one family does not prove contextuality or that all global labelings are impossible, which the source explicitly states."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_059.py",
+    "sha256": "a3e6766042872a7806ff821a4427a867169414d5508cb3216a655645ad35e67b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        77
+      ]
+    ],
+    "assessment": "Read all 77 lines. Recomputes dot-product correlations of supplied rational unit vectors, signed CHSH total and deterministic local maximum over16 assignments. Correct excess may be zero or negative and still PASS. Does not establish physical realizability, latent-variable assumptions, a universal quantum ceiling or derivation of the unit-vector correlation rule."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_060.py",
+    "sha256": "42a9098824daa512d00345f2ee5532690ffbd0182ab1a9a1113258069325e285",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        76
+      ]
+    ],
+    "assessment": "Read all 76 lines. Exact finite symplectic parity checks commutation and distinct nonzero syndromes for the declared errors. Phases are discarded, no stabilizer-sign consistency or code-space dimension is checked, and errors are not exhaustive. Nonzero/distinct is stronger than general degenerate error-correction conditions; it is the explicitly chosen finite syndrome predicate."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_061.py",
+    "sha256": "608db9ac69b14df27e2eb7859aae166ea2d38671a80a99413244aa4402c5ee09",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        117
+      ]
+    ],
+    "assessment": "Read all 117 lines. Exact finite permutations, walk typing, full two-end gauge transforms and endpoint covariance of the composite are recomputed. Algebraic telescoping yields the path identity. This is an assumed finite quiver transport structure, not a derivation of connection data or a global-section theorem."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_062.py",
+    "sha256": "5abbfeda29bd61543553891c9962ed9a27134bda50e7fca36fc97aff9764cdb7",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        105
+      ]
+    ],
+    "assessment": "Read all 105 lines. Requires declared edges, oriented continuous closed walks and recomputes ordered permutation products including inverses. A face may be a repeated/backtracking closed walk; no embedding, simple polygon, 2-cell attachment or flatness is checked. Product can be nonidentity and PASS."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_063.py",
+    "sha256": "b729ab8dac4aa0d6f349c96ca6a8775a0a044f1706094fdf5de174024861d48f",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        117
+      ]
+    ],
+    "assessment": "Read all 117 lines. Positive squared lengths, triangle nondegeneracy, exact supported angles, complete vertex incidence, deficits and total action are recomputed. Edge incidence exactly two is insufficient for the declared closed-triangulated-surface class: unique tetrahedral sphere boundaries meeting only at one vertex PASS though that vertex has disconnected link. Duplicate triangles are also not excluded. This is a restricted exact pseudocomplex calculation, not manifold recognition or continuum gravity."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_064.py",
+    "sha256": "d95655d56ddab90a8bb2679f7fcecc95a3c119809cb6639a6570966574a1f292",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        128
+      ]
+    ],
+    "assessment": "Read all 128 lines. Checks tetrahedron-oriented boundary incidence, based connector/cycle walks, supplied or actual edge-derived face permutations, then their declared-order product. The claim that every edge-derived assignment must close is false under the permitted arbitrary connectors/order: an independent six-edge S3 example computes every face correctly yet gets R064_NOT_CLOSED. A coherent connector/order convention is needed for that universal closure identity."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_065.py",
+    "sha256": "1b6997bcdf7c11969eef3c208eebb927133d6044b2fda8c69af2e56572832a79",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        110
+      ]
+    ],
+    "assessment": "Read all 110 lines. Checks total deterministic finite systems, a commuting forward observation-preserving map, and for equivalence a back map with both squares and inverse round trips. The equivalence is strict finite-system isomorphism, stronger than behavioral equivalence/bisimulation; simulation need not cover target states. Supplied back maps in simulation mode are typed but otherwise not checked."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_066.py",
+    "sha256": "4a06d581fe21ea4b27873d7d3541952c83a2793bb86baf0a46f6b2025b05c93c",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        71
+      ]
+    ],
+    "assessment": "Read all 71 lines. Exact opposite nonzero pairs plus a single-signed remainder partition every input index and preserve the exact sum. Independent magnitude-count dominance is equivalent to existence of such pairwise cancellation, with zeros left in the remainder. This certificate is stronger than zero total and does not cover grouped cancellations such as2,-1,-1."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_067.py",
+    "sha256": "d10ea7d8d157ce0454ec7788ddd274ce04afce31a630c074eb00904d8faee3a4",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        91
+      ]
+    ],
+    "assessment": "Read all 91 lines. Checks a total answer-preserving table on0..n for five explicitly decided arithmetic families with bounded target values. Explicitly refuses surrogate evidence and disclaims hardness/asymptotic conclusions. A finite lookup reduction provides no uniform algorithm or complexity bound beyond this interval."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_068.py",
+    "sha256": "02aba8552cd3afdad0c81cf44db217347295abc128562123a1c4d2490c6f4550",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        98
+      ]
+    ],
+    "assessment": "Read all 98 lines. Sequential rational interval addition/subtraction/multiplication/division require containment of exact endpoint interval extension and on-grid result endpoints; division intervals containing zero refuse. Sound enclosure is conditional on admitted initial bounds. Dependency can widen intervals, and the checker does not require tightest outward rounding or initial-grid alignment."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_069.py",
+    "sha256": "ee0cc73535fdea8094535acf3aaa78680fa2b3921ce74878f89794618228cf43",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        98
+      ]
+    ],
+    "assessment": "Read all 98 lines. Exact rational Euclidean/Sturm chain establishes squarefreeness and precisely one real root in an open rational interval whose endpoints are not roots. Claimed endpoint values are recomputed. Degree1..12 is bounded; coefficient bit lengths are not. Repeated-root polynomials are intentionally outside the representation, and algebraic-number arithmetic is not checked."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_070.py",
+    "sha256": "88eeda94b392ed8319142c4b3ec904f87f01c86f9dfb0ddd84df7ee590d2a421",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        115
+      ]
+    ],
+    "assessment": "Read all 115 lines. Computes characteristic coefficients by trace recurrence and independent elimination at n+1 points with interpolation, then checks supplied polynomial and rational roots. Square matrices of size1..8 only. Agreement is an internal consistency crosscheck, not independent provenance; root list completeness and irrational roots are outside scope."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_071.py",
+    "sha256": "0a8d5bbf47eea13d9665ee97e760fad43b12a19b6556fecae3b739aad112ecb0",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        128
+      ]
+    ],
+    "assessment": "Read all 128 lines. Reduces rational-sequence rate and positive-denominator claims to polynomial inequalities on all integers n>=n0, using positive leading coefficient, a Cauchy root bound and exhaustive checks before that bound. Both signed inequalities enforce absolute error <=C/n. Modulus pairs are sufficient witnesses; samples alone refuse. The result is genuinely quantified within this polynomial class, not merely finite checkpoint agreement or analytic continuation."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_072.py",
+    "sha256": "dd8fd11920199687d11b9a7a3d3fa9889e1b0a0f76e2ec576700a4fc5614bd32",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        100
+      ]
+    ],
+    "assessment": "Read all 100 lines. Derives oriented edge/triangle incidence, checks exact supplied matrices and nilpotency, identifies edges with one incident face and counts cells outside their endpoint subcomplex. Duplicate faces are not rejected despite simplicial-complex wording, and general nonmanifold incidence is admitted. Rim denotes this combinatorial incidence subset, not a certified topological manifold boundary."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_073.py",
+    "sha256": "cec3f78c9f8bf1eed13314f00e6eed536ec95336313e96b339de6f7a371d62ee",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        132
+      ]
+    ],
+    "assessment": "Read all 132 lines. Interpolates the exact left-sum polynomial in mesh width, checks constant term equals analytic polynomial integral, and proves an all-depth dyadic rate using a finite prefix plus explicit tail estimates, including boundary-sign cases. Listed depths<=12 replay directly. The200-step tail search is a refusal bound, but unrestricted start depth can create huge2**k integers. No arbitrary integrand/refinement theorem follows."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_074.py",
+    "sha256": "5356b5c299b768e672639b353d36f0bf6a60e2316d30199e72bd146594930c64",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        149
+      ]
+    ],
+    "assessment": "Read all 149 lines. Translates typed named-column conjunctive queries before reading stored rows, unifies variable types, requires safe outputs and evaluates complete finite joins with set semantics. Claimed answers are exact and duplicate-free. No SQL bag/null/coercion semantics or query equivalence beyond the supplied database is established; recursive join depth can reach Python recursion refusal."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_075.py",
+    "sha256": "4823577d4cff0c6e5fff6e568fd3260be2cc5294ce64a4fdb83d831580f65151",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        91
+      ]
+    ],
+    "assessment": "Read all 91 lines. Exact finite set deltas must be applicable, include every true deletion and reconstruct the new table. Old and patched selection views are independently recomputed. This validates one state transition/view instance, not a general incremental query optimizer or actual database transaction."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_076.py",
+    "sha256": "088be582a3ed3a44ed57eec1f397b10af5dcd38bf6f9a7110cc6af1e0d77e4dd",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        79
+      ]
+    ],
+    "assessment": "Read all 79 lines. Unique cell identifiers and declared references generate integer boundary maps whose composite is checked exactly. Self-loop edges, repeated/cancelling edge terms and disconnected cycles are allowed, so this is finite incidence-chain consistency, not geometric attaching-map or regular CW-complex validation."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_077.py",
+    "sha256": "822b38099f87de2250cb6b0cc867e038323c4846d8a1f91349eecb88f6c27c7b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        156
+      ]
+    ],
+    "assessment": "Read all 156 lines. Checks no foreign read/write while a last writer remains uncommitted/unaborted, conflict DAG acyclicity among committed transactions, a respecting serial order and canonical before/after state digests. Reads carry no observed values, so read-result correctness is not established. Aborted/open writes are excluded from final serial replay; supplied digests establish consistency, not authentic execution or durability."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_078.py",
+    "sha256": "6e0b1add68a914225955e4014117b1481f0ab9039d95c62c2fc31ff818ada1e0",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        65
+      ]
+    ],
+    "assessment": "Read all 65 lines. Unique append-order events, existing earlier parents, parent-clock increase and per-node clock increase are checked. This yields an acyclic declared parent graph and scalar monotonicity. It does not reconstruct vector-clock causality, actual append-only storage, event authenticity or concurrent real-time order."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_079.py",
+    "sha256": "166d6133ccef164849978deadfbfe73cb785bdc6bea17baf3316609301316f9d",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        71
+      ]
+    ],
+    "assessment": "Read all 71 lines. Exhaustive total closure, idempotence, associativity and commutativity over<=12 declared states certify a finite join-semilattice operation. Runtime replica convergence additionally needs appropriate update/inflation and delivery conditions; the merge table alone does not provide them."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_080.py",
+    "sha256": "f139149032d8c72b5b7eafaf949c26fa91a2e087c70f3997723d18c948dade33",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        78
+      ]
+    ],
+    "assessment": "Read all 78 lines. Exact finite authorization-table decisions are recomputed with issuer-name equality and no wildcard grants. Authority identity and grant authenticity are explicitly supplied assumptions; candidate-provided authority/grant labels alone cannot establish independent authorization. Denied requests can PASS when correctly denied."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_081.py",
+    "sha256": "9898dc2dcc9f93fbfdc0ce2ff6293bbadd8bd34c6f1e152b6c2ce6f988792338",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        88
+      ]
+    ],
+    "assessment": "Read all 88 lines. Exact rational sequential budget subtraction and joint released-attribute partition sizes establish bookkeeping and k-anonymity of the supplied record multiset. Costs are declared rather than derived from a privacy mechanism; repeated identical rows count as records without subject-identity evidence. Explicitly disclaims probabilistic/differential privacy."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_082.py",
+    "sha256": "3742abcce1196119489dd0e00b8e8ea4a383b8db6ab0af345baa45d96821d2b6",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        127
+      ]
+    ],
+    "assessment": "Read all127 lines. Recomputes UTF-8 artifact digest, checks a pinned toy RSA root, delegation certify/release scopes and textbook modular signature equations. Explicitly labels the root as toy with published test exponent and disclaims unforgeability/revocation/expiry/padding. No real credential or signing material was accessed or used. This apparatus cannot independently authenticate production authorization merely by verifying this scheme."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_083.py",
+    "sha256": "2e247f6f51327e4bb1320892909af81723daa4a171583d3fb0074da0a87dad76",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        101
+      ]
+    ],
+    "assessment": "Read all101 lines. Checks prior-input references, exact sum/product results, id/value record digests and current input pins. Digests exclude operation and input identities, so equal-valued derivations with different operations share a digest; coordinated edits can update all producer pins. This is snapshot consistency rather than immutable authenticated lineage history."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_084.py",
+    "sha256": "844ce538a0049564e0ef4677f4d95d5cd8b8101335fc1af14321cecadde4bde5",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        120
+      ]
+    ],
+    "assessment": "Read all120 lines. Closed schemas and pinned local implementations recompute gcd, sort, rational sum and nonoverlapping text count before comparing result digests. Reimplementation is the tool semantics here, not evidence an external tool ran. Correct guessed outputs are indistinguishable from previously executed ones and can legitimately match the digest."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_085.py",
+    "sha256": "a77c0d2c9db823f79939a717aee8cfd4154c3555c7d06fde3b7261f8c5dce7e5",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        87
+      ]
+    ],
+    "assessment": "Read all87 lines. Replays permission subset handoffs and final task membership, checking delegator rootedness. Ordinary recipients use the latest scope, but principal is exempted from any incoming handoff update; a principal self-handoff to read retains write despite general prose about self-handoff narrowing. Root scope and agent identities are supplied, not authenticated."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_086.py",
+    "sha256": "836d91941ffab9c4b27e440672a0079016d5aaed673e77f163025814000fc6f8",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        95
+      ]
+    ],
+    "assessment": "Read all95 lines. Full parent DAG acyclicity, at least one evidence link for each root, link resolution and witness content hashes are checked. Arbitrary text is a valid witness without a semantic predicate; agent labels are only strings. This proves structural provenance consistency, not truth of the evidence or agent execution."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_087.py",
+    "sha256": "a78de634b7c750e10a7c81944a4983410e7a89e6db429c9a3fec0f51802b23c4",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        88
+      ]
+    ],
+    "assessment": "Read all88 lines. Independently reruns three fixed list predicates, requires base acceptance, changed mutants, actual negative verdicts and matching reported results. Establishes the listed mutation outcomes only. It neither audits arbitrary checker code nor proves detection of all dangerous mutations."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_088.py",
+    "sha256": "f310468ab078f8b02b46a7f676634870527a412be91d05bd9b0fafd065624e05",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        108
+      ]
+    ],
+    "assessment": "Read all108 lines. Replays a bounded counter machine with exact naturals, validated registers/jumps and exact captured exit/state/step count. HALTED is checked before value/time limits, so an over-limit state at a halt instruction still counts as HALTED under this implementation priority. Correct TIMEOUT or LIMIT reports also PASS; PASS is not completion of the program or proof."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_089.py",
+    "sha256": "92ef6309c01c7a4dbb1311972f289bc3d0a36bb1e08d00651a7f93de14044246",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        110
+      ]
+    ],
+    "assessment": "Read all110 lines. Recomputes pointwise error sums, exact marginal/joint laws and pairwise independence when requested; checks either sum of sup bounds or standard deviation squared with full dependence. Pairwise independence suffices for variance additivity but not general joint independence; standard-deviation bounds do not bound bias or worst-case error. Source clearly distinguishes these rules."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_090.py",
+    "sha256": "4a1dfd8ccb2cc2a8328dbd840dd85c74873b4f6d745ae6e5a6555453cfa95f06",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        120
+      ]
+    ],
+    "assessment": "Read all120 lines. Exact ASCII splitter spans, hashes and complete coverage are checked; each span needs exactly one nonempty link or exception. Quantifier vocabulary affects diagnostic only because all spans must be covered. Formal-object links are not resolved or checked against source meaning, so syntactic coverage does not constitute semantic formalization."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_091.py",
+    "sha256": "995c82d776cf89cad76990162a3605de613181241402d8e6cc2159d2afe657b5",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        166
+      ]
+    ],
+    "assessment": "Read all166 lines. Exhaustively evaluates prenex unary/binary relational formulas on source structures of sizes1..k<=3 with<=12 relation bits. Typed map is not required injective or onto; inverse dictionary overwrites collisions and fallback lookup lets an unmapped target symbol alias a source name. Independent control mapR->S with target-onlyR PASSes by reading sourceR, without a legitimate interpretation of targetR. Even on well-bound bijections result is finite-fragment equivalence, not all-model equivalence."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_092.py",
+    "sha256": "d65bb4835475113c69702d5f8a9fc52f2be19bad1f167ab1f2bda2c18593b42a",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        116
+      ]
+    ],
+    "assessment": "Read all116 lines. Exact resolution replay uses actual recomputed resolvents and ends at empty clause; SAT partial models must be consistent and hit every clause. Sound relative to supplied CNF. Already-empty-clause UNSAT cannot use a zero-step certificate because nonempty proof steps are mandatory, a bounded incompleteness; no Lean term or independent binary kernel execution is evidenced."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_093.py",
+    "sha256": "542e5e7e0cef64733e70121e593c746f58d47f60f7d774db4fd4d64e919a981f",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        163
+      ]
+    ],
+    "assessment": "Read all163 lines. Evaluates loop-free source expressions and a bounded stack target on each declared input; checks both arms of every source branch, actual results and exact outcome table. This is finite differential validation rather than compiler correctness. Syntactically unreachable branches make scope impossible; target loop computes up to fuel+1 nonhalt operations before FUEL, so beyond-budget malformed operations may affect error classification."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_094.py",
+    "sha256": "e91f3d45758d78ccd3ea7c23cc790c26c33060c51a9f977033096b307a68ac7b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        86
+      ]
+    ],
+    "assessment": "Read all86 lines. Nominal ports must be uniquely wired, opposite directions, type-equal and have some reverse flow between every connected component pair. This checks static wiring, not session ordering, data response pairing or runtime progress. Dotted names are concatenated without escaping and repeated component rows with disjoint port sets are merged."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_095.py",
+    "sha256": "fb14927aa023c743ad0da0064376454b573770c70fae136c55d043f882be8f06",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        141
+      ]
+    ],
+    "assessment": "Read all141 lines. Local pinned insertion/merge sorts are rerun, comparison counts/log hashes recomputed, and same-input ratios checked with positive candidate count. Environment is a fixed string plus local procedure definition, not actual host benchmarking. Log pairs refer to algorithm-local positions; no wall-clock performance, broad scaling or native speedup follows."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_096.py",
+    "sha256": "25e2e36571f3e6d1c177101215cb7ae1e65b60d58545131bc4035587b51c7119",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        103
+      ]
+    ],
+    "assessment": "Read all103 lines. Recounts declared success/failure labels, binds corpus bytes to a supplied hash, and checks a clipped Chebyshev interval using the variance upper bound1/4. Binomial sampling and outcome truth are input assumptions. The prose says validity holds exactly when the bound inequality holds, but it is sufficient only: n1,h1 always yields[0,1], yet alpha1/10 is refused. Digest matching alone does not make a corpus historically immutable."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_097.py",
+    "sha256": "56e862f8af438576b01e88e25163db19ade36e6f7703c3a202ec83952aed9a60",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        101
+      ]
+    ],
+    "assessment": "Read all101 lines. Applies four fixed list mutation operators, reruns selected fixed invariants and requires every changed mutant to fail its intended invariant with an exact sorted kill row. This is finite mutation evidence under declared danger/invariants, not arbitrary program mutation adequacy. Duplicate operation may make a65-entry mutant from an allowed64-entry base."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_098.py",
+    "sha256": "adbb3855309d9a8127d48708a72e443049bd77a530ab95702a18a910d751fd7c",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        174
+      ]
+    ],
+    "assessment": "Read all174 lines. Reruns paired Euclidean/binary gcd, Newton/bisection integer roots, or two explicitly different rounding rules; exact agreeing cases merge and disagreeing cases remain listed. Distinct implementation names do not establish independent development/custody. Half-up rounds ties toward positive infinity, and half-even agrees on some ties, so prose saying they disagree exactly on ties overstates the disagreement set."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_099.py",
+    "sha256": "4009b05af04e32924be8b35393a99b95d9a6f55eebf86cec9d41528ee974319f",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        110
+      ]
+    ],
+    "assessment": "Read all110 lines. Replays a public toy LCG seed and checks each deletion/unit-decrement preserves a fixed failure predicate, ending at a local minimum under those moves. This is deterministic bounded reproduction, not unbiased generation or global minimum. No sealed seed/answer was read or solved; only this public source mechanism was inspected."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/stage_100.py",
+    "sha256": "779421e94d2e6017c6394f155ca72392a4af5f2c82b41d3ce7625171769e3e34",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        97
+      ]
+    ],
+    "assessment": "Read all97 lines. Checks finite claim/test/open references, explicit none authority and a frontier defined as claims without any test link. Test adequacy and outcomes are explicitly not decided. An OPEN claim also linked to a test is omitted from frontier and PASSes with an empty frontier, contradicting prose that an open obligation prevents completeness. Apparatus coverage is distinct from theorem certification."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/__init__.py",
+    "sha256": "1ea5ba4f6e0641f9d96ac3b356c5fc7a895d327dca60f9da0c6aacf63df19c73",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        1
+      ]
+    ],
+    "assessment": "Read one-line namespace fence: research Python checkers, not sovereign Rust; AuthorityEffect None. This is a claim boundary, not executable enforcement by itself."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/checkers/__init__.py",
+    "sha256": "fc73cb98c37925089f2caaf0d7918391387f640e500db6e6b7939f1ba2e3efe4",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        1
+      ]
+    ],
+    "assessment": "Read one-line immutable individually pinned checker namespace description. Actual release pin checking resides in loader; ordinary filesystem mutability remains possible."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/contracts/__init__.py",
+    "sha256": "00fca0c05501f48e3f791fe06bcaca0b304d3e2ba53afad2ff47cadb740b205a",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        6
+      ]
+    ],
+    "assessment": "Read all6 lines. Describes DDD/domain-kernel ownership and attributed architecture roles. Contains no executable theorem or checker; names do not establish mathematical provenance."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/contracts/grammar/__init__.py",
+    "sha256": "4de663c97030d6a2e190824a87d345666e16aa7f1e541fb7342a4e9014fe305c",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        5
+      ]
+    ],
+    "assessment": "Read all5 lines. Marks outward adapters/repositories and points domain entities inward, requesting explicit concrete imports. No runtime behavior or certificate mathematics."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/contracts/packets/__init__.py",
+    "sha256": "37555644c3d7fe98e835a8f26c2aeeae9e37bf26f6493dff29b87d032a69cfd7",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        1
+      ]
+    ],
+    "assessment": "Read one-line retired outward namespace marker directing packet types inward. No implementation or proof."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_scenarios/__init__.py",
+    "sha256": "c574f02928f8cc792785dbb417c3d298d3f0ca5d112245fbc5f78557434adc79",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        1
+      ]
+    ],
+    "assessment": "Read one-line finite-demo namespace and controller custody boundary; the concrete adapters still require separate examination."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/meron_witness.py",
+    "sha256": "a5e5a891469733bf3898395b7996067ad45b1f9c3b175c23185f5def845f6ba7",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        174
+      ]
+    ],
+    "assessment": "Read all174 lines. Revalidates exact nonnegative weights, strict +/-1 signs and unique IDs, total fixed-point-free involution on an explicit subset, equal paired weights/opposite signs and nonnegative survivors. Recomputed full sum equals survivor sum by pair cancellation. Dataclass inputs are revalidated; no Hamiltonian/path generation or global sign-freedom inference is made. Exact decimal/rational strings normalize rather than require canonical spelling; empty sector input yields the empty identity."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/sign_switching.py",
+    "sha256": "d90e3050fcb23e7c4815952934d9f44a191128cde377dacb5213765ed615dd46",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        198
+      ]
+    ],
+    "assessment": "Read all198 lines. Validates exact symmetric matrices<=128 and rational wire-size bounds, then delegates all decision/replay to signed_transport. Classification requires exact input matrix echo, certificate_verified is True, typed gauge/cycle shape and parsed transformed matrix. It does not independently recompute gauge equations or transformed entries in Python; native host is trusted. Native import occurs outside error wrapper and can raise missing-dependency ImportError, not the typed unavailable exception. Fixed-basis diagonal gauge limitation is explicit."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/contracts/grammar/ledger_codec.py",
+    "sha256": "b8e793a0d1abec1093a32b579086fd04224c5b4b080af5ba4fd6a1f296891bd4",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        362
+      ]
+    ],
+    "assessment": "Read all362 lines. Bounded JSONL header counts, entry indices/parents, SHA chain and stage>=10 are checked, but the header is not externally pinned and excludes ledger id/stage from entry hashes. Coordinated count/head rewrite accepts tail removal and rename. dict_to_packet coerces flags/audits and defaults missing checks/verdict to true without HostFenceAudit.evaluate; actual control accepts a clean audit alongside a violation. Malformed flags None raises uncaught AttributeError. Canonical function is Python sorted JSON and accepts NaN, contrary to strict RFC8785 claim; JSON duplicate keys/noncanonical input spelling are not rejected. Permanent quarantine remains intact."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/contracts/grammar/ledger_repository.py",
+    "sha256": "5425adfe2426f79a71360c7e45f32b4dc0d29faa0711e163525c56ae4cf29924",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        92
+      ]
+    ],
+    "assessment": "Read all92 lines. Resolved parent confinement and file-size/BOM checks precede codec load; save uses replace after writing a fixed sibling.tmp. Literal safe identifiers and SHA names for unsafe identifiers share a namespace, causing deterministic aliasing without a hash collision. Loaded header id is not compared to requested id. Fixed temp filename has concurrent-writer and symlink/race limitations; atomic replacement is not durable authenticated append-only storage. Probe only resolved synthetic paths inside own audit temp and wrote no ledger."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mode_discovery.py",
+    "sha256": "262eb335e78ed6250e4a3ef778956ceda5a97da91b895c8902eb00aa86789ccb",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        191
+      ]
+    ],
+    "assessment": "Read all191 lines. Searches explicit/env/installed/legacy mode resources, uses yaml.safe_load, converts fields and constructs domain contracts. Closure compares filename sets, authority string None and exactly20 unique manifest IDs, but does not compare each loaded internal mode_id to its manifest id or reject repeated manifest IDs before dictionary overwrite. Manifest filenames are not confined to mode directory; malformed/empty YAML can raise directly. Discovery/nominal closure does not verify mathematical verifier contracts."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_scenarios/antimorphic_reversal.py",
+    "sha256": "8d18f9d8e34c90bde68dec4fe31936fa72d44d53b183ccf8ea25d9665b65a714",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        226
+      ]
+    ],
+    "assessment": "Read all226 lines. Six fixed scenarios test an admitted edge involution, reverse one path, expect a typed missing inverse, lift/down-map an identity projection, reject a protected-label merge and retain its quarantine packet. Retraction checks stage/states/edges only, not full object equality. Fermion sign parity is an opaque protected label and not physical derivation. Receipt hashes deterministic Python JSON before adding its digest; RFC8785 claim is broader than serializer behavior."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_scenarios/product_cell_ring.py",
+    "sha256": "2153f7474da0f9a76f33765c1beb6e8ae90b3e229d1ce6590623a4dc3f767012",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        111
+      ]
+    ],
+    "assessment": "Read all111 lines. Fixed rational rank-four even graded algebra checks all64 basis associativity triples, unit, grading, commutativity and declared a²=b²=0, ab=w. Bilinearity extends basis checks to every rational vector; expansion yields (pa+qb)²=2pq w. Runs25 sample pairings and four expected mutations as demo evidence. Manifold interpretation is explicitly admitted, not inferred from matrices or dimensions."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_scenarios/polygraph_confluence.py",
+    "sha256": "9fcfd59295b760c07b9b40da20479445834a2d951896ef338349e5951f2d3f8b",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        193
+      ]
+    ],
+    "assessment": "Read all193 lines. Four fixed scenarios verify named-step continuity, matching branch endpoints and stage floor using domain policies. Ruleset digest is literal a*64 and there is no actual rewrite-rule body binding here; the displayed right branch from apex is not supplied as a rewrite step. Endpoint agreement is a witness-shaped join, not global confluence or proof of legal reductions. One failed join witness cannot establish a nonconfluent system. Receipt status is demo outcome and deterministic Python JSON, not full canonicalization or external execution custody."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_scenarios/token_frontier.py",
+    "sha256": "4ea22686c53f537278e7f0092135a0f2eb9b9e8e6e4b4bccdd7198ed2a5f1282",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        251
+      ]
+    ],
+    "assessment": "Read all251 lines. Exact weight ratios and retained-support normalization delegate to TokenFrontier.create; zero retained mass explicitly refuses. Input support and parser-state labels are supplied, not computed by a grammar/model. MockModelLogits validates only equal tuple lengths, leaving negative unselected weights or malformed indices to downstream behavior; underlying probability-law validity is not globally checked. Scripted trajectory is correctly labeled ILLUSTRATION_ONLY and not a parsed packet. No actual dynamic model/logit enforcement runs."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_scenarios/immune_fixtures.py",
+    "sha256": "9a5f2c78802893a99455f40470325743c52031c5e857b1f1acf5c35ebbcd6418",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        275
+      ]
+    ],
+    "assessment": "Read all275 lines including all24 fixtures. Twelve declared trigger cases and twelve controls exercise lexical/metadata conditions for failure classes; target outcomes are expectations, not detector adequacy proofs. HostReplayReceipt is a synthetic constructed object with signer label and replay_passed flag. Qualified theorem wording and timing statements are fixtures only and establish neither theorem hypotheses nor measured runtime. Contexts and examples do not demonstrate general semantic detection or independent host authenticity."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/lake_sandbox_adapter.py",
+    "sha256": "d9d364254cece29483ba2b3cd08d921a1e4f8beec4df05d067cdc70e21dfd2dd",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        464
+      ]
+    ],
+    "assessment": "Read all464 lines. Temporary-copy isolation and subprocess observation are not an OS security sandbox. Observed path pins initial Lean files, Verify harness, lean-toolchain and Lake executable before/after commands, but does not bind request.package_digest, all dependency/config files, compiler binary or newly introduced files. Legacy scanning precedes copy. Native audit envelopes/status are trusted: receipt status is not locally forced to refusal after unsuccessful build/harness. Observed axiom census/policy checks run only after both succeed. Optional version-string check is not toolchain binary attestation. No Lake/native execution was performed; conclusions about injected host outcomes and filesystem coverage are source-based."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/pfp_frozen_replay.py",
+    "sha256": "4702b3a3155b9c229b6a8d1e57af8439f105b1ffa0314166afc2c187c92f32fb",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        199
+      ]
+    ],
+    "assessment": "Read all199 lines. Six allowlisted source digests are loaded from historical packaged material or exact git revision, with no active-source fallback. Manifest files and paths are verified and copied into a bounded scratch tree; digest equality binds supplied bytes, not provenance of the manifest or dependencies/runtime. Python socket monkeypatches do not isolate subprocess networking or provide OS sandboxing, and environment filtering only recognizes selected secret suffixes. Historical/migrated evidence was not accessed and replay was not run. Source review establishes replay orchestration and limitations, not replay success."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+    "sha256": "62a4078c8ef4ddfcc5457f8d27d7b8079c90c97b5fc6f1afdb071114ce3a3c33",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        926
+      ]
+    ],
+    "assessment": "Read all926 lines. Five explicit toy fixtures and scripted arms use known witnesses; exact cochain/meron predicates are conditional and gauge delegates to native. Coverage accepts declared string markers rather than enumerated elements. Atomic rollback restores business fields while consuming fuel and updating event history/digest; zero state mutation wording is too broad. Fuel-exhaustion receipt says TERMINAL without setting current_phase, and initial digest excludes actual fixture/state content. Oracle exceptions become false outcomes, conflating invalidity with unavailability. Live callback counts are not network custody, scripted recovery/answer hints are not learned treatment benefit, and floating success-rate intervals assume sampling conditions not established by these fixtures. No provider/native/live path was executed."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/pfp_campaign.py",
+    "sha256": "718c6aea87eed019236548ab66694653956ca80004c301527c7ada4890a7f67e",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        649
+      ]
+    ],
+    "assessment": "Read all649 lines. Exact Decimal ceiling converts costs to microUSD; preparation binds selected model/rates and conservative token reservation under its supplied price assumptions. Ledger and injected judge remain trusted. V2 replay rechecks wire/raw hashes, packet receipt, decoded completion/usage and accounting failure binding; successful accounting state remains a retained assertion rather than independently replayed ledger transactions. Legacy replay recomputes reservation/judgement, caps totals, rejects duplicate generations and enforces stage feedback sequence. Capture hashes establish internal consistency, not independent provider custody or original checker correctness. Provider completion labels explicitly leave original task checks pending. Mutable receipt data and permissive adapter reservation arguments rely on callers/ledger contracts. Live, frozen historical and provider paths were not invoked."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/retained_profile_cec_bridge.py",
+    "sha256": "abf8700de7fbfe5be21b5fb1f7060f8e6f7ba5dbadc2c1170682f8fa574bb729",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        1961
+      ]
+    ],
+    "assessment": "Read all1961 lines. Exact frozen/slotted dataclasses reconstruct inputs, enumerate finite automorphism orbits (carrier<=8), preserve old distinctions and replay finite embedding/retraction/profile/transition obligations. Retained/protected pairs and witness labels are admitted, not derived from primitive inscription. Completeness is only the declared finite candidate family. Separate admission replay prevents producer-only success from granting authority. Controller omits comparison of CEC packet parent to its problem argument; independent synthetic control returns an extension for an unrelated problem. Public same-level validator trusts caller-supplied orbit tuple and accepts unchanged profiles for empty tuple, although controller itself recomputes orbits. External-all-pairs assumes ordered states despite constructor allowing unsorted states; canonical pair error follows. Normal import failed missing BytePayload; unchanged-body controls replaced serialization import only with deterministic dataclass SHA stub, not a claim about production canonicalization. No native/provider execution."
+  },
+  {
+    "path": "pfp/infrastructure/adapters/mssn_research/genesis_crosswalk.md",
+    "sha256": "f41255db402a73a8a20cd6c68aa0c650fee619fe8d790e8bb493159ab930e538",
+    "full_source_read": true,
+    "reviewed_lines": [
+      [
+        1,
+        8354
+      ]
+    ],
+    "assessment": "Read all 8354 numbered lines, including the repeated stage envelopes; no deduplication scan was credited as source reading. This is a secondary, explicitly CROSSWALK_DRAFT and AuthorityEffect=None compendium, not an external derivation or authority transfer. GEN000 treats <> as an inscription; separated tokens, carriers, metrics, categories, probability laws and physical interpretations are added assumptions. The exact Gram/Sylvester positive-definite criterion is valid for a nondegenerate finite Euclidean simplex under declared rational distances; a positive determinant alone is insufficient. Weighted-l1 primal/dual equality gives an exact finite optimum under the stated linear constraints and positive weights; closed/nonexact cochains differ from nonclosed curvature. Ordered nonabelian holonomy requires connector/order conventions and does not reduce to scalar angle closure. GEN022 onward repeatedly limits candidate tags to syntactic well-formedness and leaves semantic models and independent checkers as future work. Category/coherence, causal intervention, probability, Hilbert/Born/tensor, gravity and algorithmic-hardness descriptions are conditional obligations, not derivations from the primitive inscription. Finite session reachability is weaker than universal termination; blind joint weights require normalization; manifold claims require vertex links; Bianchi identities require compatible transports/order. These boundaries are tested separately against the stage code. Exact cancellation needs a supplied complete finite sector family; sampling and interval statements need a declared distribution and distinguish sufficient bounds from necessary coverage. Hashes, references and test links establish only the binding actually enforced, not provenance, adequacy, independence or completion. GEN098 explicitly requires independent implementations, GEN099 preserves a fixed failure predicate under shrinking, and GEN100 requires tests or typed unresolved obligations without claiming a closed horizon. No linked sealed seed, answer, private material or external source was opened. Local source reading and the retained Python checker replays cannot grade those external repositories."
+  }
+]

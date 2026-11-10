@@ -1,0 +1,2046 @@
+{
+  "findings": [
+    {
+      "id": "RPF-F030",
+      "severity": "medium",
+      "title": "Identical-endpoint rewrite shortcut refutes a reachable later declared join",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/rewriting/peak.rs",
+          "lines": [
+            496,
+            518
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/rewriting/peak.rs",
+          "lines": [
+            544,
+            554
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/rewriting/tests.rs",
+          "lines": [
+            554,
+            565
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced alongside58passing existing owner tests",
+      "detail": "With aa->a, the two distinct reductions of aaa both end at aa. With no declared join the host returns Joined(aa), but declaring the true later common reduct a returns NeedsEvidence because the equality shortcut treats unequal-to-endpoint as refuted. Check declared-join reachability within budget even when endpoints coincide; preserve the host's nearest join aa when the declaration is valid, and distinguish unchecked from refuted.",
+      "limits": "False refusal and testimony-dependent verdict, not false proof of non-joinability. Existing distant-join tests cover unequal endpoints and miss this branch."
+    },
+    {
+      "id": "RPF-F025",
+      "severity": "medium",
+      "title": "Operad source-span verification panics at an interior UTF8 byte offset",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/operad.rs",
+          "lines": [
+            143,
+            181
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced",
+      "detail": "For document \u00e9 and offsets[1,2], bounds pass but direct string slicing panics because offset1 is not a UTF8 character boundary. Use str::get(start..end) or explicit character-boundary checks and return ImmutableSpanViolation. Clarify that offsets are byte offsets, not interchangeable character offsets.",
+      "limits": "Two-byte public string only; no provider or external document used."
+    },
+    {
+      "id": "RPF-F026",
+      "severity": "medium",
+      "title": "Operad decoy neutralization accepts a mathematically false refutation string",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/operad.rs",
+          "lines": [
+            665,
+            712
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced",
+      "detail": "A matching decoy with provided evaluation '1 != 1' is Neutralized. The predicate only checks that the text contains !=; equation, action and stored reference witness are ignored. Evaluate a declared exact relation against the candidate or label the result as an unchecked refutation assertion, not a sound refutation witness.",
+      "limits": "No downstream authority promotion demonstrated; local declared neutralization predicate is inadequate."
+    },
+    {
+      "id": "RPF-F027",
+      "severity": "medium",
+      "title": "Operad tree conversion confuses original child index with current flattened input slot",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/operad.rs",
+          "lines": [
+            398,
+            410
+          ]
+        },
+        {
+          "path": "code/rust/core_operad_theory/src/kernel/terms.rs",
+          "lines": [
+            354,
+            389
+          ]
+        }
+      ],
+      "status": "current source establishes slot semantics; bounded cached-kernel probe reproduced",
+      "detail": "An accepted outer[A,B]->R tree with first child[X,Y]->A has flattened inputs[X,Y,B] after first substitution. The next iteration substitutes childB into slot1 (Y), refusing a valid coloured tree. Substitute original children right-to-left or track the expanded boundary offset. Add zero-, unary- and multi-input child cases and verify the resulting tree, not only arity.",
+      "limits": "Runtime owner included verbatim; kernel execution uses explicitly hashed cached core_operad_theory. Current kernel source was read for flattened-leaf substitution, but no full rebuild/source-binary identity is claimed."
+    },
+    {
+      "id": "RPF-F028",
+      "severity": "medium",
+      "title": "Null-tree absorption changes the enclosing operation output colour and bypasses graft bounds",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/operad.rs",
+          "lines": [
+            303,
+            343
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/operad.rs",
+          "lines": [
+            491,
+            515
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/operad.rs",
+          "lines": [
+            856,
+            869
+          ]
+        }
+      ],
+      "status": "node and graft counterexamples reproduced; recursive ideal route source-established",
+      "detail": "For outer[A,B]->R and null child of colourA, node returns null of colourA instead ofR. Grafting that null at slot999 succeeds before checking any bound/type. Preserve the enclosing boundary when propagating the ideal and define/check which partial compositions are admissible before absorbing; do the same in recursive ideal evaluation.",
+      "limits": "Local coloured-tree law failure. The kernel itself rejects NullTree conversion; no certificate or external execution is inferred."
+    },
+    {
+      "id": "RPF-F029",
+      "severity": "high",
+      "title": "Signed homology boundary accumulator can declare a nonzero integer boundary closed",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/homology_holonomy.rs",
+          "lines": [
+            19,
+            31
+          ]
+        }
+      ],
+      "status": "exact original-function probe reproduced in both overflow modes",
+      "detail": "Two copies of edge(0,1) each with coefficient i64::MIN have nonzero boundary coefficients \u00b12^64. Checked mode panics; unchecked arithmetic wraps both vertex totals tozero and returns true. Use exact BigInt or checked arithmetic with typed refusal, and distinguish integral from modular closure.",
+      "limits": "Complete original function extracted without edits, not a full module build. Two edge terms suffice; no large allocation or geometric interpretation claim."
+    },
+    {
+      "id": "RPF-F023",
+      "severity": "medium",
+      "title": "F2 matrix shape multiplication overflows at both constructor and JSON boundary",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/f2.rs",
+          "lines": [
+            61,
+            68
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/f2.rs",
+          "lines": [
+            121,
+            130
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/f2.rs",
+          "lines": [
+            163,
+            168
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced in both overflow modes",
+      "detail": "On this 64-bit target, rows=2^63, cols=2 and empty data panic with overflow checks enabled and are admitted as a zero-storage matrix when checks are disabled. JSON deserialization routes through the same multiplication and shows the same outcomes. Use checked_mul and explicit resource ceilings before comparing or allocating; zeros and derived result allocation require the same protection.",
+      "limits": "No large allocation or unbounded operation was attempted. Exhaustive small matrices separately passed 5054 linear-system and 1024 gauge cases per overflow mode; those checks do not cover arbitrary sizes."
+    },
+    {
+      "id": "RPF-F024",
+      "severity": "medium",
+      "title": "Curriculum deduplication digest merges nonisomorphic connected graphs",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/curriculum.rs",
+          "lines": [
+            44,
+            52
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/curriculum.rs",
+          "lines": [
+            110,
+            147
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced",
+      "detail": "The digest retains only sorted vertex degrees and sorted weights. K3,3 and the triangular prism, both connected six-vertex nine-edge graphs with unit weights, receive the same digest although their triangle counts are 0 and 2, proving they are not relabellings. Use a declared canonical graph encoding/isomorphism procedure or explicitly label this a coarse invariant and do not deduplicate solely by it. The generator also ignores its seed: seeds0 and1 produce identical instances.",
+      "limits": "This is an exact preimage-encoding alias, not a SHA256 collision. The fixed generated family may not currently contain both graphs; the public digest helper and stated arbitrary relabelling-dedup claim exceed that narrow family."
+    },
+    {
+      "id": "RPF-F021",
+      "severity": "medium",
+      "title": "Extension resolution uses a detector unbound to the preservation witness",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/foundation/extension.rs",
+          "lines": [
+            64,
+            113
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/foundation/extension.rs",
+          "lines": [
+            216,
+            260
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/foundation/extension.rs",
+          "lines": [
+            368,
+            417
+          ]
+        }
+      ],
+      "status": "bounded direct-owner native probe reproduced",
+      "detail": "A positive exhausted source s is preserved with detector value1 in extension {s,new}. ExtensionCandidate::evaluate receives a different callback returning0 at s; assessment accepts that same preserved source as the unique resolving candidate. Bind the candidate detector to the exact extended detector used for preservation, or recompute the complete declared extended table once and reuse that witness. Context/source strings alone do not establish this relation.",
+      "limits": "Additive finite foundation outside the consequential host protocol; no authority promotion or operational effect demonstrated. Arbitrary callbacks also assume extensionality and termination."
+    },
+    {
+      "id": "RPF-F022",
+      "severity": "medium",
+      "title": "Native canonical decoder admits values rejected by the Python closed wire algebra",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/canonical.rs",
+          "lines": [
+            221,
+            248
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/canonical.rs",
+          "lines": [
+            283,
+            325
+          ]
+        },
+        {
+          "path": "pfp/domain/shared_kernel/canonical.py",
+          "lines": [
+            291,
+            414
+          ]
+        }
+      ],
+      "status": "nine bounded native/Python discrepancies reproduced",
+      "detail": "Rust accepts invalid and uppercase byte hex, duplicate/unsorted set members, duplicate mapping keys, a non-builtin mapping type, non-field dataclass children, duplicate dataclass field names and empty enum identities. Python rejects all nine. Match the declared strict canonical image, including uniqueness/order/type/hex gates, and add negative parity vectors. Public CanonicalValue variants separately allow bypassing decoder gates when encoding.",
+      "limits": "This establishes decoder acceptance drift, not a cryptographic hash collision or an executed authority exploit. Standard JSON-to-canonical encoding follows a narrower path and was not shown to admit these malformed compound wires."
+    },
+    {
+      "id": "RPF-F031",
+      "severity": "medium",
+      "title": "Exported enforcement macros fail when instantiated",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/enforcement_macros.rs",
+          "lines": [
+            27,
+            41
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/enforcement_macros.rs",
+          "lines": [
+            91,
+            123
+          ]
+        }
+      ],
+      "status": "two bounded direct-source expansion probes reproduced",
+      "detail": "__impl_contract_base invokes a non-const assert_impl in const evaluation (E0015). attach_contract_laws appends a turbofish to an opaque path fragment and fails parsing. Every implementation wrapper invokes the base macro. Replace dead/runtime assertion scaffolding with valid type-level bounds or executed tests; test representative actual expansions and bind captured parameter names. Intended nested _run is not called and therefore would not execute a runtime law assertion even after syntax repair.",
+      "limits": "Exact original macro module included unchanged with minimal type scaffolding. Does not claim the containing crate fails when macros remain unexpanded, nor that all generated wrappers were individually compiled."
+    },
+    {
+      "id": "RPF-F032",
+      "severity": "low",
+      "title": "Flattened enforcement generator no longer reproduces its committed owner",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/enforcement_generate_macros.py",
+          "lines": [
+            7,
+            13
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/enforcement_generate_macros.py",
+          "lines": [
+            302,
+            330
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/enforcement_macros.rs",
+          "lines": [
+            1,
+            12
+          ]
+        }
+      ],
+      "status": "source-established; mutating generator deliberately not run",
+      "detail": "Generator writes sibling macros.rs, not current enforcement_macros.rs, and emits neither current boundary types nor shared capacity additions; its assert binding body also differs. Its byte-for-byte reproduction claim is therefore stale in this layout. Align the destination/generated boundary and perform generation into temporary storage before comparing and atomically replacing an explicitly authorized owner.",
+      "limits": "No source files regenerated or replaced; no assertion about historical layout or referenced tests outside this frozen scope."
+    },
+    {
+      "id": "RPF-F033",
+      "severity": "medium",
+      "title": "Maintenance canonical encoder accepts nonfinite floats as null",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/improvement_canonical_json.rs",
+          "lines": [
+            25,
+            39
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/improvement_canonical_json.rs",
+          "lines": [
+            55,
+            89
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced",
+      "detail": "Generic Serialize values NaN,+infinity,-infinity are converted by serde_json::to_value to Null before the float check and produce the same bytes/digest as None. Finite1.5 is refused. Reject floats at the serializer boundary, or constrain the public API to an already checked integer JSON carrier and describe the information loss explicitly.",
+      "limits": "Three scalar cases only; current maintenance DTOs themselves use integer fields, so no claim of an already exercised live maintenance bypass or cryptographic collision."
+    },
+    {
+      "id": "RPF-F034",
+      "severity": "low",
+      "title": "Maintenance raw-byte decoder accepts malformed and noncanonical base64 padding",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/improvement_types.rs",
+          "lines": [
+            531,
+            570
+          ]
+        }
+      ],
+      "status": "complete original-function probe reproduced",
+      "detail": "AA=A decodes as two zero bytes despite misplaced padding; AA==AAAA accepts padding before the final quartet; AB== accepts nonzero unused bits and decodes identically to canonical AA==. Require final-quartet-only contiguous padding and zero unused bits, or use a strict existing decoder. Add negative cases beside the valid raw-byte roundtrip test.",
+      "limits": "Input acceptance/encoding reproducibility defect; separately recomputed raw SHA can still protect semantic byte identity. No forged hash or authority promotion demonstrated."
+    },
+    {
+      "id": "RPF-F035",
+      "severity": "medium",
+      "title": "Authorization scaffold exposes fabricable verified signatures and reusable mutable permits",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/authorization_basis.rs",
+          "lines": [
+            17,
+            65
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/authorization_basis.rs",
+          "lines": [
+            224,
+            232
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/authorization_basis.rs",
+          "lines": [
+            299,
+            357
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced; no live landing caller found",
+      "detail": "External code can construct VerifiedOperatorSignature without TrustStore, self-register a lease, build caller-supplied equal transcripts and obtain Lander admission for an unrelated candidate. SingleUseStepPermit is public-field Clone and may be edited/copied after admission. Lander checks only nonempty fence base and signature sealed/base string equality; it does not bind candidate/tree/policy or validate GitHub review meaning. Keep this explicitly provisional or require opaque trusted handles, content bindings and atomically consumed permits before any consequential integration.",
+      "limits": "rg over code/rust found Lander admission only in this owner tests. No real filesystem landing, privilege escalation, signature forgery or operational use is demonstrated."
+    },
+    {
+      "id": "RPF-F036",
+      "severity": "medium",
+      "title": "Authorization MAC omits framing between unconstrained commit and base strings",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/authorization_basis.rs",
+          "lines": [
+            244,
+            295
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced",
+      "detail": "The same synthetic-key MAC verifies both(sealed=ab,base=c) and(sealed=a,base=bc), because raw strings are concatenated without lengths or domain tags. Enforce fixed canonical commit widths and/or frame every field with domain/version tags; bind operator and candidate identity as required by the authorization contract.",
+      "limits": "Current API admits arbitrary strings; if callers separately enforce equal fixed SHA widths this particular pair is excluded. This is message-encoding ambiguity, not a BLAKE3 collision or recovered secret."
+    },
+    {
+      "id": "RPF-F037",
+      "severity": "medium",
+      "title": "Consistent authorization cut admits reversed collection intervals and unbounded observation epochs",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/authorization_basis.rs",
+          "lines": [
+            104,
+            128
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/authorization_basis.rs",
+          "lines": [
+            146,
+            214
+          ]
+        }
+      ],
+      "status": "bounded direct-source probe reproduced",
+      "detail": "Transcript intervals[100,1] and[2,0] with observations at epoch9999 pass because only t1.end<=t2.start is checked. Validate each start<=end and every observed epoch within its collection interval, then document the trusted monotone revision/source assumptions needed for a real double-collect snapshot.",
+      "limits": "Equal source labels/payload/revisions are finite declared consistency only; authentic observation acquisition and current revocation remain outside this scaffold."
+    },
+    {
+      "id": "RPF-F038",
+      "severity": "medium",
+      "title": "Decode bias ceiling panics or accepts i32 minimum instead of refusing",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/decode_control.rs",
+          "lines": [
+            73,
+            87
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced in both overflow modes",
+      "detail": "A synthetic LOGIT_BIAS receipt with bias=-2147483648 reaches bias.abs(). With overflow checks enabled this panics; with checks disabled abs remains negative and the >1000 predicate is false, producing Pass. Use a range comparison or checked/unsigned absolute value and test both signed extremes.",
+      "limits": "Tests the declared receipt verifier, not a real provider logit intervention. Entire original owner included unchanged with cached serde; no full-crate run."
+    },
+    {
+      "id": "RPF-F039",
+      "severity": "medium",
+      "title": "JCS raw parser accepts malformed JSON and public serializer emits duplicate unsorted keys",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/jcs.rs",
+          "lines": [
+            165,
+            198
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/jcs.rs",
+          "lines": [
+            330,
+            442
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "canonicalize_str accepts01,1. and literal newline inside JSON string; serde_json rejects those same inputs. serialize_jcs preserves arbitrary unsorted duplicate keys in public JcsValue::Object. Enforce strict number/string grammar and canonicalize or validate public object vectors.",
+      "limits": "1e01 was a valid control accepted by both; vertical-tab prefix was rejected by both. No exhaustive RFC parity claim."
+    },
+    {
+      "id": "RPF-F040",
+      "severity": "medium",
+      "title": "JCS integer bound can panic or silently admit oversized integers",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/jcs.rs",
+          "lines": [
+            201,
+            224
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/jcs.rs",
+          "lines": [
+            427,
+            442
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "Value i64::MIN overflows abs: checked build panics, unchecked emits-9223372036854776000 despite advertised2^53-1 ceiling. Raw50-digit integer skips ceiling when i128 parse fails. Compare signed ranges without abs and reject integer parse overflow before f64 conversion.",
+      "limits": "Concerns this advertised restricted integer profile, not a claim all RFC8785 numeric values must be safe integers. No hash collision claim."
+    },
+    {
+      "id": "RPF-F041",
+      "severity": "medium",
+      "title": "Strict diff gate accepts malformed positions and incomplete sections",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/diff_parser.rs",
+          "lines": [
+            101,
+            118
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/diff_parser.rs",
+          "lines": [
+            226,
+            264
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/diff_parser.rs",
+          "lines": [
+            297,
+            312
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/diff_parser.rs",
+          "lines": [
+            375,
+            392
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "Accepted nonnumeric hunk start positions, unsafe Binary files traversal names by ignoring validation errors, and a second plain header-only section by inheriting section_has_change. Validate positions, propagate all path errors and reset/finalize every section.",
+      "limits": "No patch applied or filesystem escape demonstrated; unsafe metadata example retained only benign diff--git path."
+    },
+    {
+      "id": "RPF-F042",
+      "severity": "medium",
+      "title": "Lean scanner loses token boundaries and axiom parser overwrites contrary evidence",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/lean_verify.rs",
+          "lines": [
+            149,
+            175
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/lean_verify.rs",
+          "lines": [
+            229,
+            265
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/lean_verify.rs",
+          "lines": [
+            337,
+            387
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "Scanning theorem t:False:=by/-comment-/sorry reports clean because comment removal merges bysorry. A t line with sorryAx followed by repeated t line claiming no axioms produces PASS under supplied true build/harness flags. Preserve comment separators and reject conflicting duplicate declaration records; bind actual compiler output and required declaration inventory.",
+      "limits": "No Lean compilation occurred; demonstrates scanner/text-audit behavior, not kernel unsoundness."
+    },
+    {
+      "id": "RPF-F043",
+      "severity": "medium",
+      "title": "Research claim verifier accepts inconsistent receipts and manifest omits identity",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/research_evidence.rs",
+          "lines": [
+            63,
+            112
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "Changing source IDs/paths while retaining bytes leaves source_manifest_root unchanged. Verifier accepts absent observed hash/count and wrong manifest with match booleans true; empty receipt set passes all(). Frame identity/path/normalization/count into manifest and recheck independently pinned expected source evidence. Scope verifier to custody unless a claim predicate is supplied.",
+      "limits": "Intake computes real raw byte hashes; neither SHA collision nor scientific claim verification occurs."
+    },
+    {
+      "id": "RPF-F044",
+      "severity": "medium",
+      "title": "Synthesis freeze bypasses declared dependency and oracle requirements",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/synthesis_dag.rs",
+          "lines": [
+            51,
+            111
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "Pending module depending on missing node is frozen with invalid code by freeze_module and is_all_frozen returns true. Require admitted verification receipt and valid status/dependency transition; validate unique acyclic graph names and trusted mutable-state boundary.",
+      "limits": "No code executed; public scaffold API contradicts its header, not a demonstrated deployed oracle bypass."
+    },
+    {
+      "id": "RPF-F045",
+      "severity": "medium",
+      "title": "Symbol Game host does not enforce immutable well-formed problem across public API",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/symbol_game_host.rs",
+          "lines": [
+            59,
+            104
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/symbol_game_host.rs",
+          "lines": [
+            269,
+            308
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/symbol_game_host.rs",
+          "lines": [
+            718,
+            739
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "Public problem bypasses new(); try_new checks only digest, admitting recomputed negative-weight graph with negative defect. After bootstrap, changing initial_claims without updating stored digest still permits ZERO_OBSTRUCTION verification under old pin. Make admitted problem/host state opaque or revalidate positive weights, dimensions and digest at boundaries.",
+      "limits": "In-process API mutation demonstrated, no remote transport mutation path. Weak duality remains sound under the valid positive-weight graph premises."
+    },
+    {
+      "id": "RPF-F046",
+      "severity": "medium",
+      "title": "Prime host accepts a timeout budget but never enforces it",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/host/intake.rs",
+          "lines": [
+            108,
+            124
+          ]
+        }
+      ],
+      "status": "source-established",
+      "detail": "timeout_ms is range-checked and committed, but the complete host.rs/host/prime_execution.rs path never reads elapsed time or propagates a deadline to solve/replay. Add an enforceable work/deadline mechanism or identify this field explicitly as external supervisor metadata.",
+      "limits": "Source-established; no expensive solver run or observed wall-clock overrun. Dense-size fences remain real."
+    },
+    {
+      "id": "RPF-F047",
+      "severity": "high",
+      "title": "Challenge commit-reveal gate does not bind the revealed judge",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/challenge.rs",
+          "lines": [
+            40,
+            64
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/challenge.rs",
+          "lines": [
+            253,
+            274
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "Changing hidden cases, checker IDs/operator/version, judge commitment hash and timestamp passes the prerequisite verifier with the original commitment/freeze/deliverable. manifest_sha256 is never compared to a canonical reveal, and variable operator/version concatenation admits an exact field-boundary alias. Bind and verify a canonical framed judge manifest, checker identities and independently anchored event order; validate None authority.",
+      "limits": "Synthetic in-memory unchanged-owner probe; not a SHA collision, not a private benchmark attack or deployed exploit."
+    },
+    {
+      "id": "RPF-F048",
+      "severity": "high",
+      "title": "Challenge scoring passes the answer-bearing full case to the candidate",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/challenge.rs",
+          "lines": [
+            199,
+            211
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/challenge.rs",
+          "lines": [
+            215,
+            249
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/challenge.rs",
+          "lines": [
+            302,
+            323
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/challenge.rs",
+          "lines": [
+            386,
+            393
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "ExactMatchChecker reads expected_field from case, while evaluator serializes that entire case as the candidate command argument. Echoing that object is Correct for both checkers; checker independence/IDs are never enforced and the same object can be supplied twice. Separate public candidate input from judge-only expected data and bind distinct checker implementations to the reveal.",
+      "limits": "Pure checker probe models source-proven argument construction; no sandbox execution, actual cases or private key accessed. Arbitrary custom checkers may use different case conventions."
+    },
+    {
+      "id": "RPF-F049",
+      "severity": "medium",
+      "title": "Checker panics escape the advertised CheckerDefectPause boundary",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/challenge.rs",
+          "lines": [
+            215,
+            250
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "evaluate_dual_checkers handles returned Err values but calls each trait implementation without panic isolation. Synthetic checker panic unwinds instead of producing CheckerDefectPause. Specify a nonpanicking checker contract and isolate untrusted checkers, or catch recoverable unwind at a suitable boundary while preserving crash distinction.",
+      "limits": "Recovered by the probe outside the unchanged function; panic=abort cannot be caught. Does not show Rust memory unsafety."
+    },
+    {
+      "id": "RPF-F050",
+      "severity": "high",
+      "title": "CODA truncates fractional exact distance to an accepted zero",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/coda.rs",
+          "lines": [
+            268,
+            313
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "For d0=[[2],[3]], cochain=[0,1], d1=[], exact min_t |2t|+|3t-1|=2/3. BigRational.to_u64 truncates to0, so declared phi1_distance0 is accepted with ExactRepair/CheckPassed. Require denominator1 before integer conversion or compare exact rationals directly. Add fractional positive-distance negatives.",
+      "limits": "Authority remains Refused/None and premises declared. Original CODA source included unchanged with only canonical serialization shim; cached exact solver dependencies pinned in receipt. Mixed-artifact failed attempts retained."
+    },
+    {
+      "id": "RPF-F051",
+      "severity": "high",
+      "title": "MCP computation-only declaration still exposes live provider and filesystem actions",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/mcp.rs",
+          "lines": [
+            44,
+            50
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/mcp.rs",
+          "lines": [
+            208,
+            213
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/invoke.rs",
+          "lines": [
+            194,
+            220
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/invoke/ports.rs",
+          "lines": [
+            238,
+            242
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/anthropic_host.rs",
+          "lines": [
+            237,
+            264
+          ]
+        }
+      ],
+      "status": "source-established complete dispatch tracing; no provider execution",
+      "detail": "tool_actions removes only run_folder_seal/verify. anthropic_messages and *_file remain callable and dispatch to credential/network/file owners despite advertised no provider calls and computation over supplied bytes. Use an explicit pure-action allowlist or accurately declare effects with separate host authorization/capabilities; do not equate AuthorityEffect None with no external effects.",
+      "limits": "A live provider call still requires valid input, positive ceiling and configured credentials; no paid call, key discovery, socket or source mutation was performed."
+    },
+    {
+      "id": "RPF-F052",
+      "severity": "medium",
+      "title": "Prime replay labels an unexecuted compound operation conforming",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/prime.rs",
+          "lines": [
+            156,
+            249
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/prime.rs",
+          "lines": [
+            253,
+            294
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "A single step255, opCRT, executedfalse produces conforms=true/Terminalized. Receipt CRT without gamma2 or steps also conforms with arbitrary caller terminal. Validate per-step closed op identity, execution, ordering and required evidence, or label this as a letter-declaration lint.",
+      "limits": "No coordinator/descent execution; existing unchecked-laws list does not mention these additional omissions."
+    },
+    {
+      "id": "RPF-F053",
+      "severity": "medium",
+      "title": "Examiner asymmetry predicate ignores self-loops",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/genesis.rs",
+          "lines": [
+            586,
+            617
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "verify_examiner on {(0,0)} reports is_asymmetric=true because selfloops are excluded from symmetric_witnesses. Include irreflexivity in asymmetry or collect loops as reciprocal witnesses. is_strict still refuses loops, but checks only irreflexivity/asymmetry and cannot certify transitivity; a directed3cycle passes is_strict.",
+      "limits": "Exact finite synthetic relation; cycle observation is a naming/strict-partial-order scope limit, not failure of the narrower irreflexive-asymmetric conjunction."
+    },
+    {
+      "id": "RPF-F054",
+      "severity": "low",
+      "title": "A permitted nonASCII presentation codec rejects its own render",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/genesis.rs",
+          "lines": [
+            213,
+            246
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/genesis.rs",
+          "lines": [
+            249,
+            276
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "with_glyphs(0x80,0x81) succeeds, render casts each byte tochar and emits multibyteUTF8, then scan compares individual bytes againstoriginal glyphvalues and refuses. Restrict codecs to distinctASCII bytes or represent glyphs consistently aschars/bytes.",
+      "limits": "One finite depth1 public constructor roundtrip; canonicalASCII codec unaffected."
+    },
+    {
+      "id": "RPF-F055",
+      "severity": "medium",
+      "title": "Observer equivalence lacks the purity premise required for reflexivity",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/genesis.rs",
+          "lines": [
+            410,
+            427
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/genesis.rs",
+          "lines": [
+            492,
+            504
+          ]
+        }
+      ],
+      "status": "bounded unchanged-owner probe reproduced",
+      "detail": "EvaluationMorphism is an arbitrary function pointer. A function using an atomic counter returns different exact rationals for the two identical admitted contexts, so equivalent(x,x)=false. Require/document deterministic pure evaluators and bind their identity; memoization alone does not establish all equivalence laws.",
+      "limits": "Synthetic stateful evaluator, no concurrency/provider/private inputs. With pure deterministic functions every currently opaque datum remains indistinguishable, as render ignores datum."
+    },
+    {
+      "id": "RPF-F056",
+      "severity": "medium",
+      "title": "Deserialized bytecode executes under a stale bundle digest",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/bytecode/compile.rs",
+          "lines": [
+            176,
+            211
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced",
+      "detail": "Private fields derive Deserialize without digest reconstruction. Changing LoadGlyph glyph1 to99 in serialized bundle preserves original digest in execution receipt. Validate wire via constructor and recompute/bind bundle plus initial envelope at execution.",
+      "limits": "Unchanged-source native probe reproduced; no external programs."
+    },
+    {
+      "id": "RPF-F057",
+      "severity": "medium",
+      "title": "Repeating boundary assertion promotes unresolved defect to exact",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/bytecode/machine.rs",
+          "lines": [
+            100,
+            121
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/bytecode/machine.rs",
+          "lines": [
+            176,
+            186
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced",
+      "detail": "EmitObstruction followed by two AssertBoundary operations yields exact=true while defect_count remains1. The second check treats an inexact Boundary as non-Defect. Preserve prior inexactness and require actual boundary-map computation before mathematical exactness claims.",
+      "limits": "Unchanged-source native probe reproduced; symbolic instruction semantics only."
+    },
+    {
+      "id": "RPF-F058",
+      "severity": "medium",
+      "title": "Fiber continuation overflows instead of refusing",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/bytecode/machine.rs",
+          "lines": [
+            122,
+            134
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced",
+      "detail": "A supplied Fiber level u64MAX followed by StepFibration panics with overflow checks and wraps to0 without them. Use checked_add and typed refusal.",
+      "limits": "Both native overflow modes reproduced; hand-constructed public envelope."
+    },
+    {
+      "id": "RPF-F059",
+      "severity": "medium",
+      "title": "Guard generalization can bypass review and preserve an obsolete mask digest",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/guard.rs",
+          "lines": [
+            114,
+            181
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/guard.rs",
+          "lines": [
+            255,
+            267
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "Public LearnedGuard/scope fields and Deserialize admit generalized scope without named review. Mask digest omits scope/reviewer/rationale, so changing exact matching into token-only pruning preserves digest. Validate all constructors/wire and hash complete behavior/review evidence.",
+      "limits": "Source-established, not a newly executed guard probe; bounded known-good panel cannot establish universal soundness. Bounded direct-source confirmation is recorded in RPF-V023; no authority exploit or broad soundness claim."
+    },
+    {
+      "id": "RPF-F060",
+      "severity": "medium",
+      "title": "CODA wire bypasses layer and named-review gates",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/coda.rs",
+          "lines": [
+            173,
+            242
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/coda.rs",
+          "lines": [
+            269,
+            336
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced",
+      "detail": "Deserialize admits a Physical AdmittedClaim carrying ParityWitness and a QuarantinedAdapter certificate with empty reviewer/rationale; author_receipt succeeds. Use validated wire conversion and distinguish evidence-tag checks from actual evidence verification.",
+      "limits": "Both bypasses reproduced against unchanged source. No physical or parity truth inferred."
+    },
+    {
+      "id": "RPF-F061",
+      "severity": "medium",
+      "title": "Retraction replay ignores material receipt fields",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/retraction.rs",
+          "lines": [
+            364,
+            378
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/retraction.rs",
+          "lines": [
+            461,
+            496
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "Replay compares terminal, trace and cemetery but ignores schema, acts, admitted/refused counts, open-obligation count within same terminal category and authority effect. Tampering those fields remains Reproduced. Compare the complete canonical receipt or explicitly name a narrower replay predicate.",
+      "limits": "Source-established; authority string acceptance is not demonstrated external authority issuance. Bounded direct-source confirmation is recorded in RPF-V023; no authority exploit or broad soundness claim."
+    },
+    {
+      "id": "RPF-F062",
+      "severity": "medium",
+      "title": "Debate localization omits its monotonicity and common-proposition premises",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/debate.rs",
+          "lines": [
+            243,
+            317
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/debate.rs",
+          "lines": [
+            402,
+            426
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/debate.rs",
+          "lines": [
+            534,
+            557
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "Binary search assumes prefix agreement followed by permanent disagreement. Public DAG permits nonmonotone bits; a local previous-node check cannot establish first divergence. Comparisons also ignore primitive identity and intentionally compare different propositions, so differing truth bits need not be contradictory. Encode/check premises or narrow the contract to locating a local bit transition.",
+      "limits": "Source-established with monotone-only existing fixtures; no fresh debate execution yet. Bounded direct-source confirmation is recorded in RPF-V023; no authority exploit or broad soundness claim."
+    },
+    {
+      "id": "RPF-F063",
+      "severity": "high",
+      "title": "Live admission lets its request choose the signature verifier and trust file",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/adversary_live_admission.rs",
+          "lines": [
+            13,
+            23
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/adversary_live_admission.rs",
+          "lines": [
+            249,
+            258
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/adversary_live_admission.rs",
+          "lines": [
+            393,
+            415
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/adversary_host.rs",
+          "lines": [
+            225,
+            227
+          ]
+        }
+      ],
+      "status": "source-established, no verifier process executed",
+      "detail": "A request may nominate any ssh_keygen executable; verification accepts only its success exit status. The same request chooses allowed_signers_path, constrained merely to outside repository. Thus the gate does not independently authenticate operator approval against an untrusted caller. Pin executable/trust roots in host configuration, or state/enforce that this caller is already fully trusted. Child wait has no timeout.",
+      "limits": "No live admission, credential resolution, provider request or arbitrary program was executed. If callers are already trusted operators, this is a trust-boundary/documentation requirement rather than privilege escalation."
+    },
+    {
+      "id": "RPF-F064",
+      "severity": "medium",
+      "title": "Injected transport path omits advertised run resource admission checks",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/adversary_host.rs",
+          "lines": [
+            1347,
+            1365
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/adversary_host.rs",
+          "lines": [
+            1814,
+            1827
+          ]
+        }
+      ],
+      "status": "source-established",
+      "detail": "dispatch/run rejects zero compute budget and max_output_tokens outside1..65536. Public execute_with_transport validates only objective/rounds and common preflight, then enters execute without those checks. Centralize resource admission before both entry points.",
+      "limits": "Downstream owners may refuse some invalid values; no paid transport or end-to-end execution was attempted."
+    },
+    {
+      "id": "RPF-F065",
+      "severity": "medium",
+      "title": "Empty or initially refused DDC tape heads do not bind initial state",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/ddc.rs",
+          "lines": [
+            378,
+            398
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/ddc.rs",
+          "lines": [
+            412,
+            420
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/ddc.rs",
+          "lines": [
+            437,
+            471
+          ]
+        }
+      ],
+      "status": "source-established",
+      "detail": "The head starts as SHA256(genesis_root) and incorporates state only after a successful step. Distinct admitted initial states with zero steps have identical lawful=true receipt_head, and distinct first-step refusals also preserve that head. Bind initial state and full request separately, or clearly document head as accepted-prefix-only identity rather than complete request custody.",
+      "limits": "No collision in SHA256 asserted. Dispatcher may independently bind an outer request in some call paths; the public verify_tape result itself does not."
+    },
+    {
+      "id": "RPF-F066",
+      "severity": "medium",
+      "title": "Grammar probability score accepts duplicate mass and foreign-prefix binding",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/grammar.rs",
+          "lines": [
+            303,
+            324
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/grammar.rs",
+          "lines": [
+            368,
+            389
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "Two probability1 entries for legal token0 produce EFG2. The resulting EFG can be attached to an unrelated missed prefix with support0. Validate distinct token IDs and total mass<=1, bind score to grammar/prefix/distribution, and describe it as immediate legal-token mass unless a finite-horizon model is actually evaluated.",
+      "limits": "Native hand-constructed finite example reproduced. No model distribution or generation run; immediate legal mass is not in general a lower bound on multi-step completion probability."
+    },
+    {
+      "id": "RPF-F067",
+      "severity": "high",
+      "title": "Unsigned active count makes allegedly monotone pressure decrease",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/manifold.rs",
+          "lines": [
+            176,
+            190
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "For weight1 and initial0, step([u64MAX]) returns pressure-1 because count as i64 wraps the value before rational multiplication. Use BigInt-backed rational/counts or checked conversion/arithmetic with typed refusal. Positive weights plus u64 counts do not establish the claimed invariant under this implementation.",
+      "limits": "Reproduced in both Rust overflow modes against unchanged source; small allocation, no long run."
+    },
+    {
+      "id": "RPF-F068",
+      "severity": "medium",
+      "title": "Deserialized prompt graph bypasses construction and can index outside Laplacian",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/probing.rs",
+          "lines": [
+            161,
+            169
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/probing.rs",
+          "lines": [
+            459,
+            469
+          ]
+        }
+      ],
+      "status": "source-established",
+      "detail": "PromptGraph derives Deserialize for private prompts/distance/radius/adjacency. Wire may supply inconsistent adjacency or out-of-range neighbor index; laplacian writes row[other] without validation. Deserialize through the constructor or validate complete simple symmetric bounded adjacency and its relation to prompts.",
+      "limits": "Source-established; no native graph panic probe yet. Constructor-produced graphs avoid this specific indexing defect."
+    },
+    {
+      "id": "RPF-F069",
+      "severity": "low",
+      "title": "Guard fingerprint serialization has an exact field-boundary alias",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/guard.rs",
+          "lines": [
+            92,
+            101
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "token a with projection[false] hashes identically to token a followed by NUL with emptyprojection. Use tagged length framing. Actual exact pruning compares fields, so digest alias does not itself cause erroneous equality in that path.",
+      "limits": "Native probe reproduced, no cryptographic hash collision asserted."
+    },
+    {
+      "id": "RPF-F070",
+      "severity": "high",
+      "title": "Challenge score emits VERIFIED without verifying commitment, freeze or cases binding",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/invoke/workflow.rs",
+          "lines": [
+            593,
+            671
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/invoke/tests.rs",
+          "lines": [
+            625,
+            685
+          ]
+        }
+      ],
+      "status": "source-established",
+      "detail": "run_challenge_score merely deserializes, runs two instances of the same ExactMatchChecker over caller-provided cases, and copies independent commitment/freeze hashes into the result. It never checks challenge IDs, judge commitment, frozen deliverable or linkage between candidate outputs and deliverable. Empty hidden_cases yields VERIFIED by0==0. The happy-path test itself commits text naming two cases but supplies one. Require validated reveal/freeze/manifest linkage and declared nonempty evaluation census before emitting a challenge verification status; distinguish checker duplication from independence.",
+      "limits": "Pure source/control-flow finding; this endpoint was not executed in a live challenge. Extends the core challenge binding limitations in RPF-F047/F048 without claiming a private benchmark breach."
+    },
+    {
+      "id": "RPF-F071",
+      "severity": "medium",
+      "title": "Kitaev adapter names boundary isolation topological protection",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/invoke/majorana_math.rs",
+          "lines": [
+            200,
+            242
+          ]
+        }
+      ],
+      "status": "source-established claim mismatch",
+      "detail": "mzm_topologically_protected is exactly left_isolated && right_isolated, with no spectral-gap, nontrivial-phase or perturbation-stability predicate. A zero Hamiltonian has zero boundary commutators without establishing protected edge physics. Rename this result to the computed boundary-isolation predicate or add and explicitly scope the missing mathematical conditions.",
+      "limits": "Adapter source review only; no physical experiment and no claim of a general phase-classification algorithm in the delegated owner."
+    },
+    {
+      "id": "RPF-F072",
+      "severity": "high",
+      "title": "Surgery verifier certifies a single repeated defect and trusts fabricated counts",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/dda.rs",
+          "lines": [
+            363,
+            395
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/dda.rs",
+          "lines": [
+            416,
+            431
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "On d0=[0],d1=[1], fused=(0,0), sigma_before=[1], positive/negative witnesses=[1], sigma_after=[0] receives Verified. This removes one defect, contradicting the advertised exactly-two result. Public counts99/97 also survive verifier and receipt unchanged. Require distinct in-range indices, recompute counts and bind verdict inside receipt construction; add independent forged-pair/count tests.",
+      "limits": "Solver-produced pairs are distinct; this failure is in the independent public witness-verification/receipt boundary. No downstream authority promotion or provider run."
+    },
+    {
+      "id": "RPF-F073",
+      "severity": "medium",
+      "title": "Transport serde bypasses monotone in-range morphism admission",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/transport.rs",
+          "lines": [
+            121,
+            163
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/transport.rs",
+          "lines": [
+            212,
+            240
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/transport.rs",
+          "lines": [
+            371,
+            390
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "Derived Deserialize constructs private SimplicialMorphism fields directly. Map[1,0] into2, which new refuses, receives a transport certificate; map[9] into1 reaches unchecked pushforward indexing and panics. Deserialize through validated constructor and validate any public receipt before use.",
+      "limits": "Runtime simplicial_transport constructs with new and avoids this particular serde bypass. Public Rust/serde interface still admits it; no external host exploit asserted."
+    },
+    {
+      "id": "RPF-F074",
+      "severity": "high",
+      "title": "Derivation DAG completeness receipts substitute literal arithmetic for named claim verification",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            237,
+            249
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            371,
+            407
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            437,
+            469
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            959,
+            975
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            1724,
+            1779
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            2649,
+            2710
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            2714,
+            2755
+          ]
+        }
+      ],
+      "status": "source-established; fixed master output reproduced natively",
+      "detail": "All33 families pass and list177 unique nodes, but no DAG/paper/dependency/proof inputs are read. Examples: growth minima assigned1; Cabello146 computed2+72+72; Majorana validity assigned comm_trace_zero; completeness counts hard-coded;142 node witnesses depend on index/stage arithmetic rather than named propositions. Tranche7 even compares literals1 and3/4 although its documented R_t(p) formula gives R_1(1)=1. Preserve as illustrative finite fixtures and remove semantic-closure/certification implications, or bind each covered node to an actual owner predicate, premises and checked evidence.",
+      "limits": "Some small exact examples and finite CHSH/parity enumerations are valid. This finding does not refute separate paper or Lean proofs; it rejects promoting this native receipt to their verification or to quantum-selection/physical evidence."
+    },
+    {
+      "id": "RPF-F075",
+      "severity": "low",
+      "title": "Transport chain ledger omits composition carrier compatibility",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/transport.rs",
+          "lines": [
+            191,
+            205
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/transport.rs",
+          "lines": [
+            309,
+            322
+          ]
+        }
+      ],
+      "status": "bounded native probe reproduced in both overflow modes",
+      "detail": "F:[0]->carrier3 and G:[0,1]->carrier2 cannot compose under the public typed dimension rule, yet for_chain(F,G,[0]) returns two loss ledgers because reached indices fit. Check first.target_vertices==then.source_vertices or explicitly expose a restriction/extension morphism and rename the weaker operation.",
+      "limits": "The support-relative telescoping count still has its stated elementary interpretation; this is inconsistency with the module composition contract, not a false numerical sum."
+    }
+  ],
+  "claims": [
+    {
+      "id": "RPF-C012",
+      "claim": "Finite rewrite closure can decide joinability of one pair without global termination; this owner keeps bounded nonclosure and producer-declared presentation provenance distinct from exhaustive non-joinability.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/rewriting/reduction.rs",
+          "lines": [
+            97,
+            150
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/rewriting/peak.rs",
+          "lines": [
+            544,
+            618
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/rewriting/peak.rs",
+          "lines": [
+            274,
+            320
+          ]
+        }
+      ],
+      "dependencies": [
+        "Explicit finite nonempty-left-hand-side string rewrite rules",
+        "Full exploration of both reachable sets within a shared probe budget",
+        "Host-owned presentation pins for endorsed provenance"
+      ],
+      "limitations": [
+        "No system-wide confluence claim or Squier theorem follows from one pair.",
+        "Signature symbols are not checked against rule/source text by the peak owner; interpretation is raw Unicode-string rewriting.",
+        "The budget counts candidate redex probes, excluding path replay, critical-pair enumeration and string/allocation costs.",
+        "Identical-endpoint declared-join shortcut has the false-refusal defect F030."
+      ]
+    },
+    {
+      "id": "RPF-C010",
+      "claim": "The contract trait layer largely declares behavioral obligations and evidence metadata; a separate certificate-promotion owner restricts safe-Rust authority construction with an opaque capability whose public issuance is dormant.",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/traits_authority_laws.rs",
+          "lines": [
+            82,
+            182
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/traits_evidence.rs",
+          "lines": [
+            95,
+            136
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/certificate_promotion.rs",
+          "lines": [
+            359,
+            456
+          ]
+        }
+      ],
+      "dependencies": [
+        "Rust field privacy and absence of external unsafe fabrication",
+        "Future authenticated host issuer and trusted receipt/evidence owners"
+      ],
+      "limitations": [
+        "Associated marker types do not prove behavioral laws or prevent side effects.",
+        "Receipt-DAG verification inputs here are asserted counts/flags, and identity independence is checked on declared strings.",
+        "Dormancy is not evidence that a live authenticated host/publisher pipeline has run."
+      ]
+    },
+    {
+      "id": "RPF-C011",
+      "claim": "Runtime rational LP/L1 and finite F2 routines compute or replay concrete algebraic predicates on supplied finite carriers, distinct from declaration-only trait witnesses.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/rational.rs",
+          "lines": [
+            425,
+            492
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/rational.rs",
+          "lines": [
+            529,
+            612
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/f2.rs",
+          "lines": [
+            247,
+            342
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/f2.rs",
+          "lines": [
+            395,
+            447
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/cochain.rs",
+          "lines": [
+            666,
+            725
+          ]
+        }
+      ],
+      "dependencies": [
+        "Exact rational/linear-algebra and core_functional owners",
+        "Correct dimension admission and finite storage",
+        "Caller correspondence between the declared carrier and intended task"
+      ],
+      "limitations": [
+        "No automatic detector adequacy or physical interpretation follows.",
+        "F2 large-dimension shape admission is defective (F023).",
+        "Cochain protected answers and source hashes bind only supplied strings; budgets may be absent and count evaluations rather than arithmetic work.",
+        "Public/deserializable disposition labels are not themselves verified outputs unless recomputed."
+      ]
+    },
+    {
+      "id": "RPF-C009",
+      "claim": "The additive foundation enforces a finite declared repair census and partial DDA path composition; it does not derive carrier, detector adequacy or universe completeness from the nullary primitive difference.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/foundation.rs",
+          "lines": [
+            14,
+            19
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/foundation/repair.rs",
+          "lines": [
+            199,
+            297
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/foundation/dda.rs",
+          "lines": [
+            397,
+            495
+          ]
+        }
+      ],
+      "dependencies": [
+        "Caller-declared finite candidates and exact detector table",
+        "Pure/extensional state equality and callbacks",
+        "Exact typed canonical bytes and cryptographic binding assumptions"
+      ],
+      "limitations": [
+        "Empty declared repair universes are permitted; completeness is relative to that declaration.",
+        "DDA recording preserves only supplied protected projections and declared losses; operation replay is separate.",
+        "Exhaustion digest omits candidate result-state mapping and full detector table; distinct such mappings can share the same certificate ID without a hash-function collision.",
+        "F021 prevents an unconditional claim that all accepted extension resolutions preserve the same detector."
+      ]
+    },
+    {
+      "id": "RPF-C013",
+      "claim": "Contract registry validators establish finite declaration, type-binding and corpus-integrity predicates; they do not execute the declared mathematical laws or mint runtime authority.",
+      "evidence": [
+        {
+          "path": "code/rust/core_contracts/src/binding.rs",
+          "lines": [
+            336,
+            412
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/validate.rs",
+          "lines": [
+            65,
+            146
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/registry_projections.rs",
+          "lines": [
+            365,
+            434
+          ]
+        },
+        {
+          "path": "code/rust/core_contracts/src/kinds.rs",
+          "lines": [
+            119,
+            144
+          ]
+        }
+      ],
+      "dependencies": [
+        "Caller uses the intended validation entry point and examines all findings",
+        "Reviewed stable filesystem and pinned source bytes for projection parity",
+        "Separate concrete mathematical and runtime enforcement owners"
+      ],
+      "limitations": [
+        "Policy except exact sentinel.policy and several roles have no dedicated validator.",
+        "Private count/type wrappers witness their narrow predicates only; declared totality/purity/authority labels need independent enforcement.",
+        "Authorization scaffold sealed/single-use claims are disproved locally by F035-F037; live landing use was not found."
+      ]
+    },
+    {
+      "id": "RPF-C014",
+      "claim": "Symbol Game graph host implements a finite rational weighted-l1 primal/dual certificate predicate, conditional on a well-formed immutable positive-weight graph and valid exact rationals.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp_runtime/src/symbol_game_host.rs",
+          "lines": [
+            340,
+            355
+          ]
+        },
+        {
+          "path": "code/rust/pfp_runtime/src/symbol_game_host.rs",
+          "lines": [
+            382,
+            468
+          ]
+        }
+      ],
+      "dependencies": [
+        "Residual r=omega-Bs on declared finite graph",
+        "Positive weights, matching dimensions, valid normalized rationals",
+        "Dual divergence B^Tz=0, component bounds |z_e|<=w_e and equality <z,r>=sum(w_e|r_e|)",
+        "Trusted state acquisition and actual problem integrity beyond stored digest label"
+      ],
+      "limitations": [
+        "Weak duality gives supplied finite-objective optimality, not application encoding adequacy or MUB existence.",
+        "F045 shows public API does not enforce all premises.",
+        "Cut permits equality; Retract can increase defect. No global termination or universal monotonicity proof.",
+        "Legacy declared-number/boolean scoring, driver, synthesis and research helpers cannot inherit this certificate strength."
+      ]
+    },
+    {
+      "id": "RPF-C015",
+      "claim": "Frozen Unicode tables agree with their admitted Python15 scalar oracle on the entire valid Unicode scalar carrier in this offline comparison.",
+      "evidence": [
+        {
+          "path": "code/rust/core_types/src/python_alnum_v1.rs",
+          "lines": [
+            1,
+            750
+          ]
+        },
+        {
+          "path": "code/rust/core_types/src/python_case_v1.rs",
+          "lines": [
+            1,
+            3562
+          ]
+        },
+        {
+          "path": "code/rust/core_types/src/python_unicode_v1.rs",
+          "lines": [
+            1,
+            2249
+          ]
+        },
+        {
+          "path": "dag/reviews/additional_rust_pfp_foundations_unicode_validation.json"
+        }
+      ],
+      "dependencies": [
+        "Exact recorded source bytes",
+        "CPython3.12.12 Unicode15.0.0 scalar methods and exported internal case-ignorable predicate",
+        "Audited finite table parsing and exhaustive enumeration helper"
+      ],
+      "limitations": [
+        "Data comparison is not a proof of the Unicode specification, semantic equivalence of identifiers or detector adequacy.",
+        "Surrogates are outside Rust char carrier; contextual final-sigma behavior and whole-string normalization are not covered.",
+        "Production structural certifiers check order/ranges only, not oracle correctness."
+      ]
+    },
+    {
+      "id": "RPF-C016",
+      "claim": "The primary host actually solves and replays a supplied finite cochain candidate, while explicitly withholding authority and broader source/application claims.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/host.rs",
+          "lines": [
+            233,
+            291
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/host.rs",
+          "lines": [
+            343,
+            384
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/host/intake.rs",
+          "lines": [
+            203,
+            228
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/host/prime_execution.rs",
+          "lines": [
+            360,
+            432
+          ]
+        }
+      ],
+      "dependencies": [
+        "core_wdp solve/replay and carrier_manifest, core_functional exact witness semantics",
+        "Finite resource-fenced declared carrier and i128encoded before/candidate vectors",
+        "Trusted current-process execution and immutable internal witnesses"
+      ],
+      "limitations": [
+        "No automatic proof that carrier/payload encodes the intended task; source IDs lacking bytes are explicitly bound-only.",
+        "Detector adequacy is a sampled two-byte-commitment distinction, not semantic completeness.",
+        "Some Prime000 laws remain partial; successful output admission remains Refused/unsigned_lab.",
+        "Declared timeout is not enforced; F046. No new full-host integration test run."
+      ]
+    },
+    {
+      "id": "RPF-C017",
+      "claim": "Genesis resolution computes and replays finite exact rational optimization, with a separately checked integer-image certificate.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/genesis_resolution.rs",
+          "lines": [
+            144,
+            210
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/genesis_resolution.rs",
+          "lines": [
+            235,
+            296
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/genesis_resolution.rs",
+          "lines": [
+            362,
+            437
+          ]
+        }
+      ],
+      "dependencies": [
+        "Declared finite integer cochain matrices and positive rational weights",
+        "Exact simplex, primal/dual checker, bounded candidate enumerator and checked Smith normal form owners"
+      ],
+      "limitations": [
+        "Finite formal realization is admitted; it is not a derivation of mathematics/physics from a primitive.",
+        "One optimum unless bounded basic-tie enumeration succeeds; no universal tie census.",
+        "Heap/bit complexity and SNF wall time are not bounded by simplex pivots.",
+        "Source review with meaningful local tests read; this owner not freshly executed."
+      ]
+    },
+    {
+      "id": "RPF-C018",
+      "claim": "The native C011 host constructs a bounded finite weighted-L1 primal-dual certificate and delegates exact verification, independently of PFP envelope admission.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/adversary_checker.rs",
+          "lines": [
+            188,
+            205
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/adversary_checker.rs",
+          "lines": [
+            280,
+            327
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/adversary_checker_tests.rs",
+          "lines": [
+            58,
+            99
+          ]
+        }
+      ],
+      "dependencies": [
+        "Strict closed JSON and canonical exact rational parser",
+        "Canonical core_functional Phi1 certificate owner",
+        "Caller-supplied finite graph/cochain/positive weights"
+      ],
+      "limitations": [
+        "Finite optimum only; no scientific grounding or action authority.",
+        "Source pins cover two files, not complete compiler/transitive dependency attestation.",
+        "Most composition tests are ignored for missing private resources; no fresh native host suite was run."
+      ]
+    },
+    {
+      "id": "RPF-C019",
+      "claim": "The finite QDDC, classical-comparison and homology adapters preserve explicit input bounds and delegate exact predicates; their result scope remains conditional on the admitted mathematical model.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/invoke/qddc.rs",
+          "lines": [
+            140,
+            238
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/invoke/qm_classical.rs",
+          "lines": [
+            120,
+            221
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/invoke/native_homology.rs",
+          "lines": [
+            208,
+            256
+          ]
+        }
+      ],
+      "dependencies": [
+        "Canonical rational/complex matrix, quantum, convex-hull and homological perturbation owners",
+        "Caller-declared finite states/channels/contractions and physical interpretation premises"
+      ],
+      "limitations": [
+        "No physical selection, empirical confirmation or universal detector theorem.",
+        "Operation and input bounds do not imply global bit-complexity/wall-time bounds.",
+        "Adapter semantic source review and local tests read, not a fresh complete owner suite."
+      ]
+    },
+    {
+      "id": "RPF-C020",
+      "claim": "Finite vertex transport has exact GF2 functoriality and additive support-relative cardinality loss for validated composable maps.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/transport.rs",
+          "lines": [
+            19,
+            43
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/transport.rs",
+          "lines": [
+            191,
+            252
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/transport.rs",
+          "lines": [
+            271,
+            348
+          ]
+        }
+      ],
+      "dependencies": [
+        "Finite ordered vertex sets; monotone in-range maps; correct carrier composition; support deduplication; representable finite counts"
+      ],
+      "limitations": [
+        "No arbitrary simplicial complexes, higher-degree chain maps, entropy or licensing theorem. Public serde and for_chain bypasses are findings RPF-F073/F075. Certificates carry counts rather than source/map binding."
+      ]
+    },
+    {
+      "id": "RPF-C021",
+      "claim": "DDA chooses a GF2 deformation whose associator vanishes after D1D0 on a chain complex; the solver reduces distinct paired syndrome defects by two.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/epics/dda.rs",
+          "lines": [
+            13,
+            74
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/dda.rs",
+          "lines": [
+            117,
+            205
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/epics/dda.rs",
+          "lines": [
+            245,
+            336
+          ]
+        }
+      ],
+      "dependencies": [
+        "Chosen pairing/seed algebra; finite validated binary matrices; exact elimination; distinct actual defect indices"
+      ],
+      "limitations": [
+        "Observable rather than raw associativity; legacy phi_1 is chain-composite weight, not canonical quotient Phi1. No physical meron mechanism. Independent witness verifier misses distinctness/counts (RPF-F072)."
+      ]
+    },
+    {
+      "id": "RPF-C022",
+      "claim": "The derivation witness master computes33 fixed illustrative families and lists177 unique node labels; it does not verify the named derivation DAG.",
+      "evidence": [
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            15,
+            29
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            1724,
+            1779
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            2502,
+            2711
+          ]
+        },
+        {
+          "path": "code/rust/pfp/src/derivation_dag_witnesses.rs",
+          "lines": [
+            2714,
+            2755
+          ]
+        }
+      ],
+      "dependencies": [
+        "Fixed literal examples, finite enumerations, BigRational and bounded machine arithmetic"
+      ],
+      "limitations": [
+        "All-passed is native execution of those fixtures only; no universal theorem, custody validation, dependency closure, empirical evidence or derivation of quantum mechanics. Several labels use tautological counters or unrelated invariants (RPF-F074)."
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "id": "RPF-V011",
+      "kind": "bounded rewrite counterexample and existing direct-owner tests",
+      "details_file": "additional_rust_pfp_foundations_rewriting_validation.json",
+      "limits": "Original canonical and six rewriting files compile directly with cached dependencies. New probe reproduces false refusal;58existing tests pass. Initial test compilation hit incompatible cached serde_core identities, corrected by selecting a matching serde/serde_json pair; preserved setup failure is not a source defect. Not a full crate or global confluence test."
+    },
+    {
+      "id": "RPF-V009",
+      "kind": "bounded runtime operad predicate and conversion probes",
+      "details_file": "additional_rust_pfp_foundations_operad_validation.json",
+      "limits": "Four local failures use original runtime code without executing external kernel; conversion failure uses a hashed cached kernel with current source semantics separately inspected. No full crate rebuild or native/Python universal correspondence claim."
+    },
+    {
+      "id": "RPF-V010",
+      "kind": "bounded integral boundary overflow probe",
+      "details_file": "additional_rust_pfp_foundations_boundary_validation.json",
+      "limits": "Original complete thirteen-line function copied verbatim with source/excerpt hashes; both overflow modes tested. No other homology owner/dependency coverage is implied."
+    },
+    {
+      "id": "RPF-V007",
+      "kind": "bounded F2 overflow counterexamples and exhaustive small-domain checks",
+      "details_file": "additional_rust_pfp_foundations_f2_validation.json",
+      "limits": "Direct original-source inclusion, cached serde/serde_json/thiserror only. Both overflow modes compile and execute successfully. Small-domain census covers all 0..3-by-0..3 bit matrices and right-hand sides plus 2-by-2 gauge boards; no universal test or full crate suite claim."
+    },
+    {
+      "id": "RPF-V008",
+      "kind": "bounded graph digest and seed counterexample",
+      "details_file": "additional_rust_pfp_foundations_curriculum_validation.json",
+      "limits": "Direct original curriculum source with cached libraries, no generation campaign or provider calls. Two connected graphs and two seeds at b1=4 only."
+    },
+    {
+      "id": "RPF-V006",
+      "kind": "bounded additive-foundation and strict-wire correspondence probes",
+      "details_file": "additional_rust_pfp_foundations_foundation_validation.json",
+      "limits": "rustc uses cached libraries only. Foundation owner copy adds only four explicit module paths for standalone compilation; function bodies are unchanged. Canonical and child foundation modules are included from original source. Initial module-path and Python import setup errors were harness setup, not product failures. Nine Python decoder comparisons and two finite foundation observations; no full-crate or universal correspondence claim."
+    },
+    {
+      "id": "RPF-V012",
+      "kind": "bounded original macro expansion compile probes",
+      "details_file": "additional_rust_pfp_foundations_macro_validation.json",
+      "limits": "Minimal type scaffolding isolates exported macro expansion; original owner included verbatim. Both expected compile failures reproduced, no executable reached. This is not a full-crate compile or behavioral law test."
+    },
+    {
+      "id": "RPF-V013",
+      "kind": "bounded original maintenance encoding counterexamples",
+      "details_file": "additional_rust_pfp_foundations_encoding_validation.json",
+      "limits": "Canonical owner included verbatim, base64 decoder extracted complete without changes. Cached dependencies only;3nonfinite and3base64 cases plus finite-float control. No full-crate claim."
+    },
+    {
+      "id": "RPF-V014",
+      "kind": "bounded authorization scaffold counterexamples",
+      "details_file": "additional_rust_pfp_foundations_authorization_validation.json",
+      "limits": "Original entire owner included unchanged, synthetic inputs/key only, cached blake3. No network, corpus landing or claim of deployed exploit."
+    },
+    {
+      "id": "RPF-V015",
+      "kind": "bounded signed decode-bias counterexample",
+      "details_file": "additional_rust_pfp_foundations_decode_validation.json",
+      "limits": "Two rustc builds of original module, synthetic receipt and cached serde only; checked panic was caught, unchecked verifier returned Pass."
+    },
+    {
+      "id": "RPF-V016",
+      "kind": "bounded runtime parser and scaffold counterexamples",
+      "details_file": "additional_rust_pfp_foundations_runtime_boundary_validation.json",
+      "limits": "Five entire original owners, synthetic in-memory inputs, both overflow modes; no Lean compiler, patch application, provider or full suite."
+    },
+    {
+      "id": "RPF-V017",
+      "kind": "bounded exact Symbol Game trust-boundary counterexamples",
+      "details_file": "additional_rust_pfp_foundations_symbol_host_validation.json",
+      "limits": "Original owner included unchanged. Cached serde ABI mismatch resolved by compatible cached serde_json; setup attempts recorded. No download or remote exploit."
+    },
+    {
+      "id": "RPF-V018",
+      "kind": "exhaustive finite Unicode table data correspondence",
+      "details_file": "additional_rust_pfp_foundations_unicode_validation.json",
+      "limits": "All1112064 valid scalars; seven tables compared to admitted local CPython3.12 Unicode15 oracle. Separate from full source reading and not Rust or contextual string execution."
+    },
+    {
+      "id": "RPF-V019",
+      "kind": "synthetic challenge commitment/checker boundary probes",
+      "details_file": "additional_rust_pfp_foundations_challenge_validation.json",
+      "limits": "Original challenge owner included unchanged and cached dependencies only. No sandbox/candidate process or actual/private cases; echo observation is an in-memory checker test plus source argument tracing."
+    },
+    {
+      "id": "RPF-V020",
+      "kind": "CODA fractional-distance unchanged-owner counterexample",
+      "details_file": "additional_rust_pfp_foundations_coda_validation.json",
+      "limits": "One finite two-coordinate exact instance; no provider/dispatch/private case. Cached library identities aligned through Cargo fingerprints after recorded failed mixed-version attempts."
+    },
+    {
+      "id": "RPF-V021",
+      "kind": "Genesis/Prime finite public boundary probes",
+      "details_file": "additional_rust_pfp_foundations_genesis_validation.json",
+      "limits": "Complete unchanged modules and cached dependencies; no generator seed, stored benchmark, provider, descent execution or private input."
+    },
+    {
+      "id": "RPF-V022",
+      "kind": "Symbolic bytecode and CODA wire probes; existing bytecode tests",
+      "details_file": "additional_rust_pfp_foundations_epic_validation.json",
+      "limits": "Unchanged complete owners and cached dependencies, both overflow modes;50existing bytecode tests passed. No full crate suite, external candidate, provider, benchmark or private input."
+    },
+    {
+      "id": "RPF-V023",
+      "kind": "Grammar, pressure, debate, retraction and guard counterexamples",
+      "details_file": "additional_rust_pfp_foundations_pressure_validation.json",
+      "limits": "Complete unchanged five modules and cached dependencies; six assertions passed in both overflow modes. Pure finite synthetic cases, no model/provider/private benchmark or full suite."
+    },
+    {
+      "id": "RPF-V024",
+      "kind": "Final direct-source surgery, transport and derivation witness probes",
+      "details_file": "additional_rust_pfp_foundations_final_validation.json",
+      "limits": "Both overflow modes compiled and executed exit0; five bounded observations. Caught out-of-range panic is expected evidence. No whole-suite, provider, private-case or mathematical proof claim. Initial helper syntax typo was corrected before native compilation."
+    }
+  ]
+}

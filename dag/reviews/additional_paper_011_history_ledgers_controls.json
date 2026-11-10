@@ -1,0 +1,209 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "at_utc": "2026-11-10T11:51:55.849686+00:00",
+  "script_sha256": "1ecf7953eaaf48342d3cf9a768d6517df7957f361d7c3966856fe6b272a2ede4",
+  "source_execution": "none; independent controls only",
+  "source_files": [
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/g03/pinned_sources/paper/paper_change_log.md",
+      "sha256": "306eba1c32d0bf84e0c508a955a3350d4131f8861ae76fcb01c288ada155e7e0",
+      "bytes": 152638,
+      "line_count": 2670,
+      "chunk_count": 16,
+      "checks": [
+        {
+          "rule": "frozen_source_hash",
+          "status": "matched"
+        },
+        {
+          "rule": "body_line_coverage",
+          "status": "exactly_once"
+        }
+      ]
+    },
+    {
+      "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/docs/history_recovery/g03/pinned_sources/paper/paper_claim_ledger.md",
+      "sha256": "e28a9ac1ce98c153f69046a54ed971a62920444779bd56e3525cf93570c6d3fe",
+      "bytes": 223340,
+      "line_count": 3919,
+      "chunk_count": 22,
+      "checks": [
+        {
+          "rule": "frozen_source_hash",
+          "status": "matched"
+        },
+        {
+          "rule": "body_line_coverage",
+          "status": "exactly_once"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "P011LEDGER-C01",
+      "rule": "L_F_internal_fields_are_distinguishable",
+      "status": "counterexample_observed",
+      "result": {
+        "L": {
+          "num_data": 2,
+          "required_pair": [
+            0,
+            1
+          ]
+        },
+        "F": {
+          "num_data": 3,
+          "required_pair": [
+            1,
+            2
+          ]
+        }
+      },
+      "limit": "Distinguishability does not justify selecting an admission reading."
+    },
+    {
+      "id": "P011LEDGER-C02",
+      "rule": "kernel_can_encode_orientation_beyond_chosen_pair",
+      "status": "counterexample_observed",
+      "result": [
+        {
+          "a": 0,
+          "b": 1,
+          "nonzero_pairs": [
+            [
+              0,
+              1
+            ]
+          ],
+          "diagonal_zero": true,
+          "chosen_pair_nonzero": true,
+          "apart_1_2": false,
+          "apart_2_1": false
+        },
+        {
+          "a": 0,
+          "b": 1,
+          "nonzero_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "diagonal_zero": true,
+          "chosen_pair_nonzero": true,
+          "apart_1_2": true,
+          "apart_2_1": false
+        }
+      ],
+      "limit": "Finite instantiations of the read structure contract; no Lean elaboration or original execution."
+    },
+    {
+      "id": "P011LEDGER-C03",
+      "rule": "four_gate_nonentailment_is_not_sixteen_valuation_independence",
+      "status": "finite_abstraction_checked",
+      "result": {
+        "valuation_count": 12,
+        "omission_witnesses": [
+          {
+            "omitted_gate": 0,
+            "other_three_true_omitted_false": [
+              false,
+              true,
+              true,
+              true
+            ]
+          },
+          {
+            "omitted_gate": 1,
+            "other_three_true_omitted_false": [
+              true,
+              false,
+              true,
+              true
+            ]
+          },
+          {
+            "omitted_gate": 2,
+            "other_three_true_omitted_false": [
+              true,
+              true,
+              false,
+              true
+            ]
+          },
+          {
+            "omitted_gate": 3,
+            "other_three_true_omitted_false": [
+              true,
+              true,
+              true,
+              false
+            ]
+          }
+        ]
+      },
+      "limit": "Abstracts the ledger convention; does not independently certify every native state realization."
+    },
+    {
+      "id": "P011LEDGER-C04",
+      "rule": "alternating_double_deletion_cancels_with_repeated_vertices",
+      "status": "bounded_control_passed",
+      "result": {
+        "binary_vertex_lists_lengths_0_through_6": 127,
+        "signless_triangle_nonzero": {
+          "(2,)": 2,
+          "(1,)": 2,
+          "(0,)": 2
+        }
+      },
+      "limit": "127 finite controls support the elementary pairing argument, not fresh validation of the general Lean theorem."
+    },
+    {
+      "id": "P011LEDGER-C05",
+      "rule": "reverse_protection_initial_state_for_native_F016",
+      "status": "initial_facts_checked",
+      "result": {
+        "occ": [
+          0,
+          1
+        ],
+        "asserted": [
+          [
+            1,
+            0
+          ]
+        ],
+        "wit": [
+          [
+            1,
+            0
+          ]
+        ],
+        "prot": [
+          [
+            1,
+            0
+          ]
+        ],
+        "obs": [
+          [
+            0
+          ]
+        ],
+        "budget": 1,
+        "licensed": true,
+        "halted": false,
+        "sep_0_1": true,
+        "sep_1_0": true,
+        "protSep_0_1": false,
+        "protSep_1_0": true
+      },
+      "limit": "All-traces stability follows from the separately read sufficiency theorem plus symmetric separation; it is not established by this finite initial-state check."
+    }
+  ]
+}

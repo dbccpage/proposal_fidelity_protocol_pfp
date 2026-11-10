@@ -1,0 +1,316 @@
+{
+  "constant_substitution": {
+    "case": {
+      "case_id": "audit_constant_substitution",
+      "axioms": [
+        [
+          "a",
+          "b"
+        ]
+      ],
+      "goal": [
+        "c",
+        "d"
+      ]
+    },
+    "answer": {
+      "case_id": "audit_constant_substitution",
+      "status": "SOLVED",
+      "kind": "PROOF",
+      "steps": [
+        {
+          "axiom": 0,
+          "dir": "lr",
+          "pos": [],
+          "subst": {
+            "a": "c",
+            "b": "d"
+          },
+          "result": "d"
+        }
+      ]
+    },
+    "owner_verdict": [
+      [
+        true,
+        "Valid rewrite proof of 1 steps verified"
+      ],
+      [
+        true,
+        "Independent checker: Valid PROOF confirmed"
+      ]
+    ],
+    "independent_proof": {
+      "valid": false,
+      "reason": "substitution binds nonvariable or absent variable"
+    },
+    "independent_refuting_model": {
+      "valid": true,
+      "reason": "direct exhaustive finite model evaluation",
+      "assignments_checked": 1
+    },
+    "model": {
+      "size": 2,
+      "tables": {},
+      "assignment": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 1
+      }
+    }
+  },
+  "nonclosed_one_element_model": {
+    "case": {
+      "case_id": "audit_nonclosed_model",
+      "axioms": [
+        [
+          [
+            "f",
+            "x"
+          ],
+          [
+            "f",
+            "x"
+          ]
+        ]
+      ],
+      "goal": [
+        [
+          "f",
+          "a"
+        ],
+        "a"
+      ]
+    },
+    "answer": {
+      "case_id": "audit_nonclosed_model",
+      "status": "SOLVED",
+      "kind": "COUNTERMODEL",
+      "size": 1,
+      "tables": {
+        "f": [
+          1
+        ]
+      },
+      "assignment": {
+        "a": 0
+      }
+    },
+    "owner_verdict": [
+      [
+        true,
+        "Valid countermodel of size 1 verified: Valid countermodel of size 1: s (1) != t (0)"
+      ],
+      [
+        true,
+        "Independent checker: Valid COUNTERMODEL confirmed"
+      ]
+    ],
+    "independent": {
+      "valid": false,
+      "reason": "operation table shape/type/closure",
+      "symbol": "f"
+    },
+    "reason": "Any actual one-element algebra satisfies every equation; f(0)=1 is outside the domain."
+  },
+  "secondary_ignores_axioms": {
+    "case": {
+      "case_id": "audit_violated_axiom",
+      "axioms": [
+        [
+          [
+            "f",
+            "x"
+          ],
+          "x"
+        ]
+      ],
+      "goal": [
+        [
+          "f",
+          "a"
+        ],
+        "a"
+      ]
+    },
+    "answer": {
+      "case_id": "audit_violated_axiom",
+      "status": "SOLVED",
+      "kind": "COUNTERMODEL",
+      "size": 2,
+      "tables": {
+        "f": [
+          0,
+          0
+        ]
+      },
+      "assignment": {
+        "a": 1
+      }
+    },
+    "owner_verdict": [
+      [
+        false,
+        "Countermodel verification failed: Axiom 0 violated under {'a': 1, 'x': 1}: ['f', 'x'] (0) != x (1)"
+      ],
+      [
+        true,
+        "Independent checker: Valid COUNTERMODEL confirmed"
+      ]
+    ],
+    "independent": {
+      "valid": false,
+      "reason": "axiom assignment",
+      "assignments_checked": 2
+    }
+  },
+  "boolean_table": {
+    "case": {
+      "case_id": "audit_boolean_table",
+      "axioms": [
+        [
+          [
+            "f",
+            "x"
+          ],
+          "x"
+        ]
+      ],
+      "goal": [
+        [
+          "f",
+          "a"
+        ],
+        "b"
+      ]
+    },
+    "answer": {
+      "case_id": "audit_boolean_table",
+      "status": "SOLVED",
+      "kind": "COUNTERMODEL",
+      "size": 2,
+      "tables": {
+        "f": [
+          false,
+          true
+        ]
+      },
+      "assignment": {
+        "a": 0,
+        "b": 1
+      }
+    },
+    "owner_verdict": [
+      [
+        true,
+        "Valid countermodel of size 2 verified: Valid countermodel of size 2: s (0) != t (1)"
+      ],
+      [
+        true,
+        "Independent checker: Valid COUNTERMODEL confirmed"
+      ]
+    ],
+    "independent": {
+      "valid": false,
+      "reason": "operation table shape/type/closure",
+      "symbol": "f"
+    }
+  },
+  "malformed_integer_terms": {
+    "case": {
+      "case_id": "audit_integer_term",
+      "axioms": [],
+      "goal": [
+        17,
+        17
+      ]
+    },
+    "answer": {
+      "case_id": "audit_integer_term",
+      "status": "SOLVED",
+      "kind": "PROOF",
+      "steps": []
+    },
+    "owner_verdict": [
+      [
+        true,
+        "Valid rewrite proof of 0 steps verified"
+      ],
+      [
+        true,
+        "Independent checker: Valid PROOF confirmed"
+      ]
+    ],
+    "independent": {
+      "valid": false,
+      "reason": "ValueError"
+    }
+  },
+  "secondary_negative_position": {
+    "case": {
+      "case_id": "audit_negative_position",
+      "axioms": [
+        [
+          "x",
+          "y"
+        ]
+      ],
+      "goal": [
+        [
+          "f",
+          "a"
+        ],
+        [
+          "g",
+          "a"
+        ]
+      ]
+    },
+    "answer": {
+      "case_id": "audit_negative_position",
+      "status": "SOLVED",
+      "kind": "PROOF",
+      "steps": [
+        {
+          "axiom": 0,
+          "dir": "lr",
+          "pos": [
+            -1
+          ],
+          "subst": {
+            "x": "f",
+            "y": "g"
+          },
+          "result": [
+            "g",
+            "a"
+          ]
+        }
+      ]
+    },
+    "owner_verdict": [
+      [
+        false,
+        "Step 0 failed: Invalid position [-1]: Invalid position [-1] for term ['f', 'a']"
+      ],
+      [
+        true,
+        "Independent checker: Valid PROOF confirmed"
+      ]
+    ],
+    "independent": {
+      "valid": false,
+      "reason": "position"
+    },
+    "limits": "Axiom x=y trivializes the theory; this isolates malformed proof-step acceptance, not a false theorem."
+  },
+  "bounded_unary_exhaustion": {
+    "model_certificates": 648,
+    "primary_mismatches": 0,
+    "secondary_mismatches": 64,
+    "proofs_replayed": 47,
+    "proof_failures": [],
+    "limits": "Nine unary axioms and nine ground goals of depth at most two; all four two-element unary operations and two constant assignments. Not a general completeness proof."
+  }
+}

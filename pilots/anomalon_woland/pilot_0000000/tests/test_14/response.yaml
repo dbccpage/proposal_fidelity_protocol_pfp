@@ -1,0 +1,386 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: p_star_rewrite_03
+test_kind: p_star_templated
+pilot_id: pilot_0000000
+case_id: rewrite_03
+request_id: pilot_0000000_req_p_star_rewrite_03
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: p_star_rewrite_03.yaml
+  source_file_bytes: 8795
+  source_file_kb: 8.589
+  payload_bytes: 6394
+  payload_kb: 6.244
+  messages_count: 2
+raw_reply: "{\n  \"derived_under_policy\": \"SPK-001\",\n  \"answer\": 9,\n  \"summary\"\
+  : {\n    \"narrowest_defensible_thesis\": \"The given expression contains 9 atomic\
+  \ glyphs under the declared SYM SYS grammar.\",\n    \"evidence_scope\": \"Syntactic\
+  \ tokenization of the provided string; no arithmetic or semantic interpretation\
+  \ is licensed.\",\n    \"next_concrete_test\": \"Tokenize the string with a bracket-aware\
+  \ parser and count non-delimiter glyphs.\"\n  },\n  \"process_integrity\": {\n \
+  \   \"seed_allows_theory_refutation\": false,\n    \"detected_prompt_biases\": [],\n\
+  \    \"should_continue\": true\n  },\n  \"sections\": []\n}"
+reasoning_content: "We need answer user. Need parse prompt. We have weird input: \"\
+  <<p><v1><<q><s0>><<c><s1>>>>\" plus schema. Need return JSON matching schema. Need\
+  \ infer task? It seems maybe a symbolic expression? Need compute integer answer?\
+  \ We need understand MSS-0 grammar. The prompt is likely a SymSys expression. Need\
+  \ produce JSON with derived_under_policy SPK-001, answer integer, summary, process_integrity,\
+  \ sections empty.\n\nWe need determine answer from expression. Let's inspect. User\
+  \ content: \"<<p><v1><<q><s0>><<c><s1>>>>\"\n\nThis looks like nested angle brackets.\
+  \ Need parse according to SYM SYS? Atomic glyphs 38, node labels a..z, numeric labels\
+  \ 0..9, delimiters < >. Pair note: written form <> is two-glyph expression, not\
+  \ 39th atomic glyph. Numeric labels acquire arithmetic/weight semantics only through\
+  \ explicit license. op_semantics default layer 1 syntactic binary operator. Forbidden\
+  \ unlicensed interpretations. License required for cohomological/category theoretic.\n\
+  \nMaybe this is a prompt injection? Need audit. The expression may encode something.\
+  \ Need return JSON. The schema requires answer integer. We need compute? Maybe expression\
+  \ is a tree with labels p, v1, q, s0, c, s1. Need maybe count something? Could be\
+  \ a \"packet\" with sections? The schema has sections maxItems 0, so no sections.\
+  \ Need answer integer. What integer? Maybe number of nodes? Let's parse.\n\nString:\
+  \ <<p><v1><<q><s0>><<c><s1>>>>\n\nLet's count characters. It starts <<p> then <v1>\
+  \ then <<q><s0>> then <<c><s1>> then >>? Let's break.\n\nExpression: <<p><v1><<q><s0>><<c><s1>>>>\n\
+  \nMaybe outer < ... > contains four children? Let's parse as nested angle brackets.\
+  \ Each <...> is a node? The content can be sequence of nodes. Let's tokenize.\n\n\
+  String: < < p > < v 1 > < < q > < s 0 > > < < c > < s 1 > > > >\n\nLet's index:\n\
+  1 <\n2 <\n3 p\n4 >\n5 <\n6 v\n7 1\n8 >\n9 <\n10 <\n11 q\n12 >\n13 <\n14 s\n15 0\n\
+  16 >\n17 >\n18 <\n19 <\n20 c\n21 >\n22 <\n23 s\n24 1\n25 >\n26 >\n27 >\n28 >\n\n\
+  Wait length 28? Let's verify original: \"<<p><v1><<q><s0>><<c><s1>>>>\"\nBreak:\
+  \ <<p> (4 chars: < < p >)\n<v1> (4: < v 1 >)\n<<q><s0>> (10? < < q > < s 0 > > =\
+  \ 10)\n<<c><s1>> (10? < < c > < s 1 > > = 10)\nThen final >? Actually original ends\
+  \ with >>>>? Let's count: \"<<p><v1><<q><s0>><<c><s1>>>>\"\nAfter s1: >>>>? The\
+  \ substring at end: <s1>>>>. That's < s 1 > > > >? Let's see: <<c><s1>>>> = < <\
+  \ c > < s 1 > > > >? Yes.\n\nSo total: 4+4+10+10+? Wait the last part includes closing\
+  \ of outer? Let's reconstruct.\n\nMaybe it's a tree:\nOuter node: <\n  child1: <p>\n\
+  \  child2: <v1>\n  child3: <<q><s0>>\n  child4: <<c><s1>>\n>\nBut then there are\
+  \ extra >? Let's parse properly.\n\nExpression: <<p><v1><<q><s0>><<c><s1>>>>\n\n\
+  Let's write with spaces:\n< <p> <v1> <<q><s0>> <<c><s1>> >\n\nWait the outer starts\
+  \ with < and ends with >. Inside: <p> <v1> <<q><s0>> <<c><s1>>. That would be: <<p><v1><<q><s0>><<c><s1>>>?\
+  \ Let's concatenate:\nouter start <\nchild1 <p>\nchild2 <v1>\nchild3 <<q><s0>>\n\
+  child4 <<c><s1>>\nouter end >\nResult: <<p><v1><<q><s0>><<c><s1>>>\nBut original\
+  \ has one more > at end: <<p><v1><<q><s0>><<c><s1>>>>. So maybe child4 is <<c><s1>>>?\
+  \ Let's check.\n\nOriginal: <<p><v1><<q><s0>><<c><s1>>>>\nLet's count closing at\
+  \ end: after s1, there are >>>>? The string ends with \">>>>\". Actually original:\
+  \ ...<s1>>>>. That's < s 1 > > > >. So four > after s1? Let's count: <s1>>>> = <\
+  \ s 1 > > > >. Yes, four >. The first > closes <s1>. Then three > remain. The child4\
+  \ is <<c><s1>>? That would be < < c > < s 1 > >. That uses two > at end: one closes\
+  \ <s1>, one closes child4. Then outer needs one >. So total after s1: > (close s1)\
+  \ + > (close child4) + > (close outer) = three >. But original has four >? Let's\
+  \ re-examine original string: \"<<p><v1><<q><s0>><<c><s1>>>>\"\nMaybe it's: <<p><v1><<q><s0>><<c><s1>>>>\n\
+  Let's count characters manually from the text:\n< < p > < v 1 > < < q > < s 0 >\
+  \ > < < c > < s 1 > > > >\nPositions:\n1 <\n2 <\n3 p\n4 >\n5 <\n6 v\n7 1\n8 >\n\
+  9 <\n10 <\n11 q\n12 >\n13 <\n14 s\n15 0\n16 >\n17 >\n18 <\n19 <\n20 c\n21 >\n22\
+  \ <\n23 s\n24 1\n25 >\n26 >\n27 >\n28 >\n\nYes 28 chars. So after s1 at pos24, pos25\
+  \ >, pos26 >, pos27 >, pos28 >. Four >. So there are four closing brackets after\
+  \ s1. Let's see structure:\nPos1 < opens outer?\nPos2 < opens child1? pos3 p, pos4\
+  \ > closes child1.\nPos5 < opens child2? pos6 v, pos7 1, pos8 > closes child2.\n\
+  Pos9 < opens child3? pos10 < opens subchild? pos11 q, pos12 > closes q. pos13 <\
+  \ opens s0? pos14 s, pos15 0, pos16 > closes s0. pos17 > closes child3.\nPos18 <\
+  \ opens child4? pos19 < opens c? pos20 c, pos21 > closes c. pos22 < opens s1? pos23\
+  \ s, pos24 1, pos25 > closes s1. pos26 > closes child4? pos27 > closes outer? pos28\
+  \ > extra? Hmm.\n\nLet's match brackets. We can use stack. Tokens: <, <, p, >, <,\
+  \ v, 1, >, <, <, q, >, <, s, 0, >, >, <, <, c, >, <, s, 1, >, >, >, >.\n\nLet's\
+  \ assign indices and stack:\n1 < push 1\n2 < push 2\n3 p\n4 > pop 2 -> node <p>\
+  \ (2-4)\n5 < push 5\n6 v\n7 1\n8 > pop 5 -> <v1> (5-8)\n9 < push 9\n10 < push 10\n\
+  11 q\n12 > pop 10 -> <q> (10-12)\n13 < push 13\n14 s\n15 0\n16 > pop 13 -> <s0>\
+  \ (13-16)\n17 > pop 9 -> node < <q><s0> > (9-17)\n18 < push 18\n19 < push 19\n20\
+  \ c\n21 > pop 19 -> <c> (19-21)\n22 < push 22\n23 s\n24 1\n25 > pop 22 -> <s1> (22-25)\n\
+  26 > pop 18 -> node < <c><s1> > (18-26)\n27 > pop 1? Wait stack currently: 1, 18?\
+  \ Let's track:\nAfter 1: stack [1]\n2: [1,2]\n4: pop 2 -> [1]\n5: [1,5]\n8: pop\
+  \ 5 -> [1]\n9: [1,9]\n10: [1,9,10]\n12: pop 10 -> [1,9]\n13: [1,9,13]\n16: pop 13\
+  \ -> [1,9]\n17: pop 9 -> [1]\n18: [1,18]\n19: [1,18,19]\n21: pop 19 -> [1,18]\n\
+  22: [1,18,22]\n25: pop 22 -> [1,18]\n26: pop 18 -> [1]\n27: pop 1 -> []\n28: > pop\
+  \ empty -> error? So there is an extra > at pos28. Unless pos1 is not outer? Wait\
+  \ pos1 < and pos27 > close outer. Then pos28 is extra. So the string is not well-balanced?\
+  \ Let's check original: \"<<p><v1><<q><s0>><<c><s1>>>>\" Maybe there are four >\
+  \ at end, but one is part of something else? Let's count again from original: \n\
+  <<p><v1><<q><s0>><<c><s1>>>>\nLet's split by >:\n<<p\n<v1\n<<q\n<s0\n<<c\n<s1\n\
+  >>>\nWait splitting on >:\nSegment1: <<p\nSegment2: <v1\nSegment3: <<q\nSegment4:\
+  \ <s0\nSegment5: <<c\nSegment6: <s1\nSegment7: \nSegment8: \nSegment9: \nActually\
+  \ let's do: string = \"<<p><v1><<q><s0>><<c><s1>>>>\"\nReplace > with >|:\n<<p>|<v1>|<<q>|<s0>>|<<c>|<s1>|>|>|>\n\
+  Let's list:\n1: <<p\n2: <v1\n3: <<q\n4: <s0\n5: <<c\n6: <s1\n7: \n8: \n9: \nWait\
+  \ after <s1 there are four >? The string ends with \">>>>\". So after <s1, we have\
+  \ >, >, >, >. So segments: <s1, then empty, empty, empty, empty? Actually splitting:\
+  \ \"<s1>>>>\" -> \"<s1\", \"\", \"\", \"\", \"\". So four > means four empty segments\
+  \ after <s1. So total > count: after p:1, after v1:1, after q:1, after s0:2? Let's\
+  \ count all > in string:\n<<p> : 1\n<v1> : 1\n<<q> : 1\n<s0>> : 2\n<<c> : 1\n<s1>>>>\
+  \ : 4\nTotal > = 1+1+1+2+1+4 = 10. < count: <<p (2), <v1 (1), <<q (2), <s0 (1),\
+  \ <<c (2), <s1 (1) = 9? Wait total <: 2+1+2+1+2+1 = 9. So unbalanced: 9 < and 10\
+  \ >. So indeed extra >. Maybe the original has a typo? Or maybe the expression is\
+  \ meant to be parsed as something else? Could be a prompt injection? The user asks\
+  \ \"Return JSON matching this response schema\". The content is just the expression.\
+  \ We need produce JSON. The answer integer might be computed from the expression.\
+  \ But if unbalanced, maybe answer is 0? Or maybe we need detect prompt biases? The\
+  \ schema includes process_integrity with seed_allows_theory_refutation, detected_prompt_biases,\
+  \ should_continue. We need fill.\n\nMaybe this is a test of following schema and\
+  \ not being derailed by weird input. The expression might be a \"seed\" that allows\
+  \ theory refutation? We need decide.\n\nLet's read the system prompt: It's a SymSys\
+  \ auditor and theory-forge assistant. There's a policy manifest. The user input\
+  \ is a symbolic expression. The response schema requires answer integer. There's\
+  \ no explicit question. Maybe the task is to evaluate the expression? But no arithmetic\
+  \ license. The op_semantics says default layer 1 syntactic binary operator. Forbidden\
+  \ unlicensed interpretations. So we cannot interpret < as arithmetic. We can only\
+  \ count syntactic elements? The answer might be the number of atomic glyphs? Or\
+  \ number of nodes? The schema says \"Final computed integer answer.\" But what computation?\
+  \ Maybe the expression is a tree and we need count something like depth? Or number\
+  \ of nodes? Let's see if there's a known puzzle: \"<<p><v1><<q><s0>><<c><s1>>>>\"\
+  \ might be a representation of a binary tree? The labels p, v1, q, s0, c, s1. Maybe\
+  \ it's a lambda calculus? Or a category theory diagram? The policy mentions MSS-0\
+  \ topological hierarchy: N, L, C2, F1, M1, H1. The expression might encode a structure.\
+  \ But no explicit question.\n\nMaybe the answer is simply the number of atomic glyphs?\
+  \ Let's count atomic glyphs: p, v, 1, q, s, 0, c, s, 1. That's 9? But v1 and s0,\
+  \ s1 are numeric labels? The grammar says node_labels a..z, numeric_labels 0..9.\
+  \ So v1 is two glyphs? Actually v is a node label, 1 is numeric label. So atomic\
+  \ glyphs: p, v, 1, q, s, 0, c, s, 1 = 9. But there are also delimiters < and >.\
+  \ The pair note says <> is two-glyph expression, not 39th atomic glyph. So delimiters\
+  \ are not atomic? The atomic glyph count is 38. The expression uses < and >. So\
+  \ maybe answer is count of atomic glyphs? 9? Or count of nodes? Let's parse as tree:\
+  \ nodes are <p>, <v1>, <q>, <s0>, <c>, <s1>, and two composite nodes: <<q><s0>>,\
+  \ <<c><s1>>, and outer? But outer is unbalanced. If we ignore extra >, the tree\
+  \ has 9 nodes? Let's count: p, v1, q, s0, c, s1, and the two composites, and the\
+  \ outer. That's 9 nodes. But the extra > might be a typo. Could be answer 9? Or\
+  \ maybe the answer is the number of closing brackets? 10? Or number of opening brackets?\
+  \ 9? The schema says answer integer. We need infer from context.\n\nMaybe the expression\
+  \ is a \"packet\" that encodes a number. The labels: p, v1, q, s0, c, s1. Could\
+  \ be variables? p, q, c, s? v1, s0, s1. Maybe it's a polynomial? p, v1, q, s0, c,\
+  \ s1. Not obvious.\n\nLet's look at the schema: It's a PromptResponse with derived_under_policy,\
+  \ answer, summary, process_integrity. The summary has narrowest_defensible_thesis,\
+  \ evidence_scope, next_concrete_test. This looks like a generic response format\
+  \ for a reasoning task. The user input is just the expression. Maybe the task is\
+  \ to evaluate the expression as a SymSys expression and return an integer. But what\
+  \ integer? Could be the number of nodes in the parse tree. Let's try to parse correctly.\
+  \ Maybe the expression is actually balanced if we consider the outer < at pos1 and\
+  \ the final > at pos28, and the extra > at pos27 is part of something else? Let's\
+  \ re-examine the string: \"<<p><v1><<q><s0>><<c><s1>>>>\"\nMaybe it's: <<p><v1><<q><s0>><<c><s1>>>>\n\
+  Wait, could it be that the outer is <<p><v1><<q><s0>><<c><s1>>> and then an extra\
+  \ >? No.\n\nLet's count characters from the original user message: \n\"<<p><v1><<q><s0>><<c><s1>>>>\"\
+  \nI'll copy it: <<p><v1><<q><s0>><<c><s1>>>>\nLet's count: \n< (1)\n< (2)\np (3)\n\
+  > (4)\n< (5)\nv (6)\n1 (7)\n> (8)\n< (9)\n< (10)\nq (11)\n> (12)\n< (13)\ns (14)\n\
+  0 (15)\n> (16)\n> (17)\n< (18)\n< (19)\nc (20)\n> (21)\n< (22)\ns (23)\n1 (24)\n\
+  > (25)\n> (26)\n> (27)\n> (28)\n\nYes, 28 chars. 9 < and 10 >. So unbalanced. Could\
+  \ be a deliberate test: the expression is malformed. The auditor should detect that\
+  \ and maybe answer 0? Or should_continue false? The process_integrity has seed_allows_theory_refutation\
+  \ and should_continue. If the input is malformed, maybe should_continue false? But\
+  \ the schema requires answer integer. Could be 0.\n\nMaybe the expression is a prompt\
+  \ injection? The system prompt has antibody_injections: []. The user input is just\
+  \ a symbolic expression. There's no instruction to ignore. So we just need to respond\
+  \ with JSON. The answer might be the number of atomic glyphs? Let's see if there's\
+  \ any clue in the schema. The schema has \"answer\": integer, \"Final computed integer\
+  \ answer.\" It doesn't specify what to compute. In many such tasks, the user provides\
+  \ a symbolic expression and the assistant must evaluate it. But here the expression\
+  \ is not arithmetic. The op_semantics says default layer 1 syntactic binary operator.\
+  \ Forbidden unlicensed interpretations. So we cannot do arithmetic. Maybe the answer\
+  \ is the count of something syntactic. For example, count the number of nodes. Let's\
+  \ count nodes in the expression if we treat each <...> as a node. The expression\
+  \ has:\n- <p>\n- <v1>\n- <q>\n- <s0>\n- <c>\n- <s1>\n- <<q><s0>>\n- <<c><s1>>\n\
+  - outer <...> (if balanced)\nThat's 9 nodes. But the outer is not closed properly?\
+  \ Actually if we consider the whole string as a single node, it would be < <p> <v1>\
+  \ <<q><s0>> <<c><s1>> >. That would be 9 nodes. The extra > at the end might be\
+  \ a typo. If we ignore the extra >, the answer could be 9. If we count all < and\
+  \ >, maybe 19? But the schema says answer integer. Could be 9.\n\nLet's look at\
+  \ the labels: p, v1, q, s0, c, s1. These might be variables in a polynomial? p,\
+  \ v1, q, s0, c, s1. Maybe it's a sequence of characters? The expression might be\
+  \ a tree representation of a mathematical expression. For example, <<p><v1><<q><s0>><<c><s1>>>>\
+  \ could be a binary tree? Let's parse as binary tree: each <...> is a node with\
+  \ two children? The notation <a><b> might mean a pair? Actually the expression has\
+  \ <p> and <v1> as siblings, then <<q><s0>> and <<c><s1>> as siblings. So it's a\
+  \ list of four elements: p, v1, (q, s0), (c, s1). That's a tree. The number of leaves\
+  \ is 6 (p, v1, q, s0, c, s1). The number of internal nodes is 3 (the two pairs and\
+  \ the outer list). Total nodes = 9. So answer 9 is plausible.\n\nAlternatively,\
+  \ maybe the answer is the number of atomic glyphs: p, v, 1, q, s, 0, c, s, 1 = 9.\
+  \ Same number! Interesting. Both give 9. So answer 9 is a good candidate.\n\nLet's\
+  \ check if there's any other interpretation. The expression might be a representation\
+  \ of a graph. The labels: p, v1, q, s0, c, s1. Could be nodes. The edges are the\
+  \ nesting. The number of nodes is 9. The number of edges? In a tree, edges = nodes\
+  \ - 1 = 8. But answer could be 8. Or number of leaves = 6. Or depth = 3? Let's see\
+  \ depth: outer (level 1), then children: <p> (level 2), <v1> (level 2), <<q><s0>>\
+  \ (level 2), <<c><s1>> (level 2). Inside <<q><s0>>: <q> and <s0> at level 3. Inside\
+  \ <<c><s1>>: <c> and <s1> at level 3. So max depth = 3. If answer is depth, 3. But\
+  \ the schema says \"Final computed integer answer.\" No context.\n\nMaybe the expression\
+  \ is a \"seed\" for a theory. The process_integrity has \"seed_allows_theory_refutation\"\
+  . The expression might be a seed. The answer might be the number of nodes? Or maybe\
+  \ the answer is the number of atomic glyphs? Let's read the system prompt carefully.\
+  \ It says: \"You are a restrained SymSys auditor and theory-forge assistant.\" The\
+  \ user input is just the expression. There's no question. The response schema is\
+  \ given. This might be a test of the assistant's ability to follow the schema and\
+  \ not hallucinate. The answer might be a specific integer derived from the expression.\
+  \ But what integer? The schema doesn't specify. In such cases, maybe the answer\
+  \ is the number of characters? 28? Or number of < and >? 19? Or number of atomic\
+  \ glyphs? 9.\n\nLet's look at the MSS-0 grammar constraint. It mentions atomic_glyph_count:\
+  \ 38. node_labels: a..z. numeric_labels: 0..9. delimiters: < >. The expression uses\
+  \ p, v, 1, q, s, 0, c, s, 1. These are all valid node labels and numeric labels.\
+  \ The delimiters are < and >. The expression is a sequence of these. Maybe the task\
+  \ is to count the number of atomic glyphs in the expression. The atomic glyphs are\
+  \ the non-delimiter characters. Let's count: p, v, 1, q, s, 0, c, s, 1 = 9. So answer\
+  \ 9. This is a simple syntactic count. The op_semantics says default layer 1 syntactic\
+  \ binary operator. So we can count syntactically. The answer could be the number\
+  \ of atomic glyphs. That seems plausible.\n\nAlternatively, count the number of\
+  \ nodes (each <...> is a node). That also gives 9. So 9 is robust.\n\nLet's check\
+  \ if there's any other number. The expression has 9 opening brackets? Actually 9\
+  \ < and 10 >. If we count delimiters, 19. If we count pairs, 9? The pair note says\
+  \ <> is a two-glyph expression, not a 39th atomic glyph. So delimiters are not atomic.\
+  \ So atomic glyphs are the letters and digits. Count = 9.\n\nWhat about the labels:\
+  \ p, v1, q, s0, c, s1. v1 is two glyphs (v and 1). s0 is two (s and 0). s1 is two\
+  \ (s and 1). So total glyphs: p (1), v (1), 1 (1), q (1), s (1), 0 (1), c (1), s\
+  \ (1), 1 (1) = 9. Yes.\n\nSo answer 9 is likely.\n\nNow we need fill the JSON. The\
+  \ schema requires:\n- derived_under_policy: \"SPK-001\"\n- answer: integer (9)\n\
+  - summary: object with narrowest_defensible_thesis, evidence_scope, next_concrete_test\n\
+  - process_integrity: object with seed_allows_theory_refutation (boolean), detected_prompt_biases\
+  \ (array of strings), should_continue (boolean)\n- sections: array, maxItems 0,\
+  \ so empty array.\n\nWe need provide summary strings. They must be non-empty, no\
+  \ forbidden words. We need be careful with claim hygiene. Forbidden words: proves,\
+  \ guarantees, mathematically verifies, fundamentally, true intelligence, impossible,\
+  \ universal, flawless, perfectly, clearly, obviously, simply, merely, weaponized.\
+  \ We should avoid these.\n\nWe need decide process_integrity values. seed_allows_theory_refutation:\
+  \ Does the seed allow theory refutation? The input is a symbolic expression. It\
+  \ doesn't seem to be a theory. Maybe false? Or true? The field name suggests whether\
+  \ the seed (the input) allows the theory to be refuted. Since it's just a syntactic\
+  \ expression, it doesn't provide a theory to refute. So maybe false. But we need\
+  \ be consistent. detected_prompt_biases: any biases in the prompt? The prompt is\
+  \ just an expression. No obvious biases. Could be empty array. should_continue:\
+  \ true? We can continue to process. Since we can answer, true.\n\nLet's think about\
+  \ the context. This might be a test of the assistant's ability to detect prompt\
+  \ injection or biases. The user input is just a symbolic expression. There's no\
+  \ instruction to ignore. So no biases. should_continue true.\n\nSummary:\n- narrowest_defensible_thesis:\
+  \ \"The expression contains 9 atomic glyphs under the declared SYM SYS grammar.\"\
+  \ Or \"The syntactic count of atomic glyphs in the given expression is 9.\" This\
+  \ is narrow and defensible.\n- evidence_scope: \"Syntactic counting within the provided\
+  \ string; no arithmetic or semantic interpretation is licensed.\" \n- next_concrete_test:\
+  \ \"Re-parse the string with a bracket-matching parser to confirm the count of atomic\
+  \ glyphs.\" Or \"Verify the count by tokenizing the string according to the MSS-0\
+  \ grammar.\"\n\nWe need ensure no forbidden words. \"proves\" etc. Not used.\n\n\
+  Let's double-check the answer. Could it be 10? If we count the number of closing\
+  \ brackets? But the question is \"Final computed integer answer.\" Without explicit\
+  \ computation, we need infer. The most natural computation on a symbolic expression\
+  \ is to count something. The schema doesn't specify. In similar tasks, the answer\
+  \ is often the number of nodes or leaves. Let's see if there's any clue in the expression\
+  \ itself. The labels: p, v1, q, s0, c, s1. Could they stand for something? p, v,\
+  \ q, s, c. Maybe they are variables in a polynomial? p, v1, q, s0, c, s1. If we\
+  \ interpret as a polynomial, maybe we need evaluate? But no values given. So not.\n\
+  \nMaybe the expression is a representation of a number in some encoding? For example,\
+  \ <<p><v1><<q><s0>><<c><s1>>>> could be a binary tree where each node is a pair.\
+  \ The number of leaves is 6. The number of internal nodes is 3. Total nodes 9. The\
+  \ number of edges is 8. The depth is 3. The number of atomic glyphs is 9. All these\
+  \ are small integers. Which one is most likely? The schema says \"Final computed\
+  \ integer answer.\" In many such puzzles, the answer is the number of nodes. But\
+  \ the system prompt is about SymSys, MSS-0 grammar. It emphasizes atomic glyphs.\
+  \ The grammar constraint says atomic_glyph_count: 38. So counting atomic glyphs\
+  \ is a natural operation. The expression uses 9 atomic glyphs. So answer 9.\n\n\
+  Let's check if there's any other interpretation. The expression might be a \"packet\"\
+  \ with sections. The schema has sections maxItems 0. So no sections. The answer\
+  \ might be the number of sections? 0. But the expression has no sections. However,\
+  \ the schema says sections maxItems 0, so we must return empty array. The answer\
+  \ could be 0? But then why the expression? The expression might be a red herring.\
+  \ The task might be to return a JSON with answer 0 because there's no question?\
+  \ But the schema requires answer integer. If there's no question, maybe answer 0.\
+  \ But the user provided an expression, so likely they want something computed from\
+  \ it.\n\nLet's look at the user message: \"<<p><v1><<q><s0>><<c><s1>>>>\" followed\
+  \ by \"Return JSON matching this response schema: ...\" So the user is giving an\
+  \ expression and asking to return JSON. The expression is the input. The schema\
+  \ is the output format. So we need to process the expression and produce the JSON.\
+  \ The answer is likely the result of processing the expression. What processing?\
+  \ The system prompt defines a grammar and semantics. The expression is a string\
+  \ in that grammar. The most basic processing is to count the atomic glyphs. The\
+  \ grammar says atomic_glyph_count: 38. So we can count how many atomic glyphs are\
+  \ in the expression. That is 9. So answer 9.\n\nLet's also consider if the expression\
+  \ is a valid MSS-0 structure. The MSS-0 typing rules have levels: N, L, C2, F1,\
+  \ M1, H1. The expression might be a tree of nodes. The labels p, v1, q, s0, c, s1.\
+  \ Could they correspond to levels? p, q, c, s? Not obvious. The expression has nested\
+  \ brackets. It might represent a graph. But without explicit mapping, we can't assign\
+  \ levels. So syntactic count is safest.\n\nLet's prepare the JSON. We need ensure\
+  \ it matches the schema exactly. The schema has additionalProperties: false at top\
+  \ level. So only allowed properties: derived_under_policy, answer, summary, process_integrity,\
+  \ sections. Wait, the schema lists required: derived_under_policy, answer, summary,\
+  \ process_integrity. It also has sections property but not required? Actually the\
+  \ schema shows:\nproperties:\n  derived_under_policy: ...\n  answer: ...\n  summary:\
+  \ ...\n  sections: ...\n  process_integrity: ...\nrequired:\n- derived_under_policy\n\
+  - answer\n- summary\n- process_integrity\nSo sections is optional? But the schema\
+  \ has sections with maxItems 0. It's not in required. But we can include it as empty\
+  \ array. The schema says additionalProperties: false, so we can only include these\
+  \ properties. We can include sections or omit it. The user's schema shows sections\
+  \ in properties but not required. To be safe, include sections: [].\n\nNow process_integrity:\
+  \ required fields: seed_allows_theory_refutation, should_continue. detected_prompt_biases\
+  \ has default [] and is not required? Actually in ProcessIntegrityValue, required:\
+  \ seed_allows_theory_refutation, should_continue. detected_prompt_biases is not\
+  \ required. But we can include it as empty array.\n\nSummary: required: narrowest_defensible_thesis,\
+  \ evidence_scope, next_concrete_test.\n\nWe need write strings. Avoid forbidden\
+  \ words. Let's draft:\n\nnarrowest_defensible_thesis: \"The given expression contains\
+  \ 9 atomic glyphs under the declared SYM SYS grammar.\"\nevidence_scope: \"Syntactic\
+  \ tokenization of the provided string; no arithmetic or semantic interpretation\
+  \ is licensed.\"\nnext_concrete_test: \"Tokenize the string with a bracket-aware\
+  \ parser and count non-delimiter glyphs.\"\n\nCheck forbidden words: none.\n\nprocess_integrity:\n\
+  seed_allows_theory_refutation: false? Or true? The seed is the expression. Does\
+  \ it allow theory refutation? The expression itself doesn't contain a theory. It's\
+  \ just a string. So it doesn't allow refutation of a theory. So false.\ndetected_prompt_biases:\
+  \ [] (no biases detected)\nshould_continue: true (we can continue to process)\n\n\
+  But wait, the field is \"seed_allows_theory_refutation\". If the seed is the input,\
+  \ and we are to evaluate it, maybe the seed allows us to refute a theory? The expression\
+  \ might be a counterexample? Unclear. I'll set false, as it's just a syntactic expression.\n\
+  \nAlternatively, maybe the seed is the prompt itself, and it allows theory refutation\
+  \ because it's a test? I think false is safer.\n\nLet's ensure the answer is integer\
+  \ 9.\n\nNow, we must output only JSON, no markdown. The user said \"Return JSON\
+  \ matching this response schema\". So we output raw JSON.\n\nLet's construct the\
+  \ JSON:\n\n{\n  \"derived_under_policy\": \"SPK-001\",\n  \"answer\": 9,\n  \"summary\"\
+  : {\n    \"narrowest_defensible_thesis\": \"The given expression contains 9 atomic\
+  \ glyphs under the declared SYM SYS grammar.\",\n    \"evidence_scope\": \"Syntactic\
+  \ tokenization of the provided string; no arithmetic or semantic interpretation\
+  \ is licensed.\",\n    \"next_concrete_test\": \"Tokenize the string with a bracket-aware\
+  \ parser and count non-delimiter glyphs.\"\n  },\n  \"process_integrity\": {\n \
+  \   \"seed_allows_theory_refutation\": false,\n    \"detected_prompt_biases\": [],\n\
+  \    \"should_continue\": true\n  },\n  \"sections\": []\n}\n\nCheck schema: sections\
+  \ maxItems 0, so empty array is fine. additionalProperties false, so no extra fields.\n\
+  \nIs there any issue with the answer? Let's double-check the count of atomic glyphs.\
+  \ The string: <<p><v1><<q><s0>><<c><s1>>>>\nAtomic glyphs are the non-delimiter\
+  \ characters. Delimiters are < and >. So we remove all < and >. The remaining characters:\
+  \ p, v, 1, q, s, 0, c, s, 1. That's 9. Yes.\n\nWhat about the numeric labels? The\
+  \ grammar says numeric_labels: 0..9. They are atomic glyphs. So 1, 0, 1 are counted.\
+  \ v, s, c, p, q are node labels. So total 9.\n\nThus answer 9.\n\nI'll output the\
+  \ JSON."
+parsed_response:
+  derived_under_policy: SPK-001
+  answer: 9
+  summary:
+    narrowest_defensible_thesis: The given expression contains 9 atomic glyphs under
+      the declared SYM SYS grammar.
+    evidence_scope: Syntactic tokenization of the provided string; no arithmetic or
+      semantic interpretation is licensed.
+    next_concrete_test: Tokenize the string with a bracket-aware parser and count
+      non-delimiter glyphs.
+  process_integrity:
+    seed_allows_theory_refutation: false
+    detected_prompt_biases: []
+    should_continue: true
+  sections: []
+extracted_answer: 9
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 9
+  status: WRONG_ANSWER
+  reason: 'Arithmetic error: expected 3, received 9'
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: Crusoe
+  dispatch_id: gen-1791686445-OpA3v24Ptz93GBmbcrNP
+  system_fingerprint: null
+  duration_seconds: 36.61
+  tokens_per_second: 214.01
+  usage:
+    prompt_tokens: 1737
+    completion_tokens: 7835
+    reasoning_tokens: 7674
+    total_tokens: 9572
+  cost:
+    total_cost_usd: 0.009471042
+    total_cost_microusd: 9471
+    cost_details:
+      upstream_inference_cost: 0.009471042
+      upstream_inference_prompt_cost: 6.9042e-05
+      upstream_inference_completions_cost: 0.009402
+  timestamp_utc: '2026-10-11T02:41:21.854510+00:00'

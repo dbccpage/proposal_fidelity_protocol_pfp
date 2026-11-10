@@ -1,0 +1,302 @@
+{
+  "schema_version": "1.0",
+  "status": "complete_bounded_orchestration_review",
+  "reviewer": "audit_systems",
+  "date": "2026-11-10",
+  "verdict": "No actionable orchestration defect found in the reviewed source and 31 synthetic controls.",
+  "source_pins": [
+    {
+      "path": "dag/benchmark/hamiltonian_workflows.py",
+      "sha256": "5a8f7aebd438b3452fc2a3a600bc323073833d62237ac661b486fbcd1bcd48dd",
+      "lines": 57
+    },
+    {
+      "path": "dag/benchmark/reference_runner.py",
+      "sha256": "1933c92b2420a840d107d1670f9c026d14afe76ccd053137bce628028d540633",
+      "lines": 294
+    },
+    {
+      "path": "dag/benchmark/hamiltonian_artifact.py",
+      "sha256": "bf28b8371f11d2ac34256d3699a1653a2e44562e9d7b4a60e12221c750938925",
+      "lines": 271
+    },
+    {
+      "path": "dag/benchmark/budget_ledger.py",
+      "sha256": "07b20aa3d17f4e88d4e5e751a2b96daa54c0b83a66677122b0ffe53b809cbd2b",
+      "lines": 122
+    },
+    {
+      "path": "dag/benchmark/campaign_ledger.py",
+      "sha256": "e369d63cd6849d568645e9745349aad25d15417e72be82ea30dd1d2ef8d6dc60",
+      "lines": 158
+    },
+    {
+      "path": "dag/benchmark/openrouter_provider.py",
+      "sha256": "5b7d0c47bc3ee64cbcaa3a48bc74cba0c78fefbbfc3b7907e07811fe1361d035",
+      "lines": 310
+    },
+    {
+      "path": "dag/benchmark/live_campaign.py",
+      "sha256": "57890ad244ea5842259af6d5b47cf811a37639f5436c9cb85accaba240832d08",
+      "lines": 95
+    },
+    {
+      "path": "dag/benchmark/test_hamiltonian_workflows.py",
+      "sha256": "1d0e665f121bb9a7aa13388b77156cca2ed4ff4b5870d32afac23f393865fc61",
+      "lines": 311
+    }
+  ],
+  "full_source_review": [
+    "dag/benchmark/hamiltonian_workflows.py",
+    "dag/benchmark/reference_runner.py",
+    "dag/benchmark/hamiltonian_artifact.py"
+  ],
+  "claims": [
+    {
+      "id": "HW-C01",
+      "claim": "Checked orchestration dispatches two calls when the first matrix is correct; one failed proposal permits exactly one repair and three calls if corrected. Two failed matrices refuse synthesis and leave answer_text null.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            145,
+            150
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            202,
+            210
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            228,
+            237
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            75,
+            114
+          ]
+        }
+      ]
+    },
+    {
+      "id": "HW-C02",
+      "claim": "Unknown charges prevent any further quotation/dispatch and retain a blocked hold. Exhausted admission caps prevent the unreserved call. Guarded synthetic campaign controls settle known costs or retain the campaign hold for unknown billing.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            160,
+            198
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            117,
+            172
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            267,
+            311
+          ]
+        }
+      ]
+    },
+    {
+      "id": "HW-C03",
+      "claim": "Ungated decomposition continues after a wrong or malformed matrix while preserving host rejection. Its solver context contains only the proposed representation, with no host mismatch or acceptance label.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/hamiltonian_workflows.py",
+          "lines": [
+            31,
+            49
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            151,
+            159
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            202,
+            210
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            176,
+            197
+          ]
+        }
+      ]
+    },
+    {
+      "id": "HW-C04",
+      "claim": "The deterministic host control makes one synthesis call. For the same correct representation its final solver request is byte-equivalent under canonical encoding to checked and ungated requests; successful repair yields that same final context.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            137,
+            144
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            200,
+            220
+          ]
+        }
+      ]
+    },
+    {
+      "id": "HW-C05",
+      "claim": "Each tested dispatch carries the exact frozen public seed as one unchanged user message, has empty tools and zero retries, and respects the smaller run/stage token cap. Seven simulated loaded-source changes refuse before creating output or dispatching.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            100,
+            105
+          ]
+        },
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            151,
+            161
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            40,
+            72
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            224,
+            247
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            260,
+            263
+          ]
+        }
+      ]
+    },
+    {
+      "id": "HW-C06",
+      "claim": "The accepted matrix receipt explicitly leaves all requested solution obligations uncertified. A matrix is never substituted for the final answer; this review supplies only orchestration evidence, not mathematical solution scores.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/reference_runner.py",
+          "lines": [
+            228,
+            237
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            56,
+            85
+          ]
+        },
+        {
+          "path": "dag/benchmark/test_hamiltonian_workflows.py",
+          "lines": [
+            107,
+            114
+          ]
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "validation": {
+    "passed": true,
+    "tests": 31,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "command": ".venv/Scripts/python.exe -B -X utf8 -m pytest dag/benchmark/test_hamiltonian_workflows.py -q --disable-warnings --maxfail=3 --basetemp=dag/benchmark/hamiltonian_workflows_review_tmp_01 --junitxml=dag/benchmark/hamiltonian_workflows_review_tests.xml",
+    "environment": {
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+    },
+    "junit_sha256": "3eef70d1abaf679ef27b4f33c7f6f0d599f118d955184b2d55350094b1ea7c4e",
+    "test_cases": [
+      "test_first_correct_skips_repair_and_uses_only_synthesis_as_answer",
+      "test_first_failed_artifact_can_be_repaired_exactly_once[wrong_matrix]",
+      "test_first_failed_artifact_can_be_repaired_exactly_once[invalid_json]",
+      "test_first_failed_artifact_can_be_repaired_exactly_once[wrong_seed]",
+      "test_two_failed_matrices_refuse_without_synthesis_or_answer",
+      "test_unknown_bill_stops_without_any_further_dispatch[first]",
+      "test_unknown_bill_stops_without_any_further_dispatch[repair]",
+      "test_unknown_bill_stops_without_any_further_dispatch[solve]",
+      "test_cap_exhaustion_never_dispatches_unreserved_call[first]",
+      "test_cap_exhaustion_never_dispatches_unreserved_call[repair]",
+      "test_cap_exhaustion_never_dispatches_unreserved_call[solve_after_repair]",
+      "test_ungated_keeps_host_failure_but_withholds_feedback_from_solver[wrong_matrix]",
+      "test_ungated_keeps_host_failure_but_withholds_feedback_from_solver[invalid_json]",
+      "test_same_correct_matrix_yields_identical_solver_request_in_both_arms",
+      "test_repair_feedback_does_not_leak_into_final_synthesis_context",
+      "test_loaded_source_pin_change_refuses_before_output_or_dispatch[hamiltonian_artifact.py]",
+      "test_loaded_source_pin_change_refuses_before_output_or_dispatch[hamiltonian_workflows.py]",
+      "test_loaded_source_pin_change_refuses_before_output_or_dispatch[reference_runner.py]",
+      "test_loaded_source_pin_change_refuses_before_output_or_dispatch[budget_ledger.py]",
+      "test_loaded_source_pin_change_refuses_before_output_or_dispatch[campaign_ledger.py]",
+      "test_loaded_source_pin_change_refuses_before_output_or_dispatch[openrouter_provider.py]",
+      "test_loaded_source_pin_change_refuses_before_output_or_dispatch[live_campaign.py]",
+      "test_plan_pins_and_campaign_preparation_bind_both_arms_without_dispatch",
+      "test_host_preprocessing_failure_refuses_before_any_provider_dispatch",
+      "test_stage_caps_respect_smaller_run_limit[500]",
+      "test_stage_caps_respect_smaller_run_limit[2500]",
+      "test_stage_caps_respect_smaller_run_limit[6000]",
+      "test_guarded_campaign_adapter_with_synthetic_transport[correct]",
+      "test_guarded_campaign_adapter_with_synthetic_transport[repair]",
+      "test_guarded_campaign_adapter_with_synthetic_transport[twice_wrong]",
+      "test_guarded_campaign_adapter_with_synthetic_transport[unknown_bill]"
+    ],
+    "initial_attempt": "Three setup errors before test bodies: pytest default sandbox temporary directory could not be created. The successful run used a fresh workspace-owned basetemp; this was not an implementation failure."
+  },
+  "limits": [
+    "No live model/provider execution or performance observation. Synthetic transport exercises the actual guarded adapter without opening a connection.",
+    "No private answer, evaluator artifacts, or newly generated model outputs were read. Test fixture access guards reject those paths and network connects.",
+    "Correct matrix fixture is only the elementary public Pauli tensor expansion. Synthesis text is a nonmathematical sentinel; no final-answer grading occurs.",
+    "Cost prevention remains conditional on provider quote/token/tariff enforcement. Synthetic bills do not establish external enforcement.",
+    "Source mutation probes intercept reads without editing production files. They establish initial loaded-pin refusal, not a filesystem adversary or concurrent mutation guarantee.",
+    "No production sources or original grades were edited; scope is one test file and review evidence."
+  ],
+  "outputs": [
+    "dag/benchmark/test_hamiltonian_workflows.py",
+    "dag/benchmark/hamiltonian_workflows_review.json",
+    "dag/benchmark/hamiltonian_workflows_review.md",
+    "dag/benchmark/hamiltonian_workflows_review_tests.xml"
+  ],
+  "synthetic_run_receipts": "dag/benchmark/hamiltonian_workflows_review_tmp_01"
+}

@@ -1,0 +1,393 @@
+{
+  "qm-model-repaired-20261110:direct:000": {
+    "run_id": "qm-model-repaired-20261110:direct:000",
+    "run_sha256": "79f366959f1cc0b9e60bc63144cbe9ffccae12c53ec80163eada124f7ff75f1a",
+    "answer_sha256": "9454f47461812b86753a7593c37a8219b25658de71964e2ad6d461e5fb739e12",
+    "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+    "evaluator_id": "audit_systems_independent_public_seed_evaluator_v1",
+    "method": "trusted_post_freeze_mathematical_review",
+    "rubric_sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+    "reference_provenance_sha256": "74e0aac9ae4e707cf0e10beecf53123b9d5f03bb5224cac8f9911546d1d045a6",
+    "points": {
+      "spectrum": 14,
+      "dynamics": 17,
+      "pure_entanglement": 18,
+      "thermal_entanglement": 25,
+      "checks": 9
+    },
+    "deductions": [
+      {
+        "criterion_id": "spectrum.projectors",
+        "points": 2,
+        "reason": "The orthogonal eigenvectors/outer products give the right complete resolution where the chosen angle exists. Deduct2: theta in[0,pi] with sin(theta)=J/r excludes every negative J, despite the all-real-parameter task. No angle-free spectral-projector replacement is supplied in this section.",
+        "evidence": [
+          {
+            "quote": "Let \\( \\vec{n} = \\frac{(2J, 0, 2\\Delta)}{2r} = \\left(\\frac{J}{r}, 0, \\frac{\\Delta}{r}\\right) \\). Then \\( H_{sub} = -K I + 2r \\, \\vec{n}\\cdot\\vec{\\sigma} \\) where \\( \\vec{\\sigma} = (\\sigma_x, \\sigma_y, \\sigma_z) \\).\n\nEigenvalues \\( \\lambda_\\pm = -K \\pm 2r \\), with eigenvectors in subspace along ±\\(\\vec{n}\\) direction.\n\nEigenvectors in full space:  \nFor \\( E_{3} = -K + 2r \\): in subspace: \\( |u_+\\rangle = \\cos\\frac{\\theta}{2} |01\\rangle + \\sin\\frac{\\theta}{2} |10\\rangle \\),  \nwhere \\( \\cos\\theta = \\Delta/r, \\sin\\theta = J/r \\), \\( \\theta \\in [0,\\pi] \\).\n\nCheck: \\( \\vec{n}\\cdot\\vec{\\sigma} \\) for \\( n_z = \\Delta/r, n_x = J/r \\): eigenvector for +1: \\( \\cos(\\theta/2)|0\\rangle+\\sin(\\theta/2)|1\\rangle \\) in \\(\\sigma_{\\vec{n}}\\) basis, here mapping:  \n\nActually easier: Let \\( |+\\rangle_n = \\cos\\frac{\\theta}{2}|0\\rangle + \\sin\\frac{\\theta}{2}|1\\rangle \\) for single qubit. Here two qubits but subspace only:  \nDefine: \\( |E_3\\rangle = \\cos\\frac{\\theta}{2}|01\\rangle + \\sin\\frac{\\theta}{2}|10\\rangle \\) where \\( \\tan\\theta = J/\\Delta \\) for \\( \\Delta \\neq 0 \\), special cases later.\n\nCheck \\( H_{sub} \\) matrix: eigenvector \\( \\begin{pmatrix} \\cos\\frac{\\theta}{2} \\\\ \\sin\\frac{\\theta}{2} \\end{pmatrix} \\) with eigenvalue \\( -K+2r \\):  \n\n\\( (-K+2\\Delta) \\cos\\frac{\\theta}{2} + 2J \\sin\\frac{\\theta}{2} \\) should equal \\( (-K+2r) \\cos\\frac{\\theta}{2} \\).\n\nSo condition: \\( 2\\Delta \\cos\\frac{\\theta}{2} + 2J \\sin\\frac{\\theta}{2} = 2r \\cos\\frac{\\theta}{2} \\). Divide 2: \\( \\Delta \\cos\\frac{\\theta}{2} + J \\sin\\frac{\\theta}{2} = r \\cos\\frac{\\theta}{2} \\).  \n\nBut \\( r\\cos\\theta = \\Delta\\), \\( r\\sin\\theta = J \\).  \n\nThen LHS = \\( r\\cos\\theta \\cos\\frac{\\theta}{2} + r\\sin\\theta \\sin\\frac{\\theta}{2} = r \\cos\\left(\\theta - \\frac{\\theta}{2}\\right) = r\\cos\\frac{\\theta}{2} \\), matches RHS. Good.\n\nSimilarly \\( |E_4\\rangle = -\\sin\\frac{\\theta}{2}|01\\rangle + \\cos\\frac{\\theta}{2}|10\\rangle \\) with \\( E_4 = -K - 2r \\).",
+            "character_range": [
+              7015,
+              8925
+            ],
+            "line_range": [
+              188,
+              211
+            ]
+          },
+          {
+            "quote": "Also \\( |E_1\\rangle = |00\\rangle\\), \\( |E_2\\rangle = |11\\rangle\\) (degenerate eigenvalue \\( K \\)).\n\nSo projectors:\n\n\\[\nP_{K,1} = |00\\rangle\\langle 00|, \\quad P_{K,2} = |11\\rangle\\langle 11|,  \n\\]\n\\[\nP_{+} = |E_3\\rangle\\langle E_3|, \\quad P_{-} = |E_4\\rangle\\langle E_4|.\n\\]\n\nIf \\( r=0 \\) (i.e., \\( J=\\Delta=0 \\)), then \\( H = K Z\\otimes Z \\), projectors: \\( P_1 = |00\\rangle\\langle 00| + |11\\rangle\\langle 11| \\) for eigenvalue \\( K \\), \\( P_2 = |01\\rangle\\langle 01| + |10\\rangle\\langle 10| \\) for eigenvalue \\( -K \\).",
+            "character_range": [
+              8932,
+              9451
+            ],
+            "line_range": [
+              215,
+              226
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "spectrum.coincident_energies",
+        "points": 4,
+        "reason": "The answer mentions possible extra coincidence but never identifies K=+r or K=-r or explains their three-dimensional equal-energy eigenspaces. Deduct4 for the missing nonzero-radius crossing cases.",
+        "evidence": [
+          {
+            "quote": "Degeneracies:  \n- \\( E_1 = E_2 = K \\) always degenerate for these two states, unless special parameters make them equal to \\( E_3 \\) or \\( E_4 \\).  \n- \\( E_3 = E_4 \\) if \\( \\sqrt{J^2 + \\Delta^2} = 0 \\), i.e. \\( J=0, \\Delta=0 \\) (but \\( K \\) arbitrary). Then \\( E_3 = E_4 = -K \\). Possible extra degeneracy \\( K = -K \\) → \\( K=0 \\) makes all four states degenerate (zero Hamiltonian).  ",
+            "character_range": [
+              6129,
+              6514
+            ],
+            "line_range": [
+              168,
+              170
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              28374
+            ],
+            "line_range": [
+              1,
+              661
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "dynamics.state",
+        "points": 2,
+        "reason": "Correct generic spectral evolution, amplitudes and K phase. Deduct1 for the inherited invalid negative-J angle restriction, and1 because the zero-radius branch gives only a stationary/eigenstate statement, without the requested explicit ket evolution e^(iKt)|01>. This is a missing phase-resolved expression, not a claim that a stationary ray is physically wrong.",
+        "evidence": [
+          {
+            "quote": "where \\( \\cos\\theta = \\Delta/r, \\sin\\theta = J/r \\), \\( \\theta \\in [0,\\pi] \\).",
+            "character_range": [
+              7494,
+              7572
+            ],
+            "line_range": [
+              194,
+              194
+            ]
+          },
+          {
+            "quote": "\\( |01\\rangle = \\cos\\frac{\\theta}{2} |E_3\\rangle - \\sin\\frac{\\theta}{2} |E_4\\rangle \\).  \n\nThus:\n\n\\[\n|\\psi(t)\\rangle = e^{-iHt} |01\\rangle\n= \\cos\\frac{\\theta}{2} e^{-iE_3 t} |E_3\\rangle - \\sin\\frac{\\theta}{2} e^{-iE_4 t} |E_4\\rangle.\n\\]\n\nIn terms of \\( |01\\rangle, |10\\rangle \\):\n\n\\( |E_3\\rangle = c|01\\rangle + s|10\\rangle, \\quad |E_4\\rangle = -s|01\\rangle + c|10\\rangle, \\)  \nwhere \\( c = \\cos\\frac{\\theta}{2}, s = \\sin\\frac{\\theta}{2} \\), \\( \\tan\\theta = J/\\Delta \\), \\( r=\\sqrt{J^2+\\Delta^2} \\).\n\nThen \\( |01\\rangle = c|E_3\\rangle - s|E_4\\rangle \\).\n\nSo:\n\n\\( |\\psi(t)\\rangle = c e^{-iE_3 t} (c|01\\rangle + s|10\\rangle) - s e^{-iE_4 t} (-s|01\\rangle + c|10\\rangle) \\).\n\nSimplify:\n\nCoefficient of \\( |01\\rangle \\): \\( c^2 e^{-iE_3 t} + s^2 e^{-iE_4 t} \\).  \nCoefficient of \\( |10\\rangle \\): \\( cs e^{-iE_3 t} - cs e^{-iE_4 t} = cs (e^{-iE_3 t} - e^{-iE_4 t}) \\).\n\nSo:\n\n\\[\n|\\psi(t)\\rangle = A(t) |01\\rangle + B(t) |10\\rangle,\n\\]\nwhere \\( A(t) = c^2 e^{-iE_3 t} + s^2 e^{-iE_4 t}, \\quad B(t) = cs(e^{-iE_3 t} - e^{-iE_4 t}) \\).",
+            "character_range": [
+              9648,
+              10675
+            ],
+            "line_range": [
+              237,
+              267
+            ]
+          },
+          {
+            "quote": "So \\( e^{-iE_3 t} = e^{iK t} e^{-2i r t} \\), \\( e^{-iE_4 t} = e^{iK t} e^{2i r t} \\).\n\nThus \\( e^{-iE_3 t} - e^{-iE_4 t} = e^{iK t} ( e^{-2i r t} - e^{2i r t} ) = e^{iK t} (-2i \\sin(2r t)) \\).\n\nSo \\( |e^{-iE_3 t} - e^{-iE_4 t}| = |2\\sin(2r t)| \\).\n\nThus \\( |B(t)| = |cs| \\cdot 2|\\sin(2r t)| \\).\n\nBut \\( cs = \\frac12 \\sin\\theta = \\frac12 \\frac{J}{r} \\) (since \\(\\sin\\theta = J/r\\)).",
+            "character_range": [
+              11156,
+              11537
+            ],
+            "line_range": [
+              282,
+              290
+            ]
+          },
+          {
+            "quote": "If \\( r=0 \\) (both \\( J=0, \\Delta=0 \\)), Hamiltonian is diagonal, initial state stationary → \\( P=0 \\) constant.",
+            "character_range": [
+              12177,
+              12289
+            ],
+            "line_range": [
+              315,
+              315
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              28374
+            ],
+            "line_range": [
+              1,
+              661
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "dynamics.earliest_and_constant_branches",
+        "points": 1,
+        "reason": "The final summary correctly restricts pi/(4r) to J!=0, repairing the earlier overbroad r>0 wording. Deduct1 because no constant-probability branch explicitly identifies the earliest maximizing time t=0.",
+        "evidence": [
+          {
+            "quote": "Maximum reached when \\( \\sin^2(2rt) = 1 \\), i.e., \\( 2rt = \\frac{\\pi}{2} + n\\pi \\), smallest positive \\( t \\) is \\( t^* = \\frac{\\pi}{4r} \\) if \\( r>0 \\).\n\nIf \\( J=0 \\), probability is 0 always (no transition).  \nIf \\( \\Delta=0 \\), supremum = 1, reached at \\( t^* = \\frac{\\pi}{4|J|} \\).  \n\nIf \\( r=0 \\) (both \\( J=0, \\Delta=0 \\)), Hamiltonian is diagonal, initial state stationary → \\( P=0 \\) constant.",
+            "character_range": [
+              11888,
+              12289
+            ],
+            "line_range": [
+              310,
+              315
+            ]
+          },
+          {
+            "quote": "   Supremum = \\( J^2/(J^2+\\Delta^2) \\), earliest max at \\( t=\\pi/(4\\sqrt{J^2+\\Delta^2}) \\) if \\( J\\neq0 \\).  ",
+            "character_range": [
+              27544,
+              27653
+            ],
+            "line_range": [
+              649,
+              649
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              28374
+            ],
+            "line_range": [
+              1,
+              661
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.entropy",
+        "points": 1,
+        "reason": "Correct binary entropy in bits. Deduct1 for the absent0log0=0 endpoint convention, needed at the initial and decoupled states.",
+        "evidence": [
+          {
+            "quote": "Von Neumann entropy \\( S(\\rho_A) = -|a|^2 \\log_2 |a|^2 - |b|^2 \\log_2 |b|^2 \\) in bits.\n\nBut \\( |a|^2 = 1 - |b|^2 \\), \\( |b|^2 = P_{01\\to 10}(t) = \\frac{J^2}{r^2} \\sin^2(2rt) \\).",
+            "character_range": [
+              13917,
+              14095
+            ],
+            "line_range": [
+              351,
+              353
+            ]
+          },
+          {
+            "quote": "3. \\( \\rho_A(t) = \\text{diag}(1-P(t), P(t)) \\), entropy = \\( -p\\log_2 p - (1-p)\\log_2(1-p) \\) with \\( p=P(t) \\).  ",
+            "character_range": [
+              27654,
+              27768
+            ],
+            "line_range": [
+              650,
+              650
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              28374
+            ],
+            "line_range": [
+              1,
+              661
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.CHSH",
+        "points": 4,
+        "reason": "Credit2 for the correct optimization framework and several correctly derived correlations, including opposite XY/YX signs and ZZ=-1. Deduct4: the final displayed T reverses its correctly derived YX sign, its Gram multiplication drops nonzero off-diagonals, and it selects the two C^2 eigenvalues rather than the largest1 and C^2. The settled result2sqrt(2)C is false; at t=0 it predicts0 instead of2.",
+        "evidence": [
+          {
+            "quote": "For pure two-qubit state, maximal CHSH violation \\( B_{\\max} = 2\\sqrt{1+C^2} \\) if I recall? Actually standard: maximal Bell operator expectation is \\( 2\\sqrt{\\lambda_1+\\lambda_2} \\) where \\( \\lambda_1,\\lambda_2 \\) are two largest eigenvalues of \\( R^T R \\) with \\( R_{ij}=\\text{Tr}(\\rho \\sigma_i\\otimes\\sigma_j) \\).\n\nBut for pure state, Horodecki condition: \\( B_{\\max} = 2\\sqrt{M(\\rho)} \\) where \\( M(\\rho) = \\max_{j<k} (u_j+u_k) \\) with \\( u_j \\) eigenvalues of \\( U=R^T R \\).",
+            "character_range": [
+              15492,
+              15971
+            ],
+            "line_range": [
+              392,
+              394
+            ]
+          },
+          {
+            "quote": "Thus: \\( \\langle X\\otimes Y\\rangle = a^*b(i) + b^*a(-i) = i(a^*b - b^*a) = i(2i r\\sin\\phi) = -2r\\sin\\phi \\).\n\n\\( \\langle Y\\otimes X\\rangle = a^*b \\langle01|Y\\otimes X|10\\rangle + b^*a \\langle10|Y\\otimes X|01\\rangle \\).  \n\n\\( Y\\otimes X|01\\rangle = Y|0\\rangle\\otimes X|1\\rangle = i|1\\rangle\\otimes |0\\rangle = i|10\\rangle \\), so \\( \\langle10|Y\\otimes X|01\\rangle = i \\).  \n\\( \\langle01|Y\\otimes X|10\\rangle = -i \\) from before.\n\nThus \\( \\langle Y\\otimes X\\rangle = a^*b(-i) + b^*a(i) = -i(a^*b - b^*a) = -i(2i r\\sin\\phi) = 2r\\sin\\phi \\).\n\nSo indeed \\( \\langle X\\otimes Y\\rangle = -2r\\sin\\phi, \\langle Y\\otimes X\\rangle = 2r\\sin\\phi \\).\n\n---\n\nCorrelation matrix \\( T_{ij} = \\langle \\sigma_i\\otimes\\sigma_j\\rangle \\):\n\n\\( T = \\begin{pmatrix} 2r\\cos\\phi & -2r\\sin\\phi & 0 \\\\ -2r\\sin\\phi & 2r\\cos\\phi & 0 \\\\ 0 & 0 & -(|a|^2-|b|^2)^2?? \\text{Wait } \\langle Z\\otimes Z\\rangle \\end{pmatrix} \\).\n\nCompute \\( \\langle Z\\otimes Z\\rangle \\):  \n\n\\( Z\\otimes Z|01\\rangle = (+1)(-1)|01\\rangle = -|01\\rangle \\), similarly \\( Z\\otimes Z|10\\rangle = (-1)(+1)|10\\rangle = -|10\\rangle \\). So \\( \\langle Z\\otimes Z\\rangle = -1 \\) (since both components give -1).",
+            "character_range": [
+              18496,
+              19636
+            ],
+            "line_range": [
+              432,
+              451
+            ]
+          },
+          {
+            "quote": "T = \\begin{pmatrix}\n2r\\cos\\phi & -2r\\sin\\phi & 0 \\\\\n-2r\\sin\\phi & 2r\\cos\\phi & 0 \\\\\n0 & 0 & -1\n\\end{pmatrix}.\n\\]\n\nBut \\( r = |a^*b| = |ab| \\) and \\( 2r = C \\) (concurrence). Actually \\( C=2|ab| \\) so \\( |ab|=r \\) yes.\n\nAnd \\( |a|^2+|b|^2=1 \\). Also \\( |a|^2-|b|^2 = 1-2|b|^2 \\), etc.\n\n---\n\nCompute eigenvalues of \\( T^T T \\):  \n\n\\( T = \\begin{pmatrix} \\alpha & -\\beta & 0 \\\\ -\\beta & \\alpha & 0 \\\\ 0 & 0 & -1 \\end{pmatrix} \\) with \\( \\alpha = 2r\\cos\\phi, \\beta=2r\\sin\\phi \\).\n\nThen \\( T^T T = \\begin{pmatrix} \\alpha^2+\\beta^2 & 0 & 0 \\\\ 0 & \\alpha^2+\\beta^2 & 0 \\\\ 0 & 0 & 1 \\end{pmatrix} \\) because \\( T \\) symmetric? Wait: \\( T \\) is symmetric? No, T_{12} = -β, T_{21} = -β, so symmetric. Yes.\n\nCheck \\( T_{12} = -2r\\sin\\phi, T_{21} = -2r\\sin\\phi \\), symmetric.\n\nThen \\( (T^T T)_{11} = \\alpha^2 + \\beta^2 + 0 = 4r^2 \\),  \n\\( (T^T T)_{22} = \\beta^2+\\alpha^2 = 4r^2 \\),  \n\\( (T^T T)_{33} = 0+0+1=1 \\), off-diagonals zero.\n\nSo eigenvalues of \\( T^T T \\) are \\( u_1=4r^2, u_2=4r^2, u_3=1 \\).\n\nThus \\( M(\\rho) = u_1+u_2 = 8r^2 = 2C^2 \\) (since \\( C=2r \\)).\n\nSo \\( B_{\\max} = 2\\sqrt{M(\\rho)} = 2\\sqrt{8r^2} = 4\\sqrt{2} r = 2\\sqrt{2} C \\).\n\n---\n\nThus **maximal CHSH expectation** = \\( 2\\sqrt{2} C(t) \\), where \\( C(t) \\) concurrence.",
+            "character_range": [
+              19770,
+              20998
+            ],
+            "line_range": [
+              458,
+              491
+            ]
+          },
+          {
+            "quote": "   Max CHSH = \\( 2\\sqrt{2} C(t) \\).  ",
+            "character_range": [
+              27820,
+              27857
+            ],
+            "line_range": [
+              652,
+              652
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.maximal_entanglement_reachability",
+        "points": 1,
+        "reason": "Correct |J|>=|Delta| condition on the nonzero-coupling branch, including equality. Deduct1 because the final reachability statement does not exclude J=Delta=0, which satisfies that inequality but remains a product state.",
+        "evidence": [
+          {
+            "quote": "From \\( C(t) = 2|ab| \\) and \\( |a|^2+|b|^2=1 \\), maximum \\( C=1 \\) when \\( |a|=|b|=1/\\sqrt{2} \\).\n\nThat means \\( |b|^2 = \\frac{J^2}{r^2} \\sin^2(2rt) = 1/2 \\) and also \\( |a|^2=1/2 \\). So \\( \\frac{J^2}{r^2} \\sin^2(2rt) = 1/2 \\).\n\nMaximum of \\( \\frac{J^2}{r^2} \\) is 1 (when Δ=0), then \\( \\sin^2(2|J|t) = 1/2 \\) → \\( 2|J|t = \\pi/4 + n\\pi/2 \\) etc.\n\nSo maximally entangled state reachable only if \\( J^2/(J^2+\\Delta^2) \\ge 1/2 \\) → \\( J^2 \\ge \\Delta^2 \\), i.e., \\( |J| \\ge |\\Delta| \\).\n\nIf \\( |J| = |\\Delta| \\), then \\( J^2/r^2 = 1/2 \\), need \\( \\sin^2(2rt)=1 \\) → possible.",
+            "character_range": [
+              21131,
+              21702
+            ],
+            "line_range": [
+              499,
+              507
+            ]
+          },
+          {
+            "quote": "If \\( r=0 \\) (both \\( J=0, \\Delta=0 \\)), Hamiltonian is diagonal, initial state stationary → \\( P=0 \\) constant.",
+            "character_range": [
+              12177,
+              12289
+            ],
+            "line_range": [
+              315,
+              315
+            ]
+          },
+          {
+            "quote": "   Maximally entangled reachable if \\( |J| \\ge |\\Delta| \\), earliest time solution of \\( \\sin^2(2rt) = \\frac{J^2+\\Delta^2}{2J^2} \\) when \\( J\\neq0 \\).  ",
+            "character_range": [
+              27858,
+              28010
+            ],
+            "line_range": [
+              653,
+              653
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "pure_state.earliest_maximal_entanglement",
+        "points": 1,
+        "reason": "Correct general root equation and explicit earliest Delta=0 value pi/(8|J|); equality is recognized as sin^2=1. Deduct1 because no explicit general earliest-root/arcsine expression with the unreachable and zero-coupling branches is completed; the text instead says the Delta=0 example suffices.",
+        "evidence": [
+          {
+            "quote": "If \\( |J| = |\\Delta| \\), then \\( J^2/r^2 = 1/2 \\), need \\( \\sin^2(2rt)=1 \\) → possible.\n\nEarliest time: For \\( \\Delta=0 \\), \\( r=|J| \\), need \\( \\sin^2(2|J|t)=1/2 \\) → \\( 2|J|t = \\pi/4 \\) → \\( t=\\pi/(8|J|) \\).\n\nBut earlier we found \\( P_{01\\to 10} \\) reaches max at \\( t=\\pi/(4|J|) \\), there \\( |b|^2=1 \\) → product state |10>. So not maximal entanglement.\n\nMax entanglement happens when \\( |b|^2=1/2 \\), i.e., \\( \\sin^2(2rt) = r^2/(2J^2) \\).\n\n---\n\nGiven complexity, suffice: For Δ=0, time to reach Bell state \\( (|01\\rangle\\pm i|10\\rangle)/\\sqrt{2} \\) maybe when \\( 2Jt=\\pi/4 \\) for example.",
+            "character_range": [
+              21615,
+              22207
+            ],
+            "line_range": [
+              507,
+              517
+            ]
+          },
+          {
+            "quote": "   Maximally entangled reachable if \\( |J| \\ge |\\Delta| \\), earliest time solution of \\( \\sin^2(2rt) = \\frac{J^2+\\Delta^2}{2J^2} \\) when \\( J\\neq0 \\).  ",
+            "character_range": [
+              27858,
+              28010
+            ],
+            "line_range": [
+              653,
+              653
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              28374
+            ],
+            "line_range": [
+              1,
+              661
+            ]
+          }
+        ]
+      },
+      {
+        "criterion_id": "checks.decoupled_limit",
+        "points": 1,
+        "reason": "The no-transition J=0 check is correct, with an explicit positive-Delta eigenbasis branch. Deduct1 because the negative-Delta and zero-radius ket/phase checks are not completed in this check, and the constant-time exception is not verified.",
+        "evidence": [
+          {
+            "quote": "**Decoupled limit J=0**: then \\( r=|\\Delta|\\), \\( c^2=(1+\\Delta/r)/2 \\) → if Δ>0, c^2=1, s=0, so |E_3⟩=|01⟩, |E_4⟩=|10⟩, evolution: initial |01⟩ eigenstate → stationary, P=0. Matches formula \\( P= (J^2/r^2)\\sin^2(2rt)=0 \\).",
+            "character_range": [
+              26917,
+              27140
+            ],
+            "line_range": [
+              639,
+              639
+            ]
+          },
+          {
+            "quote": "If \\( J=0 \\), probability is 0 always (no transition).  \nIf \\( \\Delta=0 \\), supremum = 1, reached at \\( t^* = \\frac{\\pi}{4|J|} \\).  \n\nIf \\( r=0 \\) (both \\( J=0, \\Delta=0 \\)), Hamiltonian is diagonal, initial state stationary → \\( P=0 \\) constant.",
+            "character_range": [
+              12043,
+              12289
+            ],
+            "line_range": [
+              312,
+              315
+            ]
+          },
+          {
+            "kind": "full_final_body_review_for_omission",
+            "character_range": [
+              0,
+              28374
+            ],
+            "line_range": [
+              1,
+              661
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 83
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "python": "3.14.2",
+  "source_pins": {
+    "pfp/infrastructure/normal_forms/unverified_certificate_example.py": "9ebee540ad6a16c684074c8ed94b07b3ae5a3a471fa7d9e2fcb97cf1398b00fd",
+    "pfp/infrastructure/normal_forms/reconciliation_example.py": "6f2bf498bcd3f01f2c0213856d8fc155e1a6801f82130b6160314f31cce29a54",
+    "pfp/infrastructure/normal_forms/observer_freshness_example.py": "b30380f0effcc1fce06eb41faa700c0a3983b779e6a7f2c28b74c22764479e42"
+  },
+  "method": "Only explicitly named fully read function AST nodes, with standard hashlib/json dependencies injected; synthetic local inputs; no production imports, native/provider or filesystem operations executed.",
+  "controls": [
+    {
+      "id": "PFPINFRA-P014",
+      "name": "empty_certificate_authorized_by_self_supplied_dicts",
+      "input": {
+        "independent_verifier": {
+          "executed": true,
+          "outcome": "verified"
+        },
+        "policy_decision": {
+          "accepted": true
+        }
+      },
+      "observed": {
+        "certificate_id": "unknown",
+        "decision": "Authorized",
+        "terminal_route": "Accept",
+        "reason": "Morphism certificate successfully validated by independent verifier and accepted by active policy",
+        "certified": true,
+        "authorized": true
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P015",
+      "name": "empty_reconciliation_authorized_without_verifier_execution",
+      "input": {
+        "target_verifier": {
+          "outcome": "verified"
+        }
+      },
+      "observed": {
+        "case_id": "unknown",
+        "decision": "Authorized",
+        "terminal_route": "Preserve",
+        "obstruction_class": "[0]",
+        "repair": null,
+        "certified": true,
+        "authorized": true,
+        "reconciled": true,
+        "reason": "Bidirectional reconciliation commute is exact with zero obstruction."
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P016",
+      "name": "unsealed_ledger_without_entries_accepted",
+      "input": {
+        "erased_attributes": [
+          "transaction_id"
+        ]
+      },
+      "observed": [
+        true,
+        null
+      ],
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P017",
+      "name": "different_account_currency_pairs_collide",
+      "input": {
+        "target_verifier": {
+          "outcome": "verified"
+        },
+        "morphism": {
+          "source_records": [
+            {
+              "account_id": "a:b",
+              "currency": "c",
+              "amount_cents": 10
+            }
+          ],
+          "target_state": [
+            {
+              "account_id": "a",
+              "currency": "b:c",
+              "balance_cents": 10
+            }
+          ]
+        }
+      },
+      "observed": {
+        "case_id": "unknown",
+        "decision": "Authorized",
+        "terminal_route": "Preserve",
+        "obstruction_class": "[0]",
+        "repair": null,
+        "certified": true,
+        "authorized": true,
+        "reconciled": true,
+        "reason": "Bidirectional reconciliation commute is exact with zero obstruction."
+      },
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P018",
+      "name": "boolean_lag_and_budget_admitted",
+      "input": {
+        "packet": {
+          "packet_scope": "s",
+          "replica_lag_seconds": true
+        },
+        "observers": [
+          {
+            "observer_id": "o",
+            "authorized_scopes": [
+              "s"
+            ],
+            "max_lag_seconds": true
+          }
+        ]
+      },
+      "observed": [
+        {
+          "observer_id": "o",
+          "terminal_route": "AuthorizedFresh",
+          "authorized": true,
+          "reason": "Replica lag (Trues) is within the observer's max limit (Trues)."
+        }
+      ],
+      "result": "reproduced"
+    },
+    {
+      "id": "PFPINFRA-P019",
+      "name": "nonordered_list_reported_monotonic_for_one_packet",
+      "input": {
+        "chain": [
+          {
+            "observer_id": "loose",
+            "authorized_scopes": [
+              "s"
+            ],
+            "max_lag_seconds": 10
+          },
+          {
+            "observer_id": "strict",
+            "authorized_scopes": [
+              "s"
+            ],
+            "max_lag_seconds": 1
+          }
+        ],
+        "packet": {
+          "packet_scope": "s",
+          "replica_lag_seconds": 1
+        }
+      },
+      "observed": [
+        true,
+        []
+      ],
+      "result": "reproduced"
+    }
+  ],
+  "limitations": "Demo predicate counterexamples only; no general runtime reachability or authenticated production authority claim."
+}

@@ -12,6 +12,12 @@
 
 - [Choose a workflow](Workflows.md) · [Start here](Workflow-Start-Here.md)
 - [Workflow DAG: WF1–WF49](Workflow-DAG.md)
+- [QM benchmark and implementations](Workflow-QM-Benchmark.md)
+- [QM live pilot results](Workflow-QM-Pilot-2026-11-10.md)
+- [QM Hamiltonian checks and results](Workflow-QM-Hamiltonian.md)
+- [QM native polynomial checks](Workflow-QM-Charpoly.md)
+- [QM five-section allocation control](Workflow-QM-Sections.md)
+- [QM controls](Workflow-QM-Controls.md) · [Rational panels](Workflow-QM-Rational-Panels.md)
 - [Install and run WF1–WF5](Workflow-Running.md)
 - [WF1: typed answer](Workflow-WF1.md)
 - [WF2: full slots](Workflow-WF2.md)

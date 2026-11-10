@@ -1,0 +1,46 @@
+{
+  "status": "bounded_independent_controls_completed",
+  "helper_sha256": "611494ef2c4df5a8666c5ace7c151ac03ec3eed802d42998a289992ead664e52",
+  "controls": [
+    {
+      "id": "RLA-P40",
+      "rule": "Packed coordinate bijection, complex contraction/quadratic form and rational positive-definite solve replay",
+      "status": "observed",
+      "dimensions_index_checked": 64,
+      "packed_positions": 45760,
+      "complex_contractions": 8,
+      "rational_solves": 321,
+      "limits": "Index n<=64, exact-small Gaussian integer operations n<=8,2x2 rational systems. No original packed/LDL code executed."
+    },
+    {
+      "id": "RLA-P41",
+      "rule": "Independent exact eigenpair and orthonormality replay for rotated two-dimensional spectra",
+      "status": "observed",
+      "spectra": 49,
+      "rotation": [
+        [
+          "3/5",
+          "-4/5"
+        ],
+        [
+          "4/5",
+          "3/5"
+        ]
+      ],
+      "zero_vector_gram_mutant": "rejected",
+      "limits": "Residual identities and degeneracy control, not eigenvalue solver execution or floating error certification."
+    },
+    {
+      "id": "RLA-P42",
+      "rule": "Nonfinite comparison holes, complex finite-input overflow and dimension arithmetic",
+      "status": "counterexample_observed",
+      "NaN_trace_guard_rejects": false,
+      "NaN_hermitian_guard_rejects": false,
+      "NaN_min_eigen_guard_rejects": false,
+      "complex_add_1e308_twice": "Infinity",
+      "density_dim": 4294967296,
+      "density_dim_squared": "18446744073709551616",
+      "limits": "Python binary64 comparisons and64-bit symbolic integers. Confirms missing pre/postguards, not whether external nalgebra terminates or accepts NaN on any path."
+    }
+  ]
+}

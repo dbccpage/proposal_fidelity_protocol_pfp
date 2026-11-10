@@ -1,0 +1,63 @@
+{
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "retained_owner_execution": false,
+  "results": [
+    {
+      "id": "OPSKILL-CHECK-097",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-finite-qm-engine-bridge/SKILL.md",
+        "sha256": "d6bed9c9853304a22373e256e44999761ba48ba6a9b3782552e5cbb3977c4f6b"
+      },
+      "additional_source": {
+        "path": "code/rust/core_quantum_physics/src/engine_bridge.rs",
+        "sha256": "7bf5d688f43517567f63bde0966b6d7ca515ccaa2327ce5ccb2ce50612ce46b3",
+        "reviewed_lines": [
+          [
+            1,
+            156
+          ]
+        ],
+        "full_source_read": true
+      },
+      "observation": {
+        "public_functions": [
+          "rational_to_c64",
+          "gaussian_to_c64",
+          "cyc24_to_c64",
+          "cyc24_enclosure",
+          "cyc24_matrix_to_prod_density",
+          "rational_matrix_to_prod_density",
+          "gaussian_matrix_to_prod_density",
+          "domain_diagonal_to_prod_density"
+        ],
+        "documented_missing_functions": [
+          "evaluate_state_observables",
+          "verify_exact_state_with_engine",
+          "evaluate_state_fidelity",
+          "evaluate_bures_geometry",
+          "verify_born_gleason_domain_bridge",
+          "verify_composition_tomography_domain_bridge"
+        ]
+      },
+      "limitations": "Entire owning module was separately read to rule out reexports/macros; symbol census alone would not grant semantic credit. No Cargo/compiler run."
+    },
+    {
+      "id": "OPSKILL-CHECK-098",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-mutation-evidence-custody/SKILL.md",
+        "sha256": "754fc931a3978ce65975320c6144f6f0f2ddd3fad1b2e97166715ddd9b028692"
+      },
+      "observation": {
+        "declared_domain": "nonnegative integers",
+        "tested_population": "0..100 inclusive",
+        "all101_small_cases_agree": true,
+        "first_unchecked_input": 101,
+        "original": 0,
+        "mutant": 1
+      },
+      "limitations": "Independent functions demonstrate why finite small-case agreement cannot prove unbounded equivalence. Complete enumeration is a proof on an explicitly finite admitted carrier."
+    }
+  ]
+}

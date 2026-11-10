@@ -1,0 +1,185 @@
+{
+  "exhaustive_three_vertex_networks": {
+    "cases": 1241,
+    "mismatches": [],
+    "limits": "512 binary-capacity directed graphs including loops plus729 ternary-capacity loopless directed graphs; min cuts enumerated independently."
+  },
+  "controls": {
+    "fractional_capacity": {
+      "case": {
+        "case_id": "audit_schema",
+        "n": 2,
+        "s": 0,
+        "t": 1,
+        "arcs": [
+          [
+            0,
+            1,
+            1.9
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "audit_schema",
+        "status": "SOLVED",
+        "value": "1",
+        "flow": [
+          "1"
+        ],
+        "cut_S": [
+          0
+        ]
+      },
+      "owner_verdict": [
+        [
+          true,
+          "Valid max-flow min-cut certificate with exact value 1"
+        ],
+        [
+          true,
+          "Independent verification confirmed: flow=1, cut_cap=1"
+        ]
+      ],
+      "independent_domain_and_certificate": {
+        "valid": false,
+        "reason": "arc schema"
+      }
+    },
+    "boolean_capacity": {
+      "case": {
+        "case_id": "audit_schema",
+        "n": 2,
+        "s": 0,
+        "t": 1,
+        "arcs": [
+          [
+            0,
+            1,
+            true
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "audit_schema",
+        "status": "SOLVED",
+        "value": "1",
+        "flow": [
+          "1"
+        ],
+        "cut_S": [
+          0
+        ]
+      },
+      "owner_verdict": [
+        [
+          true,
+          "Valid max-flow min-cut certificate with exact value 1"
+        ],
+        [
+          true,
+          "Independent verification confirmed: flow=1, cut_cap=1"
+        ]
+      ],
+      "independent_domain_and_certificate": {
+        "valid": false,
+        "reason": "arc schema"
+      }
+    },
+    "fractional_endpoint": {
+      "case": {
+        "case_id": "audit_schema",
+        "n": 2,
+        "s": 0,
+        "t": 1,
+        "arcs": [
+          [
+            0.9,
+            1,
+            "2"
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "audit_schema",
+        "status": "SOLVED",
+        "value": "2",
+        "flow": [
+          "2"
+        ],
+        "cut_S": [
+          0
+        ]
+      },
+      "owner_verdict": [
+        [
+          true,
+          "Valid max-flow min-cut certificate with exact value 2"
+        ],
+        [
+          true,
+          "Independent verification confirmed: flow=2, cut_cap=2"
+        ]
+      ],
+      "independent_domain_and_certificate": {
+        "valid": false,
+        "reason": "arc schema"
+      }
+    },
+    "capacity_above_task_bound": {
+      "case": {
+        "case_id": "audit_schema",
+        "n": 2,
+        "s": 0,
+        "t": 1,
+        "arcs": [
+          [
+            0,
+            1,
+            "1000000000000000001"
+          ]
+        ]
+      },
+      "answer": {
+        "case_id": "audit_schema",
+        "status": "SOLVED",
+        "value": "1000000000000000001",
+        "flow": [
+          "1000000000000000001"
+        ],
+        "cut_S": [
+          0
+        ]
+      },
+      "owner_verdict": [
+        [
+          true,
+          "Valid max-flow min-cut certificate with exact value 1000000000000000001"
+        ],
+        [
+          true,
+          "Independent verification confirmed: flow=1000000000000000001, cut_cap=1000000000000000001"
+        ]
+      ],
+      "independent_domain_and_certificate": {
+        "valid": false,
+        "reason": "declared capacity domain"
+      }
+    },
+    "non_object": {
+      "status": "exception",
+      "type": "AttributeError",
+      "message": "'NoneType' object has no attribute 'get'",
+      "case_description": "null"
+    },
+    "long_path": {
+      "status": "exception",
+      "type": "RecursionError",
+      "message": "maximum recursion depth exceeded",
+      "case_description": "1100 vertices, unit-capacity directed chain; mathematical maximum flow1"
+    }
+  },
+  "limits": [
+    "No accepted false optimum found in these bounded well-formed graphs.",
+    "Malformed input coercion and recursion are distinct from the flow/cut theorem."
+  ]
+}

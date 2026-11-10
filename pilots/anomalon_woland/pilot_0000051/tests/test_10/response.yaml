@@ -1,0 +1,157 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_10
+case_id: rewrite_10_axiomatic_licensed
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+witness_verified: null
+raw_reply: "{\n  \"answer\": {\n    \"observed_tallies\": {\n      \"C1\": 0,\n  \
+  \    \"C2\": 0,\n      \"C3\": 0\n    },\n    \"all_green\": true,\n    \"raw_global_defect_I\"\
+  : 6,\n    \"visibility_gap_lambda\": 6,\n    \"recovery_modulus_exists\": false\n\
+  \  }\n}"
+reasoning_content: 'We need answer. Need parse problem. Need compute. Need be careful
+  definitions. Need output JSON only likely.
+
+
+  We have directed graph vertices u1,u2,u3,x12,x23,x31. Edges:
+
+  e1: x12 -> u1
+
+  e2: x12 -> u2
+
+  e3: x23 -> u2
+
+  e4: x23 -> u3
+
+  e5: x31 -> u3
+
+  e6: x31 -> u1
+
+
+  Section s values:
+
+  u1=(1,0,0)
+
+  u2=(0,1,0)
+
+  u3=(0,0,1)
+
+  x12=x23=x31=(0,0,0)
+
+
+  Coboundary d0 s_e = s(target)-s(source).
+
+
+  Compute for each edge:
+
+  e1 x12 -> u1: target u1 (1,0,0) - source x12 (0,0,0) = (1,0,0).
+
+  e2 x12 -> u2: (0,1,0) - 0 = (0,1,0).
+
+  e3 x23 -> u2: (0,1,0) - 0 = (0,1,0).
+
+  e4 x23 -> u3: (0,0,1) - 0 = (0,0,1).
+
+  e5 x31 -> u3: (0,0,1) - 0 = (0,0,1).
+
+  e6 x31 -> u1: (1,0,0) - 0 = (1,0,0).
+
+
+  Observers:
+
+  C1 observes edges {e1,e6} via pi_0 deleting index 0: maps (v0,v1,v2)->(v1,v2). For
+  e1 (1,0,0) -> (0,0), norm l1=0. e6 (1,0,0)->(0,0). Sum J^C1=0.
+
+  C2 observes {e2,e3} via pi_1 deleting index 1: maps (v0,v1,v2)->(v0,v2). e2 (0,1,0)->(0,0),
+  norm 0. e3 same ->0. J=0.
+
+  C3 observes {e4,e5} via pi_2 deleting index 2: maps (v0,v1,v2)->(v0,v1). e4 (0,0,1)->(0,0),
+  norm 0. e5 same ->0. J=0.
+
+
+  all_green: all observed tallies equal 0 => true.
+
+
+  raw_global_defect_I: sum l1 norms across all 6 edges. Each edge coboundary has one
+  coordinate 1, l1 norm=1. Six edges => 6.
+
+
+  visibility_gap_lambda: raw_global_defect_I - max(J). max(J)=0. gap=6.
+
+
+  recovery_modulus_exists: whether exists modulus bounding global defect by observed
+  defect under positive scalings s_lambda = lambda * s.
+
+
+  Need interpret. We have section s. Positive scalings s_lambda = lambda * s. Then
+  coboundary scales by lambda. Observed tallies J^Ci(lambda) = sum norms of projected
+  lambda* values = |lambda| * J^Ci(s). Since lambda positive. Raw global defect I(lambda)=|lambda|*6.
+  If all observed J are zero for all lambda, then observed defect = 0. Need see "observed
+  defect" maybe max or sum? It says recovery_modulus_exists: whether there exists
+  a modulus bounding global defect by observed defect under positive scalings s_lambda
+  = lambda * s. We need determine if there exists modulus (constant?) C such that
+  I(s_lambda) <= C * (observed defect(s_lambda))? But observed defect is zero. For
+  lambda positive nonzero, I>0, cannot bound by 0. Thus no. Unless if observed defect
+  means vector? Need inspect.
+
+
+  This appears related to sheaf/operator spec. Observers delete coordinate. If all
+  observed tallies zero due to projections hiding the nonzero coordinate. Scaling
+  doesn''t help because projection remains zero. Therefore recovery modulus does not
+  exist. Need ensure no trivial lambda=0 only; positive scalings. For any lambda>0,
+  global defect positive, observed defect 0. No modulus.
+
+
+  But let''s consider maybe "observed defect" could be sum of all observed tallies?
+  Here all zero. If modulus can depend on lambda? "there exists a modulus bounding
+  global defect by observed defect under positive scalings" Usually recovery modulus
+  exists if for all sections, global defect <= C * observed defect under nonlinear?
+  If observed defect zero implies global zero. Here false. So boolean false.
+
+
+  Need produce JSON with integer values. All as above.
+
+
+  Need verify if observed tallies perhaps include projection of coboundary on observed
+  edges, but C1 observes e1,e6 via pi_0. e1,e6 both (1,0,0), projection deletes index
+  0 => (0,0), yes zero. C2 e2,e3 (0,1,0), pi_1 deletes index1 => (0,0), zero. C3 e4,e5
+  (0,0,1), pi_2 deletes index2 => (0,0), zero. Yes.
+
+
+  Potential subtlety: l1 norm on R^2? They say fibers R^3 l1 norm. Projected coboundary
+  is in R^2; use l1 norm likely |v1|+|v2| etc. Yes.
+
+
+  Need final answer JSON only. Ensure valid.
+
+
+  Need maybe include all_green true. visibility_gap_lambda integer 6. recovery_modulus_exists
+  false.
+
+
+  Let''s craft final with answer object.
+
+
+  '
+parsed_payload:
+  answer: *id001
+metrics:
+  duration_seconds: 5.302
+  prompt_tokens: 562
+  completion_tokens: 1285
+  reasoning_tokens: 1199
+  total_tokens: 1847
+  cost_usd: 0.0
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

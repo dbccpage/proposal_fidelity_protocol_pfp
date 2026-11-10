@@ -1,0 +1,14 @@
+[
+  {
+    "script": "fail=0; bad() { printf \"FAIL synthetic\\n\"; fail=1; }; printf \"missing\\n\" | while IFS= read -r link; do bad; done; if [ \"$fail\" -eq 0 ]; then printf \"PASS\\n\"; fi; exit \"$fail\"",
+    "exit_code": 3221225794,
+    "stdout": "",
+    "stderr": "      0 [main] bash (22976) C:\\Program Files\\Git\\bin\\..\\usr\\bin\\bash.exe: *** fatal error - NtCreateDirectoryObject(\\BaseNamedObjects\\msys-2.0S5-1888ae32e00d56aa): 0xC0000022\n"
+  },
+  {
+    "script": "fail=0; bad() { printf \"FAIL synthetic\\n\"; fail=1; }; bad; if [ \"$fail\" -eq 0 ]; then printf \"PASS\\n\"; fi; exit \"$fail\"",
+    "exit_code": 3221225794,
+    "stdout": "",
+    "stderr": "      0 [main] bash (10220) C:\\Program Files\\Git\\bin\\..\\usr\\bin\\bash.exe: *** fatal error - NtCreateDirectoryObject(\\BaseNamedObjects\\msys-2.0S5-1888ae32e00d56aa): 0xC0000022\n"
+  }
+]

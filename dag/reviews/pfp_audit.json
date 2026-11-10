@@ -1,0 +1,223 @@
+{
+  "schema_version": "1.0",
+  "status": "in_progress",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "claims": [
+    {
+      "id": "PFP-ACCEPTANCE",
+      "claim": "PFP implements a typed proposal envelope plus injected checker verdicts. With no judges configured, checking returns an infrastructure error; disagreement between judges produces a checker defect. Host acceptance is relative to the supplied judges.",
+      "kind": "implementation_check",
+      "evidence": [
+        "pfp/use_cases/pfp_proposal.py:115-169",
+        "pfp/use_cases/pfp_proposal.py:312-359"
+      ],
+      "dependencies": [
+        "Each injected checker is sound for its stated predicate",
+        "The conjunction of checked predicates is adequate for the target claim",
+        "The trusted host executes the intended checker on the intended candidate"
+      ],
+      "limitations": [
+        "Envelope validity does not imply mathematical correctness",
+        "Agreement of flawed judges does not establish adequacy",
+        "Unrestricted natural-language truth is not decided"
+      ]
+    },
+    {
+      "id": "PFP-INPUT-BINDING",
+      "claim": "Task and attempt identifiers and a SHA-256 digest of a declared JSON serialization bind a reply envelope to prepared public task input.",
+      "kind": "implementation_check",
+      "evidence": [
+        "pfp/use_cases/pfp_prompt.py:83-170"
+      ],
+      "dependencies": [
+        "Correct task projection and trusted preparation",
+        "Cryptographic collision resistance for intended adversary and input population"
+      ],
+      "limitations": [
+        "A digest does not prove semantic equivalence or answer correctness",
+        "The serializer explicitly does not claim RFC 8785",
+        "Hidden-key blacklist filtering alone is not an information-flow noninterference proof"
+      ]
+    },
+    {
+      "id": "PFP-BOUNDED-STAGES",
+      "claim": "The stage policy permits at most two attempts and uses host-authored feedback classes. Resource and accounting failures stop dependent progress; a separate derivation loop has an explicit finite loop bound.",
+      "kind": "implementation_check",
+      "evidence": [
+        "pfp/use_cases/pfp_stages.py:32-130",
+        "pfp/use_cases/pfp_derivation_loops.py:8-49"
+      ],
+      "dependencies": [
+        "Provider port honors resource reservations and timeouts",
+        "Actual usage is reconciled honestly"
+      ],
+      "limitations": [
+        "A finite iteration bound is not a convergence theorem",
+        "Port interfaces alone do not prove the external provider will not overbill",
+        "A loop bound does not alone enforce wall-clock termination of a blocking provider"
+      ]
+    },
+    {
+      "id": "PFP-HOST-TERMINAL",
+      "claim": "Terminal receipt status is computed from host check and replay records, with explicit residual obligations for unchecked adversaries and repaired declarations.",
+      "kind": "implementation_check",
+      "evidence": [
+        "pfp/domain/stages/host_stages.py:27-28",
+        "pfp/domain/stages/host_stages.py:111-145"
+      ],
+      "dependencies": [
+        "Host facts and replay records correctly represent executed checks"
+      ],
+      "limitations": [
+        "The word VERIFIED names a protocol state, not an unrestricted mathematical theorem",
+        "A nonempty adversary check does not imply exhaustive adversarial coverage"
+      ]
+    },
+    {
+      "id": "PFP-FIDELITY-ADEQUACY-SEPARATION",
+      "claim": "The Lean source states and proves finite field-check equivalence for eight fidelity clauses and a finite separation from detector adequacy: a constant-pass detector cannot meet both a positive and a negative control.",
+      "kind": "formal_source_review_and_fresh_build",
+      "evidence": [
+        "lean4/FidelityAdequacy.lean"
+      ],
+      "dependencies": [
+        "Lean definitions and kernel checking at the pinned source/toolchain",
+        "Any intended runtime correspondence is established separately"
+      ],
+      "limitations": [
+        "String equality is a stricter finite binding, not every Rust transform/evidence order",
+        "Selected positive/negative controls do not establish detector completeness"
+      ],
+      "validation": "dag/reviews/lean_axiom_census.txt; lake build succeeded with 11 jobs"
+    },
+    {
+      "id": "PFP-INTERNAL-EFFECT-CLOSURE",
+      "claim": "The recursive Lean operation-tree fold retains child outputs and has no claimed authority effect because every operation in its admitted table is explicitly assigned none; induction closes that finite contract.",
+      "kind": "formal_source_review_and_fresh_build",
+      "evidence": [
+        "lean4/OperationTreeFold.lean"
+      ],
+      "dependencies": [
+        "Every operation in the admitted table has effect none by definition",
+        "The declared effect-composition function models the intended internal contract"
+      ],
+      "limitations": [
+        "This does not derive a universal authority firewall",
+        "The admitted table and its interpretation are premises, not consequences of the induction"
+      ],
+      "validation": "dag/reviews/lean_axiom_census.txt; lake build succeeded with 11 jobs"
+    }
+  ],
+  "additional_mathematical_foundations": [
+    {
+      "id": "PFP-C011-L1-CERTIFICATE",
+      "statement": "For a finite directed graph with positive rational weights, the checker verifies c-r=d0(u), divergence(y)=0, |y_e|<=w_e and sum(w_e|r_e|)=sum(c_e y_e)=reported phi1. Weak duality then certifies global optimality of the supplied repair for this declared finite L1 problem.",
+      "evidence": [
+        "pfp/domain/cohomology/certificate_checker.py:_check_c011",
+        "pfp/domain/cohomology/validation.py:_c011_violations"
+      ],
+      "proof_outline": "For every feasible potential v, y dot c = y dot (c-d0(v)) <= sum(w_e |c_e-d0(v)|), since the circulation condition kills y dot d0(v). A feasible supplied repair attaining that lower bound is globally optimal.",
+      "limits": [
+        "The graph/cochain encoding of a semantic task is an additional assumption.",
+        "The C012-C020 SOLVED branches explicitly lack independent certificate verification.",
+        "This finite optimization result does not grade the graduate-QM seed."
+      ]
+    },
+    {
+      "id": "PFP-LAB-FINITE-REPAIR",
+      "statement": "PFP Lab uses exact Fraction arithmetic on admitted graphs of at most 12 vertices and 16 directed edges. It enumerates spanning trees componentwise under a work budget to find a weighted L1 optimum and implements four explicit state moves.",
+      "evidence": [
+        "pfp_lab/core/graph.py",
+        "pfp_lab/core/obstruction.py",
+        "pfp_lab/core/governor.py"
+      ],
+      "limits": [
+        "Exact rational objective descent is relative to a supplied finite graph and claims.",
+        "ASSERT need not enforce descent unless requested; RETRACT can restore an earlier state. The entire protocol is not globally monotone by default.",
+        "Equal objective value does not imply correct semantics, unique state, or learning progress."
+      ]
+    },
+    {
+      "id": "PFP-EXACT-SCALARS-AND-NATIVE-PORTS",
+      "statement": "The Python Q and QI types implement normalized rational and rational-complex arithmetic. Stabilizer solve/check wrappers require an explicit injected native port and refuse without it; Python wrapper presence is not a native-algorithm proof.",
+      "evidence": [
+        "pfp/domain/exact/q.py",
+        "pfp/domain/exact/qi.py",
+        "pfp/domain/quantum/certificate_checker.py",
+        "pfp/domain/quantum/stabilizer_solver.py"
+      ],
+      "limits": [
+        "Native Rust implementation and binding correctness require their own review.",
+        "Finite stabilizer tasks are not arbitrary symbolic thermal/dynamic QM.",
+        "One canonical parsing boundary defect is recorded below."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "PFP-Q-TRAILING-NEWLINE",
+      "severity": "P2",
+      "status": "reproduced",
+      "evidence": [
+        "pfp/domain/exact/q.py:20",
+        "pfp/domain/exact/q.py:167-179"
+      ],
+      "problem": "parse_q accepts '1/1\\n' although its wire contract requires canonical p/q strings. Python regex $ accepts a position before a final newline, and the parser uses match rather than fullmatch.",
+      "reproduction": "fmt_q(parse_q('1/1'+chr(10))) returns '1/1', differing from the accepted input bytes.",
+      "impact": "The parser admits multiple wire strings for the same exact rational, violating its stated canonical form. No arithmetic error was observed.",
+      "recommended_change": "Use fullmatch or an absolute-end anchor; add the trailing-newline negative control. Do not modify source merely as part of this audit."
+    }
+  ],
+  "validation": [
+    {
+      "command": ".venv\\Scripts\\python.exe -m pytest pfp_lab/tests/test_obstruction.py pfp_lab/tests/test_governor.py pfp/tests/test_cohomology_certificate_fail_closed.py -q -p no:cacheprovider",
+      "result": "92 passed in 2.90s",
+      "scope": "Existing focused finite graph/governor/certificate tests, not complete repository verification"
+    },
+    {
+      "command": "Python 3.12.12 -m pytest (same targets)",
+      "result": "dependency unavailable: pytest; rerun succeeded using existing repository .venv",
+      "scope": "Environment issue, not a product-test failure"
+    },
+    {
+      "command": "lake build",
+      "working_directory": "lean4",
+      "result": "passed, 11 jobs",
+      "toolchain": "leanprover/lean4:v4.35.0",
+      "scope": "Nine SymbolGameKernel roots only; not all paper Lean projects or runtime correspondence"
+    },
+    {
+      "command": "lake env lean AxiomCensus.lean",
+      "result": "passed; 1144 constants; 375 non-internal theorem constants; 281 axiom-free; distinct dependencies Quot.sound and propext",
+      "artifact": "dag/reviews/lean_axiom_census.txt",
+      "scope": "Compiled environments for the nine library roots; theorem count includes generated lemmas and proposition-valued fields"
+    }
+  ],
+  "full_source_reads": [
+    "pfp/use_cases/pfp_prompt.py",
+    "pfp/use_cases/pfp_derivation_loops.py",
+    "pfp/domain/stages/host_stages.py",
+    "lean4/FidelityAdequacy.lean",
+    "lean4/OperationTreeFold.lean",
+    "lean4/AxiomCensus.lean",
+    "pfp/domain/exact/q.py",
+    "pfp/domain/exact/qi.py",
+    "pfp/domain/quantum/certificate_checker.py",
+    "pfp/domain/quantum/stabilizer_solver.py",
+    "pfp/domain/cohomology/certificate_checker.py",
+    "pfp/domain/cohomology/validation.py",
+    "pfp_lab/core/graph.py",
+    "pfp_lab/core/obstruction.py",
+    "pfp_lab/core/governor.py"
+  ],
+  "partial_source_reads": [
+    "pfp/use_cases/pfp_proposal.py",
+    "pfp/use_cases/pfp_stages.py",
+    "pfp/domain/exact/"
+  ],
+  "remaining_work": [
+    "Complete PFP source, native kernels, tests, educational corpus and remaining repository audit",
+    "Validate referenced line positions after final review",
+    "Trace runtime/checker adequacy and mechanization correspondence without converting declarations into evidence"
+  ]
+}

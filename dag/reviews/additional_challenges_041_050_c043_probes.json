@@ -1,0 +1,236 @@
+{
+  "exhaustive_coloring_controls": {
+    "ramsey2": 1098,
+    "ramsey3": 759,
+    "vdw": 1020
+  },
+  "failures": [],
+  "algebraic_seed_checks": [
+    {
+      "name": "vdw_seed_w23",
+      "requested_length": 8,
+      "actual_length": 8,
+      "independent_valid": true
+    },
+    {
+      "name": "vdw_seed_w24",
+      "requested_length": 34,
+      "actual_length": 34,
+      "independent_valid": true
+    },
+    {
+      "name": "vdw_seed_w25",
+      "requested_length": 80,
+      "actual_length": 80,
+      "independent_valid": true
+    },
+    {
+      "name": "vdw_seed_w33",
+      "requested_length": 26,
+      "actual_length": 26,
+      "independent_valid": true
+    },
+    {
+      "name": "Paley17",
+      "independent_valid": true
+    },
+    {
+      "name": "GreenwoodGleason16",
+      "independent_valid": true
+    }
+  ],
+  "controls": [
+    {
+      "label": "duplicate_vertices_false_impossibility",
+      "case": {
+        "case_id": "audit",
+        "type": "ramsey2",
+        "n": 3,
+        "s": 3,
+        "t": 3,
+        "fixed": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ]
+      },
+      "answer": {
+        "status": "OUT_OF_SCOPE",
+        "witness": {
+          "reason": "FIXED_COLOURS_CONTAIN_MONO",
+          "structure": [
+            0,
+            1,
+            1
+          ]
+        }
+      },
+      "result": [
+        true,
+        "ACCEPTED: Valid OUT_OF_SCOPE witness: fixed colours contain forbidden clique",
+        {
+          "primary_pass": true,
+          "primary_msg": "Valid OUT_OF_SCOPE witness: fixed colours contain forbidden clique",
+          "independent_pass": true,
+          "independent_msg": "Matrix checker: verified monochromatic fixed structure",
+          "checkers_agree": true,
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "label": "same_case_valid_colouring",
+      "case": {
+        "case_id": "audit",
+        "type": "ramsey2",
+        "n": 3,
+        "s": 3,
+        "t": 3,
+        "fixed": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ]
+      },
+      "answer": {
+        "status": "SOLVED",
+        "colours": "001"
+      },
+      "result": [
+        true,
+        "ACCEPTED: Valid Ramsey colouring certificate",
+        {
+          "primary_pass": true,
+          "primary_msg": "Valid Ramsey colouring certificate",
+          "independent_pass": true,
+          "independent_msg": "Matrix checker: valid Ramsey colouring",
+          "checkers_agree": true,
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "label": "conflicting_fixed_overwrite",
+      "case": {
+        "case_id": "audit",
+        "type": "vdw",
+        "n": 2,
+        "r": 2,
+        "k": 3,
+        "fixed": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "answer": {
+        "status": "SOLVED",
+        "colours": "10"
+      },
+      "result": [
+        true,
+        "ACCEPTED: Valid Van der Waerden colouring certificate",
+        {
+          "primary_pass": true,
+          "primary_msg": "Valid Van der Waerden colouring certificate",
+          "independent_pass": true,
+          "independent_msg": "VDW checker: valid AP-free colouring",
+          "checkers_agree": true,
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "label": "missing_kind_and_wrong_id",
+      "case": {
+        "case_id": "audit",
+        "type": "vdw",
+        "n": 2,
+        "r": 2,
+        "k": 3,
+        "fixed": []
+      },
+      "answer": {
+        "case_id": "wrong",
+        "status": "SOLVED",
+        "colours": "10"
+      },
+      "result": [
+        true,
+        "ACCEPTED: Valid Van der Waerden colouring certificate",
+        {
+          "primary_pass": true,
+          "primary_msg": "Valid Van der Waerden colouring certificate",
+          "independent_pass": true,
+          "independent_msg": "VDW checker: valid AP-free colouring",
+          "checkers_agree": true,
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "label": "k_one_crash",
+      "case": {
+        "type": "vdw",
+        "n": 2,
+        "r": 2,
+        "k": 1,
+        "fixed": []
+      },
+      "answer": {
+        "status": "SOLVED",
+        "colours": "10"
+      },
+      "result": {
+        "exception": "ZeroDivisionError",
+        "message": "division by zero"
+      }
+    },
+    {
+      "label": "malformed_drat_crash",
+      "case": {
+        "type": "ramsey2",
+        "n": 3,
+        "s": 3,
+        "t": 3,
+        "fixed": []
+      },
+      "answer": {
+        "status": "OUT_OF_SCOPE",
+        "witness": {
+          "reason": "PROVABLY_INFEASIBLE_SAT",
+          "drat_proof": [
+            "bad 0"
+          ]
+        }
+      },
+      "result": {
+        "exception": "ValueError",
+        "message": "invalid literal for int() with base 10: 'bad'"
+      }
+    }
+  ],
+  "limits": [
+    "Finite certificate enumeration supplies lower-bound witnesses, not all advertised exact upper Ramsey/VDW numbers.",
+    "Infeasibility routes share C042 DRAT engine and C043 encoders."
+  ]
+}

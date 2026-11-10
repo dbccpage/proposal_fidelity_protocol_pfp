@@ -49,4 +49,28 @@ Give a new recipe a real registry entry with an accurate status. Leave future
 ideas out of the supported list until their working path exists. A page can
 be useful while marked experimental; it should tell the reader so promptly.
 
+## Completion and Wiki publication
+
+Publish or update the workflow's Wiki entry as part of completing its working
+implementation. Keep its registry/DAG ID and Wiki link together. Each entry needs:
+
+- Purpose, exact implementation/version, inputs, outputs and execution steps.
+- The mathematical property actually checked, checker identity and open obligations.
+- Calls, token ceilings, whole-run cost cap, time limits and failure handling.
+- Validation commands and pinned evidence; actual model results only when measured.
+- Known limits, unresolved work and a resume point.
+
+Update the workflow index and sidebar so readers can find it. Check local links
+and compare the targeted pages with the live Wiki before publishing; preserve
+unrelated live edits. Retain the published commit and page hashes in the
+documentation receipt. Do not mark publication complete after only a local edit.
+
+Keep **proposed**, **implemented/synthetic-tested** and **measured** distinct.
+Update the results page after actual runs, including failures and unavailable
+fields. A design enumeration is not a collection of completed runners. Never
+publish a private benchmark answer, its derivation or its storage path.
+
+The current QM documentation mapping is `dag/wiki/workflow_documentation.json`.
+Its live pages start at the [QM benchmark](Workflow-QM-Benchmark.md).
+
 [Workflow library](Workflow-Library.md) · [Recipe template](Workflow-Recipe-Template.md)

@@ -1,0 +1,52 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "task_id": {
+      "pattern": "^[A-Za-z0-9_-]{1,32}$",
+      "title": "Task Id",
+      "type": "string"
+    },
+    "role": {
+      "const": "data",
+      "title": "Role",
+      "type": "string"
+    },
+    "operation": {
+      "const": "polynomial",
+      "title": "Operation",
+      "type": "string"
+    },
+    "data": {
+      "maxLength": 128,
+      "title": "Data",
+      "type": "string"
+    },
+    "coefficients": {
+      "items": {
+        "maximum": 10000,
+        "minimum": -10000,
+        "type": "integer"
+      },
+      "maxItems": 9,
+      "minItems": 1,
+      "title": "Coefficients",
+      "type": "array"
+    },
+    "x": {
+      "maximum": 16,
+      "minimum": -16,
+      "title": "X",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "task_id",
+    "role",
+    "operation",
+    "data",
+    "coefficients",
+    "x"
+  ],
+  "title": "Query",
+  "type": "object"
+}

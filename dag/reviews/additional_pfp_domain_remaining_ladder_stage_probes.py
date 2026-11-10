@@ -1,0 +1,17 @@
+"""Bounded synthetic controls; direct read-vetted pure modules, no package bootstraps."""
+import sys,json,hashlib,importlib.util
+from pathlib import Path
+sys.dont_write_bytecode=True
+ROOT=Path(__file__).resolve().parents[2];bindings=[];controls=[]
+def module(rel,name):
+ p=ROOT/rel;s=importlib.util.spec_from_file_location(name,p);m=importlib.util.module_from_spec(s);sys.modules[name]=m;s.loader.exec_module(m);bindings.append({'path':rel,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()});return m
+l=module('pfp/domain/pilots/certified_ladder.py','audit_ladder');d=module('pfp/domain/stages/demos.py','audit_demos');s=module('pfp/domain/stages/stages.py','audit_stages')
+def ctl(i,rule,**kw):controls.append({'id':f'PFPDOMAIN-C{i:03}','rule':rule,'status':'counterexample_observed',**kw})
+v=l.evaluate_h2(None,{1:.9,2:.1,3:.2});assert v.status=='RETAINED';ctl(112,'H2_requires_progression',stage_rates=[.9,.1,.2],status_observed=v.status)
+nan=float('nan');vs=[l.evaluate_h3(None,nan),l.evaluate_h4(None,False,nan),l.evaluate_h5(None,.5,nan),l.evaluate_h10(None,.5,nan)];assert all(v.status=='RETAINED' for v in vs);assert l.DebtMetric(boundary_residual=-1).total_debt==-1;assert l.evaluate_h6(None,-1,-1).status=='RETAINED';ctl(113,'numeric_evidence_is_valid',nan_retained=[v.hypothesis_id for v in vs],negative_debt=-1,negative_failure_counts_retained=True)
+assert l.evaluate_h12(None,{}).status=='RETAINED' and l.build_evaluation_report([]).status=='PASS';ctl(114,'report_requires_evidence_and_hypothesis_completeness',empty_suite_retained=True,empty_report_pass=True)
+r=l.P0ItemResult('x','REFUSED','ACCEPTED','REFUSED','','',True,True,False);assert l.evaluate_h0(None,[r]).status=='RETAINED';ctl(115,'H0_derives_flags_from_results',contradictory_statuses_and_flags_retained=True)
+args=('i','f','c','prompt');a=l.P0ControlItem(*args,{'a':1,'b':2},'REFUSED',True);b=l.P0ControlItem(*args,{'b':2,'a':1},'REFUSED',True);assert a==b and hash(a)!=hash(b);ctl(116,'equal_control_items_have_equal_hash',equal=True,hashes_differ=True,limit='Python process hash values deliberately not preserved as stable digests.')
+r=d.DemoRunReceipt(demo_id='x',runner_id='r',all_passed=True,checks=[d.CheckResult(name='false',passed=False)],duration_sec=0,authority_effect='Granted');assert r.terminal_status=='Exact';ctl(117,'demo_receipt_reconciles_checks',all_passed=True,failed_check=True,terminal_status=r.terminal_status,authority_effect=r.authority_effect)
+w=s.WitnessReplay(index=0,candidate_id='c',expected_accept=False,host_accepted=True,same_as_candidate=False,outcome=s.ReplayOutcome.OPEN_OBSTRUCTION);host=s.ChallengeReplay(demo_id='actual',stage=6,witnesses=(w,));r=s.Stage7Response(demo_id='different',host_replay=host,checked_count=0,obstruction_indices=[]);assert host.checked_count==1 and host.obstruction_indices==(0,);ctl(118,'stage7_metadata_matches_host_replay',host_count=1,reported_count=0,host_obstructions=[0],reported_obstructions=[],demo_ids_differ=True)
+out={'runtime':sys.version,'source_bindings':bindings,'controls':controls,'limits':['Synthetic data only; no empirical trials, provider calls or private benchmark.','Direct modules with standard library and installed Pydantic only; source bodies unchanged.']};(ROOT/'dag/reviews/additional_pfp_domain_remaining_ladder_stage_probes.json').write_text(json.dumps(out,indent=2)+'\n',encoding='utf8');print(json.dumps({'controls':len(controls),'ids':[x['id'] for x in controls]}))

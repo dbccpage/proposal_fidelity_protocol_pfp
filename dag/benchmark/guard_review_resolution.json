@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "status": "all_three_findings_addressed_regression_tests_pass",
+  "review": "dag/benchmark/guard_review.json",
+  "completed_at_utc": "2026-11-10T05:00:52.057627+00:00",
+  "resolutions": [
+    {
+      "finding": "GR-F01",
+      "change": "Public request evidence is deep-copied and the prepared wire digest is verified immediately before dispatch.",
+      "regressions": [
+        "test_mutating_public_evidence_cannot_mutate_reserved_wire",
+        "test_changed_internal_wire_fails_integrity_check_before_dispatch"
+      ]
+    },
+    {
+      "finding": "GR-F02",
+      "change": "The campaign permits only one unfinished run; a persisted reserved admission blocks the next run after reopening.",
+      "regressions": [
+        "test_campaign_freezes_membership_and_cannot_reset"
+      ]
+    },
+    {
+      "finding": "GR-F03",
+      "change": "Known charges settle durably before response text/usage validation or artifact writes. Malformed fields retain the valid cost. Later failures block the run/campaign with known spend retained.",
+      "regressions": [
+        "test_known_charge_survives_later_validation_or_persistence_failure",
+        "test_overrun_is_retained_even_when_other_usage_fields_are_malformed"
+      ]
+    }
+  ],
+  "validation": {
+    "focused_tests_passed": 41,
+    "network_or_paid_requests_in_tests": 0,
+    "independent_post_fix_review": true,
+    "independent_post_fix_receipt": "dag/benchmark/guard_review_followup.json"
+  },
+  "source_sha256": {
+    "dag/benchmark/openrouter_provider.py": "03e60d2e5ac28d16e7a852dd5be1924ff458cdd8e9e04481892421e430c777c1",
+    "dag/benchmark/campaign_ledger.py": "e369d63cd6849d568645e9745349aad25d15417e72be82ea30dd1d2ef8d6dc60",
+    "dag/benchmark/reference_runner.py": "95f2efb046664163431aa1768e3ad911427e0e855438ed509289cb02a7b4c3f5",
+    "dag/benchmark/live_campaign.py": "ae2316cc30c727022fd486419886ded796cc151454db366ea6ff165f47f832d2",
+    "dag/benchmark/budget_ledger.py": "07b20aa3d17f4e88d4e5e751a2b96daa54c0b83a66677122b0ffe53b809cbd2b",
+    "dag/benchmark/test_live_admission.py": "1a7733790b36dcea8600620dbbda76ab7c6e5b4bda95d544901ef1158b42e312"
+  },
+  "limits": [
+    "Provider tariff, routing and token-bound enforcement remains an external premise.",
+    "A process crash before learning or durably recording a provider charge still requires external reconciliation; reservations remain held.",
+    "This is a local broker boundary, not protection against arbitrary code execution that can edit its ledger.",
+    "An implausible reported charge above SQLite INTEGER range remains in the receipt but cannot be represented as ledger spend; the campaign stays blocked. This exceeds the admitted tariff/token premises. See guard_review_followup.json."
+  ]
+}

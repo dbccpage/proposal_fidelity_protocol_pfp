@@ -1,0 +1,448 @@
+--- archive/MANIFEST.sha256
++++ current/MANIFEST.sha256
+@@ -1,17 +1,17 @@
+ 84c84f1397f63a97e9401050e30e93ca5d6d1addd10ea9ba769e7f5e6afc2734  .env.example
+ ca55bd3bdef1e0336ce97da44053d0a34cecdbb122140d6db8e6929d4bd881ef  002_paper.pdf
+-cb97887abc4f3ab3068e40e5e5c6cf5525ed8c1e2adde337249ec85f5d0d1375  002_pfp_landau_companion.pdf
++cb97887abc4f3ab3068e40e5e5c6cf5525ed8c1e2adde337249ec85f5d0d1375  002_pfp_examiner_companion.pdf
+ 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94  LICENSE
+ fdc1b580085fb2812b93559cd3d5568149dc027d2616b6c636eaee6126a82bb4  LICENSE-CODE
+ dba7433cf97ca000cda7c6d9432407e56440613f526139129850f93ca3a9ada4  README.md
+-7ce99814fb5847daac7c561372faa8eeb2070dcacaab45953c13b384fd1bef13  _lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md
+-28f85550de04febf300be3723bbf2850f2b049557d5b3e502bc7ceaaf30aa70b  _lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.pdf
+-1243097743c5db855add1eb050b51d360263cf01f5b51cd8d38aff81b284d787  _lev_landau_theoretical_minimum_quiz/instructor_key.md
+-9790e220e01c200695b1a8dbeeb66bf5ad24f1479d5ed2a22b8ce530a73cdb28  _lev_landau_theoretical_minimum_quiz/instructor_key.pdf
+-646eb59154d53380721926f82049a0c1bf88991b71aa0f62f43c325a4c5cb5c8  _lev_landau_theoretical_minimum_quiz/quiz.md
+-46bdf3d98d9da39fc6da968a9c3532de609deec81308cf2af489b2e0a95cfd79  _lev_landau_theoretical_minimum_quiz/quiz.pdf
+-15c4a4b4c40b2806da765d29a8bfaff8a859c4dd4a22af79ca73d705ab5c5e27  _lev_landau_theoretical_minimum_quiz/study_guide.md
+-9e9af80f586184ed2d81f142d805895996ef4394465a2645d0aca8443c20da4d  _lev_landau_theoretical_minimum_quiz/study_guide.pdf
++7ce99814fb5847daac7c561372faa8eeb2070dcacaab45953c13b384fd1bef13  _lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md
++28f85550de04febf300be3723bbf2850f2b049557d5b3e502bc7ceaaf30aa70b  _lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.pdf
++1243097743c5db855add1eb050b51d360263cf01f5b51cd8d38aff81b284d787  _lev_examiner_theoretical_minimum_quiz/instructor_key.md
++9790e220e01c200695b1a8dbeeb66bf5ad24f1479d5ed2a22b8ce530a73cdb28  _lev_examiner_theoretical_minimum_quiz/instructor_key.pdf
++646eb59154d53380721926f82049a0c1bf88991b71aa0f62f43c325a4c5cb5c8  _lev_examiner_theoretical_minimum_quiz/quiz.md
++46bdf3d98d9da39fc6da968a9c3532de609deec81308cf2af489b2e0a95cfd79  _lev_examiner_theoretical_minimum_quiz/quiz.pdf
++15c4a4b4c40b2806da765d29a8bfaff8a859c4dd4a22af79ca73d705ab5c5e27  _lev_examiner_theoretical_minimum_quiz/study_guide.md
++9e9af80f586184ed2d81f142d805895996ef4394465a2645d0aca8443c20da4d  _lev_examiner_theoretical_minimum_quiz/study_guide.pdf
+ f4da832c241da188e8d36f6fe89df96893a7a0d07fb3995414fb6e26c7804a86  code/PROVENANCE.md
+ 1c4c5e7a5b536da561681bbfcb12882995fe1b8d5f7e5c8d1a078a0cc133dbe9  code/certificate_gate.py
+ 33a59c9210dab85cca2564b508946d579c6bb90ff5d358b4e78d2fd2cc05933e  code/demo1_signed_gauge.py
+
+--- archive/README.md
++++ current/README.md
+@@ -31,9 +31,9 @@
+ - `jupyter_notebooks/signed_exchange_and_frontier.ipynb`: a companion notebook
+   with stored outputs; it runs from this folder or from `jupyter_notebooks/`.
+ - `docs/`: the description, references, and an integration note.
+-- `_lev_landau_theoretical_minimum_quiz/`: the fictional Apartment 50 preface,
++- `_lev_examiner_theoretical_minimum_quiz/`: the fictional Apartment 50 preface,
+   an eight-level, 14-problem quiz, a study guide, and a separate worked key.
+-  Start with [the study guide](_lev_landau_theoretical_minimum_quiz/study_guide.md).
++  Start with [the study guide](_lev_examiner_theoretical_minimum_quiz/study_guide.md).
+ - `verify_deposit.py`, `tools/`, and `scripts/`: release tooling.
+ 
+ ## Toolchain for this revision
+@@ -95,7 +95,7 @@
+ ```
+ 
+ `code/native_sign_graph.py` uses the executable named by the environment
+-variable `OMEGA_SIGN_GRAPH_BIN`, or else one built in `code/rust/target/`.
++variable `CORE_SIGN_GRAPH_BIN`, or else one built in `code/rust/target/`.
+ When no executable exists it uses the Python checker, and the binary-discovery
+ test in `code/tests/test_native_sign_graph.py` is skipped with the build
+ command as its reason. When an executable is found it decides: a native
+
+--- archive/SHA256SUMS
++++ current/SHA256SUMS
+@@ -1,18 +1,18 @@
+ 84c84f1397f63a97e9401050e30e93ca5d6d1addd10ea9ba769e7f5e6afc2734  .env.example
+ ca55bd3bdef1e0336ce97da44053d0a34cecdbb122140d6db8e6929d4bd881ef  002_paper.pdf
+-cb97887abc4f3ab3068e40e5e5c6cf5525ed8c1e2adde337249ec85f5d0d1375  002_pfp_landau_companion.pdf
++cb97887abc4f3ab3068e40e5e5c6cf5525ed8c1e2adde337249ec85f5d0d1375  002_pfp_examiner_companion.pdf
+ 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94  LICENSE
+ fdc1b580085fb2812b93559cd3d5568149dc027d2616b6c636eaee6126a82bb4  LICENSE-CODE
+ 776578f28fa6fd1428e27a6f0352e8094b94263926ad92053cba288573c03b51  MANIFEST.sha256
+ dba7433cf97ca000cda7c6d9432407e56440613f526139129850f93ca3a9ada4  README.md
+-7ce99814fb5847daac7c561372faa8eeb2070dcacaab45953c13b384fd1bef13  _lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md
+-28f85550de04febf300be3723bbf2850f2b049557d5b3e502bc7ceaaf30aa70b  _lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.pdf
+-1243097743c5db855add1eb050b51d360263cf01f5b51cd8d38aff81b284d787  _lev_landau_theoretical_minimum_quiz/instructor_key.md
+-9790e220e01c200695b1a8dbeeb66bf5ad24f1479d5ed2a22b8ce530a73cdb28  _lev_landau_theoretical_minimum_quiz/instructor_key.pdf
+-646eb59154d53380721926f82049a0c1bf88991b71aa0f62f43c325a4c5cb5c8  _lev_landau_theoretical_minimum_quiz/quiz.md
+-46bdf3d98d9da39fc6da968a9c3532de609deec81308cf2af489b2e0a95cfd79  _lev_landau_theoretical_minimum_quiz/quiz.pdf
+-15c4a4b4c40b2806da765d29a8bfaff8a859c4dd4a22af79ca73d705ab5c5e27  _lev_landau_theoretical_minimum_quiz/study_guide.md
+-9e9af80f586184ed2d81f142d805895996ef4394465a2645d0aca8443c20da4d  _lev_landau_theoretical_minimum_quiz/study_guide.pdf
++7ce99814fb5847daac7c561372faa8eeb2070dcacaab45953c13b384fd1bef13  _lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md
++28f85550de04febf300be3723bbf2850f2b049557d5b3e502bc7ceaaf30aa70b  _lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.pdf
++1243097743c5db855add1eb050b51d360263cf01f5b51cd8d38aff81b284d787  _lev_examiner_theoretical_minimum_quiz/instructor_key.md
++9790e220e01c200695b1a8dbeeb66bf5ad24f1479d5ed2a22b8ce530a73cdb28  _lev_examiner_theoretical_minimum_quiz/instructor_key.pdf
++646eb59154d53380721926f82049a0c1bf88991b71aa0f62f43c325a4c5cb5c8  _lev_examiner_theoretical_minimum_quiz/quiz.md
++46bdf3d98d9da39fc6da968a9c3532de609deec81308cf2af489b2e0a95cfd79  _lev_examiner_theoretical_minimum_quiz/quiz.pdf
++15c4a4b4c40b2806da765d29a8bfaff8a859c4dd4a22af79ca73d705ab5c5e27  _lev_examiner_theoretical_minimum_quiz/study_guide.md
++9e9af80f586184ed2d81f142d805895996ef4394465a2645d0aca8443c20da4d  _lev_examiner_theoretical_minimum_quiz/study_guide.pdf
+ f4da832c241da188e8d36f6fe89df96893a7a0d07fb3995414fb6e26c7804a86  code/PROVENANCE.md
+ 1c4c5e7a5b536da561681bbfcb12882995fe1b8d5f7e5c8d1a078a0cc133dbe9  code/certificate_gate.py
+ 33a59c9210dab85cca2564b508946d579c6bb90ff5d358b4e78d2fd2cc05933e  code/demo1_signed_gauge.py
+
+--- archive/_lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md
++++ current/_lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md
+@@ -7,15 +7,15 @@
+ claim_status: scoped-exercises
+ authority_effect: "None"
+ source_paths:
+-  - omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/paper.md
++  - atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md
+ ---
+ 
+ # Apartment 50: Paper 002
+ 
+ **AuthorityEffect:** None. This is fictional examination staging, not a historical quotation or a source of mathematical authority.
+ 
+-Landau asks for the calculation and both directions of the proof. Woland asks
+-which claim the checker can establish. Behemoth changes an edge bit, rehashes a
++Examiner asks for the calculation and both directions of the proof. Adversary asks
++which claim the checker can establish. Gauge Breaker changes an edge bit, rehashes a
+ false receipt, and asks whether anyone notices. Their task in this companion
+ is **signed certificates, honest search frontiers, and the restricted
+ integrated-path obstruction**.
+
+--- archive/_lev_landau_theoretical_minimum_quiz/instructor_key.md
++++ current/_lev_examiner_theoretical_minimum_quiz/instructor_key.md
+@@ -1,13 +1,13 @@
+ ---
+ documentation_contract: symbol-game-documentation/v1
+-title: "PFP II Landau theoretical minimum: worked instructor key"
++title: "PFP II Examiner theoretical minimum: worked instructor key"
+ kind: educational-companion
+ status: active
+ maturity: instructional
+ claim_status: scoped-exercises
+ authority_effect: "None"
+ source_paths:
+-  - omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/paper.md
++  - atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md
+ ---
+ 
+ # Worked instructor key: PFP II
+
+--- archive/_lev_landau_theoretical_minimum_quiz/quiz.md
++++ current/_lev_examiner_theoretical_minimum_quiz/quiz.md
+@@ -7,17 +7,17 @@
+ claim_status: scoped-exercises
+ authority_effect: "None"
+ source_paths:
+-  - omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/paper.md
++  - atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md
+ ---
+ 
+-# Landau theoretical minimum: PFP II
++# Examiner theoretical minimum: PFP II
+ 
+ **AuthorityEffect:** None. The [Apartment 50 preface](00_preface_at_apartment_50.md)
+ is fictional examination staging. Use the [study guide](study_guide.md) to
+ prepare and keep the separate [instructor key](instructor_key.md) closed
+ during an attempt. The [manuscript](../paper.md) defines the claims.
+ 
+-This is a written and oral problem set, not a historical Landau examination.
++This is a written and oral problem set, not a historical Examiner examination.
+ Show equations, witnesses, and the scope of each conclusion. Use exact
+ integers and fractions; numerical plots or a solver's verdict alone do not
+ replace the requested argument.
+
+--- archive/_lev_landau_theoretical_minimum_quiz/study_guide.md
++++ current/_lev_examiner_theoretical_minimum_quiz/study_guide.md
+@@ -7,7 +7,7 @@
+ claim_status: scoped-exercises
+ authority_effect: "None"
+ source_paths:
+-  - omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/paper.md
++  - atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md
+ ---
+ 
+ # Study guide: PFP II
+
+--- archive/code/PROVENANCE.md
++++ current/code/PROVENANCE.md
+@@ -11,7 +11,7 @@
+ 
+ The original `exact_matrix_digest` traversed its input twice, and `search_exact_matrix` traversed it again. A one-shot iterator of a positive triangle could consequently be hashed and checked as an empty matrix. The paper-local repair first snapshots the matrix rows, then validates, hashes, and checks that same snapshot. The new regression checks both direct hashing and the search entry point.
+ 
+-From `omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/`, run:
++From `atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier/`, run:
+ 
+ ```powershell
+ py -3 -B -m unittest discover -s tests -p 'test_*.py' -v
+
+--- archive/code/native_sign_graph.py
++++ current/code/native_sign_graph.py
+@@ -72,10 +72,10 @@
+ def find_binary() -> Optional[Path]:
+     """Return an explicitly configured or package-local compiled executable.
+ 
+-    OMEGA_SIGN_GRAPH_BIN may name the executable; otherwise only this crate's
++    CORE_SIGN_GRAPH_BIN may name the executable; otherwise only this crate's
+     own target/release and target/debug directories are searched.
+     """
+-    env_bin = os.environ.get("OMEGA_SIGN_GRAPH_BIN")
++    env_bin = os.environ.get("CORE_SIGN_GRAPH_BIN")
+     if env_bin and Path(env_bin).is_file():
+         return Path(env_bin)
+ 
+
+--- archive/docs/preprint_review_2026_10_02.md
++++ current/docs/preprint_review_2026_10_02.md
+@@ -85,20 +85,20 @@
+ reservation was performed. The current receipt records interpreter/tool
+ versions and the executed scope; older counts remain historical.
+ 
+-## The revised Landau companion
++## The revised Examiner companion
+ 
+-The [quiz](../_lev_landau_theoretical_minimum_quiz/quiz.md) progresses from
++The [quiz](../_lev_examiner_theoretical_minimum_quiz/quiz.md) progresses from
+ declarations and minimal witnesses through both balance proofs, exact
+ matrices, exponential positivity, receipt forgery, batching, pairing, and
+ every Fock length class. The final problem audits the publication claim.
+ 
+-The [guide](../_lev_landau_theoretical_minimum_quiz/study_guide.md) gives
++The [guide](../_lev_examiner_theoretical_minimum_quiz/study_guide.md) gives
+ prerequisites, notation, a reading route, and replay boundaries. The
+-[worked key](../_lev_landau_theoretical_minimum_quiz/instructor_key.md)
++[worked key](../_lev_examiner_theoretical_minimum_quiz/instructor_key.md)
+ provides complete solutions and partial-credit allocations totaling 100.
+ The 80-point competence target and oral defense are teaching conventions;
+ no measured learner benefit is claimed. Apartment 50 remains fictional
+-Bulgakov staging.
++the novelist staging.
+ 
+ ## References and Zenodo materials
+ 
+
+--- archive/docs/preprint_review_validation_2026_10_02.json
++++ current/docs/preprint_review_validation_2026_10_02.json
+@@ -258,10 +258,10 @@
+   ],
+   "input_sha256": {
+     "README.md": "29c6dde1aac42874a4fb6b7350bd233a1d733f00971caa1e3bf02d65860c4f04",
+-    "_lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "98cc328105b95d24a807250889b1e2d9b5715a4e40909887c4c60b97bc0c5b62",
+-    "_lev_landau_theoretical_minimum_quiz/instructor_key.md": "6517b46da3b7bc722a2be2a2c34061bd57747829f3786109c518bd3c48ed4a9b",
+-    "_lev_landau_theoretical_minimum_quiz/quiz.md": "8934a3ef7843bb61d1d62cbd2611bcb91b2d3ac28175c2e0f76edb3666a95c6e",
+-    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "92339ed30854d64f882d47de018cb827f7c040caa2863a7f4c3e565a21151c2e",
++    "_lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "98cc328105b95d24a807250889b1e2d9b5715a4e40909887c4c60b97bc0c5b62",
++    "_lev_examiner_theoretical_minimum_quiz/instructor_key.md": "6517b46da3b7bc722a2be2a2c34061bd57747829f3786109c518bd3c48ed4a9b",
++    "_lev_examiner_theoretical_minimum_quiz/quiz.md": "8934a3ef7843bb61d1d62cbd2611bcb91b2d3ac28175c2e0f76edb3666a95c6e",
++    "_lev_examiner_theoretical_minimum_quiz/study_guide.md": "92339ed30854d64f882d47de018cb827f7c040caa2863a7f4c3e565a21151c2e",
+     "code/certificate_gate.py": "1c4c5e7a5b536da561681bbfcb12882995fe1b8d5f7e5c8d1a078a0cc133dbe9",
+     "code/demo1_signed_gauge.py": "33a59c9210dab85cca2564b508946d579c6bb90ff5d358b4e78d2fd2cc05933e",
+     "code/demo2_frontier_search.py": "ceca61a024c3c273d54bb4ec141c175b3f201a4176055da1e2d460565a66e826",
+
+--- archive/docs/references.md
++++ current/docs/references.md
+@@ -8,7 +8,7 @@
+ 1. Carroll, Jeremy H. (2026). *PFP I: Exact Graph Repair and the Boundary
+    Between a Proposal and a Certificate*. Version 0.1.0, author-review
+    preprint. Repository path
+-   `omega_engine_atlas/coda_atlas/omega_engine_symbol_game/001_pfp_discrete_cochain_retraction_and_toy_involutions`.
++   `atlas/coda_atlas/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions`.
+ 2. Harary, Frank (1953). “On the notion of balance of a signed graph.”
+    *Michigan Mathematical Journal*, 2(2), 143–146.
+    DOI [10.1307/mmj/1028989917](https://doi.org/10.1307/mmj/1028989917).
+
+--- archive/docs/release_validation_2026_10_01.json
++++ current/docs/release_validation_2026_10_01.json
+@@ -100,14 +100,14 @@
+   "lean": [],
+   "notebooks": [
+     {
+-      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb",
+-      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier",
++      "notebook": "atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb",
++      "cwd": "atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier",
+       "status": "PASS",
+       "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+     },
+     {
+-      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb",
+-      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks",
++      "notebook": "atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb",
++      "cwd": "atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks",
+       "status": "PASS",
+       "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+     }
+@@ -125,7 +125,7 @@
+         "code/rust/Cargo.toml"
+       ],
+       "exit_code": 0,
+-      "stdout": "   Compiling pfp_sign_graph v0.1.0 (/workspace/the_symbol_game/omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier/code/rust)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.56s\n     Running unittests src/lib.rs (code/rust/target/debug/deps/pfp_sign_graph-b683e7f4eeb23acf)\n\nrunning 3 tests\ntest sign_graph::tests::test_matrix_gauge ... ok\ntest sign_graph::tests::test_odd_triangle ... ok\ntest sign_graph::tests::test_tree_gauge ... ok\n\ntest result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running unittests src/bin/solve_sign_graph.rs (code/rust/target/debug/deps/solve_sign_graph-ca178f6422295e46)\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n   Doc-tests pfp_sign_graph\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n"
++      "stdout": "   Compiling pfp_sign_graph v0.1.0 (/workspace/the_symbol_game/atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier/code/rust)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.56s\n     Running unittests src/lib.rs (code/rust/target/debug/deps/pfp_sign_graph-b683e7f4eeb23acf)\n\nrunning 3 tests\ntest sign_graph::tests::test_matrix_gauge ... ok\ntest sign_graph::tests::test_odd_triangle ... ok\ntest sign_graph::tests::test_tree_gauge ... ok\n\ntest result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running unittests src/bin/solve_sign_graph.rs (code/rust/target/debug/deps/solve_sign_graph-ca178f6422295e46)\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n   Doc-tests pfp_sign_graph\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n"
+     }
+   ]
+ }
+
+--- archive/docs/release_validation_2026_10_02.json
++++ current/docs/release_validation_2026_10_02.json
+@@ -45,7 +45,7 @@
+       },
+       "effective_timeout_seconds": 60,
+       "id": "002_test_sign_graph",
+-      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier",
++      "cwd": "atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier",
+       "arguments": [
+         "-m",
+         "pytest",
+@@ -72,7 +72,7 @@
+       },
+       "effective_timeout_seconds": 60,
+       "id": "002_test_frontier_search",
+-      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier",
++      "cwd": "atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier",
+       "arguments": [
+         "-m",
+         "pytest",
+@@ -99,7 +99,7 @@
+       },
+       "effective_timeout_seconds": 60,
+       "id": "002_test_manuscript_examples",
+-      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier",
++      "cwd": "atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier",
+       "arguments": [
+         "-m",
+         "pytest",
+@@ -129,9 +129,9 @@
+     "paper.tex": "4f28220463ccb26a0e5fb1287c424d23344540b4fb8b1f3add5a05466c6a65a5",
+     "paper.pdf": "26e8b39855377977e1b9bc6bdf9334081405c958102295ddb905ce37383d8ad1",
+     "zenodo_metadata.json": "b753652c815d6498c4bbeb6ee5ef234def553bd5c8916e669fa170658f8e5d6a",
+-    "_lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "f27f3f1dc550aa9640a4590338c7e8d046bc20586c8fd19b1439b056b80ddcc5",
+-    "_lev_landau_theoretical_minimum_quiz/quiz.md": "2c8abec6d6080c60ed5f242e9e9f42b6c3e49b806057537031614c4df42f64c8",
+-    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "69cd937d94b9f86621bab1124623541c1a8457f580c80a51665d709c2569389a"
++    "_lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "f27f3f1dc550aa9640a4590338c7e8d046bc20586c8fd19b1439b056b80ddcc5",
++    "_lev_examiner_theoretical_minimum_quiz/quiz.md": "2c8abec6d6080c60ed5f242e9e9f42b6c3e49b806057537031614c4df42f64c8",
++    "_lev_examiner_theoretical_minimum_quiz/study_guide.md": "69cd937d94b9f86621bab1124623541c1a8457f580c80a51665d709c2569389a"
+   },
+   "pdf_compilation": {
+     "exit_code": 0,
+@@ -161,7 +161,7 @@
+     },
+     "kernel_environment_policy": "OPENAI_API_KEY, OPENROUTER_API_KEY, PYTHONPATH, PYTHONOPTIMIZE excluded; assertion guard executed",
+     "authority_effect": "None",
+-    "source": "omega_engine_atlas/coda_atlas/omega_engine_symbol_game/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb",
++    "source": "atlas/coda_atlas/pfp/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb",
+     "source_sha256": "20e82a7e0118b2dd4aa03e327e6808ff2a72f68bb0448191b26d92b5966b969a",
+     "input_sha256": {
+       "code/certificate_gate.py": "1c4c5e7a5b536da561681bbfcb12882995fe1b8d5f7e5c8d1a078a0cc133dbe9",
+
+--- archive/paper.md
++++ current/paper.md
+@@ -431,7 +431,7 @@
+ - Carroll, Jeremy H. (2026). *PFP I: Exact Graph Repair and the Boundary
+   Between a Proposal and a Certificate*. Version 0.1.0, author-review
+   preprint, Paper 001 in this series. Repository path
+-  `omega_engine_atlas/coda_atlas/omega_engine_symbol_game/001_pfp_discrete_cochain_retraction_and_toy_involutions`.
++  `atlas/coda_atlas/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions`.
+ - Harary, Frank (1953). “On the notion of balance of a signed graph.”
+   *Michigan Mathematical Journal*, 2(2), 143–146.
+   [doi:10.1307/mmj/1028989917](https://doi.org/10.1307/mmj/1028989917).
+
+--- archive/paper.tex
++++ current/paper.tex
+@@ -257,7 +257,7 @@
+ \end{longtable}
+ 
+ The implementation in
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py}{sign\_graph.py}
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py}{sign\_graph.py}
+ constructs a spanning forest by breadth-first traversal. A conflicting
+ edge closes an odd walk through the tree. If there is no conflict, the
+ assigned bits form a gauge. Construction is linear in the graph's
+@@ -276,7 +276,7 @@
+ 
+ The parity carrier must not be confused with the rational edge reports
+ of the companion paper PFP I (Carroll, 2026; see
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/docs/references.md}{docs/references.md}).
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/docs/references.md}{docs/references.md}).
+ Reports \((1,1,0)\) around an oriented triangle have even parity but
+ rational sum two. Their uniform-weight rational repair cost is two. The
+ coefficient system and the allowed changes are part of the claim.
+@@ -340,7 +340,7 @@
+ used when a future candidate grammar lacks such a simple complete
+ solver.
+ 
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py}{frontier\_search.py}
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py}{frontier\_search.py}
+ enumerates the \(2^{|V|}\) bit assignments in lexicographic order. It
+ checks fixed batches of at most eight, independent of worker count, and
+ consumes completed results in canonical order. Thread scheduling
+@@ -482,7 +482,7 @@
+ \]
+ 
+ The retained
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py}{exact
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py}{exact
+ checker} enumerates all rooted three-hop sequences. Its asserted finite
+ facts are 192 sequences, evenly split into 96 positive and 96 negative,
+ with every positive three-hop sequence visiting only energies at most
+@@ -543,12 +543,12 @@
+ The four frozen finite-graph files were copied from the author's non-Git
+ Genesis workspace on 2026-09-23. The matrix snapshot repair of
+ 2026-09-24 changed the search module and one regression test. The
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md}{provenance
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md}{provenance
+ record} retains both original and repaired hashes and records later
+ packaging changes with their current hashes. The baseline named above
+ identifies the repository snapshot inspected for this review. The
+ package manifests and
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/docs/preprint_review_validation_2026_10_02.json}{current
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/docs/preprint_review_validation_2026_10_02.json}{current
+ review receipt} bind the revised package bytes; historical source hashes
+ retain their dates.
+ 
+@@ -581,14 +581,14 @@
+ for this revision''. Historical 18-test and 19-test receipts apply to
+ their dated snapshots only. The package also contains an optional native
+ Rust implementation of the graph checker, described in the
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/README.md}{README};
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/README.md}{README};
+ the statements of this paper rest on the proofs and the Python checkers.
+ 
+ Useful negative controls include an odd self-loop, an all-positive
+ triangle, a malformed closed walk, floating-point matrix input, a
+ changed presentation key, a skipped frontier interval, and a one-shot
+ matrix iterator. The
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb}{notebook}
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb}{notebook}
+ illustrates the finite checker; its saved outputs are not independent
+ experimental data.
+ 
+@@ -635,10 +635,10 @@
+ \passthrough{\lstinline!tools/rebuild\_release.py --check!} checks the
+ release archive. The package tests, lint, and notebook source replay are
+ executed by the dated review receipt
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/docs/preprint_review_validation_2026_10_02.json}{included
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/docs/preprint_review_validation_2026_10_02.json}{included
+ in this package}; it lists the commands, tool versions, exit statuses,
+ tested source hashes, and any skips. The
+-\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/omega_engine_symbol_game/002_pfp_signed_presentations_and_search_frontier/docs/preprint_review_2026_10_02.md}{publication
++\href{https://github.com/dbccpage/the_symbol_game/blob/main/education/documentation/030_pfp_proposal_fidelity_protocol_pfp/papers/symbol_game/002_pfp_signed_presentations_and_search_frontier/docs/preprint_review_2026_10_02.md}{publication
+ review} states the readiness judgment and evidence limits. Historical
+ receipts in this package keep their original dates and scope and are not
+ current execution evidence.
+@@ -652,7 +652,7 @@
+   Carroll, Jeremy H. (2026). \emph{PFP I: Exact Graph Repair and the
+   Boundary Between a Proposal and a Certificate}. Version 0.1.0,
+   author-review preprint, Paper 001 in this series. Repository path
+-  \nolinkurl{omega_engine_atlas/coda_atlas/omega_engine_symbol_game/001_pfp_discrete_cochain_retraction_and_toy_involutions}.
++  \nolinkurl{atlas/coda_atlas/symbol_game/001_pfp_discrete_cochain_retraction_and_toy_involutions}.
+ \item
+   Harary, Frank (1953). ``On the notion of balance of a signed graph.''
+   \emph{Michigan Mathematical Journal}, 2(2), 143--146.
+
+--- archive/paper_change_log.md
++++ current/paper_change_log.md
+@@ -4,7 +4,7 @@
+ 
+ Recorded canonical Zenodo record <https://zenodo.org/records/23114127> (DOI: `10.5281/zenodo.23114127`, Concept DOI: `10.5281/zenodo.23114126`) across deposit metadata, `README.md`, publication catalog, and atlas `zenodo_records.md`.
+ 
+-## 2026-10-02 - First preprint review and Landau companion revision
++## 2026-10-02 - First preprint review and Examiner companion revision
+ 
+ 
+ - Kept the initial publication version at 0.1.0 and reconciled the current

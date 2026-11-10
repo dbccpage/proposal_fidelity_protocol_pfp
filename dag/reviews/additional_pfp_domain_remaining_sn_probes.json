@@ -1,0 +1,62 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/sn_tower/sn_realizations.py",
+      "sha256": "e569bdd995bb128800af317c7e1ff50c2739f6363de6e208533440837028150a"
+    },
+    {
+      "path": "pfp/domain/sn_tower/sn_verification.py",
+      "sha256": "6452db0fca5a77ab5d8bd9a493c2a0e1522d56e43dc83e6bccd1240567dcfdf3"
+    },
+    {
+      "path": "pfp/domain/sn_tower/sn_applications.py",
+      "sha256": "9e4eff23af00f3d93598ef92381d2acbd99ad1ac579305f3822ceec29f691894"
+    },
+    {
+      "path": "pfp/domain/sn_tower/sn_core.py",
+      "sha256": "2650053fc95d67a9e9be3c4ec87c4b9b6c8d42674ee8ccd8b92a78c2f2d068aa"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C074",
+      "rule": "RGB_verification_revocation_and_literal_verdict",
+      "status": "counterexample_observed",
+      "channel_green_after_false": true,
+      "firewall_green_after_false": true,
+      "string_false_accepted": true,
+      "limit": "Pure in-memory toy channels; no signatures or actual external authorization issued."
+    },
+    {
+      "id": "PFPDOMAIN-C075",
+      "rule": "simplex_degenerate_boundary",
+      "status": "counterexample_observed",
+      "endpoints": [
+        "x",
+        "x"
+      ],
+      "computed_boundary": {
+        "x": -1
+      },
+      "expected_formal_difference": {},
+      "degenerate_triangle_orientation_check": true
+    },
+    {
+      "id": "PFPDOMAIN-C076",
+      "rule": "dagger_involution_includes_label",
+      "status": "counterexample_observed",
+      "original_label": "f^dagger^dagger",
+      "double_label": "f",
+      "endpoint_only_verifier": true
+    },
+    {
+      "id": "PFPDOMAIN-C077",
+      "rule": "single_use_session_send_count",
+      "status": "counterexample_observed",
+      "sends_before_one_receive": 2,
+      "accepted": true,
+      "limit": "No transport or actual message was sent; state-only object ignores payload."
+    }
+  ]
+}

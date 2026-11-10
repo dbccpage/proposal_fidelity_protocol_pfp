@@ -1,0 +1,408 @@
+{
+  "rare_trigger_false_accept": {
+    "case": {
+      "case_id": "audit_rare",
+      "width": 64,
+      "inputs": [
+        "x"
+      ],
+      "ops": [
+        [
+          "t",
+          "xor",
+          "x",
+          123456789
+        ],
+        [
+          "n",
+          "neg",
+          "t"
+        ],
+        [
+          "u",
+          "or",
+          "t",
+          "n"
+        ],
+        [
+          "v",
+          "lshr",
+          "u",
+          63
+        ],
+        [
+          "o",
+          "xor",
+          "v",
+          1
+        ]
+      ],
+      "out": "o",
+      "target_len": 1
+    },
+    "candidate": {
+      "answer": {
+        "case_id": "audit_rare",
+        "status": "SOLVED",
+        "ops": [
+          [
+            "r",
+            "const",
+            0
+          ]
+        ],
+        "out": "r"
+      },
+      "owner_verdict": [
+        [
+          true,
+          "CERTIFICATE_VERIFIED_VALID"
+        ],
+        [
+          true,
+          "INDEPENDENT_VERIFICATION_PASSED"
+        ]
+      ],
+      "independent_equivalence": {
+        "status": "bounded_sample_agreement",
+        "checked": 128,
+        "length_within_bound": true,
+        "limits": "Independent arithmetic only; owner schema checks remain separately reported. Wide sample agreement is not universal equivalence."
+      }
+    },
+    "reference": {
+      "answer": {
+        "case_id": "audit_rare",
+        "status": "SOLVED",
+        "ops": [
+          [
+            "r0",
+            "const",
+            0
+          ]
+        ],
+        "out": "r0"
+      },
+      "owner_verdict": [
+        [
+          true,
+          "CERTIFICATE_VERIFIED_VALID"
+        ],
+        [
+          true,
+          "INDEPENDENT_VERIFICATION_PASSED"
+        ]
+      ],
+      "independent_equivalence": {
+        "status": "bounded_sample_agreement",
+        "checked": 128,
+        "length_within_bound": true,
+        "limits": "Independent arithmetic only; owner schema checks remain separately reported. Wide sample agreement is not universal equivalence."
+      }
+    },
+    "explicit_counterexample": {
+      "x": 123456789,
+      "source": 1,
+      "candidate": 0
+    }
+  },
+  "unrepresentable_zero_op_constant": {
+    "case": {
+      "case_id": "audit_constant",
+      "width": 8,
+      "inputs": [
+        "x"
+      ],
+      "ops": [
+        [
+          "r",
+          "const",
+          0
+        ]
+      ],
+      "out": "r",
+      "target_len": 0
+    },
+    "reference": {
+      "answer": {
+        "case_id": "audit_constant",
+        "status": "UNKNOWN",
+        "code": "NO_SHORTER_FOUND"
+      },
+      "owner_verdict": [
+        [
+          false,
+          "FALSE_UNKNOWN: program reduces to 0-op constant 0"
+        ],
+        [
+          false,
+          "INDEP_FALSE_UNKNOWN_REDUCED_TO_CONST_OR_INPUT"
+        ]
+      ],
+      "independent_equivalence": {
+        "status": "not_a_solved_equivalence_claim"
+      }
+    }
+  },
+  "false_unknown_second_input": {
+    "case": {
+      "case_id": "audit_second",
+      "width": 8,
+      "inputs": [
+        "x",
+        "y"
+      ],
+      "ops": [
+        [
+          "r",
+          "const",
+          0
+        ]
+      ],
+      "out": "y",
+      "target_len": 0
+    },
+    "candidate": {
+      "answer": {
+        "case_id": "audit_second",
+        "status": "UNKNOWN",
+        "code": "NO_SHORTER_FOUND"
+      },
+      "owner_verdict": [
+        [
+          false,
+          "FALSE_UNKNOWN: program reduces to 0-op input y"
+        ],
+        [
+          true,
+          "INDEP_ACCEPTED_UNKNOWN"
+        ]
+      ],
+      "independent_equivalence": {
+        "status": "not_a_solved_equivalence_claim"
+      }
+    }
+  },
+  "missed_reverse_immediate": {
+    "case": {
+      "case_id": "audit_reverse",
+      "width": 8,
+      "inputs": [
+        "x"
+      ],
+      "ops": [
+        [
+          "c",
+          "const",
+          4
+        ],
+        [
+          "r",
+          "sub",
+          "c",
+          "x"
+        ]
+      ],
+      "out": "r",
+      "target_len": 1
+    },
+    "reference": {
+      "answer": {
+        "case_id": "audit_reverse",
+        "status": "UNKNOWN",
+        "code": "NO_SHORTER_FOUND"
+      },
+      "owner_verdict": [
+        [
+          false,
+          "FALSE_UNKNOWN: shorter program exists for target_len 1"
+        ],
+        [
+          false,
+          "INDEP_REJECTED_FALSE_UNKNOWN_TARGET_LEN_1"
+        ]
+      ],
+      "independent_equivalence": {
+        "status": "not_a_solved_equivalence_claim"
+      }
+    },
+    "valid_short_program": {
+      "answer": {
+        "case_id": "audit_reverse",
+        "status": "SOLVED",
+        "ops": [
+          [
+            "r",
+            "sub",
+            4,
+            "x"
+          ]
+        ],
+        "out": "r"
+      },
+      "owner_verdict": [
+        [
+          true,
+          "CERTIFICATE_VERIFIED_VALID"
+        ],
+        [
+          true,
+          "INDEPENDENT_VERIFICATION_PASSED"
+        ]
+      ],
+      "independent_equivalence": {
+        "status": "exhaustive_equal",
+        "checked": 256,
+        "length_within_bound": true,
+        "limits": "Independent arithmetic only; owner schema checks remain separately reported. Wide sample agreement is not universal equivalence."
+      }
+    }
+  },
+  "malformed": [
+    {
+      "name": "float_width",
+      "reference": {
+        "reference_exception": "TypeError",
+        "message": "unsupported operand type(s) for <<: 'int' and 'float'"
+      },
+      "candidate": {
+        "answer": {
+          "case_id": "audit_constant",
+          "status": "SOLVED",
+          "ops": [
+            [
+              "r",
+              "const",
+              0
+            ]
+          ],
+          "out": "r"
+        },
+        "owner_verdict": [
+          {
+            "exception": "TypeError",
+            "message": "unsupported operand type(s) for <<: 'int' and 'float'"
+          },
+          [
+            false,
+            "INDEP_LENGTH_EXCEEDED: 1 > 0"
+          ]
+        ],
+        "independent_equivalence": {
+          "status": "invalid_width_domain"
+        }
+      }
+    },
+    {
+      "name": "null_target",
+      "reference": {
+        "reference_exception": "TypeError",
+        "message": "'<=' not supported between instances of 'int' and 'NoneType'"
+      },
+      "candidate": {
+        "answer": {
+          "case_id": "audit_constant",
+          "status": "SOLVED",
+          "ops": [
+            [
+              "r",
+              "const",
+              0
+            ]
+          ],
+          "out": "r"
+        },
+        "owner_verdict": [
+          {
+            "exception": "TypeError",
+            "message": "'>' not supported between instances of 'int' and 'NoneType'"
+          },
+          {
+            "exception": "TypeError",
+            "message": "'>' not supported between instances of 'int' and 'NoneType'"
+          }
+        ],
+        "independent_equivalence": {
+          "status": "exception",
+          "type": "TypeError",
+          "message": "'<=' not supported between instances of 'int' and 'NoneType'"
+        }
+      }
+    },
+    {
+      "name": "boolean_constant",
+      "reference": {
+        "answer": {
+          "case_id": "audit_constant",
+          "status": "SOLVED",
+          "ops": [
+            [
+              "r",
+              "const",
+              true
+            ]
+          ],
+          "out": "r"
+        },
+        "owner_verdict": [
+          [
+            true,
+            "CERTIFICATE_VERIFIED_VALID"
+          ],
+          [
+            true,
+            "INDEPENDENT_VERIFICATION_PASSED"
+          ]
+        ],
+        "independent_equivalence": {
+          "status": "exhaustive_equal",
+          "checked": 256,
+          "length_within_bound": true,
+          "limits": "Independent arithmetic only; owner schema checks remain separately reported. Wide sample agreement is not universal equivalence."
+        }
+      },
+      "candidate": {
+        "answer": {
+          "case_id": "audit_constant",
+          "status": "SOLVED",
+          "ops": [
+            [
+              "r",
+              "const",
+              true
+            ]
+          ],
+          "out": "r"
+        },
+        "owner_verdict": [
+          [
+            true,
+            "CERTIFICATE_VERIFIED_VALID"
+          ],
+          [
+            true,
+            "INDEPENDENT_VERIFICATION_PASSED"
+          ]
+        ],
+        "independent_equivalence": {
+          "status": "exhaustive_equal",
+          "checked": 256,
+          "length_within_bound": true,
+          "limits": "Independent arithmetic only; owner schema checks remain separately reported. Wide sample agreement is not universal equivalence."
+        }
+      }
+    }
+  ],
+  "bounded_interpreter_comparison": {
+    "programs": 128,
+    "evaluations": 32768,
+    "mismatches": [],
+    "limits": "All inputs for these 128 generated one-input programs, not all programs or wide equivalence."
+  },
+  "runner_failure_exit": {
+    "return_value": null,
+    "stdout": "Running 1 public examples...\n[FAIL] case.json: INVALID_STATUS: BANANA\n\nResult: 0/1 examples passed (0.0%)\n",
+    "limits": "Only in-memory module globals redirected; original runner unchanged. Its __main__ calls main without sys.exit."
+  },
+  "stale_generator_path_exists": true
+}

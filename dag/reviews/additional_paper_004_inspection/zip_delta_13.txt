@@ -1,0 +1,20 @@
+--- archive/_lev_landau_theoretical_minimum_quiz/study_guide.md
++++ current/_lev_examiner_theoretical_minimum_quiz/study_guide.md
+@@ -74,7 +74,7 @@
+ | --- | --- |
+ | Domain canonical algebra | Tagged types: integer `7` and string `"7"` remain distinct |
+ | `PacketCodec` helper | NFC normalization, then tagged domain encoding; its `verify` checks payload digest and authority, not every sealed envelope field |
+-| Restricted host's outer JSON | `omega-sorted-json-no-float-v1`; exact arithmetic coefficients use minimal i128 strings |
++| Restricted host's outer JSON | `core-sorted-json-no-float-v1`; exact arithmetic coefficients use minimal i128 strings |
+ 
+ RFC 8785 has its own primitive serialization and sorting rules and preserves Unicode string data as supplied. Consider U+00E9 (`é`) and U+0065 U+0301 (`e` followed by a combining acute accent). They look alike but their direct UTF-8 bytes differ. NFC maps both to U+00E9. A normalization policy is therefore part of the meaning of a digest comparison.
+ 
+@@ -92,7 +92,7 @@
+ 
+ ## 7. Interface and resource boundaries
+ 
+-The default host, runtime dispatcher and foundation library are distinct. The environment override `OMEGA_SYMBOL_GAME_HOST` belongs to the host seam. The graph tutorial adapter instead needs `OMEGA_FUNCTIONAL_GRAPH_BIN` and `OMEGA_FUNCTIONAL_GRAPH_SHA256`. Advertising an action does not configure another executable.
++The default host, runtime dispatcher and foundation library are distinct. The environment override `CORE_SYMBOL_GAME_HOST` belongs to the host seam. The graph tutorial adapter instead needs `CORE_FUNCTIONAL_GRAPH_BIN` and `CORE_FUNCTIONAL_GRAPH_SHA256`. Advertising an action does not configure another executable.
+ 
+ The restricted host has a 1,048,576-byte request ceiling, dimension limits of 4,096, and four dense-matrix cell checks at 1,048,576 cells each. The dispatcher uses a separate 65,536-byte input ceiling. Its bounded reader takes at most its limit plus one witness byte.
+ 

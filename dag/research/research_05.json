@@ -1,0 +1,167 @@
+{
+  "agent_number": 5,
+  "focus": "Independent proposals, disagreement localization, blind critique, and consensus limits",
+  "status": "proposed_not_evaluated",
+  "scope": {
+    "source_baseline": "8050c66900899771766f33e8f5fdd200b7dd9120 plus the in-progress dag audit",
+    "seed_access": "Seed content was not read or solved. Its public commitment and SHA-256 were checked. No answer key, private storage, or paid model calls were accessed.",
+    "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+    "novelty_claim": "Proposed repository adaptations, not literature-wide novelty. The new mechanisms are premise-aware disagreement frontiers, candidate-blind challenge generation, and masked-conclusion seam replay; merely adding roles would duplicate existing workflows.",
+    "implementation_boundary": "All new schemas, symbolic adapters, masking rules, and panel selectors below require implementation. Existing WF4 exact-sum success does not establish a checker for a quantum derivation. Native PFP/EIS/OPERADS integration is proposed, not executed.",
+    "benchmark_isolation": "Every future model request includes the original seed as a separate message whose decoded UTF-8 content preserves its exact bytes. Hash before and after request construction; do not rewrite assumptions or requested parts. Workflow broker has no filesystem, shell, repository retrieval, or evaluator access. Freeze final candidate bytes before separate trusted evaluation; no private scores, labels, diagnostics, or key-derived repairs return to any stage."
+  },
+  "primary_sources": [
+    {
+      "title": "Wang et al., Self-Consistency Improves Chain of Thought Reasoning in Language Models, ICLR 2023",
+      "url": "https://arxiv.org/html/2203.11171v4",
+      "relevance": "Section 2 samples multiple reasoning paths and aggregates parsed answers; motivates an equal-budget sampled-answer baseline. Its empirical improvements do not certify any particular agreed answer or establish a calibrated independence model."
+    },
+    {
+      "title": "Du et al., Improving Factuality and Reasoning in Language Models through Multiagent Debate, ICML 2024",
+      "url": "https://proceedings.mlr.press/v235/du24e.html",
+      "relevance": "Primary proceedings paper studies proposal and debate rounds. Motivates separating additional proposal supply from effects of visibility and persuasion; its results are not evidence that our proposed two-call mechanisms improve this seed."
+    },
+    {
+      "title": "Choi, Zhu and Li, Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models?, NeurIPS 2025",
+      "url": "https://arxiv.org/html/2508.17536v2",
+      "relevance": "Compares voting against debate and supplies a Dirichlet-Compound-Multinomial/Bayesian-update analysis. The martingale result is conditional on its stochastic model and update assumptions, not an impossibility theorem for arbitrary debate or sound external verification. Motivates retaining pre-debate candidates and a no-debate baseline."
+    }
+  ],
+  "repository_evidence": [
+    {"path": "dag/FOUNDATIONS.md", "lines": "5-17", "observation": "Checker soundness and task adequacy are separate; declared correlation keys and finite clean panels do not establish statistical independence."},
+    {"path": "dag/benchmark/EXPERIMENT_PROTOCOL.md", "lines": "3-19", "observation": "Immutable seed, isolated evaluator, retained failures, paired one-item comparisons, and aggregate USD 0.10 reservation are required."},
+    {"path": "dag/benchmark/ACCOUNTING.md", "lines": "3-13", "observation": "All branches/retries/judges require reservations; token bounds and tariff components must be admitted before dispatch; unavailable usage cannot count as zero."},
+    {"path": "workflows/wf04_five_agents_lggr/README.md", "lines": "32-44", "observation": "Existing family uses shared mining, five isolated solvers, local checks and global compatibility; the stated exact predicate is integer sum, not general mathematical agreement."},
+    {"path": "workflows/wf15_adversary_tribunal/README.md", "lines": "3-21", "observation": "Existing proposal freezes prosecutor and defender before seeing each other, then delegates verdict to a finite host check."},
+    {"path": "workflows/wf28_eight_role_audit_dialogue/README.md", "lines": "3-21", "observation": "Eight-role proposal retains host authority; l1 defect descent does not automatically measure semantic correctness of arbitrary derivations."},
+    {"path": "workflows/wf31_multi_agent_tournament_with_held_out_cross_validation/README.md", "lines": "3-25", "observation": "Tournament design uses a declared finite referee and held-out shares; its earlier rates were withdrawn. One frozen seed cannot supply independent task-level transfer evidence."}
+  ],
+  "common_budget_policy": {
+    "formula": "Reserve C_max = sum_s(I_s*p_in_s + O_s*p_out_s + F_s) + R <= USD 0.10 before either call. I includes the exact seed, schemas, instructions, prior artifacts and provider framing; O includes all billable reasoning and response tokens. Two calls maximum, zero retries, zero automatic fallbacks, no paid judge or tool branch.",
+    "conditional_example": "Conditional endpoint ceilings p_in <= USD 0.000001/token and p_out <= USD 0.000005/token, F_s=0, R=USD 0.01. These are admission thresholds, not current quoted prices or a model recommendation. R covers quantified framing/fee allowance; unknown fees or uncapped reasoning require refusal, not reliance on the allowance.",
+    "routing": "Pin actual provider/model/version, current tariff, enforced output cap and a justified input-token upper bound. Each stage reservation is held even after timeout or ambiguous delivery; such events stop the run. Reserve parallel branches jointly before dispatch. If input bounds exceed caps, refuse rather than truncate seed or silently remove requested parts.",
+    "receipts": "Record request hashes, visibility manifests, token allowances, provider usage, actual charges and unused reservation. Each ablation is a separately costed complete run; no campaign is authorized or executed here. Private evaluation is offline and separately costed, with no model feedback channel.",
+    "host_compute": "Assume already provisioned local CPU has zero incremental monetary charge; otherwise reserve its metered cost. Cap each artifact at 24 claims and 48 edges, each expression at 512 AST nodes and 256-bit rational components, and each deterministic checker at 10 seconds and 256 MB. Unsupported or resource-exhausted checks remain UNKNOWN."
+  },
+  "ideas": [
+    {
+      "id": "R05-I01",
+      "name": "Frozen independent proposals with a premise-aware disagreement frontier",
+      "systems": ["PFP", "OPERADS", "EIS"],
+      "mathematical_basis": {
+        "known_method": "Independent proposal sampling plus deterministic claim comparison; dependency graphs locate the earliest represented divergence rather than counting answer strings.",
+        "proposed_adaptation": "Two isolated solvers receive different preregistered public method contracts but the same unchanged seed, with no shared model-generated mining. Freeze both complete answers. Align claims only by public obligation IDs, context and domain; compare exact normal forms in an admitted fragment. Compute the minimal disagreeing nodes under ancestor order and list their descendants. Unknown equivalence is a separate status. Select one complete candidate by a frozen public-check rule, retaining the other and the frontier; never splice prose with incompatible assumptions.",
+        "composition_rule": "For an aligned DAG G and proven-incompatible node set D, frontier F={v in D: no ancestor of v lies in D}. F is minimal only relative to the represented graph and admitted alignment. Equality f=g under Gamma says nothing about whether either solves the intended task. If equal-marginal Bernoulli error indicators have rate e and correlation rho under a declared sampling distribution, P(E1=E2=1)=e^2+rho*e*(1-e); rho is not inferable from two artifacts."
+      },
+      "assumptions": [
+        "Public obligation IDs and premise/domain schemas are fixed without consulting the answer key; incorrect semantic extraction remains an explicit residual.",
+        "A trusted equivalence checker exists only for an advertised rational/polynomial fragment. Different printed expressions are not automatically incompatible; non-equivalence needs a sound witness in a common valid domain.",
+        "Isolation establishes no cross-call artifact visibility. Distinct role labels, prompts or model families do not establish independent errors. Independent decoder draws may be conditionally independent on a fixed task while error rates across tasks share common difficulty; neither model is assumed here.",
+        "At most 24 aligned claims, 48 edges and two complete candidates; malformed, truncated or missing candidates remain recorded failures."
+      ],
+      "hypothesis": "At matched total money or tokens, premise-aware frontiers identify more actionable disagreements and fewer false disagreements than final-string comparison, while preserving final-answer completeness.",
+      "typed_inputs": ["SeedBytes{utf8_bytes,sha256}", "PublicContractPair{obligation_ids,method_A,method_B,allowed_equivalences}", "BudgetReservation{max_input_tokens_total:12000,max_output_tokens_total:5000,max_calls:2}"],
+      "typed_outputs": ["FrozenCandidatePair{answer_text,claim_DAG,contexts,domains,visibility_manifest}", "DisagreementReceipt{equivalent,incompatible,unknown,frontier,descendants,witnesses}", "FinalResponse{selected_whole_candidate,selection_reason,alternative_hash,unresolved_frontier}"],
+      "stages": [
+        {"id": "bind", "kind": "host", "role": "Freeze contracts and both reservations", "instruction": "Bind exact seed and public schemas; record that neither solver can read the other, histories, evaluator or shared generated notes. Preregister ranking: fewer soundly refuted obligations, then more fixed obligations supported by admitted exact checks, then A on ties. Ranking is heuristic outside checked predicates.", "depends_on": [], "max_output_tokens": 0},
+        {"id": "propose_A", "kind": "model", "role": "First isolated proposer", "instruction": "Answer all original requested parts under method contract A; emit short public claim DAG with explicit domains and premises. Mark unsupported steps. No self-issued verification label.", "depends_on": ["bind"], "max_output_tokens": 2500},
+        {"id": "propose_B", "kind": "model", "role": "Second isolated proposer", "instruction": "Answer all original requested parts under method contract B without seeing A. Preserve obligation IDs and emit claim DAG. Declare method inapplicability rather than inventing an alternative task.", "depends_on": ["bind"], "max_output_tokens": 2500},
+        {"id": "compare", "kind": "host", "role": "Scope-aware comparator", "instruction": "Freeze both artifacts; validate bindings, acyclicity and premises. Align admitted claims, check witnesses and compute the represented disagreement frontier. Mark unmatched/unsupported claims UNKNOWN. Do not use a model judge.", "depends_on": ["propose_A", "propose_B"], "max_output_tokens": 0},
+        {"id": "freeze", "kind": "host", "role": "Deterministic whole-answer selector", "instruction": "Apply preregistered ranking only to fixed obligation IDs; render the selected complete answer with explicit contradictions/open obligations and retain alternative provenance. Do not interpret agreement as certification. Freeze before private scoring.", "depends_on": ["compare"], "max_output_tokens": 0}
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Two isolated same-model answers under identical public contracts, final-answer equality with deterministic A tie-break; same combined token budget and no judge call.",
+        "ablations": ["Remove distinct method contracts while preserving isolation", "Replace premise-aware comparison with final-string agreement", "Replace frontier with an unordered full disagreement list", "Use a single call with the same total output allowance"],
+        "evaluation": "Synthetic public pairs include equivalent rewrites, different domains, shared wrong answers and one corrupted ancestor. Measure localization precision, unknown rate and false disagreements. Separately evaluate frozen seed answers with paired repetitions; report correctness, completeness, joint errors and cost. No correlation estimate is justified by a single pair."
+      },
+      "falsification": "Advantage fails if localization does not improve over string comparison, if valid rewrites are labeled contradictory, or if ranking loses completeness beyond a preregistered tolerance. A shared wrong answer receiving a certified label immediately violates the design.",
+      "risks": ["Both solvers can share the same false premise; no disagreement detector catches universal agreement on an error.", "Canonicalization can erase domain restrictions or confuse merely different with contradictory answers.", "Check-count ranking can reward easy claims; only a frozen requested-obligation inventory may contribute."],
+      "budget_formula": "Two branches together: C_max <= 12000*p_in + 5000*p_out + sum(F_s) + R. At conditional ceilings and R=0.01, reserve USD 0.047; 2500 output tokens per branch, no additional calls.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R05-I02",
+      "name": "Candidate-blind challenge panel with witness-gated objections",
+      "systems": ["PFP", "EIS", "OPERADS"],
+      "mathematical_basis": {
+        "known_method": "Independent test design and finite counterexample checking separate candidate production from the search for disconfirming evidence.",
+        "proposed_adaptation": "Run one full solver and one challenge designer independently. The challenger sees the seed and public obligation types but never the solver answer, confidence, endpoint or check results. It emits bounded typed boundary tests and premise audits, not a rhetorical verdict. After both are frozen the host applies admissible challenges to the candidate and annotates exact counterexamples, numerical concerns, unsupported tests and untouched claims. No repair call follows.",
+        "composition_rule": "For a candidate universal assertion forall x in D, P(x), an exact witness x0 in D with checked not P(x0) refutes that assertion. Finite passing tests do not prove a universal statement. For a merely sufficient condition A=>B, failure of A is not a counterexample; require A(x0) and not B(x0). Numerical discrepancies require sound error bounds to count as exact refutations."
+      },
+      "assumptions": [
+        "Candidate claims explicitly encode quantifiers, domains, premise IDs and obligation IDs; ambiguous prose receives an uncheckable annotation.",
+        "The public challenge language is non-executable data: rational substitutions, domain-boundary probes and prerequisite-presence queries. No model-supplied shell or unrestricted code runs.",
+        "A challenger lacking the candidate may miss its specific failure; its statistical independence from the solver is unavailable even though candidate visibility is absent.",
+        "At most 12 challenges; each must target an existing public obligation and distinguish a required premise from an optional sufficient condition."
+      ],
+      "hypothesis": "At matched budget, candidate-blind test design catches more shared-premise and boundary omissions than a visible prose critique without increasing false rejections of valid controls.",
+      "typed_inputs": ["SeedBytes{utf8_bytes,sha256}", "PublicChallengeGrammar{obligation_ids,query_kinds,domain_codec,resource_caps}", "BudgetReservation{max_input_tokens_total:10000,max_output_tokens_total:4500,max_calls:2}"],
+      "typed_outputs": ["Candidate{complete_answer,typed_claims}", "BlindChallengeSet{target_obligation,premise_condition,test_kind,test_data,expected_logical_role}", "ChallengeReceipt{exact_refutations,numerical_concerns,missing_premises,unknown,untested}", "FinalResponse{original_answer_with_claim_status_annotations}"],
+      "stages": [
+        {"id": "bind", "kind": "host", "role": "Freeze visibility and grammar", "instruction": "Bind original seed, fixed obligation IDs and grammar; reserve both calls. Challenger receives no solver artifact or candidate-selected hint.", "depends_on": [], "max_output_tokens": 0},
+        {"id": "solve", "kind": "model", "role": "Complete-answer proposer", "instruction": "Answer all seed parts with explicit assumptions, domains and typed claim records. Supply candidate witnesses without claiming host approval.", "depends_on": ["bind"], "max_output_tokens": 3000},
+        {"id": "challenge", "kind": "model", "role": "Candidate-blind critic", "instruction": "From the immutable task and public grammar alone, propose at most 12 high-yield boundary/premise challenges. Do not solve the task or guess what another solver said. Encode sufficient-condition versus necessary-condition distinctions explicitly.", "depends_on": ["bind"], "max_output_tokens": 1500},
+        {"id": "check", "kind": "host", "role": "Witness-gated objection checker", "instruction": "Freeze both outputs; validate challenge applicability against candidate domains and quantifiers. Evaluate only admitted typed predicates. Require checked witnesses for refutation; unsupported, floating-point-only and timed-out checks remain separately labeled.", "depends_on": ["solve", "challenge"], "max_output_tokens": 0},
+        {"id": "freeze", "kind": "host", "role": "Annotated-answer renderer", "instruction": "Retain the original complete candidate, mark exact refutations as withdrawn claims and untested claims as open. Do not silently replace refuted conclusions. Record completeness loss and all challenge outcomes before trusted evaluation.", "depends_on": ["check"], "max_output_tokens": 0}
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Same two calls/caps, but critic sees the complete candidate and emits the same typed challenge format.",
+        "ablations": ["Replace model challenge designer with a fixed deterministic public checklist", "Allow candidate visibility while removing confidence/identity metadata only", "Replace typed challenges with freeform critique, with verdicts still untrusted"],
+        "evaluation": "Use unrelated synthetic public controls with known boundary errors and valid sufficient conditions. Measure witnessed fault discovery, challenge applicability, valid-control false rejection and completeness. Seed scoring occurs only on frozen artifacts; no rejected claim is repaired using evaluator information."
+      },
+      "falsification": "Reject the advantage if blinded challenges miss more faults at equal cost, or if false rejections increase. A critique without a valid-domain witness being treated as a mathematical refutation falsifies the host contract.",
+      "risks": ["Blind challenge generation may duplicate generic checks and miss candidate-specific algebraic errors.", "A wrong challenge interpreter can manufacture counterexamples outside the declared domain.", "Absence of detected faults can be mistaken for global approval; render untested/unsupported coverage explicitly."],
+      "budget_formula": "C_max <= 10000*p_in + 4500*p_out + sum(F_s) + R. At conditional ceilings and R=0.01, reserve USD 0.0425; solver cap 3000 plus critic cap 1500, no retries or repair branches.",
+      "status": "proposed_not_evaluated"
+    },
+    {
+      "id": "R05-I03",
+      "name": "Masked-conclusion replay at dependency seams",
+      "systems": ["PFP", "OPERADS", "EIS"],
+      "mathematical_basis": {
+        "known_method": "Blind reconstruction and compositional interface checking test whether intermediate conclusions can be reproduced from declared premises without exposing the proposed result.",
+        "proposed_adaptation": "The first call supplies a full answer and typed dependency DAG. A deterministic host selects up to four seams by descendant requested-obligation count, ties by public ID. The second call receives the unchanged seed plus each seam's input premises, domains and output type, but not the candidate seam conclusion, downstream text, model identity or confidence. It reconstructs those outputs. The host compares the frozen reconstructions with originals and propagates disagreement/unknown status; it does not ask the critic to endorse the answer.",
+        "composition_rule": "If a seam declares Gamma and inputs P1..Pk, reconstructing Q' and proving Gamma entails Q iff Q' establishes equivalence under Gamma only. Correctness still requires Gamma and each Pi, and a sound rule from them to Q. A refuted/open parent propagates to dependent conclusions. Agreement of reconstructions does not close a proof obligation by itself."
+      },
+      "assumptions": [
+        "Seam inputs are explicit and treated as assumptions, not trusted facts. The original seed stays visible even if it permits independently inferring a masked conclusion.",
+        "Selection and masking use structural fields only, not private evaluation. All candidate-generated labels and prose are removed except whitelisted typed premises/conditions; residual leakage through premises is possible and logged.",
+        "This is conclusion-blind relative to selected candidate fields, not independent proposal generation: call B depends on call A's premise extraction and topology. The visible dependency is recorded, and no independence confidence bonus is assigned.",
+        "At most four seams from a 24-node/48-edge DAG; checker equivalence and substitution remain restricted to an admitted fragment."
+      ],
+      "hypothesis": "At equal budget, masked seam reconstruction exposes more unsupported interface steps than an ordinary visible critique, with fewer endorsement flips driven by confidence or copied conclusions.",
+      "typed_inputs": ["SeedBytes{utf8_bytes,sha256}", "PublicSeamPolicy{max_seams:4,selection_rule,allowed_premise_fields,checker_versions}", "BudgetReservation{max_input_tokens_total:14000,max_output_tokens_total:4700,max_calls:2}"],
+      "typed_outputs": ["CandidateDAG{complete_answer,nodes,edges,premises,domains,output_types}", "MaskedCapsules{premise_ASTs,domain_ASTs,output_type,public_id,withheld_field_hashes}", "ReconstructionSet{seam_id,reconstructed_output,premises_used,residuals}", "SeamReceipt{equivalent,incompatible,unknown,inherited_residuals,visibility_manifest}"],
+      "stages": [
+        {"id": "bind", "kind": "host", "role": "Reserve bounded replay", "instruction": "Bind unchanged seed and public seam policy; reserve both calls including the worst-case second-input size.", "depends_on": [], "max_output_tokens": 0},
+        {"id": "propose", "kind": "model", "role": "Complete answer and dependency proposer", "instruction": "Answer every requested part; attach the bounded DAG with explicit seam premises and conclusion fields. Do not pack conclusions into premise names or descriptive labels.", "depends_on": ["bind"], "max_output_tokens": 2800},
+        {"id": "mask", "kind": "host", "role": "Deterministic seam selection and field masking", "instruction": "Validate DAG and choose up to four seams by fixed rule. Expose only whitelisted typed inputs and output types; exclude original conclusions, descendant text, confidence and identity. Freeze a visibility manifest. Empty or invalid DAG stops replay as incomplete, with unused reservation retained/reconciled normally.", "depends_on": ["propose"], "max_output_tokens": 0},
+        {"id": "reconstruct", "kind": "model", "role": "Conclusion-blind seam reconstructor", "instruction": "Using the exact seed and masked capsules, reconstruct each requested seam output under its declared assumptions. Flag missing assumptions and unsupported interfaces; do not estimate the original author's likely answer.", "depends_on": ["mask"], "max_output_tokens": 1900},
+        {"id": "freeze", "kind": "host", "role": "Compare and propagate residuals", "instruction": "Check scope-aware equivalence or exact counterexamples, retaining UNKNOWN when unavailable. Propagate original and reconstructed parent residuals to descendants. Render original full candidate with seam annotations; never replace a seam unless the complete dependency transport is checked. Freeze before separate evaluation.", "depends_on": ["reconstruct"], "max_output_tokens": 0}
+      ],
+      "baseline_and_ablations": {
+        "baseline": "Same two calls and allowances, with seam conclusions visible to the second call; all deterministic host checks unchanged.",
+        "ablations": ["Mask author/confidence only, leaving conclusions visible", "Choose seams uniformly using a preregistered host seed instead of dependency influence", "Replay every affordable seam without residual propagation", "Replace the second call with deterministic checking alone"],
+        "evaluation": "Unrelated synthetic DAGs contain wrong conclusions, false shared premises, missing inputs and valid equivalent formulations. Measure seam fault discovery, false accusations and inherited-error propagation. On the fixed benchmark measure completeness and blinded trusted score after freezing; the four seams are not four independent experimental units."
+      },
+      "falsification": "The mechanism fails if masked replay does not improve fault localization over visible critique, if masking materially reduces completeness without benefit, or if any dependent conclusion is cleared despite a required unresolved parent. A copied hidden conclusion found in a visible field invalidates the blindness condition for that run.",
+      "risks": ["Premise choice and output type may reveal the candidate conclusion; blindness is limited and must be audited.", "Both calls can reproduce the same erroneous rule or accept the same false premise.", "Structural centrality may select easy steps while missing the important unsupported analytic bridge."],
+      "budget_formula": "C_max <= 14000*p_in + 4700*p_out + sum(F_s) + R. At conditional ceilings and R=0.01, reserve USD 0.0475; output caps 2800 and 1900. Missing/invalid seams skip the second call; no replacement or repair call is allowed.",
+      "status": "proposed_not_evaluated"
+    }
+  ],
+  "recommended_reusable_primitive": {
+    "name": "FrozenPanelComparisonV1",
+    "recommendation": "Implement a host-owned visibility and comparison receipt shared by all three workflows before adding more model roles.",
+    "schema": {
+      "binding": ["seed_sha256", "candidate_sha256s", "public_obligation_id", "context_sha256", "domain_sha256", "checker_id", "checker_version"],
+      "visibility": ["producer_call_id", "visible_artifact_hashes", "withheld_field_hashes", "shared_public_inputs", "dependency_edges", "isolation_audit_status"],
+      "comparison_status": ["EQUIVALENT_IN_DECLARED_FRAGMENT", "INCOMPATIBLE_WITH_CHECKED_WITNESS", "UNKNOWN"],
+      "claim_status": ["PASS_FOR_DECLARED_PREDICATE", "REFUTED_BY_CHECKED_WITNESS", "OPEN_UNSUPPORTED", "INFRASTRUCTURE_ERROR"],
+      "residuals": ["unproved_premises", "unsupported_semantic_alignment", "unavailable_error_dependence", "missing_obligations", "unreplayed_dependencies"]
+    },
+    "invariant": "An agreement status never upgrades claim correctness. Isolation and blinding report information access, not statistical independence. Refutation requires a valid-domain witness; incomparable or unsupported claims remain UNKNOWN. No downstream output may drop inherited unresolved premises.",
+    "research_prompt_instruction": "Implement receipt schemas and public synthetic controls for copied answers, shared false premises, equivalent rewrites, out-of-domain counterexamples and masking leaks. Do not solve the benchmark, alter seed bytes, access private evaluator storage, or launch paid calls.",
+    "first_experiment": "Host-only synthetic comparison and visibility tests, then a separately authorized equal-budget R05-I02 blind-versus-visible challenge comparison. No experiment has been executed in this report."
+  }
+}

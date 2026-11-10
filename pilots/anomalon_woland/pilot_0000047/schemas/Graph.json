@@ -1,0 +1,458 @@
+{
+  "$defs": {
+    "Checker": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "checker",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "pinned_python_function",
+          "title": "Kind",
+          "type": "string"
+        },
+        "entrypoint": {
+          "const": "answer_for",
+          "title": "Entrypoint",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "core_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Core Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "entrypoint",
+        "source_sha256",
+        "core_sha256"
+      ],
+      "title": "Checker",
+      "type": "object"
+    },
+    "Document": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "document",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "utf8_document",
+          "title": "Kind",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 65536,
+          "title": "Text",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 256,
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "text",
+        "sha256",
+        "summary"
+      ],
+      "title": "Document",
+      "type": "object"
+    },
+    "Edge": {
+      "additionalProperties": false,
+      "properties": {
+        "subject": {
+          "enum": [
+            "source",
+            "source_span",
+            "document",
+            "request_span",
+            "request",
+            "checker",
+            "test",
+            "result"
+          ],
+          "title": "Subject",
+          "type": "string"
+        },
+        "dependency": {
+          "enum": [
+            "source",
+            "source_span",
+            "document",
+            "request_span",
+            "request",
+            "checker",
+            "test",
+            "result"
+          ],
+          "title": "Dependency",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "slice_of",
+            "decoded_from",
+            "uses_contract",
+            "implemented_by",
+            "tests",
+            "calls",
+            "execution_of"
+          ],
+          "title": "Relation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject",
+        "dependency",
+        "relation"
+      ],
+      "title": "Edge",
+      "type": "object"
+    },
+    "Request": {
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "pattern": "^[A-Za-z0-9_.-]{1,32}$",
+          "title": "Task Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "complement",
+            "unweighted"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "graph": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Graph",
+          "type": "string"
+        },
+        "cutoff": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Cutoff",
+          "type": "integer"
+        },
+        "degree": {
+          "maximum": 4,
+          "minimum": -1,
+          "title": "Degree",
+          "type": "integer"
+        },
+        "cochain": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Cochain",
+          "type": "array"
+        }
+      },
+      "required": [
+        "task_id",
+        "kind",
+        "graph",
+        "cutoff",
+        "degree",
+        "cochain"
+      ],
+      "title": "Request",
+      "type": "object"
+    },
+    "RequestNode": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "request",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "pilot21_request",
+          "title": "Kind",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/Request"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "payload",
+        "sha256"
+      ],
+      "title": "RequestNode",
+      "type": "object"
+    },
+    "Result": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "result",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "exact_result",
+          "title": "Kind",
+          "type": "string"
+        },
+        "request_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "answer_json": {
+          "maxLength": 65536,
+          "title": "Answer Json",
+          "type": "string"
+        },
+        "answer_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Answer Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "request_sha256",
+        "answer_json",
+        "answer_sha256"
+      ],
+      "title": "Result",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "source",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "file",
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "const": "omega_engine_education/documentation/030_the_symbol_game_proposal_fidelity_protocol_pfp/pilots/pilot_0000046/run.py",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "path",
+        "sha256"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "Span": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "enum": [
+            "source_span",
+            "request_span"
+          ],
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "byte_span",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parent": {
+          "enum": [
+            "source",
+            "document"
+          ],
+          "title": "Parent",
+          "type": "string"
+        },
+        "parent_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Parent Sha256",
+          "type": "string"
+        },
+        "encoding": {
+          "const": "utf-8",
+          "title": "Encoding",
+          "type": "string"
+        },
+        "start": {
+          "maximum": 65536,
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "maximum": 65536,
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "parent",
+        "parent_sha256",
+        "encoding",
+        "start",
+        "end",
+        "sha256"
+      ],
+      "title": "Span",
+      "type": "object"
+    },
+    "Test": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "test",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "exact_query",
+          "title": "Kind",
+          "type": "string"
+        },
+        "query": {
+          "const": "entire_pilot21_answer",
+          "title": "Query",
+          "type": "string"
+        },
+        "expected_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Expected Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "query",
+        "expected_sha256"
+      ],
+      "title": "Test",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "const": "engine_graph_v1",
+      "title": "Kind",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/Source"
+    },
+    "source_span": {
+      "$ref": "#/$defs/Span"
+    },
+    "document": {
+      "$ref": "#/$defs/Document"
+    },
+    "request_span": {
+      "$ref": "#/$defs/Span"
+    },
+    "request": {
+      "$ref": "#/$defs/RequestNode"
+    },
+    "checker": {
+      "$ref": "#/$defs/Checker"
+    },
+    "test": {
+      "$ref": "#/$defs/Test"
+    },
+    "result": {
+      "$ref": "#/$defs/Result"
+    },
+    "edges": {
+      "items": {
+        "$ref": "#/$defs/Edge"
+      },
+      "maxItems": 8,
+      "title": "Edges",
+      "type": "array"
+    },
+    "obligations": {
+      "items": {
+        "enum": [
+          "complete_spans",
+          "source_custody",
+          "whole_answer"
+        ],
+        "type": "string"
+      },
+      "maxItems": 3,
+      "title": "Obligations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "kind",
+    "source",
+    "source_span",
+    "document",
+    "request_span",
+    "request",
+    "checker",
+    "test",
+    "result",
+    "edges",
+    "obligations"
+  ],
+  "title": "Graph",
+  "type": "object"
+}

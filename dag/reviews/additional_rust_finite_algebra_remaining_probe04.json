@@ -1,0 +1,53 @@
+{
+  "status": "complete_bounded_controls",
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "original_program_execution": false,
+  "sources": [
+    {
+      "path": "code/rust/core_number_theory/src/quadratic.rs",
+      "sha256": "78aebe31aeffd2a86c4dc4b555187b3ff55e400600bd03850492f6e52d1448d4",
+      "lines": [
+        1,
+        1937
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "rule": "quadratic_square_root_replay",
+      "status": "bounded_identities_verified",
+      "generated_squares": 490,
+      "radicands": [
+        -7,
+        -3,
+        -2,
+        -1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        10
+      ],
+      "limits": "Generated-square completeness and returned-root soundness on finite rational grid; no exhaustive search over all possible rational roots."
+    },
+    {
+      "rule": "quadratic_norm_multiplicativity",
+      "status": "bounded_identities_verified",
+      "pairs": 24010
+    },
+    {
+      "rule": "quadratic_sign_vs_rational_bracket",
+      "status": "bounded_identities_verified",
+      "cases": 294,
+      "scale": 100000000
+    },
+    {
+      "rule": "real_complex_conjugation_distinction",
+      "status": "observed",
+      "real_d2": "Complex conjugation fixes sqrt2; named Galois conjugation negates it.",
+      "imaginary_d_minus1": "Both conjugations negate i.",
+      "limits": "Matches explicit owner Involution implementation, not inferred from name alone."
+    }
+  ]
+}

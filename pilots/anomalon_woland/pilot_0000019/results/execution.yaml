@@ -1,0 +1,40 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000019
+mode_id: 20
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_20_multi_agent_debate_oversight/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: One local verifier. No second model was called.
+advantages:
+- The judge's input is the code and the digest, not the speech.
+disadvantages:
+- The proposer and the adversary were not separate model calls.
+variations:
+- variation_id: receipt_ends_the_debate
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: The weak verifier checks the code and the state digest. The speech is unused.
+  evidence:
+    rounds: 2
+    state_match: true
+- variation_id: eloquence_without_receipt
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Eloquence capture (judge convinced by rhetoric without receipt)
+  observation: A fluent distance claim with no receipt loses.
+  evidence:
+    receipt: null
+- variation_id: objections_past_the_cap
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Infinite debate cycle without terminalization
+  observation: A fourth objection with no terminal receipt hits the round cap.
+  evidence:
+    rounds: 4
+    cap: 3

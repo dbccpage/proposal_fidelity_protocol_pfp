@@ -1,0 +1,47 @@
+"""Own audit metadata only: receipts and checkpoint compilation."""
+import hashlib,json
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1];P='additional_paper_007_support';BASE='papers/pfp/007_pfp_executable_lessons_and_evidence_boundaries/'
+def load(s):return json.loads((HERE/(P+s)).read_text(encoding='utf-8'))
+def write(s,x):(HERE/(P+s)).write_text(json.dumps(x,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+notes={
+'README.md':'Curriculum-design preprint carefully limits fraction checks, notebook replay and 20-route historical blockers; no learner study. Current README says Lean4.34 and pytest8.3.5, conflicting with current toolchain4.35 and pyproject>=9.0.3. Rebuild command mutates historical package; not run.',
+'paper_claim_ledger.md':'All14 claims read. Finite residual arithmetic, explicit wrong-sign counterexample and fixed-alphabet grammar preservation are supported mechanisms; learning, timing, transfer and full-route claims explicitly excluded. Historical paths/hash receipts need migration-aware handling.',
+'docs/completion_supplement.md':'20-route reading map and historical API failures distinguished from runnable companion. Conditional length/magnitude Lean bound does not bound cognition. Uncalibrated timing/transfer claims withdrawn; full route command would write originals and was not run.',
+'lean4/Expressivity.lean':'Recursive sum of integer absolute values on a chosen List Int representative; nil/cons/nonnegative results. Not rational norm implementation equivalence or quotient invariance; doc discusses separate historical Rust alignment without proof.',
+'lean4/GrammarCeiling.lean':'Induction establishes sum abs <= length*cap; length<=n and abs<=n-1 yield n(n-1), with explicit n<2 handling. Conditional finite list inequality, not emergence of grammar constraints or cognitive theorem.',
+'lean4/GrammarDepthCeiling.lean':'Free unary term nesting preserves supplied allowed symbols/operators by induction. Unbounded depth remains possible; no depth ceiling follows despite filename.',
+'lean4/lakefile.lean':'Three module roots only, no Census default root. Local Lean build configuration; not execution evidence.',
+'lean4/lean-toolchain':'Current pinned Lean4.35.0 differs from historical4.34 receipt and README. Not newly built.',
+'lean4/lake-manifest.json':'Empty external dependency package lock, fixedToolchain false. No kernel execution established.',
+'lean4/Census.lean':'21 explicit #print axioms queries across three imported owners; exact named subset, not all generated declarations. Current namespace is CoreCosmology.',
+'lean4/FullCensus.lean':'Environment iteration filters declaration owning module among three roots; includes generated/private declarations. Relies on already compiled imported modules; no source-hash/build coupling in this file.',
+'lean4/axiom_report.txt':'Historical32-line named21 report claims successful Lean4.34 build and19 axiom-free plus2 propext/Quot.sound. Content read, not fresh kernel evidence; scope phrase every definition does not include all generated declarations.',
+'lean4/full_axiom_report.txt':'Historical64-declaration census includes generated/private entries. Observed dependencies propext and Quot.sound; Classical.choice allowed but not observed. No current kernel replay claimed.',
+'code/tests/test_007_evidence_boundaries.py':'Four tests: wrong-sign cycle aggregate insufficiency, assertion-substring status spoof, printed Fraction worksheet execution, unfamiliar4-cycle13/12 residual. Useful finite counterexamples, not learner evidence or complete checker adequacy.',
+'code/tests/test_007_pedagogical_transmission.py':'Legacy thresholds consume supplied duration/metrics/statuses. Status scorer merely searches assert substring, accepts comments/string literals, performs no execution. Tests are explicitly fixture arithmetic, not empirical attention/certification.',
+'code/tests/test_007_worked_triangle.py':'Five exact fraction invariants, one stored-notebook counter/output/import scan, one repository-dependent printed block execution. Stored outputs are substring checks; final test invokes actual package initialization unless isolated elsewhere.',
+'tools/check_source_triangle.py':'Hashes seven DDC module paths from inventory, replaces parent package initialization, executes three paper blocks then expects retired norm refusal. Useful source-bound isolated check, not integration; inventory is not independently authenticated and imported dependency package may resolve additional files.',
+'tools/replay_companion_notebook.py':'Fresh child CPython ordinary-cell execution in temp cwd; captures stdout/stderr, checks sequential counters, normalized outputs, minimumPython and unchanged notebook bytes. Not Jupyter display semantics or a security sandbox; safe only after cell inspection. Optional Jupyter not run.',
+'tools/build_paper.py':'Module-top-level builder writes package build dir, TeX and paper.pdf using pandoc/XeLaTeX twice. Preserves preamble and adjusts table/listing layout. Excluded from execution; error mid-build may leave partial changed originals.',
+'LICENSE':'Exact fully read Paper004 CC BY4.0 base, applied here to prose and docs under mixed licensing. Attribution/license text review is not legal advice or verification of rights.',
+'LICENSE-CODE':'Exact fully read Paper004 PolyForm Noncommercial1.0 base, applied to Python/notebook/Lean code here. No execution or provenance authenticity established.',
+'code/deposit_paths.py':'Exact Paper004 owner: lexical/resolved containment, link and Windows/casefold guards. Useful package-custody path validation, not authenticity or TOCTOU protection.',
+'scripts/build_deposit_zip.py':'Exact Paper004 owner: deterministic metadata/ordering and upfront manifest hashes; reads files again while writing output, no second digest check. Direct overwrite possible. Not run.',
+'scripts/regen_sha256sums.py':'Exact Paper004 owner: manifest-driven hash regeneration and readonly --check; sequential non-atomic writes in default mode. Retained release bytes not regenerated.',
+'tools/rebuild_release.py':'Exact Paper004 owner: rescans and regenerates manifests, deletes old release ZIPs by default, optionally builds/checks. Rebuild is migration, not historical verification. Not run.',
+'verify_deposit.py':'Exact Paper004 owner: fixed manifest and tree checks; tests and Lean opt-in; default success is custody subset only. Named census parse lacks meaningful nonempty guarantee; no independent authentication.',
+'tools/replay_full_axiom_census.py':'Exact Paper004 owner: module-discovered full census and allowed-axiom gate with nonempty guard. Does not build/source-bind imports automatically. Historical versus current kernel state remains distinct.',
+'tools/replay_lean_axiom_census.py':'Exact Paper004 owner: named report-driven census compares mappings; no independent completeness/nonempty/whitelist gate. Does not prove semantic adequacy of theorem premises.',
+'pyproject.toml':'Complete Paper004 baseline plus complete diff: companion007 metadata,Python>=3.12,pytest>=9.0.3 and notebook dependency pins,ruffpy312,zero packages. README pytest8.3.5 pin is stale; no dependencies installed.',
+}
+if __name__=='__main__':
+ scope=load('_scope.json'); rows={r['path']:r for r in scope['files']};ledger=load('_read_ledger.json')
+ # These full bodies were displayed by a command whose later misspelled filename prevented ledger flush.
+ for n in ['code/tests/test_007_worked_triangle.py','tools/check_source_triangle.py']:
+  r=rows[BASE+n]
+  if not any(x['path']==BASE+n for x in ledger):ledger.append({'path':BASE+n,'sha256':r['sha256'],'source_lines':r['lines'],'reviewed_lines':[[1,r['lines']]],'output_truncated':False,'receipt_note':'Full output observed before later missing-file exception; recording displayed body only.'})
+ write('_read_ledger.json',ledger)
+ write('_notes_initial.json',notes)
+ source=(HERE/'additional_paper_006_support_checkpoint.py').read_text().replace('006_support','007_support').replace('006_pfp_epistemic_immune_system_and_cemetery_dag_mining','007_pfp_executable_lessons_and_evidence_boundaries').replace('Paper006','Paper007')
+ (HERE/(P+'_checkpoint.py')).write_text(source,encoding='utf-8')

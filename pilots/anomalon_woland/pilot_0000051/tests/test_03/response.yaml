@@ -1,0 +1,153 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_03
+case_id: rewrite_03_symsys_discrete
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+witness_verified: null
+raw_reply: "{\n  \"answer\": {\n    \"observed_tallies\": {\"C1\": 0, \"C2\": 0, \"\
+  C3\": 0},\n    \"all_green\": true,\n    \"raw_global_defect_I\": 6,\n    \"visibility_gap_lambda\"\
+  : 6,\n    \"recovery_modulus_exists\": false\n  }\n}"
+reasoning_content: "We need answer. Need parse problem. Need compute. Need understand\
+  \ covering nerve, fiber R3 norm l1, section values on nodes. d0 coboundary eval\
+  \ s_target_minus_s_source. Observers C1 edges e1,e6 proj del_coord_0 R3_to_R2. C2\
+  \ edges e2,e3 proj del_coord_1. C3 edges e4,e5 proj del_coord_2. Compute tallies\
+  \ J_C1 etc. Need infer J maybe sum of l1 norms of projected coboundary over observer\
+  \ edges? Need compute all green if all J zero. global_I sum_all_edges_l1_norm. gap_lambda\
+  \ = global_I - max_J. recovery_modulus_exists existence predicate under positive\
+  \ scaling. Need output.\n\nLet's parse carefully.\n\nNodes u1,u2,u3,x12,x23,x31.\
+  \ Edges:\ne1 from x12 to u1\ne2 from x12 to u2\ne3 from x23 to u2\ne4 from x23 to\
+  \ u3\ne5 from x31 to u3\ne6 from x31 to u1\n\nSection s:\nu1 = (1,0,0)\nu2 = (0,1,0)\n\
+  u3 = (0,0,1)\nx12 = (0,0,0)\nx23 = (0,0,0)\nx31 = (0,0,0)\n\nd0 coboundary eval\
+  \ s_target_minus_s_source. For edge from source to target, value = s(target) - s(source).\
+  \ Need compute for each edge.\n\ne1 from x12 to u1: s(u1)-s(x12) = (1,0,0)-(0,0,0)=(1,0,0).\n\
+  e2 from x12 to u2: (0,1,0)-(0,0,0)=(0,1,0).\ne3 from x23 to u2: (0,1,0)-(0,0,0)=(0,1,0).\n\
+  e4 from x23 to u3: (0,0,1)-(0,0,0)=(0,0,1).\ne5 from x31 to u3: (0,0,1)-(0,0,0)=(0,0,1).\n\
+  e6 from x31 to u1: (1,0,0)-(0,0,0)=(1,0,0).\n\nObservers:\nC1 edges e1,e6, proj\
+  \ del_coord_0 R3_to_R2. Need interpret \"proj del_coord_0\" maybe projection deleting\
+  \ coordinate 0? It says del_coord_0, R3_to_R2. Could mean delete coordinate 0, leaving\
+  \ coords 1,2. Or maybe projection onto coordinate 0? Need infer from notation. \"\
+  del_coord_0\" likely delete coordinate 0. Observers C1 edges e1,e6. For e1 value\
+  \ (1,0,0). Delete coord 0 -> (0,0). e6 value (1,0,0) -> (0,0). J_C1 maybe sum l1\
+  \ norms of these projected values = 0+0=0. If instead project onto coord 0 -> (1)\
+  \ maybe R3_to_R1 not R2. Since R3_to_R2, delete one coordinate. C1 del_coord_0 ->\
+  \ remove first coordinate, get (coord1, coord2). Yes.\n\nC2 edges e2,e3, del_coord_1\
+  \ -> remove second coordinate, get (coord0, coord2). e2 (0,1,0) -> (0,0). e3 same\
+  \ -> (0,0). J_C2=0.\n\nC3 edges e4,e5, del_coord_2 -> remove third coordinate, get\
+  \ (coord0, coord1). e4 (0,0,1) -> (0,0). e5 same -> (0,0). J_C3=0.\n\nAll green\
+  \ true. global_I sum_all_edges_l1_norm. Need l1 norm of each edge coboundary:\n\
+  e1 (1,0,0) l1=1\ne2 (0,1,0)=1\ne3=1\ne4=1\ne5=1\ne6=1\nsum=6.\n\ngap_lambda = global_I\
+  \ - max_J = 6 - 0 = 6.\n\nrecovery_modulus_exists existence_predicate_under_positive_scaling.\
+  \ Need determine. This likely from sheaf/covering nerve? Need understand context.\
+  \ Maybe if all observers green? Hmm.\n\nWe need be careful: The problem may be from\
+  \ a benchmark about \"covering nerve\" and \"observers\" with projections. Need\
+  \ compute tallies J_Ci maybe not simply sum l1 of projected edge values? Could be\
+  \ \"J_C\" is max over edges? Let's parse XML.\n\n<<compute>\n    <<tallies><J_C1><J_C2><J_C3>>\n\
+  \    <<all_green><all_J_zero_predicate>>\n    <<global_I><sum_all_edges_l1_norm>>\n\
+  \    <<gap_lambda><global_I_minus_max_J>>\n    <<recovery_modulus_exists><existence_predicate_under_positive_scaling>>\n\
+  \  >\n\nIt defines tallies J_C1 etc. Need compute. Observers have edges and proj.\
+  \ Maybe J_Ci is sum over edges in observer of l1 norm of projected coboundary? Or\
+  \ maybe \"tally\" counts nonzero? Need infer from \"all_J_zero_predicate\". If J\
+  \ is sum of l1 norms, all green iff all zero. If J is count of nonzero edges, all\
+  \ green iff all zero. Both same for zero/nonzero. But integer values differ. Need\
+  \ know.\n\nThe output asks observed_tallies C1 integer etc. Need compute exact.\
+  \ Need infer from notation. \"tallies\" maybe J_C = sum of l1 norms of projected\
+  \ d0 values over edges in C. The global_I is sum_all_edges_l1_norm. gap_lambda =\
+  \ global_I - max_J. If J were counts, gap not meaningful? Maybe J is \"defect\"\
+  \ sum of norms. The term \"tally\" could be sum. Let's examine.\n\nObservers:\n\
+  C1 edges e1,e6 proj del_coord_0 R3_to_R2\nC2 edges e2,e3 proj del_coord_1 R3_to_R2\n\
+  C3 edges e4,e5 proj del_coord_2 R3_to_R2\n\nEach observer covers two edges incident\
+  \ to a central? Actually C1 edges e1 (x12->u1) and e6 (x31->u1) both target u1?\
+  \ e1 target u1, e6 target u1. They are edges into u1. Projection deletes coord 0.\
+  \ The coboundary values for e1/e6 are (1,0,0). Deleting coord0 yields zero. So C1\
+  \ sees no defect. C2 edges e2/e3 both target u2? e2 target u2, e3 target u2. Values\
+  \ (0,1,0). Delete coord1 yields zero. C3 edges e4/e5 target u3. Values (0,0,1).\
+  \ Delete coord2 yields zero. So all observers see zero. Global has nonzero edges.\
+  \ This is a classic \"local observers cannot see global defect\" due to projections.\
+  \ gap_lambda = 6. Recovery modulus? If all local projections zero but global nonzero,\
+  \ no recovery modulus? Need determine.\n\n\"recovery_modulus_exists><existence_predicate_under_positive_scaling\"\
+  \ Maybe asks if there exists a modulus (constant) such that global defect <= lambda\
+  \ * max local defect? Under positive scaling? If max_J=0 and global_I>0, no finite\
+  \ modulus. But \"under positive scaling\" maybe if scaling section? Let's parse.\n\
+  \nThe section values are basis vectors at u1,u2,u3. The coboundary edges are nonzero.\
+  \ Observers project out the coordinate that is nonzero for their edges, so local\
+  \ tallies zero. This demonstrates invisibility. The recovery modulus exists? If\
+  \ local observations all zero, cannot recover global defect. So false. But need\
+  \ be certain.\n\nMaybe \"recovery_modulus_exists\" is an existence predicate under\
+  \ positive scaling. Could be if there exists C such that for all sections, global_I\
+  \ <= C * max_J. Here for this section, max_J=0, global_I=6, so no. Unless positive\
+  \ scaling of section? If scale section by t>0, global_I=6t, max_J=0, still no. So\
+  \ false.\n\nBut let's not jump. Need consider if J_Ci maybe not zero due to projection\
+  \ definition. Let's examine \"proj><del_coord_0><R3_to_R2\". Could \"del_coord_0\"\
+  \ mean \"delete coordinate 0\" as I assumed. If instead \"del_coord_0\" means \"\
+  coordinate 0\" (maybe \"del\" = delta? no). The notation \"del_coord_0\" could be\
+  \ \"delete coordinate 0\". R3_to_R2 confirms. So yes.\n\nWhat if projection is onto\
+  \ coordinate 0? Then R3_to_R2 impossible. Could be \"del_coord_0\" = \"delete coordinate\
+  \ 0\" leaving two coords. So C1 sees (0,0). C2 sees (0,0). C3 sees (0,0). All zero.\n\
+  \nWhat if J_C is not sum of l1 norms but maybe max over edges? Still zero.\n\nGlobal_I\
+  \ sum_all_edges_l1_norm = 6. gap_lambda = 6 - max(0,0,0)=6.\n\nNeed output JSON\
+  \ exactly.\n\nBut let's ensure no hidden issue: The section at x nodes zero, at\
+  \ u nodes basis. Edges from x to u. d0 = s_target - s_source. For e1 x12->u1 = (1,0,0).\
+  \ e6 x31->u1 = (1,0,0). C1 deletes coord0 -> (0,0). Yes.\n\nC2 e2 x12->u2 = (0,1,0).\
+  \ e3 x23->u2 = (0,1,0). Delete coord1 -> (0,0). Yes.\n\nC3 e4 x23->u3 = (0,0,1).\
+  \ e5 x31->u3 = (0,0,1). Delete coord2 -> (0,0). Yes.\n\nAll green true.\n\nRecovery\
+  \ modulus exists? Let's think if there is any nuance: \"existence_predicate_under_positive_scaling\"\
+  \ might mean if there exists a positive scaling factor for the section such that\
+  \ recovery modulus exists? But scaling doesn't change zero/nonzero. If local observations\
+  \ zero, global nonzero, no. If they ask \"under positive scaling\" maybe they consider\
+  \ scaling the local tallies? Hmm.\n\nMaybe \"recovery modulus\" in sheaf theory:\
+  \ Given local sections, can we bound global defect by local defects? If all local\
+  \ defects zero, global defect should be zero for a sheaf. Here local observers are\
+  \ projections, not full restrictions. The existence of a recovery modulus might\
+  \ be true if the covering nerve is connected? Wait, let's analyze the sheaf/covering\
+  \ nerve structure.\n\nThe nodes are u1,u2,u3,x12,x23,x31. Edges connect x_ij to\
+  \ u_i and u_j? Actually e1 x12-u1, e2 x12-u2, e3 x23-u2, e4 x23-u3, e5 x31-u3, e6\
+  \ x31-u1. This is a bipartite graph: central nodes x12,x23,x31 each connected to\
+  \ two u's. It's like a triangle with edges x12 between u1,u2, x23 between u2,u3,\
+  \ x31 between u3,u1. The section assigns values to all nodes. The coboundary on\
+  \ edges measures differences. Observers C1 covers edges incident to u1? Actually\
+  \ C1 edges e1 (x12-u1) and e6 (x31-u1). It projects out coord0. C2 edges e2 (x12-u2)\
+  \ and e3 (x23-u2), projects out coord1. C3 edges e4 (x23-u3) and e5 (x31-u3), projects\
+  \ out coord2. So each observer sees edges around a u node, but ignores the coordinate\
+  \ corresponding to that u's value. Since u1 has (1,0,0), edges to u1 have difference\
+  \ (1,0,0). Projecting out coord0 hides it. Similarly for u2,u3. So local observers\
+  \ see zero. Global sum sees 6. This is a counterexample to recovery.\n\nThus recovery_modulus_exists\
+  \ false.\n\nNeed output JSON with integers. Ensure no extra text.\n\nLet's craft\
+  \ final:\n{\n  \"answer\": {\n    \"observed_tallies\": {\"C1\": 0, \"C2\": 0, \"\
+  C3\": 0},\n    \"all_green\": true,\n    \"raw_global_defect_I\": 6,\n    \"visibility_gap_lambda\"\
+  : 6,\n    \"recovery_modulus_exists\": false\n  }\n}\n\nDouble-check if all_green\
+  \ should be true if all J zero. Yes.\n\nWhat if J_Ci is sum of l1 norms of projected\
+  \ values, but if projection deletes coord0, e1 (1,0,0) -> (0,0) l1=0. e6 same. So\
+  \ 0.\n\nWhat if \"del_coord_0\" means \"delete coordinate 0\" but R3_to_R2, yes.\n\
+  \nWhat if \"global_I\" is sum_all_edges_l1_norm of original coboundary, not projected.\
+  \ We computed 6. If it were sum of l1 norms of all edge values, yes.\n\nWhat if\
+  \ \"gap_lambda\" = global_I - max_J. max_J = 0. 6.\n\nWhat if \"recovery_modulus_exists\"\
+  \ is true because there is a positive scaling? Let's consider if they ask \"existence_predicate_under_positive_scaling\"\
+  \ meaning does there exist a positive constant C such that for all sections, global_I\
+  \ <= C * max_J? Here max_J=0, global_I=6, so no. If they ask \"under positive scaling\"\
+  \ maybe they allow scaling the section by a positive factor to make local tallies\
+  \ nonzero? But scaling by positive factor scales both global and local. If local\
+  \ is zero, remains zero. So no.\n\nThus final.\n\nNeed ensure JSON valid. Use integers.\
+  \ Boolean lowercase. Done."
+parsed_payload:
+  answer: *id001
+metrics:
+  duration_seconds: 22.98
+  prompt_tokens: 566
+  completion_tokens: 3180
+  reasoning_tokens: 3102
+  total_tokens: 3746
+  cost_usd: 0.0
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

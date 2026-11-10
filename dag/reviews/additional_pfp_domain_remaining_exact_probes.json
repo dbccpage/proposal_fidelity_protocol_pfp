@@ -1,0 +1,135 @@
+{
+  "at_utc": "2026-11-10T12:02:34.431756+00:00",
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/exceptions.py",
+      "sha256": "c0f7d4b1e65275d7604192e6cc8294d123a6f360e88c314a3eb63c3439429c69"
+    },
+    {
+      "path": "pfp/domain/exact/errors.py",
+      "sha256": "c5b3480bc566982069e759d397033779091da76ceba2c50b647226f0c4e53b0f"
+    },
+    {
+      "path": "pfp/domain/exact/q.py",
+      "sha256": "624890e7595b5ceb1def401d7b16f559e143e1408751259e6237711ef95bff32"
+    },
+    {
+      "path": "pfp/domain/exact/poly.py",
+      "sha256": "054e76f14e87586e43534e19dc7942340f94e258e7d38253d88293d923abad04"
+    },
+    {
+      "path": "pfp/domain/exact/alg.py",
+      "sha256": "7b11f457e4dde54646e2fe640e30836e1b8a736137cdc6208d2eca6f2585a469"
+    },
+    {
+      "path": "pfp/domain/exact/wire.py",
+      "sha256": "c7817f0cda296b3ca23b1b166389cc0df3a1a698f137ef24e9785ce4c0a4ad04"
+    },
+    {
+      "path": "pfp/domain/shared_kernel/exact.py",
+      "sha256": "c9d2d9c957f05c728b195c015408cb2391153a726d7fd8a2b369d29f52586e8e"
+    }
+  ],
+  "import_context": "Explicit source loading with inert namespace packages; original package initializers were not executed. Only read-vetted stdlib/declaration imports occur.",
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C001",
+      "rule": "distinct_root_count_at_repeated_root_endpoints",
+      "status": "counterexample_observed",
+      "cases": [
+        {
+          "polynomial": "(x-1)^2*(x-2)",
+          "interval": [
+            1,
+            3
+          ],
+          "expected_distinct_roots": 1,
+          "observed": 0
+        },
+        {
+          "polynomial": "(x-1)^2*(x-2)",
+          "interval": [
+            0,
+            1
+          ],
+          "expected_distinct_roots": 1,
+          "observed": 2
+        },
+        {
+          "polynomial": "(x-1)^2*(x-2)",
+          "interval": [
+            0,
+            3
+          ],
+          "expected_distinct_roots": 2,
+          "observed": 2
+        }
+      ]
+    },
+    {
+      "id": "PFPDOMAIN-C002",
+      "rule": "algebraic_value_invariant_under_external_mutation",
+      "status": "counterexample_observed",
+      "before_equals_one": true,
+      "after_equals_one": false,
+      "after_equals_two": true,
+      "input": "list accepted as poly despite tuple annotation"
+    },
+    {
+      "id": "PFPDOMAIN-C003",
+      "rule": "rational_wire_canonical_input_uniqueness",
+      "status": "counterexample_observed",
+      "cases": [
+        {
+          "input": " 1 ",
+          "wire_normalized": "1",
+          "strict_shared_parser": "refused"
+        },
+        {
+          "input": "01",
+          "wire_normalized": "1",
+          "strict_shared_parser": "refused"
+        },
+        {
+          "input": "1/1",
+          "wire_normalized": "1",
+          "strict_shared_parser": "refused"
+        },
+        {
+          "input": "2/2",
+          "wire_normalized": "1",
+          "strict_shared_parser": "refused"
+        },
+        {
+          "input": "1/-2",
+          "wire_normalized": "-1/2",
+          "strict_shared_parser": "refused"
+        },
+        {
+          "input": "+1",
+          "wire_normalized": "1",
+          "strict_shared_parser": "refused"
+        },
+        {
+          "input": "-0",
+          "wire_normalized": "0",
+          "strict_shared_parser": "refused"
+        }
+      ]
+    },
+    {
+      "id": "PFPDOMAIN-C004",
+      "rule": "duality_gap_constructor_consistency_and_optimality_scope",
+      "status": "counterexample_observed",
+      "inconsistent_accepted": {
+        "primal": "1",
+        "dual": "0",
+        "gap": "0",
+        "is_optimal": true
+      },
+      "zero_objectives_marked_optimal": true,
+      "limit": "No feasibility constraints, primal/dual witnesses or weak-duality relation are accepted by this API; scalar equality alone cannot establish an optimization certificate."
+    }
+  ]
+}

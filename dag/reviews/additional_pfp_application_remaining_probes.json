@@ -1,0 +1,133 @@
+{
+  "scope": "Synthetic only; no actual hidden cases; AST function bodies with explicit fake I/O; JSON Schema validation only",
+  "probes": [
+    {
+      "name": "challenge_leaks_expected_and_accepts_mutated_manifest",
+      "observed": {
+        "received_by_fake_solver": [
+          {
+            "expected": 98765,
+            "input": 7
+          },
+          {
+            "expected": -12,
+            "input": 7
+          }
+        ],
+        "both_receipts": [
+          {
+            "challenge_id": "synthetic",
+            "judge_commitment_hash": "arbitrary-unverified-commit",
+            "freeze_record_hash": "forged",
+            "deliverable_sha256": "3e5c5cfa51fab34b0ab7291761f16b01cbbd87bead60b164a59ccbfb270afc79",
+            "cases_total": 1,
+            "cases_correct": 1,
+            "cases_wrong": 0,
+            "checker_defect_pause": false,
+            "case_outcomes": [
+              {
+                "case_index": 0,
+                "kind": "Correct"
+              }
+            ],
+            "status": "COMPLETED",
+            "authority_effect": "None"
+          },
+          {
+            "challenge_id": "synthetic",
+            "judge_commitment_hash": "arbitrary-unverified-commit",
+            "freeze_record_hash": "forged",
+            "deliverable_sha256": "3e5c5cfa51fab34b0ab7291761f16b01cbbd87bead60b164a59ccbfb270afc79",
+            "cases_total": 1,
+            "cases_correct": 1,
+            "cases_wrong": 0,
+            "checker_defect_pause": false,
+            "case_outcomes": [
+              {
+                "case_index": 0,
+                "kind": "Correct"
+              }
+            ],
+            "status": "COMPLETED",
+            "authority_effect": "None"
+          }
+        ]
+      },
+      "limitations": "Subprocess was a stub; proves command argument leakage and absent commitment recomputation, not actual sandbox escape."
+    },
+    {
+      "name": "duplicate_checkers_bool_integer_alias",
+      "observed": [
+        "CORRECT",
+        "",
+        ""
+      ],
+      "limitations": "Synthetic Python equality: both purported independent checkers use same expression."
+    },
+    {
+      "name": "swarm_empty_routes_and_targets_verified",
+      "observed": {
+        "exit_code": 0,
+        "terminal_status": "Verified",
+        "disposition": "PASS_TO_MASTER",
+        "verifier_receipts": [],
+        "audit_findings": []
+      },
+      "limitations": "Governance and contract I/O injected; actual decision/empty-route bodies executed; no files written or commands run."
+    },
+    {
+      "name": "local_detector_red_branch_nameerror",
+      "observed": {
+        "exception": "NameError",
+        "message": "name 'core' is not defined"
+      },
+      "limitations": "Conditional branch reached using injected terminalizer; no assertion that current native import guard reaches it in production."
+    },
+    {
+      "name": "finite_csp_input_alias",
+      "observed": {
+        "input": {
+          "x": 1.9,
+          "y": true
+        },
+        "normalized": [
+          [
+            "x",
+            1
+          ],
+          [
+            "y",
+            1
+          ]
+        ]
+      },
+      "limitations": "Pure function behavior; caller may impose stricter admission. Finite integer fixture itself remains valid."
+    },
+    {
+      "name": "score_schema_accepts_undefined_rationals_and_exact_illegal",
+      "observed": {
+        "schema_version": "core.symbol-game.coboundary-score.v1",
+        "family": "coboundary_score",
+        "proposal_id": "synthetic",
+        "prior_residual_norm": "1/0",
+        "post_residual_norm": "0",
+        "residual_drop": "-99",
+        "structural_cost": "00/00",
+        "normalized_efficiency": null,
+        "is_legal": false,
+        "refusal_reason": "synthetic refusal",
+        "is_exact_candidate": true,
+        "dual_witness_ref": "0000000000000000000000000000000000000000000000000000000000000000",
+        "authority_effect": "None"
+      },
+      "limitations": "Schema-only acceptance; does not claim typed/native checker accepts it. No external schema references resolved."
+    }
+  ],
+  "source_pins": {
+    "pfp/entrypoints/cli/challenge_commands.py": "fe96e53bf3588bb43a932dc578e97bfa494a6787f347ffa8b7fb50d7374c30ab",
+    "pfp/entrypoints/cli/swarm_developer.py": "836e075368873e98b90a045552276173699972aeef8137493d4aba369d5a6762",
+    "pfp/use_cases/detector_adequacy/local_detector.py": "9d8e3600177c85b0e9efb9e17bbce409fd3b2b56f3b029e7e9decdc694d5d6a0",
+    "pfp/fixtures/finite_csp.py": "98b2d189a38376c5b293f6ca0f2854232d6caf8bbf7f56030b840fb8a1184f68",
+    "pfp/packet_schemas/coboundary_score_v1.schema.json": "79b1cd90b8adee4eb3c4bc9231ed9abdb1580ae9ecc1c9b362e85f7c2dae6737"
+  }
+}

@@ -1,0 +1,26 @@
+# AuthorityEffect: None.
+# Dimension probe for pilots 5-10. Not a provider run.
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000009
+task_family: graph_facts
+difficulty_rung: 3
+request_id: pilot_0000009_req_test_28
+seed_prompt: |
+  Triangle 0-1-2 with a tail 0-3-4. A stored rejection says this graph is a tree. Replay that candidate.
+
+
+  Dimension probe negative_control_set is held at: wrong.
+  Return one JSON object. Put the certificate in the answer field.
+  Bind each step you use before the certificate.
+expected_outcome:
+  answer:
+    cycle_rank: 1
+    tree: false
+  status: ACCEPTED
+input_typing:
+  lexical_alphabet: UTF-8
+  syntactic_category: ModeTrialSeed
+  semantic_carrier: graph_facts
+  dialect_tier: mode_10
+  boundary_format: pfp.sealed-packet.v1

@@ -1,0 +1,19 @@
+# Lab, C# clients and remaining Lean audit
+
+Source pin: `8050c66900899771766f33e8f5fdd200b7dd9120`. **102/102 assigned files reviewed:** 35 C#, 63 previously unread Lab files and four remaining Lean files (646,321 bytes). The JSON records every path, SHA-256, full range, review method and substantive assessment. The 36 generated score records were read as complete baselines plus every lossless line replacement; reconstruction was checked byte for byte. Five empty package markers contribute no implementation. No original source was edited.
+
+The Lab implements a finite exact rational graph game. CLI, HTTP and desktop all use the same Python governor. Their agreement therefore validates transport and replay interoperability, not independent mathematical algorithms. The nine supplied packs demonstrate cycle inconsistency, weighted repair, component sums and rollback on small synthetic graphs. Financial and ledger labels do not add empirical validity. Generated tests exercise smaller domains than the admitted graph and rational limits. Search budgets apply per enumeration; they do not by themselves establish an end-to-end memory or latency contract.
+
+`PrimitiveDifference.lean` assumes an equivalence relation defined by zero difference and proves that operations/invariants factor through its quotient exactly when they respect that relation. Its Boolean countermodel refutes automatic congruence. `ShadowBoundary.lean` proves collision obstruction, refinement/encoding preservation and the necessity of separating target collisions with new information. These results need explicit shadow, target and correspondence premises. Toy packet/LGGR/zeta worlds do not prove a runtime detector adequate; adding the target itself merely makes recovery a projection. Some quotient results use `Quot.sound` and `propext`. The historical axiom census and imported provenance were read separately from the proofs.
+
+Confirmed repair backlog:
+
+- **LCF-F1 (P2):** an admitted 64-digit claim on a weight-1000 edge produces a 67-digit defect. Python runs and verifies the receipt; compiled C# rejects it because output validation reuses the 64-character input cap (`Rational.cs:50–55`, `Dtos.cs:62–70`).
+- **LCF-F2 (P2):** both differential tests fail setup because the oracle fixture still points to `papers/005_…`; the file now lives under `papers/pfp/005_…` (`conftest.py:20–22,36–46`).
+- **LCF-F3 (P2):** C# receipt validation accepts 64 nonhex `z` characters as a digest. The schema test compares field names, missing this constraint (`Dtos.cs:136–137`, `ContractTests.cs:142–162`). This does not bypass Python replay.
+- **LCF-F4 (P2):** the web chart plots attempted `defect_after`, including rejected proposals and both D and Φ₁, under “Defect after each step.” The refused Paper 005 CUT plots 5 while actual state D stays 6 and Φ₁ stays 3 (`app.js:95–114`, `index.html:53–55`).
+- **LCF-F5 (P3):** the README desktop command invokes nonexistent `pfp_lab.__main__`; the actual C# launcher uses the correct module.
+
+Fresh offline validation: C# build succeeded with zero warnings/errors and **29/29 tests passed**. Selected Lab tests yielded **254 passed, one naming-policy failure** on three governance metadata files; another **13 non-web pin tests passed**. The two differential tests errored at setup. An isolated HTTP/TestClient run timed out after 30 seconds; the earlier full Lab run was interrupted after a stall, so no full-suite pass is claimed. The C# tests do not include the two new boundary counterexamples. All 36 score source/evidence hash checks and ten Lean provenance hash checks matched; this establishes custody, not truth of historical grades. Parent's prior successful Lean build/census is inherited validation, not rerun here.
+
+The declared slice is complete. Repairs and the unresolved HTTP validation remain explicit; the parent’s original every-file corpus audit is a separate, larger objective.

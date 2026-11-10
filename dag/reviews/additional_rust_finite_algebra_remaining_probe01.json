@@ -1,0 +1,165 @@
+{
+  "status": "complete_bounded_controls",
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "original_program_execution": false,
+  "sources": [
+    {
+      "path": "code/rust/core_number_theory/src/rational.rs",
+      "sha256": "49ce8730d2beb1fa9d272a1c157c963a071cd94c885bb062a70eaeaeca3527c0",
+      "lines": [
+        1,
+        621
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/finite_field.rs",
+      "sha256": "23eceeeeb33157f531554990d8b19c5e455968bc7ec3e171970c8745fde7b650",
+      "lines": [
+        1,
+        459
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/binary_field.rs",
+      "sha256": "7549563d8b3af98d07ee7edffa4c80c7c688fb03a343e976fc96763d60ee14b9",
+      "lines": [
+        1,
+        427
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/character_sums.rs",
+      "sha256": "3ec26b7e0b3f2ded88c7aa75e635386d989a959f2fc034f588fadae10f50963f",
+      "lines": [
+        1,
+        273
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/integer_factorization.rs",
+      "sha256": "b20c3c6e53044a5f215eeac01fd8e9c3eabb0eabe2f50347f63caf838162b81f",
+      "lines": [
+        1,
+        289
+      ]
+    },
+    {
+      "path": "code/rust/core_number_theory/src/residue.rs",
+      "sha256": "ac0e61c5c4c4376901925c11b1d08d88249c687e806b8806b206518de09a7429",
+      "lines": [
+        1,
+        95
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "rule": "binary_irreducibility_all_polynomials_degree_at_most6",
+      "status": "counterexample_found",
+      "tested": 127,
+      "false_admissions": [
+        1,
+        4,
+        8,
+        14,
+        16,
+        22,
+        26,
+        32,
+        38,
+        44,
+        50,
+        52,
+        62,
+        64,
+        74,
+        76,
+        82,
+        94,
+        100,
+        110,
+        118,
+        122,
+        124
+      ],
+      "minimal_nonfield": {
+        "degree": 0,
+        "modulus": 1
+      },
+      "nonzero_nilpotent": {
+        "degree": 2,
+        "modulus": 4,
+        "x": 2,
+        "x_squared": 0
+      }
+    },
+    {
+      "rule": "genuine_binary_fields_degree1_to4",
+      "status": "bounded_identities_verified",
+      "associativity_distributivity_triples": 13392,
+      "limits": "Enumerated admitted irreducible polynomials and canonical element masks only."
+    },
+    {
+      "rule": "out_of_carrier_binary_mask",
+      "status": "counterexample_found",
+      "degree": 2,
+      "modulus": 7,
+      "mul_4_1": 0,
+      "mul_1_4": 3,
+      "limits": "Canonical masks 0..4 excluded; this demonstrates missing public input admission, not failure on valid field elements."
+    },
+    {
+      "rule": "line_group_subset_count",
+      "status": "counterexample_found",
+      "degree": 1,
+      "generator_count": 2,
+      "source_masks": [
+        0,
+        1
+      ],
+      "required_subset_masks": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "rule": "squarefree_bounded_trials",
+      "status": "bounded_identities_verified",
+      "tested": 13013,
+      "admitted": 8485,
+      "refused": 4528,
+      "limits": "Independent square-divisor oracle on integers -500..500 and limits0..12; no complexity equivalence to factoring inferred."
+    },
+    {
+      "rule": "miller_rabin_base_logic",
+      "status": "bounded_identities_verified",
+      "tested": 20000,
+      "limits": "Only n=0..19999 compared against trial primality. Full u64 deterministic-base theorem remains mathematical dependency, not established by this finite control."
+    },
+    {
+      "rule": "residue_crt_and_two_torsion",
+      "status": "bounded_identities_verified",
+      "moduli": 999,
+      "limits": "n=2..1000 compared to complete residue enumeration; factor oracle is independent trial division, not Rust Pollard implementation."
+    },
+    {
+      "rule": "quadratic_gauss_sum_characteristic_two",
+      "status": "counterexample_found",
+      "GF2_a1_b0_sum": 0,
+      "norm_squared": 0,
+      "field_order": 2,
+      "limits": "Correctly refused by the owner checker; contradiction is only the unrestricted prose claim."
+    },
+    {
+      "rule": "zero_carrier_character_certificate",
+      "status": "counterexample_found",
+      "constructor": "FiniteField::new(0,1,[])",
+      "field_order": 0,
+      "linear_sums_checked": 0,
+      "gauss_sums_checked": 0,
+      "limits": "Unchecked constructor violates its stated field precondition; verifier has no separate nonempty/field admission."
+    }
+  ]
+}

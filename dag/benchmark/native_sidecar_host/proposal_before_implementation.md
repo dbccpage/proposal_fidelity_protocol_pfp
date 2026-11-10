@@ -1,0 +1,64 @@
+# Proposed next increment: exact algebra sidecars
+
+Status: source-grounded proposal, revised for all three public parameters on 2026-11-10. No benchmark runtime, specification, checker, evaluator, private material or live output was read or changed for this proposal. No model, provider, native binary or original program was executed. `native_sidecar_availability.json` records a retained `pfp.exe` with unbound build provenance; native execution is currently an explicit infrastructure refusal. Applicability to particular QM questions remains unmeasured.
+
+Implement one optional `qm-exact-algebra-v1` sidecar for public, finite matrix obligations. Reuse the native exact arithmetic actions and typed operad composition; return an exact mismatch to the candidate producer for a bounded repair. Start with polynomial characteristic-polynomial claims. Add ordered Pauli products through rational realification only after the first contract works. Keep free prose and uncovered obligations explicitly unverified.
+
+This is a substantive connection: the host recomputes a mathematical invariant from public operands and compares the candidate's coefficients. A schema, a prompt asking for verification, or a model-authored `verified` flag cannot discharge the obligation.
+
+## Public contract and mathematical guarantee
+
+The public task supplies an immutable obligation list, with obligation IDs, source spans/conventions, and exact matrix operands. It does not supply answers. The first profile admits a nonempty square affine matrix `A(J,Delta,K) = A0 + J*AJ + Delta*ADelta + K*AK` over the three real parameters, with four exact rational coefficient matrices and dimension at most 4. All four matrices are mandatory, including explicit zero coefficients. This covers the full three-parameter domain, not a one-variable restriction. Coefficients are reduced rational strings; floats, arbitrary code, unknown expressions, parameter-dependent denominators and piecewise formulas are refused as unsupported. Set explicit byte, coefficient-bit, dimension and time limits. The original public prose remains available; translating it into this algebraic obligation is an admitted interpretation, not a theorem about natural-language preservation.
+
+The candidate carries the public-input digest, obligation ID, answer-text binding and ascending lambda coefficient arrays for `p(lambda,J,Delta,K) = det(lambda I - A(J,Delta,K))`. Each coefficient is a sparse rational polynomial with explicit exponent triples `(eJ,eDelta,eK)`. Require exactly `n+1` lambda coefficients, monic leading coefficient, no duplicate monomials or missing/duplicate obligations, and degree at most `n` in **each** parameter. The host derives `n` from the four square matrices; the candidate cannot choose it. Bind the sidecar to an exact quoted assertion/span in the answer. A correct, unrelated sidecar earns no credit for contradictory surrounding prose.
+
+On the full Cartesian grid of `n+1` distinct host-selected rational values for **each** of `J`, `Delta` and `K`, evaluate `A` and the proposed coefficients exactly and call the existing native `exact_char_poly` action. Compare every coefficient at all `(n+1)^3` points (at most 125). Every true characteristic-polynomial coefficient has degree at most `n` in each parameter, by the determinant expansion. Hence each difference also has those per-variable bounds. Applying the univariate root bound successively to J, Delta and K proves that a difference vanishing on the entire Cartesian grid is the zero polynomial; the identity therefore holds for all real triples. This is conditional on correct parsing, degree checks, source interpretation and native arithmetic. An axis, diagonal or sampled one-variable line is insufficient. Without checked degree bounds the grid proves only agreement at its points.
+
+Public control example: `A(J,Delta,K)=[[J,Delta],[Delta,K]]`, whose polynomial is `lambda^2-(J+K)*lambda+J*K-Delta^2`. The full `{-1,0,1}^3` grid has 27 points. Reversing the `Delta^2` sign, dropping `J*K`, or adding a false term `J-Delta` is rejected with an exact witness; the last mutation deliberately evades the diagonal line `J=Delta=K`. An answer dividing by any parameter, or claiming a rank/eigenvector case split, is outside this first certificate: it must remain unresolved, including exceptional zero-parameter cases. Spectrum projectors and dynamics remain unresolved even when the characteristic polynomial is certified.
+
+For a later sign/order subprofile, reuse `exact_ordered_loop_product` on explicitly ordered rational matrices (`code/rust/pfp_runtime/src/homology_holonomy.rs:121-196`). Complex rational matrices can be encoded by the fixed realification `R(B+iC)=[[B,-C],[C,B]]`, preserving multiplication. Public controls `XY=iZ` and `YX=-iZ` expose phase and order mistakes. Initially require every word's `back` flag to be false: the existing implementation uses transpose for `back=true`, which is an inverse only under an orthogonality premise. Refuse dimension zero. These are new admission checks/glue, not existing automatic guarantees.
+
+## Existing mechanisms and the necessary glue
+
+| Mechanism | Actual owner and proposed use | Boundary |
+|---|---|---|
+| PFP proposal binding | `pfp/ffi.py:225-253` exposes exact matrix actions; `pfp/infrastructure/adapters/exact_rust_adapter.py:92-127` unwraps native outcomes. Reuse public-input/candidate binding and retain each native outcome. | Add the sidecar schema, source/answer binding, fixed obligation ledger, degree proof check, coefficient comparison and repair feedback. The adapter does not implement this profile already. |
+| Native algebra | `code/rust/pfp/src/invoke/exact.rs:739-768` dispatches rank/characteristic polynomial to `RationalMatrix`; `code/rust/pfp_runtime/src/rational.rs:47-109,278-353` uses checked matrix shape and BigRational, with Faddeev–LeVerrier characteristic coefficients. | This host route is **not** the separate generic Berkowitz implementation in `core_linear_algebra/exact_field`. Require host `success` and a valid result; an outer transport success is insufficient. |
+| Native OPERADS | `code/rust/pfp/src/port_host.rs:123-145` exposes `workflow_graph`; `code/rust/core_operads/src/operad_runtime.rs:87-176,264-400` validates typed ordered substitution and emits a plan. Use colours such as `PublicPolynomialMatrix`, `BoundCandidatePolynomial`, `ExactCheckReceipt`; bind registered executor digests. | Inline evaluation at `operad_runtime.rs:194-204,308-332` supports only identity/pair/i64 sum and refuses guarded plans. New Python host glue must execute the validated plan via the exact actions; declaring an operation does not implement it. |
+| Native EIS | `code/rust/pfp/src/port_host.rs:171-193` exposes `immune_screen`; `code/rust/core_adversary/src/oewas_oeeis_bridge.rs:137-194` routes it to `TwoSignalDangerGate::evaluate_independent`; `code/rust/core_epistemic_immune_system/src/signal_gate.rs:70-115` implements disposition. | An exact sidecar mismatch can supply host-produced `REPLAY_FAILURE` evidence, independently of a lexical/motif detector. Signal 2 alone is diagnostic in EIS; the exact checker still enforces its own refusal. Do not invent a Signal 1, rename the same residual twice, or trust candidate-supplied evidence/observer IDs. Independence checks over declared fields are not authentication. EIS adds regulation, not the algebra theorem. |
+| Native PCIV | `code/rust/core_prompt_civilization/src/fitness.rs:74-99,103-149,152-199` refuses success credit from untrusted receipt metadata, reduces mandatory outcomes, and computes Pareto fronts. | Use host-observed **sidecar** outcomes for comparing repair policies, never as whole-QM task success. No inspected host action directly exports this reducer/front API; wiring it is a small explicit native adapter follow-up, not a currently connected benchmark feature. Require a nonempty, complete mandatory list: the bare reducer's `all` check accepts an empty AllowedTask list. `prompt_civilization` demographic/regex operations are not a substitute. |
+
+WF1 supplies a task-turn/checker boundary (`pfp/workflows/wf0001/workflow.py:48-68`); WF3/WF4 supply frozen attachments/profiles and bounded candidate orchestration (`pfp/workflows/wf0003/workflow.py:196-232`, `pfp/workflows/wf0004/workflow.py:77-120`). Reuse those ownership patterns rather than their integer-sum task semantics. WF4 explicitly requires `integer_sum_v1` at lines 44-48. WF5's whole-span lower/decode/replay mechanism (`pfp/workflows/wf0005/rewrite.py:153-235`) recognizes only its controlled sum language; no existing WF5 preservation certificate covers arbitrary QM text. No need for an extra mining/model call in the first sidecar increment.
+
+Do not map arbitrary defect counts to mathematical `Phi_1`/`Gamma_2`. The native retraction engine (`code/rust/pfp/src/epics/retraction.rs:171-238`) checks descent of supplied integer triads; it does not derive those quantities from QM answers. A simple fixed repair-attempt limit plus fresh exact replay is sufficient initially.
+
+## Falsifiable comparison and next action
+
+First run a zero-provider public control panel after the frozen request finishes. Use identical frozen candidates for (A) schema-only sidecar parsing and (B) native recomputation. Include correct answers, coefficient sign flips, omitted parameter/cross terms, the diagonal-line false positive above, reordered matrix products in the later subprofile, over-degree payloads (including a grid-vanishing polynomial of degree n+1 in one variable), duplicate/missing obligations, an unrelated correct sidecar, and unsupported divisions/branches. Record exact detection, false refusal, unsupported, infrastructure failure and latency separately. Require all admitted positive fixtures to pass, every targeted false identity to fail with a witness, and unsupported material to remain unresolved. A degree-limit bypass or accepted known false identity falsifies the bridge's contract. This panel measures the adapter, not benchmark accuracy.
+
+Only then compare fixed-budget candidate generation with versus without one residual-directed repair, using the same public inputs, maximum calls and token allowance. Keep the existing whole-task evaluator outside this bridge. Report whole-task improvement only if the separately authorized evaluation measures it; report sidecar coverage and correctness independently. PCIV policy ranking is a subsequent explicit adapter, not a label to add to this first result.
+
+Required dependencies: the existing Python PFP/operations packages, the canonical process seam at `ops/operating_system/adapters/rust_host/ffi.py`, and a provenance-checked host binary containing the listed actions. `code/rust/pfp/Cargo.toml:3,23-36,50-52` names package/binary `pfp` and its math/EIS/PCIV/operad dependencies. The Python seam still defaults to historical `core_symbol_game` and `engine/crates_rs` paths (`ffi.py:94-111,141-210`), so default discovery must not be assumed to work in this relocated checkout. Pass an explicitly verified compatible binary through the existing seam; do not execute an arbitrary retained binary or build the broad workspace. This proposal establishes source availability, not present executable availability. The seam's runtime envelope echoes the action but lacks a cryptographic request identity, so the controller must retain exact request/outcome bytes or their hashes and its own input binding.
+
+Next concrete change after the freeze: a small public-only sidecar adapter plus the independent mutation panel, with the native executable prerequisite checked first. If the compatible binary is unavailable, stop at a typed infrastructure refusal; do not call a Python fallback “native reuse.”
+
+Source pins (SHA256, current read-only inspection; scoped source inspection is not a new every-file audit receipt):
+
+```text
+pfp/workflows/wf0005/rewrite.py
+d148e5759daade5b7f0d358c557f673fa18aefd0fa9f6c490df3697205de607d
+code/rust/pfp_runtime/src/rational.rs
+9d78981a19c942a70d4d4262f1df9538024754b2b87c0e0288a46d377cd3916c
+code/rust/pfp_runtime/src/homology_holonomy.rs
+545a3c8bda7ce41b04671625f908b8e4161d7cca9e550eff9e34fa65ff7b04fe
+code/rust/core_operads/src/operad_runtime.rs
+ad5f50a87bece8040ca078fa4126774822a5439658a81f74ec0b2502560b8140
+code/rust/pfp/src/port_host.rs
+9e9f93b20035011a0fd44ff795465dae81eb7c5da920d2a687a086e6efe226ee
+code/rust/core_epistemic_immune_system/src/signal_gate.rs
+78483ee16034e013c8c6c1740e96c7273711a8eadc74a72f2bb8c93de0030803
+code/rust/core_prompt_civilization/src/fitness.rs
+a333f2fe290ec148913bb6db18ea851270fba07cf130661aa0f39d0176581570
+ops/operating_system/adapters/rust_host/ffi.py
+2961bfc1a989815e653ffa23acfacc551fe9116b1b39b2f8414ffa2aa166d6a6
+```

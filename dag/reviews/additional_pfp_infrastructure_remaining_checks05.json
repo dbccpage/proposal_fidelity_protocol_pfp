@@ -1,0 +1,84 @@
+{
+  "python": "3.12.12",
+  "numpy": "2.4.3",
+  "source_pins": {
+    "pfp/infrastructure/exact_math.py": "1f39add89d804c91d1c6ab3bbab46b29b33d8edcf76fc4616f67abb3298e7f39",
+    "pfp/infrastructure/quantum/dense_checker.py": "02d837bf66e701eaa7fe78702eb1dd69176948b2775568c4f8951ee95d60958b"
+  },
+  "method": "Fully read source AST definitions with minimal in-memory DTOs and independent integer minors/diagonal controls. No source edits, production package imports, native/provider/private reads.",
+  "controls": [
+    {
+      "id": "PFPINFRA-P028",
+      "name": "four_rational_methods_reference_undefined_core",
+      "observed": {
+        "compute_gamma2": "name 'core' is not defined",
+        "compute_phi1": "name 'core' is not defined",
+        "verify_duality_gap": "name 'core' is not defined",
+        "compute_hodge_decomposition": "name 'core' is not defined"
+      },
+      "result": "reproduced",
+      "limitations": "Actual method bodies with minimal shape DTOs; no domain constructors or runtime import path exercised."
+    },
+    {
+      "id": "PFPINFRA-P029",
+      "name": "snf_625_small_integer_matrices_match_independent_minors",
+      "observed": {
+        "cases": 625,
+        "entry_domain": [
+          -2,
+          -1,
+          0,
+          1,
+          2
+        ],
+        "matrix_shape": [
+          2,
+          2
+        ],
+        "checks": [
+          "gcd entries and absolute determinant invariant factors",
+          "UAV=D",
+          "det(U)=+-1",
+          "V*V_inverse=I"
+        ]
+      },
+      "result": "reproduced",
+      "limitations": "Finite control only, minimal exact matrix/result DTOs injected; no general SNF termination proof or domain serialization test."
+    },
+    {
+      "id": "PFPINFRA-P030",
+      "name": "exact_l1_zero_gap_positive_and_tampered_value_control",
+      "observed": {
+        "accepted_value": "3",
+        "tampered_refusal": "submitted optimum does not replay"
+      },
+      "result": "reproduced",
+      "limitations": "Specific rational3cycle only; mathematical sufficiency follows weak duality under this supplied linear model, not physical encoding."
+    },
+    {
+      "id": "PFPINFRA-P031",
+      "name": "large_scale_hamiltonian_false_degeneracy_agreement",
+      "observed": {
+        "diagonal_exact": [
+          0,
+          1000000000000000,
+          1,
+          1000000000000001
+        ],
+        "true_ground_multiplicity": 1,
+        "reported": {
+          "evidence_class": "SECONDARY_NUMERIC",
+          "dense_check": "PASSED",
+          "dense_min_eigenvalue": 0.0,
+          "solver_energy": 0.0,
+          "dense_multiplicity": 2,
+          "solver_dimension": 2,
+          "energy_match": true,
+          "dimension_match": true
+        }
+      },
+      "result": "reproduced",
+      "limitations": "Read-vetted numeric body with injected admitted-style2qubit positive rational Pauli terms; no domain parser rerun. Evidence is explicitly SECONDARY_NUMERIC, not a formal certificate."
+    }
+  ]
+}

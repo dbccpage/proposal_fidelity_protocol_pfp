@@ -1,0 +1,327 @@
+{
+  "schema": "pfp.retirement-infrastructure-review.v1",
+  "status": "bounded_review_pass_after_fixes",
+  "conclusion": "No unresolved blocking defect found in the reviewed hashes for a quiescent current Windows checkout using the PowerShell preflight/removal boundary. This is bounded source and synthetic-fixture evidence, not execution authorization or a universal filesystem safety proof.",
+  "base_source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "reviewed_artifacts_are_working_tree_sources": true,
+  "scope": "prepare_retirement.py, retirement_custody.py, apply_retirement.ps1 and build_catalog.py; all four fully read, current plan/lesson/report pins independently checked, synthetic Windows fixtures only.",
+  "file_reviews": [
+    {
+      "path": "dag/pilot_triage/prepare_retirement.py",
+      "sha256": "9d8b36b520635b986a20da17127dbbdad2988501c37c0c9ac66373962552d6a6",
+      "reviewed_lines": [
+        1,
+        103
+      ],
+      "full_source_read": true,
+      "assessment": "Complete source reviewed: selects only stub/trivial verdicts, binds current report fields, requires exact files/directories and current/archive bytes, retains lessons and freezes the plan. It cannot authorize removal without PowerShell checks."
+    },
+    {
+      "path": "dag/pilot_triage/retirement_custody.py",
+      "sha256": "75eb66931485899c18f22df2168be7c15eb1dd272e2fc768c18899143b24bd64",
+      "reviewed_lines": [
+        1,
+        108
+      ],
+      "full_source_read": true,
+      "assessment": "Complete source reviewed: binds receipt to plan and lessons, distinguishes completed versus explicitly incomplete pilots, verifies archive hash and individual entry bytes, and rejects unreceipted missing evidence or escaped paths."
+    },
+    {
+      "path": "dag/pilot_triage/apply_retirement.ps1",
+      "sha256": "1fb1c8267798262a465dfdbb8a2f50a99c83469fb70326cb5a591fab9856dced",
+      "reviewed_lines": [
+        1,
+        128
+      ],
+      "full_source_read": true,
+      "assessment": "Complete source reviewed: defaults to no removal; pins fixed roots, exact numbered-child paths, report decisions, file/dir inventory and archive; rejects reparse points and alternate streams; rechecks each pilot before literal-path recursive removal and records intent/completion."
+    },
+    {
+      "path": "dag/pilot_triage/build_catalog.py",
+      "sha256": "3bd4cf5006296b991194a63689161cc254bb3700d8a3f8501e51503be4a1249c",
+      "reviewed_lines": [
+        1,
+        92
+      ],
+      "full_source_read": true,
+      "assessment": "Complete source reviewed: evidence hashes flow through EvidenceStore and remain checked against migration/source inventory; archived and incomplete pilot status propagate while initial triage stays distinct from whole-directory substantive review."
+    }
+  ],
+  "findings": [
+    {
+      "id": "RETIRE-01",
+      "initial_severity": "high",
+      "status": "resolved_in_reviewed_source",
+      "issue": "A stale catalog verdict could select a pilot whose freshly hashed report now recommended retention.",
+      "resolution": "Preparation compares the complete retained row fields with the uniquely matching current report row; PowerShell independently checks report digest and id/path/verdict/rationale before removal.",
+      "evidence": [
+        {
+          "path": "dag/pilot_triage/prepare_retirement.py",
+          "sha256": "9d8b36b520635b986a20da17127dbbdad2988501c37c0c9ac66373962552d6a6",
+          "reviewed_lines": [
+            66,
+            72
+          ]
+        },
+        {
+          "path": "dag/pilot_triage/apply_retirement.ps1",
+          "sha256": "1fb1c8267798262a465dfdbb8a2f50a99c83469fb70326cb5a591fab9856dced",
+          "reviewed_lines": [
+            74,
+            83
+          ]
+        }
+      ],
+      "probes": [
+        "stale_catalog",
+        "report_verdict_drift"
+      ]
+    },
+    {
+      "id": "RETIRE-02",
+      "initial_severity": "high",
+      "status": "resolved_for_process_interruption_with_recorded_intent",
+      "issue": "Removal originally preceded the receipt record; partial deletion or a process interruption could leave missing files unavailable to the archive evidence reader.",
+      "resolution": "The script records a single removal_intent before Remove-Item, then atomically replaces it with the completed row. EvidenceStore permits exact manifest/hash-checked archive fallback for explicit incomplete intent while preserving live evidence and incomplete status.",
+      "evidence": [
+        {
+          "path": "dag/pilot_triage/apply_retirement.ps1",
+          "sha256": "1fb1c8267798262a465dfdbb8a2f50a99c83469fb70326cb5a591fab9856dced",
+          "reviewed_lines": [
+            106,
+            128
+          ]
+        },
+        {
+          "path": "dag/pilot_triage/retirement_custody.py",
+          "sha256": "75eb66931485899c18f22df2168be7c15eb1dd272e2fc768c18899143b24bd64",
+          "reviewed_lines": [
+            54,
+            108
+          ]
+        }
+      ],
+      "probes": [
+        "partial_intent_evidence",
+        "partial_catalog_rebuild",
+        "completed_catalog_rebuild"
+      ],
+      "limit": "No production deletion, abrupt process kill or power-loss fault injection was executed. The script intentionally refuses a second Apply after a receipt exists; recovery/resumption requires inspection."
+    },
+    {
+      "id": "RETIRE-03",
+      "initial_severity": "high",
+      "status": "resolved_in_powershell_removal_boundary",
+      "issue": "Unarchived NTFS alternate data streams on files or the selected directory passed normal byte/hash/ZIP checks and would be discarded by recursive removal.",
+      "resolution": "PowerShell checks the target and every descendant for non-default streams in both preflight and the immediately-before-removal Test-CurrentPilot call. Preparation alone does not check streams and explicitly requires that PowerShell boundary.",
+      "evidence": [
+        {
+          "path": "dag/pilot_triage/apply_retirement.ps1",
+          "sha256": "1fb1c8267798262a465dfdbb8a2f50a99c83469fb70326cb5a591fab9856dced",
+          "reviewed_lines": [
+            32,
+            37
+          ]
+        },
+        {
+          "path": "dag/pilot_triage/prepare_retirement.py",
+          "sha256": "9d8b36b520635b986a20da17127dbbdad2988501c37c0c9ac66373962552d6a6",
+          "reviewed_lines": [
+            93,
+            93
+          ]
+        }
+      ],
+      "probes": [
+        "file_ads",
+        "directory_ads"
+      ]
+    },
+    {
+      "id": "RETIRE-04",
+      "initial_severity": "medium",
+      "status": "resolved_in_reviewed_source",
+      "issue": "Unknown empty directories were outside the file-only census and would silently disappear.",
+      "resolution": "Preparation compares exact directory sets; PowerShell compares current descendants with the original directory inventory embedded in the hash-pinned recovery ZIP.",
+      "evidence": [
+        {
+          "path": "dag/pilot_triage/prepare_retirement.py",
+          "sha256": "9d8b36b520635b986a20da17127dbbdad2988501c37c0c9ac66373962552d6a6",
+          "reviewed_lines": [
+            50,
+            53
+          ]
+        },
+        {
+          "path": "dag/pilot_triage/apply_retirement.ps1",
+          "sha256": "1fb1c8267798262a465dfdbb8a2f50a99c83469fb70326cb5a591fab9856dced",
+          "reviewed_lines": [
+            37,
+            40
+          ]
+        }
+      ],
+      "probes": [
+        "unknown_empty_directory"
+      ]
+    },
+    {
+      "id": "RETIRE-05",
+      "initial_severity": "medium",
+      "status": "resolved_in_reviewed_source",
+      "issue": "After removal intent, EvidenceStore originally accepted corruption of the retained-lessons file while advertising preserved_mechanism pointers.",
+      "resolution": "EvidenceStore checks the frozen lesson path, SHA-256 and exact unique lesson-to-plan identifier bijection before accepting any receipt.",
+      "evidence": [
+        {
+          "path": "dag/pilot_triage/retirement_custody.py",
+          "sha256": "75eb66931485899c18f22df2168be7c15eb1dd272e2fc768c18899143b24bd64",
+          "reviewed_lines": [
+            35,
+            42
+          ]
+        }
+      ],
+      "probes": [
+        "lesson_drift_after_intent"
+      ]
+    }
+  ],
+  "unresolved_blocking_findings": [],
+  "plan_review": {
+    "path": "dag/pilot_triage/retirement_plan.json",
+    "sha256": "d8f65f855521f0f4b94fefc9afe6fc1e0f2be490cda51ea6884007f5847eb74d",
+    "pilot_count": 138,
+    "file_count": 3146,
+    "bytes": 7116572,
+    "reports_bound": 4,
+    "lesson_id_bijection_checked": true,
+    "archive_path": "C:\\Users\\a343o\\.codex\\visualizations\\2026\\11\\10\\01a1c373-155b-7b31-94f8-3156bd6dbc35\\.pilot_recovery\\anomalon_pilots_before_quality_triage.zip",
+    "archive_sha256": "575d37c6c6044f7c533553e3b2cfb88ec98ecdffb8adfff4b1df06d64d722f49",
+    "archive_bytes": 77421556,
+    "whole_archive_hash_independently_rechecked": true,
+    "archive_entry_bytes_preflight": "Parent reports real Windows preflight passed for all 138 folders / 3146 files; this reviewer did not repeat that entire production entry scan."
+  },
+  "validation": {
+    "synthetic_results": "dag/pilot_triage/retirement_review_probe_results.json",
+    "synthetic_results_sha256": "40264c09ebdb16fc3a3f967cb8cc845e893b8bba40b3da2a2d0e8d7b1adad50b",
+    "controls_exercised": 14,
+    "fixture_creation_blocked": 1,
+    "production_apply_invoked": false,
+    "production_corpus_mutations": 0,
+    "checks": [
+      {
+        "id": "baseline_preflight",
+        "observed": {
+          "exit_code": 0,
+          "stdout": "{\"status\":\"preflight_passed_no_removal\",\"pilots\":1,\"files\":2,\"plan_sha256\":\"f6afea18cba29ff00c84dd41e09a6b085f4990e7ebc6dfa1c1a31f60a1065ee9\"}",
+          "stderr": ""
+        }
+      },
+      {
+        "id": "stale_catalog",
+        "accepted": false,
+        "error": "Catalog does not match current assessment: pilot_0000999"
+      },
+      {
+        "id": "file_ads",
+        "preparer_accepted": true,
+        "preflight": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\file_ads\\review_preflight.ps1:35\nLine |\n  35 |  … ams.Count -ne 0) { throw 'Unarchived NTFS stream; refusing removal' }\n     |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Unarchived NTFS stream; refusing removal"
+        }
+      },
+      {
+        "id": "directory_ads",
+        "preparer_accepted": true,
+        "preflight": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\directory_ads\\review_preflight.ps1:35\nLine |\n  35 |  … ams.Count -ne 0) { throw 'Unarchived NTFS stream; refusing removal' }\n     |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Unarchived NTFS stream; refusing removal"
+        }
+      },
+      {
+        "id": "unknown_file",
+        "preparer_accepted": false,
+        "error": "ValueError: Unknown or missing files; do not delete: pilot_0000999"
+      },
+      {
+        "id": "unknown_empty_directory",
+        "preparer_accepted": false,
+        "error": "ValueError: Unknown or missing directories; do not delete: pilot_0000999"
+      },
+      {
+        "id": "junction_descendant",
+        "status": "fixture_creation_blocked",
+        "stderr": "New-Item: Access is denied."
+      },
+      {
+        "id": "report_verdict_drift",
+        "preflight": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\report_verdict_drift\\review_preflight.ps1:83\nLine |\n  83 |  … t.rationale) { throw 'Plan does not match current reviewed verdict' }\n     |                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Plan does not match current reviewed verdict"
+        }
+      },
+      {
+        "id": "path_escape",
+        "preflight": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\path_escape\\review_preflight.ps1:25\nLine |\n  25 |  … lon_woland/' + $taskPilot.id)) { throw 'Unexpected relative target' }\n     |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Unexpected relative target"
+        }
+      },
+      {
+        "id": "default_stream_drift",
+        "preflight": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\default_stream_drift\\review_preflight.ps1:53\nLine |\n  53 |  … th -ne $taskExpectedFile.bytes) { throw 'Current file size changed' }\n     |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Current file size changed"
+        }
+      },
+      {
+        "id": "archive_drift",
+        "preflight": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\archive_drift\\review_preflight.ps1:20\nLine |\n  20 |  … an.recovery_archive.archive_bytes) { throw 'Archive length changed' }\n     |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Archive length changed"
+        }
+      },
+      {
+        "id": "partial_intent_evidence",
+        "status": {
+          "deletion_status": "removal_incomplete_archive_available",
+          "retirement_plan": "dag/pilot_triage/retirement_plan.json",
+          "retirement_receipt": "dag/pilot_triage/retirement_receipt.json",
+          "archive_prefix": "pilot_0000999/"
+        },
+        "archived_bytes": "public synthetic fixture README.md\n",
+        "live_bytes": "public synthetic fixture spec.yaml\n"
+      },
+      {
+        "id": "partial_catalog_rebuild",
+        "source_pins_verified": 1,
+        "status": "removal_incomplete_archive_available"
+      },
+      {
+        "id": "completed_catalog_rebuild",
+        "source_pins_verified": 1,
+        "status": "retired_from_checkout_archived"
+      },
+      {
+        "id": "lesson_drift_after_intent",
+        "accepted": false,
+        "error": "Preserved lessons changed after retirement was frozen"
+      }
+    ]
+  },
+  "residual_limits_and_followups": [
+    "Quiescence is an execution precondition: the script rechecks immediately before removal but does not lock every source inode/directory against concurrent writers or link substitution. Stop readers/writers before Apply; no hostile concurrency proof is claimed.",
+    "The junction fixture could not be created (New-Item: Access is denied), so link rejection is source-reviewed plus the parent's production scan, not a fresh injected-junction test.",
+    "The receipt replacement is atomic at the filename level in the source, but no power-loss/disk-flush guarantee or crash fault-injection test was established. The full pinned recovery archive remains necessary for manual recovery.",
+    "After any receipt exists, Apply intentionally refuses rerun. An incomplete operation should be inspected and restored/resumed through an explicit recovery procedure; automatic restart was not implemented or claimed.",
+    "The 77,421,556-byte archive is outside the repository at an absolute local visualization path. It must be retained and transferred with its SHA for another checkout/machine to rebuild archived evidence; Git alone does not carry these bytes.",
+    "The review validates eligibility against existing triage decisions, not the scientific quality of every retired file. Original report semantic-coverage limits remain in force; no candidate verdict is upgraded to mathematical evidence.",
+    "No model/provider calls, protected benchmark or private answer-key reads, production Apply, source fixes or corpus deletions were performed by this reviewer. Parent made the infrastructure repairs."
+  ]
+}

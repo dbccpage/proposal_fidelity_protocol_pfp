@@ -1,0 +1,2 @@
+#[path="C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/code/rust/core_contracts/src/enforcement_macros.rs"] mod owner;
+pub mod sealed {pub trait Sealed {}} pub mod kinds {pub trait Kind {}} pub mod binding {pub trait ImplementsContract<C> {}} #[macro_export] macro_rules! require_contract {($t:ty)=>{};} struct Contract; __impl_contract_base!(Implementation,Contract,kinds::Kind); fn main() {}

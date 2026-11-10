@@ -1,0 +1,29 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00049
+task_family: cochain_holonomy_descent
+difficulty_rung: 1
+request_id: pilot_00049_req_0
+rewrite_metadata:
+  rewrite_id: demo_1
+  name: Demo 1 - Triangle Holonomy Descent & Boundary L1 Defect
+  governing_specification: pilots/demo_003/demo_1/1_demo.md
+  governing_strategy: Strategy D1 (Boundary L1 Defect Vanishing)
+  target_stratum: Stratum 3 (Structural Boundary Packets)
+  explanation: Triangle complex holonomy descent evaluating exact vanishing of 1-cochain
+    boundary defects over Q.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union {ASSERT, CUT, ->, value}
+  syntactic_category: CochainDescentPacket
+  semantic_carrier: Directed 1-complex on 3 vertices {a, b, c} with boundary 1-cochain
+  dialect_tier: Tier S (Directed Graph Cycle)
+  boundary_format: pfp-holonomy-v1
+seed_prompt: '{"carrier":"triangle_complex_c1","vertices":["a","b","c"],"edges":[{"u":"a","v":"b","val":1},{"u":"b","v":"c","val":2},{"u":"c","v":"a","val":-3}],"task":"Verify
+  1-cycle boundary holonomy and compute net L1 defect Phi_1 = sum(e in C1) |c1(e)
+  - (d0 alpha)(e)|","output":{"phi_1":0,"verdict":"DESCENT_EXACT"}}'
+expected_outcome:
+  answer:
+    phi_1: 0
+    verdict: DESCENT_EXACT
+  status: ACCEPTED

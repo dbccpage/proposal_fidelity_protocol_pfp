@@ -1,0 +1,139 @@
+ROOT_METADATA {"metadata": {"language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 4}
+CELL 0
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+# Demonstration: Symbol Game Demo 3 Deterministic Protocol & Finite Route State Machine
+
+**The Symbol Game Research Estate · Zenodo Release Package**
+
+> **Execution Mode Notice**: This notebook executes the **deterministic host state machine** with scripted protocol turns across the 3 canonical finite routes. It demonstrates host phase transitions, detector interventions, atomic batch rollbacks, and independent route oracle checks. It is **not** a live frontier model comparison (which requires external provider credentials and network API connectivity). For the empirical live provider study, see the frozen trial receipt in `results/live_openrouter_trial_receipt.json` and `run_live_openrouter_trial` in `run_demo3_live.py`.
+
+### Protocol Treatment Arms:
+- **Arm P**: Plain prompt baseline
+- **Arm T**: Typed packet control
+- **Arm C**: Phase cue control after confirmed complete coverage
+- **Arm R**: Reflection feedback baseline after rejection
+- **Arm D**: Primary treatment (frozen failure detectors + diagnostic hints)
+- **Arm A**: Solution-bearing assistance upper bound
+
+### Three Finite Evaluation Routes:
+1. **Restricted diagonal sign gauge** (even/odd triangles)
+2. **Exact rational cochains** (exact repair vs. cokernel non-exact obstruction)
+3. **Finite signed-path pairing** (meron involution with surviving sector)
+SOURCE_END
+CELL 1
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 1, "metadata": {}, "outputs": []}
+SOURCE_START
+from run_demo3_live import (
+    FIXTURES,
+    Demo3HostEngine,
+    HostExit,
+    HostPhase,
+    MoveProposal,
+    run_scripted_arm_protocol,
+    run_all_protocol_matrix,
+)
+
+print("Available Canonical Fixtures:")
+for f_id, data in FIXTURES.items():
+    print(f" - {f_id}: route={data['route']}")
+SOURCE_END
+CELL 2
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+## Route 1: Restricted Diagonal Sign Gauge (Triangles)
+
+Evaluates discrete $\{0, 1\}$ vertex potentials on graphs to certify sign-change positivity or detect frustration cycles.
+SOURCE_END
+CELL 3
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 2, "metadata": {}, "outputs": []}
+SOURCE_START
+# Example 1A: Even Triangle Gauge Repair (Arm D)
+res_even = run_scripted_arm_protocol("gauge_even_triangle", "D")
+print("Even Triangle Exit:", res_even["final_exit"])
+print("Even Triangle Terminal:", res_even["terminal_label"])
+print("Steps to Certification:", res_even["step_count"])
+print("Fuel Consumed:", res_even["fuel_consumed"])
+print("State Digest:", res_even["final_state_digest"][:24], "...")
+
+# Example 1B: Odd Triangle Frustration Obstruction (Arm D)
+res_odd = run_scripted_arm_protocol("gauge_odd_triangle", "D")
+print("\nOdd Triangle Exit:", res_odd["final_exit"])
+print("Odd Triangle Terminal:", res_odd["terminal_label"])
+print("Steps to Certification:", res_odd["step_count"])
+SOURCE_END
+CELL 4
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+## Route 2: Exact Rational Cochains (Cokernel Obstruction)
+
+Evaluates exact rational chain complexes $C^0 \xrightarrow{d_0} C^1 \xrightarrow{d_1} C^2$:
+- **Exact Repair**: Finds 0-cochain potential $s$ such that $d_0 s = c_1$.
+- **Cokernel Obstruction**: In fixture `cochain_nonexact_cycle`, $d_1 c_1 = 1 \neq 0$ and $H^1 = \ker(d_1)/\operatorname{im}(d_0) = 0$. The separating left-null functional $\lambda = (1, 1, 1)$ satisfies $\lambda d_0 = 0$ and $\lambda c_1 = 1 \neq 0$, certifying non-exactness ($c_1 \notin \operatorname{im}(d_0)$) in the cokernel quotient $Q_1 = C^1 / \operatorname{im}(d_0)$.
+SOURCE_END
+CELL 5
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 3, "metadata": {}, "outputs": []}
+SOURCE_START
+# Example 2A: Exact Cochain Repair (Arm T)
+res_exact = run_scripted_arm_protocol("cochain_exact_cycle", "T")
+print("Exact Cochain Exit:", res_exact["final_exit"])
+print("Exact Cochain Terminal:", res_exact["terminal_label"])
+
+# Example 2B: Cokernel Non-Exact 1-Cochain Obstruction (Arm T)
+res_nonexact = run_scripted_arm_protocol("cochain_nonexact_cycle", "T")
+print("\nNon-exact 1-Cochain Exit:", res_nonexact["final_exit"])
+print("Non-exact 1-Cochain Terminal:", res_nonexact["terminal_label"])
+SOURCE_END
+CELL 6
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+## Route 3: Finite Signed-Path Pairing (Meron Involution)
+
+Evaluates partial sign-reversing involution pairings $\Xi: \mathcal{P} \to \mathcal{P}$ on paths with identical magnitudes and opposite signs, leaving an uncancelled positive survivor sector.
+SOURCE_END
+CELL 7
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 4, "metadata": {}, "outputs": []}
+SOURCE_START
+# Example 3: Meron Partial Cancellation (Arm A)
+res_meron = run_scripted_arm_protocol("meron_two_pairs_survivor", "A")
+print("Meron Pairing Exit:", res_meron["final_exit"])
+print("Meron Pairing Terminal:", res_meron["terminal_label"])
+print("State Digest:", res_meron["final_state_digest"][:24], "...")
+SOURCE_END
+CELL 8
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+## Atomic Batch Rollback Demonstration
+
+Demonstrates that an invalid move (e.g. attempting `VERIFY` with zero element coverage, or appending moves after `VERIFY`) triggers an immediate fail-stop rollback with zero state mutation.
+SOURCE_END
+CELL 9
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 5, "metadata": {}, "outputs": []}
+SOURCE_START
+engine = Demo3HostEngine("gauge_even_triangle", "T")
+
+# Attempt VERIFY with zero coverage moves -> Must be rejected with full rollback
+bad_receipt = engine.execute_batch([
+    MoveProposal("PROPOSE_WITNESS", {"witness_type": "vertex_bits", "witness": [0, 1, 0]}),
+    MoveProposal("VERIFY", {}),
+])
+print("Premature Verify Decision:", bad_receipt.host_decision)
+print("Batch Rolled Back:", bad_receipt.batch_rolled_back)
+print("Covered Elements after Rollback:", list(engine.state.covered_elements))
+print("Terminal Exit State:", engine.state.terminal_exit)
+SOURCE_END
+CELL 10
+METADATA_AND_OUTPUTS {"cell_type": "markdown", "metadata": {}}
+SOURCE_START
+## Complete 6-Arm x 5-Fixture Matrix Execution
+
+Executes the full $6 \times 5$ matrix of protocol treatments across all canonical fixtures.
+SOURCE_END
+CELL 11
+METADATA_AND_OUTPUTS {"cell_type": "code", "execution_count": 6, "metadata": {}, "outputs": []}
+SOURCE_START
+matrix = run_all_protocol_matrix()
+print(f"Evaluated {len(matrix['fixtures'])} fixtures across {len(matrix['arms'])} arms.")
+print("Matrix Execution Receipt SHA-256:", matrix["matrix_sha256"])
+print("Status: All deterministic protocol matrix transitions verified.")
+SOURCE_END

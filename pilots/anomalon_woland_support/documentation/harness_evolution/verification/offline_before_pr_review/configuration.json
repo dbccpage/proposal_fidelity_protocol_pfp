@@ -1,0 +1,99 @@
+{
+  "prices": {
+    "claude-haiku-5-5": {
+      "effective_from_utc": "2026-10-23T14:50:07.000000Z",
+      "evidence_digest": "sha256:5fde8b71bc6369e5526d47f6ce24141f694d5d2ae11825a521ccb6d5c03e605e",
+      "input_microusd_per_mtok": 100000,
+      "model_deployment_id": "claude-haiku-5-5",
+      "observed_at_utc": "2026-10-23T14:50:07.000000Z",
+      "output_microusd_per_mtok": 500000,
+      "stale_after_utc": "2026-10-24T14:50:07.000000Z"
+    },
+    "claude-sonnet-5-5": {
+      "effective_from_utc": "2026-10-23T14:50:07.000000Z",
+      "evidence_digest": "sha256:5fde8b71bc6369e5526d47f6ce24141f694d5d2ae11825a521ccb6d5c03e605e",
+      "input_microusd_per_mtok": 2000000,
+      "model_deployment_id": "claude-sonnet-5-5",
+      "observed_at_utc": "2026-10-23T14:50:07.000000Z",
+      "output_microusd_per_mtok": 10000000,
+      "stale_after_utc": "2026-10-24T14:50:07.000000Z"
+    }
+  },
+  "protocol": {
+    "ablations": {
+      "incumbent": "trajectory-0 (fixed before transfer)",
+      "panel": "distinct 12 tasks",
+      "remove": [
+        "diversification",
+        "compression",
+        "failure_memory",
+        "diagnosis"
+      ],
+      "repetitions": 3
+    },
+    "actual_dispatch": "sequential",
+    "analysis": {
+      "ci": "95% paired task bootstrap, 2000 draws, seed 26457",
+      "missing": "retain assignment; zero completion credit; withhold comparative claims for incomplete panels",
+      "multiplicity": "Holm: seven transfer contrasts; four ablation contrasts as a separate family",
+      "test": "two-sided exact paired sign test on task completion differences",
+      "unit": "task; average three fresh model trials within task"
+    },
+    "authority": "experimental incumbent only; no PR, production admission or activation",
+    "baseline": "Existing sequential propose/check policy projected into the same bounded task adapter; no strategy mixture, compression, memory or diagnosis requirement. Not the unchanged production learning service.",
+    "candidate_serialized_file_byte_cap": 3600,
+    "checkers": "immutable within experiment; defects require a new checker version and new baselines",
+    "confirmation": "fresh calls on frozen confirmation panel; no family regression; invariant controls",
+    "failure_signatures": 3,
+    "failure_threshold": "3/20",
+    "fork_period": 5,
+    "ignition": {
+      "inner_model": "claude-haiku-5-5",
+      "inner_repetitions": 1,
+      "inner_turns": 1,
+      "outer_model": "claude-sonnet-5-5",
+      "paired_repetitions": 3,
+      "rewrite_steps": 3,
+      "scope": "exploratory"
+    },
+    "max_inner_output_tokens": 2000,
+    "max_inner_turns": 6,
+    "max_input_tokens": 8000,
+    "max_outer_output_tokens": 3000,
+    "max_provider_concurrency": 2,
+    "no_seed_claim": "Local seeds reproduce scheduling only; provider repetitions are fresh unseeded calls.",
+    "outer_context": "root, current champion, six task aggregates, two recent trajectory-local decision references",
+    "phase_caps": {
+      "ablations": 6000000,
+      "discovery": 16000000,
+      "ignition": 4000000,
+      "preflight": 2000000,
+      "retry": 2000000,
+      "transfer": 10000000
+    },
+    "recent_context_attempts": 2,
+    "repetitions": 3,
+    "retained_holds": "missing or ambiguous usage halts dispatch; no implicit retries",
+    "rewrite_steps": 6,
+    "schema": "woland.harness-protocol.v1",
+    "selection": "exact-correctness-first, exact-cost-second, incumbent-on-tie; Pareto front retained",
+    "softmax_probability": "3/10",
+    "softmax_temperature": 1,
+    "source_pdf": {
+      "file": "2609.26457v1.pdf",
+      "pages": 28,
+      "sha256": "8ba79e0ad1028e43b0a47ee06162c9b3996ec90f7990b7ec35993444e505409b",
+      "url": "https://arxiv.org/abs/2609.26457v1"
+    },
+    "total_microusd": 40000000,
+    "trajectories": 3,
+    "transfer": {
+      "certificate": 4,
+      "repair": 4,
+      "repetitions": 3,
+      "sql": 8,
+      "workflow": 4
+    },
+    "ucb_exploration_squared": 2
+  }
+}

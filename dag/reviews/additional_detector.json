@@ -1,0 +1,76 @@
+{
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "status": "bounded_detector_source_review",
+  "claims": [],
+  "findings": [
+    {
+      "id": "DETECTOR-MISSING-OWNER",
+      "priority": "P1",
+      "path": "pfp/use_cases/detector_adequacy/detectors.py",
+      "lines": [
+        39,
+        68
+      ],
+      "claim": "The pinned terminalizer path is absent from this checkout, so the current adequacy battery fails before detector execution.",
+      "reproduced": true
+    },
+    {
+      "id": "DETECTOR-UNDEFINED-CORE",
+      "priority": "P1",
+      "path": "pfp/use_cases/detector_adequacy/detectors.py",
+      "lines": [
+        319,
+        323
+      ],
+      "claim": "The obstruction branch iterates core, which is never defined. If the terminalizer returns obstruction, this path raises NameError instead of producing a RED witness.",
+      "probe": {
+        "status": "reproduced",
+        "exception": "NameError",
+        "message": "name 'core' is not defined"
+      },
+      "scope": "Isolated run_detector control path with a disclosed stub terminalizer; the absent real terminalizer was not substituted in production."
+    }
+  ],
+  "validation": [
+    {
+      "command": ".venv/Scripts/python.exe -X utf8 -m pytest pfp/tests/test_detector_adequacy_battery.py -q -p no:cacheprovider --maxfail=1 --tb=short",
+      "result": "1 passed, 1 failed; stopped at missing terminalizer FileNotFoundError"
+    },
+    {
+      "probe": {
+        "status": "reproduced",
+        "exception": "NameError",
+        "message": "name 'core' is not defined"
+      }
+    }
+  ],
+  "file_reviews": [
+    {
+      "path": "pfp/use_cases/detector_adequacy/detectors.py",
+      "sha256": "5e8ff7deb1af042bad3a28fb1a348c9f976bc1f7db0c3636c639ec0f83554b78",
+      "full_source_read": true,
+      "assessment": "Full source: rational step relations, lenient/strict extraction, forest and separate-triangle diagnostics. The forest premise needs an acyclic trace; first-citation extraction alone does not establish it for arbitrary cyclic input. Independently observed missing terminalizer and undefined obstruction variable. Finite checks do not decide arbitrary reasoning truth.",
+      "reviewed_lines": [
+        [
+          1,
+          337
+        ]
+      ]
+    },
+    {
+      "path": "pfp/tests/test_detector_adequacy_battery.py",
+      "sha256": "95fb40607ebaf73d5f995faf621da617bae24b9944944c7535238280fd25e301",
+      "full_source_read": true,
+      "assessment": "Full source: finite generated positive/mutant controls and known blind-spot assertions. One quantile test passes; detector run fails at absent terminalizer. The final LGGR test imports a separately owned adversary package and was not reached; no complete battery success claimed.",
+      "reviewed_lines": [
+        [
+          1,
+          111
+        ]
+      ]
+    }
+  ],
+  "remaining_work": [
+    "Review historical terminalizer relocation and locked source custody before any repair or live adequacy inference."
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "unavailable_dependency": "NumPy is absent; initial whole-builder import stopped with ModuleNotFoundError before reviewed owners ran. No installation attempted. Final controls run parser, exact isolated resolver method and topology owners only.",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/ast_cochain/ast_models.py",
+      "sha256": "94f06c5132653197f243266e2249c1cb06199ae9f57a7d441817c4f76ca29b19"
+    },
+    {
+      "path": "pfp/domain/ast_cochain/ast_source_parser.py",
+      "sha256": "8fc57d0c438f6a85c2af5b0b325d34ebae150f46d17d9473364504b1cada5922"
+    },
+    {
+      "path": "pfp/domain/ast_cochain/ast_dependency_complex.py",
+      "sha256": "3a344b9ba3f20ec60f05163859cf3be2a26e689bb7a3ea24291f7fc90b754c08",
+      "executed_lines": [
+        [
+          97,
+          106
+        ]
+      ],
+      "execution": "Exact resolver method AST isolated without NumPy-dependent graph methods."
+    },
+    {
+      "path": "pfp/domain/value_objects/base.py",
+      "sha256": "4602c4fac9f97dbbb24c0e6a88153212d542a4102c5dba2f96a1bdddabe07ccd"
+    },
+    {
+      "path": "pfp/domain/value_objects/topology.py",
+      "sha256": "5745e0443672f68c92fbf63305595650d1aae7e6de059d73a7f01de38cd21cfa"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C018",
+      "rule": "relative_from_import_dependency_projection",
+      "status": "counterexample_observed",
+      "source": "from .. import infrastructure",
+      "source_module": "pkg.domain.a",
+      "observed_imports": [],
+      "limit": "The source parser omits module=None ImportFrom. Graph-building consequence is source analysis only; no graph method or supplied source text is executed."
+    },
+    {
+      "id": "PFPDOMAIN-C019",
+      "rule": "most_specific_absolute_import_resolution",
+      "status": "counterexample_observed",
+      "target": "pkg.infrastructure.b",
+      "known_modules": [
+        "pkg",
+        "pkg.domain.a",
+        "pkg.infrastructure.b"
+      ],
+      "resolved": "pkg",
+      "limit": "Exact isolated resolver method selects present package ancestor before child module. Effect on defect weights is source-derived, not executed here."
+    },
+    {
+      "id": "PFPDOMAIN-C020",
+      "rule": "unicode_byte_span_slice",
+      "status": "counterexample_observed",
+      "source": "éx",
+      "byte_interval": [
+        0,
+        2
+      ],
+      "expected": "é",
+      "observed": "éx"
+    }
+  ]
+}

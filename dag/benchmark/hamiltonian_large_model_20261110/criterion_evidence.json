@@ -1,0 +1,1409 @@
+{
+  "schema_version": "hamiltonian_large_model_criterion_evidence_v1",
+  "status": "complete_three_frozen_runs_graded",
+  "freeze_utc": "2026-11-10T18:23:00.289165+00:00",
+  "evaluator_id": "independent_public_input_mathematical_reviewer_audit_imported_pilots",
+  "method": "trusted_post_freeze_mathematical_review",
+  "public_sources": [
+    {
+      "path": "dag/benchmark/seed_prompt.txt",
+      "sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7"
+    },
+    {
+      "path": "dag/benchmark/EXPERIMENT_PROTOCOL.md",
+      "sha256": "6eeb2068cf555b32623d48994b44794f13a514947ff6fd61df0d50f5500e9918"
+    },
+    {
+      "path": "dag/benchmark/pilot_20261110/evaluator_rubric.json",
+      "sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc"
+    },
+    {
+      "path": "dag/benchmark/summarize_runs.py",
+      "sha256": "6ab66bad25936434b9ef897954d5cd7bf5d8ff3d24a480f1835381043a83b510"
+    }
+  ],
+  "frozen_rubric_sha256": "eaeffe10123292bda1385fcf444ae0a1b75e919f40ce09391cf1be49edcdf9dc",
+  "reference_sha256": "188307c652d4094bdbd3727c2b88e517646ffcef68c3ff9248a889703f41bb99",
+  "reference": {
+    "basis": "Independent symbolic derivation from public Hamiltonian; no private reference, prior grade or prior counterexample read.",
+    "notation": "r=sqrt(J^2+Delta^2), Pe=even parity projector, Po=odd parity projector; c/s are cosh/sinh(2 beta r) only in thermal criteria.",
+    "sections": [
+      {
+        "id": "spectrum",
+        "max_points": 20,
+        "criteria": [
+          {
+            "id": "spectrum.block_reduction",
+            "max_points": 4,
+            "criterion": "Correct invariant even/odd subspaces and Hamiltonian restriction, with a derivation."
+          },
+          {
+            "id": "spectrum.energies",
+            "max_points": 4,
+            "criterion": "All four eigenvalues including multiplicities, consistent with the seed Hamiltonian."
+          },
+          {
+            "id": "spectrum.projectors",
+            "max_points": 6,
+            "criterion": "Correct normalized orthogonal spectral projectors, resolving identity and reconstructing H."
+          },
+          {
+            "id": "spectrum.coincident_energies",
+            "max_points": 4,
+            "criterion": "All nonzero-radius even/odd coincidences are identified and equal-energy eigenspaces merged or equivalently explained."
+          },
+          {
+            "id": "spectrum.zero_radius",
+            "max_points": 2,
+            "criterion": "J=Delta=0 is handled without undefined divisions; K=0 complete degeneracy is explicit."
+          }
+        ]
+      },
+      {
+        "id": "dynamics",
+        "max_points": 20,
+        "criteria": [
+          {
+            "id": "dynamics.state",
+            "max_points": 8,
+            "criterion": "Correct evolved state and phase/sign conventions derived from the odd block, including zero-radius evolution."
+          },
+          {
+            "id": "dynamics.probability",
+            "max_points": 4,
+            "criterion": "Correct exact transition probability and valid denominator branches."
+          },
+          {
+            "id": "dynamics.supremum",
+            "max_points": 4,
+            "criterion": "Correct supremum over t>=0 for all parameters."
+          },
+          {
+            "id": "dynamics.earliest_and_constant_branches",
+            "max_points": 4,
+            "criterion": "Earliest maximizing time is correct; constant-probability cases identify t=0 and avoid applying an oscillatory time formula."
+          }
+        ]
+      },
+      {
+        "id": "pure_state",
+        "max_points": 25,
+        "criteria": [
+          {
+            "id": "pure_state.reduced_density",
+            "max_points": 4,
+            "criterion": "Correct first-spin reduced state and trace."
+          },
+          {
+            "id": "pure_state.entropy",
+            "max_points": 4,
+            "criterion": "Von Neumann entropy in bits, with endpoint convention0log0=0."
+          },
+          {
+            "id": "pure_state.concurrence",
+            "max_points": 4,
+            "criterion": "Correct pure-state concurrence with reasoning."
+          },
+          {
+            "id": "pure_state.CHSH",
+            "max_points": 6,
+            "criterion": "Correct maximal CHSH value over local dichotomic projective spin measurements, with a sufficient self-contained derivation or correlation-matrix optimization."
+          },
+          {
+            "id": "pure_state.maximal_entanglement_reachability",
+            "max_points": 4,
+            "criterion": "Necessary and sufficient parameter condition, excluding the zero-coupling/zero-radius exceptional case."
+          },
+          {
+            "id": "pure_state.earliest_maximal_entanglement",
+            "max_points": 3,
+            "criterion": "Correct earliest time, including equality and unreachable cases."
+          }
+        ]
+      },
+      {
+        "id": "thermal",
+        "max_points": 25,
+        "criteria": [
+          {
+            "id": "thermal.Gibbs_state",
+            "max_points": 6,
+            "criterion": "Correct normalized Gibbs matrix in the stated basis with derivation."
+          },
+          {
+            "id": "thermal.partition_function",
+            "max_points": 4,
+            "criterion": "Correct partition function with degeneracies."
+          },
+          {
+            "id": "thermal.partial_transpose",
+            "max_points": 7,
+            "criterion": "All four eigenvalues of the partial transpose on spin2, with correct block/sign handling."
+          },
+          {
+            "id": "thermal.entanglement_criterion",
+            "max_points": 5,
+            "criterion": "Necessary and sufficient thermal entanglement condition; strict inequality and equality/separability are correct."
+          },
+          {
+            "id": "thermal.thermal_limits",
+            "max_points": 3,
+            "criterion": "beta=0 and J=Delta=0 correctly treated without undefined expressions."
+          }
+        ]
+      },
+      {
+        "id": "checks",
+        "max_points": 10,
+        "criteria": [
+          {
+            "id": "checks.conventions",
+            "max_points": 2,
+            "criterion": "Consistent Pauli, basis, Hamiltonian, log-base and partial-transpose conventions."
+          },
+          {
+            "id": "checks.normalization",
+            "max_points": 2,
+            "criterion": "An explicit independent normalization/trace or equivalent consistency check."
+          },
+          {
+            "id": "checks.initial_condition",
+            "max_points": 2,
+            "criterion": "An explicit t=0 state/probability consistency check."
+          },
+          {
+            "id": "checks.decoupled_limit",
+            "max_points": 2,
+            "criterion": "An explicit J=0/decoupled consistency check covering the stated formulas."
+          },
+          {
+            "id": "checks.nontrivial_numerical_example",
+            "max_points": 2,
+            "criterion": "At least one correct nontrivial numerical example, clearly distinguished from proof of identities."
+          }
+        ]
+      }
+    ],
+    "criterion_reference_notes": {
+      "spectrum.block_reduction": "Using X|b>=|1-b>, Y|0>=i|1>, Y|1>=-i|0>, the XX+YY action vanishes on 00/11 and exchanges 01/10 with amplitude2. Even subspace H=K I; odd subspace H=-K I+2(Delta sigma_z+J sigma_x). Let r=sqrt(J^2+Delta^2). The odd traceless part squares to4r^2 I.",
+      "spectrum.energies": "Even energy K has multiplicity2. For r>0 the odd energies are -K+2r and -K-2r, one each before coincident-energy merging. Alternative radius R=2r is equivalent.",
+      "spectrum.projectors": "Let Pe=|00><00|+|11><11|, Po=I-Pe, and N=[J(XX+YY)+Delta(ZI-IZ)]/(2r) for r>0. N^2=Po and Pe N=0, so Pplus=(Po+N)/2 and Pminus=(Po-N)/2 are orthogonal idempotents. Pe+Pplus+Pminus=I; H=K Pe+(-K+2r)Pplus+(-K-2r)Pminus. Equivalent normalized eigenvectors/outer products earn the same credit.",
+      "spectrum.coincident_energies": "For r>0, K=r merges even K with odd plus (rank3), while K=-r merges it with odd minus (rank3). The other eigenspace has rank1. No odd-plus/odd-minus coincidence occurs unless r=0. Degenerate projectors may be represented as explicitly grouped orthogonal refinements, with physical energy eigenspace aggregation explained.",
+      "spectrum.zero_radius": "r=0 means J=Delta=0: H=K Pe-K Po. If K!=0 the projectors are Pe and Po, each rank2. If K=0, H=0 with a single four-dimensional energy eigenspace and projector I. No direction-dependent N or 1/r formulas may be used as defined at the origin.",
+      "dynamics.state": "For r>0: |psi(t)>=exp(iKt)[(cos(2rt)-i Delta/r sin(2rt))|01> -i J/r sin(2rt)|10>]. This follows from exp[-2it(Delta sigma_z+J sigma_x)]. At r=0: exp(iKt)|01>. A stated physically irrelevant overall phase is acceptable; relative signs must match the seed.",
+      "dynamics.probability": "p(t)=J^2/r^2 sin^2(2rt) for r>0, and0 at r=0. J=0 gives identically zero probability even when Delta!=0. Correct state amplitude modulus gives a derivation.",
+      "dynamics.supremum": "For J!=0, sup p=J^2/(J^2+Delta^2). For J=0, sup p=0. These include all real signs and the origin.",
+      "dynamics.earliest_and_constant_branches": "For J!=0 (hence r>0), earliest maximum t=pi/(4r). For J=0 the probability is constant0 and every t>=0 maximizes it, with earliest t=0. Using the oscillatory formula at J=0,Delta!=0 would give an incorrect earliest time.",
+      "pure_state.reduced_density": "With amplitudes a on01 and b on10, p=|b|^2, tracing out spin2 yields rho1=diag(1-p,p) in first-spin basis0,1. Cross terms vanish because second-spin basis states are orthogonal. Trace1.",
+      "pure_state.entropy": "S_bits=-p log2(p)-(1-p)log2(1-p), with0log0=0 at p=0 or1. This is entropy of the reduced state, not of the globally pure two-spin state.",
+      "pure_state.concurrence": "Pure-state concurrence C=2|ab|=2 sqrt[p(1-p)], from the determinant/spin-flip expression or Schmidt coefficients. Real signs and local phases do not alter it.",
+      "pure_state.CHSH": "Local phase rotations and a second-spin flip put the state in Schmidt form sqrt(1-p)|00>+sqrt(p)|11>. Its correlation singular values are1,C,C (one real diagonal presentation is T=diag(C,-C,1)). For Bob directions, b+bprime=2cos(theta)u and b-bprime=2sin(theta)v with orthonormal u,v; Alice optimization gives2[cos(theta)||Tu||+sin(theta)||Tv||], and optimizing theta and the two-plane gives2sqrt(1+C^2). Equivalent sufficient correlation optimization is acceptable. A bare formula/theorem name is weaker than the requested self-contained derivation.",
+      "pure_state.maximal_entanglement_reachability": "Maximal entanglement requires p=1/2. The reachable p interval is[0,J^2/r^2]. Therefore it is reachable iff J!=0 and J^2>=Delta^2; the extra J!=0 condition excludes J=Delta=0. K only changes overall phase for this initial state.",
+      "pure_state.earliest_maximal_entanglement": "When reachable, earliest t=[arcsin(r/(sqrt(2)|J|))]/(2r). If |J|=|Delta|>0 this is pi/(4r); if Delta=0,J!=0 it is pi/(8|J|). Otherwise no such time exists, including the origin.",
+      "thermal.Gibbs_state": "For r>0 put c=cosh(2 beta r), s=sinh(2 beta r), a=exp(-beta K), b=exp(beta K)[c-(Delta/r)s], d=exp(beta K)[c+(Delta/r)s], z=-exp(beta K)(J/r)s. In ordered basis the unnormalized Gibbs matrix has diagonal(a,b,d,a), entries(01,10)=(10,01)=z, all other off-diagonals0. Divide by Z. Derive by exponentiating the even scalar and odd Pauli block.",
+      "thermal.partition_function": "Z=2 exp(-beta K)+2 exp(beta K)cosh(2 beta r), agreeing with the sum over eigenvalues including the even multiplicity2. Z>0 for finite beta>=0 and real finite parameters.",
+      "thermal.partial_transpose": "Partial transpose on spin2 moves the odd coherence z into entries(00,11),(11,00). The four eigenvalues are b/Z,d/Z,(a+z)/Z,(a-z)/Z, unordered; equivalently (a+|z|)/Z,(a-|z|)/Z for the even pair. The original Gibbs eigenvalues are different and cannot substitute.",
+      "thermal.entanglement_criterion": "b,d are nonnegative, so the partial transpose is nonpositive iff |z|>a. For two qubits PPT is also sufficient for separability; equivalently this X state admits a separable decomposition when |z|<=a and positivity bd>=z^2. Thus for r>0 thermal entanglement iff (|J|/r)sinh(2 beta r)>exp(-2 beta K), with strict inequality. Equality is separable. Equivalent exp(2 beta K)-multiplied forms are accepted. A necessary-only negativity statement without the two-qubit sufficiency justification is incomplete.",
+      "thermal.thermal_limits": "beta=0 gives rho=I/4, Z=4 and four PT eigenvalues1/4, separable. At r=0, rho=diag(exp(-beta K),exp(beta K),exp(beta K),exp(-beta K))/(4 cosh(beta K)); no off-diagonals, hence separable. Expressions involving J/r or Delta/r must be assigned these branches, not evaluated literally.",
+      "checks.conventions": "Check stated basis00,01,10,11, Z eigenvalues+1,-1, standard Y sign, hbar=k_B=1, real parameters, beta>=0, time>=0, logarithm base2, partial transpose on spin2 and consistent factors2 throughout. Equivalent notation is acceptable when explicitly mapped.",
+      "checks.normalization": "An explicit check can use |a|^2+|b|^2=cos^2(2rt)+(Delta^2+J^2)/r^2 sin^2(2rt)=1, projector resolution, Gibbs trace2a+b+d=Z, PT trace1 or an equivalent independent consistency relation. Repeating a normalization claim without calculation is less evidence.",
+      "checks.initial_condition": "At t=0 the amplitudes are a=1,b=0, so |psi(0)>=|01>, p=0, rho1=|0><0| and C=0. A direct explicit check of state/probability suffices.",
+      "checks.decoupled_limit": "For J=0 there is no exchange. H is diagonal; the initial01 basis vector only acquires exp[-it(-K+2Delta)], p=C=S=0 and maximal CHSH2. Gibbs is diagonal and separable even if the ZZ term K remains; this is not a claim that all interactions vanish for every state.",
+      "checks.nontrivial_numerical_example": "Accept any independently correct nontrivial numerical substitution, clearly separated from an analytic proof. One evaluator-derived example is J=Delta=1,K=0,r=sqrt2,t=pi/(4sqrt2): p=1/2,C=1,S=1,CHSH=2sqrt2. Choosing beta=ln2/(2sqrt2) gives c=5/4,s=3/4,Z=9/2 and positive PT eigenvalues [5/4-3/(4sqrt2),5/4+3/(4sqrt2),1-3/(4sqrt2),1+3/(4sqrt2)]/(9/2). This is an optional check, not a required choice of sample."
+    },
+    "grading_rules_preserved": [
+      "Read outputs only after parent confirms all five final responses frozen.",
+      "Grade final response only; do not credit drafts or intermediate stages for missing final material.",
+      "Accept equivalent exact formulas, projector bases, phase conventions and unordered partial-transpose eigenvalue listings when mathematically equivalent and Hamiltonian-consistent.",
+      "Record each partial-credit deduction with exact final-response evidence, omitted branch, invalid step or supporting counterexample.",
+      "Do not treat numeric substitution as proof of a universal analytic claim; do not use a model self-score as accuracy.",
+      "For truncated JSON, score mathematically readable raw final solver content rather than automatically assigning zero; report unusable envelope/truncation separately.",
+      "The fixed suballocation was agreed before any model output access. Do not change weights after seeing outputs.",
+      "Report raw section/criterion scores and total; the one-seed result does not establish general graduate-QM performance."
+    ],
+    "experiment_specific_interpretation": [
+      "The unchanged rubric mentions five historical outputs; this separate experiment has three runs. Output access waits for parent confirmation that all three are complete and frozen.",
+      "Only the final answer_text is graded. No draft, matrix proposal, checker acceptance or host preprocessing artifact supplies missing final solution credit.",
+      "answer_text=None due a workflow refusal receives0 delivered-solution points across all25 criteria, recorded as unavailable delivery rather than25 false assertions.",
+      "Partial credit is criterion-specific mathematical judgment with explicit final evidence and reasons; no point weights are altered.",
+      "summarize_runs section keys pure_entanglement/thermal_entanglement map exactly to rubric sections pure_state/thermal without reallocating points."
+    ],
+    "no_output_access_before_freeze": true,
+    "fresh_numerical_execution": "None at criterion freeze; reference formulas are independently derived symbolically. Optional numeric examples do not prove universal formulas."
+  },
+  "run_evaluations": [
+    {
+      "run_id": "qm-large-20261110:hamiltonian_checked_v1:000",
+      "plan": "hamiltonian_checked_v1",
+      "run_path": "dag/benchmark/hamiltonian_large_model_20261110/runs/00_hamiltonian_checked_v1/run.json",
+      "run_sha256": "5ee8216b3132685bab2ed9a03831d06cd86200a02c1a9b1b84dfc5a5633809a3",
+      "answer_sha256": null,
+      "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+      "receipt_status": "representation_refused",
+      "answer_line_count": 0,
+      "full_final_answer_read": false,
+      "delivery_disposition": "no_final_answer",
+      "final_call_finish_reasons": [
+        "stop",
+        "stop"
+      ],
+      "points": {
+        "spectrum": 0,
+        "dynamics": 0,
+        "pure_entanglement": 0,
+        "thermal_entanglement": 0,
+        "checks": 0
+      },
+      "total_points": 0,
+      "criteria": [
+        {
+          "criterion_id": "spectrum.block_reduction",
+          "criterion": "Correct invariant even/odd subspaces and Hamiltonian restriction, with a derivation.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "spectrum.energies",
+          "criterion": "All four eigenvalues including multiplicities, consistent with the seed Hamiltonian.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "spectrum.projectors",
+          "criterion": "Correct normalized orthogonal spectral projectors, resolving identity and reconstructing H.",
+          "max_points": 6,
+          "awarded_points": 0,
+          "deducted_points": 6,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "spectrum.coincident_energies",
+          "criterion": "All nonzero-radius even/odd coincidences are identified and equal-energy eigenspaces merged or equivalently explained.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "spectrum.zero_radius",
+          "criterion": "J=Delta=0 is handled without undefined divisions; K=0 complete degeneracy is explicit.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.state",
+          "criterion": "Correct evolved state and phase/sign conventions derived from the odd block, including zero-radius evolution.",
+          "max_points": 8,
+          "awarded_points": 0,
+          "deducted_points": 8,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.probability",
+          "criterion": "Correct exact transition probability and valid denominator branches.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.supremum",
+          "criterion": "Correct supremum over t>=0 for all parameters.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.earliest_and_constant_branches",
+          "criterion": "Earliest maximizing time is correct; constant-probability cases identify t=0 and avoid applying an oscillatory time formula.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.reduced_density",
+          "criterion": "Correct first-spin reduced state and trace.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.entropy",
+          "criterion": "Von Neumann entropy in bits, with endpoint convention0log0=0.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.concurrence",
+          "criterion": "Correct pure-state concurrence with reasoning.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.CHSH",
+          "criterion": "Correct maximal CHSH value over local dichotomic projective spin measurements, with a sufficient self-contained derivation or correlation-matrix optimization.",
+          "max_points": 6,
+          "awarded_points": 0,
+          "deducted_points": 6,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.maximal_entanglement_reachability",
+          "criterion": "Necessary and sufficient parameter condition, excluding the zero-coupling/zero-radius exceptional case.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.earliest_maximal_entanglement",
+          "criterion": "Correct earliest time, including equality and unreachable cases.",
+          "max_points": 3,
+          "awarded_points": 0,
+          "deducted_points": 3,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.Gibbs_state",
+          "criterion": "Correct normalized Gibbs matrix in the stated basis with derivation.",
+          "max_points": 6,
+          "awarded_points": 0,
+          "deducted_points": 6,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.partition_function",
+          "criterion": "Correct partition function with degeneracies.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.partial_transpose",
+          "criterion": "All four eigenvalues of the partial transpose on spin2, with correct block/sign handling.",
+          "max_points": 7,
+          "awarded_points": 0,
+          "deducted_points": 7,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.entanglement_criterion",
+          "criterion": "Necessary and sufficient thermal entanglement condition; strict inequality and equality/separability are correct.",
+          "max_points": 5,
+          "awarded_points": 0,
+          "deducted_points": 5,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.thermal_limits",
+          "criterion": "beta=0 and J=Delta=0 correctly treated without undefined expressions.",
+          "max_points": 3,
+          "awarded_points": 0,
+          "deducted_points": 3,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.conventions",
+          "criterion": "Consistent Pauli, basis, Hamiltonian, log-base and partial-transpose conventions.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.normalization",
+          "criterion": "An explicit independent normalization/trace or equivalent consistency check.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.initial_condition",
+          "criterion": "An explicit t=0 state/probability consistency check.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.decoupled_limit",
+          "criterion": "An explicit J=0/decoupled consistency check covering the stated formulas.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.nontrivial_numerical_example",
+          "criterion": "At least one correct nontrivial numerical example, clearly distinguished from proof of identities.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "not_delivered",
+          "assessment": "No final answer_text was delivered after representation refusal. This is missing delivered evidence, not a finding that the absent mathematical assertion is false.",
+          "final_answer_evidence": []
+        }
+      ],
+      "no_intermediate_credit": true,
+      "mathematical_counterexamples": []
+    },
+    {
+      "run_id": "qm-large-20261110:hamiltonian_host_matrix_v1:000",
+      "plan": "hamiltonian_host_matrix_v1",
+      "run_path": "dag/benchmark/hamiltonian_large_model_20261110/runs/01_hamiltonian_host_matrix_v1/run.json",
+      "run_sha256": "b2b5174e2a3d6ce1abf55e3a1e72690a24a24459d6c43b0d508e9dc6030fcb9b",
+      "answer_sha256": "afc6bea9df08b42fc00d74b50a768f7c07852c49637771b1e8e32ddcb5718287",
+      "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+      "receipt_status": "completed",
+      "answer_line_count": 336,
+      "full_final_answer_read": true,
+      "delivery_disposition": "final_text_ends_mid_derivation",
+      "final_call_finish_reasons": [
+        "length"
+      ],
+      "points": {
+        "spectrum": 13,
+        "dynamics": 0,
+        "pure_entanglement": 0,
+        "thermal_entanglement": 0,
+        "checks": 3
+      },
+      "total_points": 16,
+      "criteria": [
+        {
+          "criterion_id": "spectrum.block_reduction",
+          "criterion": "Correct invariant even/odd subspaces and Hamiltonian restriction, with a derivation.",
+          "max_points": 4,
+          "awarded_points": 4,
+          "deducted_points": 0,
+          "disposition": "supported",
+          "assessment": "Correct Pauli tensors and invariant block matrix are derived explicitly.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                31,
+                145
+              ],
+              "text": "- $X \\otimes X$: acts as $X$ on both qubits\n\n$$\nX \\otimes X = \\begin{pmatrix}\n0 & 0 & 0 & 1 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n1 & 0 & 0 & 0 \\\\\n\\end{pmatrix}\n$$\n\n- $Y \\otimes Y$: note $Y = i \\begin{pmatrix}0 & -1 \\\\ 1 & 0\\end{pmatrix}$, so $Y \\otimes Y$ has entries:\n\n$$\nY \\otimes Y = \\begin{pmatrix}\n0 & 0 & 0 & -1 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n-1 & 0 & 0 & 0 \\\\\n\\end{pmatrix}\n$$\n\nSo $X \\otimes X + Y \\otimes Y = $\n$$\n\\begin{pmatrix}\n0 & 0 & 0 & 0 \\\\\n0 & 0 & 2 & 0 \\\\\n0 & 2 & 0 & 0 \\\\\n0 & 0 & 0 & 0 \\\\\n\\end{pmatrix}\n$$\n\n- $Z \\otimes I$: $Z$ on first qubit\n\n$$\nZ \\otimes I = \\begin{pmatrix}\n1 & 0 & 0 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n0 & 0 & -1 & 0 \\\\\n0 & 0 & 0 & -1 \\\\\n\\end{pmatrix}\n$$\n\n- $I \\otimes Z$: $Z$ on second qubit\n\n$$\nI \\otimes Z = \\begin{pmatrix}\n1 & 0 & 0 & 0 \\\\\n0 & -1 & 0 & 0 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 0 & 0 & -1 \\\\\n\\end{pmatrix}\n$$\n\nSo $Z \\otimes I - I \\otimes Z = $\n$$\n\\begin{pmatrix}\n0 & 0 & 0 & 0 \\\\\n0 & 2 & 0 & 0 \\\\\n0 & 0 & -2 & 0 \\\\\n0 & 0 & 0 & 0 \\\\\n\\end{pmatrix}\n$$\n\n- $Z \\otimes Z$: both $Z$\n\n$$\nZ \\otimes Z = \\begin{pmatrix}\n1 & 0 & 0 & 0 \\\\\n0 & -1 & 0 & 0 \\\\\n0 & 0 & -1 & 0 \\\\\n0 & 0 & 0 & 1 \\\\\n\\end{pmatrix}\n$$\n\nNow combine:\n\n$$\nH = J \\begin{pmatrix}\n0 & 0 & 0 & 0 \\\\\n0 & 0 & 2 & 0 \\\\\n0 & 2 & 0 & 0 \\\\\n0 & 0 & 0 & 0 \\\\\n\\end{pmatrix}\n+ \\Delta \\begin{pmatrix}\n0 & 0 & 0 & 0 \\\\\n0 & 2 & 0 & 0 \\\\\n0 & 0 & -2 & 0 \\\\\n0 & 0 & 0 & 0 \\\\\n\\end{pmatrix}\n+ K \\begin{pmatrix}\n1 & 0 & 0 & 0 \\\\\n0 & -1 & 0 & 0 \\\\\n0 & 0 & -1 & 0 \\\\\n0 & 0 & 0 & 1 \\\\\n\\end{pmatrix}\n$$\n\nSo total $H$:\n\n$$\nH = \\begin{pmatrix}\nK & 0 & 0 & 0 \\\\\n0 & -K + 2\\Delta & 2J & 0 \\\\\n0 & 2J & -K - 2\\Delta & 0 \\\\\n0 & 0 & 0 & K \\\\\n\\end{pmatrix}\n$$\n\nThis matrix is block-diagonal: the $|00\\rangle$ and $|11\\rangle$ states are decoupled from $|01\\rangle$ and $|10\\rangle$, and only couple within the middle block.\n\nSo we can diagonalize $H$ by considering:\n\n- 1D subspaces: $\\text{span}\\{|00\\rangle\\}$, $\\text{span}\\{|11\\rangle\\}$\n- 2D subspace: $\\text{span}\\{|01\\rangle, |10\\rangle\\}$",
+              "text_sha256": "236d2e5db6b21b12f4a7c7bc1153e66b7457f6f577514bbf6aeb640b8c3635e8"
+            }
+          ]
+        },
+        {
+          "criterion_id": "spectrum.energies",
+          "criterion": "All four eigenvalues including multiplicities, consistent with the seed Hamiltonian.",
+          "max_points": 4,
+          "awarded_points": 4,
+          "deducted_points": 0,
+          "disposition": "supported",
+          "assessment": "Correct quadratic eigenvalue calculation yields K twice and -K plus/minus2sqrt(J^2+Delta^2).",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                147,
+                205
+              ],
+              "text": "#### Eigenvalues:\n\n- $E_1 = K$ (from $|00\\rangle$)\n- $E_4 = K$ (from $|11\\rangle$)\n- The middle 2×2 block:\n$$\nH_{\\text{mid}} = \\begin{pmatrix}\n-K + 2\\Delta & 2J \\\\\n2J & -K - 2\\Delta \\\\\n\\end{pmatrix}\n$$\n\nLet us denote this as:\n$$\nH_{\\text{mid}} = \\begin{pmatrix}\na & b \\\\\nb & c \\\\\n\\end{pmatrix},\\quad a = -K + 2\\Delta,\\quad c = -K - 2\\Delta,\\quad b = 2J\n$$\n\nEigenvalues:\n\n$$\nE_{\\pm} = \\frac{a + c}{2} \\pm \\frac{1}{2} \\sqrt{(a - c)^2 + 4b^2}\n= \\frac{-2K}{2} \\pm \\frac{1}{2} \\sqrt{(4\\Delta)^2 + 4(2J)^2}\n= -K \\pm \\sqrt{4\\Delta^2 + 4J^2}\n= -K \\pm 2\\sqrt{J^2 + \\Delta^2}\n$$\n\nSo the full spectrum is:\n\n$$\n\\boxed{\n\\begin{aligned}\nE^{(1)} &= K \\quad &\\text{(from } |00\\rangle) \\\\\nE^{(2)} &= K \\quad &\\text{(from } |11\\rangle) \\\\\nE^{(3)} &= -K + 2\\sqrt{J^2 + \\Delta^2} \\\\\nE^{(4)} &= -K - 2\\sqrt{J^2 + \\Delta^2}\n\\end{aligned}\n}\n$$\n\nBut wait: $E^{(3)}$ and $E^{(4)}$ come from the middle block. Let us order them properly.\n\nSet:\n$$\n\\omega = \\sqrt{J^2 + \\Delta^2}\n$$\n\nThen the two middle eigenvalues are:\n$$\nE_+ = -K + 2\\omega,\\quad E_- = -K - 2\\omega\n$$\n\nSo the full spectrum is:\n\n$$\n\\boxed{\n\\text{Spectrum of } H: \\quad K \\ (\\text{twice}),\\quad -K + 2\\sqrt{J^2 + \\Delta^2},\\quad -K - 2\\sqrt{J^2 + \\Delta^2}",
+              "text_sha256": "c8c2796382cca7d118e86d36090f74439e520e5da21af53de90476d5d0e79d6f"
+            }
+          ]
+        },
+        {
+          "criterion_id": "spectrum.projectors",
+          "criterion": "Correct normalized orthogonal spectral projectors, resolving identity and reconstructing H.",
+          "max_points": 6,
+          "awarded_points": 2,
+          "deducted_points": 4,
+          "disposition": "partial",
+          "assessment": "Credit for the even projector and a correct generic normalized plus eigenvector, with the minus direction eventually verified. No odd outer-product projectors, complete resolution of identity or H reconstruction are delivered. The later explicit plus-vector chart is unqualified at J=0,Delta<0; earlier angle notation could cover that pole but no completed projector branch is provided.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                227,
+                256
+              ],
+              "text": "#### Spectral projectors\n\nLet us now find the spectral projectors.\n\n- $P_K$: projector onto eigenspace with eigenvalue $K$\n\nFrom above, $|00\\rangle$ and $|11\\rangle$ have energy $K$ only if they are not mixed into the middle block. But in general, only $|00\\rangle$ and $|11\\rangle$ have energy $K$ only when $J = \\Delta = 0$. Wait — no: in our matrix, $|00\\rangle$ and $|11\\rangle$ are always eigenstates with eigenvalue $K$, because off-diagonal elements are zero.\n\nIndeed, $H|00\\rangle = K |00\\rangle$, $H|11\\rangle = K |11\\rangle$, regardless of $J, \\Delta, K$, since off-diagonal entries to other states are zero.\n\nSo $|00\\rangle$ and $|11\\rangle$ are always eigenvectors with eigenvalue $K$, so:\n\n$$\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|\n$$\n\nNow the middle block: $|01\\rangle, |10\\rangle$ span an invariant subspace. Diagonalize $H_{\\text{mid}}$.\n\nLet $\\omega = \\sqrt{J^2 + \\Delta^2}$. Assume $\\omega > 0$.\n\nLet us find eigenvectors of:\n$$\n\\begin{pmatrix}\n-K + 2\\Delta & 2J \\\\\n2J & -K - 2\\Delta \\\\\n\\end{pmatrix}\n= -K I + 2 \\begin{pmatrix} \\Delta & J \\\\ J & -\\Delta \\end{pmatrix}\n$$\n\nSo diagonalize $M = \\begin{pmatrix} \\Delta & J \\\\ J & -\\Delta \\end{pmatrix}$, which has eigenvalues $\\pm \\omega$, since $\\det(M - \\lambda I) = \\lambda^2 - (\\Delta^2 + J^2) = 0$",
+              "text_sha256": "ce63291b1f8b0279c517a2d584de6e7feaed39cbca39a8d43920670d7c913d71"
+            },
+            {
+              "answer_lines": [
+                270,
+                301
+              ],
+              "text": "Normalize: define angle $\\theta$ such that $\\cos\\theta = \\Delta / \\omega$, $\\sin\\theta = J / \\omega$\n\nThen eigenvector for $+\\omega$ of $M$ is:\n$$\n|\\psi_+\\rangle = \\cos(\\theta/2) |01\\rangle + \\sin(\\theta/2) |10\\rangle\n$$\n\nStandard for $\\vec{n} \\cdot \\vec{\\sigma}$: eigenstates are $\\cos(\\theta/2)|0\\rangle + \\sin(\\theta/2)|1\\rangle$, but here the matrix is $M = \\omega (\\cos\\theta\\, \\sigma_z + \\sin\\theta\\, \\sigma_x)$, so axis is in $xz$-plane.\n\nActually, $M = J \\sigma_x + \\Delta \\sigma_z$, so eigenvector for $+\\omega$ is:\n$$\n|\\psi_+\\rangle = \\cos(\\phi/2) |01\\rangle + \\sin(\\phi/2) |10\\rangle\n$$\nwhere $\\tan\\phi = J / \\Delta$, but better to write:\n\nLet\n$$\n|\\psi_+\\rangle = \\frac{1}{\\sqrt{2\\omega(\\omega - \\Delta)}} \\begin{pmatrix} \\omega - \\Delta \\\\ 2J \\end{pmatrix} \\quad\\text{but normalize}\n$$\n\nBetter: the unnormalized eigenvector for $+\\omega$ of $M$ is:\n$$\nv_+ = \\begin{pmatrix} \\omega + \\Delta \\\\ J \\end{pmatrix} \\quad\\text{since } (\\Delta - \\omega)(\\omega + \\Delta) + J \\cdot J = (\\Delta^2 - \\omega^2) + J^2 = \\Delta^2 - (J^2 + \\Delta^2) + J^2 = 0\n$$\n\nSo yes, $v_+ = \\begin{pmatrix} \\omega + \\Delta \\\\ J \\end{pmatrix}$\n\nNorm: $(\\omega + \\Delta)^2 + J^2 = \\omega^2 + 2\\omega\\Delta + \\Delta^2 + J^2 = (J^2 + \\Delta^2) + 2\\omega\\Delta + \\Delta^2 + J^2 = 2J^2 + 2\\Delta^2 + 2\\omega\\Delta = 2\\omega(\\omega + \\Delta)$\n\nSo normalized:\n$$\n|\\psi_+\\rangle = \\frac{1}{\\sqrt{2\\omega(\\omega + \\Delta)}} \\left( (\\omega + \\Delta) |01\\rangle + J |10\\rangle \\right)",
+              "text_sha256": "a99d0d456bb2b069e7cce8251fb9d33444335728aa6bbea72250060661f45dba"
+            },
+            {
+              "answer_lines": [
+                304,
+                336
+              ],
+              "text": "Similarly, for $-\\omega$: $v_- = \\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix}$? Check:\n\n$(\\Delta)(-J) + J(\\omega + \\Delta) = -\\Delta J + J\\omega + J\\Delta = J\\omega$, not $-\\omega (-J)$\n\nBetter: eigenvector for $-\\omega$:\n\nFrom $(M + \\omega I)v = 0$:\n\n$$\n\\begin{pmatrix} \\Delta + \\omega & J \\\\ J & -\\Delta + \\omega \\end{pmatrix} \\begin{pmatrix} x \\\\ y \\end{pmatrix} = 0\n\\Rightarrow (\\Delta + \\omega)x + J y = 0\n\\Rightarrow y = -\\frac{\\Delta + \\omega}{J} x\n$$\n\nOr use orthogonal to $v_+$: $v_- = \\begin{pmatrix} -J \\\\ \\omega - \\Delta \\end{pmatrix}$, since dot product: $(\\omega + \\Delta)(-J) + J(\\omega - \\Delta) = -J\\omega - J\\Delta + J\\omega - J\\Delta = -2J\\Delta$, not zero.\n\nActually, the correct orthogonal vector is $\\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix}$? Try dot: $(\\omega + \\Delta)(-J) + J(\\omega + \\Delta) = -J\\omega - J\\Delta + J\\omega + J\\Delta = 0$. Yes.\n\nBut is it eigenvector? Apply $M$:\n\n$$\n\\begin{pmatrix} \\Delta & J \\\\ J & -\\Delta \\end{pmatrix} \\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix} = \\begin{pmatrix} -\\Delta J + J(\\omega + \\Delta) \\\\ -J^2 - \\Delta(\\omega + \\Delta) \\end{pmatrix} = \\begin{pmatrix} J\\omega \\\\ -J^2 - \\Delta\\omega - \\Delta^2 \\end{pmatrix}\n$$\n\nWe want $-\\omega \\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix} = \\begin{pmatrix} J\\omega \\\\ -\\omega(\\omega + \\Delta) \\end{pmatrix}$\n\nCompare second component: $-\\omega(\\omega + \\Delta) = -\\omega^2 - \\omega\\Delta = -(J^2 + \\Delta^2) - \\omega\\Delta = -J^2 - \\Delta^2 - \\omega\\Delta$\n\nBut we have $-J^2 - \\Delta\\omega - \\Delta^2 = -J^2 - \\Delta^2 - \\omega\\Delta$, same.\n\nSo yes, $v_- = \\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix}$\n\nNorm: $J^2 + (\\omega + \\Delta)^2 = J^2 + \\omega^2 + 2\\omega",
+              "text_sha256": "5a0925a40479ba666f0f231c452d125f90a36e50d308931ae6759102e959a713"
+            }
+          ]
+        },
+        {
+          "criterion_id": "spectrum.coincident_energies",
+          "criterion": "All nonzero-radius even/odd coincidences are identified and equal-energy eigenspaces merged or equivalently explained.",
+          "max_points": 4,
+          "awarded_points": 2,
+          "deducted_points": 2,
+          "disposition": "partial",
+          "assessment": "Correct coincidence equations K=plus/minus omega are identified. The text does not give the resulting rank3/rank1 eigenspaces or merge the energy-K projector; its claim that K degeneracy is exceptional there is misleading.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                209,
+                212
+              ],
+              "text": "Degeneracies:\n- $K$: always degenerate unless $K = -K \\pm 2\\omega$, i.e., unless $2K = \\pm 2\\omega$ → $K = \\pm \\omega$\n- So generically, $K$ is doubly degenerate.\n- The other two levels are non-degenerate unless $J = \\Delta = 0$, in which case $E_+ = E_- = -K$, so all four eigenvalues become $K, K, -K, -K$, so doubly degenerate pairs.",
+              "text_sha256": "a1fcc15247d3c1ca9ecf33ffe8a849bea99361cd4ae16cdd3934205028030605"
+            },
+            {
+              "answer_lines": [
+                231,
+                241
+              ],
+              "text": "- $P_K$: projector onto eigenspace with eigenvalue $K$\n\nFrom above, $|00\\rangle$ and $|11\\rangle$ have energy $K$ only if they are not mixed into the middle block. But in general, only $|00\\rangle$ and $|11\\rangle$ have energy $K$ only when $J = \\Delta = 0$. Wait — no: in our matrix, $|00\\rangle$ and $|11\\rangle$ are always eigenstates with eigenvalue $K$, because off-diagonal elements are zero.\n\nIndeed, $H|00\\rangle = K |00\\rangle$, $H|11\\rangle = K |11\\rangle$, regardless of $J, \\Delta, K$, since off-diagonal entries to other states are zero.\n\nSo $|00\\rangle$ and $|11\\rangle$ are always eigenvectors with eigenvalue $K$, so:\n\n$$\nP_K = |00\\rangle\\langle 00| + |11\\rangle\\langle 11|\n$$",
+              "text_sha256": "99df7640d5e4822dbb443ff7bf56540afe49ba12a3abd6543f7cc7a7d1f3ae59"
+            }
+          ]
+        },
+        {
+          "criterion_id": "spectrum.zero_radius",
+          "criterion": "J=Delta=0 is handled without undefined divisions; K=0 complete degeneracy is explicit.",
+          "max_points": 2,
+          "awarded_points": 1,
+          "deducted_points": 1,
+          "disposition": "partial",
+          "assessment": "Correct diagonal J=Delta=0 Hamiltonian and K,K,-K,-K energies. K=0 fourfold degeneracy and the single identity spectral projector are not stated.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                214,
+                225
+              ],
+              "text": "#### Special case: $J = \\Delta = 0$\n\nThen $H = K Z \\otimes Z$, so diagonal in computational basis:\n\n- $|00\\rangle$: $K$\n- $|01\\rangle$: $-K$\n- $|10\\rangle$: $-K$\n- $|11\\rangle$: $K$\n\nSo eigenvalues: $K$ (twice), $-K$ (twice)\n\nMatches above: $E_\\pm = -K \\pm 0 = -K$, so spectrum: $K, K, -K, -K$",
+              "text_sha256": "b65a6e56bb683518c265a5b7b1855809e3d0134c647e41ccc90fbfa983e718f1"
+            }
+          ]
+        },
+        {
+          "criterion_id": "dynamics.state",
+          "criterion": "Correct evolved state and phase/sign conventions derived from the odd block, including zero-radius evolution.",
+          "max_points": 8,
+          "awarded_points": 0,
+          "deducted_points": 8,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.probability",
+          "criterion": "Correct exact transition probability and valid denominator branches.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.supremum",
+          "criterion": "Correct supremum over t>=0 for all parameters.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.earliest_and_constant_branches",
+          "criterion": "Earliest maximizing time is correct; constant-probability cases identify t=0 and avoid applying an oscillatory time formula.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.reduced_density",
+          "criterion": "Correct first-spin reduced state and trace.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.entropy",
+          "criterion": "Von Neumann entropy in bits, with endpoint convention0log0=0.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.concurrence",
+          "criterion": "Correct pure-state concurrence with reasoning.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.CHSH",
+          "criterion": "Correct maximal CHSH value over local dichotomic projective spin measurements, with a sufficient self-contained derivation or correlation-matrix optimization.",
+          "max_points": 6,
+          "awarded_points": 0,
+          "deducted_points": 6,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.maximal_entanglement_reachability",
+          "criterion": "Necessary and sufficient parameter condition, excluding the zero-coupling/zero-radius exceptional case.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.earliest_maximal_entanglement",
+          "criterion": "Correct earliest time, including equality and unreachable cases.",
+          "max_points": 3,
+          "awarded_points": 0,
+          "deducted_points": 3,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.Gibbs_state",
+          "criterion": "Correct normalized Gibbs matrix in the stated basis with derivation.",
+          "max_points": 6,
+          "awarded_points": 0,
+          "deducted_points": 6,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.partition_function",
+          "criterion": "Correct partition function with degeneracies.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.partial_transpose",
+          "criterion": "All four eigenvalues of the partial transpose on spin2, with correct block/sign handling.",
+          "max_points": 7,
+          "awarded_points": 0,
+          "deducted_points": 7,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.entanglement_criterion",
+          "criterion": "Necessary and sufficient thermal entanglement condition; strict inequality and equality/separability are correct.",
+          "max_points": 5,
+          "awarded_points": 0,
+          "deducted_points": 5,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.thermal_limits",
+          "criterion": "beta=0 and J=Delta=0 correctly treated without undefined expressions.",
+          "max_points": 3,
+          "awarded_points": 0,
+          "deducted_points": 3,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.conventions",
+          "criterion": "Consistent Pauli, basis, Hamiltonian, log-base and partial-transpose conventions.",
+          "max_points": 2,
+          "awarded_points": 1,
+          "deducted_points": 1,
+          "disposition": "partial",
+          "assessment": "Correct basis, Pauli/Y sign, real Hamiltonian parameters and unit conventions. No log-base or partial-transpose convention is delivered because those sections are absent.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                1,
+                19
+              ],
+              "text": "We are given a two-spin-1/2 system with computational basis states $|00\\rangle, |01\\rangle, |10\\rangle, |11\\rangle$, where $Z|0\\rangle = |0\\rangle$, $Z|1\\rangle = -|1\\rangle$, so the eigenvalues of $Z$ are $+1$ for $|0\\rangle$ and $-1$ for $|1\\rangle$. The Hamiltonian is:\n\n$$\nH = J (X \\otimes X + Y \\otimes Y) + \\Delta (Z \\otimes I - I \\otimes Z) + K Z \\otimes Z\n$$\n\nwith real parameters $J, \\Delta, K$. The initial state is $|\\psi(0)\\rangle = |01\\rangle$. We set $\\hbar = k_B = 1$. Pauli matrices are:\n\n$$\nX = \\begin{pmatrix}0 & 1 \\\\ 1 & 0\\end{pmatrix},\\quad\nY = \\begin{pmatrix}0 & -i \\\\ i & 0\\end{pmatrix},\\quad\nZ = \\begin{pmatrix}1 & 0 \\\\ 0 & -1\\end{pmatrix},\\quad\nI = \\begin{pmatrix}1 & 0 \\\\ 0 & 1\\end{pmatrix}\n$$\n\nWe order the basis as:\n$$\n|00\\rangle, |01\\rangle, |10\\rangle, |11\\rangle\n$$",
+              "text_sha256": "2da569ae9ee7d74c212cb1a3820c6b47a4f198d1d91d248cc3838afa4e111904"
+            },
+            {
+              "answer_lines": [
+                129,
+                137
+              ],
+              "text": "So total $H$:\n\n$$\nH = \\begin{pmatrix}\nK & 0 & 0 & 0 \\\\\n0 & -K + 2\\Delta & 2J & 0 \\\\\n0 & 2J & -K - 2\\Delta & 0 \\\\\n0 & 0 & 0 & K \\\\\n\\end{pmatrix}",
+              "text_sha256": "52e9b8fc0f67b15ecd576985e577e5f37ac247d3cc54fc137e623050a23e0b29"
+            }
+          ]
+        },
+        {
+          "criterion_id": "checks.normalization",
+          "criterion": "An explicit independent normalization/trace or equivalent consistency check.",
+          "max_points": 2,
+          "awarded_points": 2,
+          "deducted_points": 0,
+          "disposition": "supported",
+          "assessment": "The generic plus-vector norm is explicitly computed and the final minus direction is checked against its eigenvalue. These supply the rubric equivalent normalization/eigenpair consistency check, within the chart domain; no separate state or thermal normalization is claimed.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                295,
+                301
+              ],
+              "text": "So yes, $v_+ = \\begin{pmatrix} \\omega + \\Delta \\\\ J \\end{pmatrix}$\n\nNorm: $(\\omega + \\Delta)^2 + J^2 = \\omega^2 + 2\\omega\\Delta + \\Delta^2 + J^2 = (J^2 + \\Delta^2) + 2\\omega\\Delta + \\Delta^2 + J^2 = 2J^2 + 2\\Delta^2 + 2\\omega\\Delta = 2\\omega(\\omega + \\Delta)$\n\nSo normalized:\n$$\n|\\psi_+\\rangle = \\frac{1}{\\sqrt{2\\omega(\\omega + \\Delta)}} \\left( (\\omega + \\Delta) |01\\rangle + J |10\\rangle \\right)",
+              "text_sha256": "75a301d176344e46c43f723c92413c055efa3ea6147f15c60bf02baf4a9e5664"
+            },
+            {
+              "answer_lines": [
+                320,
+                334
+              ],
+              "text": "Actually, the correct orthogonal vector is $\\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix}$? Try dot: $(\\omega + \\Delta)(-J) + J(\\omega + \\Delta) = -J\\omega - J\\Delta + J\\omega + J\\Delta = 0$. Yes.\n\nBut is it eigenvector? Apply $M$:\n\n$$\n\\begin{pmatrix} \\Delta & J \\\\ J & -\\Delta \\end{pmatrix} \\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix} = \\begin{pmatrix} -\\Delta J + J(\\omega + \\Delta) \\\\ -J^2 - \\Delta(\\omega + \\Delta) \\end{pmatrix} = \\begin{pmatrix} J\\omega \\\\ -J^2 - \\Delta\\omega - \\Delta^2 \\end{pmatrix}\n$$\n\nWe want $-\\omega \\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix} = \\begin{pmatrix} J\\omega \\\\ -\\omega(\\omega + \\Delta) \\end{pmatrix}$\n\nCompare second component: $-\\omega(\\omega + \\Delta) = -\\omega^2 - \\omega\\Delta = -(J^2 + \\Delta^2) - \\omega\\Delta = -J^2 - \\Delta^2 - \\omega\\Delta$\n\nBut we have $-J^2 - \\Delta\\omega - \\Delta^2 = -J^2 - \\Delta^2 - \\omega\\Delta$, same.\n\nSo yes, $v_- = \\begin{pmatrix} -J \\\\ \\omega + \\Delta \\end{pmatrix}$",
+              "text_sha256": "c7eeff6797431c0a8376466010e74b9dc2df289ef87f4ea9d104457f3c41620e"
+            }
+          ]
+        },
+        {
+          "criterion_id": "checks.initial_condition",
+          "criterion": "An explicit t=0 state/probability consistency check.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.decoupled_limit",
+          "criterion": "An explicit J=0/decoupled consistency check covering the stated formulas.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.nontrivial_numerical_example",
+          "criterion": "At least one correct nontrivial numerical example, clearly distinguished from proof of identities.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "omitted",
+          "assessment": "The final answer ends during the spectrum/eigenvector calculation at line336. This requested result/check is not present. Initial-state premises and the J=Delta=0 spectrum subcase do not substitute for evolved-state or general J=0 consistency checks.",
+          "final_answer_evidence": []
+        }
+      ],
+      "no_intermediate_credit": true,
+      "mathematical_counterexamples": [
+        {
+          "id": "HOST-CE01",
+          "answer_lines": [
+            301,
+            301
+          ],
+          "parameters": {
+            "J": 0,
+            "Delta": -1,
+            "K": 0
+          },
+          "calculation": "omega=1, so sqrt(2omega(omega+Delta))=0 and the displayed numerator is the zero vector. This explicit eigenvector chart is undefined despite omega>0. The earlier angle representation can cover this case, but the final answer does not assemble a chart-independent projector or state the exception.",
+          "kind": "missing_domain_branch"
+        },
+        {
+          "id": "HOST-CE02",
+          "answer_lines": [
+            209,
+            212
+          ],
+          "parameters": {
+            "J": 1,
+            "Delta": 0,
+            "K": 1
+          },
+          "calculation": "omega=1; energies are1,1,1,-3. Energy K has multiplicity3 and its full projector must include the odd plus subspace. The generic even projector alone is not the full energy-K spectral projector.",
+          "kind": "unmerged_degeneracy"
+        }
+      ]
+    },
+    {
+      "run_id": "qm-large-20261110:direct:000",
+      "plan": "direct",
+      "run_path": "dag/benchmark/hamiltonian_large_model_20261110/runs/02_direct/run.json",
+      "run_sha256": "fc9f62d6f987b882ab035e40aa5505af0ee504a608cef0e8d9f7876aba8048b2",
+      "answer_sha256": "d5b16b783e8ba1ebcffa3f72908d92f75e5aac6c0fedd26be3dcf9fc9eabe962",
+      "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+      "receipt_status": "completed",
+      "answer_line_count": 290,
+      "full_final_answer_read": true,
+      "delivery_disposition": "final_text_ends_mid_derivation",
+      "final_call_finish_reasons": [
+        "length"
+      ],
+      "points": {
+        "spectrum": 6,
+        "dynamics": 0,
+        "pure_entanglement": 0,
+        "thermal_entanglement": 0,
+        "checks": 4
+      },
+      "total_points": 10,
+      "criteria": [
+        {
+          "criterion_id": "spectrum.block_reduction",
+          "criterion": "Correct invariant even/odd subspaces and Hamiltonian restriction, with a derivation.",
+          "max_points": 4,
+          "awarded_points": 2,
+          "deducted_points": 2,
+          "disposition": "partial",
+          "assessment": "The invariant parity subspaces and odd block are correct. The XX+YY sum incorrectly retains2J coupling between00 and11, making the even block wrong. Half credit for the valid odd/parity reduction.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                24,
+                59
+              ],
+              "text": "#### **Term 1: $ X \\otimes X $**\n$$\nX \\otimes X = \\begin{pmatrix} 0 & 0 & 0 & 1 \\\\ 0 & 0 & 1 & 0 \\\\ 0 & 1 & 0 & 0 \\\\ 1 & 0 & 0 & 0 \\end{pmatrix}\n$$\n\n#### **Term 2: $ Y \\otimes Y $**\nNote $ Y = i \\sigma_y $, so $ Y \\otimes Y = - (i \\sigma_y) \\otimes (i \\sigma_y) $? No: $ Y \\otimes Y = \\begin{pmatrix} 0 & 0 & 0 & -1 \\\\ 0 & 0 & 1 & 0 \\\\ 0 & 1 & 0 & 0 \\\\ -1 & 0 & 0 & 0 \\end{pmatrix} $\n\nLet’s compute explicitly:\n$$\nY = \\begin{pmatrix} 0 & -i \\\\ i & 0 \\end{pmatrix} \\Rightarrow Y \\otimes Y = \\begin{pmatrix}\n0\\cdot Y & -i Y \\\\ i Y & 0\\cdot Y\n\\end{pmatrix} = \\begin{pmatrix}\n0 & 0 & 0 & -1 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n-1 & 0 & 0 & 0\n\\end{pmatrix}\n$$\nsince $ (-i)(i) = -i^2 = 1 $, $ (-i)(-i) = i^2 = -1 $, etc. Correct.\n\nSo:\n$$\nX \\otimes X + Y \\otimes Y = \\begin{pmatrix}\n0 & 0 & 0 & 2 \\\\\n0 & 0 & 2 & 0 \\\\\n0 & 2 & 0 & 0 \\\\\n2 & 0 & 0 & 0\n\\end{pmatrix}\n\\quad \\Rightarrow J(X \\otimes X + Y \\otimes Y) = 2J \\begin{pmatrix}\n0 & 0 & 0 & 1 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n1 & 0 & 0 & 0\n\\end{pmatrix}\n$$",
+              "text_sha256": "6a2bf4fc52e5befd4fecd4feb01003444946b5cdc41ab0b4284f3a7927cd720f"
+            },
+            {
+              "answer_lines": [
+                105,
+                163
+              ],
+              "text": "#### **Total Hamiltonian:**\n\nSumming all terms:\n\n$$\nH = \\begin{pmatrix}\nK & 0 & 0 & 2J \\\\\n0 & -K + 2\\Delta & 2J & 0 \\\\\n0 & 2J & -K - 2\\Delta & 0 \\\\\n2J & 0 & 0 & K\n\\end{pmatrix}\n$$\n\nSo:\n$$\nH = \\begin{pmatrix}\nK & 0 & 0 & 2J \\\\\n0 & -K + 2\\Delta & 2J & 0 \\\\\n0 & 2J & -K - 2\\Delta & 0 \\\\\n2J & 0 & 0 & K\n\\end{pmatrix}\n$$\n\nWe observe that $ H $ is block-diagonal:\n- The $ \\{|00\\rangle, |11\\rangle\\} $ subspace (spanned by $ |00\\rangle, |11\\rangle $) is coupled.\n- The $ \\{|01\\rangle, |10\\rangle\\} $ subspace is coupled.\n- No cross terms between these two 2D subspaces.\n\nSo we can diagonalize each block separately.\n\n---\n\n#### **Block 1: $ \\{|00\\rangle, |11\\rangle\\} $**\n\n$$\nH_{00,11} = \\begin{pmatrix} K & 2J \\\\ 2J & K \\end{pmatrix}\n\\Rightarrow \\text{Eigenvalues: } E = K \\pm 2J\n$$\nEigenvectors:\n- $ E_+ = K + 2J $: $ |\\psi_+\\rangle = \\frac{1}{\\sqrt{2}}(|00\\rangle + |11\\rangle) $\n- $ E_- = K - 2J $: $ |\\psi_-\\rangle = \\frac{1}{\\sqrt{2}}(|00\\rangle - |11\\rangle) $\n\n---\n\n#### **Block 2: $ \\{|01\\rangle, |10\\rangle\\} $**\n\n$$\nH_{01,10} = \\begin{pmatrix} -K + 2\\Delta & 2J \\\\ 2J & -K - 2\\Delta \\end{pmatrix}\n$$\n\nLet $ A = -K $, $ B = 2\\Delta $, so:\n$$\nH = \\begin{pmatrix} A + B & 2J \\\\ 2J & A - B \\end{pmatrix}\n\\Rightarrow \\text{Eigenvalues: } E = A \\pm \\sqrt{B^2 + (2J)^2} = -K \\pm \\sqrt{(2\\Delta)^2 + (2J)^2}\n$$\nSo:\n$$\nE_{\\pm} = -K \\pm 2 \\sqrt{J^2 + \\Delta^2}\n$$",
+              "text_sha256": "396dea3a81fa60a8d234165a7509a4978ee752330072fb82922fa032a92760d7"
+            }
+          ]
+        },
+        {
+          "criterion_id": "spectrum.energies",
+          "criterion": "All four eigenvalues including multiplicities, consistent with the seed Hamiltonian.",
+          "max_points": 4,
+          "awarded_points": 2,
+          "deducted_points": 2,
+          "disposition": "partial",
+          "assessment": "The two odd energies -K plus/minus2Omega are correct. The even energies K plus/minus2J are false for the seed; they should both equal K. Two of the four energies receive credit.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                137,
+                165
+              ],
+              "text": "#### **Block 1: $ \\{|00\\rangle, |11\\rangle\\} $**\n\n$$\nH_{00,11} = \\begin{pmatrix} K & 2J \\\\ 2J & K \\end{pmatrix}\n\\Rightarrow \\text{Eigenvalues: } E = K \\pm 2J\n$$\nEigenvectors:\n- $ E_+ = K + 2J $: $ |\\psi_+\\rangle = \\frac{1}{\\sqrt{2}}(|00\\rangle + |11\\rangle) $\n- $ E_- = K - 2J $: $ |\\psi_-\\rangle = \\frac{1}{\\sqrt{2}}(|00\\rangle - |11\\rangle) $\n\n---\n\n#### **Block 2: $ \\{|01\\rangle, |10\\rangle\\} $**\n\n$$\nH_{01,10} = \\begin{pmatrix} -K + 2\\Delta & 2J \\\\ 2J & -K - 2\\Delta \\end{pmatrix}\n$$\n\nLet $ A = -K $, $ B = 2\\Delta $, so:\n$$\nH = \\begin{pmatrix} A + B & 2J \\\\ 2J & A - B \\end{pmatrix}\n\\Rightarrow \\text{Eigenvalues: } E = A \\pm \\sqrt{B^2 + (2J)^2} = -K \\pm \\sqrt{(2\\Delta)^2 + (2J)^2}\n$$\nSo:\n$$\nE_{\\pm} = -K \\pm 2 \\sqrt{J^2 + \\Delta^2}\n$$\n\nLet $ \\Omega = \\sqrt{J^2 + \\Delta^2} $, so eigenvalues: $ -K \\pm 2\\Omega $",
+              "text_sha256": "e3a86b7b98ed7a6dbc42e065a2c141874ba4e3f7322aaea2ff6a551d37e0a2a3"
+            },
+            {
+              "answer_lines": [
+                204,
+                211
+              ],
+              "text": "### **Full Spectrum**\n\nLet $ \\Omega = \\sqrt{J^2 + \\Delta^2} $. Then the four eigenvalues are:\n\n1. $ E_1 = K + 2J $\n2. $ E_2 = K - 2J $\n3. $ E_3 = -K + 2\\Omega $\n4. $ E_4 = -K - 2\\Omega $",
+              "text_sha256": "489cbd6efdf16e27fa131860ed0c7fd3d974d7fac41877a74a0c37b64cdd2303"
+            },
+            {
+              "answer_lines": [
+                271,
+                279
+              ],
+              "text": "### ✅ Summary: Spectrum\n\nLet $ \\Omega = \\sqrt{J^2 + \\Delta^2} $\n\nEigenvalues:\n- $ E_1 = K + 2J $\n- $ E_2 = K - 2J $\n- $ E_3 = -K + 2\\Omega $\n- $ E_4 = -K - 2\\Omega $",
+              "text_sha256": "d040c100a5a6bd6b690c8c566104892a6ec5ea5abcdfb8adbdea1464d7c67b12"
+            }
+          ]
+        },
+        {
+          "criterion_id": "spectrum.projectors",
+          "criterion": "Correct normalized orthogonal spectral projectors, resolving identity and reconstructing H.",
+          "max_points": 6,
+          "awarded_points": 1,
+          "deducted_points": 5,
+          "disposition": "partial",
+          "assessment": "Limited credit for explicit correct Pe/Po projectors in the zero-radius K!=0 subcase and valid even-subspace rank-one refinements. Their generic even energy labels are wrong; the final odd vectors use the wrong Delta sign and are not eigenvectors of the stated odd block. No correct generic spectral reconstruction is delivered.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                213,
+                232
+              ],
+              "text": "**Spectral Projectors:**\n\n- $ P_{E_1} = |\\psi_+\\rangle\\langle\\psi_+| = \\frac{1}{2}(|00\\rangle + |11\\rangle)(\\langle00| + \\langle11|) $\n- $ P_{E_2} = |\\psi_-\\rangle\\langle\\psi_-| = \\frac{1}{2}(|00\\rangle - |11\\rangle)(\\langle00| - \\langle11|) $\n- $ P_{E_3} = |\\phi_+\\rangle\\langle\\phi_+| $, where $ |\\phi_+\\rangle \\propto (\\Omega - \\Delta)|01\\rangle + J |10\\rangle $\n- $ P_{E_4} = |\\phi_-\\rangle\\langle\\phi_-| $, where $ |\\phi_-\\rangle \\propto (\\Omega + \\Delta)|01\\rangle - J |10\\rangle $\n\nExplicitly:\n$$\n|\\phi_+\\rangle = \\frac{1}{\\sqrt{2\\Omega(\\Omega - \\Delta)}} \\left( (\\Omega - \\Delta)|01\\rangle + J |10\\rangle \\right) \\quad \\text{(if } \\Omega > |\\Delta|\\text{)}\n$$\nBut this diverges when $ \\Omega = \\Delta $, i.e., $ J = 0 $. So better to normalize as:\n$$\n|\\phi_+\\rangle = \\frac{1}{\\sqrt{2\\Omega(\\Omega - \\Delta)}} \\left( (\\Omega - \\Delta)|01\\rangle + J |10\\rangle \\right)\n$$\nBut $ (\\Omega - \\Delta)(\\Omega + \\Delta) = \\Omega^2 - \\Delta^2 = J^2 $, so $ 2\\Omega(\\Omega - \\Delta) = 2\\Omega(\\Omega - \\Delta) $, and norm squared:\n$$\n\\|(\\Omega - \\Delta)|01\\rangle + J |10\\rangle\\|^2 = (\\Omega - \\Delta)^2 + J^2 = \\Omega^2 - 2\\Omega\\Delta + \\Delta^2 + J^2 = 2\\Omega^2 - 2\\Omega\\Delta\n$$\nsince $ J^2 + \\Delta^2 = \\Omega^2 $. So norm is $ \\sqrt{2\\Omega(\\Omega - \\Delta)} $. So normalization is correct.",
+              "text_sha256": "98e731ba7cc80103a7bb9dfc40b797b4187f57c8bf86a3ffa32dee510675544f"
+            },
+            {
+              "answer_lines": [
+                251,
+                267
+              ],
+              "text": "### **Special Case: $ J = \\Delta = 0 $**\n\nThen $ H = K Z \\otimes Z $\n\nSo:\n- $ H|00\\rangle = K |00\\rangle $\n- $ H|01\\rangle = -K |01\\rangle $\n- $ H|10\\rangle = -K |10\\rangle $\n- $ H|11\\rangle = K |11\\rangle $\n\nSo eigenvalues: $ K, -K, -K, K $. So doubly degenerate $ \\pm K $\n\nSpectral projectors:\n- $ P_K = |00\\rangle\\langle00| + |11\\rangle\\langle11| $\n- $ P_{-K} = |01\\rangle\\langle01| + |10\\rangle\\langle10| $\n\nThis matches general formula: $ \\Omega = 0 $, so $ E_3 = E_4 = -K $, $ E_1 = E_2 = K $. So two 2D eigenspaces.",
+              "text_sha256": "2490da80d7e5b927863eda1345f710d55a458cd1c6c56694e361e501fbcecd69"
+            },
+            {
+              "answer_lines": [
+                286,
+                290
+              ],
+              "text": "Spectral projectors:\n- $ P_{E_1} = \\frac{1}{2}(|00\\rangle + |11\\rangle)(\\langle00| + \\langle11|) $\n- $ P_{E_2} = \\frac{1}{2}(|00\\rangle - |11\\rangle)(\\langle00| - \\langle11|) $\n- $ P_{E_3} = |\\phi_+\\rangle\\langle\\phi_+| $, $ |\\phi_+\\rangle = \\mathcal{N}_+ \\left( (\\Omega - \\Delta)|01\\rangle + J |10\\rangle \\right) $, $ \\mathcal{N}_+ = 1/\\sqrt{2\\Omega(\\Omega - \\Delta)} $\n- $ P_{E_4}",
+              "text_sha256": "e44f7cf08c237ba06e21c1c479df00b3a29b4aaeffcdbeb605edfa79a44fe9aa"
+            }
+          ]
+        },
+        {
+          "criterion_id": "spectrum.coincident_energies",
+          "criterion": "All nonzero-radius even/odd coincidences are identified and equal-energy eigenspaces merged or equivalently explained.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "incorrect",
+          "assessment": "The generic-degeneracy analysis uses the false even eigenvalues. It misses the permanent twofold even degeneracy and does not identify/merge the true K=plus/minusOmega coincidences.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                241,
+                247
+              ],
+              "text": "### **Degeneracies**\n\n- $ E_1 = E_2 $ iff $ J = 0 $\n- $ E_3 = E_4 $ iff $ \\Omega = 0 $, i.e., $ J = \\Delta = 0 $\n- $ E_1 = E_3 $ when $ K + 2J = -K + 2\\sqrt{J^2 + \\Delta^2} $, etc. — possible for specific $ K, J, \\Delta $\n\nBut generally non-degenerate unless symmetries.",
+              "text_sha256": "501c1c3c0c7a24a3bca4e1f27ede8a1d0efc6e7631ec66d8660fd2fd34a967c6"
+            },
+            {
+              "answer_lines": [
+                281,
+                284
+              ],
+              "text": "Degeneracy:\n- $ E_1 = E_2 $ iff $ J = 0 $\n- $ E_3 = E_4 $ iff $ J = \\Delta = 0 $\n- Other degeneracies possible for specific $ K, J, \\Delta $",
+              "text_sha256": "ead728115dcecb4dba1021d06cb067a6d490e661f4546221b6700c4f75bb05f2"
+            }
+          ]
+        },
+        {
+          "criterion_id": "spectrum.zero_radius",
+          "criterion": "J=Delta=0 is handled without undefined divisions; K=0 complete degeneracy is explicit.",
+          "max_points": 2,
+          "awarded_points": 1,
+          "deducted_points": 1,
+          "disposition": "partial",
+          "assessment": "Correct J=Delta=0 diagonal Hamiltonian and Pe/Po eigenspaces for K!=0. K=0 complete degeneracy is not separated; the unconditional two2D-eigenspace statement fails there.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                251,
+                267
+              ],
+              "text": "### **Special Case: $ J = \\Delta = 0 $**\n\nThen $ H = K Z \\otimes Z $\n\nSo:\n- $ H|00\\rangle = K |00\\rangle $\n- $ H|01\\rangle = -K |01\\rangle $\n- $ H|10\\rangle = -K |10\\rangle $\n- $ H|11\\rangle = K |11\\rangle $\n\nSo eigenvalues: $ K, -K, -K, K $. So doubly degenerate $ \\pm K $\n\nSpectral projectors:\n- $ P_K = |00\\rangle\\langle00| + |11\\rangle\\langle11| $\n- $ P_{-K} = |01\\rangle\\langle01| + |10\\rangle\\langle10| $\n\nThis matches general formula: $ \\Omega = 0 $, so $ E_3 = E_4 = -K $, $ E_1 = E_2 = K $. So two 2D eigenspaces.",
+              "text_sha256": "2490da80d7e5b927863eda1345f710d55a458cd1c6c56694e361e501fbcecd69"
+            }
+          ]
+        },
+        {
+          "criterion_id": "dynamics.state",
+          "criterion": "Correct evolved state and phase/sign conventions derived from the odd block, including zero-radius evolution.",
+          "max_points": 8,
+          "awarded_points": 0,
+          "deducted_points": 8,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.probability",
+          "criterion": "Correct exact transition probability and valid denominator branches.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.supremum",
+          "criterion": "Correct supremum over t>=0 for all parameters.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "dynamics.earliest_and_constant_branches",
+          "criterion": "Earliest maximizing time is correct; constant-probability cases identify t=0 and avoid applying an oscillatory time formula.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.reduced_density",
+          "criterion": "Correct first-spin reduced state and trace.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.entropy",
+          "criterion": "Von Neumann entropy in bits, with endpoint convention0log0=0.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.concurrence",
+          "criterion": "Correct pure-state concurrence with reasoning.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.CHSH",
+          "criterion": "Correct maximal CHSH value over local dichotomic projective spin measurements, with a sufficient self-contained derivation or correlation-matrix optimization.",
+          "max_points": 6,
+          "awarded_points": 0,
+          "deducted_points": 6,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.maximal_entanglement_reachability",
+          "criterion": "Necessary and sufficient parameter condition, excluding the zero-coupling/zero-radius exceptional case.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "pure_state.earliest_maximal_entanglement",
+          "criterion": "Correct earliest time, including equality and unreachable cases.",
+          "max_points": 3,
+          "awarded_points": 0,
+          "deducted_points": 3,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.Gibbs_state",
+          "criterion": "Correct normalized Gibbs matrix in the stated basis with derivation.",
+          "max_points": 6,
+          "awarded_points": 0,
+          "deducted_points": 6,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.partition_function",
+          "criterion": "Correct partition function with degeneracies.",
+          "max_points": 4,
+          "awarded_points": 0,
+          "deducted_points": 4,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.partial_transpose",
+          "criterion": "All four eigenvalues of the partial transpose on spin2, with correct block/sign handling.",
+          "max_points": 7,
+          "awarded_points": 0,
+          "deducted_points": 7,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.entanglement_criterion",
+          "criterion": "Necessary and sufficient thermal entanglement condition; strict inequality and equality/separability are correct.",
+          "max_points": 5,
+          "awarded_points": 0,
+          "deducted_points": 5,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "thermal.thermal_limits",
+          "criterion": "beta=0 and J=Delta=0 correctly treated without undefined expressions.",
+          "max_points": 3,
+          "awarded_points": 0,
+          "deducted_points": 3,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.conventions",
+          "criterion": "Consistent Pauli, basis, Hamiltonian, log-base and partial-transpose conventions.",
+          "max_points": 2,
+          "awarded_points": 1,
+          "deducted_points": 1,
+          "disposition": "partial",
+          "assessment": "Partial credit for the explicit correct basis, Pauli matrices and units. The later tensor sum changes the Hamiltonian convention by introducing forbidden even-sector exchange; logarithm and partial-transpose conventions are absent.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                1,
+                9
+              ],
+              "text": "We are given a two-qubit Hamiltonian for two distinguishable spin-1/2 systems with computational basis $ \\{|00\\rangle, |01\\rangle, |10\\rangle, |11\\rangle\\} $, where $ Z|0\\rangle = |0\\rangle $, $ Z|1\\rangle = -|1\\rangle $. This implies the standard Pauli convention:\n$$\nZ = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix},\\quad X = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix},\\quad Y = \\begin{pmatrix} 0 & -i \\\\ i & 0 \\end{pmatrix},\\quad I = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}\n$$\nThe Hamiltonian is:\n$$\nH = J (X \\otimes X + Y \\otimes Y) + \\Delta (Z \\otimes I - I \\otimes Z) + K (Z \\otimes Z)\n$$\nwith real parameters $ J, \\Delta, K $. The initial state is $ |\\psi(0)\\rangle = |01\\rangle $. We work in units $ \\hbar = k_B = 1 $.",
+              "text_sha256": "f2f036339be06bde4b4b892cf28b747cec76bfdf88af209049a1b8e5671a6cf0"
+            },
+            {
+              "answer_lines": [
+                24,
+                59
+              ],
+              "text": "#### **Term 1: $ X \\otimes X $**\n$$\nX \\otimes X = \\begin{pmatrix} 0 & 0 & 0 & 1 \\\\ 0 & 0 & 1 & 0 \\\\ 0 & 1 & 0 & 0 \\\\ 1 & 0 & 0 & 0 \\end{pmatrix}\n$$\n\n#### **Term 2: $ Y \\otimes Y $**\nNote $ Y = i \\sigma_y $, so $ Y \\otimes Y = - (i \\sigma_y) \\otimes (i \\sigma_y) $? No: $ Y \\otimes Y = \\begin{pmatrix} 0 & 0 & 0 & -1 \\\\ 0 & 0 & 1 & 0 \\\\ 0 & 1 & 0 & 0 \\\\ -1 & 0 & 0 & 0 \\end{pmatrix} $\n\nLet’s compute explicitly:\n$$\nY = \\begin{pmatrix} 0 & -i \\\\ i & 0 \\end{pmatrix} \\Rightarrow Y \\otimes Y = \\begin{pmatrix}\n0\\cdot Y & -i Y \\\\ i Y & 0\\cdot Y\n\\end{pmatrix} = \\begin{pmatrix}\n0 & 0 & 0 & -1 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n-1 & 0 & 0 & 0\n\\end{pmatrix}\n$$\nsince $ (-i)(i) = -i^2 = 1 $, $ (-i)(-i) = i^2 = -1 $, etc. Correct.\n\nSo:\n$$\nX \\otimes X + Y \\otimes Y = \\begin{pmatrix}\n0 & 0 & 0 & 2 \\\\\n0 & 0 & 2 & 0 \\\\\n0 & 2 & 0 & 0 \\\\\n2 & 0 & 0 & 0\n\\end{pmatrix}\n\\quad \\Rightarrow J(X \\otimes X + Y \\otimes Y) = 2J \\begin{pmatrix}\n0 & 0 & 0 & 1 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n1 & 0 & 0 & 0\n\\end{pmatrix}\n$$",
+              "text_sha256": "6a2bf4fc52e5befd4fecd4feb01003444946b5cdc41ab0b4284f3a7927cd720f"
+            },
+            {
+              "answer_lines": [
+                105,
+                125
+              ],
+              "text": "#### **Total Hamiltonian:**\n\nSumming all terms:\n\n$$\nH = \\begin{pmatrix}\nK & 0 & 0 & 2J \\\\\n0 & -K + 2\\Delta & 2J & 0 \\\\\n0 & 2J & -K - 2\\Delta & 0 \\\\\n2J & 0 & 0 & K\n\\end{pmatrix}\n$$\n\nSo:\n$$\nH = \\begin{pmatrix}\nK & 0 & 0 & 2J \\\\\n0 & -K + 2\\Delta & 2J & 0 \\\\\n0 & 2J & -K - 2\\Delta & 0 \\\\\n2J & 0 & 0 & K\n\\end{pmatrix}",
+              "text_sha256": "6249bac1d71f6bcf2b1ddb1344107639abe1f5540cb4696f00103288a959c445"
+            }
+          ]
+        },
+        {
+          "criterion_id": "checks.normalization",
+          "criterion": "An explicit independent normalization/trace or equivalent consistency check.",
+          "max_points": 2,
+          "awarded_points": 2,
+          "deducted_points": 0,
+          "disposition": "supported",
+          "assessment": "The displayed odd-vector norm is explicitly and correctly checked. This is a valid local normalization check even though the normalized vector is not the claimed eigenvector; that separate error is deducted under projectors.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                228,
+                232
+              ],
+              "text": "But $ (\\Omega - \\Delta)(\\Omega + \\Delta) = \\Omega^2 - \\Delta^2 = J^2 $, so $ 2\\Omega(\\Omega - \\Delta) = 2\\Omega(\\Omega - \\Delta) $, and norm squared:\n$$\n\\|(\\Omega - \\Delta)|01\\rangle + J |10\\rangle\\|^2 = (\\Omega - \\Delta)^2 + J^2 = \\Omega^2 - 2\\Omega\\Delta + \\Delta^2 + J^2 = 2\\Omega^2 - 2\\Omega\\Delta\n$$\nsince $ J^2 + \\Delta^2 = \\Omega^2 $. So norm is $ \\sqrt{2\\Omega(\\Omega - \\Delta)} $. So normalization is correct.",
+              "text_sha256": "6499768931e4ee0992b18faa433092880064516b6611be7a26d8d9e93d75cf71"
+            }
+          ]
+        },
+        {
+          "criterion_id": "checks.initial_condition",
+          "criterion": "An explicit t=0 state/probability consistency check.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        },
+        {
+          "criterion_id": "checks.decoupled_limit",
+          "criterion": "An explicit J=0/decoupled consistency check covering the stated formulas.",
+          "max_points": 2,
+          "awarded_points": 1,
+          "deducted_points": 1,
+          "disposition": "partial",
+          "assessment": "The J=0 odd block is explicitly checked to be diagonal and the singular chart is recognized. The eigenvector branches are not completed, and the answer never supplies state/probability/entanglement or thermal decoupled checks. Partial credit only.",
+          "final_answer_evidence": [
+            {
+              "answer_lines": [
+                224,
+                237
+              ],
+              "text": "But this diverges when $ \\Omega = \\Delta $, i.e., $ J = 0 $. So better to normalize as:\n$$\n|\\phi_+\\rangle = \\frac{1}{\\sqrt{2\\Omega(\\Omega - \\Delta)}} \\left( (\\Omega - \\Delta)|01\\rangle + J |10\\rangle \\right)\n$$\nBut $ (\\Omega - \\Delta)(\\Omega + \\Delta) = \\Omega^2 - \\Delta^2 = J^2 $, so $ 2\\Omega(\\Omega - \\Delta) = 2\\Omega(\\Omega - \\Delta) $, and norm squared:\n$$\n\\|(\\Omega - \\Delta)|01\\rangle + J |10\\rangle\\|^2 = (\\Omega - \\Delta)^2 + J^2 = \\Omega^2 - 2\\Omega\\Delta + \\Delta^2 + J^2 = 2\\Omega^2 - 2\\Omega\\Delta\n$$\nsince $ J^2 + \\Delta^2 = \\Omega^2 $. So norm is $ \\sqrt{2\\Omega(\\Omega - \\Delta)} $. So normalization is correct.\n\nBut when $ J = 0 $, $ \\Omega = |\\Delta| $. Then:\n- If $ \\Delta > 0 $, $ \\Omega = \\Delta $, then $ |\\phi_+\\rangle \\propto 0\\cdot|01\\rangle + 0\\cdot|10\\rangle $? No: $ J = 0 $, $ \\Omega = |\\Delta| $. Then $ H_{01,10} = \\begin{pmatrix} -K + 2\\Delta & 0 \\\\ 0 & -K - 2\\Delta \\end{pmatrix} $\n\nSo we must handle $ J = 0 $ separately.",
+              "text_sha256": "b45b85a22b5ef42fda3ddae9615890cccdbaaf7fe55c42bba610dcbcbafded81"
+            }
+          ]
+        },
+        {
+          "criterion_id": "checks.nontrivial_numerical_example",
+          "criterion": "At least one correct nontrivial numerical example, clearly distinguished from proof of identities.",
+          "max_points": 2,
+          "awarded_points": 0,
+          "deducted_points": 2,
+          "disposition": "omitted",
+          "assessment": "No final solution content for this criterion appears before the response ends at the unfinished fourth projector on line290. Merely stating the initial condition in the problem setup is not an independent t=0 consistency check.",
+          "final_answer_evidence": []
+        }
+      ],
+      "no_intermediate_credit": true,
+      "mathematical_counterexamples": [
+        {
+          "id": "DIRECT-CE01",
+          "answer_lines": [
+            45,
+            59
+          ],
+          "parameters": {
+            "J": 1,
+            "Delta": 0,
+            "K": 0
+          },
+          "calculation": "For the00-to11 entry, XX contributes1 and YY contributes-1, so the seed gives0, not2. The true spectrum is0,0,2,-2, whereas the answer claims2,-2,2,-2. Their squared traces are8 and16 respectively.",
+          "kind": "false_Hamiltonian_and_even_spectrum"
+        },
+        {
+          "id": "DIRECT-CE02",
+          "answer_lines": [
+            217,
+            226
+          ],
+          "parameters": {
+            "J": 3,
+            "Delta": 4,
+            "K": 0
+          },
+          "calculation": "Omega=5. The stated plus-vector direction is v=(1,3); M=[[4,3],[3,-4]] gives Mv=(13,-9), whereas5v=(5,15). Thus the final normalized vector is not the plus eigenvector despite being correctly normalized.",
+          "kind": "false_odd_projector"
+        },
+        {
+          "id": "DIRECT-CE03",
+          "answer_lines": [
+            261,
+            267
+          ],
+          "parameters": {
+            "J": 0,
+            "Delta": 0,
+            "K": 0
+          },
+          "calculation": "H=0 has one energy eigenspace of dimension4 and full spectral projector I. The delivered unconditional two2D-eigenspace description does not resolve this coincidence.",
+          "kind": "missing_complete_degeneracy_branch"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "criteria": 25,
+    "total_points": 100,
+    "run_outputs_read": 3,
+    "private_answer_or_storage_access": false,
+    "provider_calls": 0,
+    "final_answer_bodies_read": 2,
+    "unavailable_final_answers": 1,
+    "pending_runs": 0,
+    "criterion_decisions": 75
+  },
+  "reference_freeze_file_sha256": "b6af22874b8c901dffbe788f824f1b51006d437c42de30ca1ee62fd6da1aca58",
+  "output_access_authorization": {
+    "source": "Parent completion confirmation",
+    "scope": [
+      "00_hamiltonian_checked_v1",
+      "01_hamiltonian_host_matrix_v1"
+    ],
+    "third_output_access": true,
+    "received_before_first_output_read": true,
+    "third_authorization": "Parent explicitly confirmed all three final receipts frozen and no further model calls before third answer access."
+  },
+  "completed_utc": "2026-11-10T18:31:32.114295+00:00",
+  "interpretation": [
+    "All25 criterion weights and their100-point total are unchanged. All75 decisions are retained, including missing delivery.",
+    "Host-matrix16 versus direct10 is an observed within-item difference under truncation, not an established model/workflow improvement. Both final solvers stopped at length before dynamics or entanglement.",
+    "The checked pipeline delivered no final answer, so its0 records delivery refusal; no claim is made that a nonexistent final answer asserted false mathematics.",
+    "No draft/matrix-proposal/host-check verdict was credited. Public representation validity is not full-answer accuracy.",
+    "Reference wording nonpositive partial transpose means has a negative eigenvalue, not negative-semidefinite; the frozen formulas and criterion weights remain unchanged."
+  ]
+}

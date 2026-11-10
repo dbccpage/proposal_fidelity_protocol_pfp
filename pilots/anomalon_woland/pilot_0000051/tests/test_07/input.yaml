@@ -1,0 +1,23 @@
+messages:
+- role: user
+  content: "A communication nerve has 6 directed channels connecting 3 sender nodes\
+    \ to 3 router nodes.\nEach channel carries a 3-dimensional packet vector v = [v0,\
+    \ v1, v2]^T measured in l1 norm (|v0| + |v1| + |v2|).\nThe transmitted differential\
+    \ packets on the 6 channels are:\nChannel 1: [1, 0, 0]^T\nChannel 2: [0, 1, 0]^T\n\
+    Channel 3: [0, 1, 0]^T\nChannel 4: [0, 0, 1]^T\nChannel 5: [0, 0, 1]^T\nChannel\
+    \ 6: [1, 0, 0]^T\n\nThree partial sensors monitor disjoint channel pairs with\
+    \ blind spots:\nSensor C1 monitors Channels 1 and 6, but has a dead component\
+    \ on index 0 (measures only [v1, v2]^T in l1).\nSensor C2 monitors Channels 2\
+    \ and 3, but has a dead component on index 1 (measures only [v0, v2]^T in l1).\n\
+    Sensor C3 monitors Channels 4 and 5, but has a dead component on index 2 (measures\
+    \ only [v0, v1]^T in l1).\n\nCalculate:\n1. The total error reported by each sensor:\
+    \ J = {\"C1\": J^C1, \"C2\": J^C2, \"C3\": J^C3}.\n2. Is every sensor reporting\
+    \ 0 error (all_green)?\n3. What is the true global unfiltered packet defect sum\
+    \ across all 6 channels: I = sum_{k=1..6} ||Channel_k||_1?\n4. What is the sensory\
+    \ visibility gap Lambda = I - max(J)?\n5. If packet signals scale uniformly by\
+    \ any positive factor lambda > 0, can any continuous function of the sensor readings\
+    \ bound the true global defect (recovery_modulus_exists)?\n\nReturn JSON:\n{\n\
+    \  \"answer\": {\n    \"observed_tallies\": {\"C1\": integer, \"C2\": integer,\
+    \ \"C3\": integer},\n    \"all_green\": boolean,\n    \"raw_global_defect_I\"\
+    : integer,\n    \"visibility_gap_lambda\": integer,\n    \"recovery_modulus_exists\"\
+    : boolean\n  }\n}"

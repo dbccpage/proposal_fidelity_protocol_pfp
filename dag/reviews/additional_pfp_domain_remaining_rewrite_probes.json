@@ -1,0 +1,58 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "pydantic_version": "2.13.5",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/rewriting/rewrites.py",
+      "sha256": "8b39d479c102a317d33084c60d239ebcd3278dd1c45575b54c3caa96236c810e"
+    },
+    {
+      "path": "pfp/domain/rewriting/rewriting_types.py",
+      "sha256": "e9dc137a5e98cbd76fda54c75fbc96d0ef6cd14d80c154285ce4fcbd19abe8ee"
+    },
+    {
+      "path": "pfp/domain/rewriting/wires.py",
+      "sha256": "7451f591cadf88184be6ef3a8e25e5783766e6bde50cb9db8e5754618dae1cf3"
+    }
+  ],
+  "import_context": "Source-loaded reviewed rewriting modules plus installed Pydantic; inert original parent package initializers.",
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C015",
+      "rule": "empty_boundary_current_grammar",
+      "status": "expected_refusal_observed",
+      "input": "<>",
+      "observed": "EMPTY_ATOM"
+    },
+    {
+      "id": "PFPDOMAIN-C016",
+      "rule": "compilation_receipt_semantic_role_binding",
+      "status": "counterexample_observed",
+      "cases": [
+        {
+          "span_role": "constraint",
+          "wire_role": "q",
+          "accepted": true
+        },
+        {
+          "span_role": "constraint",
+          "wire_role": "z",
+          "accepted": true
+        }
+      ],
+      "limit": "Prompt bytes, digest, span coverage and symbol indices are correctly bound. The missing relation is wire role to declared SpanRole, not byte preservation."
+    },
+    {
+      "id": "PFPDOMAIN-C017",
+      "rule": "recursive_wire_codec_roundtrip",
+      "status": "counterexample_observed",
+      "rendered": "(f (g x))",
+      "parsed_argument_types": [
+        "AtomTerm",
+        "AtomTerm"
+      ],
+      "equal_to_original": false,
+      "atom_void_same_render": true
+    }
+  ]
+}

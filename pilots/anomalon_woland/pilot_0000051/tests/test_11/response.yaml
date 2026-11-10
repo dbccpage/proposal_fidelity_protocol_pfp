@@ -1,0 +1,166 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_11
+case_id: p_star_baseline
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+lift_requested: true
+raw_reply: " {\n  \"derived_under_policy\": \"SPK-001\",\n  \"summary\": {\n    \"\
+  narrowest_defensible_thesis\": \"For the given finite covering diagram and projections,\
+  \ all local observer tallies are zero while the raw global l1 defect is 6; under\
+  \ finite-valued recovery modulus functions, no modulus recovers the global defect\
+  \ from the observed maximum because positive scalings make the raw defect unbounded\
+  \ while the observed maximum remains zero.\",\n    \"evidence_scope\": \"Computed\
+  \ directly from the stated edge defects, l1 norms, projections, and positive scalings;\
+  \ no external validation or empirical claim is made.\",\n    \"next_concrete_test\"\
+  : \"Check whether allowing an extended-valued recovery modulus with f(0)=+\u221E\
+  \ changes the recovery-modulus answer, or impose a bounded scaling parameter lambda.\"\
+  \n  },\n  \"process_integrity\": {\n    \"should_continue\": true,\n    \"reason\"\
+  : \"No policy violation; the computation is well-defined and complete for the stated\
+  \ finite diagram.\"\n  },\n  \"request_structural_lift\": false,\n  \"answer\":\
+  \ {\n    \"observed_tallies\": {\n      \"C1\": 0,\n      \"C2\": 0,\n      \"C3\"\
+  : 0\n    },\n    \"all_green\": true,\n    \"raw_global_defect_I\": 6,\n    \"visibility_gap_lambda\"\
+  : 6,\n    \"recovery_modulus_exists\": false\n  }\n}"
+reasoning_content: "We need answer JSON only? Need compute. Need be careful with policy\
+  \ manifest. Need include derived_under_policy SPK-001. Need compute tallies etc.\n\
+  \nLet's parse problem. Covering diagram 3 patches u1,u2,u3 and overlaps x12,x23,x31.\
+  \ Directed edges:\ne1: x12 -> u1\ne2: x12 -> u2\ne3: x23 -> u2\ne4: x23 -> u3\n\
+  e5: x31 -> u3\ne6: x31 -> u1\n\nSection s values:\ns(u1)=(1,0,0)^T\ns(u2)=(0,1,0)^T\n\
+  s(u3)=(0,0,1)^T\ns(x12)=(0,0,0)\ns(x23)=(0,0,0)\ns(x31)=(0,0,0)\n\nEdge defect (d0\
+  \ s)_e = s(target) - s(source). Need orientation: edge source -> target. So for\
+  \ e1 x12 -> u1: s(u1)-s(x12) = (1,0,0)-(0,0,0)=(1,0,0). e2 x12 -> u2: s(u2)-s(x12)=(0,1,0).\
+  \ e3 x23 -> u2: s(u2)-s(x23)=(0,1,0). e4 x23 -> u3: s(u3)-s(x23)=(0,0,1). e5 x31\
+  \ -> u3: s(u3)-s(x31)=(0,0,1). e6 x31 -> u1: s(u1)-s(x31)=(1,0,0).\n\nAll edge fibers\
+  \ R^3 l1 norm. Norms:\ne1 (1,0,0): |1|+|0|+|0|=1\ne2 (0,1,0):1\ne3 (0,1,0):1\ne4\
+  \ (0,0,1):1\ne5 (0,0,1):1\ne6 (1,0,0):1\nTotal I=6.\n\nObservers:\nC1 watches edges\
+  \ {e1,e6} through projection pi_0 deleting coordinate 0: (v0,v1,v2)->(v1,v2). For\
+  \ e1 defect (1,0,0) projected (0,0), l1 norm =0. e6 defect (1,0,0) projected (0,0),\
+  \ norm=0. J^C1=0+0=0.\n\nC2 watches edges {e2,e3} through pi_1 deleting coordinate\
+  \ 1: (v0,v1,v2)->(v0,v2). e2 defect (0,1,0) projected (0,0), norm=0. e3 defect (0,1,0)\
+  \ projected (0,0), norm=0. J^C2=0.\n\nC3 watches edges {e4,e5} through pi_2 deleting\
+  \ coordinate 2: (v0,v1,v2)->(v0,v1). e4 defect (0,0,1) projected (0,0), norm=0.\
+  \ e5 defect (0,0,1) projected (0,0), norm=0. J^C3=0.\n\nAll-Green true? all J==0\
+  \ yes. But raw global defect I=6. Visibility gap Lambda = I - max J = 6 - 0 =6.\n\
+  \nRecovery modulus f: R_+ -> R_+ such that I(s_lambda) <= f(max J(s_lambda)) for\
+  \ all positive scalings s_lambda = lambda*s. Need determine exists. For lambda>0,\
+  \ s_lambda values scaled by lambda. Defects scaled by lambda. Observed tallies?\
+  \ For each edge, projection of lambda*defect = lambda * projection(defect). Since\
+  \ projections of defects are zero for watched edges? Wait C1 watches e1,e6; both\
+  \ defects have only coordinate 0 nonzero. Projection pi_0 deletes coordinate 0,\
+  \ so projected defect zero. Thus J^C1(s_lambda)=0 for all lambda. Similarly C2 watches\
+  \ e2,e3 defects only coordinate 1 nonzero; pi_1 deletes coordinate 1 -> zero. C3\
+  \ watches e4,e5 defects only coordinate 2 nonzero; pi_2 deletes coordinate 2 ->\
+  \ zero. So max J =0 for all lambda. I(s_lambda)=sum norms = lambda*6? Actually each\
+  \ defect lambda times original, l1 norm scales by lambda for positive lambda. I=6\
+  \ lambda. Need f(0) >= I(s_lambda)=6 lambda for all lambda>0. Since f(0) finite?\
+  \ f: R_+ -> R_+, codomain R_+ maybe nonnegative reals, no finite upper bound? If\
+  \ f(0) can be +infty? Usually function to R_+ finite? The schema asks boolean. If\
+  \ f(0) must be finite real, impossible because lambda unbounded. If allow extended\
+  \ +\u221E, possible. Need infer. \"recovery modulus function f: R_+ -> R_+\" typically\
+  \ finite-valued. For all positive scalings lambda*s, lambda positive arbitrary.\
+  \ max J=0. Need I <= f(0). If f(0) finite, choose lambda > f(0)/6, fails. So no\
+  \ finite recovery modulus. If f(0)=\u221E not in R_+? R_+ sometimes [0,\u221E),\
+  \ finite. So false. Need answer recovery_modulus_exists false. But let's examine\
+  \ if any subtlety: Maybe \"positive scalings s_lambda = lambda * s\" lambda positive.\
+  \ Yes.\n\nNeed produce valid JSON. Need include summary etc. Need maybe mention\
+  \ evidence_scope. Need process_integrity should_continue? The task asks compute.\
+  \ Should continue? Maybe true? Need decide. The schema requires should_continue\
+  \ boolean and reason. Since we can answer, should_continue maybe false? In these\
+  \ audits, process_integrity should_continue indicates whether to continue reasoning?\
+  \ Hmm. We need return JSON matching schema. It doesn't specify values except derived_under_policy.\
+  \ We can set should_continue true? Let's think. The \"process_integrity\" likely\
+  \ asks if the process should continue (e.g., no policy violation). Since no antibody\
+  \ injections. We can set true with reason \"No policy violation; computation complete.\"\
+  \ Or false? The final answer should be JSON. The user likely expects computation.\
+  \ \"should_continue\" maybe if there is enough info to proceed. I'd set true because\
+  \ we can complete. But maybe if no further action needed, false? Need not overthink.\
+  \ The schema only requires boolean. We'll set true? Let's see prior tasks? They\
+  \ often expect \"should_continue\": true if safe. But if final answer, maybe false?\
+  \ Hmm.\n\nNeed ensure all fields. request_structural_lift optional? Schema has request_structural_lift\
+  \ boolean but not required? It lists in properties but not in required. We can include\
+  \ false. Need valid JSON. Need no markdown? User says Return strictly valid JSON.\
+  \ So final should be JSON only. Need include derived_under_policy \"SPK-001\". Summary\
+  \ with narrowest_defensible_thesis, evidence_scope, next_concrete_test. Answer with\
+  \ observed_tallies C1,C2,C3 integers. all_green boolean. raw_global_defect_I integer.\
+  \ visibility_gap_lambda integer. recovery_modulus_exists boolean.\n\nLet's double-check\
+  \ all computations.\n\nEdge defects:\ne1: x12->u1: target u1 (1,0,0) - source x12\
+  \ (0,0,0) = (1,0,0). Norm 1.\ne2: x12->u2: (0,1,0) - 0 = (0,1,0). Norm 1.\ne3: x23->u2:\
+  \ (0,1,0) - 0 = (0,1,0). Norm 1.\ne4: x23->u3: (0,0,1) - 0 = (0,0,1). Norm 1.\n\
+  e5: x31->u3: (0,0,1) - 0 = (0,0,1). Norm 1.\ne6: x31->u1: (1,0,0) - 0 = (1,0,0).\
+  \ Norm 1.\nTotal 6.\n\nC1 edges e1,e6: pi0 deletes coordinate 0. e1 (1,0,0)->(0,0)\
+  \ norm 0. e6 same. J=0.\nC2 edges e2,e3: pi1 deletes coordinate 1. e2 (0,1,0)->(0,0)\
+  \ norm 0. e3 same. J=0.\nC3 edges e4,e5: pi2 deletes coordinate 2. e4 (0,0,1)->(0,0)\
+  \ norm 0. e5 same. J=0.\nAll green true. But note \"All-Green\" might mean all local\
+  \ tallies zero, yes. It doesn't mean global defect zero. So true.\n\nVisibility\
+  \ gap Lambda = I - max J = 6 - 0 = 6. If all green true but gap 6. This is the point.\n\
+  \nRecovery modulus: For all positive scalings s_lambda = lambda*s. Since max J(s_lambda)=0.\
+  \ I(s_lambda)=6 lambda. Need f(0) >= 6 lambda for all lambda>0. If f(0) finite,\
+  \ no. If f maps to R_+ finite. So false. If extended, true? The problem likely wants\
+  \ false to illustrate no recovery modulus due to unbounded scaling. We'll set false.\n\
+  \nNeed maybe mention \"under finite-valued R_+\" in summary. But answer boolean\
+  \ false. If they expected true due to f(0)=\u221E? Hmm. Let's parse \"recovery modulus\
+  \ function f: R_+ -> R_+\" In math, R_+ often positive reals, not including infinity.\
+  \ So finite. So false. If they meant extended nonnegative reals, they'd say [0,\u221E\
+  ]. So false.\n\nNeed maybe include \"evidence_scope\": \"Computed from given finite\
+  \ diagram and projections; no external validation.\" \"next_concrete_test\": \"\
+  Check whether allowing extended-valued f(0)=+\u221E changes recovery, or impose\
+  \ bounded lambda.\" But maybe not needed. Need keep concise.\n\nNeed ensure JSON\
+  \ valid. Use double quotes. No trailing commas. Let's craft.\n\nPotential issue:\
+  \ \"raw_global_defect_I\" integer 6. \"visibility_gap_lambda\" integer 6. \"observed_tallies\"\
+  \ object with C1,C2,C3 0. \"all_green\" true. \"recovery_modulus_exists\" false.\n\
+  \nProcess integrity: should_continue? If false, reason \"Computation complete; no\
+  \ further action required.\" But \"should_continue\" might be interpreted as continue\
+  \ process? Hmm. The schema doesn't define. In prior similar tasks, they often set\
+  \ should_continue true if no policy violation. But if final answer, maybe false.\
+  \ Let's think of \"process_integrity\" in context of \"antibody_injections\" and\
+  \ \"claim hygiene\". It might be a meta-check: should the assistant continue to\
+  \ answer? Since we are answering, true. But if we set false, it might imply stop.\
+  \ The user asks compute; we can set true. Reason: \"No policy violation; computation\
+  \ is well-defined and complete.\" That seems safe. If they expect false because\
+  \ no further tests? Hmm. The field name \"should_continue\" likely from a loop:\
+  \ should the system continue processing? Since we have final answer, maybe false.\
+  \ But the schema requires it. I'd set true because we can continue to provide answer.\
+  \ Actually, if we set false, it might be interpreted as \"do not continue\" but\
+  \ we already did. The final answer doesn't depend. Let's choose true with reason\
+  \ \"No policy violation; computation is well-defined and complete.\" That is defensible.\n\
+  \nNeed maybe include request_structural_lift false. It's optional but include.\n\
+  \nLet's final JSON."
+parsed_payload:
+  derived_under_policy: SPK-001
+  summary:
+    narrowest_defensible_thesis: For the given finite covering diagram and projections,
+      all local observer tallies are zero while the raw global l1 defect is 6; under
+      finite-valued recovery modulus functions, no modulus recovers the global defect
+      from the observed maximum because positive scalings make the raw defect unbounded
+      while the observed maximum remains zero.
+    evidence_scope: Computed directly from the stated edge defects, l1 norms, projections,
+      and positive scalings; no external validation or empirical claim is made.
+    next_concrete_test: "Check whether allowing an extended-valued recovery modulus\
+      \ with f(0)=+\u221E changes the recovery-modulus answer, or impose a bounded\
+      \ scaling parameter lambda."
+  process_integrity:
+    should_continue: true
+    reason: No policy violation; the computation is well-defined and complete for
+      the stated finite diagram.
+  request_structural_lift: false
+  answer: *id001
+metrics:
+  duration_seconds: 166.12936735153198
+  prompt_tokens: 2109
+  completion_tokens: 2898
+  reasoning_tokens: 0
+  total_tokens: 5007
+  cost_usd: 0.00104351199
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

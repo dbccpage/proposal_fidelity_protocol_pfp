@@ -1,0 +1,1153 @@
+--- a/education/004_oepfp/README.md
++++ b/education/004_oepfp/README.md
+@@ -32,19 +32,19 @@
+ 
+ | Task | Current route |
+ | --- | --- |
+-| Use the finite-QM derivation prompt, stages and mode | [Finite-QM PFP workflow](docs/22_unified_pfp_v4_operad_workflow_and_hacks.md); actual prompt template, six stages, six LLM techniques and native certificate checks |
+-| Run a checked example, use an IDE-authored witness, or replay a live capture | [Practical PFP and discovery](_how_to_play/13_practical_pfp_and_discovery.md) |
++| Use the finite-QM derivation prompt, stages and mode | [Finite-QM PFP workflow](../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md); actual prompt template, six stages, six LLM techniques and native certificate checks |
++| Run a checked example, use an IDE-authored witness, or replay a live capture | [Practical PFP and discovery](../../pilots/education/runbooks/13_practical_pfp_and_discovery.md) |
+ | Run ordinary Adversary work through PFP in Python or the current IDE | [Shared task turns](../../../pfp/documentation/pfp_task_turn.md#shared-adversary-use); checked prose remains explicitly unverified |
+-| Attempt an original challenge with Adversary and its original judges | [Adversary challenge play](docs/18_original_challenge_play.md); IDE/OpenRouter commands, actual results and open experiment requirements |
+-| Play a full bounded cochain-repair session | [Mechanism sessions](docs/19_bounded_mechanism_sessions.md); C006 moves, admission, replay and C004 slot decoding |
+-| Examine bounded graph rewrites and optional Julia/DSPy demos | [ACSets and DPO experiments](docs/20_acsets_dpo_and_optional_backends.md); 25 prompt and 25 cochain controls, with no new default dependencies |
++| Attempt an original challenge with Adversary and its original judges | [Adversary challenge play](../../pilots/education/runbooks/18_original_challenge_play.md); IDE/OpenRouter commands, actual results and open experiment requirements |
++| Play a full bounded cochain-repair session | [Mechanism sessions](../../pilots/education/runbooks/19_bounded_mechanism_sessions.md); C006 moves, admission, replay and C004 slot decoding |
++| Examine bounded graph rewrites and optional Julia/DSPy demos | [ACSets and DPO experiments](../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md); 25 prompt and 25 cochain controls, with no new default dependencies |
+ | Understand the new interfaces, mode availability and lessons | [Current types and learnings](docs/16_current_types_and_learnings.md) |
+ | Understand which stages use a model or host | [Eight-stage pipeline](_how_to_play/10_eight_stage_pipeline.md) |
+ | Inspect captures or troubleshoot a refusal | [Output layout and troubleshooting](_how_to_play/12_output_layout_and_troubleshooting.md) |
+ | Learn the board and basic moves | [Novice quickstart](_how_to_play/00_quickstart_how_to_play.md) and [ten useful routes](_how_to_play/06_ten_useful_ways_to_play.md) |
+ | Explore other play profiles | [Modalities atlas](_how_to_play/07_all_ways_to_play_the_symbol_game.md); research profiles are not a runtime capability guarantee |
+-| Inspect PO035 failures and experimental prompt roles | [Numbered prompt roles and PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md) |
+-| Find current runtime owners and replay historical trials | [Runtime ownership and historical replay](docs/17_runtime_ownership_and_replay.md) |
++| Inspect PO035 failures and experimental prompt roles | [Numbered prompt roles and PO035 play](../../pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md) |
++| Find current runtime owners and replay historical trials | [Runtime ownership and historical replay](../../pilots/education/runbooks/17_runtime_ownership_and_replay.md) |
+ | Verify installed integration, strict IDE handoffs and durable run budgets | [Migration execution plan](../../../pfp/documentation/pfp_migration_and_integration_plan.md); hard live liability remains a separate qualification |
+ 
+ The active Python application is `pfp`, with `pfp`, `symbol-game`
+@@ -75,7 +75,7 @@
+ | Dossier replay on a free Nemotron model | 300 | 0 accepted | same |
+ | `deepseek-v4.1-flash` replies | 50 | 13 accepted | same |
+ | PFP-PILOT-001, four representations | 64 | validation rate raw 0.938, structured 0.75, relational 0.75, symbolic 0.812; one call per cell | [`max_pilot_matrix.yaml:2337-2358`](../../../workflows/library/pilot_estate/matrix/max_pilot_matrix.yaml) |
+-| PO035 | 40 | 0 accepted; a compact rerun (15 calls) had 0 schema-valid replies | [PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md), [compact rerun](../../../workflows/library/pilot_estate/evidence/po035_simplified_20261012/README.md) |
++| PO035 | 40 | 0 accepted; a compact rerun (15 calls) had 0 schema-valid replies | [PO035 play](../../pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md), [compact rerun](../../../workflows/library/pilot_estate/evidence/po035_simplified_20261012/README.md) |
+ | Claude gate runs, 2026-10-14 | 74 | Haiku 5.5 was 8 of 8 PFP-valid; 22 failures were Markdown-fenced replies; the SQLite form gave no advantage | [`empirical_observations_20261014.md`](../../../pfp/documentation/empirical_observations_20261014.md) |
+ 
+ With one call per cell, the PFP-PILOT-001 rates do not separate the four
+--- a/pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb
++++ b/pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb
+@@ -20,7 +20,7 @@
+     "---\n",
+     "\n",
+     "> This notebook is a finite triangle teaching model. ASSERT records annotations,\n",
+-    "> and VERIFY checks only zero triangle circulation. Read [ten ways to play](06_ten_useful_ways_to_play.md)\n",
++    "> and VERIFY checks only zero triangle circulation. Read [ten ways to play](../../../education/004_oepfp/_how_to_play/06_ten_useful_ways_to_play.md)\n",
+     "> for other routes. It is not the native host and does not certify arbitrary claims.\n",
+     "\n",
+     "## 1. The Pedagogical Hook: Why Continuous Softmax Needs a Discrete Governor\n",
+@@ -65,7 +65,7 @@
+     "if not (lesson_dir / \"educational_governor.py\").is_file():\n",
+     "    candidates = [\n",
+     "        lesson_dir\n",
+-    "        / \"education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_how_to_play_the_symbol_game\"\n",
++    "        / \"pilots/education/symbol_game\"\n",
+     "    ]\n",
+     "    lesson_dir = next(\n",
+     "        (p for p in candidates if (p / \"educational_governor.py\").is_file()), lesson_dir\n",
+@@ -432,10 +432,10 @@
+     "- **Formal Verification Source:** [`education/notebooks/lessons/how_to_play/test_how_to_play_scenarios.py`](test_how_to_play_scenarios.py)\n",
+     "- **Interactive Engine:** [`education/notebooks/lessons/how_to_play/interactive_board.py`](interactive_board.py)\n",
+     "- **Visual Assets:**\n",
+-    "  - [`assets/01_dual_space_governor_loop.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/01_dual_space_governor_loop.svg)\n",
+-    "  - [`assets/02_triangle_constraint_cycle.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/02_triangle_constraint_cycle.svg)\n",
+-    "  - [`assets/03_four_legal_moves.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/03_four_legal_moves.svg)\n",
+-    "  - [`assets/04_strict_lyapunov_descent.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/04_strict_lyapunov_descent.svg)"
++    "  - [`assets/01_dual_space_governor_loop.svg`](assets/01_dual_space_governor_loop.svg)\n",
++    "  - [`assets/02_triangle_constraint_cycle.svg`](assets/02_triangle_constraint_cycle.svg)\n",
++    "  - [`assets/03_four_legal_moves.svg`](assets/03_four_legal_moves.svg)\n",
++    "  - [`assets/04_strict_lyapunov_descent.svg`](assets/04_strict_lyapunov_descent.svg)"
+    ]
+   }
+  ],
+--- a/education/004_oepfp/_how_to_play/00_quickstart_how_to_play.md
++++ b/education/004_oepfp/_how_to_play/00_quickstart_how_to_play.md
+@@ -29,7 +29,7 @@
+ ## Try ten practical routes
+ 
+ Open [ten ways to play](06_ten_useful_ways_to_play.md) and
+-[the executable local exercises](02_ten_ways_to_play.ipynb). Choose a route
++[the executable local exercises](../../../pilots/education/symbol_game/02_ten_ways_to_play.ipynb). Choose a route
+ by your task: packet repair, teaching, graph repair, certificate checking,
+ refusal handling, review, learning from rejection, extension checks, or bounded
+ strategy comparison. These routes are an editorial selection, not all possible
+@@ -37,11 +37,11 @@
+ 
+ ## The triangle teaching board
+ 
+-The [walkthrough](00_interactive_how_to_play_walkthrough.ipynb) and
+-[scenario lab](01_interactive_scenarios_lab.ipynb) use one declared triangle:
++The [walkthrough](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb) and
++[scenario lab](../../../pilots/education/symbol_game/01_interactive_scenarios_lab.ipynb) use one declared triangle:
+ 0 → 1 → 2 → 0, with edge values 2, 1, 3. Its circulation is 6.
+ 
+-The local [teaching runtime](educational_governor.py) checks exact values:
++The local [teaching runtime](../../../pilots/education/symbol_game/educational_governor.py) checks exact values:
+ 
+ | Move | Effect in this teaching model |
+ | --- | --- |
+@@ -70,8 +70,8 @@
+ file separately:
+ 
+ ```sh
+-python -m pytest education/documentation/004_oepfp/_how_to_play/test_how_to_play_scenarios.py -q
+-python -m pytest education/documentation/004_oepfp/_how_to_play/test_educational_governor_boundaries.py -q
++python -m pytest pilots/education/symbol_game/test_how_to_play_scenarios.py -q
++python -m pytest pilots/education/symbol_game/test_educational_governor_boundaries.py -q
+ ```
+ 
+ Keep the proposal, checking rule, and receipt together. If attempts run out
+--- a/pilots/education/symbol_game/01_interactive_scenarios_lab.ipynb
++++ b/pilots/education/symbol_game/01_interactive_scenarios_lab.ipynb
+@@ -50,7 +50,7 @@
+     "if not (lesson_dir / \"educational_governor.py\").is_file():\n",
+     "    candidates = [\n",
+     "        lesson_dir\n",
+-    "        / \"education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_how_to_play_the_symbol_game\"\n",
++    "        / \"pilots/education/symbol_game\"\n",
+     "    ]\n",
+     "    lesson_dir = next(\n",
+     "        (p for p in candidates if (p / \"educational_governor.py\").is_file()), lesson_dir\n",
+--- a/pilots/education/symbol_game/02_ten_ways_to_play.ipynb
++++ b/pilots/education/symbol_game/02_ten_ways_to_play.ipynb
+@@ -7,7 +7,7 @@
+    "source": [
+     "# Ten useful ways to play\n",
+     "\n",
+-    "Read [the route guide](06_ten_useful_ways_to_play.md) for the goal, limits,\n",
++    "Read [the route guide](../../../education/004_oepfp/_how_to_play/06_ten_useful_ways_to_play.md) for the goal, limits,\n",
+     "and next step of each exercise. These are finite teaching exercises, not native\n",
+     "host functional calculations or evidence that an MSS lift is licensed.\n",
+     "Every CHECKED outcome below has only the scope of its stated local rule.\n",
+@@ -27,7 +27,7 @@
+     "from fractions import Fraction\n",
+     "\n",
+     "here = Path.cwd().resolve()\n",
+-    "lesson = here if (here / \"educational_governor.py\").is_file() else here / \"education/documentation/004_oepfp/_how_to_play\"\n",
++    "lesson = here if (here / \"educational_governor.py\").is_file() else here / \"pilots/education/symbol_game\"\n",
+     "sys.path.insert(0, str(lesson))\n",
+     "from educational_governor import EducationalHostGovernor\n",
+     "\n",
+--- a/education/004_oepfp/_how_to_play/02_the_rules_of_the_board.md
++++ b/education/004_oepfp/_how_to_play/02_the_rules_of_the_board.md
+@@ -97,7 +97,7 @@
+     Verifying --> [*]: Terminal Accepted (Phi_1 = 0)
+ ```
+ 
+-![The Four Legal Moves of The Symbol Game](assets/03_four_legal_moves.svg)
++![The Four Legal Moves of The Symbol Game](../../../pilots/education/symbol_game/assets/03_four_legal_moves.svg)
+ 
+ ---
+ 
+@@ -147,7 +147,7 @@
+   $$\Phi_1(S') < \Phi_1(S)$$
+ - **Refusal on Violation:** If $\Phi_1(S') \ge \Phi_1(S)$, the move is rejected with `REFUSED_MONOTONICITY_VIOLATION`. The proposed changes are atomically discarded, but turn fuel is consumed.
+ 
+-![Strict Lyapunov Descent Trajectory](assets/04_strict_lyapunov_descent.svg)
++![Strict Lyapunov Descent Trajectory](../../../pilots/education/symbol_game/assets/04_strict_lyapunov_descent.svg)
+ 
+ ---
+ 
+--- a/education/004_oepfp/_how_to_play/05_examiner_theoretical_minimum_exam.md
++++ b/education/004_oepfp/_how_to_play/05_examiner_theoretical_minimum_exam.md
+@@ -19,7 +19,7 @@
+ **Presiding Tribunal:** Examiner, Adversary, Defect Hunter (alias Bassoon), and Gauge Breaker the Cat  
+ **Location:** Sadovaya 302-bis, Apartment 50, the city  
+ **AuthorityEffect:** `None`. Host execution receipts certify local protocol state, not universal truth.  
+-**Companion Automated Test Fixture:** [`test_examiner_theoretical_minimum.py`](test_examiner_theoretical_minimum.py)  
++**Companion Automated Test Fixture:** [`test_examiner_theoretical_minimum.py`](../../../pilots/education/symbol_game/test_examiner_theoretical_minimum.py)  
+ 
+ ---
+ 
+@@ -703,7 +703,7 @@
+ 
+ ## Qualification Attestation & Conclusion
+ 
+-A candidate who achieves 100% on the companion test suite [`test_examiner_theoretical_minimum.py`](test_examiner_theoretical_minimum.py) has demonstrated:
++A candidate who achieves 100% on the companion test suite [`test_examiner_theoretical_minimum.py`](../../../pilots/education/symbol_game/test_examiner_theoretical_minimum.py) has demonstrated:
+ 1. Complete fluency in exact rational cochain arithmetic ($\mathbb{Q}$) with zero floating-point leakage.
+ 2. Complete adherence to the Discrete Deformation Calculus (DDC) and the Authority Firewall.
+ 3. The ability to formulate, verify, and certify exact primal-dual witnesses with zero duality gap.
+--- a/education/004_oepfp/_how_to_play/06_ten_useful_ways_to_play.md
++++ b/education/004_oepfp/_how_to_play/06_ten_useful_ways_to_play.md
+@@ -103,7 +103,7 @@
+ - **Walkthrough:** Introduce an undeclared endpoint $c$. Observe schema rejection `CARRIER_REGRESS`. Repair the endpoint inside the carrier. Retain both refused and repaired packets side-by-side to witness the repair diff.
+ 
+ ### Route 3: Predict and Test
+-- **Board:** A worked interactive notebook exercise ([`00_interactive_how_to_play_walkthrough.ipynb`](00_interactive_how_to_play_walkthrough.ipynb)).
++- **Board:** A worked interactive notebook exercise ([`00_interactive_how_to_play_walkthrough.ipynb`](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb)).
+ - **Task:** Predict the host decision before executing the cell.
+ - **Proposal:** A predicted outcome with a documented reason.
+ - **Walkthrough:** Predict a descending `CUT`, a carrier escape, and a `VERIFY` move before achieving zero circulation. Compare predictions against host receipts.
+--- a/education/004_oepfp/_how_to_play/07_all_ways_to_play_the_symbol_game.md
++++ b/education/004_oepfp/_how_to_play/07_all_ways_to_play_the_symbol_game.md
+@@ -1,6 +1,6 @@
+ # The Complete Atlas: Ways to Play The Symbol Game (PFP)
+ 
+-Current execution (2026-10-12): [practical PFP and discovery](13_practical_pfp_and_discovery.md). Use the consolidated `pfp` commands there; historical profiles below do not imply current runtime support. The fixed pilot grid is retired; each new run should answer a concrete use or discovery question.
++Current execution (2026-10-12): [practical PFP and discovery](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md). Use the consolidated `pfp` commands there; historical profiles below do not imply current runtime support. The fixed pilot grid is retired; each new run should answer a concrete use or discovery question.
+ 
+ 
+ > **Scope Note:** While tens of thousands of game configurations, prompt mutations, and problem encodings exist across the Symbol Game estate, this atlas catalogs the primary benchmark modalities spanning carrier representations, internal steering, algebraic structures, dialectical reality gates, and foundational mechanization.
+@@ -111,7 +111,7 @@
+ | **12** | `simplicial_triangulation_regge` | Groups | Simplicial complexes, Regge action, and Cayley-Menger | Triangulated 4-manifolds | [`mode_12_simplicial_triangulation_regge.yaml`](../../../../ow/pfp/1_symbol_game_versions/symgame_v0.2/modes/mode_12_simplicial_triangulation_regge.yaml) | [Paper 010](../papers/symbol_game/010_the_symbol_game_holonomy_checks_and_model_pilots/README.md), [`pilot_00067`](../../../pilots/results/pilot_00067) |
+ | **13** | `normal_form_confluent_chase` | Rewrite | Pushing relational states through Church-Rosser rewrite rules | Relational schemas | [`mode_13_normal_form_confluent_chase.yaml`](../../../../ow/pfp/1_symbol_game_versions/symgame_v0.2/modes/mode_13_normal_form_confluent_chase.yaml) | [`4_symbol_game_normal_forms`](../4_symbol_game_normal_forms/README.md), [`MIC-NF`](../../014_normal_forms/contracts_normal_forms/nf.fsp.micnf.yaml) |
+ | **14** | `fail_closed_typed_refusal` | Dialectic | Deliberately submitting hostile inputs to assert exact refusal | Boundary check gates | [`mode_14_fail_closed_typed_refusal.yaml`](../../../../ow/pfp/1_symbol_game_versions/symgame_v0.2/modes/mode_14_fail_closed_typed_refusal.yaml) | [Paper 003](../papers/symbol_game/003_the_symbol_game_host_admitted_failure_detectors/README.md), [`pilot_00058`](../../../pilots/results/pilot_00058) |
+-| **15** | `interactive_tui_repl_board` | Carrier | Direct keyboard terminal gameplay with live ASCII/Unicode | Terminal widget grid | [`mode_15_interactive_tui_repl_board.yaml`](../../../../ow/pfp/1_symbol_game_versions/symgame_v0.2/modes/mode_15_interactive_tui_repl_board.yaml) | [`pilot_00070`](../../../pilots/results/pilot_00070), [`interactive_board.py`](interactive_board.py) |
++| **15** | `interactive_tui_repl_board` | Carrier | Direct keyboard terminal gameplay with live ASCII/Unicode | Terminal widget grid | [`mode_15_interactive_tui_repl_board.yaml`](../../../../ow/pfp/1_symbol_game_versions/symgame_v0.2/modes/mode_15_interactive_tui_repl_board.yaml) | [`pilot_00070`](../../../pilots/results/pilot_00070), [`interactive_board.py`](../../../pilots/education/symbol_game/interactive_board.py) |
+ | **16** | `four_e_cognitive_autopoiesis` | Dialectic | Enacted, embodied cognitive moves adjusting to perturbations | Autopoietic state graphs | [`mode_16_four_e_cognitive_autopoiesis.yaml`](../../../../ow/pfp/1_symbol_game_versions/symgame_v0.2/modes/mode_16_four_e_cognitive_autopoiesis.yaml) | [Paper 007](../papers/symbol_game/007_the_symbol_game_executable_lessons_and_evidence_boundaries/README.md), [`pilot_00054`](../../../pilots/results/pilot_00054) |
+ | **17** | `polygraph_confluence_consensus` | Found. | Simultaneous cross-examination by independent persona gates | Consensus scorecards | [`mode_17_polygraph_confluence_consensus.yaml`](../../../../ow/pfp/1_symbol_game_versions/symgame_v0.2/modes/mode_17_polygraph_confluence_consensus.yaml) | [`pilot_00068`](../../../pilots/results/pilot_00068), [`judge_audit`](../../../pfp/infrastructure/judge_audit) |
+ | **18** | `mub6_moduli_variety_play` | Found. | Exploring equiangular lines and complex Hadamard matrices | $\mathbb{C}^6$ ray configurations | [`mode_18_mub6_moduli_variety_play.yaml`](../../../../ow/pfp/1_symbol_game_versions/symgame_v0.2/modes/mode_18_mub6_moduli_variety_play.yaml) | [`pilot_00052`](../../../pilots/results/pilot_00052), [`core_mub`](../../../../engine/crates_rs/core_mub) |
+--- a/education/004_oepfp/_how_to_play/10_eight_stage_pipeline.md
++++ b/education/004_oepfp/_how_to_play/10_eight_stage_pipeline.md
+@@ -34,7 +34,7 @@
+ host evaluation. A prefix ending before stage 5 cannot establish mathematical
+ acceptance.
+ 
+-Use the [practical walkthrough](13_practical_pfp_and_discovery.md) for a manually
++Use the [practical walkthrough](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md) for a manually
+ checked witness, a live run and replay. The application accepts a selected stage
+ count, not an arbitrary stage-order or automatic-loop flag. New orders and
+ bounded repair loops are extension work through the existing typed ports.
+--- a/education/004_oepfp/_how_to_play/12_output_layout_and_troubleshooting.md
++++ b/education/004_oepfp/_how_to_play/12_output_layout_and_troubleshooting.md
+@@ -46,7 +46,7 @@
+ | Unknown transport outcome or missing billing | Preserve the unresolved reservation. Unknown cost is not zero. |
+ | Missing native/Lean/source context | Report the prerequisite as unavailable; do not substitute a synthetic witness or fabricated acceptance. |
+ 
+-The [practical guide](13_practical_pfp_and_discovery.md) contains the commands;
++The [practical guide](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md) contains the commands;
+ [types and lessons](../docs/16_current_types_and_learnings.md) explains the
+ interfaces and applied repairs. Do not tune a pilot indefinitely: collate the
+ bounded result, remaining error and useful lesson, then move on.
+--- a/pilots/education/runbooks/13_practical_pfp_and_discovery.md
++++ b/pilots/education/runbooks/13_practical_pfp_and_discovery.md
+@@ -110,7 +110,7 @@
+ 
+ Modes 2 and 14 have direct pipeline support. Other executable modes require
+ explicit inputs; modes 3, 6 and 15 require hooks that are currently unavailable.
+-See the [type and capability reference](../docs/16_current_types_and_learnings.md)
++See the [type and capability reference](../../../education/004_oepfp/docs/16_current_types_and_learnings.md)
+ before selecting a mode. A missing tool or input is not a mathematical defect.
+ 
+ Hieroglyphic rewrites, variable prompt/response templates, new stages, loops and
+@@ -151,7 +151,7 @@
+ were repaired; unknown billing was retained as unknown.
+ 
+ These are the recorded results in the
+-[consolidation handoff](../../../../pfp/documentation/pfp_consolidation_plan.md#bounded-implementation-handoff--2026-10-12),
++[consolidation handoff](../../../pfp/documentation/pfp_consolidation_plan.md#bounded-implementation-handoff--2026-10-12),
+ not new live trials performed for this page. Successful-run cost is not total
+ campaign spending. They demonstrate one working path, not universal reasoning
+ improvement or a clean repository-wide suite.
+@@ -170,7 +170,7 @@
+ The skill reads the shared `pfp_turn` brief and submits the actual response with
+ `teamwork submit --raw-reply`. Python can drive the same prepare/submit handoff,
+ or explicitly choose an OpenRouter text-artifact bout. Follow the
+-[exact commands and replay example](../../../../pfp/documentation/pfp_task_turn.md#shared-adversary-use).
++[exact commands and replay example](../../../pfp/documentation/pfp_task_turn.md#shared-adversary-use).
+ IDE cost is unavailable. Model text cannot execute commands or install guidance.
+ 
+ The bounded compatibility question was whether the ordinary role profile could
+@@ -218,7 +218,7 @@
+ source bytes and a host-pinned native executable. It checks finite syntax,
+ ownership and protected-path restrictions. It does not establish that the patch
+ applies, fixes the task or has semantic correctness. Saved evidence is not a new
+-checker authorization. See the [commands and current limits](../../../../pfp/documentation/pfp_epic_closeout.md#use-the-finite-consumers).
++checker authorization. See the [commands and current limits](../../../pfp/documentation/pfp_epic_closeout.md#use-the-finite-consumers).
+ 
+ The 2026-10-12 shared Adversary bout completed build/review/learning in three actual
+ calls, with 3,833 input/575 output tokens and $0.00091995 reported cost. All three
+--- a/education/004_oepfp/_how_to_play/README.md
++++ b/education/004_oepfp/_how_to_play/README.md
+@@ -1,6 +1,6 @@
+ # How to Play The Symbol Game: Master Educational Syllabus & Player Manual
+ 
+-Current execution (2026-10-12): [practical PFP and discovery](13_practical_pfp_and_discovery.md). Use the consolidated `pfp` commands there; historical profiles below do not imply current runtime support. The fixed pilot grid is retired; each new run should answer a concrete use or discovery question.
++Current execution (2026-10-12): [practical PFP and discovery](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md). Use the consolidated `pfp` commands there; historical profiles below do not imply current runtime support. The fixed pilot grid is retired; each new run should answer a concrete use or discovery question.
+ 
+ 
+ > **Lead Council:** `L3_nous_panepistimion` & `L3_logos_techne`  
+@@ -20,12 +20,12 @@
+ for an introduction using S(n), MSS-N, and basic packets.
+ 
+ Choose from [ten useful ways to play](06_ten_useful_ways_to_play.md) or explore the master matrix in [the modalities atlas](07_all_ways_to_play_the_symbol_game.md).
+-For recent bounded LLM experiments, see [numbered prompt roles and PO035 play](../docs/16_numbered_prompt_roles_and_po035_play.md): short public workpads, calculation/carrier matching, measured failures and explicit experimental variants.
++For recent bounded LLM experiments, see [numbered prompt roles and PO035 play](../../../pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md): short public workpads, calculation/carrier matching, measured failures and explicit experimental variants.
+ These are practical learning and research routes across all published monographs and demonstrations. New players can start with mark distinction, packet
+ repair, and prediction before attempting advanced mathematics.
+ 
+ The notebooks below model a **declared directed triangle**. Their runtime
+-is [educational_governor.py](educational_governor.py), an exact local teaching
++is [educational_governor.py](../../../pilots/education/symbol_game/educational_governor.py), an exact local teaching
+ model, separate from the native Symbol Game host. Its circulation check does
+ not compute the native Phi1, Gamma2, or Xi functionals. ASSERT records an
+ annotation; it does not prove that annotation. VERIFY certifies only zero
+@@ -40,22 +40,22 @@
+ 
+ ### Interactive Jupyter Notebooks (Browser Sessions)
+ 
+-Begin with [ten executable local exercises](02_ten_ways_to_play.ipynb),
++Begin with [ten executable local exercises](../../../pilots/education/symbol_game/02_ten_ways_to_play.ipynb),
+ which accompanies the [ten-route guide](06_ten_useful_ways_to_play.md).
+ 
+ | Notebook | Focus | Key Topics |
+ | :--- | :--- | :--- |
+-| **[`00. Interactive Walkthrough`](00_interactive_how_to_play_walkthrough.ipynb)** | Live Visual Walkthrough | Step-by-step interactive walkthrough of all 4 moves, 7 scenarios, reactive `ipywidgets` workbench, and live defect gauge. |
+-| **[`01. Interactive Scenarios Lab`](01_interactive_scenarios_lab.ipynb)** | Diagnostic Refusal Lab | Adversarial lab probing the boundary conditions: carrier smuggling, non-monotonic rollbacks, and post-terminal state locks. |
++| **[`00. Interactive Walkthrough`](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb)** | Live Visual Walkthrough | Step-by-step interactive walkthrough of all 4 moves, 7 scenarios, reactive `ipywidgets` workbench, and live defect gauge. |
++| **[`01. Interactive Scenarios Lab`](../../../pilots/education/symbol_game/01_interactive_scenarios_lab.ipynb)** | Diagnostic Refusal Lab | Adversarial lab probing the boundary conditions: carrier smuggling, non-monotonic rollbacks, and post-terminal state locks. |
+ 
+ ### Visual Diagrams & Infographics (`assets/`)
+ 
+ | Asset | Format | Preview / Topic |
+ | :--- | :--- | :--- |
+-| **[`01. Dual-Space Architecture`](assets/01_dual_space_governor_loop.svg)** | SVG | Proposer space $\to$ Bit-level firewall $\to$ Discrete host governor loop. |
+-| **[`02. 3-Cycle Triangle Repair`](assets/02_triangle_constraint_cycle.svg)** | SVG | $K_3$ directed graph showing holonomy circulation $\Phi_1 = 6$ and chord repair. |
+-| **[`03. The Four Legal Moves`](assets/03_four_legal_moves.svg)** | SVG | Complete state-transition infographic for `ASSERT`, `CUT`, `VERIFY`, `RETRACT`. |
+-| **[`04. Strict Lyapunov Descent`](assets/04_strict_lyapunov_descent.svg)** | SVG | Trajectory staircase demonstrating atomic rollbacks on non-monotonic attempts. |
++| **[`01. Dual-Space Architecture`](../../../pilots/education/symbol_game/assets/01_dual_space_governor_loop.svg)** | SVG | Proposer space $\to$ Bit-level firewall $\to$ Discrete host governor loop. |
++| **[`02. 3-Cycle Triangle Repair`](../../../pilots/education/symbol_game/assets/02_triangle_constraint_cycle.svg)** | SVG | $K_3$ directed graph showing holonomy circulation $\Phi_1 = 6$ and chord repair. |
++| **[`03. The Four Legal Moves`](../../../pilots/education/symbol_game/assets/03_four_legal_moves.svg)** | SVG | Complete state-transition infographic for `ASSERT`, `CUT`, `VERIFY`, `RETRACT`. |
++| **[`04. Strict Lyapunov Descent`](../../../pilots/education/symbol_game/assets/04_strict_lyapunov_descent.svg)** | SVG | Trajectory staircase demonstrating atomic rollbacks on non-monotonic attempts. |
+ 
+ ### Prose Guides & Handbooks
+ 
+@@ -74,9 +74,9 @@
+ | **[10. The Eight-Stage Pipeline](10_eight_stage_pipeline.md)** | Architecture Lifecycle | 8 public operational stages, host evaluation boundary, and stages/controller correspondence. |
+ | **[11. Run Modes & Legacy CLI](11_run_modes_and_legacy_cli.md)** | Historical References | Proof pipeline, operator tower, and historical symsys-pipeline CLI reference. |
+ | **[12. Output Layout & Troubleshooting](12_output_layout_and_troubleshooting.md)** | Operations & P* | Run artifact layout, manifest fields, diagnostic triage, and deterministic seed-to-P* assembly. |
+-| **[Examiner Exam Test Suite](test_examiner_theoretical_minimum.py)** | Automated Exam Verifier | 15 programmatic tests executing exact rational solutions, zero duality gap certificates, Regge Cayley-Menger determinants, and 48-mutation rejection. |
+-| **[Python Test Suite](test_how_to_play_scenarios.py)** | Executable Scenarios | 7 automated unit test scenarios verifying move rules, rollback on defect increase, and receipt issuance. |
+-| **[Interactive Board Engine](interactive_board.py)** | Visual UI Module | Reactive HTML board cards, dynamic SVG triangle graphs, and `ipywidgets` player workbench. |
++| **[Examiner Exam Test Suite](../../../pilots/education/symbol_game/test_examiner_theoretical_minimum.py)** | Automated Exam Verifier | 15 programmatic tests executing exact rational solutions, zero duality gap certificates, Regge Cayley-Menger determinants, and 48-mutation rejection. |
++| **[Python Test Suite](../../../pilots/education/symbol_game/test_how_to_play_scenarios.py)** | Executable Scenarios | 7 automated unit test scenarios verifying move rules, rollback on defect increase, and receipt issuance. |
++| **[Interactive Board Engine](../../../pilots/education/symbol_game/interactive_board.py)** | Visual UI Module | Reactive HTML board cards, dynamic SVG triangle graphs, and `ipywidgets` player workbench. |
+ 
+ ---
+ 
+@@ -133,10 +133,10 @@
+ 
+ ```bash
+ # 1. Run the discrete host governor unit test scenarios (7 scenarios)
+-py -3.12 -m pytest education/documentation/004_oepfp/_how_to_play/test_how_to_play_scenarios.py -v
++py -3.12 -m pytest pilots/education/symbol_game/test_how_to_play_scenarios.py -v
+ 
+ # 2. Run Examiner's Theoretical Minimum qualification exam fixture (15 tests across 3 tiers)
+-py -3.12 -m pytest education/documentation/004_oepfp/_how_to_play/test_examiner_theoretical_minimum.py -v
++py -3.12 -m pytest pilots/education/symbol_game/test_examiner_theoretical_minimum.py -v
+ 
+ # 3. Run the complete curriculum and exam E2E verification battery (61 tests)
+ py -3.12 -m pytest education/education_app/tests/test_e2e_curriculum_and_exam.py -v
+@@ -149,4 +149,4 @@
+ test_e2e_curriculum_and_exam.py: 61 passed in 1.40s
+ ```
+ 
+-- [Where PFP code lives and how to replay it](../docs/17_runtime_ownership_and_replay.md)
++- [Where PFP code lives and how to replay it](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md)
+--- a/pilots/education/symbol_game/build_notebooks.py
++++ b/pilots/education/symbol_game/build_notebooks.py
+@@ -39,7 +39,7 @@
+ ---
+ 
+ > This notebook is a finite triangle teaching model. ASSERT records annotations,
+-> and VERIFY checks only zero triangle circulation. Read [ten ways to play](06_ten_useful_ways_to_play.md)
++> and VERIFY checks only zero triangle circulation. Read [ten ways to play](../../../education/004_oepfp/_how_to_play/06_ten_useful_ways_to_play.md)
+ > for other routes. It is not the native host and does not certify arbitrary claims.
+ 
+ ## 1. The Pedagogical Hook: Why Continuous Softmax Needs a Discrete Governor
+@@ -77,7 +77,7 @@
+ # Ensure current lesson directory is on sys.path
+ lesson_dir = Path(".").resolve()
+ if not (lesson_dir / "educational_governor.py").is_file():
+-    candidates = [lesson_dir / "education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_how_to_play_the_symbol_game"]
++    candidates = [lesson_dir / "pilots/education/symbol_game"]
+     lesson_dir = next((p for p in candidates if (p / "educational_governor.py").is_file()), lesson_dir)
+ if str(lesson_dir) not in sys.path:
+     sys.path.insert(0, str(lesson_dir))
+@@ -395,10 +395,10 @@
+ - **Formal Verification Source:** [`education/notebooks/lessons/how_to_play/test_how_to_play_scenarios.py`](test_how_to_play_scenarios.py)
+ - **Interactive Engine:** [`education/notebooks/lessons/how_to_play/interactive_board.py`](interactive_board.py)
+ - **Visual Assets:**
+-  - [`assets/01_dual_space_governor_loop.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/01_dual_space_governor_loop.svg)
+-  - [`assets/02_triangle_constraint_cycle.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/02_triangle_constraint_cycle.svg)
+-  - [`assets/03_four_legal_moves.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/03_four_legal_moves.svg)
+-  - [`assets/04_strict_lyapunov_descent.svg`](file:///c:/Users/a343o/source/repos/the_symbol_game/education/notebooks/lessons/how_to_play/assets/04_strict_lyapunov_descent.svg)""")
++  - [`assets/01_dual_space_governor_loop.svg`](assets/01_dual_space_governor_loop.svg)
++  - [`assets/02_triangle_constraint_cycle.svg`](assets/02_triangle_constraint_cycle.svg)
++  - [`assets/03_four_legal_moves.svg`](assets/03_four_legal_moves.svg)
++  - [`assets/04_strict_lyapunov_descent.svg`](assets/04_strict_lyapunov_descent.svg)""")
+     )
+ 
+     for index, cell in enumerate(cells):
+@@ -460,7 +460,7 @@
+ 
+ lesson_dir = Path(".").resolve()
+ if not (lesson_dir / "educational_governor.py").is_file():
+-    candidates = [lesson_dir / "education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_how_to_play_the_symbol_game"]
++    candidates = [lesson_dir / "pilots/education/symbol_game"]
+     lesson_dir = next((p for p in candidates if (p / "educational_governor.py").is_file()), lesson_dir)
+ if str(lesson_dir) not in sys.path:
+     sys.path.insert(0, str(lesson_dir))
+--- a/pilots/education/symbol_game/build_ten_routes_notebook.py
++++ b/pilots/education/symbol_game/build_ten_routes_notebook.py
+@@ -12,7 +12,7 @@
+     cells = [
+         nbf.v4.new_markdown_cell("""# Ten useful ways to play
+ 
+-Read [the route guide](06_ten_useful_ways_to_play.md) for the goal, limits,
++Read [the route guide](../../../education/004_oepfp/_how_to_play/06_ten_useful_ways_to_play.md) for the goal, limits,
+ and next step of each exercise. These are finite teaching exercises, not native
+ host functional calculations or evidence that an MSS lift is licensed.
+ Every CHECKED outcome below has only the scope of its stated local rule.
+@@ -24,7 +24,7 @@
+ from fractions import Fraction
+ 
+ here = Path.cwd().resolve()
+-lesson = here if (here / 'educational_governor.py').is_file() else here / 'education/documentation/004_oepfp/_how_to_play'
++lesson = here if (here / 'educational_governor.py').is_file() else here / 'pilots/education/symbol_game'
+ repo = next(p for p in [lesson, *lesson.parents] if (p / '.git').exists())
+ sys.path.insert(0, str(lesson))
+ sys.path.insert(0, str(repo / 'education/documentation/004_oepfp/papers/symbol_game/000_pfp_introduction/code'))
+--- a/pilots/education/finite_qm_workflow/README.md
++++ b/pilots/education/finite_qm_workflow/README.md
+@@ -4,16 +4,16 @@
+ 
+ Start with the actual files:
+ 
+-- [prompt_template.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml)
+-- [workflow.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
+-- [mode.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml)
++- [prompt_template.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml)
++- [workflow.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
++- [mode.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml)
+ 
+ The [copyable system prompt](finite_qm_pfp_system_prompt.md) contains instructions
+ for doing a derivation. The source catalog is a separate lookup asset and is
+ never dumped into the prompt.
+ 
+ [Practical guide](how_to_play_v4_operad_pfp.md) ·
+-[Stage/mode overview](../../docs/22_unified_pfp_v4_operad_workflow_and_hacks.md) ·
++[Stage/mode overview](../runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md) ·
+ [Historical M3 evidence](m3_decoy_ablation_and_empirical_evidence.md) ·
+ [Validation](validation_report.md)
+ 
+--- a/pilots/education/finite_qm_workflow/how_to_play_v4_operad_pfp.md
++++ b/pilots/education/finite_qm_workflow/how_to_play_v4_operad_pfp.md
+@@ -5,10 +5,10 @@
+ 
+ ## The actual template
+ 
+-Open [prompt_template.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml).
++Open [prompt_template.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml).
+ It contains the system prompt and a user prompt with target and stage-instruction
+-slots. [workflow.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
+-supplies the six stages; [mode.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml)
++slots. [workflow.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
++supplies the six stages; [mode.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml)
+ supplies the derivation mode and LLM techniques. No registry is appended.
+ 
+ For manual research, use the system prompt, supply the target and sources, and
+@@ -18,7 +18,7 @@
+ 
+ ## Prepare a bound derivation request
+ 
+-The included [work unit](../../../../../pfp/fixtures/finite_qm_workflow/c4_work_unit.json)
++The included [work unit](../../../pfp/fixtures/finite_qm_workflow/c4_work_unit.json)
+ is an exact C4 precursor example. Its sought certificate is withheld and its
+ quantum-interface imports remain open.
+ 
+--- a/pilots/education/finite_qm_workflow/validation_report.md
++++ b/pilots/education/finite_qm_workflow/validation_report.md
+@@ -2,9 +2,9 @@
+ 
+ AuthorityEffect: None. Revised 2026-10-18 after the initial registry dump was
+ rejected. The deliverables are now the actual
+-[prompt_template.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml),
+-[workflow.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
+-and [mode.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml).
++[prompt_template.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml),
++[workflow.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
++and [mode.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml).
+ 
+ The renderer uses the new prompt and stage instructions. Six workflow stages
+ connect mining, derivation, host verification, repair, challenge and recording.
+--- a/education/004_oepfp/curriculum/700_math/concepts/lesson_700_09_directed_3_cycle_play_demo.md
++++ b/education/004_oepfp/curriculum/700_math/concepts/lesson_700_09_directed_3_cycle_play_demo.md
+@@ -19,7 +19,7 @@
+ - claims $c = (1,1,1)$
+ - host $\Phi_1 = 3$  **[Pinned]** `compute_phi1` / `play_demo.py`
+ 
+-Short video of this single example: `notebooks/scenes/three_cycle_phi1.py` (matplotlib+ffmpeg; optional Manim class `ThreeCyclePhi1`).
++Short video of this single example: `pilots/education/track_a/scenes/three_cycle_phi1.py` (matplotlib+ffmpeg; optional Manim class `ThreeCyclePhi1`).
+ 
+ **Predict-then-run.** Before executing the next cell, write `CONSISTENT` / `CONTRADICTION` and $\Phi_1$. The checked-in values are the worked solution; change a claim without updating them and the cell fails.
+ 
+@@ -61,7 +61,7 @@
+ - **Ledger IDs**: `PO032-C29` through `PO032-C36`
+ - **Code**: `papers/032_the_symbol_game_three_layer_sovereignty_and_discrete_l1_projection/code/l1_symbol_game_governor.py` (`compute_phi1`, module-level)
+ - **Code**: `papers/033_the_symbol_game_practitioners_field_manual/code/play_demo.py`
+-- **Video**: `notebooks/scenes/three_cycle_phi1.py` (Track A video 3)
++- **Video**: `pilots/education/track_a/scenes/three_cycle_phi1.py` (Track A video 3)
+ 
+ > **Claim-typing legend**
+ > - **[Pinned]**: taken from a file this repository already has.
+--- a/education/004_oepfp/curriculum/700_math/notebooks/lesson_700_09_directed_3_cycle_play_demo.ipynb
++++ b/education/004_oepfp/curriculum/700_math/notebooks/lesson_700_09_directed_3_cycle_play_demo.ipynb
+@@ -14,7 +14,7 @@
+     "- claims $c = (1,1,1)$\n",
+     "- host $\\Phi_1 = 3$  **[Pinned]** `compute_phi1` / `play_demo.py`\n",
+     "\n",
+-    "Short video of this single example: `notebooks/scenes/three_cycle_phi1.py` (matplotlib+ffmpeg; optional Manim class `ThreeCyclePhi1`).\n",
++    "Short video of this single example: `pilots/education/track_a/scenes/three_cycle_phi1.py` (matplotlib+ffmpeg; optional Manim class `ThreeCyclePhi1`).\n",
+     "\n",
+     "**Predict-then-run.** Before executing the next cell, write `CONSISTENT` / `CONTRADICTION` and $\\Phi_1$. The checked-in values are the worked solution; change a claim without updating them and the cell fails.\n"
+    ]
+@@ -204,7 +204,7 @@
+     "- **Ledger IDs**: `PO032-C29` through `PO032-C36`\n",
+     "- **Code**: `papers/032_the_symbol_game_three_layer_sovereignty_and_discrete_l1_projection/code/l1_symbol_game_governor.py` (`compute_phi1`, module-level)\n",
+     "- **Code**: `papers/033_the_symbol_game_practitioners_field_manual/code/play_demo.py`\n",
+-    "- **Video**: `notebooks/scenes/three_cycle_phi1.py` (Track A video 3)\n"
++    "- **Video**: `pilots/education/track_a/scenes/three_cycle_phi1.py` (Track A video 3)\n"
+    ]
+   },
+   {
+@@ -237,4 +237,4 @@
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+-}+}
+--- a/education/004_oepfp/curriculum/970_interactive_foundations/concepts/lesson_970_03_naked_prompt_cancellation.md
++++ b/education/004_oepfp/curriculum/970_interactive_foundations/concepts/lesson_970_03_naked_prompt_cancellation.md
+@@ -27,7 +27,7 @@
+ ### Anchors & Provenance
+ - **Paper 032 Anchor**: *The Symbol Game: Three-Layer Sovereignty and Discrete L1 Projection* (Section 1: Foundations and the Wager).
+ - **Paper 033 Anchor**: *The Symbol Game Practitioner's Field Manual* (Section 2: The Three-Cycle Play Demo).
+-- **Substrate Module**: `education.notebooks.scenes.three_cycle_phi1` (Exact rational cycle defect computation).
++- **Substrate Module**: `pilots.education.track_a.scenes.three_cycle_phi1` (Exact rational cycle defect computation).
+ 
+ ---
+ 
+--- a/education/004_oepfp/curriculum/970_interactive_foundations/notebooks/lesson_970_03_naked_prompt_cancellation.ipynb
++++ b/education/004_oepfp/curriculum/970_interactive_foundations/notebooks/lesson_970_03_naked_prompt_cancellation.ipynb
+@@ -23,7 +23,7 @@
+     "### Anchors & Provenance\n",
+     "- **Paper 032 Anchor**: *The Symbol Game: Three-Layer Sovereignty and Discrete L1 Projection* (Section 1: Foundations and the Wager).\n",
+     "- **Paper 033 Anchor**: *The Symbol Game Practitioner's Field Manual* (Section 2: The Three-Cycle Play Demo).\n",
+-    "- **Substrate Module**: `education.notebooks.scenes.three_cycle_phi1` (Exact rational cycle defect computation).\n",
++    "- **Substrate Module**: `pilots.education.track_a.scenes.three_cycle_phi1` (Exact rational cycle defect computation).\n",
+     "\n",
+     "---\n",
+     "\n",
+--- a/education/004_oepfp/curriculum/curriculum_125_master.md
++++ b/education/004_oepfp/curriculum/curriculum_125_master.md
+@@ -337,14 +337,14 @@
+ 
+ ### [How to Play The Symbol Game: Operational Playbook, Interactive Notebooks & Governance Manual](../_how_to_play/README.md)
+ A comprehensive curriculum and player manual guiding humans, developers, and models from basic moves to advanced discrete governance:
+-- **[00. Interactive Walkthrough Notebook](../_how_to_play/00_interactive_how_to_play_walkthrough.ipynb)**: Step-by-step browser walkthrough consuming `test_how_to_play_scenarios.py` with reactive `ipywidgets` workbench and instant visual defect gauges.
+-- **[01. Interactive Scenarios Lab](../_how_to_play/01_interactive_scenarios_lab.ipynb)**: Diagnostic laboratory testing boundary probes: carrier smuggling, non-monotonic rollbacks, premature verification, and post-terminal state locks.
++- **[00. Interactive Walkthrough Notebook](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb)**: Step-by-step browser walkthrough consuming `test_how_to_play_scenarios.py` with reactive `ipywidgets` workbench and instant visual defect gauges.
++- **[01. Interactive Scenarios Lab](../../../pilots/education/symbol_game/01_interactive_scenarios_lab.ipynb)**: Diagnostic laboratory testing boundary probes: carrier smuggling, non-monotonic rollbacks, premature verification, and post-terminal state locks.
+ - **[00. Quickstart Guide](../_how_to_play/00_quickstart_how_to_play.md)**: 5-minute visual walkthrough, dual-space loop, and first playable triangle repair game.
+ - **[01. The Three Editions](../_how_to_play/01_the_three_game_editions_and_evolution.md)**: Historical evolution from v1 LP-forcing to v2 SPK-002, to v3 L1 Oracle Governor.
+ - **[02. Rules of the Board](../_how_to_play/02_the_rules_of_the_board.md)**: The 5-tuple state, bit-level carrier firewall, the 4 legal moves, and Lyapunov descent invariants.
+ - **[03. Developer Handbook](../_how_to_play/03_developer_and_player_handbook.md)**: Model integration, defeating the AM-4 stationary loop with chord decoupling, and Python host patterns.
+ - **[04. Visual Reference & Cheat Sheet](../_how_to_play/04_visual_reference_and_cheat_sheet.md)**: System flowcharts, refusal code dictionary, canonical topologies, and 4-file receipt layout.
+ - **[Visual Assets & Infographics](../_how_to_play/assets/)**: High-resolution vector diagrams for the dual-space loop, 3-cycle triangle, four legal moves, and Lyapunov descent staircase.
+-- **[Executable Test Scenarios](../_how_to_play/test_how_to_play_scenarios.py)**: Automated unit test suite validating move mechanics and rollback on defect increase (7/7 passed).
++- **[Executable Test Scenarios](../../../pilots/education/symbol_game/test_how_to_play_scenarios.py)**: Automated unit test suite validating move mechanics and rollback on defect increase (7/7 passed).
+ - **Automated Notebook Test Suite**: Automated nbformat and headless code cell execution verifier (4/4 passed).
+ 
+--- a/education/004_oepfp/docs/03_context_extension_calculus_and_foundations.md
++++ b/education/004_oepfp/docs/03_context_extension_calculus_and_foundations.md
+@@ -168,7 +168,7 @@
+ \end{aligned}
+ }$$
+ 
+-Stage count at the 2026-10-20 pin: the earlier text said "8-Stage". The public controller [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml) declares `public_stage_count: 11`, `StageName` in [stages.py](../../../../pfp/domain/stages/stages.py) lists the same eleven names (admit through evidence_plan), and `run-seed --stages` accepts 1 to 11 with default 5 ([pfp.py](../../../../pfp/entrypoints/cli/pfp.py) line 75). The separate finite-QM research workflow has six stages P0 to P5 ([22](22_unified_pfp_v4_operad_workflow_and_hacks.md)).
++Stage count at the 2026-10-20 pin: the earlier text said "8-Stage". The public controller [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml) declares `public_stage_count: 11`, `StageName` in [stages.py](../../../../pfp/domain/stages/stages.py) lists the same eleven names (admit through evidence_plan), and `run-seed --stages` accepts 1 to 11 with default 5 ([pfp.py](../../../../pfp/entrypoints/cli/pfp.py) line 75). The separate finite-QM research workflow has six stages P0 to P5 ([22](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md)).
+ 
+ ### Verdict on Needing CEC:
+ 1. **For fixed-context PFP runs:** CEC is **not** invoked. PFP verifies candidates against the declared context contracts; if an obstruction cannot be repaired at depth $n$, PFP fails closed and emits a typed refusal (`REFUSED`, `NO_ACTIVE_OBSTRUCTION`, or `OpenObstruction`).
+--- a/education/004_oepfp/docs/04_symbol_game_architecture.md
++++ b/education/004_oepfp/docs/04_symbol_game_architecture.md
+@@ -25,7 +25,7 @@
+ > `review_findings.md` and a PFP50 inventory under
+ > `001_finite_obstruction_calculus/plans/`; neither file is present at the
+ > 2026-10-20 pin. The nearest current records are
+-> [13_review_findings_and_pilot_runbook.md](13_review_findings_and_pilot_runbook.md)
++> [13_review_findings_and_pilot_runbook.md](../../../pilots/education/runbooks/13_review_findings_and_pilot_runbook.md)
+ > and the PFP50 derivation control
+ > [plan_7d_pfp50_catalog](../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/derivation_controls/plan_7d_pfp50_catalog/derivation.md).
+ > Gate/mode YAML is not evidence of execution. These reference demos are not
+--- a/pilots/education/runbooks/13_review_findings_and_pilot_runbook.md
++++ b/pilots/education/runbooks/13_review_findings_and_pilot_runbook.md
+@@ -20,7 +20,7 @@
+ 
+ # 13. Review Findings & Staged Demos Runbook
+ 
+-Current execution (2026-10-12): [practical PFP and discovery](../_how_to_play/13_practical_pfp_and_discovery.md). Use the consolidated `pfp` commands there; historical profiles below do not imply current runtime support. The fixed pilot grid is retired; each new run should answer a concrete use or discovery question.
++Current execution (2026-10-12): [practical PFP and discovery](13_practical_pfp_and_discovery.md). Use the consolidated `pfp` commands there; historical profiles below do not imply current runtime support. The fixed pilot grid is retired; each new run should answer a concrete use or discovery question.
+ 
+ 
+ **AuthorityEffect:** `None`  
+@@ -47,7 +47,7 @@
+ py -3.12 ow/pfp_v0.2/python/controllers/run_fifty_demos.py
+ ```
+ 
+-**Current-source status (2026-10-20, pin `c419cc6beb`).** `run_fifty_demos.py` and the whole `ow/` tree are gone. The current command surface is the PFP CLI ([pfp.py](../../../../pfp/entrypoints/cli/pfp.py)):
++**Current-source status (2026-10-20, pin `c419cc6beb`).** `run_fifty_demos.py` and the whole `ow/` tree are gone. The current command surface is the PFP CLI ([pfp.py](../../../pfp/entrypoints/cli/pfp.py)):
+ 
+ | Subcommand | Purpose (from its `help` text) |
+ | --- | --- |
+@@ -59,4 +59,4 @@
+ | `run-seed <seed_id>` | Numbered stages; `--stages` 1 to 11, default 5 |
+ | `check-seed`, `prepare-task`, `check-task` | Offline candidate and task-turn checks |
+ 
+-The seed catalog read by `_seed_catalog_from_snapshot` ([pilot_runner.py](../../../../pfp/infrastructure/pilot_runner.py) lines 60-104) is [seeds.yaml](../../../../workflows/library/pilot_estate/matrix/seeds.yaml): `total_seeds: 74`, made of 24 review seeds and 50 MSSN50 seeds. The loader refuses a count, folder-index or SHA-256 mismatch. So the "50 demos" of this runbook correspond to the 50 MSSN50 seeds inside a 74-seed catalog. Run one seed at a time; do not run the whole catalog in one command on a low-memory machine. The practical guide linked at the top gives worked commands.
++The seed catalog read by `_seed_catalog_from_snapshot` ([pilot_runner.py](../../../pfp/infrastructure/pilot_runner.py) lines 60-104) is [seeds.yaml](../../../workflows/library/pilot_estate/matrix/seeds.yaml): `total_seeds: 74`, made of 24 review seeds and 50 MSSN50 seeds. The loader refuses a count, folder-index or SHA-256 mismatch. So the "50 demos" of this runbook correspond to the 50 MSSN50 seeds inside a 74-seed catalog. Run one seed at a time; do not run the whole catalog in one command on a low-memory machine. The practical guide linked at the top gives worked commands.
+--- a/education/004_oepfp/docs/16_current_types_and_learnings.md
++++ b/education/004_oepfp/docs/16_current_types_and_learnings.md
+@@ -24,7 +24,7 @@
+ both native Symbol Game crates share the existing boundaries; this update adds
+ documentation, not another framework.
+ 
+-Start with the [practical play guide](../_how_to_play/13_practical_pfp_and_discovery.md).
++Start with the [practical play guide](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md).
+ The tables below reference existing code. They distinguish wire/type validity,
+ host evaluation, captured evidence and admission rather than treating them as
+ interchangeable PASS labels.
+@@ -146,7 +146,7 @@
+ 
+ ## Discoveries and applied repairs
+ 
+-The [Adversary challenge runbook](18_original_challenge_play.md) adds the
++The [Adversary challenge runbook](../../../pilots/education/runbooks/18_original_challenge_play.md) adds the
+ original-judge play route, actual IDE/OpenRouter outcomes and repairs to replay,
+ candidate progress, learning feedback and C023/C024/C027 checking. It keeps
+ finite witness acceptance separate from original experiment completion.
+--- a/pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md
++++ b/pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md
+@@ -105,10 +105,10 @@
+ 
+ The former `prompts/versioned/` directory and its README are no longer on disk at the
+ 2026-10-20 pin. The current owner is the unversioned
+-[template role registry](../../../../pfp/infrastructure/yaml/prompts/templates/template_role_registry.yaml)
++[template role registry](../../../pfp/infrastructure/yaml/prompts/templates/template_role_registry.yaml)
+ (`version: 1.0.4`, profile `RELATIONAL_SPACETIME_EXPERIMENTAL_CANDIDATE`), which names
+ `template_pfp_t0001.yaml` to `template_pfp_t0003.yaml` and `template_pfp_r0001.yaml`; the
+-[prompts README](../../../../pfp/infrastructure/yaml/prompts/README.md) says
++[prompts README](../../../pfp/infrastructure/yaml/prompts/README.md) says
+ historical versions are kept in Git history rather than version directories. The table below names the frozen experiment's
+ original v1.0.0 identities; versions 1.0.1, 1.0.2 and 1.0.3 remain separate profiles:
+ 
+@@ -146,7 +146,7 @@
+ those v1.0.0 resources are no longer in the working tree either:
+ `read_frozen_prompt_source` reads packaged data when present and otherwise the Git
+ object at commit `56e1e552c5`, and returns `FROZEN_SOURCE_UNAVAILABLE` when neither
+-exists ([pfp_frozen_replay.py](../../../../pfp/infrastructure/adapters/pfp_frozen_replay.py)
++exists ([pfp_frozen_replay.py](../../../pfp/infrastructure/adapters/pfp_frozen_replay.py)
+ lines 53-75). Copies also remain inside the evidence bundles under `frozen_sources/`
+ and `source_snapshot/`. Original paths in
+ retained receipts and snapshots remain historical identities. Explicit readback
+@@ -163,7 +163,7 @@
+ > **Status at `201dc8d` (2026-10-15).** `pfp/infrastructure/numbered_prompts.py`
+ > now selects v1.0.4 (`PFP-R0001-v1.0.4`, run namespace
+ > `po035_simplified_v1_0_4_20261013`), while the versioned prompts README still
+-> names v1.0.3. See the [pilot status](../README.md#pilot-status-at-201dc8d-2026-10-15).
++> names v1.0.3. See the [pilot status](../../../education/004_oepfp/README.md#pilot-status-at-201dc8d-2026-10-15).
+ >
+ > **Status at `c419cc6beb` (2026-10-20).** `numbered_prompts.py` lines 33-41 still select
+ > `PFP-R0001-v1.0.4` and pin the registry by SHA-256 (`REGISTRY_SHA256`). The versioned
+--- a/pilots/education/runbooks/17_runtime_ownership_and_replay.md
++++ b/pilots/education/runbooks/17_runtime_ownership_and_replay.md
+@@ -40,7 +40,7 @@
+ judge-audit compositions beside the pilots, separate executable normal-form code
+ from YAML/SQL assets, retire duplicate canonical-type monoliths, and replace the
+ type census's legacy alias search with exact current paths. The
+-[package ownership map](../../../../pfp/README.md) gives the direct entry points.
++[package ownership map](../../../pfp/README.md) gives the direct entry points.
+ 
+ The public `pfp.infrastructure.UnifiedPfpDemoRunner` name resolves
+ to the same class as `infrastructure.pilot_runners.pilot_dispatch`. It does not
+@@ -110,11 +110,11 @@
+ identity. Its remaining stage requirements and source YAML stay unchanged;
+ stage 0 and host-only stage 5 retain their existing empty model schema.
+ (Stage numbers corrected 2026-10-20: `assemble` now accepts stages 0 to 11
+-(`STAGE_COUNT = 11`). [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml)
++(`STAGE_COUNT = 11`). [controller.yaml](../../../pfp/infrastructure/yaml/stages/controller.yaml)
+ marks stages 2, 3, 4, 6 and 11 as model stages and 1, 5, 7, 8, 9 and 10 as host
+ stages. `AssemblePromptUseCase` loads a model schema for every non-host stage and
+ for stage 1, whose file carries a repair-turn schema; stage 0 and the other host
+-stages get an empty schema ([assemble_prompt.py](../../../../pfp/use_cases/assemble_prompt.py)
++stages get an empty schema ([assemble_prompt.py](../../../pfp/use_cases/assemble_prompt.py)
+ lines 42-58). The CLI help text still says "Stage index (0-8)".)
+ Assembly performs no model dispatch or independent task checking. A valid
+ response shape still needs the selected stage's host checks. The existing
+@@ -266,7 +266,7 @@
+ 
+ ## Numbered seed stages and refusal replay
+ 
+-The [numbered-stage runbook](../../../../pfp/documentation/pfp_seed_execution.md)
++The [numbered-stage runbook](../../../pfp/documentation/pfp_seed_execution.md)
+ uses the same accounted PFP boundary for `pfp run-seed`. Select explicit model,
+ call, output-token and financial limits. Start with the shortest useful prefix;
+ Stage5 remains the independent host verification step. Original stage prompts,
+@@ -541,7 +541,7 @@
+ From the repository root, select an explicit model and a new output directory:
+ 
+ ```powershell
+-python education/documentation/004_oepfp/curriculum/scenes/naked_prompt_launder.py record --model YOUR_MODEL --output-dir NEW_DIRECTORY --max-provider-calls 2 --max-output-tokens 2048 --max-estimated-cost-microusd 500
++python pilots/education/track_a/scenes/naked_prompt_launder.py record --model YOUR_MODEL --output-dir NEW_DIRECTORY --max-provider-calls 2 --max-output-tokens 2048 --max-estimated-cost-microusd 500
+ ```
+ 
+ The estimated allowance uses the existing gateway policy; it is not a hard
+@@ -555,7 +555,7 @@
+ Matplotlib/FFmpeg tools and a fresh MP4 path:
+ 
+ ```powershell
+-python education/documentation/004_oepfp/curriculum/scenes/naked_prompt_launder.py render --input SAVED_CAPTURE.json --output NEW_CLIP.mp4
++python pilots/education/track_a/scenes/naked_prompt_launder.py render --input SAVED_CAPTURE.json --output NEW_CLIP.mp4
+ ```
+ 
+ Historical `_render` JSON/MP4 files retain their bytes and old meaning. Rendering
+--- a/pilots/education/runbooks/18_original_challenge_play.md
++++ b/pilots/education/runbooks/18_original_challenge_play.md
+@@ -545,7 +545,7 @@
+ 
+ ## Accounted exploratory matrix helpers
+ 
+-The [PFP pilot runbook](../../../../pfp/documentation/pfp_pilot_matrix.md)
++The [PFP pilot runbook](../../../pfp/documentation/pfp_pilot_matrix.md)
+ shows one original C052 synthesis case through the shared PFP/accounting adapter.
+ The formal-math and synthesis helpers preserve original judges and private-field
+ isolation, retain exact vendor replies, and stop all models on unknown cost or
+--- a/pilots/education/runbooks/19_bounded_mechanism_sessions.md
++++ b/pilots/education/runbooks/19_bounded_mechanism_sessions.md
+@@ -184,7 +184,7 @@
+ > **Evidence status of the 2026-10-16 and 2026-10-17 sections below (checked 2026-10-20, pin `c419cc6beb`).**
+ >
+ > 1. **Benchmark scripts and receipts are not in the repository.** The 11 scripts and 13 receipts these sections say were "executed via" or "committed at" `workflows/wf12_mechanism_control_arms/pilots/` and `.../b_cohomology/` (for example `c004_paired_mask_benchmark.py`, `c004_paired_benchmark_receipt.json`, `c006_60board_hidden_p_star_receipt.json`, `b_cohomology_p_star_receipt.json`) are not tracked at the pin, and `git log --all` over those paths returns no commit. The test files `test_c004_paired_mask_benchmark.py`, `test_c004_pfp_mechanism_boundary.py` and `test_operad_cochain_ablation.py`, and `extended_checkers.py`, are also absent.
+-> 2. **Several named functions are absent.** `integer_slots_prefix_state`, `extract_integer_slot_vocab_candidates`, `allowed_integer_slot_tokens`, `C004_CARRIER_CHARS` and a `gbnf_slots` parameter are not defined anywhere in tracked code. `integer_slots_gbnf`, `integer_slots_control` and `parse_integer_slots` do exist in [carrier_decoding.py](../../../../pfp/domain/carrier_decoding.py), and `HfLocalRunner` and `LocalHfMechanismAdapter` exist in `decode_controls/local_hf_mechanism.py`.
++> 2. **Several named functions are absent.** `integer_slots_prefix_state`, `extract_integer_slot_vocab_candidates`, `allowed_integer_slot_tokens`, `C004_CARRIER_CHARS` and a `gbnf_slots` parameter are not defined anywhere in tracked code. `integer_slots_gbnf`, `integer_slots_control` and `parse_integer_slots` do exist in [carrier_decoding.py](../../../pfp/domain/carrier_decoding.py), and `HfLocalRunner` and `LocalHfMechanismAdapter` exist in `decode_controls/local_hf_mechanism.py`.
+ > 3. **Paper 027 depends on the same files.** [`replay.py`](../../../../atlas/coda_atlas/F004_papers/015_pfp/027_pfp_proposal_channels_and_internal_interventions/code/replay.py) (lines 475-511) reads these 13 receipts, and the checked-in [`replay_receipt.json`](../../../../atlas/coda_atlas/F004_papers/015_pfp/027_pfp_proposal_channels_and_internal_interventions/replay_receipt.json) reports `PASS` with `REPLAYED_FROM_COMMITTED_RECEIPTS`. At the pin the files it reads are absent, so that receipt cannot be reproduced from this checkout.
+ > 4. **Reading rule.** Treat every ratio, call count and cost in the 2026-10-16/17 sections (for example 0/8 to 8/8 parseability, 12/12, 60/60, 8/60, 10/10) as an unverified historical statement. Several are conditional ratios on small denominators after abstention (2/2, 5/5, 6/6, 8/8); they are counts, not rates. The 3-Gate rubric's "Already Tested? Yes" dispositions below rest on these absent receipts and should be read as "recorded in prose only" until the files are restored and replayed.
+ 
+--- a/education/004_oepfp/docs/21_prompt_template_contracts_and_single_prompt_standard.md
++++ b/education/004_oepfp/docs/21_prompt_template_contracts_and_single_prompt_standard.md
+@@ -22,7 +22,7 @@
+ 
+ For the finite-QM prompt template, staged workflow, execution mode and attached
+ LLM techniques, see the
+-[finite-QM reference workflow](22_unified_pfp_v4_operad_workflow_and_hacks.md).
++[finite-QM reference workflow](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md).
+ That candidate profile reuses the shared task-turn envelope; it does not rename
+ this page's packet contracts or the existing numbered stage machine.
+ 
+--- a/pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md
++++ b/pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md
+@@ -3,16 +3,16 @@
+ AuthorityEffect: None. Revised 2026-10-18 after the initial registry-dump design
+ was rejected. These three linked YAML files are the delivery:
+ 
+-- [prompt_template.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml): actual system and user prompts for doing a derivation, with the mathematical operad toolbox, four mining missions, certificate construction and output instructions.
+-- [workflow.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml): stage instructions, inputs, outputs, checks, transitions and answer-free repair guidance.
+-- [mode.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml): one `FINITE_QM_DERIVATION` mode with budgets, provider policy and six attached LLM techniques.
++- [prompt_template.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml): actual system and user prompts for doing a derivation, with the mathematical operad toolbox, four mining missions, certificate construction and output instructions.
++- [workflow.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml): stage instructions, inputs, outputs, checks, transitions and answer-free repair guidance.
++- [mode.yaml](../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml): one `FINITE_QM_DERIVATION` mode with budgets, provider policy and six attached LLM techniques.
+ 
+-The [copyable system prompt](../_how_to_play/v4_operad_container_and_p_star_loop/finite_qm_pfp_system_prompt.md)
++The [copyable system prompt](../finite_qm_workflow/finite_qm_pfp_system_prompt.md)
+ is rendered from the template. The source catalog remains a separate
+ lookup asset. It is never appended to the system prompt. Registered software
+ skills and mathematical operad families are distinct objects.
+ 
+-Source check (2026-10-22, pin `305b9690f97fc3f5c13e361cfe752a6d5dc7ad8d`): `workflow.yaml` declares six stages (`P0_MINE_OPERAD` to `P5_RECORD`, entry P0, terminal P5); `mode.yaml` sets `max_candidate_attempts: 2` and lists six techniques `H1_POPULATE_BEFORE_EXECUTE`, `H2_DECOY_EQUATIONS`, `H3_WITNESS_FIRST`, `H4_C4_DIAGNOSTIC`, `H5_FRESH_CONTEXT_RESIDUAL_REPAIR` and `H6_MASKED_SECOND_VIEW`; [finite_qm_operad_catalog.json](../../../../pfp/infrastructure/yaml/prompts/finite_qm_operad_catalog.json) has 744 `entries`. P1 lists H1 to H4. The 2026-10-20 figure of 584 is historical.
++Source check (2026-10-22, pin `305b9690f97fc3f5c13e361cfe752a6d5dc7ad8d`): `workflow.yaml` declares six stages (`P0_MINE_OPERAD` to `P5_RECORD`, entry P0, terminal P5); `mode.yaml` sets `max_candidate_attempts: 2` and lists six techniques `H1_POPULATE_BEFORE_EXECUTE`, `H2_DECOY_EQUATIONS`, `H3_WITNESS_FIRST`, `H4_C4_DIAGNOSTIC`, `H5_FRESH_CONTEXT_RESIDUAL_REPAIR` and `H6_MASKED_SECOND_VIEW`; [finite_qm_operad_catalog.json](../../../pfp/infrastructure/yaml/prompts/finite_qm_operad_catalog.json) has 744 `entries`. P1 lists H1 to H4. The 2026-10-20 figure of 584 is historical.
+ 
+ ## Count one family, then the catalog
+ 
+@@ -75,7 +75,7 @@
+ 
+ The mode defines attachment points, activation conditions and checks for each
+ technique. Their general effectiveness remains an experimental question. The
+-historical [M3 evidence audit](../_how_to_play/v4_operad_container_and_p_star_loop/m3_decoy_ablation_and_empirical_evidence.md)
++historical [M3 evidence audit](../finite_qm_workflow/m3_decoy_ablation_and_empirical_evidence.md)
+ explains why scaffolded extraction percentages are not clean derivation evidence.
+ 
+ ## Focused integration
+@@ -91,8 +91,8 @@
+ integration. Existing PFP provider, budget and stage owners remain responsible
+ for live dispatch. No provider call is made by these offline commands.
+ 
+-See the [practical guide](../_how_to_play/v4_operad_container_and_p_star_loop/how_to_play_v4_operad_pfp.md)
+-and [validation report](../_how_to_play/v4_operad_container_and_p_star_loop/validation_report.md).
++See the [practical guide](../finite_qm_workflow/how_to_play_v4_operad_pfp.md)
++and [validation report](../finite_qm_workflow/validation_report.md).
+ 
+ ## Claim hygiene
+ 
+--- a/education/004_oepfp/docs/23_finite_qm_workflow_walkthrough.md
++++ b/education/004_oepfp/docs/23_finite_qm_workflow_walkthrough.md
+@@ -124,7 +124,7 @@
+ py -3.12 -m pfp.entrypoints.cli.finite_qm_prompt check pfp/fixtures/finite_qm_workflow/c4_work_unit.json reply.json --source-root . --attempt docs-walkthrough-1 --stage P1_DERIVE
+ ```
+ 
+-This is an instruction for a later checking step, not a command executed by this documentation review. It requires an existing discoverable native host; an externally located host can be selected through the existing `CORE_SYMBOL_GAME_HOST` setting. Use the [runtime ownership guide](17_runtime_ownership_and_replay.md) for that environment. An unavailable host is an infrastructure limitation, not a false mathematical certificate and not an accepted result.
++This is an instruction for a later checking step, not a command executed by this documentation review. It requires an existing discoverable native host; an externally located host can be selected through the existing `CORE_SYMBOL_GAME_HOST` setting. Use the [runtime ownership guide](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md) for that environment. An unavailable host is an infrastructure limitation, not a false mathematical certificate and not an accepted result.
+ 
+ The [native judge adapter](../../../../pfp/infrastructure/finite_qm_cochain_judge.py) parses the supplied rational witnesses and calls the existing cochain evaluator. It checks the submitted candidate against the problem; it does not establish validity by comparing it with a stored answer. The required equations are:
+ 
+--- a/education/004_oepfp/docs/README.md
++++ b/education/004_oepfp/docs/README.md
+@@ -30,7 +30,7 @@
+ 
+ **Beginner:** read the [finite-QM workflow walkthrough](23_finite_qm_workflow_walkthrough.md), then work the [certificate lesson](../levels/level_finite_qm_certificate_walkthrough.md). You need signed arithmetic and a shell for preparation; the lesson introduces the required matrix notation. Preparation is offline and does not check a certificate.
+ 
+-**Experienced researcher or implementer:** inspect the [prompt, stages and mode](22_unified_pfp_v4_operad_workflow_and_hacks.md), then the actual [prompt template](../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml), [workflow](../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml) and [mode](../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml). Read the [digest profiles](01_digest_and_canonical_serialization.md) before implementing a new packet producer.
++**Experienced researcher or implementer:** inspect the [prompt, stages and mode](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md), then the actual [prompt template](../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml), [workflow](../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml) and [mode](../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml). Read the [digest profiles](01_digest_and_canonical_serialization.md) before implementing a new packet producer.
+ 
+ Keep three counts separate: the finite-QM research workflow names **six stages** (P0 to P5 in `workflow.yaml`), the existing public runtime exposes **eleven numbered stages** (`public_stage_count: 11` in [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml); model stages 2, 3, 4, 6 and 11, host stages 1, 5, 7, 8, 9 and 10), and the [levels catalogue](../levels/README.md) contains **101 numbered curriculum specifications** (101 files whose names match `level_<digits>_`, rechecked 2026-10-22; the directory also holds other unnumbered pages). A curriculum row is not evidence of an implemented runtime stage. P1 and P3 request preparation and candidate checking are connected. The six-stage workflow also includes research instructions and has no new automatic full live runner.
+ 
+@@ -86,10 +86,10 @@
+ 
+ | Result | Pages |
+ | --- | --- |
+-| Describes a former estate or retired code; now marked historical with current homes | [00](00_master_synthesis_and_cartography.md), [02](02_surviving_ideas_ledger.md), [04](04_symbol_game_architecture.md), [06](06_prompt_packet_stage_synthesis.md), [12](12_pr_review_and_verification_loop.md), [13](13_review_findings_and_pilot_runbook.md), [21](21_prompt_template_contracts_and_single_prompt_standard.md) |
++| Describes a former estate or retired code; now marked historical with current homes | [00](00_master_synthesis_and_cartography.md), [02](02_surviving_ideas_ledger.md), [04](04_symbol_game_architecture.md), [06](06_prompt_packet_stage_synthesis.md), [12](12_pr_review_and_verification_loop.md), [13](../../../pilots/education/runbooks/13_review_findings_and_pilot_runbook.md), [21](21_prompt_template_contracts_and_single_prompt_standard.md) |
+ | Object model mostly proposed (no matching classes) | [05](05_pfp_and_adversary_swarm_system_design.md), [07](07_sentinel_ai_integration.md) |
+-| Current and corrected in place (paths, counts, limits) | [01](01_digest_and_canonical_serialization.md), [03](03_context_extension_calculus_and_foundations.md), [08](08_native_rust_host_architecture.md), [09](09_runtime_actions_and_governor.md), [10](10_functional_metric_ownership.md), [11](11_mss_n_machine_wire_registry.md), [14](14_release_checklist.md), [15](15_comparative_tooling_and_external_repositories.md), both 16s, [17](17_runtime_ownership_and_replay.md), [20](20_acsets_dpo_and_optional_backends.md), [22](22_unified_pfp_v4_operad_workflow_and_hacks.md), [23](23_finite_qm_workflow_walkthrough.md) |
+-| Cites receipts and scripts that are not in the repository | [18](18_original_challenge_play.md) and [19](19_bounded_mechanism_sessions.md) (the 2026-10-16/17 `P*` campaigns); treat their ratios as unverified |
++| Current and corrected in place (paths, counts, limits) | [01](01_digest_and_canonical_serialization.md), [03](03_context_extension_calculus_and_foundations.md), [08](08_native_rust_host_architecture.md), [09](09_runtime_actions_and_governor.md), [10](10_functional_metric_ownership.md), [11](11_mss_n_machine_wire_registry.md), [14](14_release_checklist.md), [15](15_comparative_tooling_and_external_repositories.md), both 16s, [17](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md), [20](../../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md), [22](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md), [23](23_finite_qm_workflow_walkthrough.md) |
++| Cites receipts and scripts that are not in the repository | [18](../../../pilots/education/runbooks/18_original_challenge_play.md) and [19](../../../pilots/education/runbooks/19_bounded_mechanism_sessions.md) (the 2026-10-16/17 `P*` campaigns); treat their ratios as unverified |
+ | Archived external text, scope note added | [deep research prompt](pfp_pciv_eis_llms_deep_research_prompt.md) |
+ 
+ Two files share the number 16. They are separate documents with different scopes and are listed as 16a and 16b in section 4; their filenames are unchanged.
+@@ -97,16 +97,16 @@
+ ## Current implementation and discoveries (2026-10-12)
+ 
+ Start with [current types, capabilities and lessons](16_current_types_and_learnings.md)
+-and the [practical play guide](../_how_to_play/13_practical_pfp_and_discovery.md).
++and the [practical play guide](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md).
+ These describe the consolidated application, bounded live/replay discoveries and
+ targeted failure learning. Older runbooks retain historical source references;
+ use the current guide for execution. No fixed pilot count is required.
+ 
+-[Adversary challenge play](18_original_challenge_play.md) composes the shared
++[Adversary challenge play](../../../pilots/education/runbooks/18_original_challenge_play.md) composes the shared
+ workflow, PFP turns and original challenge judges for IDE/OpenRouter execution.
+ It records actual bounded outcomes and the scientific obligations still open.
+ 
+-[ACSets and DPO experiments](20_acsets_dpo_and_optional_backends.md) add bounded
++[ACSets and DPO experiments](../../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md) add bounded
+ prompt/cochain controls, registered polygraph steps and one optional Julia/DSPy
+ demo each. They do not add default runtime dependencies or model-efficacy claims.
+ 
+@@ -149,11 +149,11 @@
+ | Document | Semantic Role | Authority Status | Key Invariants |
+ |---|---|---|---|
+ | [`12_pr_review_and_verification_loop.md`](12_pr_review_and_verification_loop.md) | PR Verification Loop & Prompts | Verification Spec (proposed loop) | 5-stage adversary specification, AB-01–07 (labels, not implemented antibodies), targeted test replay, `SwarmEvidenceEnvelopeV1` (written by `swarm_developer.py`), and Claude Code review prompts. |
+-| [`13_review_findings_and_pilot_runbook.md`](13_review_findings_and_pilot_runbook.md) | Review Findings & Runbook | Operational Runbook | Exact rational duality audit findings; the historical 50-demo command and the current PFP CLI subcommands over the 74-seed catalog. |
++| [`13_review_findings_and_pilot_runbook.md`](../../../pilots/education/runbooks/13_review_findings_and_pilot_runbook.md) | Review Findings & Runbook | Operational Runbook | Exact rational duality audit findings; the historical 50-demo command and the current PFP CLI subcommands over the 74-seed catalog. |
+ | [`14_release_checklist.md`](14_release_checklist.md) | Release Discipline | Operational Contract | Step-by-step preflight checklist for repository releases, secret scrubbing, and receipt-claim bindings. |
+ | [`15_comparative_tooling_and_external_repositories.md`](15_comparative_tooling_and_external_repositories.md) | Comparative Tooling Evaluation | Reference (unpinned) | Four-axis mapping and evaluation of 18 named external projects (Mathlib4, LeanDojo-v2, LeanCopilot, CivAgent, CatDock, CEO, AgentCiv, sharpen, AutoPrompt, gpt-prompt-engineer, TheBigPromptLibrary, DAIR guide, vLLM, SGLang, LLMLingua, RepE, llm-attacks, Prompt Guard); no commits pinned. |
+ | 16a [`16_current_types_and_learnings.md`](16_current_types_and_learnings.md) | Current PFP Interfaces & Learning | Source-grounded Reference | Typed prompts/stages/witnesses, conditional mode availability (15 of 20 modes have executors), six guidance kinds, a worked DEMO_07 check and applied bounded-run repairs. |
+-| 16b [`16_numbered_prompt_roles_and_po035_play.md`](16_numbered_prompt_roles_and_po035_play.md) | Empirical Prompt Contracts & Play | Experimental Reference | Numbered prompt roles (current registry v1.0.4), public workpads, calculation bindings and bounded PO035 failures. |
++| 16b [`16_numbered_prompt_roles_and_po035_play.md`](../../../pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md) | Empirical Prompt Contracts & Play | Experimental Reference | Numbered prompt roles (current registry v1.0.4), public workpads, calculation bindings and bounded PO035 failures. |
+ 
+ ---
+ 
+@@ -161,11 +161,11 @@
+ 
+ | Document | Semantic Role | Authority Status | Key Invariants |
+ |---|---|---|---|
+-| [`17_runtime_ownership_and_replay.md`](17_runtime_ownership_and_replay.md) | Runtime Ownership & Replay | Source-grounded Runbook | Current owners and commands for demos, matrices, numbered stages, PO035 loops, Paper 008 benchmark and the finite gauge workbench; historical replay profiles. |
+-| [`18_original_challenge_play.md`](18_original_challenge_play.md) | Original Challenge Play | Runbook with bounded observations | IDE and OpenRouter challenge play through PFP and the original judges; recorded paid attempts (87 replies, $0.03540475 known); untracked `P*` receipts flagged. |
+-| [`19_bounded_mechanism_sessions.md`](19_bounded_mechanism_sessions.md) | Mechanism Sessions | Runbook; later sections unverified | C006 ASSERT/CUT/LIFT_REQUEST/VERIFY sessions and paid runs; the 2026-10-16/17 C001-C020 `P*` campaign sections cite absent scripts, receipts and functions. |
+-| [`20_acsets_dpo_and_optional_backends.md`](20_acsets_dpo_and_optional_backends.md) | ACSets & DPO Experiments | Offline Controls | Two 25-case rewriting pilots and one Julia and one DSPy optional demo (14 controls). |
+-| [`22_unified_pfp_v4_operad_workflow_and_hacks.md`](22_unified_pfp_v4_operad_workflow_and_hacks.md) | Finite-QM Prompt, Stages & Mode | Source-grounded Reference | Six research stages P0–P5, one mode with six techniques and two attempts, 744-entry operad catalog (rechecked 2026-10-22). |
++| [`17_runtime_ownership_and_replay.md`](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md) | Runtime Ownership & Replay | Source-grounded Runbook | Current owners and commands for demos, matrices, numbered stages, PO035 loops, Paper 008 benchmark and the finite gauge workbench; historical replay profiles. |
++| [`18_original_challenge_play.md`](../../../pilots/education/runbooks/18_original_challenge_play.md) | Original Challenge Play | Runbook with bounded observations | IDE and OpenRouter challenge play through PFP and the original judges; recorded paid attempts (87 replies, $0.03540475 known); untracked `P*` receipts flagged. |
++| [`19_bounded_mechanism_sessions.md`](../../../pilots/education/runbooks/19_bounded_mechanism_sessions.md) | Mechanism Sessions | Runbook; later sections unverified | C006 ASSERT/CUT/LIFT_REQUEST/VERIFY sessions and paid runs; the 2026-10-16/17 C001-C020 `P*` campaign sections cite absent scripts, receipts and functions. |
++| [`20_acsets_dpo_and_optional_backends.md`](../../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md) | ACSets & DPO Experiments | Offline Controls | Two 25-case rewriting pilots and one Julia and one DSPy optional demo (14 controls). |
++| [`22_unified_pfp_v4_operad_workflow_and_hacks.md`](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md) | Finite-QM Prompt, Stages & Mode | Source-grounded Reference | Six research stages P0–P5, one mode with six techniques and two attempts, 744-entry operad catalog (rechecked 2026-10-22). |
+ | [`23_finite_qm_workflow_walkthrough.md`](23_finite_qm_workflow_walkthrough.md) | Finite-QM Walkthrough | Instructional | Prepare, bind, check and repair one C4 certificate turn offline. |
+ 
+ ---
+@@ -185,11 +185,11 @@
+ 2. **Zero Forbidden Hype Verbs:** All documents adhere to `RULE[user_global]` and the forbidden-word list in the PR scope rule (`rl_pr_scope_and_branch_diff_audit.md`); evidence is framed with scoped claims (`supports`, `demonstrates in this toy setting`). Verbatim archived external text, such as the model outputs in the deep research prompt, is quoted, not adopted.
+ 3. **No Redundant Facades:** Documents should correspond to an active, maintained subsystem. Where a page describes a retired subsystem, it is labelled historical in place rather than deleted. Merged documents consolidate redundant stubs and keep unified lineage under numerical prefixes.
+ 
+-- [Runtime ownership and historical replay](17_runtime_ownership_and_replay.md)
+-- [Adversary original challenge play](18_original_challenge_play.md)
+-- [Bounded mechanism sessions](19_bounded_mechanism_sessions.md)
+-- [ACSets and DPO experiments](20_acsets_dpo_and_optional_backends.md)
++- [Runtime ownership and historical replay](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md)
++- [Adversary original challenge play](../../../pilots/education/runbooks/18_original_challenge_play.md)
++- [Bounded mechanism sessions](../../../pilots/education/runbooks/19_bounded_mechanism_sessions.md)
++- [ACSets and DPO experiments](../../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md)
+ - [Prompt template contracts & single prompt standard](21_prompt_template_contracts_and_single_prompt_standard.md)
+-- [Finite-QM prompt, stages and execution mode](22_unified_pfp_v4_operad_workflow_and_hacks.md)
++- [Finite-QM prompt, stages and execution mode](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md)
+ - [Finite-QM workflow walkthrough: prepare, derive, check and repair](23_finite_qm_workflow_walkthrough.md)
+ 
+--- a/education/004_oepfp/index.md
++++ b/education/004_oepfp/index.md
+@@ -5,9 +5,9 @@
+ 
+ | Need | Read |
+ | --- | --- |
+-| Finite-QM prompt template, stages and mode | [Finite-QM workflow](docs/22_unified_pfp_v4_operad_workflow_and_hacks.md) |
++| Finite-QM prompt template, stages and mode | [Finite-QM workflow](../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md) |
+ | Orientation, goals and evidence limits | [Documentation hub](README.md) |
+-| Runnable examples and discovery experiments | [Practical PFP](_how_to_play/13_practical_pfp_and_discovery.md) |
++| Runnable examples and discovery experiments | [Practical PFP](../../pilots/education/runbooks/13_practical_pfp_and_discovery.md) |
+ | Existing types, mode capability map and learned repairs | [Types and learnings](docs/16_current_types_and_learnings.md) |
+ | Stage semantics | [Eight-stage pipeline](_how_to_play/10_eight_stage_pipeline.md) |
+ | Capture files and troubleshooting | [Output layout](_how_to_play/12_output_layout_and_troubleshooting.md) |
+--- a/education/004_oepfp/levels/README.md
++++ b/education/004_oepfp/levels/README.md
+@@ -30,7 +30,7 @@
+ 
+ Begin with the [finite-QM certificate walkthrough](level_finite_qm_certificate_walkthrough.md): four vertices, four signed edge values, one potential and one independently checkable lower bound. It teaches a complete finite calculation before introducing the larger catalogue. Follow the [workflow walkthrough](../docs/23_finite_qm_workflow_walkthrough.md) to prepare the actual offline request, understand source pins, and distinguish preparation from judging.
+ 
+-Experienced readers can go directly to [the actual prompt, six research stages and mode](../docs/22_unified_pfp_v4_operad_workflow_and_hacks.md). Those **six workflow stages**, the **eleven public runtime stages**, and these **101 curriculum specifications** name different objects. The [current interfaces](../docs/16_current_types_and_learnings.md) describe runtime availability. The table below retains proposed evaluator names and error labels as teaching specifications; their presence does not establish executable dispatch or implementation coverage.
++Experienced readers can go directly to [the actual prompt, six research stages and mode](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md). Those **six workflow stages**, the **eleven public runtime stages**, and these **101 curriculum specifications** name different objects. The [current interfaces](../docs/16_current_types_and_learnings.md) describe runtime availability. The table below retains proposed evaluator names and error labels as teaching specifications; their presence does not establish executable dispatch or implementation coverage.
+ 
+ ## Listen, then watch
+ 
+@@ -220,10 +220,10 @@
+ | [`level_finite_qm_certificate_walkthrough.md`](level_finite_qm_certificate_walkthrough.md) | Worked C4 certificate lesson (supplement, no stage number) |
+ | [`curriculum_lesson_crosswalk.md`](curriculum_lesson_crosswalk.md) | Level-to-lesson crosswalk; links repointed to [`../curriculum/`](../curriculum/) on 2026-10-20 |
+ | [`meta_00_symbol_game_foundations.md`](meta_00_symbol_game_foundations.md) to [`meta_03_symbol_game_proof_ledger.md`](meta_03_symbol_game_proof_ledger.md) | The four canonical monographs listed at the top |
+-| [`level_challenge_findings_readme.md`](level_challenge_findings_readme.md) | Index of the challenge findings notes |
+-| [`level_c043_space_bunny_and_combinatorial_findings.md`](level_c043_space_bunny_and_combinatorial_findings.md) to [`level_c059_space_bunny_and_sql_findings.md`](level_c059_space_bunny_and_sql_findings.md) | Seventeen per-challenge findings notes, C043 to C059 (copies of the atlas notes; see their 2026-10-20 source checks) |
+-| [`level_challenges_findings_and_updates.md`](level_challenges_findings_and_updates.md) | Hub of challenge findings and updates |
+-| [`level_symbol_game_challenge_and_demos_findings.md`](level_symbol_game_challenge_and_demos_findings.md) | Hub of challenge and demo findings |
++| [`level_challenge_findings_readme.md`](../../../pilots/education/challenge_findings/level_challenge_findings_readme.md) | Index of the challenge findings notes |
++| [`level_c043_space_bunny_and_combinatorial_findings.md`](../../../pilots/education/challenge_findings/level_c043_space_bunny_and_combinatorial_findings.md) to [`level_c059_space_bunny_and_sql_findings.md`](../../../pilots/education/challenge_findings/level_c059_space_bunny_and_sql_findings.md) | Seventeen per-challenge findings notes, C043 to C059 (copies of the atlas notes; see their 2026-10-20 source checks) |
++| [`level_challenges_findings_and_updates.md`](../../../pilots/education/challenge_findings/level_challenges_findings_and_updates.md) | Hub of challenge findings and updates |
++| [`level_symbol_game_challenge_and_demos_findings.md`](../../../pilots/education/challenge_findings/level_symbol_game_challenge_and_demos_findings.md) | Hub of challenge and demo findings |
+ 
+ The folder holds 128 files: 101 numbered levels, these 26 files and this README.
+ 
+--- a/education/004_oepfp/levels/curriculum_lesson_crosswalk.md
++++ b/education/004_oepfp/levels/curriculum_lesson_crosswalk.md
+@@ -50,13 +50,13 @@
+ |:---:|:---|:---|:---|:---|
+ | **00** | [`level_00_ground.md`](level_00_ground.md) | Track 800 (Grammar) | [000.01 The Empty Slate: What Is Nothing?](../curriculum/000_beginners/concepts/lesson_000_01_the_empty_slate.md)<br/>[000.02 Drawing a Boundary](../curriculum/000_beginners/concepts/lesson_000_02_drawing_a_boundary.md)<br/>[000.03 The Law of Crossing](../curriculum/000_beginners/concepts/lesson_000_03_the_law_of_crossing.md)<br/>600.00 The Genesis Distinction (not found at pin)<br/>[800.01 The Two-Byte Wire Mark <>](../curriculum/800_grammar/concepts/lesson_800_01_two_byte_wire_mark.md)<br/>[800.02 MSS-0 & The Genesis of Distinction](../curriculum/800_grammar/concepts/lesson_800_02_1_historical_roots_mss_0_genesis_distinction.md) | [`lesson_000_01_the_empty_slate.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_01_the_empty_slate.ipynb)<br/>[`lesson_000_02_drawing_a_boundary.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_02_drawing_a_boundary.ipynb)<br/>[`lesson_000_03_the_law_of_crossing.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_03_the_law_of_crossing.ipynb)<br/>`N0_the_genesis_distinction.ipynb` (not found at pin)<br/>[`lesson_800_01_two_byte_wire_mark.ipynb`](../curriculum/800_grammar/notebooks/lesson_800_01_two_byte_wire_mark.ipynb)<br/>[`lesson_800_02_1_historical_roots_mss_0_genesis_distinction.ipynb`](../curriculum/800_grammar/notebooks/lesson_800_02_1_historical_roots_mss_0_genesis_distinction.ipynb) |
+ | **01** | [`level_01_symbol_genesis.md`](level_01_symbol_genesis.md) | Track 600 (MSS-N Frontier) | [000.04 Naming What We Find](../curriculum/000_beginners/concepts/lesson_000_04_naming_what_we_find.md)<br/>[000.07 The First Up-Lift](../curriculum/000_beginners/concepts/lesson_000_07_the_first_up_lift.md)<br/>[100.06 The 38-Glyph Wire Alphabet](../curriculum/100_novices/concepts/lesson_100_06_the_38_glyph_wire_alphabet.md)<br/>600.01 The First Up-Lift (not found at pin) | [`lesson_000_04_naming_what_we_find.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_04_naming_what_we_find.ipynb)<br/>[`lesson_000_07_the_first_up_lift.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_07_the_first_up_lift.ipynb)<br/>[`lesson_100_06_the_38_glyph_wire_alphabet.ipynb`](../curriculum/100_novices/notebooks/lesson_100_06_the_38_glyph_wire_alphabet.ipynb)<br/>`N1_the_first_uplift.ipynb` (not found at pin) |
+-| **02** | [`level_02_relational_pairings.md`](level_02_relational_pairings.md) | How to Play | [000.11 Two Dots and a Bridge](../curriculum/000_beginners/concepts/lesson_000_11_two_dots_and_a_bridge.md)<br/>[000.12 Walking in a Circle](../curriculum/000_beginners/concepts/lesson_000_12_walking_in_a_circle.md)<br/>[000.14 The Mismatched Loop (Phi_1)](../curriculum/000_beginners/concepts/lesson_000_14_the_mismatched_loop_phi_1.md)<br/>[000.16 The Elevator Move (CUT)](../curriculum/000_beginners/concepts/lesson_000_16_the_elevator_move_cut.md)<br/>[000.17 Flattening the Slope](../curriculum/000_beginners/concepts/lesson_000_17_flattening_the_slope.md)<br/>[000.18 The Stubborn Cycle](../curriculum/000_beginners/concepts/lesson_000_18_the_stubborn_cycle.md)<br/>[000.19 The Survivor Witness](../curriculum/000_beginners/concepts/lesson_000_19_the_survivor_witness.md)<br/>[200.06 The 1-Skeleton Complex](../curriculum/200_intermediates/concepts/lesson_200_06_the_1_skeleton_complex.md)<br/>[200.07 Calculating Coboundary Matrices](../curriculum/200_intermediates/concepts/lesson_200_07_calculating_coboundary_matrices.md)<br/>[200.09 Weighted L1 Defect Functional](../curriculum/200_intermediates/concepts/lesson_200_09_weighted_l1_defect_functional.md)<br/>[200.10 Holonomy on Directed Graphs](../curriculum/200_intermediates/concepts/lesson_200_10_holonomy_on_directed_graphs.md)<br/>[Rules The Rules of the Board](../_how_to_play/02_the_rules_of_the_board.md)<br/>Interactive Walkthrough Notebook | [`lesson_000_11_two_dots_and_a_bridge.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_11_two_dots_and_a_bridge.ipynb)<br/>[`lesson_000_12_walking_in_a_circle.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_12_walking_in_a_circle.ipynb)<br/>[`lesson_000_14_the_mismatched_loop_phi_1.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_14_the_mismatched_loop_phi_1.ipynb)<br/>[`lesson_000_16_the_elevator_move_cut.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_16_the_elevator_move_cut.ipynb)<br/>[`lesson_000_17_flattening_the_slope.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_17_flattening_the_slope.ipynb)<br/>[`lesson_000_18_the_stubborn_cycle.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_18_the_stubborn_cycle.ipynb)<br/>[`lesson_000_19_the_survivor_witness.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_19_the_survivor_witness.ipynb)<br/>[`lesson_200_06_the_1_skeleton_complex.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_06_the_1_skeleton_complex.ipynb)<br/>[`lesson_200_07_calculating_coboundary_matrices.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_07_calculating_coboundary_matrices.ipynb)<br/>[`lesson_200_09_weighted_l1_defect_functional.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_09_weighted_l1_defect_functional.ipynb)<br/>[`lesson_200_10_holonomy_on_directed_graphs.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_10_holonomy_on_directed_graphs.ipynb)<br/>[`00_interactive_how_to_play_walkthrough.ipynb`](../_how_to_play/00_interactive_how_to_play_walkthrough.ipynb) |
++| **02** | [`level_02_relational_pairings.md`](level_02_relational_pairings.md) | How to Play | [000.11 Two Dots and a Bridge](../curriculum/000_beginners/concepts/lesson_000_11_two_dots_and_a_bridge.md)<br/>[000.12 Walking in a Circle](../curriculum/000_beginners/concepts/lesson_000_12_walking_in_a_circle.md)<br/>[000.14 The Mismatched Loop (Phi_1)](../curriculum/000_beginners/concepts/lesson_000_14_the_mismatched_loop_phi_1.md)<br/>[000.16 The Elevator Move (CUT)](../curriculum/000_beginners/concepts/lesson_000_16_the_elevator_move_cut.md)<br/>[000.17 Flattening the Slope](../curriculum/000_beginners/concepts/lesson_000_17_flattening_the_slope.md)<br/>[000.18 The Stubborn Cycle](../curriculum/000_beginners/concepts/lesson_000_18_the_stubborn_cycle.md)<br/>[000.19 The Survivor Witness](../curriculum/000_beginners/concepts/lesson_000_19_the_survivor_witness.md)<br/>[200.06 The 1-Skeleton Complex](../curriculum/200_intermediates/concepts/lesson_200_06_the_1_skeleton_complex.md)<br/>[200.07 Calculating Coboundary Matrices](../curriculum/200_intermediates/concepts/lesson_200_07_calculating_coboundary_matrices.md)<br/>[200.09 Weighted L1 Defect Functional](../curriculum/200_intermediates/concepts/lesson_200_09_weighted_l1_defect_functional.md)<br/>[200.10 Holonomy on Directed Graphs](../curriculum/200_intermediates/concepts/lesson_200_10_holonomy_on_directed_graphs.md)<br/>[Rules The Rules of the Board](../_how_to_play/02_the_rules_of_the_board.md)<br/>Interactive Walkthrough Notebook | [`lesson_000_11_two_dots_and_a_bridge.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_11_two_dots_and_a_bridge.ipynb)<br/>[`lesson_000_12_walking_in_a_circle.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_12_walking_in_a_circle.ipynb)<br/>[`lesson_000_14_the_mismatched_loop_phi_1.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_14_the_mismatched_loop_phi_1.ipynb)<br/>[`lesson_000_16_the_elevator_move_cut.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_16_the_elevator_move_cut.ipynb)<br/>[`lesson_000_17_flattening_the_slope.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_17_flattening_the_slope.ipynb)<br/>[`lesson_000_18_the_stubborn_cycle.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_18_the_stubborn_cycle.ipynb)<br/>[`lesson_000_19_the_survivor_witness.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_19_the_survivor_witness.ipynb)<br/>[`lesson_200_06_the_1_skeleton_complex.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_06_the_1_skeleton_complex.ipynb)<br/>[`lesson_200_07_calculating_coboundary_matrices.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_07_calculating_coboundary_matrices.ipynb)<br/>[`lesson_200_09_weighted_l1_defect_functional.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_09_weighted_l1_defect_functional.ipynb)<br/>[`lesson_200_10_holonomy_on_directed_graphs.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_10_holonomy_on_directed_graphs.ipynb)<br/>[`00_interactive_how_to_play_walkthrough.ipynb`](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb) |
+ | **03** | [`level_03_abstract_simplices.md`](level_03_abstract_simplices.md) | Track 600 (MSS-N Frontier) | [000.21 Filling the Triangle](../curriculum/000_beginners/concepts/lesson_000_21_filling_the_triangle.md)<br/>[200.11 Primal Nearest Coboundary LP](../curriculum/200_intermediates/concepts/lesson_200_11_primal_nearest_coboundary_lp.md)<br/>[200.12 Dual Circulation Certificates](../curriculum/200_intermediates/concepts/lesson_200_12_dual_circulation_certificates.md)<br/>[200.13 Total Unimodularity of Networks](../curriculum/200_intermediates/concepts/lesson_200_13_total_unimodularity_of_networks.md)<br/>[200.14 Exact Rational Duality Gap](../curriculum/200_intermediates/concepts/lesson_200_14_exact_rational_duality_gap.md)<br/>600.03 Simplices & Exact Betti Numbers (not found at pin) | [`lesson_000_21_filling_the_triangle.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_21_filling_the_triangle.ipynb)<br/>[`lesson_200_11_primal_nearest_coboundary_lp.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_11_primal_nearest_coboundary_lp.ipynb)<br/>[`lesson_200_12_dual_circulation_certificates.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_12_dual_circulation_certificates.ipynb)<br/>[`lesson_200_13_total_unimodularity_of_networks.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_13_total_unimodularity_of_networks.ipynb)<br/>[`lesson_200_14_exact_rational_duality_gap.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_14_exact_rational_duality_gap.ipynb)<br/>`N3_simplices_and_exact_betti_numbers.ipynb` (not found at pin) |
+ | **04** | [`level_04_simplex_graph_expansions.md`](level_04_simplex_graph_expansions.md) | Track 300 (Advanced) | [000.08 Tree Branches from Brackets](../curriculum/000_beginners/concepts/lesson_000_08_tree_branches_from_brackets.md)<br/>[300.18 Presheaves vs Sheaves on Discrete Sites](../curriculum/300_advanced/concepts/lesson_300_18_presheaves_vs_sheaves_on_discrete_sites.md) | [`lesson_000_08_tree_branches_from_brackets.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_08_tree_branches_from_brackets.ipynb)<br/>[`lesson_300_18_presheaves_vs_sheaves_on_discrete_sites.ipynb`](../curriculum/300_advanced/notebooks/lesson_300_18_presheaves_vs_sheaves_on_discrete_sites.ipynb) |
+ | **05** | [`level_05_regge_metric_simplices.md`](level_05_regge_metric_simplices.md) | Track 600 (MSS-N Frontier) | [000.22 Gluing Triangles Together](../curriculum/000_beginners/concepts/lesson_000_22_gluing_triangles_together.md)<br/>[000.23 The Deficit Angle](../curriculum/000_beginners/concepts/lesson_000_23_the_deficit_angle.md)<br/>[300.06 Metric Simplices and Cayley-Menger](../curriculum/300_advanced/concepts/lesson_300_06_metric_simplices_and_cayley_menger.md)<br/>[300.08 3D Dihedral Angles and Hinges](../curriculum/300_advanced/concepts/lesson_300_08_3d_dihedral_angles_and_hinges.md)<br/>600.04 Metric Simplices & Cayley-Menger (not found at pin)<br/>600.05 First Deficit Angle (not found at pin) | [`lesson_000_22_gluing_triangles_together.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_22_gluing_triangles_together.ipynb)<br/>[`lesson_000_23_the_deficit_angle.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_23_the_deficit_angle.ipynb)<br/>[`lesson_300_06_metric_simplices_and_cayley_menger.ipynb`](../curriculum/300_advanced/notebooks/lesson_300_06_metric_simplices_and_cayley_menger.ipynb)<br/>[`lesson_300_08_3d_dihedral_angles_and_hinges.ipynb`](../curriculum/300_advanced/notebooks/lesson_300_08_3d_dihedral_angles_and_hinges.ipynb)<br/>`N4_metric_simplices_and_cayley_menger.ipynb` (not found at pin)<br/>`N5_first_deficit_angle.ipynb` (not found at pin) |
+ | **06** | [`level_06_tower_extension_retraction.md`](level_06_tower_extension_retraction.md) | Track 600 (MSS-N Frontier) | 600.06 Up-Down Maps & Non-Descent (not found at pin) | `N6_updown_maps_and_nondescent.ipynb` (not found at pin) |
+ | **07** | [`level_07_transfer_operators_orbits.md`](level_07_transfer_operators_orbits.md) | Track 600 (MSS-N Frontier) | 600.08 Policy About Policies (not found at pin)<br/>600.09 Audit of Audits (not found at pin) | `N8_policy_about_policies.ipynb` (not found at pin)<br/>`N9_audit_of_audits.ipynb` (not found at pin) |
+-| **08** | [`level_08_monadic_adjunction_cochains.md`](level_08_monadic_adjunction_cochains.md) | Track 900 (Packets) | [000.24 The Canonical Envelope](../curriculum/000_beginners/concepts/lesson_000_24_the_canonical_envelope.md)<br/>[100.11 The PacketEnvelope Schema](../curriculum/100_novices/concepts/lesson_100_11_the_packetenvelope_schema.md)<br/>[100.12 RFC 8785 Canonical JSON](../curriculum/100_novices/concepts/lesson_100_12_rfc_8785_canonical_json.md)<br/>[100.13 SHA-256 Envelope Sealing](../curriculum/100_novices/concepts/lesson_100_13_sha_256_envelope_sealing.md)<br/>[900.01 The 4-Field Packet Envelope *(Historical / Superseded)*](../curriculum/900_packets/concepts/lesson_900_01_1_4_field_packet_envelope.md)<br/>[900.03 Sealed Packets *(Historical / Superseded)*](../curriculum/900_packets/concepts/lesson_900_03_3_sealed_packets_tamper_evident_communication.md) | [`lesson_000_24_the_canonical_envelope.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_24_the_canonical_envelope.ipynb)<br/>[`lesson_100_11_the_packetenvelope_schema.ipynb`](../curriculum/100_novices/notebooks/lesson_100_11_the_packetenvelope_schema.ipynb)<br/>[`lesson_100_12_rfc_8785_canonical_json.ipynb`](../curriculum/100_novices/notebooks/lesson_100_12_rfc_8785_canonical_json.ipynb)<br/>[`lesson_100_13_sha_256_envelope_sealing.ipynb`](../curriculum/100_novices/notebooks/lesson_100_13_sha_256_envelope_sealing.ipynb)<br/>[`00_interactive_how_to_play_walkthrough.ipynb`](../_how_to_play/00_interactive_how_to_play_walkthrough.ipynb)<br/>[`lesson_900_01_1_4_field_packet_envelope.ipynb`](../curriculum/900_packets/notebooks/lesson_900_01_1_4_field_packet_envelope.ipynb) *(Historical)* |
++| **08** | [`level_08_monadic_adjunction_cochains.md`](level_08_monadic_adjunction_cochains.md) | Track 900 (Packets) | [000.24 The Canonical Envelope](../curriculum/000_beginners/concepts/lesson_000_24_the_canonical_envelope.md)<br/>[100.11 The PacketEnvelope Schema](../curriculum/100_novices/concepts/lesson_100_11_the_packetenvelope_schema.md)<br/>[100.12 RFC 8785 Canonical JSON](../curriculum/100_novices/concepts/lesson_100_12_rfc_8785_canonical_json.md)<br/>[100.13 SHA-256 Envelope Sealing](../curriculum/100_novices/concepts/lesson_100_13_sha_256_envelope_sealing.md)<br/>[900.01 The 4-Field Packet Envelope *(Historical / Superseded)*](../curriculum/900_packets/concepts/lesson_900_01_1_4_field_packet_envelope.md)<br/>[900.03 Sealed Packets *(Historical / Superseded)*](../curriculum/900_packets/concepts/lesson_900_03_3_sealed_packets_tamper_evident_communication.md) | [`lesson_000_24_the_canonical_envelope.ipynb`](../curriculum/000_beginners/notebooks/lesson_000_24_the_canonical_envelope.ipynb)<br/>[`lesson_100_11_the_packetenvelope_schema.ipynb`](../curriculum/100_novices/notebooks/lesson_100_11_the_packetenvelope_schema.ipynb)<br/>[`lesson_100_12_rfc_8785_canonical_json.ipynb`](../curriculum/100_novices/notebooks/lesson_100_12_rfc_8785_canonical_json.ipynb)<br/>[`lesson_100_13_sha_256_envelope_sealing.ipynb`](../curriculum/100_novices/notebooks/lesson_100_13_sha_256_envelope_sealing.ipynb)<br/>[`00_interactive_how_to_play_walkthrough.ipynb`](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb)<br/>[`lesson_900_01_1_4_field_packet_envelope.ipynb`](../curriculum/900_packets/notebooks/lesson_900_01_1_4_field_packet_envelope.ipynb) *(Historical)* |
+ | **10** | [`level_10_spectral_epistemic_quarantine.md`](level_10_spectral_epistemic_quarantine.md) | Track 400 (Researchers) | [200.04 The S_n Expressivity Obstruction](../curriculum/200_intermediates/concepts/lesson_200_04_the_s_n_expressivity_obstruction.md)<br/>[400.09 Harmonic Density and Betti Numbers](../curriculum/400_researchers/concepts/lesson_400_09_harmonic_density_and_betti_numbers.md) | [`lesson_200_04_the_s_n_expressivity_obstruction.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_04_the_s_n_expressivity_obstruction.ipynb)<br/>[`lesson_400_09_harmonic_density_and_betti_numbers.ipynb`](../curriculum/400_researchers/notebooks/lesson_400_09_harmonic_density_and_betti_numbers.ipynb) |
+ | **11** | [`level_11_polygraph_confluence_peaks.md`](level_11_polygraph_confluence_peaks.md) | Track 800 (Grammar) | [200.02 Arity Filtration and ARS](../curriculum/200_intermediates/concepts/lesson_200_02_arity_filtration_and_ars.md)<br/>[800.04 Abstract Reduction Systems (ARS)](../curriculum/800_grammar/concepts/lesson_800_04_1_abstract_reduction_systems_ars.md)<br/>[800.05 Redex Keying and Normal Forms](../curriculum/800_grammar/concepts/lesson_800_05_2_redex_keying_normal_forms.md) | [`lesson_200_02_arity_filtration_and_ars.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_02_arity_filtration_and_ars.ipynb)<br/>[`lesson_800_04_1_abstract_reduction_systems_ars.ipynb`](../curriculum/800_grammar/notebooks/lesson_800_04_1_abstract_reduction_systems_ars.ipynb)<br/>[`lesson_800_05_2_redex_keying_normal_forms.ipynb`](../curriculum/800_grammar/notebooks/lesson_800_05_2_redex_keying_normal_forms.ipynb) |
+ | **12** | [`level_12_observer_stack_dda.md`](level_12_observer_stack_dda.md) | Track 200 (Intermediates) | [100.15 The Four-File Receipt](../curriculum/100_novices/concepts/lesson_100_15_the_four_file_receipt.md)<br/>[200.16 The Five DDA Operators](../curriculum/200_intermediates/concepts/lesson_200_16_the_five_dda_operators.md) | [`lesson_100_15_the_four_file_receipt.ipynb`](../curriculum/100_novices/notebooks/lesson_100_15_the_four_file_receipt.ipynb)<br/>[`lesson_200_16_the_five_dda_operators.ipynb`](../curriculum/200_intermediates/notebooks/lesson_200_16_the_five_dda_operators.ipynb) |
+--- a/pilots/education/challenge_findings/level_c043_space_bunny_and_combinatorial_findings.md
++++ b/pilots/education/challenge_findings/level_c043_space_bunny_and_combinatorial_findings.md
+@@ -12,7 +12,7 @@
+ > so no count in this note can be checked. The audit behind these notices is recorded
+ > in the collection's `verification/residuals.md`, section 8.
+ 
+-> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a near copy (only paths differ) of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c043_ramsey_vdw_constructions/`](../../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/). Its scoring receipt [`commit_reveal/c043_l41_scoring_receipt.json`](../../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/commit_reveal/c043_l41_scoring_receipt.json) records 64/64 cases, 48/48 mutations killed, `PASS_TO_MASTER` and 0.2107 s for the reference solver only; its `authority_effect` field is `null`. No model-run record is retained.
++> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a near copy (only paths differ) of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c043_ramsey_vdw_constructions/`](../../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/). Its scoring receipt [`commit_reveal/c043_l41_scoring_receipt.json`](../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/commit_reveal/c043_l41_scoring_receipt.json) records 64/64 cases, 48/48 mutations killed, `PASS_TO_MASTER` and 0.2107 s for the reference solver only; its `authority_effect` field is `null`. No model-run record is retained.
+ 
+ > **Correction notice (2026-09-28).** Paper 010 (version 2.0.0) re-derived the model
+ > counts for C017 and C045 to C050 from the retained run records; where they differ
+@@ -36,8 +36,8 @@
+ We evaluated the newly released **Space Bunny Alpha** (`stealth/space-bunny-alpha`) model on OpenRouter against open-weights baselines (LLaMA 3.3 70B and LLaMA 3.1 8B) on **Challenge C043: Ramsey and van der Waerden Lower-Bound Constructions**.
+ 
+ All candidate outputs were judged against dual independent checkers:
+-1. Primary Python Checker: [`ramsey_vdw_checker.py`](../../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)
+-2. Independent Matrix/Bitmask Checker: [`independent_checker.py`](../../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)
++1. Primary Python Checker: [`ramsey_vdw_checker.py`](../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)
++2. Independent Matrix/Bitmask Checker: [`independent_checker.py`](../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)
+ 3. Cryptographic Commit-Reveal Scoring Receipt: `PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed) sealed in `_intelligence/_adversary/runs/c043_eval_1790620716/`.
+ 
+ ---
+--- a/pilots/education/challenge_findings/level_c044_space_bunny_and_group_findings.md
++++ b/pilots/education/challenge_findings/level_c044_space_bunny_and_group_findings.md
+@@ -14,7 +14,7 @@
+ > checked, and the counts would not measure identification. The audit behind these
+ > notices is recorded in the collection's `verification/residuals.md`, section 8.
+ 
+-> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c044_finite_group_identification/`](../../../../workflows/tasks/certified_challenges/c044_finite_group_identification/). Its scoring receipt [`commit_reveal/c044_l41_scoring_receipt.json`](../../../../workflows/tasks/certified_challenges/c044_finite_group_identification/commit_reveal/c044_l41_scoring_receipt.json) records 64/64, 48/48 and 1.4585 s for the reference solver only. No model-run record is retained.
++> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c044_finite_group_identification/`](../../../../workflows/tasks/certified_challenges/c044_finite_group_identification/). Its scoring receipt [`commit_reveal/c044_l41_scoring_receipt.json`](../../../workflows/tasks/certified_challenges/c044_finite_group_identification/commit_reveal/c044_l41_scoring_receipt.json) records 64/64, 48/48 and 1.4585 s for the reference solver only. No model-run record is retained.
+ 
+ > **Correction notice (2026-09-28).** Paper 010 (version 2.0.0) re-derived the model
+ > counts for C017 and C045 to C050 from the retained run records; where they differ
+--- a/pilots/education/challenge_findings/level_symbol_game_challenge_and_demos_findings.md
++++ b/pilots/education/challenge_findings/level_symbol_game_challenge_and_demos_findings.md
+@@ -183,7 +183,7 @@
+ ## 4. Demonstration 3: Challenge C005 Hosted Decoding Controls
+ 
+ ### 4.1 Benchmark Setup & Methodology
+-- **Harness:** [`workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py`](../../../../workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py)
++- **Harness:** [`workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py`](../../../workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py)
+ - **Model:** `nousresearch/hermes-3-llama-3.1-405b` via OpenRouter.
+ - **Task:** 50 hidden consistency cases evaluating potential propagation $\Phi_1(c) = 0$ vs chord loop obstructions $\Gamma_2 > 0$.
+ - **Arms Evaluated:**
+@@ -295,7 +295,7 @@
+ 
+ ### 7.1 Deliverables & Verification
+ - **Challenge Deliverable:** Frozen solver module `reference_solver/solver.py` integrating algebraic seeds (Paley $P_{17}$, Greenwood-Gleason $K_{16}$, cyclic Van der Waerden sequences) with vertex-embedding search and CDCL SAT fallback.
+-- **Dual Checkers:** Primary Python checker ([`ramsey_vdw_checker.py`](../../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)) + Independent Matrix/Array Checker ([`independent_checker.py`](../../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)).
++- **Dual Checkers:** Primary Python checker ([`ramsey_vdw_checker.py`](../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/ramsey_vdw_checker.py)) + Independent Matrix/Array Checker ([`independent_checker.py`](../../../workflows/tasks/certified_challenges/c043_ramsey_vdw_constructions/judge_packet/checkers/independent_checker.py)).
+ - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed, 48/48 hostile mutations killed)** sealed in `_intelligence/_adversary/runs/c043_eval_1790620716/`.
+ 
+ ### 7.2 Multi-Scale Empirical Matrix (Including Space Bunny Alpha)
+@@ -317,7 +317,7 @@
+ 
+ ### 8.1 Deliverables & Verification
+ - **Challenge Deliverable:** Frozen solver module `reference_solver/solver.py` integrating exact algebraic group closure, Latin square validation, recomputable invariant sieving (element order histograms, center order, derived subgroup order, abelianization factors, conjugacy classes, $x^k = e$ solutions), and structured basis backtracking isomorphism search.
+-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../workflows/tasks/certified_challenges/c044_finite_group_identification/judge_packet/checkers/exact_checker.py)) + Independent Matrix Checker ([`independent_checker.py`](../../../../workflows/tasks/certified_challenges/c044_finite_group_identification/judge_packet/checkers/independent_checker.py)).
++- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../workflows/tasks/certified_challenges/c044_finite_group_identification/judge_packet/checkers/exact_checker.py)) + Independent Matrix Checker ([`independent_checker.py`](../../../workflows/tasks/certified_challenges/c044_finite_group_identification/judge_packet/checkers/independent_checker.py)).
+ - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 1.458s, 48/48 hostile mutations killed)** sealed into `_intelligence/_adversary/runs/c044_eval_1790622696`.
+ 
+ ### 8.2 Multi-Scale Empirical Matrix
+@@ -339,7 +339,7 @@
+ 
+ ### 9.1 Deliverables & Verification
+ - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating combinatorial Euler rotation verification ($V - E + F = 2$), Alexander arc matrix reduction, state-sum Kauffman bracket in $\mathbb{Z}[A, A^{-1}]$, Jones polynomial normalization $V(t) = (-A^3)^{-w} \langle K \rangle |_{A = t^{-1/4}}$, and Rolfsen catalog classification up to 7 crossings.
+-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../workflows/tasks/certified_challenges/c045_knot_polynomials_from_pd/judge_packet/checkers/exact_checker.py)) + Independent Structural Checker ([`independent_checker.py`](../../../../workflows/tasks/certified_challenges/c045_knot_polynomials_from_pd/judge_packet/checkers/independent_checker.py)).
++- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../workflows/tasks/certified_challenges/c045_knot_polynomials_from_pd/judge_packet/checkers/exact_checker.py)) + Independent Structural Checker ([`independent_checker.py`](../../../workflows/tasks/certified_challenges/c045_knot_polynomials_from_pd/judge_packet/checkers/independent_checker.py)).
+ - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.427s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c045_eval_1790623789`.
+ 
+ ### 9.2 Multi-Scale Empirical Matrix
+@@ -361,7 +361,7 @@
+ 
+ ### 10.1 Deliverables & Verification
+ - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating Robinson first-order unification, subterm replacement, Lexicographic Path Order (LPO) with symbol precedence, priority agenda saturation, critical pair overlap enumeration, and variable canonicalization.
+-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../workflows/tasks/certified_challenges/c046_knuth_bendix_completion/judge_packet/checkers/exact_checker.py)) + Independent Confluence Checker ([`independent_checker.py`](../../../../workflows/tasks/certified_challenges/c046_knuth_bendix_completion/judge_packet/checkers/independent_checker.py)).
++- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../workflows/tasks/certified_challenges/c046_knuth_bendix_completion/judge_packet/checkers/exact_checker.py)) + Independent Confluence Checker ([`independent_checker.py`](../../../workflows/tasks/certified_challenges/c046_knuth_bendix_completion/judge_packet/checkers/independent_checker.py)).
+ - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.721s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c046_eval_1790624975`.
+ 
+ ### 10.2 Multi-Scale Empirical Matrix
+@@ -383,7 +383,7 @@
+ 
+ ### 11.1 Deliverables & Verification
+ - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` providing exact Gaussian elimination over $\mathbb{Q}$, nullspace projection, Bareiss fraction-free determinants for absence proofs, and algebraic root checking.
+-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/exact_checker.py)) + Independent Recurrence Checker ([`independent_checker.py`](../../../../workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/independent_checker.py)).
++- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/exact_checker.py)) + Independent Recurrence Checker ([`independent_checker.py`](../../../workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/independent_checker.py)).
+ - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.774s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c047_eval_1790624985`.
+ 
+ ### 11.2 Multi-Scale Empirical Matrix
+@@ -405,7 +405,7 @@
+ 
+ ### 12.1 Deliverables & Verification
+ - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating Pollard's rho, Miller-Rabin primality, Holzer bounded rational point search, and Serre Hilbert symbol valuations over $\mathbb{Q}_v$ ($v \in \{\infty, 2, p\}$).
+-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../workflows/tasks/certified_challenges/c048_ternary_quadratic_forms/judge_packet/exact_checker.py)) + Independent Diophantine Checker ([`independent_checker.py`](../../../../workflows/tasks/certified_challenges/c048_ternary_quadratic_forms/judge_packet/independent_checker.py)).
++- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../workflows/tasks/certified_challenges/c048_ternary_quadratic_forms/judge_packet/exact_checker.py)) + Independent Diophantine Checker ([`independent_checker.py`](../../../workflows/tasks/certified_challenges/c048_ternary_quadratic_forms/judge_packet/independent_checker.py)).
+ - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.066s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c048_eval_1790625286`.
+ 
+ ### 12.2 Multi-Scale Empirical Matrix
+@@ -427,7 +427,7 @@
+ 
+ ### 13.1 Deliverables & Verification
+ - **Challenge Deliverable:** Frozen reference solver `reference_solver/solver.py` integrating categorical duality ($C^{\mathrm{op}}$) to evaluate limits and colimits via universal arrow factorizations, alongside naturality and triangle identity verification for adjunctions.
+-- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../../workflows/tasks/certified_challenges/c049_finite_category_universal_constructions/judge_packet/exact_checker.py)) + Independent Category Checker ([`independent_checker.py`](../../../../workflows/tasks/certified_challenges/c049_finite_category_universal_constructions/judge_packet/independent_checker.py)).
++- **Dual Checkers:** Primary Exact Checker ([`exact_checker.py`](../../../workflows/tasks/certified_challenges/c049_finite_category_universal_constructions/judge_packet/exact_checker.py)) + Independent Category Checker ([`independent_checker.py`](../../../workflows/tasks/certified_challenges/c049_finite_category_universal_constructions/judge_packet/independent_checker.py)).
+ - **Commit-Reveal Record:** **`PASS_TO_MASTER` (64/64 cases passed in 0.450s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c049_eval_1790625868` (SHA-256: `88b989fd6c50851e0a9ffa799b9d817594508a8678e47636a146b8d51de78702`).
+ 
+ ### 13.2 Multi-Scale Empirical Matrix
+--- a/education/008_oeop/atlas/23_plan_oewas_consolidation_oeeis_and_demo_integration.md
++++ b/education/008_oeop/atlas/23_plan_oewas_consolidation_oeeis_and_demo_integration.md
+@@ -45,7 +45,7 @@
+ | --- | --- | --- |
+ | OEEIS [`domain/treg.py`](../../../../eis/domain/treg.py) `TregSupervisor` | Inclusive `toxicity >= Fraction(1, 5)` on signal-1-only firings. A pinned benign corpus is a separate mode: any firing on that corpus is signal 1 alone, so tau is not the decision. | `IMPLEMENTED` |
+ | OEWAS [`domain/operad/treg.py`](../../../../operads/domain/operad/treg.py) `OperadTregSupervisor` | Strict `toxicity > Fraction(2, 5)` after at least three suppressions (`min_suppressions` default 3). | `IMPLEMENTED` |
+-| Education [`was_operad_core.py`](../code/was_operad_core.py) `OperadTregSupervisor` | Per-second execution-count rate limit. It is a third mechanism, and it is not the false-suppression monitor. | `IMPLEMENTED` teaching code |
++| Education [`was_operad_core.py`](../../../pilots/education/operad_simulation/code/was_operad_core.py) `OperadTregSupervisor` | Per-second execution-count rate limit. It is a third mechanism, and it is not the false-suppression monitor. | `IMPLEMENTED` teaching code |
+ 
+ ### Operad JSON homes
+ 
+--- a/pilots/education/operad_simulation/code/README.md
++++ b/pilots/education/operad_simulation/code/README.md
+@@ -23,5 +23,5 @@
+ Execute targeted tests using Python 3.12:
+ 
+ ```bash
+-py -3.12 -m pytest education/documentation/008_oeop/code/tests/test_was_operad_levels.py -v
++py -3.12 -m pytest pilots/education/operad_simulation/code/tests/test_was_operad_levels.py -v
+ ```
+--- a/pilots/education/eis_simulation/code/README.md
++++ b/pilots/education/eis_simulation/code/README.md
+@@ -24,5 +24,5 @@
+ Execute targeted tests using Python 3.12:
+ 
+ ```bash
+-py -3.12 -m pytest education/documentation/009_oeeis/code/tests/test_eis_levels.py -v
++py -3.12 -m pytest pilots/education/eis_simulation/code/tests/test_eis_levels.py -v
+ ```
+--- a/pilots/education/pciv_simulation/code/README.md
++++ b/pilots/education/pciv_simulation/code/README.md
+@@ -24,5 +24,5 @@
+ Execute targeted tests using Python 3.12:
+ 
+ ```bash
+-py -3.12 -m pytest education/documentation/010_oepciv/code/tests/test_prompt_civilization_levels.py -v
++py -3.12 -m pytest pilots/education/pciv_simulation/code/tests/test_prompt_civilization_levels.py -v
+ ```
+--- a/pfp/tests/test_consistency_teaching.py
++++ b/pfp/tests/test_consistency_teaching.py
+@@ -27,7 +27,7 @@
+ 
+     monkeypatch.setattr(builtins, "__import__", checked_import)
+     module = importlib.import_module(
+-        "education.documentation.004_oepfp.curriculum.scenes.naked_prompt_launder")
++        "pilots.education.track_a.scenes.naked_prompt_launder")
+     assert callable(module.record_one) and callable(module.render_mp4)
+     assert attempted == []
+ 
+@@ -148,7 +148,7 @@
+ 
+ def test_renderer_existing_output_refuses_before_optional_import(tmp_path, monkeypatch):
+     scene = importlib.import_module(
+-        "education.documentation.004_oepfp.curriculum.scenes.naked_prompt_launder")
++        "pilots.education.track_a.scenes.naked_prompt_launder")
+     output = tmp_path / "old.mp4"
+     output.write_bytes(b"original movie")
+     original = builtins.__import__
+--- a/pfp/tests/finite_qm_workflow/test_finite_qm_reference_workflow.py
++++ b/pfp/tests/finite_qm_workflow/test_finite_qm_reference_workflow.py
+@@ -60,7 +60,7 @@
+     assert len(system.encode("utf-8")) < 20_000
+     saved = (
+         ROOT
+-        / "education/documentation/004_oepfp/_how_to_play/v4_operad_container_and_p_star_loop/finite_qm_pfp_system_prompt.md"
++        / "pilots/education/finite_qm_workflow/finite_qm_pfp_system_prompt.md"
+     )
+     assert saved.read_text(encoding="utf-8") == system
+ 
+--- a/workflows/wf19_failure_derived_rule_transfer/pilots/challenge_suite/protocol_collation.py
++++ b/workflows/wf19_failure_derived_rule_transfer/pilots/challenge_suite/protocol_collation.py
+@@ -11,8 +11,8 @@
+ 
+ from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT, SOURCE
+ 
+-DOC = "education/documentation/004_oepfp/docs/18_original_challenge_play.md"
+-SESSION_DOC = "education/documentation/004_oepfp/docs/19_bounded_mechanism_sessions.md"
++DOC = "pilots/education/runbooks/18_original_challenge_play.md"
++SESSION_DOC = "pilots/education/runbooks/19_bounded_mechanism_sessions.md"
+ 
+ 
+ def _pin(path):

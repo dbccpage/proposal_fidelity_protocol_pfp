@@ -1,0 +1,324 @@
+{
+  "schema": "paper010-publication-review/v1",
+  "review_date": "2026-10-02",
+  "recorded_at_utc": "2026-10-02T20:05:08.403337+00:00",
+  "version": "0.1.0",
+  "release_status": "initial public preprint candidate; not a Zenodo publication",
+  "reviewed_main_commit": "1325a7e8bcb1d60624ddaa7b6b724d47c7918628",
+  "reviewed_package_tree": "d4fbec3358144db688ae18c614309a4b57341ad2",
+  "manuscript_code_baseline": "a623568eb0f853b968bc419bf06dfc6af256ab02",
+  "environment": {
+    "python": "3.12.14",
+    "pytest": "pytest 9.1.1",
+    "ruff": "ruff 0.14.13",
+    "mypy": "mypy 1.19.1 (compiled: yes)",
+    "pandoc": "pandoc 3.1.3",
+    "xelatex": "XeTeX 3.141592653-2.6-0.999995 (TeX Live 2023/Debian)",
+    "lean_pin": "leanprover/lean4:v4.34.0-rc1"
+  },
+  "commands": [
+    {
+      "scope": "host and evidence tests",
+      "argv": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "-m",
+        "pytest",
+        "code/tests"
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "stdout": "..........................................                               [100%]\n42 passed in 0.11s\n",
+      "stderr": ""
+    },
+    {
+      "scope": "code and new build-tool lint",
+      "argv": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "code",
+        "tools/study_capstone.py",
+        "tools/render_paper.py"
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    {
+      "scope": "code type checking",
+      "argv": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "-m",
+        "mypy",
+        "code"
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "stdout": "Success: no issues found in 9 source files\n",
+      "stderr": ""
+    },
+    {
+      "scope": "fresh C017 replay",
+      "argv": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "code/replay_c017.py"
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "stdout": "case     group and lattice    host verdict      plaquettes  skipped  detail\npois_01  S3 3x3 open          NOT_FLAT                   4        3  witness holonomy r2\nbase_01  S3 3x4 open          NOT_FLAT                   6        5  witness holonomy s\nbase_02  S3 4x5 open          FLAT_TRIVIAL              12        0  tree gauge makes every link the identity\nbase_03  S3 5x6 periodic      FLAT_NONTRIVIAL           30       20  hol_a=r, hol_b=r2\nbase_13  Q8 4x5 open          NOT_FLAT                  12       11  witness holonomy -i\n\nrun       case     stated verdict   label matches host  certificate accepted here\narm1      pois_01  NOT_FLAT         True                not retained\narm1      base_01  NOT_FLAT         True                not retained\narm1      base_02  None             False               not retained\narm1      base_03  FLAT_NONTRIVIAL  True                not retained\narm1      base_13  NOT_FLAT         True                not retained\narm2      pois_01  NOT_FLAT         True                not retained\narm2      base_01  PURE_GAUGE       False               not retained\narm2      base_02  NOT_FLAT         False               not retained\narm2      base_03  FLAT_NONTRIVIAL  True                not retained\narm2      base_13  None             False               not retained\narm5_70b  pois_01  NOT_FLAT         True                True\narm5_70b  base_01  NOT_FLAT         True                True\narm5_70b  base_02  NOT_FLAT         False               False\narm5_70b  base_03  None             False               False\narm5_70b  base_13  NOT_FLAT         True                True\narm5_sba  pois_01  NOT_FLAT         True                True\narm5_sba  base_01  NOT_FLAT         True                True\narm5_sba  base_02  NOT_FLAT         False               False\narm5_sba  base_03  None             False               False\narm5_sba  base_13  NOT_FLAT         True                True\narm6_sba  pois_01  NOT_FLAT         True                True\narm6_sba  base_01  NOT_FLAT         True                True\narm6_sba  base_02  NOT_FLAT         False               False\narm6_sba  base_03  FLAT_NONTRIVIAL  True                True\narm6_sba  base_13  NOT_FLAT         True                True\n",
+      "stderr": ""
+    },
+    {
+      "scope": "historical evidence recount",
+      "argv": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "code/recount_pilots.py"
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "stdout": "Source custody: 15 original historical files match both hashes\nC017 extraction: 25 recorded case entries match source reports\nTable 3: recorded acceptances, out of ten; model order: stealth/space-bunny-alpha, meta-llama/llama-3.3-70b-instruct, meta-llama/llama-3.1-8b-instruct\nc045 2 8 3\nc046 4 7 8\nc047 4 2 0\nc048 10 8 5\nc049_panel_a 5 6 4\nc049_panel_b 9 6 6\nc050_run_1 7 4 1\nc050_run_2 6 3 1\nTable 4: author categories (verdict/object/neither), best earlier baseline count\nC045 7 3 0 10\nC046 5 3 2 10\nC047 4 6 0 0\nC048 10 0 0 3\nC049 5 5 0 2\nC050 5 5 0 1\nScope: offline recount only; no model call and no fresh C045-C050 checker execution\n",
+      "stderr": ""
+    },
+    {
+      "scope": "offline study capstone",
+      "argv": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "tools/study_capstone.py",
+        "--output",
+        "/workspace/scratch/6f8cf591c58d/p010-capstone.json"
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "stdout": "PASS: scoped capstone packet written to /workspace/scratch/6f8cf591c58d/p010-capstone.json\n",
+      "stderr": ""
+    },
+    {
+      "scope": "static named Lean census source check",
+      "argv": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "tools/replay_lean_axiom_census.py",
+        "--check",
+        "."
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "stdout": "OK 010_holonomy_checks_and_model_pilots: Census.lean is up to date\n",
+      "stderr": ""
+    },
+    {
+      "scope": "manuscript tables, teaching structure, links, metadata and historical full census",
+      "argv": [
+        "python",
+        "p010_final_validation.py"
+      ],
+      "cwd": "review workspace",
+      "exit_code": 0,
+      "result": "Tables 3/4 agree with the offline recount; 24 questions and keyed answers; eight levels; relative links; synchronized description; 26 historical declarations (25 axiom-free, one propext)."
+    },
+    {
+      "scope": "final PDF rebuild and visual inspection",
+      "argv": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "tools/render_paper.py"
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "result": "Final renderer executed earlier in this review with zero overfull or missing-character warnings. All 14 final pages rendered with Poppler and visually inspected. Tables remain complete; literal paths wrap without escaped underscore artifacts.",
+      "pages": 14
+    },
+    {
+      "scope": "isolated wheel installation and installed API execution",
+      "argv": [
+        "python",
+        "-m",
+        "pip",
+        "install",
+        "--no-deps",
+        "--no-build-isolation",
+        "--target",
+        "<isolated target>",
+        "<isolated package copy>"
+      ],
+      "cwd": "review workspace",
+      "exit_code": 0,
+      "result": "Built and installed the v0.1.0 wheel in an isolated target; imported holonomy from that target and executed its Q8 open-lattice checker. Dependencies were not fetched."
+    }
+  ],
+  "historical_scope": {
+    "source_files": 15,
+    "c017_extracted_entries": 25,
+    "c017_retained_solution_records": 15,
+    "c017_parsed_certificates": 13,
+    "c017_parser_error_records": 2,
+    "c017_accepted": 10,
+    "c017_rejected": 5,
+    "c017_missing_payloads": 10,
+    "table3": "Recount of original flags and one explicit JSON_ERROR; not fresh formal-checker validation.",
+    "table4": "Author identifier categories and prior checker-baseline record; not an independent leakage classification or fresh checker execution."
+  },
+  "not_run": [
+    {
+      "operation": "pinned Lean build and executable named/full axiom censuses",
+      "reason": "Lean 4.34.0-rc1 is not available on PATH. Available unpinned local Lean launchers fail before compilation with \"failed to locate application\". Only retained reports/generated source were checked statically; no compiler substitution is claimed."
+    },
+    {
+      "operation": "fresh C045-C050 checker executions",
+      "reason": "This package audits retained reports and the prior baseline record. Historical checker execution requires the collection script and cited Git commits and was not performed."
+    },
+    {
+      "operation": "new hosted-model trials or learner study",
+      "reason": "No provider request or learner measurement was made."
+    }
+  ],
+  "artifact_hash_scope": "SHA-256 of deposited artifacts, excluding this self-referential record, release controls and ZIP. Later custody checks bind the complete release.",
+  "artifact_sha256": {
+    "LICENSE": "9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94",
+    "LICENSE-CODE": "fdc1b580085fb2812b93559cd3d5568149dc027d2616b6c636eaee6126a82bb4",
+    "README.md": "101596db69dad65651d7c725ca0cbebbd9ed380735a257430eaee46a0669d335",
+    "_lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "b94eabfc487adef4778e690409e29e1bb7c2099b94e492529929bf4c2401b4c2",
+    "_lev_landau_theoretical_minimum_quiz/answer_key.md": "37ac3c4e5c42c3a50e8731370e86edd5aa6ccf8e4a8b52462acaf2554e6cdde1",
+    "_lev_landau_theoretical_minimum_quiz/quiz.md": "b50f1bf80ffc2beaa61e71036668bb8cbd36a64d3a5186c11d9cc151bf038de8",
+    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "837e60aef12caa779c82717560a792c86ec1e838d009c8010526b418c776d366",
+    "code/__init__.py": "b8c39b343613357c8658085074471c49386c937f67f2b5b731dcc0ae91f2ba7d",
+    "code/data/c017/base_01.json": "890d2bfe3311b2f609db9fd7152cbc0b9d47a7bae49ee22bf452e24bd5461684",
+    "code/data/c017/base_02.json": "1ea12f8f60b0d28177faf9255ddab84234d4bcd0ac49715fa3d11605d445223c",
+    "code/data/c017/base_03.json": "1e22ed7d22dd8130f6da6e41487c1be385f41fd315d6e05a24fc4af6f624e4c6",
+    "code/data/c017/base_13.json": "dc3438254b883ca6e882650974bc52707c2ef455ea49be268276b029022a2f8e",
+    "code/data/c017/model_claims.json": "a875a1294cef91db0faa2154594c1ee20a95467658c7321b7a38c14c6ef7ed31",
+    "code/data/c017/pois_01.json": "35cda630cb5aaf93a3e16b5eb39a1a30fe899097756e7754ab9b518899ba7234",
+    "code/data/c017/provenance.json": "1d1e84ce2f51cb6bdeab0415cdee682e4cfbf29a49de7a1f48146d0a5b4112cf",
+    "code/deposit_paths.py": "37c4f3b5da608d38bffd5315ef73a79e066d2fd96b219325e818941e1b3dac62",
+    "code/holonomy.py": "34aa6a1c7e1e41aac099294063e26cd8a377d2094756d758ec89947e04a0d8fb",
+    "code/recount_pilots.py": "5c309836d14d83d30eb50285f7efc082d16c773c12d7d32b9f766b2f331f9766",
+    "code/replay_c017.py": "10a717d2b6c34229f6f23866efe6737a617538e408a8079f3ee76cb8267a67c7",
+    "code/tests/__init__.py": "42631d69754d0102dac80f4996996d809cd99742624324e05852ef6b66290a63",
+    "code/tests/test_c017_replay.py": "90932ddb04db3ef1b93e6d098e203b2353a165e5c8f10581c587309127ad8196",
+    "code/tests/test_holonomy_checker.py": "7804318a45e98265432ba1f0498d205da4f07e1ec9e59f9cc51ff8915478d0da",
+    "code/tests/test_pilot_evidence.py": "3d1933fdcb3e458e46feaaaa06ef9cc1f79e3bdb85418a8e64d5b1918a9f7ade",
+    "docs/completion_supplement.md": "9c421e46812825cde88198997710bea2d42b5e20535523abb1b2709a6ab9b58c",
+    "docs/descriptions.md": "5a63424a1a1ea7f5d0e4300b405e5a594ecc4328c4cf45cd89fc985bcc72284f",
+    "docs/historical_evidence/README.md": "a8ce721d6bd242cf84d51c7c25d209bd62bd81617629beb6513a3dc71585f06e",
+    "docs/historical_evidence/arm5_hybrid_report.json": "1c1664c87750e1c7b47c79c3e0ccd3e20251e75ee60a70bed942895ee1062912",
+    "docs/historical_evidence/arm5_stealth_space_bunny_alpha_report.json": "1b2695971deddfab317500a034cf565dd219f4360813e3a110f024233d525fb3",
+    "docs/historical_evidence/arm6_stealth_space_bunny_alpha_report.json": "a98092d74e9a1d037de83730fe630a6e6d11043f7af690a68c465cda45d3b452",
+    "docs/historical_evidence/c045.json": "ef2050578d5648969c901efe9d555b5e848b1bd33579663740bfee7c3ea286d9",
+    "docs/historical_evidence/c046.json": "b6d733200913e65868e19c09556d9c62b9985ed6024ccb0cfd4d5ae8c8ac9750",
+    "docs/historical_evidence/c047.json": "27b686b890d3d55cf79b885b9343f3aec4be1bb9eb323b360e7dd4fc04b1aa4b",
+    "docs/historical_evidence/c048.json": "2e6991d6ba4c5d7c830961fb9c1f6274f322f9bf6d060d910a5e23b18af33f9b",
+    "docs/historical_evidence/c049_panel_a_0.json": "00d5b6b0ae345a438a2b323b1f7479af9e37bab5b4191fd2b85e082741bdc7c4",
+    "docs/historical_evidence/c049_panel_a_1.json": "13364c9478ef5be42931313e61585d2a9d526d3f0156bd64c8903a97fd4d1ef6",
+    "docs/historical_evidence/c049_panel_a_2.json": "e22596b1b49b81b0744560ee65fcf7f399a6f31494cf1bb6f5bfb6ec5af9cf32",
+    "docs/historical_evidence/c049_panel_b.json": "437834475e4b703c4533c0c7a35f983414cb2061d4b853b0471c7b81170e8541",
+    "docs/historical_evidence/c050_run_1.json": "2b07e4d59f10a0bb2b2ef1002703bd0bcba012bc9fec46313140c60c82aa10a9",
+    "docs/historical_evidence/c050_run_2.json": "566f089c6a00b865a2e28b46c57b3d41fad2022b1a8bb9db186829b4b8af0c46",
+    "docs/historical_evidence/formal_math_baselines.json": "b72967ab8630ae02ad8fbc284cdaccd04e60336fed779eef400b552920b828f6",
+    "docs/historical_evidence/immune_transfer_report.json": "315713f67de840302c2e3429cabfe7ca09f7444ae2244f308059e33a903fe243",
+    "docs/historical_evidence/provenance.json": "9937cec6ad68ca5c4c34dad30fd4fe9655a6f5fb14dbabafb1c685ddce5156da",
+    "docs/lean_claim_map.md": "193b5aaa46c6e32fa0983151d78dd3c8d91871b90b7fc4e42a1d00609e8c7ba9",
+    "docs/references.md": "6be3fc12e898095c10a339b8bba201c37c107d1bd58ca6f5e6952ed116fea993",
+    "docs/release_validation_2026_10_01.json": "be197ed6ae4591b7c960d512b57bed38dc4abfdc3e7f09f43977898b787daa39",
+    "docs/release_validation_2026_10_02.json": "63f3b850d6f1fd8be833fdfe6a9ee12961065b8d96262bfa557b0e24d8073424",
+    "lean4/Census.lean": "0f0df0773ea29434a8afbef1b6cb18b8d0d713fa4b3309ca118bce336ced6c3b",
+    "lean4/FullCensus.lean": "46a0b036bd0744cffb47e7ea5f63e928efed665ee6b8171cd936807a157362ef",
+    "lean4/LatticeDecimation.lean": "fbd00f3f0ec550850504447066c950cb394f7cc9fb1a60a2269367253fccd99b",
+    "lean4/axiom_report.txt": "e57e5a93ce9e1851472a7ecbe3217d9c23ec656bf99aae79812264362e7cf9dc",
+    "lean4/full_axiom_report.txt": "b127df02bb3de625d5c5b43c4b5348084cd1dfc9ba6616c5dcf8b2d60d4bb36f",
+    "lean4/lake-manifest.json": "93dabd756a317682bf782bb7a5bfef8b07e14ab88e3cc89538274bbfabd90654",
+    "lean4/lakefile.lean": "73b620cfa8ec1d9eb8d06056337eee06bf60de88ba67c473216d81e0b99700d2",
+    "lean4/lean-toolchain": "cdbc6c372a2b37ad94430a6cec69cedfa4d36f255bfd968773fd91bf7a1746bf",
+    "paper.md": "1094aa7580f363ced3570e4eac48029d33b4b9e8f937585fe8b8076b6da50539",
+    "paper.pdf": "2e21fe507737ab81a3637af5da70871ac54391140b1fe94ce1323d317e7b63b4",
+    "paper.tex": "cde06477d9094be656540eb606c14d584ef151a7de10b66dd2dd0e516b3fa9d2",
+    "paper_change_log.md": "ef83ea4d176745da312b4f2267d4c8fa7de4ebc458c5d3e8f8e0a0076c3dfbc6",
+    "paper_claim_ledger.md": "50b3e116597677b68efa8865e667a0f3b53c6d5ed496f280f39234a6b6b67202",
+    "pyproject.toml": "3e1e688f19e8be9ad9293a78a46fb989fb76e77bce81375484c2e423f07984db",
+    "scripts/build_deposit_zip.py": "fc21f6119be966f4c3acfce58164e4d5b22360c0603081727cf5c6639a604675",
+    "scripts/regen_sha256sums.py": "2ec060492be0f7af01f4bf2b719da5076af7e3a0858182282c274fbaefb0731f",
+    "tools/latex_inline_code.lua": "ae77eaa9f3223d04146d1950c510251806e973205196e07f1873aede5a3c048b",
+    "tools/paper_preamble.tex": "784ab58f4c2487da123078f0e1c3bb7f7bfb5338fc5874ac61415ac996adafc8",
+    "tools/rebuild_release.py": "e30952640a1dc507e1c8ebeebfd6cd3b003e99191903ace3856db7d484260df7",
+    "tools/render_paper.py": "158c96d3668b7d4c9c1a1088a33ed3508821be3d0f5ee7da61295b6a17e2f1c2",
+    "tools/replay_full_axiom_census.py": "514b82e8776ae675389a58d5813c629f5f142ca35bb674c41f9161fb20765e09",
+    "tools/replay_lean_axiom_census.py": "c73bf94a0b15a3c7017578f4983a9044f3896609325bda2a7e7ddfba6c44f00d",
+    "tools/study_capstone.py": "de37c38b1d982fcba2be12f3a58e2a7ef2bdd33297e861a90711fbda4864d370",
+    "verify_deposit.py": "e0d1660d3ab112fc0a7c24b638cddd61902c2985d0849f987c172813db4981f5",
+    "zenodo_metadata.json": "cd3ecbb4b4821e46ed1e835f054e039ed0cdcf6e52c805a2615f4ad527c007ef"
+  },
+  "interpretation": "This record reports finite executions and custody. It does not establish general checker soundness, unaided model performance, a causal prompt effect, operational authority or publication.",
+  "custody_validation": {
+    "package_checks": [
+      {
+        "argv": [
+          "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+          "tools/rebuild_release.py"
+        ],
+        "exit_code": 0
+      },
+      {
+        "argv": [
+          "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+          "verify_deposit.py"
+        ],
+        "exit_code": 0
+      },
+      {
+        "argv": [
+          "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+          "tools/rebuild_release.py",
+          "--check"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "isolated_archive_members": 74,
+    "isolated_commands": [
+      {
+        "argv": [
+          "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+          "-m",
+          "pytest",
+          "code/tests"
+        ],
+        "cwd": "isolated extracted ZIP package",
+        "exit_code": 0,
+        "stdout": "..........................................                               [100%]\n42 passed in 0.13s\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+          "code/recount_pilots.py"
+        ],
+        "cwd": "isolated extracted ZIP package",
+        "exit_code": 0,
+        "stdout": "Source custody: 15 original historical files match both hashes\nC017 extraction: 25 recorded case entries match source reports\nTable 3: recorded acceptances, out of ten; model order: stealth/space-bunny-alpha, meta-llama/llama-3.3-70b-instruct, meta-llama/llama-3.1-8b-instruct\nc045 2 8 3\nc046 4 7 8\nc047 4 2 0\nc048 10 8 5\nc049_panel_a 5 6 4\nc049_panel_b 9 6 6\nc050_run_1 7 4 1\nc050_run_2 6 3 1\nTable 4: author categories (verdict/object/neither), best earlier baseline count\nC045 7 3 0 10\nC046 5 3 2 10\nC047 4 6 0 0\nC048 10 0 0 3\nC049 5 5 0 2\nC050 5 5 0 1\nScope: offline recount only; no model call and no fresh C045-C050 checker execution\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+          "tools/study_capstone.py",
+          "--output",
+          "/workspace/scratch/6f8cf591c58d/p010-extracted-capstone.json"
+        ],
+        "cwd": "isolated extracted ZIP package",
+        "exit_code": 0,
+        "stdout": "PASS: scoped capstone packet written to /workspace/scratch/6f8cf591c58d/p010-extracted-capstone.json\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+          "verify_deposit.py"
+        ],
+        "cwd": "isolated extracted ZIP package",
+        "exit_code": 0,
+        "stdout": "OK: Manifest and two-way sweep checks passed.\n\nVerification PASSED.\n",
+        "stderr": ""
+      }
+    ],
+    "scope": "Extracted release executes without repository history. The archive and controls are refreshed again after this record; its own final ZIP hash is intentionally not embedded."
+  }
+}

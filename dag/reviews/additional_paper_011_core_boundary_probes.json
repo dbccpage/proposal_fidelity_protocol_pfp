@@ -1,0 +1,37 @@
+{
+  "runtime": {
+    "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\.venv\\Scripts\\python.exe",
+    "scope": "Focused checks on available workspace interpreter; not reproduction of the declared Python3.12 runtime profile."
+  },
+  "checks": [
+    {
+      "rule": "relocation_can_remove_computational_body",
+      "status": "observed",
+      "original_value": 7,
+      "transformed_value": 0,
+      "removed_top_level_nodes": 1,
+      "declared_allowed_difference": "Top-level sys.path bootstrap removal and import-module qualification only",
+      "limits": "Independent synthetic mixed bootstrap/computation block. Does not assert an actual pinned historical module contains that pattern."
+    },
+    {
+      "rule": "g03_stale_control_path_shadow",
+      "status": "observed",
+      "error_type": "AttributeError",
+      "error": "'str' object has no attribute 'relative_to'",
+      "limits": "Unchanged controls/check_calls AST; synthetic process responses and JSON serialization supplied to avoid importing unread/sealed dependencies. No binary executed."
+    },
+    {
+      "rule": "uniform_subset_coverage_formula",
+      "status": "verified_for_enumerated_finite_controls",
+      "comparisons": 240,
+      "max_n": 8,
+      "limits": "Exact finite subset enumeration, not an empirical model result or independence claim."
+    }
+  ],
+  "pytest": {
+    "exit_code": 0,
+    "log": "dag/reviews/additional_paper_011_core_boundary_pytest.txt",
+    "scope": "Only explicitly selected pure tests; no torch import, native fixture, original loader or historical receipt."
+  }
+}

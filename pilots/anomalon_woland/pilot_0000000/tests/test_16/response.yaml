@@ -1,0 +1,166 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: p_star_rewrite_05
+test_kind: p_star_templated
+pilot_id: pilot_0000000
+case_id: rewrite_05
+request_id: pilot_0000000_req_p_star_rewrite_05
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: p_star_rewrite_05.yaml
+  source_file_bytes: 9053
+  source_file_kb: 8.841
+  payload_bytes: 6634
+  payload_kb: 6.479
+  messages_count: 2
+raw_reply: "{\n  \"derived_under_policy\": \"SPK-001\",\n  \"answer\": 3,\n  \"summary\"\
+  : {\n    \"narrowest_defensible_thesis\": \"Under exact rational arithmetic, the\
+  \ declared equations imply x=1 and y=2, so x+y=3.\",\n    \"evidence_scope\": \"\
+  Manual symbolic solution of the two declared linear equations; no external evaluator\
+  \ invoked.\",\n    \"next_concrete_test\": \"Substitute x=1 and y=2 into both equations\
+  \ to check 1+2*2=5 and 3*1-2=1.\"\n  },\n  \"process_integrity\": {\n    \"seed_allows_theory_refutation\"\
+  : true,\n    \"detected_prompt_biases\": [\n      \"declared obstacle 'singularsystem'\
+  \ conflicts with the nonsingular coefficient matrix (determinant -7)\"\n    ],\n\
+  \    \"should_continue\": false\n  },\n  \"sections\": []\n}"
+reasoning_content: "We need answer. Need parse packet. Need solve system? Let's inspect.\n\
+  \nUser gives encoded-ish:\n<<decl><<alph><gamma38>><<terms><ratsys>><<rules><exactrational>><<obst><singularsystem>><<term><exactsolution>>>><<task><<assume><<eq><<add><x><<mul><2><y>>><5>>><<assume><<eq><<sub<<mul><3><x>><y>><1>>><<goal><<eval><<add><x><y>>>><<return><<answer><<add><x><y>>>>>>\n\
+  \nNeed return JSON matching schema. Need compute x+y from equations:\nx + 2y = 5\n\
+  3x - y = 1\nSolve exact rational.\n\nFrom first x = 5 - 2y.\nSecond 3(5-2y) - y\
+  \ = 1 => 15 -6y - y =1 => -7y = -14 => y=2. x=5-4=1. x+y=3.\n\nNeed provide JSON\
+  \ with derived_under_policy SPK-001, answer 3, summary fields, process_integrity.\
+  \ sections maxItems 0 so empty array. Need process_integrity: seed_allows_theory_refutation\
+  \ boolean, detected_prompt_biases array, should_continue boolean. Need infer. The\
+  \ prompt includes \"obst singularsystem\" maybe singular? But system is nonsingular?\
+  \ Equations determinant? Matrix [[1,2],[3,-1]] det -1-6=-7 nonzero. So not singular.\
+  \ Maybe \"obst singularsystem\" is a declared obstacle? Need process integrity.\
+  \ seed_allows_theory_refutation? The seed? We need decide. It asks \"Return JSON\
+  \ matching response schema\". We can set seed_allows_theory_refutation true? Hmm.\n\
+  \nNeed be careful with policy. We are auditor. The task is arithmetic exact rational.\
+  \ No forbidden words. Need maybe mention evidence scope: symbolic computation? We\
+  \ can compute manually. The evaluator scope: SymPy promotes symbolic computation,\
+  \ not empirical. But we don't need.\n\nNeed output only JSON. Ensure no extra text.\
+  \ Schema requires additionalProperties false. sections maxItems 0. summary required\
+  \ strings. process_integrity required seed_allows_theory_refutation, should_continue,\
+  \ detected_prompt_biases optional default. We can include detected_prompt_biases\
+  \ maybe [] or list. Need maybe detect prompt biases? The prompt has \"obst singularsystem\"\
+  \ but actual system nonsingular. Could be a bias? Maybe \"singularsystem\" is an\
+  \ injected assumption? The equations are not singular. The process_integrity field\
+  \ asks detected_prompt_biases. We can list \"declared singularsystem conflicts with\
+  \ nonsingular coefficient matrix\" maybe. But if we include, it's a string. Should\
+  \ we? The schema allows. Need decide.\n\nLet's parse the packet: <<decl><<alph><gamma38>><<terms><ratsys>><<rules><exactrational>><<obst><singularsystem>><<term><exactsolution>>>><<task>...\n\
+  It declares alphabet gamma38, terms ratsys, rules exactrational, obstacle singularsystem,\
+  \ term exactsolution. Then task assume equations, goal eval add x y, return answer\
+  \ add x y.\n\nThe obstacle \"singularsystem\" might be a declared obstacle, but\
+  \ the system is not singular. Maybe we should note in process_integrity detected_prompt_biases:\
+  \ [\"declared obstacle 'singularsystem' is not supported by the given equations;\
+  \ coefficient determinant is -7\"]. But the schema's process_integrity is about\
+  \ prompt biases. Could include. But maybe not necessary. The answer is 3.\n\nNeed\
+  \ ensure \"derived_under_policy\": \"SPK-001\". \"answer\": 3 integer.\n\nSummary:\n\
+  narrowest_defensible_thesis: \"Under exact rational arithmetic, the given linear\
+  \ system has unique solution x=1, y=2, so x+y=3.\" This is narrow. Avoid forbidden\
+  \ words? \"unique\" not forbidden. \"exact rational arithmetic\" okay. \"supports\"\
+  \ maybe. No \"proves\". \nevidence_scope: \"Manual symbolic solution of the two\
+  \ declared equations; no external evaluator invoked.\" \nnext_concrete_test: \"\
+  Substitute x=1, y=2 into both equations: 1+2*2=5 and 3*1-2=1.\" Good.\n\nProcess\
+  \ integrity:\nseed_allows_theory_refutation: true? The seed? The prompt includes\
+  \ obstacle singularsystem, which could be refuted by determinant. If seed allows\
+  \ theory refutation, yes? Hmm. The field name \"seed_allows_theory_refutation\"\
+  \ likely asks whether the seed/prompt permits refutation of a theory. The prompt\
+  \ declares obstacle singularsystem, but we can refute it. So true. should_continue:\
+  \ true? We can continue? The task is complete. Maybe should_continue false? The\
+  \ schema likely expects boolean. \"should_continue\" maybe whether process should\
+  \ continue after this response. Since answer computed, false. But if we detect bias,\
+  \ maybe should_continue true? Let's think.\n\nThis is a meta prompt from some system.\
+  \ They want JSON. process_integrity likely used to indicate if the seed allows theory\
+  \ refutation and if should continue. The seed includes \"obst singularsystem\" maybe\
+  \ an obstacle. If we can refute singularsystem, seed allows theory refutation? Actually\
+  \ \"seed_allows_theory_refutation\" might be true if the prompt's seed permits challenging\
+  \ its assumptions. The prompt has an obstacle \"singularsystem\" but the system\
+  \ is nonsingular. We can refute that obstacle. So true. should_continue: maybe true\
+  \ if there is more to do? But the task is just compute answer. I'd set should_continue\
+  \ false because task complete. But maybe they expect true to continue auditing?\
+  \ Hmm.\n\nLet's examine schema: ProcessIntegrityValue:\n- seed_allows_theory_refutation:\
+  \ boolean\n- detected_prompt_biases: array of strings default []\n- should_continue:\
+  \ boolean\n\nThis is likely part of a response contract for a \"theory forge\" where\
+  \ the model should decide if the seed allows refutation and if it should continue.\
+  \ The prompt is a task to solve equations. There's no theory to refute except obstacle.\
+  \ The \"obst singularsystem\" is a declared obstacle. The system is not singular,\
+  \ so the obstacle is false. That is a refutation. So seed_allows_theory_refutation\
+  \ true. should_continue? If we refute the obstacle, maybe we should continue? But\
+  \ the task is to return answer. The answer is 3. I'd set should_continue false because\
+  \ no further action needed. But if the process integrity is about the meta-process,\
+  \ maybe should_continue true if there are detected biases? Hmm.\n\nLet's consider\
+  \ if \"singularsystem\" is a prompt bias: it biases toward thinking the system is\
+  \ singular. We detected it. If detected_prompt_biases non-empty, should_continue\
+  \ might be true to address it? But we already addressed in summary? The schema doesn't\
+  \ have a place to explain except summary. We can include detected_prompt_biases:\
+  \ [\"declared obstacle 'singularsystem' is not supported by the given equations;\
+  \ determinant is -7\"]. Then should_continue maybe false because answer is complete.\
+  \ Or true because bias detected? The field \"should_continue\" likely means whether\
+  \ the model should continue processing the prompt. Since we are returning final\
+  \ answer, false.\n\nNeed ensure JSON valid. No markdown. Let's craft.\n\nCheck forbidden\
+  \ words: \"proves\", \"guarantees\", \"mathematically verifies\", \"fundamentally\"\
+  , \"true intelligence\", \"impossible\", \"universal\", \"flawless\", \"perfectly\"\
+  , \"clearly\", \"obviously\", \"simply\", \"merely\", \"weaponized\". Avoid. \"\
+  unique\" okay. \"exact\" okay. \"supports\" okay. \"shows\" okay.\n\nAnswer integer\
+  \ 3.\n\nSections: [].\n\nProcess integrity: seed_allows_theory_refutation: true,\
+  \ detected_prompt_biases: [\"declared obstacle 'singularsystem' conflicts with the\
+  \ nonsingular coefficient matrix (determinant -7)\"], should_continue: false.\n\n\
+  But wait: The schema says detected_prompt_biases items minLength 1 pattern \\S.\
+  \ Our string has spaces, okay. It's a string. Good.\n\nSummary:\nnarrowest_defensible_thesis:\
+  \ \"Under exact rational arithmetic, the declared equations imply x=1 and y=2, so\
+  \ x+y=3.\"\nevidence_scope: \"Manual symbolic solution of the two declared linear\
+  \ equations; no external evaluator invoked.\"\nnext_concrete_test: \"Substitute\
+  \ x=1 and y=2 into both equations to check 1+2*2=5 and 3*1-2=1.\"\n\nNeed maybe\
+  \ mention \"exact rational\" as per rules. Good.\n\nLet's output JSON. Ensure no\
+  \ trailing commas. Use double quotes. \n"
+parsed_response:
+  derived_under_policy: SPK-001
+  answer: 3
+  summary:
+    narrowest_defensible_thesis: Under exact rational arithmetic, the declared equations
+      imply x=1 and y=2, so x+y=3.
+    evidence_scope: Manual symbolic solution of the two declared linear equations;
+      no external evaluator invoked.
+    next_concrete_test: Substitute x=1 and y=2 into both equations to check 1+2*2=5
+      and 3*1-2=1.
+  process_integrity:
+    seed_allows_theory_refutation: true
+    detected_prompt_biases:
+    - declared obstacle 'singularsystem' conflicts with the nonsingular coefficient
+      matrix (determinant -7)
+    should_continue: false
+  sections: []
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: ACCEPTED
+  reason: Linear system solution matches exact rational ground truth
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: CoreWeave
+  dispatch_id: gen-1791686499-snOB0LUnxAIqLbrZcJe3
+  system_fingerprint: null
+  duration_seconds: 12.955
+  tokens_per_second: 163.57
+  usage:
+    prompt_tokens: 1836
+    completion_tokens: 2119
+    reasoning_tokens: 1915
+    total_tokens: 3955
+  cost:
+    total_cost_usd: 0.00159223
+    total_cost_microusd: 1592
+    cost_details:
+      upstream_inference_cost: 0.00159223
+      upstream_inference_prompt_cost: 0.00021488
+      upstream_inference_completions_cost: 0.00137735
+  timestamp_utc: '2026-10-11T02:41:52.524942+00:00'

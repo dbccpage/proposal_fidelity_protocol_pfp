@@ -1,0 +1,17 @@
+import sys
+sys.dont_write_bytecode=True
+import additional_pfp_domain_remaining_audit as a
+rows=[
+('bridge/ast_cochain_extractor.py',58,'Compatibility imports now point to local AST owners despite sister-package header. Any Exception during import is captured; unavailable constructors and layer iteration/length raise instead of returning fabricated success. Broad catch defers genuine import programming defects until use; it does not certify the available implementation.'),
+('bridge/ast_dependency_complex.py',11,'Direct aliases to the fully reviewed local heuristic graph builder and model; no transformation or stronger guarantees.'),
+('bridge/ast_metrics_evaluator.py',8,'Direct aliases to local floating chain-condition helper and functional-refusing evaluator; no independent arithmetic implementation.'),
+('bridge/ast_models.py',9,'Reexports through compatibility bridge, inheriting unavailable-component refusal and passive-record limits.'),
+('bridge/ast_source_parser.py',6,'Direct aliases to parsed-tree model/source parser; inherited relative-import and scope limitations.'),
+('bridge/real_evaluators.py',195,'Named LP/cochain/meron/thimble/adjunction scoring methods all unconditionally call the independently read require_rust_functional refusal owner; physical headings add no implementation. Remaining LPConstraint uses default-zero missing variables,1e-8 tolerance and treats unknown op as equality, without finite/type constraints. Bipartite BFS is valid for a supplied finite graph with listed endpoints but returned [u,v] is only a color-conflict edge, not an odd-cycle path as documented. Passive saddle/adjunction records do not establish physics or adjunction laws; no native execution.'),
+('bridge/pharmacy_catalog.py',6,'Compatibility repository alias via pharmacy_seeder; no catalog implementation or certificate validation.'),
+('bridge/pharmacy_models.py',20,'Explicit pharmacy record/enum reexports through seeder bridge; semantics remain in external EIS owners, not reviewed by these aliases.'),
+('bridge/pharmacy_seeder.py',64,'Imports explicitly named eis.domain pharmacy components/templates. Broad Exception catch replaces components with constructors that raise captured failure and templates with raising iteration/length. This avoids silently empty harvest but does not implement detection/learning or certify available external components. No EIS source or imported execution performed here.'),
+('bridge/pharmacy_templates.py',6,'Compatibility alias only; unavailable template use raises through reviewed bridge, no data body or template-validity proof here.'),
+('bridge/__init__.py',64,'Full lazy export table reviewed for AST/pharmacy/SBE/symbol-game/trace surfaces; cached aliases carry owner semantics, not assurance. No automatic provider or computation call at package definition.')]
+for p,l,s in rows:a.record('pfp/domain/'+p,1,l,s)
+n=a.read('_notes.json');n['external_dependencies_consulted'].append({'path':'pfp/functional_boundary.py','sha256':'de2a3e10556b28ebde1ab10b86ac89c85a336929c4d68e2ba110be2c1877c8d0','reviewed_lines':[[1,30]],'purpose':'Confirm all named Python functional legacy wrappers raise RustFunctionalRequired unconditionally; dependency-only consultation, outside427 scope.','assessment':'Pure constants, exception and one unconditional-raise function; names a required Rust owner but neither executes nor proves it.'});a.write('_notes.json',n);a.report()

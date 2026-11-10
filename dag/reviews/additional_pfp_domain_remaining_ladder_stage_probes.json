@@ -1,0 +1,89 @@
+{
+  "runtime": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "source_bindings": [
+    {
+      "path": "pfp/domain/pilots/certified_ladder.py",
+      "sha256": "5fcda31d5960dcb48bbb3081033e77d05169c262af424dcd4c63de8f458673ec"
+    },
+    {
+      "path": "pfp/domain/stages/demos.py",
+      "sha256": "5ccc5bd1a42c585b6b227e6c9dcbeb254e3db0713410e2e444c2a437df4c43ae"
+    },
+    {
+      "path": "pfp/domain/stages/stages.py",
+      "sha256": "9fafb52c29dd336f70947b545171cdba74af2f099176a0093d723907c3faa8b7"
+    }
+  ],
+  "controls": [
+    {
+      "id": "PFPDOMAIN-C112",
+      "rule": "H2_requires_progression",
+      "status": "counterexample_observed",
+      "stage_rates": [
+        0.9,
+        0.1,
+        0.2
+      ],
+      "status_observed": "RETAINED"
+    },
+    {
+      "id": "PFPDOMAIN-C113",
+      "rule": "numeric_evidence_is_valid",
+      "status": "counterexample_observed",
+      "nan_retained": [
+        "H3",
+        "H4",
+        "H5",
+        "H10"
+      ],
+      "negative_debt": -1,
+      "negative_failure_counts_retained": true
+    },
+    {
+      "id": "PFPDOMAIN-C114",
+      "rule": "report_requires_evidence_and_hypothesis_completeness",
+      "status": "counterexample_observed",
+      "empty_suite_retained": true,
+      "empty_report_pass": true
+    },
+    {
+      "id": "PFPDOMAIN-C115",
+      "rule": "H0_derives_flags_from_results",
+      "status": "counterexample_observed",
+      "contradictory_statuses_and_flags_retained": true
+    },
+    {
+      "id": "PFPDOMAIN-C116",
+      "rule": "equal_control_items_have_equal_hash",
+      "status": "counterexample_observed",
+      "equal": true,
+      "hashes_differ": true,
+      "limit": "Python process hash values deliberately not preserved as stable digests."
+    },
+    {
+      "id": "PFPDOMAIN-C117",
+      "rule": "demo_receipt_reconciles_checks",
+      "status": "counterexample_observed",
+      "all_passed": true,
+      "failed_check": true,
+      "terminal_status": "Exact",
+      "authority_effect": "Granted"
+    },
+    {
+      "id": "PFPDOMAIN-C118",
+      "rule": "stage7_metadata_matches_host_replay",
+      "status": "counterexample_observed",
+      "host_count": 1,
+      "reported_count": 0,
+      "host_obstructions": [
+        0
+      ],
+      "reported_obstructions": [],
+      "demo_ids_differ": true
+    }
+  ],
+  "limits": [
+    "Synthetic data only; no empirical trials, provider calls or private benchmark.",
+    "Direct modules with standard library and installed Pydantic only; source bodies unchanged."
+  ]
+}

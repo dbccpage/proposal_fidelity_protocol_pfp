@@ -1,0 +1,466 @@
+{
+  "execution_kind": "independent_bounded_controls",
+  "controls": [
+    {
+      "id": "ROUT-CHECK015",
+      "title": "Tolerance does not make the reported coefficient dominate measured assembly",
+      "observed": {
+        "g": 0,
+        "atol": 1,
+        "components": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "violated": false,
+        "assembled_m": 5,
+        "m_used": 0
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/derivative_bound.rs",
+          "sha256": "de8d24fc7743cbb33fefc37513e9601b02b0a755123a45c9a8b9998c85fd2763"
+        }
+      ],
+      "limitations": "Independent mathematical/predicate control; no native execution or general theorem certification."
+    },
+    {
+      "id": "ROUT-CHECK016",
+      "title": "Unchecked i128 product changes exact square root",
+      "observed": {
+        "input": "85070591730234615865843651857942052864/5",
+        "unbounded_product": "425352958651173079329218259289710264320",
+        "wrapped_i128_product": "85070591730234615865843651857942052864",
+        "returned_surd_as_rational": "9223372036854775808/5",
+        "square_divided_by_input": "1/5",
+        "checked_profile": "overflow panic"
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/replica_hierarchy.rs",
+          "sha256": "6d76ff62804a4907bca2f151f39d531485c0cf13657944904950f06fe07d8125"
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/rational.rs",
+          "sha256": "1ba4da2b8440fa7659c490b58bdc51ff4fa55e7755ecf1fbaa5f0bd7e3c3f681"
+        }
+      ],
+      "limitations": "Independent fixed-width emulation. Valid Rational is representable; source p*d is unchecked. Runtime profile determines panic versus wrap; no native build was run."
+    },
+    {
+      "id": "ROUT-CHECK017",
+      "title": "Sparse polynomial degree overflows without a large polynomial",
+      "observed": {
+        "left_monomial_degree": 4294967295,
+        "right_monomial_degree": 1,
+        "mathematical_product_degree": 4294967296,
+        "unchecked_product_degree": 0,
+        "checked_profile": "overflow panic"
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/retraction_geometry.rs",
+          "sha256": "6151ed4aaab14bba4059b5fff2a23834ff1efe105c6ca0fcd43c68e6a1ba8281"
+        }
+      ],
+      "limitations": "Independent mathematical/predicate control; no native execution or general theorem certification."
+    },
+    {
+      "id": "ROUT-CHECK018",
+      "title": "Observation shape validation misses malformed storage",
+      "observed": {
+        "public_matrix": {
+          "rows": 1,
+          "cols": 1,
+          "data": []
+        },
+        "observe_residual_shape_gate": true,
+        "storage_gate_needed": false,
+        "next_multiplication_first_index": 0,
+        "available_entries": 0
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/cochain_presentation.rs",
+          "sha256": "a372cd6312ce5d20f807fe18ef445f95385afd3efe0933aaf9f2bc99ec4705a9"
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/matrix.rs",
+          "sha256": "d407e597fd23d3d83f95c0cbbd8eafa2c48a8f00be4968cbeeab294e7cab6184"
+        }
+      ],
+      "limitations": "Predicate control of the actual admission gap; Rust indexing panic inferred from read matrix body, not executed."
+    },
+    {
+      "id": "ROUT-CHECK019",
+      "title": "Lattice validator admits a public three-local term",
+      "observed": {
+        "dimensions": {
+          "a": 2,
+          "b": 2,
+          "c": 2
+        },
+        "support": [
+          "a",
+          "b",
+          "c"
+        ],
+        "operator": "Z tensor I tensor I, Hermitian 8x8",
+        "product_state": "|0><0| on each site",
+        "unique_nonempty_label": "three",
+        "validate_terms_accepts": true,
+        "LocalHamiltonianTerm_new_would_reject": true,
+        "additional_nonhermitian_case": "support[a], operator[[0,1],[0,0]] also passes shape-only lattice validator"
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/quantum_lattice.rs",
+          "sha256": "445d36a01d1014d0f99c4054837db7b82e8037123926ab0138dd076153d703ce"
+        }
+      ],
+      "limitations": "Independent mathematical/predicate control; no native execution or general theorem certification."
+    },
+    {
+      "id": "ROUT-CHECK020",
+      "title": "Finite evolution inputs produce an infinite phase argument",
+      "observed": {
+        "Hamiltonian": "1x1 [2]",
+        "time": "1.7976931348623157e+308",
+        "eigen_residual": 0,
+        "phase_product": "-inf",
+        "source_checks_after_phase": "none; Ok is unconditional",
+        "expected_Rust_trigonometric_result": "NaN"
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/numeric.rs",
+          "sha256": "85d26697f2ed77206feccff51b8e2ce8ae935c2ec09d7e90270b6ac623ab12a8"
+        }
+      ],
+      "limitations": "Python evaluates only IEEE product. NaN output is source-based inference for Rust sin/cos(infinity); no original function or libc probe executed."
+    },
+    {
+      "id": "ROUT-CHECK021",
+      "title": "Overflow creates a vacuous green lower-bound comparison",
+      "observed": {
+        "Hamiltonian": "I4 as one two-site term",
+        "product_state": "|00><00|",
+        "time": "1e+200",
+        "nu_e": 0.0,
+        "full_incident_g": 1.0,
+        "signed_rhs": "-inf",
+        "margin": "inf",
+        "bound_satisfied": true
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/quantum_lattice.rs",
+          "sha256": "445d36a01d1014d0f99c4054837db7b82e8037123926ab0138dd076153d703ce"
+        }
+      ],
+      "limitations": "Independent final-expression control. Identity Hamiltonian has exact zero defect and finite phase t; full numerical eigensolver/evolution path not executed. This is an unguarded nonfinite diagnostic, not a false finite inequality."
+    },
+    {
+      "id": "ROUT-CHECK022",
+      "title": "Primal-dual quotient mass2 is distinct from H1 closedness",
+      "observed": {
+        "bigon": {
+          "d0": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "d1": [
+            [
+              1,
+              -1
+            ]
+          ],
+          "omega": [
+            [
+              1
+            ],
+            [
+              -1
+            ]
+          ],
+          "d1omega": 2,
+          "H1_class": false,
+          "primal_alpha": 0,
+          "dual": [
+            1,
+            -1
+          ],
+          "dual_pairing": 2
+        },
+        "closed_three_coordinate_example": {
+          "d0": [
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              0
+            ]
+          ],
+          "d1": [
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "omega": [
+            [
+              1
+            ],
+            [
+              -1
+            ],
+            [
+              0
+            ]
+          ],
+          "closed": true,
+          "nonexact": true,
+          "distance": 2
+        },
+        "independent_grid_points": 129,
+        "all_grid_masses_at_least2": true
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/cochain_presentation.rs",
+          "sha256": "a372cd6312ce5d20f807fe18ef445f95385afd3efe0933aaf9f2bc99ec4705a9"
+        },
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/observer_carriers.rs",
+          "sha256": "f96af93e530834f36b7a6950cee850c3ae47e1fa4e4d781d177285829bd4d99c"
+        }
+      ],
+      "limitations": "Exact dual feasibility and equal primal/dual objective certify the all-alpha lower bound by Holder/weak duality; the 129-point grid alone would not. No native solver ran."
+    },
+    {
+      "id": "ROUT-CHECK023",
+      "title": "Observers can miss all defects; coupled attainable defects change adequacy",
+      "observed": {
+        "six_edge_raw": 6,
+        "six_edge_observed": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "coupled_D": [
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "coupled_O": [
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "OD": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0
+          ]
+        ],
+        "kernel_basis": "first four coordinate vectors",
+        "kernel_dimension": 4,
+        "ker_OD_subset_ker_D": true,
+        "each_edge_kernel_dimension": 1,
+        "fragmentation_identity_observers_on_two_edges": {
+          "raw": 2,
+          "max_J": 1,
+          "edgewise_loss": 0,
+          "fragmentation": 1
+        }
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/observer_carriers.rs",
+          "sha256": "f96af93e530834f36b7a6950cee850c3ae47e1fa4e4d781d177285829bd4d99c"
+        }
+      ],
+      "limitations": "The displayed exact matrix identities and basis description establish containment for this finite carrier; this is stronger than sampling but is not global detector adequacy."
+    },
+    {
+      "id": "ROUT-CHECK024",
+      "title": "Linear gauge ansatz and group pure gauge have different curvature conclusions",
+      "observed": {
+        "chi": [
+          "0",
+          "J1",
+          "J2"
+        ],
+        "linear_d1A": "zero from d1d0=0",
+        "corner_commutator": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "group_closed_loop_holonomy": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "transition_twist_norm": 4,
+        "quotient_annotation": 2,
+        "annotation_is_not_derived": true
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/gauge_coupling_bridge.rs",
+          "sha256": "3d299233156bf028f44129ead135d7bdd0fb10cb914fb80d717fdc9ae87b3ffc"
+        }
+      ],
+      "limitations": "Exact finite rational matrix identities; no gauge-covariance, cellular realization or cohomology theorem follows from the corner polynomial."
+    },
+    {
+      "id": "ROUT-CHECK025",
+      "title": "Nonlinear retraction breaks the projected semigroup identity",
+      "observed": {
+        "initial": [
+          1,
+          0,
+          1
+        ],
+        "two_projected_quarter_turns": [
+          1,
+          0,
+          1
+        ],
+        "one_projected_half_turn": [
+          -1,
+          0,
+          1
+        ],
+        "defect": [
+          -2,
+          0,
+          0
+        ],
+        "chart_field": "(x^2,0)",
+        "chart_derivative": "diag(2x,0)"
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/retraction_geometry.rs",
+          "sha256": "6151ed4aaab14bba4059b5fff2a23834ff1efe105c6ca0fcd43c68e6a1ba8281"
+        }
+      ],
+      "limitations": "One exact admitted graph retraction and rotation counterexample; no universal claim that every projection destroys a semigroup."
+    },
+    {
+      "id": "ROUT-CHECK026",
+      "title": "Replica controls separate additivity from singleton calibration",
+      "observed": {
+        "grid_points": 9,
+        "unweighted_l1_additive": true,
+        "weighted_2l1_additive": true,
+        "weighted_singleton_value": 2,
+        "singleton_gauge": 1,
+        "l2_two_singletons": {
+          "union": "sqrt(2)",
+          "sum": 2
+        },
+        "audit_exhaustion_method_has_failure_gate": false,
+        "failed_RE3_search_returns_at_first_counterexample": true
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_ooutwire_primitives/src/alpha_projection_obstruction/replica_hierarchy.rs",
+          "sha256": "6d76ff62804a4907bca2f151f39d531485c0cf13657944904950f06fe07d8125"
+        }
+      ],
+      "limitations": "Finite controls do not prove the sampled RE1-RE5 characterization universally. Exhaustion metadata gap is source-confirmed; no forged Rust instance executed."
+    }
+  ],
+  "all_assertions_passed": true,
+  "helper_sha256": "1e09f74e8b5b6c3669edfc501a3e892da576e2d6fd925c0df61c428b558486b0"
+}

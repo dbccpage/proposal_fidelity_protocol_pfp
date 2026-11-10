@@ -1,0 +1,172 @@
+{
+  "execution_kind": "independent_bounded_controls",
+  "controls": [
+    {
+      "id": "RQPR-CHECK001",
+      "title": "Exact variant gate is weaker than display denominator validation",
+      "observed": {
+        "public_packet": {
+          "numerator": 1,
+          "denominator": 0
+        },
+        "variant": "ExactRational",
+        "display_accept": false,
+        "governance_accept": true
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_measurement/src/measurement_kernel.rs",
+          "sha256": "9613ca8adb25f0eef4a6be434d6fbefde809ec048d8ec67ab60c5a31f8144f08"
+        }
+      ],
+      "limitations": "Direct independent model of inspected match arms; no original BigRational or Rust code executed. new_raw(1,0) is explicitly constructed in affine/clock tests."
+    },
+    {
+      "id": "RQPR-CHECK002",
+      "title": "Placeholder decimal conversion loses ordinary large magnitudes",
+      "observed": {
+        "input": 42,
+        "scale": 18,
+        "saturating_i64_mantissa": 9223372036854775807,
+        "display": 9.223372036854776,
+        "NaN_saturating_cast_expected": 0
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_measurement/src/measurement_kernel.rs",
+          "sha256": "9613ca8adb25f0eef4a6be434d6fbefde809ec048d8ec67ab60c5a31f8144f08"
+        }
+      ],
+      "limitations": "Rust float-to-i64 saturation modeled independently; function is explicitly named unchecked and documented as placeholder. Not a governance bypass."
+    },
+    {
+      "id": "RQPR-CHECK003",
+      "title": "Affine conditional enclosure contains all16 endpoint realizations",
+      "observed": {
+        "center": "10/3",
+        "radius": "621/280",
+        "min": "1217/840",
+        "max": "4663/840",
+        "corners": 16
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_measurement/src/affine_calibration.rs",
+          "sha256": "264296d77ea37988e3524487b82ba18d21851ccefd1d6ab8f8551f9c1531bb22"
+        }
+      ],
+      "limitations": "Exact independent Fraction arithmetic. The triangle-inequality derivation covers all admissible values; finite corner control alone does not authenticate supplied errors or instruments."
+    },
+    {
+      "id": "RQPR-CHECK004",
+      "title": "Central difference propagates eight independent endpoint combinations",
+      "observed": {
+        "finite_response": [
+          "32/5",
+          "48/5"
+        ],
+        "declared_M": 3,
+        "extra_regularization_radius": "1/2"
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_measurement/src/finite_response.rs",
+          "sha256": "45f363722596ed37672380d87e48bc1e2ba0101c1121d73e24f8665778e010c2"
+        }
+      ],
+      "limitations": "No function regularity or common-target premise is established by this calculation; Taylor remainder bound remains conditional."
+    },
+    {
+      "id": "RQPR-CHECK005",
+      "title": "Clock telescoping and endpoint coarsening preserve exact bounds",
+      "observed": {
+        "all10intervals": [
+          [
+            0,
+            0,
+            "0",
+            "0"
+          ],
+          [
+            0,
+            1,
+            "1/2",
+            "1/2"
+          ],
+          [
+            0,
+            2,
+            "0",
+            "1"
+          ],
+          [
+            0,
+            3,
+            "1/4",
+            "5/4"
+          ],
+          [
+            1,
+            1,
+            "0",
+            "0"
+          ],
+          [
+            1,
+            2,
+            "1/2",
+            "1/2"
+          ],
+          [
+            1,
+            3,
+            "1/4",
+            "3/4"
+          ],
+          [
+            2,
+            2,
+            "0",
+            "0"
+          ],
+          [
+            2,
+            3,
+            "1/4",
+            "1/4"
+          ],
+          [
+            3,
+            3,
+            "0",
+            "0"
+          ]
+        ],
+        "coarse": {
+          "durations": [
+            "3",
+            "3"
+          ],
+          "readings": [
+            "0",
+            "3",
+            "25/4"
+          ],
+          "budgets": [
+            "1",
+            "1/4"
+          ]
+        }
+      },
+      "source_pins": [
+        {
+          "path": "code/rust/core_measurement/src/finite_chain_clock.rs",
+          "sha256": "54b0550e0bdd97ef7d7c44fe4e34531e5d99000f2f2840bf603fab6729695d23"
+        }
+      ],
+      "limitations": "Exact independent finite arithmetic; no chronology, physical calibration or empirical adequacy follows."
+    }
+  ],
+  "all_assertions_passed": true,
+  "helper_sha256": "12f723e0db6faa822ad5ea0a3e1f496bd6b78fd134cb91fbed47c189db6bcd1d"
+}

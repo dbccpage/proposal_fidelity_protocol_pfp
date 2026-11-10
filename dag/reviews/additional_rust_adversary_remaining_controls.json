@@ -1,0 +1,443 @@
+{
+  "review_id": "additional_rust_adversary_remaining_controls",
+  "scope_sha256": "d0547aab64c96d5e8cb280c02ad499283cff257d6931ca886f113cb4235ccd27",
+  "execution_kind": "Fresh standalone standard-library finite controls; no original modules, native/Cargo, providers, network or private benchmark access.",
+  "controls": [
+    {
+      "id": "RA-T01",
+      "title": "DDC metric/time changes leave selected step-hash input unchanged",
+      "status": "PASS",
+      "result": {
+        "different_steps": true,
+        "equal_prehash_projection": true
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/stage/ddc_tape_evaluator.rs",
+          "sha256": "7936943fe821f8bcdc51971597f00d627d1467e1a7c9ac48c69beebe542fa98c",
+          "lines": [
+            519,
+            575
+          ]
+        }
+      ],
+      "limits": "Projection proof; no Rust serialization, checker or cryptographic collision claim."
+    },
+    {
+      "id": "RA-T02",
+      "title": "Equal branch IDs/counts do not bind compensation contents",
+      "status": "PASS",
+      "result": {
+        "different_branch_bodies": true,
+        "equal_prehash_projection": true
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/stage/ddc_tape_evaluator.rs",
+          "sha256": "7936943fe821f8bcdc51971597f00d627d1467e1a7c9ac48c69beebe542fa98c",
+          "lines": [
+            717,
+            779
+          ]
+        }
+      ],
+      "limits": "Compares separate evaluator histories; duplicate branch ID within one evaluator is correctly refused."
+    },
+    {
+      "id": "RA-T03",
+      "title": "OEARS refusal prefix has no accepted complete extension",
+      "status": "PASS",
+      "result": {
+        "M_prefix": true,
+        "M_complete": false,
+        "M_T_complete": false,
+        "T_complete": true
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/stage/ddc_tape_evaluator.rs",
+          "sha256": "7936943fe821f8bcdc51971597f00d627d1467e1a7c9ac48c69beebe542fa98c",
+          "lines": [
+            133,
+            166
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/stage/ddc_tape_evaluator.rs",
+          "sha256": "7936943fe821f8bcdc51971597f00d627d1467e1a7c9ac48c69beebe542fa98c",
+          "lines": [
+            236,
+            276
+          ]
+        }
+      ],
+      "limits": "Finite abstraction of the two directly conflicting terminal rules, not full tokenizer/native execution."
+    },
+    {
+      "id": "RA-T04",
+      "title": "Representable Rational64 inputs need not have a representable sum",
+      "status": "PASS",
+      "result": {
+        "each": 9223372036854775807,
+        "exact_sum": "18446744073709551614",
+        "fits_signed_i64": false
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/stage/ddc_tape_evaluator.rs",
+          "sha256": "7936943fe821f8bcdc51971597f00d627d1467e1a7c9ac48c69beebe542fa98c",
+          "lines": [
+            497,
+            517
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/stage/ddc_tape_evaluator.rs",
+          "sha256": "7936943fe821f8bcdc51971597f00d627d1467e1a7c9ac48c69beebe542fa98c",
+          "lines": [
+            598,
+            645
+          ]
+        }
+      ],
+      "limits": "Exact representability counterexample; panic/wrap behavior of compiled dependencies was not executed or inferred."
+    },
+    {
+      "id": "RA-T05",
+      "title": "Nested local budgets are not one conserved shared budget",
+      "status": "PASS",
+      "result": {
+        "parent": 100,
+        "child_spends": [
+          60,
+          60
+        ],
+        "sum": 120,
+        "each_local_check_passes": true
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/dialectic.rs",
+          "sha256": "4424c17439ebce061c1fac7ae8abf5178614e2fc8c29593657064faa1d8b5415",
+          "lines": [
+            166,
+            194
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/dialectic.rs",
+          "sha256": "4424c17439ebce061c1fac7ae8abf5178614e2fc8c29593657064faa1d8b5415",
+          "lines": [
+            282,
+            309
+          ]
+        }
+      ],
+      "limits": "Local AdversaryMachine nest abstraction; does not bypass the separate durable PFP gateway ledger."
+    },
+    {
+      "id": "RA-T06",
+      "title": "Terminal scheduler branch ignores declared allowed result statuses",
+      "status": "PASS",
+      "result": {
+        "allowed": [
+          "PASS"
+        ],
+        "incoming": "HOLD",
+        "stop_statuses": [],
+        "next": "COMPLETED"
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/stage/scheduler.rs",
+          "sha256": "d5c64230cd965bf16b52f1505eb79d697c2dab0f2455b659cc75349f7ccbf197",
+          "lines": [
+            246,
+            270
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/stage/scheduler.rs",
+          "sha256": "d5c64230cd965bf16b52f1505eb79d697c2dab0f2455b659cc75349f7ccbf197",
+          "lines": [
+            309,
+            343
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/stage/topology.rs",
+          "sha256": "ccfca985ad3bb75c18da7578e73f33b1e4f31737a4e78a3fb53782149e5f9c10",
+          "lines": [
+            82,
+            115
+          ]
+        }
+      ],
+      "limits": "Source-derived transition model under otherwise valid records; no original scheduler execution or deployment claim."
+    },
+    {
+      "id": "RA-T07",
+      "title": "Worsening residual is counted as progress",
+      "status": "PASS",
+      "result": {
+        "pre": [
+          "1"
+        ],
+        "post": [
+          "2"
+        ],
+        "delta": "1",
+        "changed_state": 0,
+        "refined_residual": 1,
+        "progressed": true,
+        "dry_rounds_reset": true
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/stage/run_swarm.rs",
+          "sha256": "a16eb22387097a4f11fabc4fc6be3dec14a0512f571c52c7a4af0961c01636c1",
+          "lines": [
+            138,
+            159
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/stage/scheduler.rs",
+          "sha256": "d5c64230cd965bf16b52f1505eb79d697c2dab0f2455b659cc75349f7ccbf197",
+          "lines": [
+            325,
+            331
+          ]
+        }
+      ],
+      "limits": "Demonstrates counter semantics; finite total-step/unit budget still bounds scheduler and is not claimed bypassed."
+    },
+    {
+      "id": "RA-T08",
+      "title": "Runtime epoch comparison rejects zero-weight masking",
+      "status": "PASS",
+      "result": {
+        "zero_weight_local_delta": "0",
+        "runtime_weight_binding": false,
+        "matching_epoch_delta": "-1"
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/stage/evaluation.rs",
+          "sha256": "ba392279fc2056c6d879f976edbd8af111cfffe14ff523831d5e9395de69c68b",
+          "lines": [
+            1,
+            152
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/stage/run_swarm.rs",
+          "sha256": "a16eb22387097a4f11fabc4fc6be3dec14a0512f571c52c7a4af0961c01636c1",
+          "lines": [
+            61,
+            90
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/stage/run_swarm.rs",
+          "sha256": "a16eb22387097a4f11fabc4fc6be3dec14a0512f571c52c7a4af0961c01636c1",
+          "lines": [
+            415,
+            430
+          ]
+        }
+      ],
+      "limits": "Positive reconciliation: local arithmetic alone is insufficient, but reviewed runtime explicitly closes the weight/probe binding gap."
+    },
+    {
+      "id": "RA-T09",
+      "title": "Exact cochain and L1 primal/dual finite witnesses",
+      "status": "PASS",
+      "result": {
+        "d1_d0": [
+          0,
+          0,
+          0
+        ],
+        "primal": "1",
+        "dual": "1",
+        "invalid_dual_refused_by_constraint": true
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/primary_gates.rs",
+          "sha256": "dd7eba65f2ee104e7db15953f13d2bce4c18bfd2298a3b4154cdd4af5d5422c9",
+          "lines": [
+            365,
+            435
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/primary_gates.rs",
+          "sha256": "dd7eba65f2ee104e7db15953f13d2bce4c18bfd2298a3b4154cdd4af5d5422c9",
+          "lines": [
+            688,
+            727
+          ]
+        }
+      ],
+      "limits": "Independent mathematical instance, not execution of native predicates, tie-break verifier or carrier-to-matrix reconstruction."
+    },
+    {
+      "id": "RA-T10",
+      "title": "Edge-only constructor check admits a face without its boundary",
+      "status": "PASS",
+      "result": {
+        "nodes": [
+          0,
+          1,
+          2
+        ],
+        "edges": [],
+        "face": [
+          0,
+          1,
+          2
+        ],
+        "constructor_predicate": true,
+        "simplicial_boundary_closed": false
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/carrier.rs",
+          "sha256": "5cb056534268193631a8a777a2124c442f370172b5bb3346b11049dad1e2ff96",
+          "lines": [
+            124,
+            149
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/carrier.rs",
+          "sha256": "5cb056534268193631a8a777a2124c442f370172b5bb3346b11049dad1e2ff96",
+          "lines": [
+            721,
+            762
+          ]
+        }
+      ],
+      "limits": "Public-constructor counterexample; stronger JSON parser checks face closure and is not claimed bypassed."
+    },
+    {
+      "id": "RA-T11",
+      "title": "Publication verdict predicate does not compare task or candidate",
+      "status": "PASS",
+      "result": {
+        "different_tasks": [
+          "task-A",
+          "task-B"
+        ],
+        "same_accepted_checker_verdict_decisions": [
+          true,
+          true
+        ]
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/skill_run.rs",
+          "sha256": "0bb292ee13cb4454a15030b1eb8203a155c1683e791842d8097dcdde623ed245",
+          "lines": [
+            187,
+            215
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/skill_run.rs",
+          "sha256": "0bb292ee13cb4454a15030b1eb8203a155c1683e791842d8097dcdde623ed245",
+          "lines": [
+            267,
+            317
+          ]
+        },
+        {
+          "path": "code/rust/core_adversary/src/evidence_parse.rs",
+          "sha256": "e8680eb8d38ed7a2b7d32ae1bee60b9c43ddb3fb01ec3c0f72ea9bd29ad704ad",
+          "lines": [
+            114,
+            163
+          ]
+        }
+      ],
+      "limits": "Only the inspected binding/predicate projection; a real parsed receipt and filesystem publication were not constructed or executed."
+    },
+    {
+      "id": "RA-T12",
+      "title": "Lexical numeric equality differs from exact numeric equality",
+      "status": "PASS",
+      "result": {
+        "mathematical_one_equals_one_point_zero": true,
+        "different_number_strings": true,
+        "integer_outside_i64_u64": "18446744073709551616"
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/research_loop/response_schema.rs",
+          "sha256": "abce1d0262c1a2b25c41ad11d8b01221f6acdb1864d42711666994e3b1f901f2",
+          "lines": [
+            338,
+            361
+          ]
+        }
+      ],
+      "limits": "Shows declared native helper boundary; no serde parser or broader JSON Schema implementation conformance run."
+    },
+    {
+      "id": "RA-T13",
+      "title": "Synthetic outer-product mixture has a sound conditional density construction",
+      "status": "PASS",
+      "result": {
+        "trace": "1",
+        "eigenvalues": [
+          "1/2",
+          "1/2"
+        ],
+        "quadratic_form_controls": [
+          "1/2",
+          "1/2",
+          "1",
+          "1"
+        ]
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/stage/synthetic_diagnostic.rs",
+          "sha256": "64872be49940b0a4c0feb857ac21f0c28700524b5f39f80add44886dcafc2c8c",
+          "lines": [
+            24,
+            115
+          ]
+        }
+      ],
+      "limits": "Independent exact example; no Gaussian/NumPy/eigensolver execution, no text-quality or physical-quantum inference."
+    },
+    {
+      "id": "RA-T14",
+      "title": "Complete-bout retained-prefix comparison detects equal-length substitution",
+      "status": "PASS",
+      "result": {
+        "equal_length_bad_prefix_refused": true,
+        "exact_prefix_extension_admitted": true
+      },
+      "source_evidence": [
+        {
+          "path": "code/rust/core_adversary/src/complete_bout.rs",
+          "sha256": "7de8f0b8f7c51376284b9c693593623665da4c00c73d3febaf2aa164cb537769",
+          "lines": [
+            114,
+            159
+          ]
+        }
+      ],
+      "limits": "Positive source-derived control; distinct from prior Python event-mirror length-only finding OAR-F14."
+    }
+  ],
+  "summary": {
+    "passed": 14,
+    "failed": 0,
+    "original_functions_executed": 0
+  }
+}

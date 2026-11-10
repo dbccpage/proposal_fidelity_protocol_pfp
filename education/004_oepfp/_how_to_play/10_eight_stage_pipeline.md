@@ -34,7 +34,7 @@ mathematical seed witness. An eight-stage live run has seven model calls and one
 host evaluation. A prefix ending before stage 5 cannot establish mathematical
 acceptance.
 
-Use the [practical walkthrough](13_practical_pfp_and_discovery.md) for a manually
+Use the [practical walkthrough](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md) for a manually
 checked witness, a live run and replay. The application accepts a selected stage
 count, not an arbitrary stage-order or automatic-loop flag. New orders and
 bounded repair loops are extension work through the existing typed ports.

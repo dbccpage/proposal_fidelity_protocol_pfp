@@ -1,0 +1,57 @@
+.......................F................................................ [ 62%]
+...........................................                              [100%]
+================================== FAILURES ===================================
+_ test_complete_discovery_retains_spec_only_entries_and_real_checker_contract _
+
+tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/reviews/additional_paper_011_core_final_test_temp_20261110_055938_166397/pytest/test_complete_discovery_retain0')
+
+    def test_complete_discovery_retains_spec_only_entries_and_real_checker_contract(tmp_path):
+        demos = tmp_path / "demos"
+        demos.mkdir()
+        (demos / "demos_runner.py").write_text(
+            "DEMO_DISPATCH: dict = " + repr(dict.fromkeys(catalog.DEMO_IDS)), encoding="utf-8"
+        )
+        root = tmp_path / "challenges/theme/c011_fixture"
+        for folder in ["governance", "judge_packet/cases", "judge_packet/checkers", "reference_solver"]:
+            (root / folder).mkdir(parents=True)
+        (root / "governance/commit_reveal_runner.py").write_text(
+            "from ..judge_packet.checkers.primary import check\n"
+            "from ..judge_packet.checkers.independent import verify\n"
+            "from ..reference_solver.solver import solve\n",
+            encoding="utf-8",
+        )
+        (root / "judge_packet/checkers/primary.py").write_text(
+            "def check(case,answer):\n    return True\n", encoding="utf-8"
+        )
+        (root / "judge_packet/checkers/independent.py").write_text(
+            "def verify(case,answer):\n    return False\n", encoding="utf-8"
+        )
+        (root / "judge_packet/cases/case.json").write_text('{"id":"test","value":1}', encoding="utf-8")
+>       result = catalog.build_catalog(tmp_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+papers\pfp\011_recreated_demos_and_proposal_fidelity_evidence\code\tests\test_paper011_recreations.py:364: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/reviews/additional_paper_011_core_final_test_temp_20261110_055938_166397/pytest/test_complete_discovery_retain0')
+
+    def build_catalog(source: Path) -> dict:
+        runner = source / "demos/demos_runner.py"
+        raw = runner.read_bytes()
+        tree = ast.parse(raw)
+        dispatch = next(
+            node.value
+            for node in tree.body
+            if isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            and node.target.id == "DEMO_DISPATCH"
+        )
+        ids = tuple(sorted(node.value for node in dispatch.keys))
+        if ids != DEMO_IDS:
+>           raise ValueError("preserved demo dispatch differs from the declared 27 obligations")
+E           ValueError: preserved demo dispatch differs from the declared 27 obligations
+
+papers\pfp\011_recreated_demos_and_proposal_fidelity_evidence\code\demo_catalog.py:160: ValueError
+=========================== short test summary info ===========================
+FAILED dag\reviews::test_complete_discovery_retains_spec_only_entries_and_real_checker_contract
+1 failed, 114 passed in 1.83s

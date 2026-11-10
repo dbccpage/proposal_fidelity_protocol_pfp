@@ -1,0 +1,186 @@
+{
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "retained_owner_execution": false,
+  "results": [
+    {
+      "id": "OPSKILL-CHECK-030",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/github/scripts/block-dangerous-git.sh",
+        "sha256": "234922b83c0a1737ee7300806c21ac0f389b07aaeb65c2d71ccedafbc5e1ea4b"
+      },
+      "observation": {
+        "synthetic_command": "git -C repo push origin main",
+        "matched_patterns": []
+      },
+      "limitations": "Regex semantics control only; no shell or Git command executed. Global Git option makes a normal push evade all literal patterns."
+    },
+    {
+      "id": "OPSKILL-CHECK-031",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/goo-quotient-universal-factor-uniqueness-gate/SKILL.md",
+        "sha256": "96789ae41c415cf8368a0afc1b5b0c7ced08288773202c05b34b9d79227a12dc"
+      },
+      "observation": {
+        "C": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "C_squared": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "x": [
+          0,
+          1
+        ],
+        "Cx": [
+          2,
+          0
+        ],
+        "residual_norm_L1": 3,
+        "distance_to_image_L1": 1,
+        "nearest_image_point": [
+          0,
+          0
+        ]
+      },
+      "limitations": "Exact idempotent counterexample: image is x-axis, so distance from (0,1) is 1. Arbitrary oblique projection residual norm 3 is not the minimum quotient distance."
+    },
+    {
+      "id": "OPSKILL-CHECK-032",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/governance-clean-arch/scripts/check_inward_dependencies.py",
+        "sha256": "3ba7852c7fbe9fdc78a311d7f87490ae2043b4e946912c90bd66409e1715a7d0"
+      },
+      "observation": {
+        "python_import": "from pkg import infrastructure",
+        "node_module": "pkg",
+        "imported_names": [
+          "infrastructure"
+        ],
+        "resolver_segments": [
+          "pkg"
+        ],
+        "outer_hits": []
+      },
+      "limitations": "Isolated branch mirror of import_targets when node.module is set; does not import pkg or run the architecture owner. The imported submodule name is dropped."
+    },
+    {
+      "id": "OPSKILL-CHECK-033",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/governance-lean4-estate/scripts/check_lean4_estate.py",
+        "sha256": "25c32e67007b0241e70a0b8250563792eac1e52e09259be9bbb6f4e716dd8ae1"
+      },
+      "observation": {
+        "toolchain_text": "leanprover/lean4:",
+        "accepted_prefix": true,
+        "version_suffix": ""
+      },
+      "limitations": "Exact prefix predicate; no Lean toolchain/network/build invoked. Prefix presence does not validate release tag or package config."
+    },
+    {
+      "id": "OPSKILL-CHECK-034",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/governance-git-release/scripts/check_git_release.py",
+        "sha256": "fce23820c38b6ca523d8760a50c9eefea1fb6c6aa049f0b79770a7bea1912d62"
+      },
+      "observation": {
+        "wrong_nonzero_hash_detected": false,
+        "quoted_zero_hash_detected": false
+      },
+      "limitations": "Literal substring control only; no immutable artifact, Git index or archive modified. A malformed or wrong digest need not match the one forbidden spelling."
+    },
+    {
+      "id": "OPSKILL-CHECK-035",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/governance-pedagogy/scripts/check_lesson_folders.py",
+        "sha256": "aeac0a81ca62065dd16c903e4f59275478720f237253ab6198ca3e62e976987e"
+      },
+      "observation": {
+        "code_cells": [
+          "assert 1",
+          "if False:\n    assert False",
+          "def never_called():\n    assert 2 == 3"
+        ],
+        "presence_results": [
+          true,
+          true,
+          true
+        ],
+        "meaningful_executed_learning_check": false
+      },
+      "limitations": "Exact copied AST predicate on synthetic strings; no notebook or retained scanner executed. Presence is neither execution nor learning evidence."
+    },
+    {
+      "id": "OPSKILL-CHECK-036",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/governance-exact-solvers/references/relational_math_discipline.md",
+        "sha256": "80049a0d303ff1aebdb2da9521f713c4ea922d7156c9e7a13d211597fc53a476"
+      },
+      "observation": {
+        "objects": [
+          "A",
+          "B"
+        ],
+        "arrows": {
+          "idA": [
+            "A",
+            "A"
+          ],
+          "idB": [
+            "B",
+            "B"
+          ],
+          "f": [
+            "A",
+            "B"
+          ]
+        },
+        "composition": [
+          [
+            "idA",
+            "idA",
+            "idA"
+          ],
+          [
+            "idB",
+            "idB",
+            "idB"
+          ],
+          [
+            "f",
+            "idA",
+            "f"
+          ],
+          [
+            "idB",
+            "f",
+            "f"
+          ]
+        ],
+        "category_axioms_checked": "all composable pairs/triples and listed identities",
+        "f_has_inverse": false
+      },
+      "limitations": "Exact finite category counterexample to requiring inverses of every category morphism. Groupoids require inverses; general categories and monoids do not."
+    }
+  ]
+}

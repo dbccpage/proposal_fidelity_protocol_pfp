@@ -1,0 +1,123 @@
+lineage:
+  prompt_id: pilot_00000_p_star_rewrite_20
+  generation_id: 1
+  family_id: linear_algebra
+  parent_id: pilot_00000_p_star
+guidance:
+  rules:
+  - rule_id: RULE_CLAIM_HYGIENE_001
+    name: Claim Discipline Invariant
+    statement: Prefer narrow claims over broad claims; forbid unhedged promotional
+      verbs (proves, guarantees, universal).
+  - rule_id: RULE_SPK_001_GRAMMAR
+    name: Symbol System Grammar
+    statement: Adhere to the 38 atomic glyphs; numeric labels acquire arithmetic semantics
+      only through explicit license.
+  antibodies:
+  - antibody_id: ab_general_obstruction_479dd05f
+    failure_class: general_obstruction
+    target_pattern: 'LIMIT_HONESTY_VIOLATION: Unhedged thermodynamic or continuum
+      limit claim'
+    constraint_type: Restrain
+    operatorizability: repairable
+    action: repair
+    severity: P2
+    description: 'Custom obstruction defect: LIMIT_HONESTY_VIOLATION: Unhedged thermodynamic
+      or continuum limit claim'
+  antipatterns:
+  - antipattern_id: AP_PROMPT_001
+    name: Self-Certifying Verdict
+    description: 'Emitting ''verified'': true or unearned certainty without oracle
+      or mechanical proof.'
+  helpful_patterns:
+  - pattern_id: HP_MATH_001
+    name: Exact Rational Verification
+    description: Solve linear systems using exact rational arithmetic and check solutions
+      by substitution into original equations.
+system_prompt: "semantic_policy_manifest:\n  policy_id: SPK-001\n  required_stamp:\
+  \ 'derived_under_policy: SPK-001'\nmss0_grammar_constraint:\n  system_name: SYM\
+  \ SYS\n  atomic_glyph_count: 38\n  node_labels: a..z\n  numeric_labels: 0..9\n \
+  \ delimiters:\n  - <\n  - '>'\n  pair_note: The written form <> is a two-glyph expression,\
+  \ not a 39th atomic glyph.\n  numeric_license_rule: Numeric labels acquire arithmetic\
+  \ or weight semantics only\n    through an explicit license.\n  derived_patterns_note:\
+  \ Category-theoretic structures (functors, limits, adjunctions,\n    monads) are\
+  \ derived patterns, not new primitives.\nop_semantics:\n  default_layer: 1\n  default_meaning:\
+  \ syntactic_binary_operator\n  forbidden_unlicensed_interpretations:\n  - arithmetic\n\
+  \  - multiplication\n  - tensor_product\n  - boundary\n  - coboundary\n  - causality\n\
+  \  - optimization\n  - physical_transition\n  license_required_for:\n  - cohomological_interpretation\n\
+  \  - category_theoretic_interpretation\nimport_boundary: Do not import continuous\
+  \ physics, Lie algebras, or differential geometry\n  unless explicitly mapping them\
+  \ FROM the 38 SYM SYS primitives.\nmss0_typing_rules:\n  preamble: 'Whenever formalizing\
+  \ structures, adhere to the MSS-0 topological hierarchy:'\n  levels:\n  - level:\
+  \ 1\n    code: N\n    name: Node\n    meaning: 0-simplex\n  - level: 2\n    code:\
+  \ L\n    name: Edge\n    meaning: 1-simplex\n  - level: 3\n    code: C2\n    name:\
+  \ Cycle\n    meaning: 1-chain closed loop; strictly distinct from a filled region\n\
+  \  - level: 4\n    code: F1\n    name: Face\n    meaning: 2-simplex / triangle;\
+  \ strictly requires a declared 2-cell\n  - level: 5\n    code: M1\n    name: Mass\n\
+  \    meaning: Topological lock; requires LockStructure, ObstructionClass, and ConstraintInvariant\n\
+  \  - level: 6\n    code: H1\n    name: SelfModel\n    meaning: Recursive Locus;\
+  \ requires explicit declaration of recursive equivalence\n      semantics\nevaluator_scope_rule:\n\
+  \  principle: An evaluator may promote only the claim type it directly tests.\n\
+  \  bindings:\n  - evaluator: cargo test\n    promotes: implementation behavior\n\
+  \    does_not_promote: mathematical truth\n  - evaluator: SymPy\n    promotes: symbolic\
+  \ computation\n    does_not_promote: empirical reality\n  - evaluator: Lean/Coq/Isabelle\n\
+  \    promotes: formal theorem validity relative to stated axioms\n    does_not_promote:\
+  \ null\n  - evaluator: Reference checks\n    promotes: provenance support\n    does_not_promote:\
+  \ proof\n  - evaluator: Confidence scores\n    promotes: nothing\n    does_not_promote:\
+  \ evidence\nevidence_levels:\n- code: F0\n  meaning: unverified idea\n- code: F1\n\
+  \  meaning: internally consistent\n- code: F2\n  meaning: structurally validated\n\
+  - code: F3\n  meaning: mechanically-verified (within verification scope)\n- code:\
+  \ F4\n  meaning: independently reproduced\nclaim_hygiene:\n  discipline: You must\
+  \ write with strict claim discipline.\n  forbidden_words:\n  - proves\n  - guarantees\n\
+  \  - mathematically verifies\n  - fundamentally\n  - true intelligence\n  - impossible\n\
+  \  - universal\n  - flawless\n  - perfectly\n  - clearly\n  - obviously\n  - simply\n\
+  \  - merely\n  - weaponized\n  forbidden_word_exceptions: unless explicitly scoped\
+  \ as speculative or nested inside\n    user quotes\n  replacement_defaults:\n  -\
+  \ from: proves\n    to: supports or shows in this model\n  - from: guarantees\n\
+  \    to: guarantees under the declared assumptions\n  - from: fundamental flaw\n\
+  \    to: failure mode\n  - from: mathematically verified\n    to: checked by this\
+  \ oracle/test\n  default_posture: Prefer narrow claims over broad claims. Do not\
+  \ promote speculative\n    ideas into theorems. Do not describe toy tests or implementation\
+  \ checks as mathematical\n    proofs of universal results.\nrole:\n  persona: You\
+  \ are a restrained SymSys auditor and theory-forge assistant.\nantibody_injections:\
+  \ []\n"
+user_prompt: '<stage_1: "Solve for x in 7x = 7 -> subtotal_x = 1 (weight = 1)">
+
+  <stage_2: "Solve for y in 2y = 5 - x -> subtotal_y = 2 (weight = 1)">
+
+  <root_aggregation: "answer = weight_x * subtotal_x + weight_y * subtotal_y">
+
+  <return: {"answer": 3}>
+
+  '
+response_schema: "$defs:\n  JsonValue: {}\n  ProcessIntegrityValue:\n    additionalProperties:\
+  \ false\n    properties:\n      seed_allows_theory_refutation:\n        title: Seed\
+  \ Allows Theory Refutation\n        type: boolean\n        x-slot: data\n      detected_prompt_biases:\n\
+  \        default: []\n        items:\n          minLength: 1\n          pattern:\
+  \ \\S\n          type: string\n        title: Detected Prompt Biases\n        type:\
+  \ array\n        x-slot: data\n      should_continue:\n        title: Should Continue\n\
+  \        type: boolean\n        x-slot: data\n    required:\n    - seed_allows_theory_refutation\n\
+  \    - should_continue\n    title: ProcessIntegrityValue\n    type: object\n  ResponseSectionValue:\n\
+  \    additionalProperties: false\n    description: Rows validated against the packet\
+  \ response contract by validate_response.\n    properties:\n      name:\n      \
+  \  maxLength: 240\n        minLength: 1\n        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$\n\
+  \        title: Name\n        type: string\n        x-slot: data\n      rows:\n\
+  \        items:\n          $ref: '#/$defs/JsonValue'\n        title: Rows\n    \
+  \    type: array\n        x-slot: data\n    required:\n    - name\n    - rows\n\
+  \    title: ResponseSectionValue\n    type: object\n  ResponseSummaryValue:\n  \
+  \  additionalProperties: false\n    properties:\n      narrowest_defensible_thesis:\n\
+  \        minLength: 1\n        pattern: \\S\n        title: Narrowest Defensible\
+  \ Thesis\n        type: string\n        x-slot: data\n      evidence_scope:\n  \
+  \      minLength: 1\n        pattern: \\S\n        title: Evidence Scope\n     \
+  \   type: string\n        x-slot: data\n      next_concrete_test:\n        minLength:\
+  \ 1\n        pattern: \\S\n        title: Next Concrete Test\n        type: string\n\
+  \        x-slot: data\n    required:\n    - narrowest_defensible_thesis\n    - evidence_scope\n\
+  \    - next_concrete_test\n    title: ResponseSummaryValue\n    type: object\nadditionalProperties:\
+  \ false\ndescription: Actual model response. Descriptive strings and true|false\
+  \ placeholders\n  belong only to the template.\nproperties:\n  derived_under_policy:\n\
+  \    const: SPK-001\n    title: Derived Under Policy\n    type: string\n    x-slot:\
+  \ data\n  summary:\n    $ref: '#/$defs/ResponseSummaryValue'\n    x-slot: data\n\
+  \  sections:\n    type: array\n    minItems: 0\n    maxItems: 0\n    items: false\n\
+  \  process_integrity:\n    $ref: '#/$defs/ProcessIntegrityValue'\n    x-slot: data\n\
+  required:\n- derived_under_policy\n- summary\n- process_integrity\ntitle: PromptResponse\n\
+  type: object\n$schema: https://json-schema.org/draft/2020-12/schema\n"

@@ -1,0 +1,2432 @@
+{
+  "review_id": "additional_rust_homology_remaining",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "status": "in_progress",
+  "repository_wide_audit_complete": false,
+  "scope": {
+    "files": 126,
+    "original_bytes": 1313676,
+    "original_lines": 37443,
+    "full_source_reads": 33,
+    "partial_source_reads": 0,
+    "reviewed_original_lines": 8866,
+    "bounded_data_dispositions": 0,
+    "pending_files": 93
+  },
+  "file_reviews": [
+    {
+      "path": "code/rust/core_homology/Cargo.toml",
+      "sha256": "1281ab53ed1ee38e0e2b90dfb124bfea86a5e65206f47ab07ee0e49368fea849",
+      "line_count": 94,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          94
+        ]
+      ],
+      "assessment": "Fully read crate manifest. autotests=false and sixteen explicitly named sibling integration targets; unit modules remain declared in lib. Rational/bigint/linear-algebra and homotopy/functional dependencies are external mathematical/serialization trust dependencies, not implicitly reviewed. No compilation, dependency resolution or integration-test execution. Version/workspace metadata and mutation comments confer no verification.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/Cargo.toml",
+          "sha256": "1281ab53ed1ee38e0e2b90dfb124bfea86a5e65206f47ab07ee0e49368fea849",
+          "lines": [
+            1,
+            94
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read crate manifest. autotests=false and sixteen explicitly named sibling integration targets; unit modules remain declared in lib. Rational/bigint/linear-algebra and homotopy/functional dependencies are external mathematical/serialization trust dependencies, not implicitly reviewed. No compilation, dependency resolution or integration-test execution. Version/workspace metadata and mutation comments confer no verification."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/a_infinity_algebra.rs",
+      "sha256": "a449e04d699a9a458810f7a8d10c24c0f6863e910371bcbe80bbaa50aa296d7f",
+      "line_count": 113,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          113
+        ]
+      ],
+      "assessment": "Fully read label/notes shell and StasheffDegree witness. Shell validation only nonempty label; degree2-arity with positiveu32 arity is exact bounded arithmetic. No graded module, multilinear operations, Stasheff identities, units or morphisms are represented. Explicit notPROVED/best-effort qualification is material. Tests check only empty label and one degree positive/negative, not A-infinity algebra laws.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/a_infinity_algebra.rs",
+          "sha256": "a449e04d699a9a458810f7a8d10c24c0f6863e910371bcbe80bbaa50aa296d7f",
+          "lines": [
+            1,
+            113
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read label/notes shell and StasheffDegree witness. Shell validation only nonempty label; degree2-arity with positiveu32 arity is exact bounded arithmetic. No graded module, multilinear operations, Stasheff identities, units or morphisms are represented. Explicit notPROVED/best-effort qualification is material. Tests check only empty label and one degree positive/negative, not A-infinity algebra laws."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/boundary.rs",
+      "sha256": "5b89608739c7a2a48a6aceb52324799887b17c846daf878be147a14815f35fc4",
+      "line_count": 182,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          182
+        ]
+      ],
+      "assessment": "Full source read. Constructorcomputesmatrixhash butallowsarbitraryfrom/to degrees, publicmatrix/hash mutation. Applycheckscoefficientlengthonly,notinputdegree orbasis; result copiesinputbasis into changeddegree/possiblydifferentdimension. hash()recomputesmatrixwhilemap_hashcanstaystale. No actualmapsemantic unitcontrols here; appendedcapacitytest only. Properlybound caller canuse multiplication, but typedgrading/provenance notenforced.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/boundary.rs",
+          "sha256": "5b89608739c7a2a48a6aceb52324799887b17c846daf878be147a14815f35fc4",
+          "lines": [
+            1,
+            182
+          ],
+          "empty_file_read": false,
+          "assessment": "Full source read. Constructorcomputesmatrixhash butallowsarbitraryfrom/to degrees, publicmatrix/hash mutation. Applycheckscoefficientlengthonly,notinputdegree orbasis; result copiesinputbasis into changeddegree/possiblydifferentdimension. hash()recomputesmatrixwhilemap_hashcanstaystale. No actualmapsemantic unitcontrols here; appendedcapacitytest only. Properlybound caller canuse multiplication, but typedgrading/provenance notenforced."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/boundary_map.rs",
+      "sha256": "156463a117cea28d7790fa32814d9b9e13038a11332cb09e37198dff816db4c8",
+      "line_count": 241,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          241
+        ]
+      ],
+      "assessment": "Completebodyread. Candidateprivatefields deriveactualmatrixdimensions andcheckedapply refuseswrongvectorlength; DegreeShift isdeclaredkindnotanactualgradedsource/targetcheck. CertifiedBoundaryMapprivateconstruction iscrateonlyandexplicitlynotyetwired; do notclaimusablecheckedcertificationpath. BoundaryMapWitness iscalledunforgeable butderivedDeserialize/publicsemanticfields do notauthenticatewiretestimony, extendingF004scope; notenoughtoconstructprivatecertificateoutsidecrate. Genericcapacitytests notsemanticpathvalidation.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/boundary_map.rs",
+          "sha256": "156463a117cea28d7790fa32814d9b9e13038a11332cb09e37198dff816db4c8",
+          "lines": [
+            1,
+            241
+          ],
+          "empty_file_read": false,
+          "assessment": "Completebodyread. Candidateprivatefields deriveactualmatrixdimensions andcheckedapply refuseswrongvectorlength; DegreeShift isdeclaredkindnotanactualgradedsource/targetcheck. CertifiedBoundaryMapprivateconstruction iscrateonlyandexplicitlynotyetwired; do notclaimusablecheckedcertificationpath. BoundaryMapWitness iscalledunforgeable butderivedDeserialize/publicsemanticfields do notauthenticatewiretestimony, extendingF004scope; notenoughtoconstructprivatecertificateoutsidecrate. Genericcapacitytests notsemanticpathvalidation."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/carrier.rs",
+      "sha256": "7e59d5ab255adb67b2cf55654cd0d2361a4380ac783e767137927b3e9a94c489",
+      "line_count": 235,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          235
+        ]
+      ],
+      "assessment": "Completebodyread. UnlikepublicCochainComplex, Carrierownsprivatecomplexandweights andexposesonlysharedreferences, noDeserialize/mutablegetter. Publicconstructorrechecksweightdimension/strictpositivity andmatrixdimensions/chainlaw; thusconstructioninvariantsarepreservedbythisdisplayedAPI. dimQ1=C1-rankd0 anddimH1=kerd1-rankd0 meaningfullydistinguishallresidualsfromclosedones. Exactbackendstilltrusted; sourcehasgenericcapacityunitonly, notfreshmathreplay. Noauthoritypromotionexplicit.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/carrier.rs",
+          "sha256": "7e59d5ab255adb67b2cf55654cd0d2361a4380ac783e767137927b3e9a94c489",
+          "lines": [
+            1,
+            235
+          ],
+          "empty_file_read": false,
+          "assessment": "Completebodyread. UnlikepublicCochainComplex, Carrierownsprivatecomplexandweights andexposesonlysharedreferences, noDeserialize/mutablegetter. Publicconstructorrechecksweightdimension/strictpositivity andmatrixdimensions/chainlaw; thusconstructioninvariantsarepreservedbythisdisplayedAPI. dimQ1=C1-rankd0 anddimH1=kerd1-rankd0 meaningfullydistinguishallresidualsfromclosedones. Exactbackendstilltrusted; sourcehasgenericcapacityunitonly, notfreshmathreplay. Noauthoritypromotionexplicit."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/carrier_manifest.rs",
+      "sha256": "bc799de82fbca7a298a6d03e59eb9dad3baabc1bc3112c4023ad243ec9d23b23",
+      "line_count": 540,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          540
+        ]
+      ],
+      "assessment": "Full540lines/twochunksread. V2distinguishesQdomainfromBigRationalrepresentation, refusesambiguousv1/futureversion, privateverifiedtypewithunverifiedSerdeDTOandexplicitparser, comparescarrierhashfromdims/map/weight hashes. from_carriercomputesranks/dimensionsfromprivateCarrier. from_sliceonlychecks4listedconstraints; importsunboundrank_d0/dim_q1/dim_h1/provenance/witnesshashunchanged. Changingthosecanproduceimpossibleinternalclaimswithoutrehash. Documentationcorrectlydisclaimsspecificcarrierproof, butnotallfieldconsistencyverified. Presence/dropfieldtestonlychecksDTOcoverage. Noreadsofexternalhistoricalbase, noSerde/nativeexecution.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/carrier_manifest.rs",
+          "sha256": "bc799de82fbca7a298a6d03e59eb9dad3baabc1bc3112c4023ad243ec9d23b23",
+          "lines": [
+            1,
+            540
+          ],
+          "empty_file_read": false,
+          "assessment": "Full540lines/twochunksread. V2distinguishesQdomainfromBigRationalrepresentation, refusesambiguousv1/futureversion, privateverifiedtypewithunverifiedSerdeDTOandexplicitparser, comparescarrierhashfromdims/map/weight hashes. from_carriercomputesranks/dimensionsfromprivateCarrier. from_sliceonlychecks4listedconstraints; importsunboundrank_d0/dim_q1/dim_h1/provenance/witnesshashunchanged. Changingthosecanproduceimpossibleinternalclaimswithoutrehash. Documentationcorrectlydisclaimsspecificcarrierproof, butnotallfieldconsistencyverified. Presence/dropfieldtestonlychecksDTOcoverage. Noreadsofexternalhistoricalbase, noSerde/nativeexecution."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/cech_gate.rs",
+      "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+      "line_count": 529,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          529
+        ]
+      ],
+      "assessment": "Full529lines/twochunksread. Exactfinitealgebra checkslocaldeclaredstatusbeforematrixcompatibility, d1d0=0, cocyclecondition andaugmentedrankmembership. Fourwayterminalseparation mathematicallyvalidconditionaloncorrectinputmatricesandstatusassumptions. SectionscontainonlyIDs/status,noactualsections,coverrestrictionmaps,replaycallbackordeltaextraction; emptylistpassesandfaithfulcomparisonisdeclaredbool. Hencepresheaf/semanticgluingandpositivePhi1 licenseremainexternalpremises. ComplexNotExactmisnameschainlaw: zero-compositiondoesnotimplyim=ker; triangleobstructionpositiveitselfnonexact. Unitcasesproperlydistinguishclosednonexact,exactdiscrepancy,missing/replayfailedlocal,notclosedandinvaliddimensions; zero1x3targetis1Dwithzeromap, notzero-dimensionalC2. Noactualrankbackendexecution.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/cech_gate.rs",
+          "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+          "lines": [
+            1,
+            529
+          ],
+          "empty_file_read": false,
+          "assessment": "Full529lines/twochunksread. Exactfinitealgebra checkslocaldeclaredstatusbeforematrixcompatibility, d1d0=0, cocyclecondition andaugmentedrankmembership. Fourwayterminalseparation mathematicallyvalidconditionaloncorrectinputmatricesandstatusassumptions. SectionscontainonlyIDs/status,noactualsections,coverrestrictionmaps,replaycallbackordeltaextraction; emptylistpassesandfaithfulcomparisonisdeclaredbool. Hencepresheaf/semanticgluingandpositivePhi1 licenseremainexternalpremises. ComplexNotExactmisnameschainlaw: zero-compositiondoesnotimplyim=ker; triangleobstructionpositiveitselfnonexact. Unitcasesproperlydistinguishclosednonexact,exactdiscrepancy,missing/replayfailedlocal,notclosedandinvaliddimensions; zero1x3targetis1Dwithzeromap, notzero-dimensionalC2. Noactualrankbackendexecution."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/certificates.rs",
+      "sha256": "d499db18ad42f2a148571ae22c71bdeeb34260ff227a4507c51303cd41ce3e5c",
+      "line_count": 158,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          158
+        ]
+      ],
+      "assessment": "Fullbodyread. Openingexplicitlydisclaims authority-bearingcertificates. Publicverificationbool/property/inputoutputhashes areevidencedeclarations; BoundEvidence checksnonemptylabels,verifiedtrueand subject=output,returnscomputationtagonly. Noactualcomputationreplay/propertyverifier/signature, inputbinding notretained inBoundEvidence. Positive/mismatchtests demonstrateonlyassociationcontract, properlynotproofauthority.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/certificates.rs",
+          "sha256": "d499db18ad42f2a148571ae22c71bdeeb34260ff227a4507c51303cd41ce3e5c",
+          "lines": [
+            1,
+            158
+          ],
+          "empty_file_read": false,
+          "assessment": "Fullbodyread. Openingexplicitlydisclaims authority-bearingcertificates. Publicverificationbool/property/inputoutputhashes areevidencedeclarations; BoundEvidence checksnonemptylabels,verifiedtrueand subject=output,returnscomputationtagonly. Noactualcomputationreplay/propertyverifier/signature, inputbinding notretained inBoundEvidence. Positive/mismatchtests demonstrateonlyassociationcontract, properlynotproofauthority."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/chain.rs",
+      "sha256": "1516632b20422730b46c39ebc0508c71e9c5a089e67428f7d5676109ef8cdaf5",
+      "line_count": 353,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          353
+        ]
+      ],
+      "assessment": "Complete source and tests read. Rational coordinate arithmetic validates degree and vectorlength but not basis_id despite same-basis doc; results retain leftbasis. hash usescoefficients only, notdegree/basis/type. Publicfields and deriveddeserialize are data admission, not mathematical carrierproof. Tests cover dimensions,degree,arithmetic and changedcoefficients but noforeignbasis. Genericcapacityrecord independent of chains.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/chain.rs",
+          "sha256": "1516632b20422730b46c39ebc0508c71e9c5a089e67428f7d5676109ef8cdaf5",
+          "lines": [
+            1,
+            353
+          ],
+          "empty_file_read": false,
+          "assessment": "Complete source and tests read. Rational coordinate arithmetic validates degree and vectorlength but not basis_id despite same-basis doc; results retain leftbasis. hash usescoefficients only, notdegree/basis/type. Publicfields and deriveddeserialize are data admission, not mathematical carrierproof. Tests cover dimensions,degree,arithmetic and changedcoefficients but noforeignbasis. Genericcapacityrecord independent of chains."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/chain_complex.rs",
+      "sha256": "c83760431005300706f27d16c1ae515d6857d29657b2b15e1f22d1d3222e77e7",
+      "line_count": 354,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          354
+        ]
+      ],
+      "assessment": "Full constructor, view andtests read. Correct dimensionchecks and exactd1*d2 zero at construction; zeroouterdimension skip mathematically valid. All dimensions,maps,witness and duplicatedboundariesvector remainpublic. Mutation can invalidate chainlaw or split boundary_1/2 from the view withoutupdatingcachedcomplexhash. Returnedhashiswitnessfield, no replay. Tests discriminate invalidproduct andshape plus finitelysupporteddegree but notpostconstruction mutation. Arithmetic/backend conditional, no nativeexecution.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/chain_complex.rs",
+          "sha256": "c83760431005300706f27d16c1ae515d6857d29657b2b15e1f22d1d3222e77e7",
+          "lines": [
+            1,
+            354
+          ],
+          "empty_file_read": false,
+          "assessment": "Full constructor, view andtests read. Correct dimensionchecks and exactd1*d2 zero at construction; zeroouterdimension skip mathematically valid. All dimensions,maps,witness and duplicatedboundariesvector remainpublic. Mutation can invalidate chainlaw or split boundary_1/2 from the view withoutupdatingcachedcomplexhash. Returnedhashiswitnessfield, no replay. Tests discriminate invalidproduct andshape plus finitelysupporteddegree but notpostconstruction mutation. Arithmetic/backend conditional, no nativeexecution."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/chain_map.rs",
+      "sha256": "a9812165b14aa8ada02118d49941943c8741fbb04ea1c4d25cf9570401f342f8",
+      "line_count": 232,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          232
+        ]
+      ],
+      "assessment": "Fullsource read. Privatecertifiedmaps and sharedaccessor preserve resultingmaplist, and checkedmultiplication comparescommutingsquares. However publicFiniteChainComplexView trait requiresonlyboundaryslice+claimedhash, notdifferentialsquarezero, dimensionsortrustedhashderivation. Identitymaps oninvaliddifferential[1],[1]passallcommutingsquares. Singledegreeemptyboundaryview hasnovectordimensions; targetextraboundariesunchecked. Maphashencodesnativeusize degree plusentriesonly,omitsshape; serializationerrorsbecomeemptybytes. No semanticchain-maptests inthisbody, onlygenericcapacitytests. NoRustexecution.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/chain_map.rs",
+          "sha256": "a9812165b14aa8ada02118d49941943c8741fbb04ea1c4d25cf9570401f342f8",
+          "lines": [
+            1,
+            232
+          ],
+          "empty_file_read": false,
+          "assessment": "Fullsource read. Privatecertifiedmaps and sharedaccessor preserve resultingmaplist, and checkedmultiplication comparescommutingsquares. However publicFiniteChainComplexView trait requiresonlyboundaryslice+claimedhash, notdifferentialsquarezero, dimensionsortrustedhashderivation. Identitymaps oninvaliddifferential[1],[1]passallcommutingsquares. Singledegreeemptyboundaryview hasnovectordimensions; targetextraboundariesunchecked. Maphashencodesnativeusize degree plusentriesonly,omitsshape; serializationerrorsbecomeemptybytes. No semanticchain-maptests inthisbody, onlygenericcapacitytests. NoRustexecution."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/coboundary.rs",
+      "sha256": "1d0720d4d3991d0c61b5f9f1b33d8b6f62c700d5d4fc8753478f2ad9962c58c5",
+      "line_count": 207,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          207
+        ]
+      ],
+      "assessment": "Full source andtests read. Same degree/basis/cachedhash boundary as BoundaryMap, with applydimensionrefusal. Source/mapdegrees mayarbitrary and inputdegree isignoredinapply; standaloneoutputinheritsinputbasis. Testcheckswronglengthonly. Topological coboundary statusrequires surroundingcomplex/caller, not constructoralone.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/coboundary.rs",
+          "sha256": "1d0720d4d3991d0c61b5f9f1b33d8b6f62c700d5d4fc8753478f2ad9962c58c5",
+          "lines": [
+            1,
+            207
+          ],
+          "empty_file_read": false,
+          "assessment": "Full source andtests read. Same degree/basis/cachedhash boundary as BoundaryMap, with applydimensionrefusal. Source/mapdegrees mayarbitrary and inputdegree isignoredinapply; standaloneoutputinheritsinputbasis. Testcheckswronglengthonly. Topological coboundary statusrequires surroundingcomplex/caller, not constructoralone."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/coboundary_matrix.rs",
+      "sha256": "ac4460d5d7a12b0f7ac899a65b6829cf6dba3f552f795115c0b0e2f7d73f6814",
+      "line_count": 142,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          142
+        ]
+      ],
+      "assessment": "Completebodyread. Sparseconstructorchecksbounds, duplicateentries accumulate. Floatapplyonlylengthchecks thenuncheckedindices overpublicmatrixfields; noNaN/Inf/error-tolerancemonitor despiteNumericalprofilecomment. Integerapply_exact rechecksindices andcheckedmul/add, so itrefuses mutatedbounds/overflow. compose_exact checksintermediatedimensionandappliesboth, notuniversalcompositionzero. Singlefixturecomputes[1,1]*(1,-1)=0; let-elseearlyreturnwouldsilentlypassifconstructorsrefused. Notanactualtrianglecomplexproof ornativeexecution.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/coboundary_matrix.rs",
+          "sha256": "ac4460d5d7a12b0f7ac899a65b6829cf6dba3f552f795115c0b0e2f7d73f6814",
+          "lines": [
+            1,
+            142
+          ],
+          "empty_file_read": false,
+          "assessment": "Completebodyread. Sparseconstructorchecksbounds, duplicateentries accumulate. Floatapplyonlylengthchecks thenuncheckedindices overpublicmatrixfields; noNaN/Inf/error-tolerancemonitor despiteNumericalprofilecomment. Integerapply_exact rechecksindices andcheckedmul/add, so itrefuses mutatedbounds/overflow. compose_exact checksintermediatedimensionandappliesboth, notuniversalcompositionzero. Singlefixturecomputes[1,1]*(1,-1)=0; let-elseearlyreturnwouldsilentlypassifconstructorsrefused. Notanactualtrianglecomplexproof ornativeexecution."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/cochain.rs",
+      "sha256": "31ac626c419b997d982876bdd42f8ab7e3833b7c9160d6fa154057913da2d5c8",
+      "line_count": 353,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          353
+        ]
+      ],
+      "assessment": "Complete source and tests independently read; same arithmetic/hash omission as chain, with typed linearfunctional meaning only declared by caller. Addition/subtraction can combine different basisIDs and copy leftbasis; coefficientonlyhash losesdegree/basis and shareschain domain. Positive scalar/zero/dimensiontests do not establish functional evaluation or basis covariance. Genericcapacityrecord not a cochain theorem.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/cochain.rs",
+          "sha256": "31ac626c419b997d982876bdd42f8ab7e3833b7c9160d6fa154057913da2d5c8",
+          "lines": [
+            1,
+            353
+          ],
+          "empty_file_read": false,
+          "assessment": "Complete source and tests independently read; same arithmetic/hash omission as chain, with typed linearfunctional meaning only declared by caller. Addition/subtraction can combine different basisIDs and copy leftbasis; coefficientonlyhash losesdegree/basis and shareschain domain. Positive scalar/zero/dimensiontests do not establish functional evaluation or basis covariance. Genericcapacityrecord not a cochain theorem."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/cochain_complex.rs",
+      "sha256": "1606de57e63618814a01d207a8400ed9a44b90ee91c075c96f3a9fd01d83a8b9",
+      "line_count": 407,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          407
+        ]
+      ],
+      "assessment": "Full constructor/provenance/contract/tests read. Computes exactd1*d0 and dimensionchecks beforecreatingwitness; emptyouterdimension skipvalid. TheoremProvenance only rejectsblankstrings; derivedDeserialize bypassesconstructorblankguard, and noexternaltheorem/sourceauthentication occurs. Publiccomplexmaps/dimensions/witness canbediverged afterchecking. _witness_hash iscomputedunused. Contractbinding is markerimpl+externalmacro, notproof readhere. Unitpositive/negativeboundarychecks credited; genericcapacityunrelated.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/cochain_complex.rs",
+          "sha256": "1606de57e63618814a01d207a8400ed9a44b90ee91c075c96f3a9fd01d83a8b9",
+          "lines": [
+            1,
+            407
+          ],
+          "empty_file_read": false,
+          "assessment": "Full constructor/provenance/contract/tests read. Computes exactd1*d0 and dimensionchecks beforecreatingwitness; emptyouterdimension skipvalid. TheoremProvenance only rejectsblankstrings; derivedDeserialize bypassesconstructorblankguard, and noexternaltheorem/sourceauthentication occurs. Publiccomplexmaps/dimensions/witness canbediverged afterchecking. _witness_hash iscomputedunused. Contractbinding is markerimpl+externalmacro, notproof readhere. Unitpositive/negativeboundarychecks credited; genericcapacityunrelated."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/cocycle.rs",
+      "sha256": "2c98223a2b809aa227372aa40685a63469a987065d14e8737deb0b8d64897c1b",
+      "line_count": 224,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          224
+        ]
+      ],
+      "assessment": "Full source/testsread. Some map branch checksdegree/dimensions/zero; None certifieswithoutknowingtopdegree orcarrier. Callercomplexhash/cachedmaphash remainunverified andpubliccochain+witnessmutable. TestsrefuseSome identitynonzero,wrongdegree/wronglength butnotomittedmap orstale/foreigncarrier. Constructionrecordisconditional oncallerbinding, notintrinsiccertificate.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/cocycle.rs",
+          "sha256": "2c98223a2b809aa227372aa40685a63469a987065d14e8737deb0b8d64897c1b",
+          "lines": [
+            1,
+            224
+          ],
+          "empty_file_read": false,
+          "assessment": "Full source/testsread. Some map branch checksdegree/dimensions/zero; None certifieswithoutknowingtopdegree orcarrier. Callercomplexhash/cachedmaphash remainunverified andpubliccochain+witnessmutable. TestsrefuseSome identitynonzero,wrongdegree/wronglength butnotomittedmap orstale/foreigncarrier. Constructionrecordisconditional oncallerbinding, notintrinsiccertificate."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/coefficient_domain.rs",
+      "sha256": "dbe54ce28afae975c06d742e5c7052f7d906f08b7932a0156e69e406538ad7dc",
+      "line_count": 202,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          202
+        ]
+      ],
+      "assessment": "Fully read domain enum, bounded trial-division characteristic and generic capacity record. Only prime-field Fp parameters<=4096 admitted; Integers/Rational characteristic0, Real refused by implementation policy. This is not a claim that all finite fields have prime order or that mathematical reals lack exact characteristic. Enum itself remains publicly constructible/deserializable without ExactCharacteristic validation. Generic1<=items<=capacity record is unrelated to field arithmetic; tests distinguish primes/composites and simple bounds only.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/coefficient_domain.rs",
+          "sha256": "dbe54ce28afae975c06d742e5c7052f7d906f08b7932a0156e69e406538ad7dc",
+          "lines": [
+            1,
+            202
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read domain enum, bounded trial-division characteristic and generic capacity record. Only prime-field Fp parameters<=4096 admitted; Integers/Rational characteristic0, Real refused by implementation policy. This is not a claim that all finite fields have prime order or that mathematical reals lack exact characteristic. Enum itself remains publicly constructible/deserializable without ExactCharacteristic validation. Generic1<=items<=capacity record is unrelated to field arithmetic; tests distinguish primes/composites and simple bounds only."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/cohomology.rs",
+      "sha256": "aced3ce0dcdaa69d3925f7557635005373db84d7e0c4127fc96fa7f51c1f1f3a",
+      "line_count": 464,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          464
+        ]
+      ],
+      "assessment": "Fullsource/testbody read. CorrectH0=kerd0 and H1=kerd1-rankd0 undercochainlaw; explicitH2refusal. Underflowtest mutatespublicd0/d1 intoinvalidcomplex withrank2>kernel1, demonstratingmutationpath butnotcoveringinvalidinclusion withequalranks. Exampled0=(1,0),d1=(1,0) hasproduct1,yetkerdim=imdim=1 returnsH1=0. H1versusfullresidualquotientdistinctionvaluable. DeRham-stylepaddedfiniteexample hasH1=1byconstruction, notintervaldeRhamcohomology proof. Contract/backendconditional.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/cohomology.rs",
+          "sha256": "aced3ce0dcdaa69d3925f7557635005373db84d7e0c4127fc96fa7f51c1f1f3a",
+          "lines": [
+            1,
+            464
+          ],
+          "empty_file_read": false,
+          "assessment": "Fullsource/testbody read. CorrectH0=kerd0 and H1=kerd1-rankd0 undercochainlaw; explicitH2refusal. Underflowtest mutatespublicd0/d1 intoinvalidcomplex withrank2>kernel1, demonstratingmutationpath butnotcoveringinvalidinclusion withequalranks. Exampled0=(1,0),d1=(1,0) hasproduct1,yetkerdim=imdim=1 returnsH1=0. H1versusfullresidualquotientdistinctionvaluable. DeRham-stylepaddedfiniteexample hasH1=1byconstruction, notintervaldeRhamcohomology proof. Contract/backendconditional."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/cycle.rs",
+      "sha256": "c7d779910a91185adbdd6e9cb483060156cdb7fa3bf4535158a9a8e0a419d70e",
+      "line_count": 224,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          224
+        ]
+      ],
+      "assessment": "Full source/testsread. Some(boundary)checksdegree,dimension andactualzero product, thenrecords callercomplexhash andcachedmaphash withoutbindingthem tocanonicalcarrier. None unconditionallycertifieseverydegree/vector, no degree0/carrierboundaryabsenceproof. Publicchain+witness allowreplacement/reuse despite onlytry_cycle constructiondoc. Tests include threeSome negatives, noNonepositivecontext orforeigncomplexbinding. Genericcapacityunrelated.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/cycle.rs",
+          "sha256": "c7d779910a91185adbdd6e9cb483060156cdb7fa3bf4535158a9a8e0a419d70e",
+          "lines": [
+            1,
+            224
+          ],
+          "empty_file_read": false,
+          "assessment": "Full source/testsread. Some(boundary)checksdegree,dimension andactualzero product, thenrecords callercomplexhash andcachedmaphash withoutbindingthem tocanonicalcarrier. None unconditionallycertifieseverydegree/vector, no degree0/carrierboundaryabsenceproof. Publicchain+witness allowreplacement/reuse despite onlytry_cycle constructiondoc. Tests include threeSome negatives, noNonepositivecontext orforeigncomplexbinding. Genericcapacityunrelated."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/e_infinity_operad.rs",
+      "sha256": "605dc172bd2666086ca6194c16621e2a761eeaf08c141fcb1d7a94970a765e8d",
+      "line_count": 102,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          102
+        ]
+      ],
+      "assessment": "Fully read shell and symmetric-order witness. Nonempty label plus1<=arity<=20 computes arity factorial with checkedu64 multiplication, correctly bounding20! belowu64. No symmetric action, contractibility, operad composition or E-infinity law checked; factorial is a separate finite arithmetic fact. Unit tests cover shell and4!/zeroarity, not an operad. Explicit shell disclaimer retained.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/e_infinity_operad.rs",
+          "sha256": "605dc172bd2666086ca6194c16621e2a761eeaf08c141fcb1d7a94970a765e8d",
+          "lines": [
+            1,
+            102
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read shell and symmetric-order witness. Nonempty label plus1<=arity<=20 computes arity factorial with checkedu64 multiplication, correctly bounding20! belowu64. No symmetric action, contractibility, operad composition or E-infinity law checked; factorial is a separate finite arithmetic fact. Unit tests cover shell and4!/zeroarity, not an operad. Explicit shell disclaimer retained."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/error.rs",
+      "sha256": "2de99e27e73dbe4dd1960853b2bf2ffe943f34505751b244a82d681b49ee226d",
+      "line_count": 77,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          77
+        ]
+      ],
+      "assessment": "Fully read compatibility errors and BoundarySquareDefect. Positive supplied nonzero-entry count converts to typed degree error; there is no matrix input or recomputation of the count. It certifies positivity of caller testimony, not an actual boundary-square defect. Zero count refused, negative degree allowed as graded data. Formatting/error conversion and unit example do not establish topology.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/error.rs",
+          "sha256": "2de99e27e73dbe4dd1960853b2bf2ffe943f34505751b244a82d681b49ee226d",
+          "lines": [
+            1,
+            77
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read compatibility errors and BoundarySquareDefect. Positive supplied nonzero-entry count converts to typed degree error; there is no matrix input or recomputation of the count. It certifies positivity of caller testimony, not an actual boundary-square defect. Zero count refused, negative degree allowed as graded data. Formatting/error conversion and unit example do not establish topology."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/errors.rs",
+      "sha256": "583ab990dc23530d8cc82b3bc32a414694c90a0281aaa66126301bf3b40168d3",
+      "line_count": 280,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          280
+        ]
+      ],
+      "assessment": "Fully read error taxonomy, source-preserving SNF failure, nonintegral lattice distinction, conversion/displaytests and generic capacity witness. Correctly distinguishes nonintegral presentation from failed SNF and inconsistent Betti rank from plausible clampedzero. Error types declare categories rather than checking predicates. Appended generic count/capacity arithmetic does not certify boundary laws or error exhaustiveness; mutation tally remains unverified comment.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/errors.rs",
+          "sha256": "583ab990dc23530d8cc82b3bc32a414694c90a0281aaa66126301bf3b40168d3",
+          "lines": [
+            1,
+            280
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read error taxonomy, source-preserving SNF failure, nonintegral lattice distinction, conversion/displaytests and generic capacity witness. Correctly distinguishes nonintegral presentation from failed SNF and inconsistent Betti rank from plausible clampedzero. Error types declare categories rather than checking predicates. Appended generic count/capacity arithmetic does not certify boundary laws or error exhaustiveness; mutation tally remains unverified comment."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/hash.rs",
+      "sha256": "654733e138054a28a7ca60541d438194ee2bc6865b180d9d2c246f9b47787a55",
+      "line_count": 145,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          145
+        ]
+      ],
+      "assessment": "Fullcompatibilityhashsourceandtestsread. Typedhashwrappers allhashrawinputuntagged;Rusttypesseparated butbyteidentitynotgloballydomain-tagged. Newdomain_separated hashesdomain||ff||payload witharbitrarybytearguments: delimiternotescaped/lengthframed, permittingdifferentdomain/payloadpairswithsamebytes. domains_separate comparestwodomainsforthesamepayloadonly, so unitpositivecannotdetectcrosspayloadambiguity. Digestlengthcheckvacuousforfixed[32]. NoBLAKE3execution; ambiguityneedsnocryptographiccollision.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/hash.rs",
+          "sha256": "654733e138054a28a7ca60541d438194ee2bc6865b180d9d2c246f9b47787a55",
+          "lines": [
+            1,
+            145
+          ],
+          "empty_file_read": false,
+          "assessment": "Fullcompatibilityhashsourceandtestsread. Typedhashwrappers allhashrawinputuntagged;Rusttypesseparated butbyteidentitynotgloballydomain-tagged. Newdomain_separated hashesdomain||ff||payload witharbitrarybytearguments: delimiternotescaped/lengthframed, permittingdifferentdomain/payloadpairswithsamebytes. domains_separate comparestwodomainsforthesamepayloadonly, so unitpositivecannotdetectcrosspayloadambiguity. Digestlengthcheckvacuousforfixed[32]. NoBLAKE3execution; ambiguityneedsnocryptographiccollision."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/hashing.rs",
+      "sha256": "745b38c4124f342aef8328533eaab8e297b35d81477685b4152296521d851fbb",
+      "line_count": 356,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          356
+        ]
+      ],
+      "assessment": "Full hashing/testsread. Matrixhash includesdomain/shape/rationallimbs; integerlatticetagdistinct, manifestdimbinding,weights/provenancestringtags explicit. Cochain-witness helperhashesonlyshapes+provenance,notactualentries/complex, while otherfields canbindmaps separately. hash_vectorgenericQcoordinates isintentionallyonlyvectorhash, so chain/cochaincallersmustbindtype/degree/basis elsewhere. No signature/authentication or mathematicaltruth fromhashing. Carrierconstantdefinitionsnotyetread; nobodycredit inferred. Appendedcapacityrecord unrelated.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/hashing.rs",
+          "sha256": "745b38c4124f342aef8328533eaab8e297b35d81477685b4152296521d851fbb",
+          "lines": [
+            1,
+            356
+          ],
+          "empty_file_read": false,
+          "assessment": "Full hashing/testsread. Matrixhash includesdomain/shape/rationallimbs; integerlatticetagdistinct, manifestdimbinding,weights/provenancestringtags explicit. Cochain-witness helperhashesonlyshapes+provenance,notactualentries/complex, while otherfields canbindmaps separately. hash_vectorgenericQcoordinates isintentionallyonlyvectorhash, so chain/cochaincallersmustbindtype/degree/basis elsewhere. No signature/authentication or mathematicaltruth fromhashing. Carrierconstantdefinitionsnotyetread; nobodycredit inferred. Appendedcapacityrecord unrelated."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/homology.rs",
+      "sha256": "79db77b5bc17da80e5bfe5ed80d6a2d942fe55146f5ed5ba5e4863a5b8bba197",
+      "line_count": 381,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          381
+        ]
+      ],
+      "assessment": "Fullsource/testbody read. Exactranks/kernel dimensions computeH0/H1 conditionalon chainlaw; H2 deliberatelyunsupporteddespite fullreport shorthand. checked_sub refusesnegative dimension but doesnotproveimageinkernel; currentpublicmaps canviolate d1d2=0 whileranksstillfit. Reportbinds cachedcomplexhash notcurrentrecomputedmaps. Testsvalidpoint/tree/triangle/disconnectedcases mathematicallycorrect, externalrankbackendnotexecuted. Genericcapacitycountrecord unrelated.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/homology.rs",
+          "sha256": "79db77b5bc17da80e5bfe5ed80d6a2d942fe55146f5ed5ba5e4863a5b8bba197",
+          "lines": [
+            1,
+            381
+          ],
+          "empty_file_read": false,
+          "assessment": "Fullsource/testbody read. Exactranks/kernel dimensions computeH0/H1 conditionalon chainlaw; H2 deliberatelyunsupporteddespite fullreport shorthand. checked_sub refusesnegative dimension but doesnotproveimageinkernel; currentpublicmaps canviolate d1d2=0 whileranksstillfit. Reportbinds cachedcomplexhash notcurrentrecomputedmaps. Testsvalidpoint/tree/triangle/disconnectedcases mathematicallycorrect, externalrankbackendnotexecuted. Genericcapacitycountrecord unrelated."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/homology_class.rs",
+      "sha256": "998a216ad3c2e3c43771082f30492a770211056e79649ead103f6ef00c6addd3",
+      "line_count": 306,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          306
+        ]
+      ],
+      "assessment": "Fullbodyandtestsread. CertifiedCycle::new_unchecked publicandexplicitlyunchecked. Homology/CohomologyClass new_checked comparesonly quotientcomplexID anddomaindeclaration; no cyclezero,degree,representative/relation/length matching. Privatefields preserveconstructedmetadata pairnotmathpredicate. Testsdeliberately verifycomplex/domainmismatchandpositiveidentities; quotientinputsunchecked. CheckedI64testwrapper usescheckedmethodsbutuncheckedAddoutside scope; noexecution.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/homology_class.rs",
+          "sha256": "998a216ad3c2e3c43771082f30492a770211056e79649ead103f6ef00c6addd3",
+          "lines": [
+            1,
+            306
+          ],
+          "empty_file_read": false,
+          "assessment": "Fullbodyandtestsread. CertifiedCycle::new_unchecked publicandexplicitlyunchecked. Homology/CohomologyClass new_checked comparesonly quotientcomplexID anddomaindeclaration; no cyclezero,degree,representative/relation/length matching. Privatefields preserveconstructedmetadata pairnotmathpredicate. Testsdeliberately verifycomplex/domainmismatchandpositiveidentities; quotientinputsunchecked. CheckedI64testwrapper usescheckedmethodsbutuncheckedAddoutside scope; noexecution."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/ids.rs",
+      "sha256": "c7ae629fec2cf21ab3694036e11128a6377535682c4185b1d0a75c7c2f57957e",
+      "line_count": 208,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          208
+        ]
+      ],
+      "assessment": "Full source read. u64newtypes give distinctRusttypes but arbitrary repeatednumbersremainconstructible/deserializable; no globaluniqueness allocation orverifiedobjectlookup. BasisIdarbitraryString. BasisRoster specificallychecksnonempty roster/nonemptydistinctnames, notlinearindependence or fullbasis; whitespace isvalidbyliteralgrammar. Signedi32degrees allownegativegradedobjects. Unitdisplay/order/equality/rostercontrols finiteandaccurate.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/ids.rs",
+          "sha256": "c7ae629fec2cf21ab3694036e11128a6377535682c4185b1d0a75c7c2f57957e",
+          "lines": [
+            1,
+            208
+          ],
+          "empty_file_read": false,
+          "assessment": "Full source read. u64newtypes give distinctRusttypes but arbitrary repeatednumbersremainconstructible/deserializable; no globaluniqueness allocation orverifiedobjectlookup. BasisIdarbitraryString. BasisRoster specificallychecksnonempty roster/nonemptydistinctnames, notlinearindependence or fullbasis; whitespace isvalidbyliteralgrammar. Signedi32degrees allownegativegradedobjects. Unitdisplay/order/equality/rostercontrols finiteandaccurate."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/lib.rs",
+      "sha256": "7a4b3ea218bda0eb59c9989bf3cf5c2654eaca653d603a01921a00d4e7583488",
+      "line_count": 285,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          285
+        ]
+      ],
+      "assessment": "Fully read all exports and cyclomatic witness/tests. Top-level explicitly describes new TDA modules as best-effort shells, not complete topology algorithms. Cyclomatic admission checks nonempty unique vertices, endpoint membership, V/E<=1024, supplied component range and nonnegative E+C-V; it never derives connected components. Tree with2vertices1edge and declared2components yields b1=1 despite actual0. Private fields preserve only this checked arithmetic admission. Triangle positive and too-few-components negative miss false in-range component claims. Module exports or mutation accounting comment do not establish execution.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/lib.rs",
+          "sha256": "7a4b3ea218bda0eb59c9989bf3cf5c2654eaca653d603a01921a00d4e7583488",
+          "lines": [
+            1,
+            285
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read all exports and cyclomatic witness/tests. Top-level explicitly describes new TDA modules as best-effort shells, not complete topology algorithms. Cyclomatic admission checks nonempty unique vertices, endpoint membership, V/E<=1024, supplied component range and nonnegative E+C-V; it never derives connected components. Tree with2vertices1edge and declared2components yields b1=1 despite actual0. Private fields preserve only this checked arithmetic admission. Triangle positive and too-few-components negative miss false in-range component claims. Module exports or mutation accounting comment do not establish execution."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/matrix.rs",
+      "sha256": "176f93c71dfd6a08a4def19fc9d216a9d86c766bfee3d1d06cf9b64a1d1deae4",
+      "line_count": 357,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          357
+        ]
+      ],
+      "assessment": "Fully read wrappers, exact augmented-rank column-space criterion, generic capacity record and alltests. Rank/image/kernel and multiplication delegate to linear_algebra backend, which is outside this slice and not executed. Given valid rational matrix/rank primitives, rank([M|v])=rank(M) is correct membership test and explicit vector dimension refusal is appropriate. Triangle zero-sum image, rank-deficient matrix, multiplication and dimension tests are substantive finite cases. Generic capacity witness is independent of matrix shape or rank and not a proof of backend correctness. Allocation/usize capacity paths lack explicit resource policy; no concrete hugeallocation executed.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/matrix.rs",
+          "sha256": "176f93c71dfd6a08a4def19fc9d216a9d86c766bfee3d1d06cf9b64a1d1deae4",
+          "lines": [
+            1,
+            357
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read wrappers, exact augmented-rank column-space criterion, generic capacity record and alltests. Rank/image/kernel and multiplication delegate to linear_algebra backend, which is outside this slice and not executed. Given valid rational matrix/rank primitives, rank([M|v])=rank(M) is correct membership test and explicit vector dimension refusal is appropriate. Triangle zero-sum image, rank-deficient matrix, multiplication and dimension tests are substantive finite cases. Generic capacity witness is independent of matrix shape or rank and not a proof of backend correctness. Allocation/usize capacity paths lack explicit resource policy; no concrete hugeallocation executed."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/quotient.rs",
+      "sha256": "b235b280b0e84897b0f822c196902106ab2098c66aaa944931223fbab5dd8cc1",
+      "line_count": 272,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          272
+        ]
+      ],
+      "assessment": "Fullbodyread. Publicuncheckedspace storescallerprojection/degree/relation/domain/hash; despite internal-constructor doc thefunctionispublic. projectvalidatesrawlength thenmatrixmultiply, notboundarysubspace/projectionkernel. Classnew_checkedhashesreturnedvectorandrelationlabel, notbindingprojection,complex,degreeordomainintowitness; thoselatterfields separateandderivedDeserializeunchecked. Genericcapacitytestalone. Vectorserializationfailureproperlypropagates,relationserializationfallback remainsbutenumusuallyserializable. Validonlyconditional on independentlyverified quotientspace.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/quotient.rs",
+          "sha256": "b235b280b0e84897b0f822c196902106ab2098c66aaa944931223fbab5dd8cc1",
+          "lines": [
+            1,
+            272
+          ],
+          "empty_file_read": false,
+          "assessment": "Fullbodyread. Publicuncheckedspace storescallerprojection/degree/relation/domain/hash; despite internal-constructor doc thefunctionispublic. projectvalidatesrawlength thenmatrixmultiply, notboundarysubspace/projectionkernel. Classnew_checkedhashesreturnedvectorandrelationlabel, notbindingprojection,complex,degreeordomainintowitness; thoselatterfields separateandderivedDeserializeunchecked. Genericcapacitytestalone. Vectorserializationfailureproperlypropagates,relationserializationfallback remainsbutenumusuallyserializable. Validonlyconditional on independentlyverified quotientspace."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/scalar.rs",
+      "sha256": "4eb5a6b4ba2360b7781d6ca7ca9998a59410f94400038a51c8d0bf939f55aa25",
+      "line_count": 311,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          311
+        ]
+      ],
+      "assessment": "Fully read canonical BigRational alias, exact legacy injection, explicit fallible i64 narrowing, constructors and regressiontests. qr documents zero-denominator panic. Exactness depends on rational normalization/library invariants; comments prohibit decision-path narrowing but do not enforce all callers. Length-prefixed signed little-endian numerator/denominator/vector representation separates structural encodings; source carefully distinguishes injective encoding from fixed-width hash collision resistance. Concrete1/515 vs769/2 unframed collision valid, as are beyond-i64 product and narrowrefusal examples. No BigRational/BLAKE3 execution.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/scalar.rs",
+          "sha256": "4eb5a6b4ba2360b7781d6ca7ca9998a59410f94400038a51c8d0bf939f55aa25",
+          "lines": [
+            1,
+            311
+          ],
+          "empty_file_read": false,
+          "assessment": "Fully read canonical BigRational alias, exact legacy injection, explicit fallible i64 narrowing, constructors and regressiontests. qr documents zero-denominator panic. Exactness depends on rational normalization/library invariants; comments prohibit decision-path narrowing but do not enforce all callers. Length-prefixed signed little-endian numerator/denominator/vector representation separates structural encodings; source carefully distinguishes injective encoding from fixed-width hash collision resistance. Concrete1/515 vs769/2 unframed collision valid, as are beyond-i64 product and narrowrefusal examples. No BigRational/BLAKE3 execution."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/serialization.rs",
+      "sha256": "fd7a8b8b51b95af9abcef5c2f917f2154474df3f21891d761536a6557a3c0b01",
+      "line_count": 190,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          190
+        ]
+      ],
+      "assessment": "Fullsource/testsread. Customwireparserabsent; typesuseSerde. ChainByteLedger requiresnonempty i64 coefficients, checkedcount*8 andi128sum plus tautologicalto_le/from_le roundtrip. Itreturns count/bytelen/checksum, noactualencodedbytesorlosslesschainreconstruction; permutation/differentcoefficientsmaysharesummary legitimately. Emptychainrefusal isthisrepresentationpolicy, notclaimzeromoduleinvalid. Genericcapacitytestunrelated to serializationequivalence.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/serialization.rs",
+          "sha256": "fd7a8b8b51b95af9abcef5c2f917f2154474df3f21891d761536a6557a3c0b01",
+          "lines": [
+            1,
+            190
+          ],
+          "empty_file_read": false,
+          "assessment": "Fullsource/testsread. Customwireparserabsent; typesuseSerde. ChainByteLedger requiresnonempty i64 coefficients, checkedcount*8 andi128sum plus tautologicalto_le/from_le roundtrip. Itreturns count/bytelen/checksum, noactualencodedbytesorlosslesschainreconstruction; permutation/differentcoefficientsmaysharesummary legitimately. Emptychainrefusal isthisrepresentationpolicy, notclaimzeromoduleinvalid. Genericcapacitytestunrelated to serializationequivalence."
+        }
+      ]
+    },
+    {
+      "path": "code/rust/core_homology/src/witness.rs",
+      "sha256": "64b1eba729842d827166f59eb2cac48f323a856e7da14e306d946465842bb5cb",
+      "line_count": 342,
+      "full_source_read": true,
+      "empty_file_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          342
+        ]
+      ],
+      "assessment": "Full source/tests read. Explicitly constructiontime recordswithoutselfreverification. Four nominallysealedwitnesses have privateunit butpublicsemanticfields and derivedDeserialize; externalwiredecoding ormutationbypassesexclusiveconstruction provenance. Homology/Cohomology witness fields arefullypublicanddonotcheckker-im arithmetic. Dummyhash/accessortests arestructuretests, notmathematicalproof. Genericcapacityrecord bearsnorelation toboundwitnesspredicate.",
+      "chunk_assessments": [
+        {
+          "path": "code/rust/core_homology/src/witness.rs",
+          "sha256": "64b1eba729842d827166f59eb2cac48f323a856e7da14e306d946465842bb5cb",
+          "lines": [
+            1,
+            342
+          ],
+          "empty_file_read": false,
+          "assessment": "Full source/tests read. Explicitly constructiontime recordswithoutselfreverification. Four nominallysealedwitnesses have privateunit butpublicsemanticfields and derivedDeserialize; externalwiredecoding ormutationbypassesexclusiveconstruction provenance. Homology/Cohomology witness fields arefullypublicanddonotcheckker-im arithmetic. Dummyhash/accessortests arestructuretests, notmathematicalproof. Genericcapacityrecord bearsnorelation toboundwitnesspredicate."
+        }
+      ]
+    }
+  ],
+  "automated_reviews": [],
+  "remaining_unsupported_files": [
+    {
+      "path": "code/rust/core_homology/src/alpha_complex.rs",
+      "sha256": "b197242b22a9e5fd480ed2b744ccf749fd70431a7cfea15a19726c013d1ca95c",
+      "reviewed_lines": [],
+      "unread_line_count": 125,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/barcode.rs",
+      "sha256": "ae076bd7f0a4845e7ce9f51a3f544f141210e1f7ddc6c5d7ef0c44e64f9d281a",
+      "reviewed_lines": [],
+      "unread_line_count": 144,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/block_embedding.rs",
+      "sha256": "270ecd2f69758407c37331ccbcd8afd3c4253a3f3d94de75bae8f0a51eb4c3f7",
+      "reviewed_lines": [],
+      "unread_line_count": 150,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/bockstein_homomorphism.rs",
+      "sha256": "4e726d1304db8f48ab80e61de925f8adbbcf6935657ef9817925aff23131ab08",
+      "reviewed_lines": [],
+      "unread_line_count": 161,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/bottleneck_distance.rs",
+      "sha256": "d17b52c9bc585766dad5307e176a20fccd0c48d5f70e6e193ab85ee00c9da652",
+      "reviewed_lines": [],
+      "unread_line_count": 253,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/boundary_trace.rs",
+      "sha256": "76a4ee7fdfb730dc50302b22424adb7e8560a6af36d9124a99e4abd1ccc0e195",
+      "reviewed_lines": [],
+      "unread_line_count": 169,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cap_product.rs",
+      "sha256": "c6357496bdfc457199fe60c5132a678e61d4fdfb14a157e741e8f64d4593ae80",
+      "reviewed_lines": [],
+      "unread_line_count": 144,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cell_grammar.rs",
+      "sha256": "a2b8aa4819c918e75e46ad8b5762f816ec793a52e594c7162175a6f5adb8e287",
+      "reviewed_lines": [],
+      "unread_line_count": 442,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/clearing_optimization.rs",
+      "sha256": "2fccdb4cbd59b22ef0c67ceaddf9320ddfce7e70382a2922ba322154d0282d7b",
+      "reviewed_lines": [],
+      "unread_line_count": 206,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/clique_complex.rs",
+      "sha256": "8a8cabfe1d3698864049206919da62276a261da33126cbb2ff65f4a1cfc30bf6",
+      "reviewed_lines": [],
+      "unread_line_count": 165,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cochain_primitive_difference.rs",
+      "sha256": "2b5256cd25437d137729f3ddbbb352fc4c5ff9ec622040d01a6b0c8157dcbcf6",
+      "reviewed_lines": [],
+      "unread_line_count": 296,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cochain_realization.rs",
+      "sha256": "1f38ab90eb14d5eea8e77a9380eb80f5083042ba71ff6588fb368f58ab873a6a",
+      "reviewed_lines": [],
+      "unread_line_count": 359,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cohomology_algebra.rs",
+      "sha256": "5a640f7352c74d50520f6c8a65bc8e3fd14ed247f37ba9ac9e131c2fff132720",
+      "reviewed_lines": [],
+      "unread_line_count": 164,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/contract_property_witnesses.rs",
+      "sha256": "1f8bb20793624de8b3d537303d8f50a7b28427acf428c16c1d2f12e204af9852",
+      "reviewed_lines": [],
+      "unread_line_count": 191,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cup_product.rs",
+      "sha256": "b053db27616951a3f8644e015ec6d0056ed9c07c6208a9895eb2702b41e4ed80",
+      "reviewed_lines": [],
+      "unread_line_count": 226,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cycle_aware.rs",
+      "sha256": "1ba94a2f23c8aa0c0f0e08a262d019dd0cfa1680cb892a28e79249bdfcac256f",
+      "reviewed_lines": [],
+      "unread_line_count": 386,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cycle_basis.rs",
+      "sha256": "5feee3af12f21b0a37203b5452c49f0470bb96d24b724a0fc05f85dca4f2c687",
+      "reviewed_lines": [],
+      "unread_line_count": 529,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cycle_space_projector.rs",
+      "sha256": "d3ecc496270908973cdc0075d00ef0f2a54e00a31348f3163eec2043e670ca0b",
+      "reviewed_lines": [],
+      "unread_line_count": 290,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/cyclic_phase.rs",
+      "sha256": "aa5a4610e378c6676dc3ab4237ea4b610728bbb7facadc21fb29f7bfbd72600d",
+      "reviewed_lines": [],
+      "unread_line_count": 403,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/declared_incidence.rs",
+      "sha256": "7c025ae3b14f9ed8914687e8ef586a8ee969edec94a97afa28a4ca08ad12c4ce",
+      "reviewed_lines": [],
+      "unread_line_count": 190,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/deformation_complex.rs",
+      "sha256": "519ec70baf1783f2027a352d3c3191c17d1fa3150f4709d73d553a8aa453388d",
+      "reviewed_lines": [],
+      "unread_line_count": 177,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/dgla.rs",
+      "sha256": "89c2b98f4c3ffb34be9a32f3821a2c6bf7c6a4d37ab626ddcbed26f5c144b47b",
+      "reviewed_lines": [],
+      "unread_line_count": 2186,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/diagram_plotting.rs",
+      "sha256": "9f57563f6048987f45228bf7a736073501e0b15855299c1f59be8883a3906373",
+      "reviewed_lines": [],
+      "unread_line_count": 114,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/dipha_io.rs",
+      "sha256": "70bdd96403ef284392d79ce43420cc37f43ef5c84c58c7799f8f9992f9c66140",
+      "reviewed_lines": [],
+      "unread_line_count": 159,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/directed_multigraph.rs",
+      "sha256": "42551c9574dffb599e4e5abadb2eb3d065d8cbc742c2b903b11c896388e68e25",
+      "reviewed_lines": [],
+      "unread_line_count": 228,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/discrete_morse_complex.rs",
+      "sha256": "43f7181f6efab0a0908fb27b4c6e08cb762fda968c337509e5ed739417971ec9",
+      "reviewed_lines": [],
+      "unread_line_count": 126,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/discrete_morse_function.rs",
+      "sha256": "48a67a9c28e15b32342b7e23b56417ad56085b221eb7eb88c73fe6bddcb6c5d2",
+      "reviewed_lines": [],
+      "unread_line_count": 182,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/dowker_complex.rs",
+      "sha256": "c2cb6d717b6226efbb57083076968d3edb8a695b7ea2ae91cd0f89f5cf0b6751",
+      "reviewed_lines": [],
+      "unread_line_count": 127,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/exact_betti.rs",
+      "sha256": "c9cdb006417fb070184c77838bbe701fb91940bec2602706edb517b4e5d41959",
+      "reviewed_lines": [],
+      "unread_line_count": 722,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/exact_carrier.rs",
+      "sha256": "e05ae106801b6aa7ddf74324ee628f04bd999fd41cf856bf558b8e27ddf951c2",
+      "reviewed_lines": [],
+      "unread_line_count": 458,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/f2_cohomology.rs",
+      "sha256": "254728b8e7ac03af6669b339fa64501492106e34416698b8dc648bfd02af422b",
+      "reviewed_lines": [],
+      "unread_line_count": 418,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/filtered_complex.rs",
+      "sha256": "67d03399e7a36c6ee2c9e3a90bed300f0bf19373402c6d1db55d685676309779",
+      "reviewed_lines": [],
+      "unread_line_count": 126,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/filtration.rs",
+      "sha256": "63f5ba7bc472323f05ab2edc7ecf3a4f3c3055c81fa4f08e96bc946609d5ad5f",
+      "reviewed_lines": [],
+      "unread_line_count": 206,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/finite_cliques.rs",
+      "sha256": "7152187523109abb8d3eca03fa53fb4727e9fc2776118ec6b86371593cb26552",
+      "reviewed_lines": [],
+      "unread_line_count": 155,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/finite_directed_graph.rs",
+      "sha256": "98bbd76ef8395ef22d36d69ea201fe4913c30a295dac4b1ac5fc8a7dffaf61b0",
+      "reviewed_lines": [],
+      "unread_line_count": 367,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/finite_poset.rs",
+      "sha256": "386724950bc2e29e4399a018028bdef73a5b0c38d1e9b5b32b937fb4eef4b91d",
+      "reviewed_lines": [],
+      "unread_line_count": 1329,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/finite_rational_homology.rs",
+      "sha256": "03515087e482578637e304a3870e7bf69af37215babdd7ed3061a4f71b628c1c",
+      "reviewed_lines": [],
+      "unread_line_count": 348,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/gradient_path.rs",
+      "sha256": "2dee02bd17049214de489110dfa6abdaf7cf58a4e3f12696742272921f1fc259",
+      "reviewed_lines": [],
+      "unread_line_count": 180,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/graph_carrier.rs",
+      "sha256": "afb6602686193e0149e822d107226f54916cec44d2a6f63a25d3b23c1ae36e71",
+      "reviewed_lines": [],
+      "unread_line_count": 234,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/graph_coloring.rs",
+      "sha256": "9c6c4f56d53d406ca42e917626eee60ec622725054767e87c66e76fa47a9fe48",
+      "reviewed_lines": [],
+      "unread_line_count": 456,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/graph_f2.rs",
+      "sha256": "80bed30418055a6e09eaf58a1653675e67dd0626a61d2b0941f0af4d155079eb",
+      "reviewed_lines": [],
+      "unread_line_count": 376,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/gudhi_io.rs",
+      "sha256": "03c6e5c4b191af94eba1e40a16552fbbfde9ce8ccf015f29c6d9097fde9b6159",
+      "reviewed_lines": [],
+      "unread_line_count": 125,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/homological_contract_alignment.rs",
+      "sha256": "7d07adb4a438de1d9a3f05e4d3f10591eaafd9d02625d5803d0b8057536b83ab",
+      "reviewed_lines": [],
+      "unread_line_count": 199,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/homological_perturbation.rs",
+      "sha256": "56b658cf7f49b0cc806a01bdbcf5fc227f10194609a459ebf3dd45803b4167a3",
+      "reviewed_lines": [],
+      "unread_line_count": 583,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/homology_computer.rs",
+      "sha256": "ebacf6dd02323bce7640da7235a4973289dcdf1c7828167e96d7c11370179004",
+      "reviewed_lines": [],
+      "unread_line_count": 193,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/integral_chain_complex.rs",
+      "sha256": "fa3899b50ee9a15f90e85ae11f9663392cd91525f376fdd5740e27931b56be52",
+      "reviewed_lines": [],
+      "unread_line_count": 567,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/integral_chain_equivalence.rs",
+      "sha256": "01ef043ef2e5c20fdcaf994aa571aacc950de4b284f30ae2be907b53703c5cb5",
+      "reviewed_lines": [],
+      "unread_line_count": 721,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/interleaving_distance.rs",
+      "sha256": "936adf32df63ada007b54503c251c1905132b839c445bc521739d8f53695138b",
+      "reviewed_lines": [],
+      "unread_line_count": 181,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/join_complex.rs",
+      "sha256": "224cb06d7cd344f0dd873dac83a1bddb7fde632b15b212820c496b21852025e6",
+      "reviewed_lines": [],
+      "unread_line_count": 183,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/l_infinity_operad.rs",
+      "sha256": "1a0a93541b08aba5c4fa096c23e38c1cd72a5182188aaa6b42cbf2dbf8a0ca4b",
+      "reviewed_lines": [],
+      "unread_line_count": 646,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/lambda_graph.rs",
+      "sha256": "9e6db291f7bb37b4d698a2db98ab699dd50e918ca8aab39aa6580526445426fc",
+      "reviewed_lines": [],
+      "unread_line_count": 131,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/lefschetz.rs",
+      "sha256": "e95e45915640fdd81da7a87a180c3cc7e6cc9483d3b205510a302cd982edb445",
+      "reviewed_lines": [],
+      "unread_line_count": 634,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/link_star.rs",
+      "sha256": "c5cce41a3278ec6f125c0be5a8088041be9259e4b389ac5308b4675789f347ed",
+      "reviewed_lines": [],
+      "unread_line_count": 155,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/mapping_cone.rs",
+      "sha256": "08481c20ff76b2403873cf61af1b6161287a6696eda558f284db94246322fc1a",
+      "reviewed_lines": [],
+      "unread_line_count": 145,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/mapping_cylinder.rs",
+      "sha256": "5eefb48092a2d9999f4e45ddd55584c5f9618d7ae9028d22f0849ea3e3de94ed",
+      "reviewed_lines": [],
+      "unread_line_count": 142,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/matrix_reduction.rs",
+      "sha256": "cedd72873cc58cbc37cc2a1580ae3982235aa94113d9eb031709cd47c124435b",
+      "reviewed_lines": [],
+      "unread_line_count": 177,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/maurer_cartan.rs",
+      "sha256": "6c81d45d225d2dea328d7c5da9a83a3da84e1c24cc5ba72efc833c0429073e79",
+      "reviewed_lines": [],
+      "unread_line_count": 679,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/mayervietoris_ss.rs",
+      "sha256": "99d94d94dd09d530e0b236864ae8f70a9b953454f2242e8c909add5079868c88",
+      "reviewed_lines": [],
+      "unread_line_count": 107,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/morse_smale.rs",
+      "sha256": "b5313b1a8fd4a44bbc1574a964f3119769db03bff71988242dd15869279bdbb8",
+      "reviewed_lines": [],
+      "unread_line_count": 106,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/numerical_dual_witness.rs",
+      "sha256": "4b875c9b581d24a46b03b4a981c799f50813013262cbf57187a8b9b0b0cf55dc",
+      "reviewed_lines": [],
+      "unread_line_count": 342,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/observed_2category.rs",
+      "sha256": "31eef9f210b5fdfcc7fccd3fe0440a3d0eef3372f4b976401d4d8c1041517326",
+      "reviewed_lines": [],
+      "unread_line_count": 244,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/permutohedral.rs",
+      "sha256": "2493353f886d7641033efdf749dfef06c3a68c7d3c44e2428388cd2e8b9df2f6",
+      "reviewed_lines": [],
+      "unread_line_count": 895,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/perseus_io.rs",
+      "sha256": "7cfa1323d433dbd2b823bf7c8dcf750fe49f199c834fa0991b6a9cb3f33c047c",
+      "reviewed_lines": [],
+      "unread_line_count": 119,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/persistence_diagram.rs",
+      "sha256": "a115c2abc21b0cac37c599762bebfe78b7f0afc2214be95f17d62aaa410e6648",
+      "reviewed_lines": [],
+      "unread_line_count": 193,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/persistence_pairing.rs",
+      "sha256": "3bb371c6e594acb82311daf4c06788e923aff03f867adecbe2ee4ea9256a9c32",
+      "reviewed_lines": [],
+      "unread_line_count": 137,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/persistent_homology.rs",
+      "sha256": "e1559eba5d2280209924a2a4016a1617233cee883b9e4306a6471b902865e178",
+      "reviewed_lines": [],
+      "unread_line_count": 217,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/ph_matrix_reduction.rs",
+      "sha256": "bf51f9126eaf16f97895aecf8281ad2d140a783c03e79f7fafd9227fd9d1a519",
+      "reviewed_lines": [],
+      "unread_line_count": 210,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/phat_io.rs",
+      "sha256": "c100b3f013cb4853f9e5ff1030324525e3b1ad47c961e27ddccb3850ac413e73",
+      "reviewed_lines": [],
+      "unread_line_count": 127,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/poset_census.rs",
+      "sha256": "43b29ba664fb20e02f7d7cacb1d8cfc38f267b9ee6a50cd92f9267e87b24d8e6",
+      "reviewed_lines": [],
+      "unread_line_count": 495,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/presentation_symmetry.rs",
+      "sha256": "0237722526cbb2c57d39af309a21aba0d83448ca00edf8331a4568320553a801",
+      "reviewed_lines": [],
+      "unread_line_count": 233,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/primal_residual.rs",
+      "sha256": "1950a06285cdd8e149f9bdf5f238daffdd6455b3a0d624658c924fc5bbb03386",
+      "reviewed_lines": [],
+      "unread_line_count": 161,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/primitive_decomposition.rs",
+      "sha256": "1bbc2d532604b11268743537e13f8b7631f882935b0b63d21d3bdab401a630e7",
+      "reviewed_lines": [],
+      "unread_line_count": 153,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/relative_chain_map.rs",
+      "sha256": "0743880490a56f688320c89e5d6f138f38e062c638a6115bb0501a0d85acb61d",
+      "reviewed_lines": [],
+      "unread_line_count": 142,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/relative_complex.rs",
+      "sha256": "0f9e996b5662c136502bc17430a6ac8fb59ac8d32406f97768a03f2719a0583f",
+      "reviewed_lines": [],
+      "unread_line_count": 129,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/relative_homology.rs",
+      "sha256": "059e55b15164556c9865ec65eca8b1686f5991d158b03c726f4ab90897cd87a4",
+      "reviewed_lines": [],
+      "unread_line_count": 124,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/representative_cycle.rs",
+      "sha256": "9b9823ddece0e55079ecf4926e55ca1cb14e6f2c548eda7ac0dbde89ebbb67e1",
+      "reviewed_lines": [],
+      "unread_line_count": 125,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/restriction_dga.rs",
+      "sha256": "a6db516c1e12de67c975f4db3ea74a4dac3a99d9a559de3aa8a2715cc168b0c5",
+      "reviewed_lines": [],
+      "unread_line_count": 422,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/serre_spectral_sequence.rs",
+      "sha256": "a5393836821cc18b38275bb53b36fbc59b371b25beb4edf4f9a8f91333ac6e22",
+      "reviewed_lines": [],
+      "unread_line_count": 170,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/simplicial.rs",
+      "sha256": "27ce111040019ac5197cb442f6d45c392012efe5598f1e98497ecd46801678cf",
+      "reviewed_lines": [],
+      "unread_line_count": 793,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/smith_normal_form.rs",
+      "sha256": "e18d36df59dca0486956892ad95705e3af037ce118ad7efe11efb5c769ff0429",
+      "reviewed_lines": [],
+      "unread_line_count": 378,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/sparse_filtration.rs",
+      "sha256": "230aaa30d22e69680ef8422aee3b0a673f06d697e00e9cd2dfe8bd5561e5cccd",
+      "reviewed_lines": [],
+      "unread_line_count": 127,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/spectral_sequence.rs",
+      "sha256": "7575252dc2da59563b010302dc265d34c9538318d39975f0773d0f999fb19452",
+      "reviewed_lines": [],
+      "unread_line_count": 146,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/square_lattice.rs",
+      "sha256": "126cbb47b598433f631e58357b0c5ad2e1944bb741f645084e836de2ffd806fd",
+      "reviewed_lines": [],
+      "unread_line_count": 358,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/subdivision.rs",
+      "sha256": "e0489c01a7acaa7ce1260e01bdbd8b1279672b6151be99f01f4bdaabc1a0ee1e",
+      "reviewed_lines": [],
+      "unread_line_count": 150,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/suspension.rs",
+      "sha256": "2c2f5d8e0b6ab7b3641b0957dea83fda4cfff3a4632951f2b0c0ebb73daa77c7",
+      "reviewed_lines": [],
+      "unread_line_count": 100,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/tests/mod.rs",
+      "sha256": "4a3e3e079a731efb69d2f64acae2759da3c7a12a2d708bb3a2d6ce1359579410",
+      "reviewed_lines": [],
+      "unread_line_count": 628,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/transition_scorer.rs",
+      "sha256": "9610d930e7ea35fe46225c4e84266621b149cfb673f05cdeb4c451b6e0a0eea4",
+      "reviewed_lines": [],
+      "unread_line_count": 597,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/trichotomy_witness.rs",
+      "sha256": "6aa85ff2c84c86cfba8d44871e1edff8aa6f1c6c57a52b68e96432680e786e67",
+      "reviewed_lines": [],
+      "unread_line_count": 330,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/twist_algorithm.rs",
+      "sha256": "efb77dd0bd54833550831e9bf27b050150feccb57be0249132b8befd0defe655",
+      "reviewed_lines": [],
+      "unread_line_count": 189,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/upper_triangular_pairs.rs",
+      "sha256": "9b8a21b92e7a26101eec2bc54417629eb68c88add62cd71e6c01b6830966ae42",
+      "reviewed_lines": [],
+      "unread_line_count": 83,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/vietoris_rips.rs",
+      "sha256": "31224730ce90d3cb525b17aec127856869f9abac6481de61c321eae30872473e",
+      "reviewed_lines": [],
+      "unread_line_count": 257,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/wasserstein_distance.rs",
+      "sha256": "a9338942a653996b77e23beb262ec8c984bb0f4236a382d6326659476977ebfd",
+      "reviewed_lines": [],
+      "unread_line_count": 229,
+      "first_unread_line": 1
+    },
+    {
+      "path": "code/rust/core_homology/src/witness_complex.rs",
+      "sha256": "2cd07fdede7016f8ce8fa591f2154b1694be9eb975f4bc6fa587972d67304a42",
+      "reviewed_lines": [],
+      "unread_line_count": 233,
+      "first_unread_line": 1
+    }
+  ],
+  "analysis_complete": false,
+  "claims": [
+    {
+      "id": "RUSTHOMOLOGY-CL001",
+      "statement": "The A-infinity and E-infinity modules explicitly expose structural shells plus small degree/factorial witnesses; neither witness checks the named higher algebra or operad laws.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/a_infinity_algebra.rs",
+          "sha256": "a449e04d699a9a458810f7a8d10c24c0f6863e910371bcbe80bbaa50aa296d7f",
+          "lines": [
+            1,
+            40
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/a_infinity_algebra.rs",
+          "sha256": "a449e04d699a9a458810f7a8d10c24c0f6863e910371bcbe80bbaa50aa296d7f",
+          "lines": [
+            62,
+            97
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/e_infinity_operad.rs",
+          "sha256": "605dc172bd2666086ca6194c16621e2a761eeaf08c141fcb1d7a94970a765e8d",
+          "lines": [
+            1,
+            35
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/e_infinity_operad.rs",
+          "sha256": "605dc172bd2666086ca6194c16621e2a761eeaf08c141fcb1d7a94970a765e8d",
+          "lines": [
+            64,
+            75
+          ]
+        }
+      ],
+      "limits": "Correct arithmetic scope is credited; no native run or implied mathematical completeness."
+    },
+    {
+      "id": "RUSTHOMOLOGY-CL002",
+      "statement": "The scalar and matrix interfaces support exact rational finite linear algebra and distinguish injective prehash encoding from hash collision resistance, conditional on the external arithmetic backend.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/scalar.rs",
+          "sha256": "4eb5a6b4ba2360b7781d6ca7ca9998a59410f94400038a51c8d0bf939f55aa25",
+          "lines": [
+            25,
+            39
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/scalar.rs",
+          "sha256": "4eb5a6b4ba2360b7781d6ca7ca9998a59410f94400038a51c8d0bf939f55aa25",
+          "lines": [
+            67,
+            125
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/matrix.rs",
+          "sha256": "176f93c71dfd6a08a4def19fc9d216a9d86c766bfee3d1d06cf9b64a1d1deae4",
+          "lines": [
+            15,
+            60
+          ]
+        }
+      ],
+      "limits": "This source review does not establish backend correctness, safe behavior for every allocation size, source authentication or decision-path enforcement of narrowing policy."
+    },
+    {
+      "id": "RUSTHOMOLOGY-CL003",
+      "statement": "Chain/cochain constructors and supplied-map cycle checks perform substantive exact finite equations, but their certificate meaning additionally depends on carrier, basis, map and immutable-state binding.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/chain_complex.rs",
+          "sha256": "c83760431005300706f27d16c1ae515d6857d29657b2b15e1f22d1d3222e77e7",
+          "lines": [
+            49,
+            112
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cochain_complex.rs",
+          "sha256": "1606de57e63618814a01d207a8400ed9a44b90ee91c075c96f3a9fd01d83a8b9",
+          "lines": [
+            85,
+            146
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cycle.rs",
+          "sha256": "c7d779910a91185adbdd6e9cb483060156cdb7fa3bf4535158a9a8e0a419d70e",
+          "lines": [
+            29,
+            46
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cocycle.rs",
+          "sha256": "2c98223a2b809aa227372aa40685a63469a987065d14e8737deb0b8d64897c1b",
+          "lines": [
+            29,
+            46
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/witness.rs",
+          "sha256": "64b1eba729842d827166f59eb2cac48f323a856e7da14e306d946465842bb5cb",
+          "lines": [
+            1,
+            5
+          ]
+        }
+      ],
+      "limits": "Arithmetic backend remains external; current public representations, omissions and deserialization do not enforce every construction premise."
+    },
+    {
+      "id": "RUSTHOMOLOGY-CL004",
+      "statement": "Finite rational homology dimensions are correctly expressed as kernel minus image under the chain-law premise; metadata-only quotient and evidence records do not supply that premise or authenticate it.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/homology.rs",
+          "sha256": "79db77b5bc17da80e5bfe5ed80d6a2d942fe55146f5ed5ba5e4863a5b8bba197",
+          "lines": [
+            86,
+            124
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cohomology.rs",
+          "sha256": "aced3ce0dcdaa69d3925f7557635005373db84d7e0c4127fc96fa7f51c1f1f3a",
+          "lines": [
+            79,
+            109
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/certificates.rs",
+          "sha256": "d499db18ad42f2a148571ae22c71bdeeb34260ff227a4507c51303cd41ce3e5c",
+          "lines": [
+            1,
+            4
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/certificates.rs",
+          "sha256": "d499db18ad42f2a148571ae22c71bdeeb34260ff227a4507c51303cd41ce3e5c",
+          "lines": [
+            99,
+            120
+          ]
+        }
+      ],
+      "limits": "External exact arithmetic backend and immutable valid carrier remain dependencies; H2 is outside these two report APIs."
+    },
+    {
+      "id": "RUSTHOMOLOGY-CL005",
+      "statement": "Carrier preserves exact cochain-law and positive-weight construction checks through private owned state, and its manifest parser correctly separates mathematical domain from machine representation and rejects ambiguous historical versions.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/carrier.rs",
+          "sha256": "7e59d5ab255adb67b2cf55654cd0d2361a4380ac783e767137927b3e9a94c489",
+          "lines": [
+            19,
+            80
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/carrier_manifest.rs",
+          "sha256": "bc799de82fbca7a298a6d03e59eb9dad3baabc1bc3112c4023ad243ec9d23b23",
+          "lines": [
+            10,
+            58
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/carrier_manifest.rs",
+          "sha256": "bc799de82fbca7a298a6d03e59eb9dad3baabc1bc3112c4023ad243ec9d23b23",
+          "lines": [
+            280,
+            326
+          ]
+        }
+      ],
+      "limits": "Rank/backend correctness and complete manifest-field validation remain separate; F014 concerns unbound derived/provenance fields."
+    },
+    {
+      "id": "RUSTHOMOLOGY-CL006",
+      "statement": "The Cech gate implements a substantive finite linear-algebra classification with local-status refusal ordered first, while section replay, presheaf realization and faithful comparison are caller declarations.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/cech_gate.rs",
+          "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+          "lines": [
+            39,
+            87
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cech_gate.rs",
+          "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+          "lines": [
+            124,
+            210
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cech_gate.rs",
+          "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+          "lines": [
+            484,
+            501
+          ]
+        }
+      ],
+      "limits": "No actuallocalreplay, coverconstruction, deltaextraction, proof ofa faithfulcomparison or quantitativePhi1value iscomputed."
+    }
+  ],
+  "findings": [
+    {
+      "id": "RUSTHOMOLOGY-F001",
+      "severity": "medium",
+      "statement": "CyclomaticWitness accepts a false component count and consequently an incorrect graph Betti number.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/lib.rs",
+          "sha256": "7a4b3ea218bda0eb59c9989bf3cf5c2654eaca653d603a01921a00d4e7583488",
+          "lines": [
+            216,
+            256
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/lib.rs",
+          "sha256": "7a4b3ea218bda0eb59c9989bf3cf5c2654eaca653d603a01921a00d4e7583488",
+          "lines": [
+            268,
+            283
+          ]
+        }
+      ],
+      "reason": "Two distinct vertices with one connecting edge and caller components=2 pass every displayed guard and yield E+C-V=1, while independently derived connectivity has one component and b1=0. Checking1<=C<=V and nonnegativity does not bind C to the graph.",
+      "control": "RUSTHOMOLOGY-C001",
+      "limits": "Independent exact predicate/model control, not executed Rust. A truthful supplied component count restores the standard graph formula."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F002",
+      "severity": "medium",
+      "statement": "Chain and Cochain arithmetic accepts incompatible bases while retaining the left basis label.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/chain.rs",
+          "sha256": "1516632b20422730b46c39ebc0508c71e9c5a089e67428f7d5676109ef8cdaf5",
+          "lines": [
+            52,
+            104
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cochain.rs",
+          "sha256": "31ac626c419b997d982876bdd42f8ab7e3833b7c9160d6fa154057913da2d5c8",
+          "lines": [
+            52,
+            104
+          ]
+        }
+      ],
+      "reason": "Only degree and coefficient length are compared. Coordinates1 in basis e and1 in basis2e add as2e-labelled-coordinate units, whereas actual sum is3e. Subtraction has the same missing basis check.",
+      "control": "RUSTHOMOLOGY-C002",
+      "limits": "Source and independent finite coordinate model; no Rust execution. Callers may impose an additional same-basis precondition."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F003",
+      "severity": "medium",
+      "statement": "Chain and Cochain hashes omit degree and basis and use the same vector domain.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/chain.rs",
+          "sha256": "1516632b20422730b46c39ebc0508c71e9c5a089e67428f7d5676109ef8cdaf5",
+          "lines": [
+            47,
+            50
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cochain.rs",
+          "sha256": "31ac626c419b997d982876bdd42f8ab7e3833b7c9160d6fa154057913da2d5c8",
+          "lines": [
+            47,
+            50
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/hashing.rs",
+          "sha256": "745b38c4124f342aef8328533eaab8e297b35d81477685b4152296521d851fbb",
+          "lines": [
+            66,
+            75
+          ]
+        }
+      ],
+      "reason": "Distinct mathematical typed elements with identical coordinate lists feed identical bytes to hash_vector; no cryptographic collision is required. Existing changed-coordinate tests do not cover this.",
+      "control": "RUSTHOMOLOGY-C002",
+      "limits": "This is a contextual-binding gap if these hashes identify full elements; an explicitly coordinate-only digest or separately bound carrier context is valid."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F004",
+      "severity": "medium",
+      "statement": "Construction-time chain/cochain and witness invariants are not preserved by the public representation.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/chain_complex.rs",
+          "sha256": "c83760431005300706f27d16c1ae515d6857d29657b2b15e1f22d1d3222e77e7",
+          "lines": [
+            12,
+            32
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/chain_complex.rs",
+          "sha256": "c83760431005300706f27d16c1ae515d6857d29657b2b15e1f22d1d3222e77e7",
+          "lines": [
+            115,
+            140
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cochain_complex.rs",
+          "sha256": "1606de57e63618814a01d207a8400ed9a44b90ee91c075c96f3a9fd01d83a8b9",
+          "lines": [
+            49,
+            67
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/witness.rs",
+          "sha256": "64b1eba729842d827166f59eb2cac48f323a856e7da14e306d946465842bb5cb",
+          "lines": [
+            10,
+            56
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cycle.rs",
+          "sha256": "c7d779910a91185adbdd6e9cb483060156cdb7fa3bf4535158a9a8e0a419d70e",
+          "lines": [
+            9,
+            17
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cocycle.rs",
+          "sha256": "2c98223a2b809aa227372aa40685a63469a987065d14e8737deb0b8d64897c1b",
+          "lines": [
+            9,
+            17
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/boundary_map.rs",
+          "sha256": "156463a117cea28d7790fa32814d9b9e13038a11332cb09e37198dff816db4c8",
+          "lines": [
+            13,
+            45
+          ]
+        }
+      ],
+      "reason": "Public map/dimension/element/witness fields allow safe replacement after verification without updating cached witness hashes. ChainComplex also has a separate public boundaries copy. Privateunit witnessfields block literals but derivedDeserialize admits wireconstruction with no predicate replay.",
+      "control": "RUSTHOMOLOGY-C002",
+      "limits": "Source-visible invariant boundary; finite model shows0 product becoming1 under permitted matrixreplacement. No actual Rust/Serde execution and no claim that all consumers omit revalidation. Carrier itself is different: private owned state with shared-only accessors protects these construction invariants through its displayed API. CertifiedBoundaryMap is also private and its construction is explicitly unwired."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F005",
+      "severity": "medium",
+      "statement": "Cycle and cocycle constructors treat an omitted map as proof of zero boundary without binding its absence to a carrier.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/cycle.rs",
+          "sha256": "c7d779910a91185adbdd6e9cb483060156cdb7fa3bf4535158a9a8e0a419d70e",
+          "lines": [
+            19,
+            60
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cocycle.rs",
+          "sha256": "2c98223a2b809aa227372aa40685a63469a987065d14e8737deb0b8d64897c1b",
+          "lines": [
+            19,
+            60
+          ]
+        }
+      ],
+      "reason": "For vector[1] under identityboundary, Some(map)refuses while None alwaysmintsawitness under the same suppliedcomplexhash. The Nonebranch neitherchecksdegree0/topdegree norresolves thathash toitsmap.",
+      "control": "RUSTHOMOLOGY-C002",
+      "limits": "Caller-declared zero differential is a valid conditional case; the API does not establish that premise. Independent finite model only."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F006",
+      "severity": "medium",
+      "statement": "CertifiedChainMap checks commuting squares on a caller-provided view without checking that the views are chain complexes.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/chain_map.rs",
+          "sha256": "a9812165b14aa8ada02118d49941943c8741fbb04ea1c4d25cf9570401f342f8",
+          "lines": [
+            33,
+            104
+          ]
+        }
+      ],
+      "reason": "FiniteChainComplexView can expose scalar boundarymaps[1],[1] with arbitraryhashes. Identitymaps satisfyeverycheckedcommutingsquare, yetdifferentialsquareis1. This yields certification ofmaps between invalidcomplexviews.",
+      "control": "RUSTHOMOLOGY-C002",
+      "limits": "The commuting-square calculation itself is correct. The missing premise is verifiedcomplexadmission, not a false matrixequation; no nativeexecution."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F007",
+      "severity": "medium",
+      "statement": "Chain-map witness hashing omits map shape and silently substitutes empty bytes on serialization failure.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/chain_map.rs",
+          "sha256": "a9812165b14aa8ada02118d49941943c8741fbb04ea1c4d25cf9570401f342f8",
+          "lines": [
+            89,
+            104
+          ]
+        }
+      ],
+      "reason": "Atfixeddegree, 1x2and2x1mapswithflatentries[1,2]haveidenticalhashinput. Anempty-boundaryview suppliesnodimensions toseparatelybindthose shapes. unwrap_or_default also makes serializationfailureindistinguishable fromemptyserializedpayload atthatseam.",
+      "control": "RUSTHOMOLOGY-C002",
+      "limits": "Shape countermodel is exactprehashcomparison; genericSerializefailure is source-observed fallback, not a demonstratedfailure for the usualQbackend."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F008",
+      "severity": "medium",
+      "statement": "Standalone boundary and coboundary application ignores the input degree and carries its basis into the target unchanged.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/boundary.rs",
+          "sha256": "5b89608739c7a2a48a6aceb52324799887b17c846daf878be147a14815f35fc4",
+          "lines": [
+            23,
+            48
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/coboundary.rs",
+          "sha256": "1d0720d4d3991d0c61b5f9f1b33d8b6f62c700d5d4fc8753478f2ad9962c58c5",
+          "lines": [
+            23,
+            52
+          ]
+        }
+      ],
+      "reason": "An input atdegree7ofcorrectlengthpassesamap declared1->0 or0->1. Constructors do notrequireadjacentdegree, andthereisno targetbasisargument. The outputlabel iscopiedevenforrectangularmaps.",
+      "control": "RUSTHOMOLOGY-C002",
+      "limits": "Some cycle/cocycle callers adddegreechecks; this finding targets the standalone publicapply boundary and missingbasisrepresentation only."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F009",
+      "severity": "medium",
+      "statement": "Homology and cohomology reports can assign plausible dimensions after a public mutation breaks the chain law without causing rank underflow.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/homology.rs",
+          "sha256": "79db77b5bc17da80e5bfe5ed80d6a2d942fe55146f5ed5ba5e4863a5b8bba197",
+          "lines": [
+            96,
+            155
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cohomology.rs",
+          "sha256": "aced3ce0dcdaa69d3925f7557635005373db84d7e0c4127fc96fa7f51c1f1f3a",
+          "lines": [
+            89,
+            140
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cohomology.rs",
+          "sha256": "aced3ce0dcdaa69d3925f7557635005373db84d7e0c4127fc96fa7f51c1f1f3a",
+          "lines": [
+            371,
+            393
+          ]
+        }
+      ],
+      "reason": "Outer[1,0]andinner[1,0]^Tcompose to1, butkerdimension1minusimagerank1equals0. Avalidpriorinner[0,1]^Tcanbereplacedpublicly; thereportneitherrechecksproductnorrefreshescomplexhash. Existingunderflownegativeuseslargerimageandmissesthiscase.",
+      "control": "RUSTHOMOLOGY-C003",
+      "limits": "Finiteexactcountermodel of reportpreconditions, noRustexecution. Thedimensionformularemainscorrectforvalidimmutablecomplexes."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F010",
+      "severity": "medium",
+      "statement": "Checked homology-class constructors bind only complex and coefficient-domain labels, not the supplied cycle to its quotient class.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/homology_class.rs",
+          "sha256": "998a216ad3c2e3c43771082f30492a770211056e79649ead103f6ef00c6addd3",
+          "lines": [
+            15,
+            59
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/homology_class.rs",
+          "sha256": "998a216ad3c2e3c43771082f30492a770211056e79649ead103f6ef00c6addd3",
+          "lines": [
+            90,
+            109
+          ]
+        }
+      ],
+      "reason": "Apublicuncheckedcycle atdegree99withthreecoefficients combineswithaone-coordinatequotientatdegree1 aslongascomplex/domainlabelsmatch. Cyclecondition,representativebinding,degreeand ModBoundaries/ModCoboundaries relationarenotchecked.",
+      "control": "RUSTHOMOLOGY-C003",
+      "limits": "Namedunchecked inputconstructor makesexternalproofpremisepossible; thecheckedclassboundaryitself doesnotestablishit. NoRustexecution."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F011",
+      "severity": "medium",
+      "statement": "Quotient-class certification accepts arbitrary caller projections without a boundary-subspace obligation or full witness context binding.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/quotient.rs",
+          "sha256": "b235b280b0e84897b0f822c196902106ab2098c66aaa944931223fbab5dd8cc1",
+          "lines": [
+            37,
+            78
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/quotient.rs",
+          "sha256": "b235b280b0e84897b0f822c196902106ab2098c66aaa944931223fbab5dd8cc1",
+          "lines": [
+            104,
+            129
+          ]
+        }
+      ],
+      "reason": "ForQ/Q thequotientmustbezero, butsuppliedidentityprojectionreturnsnonzero[1]andmintsawitness. NoBinputchecksannihilation/kernel. Witnesshashesonlyrelationlabelandrepresentative,soidenticaldataondifferentcomplexes/degrees/projections sharewitnessfields.",
+      "control": "RUSTHOMOLOGY-C003",
+      "limits": "A correct externallyverifiedprojectioncanmake thecalculationvalid. Thisis missingmathematicaladmissionandbinding, not an error in matrix multiplication."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F012",
+      "severity": "medium",
+      "statement": "Arbitrary-byte domain separation has an ambiguous delimiter encoding.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/hash.rs",
+          "sha256": "654733e138054a28a7ca60541d438194ee2bc6865b180d9d2c246f9b47787a55",
+          "lines": [
+            92,
+            119
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/hash.rs",
+          "sha256": "654733e138054a28a7ca60541d438194ee2bc6865b180d9d2c246f9b47787a55",
+          "lines": [
+            128,
+            143
+          ]
+        }
+      ],
+      "reason": "Domaina withpayloadff62 anddomain61ffwithpayload62 bothencode61ffff62. Differentdomain/payloadpairscollidebeforeBLAKE3. Testonlychangesdomainwithfixedpayloadanddoesnotdiscriminateframingambiguity.",
+      "control": "RUSTHOMOLOGY-C003",
+      "limits": "Independentbyteequality, not a cryptographichashcollision search. FixedrestrictedASCII domainswithout0xff wouldavoidthisparticularambiguity, buttheAPIacceptsarbitrarybytes."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F013",
+      "severity": "medium",
+      "statement": "The floating sparse coboundary path neither rechecks public entry bounds nor monitors nonfinite numerical results.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/coboundary_matrix.rs",
+          "sha256": "ac4460d5d7a12b0f7ac899a65b6829cf6dba3f552f795115c0b0e2f7d73f6814",
+          "lines": [
+            11,
+            55
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/coboundary_matrix.rs",
+          "sha256": "ac4460d5d7a12b0f7ac899a65b6829cf6dba3f552f795115c0b0e2f7d73f6814",
+          "lines": [
+            83,
+            120
+          ]
+        }
+      ],
+      "reason": "Apubliclyconstructed/mutated out-of-boundsentryreaches directindexing, whileNaNinputorfiniteoverflowreturnsOkwithnonfiniteoutput. apply_exact separatelyrechecksindicesandcheckedarithmetic, so its protectionsdo notcoverapply.",
+      "control": "RUSTHOMOLOGY-C004",
+      "limits": "Source-level indexing proof and independent IEEEfiniteexamples only, notRustexecution. Validimmutablefiniteinputsavoidtheindexcase; no error tolerance is implemented inthisbody."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F014",
+      "severity": "medium",
+      "statement": "The verified carrier-manifest parser accepts impossible rank/dimension fields and altered witness/provenance hashes without changing the carrier hash.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/carrier_manifest.rs",
+          "sha256": "bc799de82fbca7a298a6d03e59eb9dad3baabc1bc3112c4023ad243ec9d23b23",
+          "lines": [
+            37,
+            51
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/carrier_manifest.rs",
+          "sha256": "bc799de82fbca7a298a6d03e59eb9dad3baabc1bc3112c4023ad243ec9d23b23",
+          "lines": [
+            276,
+            344
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/carrier_manifest.rs",
+          "sha256": "bc799de82fbca7a298a6d03e59eb9dad3baabc1bc3112c4023ad243ec9d23b23",
+          "lines": [
+            515,
+            538
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/hashing.rs",
+          "sha256": "745b38c4124f342aef8328533eaab8e297b35d81477685b4152296521d851fbb",
+          "lines": [
+            113,
+            140
+          ]
+        }
+      ],
+      "reason": "Carrierhashcoversdims,map/weight hashesandfixedlabels, notrank_d0,dim_q1,dim_h1,witness_hashorprovenance_hash. Editingthoseleavesallparserguardsunchanged; rank999 onC1dimension3andH1>Q1areaccepted bythevisiblelogic. Requiredfieldpresenceisnotfieldvalidation.",
+      "control": "RUSTHOMOLOGY-C004",
+      "limits": "Internal-consistencygap beyondthecorrectlyspecificcarrier/non-authenticationdisclaimer; guardprojectioncontroldoesnotexecuteSerde/BLAKE3. Comparingtheentiremanifesttofrom_carrierwouldcatchtheseedits."
+    },
+    {
+      "id": "RUSTHOMOLOGY-F015",
+      "severity": "low",
+      "statement": "The Cech gate uses exactness terminology for the weaker zero-composition chain law.",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/cech_gate.rs",
+          "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+          "lines": [
+            98,
+            108
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cech_gate.rs",
+          "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+          "lines": [
+            179,
+            185
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cech_gate.rs",
+          "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+          "lines": [
+            313,
+            371
+          ]
+        }
+      ],
+      "reason": "d1d0=0meansimagecontainedinkernel, notimageequalsthekernel. Itsowntriangleexamplehasrankd0=2andkerd1dimension3, intentionallynonexactwithaH1obstruction, despitepassingthecomplexcheck.",
+      "control": "RUSTHOMOLOGY-C004",
+      "limits": "Terminologydefect; the displayedfinitecocycle/imageclassification is correct underitsinputassumptions. No nativeexecution."
+    }
+  ],
+  "controls": [
+    {
+      "id": "RUSTHOMOLOGY-C001",
+      "rule": "independent_graph_connectivity_and_prehash_framing",
+      "status": "counterexample_and_positive_controls_confirmed",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/lib.rs",
+          "sha256": "7a4b3ea218bda0eb59c9989bf3cf5c2654eaca653d603a01921a00d4e7583488",
+          "lines": [
+            216,
+            256
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/scalar.rs",
+          "sha256": "4eb5a6b4ba2360b7781d6ca7ca9998a59410f94400038a51c8d0bf939f55aa25",
+          "lines": [
+            104,
+            125
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/e_infinity_operad.rs",
+          "sha256": "605dc172bd2666086ca6194c16621e2a761eeaf08c141fcb1d7a94970a765e8d",
+          "lines": [
+            64,
+            75
+          ]
+        }
+      ],
+      "helper": {
+        "path": "dag/reviews/additional_rust_homology_remaining_probe01.py",
+        "sha256": "7b148386c7cf97a28264b568b490c264245f59b6dd24794987d7875aeda16c75"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_homology_remaining_probe01.json",
+        "sha256": "14d880f3c1280d1ae25f4202c392f68adfa98a3b23a905aa1d5c9d60fc860b4e"
+      },
+      "limits": "Python3.14 standard-library finite calculations only; no original Rust/native program execution."
+    },
+    {
+      "id": "RUSTHOMOLOGY-C002",
+      "rule": "independent_coordinate_and_certificate_binding_countermodels",
+      "status": "source_predicate_countermodels_confirmed",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/chain.rs",
+          "sha256": "1516632b20422730b46c39ebc0508c71e9c5a089e67428f7d5676109ef8cdaf5",
+          "lines": [
+            47,
+            104
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cochain.rs",
+          "sha256": "31ac626c419b997d982876bdd42f8ab7e3833b7c9160d6fa154057913da2d5c8",
+          "lines": [
+            47,
+            104
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cycle.rs",
+          "sha256": "c7d779910a91185adbdd6e9cb483060156cdb7fa3bf4535158a9a8e0a419d70e",
+          "lines": [
+            22,
+            60
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cocycle.rs",
+          "sha256": "2c98223a2b809aa227372aa40685a63469a987065d14e8737deb0b8d64897c1b",
+          "lines": [
+            22,
+            60
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/chain_map.rs",
+          "sha256": "a9812165b14aa8ada02118d49941943c8741fbb04ea1c4d25cf9570401f342f8",
+          "lines": [
+            40,
+            104
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cochain_complex.rs",
+          "sha256": "1606de57e63618814a01d207a8400ed9a44b90ee91c075c96f3a9fd01d83a8b9",
+          "lines": [
+            49,
+            67
+          ]
+        }
+      ],
+      "helper": {
+        "path": "dag/reviews/additional_rust_homology_remaining_probe02.py",
+        "sha256": "e2e988a6d26d487e2e8b75f1c514072415bdb0f6b79c6a7a6b07ecdff2dbe685"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_homology_remaining_probe02.json",
+        "sha256": "e3af973278331b758befa35a37f582c27c40470ec825a319f056a7e39975e574"
+      },
+      "limits": "Independent Python finite equations and prehash comparison only; public-field/derived-Serde observations are source-level, not nativeexecution."
+    },
+    {
+      "id": "RUSTHOMOLOGY-C003",
+      "rule": "independent_rank_inclusion_class_binding_and_domain_framing",
+      "status": "independent_countermodels_confirmed",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/homology.rs",
+          "sha256": "79db77b5bc17da80e5bfe5ed80d6a2d942fe55146f5ed5ba5e4863a5b8bba197",
+          "lines": [
+            96,
+            155
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cohomology.rs",
+          "sha256": "aced3ce0dcdaa69d3925f7557635005373db84d7e0c4127fc96fa7f51c1f1f3a",
+          "lines": [
+            89,
+            140
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/homology_class.rs",
+          "sha256": "998a216ad3c2e3c43771082f30492a770211056e79649ead103f6ef00c6addd3",
+          "lines": [
+            15,
+            59
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/quotient.rs",
+          "sha256": "b235b280b0e84897b0f822c196902106ab2098c66aaa944931223fbab5dd8cc1",
+          "lines": [
+            37,
+            78
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/quotient.rs",
+          "sha256": "b235b280b0e84897b0f822c196902106ab2098c66aaa944931223fbab5dd8cc1",
+          "lines": [
+            111,
+            129
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/hash.rs",
+          "sha256": "654733e138054a28a7ca60541d438194ee2bc6865b180d9d2c246f9b47787a55",
+          "lines": [
+            92,
+            119
+          ]
+        }
+      ],
+      "helper": {
+        "path": "dag/reviews/additional_rust_homology_remaining_probe03.py",
+        "sha256": "6cefa94ca9748df1e56c5dd4d1bf457cdff34070c80aba65f552e196faef56f0"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_homology_remaining_probe03.json",
+        "sha256": "71b10e737fb861fd9c68514a9d0bb71f6f38c6097a63f602f3684040c95cac69"
+      },
+      "limits": "PythonFractionrank andfiniteprehash/guardcontrols only; noRustorSerdeexecution."
+    },
+    {
+      "id": "RUSTHOMOLOGY-C004",
+      "rule": "manifest_projection_cech_exactness_and_float_bounds",
+      "status": "counterexample_and_positive_controls_confirmed",
+      "evidence": [
+        {
+          "path": "code/rust/core_homology/src/carrier_manifest.rs",
+          "sha256": "bc799de82fbca7a298a6d03e59eb9dad3baabc1bc3112c4023ad243ec9d23b23",
+          "lines": [
+            276,
+            344
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/hashing.rs",
+          "sha256": "745b38c4124f342aef8328533eaab8e297b35d81477685b4152296521d851fbb",
+          "lines": [
+            113,
+            140
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/cech_gate.rs",
+          "sha256": "b97cab1f7103c5cd4dbfb9113cc23aae82364cf123b14f8a3ec3862895ad687f",
+          "lines": [
+            124,
+            210
+          ]
+        },
+        {
+          "path": "code/rust/core_homology/src/coboundary_matrix.rs",
+          "sha256": "ac4460d5d7a12b0f7ac899a65b6829cf6dba3f552f795115c0b0e2f7d73f6814",
+          "lines": [
+            43,
+            55
+          ]
+        }
+      ],
+      "helper": {
+        "path": "dag/reviews/additional_rust_homology_remaining_probe04.py",
+        "sha256": "d73cb3af7d3bf57ee733ee3664a0a235ad6ec250292d917cc4dad050b5fd72e4"
+      },
+      "receipt": {
+        "path": "dag/reviews/additional_rust_homology_remaining_probe04.json",
+        "sha256": "b5321d9121b34ae540dd764f34201802f88dc0861bd748b0f0288a2e9cbf5ed3"
+      },
+      "limits": "Finite independent arithmetic and sourceguardargumentprojection only; notnativeprogramorparserexecution."
+    }
+  ],
+  "external_dependencies_consulted": [],
+  "limits": [
+    "Original Rust/manifests and historical evidence remain unchanged.",
+    "No Rust/Cargo/native/provider or retained program execution, broad suite, credentials or private answer access.",
+    "Only complete displayed source bodies earn full reading credit; parse/census and narrow dependency consultations remain separate.",
+    "Independent exact finite controls are bounded to their declared carrier/input and do not establish general native correctness."
+  ]
+}

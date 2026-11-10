@@ -29,7 +29,7 @@ changing its carrier, goal, or checking rule.
 ## Try ten practical routes
 
 Open [ten ways to play](06_ten_useful_ways_to_play.md) and
-[the executable local exercises](02_ten_ways_to_play.ipynb). Choose a route
+[the executable local exercises](../../../pilots/education/symbol_game/02_ten_ways_to_play.ipynb). Choose a route
 by your task: packet repair, teaching, graph repair, certificate checking,
 refusal handling, review, learning from rejection, extension checks, or bounded
 strategy comparison. These routes are an editorial selection, not all possible
@@ -37,11 +37,11 @@ ways to play.
 
 ## The triangle teaching board
 
-The [walkthrough](00_interactive_how_to_play_walkthrough.ipynb) and
-[scenario lab](01_interactive_scenarios_lab.ipynb) use one declared triangle:
+The [walkthrough](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb) and
+[scenario lab](../../../pilots/education/symbol_game/01_interactive_scenarios_lab.ipynb) use one declared triangle:
 0 → 1 → 2 → 0, with edge values 2, 1, 3. Its circulation is 6.
 
-The local [teaching runtime](educational_governor.py) checks exact values:
+The local [teaching runtime](../../../pilots/education/symbol_game/educational_governor.py) checks exact values:
 
 | Move | Effect in this teaching model |
 | --- | --- |
@@ -70,8 +70,8 @@ From the repository root, with Python 3.12 and pytest installed, run each
 file separately:
 
 ```sh
-python -m pytest education/documentation/004_oepfp/_how_to_play/test_how_to_play_scenarios.py -q
-python -m pytest education/documentation/004_oepfp/_how_to_play/test_educational_governor_boundaries.py -q
+python -m pytest pilots/education/symbol_game/test_how_to_play_scenarios.py -q
+python -m pytest pilots/education/symbol_game/test_educational_governor_boundaries.py -q
 ```
 
 Keep the proposal, checking rule, and receipt together. If attempts run out

@@ -1,0 +1,136 @@
+{
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "retained_owner_execution": false,
+  "results": [
+    {
+      "id": "OPSKILL-CHECK-044",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/lib-education-engine/section_template.yaml",
+        "sha256": "6499cfbbf3199e7ed1d77d2558b5b50ec22883f276b2e1bdad4c9a8c5172a12f"
+      },
+      "observation": {
+        "supplied_template_tag": "SSS",
+        "schema_pattern": "^[a-z0-9-]+$",
+        "matches": false,
+        "global_required": [
+          "type",
+          "lesson",
+          "section",
+          "title"
+        ],
+        "variation_missing_required": "section"
+      },
+      "limitations": "Direct schema predicate and full source comparison; no importer executed, no schema proves pedagogical truth."
+    },
+    {
+      "id": "OPSKILL-CHECK-045",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/lib-education-engine/examples/invalid_examples.md",
+        "sha256": "13e632eac6dd4d4360d2ee75f686055272abb4838927ab55714fc5c1589febd2"
+      },
+      "observation": {
+        "allegedly_overlong_title": "This is an extremely long title that exceeds the maximum allowed length of 255 characters and therefore will fail validation because we want to enforce reasonable limits on field lengths to ensure consistent display and storage in the database system...",
+        "actual_characters": 253,
+        "schema_maximum": 255,
+        "actually_over_maximum": false
+      },
+      "limitations": "Only title length evaluated; damaged Markdown heading/fence itself is a separate problem. This is not an executing invalid-fixture suite."
+    },
+    {
+      "id": "OPSKILL-CHECK-046",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/lib-pedagogy-improvement/references/rubric-and-workflow.md",
+        "sha256": "0998888e5ee3d729cb27668d441084e9772cbd99d3ef65350818e1dc5e6b8575"
+      },
+      "observation": {
+        "admitted_ideal_projective_measurement": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "eigenstate": [
+          1,
+          0
+        ],
+        "conditional_post_measurement_state": [
+          1,
+          0
+        ],
+        "changed": false
+      },
+      "limitations": "Exact admitted finite quantum formalism counterexample to unconditional eigenstate-changes wording. It does not derive physical measurement assumptions or invoke a provider/native engine."
+    },
+    {
+      "id": "OPSKILL-CHECK-047",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/meta-no-comments/scripts/purge_comments.py",
+        "sha256": "d0857ee8bddc9cf0521496999da419850ccfd8113f0268b108b4774190fb6e8d"
+      },
+      "observation": {
+        "before": [
+          "const char *s = \"a/*not a comment*/b\";",
+          "int/*comment*/x;"
+        ],
+        "after_block_regex": [
+          "const char *s = \"ab\";",
+          "intx;"
+        ],
+        "string_value_changed": true,
+        "identifier_tokens_merged": true
+      },
+      "limitations": "Exact isolated regex used by owner, run only on in-memory synthetic source. No retained purge function or file write executed."
+    },
+    {
+      "id": "OPSKILL-CHECK-048",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/meta-no-comments/scripts/purge_comments.py",
+        "sha256": "d0857ee8bddc9cf0521496999da419850ccfd8113f0268b108b4774190fb6e8d"
+      },
+      "observation": {
+        "test_tree_path": "tests/fixtures/helper.rs",
+        "owner_basename_skip": false
+      },
+      "limitations": "Pure path predicate; test directory ancestry is not checked. No files created/removed."
+    },
+    {
+      "id": "OPSKILL-CHECK-049",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/meta-atlas-state-to-state-verifier/SKILL.md",
+        "sha256": "6c69be26ba4ba62e2c789390957cd00759dcc18c557ad9bce113f21f6236ec31"
+      },
+      "observation": {
+        "three_observations": [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "unseen_input": [
+          4,
+          10
+        ],
+        "universal_decrease": false
+      },
+      "limitations": "Finite countermodel to extrapolation from three observed runs, not a claim about the shared engine actual evaluator."
+    }
+  ]
+}

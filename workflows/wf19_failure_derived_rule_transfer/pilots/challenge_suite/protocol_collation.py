@@ -11,8 +11,8 @@ from pathlib import Path
 
 from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.catalog import ROOT, SOURCE
 
-DOC = "education/documentation/004_oepfp/docs/18_original_challenge_play.md"
-SESSION_DOC = "education/documentation/004_oepfp/docs/19_bounded_mechanism_sessions.md"
+DOC = "pilots/education/runbooks/18_original_challenge_play.md"
+SESSION_DOC = "pilots/education/runbooks/19_bounded_mechanism_sessions.md"
 
 
 def _pin(path):

@@ -1,0 +1,44 @@
+[
+  {
+    "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/fixtures/c041_supplemental_candidates.json",
+    "sha256": "1c6a0a661246477468dd110be74774fa3c3379a6e53692dd8306892256433642",
+    "full_source_read": false,
+    "assessment_method": "schema_specific_bounded_parsing_and_exact_finite_arithmetic",
+    "checks": [
+      {
+        "rule": "strict_json_and_fixture_schema",
+        "status": "parsed",
+        "rows": 2,
+        "schema_version": "paper011.c041-supplemental-proposals.v1",
+        "declared_status": "UNVERIFIED_PROPOSALS"
+      },
+      {
+        "rule": "target_candidate_identity_and_kind",
+        "status": "observed",
+        "case_ids": [
+          "c041_base_16",
+          "c041_ctrl_08"
+        ]
+      },
+      {
+        "rule": "exact_arithmetic_countercontrols",
+        "status": "verified_for_declared_finite_domain",
+        "false_target_counterexample": {
+          "a": 39,
+          "b": 39,
+          "sum": 78,
+          "bound": 70
+        },
+        "true_target_domain": "Natural k<50",
+        "checked_values": 50,
+        "max_square": 2401,
+        "strict_bound": 2600
+      }
+    ],
+    "assessment": "Two explicitly UNVERIFIED_PROPOSALS with original-case SHA references. First refutes universal bounded sum via39+39=78; second proves k<=49 implies k^2<=2401<2600. Candidate Lean strings have the corresponding argument structure, but no Lean kernel/typecheck executed and referenced original case files/hashes were not independently rebound in this slice. No original solver outcomes overwritten. Parsed fixture/content examination is not counted as full_source_read.",
+    "limitations": [
+      "No Lean executable or imported proof library used.",
+      "Original target source SHA references remain dependency assertions, not newly authenticated here."
+    ]
+  }
+]

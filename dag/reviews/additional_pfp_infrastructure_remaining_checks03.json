@@ -1,0 +1,68 @@
+{
+  "python": "3.14.2",
+  "source_pins": {
+    "pfp/infrastructure/trace/execution_trace.py": "6bb715db93eee3707ff42d23001bfdbc95f9aae22475f6eeb1eabe51bf3c75ab",
+    "pfp/infrastructure/trace/provider_dispatch.py": "9db59c2ecaebaccef870607f66688627b422d50a1354ccea59ff9260456ef8eb",
+    "pfp/infrastructure/serialization/json_wire.py": "53c220485942add1ce57c60c2e3036751ba0cbb524cdac0ec05f32a694a6710b"
+  },
+  "method": "Named fully read AST definitions/constants only; synthetic records and public bytes; task-owned temporary subtree automatically removed after checks; no production imports/native/provider/private files.",
+  "controls": [
+    {
+      "id": "PFPINFRA-P020",
+      "name": "trace_invalid_utf8_escapes_admission",
+      "observed": {
+        "exception": "UnicodeDecodeError"
+      },
+      "result": "reproduced",
+      "limit": "Malformed synthetic line only; no existing trace read."
+    },
+    {
+      "id": "PFPINFRA-P021",
+      "name": "legacy_artifact_lookup_escapes_raw_root",
+      "observed": {
+        "attempt_id": "../outside",
+        "matched_outside_raw_directory": true
+      },
+      "result": "reproduced",
+      "limit": "Only task-owned temporary sibling file; V1 recovery, not encrypted V2 custody."
+    },
+    {
+      "id": "PFPINFRA-P022",
+      "name": "response_before_intent_recovers_complete",
+      "observed": {
+        "attempt_id": "safe",
+        "status": "DISPATCH_COMPLETE",
+        "provider": "fixture",
+        "model": "fixture",
+        "raw_response_sha256": "9cc27f4c0426a48414fc781084600e8625fee022c898b7324acdd7183c0d95cc",
+        "retry_permitted": false,
+        "encrypted_artifact_ref": null
+      },
+      "result": "reproduced",
+      "limit": "Synthetic record objects; no claim of actual provider dispatch. Scanner also does not enforce this chronology."
+    },
+    {
+      "id": "PFPINFRA-P023",
+      "name": "attempt_identity_omits_output_limit",
+      "observed": {
+        "same_attempt_id": "aaac0be87b13764dd4b241fd03dd05dab0d99b915257de96d5efb52f12875441",
+        "limits": [
+          1,
+          999
+        ]
+      },
+      "result": "reproduced",
+      "limit": "Identity helper only. Separate gateway accounting may bind limits elsewhere; not evaluated by this probe."
+    },
+    {
+      "id": "PFPINFRA-P024",
+      "name": "content_addressed_conflict_raises_unbound_name",
+      "observed": {
+        "exception": "NameError",
+        "message": "name 'CanonicalizationError' is not defined"
+      },
+      "result": "reproduced",
+      "limit": "Expected domain validation injected as identity for already valid inputs; only task-owned temporary file."
+    }
+  ]
+}

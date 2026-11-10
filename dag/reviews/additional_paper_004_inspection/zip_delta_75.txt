@@ -1,0 +1,183 @@
+--- archive/paper.md
++++ current/paper.md
+@@ -3,7 +3,7 @@
+ # PFP IV: Native Verification and the Custody of Finite Evidence
+ 
+ Jeremy H. Carroll\
+-2026-10-02 · Version 0.1.0 · Systems methods paper · Author-review revision
++2026-10-23 · Version 0.2.0 · Author-review extension
+ 
+ </div>
+ 
+@@ -51,7 +51,7 @@
+ their exercised paths; a passing test suite would not prove every reachable
+ program behavior.
+ 
+-The scope is the [Rust `omega_symbol_game` crate][rust-crate], its [protocol][protocol],
++The scope is the [Rust `core_symbol_game` crate][rust-crate], its [protocol][protocol],
+ the Python [native seam wrapper][ffi], and the named transport and regression
+ sources below. The repository that holds those files is private. This deposit
+ includes an immutable copy of the audited source at the code baseline,
+@@ -110,18 +110,18 @@
+ foundation library does not wire a carrier-changing lift into the default
+ host protocol.
+ 
+-Python's `omega_engine_symbol_game.ffi.RustSymbolGameHost` delegates process
++Python's `pfp.ffi.RustSymbolGameHost` delegates process
+ location and invocation to the operating-system adapter. The supported
+-`OMEGA_SYMBOL_GAME_HOST` environment override belongs to that seam.
++`CORE_SYMBOL_GAME_HOST` environment override belongs to that seam.
+ Convenience methods retain the full railway outcome or typed refusal.
+ Equivalent names in Python and Rust are insufficient to establish functional
+ parity: parity needs a declared common input domain, output relation, and
+ differential evidence.
+ 
+ A separate tutorial adapter,
+-`omega_engine_providers.adapters.native_functional.compute_graph_phi1`,
+-requires `OMEGA_FUNCTIONAL_GRAPH_BIN` and
+-`OMEGA_FUNCTIONAL_GRAPH_SHA256`. It validates the executable digest and exact
++`providers.adapters.native_functional.compute_graph_phi1`,
++requires `CORE_FUNCTIONAL_GRAPH_BIN` and
++`CORE_FUNCTIONAL_GRAPH_SHA256`. It validates the executable digest and exact
+ graph inputs, then parses a narrowly shaped native result. This is a separate
+ binary-selection contract. Configuring one environment variable family does
+ not configure the other.
+@@ -142,7 +142,7 @@
+ | --- | --- |
+ | Domain canonical algebra | Tagged values, including exact integers, fractions, and supported compound types |
+ | `PacketCodec` helper | NFC normalization followed by tagged domain encoding |
+-| Restricted host profile | `omega-sorted-json-no-float-v1` for its outer request structure |
++| Restricted host profile | `core-sorted-json-no-float-v1` for its outer request structure |
+ 
+ The [domain canonical module][canonical] explicitly encodes type information.
+ For example, an integer and a string containing the same digits remain
+@@ -166,7 +166,7 @@
+ ## 5. Restricted host execution
+ 
+ The [host implementation][host] admits the following narrow successful path.
+-The request uses `omega.oesos.rust-prime-host-request.v1`, carries exactly one
++The request uses `core.oesos.rust-prime-host-request.v1`, carries exactly one
+ candidate, and binds the host registry and build-stamped source revision.
+ The arithmetic domain is rational and the acceptance mode is
+ `must_equal_replayed_normal_form-v1`. This restricted request wire accepts
+@@ -200,7 +200,7 @@
+ caller from manufacturing the particular Rust evidence object used in that
+ sequence.
+ 
+-## 6. Worked example: exact repair with refused admission
++## 6. Worked example: problem change with refused admission
+ 
+ The canonical [host integration fixture][host-tests] uses vertices 0, 1, 2, 3,
+ unit-weight oriented edges
+@@ -236,9 +236,12 @@
+ so Gamma2, the unweighted L1 norm of these face values, is 7 + 5 = 12, while
+ Phi1, the unit-weight L1 distance from the before vector to the edge
+ differences of vertex potentials, is 7, attained by the residual `(5,2,0,0,0)`
+-and matched from below by the unit circulation around `(0,1,2)`. The two faces
+-span both independent cycles of this graph, so the replayed normal form is the
+-zero vector and the final values are 0 and 0.
++and matched from below by the unit circulation around `(0,1,2)`. The two face sums are 7 and 5, so Gamma2 of the before vector is 12. Face sums
++are unchanged by coboundaries, because d1 composed with d0 is 0. No potential
++takes (3,2,2,1,1) to the zero vector. The jump from those face sums to the
++zero vector is a problem change, not an exact repair. The laboratory still
++reports final summaries 0 and 0 on that replaced candidate, and admission
++stays refused. Gamma2 of the before vector remains 12.
+ 
+ These are assertions of the test at the pinned source. Section 9 separates
+ that source text from the retained historical native run. They illustrate how
+@@ -341,10 +344,10 @@
+ principal native commands are:
+ 
+ ```powershell
+-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test host_contract
+-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test foundation_contract
+-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test invoke_contract
+-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test native_cli_intake
++cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test host_contract
++cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test foundation_contract
++cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test invoke_contract
++cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test native_cli_intake
+ ```
+ 
+ `host_contract` checks the worked path and hostile variations.
+@@ -355,7 +358,7 @@
+ (2026-09-29 UTC), using Rust 1.98.0 on Windows (x86_64-pc-windows-msvc). It
+ reports `host_contract` 12 passed, `foundation_contract` 11, `invoke_contract`
+ 32 and `native_cli_intake` 9, with no failures. The run commit is
+-`1c7092c3db2ab2fa65999cf2555aff7733b97b99`. The `omega_symbol_game` crate tree
++`1c7092c3db2ab2fa65999cf2555aff7733b97b99`. The `core_symbol_game` crate tree
+ at that commit and at the code baseline is
+ `75d77aa5e1f30dfc102f00c8f7cb6159418dec63`. This is retained historical
+ execution evidence. The 2026-10-02 package-local receipt does not record a
+@@ -373,7 +376,7 @@
+ 
+ For Python, collect and run `test_packet_contracts.py`,
+ `test_exact_functional_port.py`, `test_functional_boundary.py`, and
+-`test_ffi_seam_isolation.py` under `omega_engine_symbol_game/tests/`.
++`test_ffi_seam_isolation.py` under `pfp/tests/`.
+ The exact-functional suite contains scripted refusal cases and native cases.
+ Its native cases can skip when the executable is missing; a receipt must retain
+ that distinction. A scripted host tests adapter handling, not native arithmetic.
+@@ -432,6 +435,36 @@
+ `docs/release_validation_2026_10_01.json` and
+ `docs/release_validation_2026_10_02.json` keep their original dates and scope.
+ 
++## Research extension: custody across harness replacement
++
++The new research path adds custody identities for the experiment, candidate,
++parent, checker, partition, model, configuration and original budget. Raw provider
++bytes are retained before interpretation. A private verdict binds the submitted
++program and the actual outputs on the frozen private cases. Offline replay
++rechecks those outputs; it does not infer success from a stored status string.
++A changed reply, stale parent or substituted private case cannot inherit an
++existing evaluation receipt. These are additional implementation obligations,
++not claims about the historical source archive audited above.
++
++Budget custody is also persistent. Every request reserves its maximum supported
++liability before transport. A malformed answer may still contain valid billable
++usage, while a missing or ambiguous usage report retains its reservation and
++halts dispatch. A child harness receives no ledger, provider credential or
++permission to choose its own budget identity. Experimental incumbent replacement
++therefore cannot reset expenditure.
++
++A chained local journal detects inconsistent edits under a retained anchor. It
++does not authenticate a hostile host capable of replacing every object and anchor.
++Native executable identity, source identity and source-to-binary reproducibility
++remain separate claims. The live Linux containment probe and paid experiment
++have not run; the new author-review package must not present local Windows tests
++as observations of those environments.
++
++The source and page references for this extension are collected in
++[Paper 029](../029_pfp_evidence_bound_harness_evolution/paper.md) and its
++[source-to-claim map](../029_pfp_evidence_bound_harness_evolution/docs/source_to_claim_map.md).
++The author-review rendering does not replace a historical deposit or archive.
++
+ ## References
+ 
+ - Necula, G. C. (1997). [Proof-carrying code][pcc]. In *Proceedings of the 24th
+@@ -447,14 +480,14 @@
+ 
+ [pcc]: https://doi.org/10.1145/263699.263712
+ [jcs]: https://doi.org/10.17487/RFC8785
+-[rust-crate]: https://github.com/dbccpage/the_symbol_game/tree/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game
+-[protocol]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/protocol.rs
+-[main]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/main.rs
+-[invoke]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/invoke.rs
+-[host]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/host.rs
+-[host-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/tests/host_contract.rs
+-[ffi]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/ffi.py
+-[envelope]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/entities/packet_envelope.py
+-[canonical]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/shared_kernel/canonical.py
+-[codec]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/packet_codec.py
+-[boundary-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/tests/test_functional_boundary.py
++[rust-crate]: https://github.com/dbccpage/the_symbol_game/tree/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game
++[protocol]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/protocol.rs
++[main]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/main.rs
++[invoke]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/invoke.rs
++[host]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/host.rs
++[host-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/tests/host_contract.rs
++[ffi]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/ffi.py
++[envelope]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/entities/packet_envelope.py
++[canonical]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/shared_kernel/canonical.py
++[codec]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/packet_codec.py
++[boundary-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_functional_boundary.py

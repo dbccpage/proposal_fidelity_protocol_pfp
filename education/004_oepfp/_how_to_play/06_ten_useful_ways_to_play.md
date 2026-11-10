@@ -103,7 +103,7 @@ The game admits indefinitely many instances. These ten routes represent an edito
 - **Walkthrough:** Introduce an undeclared endpoint $c$. Observe schema rejection `CARRIER_REGRESS`. Repair the endpoint inside the carrier. Retain both refused and repaired packets side-by-side to witness the repair diff.
 
 ### Route 3: Predict and Test
-- **Board:** A worked interactive notebook exercise ([`00_interactive_how_to_play_walkthrough.ipynb`](00_interactive_how_to_play_walkthrough.ipynb)).
+- **Board:** A worked interactive notebook exercise ([`00_interactive_how_to_play_walkthrough.ipynb`](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb)).
 - **Task:** Predict the host decision before executing the cell.
 - **Proposal:** A predicted outcome with a documented reason.
 - **Walkthrough:** Predict a descending `CUT`, a carrier escape, and a `VERIFY` move before achieving zero circulation. Compare predictions against host receipts.

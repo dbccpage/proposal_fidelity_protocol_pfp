@@ -1,0 +1,2276 @@
+{
+  "schema": "pfp.additional-native-systems-audit.v1",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "status": "substantive_checkpoint_remaining_work_explicit",
+  "context_sources": [
+    "dag/FOUNDATIONS.md",
+    "dag/reviews/systems_audit.md"
+  ],
+  "claims": [
+    {
+      "id": "NATIVE-EIS-001",
+      "classification": "implementation_check",
+      "claim": "Thymus screening establishes nonmatching on the supplied finite panel and produces Candidate status; it does not externally admit a rule.",
+      "evidence": [
+        "code/rust/core_epistemic_immune_system/src/thymus.rs:34-97"
+      ],
+      "dependencies": [
+        "regex semantics",
+        "panel content/cleanliness",
+        "valid proposed spec"
+      ],
+      "limitations": [
+        "Empty panels pass vacuously.",
+        "No population false-positive bound or completeness proof.",
+        "Panel hash boundary collision is separately reproduced."
+      ]
+    },
+    {
+      "id": "NATIVE-EIS-002",
+      "classification": "source_derived_mathematical_argument",
+      "claim": "For positive K, n in1..16 and 0<t<1, the Hill threshold is equivalently S^n(1-t)>=t*K^n. With positive per-sensor cap c, activation requires at least the least integer q with (q*c)^n(1-t)>=t*K^n named positive sensors.",
+      "evidence": [
+        "code/rust/core_epistemic_immune_system/src/allostery.rs:39-72",
+        "code/rust/core_epistemic_immune_system/src/allostery.rs:81-174"
+      ],
+      "dependencies": [
+        "nonnegative exact signals",
+        "enforced positive cap",
+        "distinct normalized sensor names"
+      ],
+      "limitations": [
+        "An inspection argument, not a mechanized proof of Rust.",
+        "Named sources need not be independent.",
+        "BigInt input magnitude is not bounded here."
+      ]
+    },
+    {
+      "id": "NATIVE-EIS-003",
+      "classification": "implementation_check",
+      "claim": "Native support is an exact branch-and-bound maximum independent set over at most32 deduplicated supplied correlation-key rows; support>=3 yields provisional eligibility only.",
+      "evidence": [
+        "code/rust/core_epistemic_immune_system/src/admission.rs:221-306"
+      ],
+      "dependencies": [
+        "truth and adequacy of correlation metadata"
+      ],
+      "limitations": [
+        "Graph independence is not statistical independence.",
+        "Distinct observation digests in external-review assessment need not represent independent observers.",
+        "Compatibility replay/human_admit helpers do not perform full authenticated replay."
+      ]
+    },
+    {
+      "id": "NATIVE-EIS-004",
+      "classification": "implementation_check_with_finite_tests",
+      "claim": "Signed custody verification binds ordered statement bytes, issuer/key/purpose/scope, declared rule/source/subject/context, evidence bytes, clock windows and legal chained state transitions.",
+      "evidence": [
+        "code/rust/core_epistemic_immune_system/src/authenticated.rs:148-375",
+        "code/rust/core_epistemic_immune_system/src/authenticated.rs:378-472",
+        "code/rust/tests/core_epistemic_immune_system/authenticated_custody.rs:1-388"
+      ],
+      "dependencies": [
+        "trusted policy and clock supplied by caller",
+        "ed25519-dalek verification",
+        "durable latest tip held outside this function",
+        "observer truth"
+      ],
+      "limitations": [
+        "Authenticates key-relative statements, not truth or human identity.",
+        "Caller can provide a valid historical prefix unless external tip pinning rejects it.",
+        "Reversed timestamp interval causes a pre-signature debug panic; no signature bypass shown."
+      ]
+    },
+    {
+      "id": "NATIVE-EIS-005",
+      "classification": "implementation_check_with_finite_tests",
+      "claim": "Regulation computes a strict false-discovery threshold FP/(TP+FP) using exact widened arithmetic and checks telemetry target/current status.",
+      "evidence": [
+        "code/rust/core_epistemic_immune_system/src/regulation.rs:35-87",
+        "code/rust/tests/core_epistemic_immune_system/regulation_exact_boundaries.rs:28-113"
+      ],
+      "dependencies": [
+        "correct supplied TP/FP classifications"
+      ],
+      "limitations": [
+        "Not FP/(FP+TN), not a population guarantee, and intentionally distinct from Python Signal1 toxicity."
+      ]
+    },
+    {
+      "id": "NATIVE-EIS-006",
+      "classification": "implementation_check",
+      "claim": "Two-signal screening checks distinct observer/predicate/digest/span projections before disposition; the activation use case binds content bytes through injected ports.",
+      "evidence": [
+        "code/rust/core_epistemic_immune_system/src/independence.rs:254-315",
+        "code/rust/core_epistemic_immune_system/src/signal_gate.rs:70-114",
+        "code/rust/core_epistemic_immune_system/src/activation_use_case.rs:41-69"
+      ],
+      "dependencies": [
+        "trustworthy port implementation",
+        "adequate host sensor"
+      ],
+      "limitations": [
+        "Structural separation is not statistical independence.",
+        "evaluate_signals alone trusts projected evidence; evaluate_independent adds structural checks.",
+        "No detector completeness inference."
+      ]
+    },
+    {
+      "id": "NATIVE-PCIV-001",
+      "classification": "implementation_check_with_finite_probe",
+      "claim": "Native immunity implements shortest-hop BFS backward propagation and fixed-point forward taint, unlike the reviewed Python current-prompt/single-pass adapters.",
+      "evidence": [
+        "code/rust/core_prompt_civilization/src/immunity.rs:43-137"
+      ],
+      "dependencies": [
+        "consistent supplied graph",
+        "caller horizon"
+      ],
+      "limitations": [
+        "No hard maximum10 is enforced by compute_backward_propagation.",
+        "This is graph reachability, not causality or effective protection.",
+        "Fixture confirms only the supplied three-node case."
+      ]
+    },
+    {
+      "id": "NATIVE-PCIV-002",
+      "classification": "implementation_check",
+      "claim": "Lineage witness digests bind named endpoints and relationship, and insertion rejects cycles; the digest is publicly computable from those declarations.",
+      "evidence": [
+        "code/rust/core_prompt_civilization/src/genealogy.rs:68-105",
+        "code/rust/core_prompt_civilization/src/genealogy.rs:143-189"
+      ],
+      "dependencies": [
+        "caller provenance and graph mutation discipline"
+      ],
+      "limitations": [
+        "No observation, signed issuer or semantic causal proof is required.",
+        "Public maps permit bypassing insertion checks.",
+        "Generation cache is stale after some legal insertion orders."
+      ]
+    },
+    {
+      "id": "NATIVE-PCIV-003",
+      "classification": "source_derived_mathematical_argument",
+      "claim": "For a well-formed stochastic graph, sparse F(r)=alpha*P*r+(1-alpha)u is an l1 contraction with alpha=17/20. The posterior bound alpha/(1-alpha)*||r_k-r_(k-1)||1=17/3*delta follows from geometric summation. The implementation computes rational steps and that exact scalar bound.",
+      "evidence": [
+        "code/rust/core_prompt_civilization/src/rank.rs:608-770"
+      ],
+      "dependencies": [
+        "P nonnegative column-stochastic",
+        "valid graph endpoints",
+        "exact arithmetic",
+        "consecutive iterates"
+      ],
+      "limitations": [
+        "Inspection argument, not mechanized implementation proof.",
+        "Singleton branch skips graph validation.",
+        "is_converged tests delta<=tolerance, not certified_l1_error<=tolerance.",
+        "Compaction trusts its supplied certificate's error field."
+      ]
+    },
+    {
+      "id": "NATIVE-PCIV-004",
+      "classification": "implementation_check",
+      "claim": "Dense rank verification reconstructs transition entries, rejects a nonstochastic candidate vector or mismatched matrix, and checks the exact stationary equation.",
+      "evidence": [
+        "code/rust/core_prompt_civilization/src/rank.rs:428-479",
+        "code/rust/core_prompt_civilization/src/rank_port.rs:132-206"
+      ],
+      "dependencies": [
+        "valid node/edge/evidence/damping domain",
+        "consistent node ordering"
+      ],
+      "limitations": [
+        "Duplicate parent edges break row stochasticity in both implementations.",
+        "Rank port does not enforce all stochastic-domain assumptions.",
+        "A metric-relative rank is not semantic fitness, generalization, convergence of learning or task success."
+      ]
+    },
+    {
+      "id": "NATIVE-OP-001",
+      "classification": "implementation_check",
+      "claim": "Foundation and Python-compatible planar substitution replace one typed input with ordered inner inputs. Structural associativity checks compare signatures for specified triples.",
+      "evidence": [
+        "code/rust/core_operad_theory/src/foundation/colored_operad.rs:106-148",
+        "code/rust/core_operads/src/planar.rs:177-255",
+        "code/rust/core_operad_theory/src/realization/associativity_witness.rs:50-151"
+      ],
+      "dependencies": [
+        "operation typing",
+        "valid index domain"
+      ],
+      "limitations": [
+        "Does not compare operation behavior or establish equality of full Operation records.",
+        "Signature tests do not prove associativity of arbitrary actions or effects."
+      ]
+    },
+    {
+      "id": "NATIVE-OP-002",
+      "classification": "implementation_check_with_finite_tests",
+      "claim": "The kernel normalizer validates reconstructed operation/port data, including Admitted trees, substitutes matching open leaves, erases identity/association syntax and hashes structured tree plus boundary.",
+      "evidence": [
+        "code/rust/core_operad_theory/src/kernel/terms.rs:139-167",
+        "code/rust/core_operad_theory/src/kernel/terms.rs:242-440",
+        "code/rust/core_operads/src/operad_runtime.rs:559-595"
+      ],
+      "dependencies": [
+        "OperationSpec constructor semantics",
+        "canonical byte profile"
+      ],
+      "limitations": [
+        "Source explicitly says Lean tree proofs do not verify this Rust implementation or serialization.",
+        "Foundation PlanarTree hashes use a different weaker scheme; demonstrated collision does not establish kernel-normalized hash collision."
+      ]
+    },
+    {
+      "id": "NATIVE-OP-003",
+      "classification": "implementation_check",
+      "claim": "Runtime inventory interpretation locally executes only identity, pair and checked i64 sum; selected host guards or unregistered external targets refuse local execution.",
+      "evidence": [
+        "code/rust/core_operads/src/operad_runtime.rs:182-235",
+        "code/rust/core_operads/src/operad_runtime.rs:263-334",
+        "code/rust/core_operads/src/operad_runtime.rs:369-401"
+      ],
+      "dependencies": [
+        "trusted external executor for other bindings",
+        "kernel type checks"
+      ],
+      "limitations": [
+        "VALID can describe an inert normalized plan with no execution.",
+        "No native mechanism here executes arbitrary skill prose or verifies a QM derivation.",
+        "Runtime limits and downstream type semantics still need broader adversarial audit."
+      ]
+    },
+    {
+      "id": "NATIVE-OP-004",
+      "classification": "source_confirmed_evidence_limit",
+      "claim": "Generic L4 capacity records and trivial Ok/Err assertions are not module-wide correctness or mutation-analysis evidence.",
+      "evidence": [
+        "code/rust/core_operad_theory/src/foundation/operation.rs:170-184",
+        "code/rust/core_epistemic_immune_system/src/admission.rs:625-660"
+      ],
+      "dependencies": [
+        "separate reproducible mutation campaign if claimed"
+      ],
+      "limitations": [
+        "Comments saying killed=6 do not execute six mutations.",
+        "Capacity-record tests exercise their own tiny admission wrapper, not surrounding algorithm behavior."
+      ]
+    },
+    {
+      "id": "NATIVE-OP-005",
+      "classification": "implementation_check",
+      "claim": "OperadAlgebra recursively evaluates supplied JSON actions or structural packaging; its carrier strings and policy reference do not validate runtime value types or enforce an admission decision.",
+      "evidence": [
+        "code/rust/core_operad_theory/src/realization/algebra_over_operad.rs:54-183"
+      ],
+      "dependencies": [
+        "registered action semantics",
+        "caller policy enforcement"
+      ],
+      "limitations": [
+        "Evaluation receipts bind term ID only, reuse a fixed timestamp, and do not bind distinct input/execution occurrence identities.",
+        "No general algebra homomorphism, authority or execution-provenance theorem established."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "NATIVE-BUG-001",
+      "priority": "P2",
+      "title": "Reversed attestation interval panics before signature verification",
+      "evidence": [
+        "code/rust/core_epistemic_immune_system/src/authenticated.rs:256-262",
+        "code/rust/core_epistemic_immune_system/src/authenticated.rs:360-365"
+      ],
+      "status": "reproduced_public_api",
+      "observation": "issued_at100, expires_at50, otherwise valid policy/binding, empty signature: verify panics in debug build rather than returning Refusal.",
+      "mechanism": "valid_lifetime eagerly subtracts unsigned timestamps even when valid_issue is false.",
+      "limits": "No signed-attestation acceptance bypass shown. Release overflow behavior was not tested; with unchecked wrapping valid_issue still fails.",
+      "repair": "Use checked duration or short-circuit on invalid interval before subtraction; regression must cover malformed unsigned endpoints."
+    },
+    {
+      "id": "NATIVE-BUG-002",
+      "priority": "P2",
+      "title": "Foundation tree hashes conflate structurally different trees",
+      "evidence": [
+        "code/rust/core_operad_theory/src/foundation/operation.rs:61-71",
+        "code/rust/core_operad_theory/src/foundation/planar_tree.rs:133-143"
+      ],
+      "status": "reproduced_public_api",
+      "observation": "Nullary operation id f;leaf:A and unary operation id f with A input both hash to tree_14fe719ba34ee24b; arities0 and1.",
+      "mechanism": "Unescaped semicolon concatenation is noninjective before hashing; output signature and many operation fields are omitted, and hash is truncated to64bits.",
+      "limits": "Distinct from kernel::terms canonical structured hash. No collision in that stronger path demonstrated.",
+      "repair": "Use domain-separated structured encoding with complete identity assumptions and full digest; migrate existing IDs explicitly."
+    },
+    {
+      "id": "NATIVE-BUG-003",
+      "priority": "P2",
+      "title": "Permutation operation IDs collide for different valid permutations",
+      "evidence": [
+        "code/rust/core_operad_theory/src/foundation/operation.rs:147-165"
+      ],
+      "status": "reproduced_public_api",
+      "observation": "For12 inputs, [1,11,0,2,3,4,5,6,7,8,9,10] and [11,1,0,2,3,4,5,6,7,8,9,10] produce p^sigma_11102345678910 despite different signatures.",
+      "mechanism": "Decimal indices are concatenated without separators.",
+      "limits": "ID collision, not cryptographic hash collision or demonstrated authority bypass.",
+      "repair": "Encode permutation as a framed vector or canonical structured digest."
+    },
+    {
+      "id": "NATIVE-BUG-004",
+      "priority": "P2",
+      "title": "Duplicate parent edges break stochastic rank reconstruction",
+      "evidence": [
+        "code/rust/core_prompt_civilization/src/rank.rs:171-229",
+        "code/rust/core_prompt_civilization/src/rank.rs:362-414",
+        "code/rust/core_prompt_civilization/src/rank_port.rs:61-109"
+      ],
+      "status": "reproduced_public_api",
+      "observation": "P,C with repeated P->C gives transition row sums1 and3/4. Dense solver returns [1/2,1/2], rejected by its own certificate verifier. Compatibility matrix port returns the same defective row.",
+      "mechanism": "Denominator counts duplicate parents while membership adds each destination's contribution once.",
+      "limits": "Verifier rejects this dense output; no false verification of this example. Sparse citation solver handles multiplicities separately.",
+      "repair": "Reject/deduplicate edges consistently or accumulate multiplicity in numerators; validate rows and solver certificate."
+    },
+    {
+      "id": "NATIVE-BUG-005",
+      "priority": "P2",
+      "title": "Singleton sparse PageRank skips graph validation",
+      "evidence": [
+        "code/rust/core_prompt_civilization/src/rank.rs:625-645",
+        "code/rust/core_prompt_civilization/src/rank.rs:688-713"
+      ],
+      "status": "reproduced_public_api",
+      "observation": "CitationGraph::new(1,[(0,99)]) returns accepted/converged rank with zero error instead of rejecting out-of-range endpoint.",
+      "mechanism": "Singleton return precedes build_sparse_in_edges validation.",
+      "limits": "Rank of the valid singleton graph is trivially1; the defect is certifying an invalid declared graph.",
+      "repair": "Validate graph endpoints before singleton shortcut."
+    },
+    {
+      "id": "NATIVE-BUG-006",
+      "priority": "P2",
+      "title": "Thymus panel digest does not bind sample boundaries",
+      "evidence": [
+        "code/rust/core_epistemic_immune_system/src/thymus.rs:34-45",
+        "code/rust/core_epistemic_immune_system/src/thymus.rs:82-96"
+      ],
+      "status": "reproduced_public_api",
+      "observation": "Panels [a newline b] and [a,b] have identical self_panel_hash despite different sample counts1 and2.",
+      "mechanism": "A newline delimiter is also permitted inside samples.",
+      "limits": "samples_tested differs, so complete verdicts need not collide. No authenticated panel-custody bypass demonstrated.",
+      "repair": "Hash a framed ordered sequence of samples rather than delimiter concatenation."
+    },
+    {
+      "id": "NATIVE-BUG-007",
+      "priority": "P2",
+      "title": "Adding an ancestor leaves descendant generations stale",
+      "evidence": [
+        "code/rust/core_prompt_civilization/src/genealogy.rs:183-187",
+        "code/rust/core_prompt_civilization/src/genealogy.rs:213-232"
+      ],
+      "status": "reproduced_public_api",
+      "observation": "Insert valid-seal B->C, then A->B: B generation1, C generation1 although max-parent-plus-one requires2. BFS distance remains correct.",
+      "mechanism": "Only direct child cache is updated; derive_generation returns positive cached value without checking new ancestor structure.",
+      "limits": "Fixture uses legal incremental insertions; no concurrent or persisted graph behavior tested.",
+      "repair": "Invalidate/rederive descendant generations or enforce an insertion invariant that prevents stale caches."
+    },
+    {
+      "id": "NATIVE-TEST-001",
+      "priority": "P2",
+      "title": "EIS activation-use-case parity target does not compile",
+      "evidence": [
+        "code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs:57-68",
+        "code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs:71-91"
+      ],
+      "status": "compiler_reproduced",
+      "observation": "Rust1.99.0 reports E0621 for input lifetime and E0597 for trace borrow at final expression. Whole selected --tests invocation yields no test results.",
+      "repair": "Repair test lifetime/borrow structure and then run all intended vectors; source implementation was not edited."
+    },
+    {
+      "id": "NATIVE-TEST-002",
+      "priority": "P2",
+      "title": "Current native suites contain obsolete digests and witness fixtures",
+      "evidence": [
+        "code/rust/core_prompt_civilization/src/immunity.rs:237-267",
+        "code/rust/core_prompt_civilization/src/record.rs:276-315",
+        "code/rust/core_operad_theory/src/kernel/canonical.rs:224-264",
+        "code/rust/tests/core_epistemic_immune_system/activation_parity.rs:32-40",
+        "code/rust/tests/core_epistemic_immune_system/activation_parity.rs:77-108"
+      ],
+      "status": "existing_tests_failed_and_source_explained",
+      "observation": "Two immunity tests use w1/w2/w rejected by bound witness admission; genome test expects omega-prefixed digest; two canonical tests pass core.test but expect omega.test; two EIS activation tests retain old receipt hashes. Current Python canonical_id matches native first danger-row hash dca5bb..., not frozen84c5cc....",
+      "limits": "Only the first mismatching EIS row was independently recomputed. No complete fixture migration or historical custody reconstruction.",
+      "repair": "Preserve old fixture provenance, regenerate current namespace vectors from an explicit versioned rule and repair stale witness construction; rerun whole relevant suites."
+    }
+  ],
+  "validation": [
+    {
+      "kind": "existing_native_tests",
+      "command": "cargo test --offline --locked -p core_epistemic_immune_system -p core_prompt_civilization -p core_operads --lib",
+      "result": "PCIV unit result113passed3failed; output for earlier packages was truncated and is not counted here.",
+      "exit_code": 1,
+      "limits": "Subsequent package-specific results below supersede incomplete earlier output; no aggregate double-count."
+    },
+    {
+      "kind": "native_compile_block",
+      "command": "cargo test --offline --locked -p core_epistemic_immune_system -p core_operads --tests --quiet",
+      "result": "Compilation failed on activation_use_case_parity E0621/E0597; no test results.",
+      "exit_code": 101
+    },
+    {
+      "kind": "existing_native_tests",
+      "command": "cargo test --offline --locked -p core_operads --tests --quiet",
+      "result": "56passed0failed across10binaries (13unit plus43integration)",
+      "per_binary_passed": [
+        13,
+        8,
+        17,
+        2,
+        2,
+        2,
+        3,
+        2,
+        2,
+        5
+      ],
+      "exit_code": 0,
+      "limits": "Finite existing tests; many test sources/fixtures remain unread."
+    },
+    {
+      "kind": "existing_native_tests",
+      "command": "cargo test --offline --locked -p core_epistemic_immune_system --lib --test authenticated_custody --test signal_gate_parity --test activation_parity --test regulation_exact_boundaries --test independence_parity --quiet",
+      "result": "24unit passed; activation_parity2passed2failed; Cargo stopped before later selected binaries.",
+      "exit_code": 101
+    },
+    {
+      "kind": "existing_native_tests",
+      "command": "cargo test --offline --locked -p core_epistemic_immune_system --test authenticated_custody --test signal_gate_parity --test regulation_exact_boundaries --test independence_parity --no-fail-fast --quiet",
+      "result": "19passed0failed across4binaries",
+      "per_binary_passed": [
+        8,
+        2,
+        7,
+        2
+      ],
+      "exit_code": 0,
+      "limits": "Finite fixture correspondence; selected JSON fixture contents not fully reviewed."
+    },
+    {
+      "kind": "existing_native_tests",
+      "command": "cargo test --offline --locked -p core_prompt_civilization --test rank_port --quiet",
+      "result": "2passed0failed",
+      "exit_code": 0,
+      "limits": "One fixture-loop test and one standalone capacity wrapper."
+    },
+    {
+      "kind": "existing_native_tests",
+      "command": "cargo test --offline --locked -p core_operad_theory --tests --quiet",
+      "result": "72unit passed2failed; integration targets did not run because unit target failed.",
+      "exit_code": 101
+    },
+    {
+      "kind": "finite_public_api_probes",
+      "command": ".venv/Scripts/python.exe dag/reviews/additional_native_systems_probes.py",
+      "result": {
+        "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "results": [
+          {
+            "panicked": true,
+            "probe": "attestation_reversed_interval",
+            "signature_supplied": false
+          },
+          {
+            "arities": [
+              0,
+              1
+            ],
+            "different_tree": true,
+            "equal_hash": true,
+            "hash": "tree_14fe719ba34ee24b",
+            "probe": "term_hash_collision"
+          },
+          {
+            "different_signature": true,
+            "equal_id": true,
+            "id": "p^sigma_11102345678910",
+            "probe": "permutation_id_collision"
+          },
+          {
+            "own_certificate_valid": false,
+            "probe": "duplicate_parent_edges",
+            "rank": [
+              "1/2",
+              "1/2"
+            ],
+            "row_sums": [
+              "1",
+              "3/4"
+            ]
+          },
+          {
+            "probe": "duplicate_edges_compatibility_port",
+            "result": "Ok(Array [Array [String(\"1/2\"), String(\"1/2\")], Array [String(\"1/2\"), String(\"1/4\")]])"
+          },
+          {
+            "accepted": true,
+            "converged": true,
+            "probe": "singleton_invalid_edge"
+          },
+          {
+            "backward_a_distance": 2,
+            "backward_a_weight": "1/4",
+            "expected_c": 2,
+            "forward_taint_reaches_c": true,
+            "generation_b": 1,
+            "generation_c": 1,
+            "probe": "lineage_generation_cache"
+          },
+          {
+            "probe": "self_panel_hash_collision",
+            "same_hash": true,
+            "sample_counts": [
+              1,
+              2
+            ]
+          }
+        ],
+        "exit_code": 0,
+        "stderr": ""
+      },
+      "limits": "Debug compiled Rust with offline current Cargo artifacts; temporary products removed. No release, fuzz, or deployed-host test."
+    },
+    {
+      "kind": "bounded_cross_language_check",
+      "result": "Current Python eis.domain.canonical.canonical_id matches native danger receipt hash sha256:dca5bb312e24211f570c1aea1a246ab123a930eb3951d64363f47d85a7983cf8 on first successful frozen danger row.",
+      "limits": "One common input only; frozen expected sha256:84c5cc... fails. No complete cross-language equivalence proof."
+    },
+    {
+      "kind": "independent_hash_check",
+      "result": "SHA-256(core-prompt-genome-v1: + documented compact envelope)=5a60fd3bc53dc83c9953864b00297b0278e3ad62358742582cdd7ec9366f5663. Replacing prefix by omega-prompt-genome-v1: gives expected0a7c69d37eb984e67f2359188154aa50f9ee2470f8a003d5d4abfa3b50ca78d2.",
+      "limits": "Explains golden failure; does not prove arbitrary canonicalization."
+    }
+  ],
+  "file_reviews": [
+    {
+      "path": "code/rust/Cargo.toml",
+      "sha256": "cc24df2f92a39ba6ff4644a33a89e976c06e503136838625a430a8f640b882ef",
+      "bytes": 1083,
+      "line_count": 52,
+      "full_source_read": true,
+      "assessment": "Full manifest read to identify crate dependencies and explicit integration targets; no general dependency correctness audit.",
+      "reviewed_lines": [
+        [
+          1,
+          52
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/Cargo.toml",
+      "sha256": "805eb468d43fb3d33aba4b7dcf909c81350505b7dd4a22a6cac82dbe27f24391",
+      "bytes": 1901,
+      "line_count": 64,
+      "full_source_read": true,
+      "assessment": "Full manifest read to identify crate dependencies and explicit integration targets; no general dependency correctness audit.",
+      "reviewed_lines": [
+        [
+          1,
+          64
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/activation.rs",
+      "sha256": "d98051e65eae2d76cc19310b0836b0eb1e69f61966ed2044d626bf64a31d944f",
+      "bytes": 19974,
+      "line_count": 538,
+      "full_source_read": true,
+      "assessment": "Structural receipts with sorted canonical digest and checked deserialization; conjunction validates bound subject/spec and distinct observer IDs. Legacy flags/observer names do not establish authenticated custody or statistical independence. Frozen digest vectors fail current namespace hashes.",
+      "reviewed_lines": [
+        [
+          1,
+          538
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/activation_ports.rs",
+      "sha256": "7a5dcda7854fbda56c3c78b767d5d1200f2cac0e334d2b77c765d2a6097c1e8c",
+      "bytes": 4404,
+      "line_count": 136,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/activation_use_case.rs",
+      "sha256": "20c4d4d06fbc35faae3ff4c2d78c725cf0a86150b6adc2774fdca07f352e9b40",
+      "bytes": 6698,
+      "line_count": 187,
+      "full_source_read": true,
+      "assessment": "Injected custody/sensor ports bind actual subject bytes to danger receipt; dependent failures propagate. Port implementation honesty/health is an external obligation, unlike authenticated adapter semantics elsewhere.",
+      "reviewed_lines": [
+        [
+          1,
+          187
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/admission.rs",
+      "sha256": "982a71a470c19d28742245b6757bac659caa943a335482e436c99388ae5ce929",
+      "bytes": 25108,
+      "line_count": 661,
+      "full_source_read": true,
+      "assessment": "Candidate external-review eligibility and MIS of <=32 deduplicated declared-correlation nodes; independent observation count is digest-distinctness, not independent sources. Human admission compatibility helper checks receipt prefix rather than signer; replay and mutation demo helpers inspect caller fields, not replay execution.",
+      "reviewed_lines": [
+        [
+          1,
+          661
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/allostery.rs",
+      "sha256": "18cf56fce8240a0bf1099b426e316f881e926350d4a6b06c6340850961369650",
+      "bytes": 12916,
+      "line_count": 329,
+      "full_source_read": true,
+      "assessment": "BigRational Hill response S^n/(K^n+S^n), exact cross-multiplied threshold and binary-searched minimum capped sensor count. Named/casefolded sensor distinctness is not statistical independence.",
+      "reviewed_lines": [
+        [
+          1,
+          329
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/anti_skill.rs",
+      "sha256": "a22523367c817af149740988911f48cdcb615c63d273f632cb4ec949c8fcd584",
+      "bytes": 9052,
+      "line_count": 263,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/authenticated.rs",
+      "sha256": "7e48f76cbe13c78017b713516c474ede6814eb6485d0a30fa7173f4dfa61852c",
+      "bytes": 24258,
+      "line_count": 720,
+      "full_source_read": true,
+      "assessment": "Verified ordered signed payload, exact role/scope/binding checks and history transition chain; caller-supplied trust/time and latest tip remain obligations. Reproduced checked-build panic on expires_at<issued_at due to eager unsigned subtraction.",
+      "reviewed_lines": [
+        [
+          1,
+          720
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+      "sha256": "8ff06aedf4c57f9a85888c0fe06f44ca7e7687837e9e279bf7d00c2ba96a1b97",
+      "bytes": 11884,
+      "line_count": 326,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/danger_gate.rs",
+      "sha256": "0b025fc5308931e013e8058fe912f6ac933b30bff48686188b358de656cf3e0e",
+      "bytes": 7600,
+      "line_count": 217,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/formulary.rs",
+      "sha256": "50afb898756a465c2456daddbf51f1b29635c708970f4024abcd9fc5a0244783",
+      "bytes": 6920,
+      "line_count": 197,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/host_checks.rs",
+      "sha256": "cfb1916eda44fdaedc624f9b4552f7117c142a1753edfd6ab87de5be4b8a10c8",
+      "bytes": 12827,
+      "line_count": 372,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/independence.rs",
+      "sha256": "2a91cb2b45ddc843f14258cf343ec5584e3f0c9022840300bfcfd8d9b03d56e8",
+      "bytes": 16305,
+      "line_count": 433,
+      "full_source_read": true,
+      "assessment": "Checks observer labels, declared predicate overlap, match digest and span overlap with exact integer projections. Caller-supplied identity/spans/digests do not prove causal/statistical independence.",
+      "reviewed_lines": [
+        [
+          1,
+          433
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/lib.rs",
+      "sha256": "9675e12ab7884702eda60758c4ce62916a1a79a2406b3073a9db1d4548d4707f",
+      "bytes": 10992,
+      "line_count": 310,
+      "full_source_read": true,
+      "assessment": "Module exports, Refusal wrapper, legacy integration-style unit tests and standalone capacity-record tests. Passing these does not authenticate host evidence or prove module-wide authority invariants.",
+      "reviewed_lines": [
+        [
+          1,
+          310
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/pharmacy_search.rs",
+      "sha256": "11589ec4d53ccda891dd7063de9728ed03522109f0367993c66eb81de406b5f6",
+      "bytes": 18895,
+      "line_count": 537,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/regulation.rs",
+      "sha256": "4328523e2b94c10c5e6e0095e578930aa7ccce466c21e7574f373b0214bd2554",
+      "bytes": 7530,
+      "line_count": 206,
+      "full_source_read": true,
+      "assessment": "Exact FP/(TP+FP) proportion, widened u128 total and BigUint cross products; foreign telemetry and inactive statuses cannot suspend. Supplied counts lack truth/authentication checks; policy is not population FPR.",
+      "reviewed_lines": [
+        [
+          1,
+          206
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/signal_gate.rs",
+      "sha256": "78483ee16034e013c8c6c1740e96c7273711a8eadc74a72f2bb8c93de0030803",
+      "bytes": 9564,
+      "line_count": 242,
+      "full_source_read": true,
+      "assessment": "Signal1+Signal2 wrapper performs structural independence checks before disposition and canonical bounded outputs; no underlying observation authentication or detector completeness. Frozen JSON parity tests are finite correspondence only.",
+      "reviewed_lines": [
+        [
+          1,
+          242
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/thymus.rs",
+      "sha256": "02bd96bd792a104053cacb310f74182ece787c81ca8dd2552e60672bce0c49ce",
+      "bytes": 7774,
+      "line_count": 216,
+      "full_source_read": true,
+      "assessment": "Regex screening over caller-supplied finite strings retires a self-reactive proposed detector, otherwise promotes Candidate. Empty panels are allowed. Newline-concatenated panel hash does not uniquely bind sample boundaries.",
+      "reviewed_lines": [
+        [
+          1,
+          216
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/Cargo.toml",
+      "sha256": "64d0b916e0858cf380bc14e9acc9ddb7db92b54ed0ea8cdd4846c4e8de1ee5ae",
+      "bytes": 1273,
+      "line_count": 50,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/applications/mod.rs",
+      "sha256": "ee182aa6b5458b569f22a4a13671ef1f5f62c56daebb5d9ebc98258ff2a9a44c",
+      "bytes": 2568,
+      "line_count": 71,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/applications/oeas_workflow_operad.rs",
+      "sha256": "1c14136c25839f0fca107abf61ea1aac8ebf04c2f2200a10b3a23972b89d4680",
+      "bytes": 9032,
+      "line_count": 259,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/deformation/bar_cobar.rs",
+      "sha256": "35e096c99e0788bc0f1d7aaf431afb4ab0dd45b89ce3607de3e51280605a923b",
+      "bytes": 5349,
+      "line_count": 129,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/deformation/cooperad.rs",
+      "sha256": "3de1f2a0df5fefc893e5e251a2012bd097e495247ecb3b1051327ed420615d41",
+      "bytes": 6433,
+      "line_count": 175,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/deformation/koszul_duality.rs",
+      "sha256": "267dcb5488b0a3af00f5b039d2fe519e37a1d8498fbd6de9e3a6db39b5e7f627",
+      "bytes": 6104,
+      "line_count": 164,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/deformation/mod.rs",
+      "sha256": "46d73bd988f3ba117d8a915642846f7131e3c50e8e74a56e0da376dcbbc4813a",
+      "bytes": 5171,
+      "line_count": 155,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/deformation/quadratic_operad.rs",
+      "sha256": "fde0d5110fd73db8e1c533043bb6e8a315cc875b5d2b3e0b3526cee2c28a207e",
+      "bytes": 3659,
+      "line_count": 112,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/foundation/colored_operad.rs",
+      "sha256": "8ddc4ec12bbe73310e699043a773d02216c3b4722377c893f0b9c3bbfe71d5e0",
+      "bytes": 10589,
+      "line_count": 303,
+      "full_source_read": true,
+      "assessment": "Colour/generator registration and matching-slot substitution preserve ordered signatures. Closed universe is enforced on registration, not arbitrary public partial_compose inputs. Composite labels are syntax, so no full equality/unit law on entire Operation records is established.",
+      "reviewed_lines": [
+        [
+          1,
+          303
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/foundation/colour.rs",
+      "sha256": "7c16fd0441e992c79713d7c011c9f88a537dc15b62d3daa5b4694af309aec1d5",
+      "bytes": 4826,
+      "line_count": 151,
+      "full_source_read": true,
+      "assessment": "Nonempty trimmed colour constructor, vector signatures, and finite slot-count witness. Derived deserialization permits values outside constructor invariants; signature-slot witness detects empty strings only, not full runtime semantics.",
+      "reviewed_lines": [
+        [
+          1,
+          151
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/foundation/mod.rs",
+      "sha256": "248980706950e0aa3fe7cbc56477e0eea2e8a2256ad7f38ea6fa5cd2113cc8b9",
+      "bytes": 5766,
+      "line_count": 157,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/foundation/monoidal_operad.rs",
+      "sha256": "05d7a0fabf1273a9e631bc0ed35f946fd16d58e48363fd322b5236b3c2d8fec6",
+      "bytes": 6340,
+      "line_count": 158,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/foundation/operation.rs",
+      "sha256": "6152472d42fc0c7c5ffa2dd4451eb48f15020af15c14dc00f95b5dab6d105274",
+      "bytes": 5849,
+      "line_count": 185,
+      "full_source_read": true,
+      "assessment": "Operation IDs trim nonempty text; structural kind/fields are public and derived deserialization does not call constructors. Permutation validity is checked but delimiter-free decimal index naming collides at arity12.",
+      "reviewed_lines": [
+        [
+          1,
+          185
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/foundation/planar_tree.rs",
+      "sha256": "788daa0090b97a0aa98f137d6b4ae4684ed1bcdf02782e99d7c72aa0a78ca8d8",
+      "bytes": 6399,
+      "line_count": 189,
+      "full_source_read": true,
+      "assessment": "Immediate-child arity/colour checks and slot grafting; public fields and derived deserialization are not recursively validated capabilities. Semicolon-delimited, 64-bit-truncated term hash has demonstrated encoding collision without cryptographic attack.",
+      "reviewed_lines": [
+        [
+          1,
+          189
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/foundation/span_operand.rs",
+      "sha256": "ab92dac56f66d80915b4f8fc04a11ab223522991cf07f1750a66b9c9b156bf6d",
+      "bytes": 7909,
+      "line_count": 232,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/geometric/en_algebra.rs",
+      "sha256": "4f682e44b158ef033c606519a9374c4612a32f1922a03c638ed074fe1fb83ae5",
+      "bytes": 6361,
+      "line_count": 173,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/geometric/little_disks.rs",
+      "sha256": "c2eb74a450f7257401efa2a1f3a870a0cf8899952b0bb46439b5645919acc1e3",
+      "bytes": 5487,
+      "line_count": 168,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/geometric/mod.rs",
+      "sha256": "0e4f03433ba287b0222f70fb179d2a7b92b98efc17c02c28f6b73ba454844902",
+      "bytes": 3139,
+      "line_count": 91,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/canonical.rs",
+      "sha256": "db2c235951183ef42fda765aee798f55e10254f0e9061c6e34537c4f7eded6db",
+      "bytes": 12041,
+      "line_count": 332,
+      "full_source_read": true,
+      "assessment": "Explicit recursive sorted ASCII encoding rejects floats/non-ASCII; exact envelope hash. Current tests pass core.test to encoder but expect omega.test, explaining two failures without establishing a serialization defect.",
+      "reviewed_lines": [
+        [
+          1,
+          332
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/capability.rs",
+      "sha256": "028c357cbe705ea8934defdd38946b5cf21280e82521bf0430e81ae7d8b68e55",
+      "bytes": 16166,
+      "line_count": 463,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/cells.rs",
+      "sha256": "f48a1ac189a01b98661fb2135766ce26316fcfbad1c54d1e3e33a40ad838ff68",
+      "bytes": 36344,
+      "line_count": 1093,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/mod.rs",
+      "sha256": "1fb407917bb4c05befde8565be253beb8ff004a8182f8018631ed5c9d021608c",
+      "bytes": 4780,
+      "line_count": 124,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/model.rs",
+      "sha256": "d6dbdb0c59c5eb66d63964e0055e219e7e1862c51ac2f301dc2a45ec1857f471",
+      "bytes": 24888,
+      "line_count": 734,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/obligations.rs",
+      "sha256": "18c3b125b0194b255ceacadbdb65303907862d130ec1a901a56809f57b1ae927",
+      "bytes": 11759,
+      "line_count": 343,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/observer.rs",
+      "sha256": "a068da7b4c0595baa322ddb58928d26a8152071d5efec468d486410d0419be86",
+      "bytes": 16357,
+      "line_count": 420,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/reindex.rs",
+      "sha256": "86889412154beea6086d8522c9fbbe44e6d12f734c425d6c9cc7339e2d1959df",
+      "bytes": 12370,
+      "line_count": 344,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/result.rs",
+      "sha256": "b0508286f67f6bf41212b3eb1afcf0e7ffa065e19ca8f61333677fc103fecd9a",
+      "bytes": 3573,
+      "line_count": 112,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/terms.rs",
+      "sha256": "4c74b099aeb2e06006fe86d37c82fb5e47b7d2295956f09c7614a3081fd8b46f",
+      "bytes": 20806,
+      "line_count": 631,
+      "full_source_read": true,
+      "assessment": "Recursively reconstructs/validates port and operation specs even for Admitted nodes; substitutes typed open leaves, erases identities and association syntax, hashes structured canonical tree+boundary. Formal tree proofs explicitly do not yet verify Rust/serialization. Distinct from foundation PlanarTree delimiter hash.",
+      "reviewed_lines": [
+        [
+          1,
+          631
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/kernel/trace.rs",
+      "sha256": "4ab1cf15e9502b623f22232e33951765d4ada1f615935258f1701488958fae2e",
+      "bytes": 15194,
+      "line_count": 427,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/lib.rs",
+      "sha256": "2abe3fa38d4ddbb141f1a97271db055523d3899dbd738a7e0e70d0930adbc26a",
+      "bytes": 7053,
+      "line_count": 185,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/python.rs",
+      "sha256": "91acc473145e9238d507ce31f879868b2bc601f3ae6c5f38cc54f440dbffffa0",
+      "bytes": 7800,
+      "line_count": 261,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/realization/algebra_over_operad.rs",
+      "sha256": "3368c9314e6e27e7b1601df95d9c16ca8efd4330327eab3bdd5ae0a9d9d64139",
+      "bytes": 10728,
+      "line_count": 302,
+      "full_source_read": true,
+      "assessment": "Ordered recursive actions on untyped JSON; carriers are strings, policy reference is attached metadata, missing actions return structural packaging. Receipts reuse term-only ID across inputs and fixed emitted_at timestamp. No execution provenance or semantic algebra law certification.",
+      "reviewed_lines": [
+        [
+          1,
+          302
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/realization/associativity_witness.rs",
+      "sha256": "f736cb5c254275e450ba7e4bd0907ecd16261c1f3d77fa945db59ae0c9e1c86c",
+      "bytes": 10761,
+      "line_count": 284,
+      "full_source_read": true,
+      "assessment": "Sequential witness evaluates two signatures for given operations and indices; unit check tests first input slot or reports nullary vacuity. DTO is not an independently replayed proof; unchecked i+j occurs in formatting before bounds validation.",
+      "reviewed_lines": [
+        [
+          1,
+          284
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/realization/mod.rs",
+      "sha256": "1204b22ed6844304bfe789ac7f4bed48f8f1ffa5f288497eb783d56831d7ff70",
+      "bytes": 6618,
+      "line_count": 174,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operad_theory/src/realization/module_over_operad.rs",
+      "sha256": "6f92e8b1711c483b52c183c0e216557e6fe9ab66cb1be1370931eee743442a47",
+      "bytes": 6907,
+      "line_count": 195,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operads/Cargo.toml",
+      "sha256": "46aa81e611d1bb19b9712d3bef147b1ddd2e16448dbbac2fbf06d84bbc802f55",
+      "bytes": 1503,
+      "line_count": 57,
+      "full_source_read": true,
+      "assessment": "Full manifest read to identify crate dependencies and explicit integration targets; no general dependency correctness audit.",
+      "reviewed_lines": [
+        [
+          1,
+          57
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operads/src/estate.rs",
+      "sha256": "d3b565274738d96b77e113e409ed621e877ad3976b5cb0020b3563ecff99d67b",
+      "bytes": 23219,
+      "line_count": 647,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operads/src/graph.rs",
+      "sha256": "203f747ab3ec09d56f3336be8c84a4c29882fb6d0477db33e2080446a021096d",
+      "bytes": 25330,
+      "line_count": 738,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operads/src/immune_guards.rs",
+      "sha256": "ce6d13506042ee4cbf91d6fae627a180484fd322f18550f28f1167492b4f1738",
+      "bytes": 7208,
+      "line_count": 208,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operads/src/immune_ports.rs",
+      "sha256": "feb6743f946631410c05bd51a333352476b128e4618078271bca3cce3b563615",
+      "bytes": 10763,
+      "line_count": 299,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operads/src/lib.rs",
+      "sha256": "3a5a969ce5a602d68f9f649fcbd2e6fe91f1e7e0e29a159ff62b79658d136492",
+      "bytes": 3138,
+      "line_count": 101,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operads/src/operad_runtime.rs",
+      "sha256": "ad5f50a87bece8040ca078fa4126774822a5439658a81f74ec0b2502560b8140",
+      "bytes": 21179,
+      "line_count": 629,
+      "full_source_read": true,
+      "assessment": "Bounded inventory parsing, ordered normal-form construction, checked input permutation, explicit no-authority outputs; only identity/pair/checked i64 sum execute locally. Selected host guards cause execution refusal. Limit check occurs before increment so may admit 129 despite message128; not yet probed.",
+      "reviewed_lines": [
+        [
+          1,
+          629
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operads/src/planar.rs",
+      "sha256": "5c65e58a504ccab5ed9994028581dfbf9f5e1a900aa9807ac604f837755619ae",
+      "bytes": 13414,
+      "line_count": 386,
+      "full_source_read": true,
+      "assessment": "Closed colour vocabulary and exact integer slot validation; delegates ordered substitution to foundation owner. Associativity witness compares signatures for supplied triple, not arbitrary body behavior.",
+      "reviewed_lines": [
+        [
+          1,
+          386
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_operads/src/policy.rs",
+      "sha256": "0beac120e938bb34ea2242ffcb2513645a991ff0463bce5f820f71f87277f55e",
+      "bytes": 8939,
+      "line_count": 234,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operads/src/skill_garden.rs",
+      "sha256": "e75c1c6b77002e5fa7d9d9db5a76b964eee25adfc2c3aeff25e2c858791d2527",
+      "bytes": 13134,
+      "line_count": 337,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_operads/src/workflow.rs",
+      "sha256": "c60cbeb720a274fd351d4fc8b48b246f7e4b0f80fe3d1e1b91c8e34295c6327c",
+      "bytes": 13576,
+      "line_count": 418,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/Cargo.toml",
+      "sha256": "7d6aca9e785fc6a19ef3e3d17d571c9672fc118a1af4b9e888949c7219eeec7a",
+      "bytes": 1934,
+      "line_count": 70,
+      "full_source_read": true,
+      "assessment": "Full manifest read to identify crate dependencies and explicit integration targets; no general dependency correctness audit.",
+      "reviewed_lines": [
+        [
+          1,
+          70
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/antimorphism.rs",
+      "sha256": "aef1d290ba46c833642fe3ccfe24d2aed66f994717ae1a61413df8a36b3f5cc3",
+      "bytes": 11245,
+      "line_count": 307,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/civilization.rs",
+      "sha256": "78768525be69d78dbe2b4d563280568c1c9206eae5f863ecead720a4cd75bdf7",
+      "bytes": 14737,
+      "line_count": 415,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/convergence.rs",
+      "sha256": "c8669f35d7782137fe695cd3a8309cf7915c3f55d7e172ef1ff938c78ba748cb",
+      "bytes": 7301,
+      "line_count": 230,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/crossover.rs",
+      "sha256": "257a50ac217bd4cbdd18b23793da38005b5792c768311c870b08a7f3f3356dcc",
+      "bytes": 10865,
+      "line_count": 331,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/domain.rs",
+      "sha256": "fb5826c36dfab851f3fb54687fa12e4adfe5fc91f0281966e1db506c5aec1832",
+      "bytes": 6885,
+      "line_count": 200,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/ecology.rs",
+      "sha256": "40265d035547dd82784a873c80d3fd4a8e5af9909104d21894613144247c22a8",
+      "bytes": 18106,
+      "line_count": 536,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/evidence.rs",
+      "sha256": "955728b4c715b24b8dcdfb54048a9bbb57fce2e8471bad9df12c4904837185bb",
+      "bytes": 7616,
+      "line_count": 225,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/fitness.rs",
+      "sha256": "a333f2fe290ec148913bb6db18ea851270fba07cf130661aa0f39d0176581570",
+      "bytes": 23825,
+      "line_count": 718,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/forge.rs",
+      "sha256": "3525036da193dd866d889490567b30d8582289e1d2ffd006523223baa65d49ea",
+      "bytes": 21363,
+      "line_count": 602,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/genealogy.rs",
+      "sha256": "b37fda31e2c0858e58c0aa07f51e471a46a1d16abee10027d1d970d813f28d58",
+      "bytes": 17884,
+      "line_count": 559,
+      "full_source_read": true,
+      "assessment": "Public self-computable SHA-256 binds domain/endpoints/relationship; insertion checks that digest and DAG cycles. No cryptographic issuer or observation authentication; duplicate edges are not deduplicated, public graph maps allow unchecked mutation. Cached generations may be stale after adding ancestor edges.",
+      "reviewed_lines": [
+        [
+          1,
+          559
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/allostery.rs",
+      "sha256": "679eaf07e39bc8260e1f3a33ba3a41adb644535b646eb008fb1e658651beac9a",
+      "bytes": 7125,
+      "line_count": 217,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/clonal.rs",
+      "sha256": "815f6a1d6f751761a7e5f2094e1d7d33ed51ee515ff4231e7481fddcaad70cec",
+      "bytes": 7629,
+      "line_count": 227,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/complement.rs",
+      "sha256": "6da5d1205e5388275b03e8ebb2e3612cab4ebe40d2949bc1af10b49e1e60e7e2",
+      "bytes": 7287,
+      "line_count": 212,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/danger_gate.rs",
+      "sha256": "7f8a671446b43a67bf50efdd7692042c25ab959578fb4f5c7f046cc66701c123",
+      "bytes": 6312,
+      "line_count": 188,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/mhc.rs",
+      "sha256": "16b1d70657a59c87c04a94a7a3f784f84b3f9c52063ad8de1ff0ef520c7a0bd1",
+      "bytes": 4863,
+      "line_count": 162,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/mod.rs",
+      "sha256": "0948fbd5c763d0ba5be32d062a0f6ad8cd9858f9acb37833bce31dcfcd571189",
+      "bytes": 4754,
+      "line_count": 162,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/proofreading.rs",
+      "sha256": "45c880e8a3bc23ce187469e7795d474efa5818abf2281edb53326530cead4c3e",
+      "bytes": 6565,
+      "line_count": 203,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/thymus.rs",
+      "sha256": "f76ed6d8294a80d0614a1a18f7092f1aaaa045368eaf9e8a333ed4e38ba6df8f",
+      "bytes": 6364,
+      "line_count": 193,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/treg.rs",
+      "sha256": "0ad8a69406dc39228fd94595ade9cdd07afd61bffb94197a4f08c2495291cb5f",
+      "bytes": 8778,
+      "line_count": 258,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immunity.rs",
+      "sha256": "8001946336e19f9770040e7544294dfba80eb57b76f04155598aaf5e014592b0",
+      "bytes": 11089,
+      "line_count": 320,
+      "full_source_read": true,
+      "assessment": "BFS computes shortest backward distance with exact 2^-d weight and fixed-point forward taint. Valid-seal probe confirms 2-hop weight1/4 and order-independent taint, unlike Python adapter. Caller max_hops is not capped at10; two embedded tests fail before traversal because their dummy digests violate current admission.",
+      "reviewed_lines": [
+        [
+          1,
+          320
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/lamarckian.rs",
+      "sha256": "f5fcb34805b52b0f97c7479ec76dde2c36f83abf2f8f06b3a7e1e70d38dac886",
+      "bytes": 19096,
+      "line_count": 543,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/learning_signals.rs",
+      "sha256": "ea9bea145b2e52d29d0fc198de68bb753e3455b08d4561dfb74eddf404867949",
+      "bytes": 10067,
+      "line_count": 314,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/lib.rs",
+      "sha256": "78dc541cf9c016c47e17601ad67dc28dfb6e2a3c754711ec03121b607be9b445",
+      "bytes": 5384,
+      "line_count": 180,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/matching.rs",
+      "sha256": "f6ba9d503a9479148614fda445f4d242cfdd5d6d0bf3e7effca480a2da18688e",
+      "bytes": 8670,
+      "line_count": 249,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/metabolism.rs",
+      "sha256": "9644c4bf49635fa67eb356507b914268f2f1040ab8c585ee273dcc0244d10931",
+      "bytes": 13871,
+      "line_count": 439,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/pharmacy.rs",
+      "sha256": "0b80c58e82b814bc8c62018167e836c1402d8d987041648c2acf1841aec3d90a",
+      "bytes": 50296,
+      "line_count": 1418,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/prompt_family.rs",
+      "sha256": "de795dc640772fe6699825cc18e149ca3fe9e8054f1d79f503906794dd680139",
+      "bytes": 19708,
+      "line_count": 619,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/rank.rs",
+      "sha256": "b0f6a694bf7c46fdded2dc201c55930ca8964f29773f120863404551bdb1cbe8",
+      "bytes": 39158,
+      "line_count": 1132,
+      "full_source_read": true,
+      "assessment": "Exact rational fixed-point reconstruction and verification; metric-relative PageRank, not general fitness theorem. Dense evidence reconstruction counts duplicate parent edges in denominator but adds their mass once. Rational64 operations require arithmetic-bound scrutiny.",
+      "reviewed_lines": [
+        [
+          1,
+          1132
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/rank_port.rs",
+      "sha256": "e7d60c7b28a84c8516b713cefd6a0d094d4c68e8a48db465d68ea2814b60d241",
+      "bytes": 15850,
+      "line_count": 487,
+      "full_source_read": true,
+      "assessment": "Exact rational compatibility port reconstructs declared matrices and checks stationary vectors, but accepts duplicate nodes/edges, ignores foreign graph endpoints, and does not constrain damping or nonnegative evidence counts. Resource limits cover requested solve dimensions and some pivot coefficients only.",
+      "reviewed_lines": [
+        [
+          1,
+          487
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/record.rs",
+      "sha256": "cd4fed5b19cb33b7ccb203ea66826c26b625b378bdc58f8ad1ee4d76a23477e7",
+      "bytes": 13584,
+      "line_count": 428,
+      "full_source_read": true,
+      "assessment": "Genome IDs bind sorted structural envelope with core-prefixed SHA-256; ordering regression assertions pass, old omega-prefix golden digest fails. Derived-generation constructor trusts parent_generations supplied separately and only checks span names; public DTO fields/Deserialize are not immutable validated capabilities.",
+      "reviewed_lines": [
+        [
+          1,
+          428
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/society.rs",
+      "sha256": "19cb9f880889242dbcfad28091f8ecb662e2f07b0d5ec7f95800c51cc1c86cef",
+      "bytes": 16618,
+      "line_count": 465,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/tests/rational_solvers_falsification.rs",
+      "sha256": "530c6ada5710532d057b6ea73b50e315c9a522f3a68a372be35da4eb98ef54cb",
+      "bytes": 77488,
+      "line_count": 2223,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/activation_parity.rs",
+      "sha256": "10b60459dbfa238ed5fdeca2665721367565d13f80036bf27e4e6ee776e4165b",
+      "bytes": 6969,
+      "line_count": 166,
+      "full_source_read": true,
+      "assessment": "Frozen constructor/admission precedence vectors fail at danger receipt hash expectations. Two other tests pass. Fixture historical provenance not reconstructed.",
+      "reviewed_lines": [
+        [
+          1,
+          166
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs",
+      "sha256": "902f55811419ea5cac4894a38b72db06d42456da2fb466417bf77e963d7f2d3c",
+      "bytes": 5473,
+      "line_count": 150,
+      "full_source_read": true,
+      "assessment": "Complete test source read. Missing input lifetime and end-of-block RefCell temporary prevent compilation; its intended 24-vector ordered-trace and injected-port-failure assertions did not run.",
+      "reviewed_lines": [
+        [
+          1,
+          150
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/admission_support.rs",
+      "sha256": "a854abc5fba636a5ddf59335dd3ad49a1c4a5a88ca8230370f6e59f77b48e518",
+      "bytes": 4408,
+      "line_count": 124,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/authenticated_custody.rs",
+      "sha256": "36ece4192b02e3fc2e6875a429b2ed11c134acec910a21f2f9695e16a4d649ba",
+      "bytes": 15110,
+      "line_count": 493,
+      "full_source_read": true,
+      "assessment": "Eight fixture-key tests exercise roles, scope, signatures, expiry, replay transitions and payload structure. Reversed issuance/expiry interval was absent; this audit adds a separate finite probe.",
+      "reviewed_lines": [
+        [
+          1,
+          493
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/fixtures/admission_support.json",
+      "sha256": "01d4aeaff3bf09cd27aa32ba0070b529a1c54976191b169821c68efe74bf101a",
+      "bytes": 17398,
+      "line_count": 541,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/fixtures/python_activation_v1.json",
+      "sha256": "b4be00790658cc52df0babe0efd7a9ad4551f0be8ce165eb5bda05953a9e8ea6",
+      "bytes": 69767,
+      "line_count": 1505,
+      "full_source_read": false,
+      "assessment": "Selected first successful danger-record parsed row inspected and independently hashed; other content not semantically reviewed.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/fixtures/python_guard_use_case_v1.json",
+      "sha256": "16b879e8ea5de9b5600209b71bf0cc9ee507ab63ca4336d40767156650dd4258",
+      "bytes": 39731,
+      "line_count": 1113,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/fixtures/python_host_checks_v1.json",
+      "sha256": "5725706b6181caa6383458bf40c17522c87113f64da7d78eaf466eb660b02b64",
+      "bytes": 14914,
+      "line_count": 796,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/fixtures/python_independence_v1.json",
+      "sha256": "152a97fd57d3fbd0fc43c9605ce0dc735912b14c16e6496c5ee7eedcd28ad672",
+      "bytes": 50154,
+      "line_count": 1752,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/fixtures/python_signal_gate_v1.json",
+      "sha256": "56b8e3aad251d98a44980231daba239558e83ff93718e273a260d3e8a5dc60ad",
+      "bytes": 117469,
+      "line_count": 4153,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/host_checks_parity.rs",
+      "sha256": "d39e993939232aa6e376406ff06e6d35374e35fd15ec5afecd5acf7cff4be1ca",
+      "bytes": 3441,
+      "line_count": 97,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/independence_parity.rs",
+      "sha256": "b5695d96176abdad56ba51bf4d9d9918e58e08eefcf6eb9daa5c59851bb88b53",
+      "bytes": 5338,
+      "line_count": 132,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/legacy_state_fences.rs",
+      "sha256": "52f451972f8cc2174dbced7d6ba4d4bf5f044238f506fa563d9f2c910116c39d",
+      "bytes": 8331,
+      "line_count": 231,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/pharmacy_search.rs",
+      "sha256": "bd98fbae203ce41b4a71e8453dd797ce0061d23b7fef79cbeeb35c1916d6a233",
+      "bytes": 9938,
+      "line_count": 261,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/regulation_exact_boundaries.rs",
+      "sha256": "3758fc23d470d0630ae2da3642397c0e931158fd0537e0e9eb546495df8081d5",
+      "bytes": 7556,
+      "line_count": 218,
+      "full_source_read": true,
+      "assessment": "Seven finite tests including full-u64 totals, strict threshold boundary, foreign telemetry, and FDR/FPR distinction; passing does not validate supplied telemetry truth.",
+      "reviewed_lines": [
+        [
+          1,
+          218
+        ]
+      ]
+    },
+    {
+      "path": "code/rust/tests/core_epistemic_immune_system/signal_gate_parity.rs",
+      "sha256": "f36abfb378a77cb245e6cb4a27968fc6bc4cfff3b2737884c677682dc8fe25eb",
+      "bytes": 3837,
+      "line_count": 87,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operad_theory/canonical_parity.rs",
+      "sha256": "b897747f20e9cad1834024471372e4840db3a66c908cc91e9f2cdb987ac5aea9",
+      "bytes": 12001,
+      "line_count": 326,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operad_theory/fixtures/canonical_parity.json",
+      "sha256": "7f55df9886a5888e62ecdaa922866415ab3703f5160ac8173304e3387c906c51",
+      "bytes": 105828,
+      "line_count": 2790,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operad_theory/fixtures/ddc_golden_cases.json",
+      "sha256": "a78b87e1d60d6ccc9bf27a4523a3f0eee20e1f8edda498c46ca4b662091fd907",
+      "bytes": 5791,
+      "line_count": 193,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operad_theory/generate_canonical_parity.py",
+      "sha256": "eee88bf3c7727395f11b0384fe201fba09d8428a15c917d2cdfba2d1e0617ca7",
+      "bytes": 1494,
+      "line_count": 40,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operad_theory/generate_ddc_parity.py",
+      "sha256": "cef7395d89b40fd268953f7899b853bd9b1af4af6fc4b93b4c2148d5a41592d4",
+      "bytes": 6702,
+      "line_count": 207,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operad_theory/kernel_tests.rs",
+      "sha256": "ca0bf6a338511e8a39dc9b93882836cb652044406086d82506efe7018ec60b69",
+      "bytes": 31242,
+      "line_count": 828,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operad_theory/operad_term_unit.rs",
+      "sha256": "46047d6060fc203636e45d398ee5f19c7af338c933fe790940cf57f21876aee4",
+      "bytes": 4622,
+      "line_count": 131,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operad_theory/operad_theory_tests.rs",
+      "sha256": "fddf7b31ac60e0319123d5b70de31c698278fa5376af2334a242d75fd1a3707c",
+      "bytes": 11540,
+      "line_count": 328,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/estate_composition_contract.rs",
+      "sha256": "341906006c24f5be2a7cb97961ceed08d5aa2d11c3c4904f979df6c7cb4d805f",
+      "bytes": 11311,
+      "line_count": 319,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/estate_lifecycle_contract.rs",
+      "sha256": "3ef37ab33840db0c6d9c3285791c43082976a686c5e9fd6ef17f51ec7b77c390",
+      "bytes": 15128,
+      "line_count": 423,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/fixtures/python_danger_policy_v1.json",
+      "sha256": "1a3db006eceb2954506dc2d9bfc3007b9a331db250202b6ccbace75d4ba48fea",
+      "bytes": 13021,
+      "line_count": 521,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/fixtures/python_immune_guards_v1.json",
+      "sha256": "9bb78959eaf9d849d50e7dd32ffac28e2199fbc8545d2e4dbed146668a282324",
+      "bytes": 647746,
+      "line_count": 22785,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/fixtures/python_planar_v1.json",
+      "sha256": "cb3cf004d02c5ffa21a7ef0cb56be9cbfd4c1fec9317a24bb9563c976e60e02a",
+      "bytes": 144566,
+      "line_count": 6478,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/fixtures/python_workflow_v1.json",
+      "sha256": "ce399b4552810ab334927e8c1038ccd34a4b711b92bfa3c61795f4889869f5ba",
+      "bytes": 33249,
+      "line_count": 1399,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/fixtures/skill_garden_cull.json",
+      "sha256": "0f9f1e289845bac9b8cb8a1950c2bef49647b19c821c81e8c66fc64055afdc9f",
+      "bytes": 7395,
+      "line_count": 314,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/fixtures/workflow_graph.json",
+      "sha256": "02aa7c3ebf0226a1c18b3997e7dab903a6dd10905d7d1f9370b37c675a727f73",
+      "bytes": 6743,
+      "line_count": 343,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/immune_guards_parity.rs",
+      "sha256": "c9abf44680d2b84f9a38fd1be5a30878f715ef5aaaaa53ef2796af20e23f9b0a",
+      "bytes": 10133,
+      "line_count": 272,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/planar_parity.rs",
+      "sha256": "269aeffeb0a2949edf678ce97bf30c511b27207b561bd9470a1ac15ee9b6b45b",
+      "bytes": 6420,
+      "line_count": 166,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/policy_parity.rs",
+      "sha256": "fe662c8ebd2f475f86ec0bcd8473fed3000420afa5aef46a9c44d636527f20bd",
+      "bytes": 2845,
+      "line_count": 57,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/skill_garden_cull.rs",
+      "sha256": "88693a4d1cae171bc33b609b4ccb82360bc987cf5f9afb1c1df19767950dd9d4",
+      "bytes": 4832,
+      "line_count": 139,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/workflow_graph.rs",
+      "sha256": "a12b8d6aa90f1bae6967637884ac233f595e34bb45e20c5b47324e38a734b291",
+      "bytes": 4057,
+      "line_count": 120,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/workflow_parity.rs",
+      "sha256": "ad7da056fa97a5ca169e0f797587bb26a6588d5ba1dfe38c2030cbcacadce799",
+      "bytes": 2998,
+      "line_count": 65,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_operads/workflow_step_contract.rs",
+      "sha256": "badb95918ca84d464bbcbb7713cfb5dfa09ae2f34577113ddf7f24bee7da8f51",
+      "bytes": 9600,
+      "line_count": 260,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/adversarial_authority_fuzz.rs",
+      "sha256": "2f2aaff8a86002154ade6c9de0cf8453ac90ee4bf99ff430f069b89e539b57f0",
+      "bytes": 32905,
+      "line_count": 857,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/allosteric_quorum.rs",
+      "sha256": "81e6efca39480b3fb2b2a17f5ca8686e8c3cfbe8ad7031e8f275cb8d9d9a1931",
+      "bytes": 7817,
+      "line_count": 223,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/antimorphism_detectors.rs",
+      "sha256": "abbaf8506091a143c0fdffa6d5aaad37190308b9756c1c17f6a9e96493fc904b",
+      "bytes": 12619,
+      "line_count": 337,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/fixtures/learning_signals.json",
+      "sha256": "5e7e4187cbf269d0338e9072dddb1346fba17be92d6fb0dc547871e81e7a726a",
+      "bytes": 8334,
+      "line_count": 304,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/fixtures/metabolism.json",
+      "sha256": "0ff9138fc9a9f28460cd2aed07a197b0dc6aec4ed4a15412983ec81d05b0ed50",
+      "bytes": 25051,
+      "line_count": 1030,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/fixtures/python_pharmacy_overlap_v1.json",
+      "sha256": "7394f34cd3ad5a923ac2c4f06ff49588d55c9af9f16601803b40742a42447f24",
+      "bytes": 26564,
+      "line_count": 824,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/fixtures/python_prompt_family_v1.json",
+      "sha256": "798d65d51e437ff37a08749e00d34bab2b1d3d171be49694454c52383641b181",
+      "bytes": 119730,
+      "line_count": 3823,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/fixtures/rank_port.json",
+      "sha256": "b0dd8816a2af74091c0c1dcc4a95c03a69dfe96f737d578119998c23d7b20945",
+      "bytes": 4217,
+      "line_count": 246,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/learning_signals.rs",
+      "sha256": "53695af05bd585b7f24ea0c38468f4f3cafb540a39aca08671d15a498869156a",
+      "bytes": 4443,
+      "line_count": 123,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/metabolism.rs",
+      "sha256": "4e5a5e6fe6b70002d5379ba6ed11edb87333e68ed3b26b1dd485aa5e1a79dd0d",
+      "bytes": 4505,
+      "line_count": 130,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/oeeis_kernel.rs",
+      "sha256": "47ba1c699b306aa7cb4321b451257e16b4aff88314cfc743224512b950a39722",
+      "bytes": 10941,
+      "line_count": 292,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/pharmacy_overlap.rs",
+      "sha256": "d5b63913be29438f367312c5c10b59330cb343a05fa7161dd4728bddc2ff2deb",
+      "bytes": 2056,
+      "line_count": 44,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/pharmacy_raw_binding_contract.rs",
+      "sha256": "aabac3b6da9f97b9b244cee3995495f0d66e95541101f38c688e25cfac5a19db",
+      "bytes": 13200,
+      "line_count": 347,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/prompt_ecology.rs",
+      "sha256": "bd0f81cb2f9ab56feb976f59e12fced57d5ae4d6baf4976f82b8783b1fbb481f",
+      "bytes": 19114,
+      "line_count": 605,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/prompt_family_parity.rs",
+      "sha256": "d576b5a829b6269d181923cb1f5d776bf97720bb52239485483cb562fc5646c2",
+      "bytes": 5550,
+      "line_count": 146,
+      "full_source_read": false,
+      "assessment": "Not semantically reviewed in this phase. Path/hash/line metadata only; crate-level execution does not imply source review.",
+      "reviewed_lines": []
+    },
+    {
+      "path": "code/rust/tests/core_prompt_civilization/rank_port.rs",
+      "sha256": "24bb54806ac1b167a1c106d80b17dbabd303b294e6f9f00630a2a0ad10c9971f",
+      "bytes": 4362,
+      "line_count": 123,
+      "full_source_read": true,
+      "assessment": "One frozen JSON-vector comparison plus a generic capacity test. Both pass; fixture contents not semantically reviewed and omitted malformed duplicate edges were separately probed.",
+      "reviewed_lines": [
+        [
+          1,
+          123
+        ]
+      ]
+    }
+  ],
+  "scope": [
+    "code/rust/core_epistemic_immune_system",
+    "code/rust/core_prompt_civilization",
+    "code/rust/core_operads",
+    "code/rust/core_operad_theory",
+    "code/rust/tests/core_epistemic_immune_system",
+    "code/rust/tests/core_prompt_civilization",
+    "code/rust/tests/core_operads",
+    "code/rust/tests/core_operad_theory"
+  ],
+  "exclusions": [
+    "Dot-prefixed directories and ignored build caches",
+    "No private benchmark, answer-key or seed solution access",
+    "Other Rust crates are dependency/backlog only unless explicitly listed"
+  ],
+  "method": "Full-source read means every source line displayed and inspected, including embedded tests; it is not an exhaustive dependency review or proof. Unread files remain false despite parsing or passing tests. Cargo-generated ignored target artifacts are the only non-report build products.",
+  "environment": {
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "python": ".venv/Scripts/python.exe, Python 3.14",
+    "build_mode": "offline locked debug/test Windows",
+    "source_changes": "none"
+  },
+  "coverage": {
+    "full_rust_files": 30,
+    "full_manifest_files": 4,
+    "full_read_lines": 11553,
+    "tracked_files_in_declared_scope": 153,
+    "not_full_source_read": 119
+  },
+  "remaining_work": {
+    "unread_paths": [
+      "code/rust/core_epistemic_immune_system/src/activation_ports.rs",
+      "code/rust/core_epistemic_immune_system/src/anti_skill.rs",
+      "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+      "code/rust/core_epistemic_immune_system/src/danger_gate.rs",
+      "code/rust/core_epistemic_immune_system/src/formulary.rs",
+      "code/rust/core_epistemic_immune_system/src/host_checks.rs",
+      "code/rust/core_epistemic_immune_system/src/pharmacy_search.rs",
+      "code/rust/core_operad_theory/Cargo.toml",
+      "code/rust/core_operad_theory/src/applications/mod.rs",
+      "code/rust/core_operad_theory/src/applications/oeas_workflow_operad.rs",
+      "code/rust/core_operad_theory/src/deformation/bar_cobar.rs",
+      "code/rust/core_operad_theory/src/deformation/cooperad.rs",
+      "code/rust/core_operad_theory/src/deformation/koszul_duality.rs",
+      "code/rust/core_operad_theory/src/deformation/mod.rs",
+      "code/rust/core_operad_theory/src/deformation/quadratic_operad.rs",
+      "code/rust/core_operad_theory/src/foundation/mod.rs",
+      "code/rust/core_operad_theory/src/foundation/monoidal_operad.rs",
+      "code/rust/core_operad_theory/src/foundation/span_operand.rs",
+      "code/rust/core_operad_theory/src/geometric/en_algebra.rs",
+      "code/rust/core_operad_theory/src/geometric/little_disks.rs",
+      "code/rust/core_operad_theory/src/geometric/mod.rs",
+      "code/rust/core_operad_theory/src/kernel/capability.rs",
+      "code/rust/core_operad_theory/src/kernel/cells.rs",
+      "code/rust/core_operad_theory/src/kernel/mod.rs",
+      "code/rust/core_operad_theory/src/kernel/model.rs",
+      "code/rust/core_operad_theory/src/kernel/obligations.rs",
+      "code/rust/core_operad_theory/src/kernel/observer.rs",
+      "code/rust/core_operad_theory/src/kernel/reindex.rs",
+      "code/rust/core_operad_theory/src/kernel/result.rs",
+      "code/rust/core_operad_theory/src/kernel/trace.rs",
+      "code/rust/core_operad_theory/src/lib.rs",
+      "code/rust/core_operad_theory/src/python.rs",
+      "code/rust/core_operad_theory/src/realization/mod.rs",
+      "code/rust/core_operad_theory/src/realization/module_over_operad.rs",
+      "code/rust/core_operads/src/estate.rs",
+      "code/rust/core_operads/src/graph.rs",
+      "code/rust/core_operads/src/immune_guards.rs",
+      "code/rust/core_operads/src/immune_ports.rs",
+      "code/rust/core_operads/src/lib.rs",
+      "code/rust/core_operads/src/policy.rs",
+      "code/rust/core_operads/src/skill_garden.rs",
+      "code/rust/core_operads/src/workflow.rs",
+      "code/rust/core_prompt_civilization/src/antimorphism.rs",
+      "code/rust/core_prompt_civilization/src/civilization.rs",
+      "code/rust/core_prompt_civilization/src/convergence.rs",
+      "code/rust/core_prompt_civilization/src/crossover.rs",
+      "code/rust/core_prompt_civilization/src/domain.rs",
+      "code/rust/core_prompt_civilization/src/ecology.rs",
+      "code/rust/core_prompt_civilization/src/evidence.rs",
+      "code/rust/core_prompt_civilization/src/fitness.rs",
+      "code/rust/core_prompt_civilization/src/forge.rs",
+      "code/rust/core_prompt_civilization/src/immune/allostery.rs",
+      "code/rust/core_prompt_civilization/src/immune/clonal.rs",
+      "code/rust/core_prompt_civilization/src/immune/complement.rs",
+      "code/rust/core_prompt_civilization/src/immune/danger_gate.rs",
+      "code/rust/core_prompt_civilization/src/immune/mhc.rs",
+      "code/rust/core_prompt_civilization/src/immune/mod.rs",
+      "code/rust/core_prompt_civilization/src/immune/proofreading.rs",
+      "code/rust/core_prompt_civilization/src/immune/thymus.rs",
+      "code/rust/core_prompt_civilization/src/immune/treg.rs",
+      "code/rust/core_prompt_civilization/src/lamarckian.rs",
+      "code/rust/core_prompt_civilization/src/learning_signals.rs",
+      "code/rust/core_prompt_civilization/src/lib.rs",
+      "code/rust/core_prompt_civilization/src/matching.rs",
+      "code/rust/core_prompt_civilization/src/metabolism.rs",
+      "code/rust/core_prompt_civilization/src/pharmacy.rs",
+      "code/rust/core_prompt_civilization/src/prompt_family.rs",
+      "code/rust/core_prompt_civilization/src/society.rs",
+      "code/rust/core_prompt_civilization/tests/rational_solvers_falsification.rs",
+      "code/rust/tests/core_epistemic_immune_system/admission_support.rs",
+      "code/rust/tests/core_epistemic_immune_system/fixtures/admission_support.json",
+      "code/rust/tests/core_epistemic_immune_system/fixtures/python_activation_v1.json",
+      "code/rust/tests/core_epistemic_immune_system/fixtures/python_guard_use_case_v1.json",
+      "code/rust/tests/core_epistemic_immune_system/fixtures/python_host_checks_v1.json",
+      "code/rust/tests/core_epistemic_immune_system/fixtures/python_independence_v1.json",
+      "code/rust/tests/core_epistemic_immune_system/fixtures/python_signal_gate_v1.json",
+      "code/rust/tests/core_epistemic_immune_system/host_checks_parity.rs",
+      "code/rust/tests/core_epistemic_immune_system/independence_parity.rs",
+      "code/rust/tests/core_epistemic_immune_system/legacy_state_fences.rs",
+      "code/rust/tests/core_epistemic_immune_system/pharmacy_search.rs",
+      "code/rust/tests/core_epistemic_immune_system/signal_gate_parity.rs",
+      "code/rust/tests/core_operad_theory/canonical_parity.rs",
+      "code/rust/tests/core_operad_theory/fixtures/canonical_parity.json",
+      "code/rust/tests/core_operad_theory/fixtures/ddc_golden_cases.json",
+      "code/rust/tests/core_operad_theory/generate_canonical_parity.py",
+      "code/rust/tests/core_operad_theory/generate_ddc_parity.py",
+      "code/rust/tests/core_operad_theory/kernel_tests.rs",
+      "code/rust/tests/core_operad_theory/operad_term_unit.rs",
+      "code/rust/tests/core_operad_theory/operad_theory_tests.rs",
+      "code/rust/tests/core_operads/estate_composition_contract.rs",
+      "code/rust/tests/core_operads/estate_lifecycle_contract.rs",
+      "code/rust/tests/core_operads/fixtures/python_danger_policy_v1.json",
+      "code/rust/tests/core_operads/fixtures/python_immune_guards_v1.json",
+      "code/rust/tests/core_operads/fixtures/python_planar_v1.json",
+      "code/rust/tests/core_operads/fixtures/python_workflow_v1.json",
+      "code/rust/tests/core_operads/fixtures/skill_garden_cull.json",
+      "code/rust/tests/core_operads/fixtures/workflow_graph.json",
+      "code/rust/tests/core_operads/immune_guards_parity.rs",
+      "code/rust/tests/core_operads/planar_parity.rs",
+      "code/rust/tests/core_operads/policy_parity.rs",
+      "code/rust/tests/core_operads/skill_garden_cull.rs",
+      "code/rust/tests/core_operads/workflow_graph.rs",
+      "code/rust/tests/core_operads/workflow_parity.rs",
+      "code/rust/tests/core_operads/workflow_step_contract.rs",
+      "code/rust/tests/core_prompt_civilization/adversarial_authority_fuzz.rs",
+      "code/rust/tests/core_prompt_civilization/allosteric_quorum.rs",
+      "code/rust/tests/core_prompt_civilization/antimorphism_detectors.rs",
+      "code/rust/tests/core_prompt_civilization/fixtures/learning_signals.json",
+      "code/rust/tests/core_prompt_civilization/fixtures/metabolism.json",
+      "code/rust/tests/core_prompt_civilization/fixtures/python_pharmacy_overlap_v1.json",
+      "code/rust/tests/core_prompt_civilization/fixtures/python_prompt_family_v1.json",
+      "code/rust/tests/core_prompt_civilization/fixtures/rank_port.json",
+      "code/rust/tests/core_prompt_civilization/learning_signals.rs",
+      "code/rust/tests/core_prompt_civilization/metabolism.rs",
+      "code/rust/tests/core_prompt_civilization/oeeis_kernel.rs",
+      "code/rust/tests/core_prompt_civilization/pharmacy_overlap.rs",
+      "code/rust/tests/core_prompt_civilization/pharmacy_raw_binding_contract.rs",
+      "code/rust/tests/core_prompt_civilization/prompt_ecology.rs",
+      "code/rust/tests/core_prompt_civilization/prompt_family_parity.rs"
+    ],
+    "priorities": [
+      "Remaining EIS modules and full parity/admission/pharmacy fixtures; operational authenticated adapters and host observer trust correspondence.",
+      "PCIV fitness, forge, lamarckian, pharmacy, ecology, metabolism, society, rank resource/arithmetic bounds and remaining tests.",
+      "OPERADS kernel model/capability/trace/reindex/observer/cells, workflow graph/estate/skill garden, and complete tests/fixtures.",
+      "Audit core_operad_canon/core_types and other cross-crate dependencies separately.",
+      "Reconstruct historical namespace-migration fixture provenance before changing old receipts; repair defects only in a separately authorized repair phase."
+    ],
+    "source_concerns_not_yet_reproduced": [
+      "Operad runtime maximum128occurrences check uses >128 before increment, potentially admitting129.",
+      "Associativity witness formats i+j before validating indexes; overflow behavior needs bounded input probe.",
+      "Rank port does not enforce alpha in(0,1), nonnegative evidence or unique nodes; consequences beyond duplicate edges remain untested.",
+      "Direct NormalizedTerm construction and public foundation DTO fields are not validated capabilities; audit consuming paths before broader claims.",
+      "OperadAlgebra policy metadata and fixed timestamp require downstream provenance investigation, not an inferred authenticated-admission bypass."
+    ],
+    "nonclaims": [
+      "No comprehensive native audit completion",
+      "No mechanized proof of Rust/Python correspondence",
+      "No demonstrated cryptographic signature forgery",
+      "No end-to-end scientific/QM correctness result",
+      "No production fixes or paid calls"
+    ]
+  }
+}

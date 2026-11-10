@@ -1,0 +1,261 @@
+{
+  "method": "Unchanged fully read stage and preamble source executed directly; independent tiny payloads; no native/provider/private data access.",
+  "checks": [
+    {
+      "stage": 83,
+      "rule": "lineage_digest_omits_operation_sum",
+      "status": "observed",
+      "payload": {
+        "sources": [
+          [
+            "x",
+            "2/1",
+            "sha256:61d59c428b3b771cc291244dd72c2adc8662d32b0f9f0d830170e1cd9eb5ac72"
+          ],
+          [
+            "y",
+            "2/1",
+            "sha256:14fdbe00ab72108a6938b6ad9cc8cb64f7e2f2ffd37fe8c1eb2a376c133c7c8e"
+          ]
+        ],
+        "derived": [
+          [
+            "z",
+            "sum",
+            [
+              [
+                "x",
+                "sha256:61d59c428b3b771cc291244dd72c2adc8662d32b0f9f0d830170e1cd9eb5ac72"
+              ],
+              [
+                "y",
+                "sha256:14fdbe00ab72108a6938b6ad9cc8cb64f7e2f2ffd37fe8c1eb2a376c133c7c8e"
+              ]
+            ],
+            "4/1",
+            "sha256:d28d7491e45d5da42a78b1471ce1480c41367868c89b66fa000b57080288b33d"
+          ]
+        ]
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "assessment": "Different valid lineage operations share the identical derived record digest because only id/value are hashed; this digest does not bind the derivation."
+    },
+    {
+      "stage": 83,
+      "rule": "lineage_digest_omits_operation_product",
+      "status": "observed",
+      "payload": {
+        "sources": [
+          [
+            "x",
+            "2/1",
+            "sha256:61d59c428b3b771cc291244dd72c2adc8662d32b0f9f0d830170e1cd9eb5ac72"
+          ],
+          [
+            "y",
+            "2/1",
+            "sha256:14fdbe00ab72108a6938b6ad9cc8cb64f7e2f2ffd37fe8c1eb2a376c133c7c8e"
+          ]
+        ],
+        "derived": [
+          [
+            "z",
+            "product",
+            [
+              [
+                "x",
+                "sha256:61d59c428b3b771cc291244dd72c2adc8662d32b0f9f0d830170e1cd9eb5ac72"
+              ],
+              [
+                "y",
+                "sha256:14fdbe00ab72108a6938b6ad9cc8cb64f7e2f2ffd37fe8c1eb2a376c133c7c8e"
+              ]
+            ],
+            "4/1",
+            "sha256:d28d7491e45d5da42a78b1471ce1480c41367868c89b66fa000b57080288b33d"
+          ]
+        ]
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "assessment": "Different valid lineage operations share the identical derived record digest because only id/value are hashed; this digest does not bind the derivation."
+    },
+    {
+      "stage": 85,
+      "rule": "principal_self_handoff_does_not_narrow",
+      "status": "observed",
+      "payload": {
+        "principal": "p",
+        "principal_scope": [
+          "read",
+          "write"
+        ],
+        "handoffs": [
+          [
+            "p",
+            "p",
+            [
+              "read"
+            ]
+          ]
+        ],
+        "tasks": [
+          [
+            "p",
+            "write"
+          ]
+        ]
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "assessment": "Source prose allows self-handoff narrowing, but principal is specially exempted from updates and retains write. Other agents use last received scope."
+    },
+    {
+      "stage": 91,
+      "rule": "unmapped_target_symbol_aliases_source_name",
+      "status": "observed",
+      "payload": {
+        "bound": 1,
+        "source_symbols": {
+          "R": 1
+        },
+        "target_symbols": {
+          "S": 1,
+          "R": 1
+        },
+        "map": {
+          "R": "S"
+        },
+        "source": {
+          "prefix": "Ax",
+          "matrix": [
+            "rel",
+            "R",
+            "x"
+          ]
+        },
+        "target": {
+          "prefix": "Ax",
+          "matrix": [
+            "rel",
+            "R",
+            "x"
+          ]
+        }
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "assessment": "Target R is outside the image of the declared map R->S. Fallback rename.get reads source R anyway. A target model with S true,R false and source R true refutes the resulting unqualified translation equivalence; target-only symbols have no explicit interpretation in the implementation."
+    },
+    {
+      "stage": 92,
+      "rule": "initial_empty_clause_has_no_zero_step_refutation",
+      "status": "observed",
+      "payload": {
+        "claims": [
+          {
+            "cnf": [
+              []
+            ],
+            "answer": "UNSAT",
+            "proof": [],
+            "model": null
+          }
+        ]
+      },
+      "observed": [
+        "REFUSED",
+        "R092_FLAG_WITHOUT_PROOF"
+      ],
+      "assessment": "CNF already contains the empty clause and is unsatisfiable, but kernel requires at least one resolution step. This is incompleteness of the allowed certificate format, not false SAT acceptance."
+    },
+    {
+      "stage": 96,
+      "rule": "chebyshev_condition_not_necessary",
+      "status": "observed",
+      "payload": {
+        "corpus": [
+          [
+            "case",
+            "synthetic"
+          ]
+        ],
+        "corpus_digest": "sha256:54b26a3cb7c3f762d2ec54fd04b17becabf27bb127eeb73ea52cad71e9a88575",
+        "trials": [
+          [
+            "case",
+            "success"
+          ]
+        ],
+        "estimate": {
+          "successes": 1,
+          "count": 1,
+          "point": "1/1",
+          "half_width": "1/1",
+          "alpha": "1/10",
+          "interval": [
+            "0/1",
+            "1/1"
+          ]
+        }
+      },
+      "observed": [
+        "REFUSED",
+        "R096_INTERVAL"
+      ],
+      "assessment": "For n1 and half-width1 the clipped interval is always[0,1], so coverage is1 for every Bernoulli parameter. Condition1/(4*n*h*h)<=alpha fails and checker refuses. The Chebyshev inequality is a sufficient bound, not the claimed exact necessity."
+    },
+    {
+      "stage": 100,
+      "rule": "open_tested_claim_absent_from_frontier",
+      "status": "observed",
+      "payload": {
+        "claims": [
+          "c"
+        ],
+        "tests": [
+          "t"
+        ],
+        "evidence": [
+          [
+            "c",
+            "t"
+          ]
+        ],
+        "open": [
+          [
+            "c",
+            "OPEN",
+            "unsolved obligation"
+          ]
+        ],
+        "frontier": [],
+        "self_certification": "none",
+        "authority_effect": "None"
+      },
+      "observed": [
+        "PASS",
+        null
+      ],
+      "assessment": "An explicitly OPEN claim with a declared test is removed from the computed frontier; links are not evidence of proof. This contradicts prose that an open obligation cannot coexist with a complete frontier."
+    }
+  ],
+  "source_hashes": {
+    "pfp/infrastructure/adapters/mssn_research/checkers/preamble.py": "eda37af9d43d82c6fa49bfca46a81e2259d5e33438144265cf2a422193cbbfeb",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_083.py": "2e247f6f51327e4bb1320892909af81723daa4a171583d3fb0074da0a87dad76",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_085.py": "a77c0d2c9db823f79939a717aee8cfd4154c3555c7d06fde3b7261f8c5dce7e5",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_091.py": "995c82d776cf89cad76990162a3605de613181241402d8e6cc2159d2afe657b5",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_092.py": "d65bb4835475113c69702d5f8a9fc52f2be19bad1f167ab1f2bda2c18593b42a",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_096.py": "25e2e36571f3e6d1c177101215cb7ae1e65b60d58545131bc4035587b51c7119",
+    "pfp/infrastructure/adapters/mssn_research/checkers/stage_100.py": "779421e94d2e6017c6394f155ca72392a4af5f2c82b41d3ce7625171769e3e34"
+  }
+}

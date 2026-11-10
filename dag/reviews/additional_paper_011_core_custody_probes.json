@@ -1,0 +1,32 @@
+{
+  "method": "Read-vetted modules with independently constructed synthetic bytes. Git inventory lookup is replaced by explicit pinned-tree metadata; no Git objects, historical source or provider accessed.",
+  "checks": [
+    {
+      "rule": "git_metadata_does_not_bind_captured_bytes",
+      "status": "observed",
+      "verdict": "VERIFIED_BYTE_COPIES",
+      "source_inventory_checked": true,
+      "declared_git_blob_oid": "bb16e9c8197610d8d435250b5668c29eef4a2cbd",
+      "actual_captured_git_blob_oid": "82dc460474602f4b03ce026fda76bcfc2e1ffbb3",
+      "limits": "The mocked lookup returns metadata for different bytes; all source/copy SHA256 and trusted manifest pin agree. Demonstrates absent bridge, not an incorrect real Git executable."
+    },
+    {
+      "rule": "aggregate_families_accepts_duplicate_rows",
+      "status": "observed",
+      "rows": 14,
+      "reported_families": 13,
+      "verdict": "VERIFIED_SOURCE_BINDINGS",
+      "limits": "Inventory pin is recomputed for synthetic input. No bypass of an independently fixed external pin."
+    }
+  ],
+  "pytest": {
+    "exit_code": 0,
+    "log": "dag/reviews/additional_paper_011_core_custody_pytest.txt",
+    "scope": "Three fully read synthetic-only test modules, no conftest or plugin autoload; temp files confined to this review prefix."
+  },
+  "runtime": {
+    "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\.venv\\Scripts\\python.exe",
+    "scope": "Focused checks on available workspace interpreter; not reproduction of the declared Python3.12 runtime profile."
+  }
+}

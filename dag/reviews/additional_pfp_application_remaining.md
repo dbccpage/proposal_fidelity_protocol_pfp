@@ -1,0 +1,27 @@
+Completed the frozen application slice at `8050c66900899771766f33e8f5fdd200b7dd9120`: **165 files, 26,996,074 bytes**. This comprises **151 complete body reviews and 14 bounded structured-evidence reviews**. Every file has an exact hash, assessment and explicit review level in [the report](additional_pfp_application_remaining.json). Large JSON inventories, compressed responses and the generated module table do not receive full-reading credit.
+
+The application contains useful mechanisms for binding exact reply bytes and typed candidates, refusing unavailable host verification, distinguishing no-judge replies from accepted answers, and recomputing pipeline outcomes from host facts. Its mathematical force remains conditional on an admitted problem, carrier, encoding, checker and resource policy. The monograph and QDDC documentation make that distinction unusually explicit: weighted rational quotient certificates are separate from integer/GF2 repair; DPO existence does not establish confluence; strict decrease need not imply finite arrival; a CPTP reset under a supplied Hilbert carrier does not derive physical dynamics or semantic truth. Prior domain/native reports were consulted as named evidence, without new execution credit.
+
+The principal actionable findings are:
+
+| Finding | Observed boundary failure |
+|---|---|
+| F001–F003 | Legacy challenge scoring sends the entire expected-answer-bearing case to the solver, does not recompute judge/freeze commitments, and duplicates one equality test under an independent-checker label. It accepts Boolean `true` against integer `1`. |
+| F004–F005 | An empty swarm contract can produce `Verified`. Declared operations, paths and budgets are not a tool/network/financial sandbox in these callers. |
+| F006–F007 | StageB releases uncertain timeout liability as zero cost, permits malformed/negative usage and settlement above its cap, and writes raw custody only after scoring and completion of all parallel jobs. |
+| F008–F009 | Missing ladder observations become favorable default metrics; the local detector's obstruction branch raises `NameError`. |
+| F010–F014 | Legacy machine-block types can crash evaluation; opaque dual references do not establish exactness; a prompt helper drops kill conditions; replay returns are only label-bound at this caller; pilot objective hashes omit grading/resource inputs. |
+| F015–F018, F021 | Corpus-ID framing collides; score schema admits undefined rationals and contradictory flags; CSP normalization changes noninteger inputs; MUB6 construction introduces floats despite its declared constraint; legacy exactness counts claimed eliminations without checking membership or the dual. |
+| F019–F020 | Historical pins need edition-aware reconciliation. In-sample AUC and globally standardized out-of-fold diagnostics do not establish prospective detector adequacy. |
+
+The report contains 14 synthesis claims and 21 findings with exact source ranges, limitations and repair suggestions. Some findings are confirmed synthetic failures; others identify the trust that must be enforced by an injected adapter. They are labeled separately. Guarded legacy demonstrations are not reported as active successful solvers, and the canonical exact Rust score path is distinguished from legacy cardinality scoring.
+
+Ten [bounded controls](additional_pfp_application_remaining_probes.json), including four [additional controls](additional_pfp_application_remaining_extra_probes.json), reproduced the important failures using vetted AST fragments, fake I/O and JSON Schema validation. No production package initializer, subprocess, provider, native build or historical command ran. No private benchmark/seed/key material was accessed. Original sources were unchanged.
+
+Whole-population evidence checks found all 1,600 stored StageB calls/traces internally consistent on request/response hashes, token counts and stop reasons. Their recorded charges sum exactly to **9978961/10000000 USD**; this is declared historical spend, not invoice authentication. The retained 800 primary rows include 492 failures and 485 schema-invalid outputs. The stored predictive decision is **DROPPED**. The README's 358 primary `max_tokens` stops differ from the retained count of 359.
+
+All 270 selected StageA count comparisons and ten cross-census comparisons passed. The static test inventory contains 308 modules, 2,771 test functions and 10,131 assertions, all marked `NOT_RUN`; these counts are not test execution. Historical pilot labels and proposed verifier signatures likewise are not executable certificates or new empirical observations.
+
+The historical manifest contains three same-path/different-hash source pairs, and several old artifact pins do not match current bytes even under LF/CRLF projections. The cited historical base commit is unavailable locally. These remain unresolved snapshot/relocation bindings, **not demonstrated data loss**. The migration map's explicit previous-edition hashes and self-map null hash are intentional and are not conflated with those conflicts.
+
+[Independent validation](additional_pfp_application_remaining_validation.json) passed every frozen source hash, all ranges in the 83 cited source-evidence items, all complete-read receipts and probe references. A strict scan of 7,742 structured records found no duplicate JSON keys or nonfinite tokens. This validates custody and report consistency, not mathematical truth. No paths remain undisposed within this slice; the 14 bounded evidence files retain their stated semantic limits.

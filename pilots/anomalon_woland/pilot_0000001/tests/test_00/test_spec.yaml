@@ -1,0 +1,27 @@
+schema: pfp.test-spec.v1
+authority_effect: None
+test_id: test_00
+pilot_id: pilot_0000001
+case_id: mistral_7b_free_live
+test_index: 0
+generation_id: 0
+dialect_name: Mode 02 - Sealed Envelope Seed
+model_id: mistralai/mistral-7b-instruct:free
+expected_outcome:
+  answer:
+    connected: true
+    triangle_012: true
+    bridge_03: true
+    edge_count: 4
+  status: ACCEPTED
+actual_outcome:
+  status: TRANSPORT_FAILURE
+  transport_code: PROVIDER_HTTP_404
+  extracted_answer: null
+  gate_status: REJECTED
+  refusal_code: TRANSPORT_FAILURE
+metrics:
+  provider_calls: 1
+  cost_usd: 0.0
+  billing: free
+notes: Model endpoint returned HTTP 404 on OpenRouter free tier.

@@ -1,0 +1,33 @@
+{
+  "owner": "code/rust/core_contracts/src/enforcement_macros.rs",
+  "owner_sha256": "a7842c008cb9a967d66a483d44886b80c23128deccb426c96e024d4541c607d4",
+  "limits": "Original entire macro module is included unchanged. Base probe supplies minimal type scaffolding only, isolating expansion validity; no claim of complete crate compilation. Attach probe supplies a deliberately failing assertion to distinguish execution from type checking.",
+  "runs": [
+    {
+      "case": "base",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_macro_base.rs",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_macro_base.exe"
+      ],
+      "compile_exit": 1,
+      "compile_output": "error[E0015]: cannot call non-const function `assert_impl::<Implementation>` in constants\n  --> C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\core_contracts\\src\\enforcement_macros.rs:29:13\n   |\n29 |             assert_impl::<$ty>();\n   |             ^^^^^^^^^^^^^^^^^^^^\n   |\n  ::: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_macro_base.rs:2:203\n   |\n 2 | ...>{};} struct Contract; __impl_contract_base!(Implementation,Contract,kinds::Kind); fn main() {}\n   |                           ---------------------------------------------------------- in this macro invocation\n   |\nnote: function `assert_impl` is not const\n  --> C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\core_contracts\\src\\enforcement_macros.rs:28:13\n   |\n28 |             fn assert_impl<I: $crate::binding::ImplementsContract<$contract>>() {}\n   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n   |\n  ::: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_macro_base.rs:2:203\n   |\n 2 | ...>{};} struct Contract; __impl_contract_base!(Implementation,Contract,kinds::Kind); fn main() {}\n   |                           ---------------------------------------------------------- in this macro invocation\n   = note: calls in constants are limited to constant functions, tuple structs and tuple variants\n   = note: this error originates in the macro `__impl_contract_base` (in Nightly builds, run with -Z macro-backtrace for more info)\n\nerror: aborting due to 1 previous error\n\nFor more information about this error, try `rustc --explain E0015`.\n",
+      "probe_sha256": "2886c0740720c4b5c1cd8181704e7c6f9adf443907508f9f50c98ec584c08ef6"
+    },
+    {
+      "case": "attach",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_macro_attach.rs",
+        "-o",
+        "C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_macro_attach.exe"
+      ],
+      "compile_exit": 1,
+      "compile_output": "error: expected one of `!`, `.`, `;`, `?`, `{`, `}`, or an operator, found `::`\n  --> C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\code\\rust\\core_contracts\\src\\enforcement_macros.rs:39:27\n   |\n39 |                 $assert_fn::<$contract>();\n   |                           ^^ expected one of 7 possible tokens\n   |\n  ::: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\reviews\\additional_rust_pfp_foundations_macro_attach.rs:2:62\n   |\n 2 | ...anic!(\"law violated\")} attach_contract_laws!(Implementation,Contract,assert_law); fn main() {println!(\"law assertion not executed...\n   |                           --------------------------------------------------------- in this macro invocation\n   |\n   = note: this error originates in the macro `attach_contract_laws` (in Nightly builds, run with -Z macro-backtrace for more info)\n\nerror: aborting due to 1 previous error\n\n",
+      "probe_sha256": "24745fc76470caa8143b0fcaeacb5bb65f7f969de581e33677a3ac43519452a3"
+    }
+  ]
+}

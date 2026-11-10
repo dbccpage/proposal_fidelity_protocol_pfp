@@ -1,0 +1,30 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00035
+task_family: formal_logic_deduction
+difficulty_rung: 1
+request_id: pilot_00035_req_0
+rewrite_metadata:
+  rewrite_id: t1_bench-002-deduction_spans
+  name: Tier 1 bench-002-deduction (spans) - Segment Offset Span Annotation
+  governing_specification: tier1_live_runs_tier1-001.md
+  governing_strategy: Strategy T1-SPANS (Character Offset Role Indexing)
+  target_stratum: Stratum 3 (First-Order Logic Syllogistic Inference)
+  explanation: Tier 1 prompt variation for bench-002-deduction rendered under spans
+    encoding.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union UTF-8 text
+  syntactic_category: SyllogisticDeduction
+  semantic_carrier: First-order logic syllogistic transitive deduction with 2 premises.
+  dialect_tier: Tier Span (Indexed Offsets)
+  boundary_format: pfp-spans-v1
+seed_prompt: '{"source":"Task: Given that all squares are rectangles and all rectangles
+  are polygons, does it follow that all squares are polygons? Context: Classical first-order
+  logic. Output: Respond with a JSON object containing \"verdict\": \"YES\" or \"NO\",
+  and \"premise_count\": 2.","spans":[[0,123,"task"],[123,161,"context"],[161,256,"output"]]}'
+expected_outcome:
+  answer:
+    verdict: 'YES'
+    premise_count: 2
+  status: ACCEPTED

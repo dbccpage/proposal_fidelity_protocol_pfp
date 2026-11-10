@@ -1,0 +1,14 @@
+(* quiz-packet-v1: educational ask/ans/ref surface; AuthorityEffect: None.
+   One message; lowercase ASCII words (underscores allowed), commas,
+   brackets. No whitespace, graph arrows, infix inequalities or raw prose.
+   Packet structure does not verify field meanings or a claimed answer. *)
+quiz_message = "ask<", items, ">" | "ans<", items, ">" | refusal ;
+refusal = "ref<", refusal_code, ">" ;
+refusal_code = "1" | "2" | "3" | "4" | "5" | "6" ;
+items = item, { ",", item } ;
+item = word | packet ;
+packet = "<>" | "<", items, ">" | word, "<", [ items ], ">" ;
+word = glyph, { glyph } ;
+glyph = lower_latin | digit | "_" ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+lower_latin = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;

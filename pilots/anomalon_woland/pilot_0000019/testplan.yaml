@@ -1,0 +1,31 @@
+schema: pfp.mode-trial-plan.v1
+authority_effect: None
+pilot_id: pilot_0000019
+spec: spec.yaml
+mode_id: 20
+mode_coordinate: mode_20
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_20_multi_agent_debate_oversight/contract.yaml
+packet: packet.yaml
+seed: seed.yaml
+responses: results
+canonical_template: pilot_0000000/prompt_template.yaml is a generated empty shell and is not copied here.
+provider_calls: 0
+winning_condition_executed: true
+execution_limit: One local verifier. No second model was called.
+advantages:
+- The judge's input is the code and the digest, not the speech.
+disadvantages:
+- The proposer and the adversary were not separate model calls.
+variations:
+- variation_id: receipt_ends_the_debate
+  role: winning
+  status: ACCEPTED
+  failure_mode: null
+- variation_id: eloquence_without_receipt
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Eloquence capture (judge convinced by rhetoric without receipt)
+- variation_id: objections_past_the_cap
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Infinite debate cycle without terminalization

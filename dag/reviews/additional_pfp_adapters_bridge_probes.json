@@ -1,0 +1,32 @@
+{
+  "method": "Unchanged full adapter AST with serialization import replaced by deterministic dataclass JSON SHA256 stub. Normal import fails because pfp.domain lacks BytePayload. No claim about production digest implementation. Synthetic two-state problems only; no supplied fixtures, native builds, providers or sealed material.",
+  "source_sha256": "abf8700de7fbfe5be21b5fb1f7060f8e6f7ba5dbadc2c1170682f8fa574bb729",
+  "checks": [
+    {
+      "rule": "valid_cec_control",
+      "status": "observed",
+      "accepted": true,
+      "replay": true
+    },
+    {
+      "rule": "controller_binds_cec_parent",
+      "status": "counterexample",
+      "controller_problem_id": "a2558080bc3b83bced1b192ab5edcfd95c0f6ecbbe957463e2a21a4aa9f5a8de",
+      "packet_parent_id": "615b61abd4d189e9128a2c3c0a753185b4d14e50771fd3699175ca7713b3374e",
+      "returned_kind": "ConservativeExtensionProposal",
+      "accepted_unrelated_parent": true
+    },
+    {
+      "rule": "public_same_level_validator_binds_orbits",
+      "status": "counterexample",
+      "actual_active_orbits": 1,
+      "unchanged_profiles_empty_orbits_accepted": true
+    },
+    {
+      "rule": "external_all_pairs_canonical_order",
+      "status": "counterexample",
+      "constructor_accepts_unsorted_states": true,
+      "active_obstructions_result": "BridgeError: active_obstruction.pair must be in canonical order"
+    }
+  ]
+}

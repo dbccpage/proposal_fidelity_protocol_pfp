@@ -1,0 +1,179 @@
+{
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "status": "bounded_full_source_checkpoint",
+  "claims": [
+    {
+      "id": "FORMAL-PACKET-COLLISION",
+      "claim": "If packet(a)=packet(b) but target(a) differs from target(b), no decoder of only that packet recovers the target for every source. The concrete TypedPacket example intentionally omits one Boolean target.",
+      "kind": "fresh_kernel_checked_conditional_theorem",
+      "evidence": [
+        "lean4/TypedPacketShadow.lean:20-101"
+      ],
+      "dependencies": [
+        "The supplied source, packet projection and target model the intended application"
+      ],
+      "limitations": [
+        "Not every packet loses the target; the collision premise needs application evidence."
+      ]
+    },
+    {
+      "id": "FORMAL-COUNT-LIFT",
+      "claim": "An applicable positive-cost patch with nonempty structural additions advances the level, decreases a natural-number budget and increases declared mass.",
+      "kind": "fresh_kernel_checked_constructive_count_theorem",
+      "evidence": [
+        "lean4/LiftPatchSemantics.lean"
+      ],
+      "dependencies": [
+        "Only declared natural-number counters are modeled"
+      ],
+      "limitations": [
+        "No semantic knowledge gain, preservation or physical law is derived."
+      ]
+    },
+    {
+      "id": "FORMAL-TOWER-ZETA-SCOPE",
+      "claim": "TowerZeta proves affine Nat tower identities and packet collision obstructions. Its zetaAt field is an arbitrary integer-valued function; an analytic zeta-function or RH theorem is not implemented.",
+      "kind": "full_source_scope_assessment",
+      "evidence": [
+        "lean4/TowerZeta.lean"
+      ],
+      "dependencies": [],
+      "limitations": [
+        "Names and Bool fields do not construct analytic objects or certified terminal theorems."
+      ]
+    }
+  ],
+  "findings": [],
+  "validation": [
+    {
+      "command": "lake build; lake env lean AxiomCensus.lean",
+      "status": "previously_executed_this_audit_passed",
+      "receipt": "dag/reviews/lean_axiom_census.txt"
+    }
+  ],
+  "file_reviews": [
+    {
+      "path": "lean4/SLevel.lean",
+      "sha256": "4fededd39a87ef2d5a38db30305fcdb7f86e56c45269cbbeec0ed2f68eb3db88",
+      "full_source_read": true,
+      "assessment": "LicensedLift stores next-level, decreasing-budget and increasing-count premises; first lemmas project those premises. PacketizationContract includes soundness as a field, so fidelity/no-authority lemmas project the contract rather than verify an actual compiler. A two-world constant Unit shadow proves one information-loss counterexample only.",
+      "reviewed_lines": [
+        [
+          1,
+          128
+        ]
+      ]
+    },
+    {
+      "path": "lean4/Sweeper.lean",
+      "sha256": "b5f2fbff9af9730b7fb0d2b34a4be0fa122d74e43f6014ef2382101a8318bd8e",
+      "full_source_read": true,
+      "assessment": "Finite Boolean conjunction equivalence for certificate terminalization; no semantic witness validator is defined here. Ledger counters increase under the named append functions. OperationOutput is defined never to be authority; treeOutput examines the root, while the separate OperationTreeFold module provides recursive effect bookkeeping. No universal social/semantic authority theorem follows.",
+      "reviewed_lines": [
+        [
+          1,
+          164
+        ]
+      ]
+    },
+    {
+      "path": "lean4/TowerZeta.lean",
+      "sha256": "ee783fc1678d45ef5314575e039d95147721af5704586ffa6487c0b77a6c0bf1",
+      "full_source_read": true,
+      "assessment": "Affine natural-number towers base+delta*k, injective first-coordinate parameter recovery, positive-step unbounded coordinate growth. TowerZetaFamily accepts any Nat->Nat->Int function, including zero: it is not a construction of the analytic Riemann zeta function. Bridge collision lemmas correctly prohibit decoding a target distinguishing equal supplied packets. Boolean RH admission gates and finite toy worlds do not prove or disprove RH.",
+      "reviewed_lines": [
+        [
+          1,
+          633
+        ]
+      ]
+    },
+    {
+      "path": "lean4/TypedPacketShadow.lean",
+      "sha256": "8f2ecdcdb696fd711d6dfe9d159b0e0c1d342acf29055228324ecf9f26bcbdab",
+      "full_source_read": true,
+      "assessment": "General equal-packet/different-value collision implies no total decoder. The concrete finite packet deliberately omits one Boolean distinction. Useful as a regression counterexample to universal packet adequacy; does not prohibit a richer packet or a faithful task-specific projection.",
+      "reviewed_lines": [
+        [
+          1,
+          90
+        ]
+      ]
+    },
+    {
+      "path": "lean4/LiftPatchSemantics.lean",
+      "sha256": "92cd272348c83a53a48c7741770220a6d2e3a5c8390cb455b0cb730ce991f7c4",
+      "full_source_read": true,
+      "assessment": "Constructs a licensed count-level lift from positive applicable cost and positive structural additions. Nat arithmetic proves decreased budget and increased count. Does not prove preservation of arbitrary semantics or identify newly added symbols with useful knowledge.",
+      "reviewed_lines": [
+        [
+          1,
+          73
+        ]
+      ]
+    },
+    {
+      "path": "lean4/lakefile.lean",
+      "sha256": "807e37bb6876baf528dcc3cf51b53b9b1631e33b9b2f6012c2731de4ba784b1a",
+      "full_source_read": true,
+      "assessment": "Nine explicit core library roots, no external packages; matches successful fresh build and axiom census. This source is a build declaration, not a correspondence proof.",
+      "reviewed_lines": [
+        [
+          1,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "lean4/README.md",
+      "sha256": "9f31dc02945b114d8f54b7d1e4484e74cbc9bffa860bc96e0fb564a2b4c01060",
+      "full_source_read": true,
+      "assessment": "Explicit provenance and limits: imported source, historical grades below local L4D floor, no Mathlib, permitted axiom list, nine roots and census counts. Fresh audit reproduced the build/census. Historical reviewer grades remain source assertions and are not new proof quality certification.",
+      "reviewed_lines": [
+        [
+          1,
+          51
+        ]
+      ]
+    },
+    {
+      "path": "lean4/.gitignore",
+      "sha256": "b3298f2eb1563baa78817adb326c006801db7902f5ab8e387b5437058a4e64d2",
+      "full_source_read": true,
+      "assessment": "Excludes only .lake build directory; root dot filename is eligible under user directory rule.",
+      "reviewed_lines": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "path": "lean4/lake-manifest.json",
+      "sha256": "b947448ee2115859ee8a8296c302119b1497c02ae0c0e95ad235d12b7610bf17",
+      "full_source_read": true,
+      "assessment": "Empty dependency package list with local .lake package directory. Matches core-Lean-only build.",
+      "reviewed_lines": [
+        [
+          1,
+          6
+        ]
+      ]
+    },
+    {
+      "path": "lean4/lean-toolchain",
+      "sha256": "27e73059e3a4d568450f74e39c2f79676c4f8d41373fff15170690f124e3bacd",
+      "full_source_read": true,
+      "assessment": "Pins leanprover/lean4:v4.35.0, the version used by fresh build.",
+      "reviewed_lines": [
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "remaining_work": [
+    "Complete PrimitiveDifference, ShadowBoundary and provenance-record semantic/correspondence review."
+  ]
+}

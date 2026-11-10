@@ -1,0 +1,171 @@
+{
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "retained_owner_execution": false,
+  "results": [
+    {
+      "id": "OPSKILL-CHECK-099",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-sprint-planning-review/references/instructions.md",
+        "sha256": "d2be8687986b8e95a3631bb496370c3b3eea4be6e06dbb5e9f67f07a13ae6c09"
+      },
+      "observation": {
+        "branch": "sprint-108-0",
+        "derived_sprint_number": "108",
+        "expected_cleanup_identity": "108-0",
+        "explicit_cleanup_int_conversion_raises_ValueError": true
+      },
+      "limitations": "Literal Python expressions from documentation reproduced independently; enclosing planning/review workflow is pseudocode and not invoked."
+    },
+    {
+      "id": "OPSKILL-CHECK-100",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-sprint-execution/references/instructions.md",
+        "sha256": "8577bf7e625bce0f9dd5c529f9b509706182bca0e85e28d54741894d05438548"
+      },
+      "observation": {
+        "completion_text": "Story Completion\nQuality Gates\n",
+        "documented_header_predicate_accepts": true,
+        "story_rows": 0,
+        "test_results": 0,
+        "evidence_paths": 0
+      },
+      "limitations": "Tests the displayed substring predicate only; surrounding manual acceptance/evidence checks could reject this document if independently enforced. No actual sprint artifact written."
+    },
+    {
+      "id": "OPSKILL-CHECK-101",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-sprint-retrospective/SKILL.md",
+        "sha256": "55876ec06a36756626c65d699c7ccdcfdfaf6502f4ea72de86880fd0a243131d"
+      },
+      "observation": {
+        "prerequisite_edges": [
+          [
+            "retrospective",
+            "vp_briefing"
+          ],
+          [
+            "vp_briefing",
+            "retrospective"
+          ]
+        ],
+        "initial_artifacts": [],
+        "ready_producers": [],
+        "cycle": true
+      },
+      "limitations": "Finite dependency model of literal first-run pre-gates; precreated placeholder files can break existence deadlock without providing completed review evidence. No orchestrator executed."
+    },
+    {
+      "id": "OPSKILL-CHECK-102",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-sprint-retrospective/references/instructions.md",
+        "sha256": "e09884e1e685a9b0aec4d27a03c303f74d2dd7a1c8391d27d08961b2a025f624"
+      },
+      "observation": {
+        "HEAD_equals_sprint_branch": true,
+        "documented_two_dot_selection": [],
+        "sprint_story_commits_excluded": [
+          "story1",
+          "story2"
+        ]
+      },
+      "limitations": "Exact reachability-set meaning of A..B, not an actual Git log run. Author email/file-count heuristic also does not establish UI origin or CI execution."
+    },
+    {
+      "id": "OPSKILL-CHECK-103",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-stale-census-detector/SKILL.md",
+        "sha256": "1c0635003b74fbf6f363c185c8206a105b8af1029dbccba917bc072ed12159e7"
+      },
+      "observation": {
+        "convention": "unary operations (input,output); outer accepts inner output",
+        "before": {
+          "A": [
+            "X",
+            "X"
+          ],
+          "B": [
+            "Y",
+            "Y"
+          ]
+        },
+        "after": {
+          "A": [
+            "X",
+            "X"
+          ],
+          "B": [
+            "X",
+            "Y"
+          ]
+        },
+        "before_composable_pairs": [
+          [
+            "A",
+            "A"
+          ],
+          [
+            "B",
+            "B"
+          ]
+        ],
+        "after_composable_pairs": [
+          [
+            "A",
+            "A"
+          ],
+          [
+            "B",
+            "A"
+          ]
+        ],
+        "both_count_pairs": [
+          2,
+          2
+        ],
+        "undetected_colour_change": true
+      },
+      "limitations": "Finite independent colour-compatibility graph; refutes count-pair completeness/causal identification, not the usefulness of exact finite fixture census or source-bound inventories."
+    },
+    {
+      "id": "OPSKILL-CHECK-104",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-uncalled-module-detector/SKILL.md",
+        "sha256": "06c1c0e5137975598b7683f3b02d98f462e235b64221008d24dafd16d67c65dd"
+      },
+      "observation": {
+        "programs": {
+          "test_a.py": "from target import check\ncheck()\n",
+          "production.py": "import importlib\nmod=importlib.import_module(\"target\")\nmod.check()\n"
+        },
+        "static_target_importers": [
+          "test_a.py"
+        ],
+        "production_target_call_present_via_dynamic_import": true,
+        "test_only_static_classification_is_false_positive": true
+      },
+      "limitations": "Transparent static-import model matching declared limitation, not a replay of external operations detector. Code strings parsed only, never imported or executed."
+    },
+    {
+      "id": "OPSKILL-CHECK-105",
+      "status": "observed",
+      "source": {
+        "path": "operads/skills/techne-unfalsifiable-gate-auditor/SKILL.md",
+        "sha256": "dc7c353e930539c1308b435dddadead7e0ccbb504754520a61510efca2761440"
+      },
+      "observation": {
+        "criterion": "Python source parses successfully",
+        "explicit_Decisive_mutation_declaration": false,
+        "valid_source": "x = 1\n",
+        "invalid_source": "x =\n",
+        "criterion_can_fail": true
+      },
+      "limitations": "Syntax counterexample refutes inference from missing declared falsifier to unfalsifiability. It does not establish semantic adequacy of a build/test gate; no native compile or retained tool invoked."
+    }
+  ]
+}

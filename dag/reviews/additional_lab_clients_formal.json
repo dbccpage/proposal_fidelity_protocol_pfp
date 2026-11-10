@@ -1,0 +1,2172 @@
+{
+  "schema_version": "pfp.audit.additional_lab_clients_formal.v1",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "status": "declared_slice_complete",
+  "scope": {
+    "original_inventory": "dag/file_inventory.json",
+    "file_count": 102,
+    "csharp": 35,
+    "pfp_lab": 63,
+    "lean4": 4,
+    "score_records": 36,
+    "other_full_text_files": 66,
+    "original_source_edits": false,
+    "excludes": "Protected benchmark/keys, imported pilots, other agents reports/builders, ignored caches."
+  },
+  "claims": [
+    {
+      "id": "LCF-C1",
+      "claim": "The three Lab front ends share one exact Python governor; their agreement is transport and replay interoperability, not independent algorithm validation.",
+      "evidence": [
+        {
+          "path": "csharp/PfpLab.Client/CoreProcess.cs",
+          "sha256": "0d4f3ada46a4b3d7c3c178a5b5b3f052fa1aef6e35d48cd3e92dd4e4f333673d",
+          "lines": [
+            70,
+            110
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Client/PfpLabClient.cs",
+          "sha256": "550f2f58fdb64fa9d5d5626df5059043c168eab3bf4b1a168342ec33b8837331",
+          "lines": [
+            35,
+            95
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/cli/rpc.py",
+          "sha256": "f48ae3d7b1921a37d5614e1f58941eb7343f1c17ae3c188ef6ccdd8806dd9f54",
+          "lines": [
+            57,
+            115
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/web/app.py",
+          "sha256": "d9202713b6f02ea4354960dcf00cc71fd7d5f52ff69ba212350dfb3caa0b3e96",
+          "lines": [
+            97,
+            148
+          ],
+          "kind": "source"
+        }
+      ],
+      "dependencies": [
+        "pfp_lab/core/graph.py",
+        "pfp_lab/core/obstruction.py",
+        "pfp_lab/core/governor.py",
+        "pfp_lab/core/session.py"
+      ],
+      "limitations": [
+        "Finite rational weighted graph semantics depend on supplied carrier, weights, claims and proposals. No empirical source-truth detector or cross-language mathematical engine is provided."
+      ]
+    },
+    {
+      "id": "LCF-C2",
+      "claim": "Lab tests supply bounded checks of weighted L1 obstruction, gauge invariance, component sums, CUT descent and exact replay, with explicit counterexamples to globally monotone histories.",
+      "evidence": [
+        {
+          "path": "pfp_lab/tests/test_obstruction.py",
+          "sha256": "864c8ac36089666a4d5698bfc55fef49f16f01f4456318fd8042a159d37c96d7",
+          "lines": [
+            39,
+            142
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/tests/test_governor.py",
+          "sha256": "9a155d5d75223cf159ec99e553999fea14ed0976c370ecb8de161e2b7eefb78f",
+          "lines": [
+            88,
+            263
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/tests/strategies.py",
+          "sha256": "3184f28c40693cd61c1305dba01cfac1793b999e7ea0d0fa31465ccbcfc92cd4",
+          "lines": [
+            18,
+            46
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/tests/test_differential.py",
+          "sha256": "a03c612b494c77aff3d0ce8f72e6a10e9252ff8d5c5c39cdff176e56452d100c",
+          "lines": [
+            26,
+            105
+          ],
+          "kind": "source"
+        }
+      ],
+      "dependencies": [
+        "Paper005 weighted graph model",
+        "positive integer weights",
+        "exact Fraction arithmetic",
+        "search budget"
+      ],
+      "limitations": [
+        "Generated tests do not prove all admitted graphs or all rationals. Differential tests currently fail setup. RETRACT can increase D; ASSERT monotonicity is optional; D and Phi_1 are not interchangeable."
+      ]
+    },
+    {
+      "id": "LCF-C3",
+      "claim": "Resource checks bound admitted graph/move/text sizes and each obstruction enumeration, but they do not prove an end-to-end memory, total session cost or latency ceiling.",
+      "evidence": [
+        {
+          "path": "pfp_lab/cli/rpc.py",
+          "sha256": "f48ae3d7b1921a37d5614e1f58941eb7343f1c17ae3c188ef6ccdd8806dd9f54",
+          "lines": [
+            158,
+            172
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Client/JsonRpcChannel.cs",
+          "sha256": "263ce2b19107928aa13bb1633da9de683cd81344a1c2d05db7d34b3e9eac5f5e",
+          "lines": [
+            42,
+            95
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/core/obstruction.py",
+          "sha256": "3398443114b0337ce8a57829482f6977f7cead57e5a9ba00fd5e84954eb011c9",
+          "lines": [
+            81,
+            108
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/core/governor.py",
+          "sha256": "0c9c74a525c59299ca76978019e105aaae31cc56ea5f5132bad17c2ebf2ea53f",
+          "lines": [
+            121,
+            148
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/tests/test_pins.py",
+          "sha256": "a4f1db4faf6755b3569fbdf8f9cb059d9eb31475c679e0e36bffc8c3210bea34",
+          "lines": [
+            97,
+            102
+          ],
+          "kind": "source"
+        }
+      ],
+      "dependencies": [
+        "Fresh SearchBudget per obstruction call",
+        "multiple searches per session/move",
+        "exact rational numerator/denominator growth"
+      ],
+      "limitations": [
+        "RPC reads full lines before admission cap; C# queue wait precedes per-exchange timeout; no independent bit-complexity or wall-clock proof."
+      ]
+    },
+    {
+      "id": "LCF-C4",
+      "claim": "Receipt SHA and current-core replay detect tested tampering; they do not establish historical code-version authenticity, author identity or semantic adequacy.",
+      "evidence": [
+        {
+          "path": "pfp_lab/tests/test_receipts.py",
+          "sha256": "f5746a3ccc3f7f77d28decf080d30d8a2da4f2d4b9afe2884d82aed259a87ccc",
+          "lines": [
+            30,
+            100
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/tests/test_pins.py",
+          "sha256": "a4f1db4faf6755b3569fbdf8f9cb059d9eb31475c679e0e36bffc8c3210bea34",
+          "lines": [
+            66,
+            79
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Tests/ContractTests.cs",
+          "sha256": "5d9055fb1d2c9eff7cfc0f6f89761094f4b9c9c9010bf6ae302a563c2cc5a216",
+          "lines": [
+            65,
+            117
+          ],
+          "kind": "source"
+        }
+      ],
+      "dependencies": [
+        "Current shared-core behavior",
+        "canonical JSON policy",
+        "SHA-256 content binding"
+      ],
+      "limitations": [
+        "No signature or trusted version-to-code binding. Existing parent report records resealed invented core_version acceptance; not duplicated as a new finding."
+      ]
+    },
+    {
+      "id": "LCF-C5",
+      "claim": "PrimitiveDifference proves quotient factorization exactly when the supplied operation or invariant respects the supplied zero-equivalence relation, and explicitly exhibits failure without congruence.",
+      "evidence": [
+        {
+          "path": "lean4/PrimitiveDifference.lean",
+          "sha256": "6731cb65753be770c7a6d1eb93d2f2f09423cc123583828069970d375f1829ba",
+          "lines": [
+            13,
+            18
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/PrimitiveDifference.lean",
+          "sha256": "6731cb65753be770c7a6d1eb93d2f2f09423cc123583828069970d375f1829ba",
+          "lines": [
+            67,
+            143
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/PrimitiveDifference.lean",
+          "sha256": "6731cb65753be770c7a6d1eb93d2f2f09423cc123583828069970d375f1829ba",
+          "lines": [
+            265,
+            295
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/PrimitiveDifference.lean",
+          "sha256": "6731cb65753be770c7a6d1eb93d2f2f09423cc123583828069970d375f1829ba",
+          "lines": [
+            297,
+            447
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/PrimitiveDifference.lean",
+          "sha256": "6731cb65753be770c7a6d1eb93d2f2f09423cc123583828069970d375f1829ba",
+          "lines": [
+            532,
+            755
+          ],
+          "kind": "source"
+        }
+      ],
+      "dependencies": [
+        "Lean equality and quotient types",
+        "zero equivalence laws supplied in structure",
+        "Quot.sound; propext for some quotient/setoid results"
+      ],
+      "limitations": [
+        "Not a derivation of logic, equivalence laws or physical structure from an inscription. Congruence/pointed zero are extra admissions; no concrete PFP detector implementation is proved adequate."
+      ]
+    },
+    {
+      "id": "LCF-C6",
+      "claim": "ShadowBoundary formalizes information-preservation requirements: equal observations cannot decode distinct targets, and an augmentation must separate every relevant target collision.",
+      "evidence": [
+        {
+          "path": "lean4/ShadowBoundary.lean",
+          "sha256": "ac6584549fd5c018f7c78f4511c43994e18bfe37febe3d7510e1efa6d026c079",
+          "lines": [
+            29,
+            60
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/ShadowBoundary.lean",
+          "sha256": "ac6584549fd5c018f7c78f4511c43994e18bfe37febe3d7510e1efa6d026c079",
+          "lines": [
+            278,
+            443
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/ShadowBoundary.lean",
+          "sha256": "ac6584549fd5c018f7c78f4511c43994e18bfe37febe3d7510e1efa6d026c079",
+          "lines": [
+            470,
+            563
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/ShadowBoundary.lean",
+          "sha256": "ac6584549fd5c018f7c78f4511c43994e18bfe37febe3d7510e1efa6d026c079",
+          "lines": [
+            900,
+            966
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/ShadowBoundary.lean",
+          "sha256": "ac6584549fd5c018f7c78f4511c43994e18bfe37febe3d7510e1efa6d026c079",
+          "lines": [
+            1012,
+            1117
+          ],
+          "kind": "source"
+        }
+      ],
+      "dependencies": [
+        "Explicit shadow/value functions",
+        "collision or fiber-invariance premises",
+        "DecidableEq Value for separation equivalence",
+        "PrimitiveDifference; TowerZeta supplied toy models"
+      ],
+      "limitations": [
+        "Generic theorem has no finiteness premise despite file label. Bool/Unit examples do not establish collisions in an actual runtime unless correspondence is shown. Target-augmented success assumes access to the target. No cost, computable discovery or approximate accuracy claim."
+      ]
+    },
+    {
+      "id": "LCF-C7",
+      "claim": "All 36 generated score records and all ten Lean provenance file hashes bind their current recorded sources/evidence bytes, but grading and historical run assertions are separate from proofs and fresh executions.",
+      "evidence": [
+        {
+          "path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+          "sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+          "lines": [
+            24,
+            94
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/core/obstruction.contract.score.json",
+          "sha256": "daa72581fbcaa9fe526a8a70a420ec496b88904e94565ba6120456d36c1c0b85",
+          "lines": [
+            43,
+            116
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Desktop/Shell.contract.score.json",
+          "sha256": "b0c6172aadb6076755df8eca37e8509ef0425f9fb2254f2d7ac22cf6fe7bcea6",
+          "lines": [
+            34,
+            93
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/axiom_report.txt",
+          "sha256": "78b1106f8085e9c8b174e842b422a7fb1e650c6769100cd9593ca1423842fdf6",
+          "lines": [
+            1,
+            9
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/axiom_report.txt",
+          "sha256": "78b1106f8085e9c8b174e842b422a7fb1e650c6769100cd9593ca1423842fdf6",
+          "lines": [
+            393,
+            393
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "lean4/provenance.json",
+          "sha256": "93f1a53940e8a2a8574df277bec923e2a7699c3aac0cec3130dd741d6e20ffc2",
+          "lines": [
+            1,
+            12
+          ],
+          "kind": "source"
+        }
+      ],
+      "dependencies": [
+        "Byte hash custody checks in additional_lab_clients_formal_probe.json",
+        "Rubric and historical evidence files"
+      ],
+      "limitations": [
+        "Evidence contents not re-audited in this slice merely because hashes match. Historical mutation scores do not exhaust unknown defects. Parent compile/census results are inherited validation, not a fresh run here."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "LCF-F1",
+      "severity": "P2",
+      "title": "Valid computed Python rationals are rejected by the C# client",
+      "evidence": [
+        {
+          "path": "csharp/PfpLab.Client/Rational.cs",
+          "sha256": "e5f923deaf6573f27faf79e5bd8ba7636a26477fdc92f9beaa03303ef860cf1e",
+          "lines": [
+            16,
+            17
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Client/Rational.cs",
+          "sha256": "e5f923deaf6573f27faf79e5bd8ba7636a26477fdc92f9beaa03303ef860cf1e",
+          "lines": [
+            50,
+            55
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Client/Dtos.cs",
+          "sha256": "d47a1914412be1d6c2a18dc85b20e973ecef0157e47956de94388f92b315c308",
+          "lines": [
+            21,
+            26
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Client/Dtos.cs",
+          "sha256": "d47a1914412be1d6c2a18dc85b20e973ecef0157e47956de94388f92b315c308",
+          "lines": [
+            62,
+            70
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/core/contracts.py",
+          "sha256": "5bc7b94a606f87ddb51ffb237e8be44b81e17abaab15815a631748af8caad3ea",
+          "lines": [
+            150,
+            164
+          ],
+          "kind": "source"
+        }
+      ],
+      "counterexample": "Two vertices, one edge weight1000, ASSERT value consisting of64 nines. Python admits scenario, computes67-character defect, and verifies its receipt; current compiled C# Receipt.Validate throws Protocol for defect_after.",
+      "impact": "Desktop RunAsync rejects a valid core result and cannot display/save that run; identical admitted scenario works through Python.",
+      "next_action": "Separate input rational admission cap from bounded canonical computed-output parsing; prove/derive a safe output bound or use transport-size limits, and add cross-language arithmetic-growth regression.",
+      "status": "confirmed_by_offline_python_and_compiled_csharp_probe"
+    },
+    {
+      "id": "LCF-F2",
+      "severity": "P2",
+      "title": "Differential oracle fixture references the pre-migration paper path",
+      "evidence": [
+        {
+          "path": "pfp_lab/tests/conftest.py",
+          "sha256": "82dcbc61132f3d79aff3a35d8fbba4215aec11ec9c1d586285bca699da704117",
+          "lines": [
+            20,
+            22
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/tests/conftest.py",
+          "sha256": "82dcbc61132f3d79aff3a35d8fbba4215aec11ec9c1d586285bca699da704117",
+          "lines": [
+            36,
+            46
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/core/PROVENANCE.md",
+          "sha256": "d1076f8067979e5e5381202a6e546f2a6bf3c4e1d0bb136cdf573284aa07b0cf",
+          "lines": [
+            8,
+            20
+          ],
+          "kind": "source"
+        }
+      ],
+      "counterexample": "Both tests in test_differential.py error at fixture setup; old papers/005... does not exist, relocated papers/pfp/005... does.",
+      "impact": "Current suite cannot exercise its advertised independent port-oracle comparison. Historical scores saying it passes are not fresh evidence.",
+      "next_action": "Repair the scoped fixture path and pin source custody, then rerun bounded differential checks.",
+      "status": "confirmed_2_setup_errors"
+    },
+    {
+      "id": "LCF-F3",
+      "severity": "P2",
+      "title": "DTO validation accepts a nonhex digest while claiming a mirrored wire contract",
+      "evidence": [
+        {
+          "path": "csharp/PfpLab.Client/Dtos.cs",
+          "sha256": "d47a1914412be1d6c2a18dc85b20e973ecef0157e47956de94388f92b315c308",
+          "lines": [
+            117,
+            137
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Tests/ContractTests.cs",
+          "sha256": "5d9055fb1d2c9eff7cfc0f6f89761094f4b9c9c9010bf6ae302a563c2cc5a216",
+          "lines": [
+            142,
+            162
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "csharp/PfpLab.Client/Dtos.contract.score.json",
+          "sha256": "8aa027836d846e1b981c54f8ce7f3bf6aeb0e83a89cce07596a3623db5c9e07d",
+          "lines": [
+            40,
+            53
+          ],
+          "kind": "source"
+        }
+      ],
+      "counterexample": "Receipt.Validate accepts Digest=new string(z,64); Python ReceiptOut requires lowercase hex. Field-name schema test misses this constraint.",
+      "impact": "Malformed core responses can be admitted locally. This is not a successful bypass of Python verify_receipt. Other DTO checks also omit status enums and full scenario validation.",
+      "next_action": "Enforce actual wire constraints at the client boundary and add adversarial shape/enum/hash tests; qualify schema correspondence claims.",
+      "status": "confirmed_compiled_dto_probe"
+    },
+    {
+      "id": "LCF-F4",
+      "severity": "P2",
+      "title": "The web chart labels attempted and mixed metrics as defect after each step",
+      "evidence": [
+        {
+          "path": "pfp_lab/web/static/app.js",
+          "sha256": "464fafb582905345156b6de52217df057d91a7efc84df082399e8a6f439676ad",
+          "lines": [
+            95,
+            114
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/web/static/index.html",
+          "sha256": "80543fd2174c6ef92374fca0a6491469dc3405d8ebaa07bad1a5cfdc5493d36d",
+          "lines": [
+            53,
+            55
+          ],
+          "kind": "source"
+        },
+        {
+          "path": "pfp_lab/tests/test_governor.py",
+          "sha256": "9a155d5d75223cf159ec99e553999fea14ed0976c370ecb8de161e2b7eefb78f",
+          "lines": [
+            126,
+            133
+          ],
+          "kind": "source"
+        }
+      ],
+      "counterexample": "Paper005 refused relational CUT reports attempted Phi_1 5 while unchanged section D remains6 and unchanged Phi_1 remains3; chart plots5 under Defect after each step. ASSERT points use D, claim-CUT points use Phi_1.",
+      "impact": "Visualization can imply a state trajectory or monotonicity property that the receipt does not represent. Table shows refusal status, but chart label does not identify attempted metric.",
+      "next_action": "Label metric and proposed/admitted values explicitly or generate separate actual-state D/Phi_1 traces from replay.",
+      "status": "source_and_existing_test_witness"
+    },
+    {
+      "id": "LCF-F5",
+      "severity": "P3",
+      "title": "README desktop command invokes a nonexistent package entry point",
+      "evidence": [
+        {
+          "path": "pfp_lab/README.md",
+          "sha256": "7a08bd6dc663a3c653c3155fa63f9237126a2267f8d9a43108c337dc4ded50fa",
+          "lines": [
+            14,
+            18
+          ],
+          "kind": "source"
+        }
+      ],
+      "counterexample": "python -m pfp_lab stdio exits1: no pfp_lab.__main__. Actual client correctly invokes pfp_lab.cli.main.",
+      "impact": "Manual setup/troubleshooting command fails; installed client path is unaffected.",
+      "next_action": "Correct documentation to the owned CLI module.",
+      "status": "confirmed_command"
+    }
+  ],
+  "validation": [
+    {
+      "id": "V1",
+      "kind": "custody_and_review",
+      "result": "102/102 files fully reviewed against original inventory hashes:35 C#,63 Lab,4 Lean.36 score records reviewed through full baselines plus every replacement; byte reconstruction asserted.66 other files read fully, including5 zero-byte markers."
+    },
+    {
+      "id": "V2",
+      "kind": "fresh_offline_build",
+      "command": "dotnet build csharp/PfpLab.sln --no-restore -m:1 -p:UseSharedCompilation=false",
+      "result": "PASS:0 warnings,0 errors. Earlier parallel/default build canceled by environment (MSB5021), not a source compile error."
+    },
+    {
+      "id": "V3",
+      "kind": "fresh_offline_tests",
+      "command": "dotnet csharp/PfpLab.Tests/bin/Debug/net8.0-windows/PfpLab.Tests.dll",
+      "result": "29 passed,0 failed after successful build. Earlier --unit subset22 passed is contained in this29, not additive."
+    },
+    {
+      "id": "V4",
+      "kind": "fresh_offline_tests",
+      "command": "pytest test_admission test_boundaries test_cli test_contracts test_graph test_obstruction test_governor test_packs test_receipts test_rpc; -q -p no:cacheprovider --basetemp=dag/reviews/additional_lab_clients_formal_pytest_tmp",
+      "result": "254 passed,1 failed in7.16s. Failure test_new_trees_carry_no_upstream_names names governance/baseline.json, governance/evidence/workflow-live-round-tests.run.json and governance/evidence/workflow-review-fixes-tests.run.json. Metadata naming-policy failure, not numerical counterexample."
+    },
+    {
+      "id": "V5",
+      "kind": "fresh_offline_tests",
+      "command": "pytest pfp_lab/tests/test_pins.py -k \"not web\" -q -p no:cacheprovider --basetemp=dag/reviews/additional_lab_clients_formal_pins_tmp",
+      "result": "13 passed,2 deselected; one Starlette BlockingPortal deprecation warning."
+    },
+    {
+      "id": "V6",
+      "kind": "fresh_offline_tests",
+      "command": "pytest pfp_lab/tests/test_differential.py -q -p no:cacheprovider --tb=short",
+      "result": "2 setup errors in0.46s, stale oracle path. No new differential comparisons executed."
+    },
+    {
+      "id": "V7",
+      "kind": "incomplete_runtime_validation",
+      "result": "Initial full Lab suite with default temp location was interrupted after failures/setup errors and a long stall, without final summary. Selected runs with owned basetemp then completed as above. Isolated existing test_web.py + test_pins.py subprocess timed out after30s with empty stdout/stderr. No claim of full-suite pass and no attribution of HTTP stall to a source defect.",
+      "artifact": "dag/reviews/additional_lab_clients_formal_web_run.json"
+    },
+    {
+      "id": "V8",
+      "kind": "bounded_counterexample",
+      "result": "Python admits64-character claim, emits67-character defect, receipt replay valid; compiled C# DTO refuses. Separate nonhex64-character digest accepted by DTO.",
+      "artifacts": [
+        "dag/reviews/additional_lab_clients_formal_probe.py",
+        "dag/reviews/additional_lab_clients_formal_probe.json",
+        "dag/reviews/additional_lab_clients_formal_probe/Program.cs",
+        "dag/reviews/additional_lab_clients_formal_probe/receipt.json"
+      ],
+      "limits": "One arithmetic-growth witness and one DTO boundary witness. No provider, external network or private benchmark."
+    },
+    {
+      "id": "V9",
+      "kind": "mechanical_custody",
+      "result": "36/36 score source hashes and all referenced current evidence hashes match;10/10 Lean provenance source hashes match. Hash verification does not establish truth of historical scoring text."
+    },
+    {
+      "id": "V10",
+      "kind": "inherited_kernel_validation",
+      "result": "Prior parent report records lake build11jobs and AxiomCensus1144constants375theorems281axiom-free, deps propext/Quot.sound. Not rerun here; new semantic full reads cover the two previously unread proof modules."
+    }
+  ],
+  "file_reviews": [
+    {
+      "path": "csharp/.editorconfig",
+      "sha256": "cccc6ce4f8f8894056ed991b76a6961b2f768a36a0bd6648ff532e13ba65c3f9",
+      "full_source_read": true,
+      "assessment": "Compiler/analyzer severities, complexity threshold and scoped test exemptions. A static policy, not assurance that semantics or all error paths are correct.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        31
+      ],
+      "bytes": 1032
+    },
+    {
+      "path": "csharp/.gitignore",
+      "sha256": "6c5082c7e6de3e350189c67a1aacf757485ecc26e0a3cf96683528565f3e5f12",
+      "full_source_read": true,
+      "assessment": "Excludes bin and obj build products; no runtime or mathematical content.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        2
+      ],
+      "bytes": 10
+    },
+    {
+      "path": "csharp/CodeMetricsConfig.txt",
+      "sha256": "833445c48a07c4eaac1b7553438cd6efe6b4965635898a6cebd5dcd51746dd44",
+      "full_source_read": true,
+      "assessment": "CA1502 complexity threshold 10; a maintainability threshold, not a correctness theorem.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        1
+      ],
+      "bytes": 11
+    },
+    {
+      "path": "csharp/Directory.Build.props",
+      "sha256": "3077632cd714192544d74f61a48926fa3e109cd3b506de6a9aa2e00398ab67dd",
+      "full_source_read": true,
+      "assessment": "Language 12, nullable and recommended analysis, warnings as errors, checked overflow and deterministic builds. BigInteger parsing remains governed by runtime checks.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        19
+      ],
+      "bytes": 833
+    },
+    {
+      "path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Child-process ownership: resolved interpreter, UTF-8 pipes, bounded error-tail capture, idempotent async disposal that closes input, waits, then kills the process tree. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        192
+      ],
+      "bytes": 8279,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Client/CoreProcess.cs",
+      "sha256": "0d4f3ada46a4b3d7c3c178a5b5b3f052fa1aef6e35d48cd3e92dd4e4f333673d",
+      "full_source_read": true,
+      "assessment": "Discovers/overrides interpreter, launches shared Python stdio core with UTF-8 pipes, bounded-count stderr tail and asynchronous shutdown/kill. No protocol arithmetic. Disposal tests cover ordinary exit; they are not an all-environment termination proof; tail count does not bound line bytes.",
+      "classification": "process_boundary",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        167
+      ],
+      "bytes": 5472
+    },
+    {
+      "path": "csharp/PfpLab.Client/Dtos.contract.score.json",
+      "sha256": "8aa027836d846e1b981c54f8ce7f3bf6aeb0e83a89cce07596a3623db5c9e07d",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Runtime admission of untrusted JSON from the core: every record is validated after deserialisation, so nullable annotations are never the only check (RULE_CS_002). Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        204
+      ],
+      "bytes": 8492,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Client/Dtos.cs",
+      "sha256": "d47a1914412be1d6c2a18dc85b20e973ecef0157e47956de94388f92b315c308",
+      "full_source_read": true,
+      "assessment": "Checks presence, rational spelling and selected structure. It does not mirror all schema constraints: digest checks only length, verdict status/move are free strings, several missing value fields get deserializer defaults. Its 64-character output rational check rejects valid computed core values.",
+      "classification": "wire_contract",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        152
+      ],
+      "bytes": 4461
+    },
+    {
+      "path": "csharp/PfpLab.Client/JsonRpcChannel.contract.score.json",
+      "sha256": "0dfdda5cdafacdd5bbda61d3e6f0aa08add9328b71609fdcb7c1753d463085bf",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Line-framed JSON-RPC client with serialised calls, per-call timeout and cancellation, envelope and id checks, a channel that faults after desynchronisation, and the typed CoreException translation. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        196
+      ],
+      "bytes": 8584,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Client/JsonRpcChannel.cs",
+      "sha256": "263ce2b19107928aa13bb1633da9de683cd81344a1c2d05db7d34b3e9eac5f5e",
+      "full_source_read": true,
+      "assessment": "Serializes requests, checks matching version/id, maps errors, faults after timeout/EOF/cancellation/IO. Timeout begins after acquiring semaphore, so queue wait is not included. ReadLineAsync has no response-byte cap. Protocol validation is a bounded subset, not independent replay.",
+      "classification": "transport_boundary",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        231
+      ],
+      "bytes": 8365
+    },
+    {
+      "path": "csharp/PfpLab.Client/PfpLab.Client.csproj",
+      "sha256": "4917ade04e9ac057ebfb172bbfe8f73459abb12a1aa365a282892d34d2046328",
+      "full_source_read": true,
+      "assessment": "net8.0 library target; no separate mathematical engine or extra package dependency.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        7
+      ],
+      "bytes": 274
+    },
+    {
+      "path": "csharp/PfpLab.Client/PfpLabClient.contract.score.json",
+      "sha256": "5573722b758540e1b811ebd7a4d76d277aaccbdaf969588c372157c0cf78d508",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Typed facade over the five methods: local JSON pre-check, deserialisation with contract errors, validation of every answer. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        192
+      ],
+      "bytes": 8162,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Client/PfpLabClient.cs",
+      "sha256": "550f2f58fdb64fa9d5d5626df5059043c168eab3bf4b1a168342ec33b8837331",
+      "full_source_read": true,
+      "assessment": "Five typed methods delegate to the one Python core; Run returns validated DTO plus raw JSON, Verify asks Python to replay. Pack JSON is extracted without full ScenarioIn validation. Local JSON parse adds no mathematical evidence.",
+      "classification": "client_facade",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        115
+      ],
+      "bytes": 4807
+    },
+    {
+      "path": "csharp/PfpLab.Client/Rational.contract.score.json",
+      "sha256": "3094d0d0332a7e4759fb40be12dc694997e574957d8d1926c59a4a9460f0c94f",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Exact rational value type across the language boundary: canonical parsing identical to the Python core, lowest-terms check, overflow-free comparison on BigInteger, and a safe default value. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        192
+      ],
+      "bytes": 8410,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Client/Rational.cs",
+      "sha256": "e5f923deaf6573f27faf79e5bd8ba7636a26477fdc92f9beaa03303ef860cf1e",
+      "full_source_read": true,
+      "assessment": "BigInteger canonical parser/formatter/comparison with gcd and positive denominator; denominator-minus-one makes default zero. Exact for accepted spellings, but input MaxChars=64 is incorrectly reused to admit computed outputs; no general Python-output closure.",
+      "classification": "exact_value_adapter",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        122
+      ],
+      "bytes": 4250
+    },
+    {
+      "path": "csharp/PfpLab.Desktop/App.xaml",
+      "sha256": "badbf7a63edb8219ea9aeb801df90e60adacbf8f238e27a47839f3cb6c5c16b6",
+      "full_source_read": true,
+      "assessment": "WPF resources and colors only. No protocol values or invariants are computed.",
+      "classification": "ui_layout",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        13
+      ],
+      "bytes": 619
+    },
+    {
+      "path": "csharp/PfpLab.Desktop/MainViewModel.contract.score.json",
+      "sha256": "dc1b7b074c18846376a65778f9e52abc9e648357a07521e6a6d031654c9a6369",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. View model with cancellable async commands and property-change plumbing: orchestrates loading, running, saving and verifying, turns expected failures into status, and lets unexpected ones reach the fail-closed handler. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        194
+      ],
+      "bytes": 8530,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Desktop/MainViewModel.cs",
+      "sha256": "7db8bfebc21d2f2d886fbdebcf68f8c9e782824fcb075b05c4e552b27d54b926",
+      "full_source_read": true,
+      "assessment": "Loads/edits/runs/saves/verifies via IPfpLabClient; presents exact strings, typed failures and cancellable commands. Existing results survive editing and failed runs. No independent calculation, checker or proof; mocks test orchestration only.",
+      "classification": "ui_orchestration",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        306
+      ],
+      "bytes": 8614
+    },
+    {
+      "path": "csharp/PfpLab.Desktop/MainWindow.xaml",
+      "sha256": "1e90338e84b69bba3d02954202656fd682b2608164f7d0156361ef0dd08bf7b2",
+      "full_source_read": true,
+      "assessment": "Scenario editor, run controls and bound receipt/result grid. Displays core output; no independently computed mathematical state.",
+      "classification": "ui_layout",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        71
+      ],
+      "bytes": 4279
+    },
+    {
+      "path": "csharp/PfpLab.Desktop/PfpLab.Desktop.csproj",
+      "sha256": "28c381e22fce3f84347349452b4330fa5da3301820232283488fc8c6c9815889",
+      "full_source_read": true,
+      "assessment": "net8.0-windows WPF executable references the client. Buildable desktop shell does not verify protocol mathematics.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        13
+      ],
+      "bytes": 454
+    },
+    {
+      "path": "csharp/PfpLab.Desktop/Shell.contract.score.json",
+      "sha256": "b0c6172aadb6076755df8eca37e8509ef0425f9fb2254f2d7ac22cf6fe7bcea6",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Application shell: owns the core process for the app's lifetime, fail-closed unhandled-exception handler, window wiring with cancellation on close. Recorded L4D is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        192
+      ],
+      "bytes": 8250,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L4D",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Desktop/Shell.cs",
+      "sha256": "01e8a6a7003d2bcfc718c5177a21c16d6b2b7c347bc2ddc72e5be31e86e0ba8b",
+      "full_source_read": true,
+      "assessment": "WPF startup, process ownership, dialogs, selection events, cancellation and fail-closed unexpected exception handler. Static read plus build only; no interactive UI test. Historical score openly records eight surviving shell mutants.",
+      "classification": "ui_process_lifecycle",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        131
+      ],
+      "bytes": 4218
+    },
+    {
+      "path": "csharp/PfpLab.Tests/ContractTests.contract.score.json",
+      "sha256": "9ea656eb949ce07a4e83af1fc0ab8bb693455eb865814ef06cf2686d910c4d65",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Real-core contract tests, receipts verified across languages, schema comparison. Recorded L3C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        150
+      ],
+      "bytes": 5992,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L3C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Tests/ContractTests.cs",
+      "sha256": "5d9055fb1d2c9eff7cfc0f6f89761094f4b9c9c9010bf6ae302a563c2cc5a216",
+      "full_source_read": true,
+      "assessment": "Seven real Python-core checks cover paper numbers, typed refusals, receipt exchange and process lifetime. Schema comparison checks field names only. Both language routes invoke the same Python computation, so this is transport/replay interoperability, not two independent mathematical implementations.",
+      "classification": "bounded_integration_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        187
+      ],
+      "bytes": 9462
+    },
+    {
+      "path": "csharp/PfpLab.Tests/Harness.contract.score.json",
+      "sha256": "8f18dd898312d3fe58f3b4d072b8e927b74e0652adee9428575efabed4eab551",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Minimal runner: named async tests, checks, exit code 0 or 3. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        150
+      ],
+      "bytes": 5920,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Tests/Harness.cs",
+      "sha256": "abcf50c1aa32905f9367d39a682070a77ace3ed4536435c433a4f9dca226142a",
+      "full_source_read": true,
+      "assessment": "Named async test runner with assertions and aggregate exit 0/3; catches failed tests and prints summaries. No per-test timeout or theorem-level coverage guarantee.",
+      "classification": "test_harness",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        116
+      ],
+      "bytes": 3116
+    },
+    {
+      "path": "csharp/PfpLab.Tests/PfpLab.Tests.csproj",
+      "sha256": "5330b897cafd1100bf6a34e74ab751c3d1236381bc27aaae04939050636f53b6",
+      "full_source_read": true,
+      "assessment": "net8.0-windows WPF console test harness references both projects without external test packages.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        20
+      ],
+      "bytes": 782
+    },
+    {
+      "path": "csharp/PfpLab.Tests/Program.contract.score.json",
+      "sha256": "97986744a3bb11e239d1bdab6112c5ba049f50ac590c734a3b8905dd635b9dac",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Entry point selecting unit or all tests. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        150
+      ],
+      "bytes": 5880,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Tests/Program.cs",
+      "sha256": "5802f36b6a128b1606769a15aa8aaa3bebd578088d77802247c8281d5d14a0c9",
+      "full_source_read": true,
+      "assessment": "Selects 22 unit/view-model checks or all 29 checks; does not launch the WPF application window.",
+      "classification": "test_entrypoint",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        27
+      ],
+      "bytes": 753
+    },
+    {
+      "path": "csharp/PfpLab.Tests/UnitTests.contract.score.json",
+      "sha256": "822dac6a53c9243f0c9d3a34e21fb1457028adf4302a8a53561a36fd20aac4a5",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Rational, DTO, channel and options tests without processes. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        150
+      ],
+      "bytes": 5922,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Tests/UnitTests.cs",
+      "sha256": "005f1a0fe7ba7392a8f4fe8e6f5143f95ef7b0b0fbaaefd1468ee646ed056bcc",
+      "full_source_read": true,
+      "assessment": "Canonical rational examples, large integer comparison, DTO examples, scripted RPC errors/timeouts/cancellation and interpreter discovery. Sample receipt deliberately has incomplete scenario shape; 64-character nonhex digest and >64-character computed outputs are absent from tests.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        311
+      ],
+      "bytes": 16589
+    },
+    {
+      "path": "csharp/PfpLab.Tests/ViewModelTests.contract.score.json",
+      "sha256": "c3fd35f1f9c54e5e6d567746342c317e70e10da1104b3cf5f2e5bc45d396378b",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. View model against a scripted client. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        150
+      ],
+      "bytes": 5913,
+      "baseline_path": "csharp/PfpLab.Client/CoreProcess.contract.score.json",
+      "baseline_sha256": "3c96a0126ec93114335c924a1d8d371f20fdb1f686a365d64e0c38ad1d835be0",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "csharp/PfpLab.Tests/ViewModelTests.cs",
+      "sha256": "2be8ac2a3c8683cc9609333ac6aa14ddff9b93f73c2a2e2b7df4f79f9d12e7b8",
+      "full_source_read": true,
+      "assessment": "Seven mocked-client tests cover state/status/cancellation/save/verify behaviors and owned temporary files. Fake values establish no core correctness; no GUI event-loop interaction is tested.",
+      "classification": "bounded_mock_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        231
+      ],
+      "bytes": 11236
+    },
+    {
+      "path": "csharp/PfpLab.sln",
+      "sha256": "795aae0405a59318802117d0a9a1b013c30cb3a30a991f2ef9c8972fac5ef0f5",
+      "full_source_read": true,
+      "assessment": "Three-project Debug/Release platform mapping. No theorem or runtime invariant.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        62
+      ],
+      "bytes": 3943
+    },
+    {
+      "path": "csharp/README.md",
+      "sha256": "75387c96d617b5664460a728166f4b1d625aec16d8bef5ca304f6ad517c0b675",
+      "full_source_read": true,
+      "assessment": "Documents thin shared-core client, correct Python module entry point and self-hosted unit/contract runner; historical build claims distinguished from fresh 29-test run.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        39
+      ],
+      "bytes": 1750
+    },
+    {
+      "path": "lean4/PrimitiveDifference.lean",
+      "sha256": "6731cb65753be770c7a6d1eb93d2f2f09423cc123583828069970d375f1829ba",
+      "full_source_read": true,
+      "assessment": "Full 787-line read. PrimitiveDifference assumes reflexive/symmetric/transitive zero relation; quotient and unary/binary factorization iff congruence, uniqueness, product/mod-setoid compatibility and coarsening follow. Bool all-zero/nonconstant delta explicitly refutes automatic factorization. Context fingerprint discards context by definition. Pointed zero and congruence are additional structure. No primitive ontology or runtime checker is derived; quotient results use Quot.sound (some also propext).",
+      "classification": "formal_proof_source",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        787
+      ],
+      "bytes": 29215
+    },
+    {
+      "path": "lean4/ShadowBoundary.lean",
+      "sha256": "ac6584549fd5c018f7c78f4511c43994e18bfe37febe3d7510e1efa6d026c079",
+      "full_source_read": true,
+      "assessment": "Full 1187-line read. Collision witness blocks total decoder; quotient descent iff fiber invariance; refinement, mutually decodable shadows, injective-on-target-image encodings, composition, joint encodings and separating augmentations preserve exact target distinctions. Augmentation separation equivalence assumes DecidableEq Value. Target-augmented success simply includes target and projects snd. Unit/Bool packet, LGGR and zeta worlds are supplied models; generic theorem needs no finiteness hypothesis and provides no detector discovery, approximate-statistical guarantee or physical bridge.",
+      "classification": "formal_proof_source",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        1187
+      ],
+      "bytes": 50644
+    },
+    {
+      "path": "lean4/axiom_report.txt",
+      "sha256": "78b1106f8085e9c8b174e842b422a7fb1e650c6769100cd9593ca1423842fdf6",
+      "full_source_read": true,
+      "assessment": "Full 393-line read of Oct27 Linux Lean4.35 census: nine roots, 1144 constants/375 noninternal theorems/281 axiom-free; actual dependencies propext and Quot.sound, while allow-list also permits Classical.choice. Includes generated structure-field/projection lemmas. Historical successful build/census is distinct from source semantic review; parent has independently rerun the same census, not repeated here.",
+      "classification": "historical_kernel_run_record",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        393
+      ],
+      "bytes": 26991
+    },
+    {
+      "path": "lean4/provenance.json",
+      "sha256": "93f1a53940e8a2a8574df277bec923e2a7699c3aac0cec3130dd741d6e20ffc2",
+      "full_source_read": true,
+      "assessment": "Full 235-line read: source/graded commits, ten file hashes, rehoming decisions, nonmoved files, grade claims and retained-source rationale. All ten current hashes match. Scores/external adversary report not independently regraded; text itself records stale bindings/library-root/path claims. No certification follows from byte identity.",
+      "classification": "historical_custody_record",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        235
+      ],
+      "bytes": 12275
+    },
+    {
+      "path": "pfp_lab/README.md",
+      "sha256": "7a08bd6dc663a3c653c3155fa63f9237126a2267f8d9a43108c337dc4ded50fa",
+      "full_source_read": true,
+      "assessment": "Documents bounded exact graph game, receipt replay and front ends. Desktop example uses nonexistent pfp_lab.__main__; grade threshold is governance policy, not a proof.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        82
+      ],
+      "bytes": 2960
+    },
+    {
+      "path": "pfp_lab/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "full_source_read": true,
+      "assessment": "Verified zero bytes: Python package marker with no semantic implementation or mathematical contribution.",
+      "classification": "empty_package_marker",
+      "review_mode": "full_text",
+      "reviewed_lines": [],
+      "bytes": 0
+    },
+    {
+      "path": "pfp_lab/cli/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "full_source_read": true,
+      "assessment": "Verified zero bytes: Python package marker with no semantic implementation or mathematical contribution.",
+      "classification": "empty_package_marker",
+      "review_mode": "full_text",
+      "reviewed_lines": [],
+      "bytes": 0
+    },
+    {
+      "path": "pfp_lab/cli/main.contract.score.json",
+      "sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Production CLI: documented exit-code contract, translation of every expected failure, bounded file reads, UTF-8 output whatever the console code page, schema export. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        228
+      ],
+      "bytes": 9739,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/cli/main.py",
+      "sha256": "bf8980ac83fe0df096f1a01792e89d441fdbbd9be81ccf22685d51c034d81632",
+      "full_source_read": true,
+      "assessment": "Shared-core commands, MAX_JSON_BYTES+1 capped file reads, stable exit codes and UTF-8 stdio framing. CLI success means a scenario ran, even when moves are refused. Schema export is structural and does not prove generated schema equivalence to validators.",
+      "classification": "command_boundary",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        207
+      ],
+      "bytes": 8242
+    },
+    {
+      "path": "pfp_lab/cli/rpc.contract.score.json",
+      "sha256": "22073f842e47c0536bee227bad6766b86a4e2a9ffe591696b65e1f2482b0aef2",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Protocol server for the C# app: JSON-RPC 2.0 framing, envelope validation, method table, and a fixed translation of each expected failure to a JSON-RPC error with a stable data code; unexpected failures end the process (fail-closed) for the client to report. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        226
+      ],
+      "bytes": 9892,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/cli/rpc.py",
+      "sha256": "f48ae3d7b1921a37d5614e1f58941eb7343f1c17ae3c188ef6ccdd8806dd9f54",
+      "full_source_read": true,
+      "assessment": "Five methods and strict envelope mapping to shared-core admission/run/replay. A full line is read before byte-length rejection; the input cap is not a preallocation memory bound. Unexpected exceptions terminate the process.",
+      "classification": "rpc_boundary",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        178
+      ],
+      "bytes": 6306
+    },
+    {
+      "path": "pfp_lab/core/PROVENANCE.md",
+      "sha256": "d1076f8067979e5e5381202a6e546f2a6bf3c4e1d0bb136cdf573284aa07b0cf",
+      "full_source_read": true,
+      "assessment": "Explicit paper source blob/SHA and port differences, including per-component enumeration and tie breaking. Differential oracle claim is currently blocked by stale fixture path.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        41
+      ],
+      "bytes": 2965
+    },
+    {
+      "path": "pfp_lab/core/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "full_source_read": true,
+      "assessment": "Verified zero bytes: Python package marker with no semantic implementation or mathematical contribution.",
+      "classification": "empty_package_marker",
+      "review_mode": "full_text",
+      "reviewed_lines": [],
+      "bytes": 0
+    },
+    {
+      "path": "pfp_lab/core/admission.contract.score.json",
+      "sha256": "65fd6389447b2e5c19676ee45dbe29f76bed98a316ff451c039047e219a1c691",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. The single admission gate for every value that enters the core: canonical-form rationals (one spelling per value, so hashes bind values), bool-safe integers, bounded names, and the typed failure hierarchy with stable codes that every front end translates. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        244
+      ],
+      "bytes": 10617,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/core/admission.py",
+      "sha256": "62e4db774f0a1a3e23d8540785cca32d049d5b89f3016ae034a2eff12828a4e9",
+      "full_source_read": true,
+      "assessment": "Canonical fullmatch ASCII name/rational gates, exact-int rejection of bool/float, bounded input lengths and typed errors. Fraction values are exact. These input-size restrictions do not bound all computed rational output lengths.",
+      "classification": "input_admission",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        128
+      ],
+      "bytes": 4471
+    },
+    {
+      "path": "pfp_lab/core/contracts.contract.score.json",
+      "sha256": "a6fcecb67bcdcc4334e156f9fb7c83f1d23b4402bbdbfd8118b9f2710226b832",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. The wire contract of every front end: strict, frozen Pydantic models with discriminated moves, size limits before parsing, conversion to exact governor values, and the admitted built-in pack catalog. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        264
+      ],
+      "bytes": 11149,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/core/governor.contract.score.json",
+      "sha256": "f717205c560cc9b76d88350b1ad3e91d1e5fcea4789e114eb54c7f96bbc53a44",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. The protocol state machine: four moves, fourteen verdict statuses, refusal without state change, snapshot history and retraction, with one handler per move. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        242
+      ],
+      "bytes": 10296,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/core/graph.contract.score.json",
+      "sha256": "6546ee2a18b642051f7ecdceb11d74437b7c45b201e22247b1ca44c5a705e86c",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. The declared carrier as an immutable, validated value: names, sizes, weights, self-loops and duplicates refused at construction, so no later code needs to re-check them; component decomposition used by the obstruction search. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        232
+      ],
+      "bytes": 10215,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/core/obstruction.contract.score.json",
+      "sha256": "daa72581fbcaa9fe526a8a70a420ec496b88904e94565ba6120456d36c1c0b85",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Non-trivial exact algorithm: L1 defect, the primary obstruction Phi_1 by spanning-forest enumeration per component with Paper 005 tie-breaking, the idempotent projection P_S, and an explicit search budget with a typed failure. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        240
+      ],
+      "bytes": 10927,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/core/packs/IDEA_PACKS.md",
+      "sha256": "374929e16e28c78dbbd4a17a82dae8bf975e2252226b4e9ce9257fefeda25e42",
+      "full_source_read": true,
+      "assessment": "Five named pedagogical graph ideas with exact fixture tests. Financial and ledger labels are analogies rather than empirical market/accounting evidence.",
+      "classification": "configuration_or_documentation",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        22
+      ],
+      "bytes": 1272
+    },
+    {
+      "path": "pfp_lab/core/packs/arbitrage-cycle.json",
+      "sha256": "1ae1c9743259372d33e10efe3f04d700b69d78c1e96d24060f35dc9e7d0a3054",
+      "full_source_read": true,
+      "assessment": "Three additive quotes 3,2,-4 have residual cycle sum 1; rollback plus -5 closes it and section 0,3,5 reaches D=0. No multiplicative exchange rates, spread, execution or market evidence.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        81
+      ],
+      "bytes": 1488
+    },
+    {
+      "path": "pfp_lab/core/packs/cheapest-repair.json",
+      "sha256": "bf183b1dcbeba7249b10f9e0ddd60bda82ea3b2945288781e7328394f16ec30c",
+      "full_source_read": true,
+      "assessment": "Four-cycle mismatch 3 with weights 4,3,2,1: putting mismatch on weight 4 yields attempted D=12 and is refused; weight 1 gives D=3; subsequent claim change removes obstruction. Supplied proposal, not autonomous search for truth.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        113
+      ],
+      "bytes": 1856
+    },
+    {
+      "path": "pfp_lab/core/packs/every-edge-not-all.json",
+      "sha256": "64465b40ae9ca4ca9a2e46ab6b76ab25bf09893424029a6b3308aa17564bcbb6",
+      "full_source_read": true,
+      "assessment": "Triangle of unit claims has sum 3: different sections satisfy different edges but none satisfies all simultaneously. Finite rational coboundary inconsistency; odd parity is not the essential reason and no general logical/quantum theorem follows.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        94
+      ],
+      "bytes": 1542
+    },
+    {
+      "path": "pfp_lab/core/packs/ledger-reconciliation.json",
+      "sha256": "2e8d2ef708987a526725e38542802fb3f87559cbb7aebd80a2ccb306724490b7",
+      "full_source_read": true,
+      "assessment": "Weighted four-edge cycle has implied sum125 versus direct claim120; supplied low-weight claim change to125 repairs. Weight-as-trust is an input convention, not calibrated reliability.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        91
+      ],
+      "bytes": 1730
+    },
+    {
+      "path": "pfp_lab/core/packs/paper-005-worked-session.json",
+      "sha256": "fb22c0ca6d6e184fc39bcf7054d480e99c2900338d35c7ed77638ace1bcdc17a",
+      "full_source_read": true,
+      "assessment": "Triangle weights1,2,3 with claims1 produces Phi_1=3; proposed claims5,0,0 refused at5, repair -2,1,1 reaches0; retract restores snapshot and positive obstruction. D and Phi_1 are distinct metrics.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        99
+      ],
+      "bytes": 1670
+    },
+    {
+      "path": "pfp_lab/core/packs/refusal-gallery.json",
+      "sha256": "186842f63359138aaf4ae1f6091342e28ef7d201ce75e4f712ca809f6ad6b590",
+      "full_source_read": true,
+      "assessment": "Thirteen intentionally malformed/increasing/unknown moves exercise typed refusals around one accepted claim. Snapshot preservation excludes step counter; examples are not exhaustive input-space coverage.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        120
+      ],
+      "bytes": 1920
+    },
+    {
+      "path": "pfp_lab/core/packs/retract-stale-claim.json",
+      "sha256": "8eae1c4f5e5a8a166c40bcb2bbeac1349829b16093a9ff8a567f28b2b0005313",
+      "full_source_read": true,
+      "assessment": "Path claims2,3 and direct5 are consistent; revise direct to8 then retract to xz_first and supply section0,2,5. History retained; rollback is not monotone defect descent.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        85
+      ],
+      "bytes": 1495
+    },
+    {
+      "path": "pfp_lab/core/packs/section-repair.json",
+      "sha256": "67fc5ea7fe7442810bc46821ec44f808ee23673f19577b2f070b51e63452c48b",
+      "full_source_read": true,
+      "assessment": "Consistent cycle1,2,-3 has Phi_1=0 while initial D>0; supplied section b=1,c=3 makes D=0 and satisfies edge check. Distinguishes obstruction from current-state defect.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        70
+      ],
+      "bytes": 1106
+    },
+    {
+      "path": "pfp_lab/core/packs/two-islands.json",
+      "sha256": "cbb484c54458f5da0dc67c5e67a18c18d77561db00389d8d320ddc70bf402ed9",
+      "full_source_read": true,
+      "assessment": "Triangle rational inconsistency plus independent path -4/3; supplied claim repair makes obstruction and D zero. Demonstrates independent-component sum and exact fractions within one small fixture.",
+      "classification": "public_synthetic_fixture",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        92
+      ],
+      "bytes": 1491
+    },
+    {
+      "path": "pfp_lab/core/session.contract.score.json",
+      "sha256": "98814ef3cced09c046eb4e356ddf94bdbb147afdcf49e553c1a1e43bb072255c",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. The use case and the certificate: deterministic scenario runs, content-addressed receipts over canonical JSON, and verification by digest check plus full replay. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        240
+      ],
+      "bytes": 10377,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "full_source_read": true,
+      "assessment": "Verified zero bytes: Python package marker with no semantic implementation or mathematical contribution.",
+      "classification": "empty_package_marker",
+      "review_mode": "full_text",
+      "reviewed_lines": [],
+      "bytes": 0
+    },
+    {
+      "path": "pfp_lab/tests/conftest.contract.score.json",
+      "sha256": "f8a5fd9da9971f6ab1286e0451711109a113a5148ebea2627da53293893a0571",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Fixture loading the oracle by path, Hypothesis profiles. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        174
+      ],
+      "bytes": 6563,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/conftest.py",
+      "sha256": "82dcbc61132f3d79aff3a35d8fbba4215aec11ec9c1d586285bca699da704117",
+      "full_source_read": true,
+      "assessment": "Loads unmodified paper oracle by path and disables optional native hook; Hypothesis default 200/mutation 25. Old papers/005 path is missing, so both differential tests fail setup today.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        52
+      ],
+      "bytes": 1836
+    },
+    {
+      "path": "pfp_lab/tests/strategies.contract.score.json",
+      "sha256": "4bcbb37df892979bdb76ba5f20fff5f95964bd2bfc6e0b20fcb0868b6bbf6a6f",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Generators for admitted graphs, claims and sections. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        178
+      ],
+      "bytes": 6661,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/strategies.py",
+      "sha256": "3184f28c40693cd61c1305dba01cfac1793b999e7ea0d0fa31465ccbcfc92cd4",
+      "full_source_read": true,
+      "assessment": "Finite random generator uses at most five names, seven edges, small weights and small Fractions; does not cover the full admitted 12-vertex/16-edge or 64-character arithmetic domain.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        46
+      ],
+      "bytes": 1571
+    },
+    {
+      "path": "pfp_lab/tests/test_admission.contract.score.json",
+      "sha256": "a7fc596dc5c10a7dc75f6b96d83c12f3a607c894ac30f850fed3c484b5082912",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Boundary and refusal tables plus a round-trip property. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        194
+      ],
+      "bytes": 7569,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_admission.py",
+      "sha256": "4861447ea3f6ebbd6d54a626ea8e68fd323e7940cf8129687da183fa3c353829",
+      "full_source_read": true,
+      "assessment": "Explicit bool/float/name/canonical fraction rejection tables and bounded round-trip property. Does not test arithmetic closure of output format.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        104
+      ],
+      "bytes": 3676
+    },
+    {
+      "path": "pfp_lab/tests/test_boundaries.contract.score.json",
+      "sha256": "e185b4b612a9f21b5b1c9b777edd72a292c20320de805f88d64d6f9819b166a3",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. AST and text scans enforcing RULE_PY_002/003, import bounds, naming and RULE_CS_002. Recorded L3C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        196
+      ],
+      "bytes": 7472,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L3C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_boundaries.py",
+      "sha256": "97fdae78d9051cf0e7091b3fc9f83b50fa08a40c3b3d8a397a9f0376a11405ff",
+      "full_source_read": true,
+      "assessment": "AST/static text guards prohibit production asserts, floats, bad imports, naming and C# null-forgiving syntax. Current naming test fails on three governance metadata files; a lexical policy failure, not mathematical disagreement.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        136
+      ],
+      "bytes": 5222
+    },
+    {
+      "path": "pfp_lab/tests/test_cli.contract.score.json",
+      "sha256": "8cb7e7f7b6c8c91531f51c1989459386411e2c4170956323a8f376bb1acf390e",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Contract tests for every exit code, including subprocess runs. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        202
+      ],
+      "bytes": 7649,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_cli.py",
+      "sha256": "9efa950f92b1c6e111c6f0b0c63b043e675c09c0885a04e0683a715ce6614efc",
+      "full_source_read": true,
+      "assessment": "Capped input, exit codes, schema snapshot, receipt file IO and subprocess UTF-8 tests. Source read confirms only public packs and owned temporary files; all included tests passed in the selected run.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        163
+      ],
+      "bytes": 6292
+    },
+    {
+      "path": "pfp_lab/tests/test_contracts.contract.score.json",
+      "sha256": "94a5a458ef18d1b8927ccbb0358367207a99b2a2bcd73b54e16917d8cea007c3",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Adversarial admission table. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        194
+      ],
+      "bytes": 7423,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_contracts.py",
+      "sha256": "833f5c208bff7f96086b85d689ac6e6ef6001f5eb8e9dfc25def583395ee6b3b",
+      "full_source_read": true,
+      "assessment": "25-case adversarial scenario table, max moves/bytes and model freeze/conversion checks. Outer immutability does not test nested pack dictionary isolation (already reported by parent); schema export and model validation differ.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        173
+      ],
+      "bytes": 7051
+    },
+    {
+      "path": "pfp_lab/tests/test_differential.contract.score.json",
+      "sha256": "c12506f902358fc167a24c515659c9a41bc0017f2bd71ad54c9c0402b032dfed",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Generated move sequences compared with an independent oracle. Recorded L3C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        182
+      ],
+      "bytes": 6922,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L3C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_differential.py",
+      "sha256": "a03c612b494c77aff3d0ce8f72e6a10e9252ff8d5c5c39cdff176e56452d100c",
+      "full_source_read": true,
+      "assessment": "300 generated cases with at most four vertices/six edges and up to ten moves compare verdict IDs/status/admission/defects and state to source oracle. Finite correspondence evidence if fixture works; currently both tests fail before exercising it.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        105
+      ],
+      "bytes": 4448
+    },
+    {
+      "path": "pfp_lab/tests/test_governor.contract.score.json",
+      "sha256": "1b3777d29e877851ed06165b09c64a6a80b63008fbdfa57ce109397e61ee7c86",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Every status, state preservation, and generated descent properties. Recorded L3C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        216
+      ],
+      "bytes": 8368,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L3C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_governor.py",
+      "sha256": "9a155d5d75223cf159ec99e553999fea14ed0976c370ecb8de161e2b7eefb78f",
+      "full_source_read": true,
+      "assessment": "Hand-worked move/refusal/retract behavior and generated CUT monotonicity/state-copy properties. Refusals advance counter, while snapshots remain unchanged; RETRACT can raise D. These checks are not a universal state-machine proof.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        282
+      ],
+      "bytes": 11479
+    },
+    {
+      "path": "pfp_lab/tests/test_graph.contract.score.json",
+      "sha256": "e2ab6b2ae619787ac875c5382526986fb7cc59f7813377eb506c5acb20cd9715",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Construction refusals and components. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        192
+      ],
+      "bytes": 7159,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_graph.py",
+      "sha256": "53505062a1cb702fcc714a2c62a4138ffa57a58200ac57ad1b0036af072ba436",
+      "full_source_read": true,
+      "assessment": "Carrier/edge bounds, duplicate/self-loop/type refusal, opposite directed edges, sorted components and frozen dataclass tests. Bounded constructor checks, not type-level proof.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        107
+      ],
+      "bytes": 4073
+    },
+    {
+      "path": "pfp_lab/tests/test_obstruction.contract.score.json",
+      "sha256": "fc023b6c17de74f077514d2b41bb0f0c76e12689f7499855a1f6947cba690d05",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Hand-worked values and generated optimality, idempotence and gauge properties. Recorded L3C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        196
+      ],
+      "bytes": 7771,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L3C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_obstruction.py",
+      "sha256": "864c8ac36089666a4d5698bfc55fef49f16f01f4456318fd8042a159d37c96d7",
+      "full_source_read": true,
+      "assessment": "Worked cycle/path/components plus generated lower-bound/attainment/projection/gauge/homogeneity properties and budget refusal. Comparing returned minimum to sampled sections is not an independent optimality proof. Test name additive includes homogeneity; additivity is separately tested only over components.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        142
+      ],
+      "bytes": 5638
+    },
+    {
+      "path": "pfp_lab/tests/test_packs.contract.score.json",
+      "sha256": "68d891d7e84369a0a7a765c8c1b356bfa0553b33b61439e69908994d424a8cdc",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Guide numbers for the worked session. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        187
+      ],
+      "bytes": 7256,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_packs.py",
+      "sha256": "91b464b54428fe4f66ef9c13a93e1821640ec4760194fa20770db4e7789ac7a9",
+      "full_source_read": true,
+      "assessment": "Expected exact numbers/statuses for all nine pedagogical packs, including refused heavier repair and rollback. Synthetic examples do not establish applicability of financial/ledger analogies.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        101
+      ],
+      "bytes": 4361
+    },
+    {
+      "path": "pfp_lab/tests/test_pins.contract.score.json",
+      "sha256": "491f636e0d63f1f049f867eb7fe05b43b5a8314cca145b054337377fc6e35ec7",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Pins documented constants, formats and edges found by the mutation campaigns. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        204
+      ],
+      "bytes": 7986,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_pins.py",
+      "sha256": "a4f1db4faf6755b3569fbdf8f9cb059d9eb31475c679e0e36bffc8c3210bea34",
+      "full_source_read": true,
+      "assessment": "Pins constants, exit codes, golden digest, output formatting, eleven-step search count and HTTP error cases. Thirteen non-web tests pass; two HTTP-related tests remain runtime-unverified in this pass.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        177
+      ],
+      "bytes": 7001
+    },
+    {
+      "path": "pfp_lab/tests/test_receipts.contract.score.json",
+      "sha256": "05006d596a1946e7497c6ec6c1edb721456d58dcf3baf44b162214bd7e706b48",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Round trips and tamper detection. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        192
+      ],
+      "bytes": 7522,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_receipts.py",
+      "sha256": "f5746a3ccc3f7f77d28decf080d30d8a2da4f2d4b9afe2884d82aed259a87ccc",
+      "full_source_read": true,
+      "assessment": "Round trips all packs, hash/key-order checks and resealed verdict/final-state tampering. Shared-core deterministic replay does not authenticate historical version/author or semantic adequacy.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        100
+      ],
+      "bytes": 3869
+    },
+    {
+      "path": "pfp_lab/tests/test_rpc.contract.score.json",
+      "sha256": "5443d808b55b30b6b410dc46dd6fb51dfe456cea3ebf8968538b6a3ca7428498",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Every JSON-RPC method and error code. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        190
+      ],
+      "bytes": 7081,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_rpc.py",
+      "sha256": "e5d8ff39ccd6c7875e71861929760011c795db1d3dd5c5520457f97fd967fa4d",
+      "full_source_read": true,
+      "assessment": "Scripted method/error/size/envelope tests and in-memory line framing. Oversize string test begins after allocation, so it does not demonstrate bounded streaming memory.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        123
+      ],
+      "bytes": 4695
+    },
+    {
+      "path": "pfp_lab/tests/test_web.contract.score.json",
+      "sha256": "f5d240da170c25e9ec6dc7be0861a36e0873707ba363c653e88fee7290c3b630",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Every HTTP status and the bind rule. Recorded L2C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        194
+      ],
+      "bytes": 7207,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L2C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/tests/test_web.py",
+      "sha256": "91359d8aa2616bb0c232c5626b1de6182d46cb0bbfcf346c4fdc2b80d05aa2d6",
+      "full_source_read": true,
+      "assessment": "TestClient checks statuses, body cap, path allow-list and bind rules with uvicorn mocked. This run stalls before completion; no live server/provider calls. Prior score claims are historical evidence only.",
+      "classification": "bounded_tests",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        123
+      ],
+      "bytes": 4717
+    },
+    {
+      "path": "pfp_lab/web/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "full_source_read": true,
+      "assessment": "Verified zero bytes: Python package marker with no semantic implementation or mathematical contribution.",
+      "classification": "empty_package_marker",
+      "review_mode": "full_text",
+      "reviewed_lines": [],
+      "bytes": 0
+    },
+    {
+      "path": "pfp_lab/web/app.contract.score.json",
+      "sha256": "1f54d02dac8b0c6ec15657c1e21909ed825c66638862304f0d3a94d4f791a3fa",
+      "full_source_read": true,
+      "assessment": "Read full baseline and all line replacements, including history, artifact/evidence hashes, gates, invariants and mutation accounting. Stateless HTTP API and page server with chunked, capped body reads, typed error responses, an asset allow-list, and a loopback-by-default bind rule enforced before the server starts. Recorded L4C is a rubric judgment, not mathematical proof or a current test result. Source/evidence hashes checked separately; historical logs were not reexecuted or semantically reviewed by this receipt.",
+      "classification": "historical_generated_score_record",
+      "review_mode": "full_baseline_plus_all_lossless_line_differences",
+      "reviewed_lines": [
+        1,
+        234
+      ],
+      "bytes": 10048,
+      "baseline_path": "pfp_lab/cli/main.contract.score.json",
+      "baseline_sha256": "fc3b64411a9ae514f594992303ca80bc1e507134bcec903dd058b4bbef577faa",
+      "reconstruction_verified": true,
+      "score_token": "L4C",
+      "review_helper": "dag/reviews/additional_lab_clients_formal_scores.py"
+    },
+    {
+      "path": "pfp_lab/web/app.py",
+      "sha256": "d9202713b6f02ea4354960dcf00cc71fd7d5f52ff69ba212350dfb3caa0b3e96",
+      "full_source_read": true,
+      "assessment": "Stateless FastAPI routes delegate to shared core; streamed body cap, fixed asset allow-list and loopback-default bind guard. Remote use requires explicit flag and has no authentication. Synchronous bounded search inside async routes is not a latency guarantee; HTTP runtime recheck timed out.",
+      "classification": "http_boundary",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        197
+      ],
+      "bytes": 7061
+    },
+    {
+      "path": "pfp_lab/web/static/app.css",
+      "sha256": "87425bb1cc9161fd581e3dceb315ab814bd89dc2d7c0a5a28178ea7090febb5e",
+      "full_source_read": true,
+      "assessment": "Responsive/dark styles, grid/layout and result colors; no computation or mathematical claim. Static source review does not substitute for interactive visual/accessibility testing.",
+      "classification": "ui_style",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        144
+      ],
+      "bytes": 4188
+    },
+    {
+      "path": "pfp_lab/web/static/app.js",
+      "sha256": "464fafb582905345156b6de52217df057d91a7efc84df082399e8a6f439676ad",
+      "full_source_read": true,
+      "assessment": "Edits JSON, loads packs, renders exact core strings, downloads last receipt and asks backend to verify uploads. Chart alone converts rationals to floating point; it plots attempted verdict.defect_after, including rejected proposals and both D and Phi_1 metrics. No browser-side independent checker or cancellation/order guard.",
+      "classification": "ui_rendering",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        232
+      ],
+      "bytes": 9145
+    },
+    {
+      "path": "pfp_lab/web/static/index.html",
+      "sha256": "80543fd2174c6ef92374fca0a6491469dc3405d8ebaa07bad1a5cfdc5493d36d",
+      "full_source_read": true,
+      "assessment": "Accessible labels, editor, graph and result trace structure. Chart caption Defect after each step overstates the meaning of attempted and mixed-metric verdict values; no logic or formal evidence.",
+      "classification": "ui_layout",
+      "review_mode": "full_text",
+      "reviewed_lines": [
+        1,
+        69
+      ],
+      "bytes": 2826
+    }
+  ],
+  "remaining_work": {
+    "unread_files_in_declared_slice": [],
+    "repair_backlog": [
+      "LCF-F1",
+      "LCF-F2",
+      "LCF-F3",
+      "LCF-F4",
+      "LCF-F5"
+    ],
+    "validation_limits": [
+      "HTTP/TestClient runtime stall unresolved; complete Lab suite not green (naming failure plus stale oracle).",
+      "No UI interaction, mutation campaign rerun or new Lean kernel run performed.",
+      "Source/evidence byte custody is not a regrading of historical claims."
+    ],
+    "outside_slice": "Original every-file corpus audit remains the parent goal; this report completes only its declared102-file slice."
+  }
+}

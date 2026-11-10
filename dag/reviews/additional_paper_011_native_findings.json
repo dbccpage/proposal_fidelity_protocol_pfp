@@ -1,0 +1,566 @@
+[
+  {
+    "id": "P011-NATIVE-F001",
+    "title": "Fresh datum naming requires a namespace assumption",
+    "assessment": "The public Python delta path chooses w{current_count} without collision testing. On base data(w2,x), a NewDatum plus binary instance(0,2) passes the fast profile check but naive replay refuses the out-of-range index because w2 deduplicates. Fresh bounded control confirmed it. Controlled built-in histories do not use this collision; arbitrary-base workflow reuse must reserve names or verify freshness before admitting fast certificates.",
+    "fresh_evidence": "dag/reviews/additional_paper_011_native_controls.json",
+    "statement": "The public Python delta path chooses w{current_count} without collision testing. On base data(w2,x), a NewDatum plus binary instance(0,2) passes the fast profile check but naive replay refuses the out-of-range index because w2 deduplicates. Fresh bounded control confirmed it. Controlled built-in histories do not use this collision; arbitrary-base workflow reuse must reserve names or verify freshness before admitting fast certificates.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/candidates.py",
+        "sha256": "856ce42faba2dc2ae1217207ecc8af893eac29b50ae8a374dc06d2ba22c957bb",
+        "lines": [
+          [
+            114,
+            137
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/candidates.py",
+        "sha256": "856ce42faba2dc2ae1217207ecc8af893eac29b50ae8a374dc06d2ba22c957bb",
+        "lines": [
+          [
+            177,
+            252
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/model.py",
+        "sha256": "6a7fd2ba9688d47e9291514c623a811cde3c6b9e8fda1d12a608dc9bb0b1f3c2",
+        "lines": [
+          [
+            106,
+            139
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/candidates.py",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/candidates.py",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/model.py"
+    ],
+    "severity": "bounded_reuse_or_claim_limit"
+  },
+  {
+    "id": "P011-NATIVE-F002",
+    "title": "Orbit representative selection is invariant only after quotienting",
+    "assessment": "The closure policy chooses the least pair in each automorphism orbit. On a featureless three-datum regime it selects(0,1); swapping1/2 maps that selected pair to(0,2), while recomputation still selects(0,1). Thus the literal raw challenge-set equivariance sentence is false. The quotient child-set claim remains compatible with the implementation and this counterexample does not refute it.",
+    "fresh_evidence": "dag/reviews/additional_paper_011_native_controls.json",
+    "statement": "The closure policy chooses the least pair in each automorphism orbit. On a featureless three-datum regime it selects(0,1); swapping1/2 maps that selected pair to(0,2), while recomputation still selects(0,1). Thus the literal raw challenge-set equivariance sentence is false. The quotient child-set claim remains compatible with the implementation and this counterexample does not refute it.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/engine.py",
+        "sha256": "23803a3dcce2adf0dee623caba33791d41a25d2da3fdfd226da3cad2ee140b5e",
+        "lines": [
+          [
+            335,
+            346
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/iso.py",
+        "sha256": "b0f1f3bcf05126111a07706f4388a9fff5e30455d4b8f127966cf99ab0d0886e",
+        "lines": [
+          [
+            288,
+            312
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/engine.py",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g01/original/code/derivation/iso.py"
+    ],
+    "severity": "bounded_reuse_or_claim_limit"
+  },
+  {
+    "id": "P011-NATIVE-F003",
+    "title": "Integral adapter computes transposed chain homology",
+    "assessment": "The adapter transposes cochain matrices to create boundary maps. Over Q this preserves degreewise rank-derived Betti dimensions. Integral torsion is not thereby same-degree cohomology: a cochain Z--2\u2192Z has H1=Z/2, while the transposed chain has H0=Z/2. Keep this convention explicit in any consumer. This is a mathematical interpretation boundary, not an allegation that SNF verification is wrong. Parent paper/dossier claim assessment is separate.",
+    "statement": "The adapter transposes cochain matrices to create boundary maps. Over Q this preserves degreewise rank-derived Betti dimensions. Integral torsion is not thereby same-degree cohomology: a cochain Z--2\u2192Z has H1=Z/2, while the transposed chain has H0=Z/2. Keep this convention explicit in any consumer. This is a mathematical interpretation boundary, not an allegation that SNF verification is wrong. Parent paper/dossier claim assessment is separate.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_dossier_integral.rs",
+        "sha256": "b0c8883725c3489630052f7df800141cadd59fbf23ac0b6bdc60235c4bd855df",
+        "lines": [
+          [
+            1,
+            238
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_dossier_integral.rs"
+    ],
+    "severity": "bounded_reuse_or_claim_limit"
+  },
+  {
+    "id": "P011-NATIVE-F004",
+    "title": "G04 audit branches do not enforce the census carrier bound",
+    "assessment": "The census builds at most five data, but mutation audit validates pi as a permutation of its own length without a five-element bound before transporting a fixed5x5 stake. Identity pi of length6 reaches an out-of-bounds access. Endpoint-only audit likewise admits arbitrarily many fresh datum tokens before first-index lookup against5x5 labels. This is a source-derived malformed-input failure; no Rust binary was run. Scope a reusable checker to a checked finite carrier and avoid treating its narrow ACCEPTED controls as a general theorem verifier.",
+    "statement": "The census builds at most five data, but mutation audit validates pi as a permutation of its own length without a five-element bound before transporting a fixed5x5 stake. Identity pi of length6 reaches an out-of-bounds access. Endpoint-only audit likewise admits arbitrarily many fresh datum tokens before first-index lookup against5x5 labels. This is a source-derived malformed-input failure; no Rust binary was run. Scope a reusable checker to a checked finite carrier and avoid treating its narrow ACCEPTED controls as a general theorem verifier.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/second_checker.rs",
+        "sha256": "12744c271f3dd584407b72821b28f339da02b37bcd29c9f5e3815de38a39748c",
+        "lines": [
+          [
+            60,
+            76
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/second_checker.rs",
+        "sha256": "12744c271f3dd584407b72821b28f339da02b37bcd29c9f5e3815de38a39748c",
+        "lines": [
+          [
+            164,
+            198
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/second_checker.rs",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/second_checker.rs"
+    ],
+    "severity": "bounded_reuse_or_claim_limit"
+  },
+  {
+    "id": "P011-NATIVE-F005",
+    "title": "Historical G04 proof/test slice is not a self-contained package",
+    "assessment": "Direct path existence checks find run_index.py,lean/SecondIndex/Inherited.lean andlean/SecondIndex/Kernel.lean absent from this retained extract. test_index.py imports run_index at module load and Index.lean imports Inherited. Source review of present bodies remains useful but the copied historical133-test/87-theorem receipt cannot be freshly reproduced from this subtree alone. Restore custody-pinned dependencies or provide explicit build staging before claiming current replay.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/test_index.py",
+        "sha256": "f0bb46809ec3ac0571ea6175bc1fa3fff9eec50b5cce3d81c2cd83114b8c7d84",
+        "lines": [
+          [
+            30,
+            36
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/lean/SecondIndex/Index.lean",
+        "sha256": "a6458915090bb1acd3a93052f3fe16ffd7c0dcaf6bb6c5f2241acfff24cd9e11",
+        "lines": [
+          [
+            1,
+            30
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/STATUS.md",
+        "sha256": "269bc78fce254c03a9a1cf9e16e389174d1cf219645e8cb932388f0007866118",
+        "lines": [
+          [
+            170,
+            209
+          ]
+        ]
+      }
+    ],
+    "severity": "replay_dependency_limit",
+    "statement": "Direct path existence checks find run_index.py,lean/SecondIndex/Inherited.lean andlean/SecondIndex/Kernel.lean absent from this retained extract. test_index.py imports run_index at module load and Index.lean imports Inherited. Source review of present bodies remains useful but the copied historical133-test/87-theorem receipt cannot be freshly reproduced from this subtree alone. Restore custody-pinned dependencies or provide explicit build staging before claiming current replay.",
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/test_index.py",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/lean/SecondIndex/Index.lean",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/STATUS.md"
+    ]
+  },
+  {
+    "id": "P011-NATIVE-F006",
+    "title": "I-X extrapolation has a definitionally available free-stake witness",
+    "assessment": "I-X is labelled NOT FORCED and asks,for each future run bound,for one of seven stakes whose first demand exceeds the bound or does not exist. The included free stake never carries a demand,as the earlier theorem and Python definition state,so it witnesses the no-index disjunct under every responder history preserving that stake. As written this prediction cannot discriminate delayed-demand behavior from the trivial free case; preserve it historically and exclude free/no-demand alternatives when designing a new discriminating task.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/PREDICTIONS.md",
+        "sha256": "7ed4d8f090fe2541d1ff5dfe5172d2349aaf42827510bed3a35c552ba70e223c",
+        "lines": [
+          [
+            230,
+            253
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/lean/SecondIndex/Index.lean",
+        "sha256": "a6458915090bb1acd3a93052f3fe16ffd7c0dcaf6bb6c5f2241acfff24cd9e11",
+        "lines": [
+          [
+            136,
+            144
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_nofirst/nofirst.py",
+        "sha256": "14951df2cf163093d02465958cbf63a579a841b2422cf935b50a52a37133a90b",
+        "lines": [
+          [
+            103,
+            137
+          ]
+        ]
+      }
+    ],
+    "severity": "non_discriminating_prediction",
+    "statement": "I-X is labelled NOT FORCED and asks,for each future run bound,for one of seven stakes whose first demand exceeds the bound or does not exist. The included free stake never carries a demand,as the earlier theorem and Python definition state,so it witnesses the no-index disjunct under every responder history preserving that stake. As written this prediction cannot discriminate delayed-demand behavior from the trivial free case; preserve it historically and exclude free/no-demand alternatives when designing a new discriminating task.",
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/PREDICTIONS.md",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_index/lean/SecondIndex/Index.lean",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g04/original/research/second_nofirst/nofirst.py"
+    ]
+  },
+  {
+    "id": "P011-NATIVE-F007",
+    "title": "The retained primitive crate has an unresolved module filename",
+    "assessment": "lib.rs declares pub mod omega without a path override, but the retained implementation is core.rs and neither omega.rs nor omega/mod.rs exists. The ordinary crate layout is not self-contained as copied; explicit custody-preserving staging is required before a fresh build can support historical Rust test claims. No build was attempted.",
+    "statement": "lib.rs declares pub mod omega without a path override, but the retained implementation is core.rs and neither omega.rs nor omega/mod.rs exists. The ordinary crate layout is not self-contained as copied; explicit custody-preserving staging is required before a fresh build can support historical Rust test claims. No build was attempted.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/lib.rs",
+        "sha256": "3d2a390bedd8ce01323719de0193d45b8f9b24f7b95f5c64810390bad5163bce",
+        "lines": [
+          [
+            140,
+            140
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/lib.rs"
+    ],
+    "severity": "bounded_reuse_or_claim_limit",
+    "validation_status": "full_source_review_and_finite_source_derived_counterexample_no_native_execution"
+  },
+  {
+    "id": "P011-NATIVE-F008",
+    "title": "Public Pair construction bypasses imposition carrier validation",
+    "assessment": "Pair exposes public i and j fields, while impose checks only j against the carrier size. On a one-datum regime, Pair {i:999,j:0} passes this check and is retained; satisfies subsequently indexes profiles[999]. A diagonal pair also bypasses Pair::new. This is a source-derived counterexample to arbitrary public-input safety, not a failure of the sorted pairs generated by internal enumeration. Validate both endpoints and distinctness at the admission boundary before workflow reuse.",
+    "statement": "Pair exposes public i and j fields, while impose checks only j against the carrier size. On a one-datum regime, Pair {i:999,j:0} passes this check and is retained; satisfies subsequently indexes profiles[999]. A diagonal pair also bypasses Pair::new. This is a source-derived counterexample to arbitrary public-input safety, not a failure of the sorted pairs generated by internal enumeration. Validate both endpoints and distinctness at the admission boundary before workflow reuse.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/mark.rs",
+        "sha256": "336b899a5ae3451ffac86ca3eeb9ca4eaf41f28f905841537785d55c29b4962b",
+        "lines": [
+          [
+            37,
+            61
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/imposition.rs",
+        "sha256": "381ab91e4488783e57d6c37ffdc00957b884b458ba619189f5766b81a453e138",
+        "lines": [
+          [
+            24,
+            30
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/separability.rs",
+        "sha256": "8d3b97a54c89c77a0d8ac82d8528533b86e94614dc98be008791e1ccdf3347ac",
+        "lines": [
+          [
+            55,
+            57
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/mark.rs",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/imposition.rs",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/separability.rs"
+    ],
+    "severity": "bounded_reuse_or_claim_limit",
+    "validation_status": "full_source_review_and_finite_source_derived_counterexample_no_native_execution"
+  },
+  {
+    "id": "P011-NATIVE-F009",
+    "title": "The holding iterator omits rule-covered instances promised by its documentation",
+    "assessment": "holding documents all admitted and rule-covered instances, but iterates only the explicit instance store. A regime with two data and one unary form carrying a uniform rule but no admitted instance has holding=[] although derivable holds for both unary ground instances. Preserve the finite admitted-only iterator as such or define a separate finite carrier enumeration; this observation is source-derived and no Rust executable was run.",
+    "statement": "holding documents all admitted and rule-covered instances, but iterates only the explicit instance store. A regime with two data and one unary form carrying a uniform rule but no admitted instance has holding=[] although derivable holds for both unary ground instances. Preserve the finite admitted-only iterator as such or define a separate finite carrier enumeration; this observation is source-derived and no Rust executable was run.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/judgment.rs",
+        "sha256": "5cb075b32be05c97e78eeb1aad8dbc00e189b871920dd6a61c81b68843a221de",
+        "lines": [
+          [
+            35,
+            48
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/profile.rs",
+        "sha256": "af1212ee095dd5ffed024b923f6cb8b7178227ef6e0f788e44149b520e828324",
+        "lines": [
+          [
+            1,
+            60
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/judgment.rs",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/profile.rs"
+    ],
+    "severity": "bounded_reuse_or_claim_limit",
+    "validation_status": "full_source_review_and_finite_source_derived_counterexample_no_native_execution"
+  },
+  {
+    "id": "P011-NATIVE-F010",
+    "title": "Funding followed by license refusal records stale support",
+    "assessment": "When initial funding is0, the later grant is1, and the selected augmentation is denied a license, Core appends SetBudget(1) but builds the refusal move with the old world and the new history length. Report::verify replays that prefix and compares budget1 against recorded support budget0, rejecting the generated checkpoint. This is a source-derived finite control flow finding; the retained crate also has independent rename/module build failures and no native execution was attempted.",
+    "statement": "When initial funding is0, the later grant is1, and the selected augmentation is denied a license, Core appends SetBudget(1) but builds the refusal move with the old world and the new history length. Report::verify replays that prefix and compares budget1 against recorded support budget0, rejecting the generated checkpoint. This is a source-derived finite control flow finding; the retained crate also has independent rename/module build failures and no native execution was attempted.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/core.rs",
+        "sha256": "34a86735ff30ae1ceb48e16c60f4d1ddf1864121d2e2c830ab533248070da9e8",
+        "lines": [
+          [
+            373,
+            389
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/core.rs",
+        "sha256": "34a86735ff30ae1ceb48e16c60f4d1ddf1864121d2e2c830ab533248070da9e8",
+        "lines": [
+          [
+            431,
+            445
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/core.rs",
+        "sha256": "34a86735ff30ae1ceb48e16c60f4d1ddf1864121d2e2c830ab533248070da9e8",
+        "lines": [
+          [
+            202,
+            217
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/core.rs",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/core.rs",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/core.rs"
+    ],
+    "severity": "bounded_reuse_or_claim_limit",
+    "validation_status": "source_derived_no_native_execution"
+  },
+  {
+    "id": "P011-NATIVE-F011",
+    "title": "Automorphism budget count can overflow before refusal",
+    "assessment": "Automorphism perm_count uses ordinary u64 multiplication while canonicalization uses saturating multiplication. On a structureless21-datum carrier,21! exceeds u64::MAX, so overflow-checked execution panics rather than returning IsoBudgetError. On sufficiently large unchecked products factorial can wrap to0, bypassing the intended budget guard before factorial allocation. Wrapper data limits32 do not exclude the checked21-datum case. This is arithmetic/source analysis, not native execution.",
+    "statement": "Automorphism perm_count uses ordinary u64 multiplication while canonicalization uses saturating multiplication. On a structureless21-datum carrier,21! exceeds u64::MAX, so overflow-checked execution panics rather than returning IsoBudgetError. On sufficiently large unchecked products factorial can wrap to0, bypassing the intended budget guard before factorial allocation. Wrapper data limits32 do not exclude the checked21-datum case. This is arithmetic/source analysis, not native execution.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/automorphism.rs",
+        "sha256": "cb85b03a7b381951f2e43880976170a417c09580bcb51356d37b1c2dbe0c834d",
+        "lines": [
+          [
+            52,
+            70
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/canonical.rs",
+        "sha256": "bb59e82fcd8cc546cf725350250dddbd87c8c50c4411eb4f143ea73fa1c8f413",
+        "lines": [
+          [
+            150,
+            166
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/automorphism.rs",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/canonical.rs"
+    ],
+    "severity": "bounded_reuse_or_claim_limit",
+    "validation_status": "source_derived_no_native_execution"
+  },
+  {
+    "id": "P011-NATIVE-F012",
+    "title": "Surd radicand multiplication can wrap to a wrong exact result",
+    "assessment": "Surd::sqrt multiplies reduced rational numerator p by denominator d with ordinary i128 multiplication before squarefree decomposition. Let p=2^126+1 and d=4 (coprime, both representable). The mathematical product is2^128+4; unchecked release multiplication wraps to4, yielding sqrt(p/d)=1/2 instead of its large positive value. In overflow-checked mode this panics. Surd::mul similarly uses unchecked radicand multiplication. This contradicts the blanket exact-with-checked-overflow characterization outside the tiny fixtures; no Rust executable was run.",
+    "statement": "Surd::sqrt multiplies reduced rational numerator p by denominator d with ordinary i128 multiplication before squarefree decomposition. Let p=2^126+1 and d=4 (coprime, both representable). The mathematical product is2^128+4; unchecked release multiplication wraps to4, yielding sqrt(p/d)=1/2 instead of its large positive value. In overflow-checked mode this panics. Surd::mul similarly uses unchecked radicand multiplication. This contradicts the blanket exact-with-checked-overflow characterization outside the tiny fixtures; no Rust executable was run.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/alpha_projection_obstruction/replica_hierarchy.rs",
+        "sha256": "e13b05913e217366225b522c48e3d4b5d8ab6c8ab22e103ff0d542804d6a509f",
+        "lines": [
+          [
+            80,
+            88
+          ],
+          [
+            141,
+            147
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g07/pinned_primitives/src/alpha_projection_obstruction/replica_hierarchy.rs"
+    ],
+    "severity": "exact_arithmetic_soundness_outside_small_fixture_domain",
+    "validation_status": "source_derived_finite_arithmetic_counterexample_no_native_execution"
+  },
+  {
+    "id": "P011-NATIVE-F013",
+    "title": "MUB transport references absent external owner paths",
+    "assessment": "MUB transport dependency paths do not resolve in the preserved checkout: ../../../../../../../../engine/crates_rs/core_mub and core_number_theory resolve under C:/Users/a343o/engine, and both directory existence checks are false. The139-package lock includes31 local packages without source hashes. Therefore this archived transport is not independently buildable here as written; historical successful native receipts cannot substitute for a current reproducible dependency mapping.",
+    "statement": "MUB transport dependency paths do not resolve in the preserved checkout: ../../../../../../../../engine/crates_rs/core_mub and core_number_theory resolve under C:/Users/a343o/engine, and both directory existence checks are false. The139-package lock includes31 local packages without source hashes. Therefore this archived transport is not independently buildable here as written; historical successful native receipts cannot substitute for a current reproducible dependency mapping.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_mub_replay/Cargo.toml",
+        "sha256": "724eea08dce1c90dce73369c4d352dac4730fd35784f2f04ef925736da6864dc",
+        "lines": [
+          [
+            8,
+            14
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_mub_replay/Cargo.toml"
+    ],
+    "severity": "reproducibility_dependency_gap",
+    "validation_status": "path_resolution_and_existence_only_no_native_execution"
+  },
+  {
+    "id": "P011-NATIVE-F014",
+    "title": "Invariant fixed-label classifier is narrower than all equivariant observation",
+    "assessment": "symmetric_no_equivariant_classifier proves f(not x)=f(x) implies f(false)=f(true): invariance into a codomain with trivial action. The surrounding comment promotes this to no definable observer and says any observer requires orientation breaking. With Bool.not acting on BOTH domain and codomain, f=id is equivariant (f(not x)=not(f(x))) and separates false/true. The theorem is valid; the unqualified observer/equivariance interpretation exceeds its hypothesis. State fixed output labels/trivial codomain action, and distinguish abstract equivariant information from a chosen label.",
+    "statement": "symmetric_no_equivariant_classifier proves f(not x)=f(x) implies f(false)=f(true): invariance into a codomain with trivial action. The surrounding comment promotes this to no definable observer and says any observer requires orientation breaking. With Bool.not acting on BOTH domain and codomain, f=id is equivariant (f(not x)=not(f(x))) and separates false/true. The theorem is valid; the unqualified observer/equivariance interpretation exceeds its hypothesis. State fixed output labels/trivial codomain action, and distinguish abstract equivariant information from a chosen label.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/PrimDiff.lean",
+        "sha256": "f46c3bc439b7361bf19586e322bf95452b7e316844ae05815f27fcf42552dbea",
+        "lines": [
+          [
+            309,
+            341
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/PrimDiff.lean"
+    ],
+    "severity": "formal_statement_to_interpretation_scope",
+    "validation_status": "source_derived_two_point_counterexample_no_Lean_execution"
+  },
+  {
+    "id": "P011-NATIVE-F015",
+    "title": "Two legacy double-boundary spot-checks query the wrong dimension",
+    "assessment": "The first two conjuncts of d2_zero_dims_2_3_4 query facets of a cell after two boundary operations. Their target lengths are n-1, while every resulting term has length n-2, so these zeros are automatic and do not test cancellation. For triangle(0,1,2), even the signless double boundary passes all queried edge checks although each correct vertex coefficient is2; the tetrahedron case has the analogous triangle-versus-edge mismatch. The third dimension4 conjunct queries two successive facets correctly. BoundaryCancellation independently proves every target coefficient zero and supplies correct signless counterexamples, so the stronger signed theorem is not undermined. Retain historical bytes but do not count the first two conjuncts as substantive cancellation tests.",
+    "statement": "The first two conjuncts of d2_zero_dims_2_3_4 query facets of a cell after two boundary operations. Their target lengths are n-1, while every resulting term has length n-2, so these zeros are automatic and do not test cancellation. For triangle(0,1,2), even the signless double boundary passes all queried edge checks although each correct vertex coefficient is2; the tetrahedron case has the analogous triangle-versus-edge mismatch. The third dimension4 conjunct queries two successive facets correctly. BoundaryCancellation independently proves every target coefficient zero and supplies correct signless counterexamples, so the stronger signed theorem is not undermined. Retain historical bytes but do not count the first two conjuncts as substantive cancellation tests.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/LadderGeneral.lean",
+        "sha256": "04d5ea0690ff6c5ba3145a9565de3856d9b69e306b1e50c94735765e7c856aa1",
+        "lines": [
+          [
+            295,
+            327
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/BoundaryCancellation.lean",
+        "sha256": "669de56247a20536c17ae6ca4dd5674f9a098c3ec4c2d5973c443ecaa400f0e5",
+        "lines": [
+          [
+            371,
+            398
+          ],
+          [
+            589,
+            626
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/LadderGeneral.lean",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/BoundaryCancellation.lean"
+    ],
+    "severity": "test_adequacy_gap",
+    "validation_status": "fresh_two_case_independent_arithmetic_reconstruction_no_Lean_execution"
+  },
+  {
+    "id": "P011-NATIVE-F016",
+    "title": "Reverse protected orientation refutes the live-funded stability converse",
+    "assessment": "The recorded openExactStabilityCharacterization is false on a live funded two-occurrence state: occ=[0,1], asserted=wit=prot=[(1,0)], obs=some[[0]], budget=1, licensed=true, refusals=[], halted=false, queried at(0,1). protSep(s,1,0)=true, so protSep_trace_stable proves separation of(1,0) after every trace. sepCol and hence sepP are symmetric, so(0,1) is also trace-stable; protSep(s,0,1)=false because protection stores ordered pairs. All hypotheses of the displayed open proposition hold and its conclusion fails. This is a source-derived all-traces argument using the existing sufficiency theorem, not a bounded trace search or fresh Lean result. The state is also reachable by admitting0,1, asserting/retaining/protecting(1,0), declaring observation, setting budget2 and adding[0]. Replace the open converse with an appropriately unoriented or closure-aware characterization; preserve historical bytes.",
+    "statement": "The recorded openExactStabilityCharacterization is false on a live funded two-occurrence state: occ=[0,1], asserted=wit=prot=[(1,0)], obs=some[[0]], budget=1, licensed=true, refusals=[], halted=false, queried at(0,1). protSep(s,1,0)=true, so protSep_trace_stable proves separation of(1,0) after every trace. sepCol and hence sepP are symmetric, so(0,1) is also trace-stable; protSep(s,0,1)=false because protection stores ordered pairs. All hypotheses of the displayed open proposition hold and its conclusion fails. This is a source-derived all-traces argument using the existing sufficiency theorem, not a bounded trace search or fresh Lean result. The state is also reachable by admitting0,1, asserting/retaining/protecting(1,0), declaring observation, setting budget2 and adding[0]. Replace the open converse with an appropriately unoriented or closure-aware characterization; preserve historical bytes.",
+    "source_evidence": [
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/StableContent.lean",
+        "sha256": "ab6ab867cbed308b4f907d10a6741f4d08583ffdb5198fd1f10b40adc705d0af",
+        "lines": [
+          [
+            61,
+            78
+          ],
+          [
+            254,
+            286
+          ],
+          [
+            496,
+            506
+          ]
+        ]
+      },
+      {
+        "path": "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/PrimitivePassage.lean",
+        "sha256": "e14ca1a035e90e2d28cce2aca46f92425bf6e9304c8d274fbd2a21add09bd8a8",
+        "lines": [
+          [
+            109,
+            116
+          ],
+          [
+            599,
+            676
+          ],
+          [
+            912,
+            915
+          ]
+        ]
+      }
+    ],
+    "evidence": [
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/StableContent.lean",
+      "papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/code/native_genesis_g12/original/lean4/Derivation/PrimitivePassage.lean"
+    ],
+    "severity": "false_open_conjecture",
+    "validation_status": "source_derived_counterexample_using_existing_trace_sufficiency_no_Lean_execution"
+  }
+]

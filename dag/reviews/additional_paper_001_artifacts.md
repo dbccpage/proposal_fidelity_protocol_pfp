@@ -1,0 +1,13 @@
+Paper 001's remaining 23 artifact files now have complete content dispositions, including all 97 logical ZIP members. Original sources and historical evidence are unchanged.
+
+The archive has 43 exact-byte correspondences, 32 text correspondences differing only by newlines, and 22 files with substantive text differences. Every one of the 1,321 diff lines was read. Applying all reverse hunks reconstructs each archived text exactly. All eight PDFs and the figure equal fully reviewed current bytes; all member CRCs and 191 embedded manifest bindings pass. This is logical-content review and bounded container checking, not authentication of historical execution.
+
+The current manifests still have 52/53 raw mismatches, with 20/21 surviving text-only LF normalization. The current lock contains 107 packages (91 registry, 16 local); all dependency edges resolve within its metadata, but local crate contents and build paths are separate obligations.
+
+All 46 public historical trace records were read. They provide useful negative examples: an identity map admitted as fixed-point-free, a chain swap falsely described as a symmetry, and odd-cycle or complexity narratives promoted into instance-specific obstruction claims. The narrow fixed-carrier Fock argument remains supported by the separate exact checker review. None of these records establishes general model benefit or independent physical truth.
+
+The debate receipt's arithmetic is correct against historical labels: TP=6, FP=2, TN=2, FN=0; precision 3/4, recall 1, accuracy 4/5. The raw caught-am field is true on all ten records, including both concurrences, and must not be counted as ten detections. The two equal receipts bind the archived/LF trace digest, not the current CRLF bytes. Parent replay separately refuses all ten proposals.
+
+All four dated docs receipts were edited after the ZIP snapshot to rename recorded paths; one change occurs inside Cargo stdout. Their historical outcomes remain recorded, but current copies should be labeled as edited transcriptions. Preserve original archived fields and add relocation annotations separately. Source-hash comparisons are retained for 123 receipt bindings; changed inputs do not retroactively disprove earlier executions or validate current ones.
+
+The JSON report lists every file and every archive member with exact pins, full-read provenance, assessment and evidence limits. Five small finite countercontrols and all custody checks ran offline. No native build, network/provider call, credential access or private benchmark read occurred. The wider repository audit remains incomplete.
