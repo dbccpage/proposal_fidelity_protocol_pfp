@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="19" time="1.845" timestamp="2026-11-10T01:51:38.213217-05:00" hostname="offline-validation"><testcase classname="" name="test_candidate_allowlist_and_exact_types" time="0.002" /><testcase classname="" name="test_partition_counts_and_answer_free_projection" time="0.004" /><testcase classname="" name="test_output_schema_and_diagnosis_are_checked" time="0.001" /><testcase classname="" name="test_direct_anthropic_liability_and_capabilities" time="0.002"><failure message="RuntimeError: OFFLINE_VALIDATION_FORBIDS:subprocess.Popen">def test_direct_anthropic_liability_and_capabilities():
+        transport = AnthropicTransport(api_key="fixture")
+        for model, maximum, expected in (
+            ("claude-haiku-5-5", 2000, 1800),
+            ("claude-sonnet-5-5", 3000, 46000),
+        ):
+            quote = PriceQuoteV1(ModelPricingObservationV1(**PRICES[model]), 1)
+            request = CandidateRequest(
+                "system", "task", decoding=DecodingParamsV1(thinking="adaptive", effort="medium")
+            )
+            assert (
+&gt;               transport.maximum_liability(Provider.ANTHROPIC, model, request, maximum, quote)
+                == expected
+            )
+
+..\anomalon\omega_engine_woland\tests\providers\test_harness_anthropic_budget.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\providers\anthropic_messages.py:227: in maximum_liability
+    return table.quote(model, 8000, limit,
+..\anomalon\omega_engine_woland\domain\providers\budget.py:273: in quote
+    quote = _native(
+..\anomalon\omega_engine_woland\domain\providers\budget.py:64: in _native
+    return budget_runtime().invoke(operation, **payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\providers\rust_budget.py:25: in invoke
+    response = (self._host or RustSymbolGameHost()).invoke_runtime(
+..\anomalon\omega_engine_operating_system\adapters\rust_host\ffi.py:902: in invoke_runtime
+    produced = self._run(["invoke"], stdin_bytes=encoded.value)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_operating_system\adapters\rust_host\ffi.py:780: in _run
+    completed = subprocess.run(
+..\..\..\AppData\Roaming\uv\python\cpython-3.13.11-windows-x86_64-none\Lib\subprocess.py:554: in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\AppData\Roaming\uv\python\cpython-3.13.11-windows-x86_64-none\Lib\subprocess.py:1039: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+..\..\..\AppData\Roaming\uv\python\cpython-3.13.11-windows-x86_64-none\Lib\subprocess.py:1550: in _execute_child
+    sys.audit("subprocess.Popen", executable, args, cwd, env)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+event = 'subprocess.Popen'
+args = (None, 'C:\\Users\\a343o\\source\\repos\\anomalon\\omega_engine\\crates_rs\\target\\release\\omega_symbol_game.exe invoke', None, None)
+
+    def audit(event, args):
+        if event in {"socket.connect", "socket.getaddrinfo", "subprocess.Popen", "os.system"}:
+&gt;           raise RuntimeError("OFFLINE_VALIDATION_FORBIDS:" + event)
+E           RuntimeError: OFFLINE_VALIDATION_FORBIDS:subprocess.Popen
+
+dag\migrations\woland_support_consumer_patch_validate.py:50: RuntimeError</failure></testcase><testcase classname="" name="test_missing_cache_or_boolean_usage_is_never_zero_cost" time="0.000" /><testcase classname="test_harness_corpus_boundary" name="test_missing_corpus_is_an_explicit_infrastructure_refusal[flow]" time="0.001" /><testcase classname="test_harness_corpus_boundary" name="test_missing_corpus_is_an_explicit_infrastructure_refusal[linear]" time="0.001" /><testcase classname="test_harness_corpus_boundary" name="test_missing_corpus_is_an_explicit_infrastructure_refusal[sql]" time="0.000" /><testcase classname="test_harness_corpus_boundary" name="test_builtin_checks_do_not_import_the_relocated_corpus" time="0.001" /><testcase classname="test_harness_corpus_boundary" name="test_internal_checker_dependency_failure_is_not_hidden" time="0.000" /><testcase classname="test_harness_corpus_boundary" name="test_checker_entrypoint_error_is_not_hidden" time="0.000" /><testcase classname="test_harness_corpus_boundary" name="test_missing_checker_refuses_trial_before_any_side_effect[flow]" time="0.000" /><testcase classname="test_harness_corpus_boundary" name="test_missing_checker_refuses_trial_before_any_side_effect[linear]" time="0.000" /><testcase classname="test_harness_corpus_boundary" name="test_missing_checker_refuses_trial_before_any_side_effect[sql]" time="0.000" /><testcase classname="test_harness_corpus_boundary" name="test_cli_missing_checker_refuses_before_store_provider_or_pricing_reads[run-extra0]" time="0.006" /><testcase classname="test_harness_corpus_boundary" name="test_cli_missing_checker_refuses_before_store_provider_or_pricing_reads[resume-extra1]" time="0.004" /><testcase classname="test_harness_corpus_boundary" name="test_cli_missing_checker_refuses_before_store_provider_or_pricing_reads[preflight-extra2]" time="0.003" /><testcase classname="test_harness_corpus_boundary" name="test_cli_requires_both_explicit_pricing_inputs[supplied0]" time="0.004" /><testcase classname="test_harness_corpus_boundary" name="test_cli_requires_both_explicit_pricing_inputs[supplied1]" time="0.005" /></testsuite></testsuites>

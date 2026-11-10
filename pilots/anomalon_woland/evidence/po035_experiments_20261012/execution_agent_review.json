@@ -1,0 +1,145 @@
+{
+  "schema": "pfp.po035-independent-analytical-review.v1",
+  "agent": "/root/po035_execution_review",
+  "reviewed_on": "2026-10-12",
+  "authority_effect": "None",
+  "review_scope": "Independent analytical review of the five schema-valid final packets supplied in blind_valid_packets.json against their original seed obligations and the common task clarifications. Schema validity is not finite witness validity or analytical completion.",
+  "blinding": {
+    "arm_mapping_opened": false,
+    "results_metadata_opened": false,
+    "current_raw_arm_metadata_opened": false,
+    "materials_used": [
+      "blind_valid_packets.json, selecting only the requested review IDs",
+      "Original seed text for pilots 0000199, 0000201, 0000202 and 0000203",
+      "Common task clarifications",
+      "The disputed section-5 eight-stage source excerpt for pilot 0000201"
+    ],
+    "limitations": [
+      "The reviewer was not blind to task identity, original fixtures or mathematical obligations.",
+      "The reviewer previously inspected the experiment design and runtime and reviewed historical PO035 evidence, so this is not a reviewer unfamiliar with the hypotheses or scaffolding.",
+      "The arm mapping, results and current raw arm metadata were not opened for these analytical reviews.",
+      "These are scoped mathematical reviews with direct finite substitutions, not formal proof checks, provider enforcement attestations or statistical evidence of an intervention effect."
+    ]
+  },
+  "reviewed_ids": [
+    "ddb2999c0858",
+    "976d6966270f",
+    "cec995df7849",
+    "bda4ed83a8d5",
+    "ed2b55be28a4"
+  ],
+  "reviews": [
+    {
+      "review_id": "ddb2999c0858",
+      "pilot_id": "pilot_0000199",
+      "status": "CRITICAL_ERROR",
+      "errors": [
+        "The derivation swaps the two fixtures. The first point is t=1, x=(1,1), c=1, with dilation factor 2; its l1 radius, Euclidean radius squared and intervals before/after are 2, 2, -1, -4, rather than the recorded 1, 1, 0, 0.",
+        "The separate null point is t=1, x=(1,0). Its recorded envelope 1/4 is correct, but the derivation assigns the null and first-point roles incorrectly.",
+        "The packet calls indexed C_a and mu_a fixed without explicitly stating that as an additional assumption."
+      ],
+      "missing_obligations": [
+        "Explicit uniform hypotheses sufficient for the outside-cone bound and its limit.",
+        "Null-boundary analysis according to the rate of (a*v_hop(a)-c)/a and the behavior of the prefactor and decay parameter.",
+        "An explicit account of what the upper bound leaves unproved inside the cone, including sharp propagation and isotropy.",
+        "Analysis of whether causal order identifies a Minkowski metric or its scale."
+      ],
+      "next_procedural_goals": [
+        "Assign each certificate field to its named fixture before calculation; substitute dilation into both space and time and compare the certificate with the displayed equations.",
+        "State the refinement hypotheses explicitly, then analyze outside, boundary and inside regimes separately.",
+        "Separate the limiting cone norm, metric identification and metric-scale questions instead of listing them as future calculations."
+      ]
+    },
+    {
+      "review_id": "976d6966270f",
+      "pilot_id": "pilot_0000202",
+      "status": "CRITICAL_ERROR",
+      "errors": [
+        "The packet computes the metric-star central cosine 7/8 after stretching, then records an unrelated -1/2 in cosine_after despite the explicit field-to-carrier assignment.",
+        "It computes d1*d0=(0,0,0), then invents a sign/normalization convention taking that zero vector to (1,1,1).",
+        "The specified cochain has d1*delta=d1*delta_prime=1, not curvature_before=0 and curvature_after=1.",
+        "The curvature codomain has cochain degree 2, not 1.",
+        "It repeats the corrected confusion between the complex identity d1*d0=0 and exactness."
+      ],
+      "missing_obligations": [
+        "The induced map C1/im(d0) to C2 and its kernel ker(d1)/im(d0).",
+        "The symbolic angular-deficit comparison for the two intrinsic metric stars.",
+        "A constructed intrinsic metric counterexample and a conditional frame-transport bridge with explicit hypotheses."
+      ],
+      "next_procedural_goals": [
+        "Complete each independent carrier calculation and reject any certificate value that contradicts its displayed calculation; an unspecified convention cannot override a matrix product.",
+        "Define the quotient map and kernel with their cochain degrees before discussing geometry.",
+        "Compare angular deficits using 2*pi-6*arccos(central_cosine), then state the frame-transport construction and its additional assumptions separately."
+      ]
+    },
+    {
+      "review_id": "cec995df7849",
+      "pilot_id": "pilot_0000203",
+      "status": "CRITICAL_ERROR",
+      "errors": [
+        "For the proposed alpha=(-1,1,0)/100000000, delta-d0*alpha=(-1,2,2)/100000000, so the primal norm is 5/100000000, not 3/100000000.",
+        "The proposed dual beta=(1,-1,0) fails annihilation: d0^T*beta=(-1,2,-1).",
+        "The same proposed dual has delta^T*beta=0, not the recorded 3/100000000."
+      ],
+      "missing_obligations": [
+        "A weak-duality argument rather than a restatement of the primal and dual problems.",
+        "The assumptions and argument establishing attainment of the finite optimum.",
+        "An explicit certificate-checking terminal policy with checking states and transitions; 'halt on certified obstruction' does not define the certification procedure.",
+        "An explanation of how exact witnesses prevent tolerance-induced false zero authorization."
+      ],
+      "next_procedural_goals": [
+        "Substitute each proposed witness into every constraint and objective before comparing the primal and dual values.",
+        "Give the weak-duality inequality with its domain assumptions, followed by the finite attainment argument.",
+        "Define the certificate-validation, continuation and terminal states and their transitions; keep this policy distinct from the explicit unbounded counter-system."
+      ]
+    },
+    {
+      "review_id": "bda4ed83a8d5",
+      "pilot_id": "pilot_0000201",
+      "status": "CRITICAL_ERROR",
+      "errors": [
+        "The composite transport is T12*T01=6, whereas the direct transport is T02=5. The specified transport therefore does not satisfy the imposed 2-cell path relation.",
+        "The packet correctly computes the covariant differences (0,-2,-1), then records the different vector (1,1,-1).",
+        "The identity-transport differences are (1,2,3), not the reused covariant certificate vector.",
+        "The proposed identity repair does not cancel the identity-transport differences under delta+d0*alpha=0.",
+        "The packet treats the path relation as an assumption overriding incompatible fixed transports and replaces composition with addition of untransported differences."
+      ],
+      "missing_obligations": [
+        "Actual categorical data, identity/composition laws and the constructions or added assumptions for all eight stages and seven transitions.",
+        "The connection-curvature correction to a naive d_T squared equals zero assertion.",
+        "A valid identity-transport zero-obstruction control and an explanation of why positive obstruction does not follow from stages 1-6."
+      ],
+      "next_procedural_goals": [
+        "Maintain separate transported and identity-control records, and verify each certificate against its own carrier.",
+        "Derive the transported composition defect in a common target fiber; distinguish a free path representation from descent through the imposed path relation.",
+        "For every stage and transition state its construction, independent premise or unresolved obligation, without using a premise to change the fixed fixture."
+      ]
+    },
+    {
+      "review_id": "ed2b55be28a4",
+      "pilot_id": "pilot_0000202",
+      "status": "CRITICAL_ERROR",
+      "errors": [
+        "The stretched metric-star cosine is 7/8, not -1/2.",
+        "The specified cochain gives curvature 1 before and after, not 1/3 and -1/3.",
+        "The matrix product d1*d0 is (0,0,0), not (1/3,1/3,1/3), contradicting the packet's own claim that the complex identity holds.",
+        "The quotient domain and curvature codomain have cochain degrees 1 and 2, not 3 and 1.",
+        "Angular deficit is 2*pi-6*arccos(central_cosine), not a difference of cosines.",
+        "The packet calls carrier-local computations certified despite its unsupported and contradictory arithmetic."
+      ],
+      "missing_obligations": [
+        "The induced quotient map and its kernel.",
+        "The explicit intrinsic metric counterexample and angular-deficit comparison.",
+        "A constructed conditional frame-transport bridge distinguishing metric compatibility from the intrinsic Levi-Civita connection."
+      ],
+      "next_procedural_goals": [
+        "Finish independent metric and cochain calculations and check internal consistency before submitting the typed certificate.",
+        "Type the quotient map and kernel explicitly before proposing geometric identifications.",
+        "Construct the intrinsic counterexample and state the geometric bridge and its additional hypotheses as separate claims; retain unverified obligations as unverified."
+      ]
+    }
+  ],
+  "provider_dispatches_by_review": 0,
+  "network_calls_by_review": 0,
+  "runtime_files_edited_by_review": []
+}

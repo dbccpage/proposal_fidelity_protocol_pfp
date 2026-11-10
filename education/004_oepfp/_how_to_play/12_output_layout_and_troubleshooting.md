@@ -46,7 +46,7 @@ apply new learning to guidance/code rather than rewriting a historical run.
 | Unknown transport outcome or missing billing | Preserve the unresolved reservation. Unknown cost is not zero. |
 | Missing native/Lean/source context | Report the prerequisite as unavailable; do not substitute a synthetic witness or fabricated acceptance. |
 
-The [practical guide](13_practical_pfp_and_discovery.md) contains the commands;
+The [practical guide](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md) contains the commands;
 [types and lessons](../docs/16_current_types_and_learnings.md) explains the
 interfaces and applied repairs. Do not tune a pilot indefinitely: collate the
 bounded result, remaining error and useful lesson, then move on.

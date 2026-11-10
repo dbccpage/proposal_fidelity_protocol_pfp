@@ -1,0 +1,28 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00027
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_00027_req_0
+rewrite_metadata:
+  rewrite_id: idea_18
+  name: Idea 18 - Whole-Expression Symbol Rewriting
+  governing_specification: IDEAS.md#whole-expression-symbol-rewriting
+  governing_strategy: Strategy I18 (Total Operator/Value AST Decoding)
+  target_stratum: Stratum 2 (Pure AST Expression Encoding)
+  explanation: Encodes operators, digits, nesting and separators into whole-expression
+    structural AST.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '[', ']', ',', '"'}
+  syntactic_category: WholeExpressionASTProposal
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) as Pure Structural S-Expression
+    AST
+  dialect_tier: Tier S (Full Expression AST)
+  boundary_format: pfp-full-ast-v1
+seed_prompt: "[SYSTEM,\n  [EQ, [ADD, [VAR, \"x\"], [MUL, 2, [VAR, \"y\"]]], 5],\n\
+  \  [EQ, [SUB, [MUL, 3, [VAR, \"x\"]], [VAR, \"y\"]], 1],\n  [TARGET, [ADD, [VAR,\
+  \ \"x\"], [VAR, \"y\"]]],\n  [RETURN, [RECORD, [\"answer\", [ADD, [VAR, \"x\"],\
+  \ [VAR, \"y\"]]]]]\n]\n"
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

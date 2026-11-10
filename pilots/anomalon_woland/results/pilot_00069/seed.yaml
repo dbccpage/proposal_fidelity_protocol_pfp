@@ -1,0 +1,28 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00069
+task_family: quantum_stabilizer_exact
+difficulty_rung: 1
+request_id: pilot_00069_req_0
+rewrite_metadata:
+  rewrite_id: demo_q40_quantum_solver
+  name: Demo Q40 - Quantum Stabilizer Solver & 40-Record Exact Benchmark
+  governing_specification: pilots/demo_003/demo_q40_quantum_solver/README.md
+  governing_strategy: Strategy DQ40 (Gottesman-Knill Commutation & Rank)
+  target_stratum: Stratum 4 (Quantum Error Correction & Commutativity)
+  explanation: Multi-qubit Pauli stabilizer group commutation and code space dimension
+    determination.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union {commuting, code_dim, Pauli}
+  syntactic_category: StabilizerGroupSolver
+  semantic_carrier: 4-qubit Pauli stabilizer plaquette S = <X1X2X3X4, Z1Z2Z3Z4>
+  dialect_tier: Tier Q (Pauli Stabilizer Group)
+  boundary_format: pfp-q40-v1
+seed_prompt: '{"qubit_count":4,"generators":["X1 X2 X3 X4","Z1 Z2 Z3 Z4"],"task":"Determine
+  if generators mutually commute and compute code space dimension 2^(n-k)","output":{"commuting":true,"code_dim":4}}'
+expected_outcome:
+  answer:
+    commuting: true
+    code_dim: 4
+  status: ACCEPTED

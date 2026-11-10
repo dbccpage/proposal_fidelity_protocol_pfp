@@ -1,0 +1,117 @@
+{
+  "source_sha256": {
+    "prepare_retirement.py": "9d8b36b520635b986a20da17127dbbdad2988501c37c0c9ac66373962552d6a6",
+    "retirement_custody.py": "75eb66931485899c18f22df2168be7c15eb1dd272e2fc768c18899143b24bd64",
+    "apply_retirement.ps1": "1fb1c8267798262a465dfdbb8a2f50a99c83469fb70326cb5a591fab9856dced",
+    "build_catalog.py": "3bd4cf5006296b991194a63689161cc254bb3700d8a3f8501e51503be4a1249c"
+  },
+  "production_apply_invoked": false,
+  "production_corpus_mutations": 0,
+  "synthetic_workspace_removed": true,
+  "results": [
+    {
+      "id": "baseline_preflight",
+      "observed": {
+        "exit_code": 0,
+        "stdout": "{\"status\":\"preflight_passed_no_removal\",\"pilots\":1,\"files\":2,\"plan_sha256\":\"f6afea18cba29ff00c84dd41e09a6b085f4990e7ebc6dfa1c1a31f60a1065ee9\"}",
+        "stderr": ""
+      }
+    },
+    {
+      "id": "stale_catalog",
+      "accepted": false,
+      "error": "Catalog does not match current assessment: pilot_0000999"
+    },
+    {
+      "id": "file_ads",
+      "preparer_accepted": true,
+      "preflight": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\file_ads\\review_preflight.ps1:35\nLine |\n  35 |  \u2026 ams.Count -ne 0) { throw 'Unarchived NTFS stream; refusing removal' }\n     |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Unarchived NTFS stream; refusing removal"
+      }
+    },
+    {
+      "id": "directory_ads",
+      "preparer_accepted": true,
+      "preflight": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\directory_ads\\review_preflight.ps1:35\nLine |\n  35 |  \u2026 ams.Count -ne 0) { throw 'Unarchived NTFS stream; refusing removal' }\n     |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Unarchived NTFS stream; refusing removal"
+      }
+    },
+    {
+      "id": "unknown_file",
+      "preparer_accepted": false,
+      "error": "ValueError: Unknown or missing files; do not delete: pilot_0000999"
+    },
+    {
+      "id": "unknown_empty_directory",
+      "preparer_accepted": false,
+      "error": "ValueError: Unknown or missing directories; do not delete: pilot_0000999"
+    },
+    {
+      "id": "junction_descendant",
+      "status": "fixture_creation_blocked",
+      "stderr": "New-Item: Access is denied."
+    },
+    {
+      "id": "report_verdict_drift",
+      "preflight": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\report_verdict_drift\\review_preflight.ps1:83\nLine |\n  83 |  \u2026 t.rationale) { throw 'Plan does not match current reviewed verdict' }\n     |                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Plan does not match current reviewed verdict"
+      }
+    },
+    {
+      "id": "path_escape",
+      "preflight": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\path_escape\\review_preflight.ps1:25\nLine |\n  25 |  \u2026 lon_woland/' + $taskPilot.id)) { throw 'Unexpected relative target' }\n     |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Unexpected relative target"
+      }
+    },
+    {
+      "id": "default_stream_drift",
+      "preflight": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\default_stream_drift\\review_preflight.ps1:53\nLine |\n  53 |  \u2026 th -ne $taskExpectedFile.bytes) { throw 'Current file size changed' }\n     |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Current file size changed"
+      }
+    },
+    {
+      "id": "archive_drift",
+      "preflight": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Exception: C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\pilot_triage\\retirement_review_fixture_dicjyi_8\\archive_drift\\review_preflight.ps1:20\nLine |\n  20 |  \u2026 an.recovery_archive.archive_bytes) { throw 'Archive length changed' }\n     |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Archive length changed"
+      }
+    },
+    {
+      "id": "partial_intent_evidence",
+      "status": {
+        "deletion_status": "removal_incomplete_archive_available",
+        "retirement_plan": "dag/pilot_triage/retirement_plan.json",
+        "retirement_receipt": "dag/pilot_triage/retirement_receipt.json",
+        "archive_prefix": "pilot_0000999/"
+      },
+      "archived_bytes": "public synthetic fixture README.md\n",
+      "live_bytes": "public synthetic fixture spec.yaml\n"
+    },
+    {
+      "id": "partial_catalog_rebuild",
+      "source_pins_verified": 1,
+      "status": "removal_incomplete_archive_available"
+    },
+    {
+      "id": "completed_catalog_rebuild",
+      "source_pins_verified": 1,
+      "status": "retired_from_checkout_archived"
+    },
+    {
+      "id": "lesson_drift_after_intent",
+      "accepted": false,
+      "error": "Preserved lessons changed after retirement was frozen"
+    }
+  ]
+}

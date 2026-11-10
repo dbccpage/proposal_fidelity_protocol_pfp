@@ -1,0 +1,51 @@
+schema: pfp.mode-trial-plan.v1
+authority_effect: None
+pilot_id: pilot_0000001
+spec: spec.yaml
+mode_id: 2
+mode_coordinate: mode_02
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_02_packets_and_sealed_envelopes/contract.yaml
+packet: packet.yaml
+seed: seed.yaml
+responses: results
+canonical_template: pilot_0000000/prompt_template.yaml is a generated empty shell and is not copied here.
+provider_calls: 0
+winning_condition_executed: true
+execution_limit: Digest checks ran on the four-object packet. No model was called.
+advantages:
+- An edge flip changes the problem digest.
+- Separate object digests localize a candidate-only edit.
+- Span digests name which fact moved.
+disadvantages:
+- Whitespace and an edge flip are the same kind of digest failure.
+- A resealed wrong answer passes the digest check.
+- The seal is not the graph oracle.
+variations:
+- variation_id: honest_four_object_seal
+  role: winning
+  status: ACCEPTED
+  failure_mode: null
+- variation_id: bare_packet_misses_edge_flip
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Missing envelope metadata
+- variation_id: single_seal_edge_flip
+  role: advantage
+  status: REJECTED
+  failure_mode: null
+- variation_id: single_seal_whitespace
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Digest mismatch (tampered payload)
+- variation_id: candidate_edit_is_localized
+  role: advantage
+  status: REJECTED
+  failure_mode: null
+- variation_id: resealed_wrong_answer
+  role: disadvantage
+  status: REJECTED
+  failure_mode: Digest-only acceptance of a false candidate
+- variation_id: span_seal_localizes_triangle
+  role: advantage
+  status: REJECTED
+  failure_mode: null

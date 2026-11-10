@@ -1,0 +1,205 @@
+"""Rigorous verification test suite for HodgeSolver.
+
+Determines whether hodge_solver.py is actually a valid simplicial Hodge solver.
+
+Verifications:
+1. Boundary Nilpotency: ∂_{k-1} ∘ ∂_k = 0 across 0- to 4-simplices.
+2. Coboundary Nilpotency: d_k ∘ d_{k-1} = 0.
+3. Hodge Laplacian Symmetry & PSD: Δ_k = Δ_k^T and λ_min(Δ_k) >= 0.
+4. Helmholtz-Hodge Decomposition:
+   - Reconstruction: x == exact + coexact + harmonic
+   - Harmonicity: Δ_k @ harmonic == 0
+   - Mutual Orthogonality: <exact, coexact> = <exact, harmonic> = <coexact, harmonic> = 0
+5. Topology Test (Solid vs Hollow Triangle):
+   - Solid triangle (with 2-face): dim ker(Δ_1) == 0 (no holes)
+   - Hollow triangle (no 2-face): dim ker(Δ_1) == 1 (one 1D hole)
+6. Hodge Star Double-Involution:
+   - ⋆⋆ x == (-1)^{(k+1)(n-k)} x on full n-simplices.
+"""
+
+from __future__ import annotations
+
+import sys
+import unittest
+from pathlib import Path
+
+import numpy as np
+
+HERE = Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+
+from hodge_solver import HodgeSolver  # noqa: E402
+
+
+class TestHodgeSolverVerification(unittest.TestCase):
+    """Test suite determining if HodgeSolver satisfies all discrete exterior calculus axioms."""
+
+    def setUp(self):
+        self.rng = np.random.default_rng(2026)
+
+    def test_01_boundary_nilpotency_all_dimensions(self):
+        """Verify ∂_{k-1} ∘ ∂_k = 0 for 2-, 3-, and 4-simplices."""
+        test_simplices = {
+            2: "0>1<>0>2<>1>2",
+            3: "0>1<>0>2<>0>3<>1>2<>1>3<>2>3",
+            4: "0>1<>0>2<>0>3<>0>4<>1>2<>1>3<>1>4<>2>3<>2>4<>3>4",
+        }
+        for n, glyph_str in test_simplices.items():
+            solver = HodgeSolver(glyph_str)
+            self.assertEqual(solver.max_dim, n)
+            for k in range(2, n + 1):
+                b_prev = solver.boundary(k - 1)
+                b_curr = solver.boundary(k)
+                product = b_prev @ b_curr
+                self.assertTrue(
+                    np.allclose(product, 0.0),
+                    f"Boundary nilpotency ∂_{k - 1} ∘ ∂_{k} failed on {n}-simplex",
+                )
+
+    def test_02_coboundary_nilpotency(self):
+        """Verify d_k ∘ d_{k-1} = 0 (coboundary of coboundary is zero)."""
+        solver = HodgeSolver("0>1<>0>2<>0>3<>1>2<>1>3<>2>3")  # 3-simplex
+        for k in range(solver.max_dim - 1):
+            d_curr = solver.coboundary(k)
+            d_next = solver.coboundary(k + 1)
+            product = d_next @ d_curr
+            self.assertTrue(
+                np.allclose(product, 0.0),
+                f"Coboundary nilpotency d_{k + 1} ∘ d_{k} failed at k={k}",
+            )
+
+    def test_03_hodge_laplacian_symmetry_and_psd(self):
+        """Verify Δ_k is symmetric and positive semi-definite (all eigenvalues >= 0)."""
+        test_simplices = [
+            "0",
+            "0>1",
+            "0>1<>0>2<>1>2",
+            "0>1<>0>2<>0>3<>1>2<>1>3<>2>3",
+        ]
+        for glyph_str in test_simplices:
+            solver = HodgeSolver(glyph_str)
+            for k in range(solver.max_dim + 1):
+                lap = solver.hodge_laplacian(k)
+                # Symmetry
+                self.assertTrue(
+                    np.allclose(lap, lap.T),
+                    f"Laplacian Δ_{k} is not symmetric for {glyph_str}",
+                )
+                # Positive semi-definiteness
+                eigenvalues = np.linalg.eigvalsh(lap)
+                self.assertTrue(
+                    np.all(eigenvalues > -1e-9),
+                    f"Laplacian Δ_{k} has negative eigenvalues {eigenvalues} for {glyph_str}",
+                )
+
+    def test_04_helmholtz_decomposition_reconstruction_and_orthogonality(self):
+        """Verify x = exact + coexact + harmonic, Δh = 0, and mutual orthogonality."""
+        solver = HodgeSolver("0>1<>0>2<>0>3<>1>2<>1>3<>2>3")  # 3-simplex
+        for k in range(solver.max_dim + 1):
+            N = len(solver.C[k])
+            if N == 0:
+                continue
+            for _ in range(5):
+                x = self.rng.normal(size=N)
+                exact, coexact, harmonic = solver.hodge_decomposition(k, x)
+
+                # 1. Exact reconstruction
+                reconstruction_err = np.linalg.norm(exact + coexact + harmonic - x)
+                self.assertLess(
+                    reconstruction_err,
+                    1e-10,
+                    f"Reconstruction error {reconstruction_err} too large at k={k}",
+                )
+
+                # 2. Harmonicity of h: Δ_k h == 0
+                lap = solver.hodge_laplacian(k)
+                harmonic_err = np.linalg.norm(lap @ harmonic)
+                self.assertLess(
+                    harmonic_err,
+                    1e-8,
+                    f"Harmonic component not in kernel of Δ_{k}, error {harmonic_err}",
+                )
+
+                # 3. Mutual Orthogonality
+                dot_exact_coexact = abs(np.dot(exact, coexact))
+                dot_exact_harmonic = abs(np.dot(exact, harmonic))
+                dot_coexact_harmonic = abs(np.dot(coexact, harmonic))
+
+                self.assertLess(dot_exact_coexact, 1e-10, f"<exact, coexact> != 0 at k={k}")
+                self.assertLess(dot_exact_harmonic, 1e-10, f"<exact, harmonic> != 0 at k={k}")
+                self.assertLess(dot_coexact_harmonic, 1e-10, f"<coexact, harmonic> != 0 at k={k}")
+
+    def test_05_topological_distinguisher_solid_vs_hollow_triangle(self):
+        """The critical test: A solid triangle has NO holes (ker Δ_1 = 0).
+
+        A hollow triangle HAS a 1D hole (ker Δ_1 has dimension 1).
+        """
+        # Case A: Solid Triangle (with interior 2-face)
+        solid = HodgeSolver("0>1<>0>2<>1>2")
+        self.assertEqual(len(solid.C[2]), 1, "Solid triangle must have exactly one 2-face")
+        lap_solid_1 = solid.hodge_laplacian(1)
+        eig_solid_1 = np.linalg.eigvalsh(lap_solid_1)
+        # All eigenvalues must be strictly positive (3.0 for standard equilateral triangle)
+        num_harmonic_solid = np.sum(np.abs(eig_solid_1) < 1e-8)
+        self.assertEqual(
+            num_harmonic_solid,
+            0,
+            "Solid triangle must have zero harmonic 1-forms (dim ker Δ_1 == 0)",
+        )
+
+        # Case B: Hollow Triangle (manual edge-only complex, no 2-face)
+        # We simulate the hollow complex by zeroing out the 2-face contribution
+        # In a hollow triangle, Δ_1 = ∂_1^T @ ∂_1
+        b1 = solid.boundary(1)
+        lap_hollow_1 = b1.T @ b1
+        eig_hollow_1 = np.linalg.eigvalsh(lap_hollow_1)
+        num_harmonic_hollow = np.sum(np.abs(eig_hollow_1) < 1e-8)
+        self.assertEqual(
+            num_harmonic_hollow,
+            1,
+            "Hollow triangle must have exactly 1 harmonic 1-form (dim ker Δ_1 == 1)",
+        )
+
+        # The harmonic 1-form is the circulation cycle [1, -1, 1]
+        cycle = np.array([1.0, -1.0, 1.0])
+        self.assertLess(
+            np.linalg.norm(lap_hollow_1 @ cycle),
+            1e-10,
+            "Circulation cycle must be in the kernel of the hollow triangle Laplacian",
+        )
+
+    def test_06_hodge_star_double_involution(self):
+        """Verify ⋆⋆ x = (-1)^{(k+1)(n-k)} x on a full n-simplex."""
+        for n in [1, 2, 3, 4]:
+            examples = {
+                1: "0>1",
+                2: "0>1<>0>2<>1>2",
+                3: "0>1<>0>2<>0>3<>1>2<>1>3<>2>3",
+                4: "0>1<>0>2<>0>3<>0>4<>1>2<>1>3<>1>4<>2>3<>2>4<>3>4",
+            }
+            solver = HodgeSolver(examples[n])
+            self.assertTrue(solver.is_full_simplex())
+
+            for k in range(n + 1):
+                N = len(solver.C[k])
+                x = self.rng.normal(size=N)
+                star1 = solver.hodge_star(k, x)
+                star2 = solver.hodge_star(n - k - 1, star1)
+                expected_sign = (-1) ** ((k + 1) * (n - k))
+                self.assertTrue(
+                    np.allclose(star2, expected_sign * x, atol=1e-10),
+                    f"Double star involution failed on {n}-simplex at k={k}",
+                )
+
+    def test_07_hodge_star_refuses_non_full_simplex(self):
+        """Hodge star must raise a clean ValueError if called on an incomplete complex."""
+        # Path graph 0-1-2 without edge 0-2 (not a full simplex)
+        solver = HodgeSolver("0>1<>1>2")
+        self.assertFalse(solver.is_full_simplex())
+        with self.assertRaises(ValueError):
+            solver.hodge_star(0, [1.0, 2.0, 3.0])
+
+
+if __name__ == "__main__":
+    unittest.main()

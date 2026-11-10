@@ -1,0 +1,41 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000011
+mode_id: 12
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_12_simplicial_triangulation_and_regge/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: One triangle formula. No Regge action over a larger complex was computed.
+advantages:
+- The sign of 16 area^2 separates the two triangles with integer arithmetic.
+disadvantages:
+- The same arithmetic does not produce angles or a conservation identity.
+variations:
+- variation_id: positive_and_degenerate
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: The equilateral numerator is 48. The degenerate numerator is 0, so the winning move is
+    a typed refusal.
+  evidence:
+    positive: 48
+    degenerate: 0
+- variation_id: numeric_zero_on_degenerate
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Invalid or degenerate simplex (dimension-correct squared volume <= 0)
+  observation: Returning area 0 for the degenerate triangle is a silent pass, not a refusal.
+  evidence:
+    returned: 0
+    required: DEGENERATE_SIMPLEX
+- variation_id: bianchi_from_positive_area
+  role: disadvantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: Hinged curvature imbalance
+  observation: Positive squared area does not imply a discrete Bianchi identity.
+  evidence:
+    bianchi_inferred: false

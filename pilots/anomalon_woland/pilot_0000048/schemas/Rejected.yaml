@@ -1,0 +1,25 @@
+additionalProperties: false
+properties:
+  status:
+    const: REJECTED
+    title: Status
+    type: string
+  reason:
+    maxLength: 1200
+    title: Reason
+    type: string
+  diagnostic_bytes:
+    minimum: 0
+    title: Diagnostic Bytes
+    type: integer
+  diagnostic_sha256:
+    pattern: ^[0-9a-f]{64}$
+    title: Diagnostic Sha256
+    type: string
+required:
+- status
+- reason
+- diagnostic_bytes
+- diagnostic_sha256
+title: Rejected
+type: object

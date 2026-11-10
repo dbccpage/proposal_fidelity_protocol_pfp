@@ -1,0 +1,29 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_00068
+task_family: polygraph_term_rewriting
+difficulty_rung: 1
+request_id: pilot_00068_req_0
+rewrite_metadata:
+  rewrite_id: demo_polygraph_confluence
+  name: Demo Polygraph Confluence - 2-Cell Term Rewriting & Church-Rosser Join
+  governing_specification: pilots/demo_003/demo_polygraph_confluence/README.md
+  governing_strategy: Strategy DPC (Newman Lemma Local Peak Joining)
+  target_stratum: Stratum 3 (Higher-Dimensional Rewriting Confluence)
+  explanation: Polygraph 2-cell Church-Rosser term rewriting confluence under Newman's
+    lemma.
+  codebook_slots: {}
+input_typing:
+  lexical_alphabet: Gamma_38 union {confluent, join_term, normal_form}
+  syntactic_category: PeakJoinConfluenceCheck
+  semantic_carrier: Polygraphic term rewrite system with critical peak s <- u -> t
+  dialect_tier: Tier P (Polygraph 2-Cell)
+  boundary_format: pfp-poly-v1
+seed_prompt: '{"polygraph_rank":2,"term_u":"f(g(x), h(x))","reductions":{"left":"f(x,
+  h(x))","right":"f(g(x), x)"},"task":"Verify local confluence of critical peak by
+  computing confluent join term w","output":{"confluent":true,"join_term":"normal_form"}}'
+expected_outcome:
+  answer:
+    confluent: true
+    join_term: normal_form
+  status: ACCEPTED

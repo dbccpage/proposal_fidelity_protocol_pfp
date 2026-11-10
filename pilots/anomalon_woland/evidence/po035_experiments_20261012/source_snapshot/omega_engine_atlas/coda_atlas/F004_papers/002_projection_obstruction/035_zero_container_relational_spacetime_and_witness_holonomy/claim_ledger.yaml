@@ -1,0 +1,214 @@
+schema: "po035.claim_ledger.v1"
+paper_id: "PO-035"
+title: "Zero-Container Relational Spacetime, Emergent Lorentz Causality, and Witness Holonomy"
+manuscript_version: "0.1.0"
+authority_effect: "None"
+claims:
+  - claim_id: R01-EMERGENT-CAUSALITY
+    slug: r01_emergent_causality
+    record_kind: mathematical_claim
+    claim_kind: written_theorem_group
+    title: "Section 3 & 4: Emergent Lorentz Causality and Defect Current Conservation"
+    statement: Under continuum carrier refinement a -> 0, the Lieb-Robinson Duhamel influence envelope converges to the sharp Minkowski forward causal cone with emergent effective light speed c_eff = v_LR, and the discrete defect 4-current satisfies relativistic conservation partial_mu J^mu = O(a^2) -> 0.
+    claim_status: REQUIRES_CORRECTION
+    proof_status: PROSE_PROOF
+    mechanization_status: NO_NEW_GENERAL_LEAN_PROOF
+    applicability: UNDER_STATED_HYPOTHESES
+    release_criticality:
+      level: CORE
+      blocker_if_invalid: true
+    authority_effect: None
+    paper_pointer:
+      section: "§3, §4"
+      heading: "Section 3 & 4"
+    hypotheses:
+      - Discrete carrier lattice with pitch a > 0, bounded local generator strength g, Lieb-Robinson velocity v_LR, and symmetric central-difference stencil.
+    depends_on: []
+    evidence:
+      - kind: prose_proof
+        relation: supports
+        pointer: "§3, §4"
+      - kind: python
+        relation: tests
+        python_file_type: code
+        module_path: code.continuum_lorentz_causality
+        file_location: code/continuum_lorentz_causality.py
+      - kind: python
+        relation: tests
+        python_file_type: test
+        module_path: code.tests.test_continuum_lorentz_causality
+        file_location: code/tests/test_continuum_lorentz_causality.py
+      - kind: python
+        relation: tests
+        python_file_type: test
+        module_path: code.tests.test_adversarial_continuum_causality
+        file_location: code/tests/test_adversarial_continuum_causality.py
+    open_obligations:
+      - obligation_id: "OBL-R01-01"
+        release_blocking: true
+        text: "Resolve metric scale and dilation non-invariance: positive dilations (t, x) -> (2t, 2x) preserve causal order inequalities while rescaling intervals (s^2 -> 4s^2); supply explicit dimensional and scale premises beyond Lieb-Robinson causal bounds."
+      - obligation_id: "OBL-R01-02"
+        release_blocking: true
+        text: "Close lattice-to-continuum scaling gap: state explicit velocity scaling a*v_LR(a) -> c or time rescaling, uniform hypotheses, and limiting spatial norm connecting hypercubic graph metrics to Euclidean Minkowski intervals."
+      - obligation_id: "OBL-R01-03"
+        release_blocking: true
+        text: "Correct null boundary envelope evaluation: retain the non-vanishing prefactor C_0 at the null boundary (returns 0.25 at tested spacings) and resolve discrepancies between direct Duhamel weight and upper envelope saturation."
+      - obligation_id: "OBL-R01-04"
+        release_blocking: true
+        text: "Establish non-manufactured current conservation: derive the conserved defect current from microscopic projection residual dynamics rather than prescribing a pre-conserved traveling Gaussian."
+    limitations:
+      - Exact finite replay and numerical stencils check discrete convergence; full infinite-dimensional continuum limit is an analytical derivation under stated refinement assumptions.
+      - Requires mathematical correction per review findings F1 and F5.
+
+  - claim_id: R02-RELATIONAL-SPINE
+    slug: r02_relational_spine
+    record_kind: mathematical_claim
+    claim_kind: written_theorem_group
+    title: "Section 5: The 8-Stage Unified Relational Spine"
+    statement: Formal operational definition of the 8-stage categorical vocabulary (Presentation -> Family of Presentations -> Representation -> Fiber Bundle -> Fact -> Compression -> Obstruction -> Relational Regge Curvature) grounding relational difference cochains without ambient containers.
+    claim_status: REQUIRES_CORRECTION
+    proof_status: FORMAL_SPECIFICATION
+    mechanization_status: NO_NEW_GENERAL_LEAN_PROOF
+    applicability: UNDER_STATED_HYPOTHESES
+    release_criticality:
+      level: CORE
+      blocker_if_invalid: true
+    authority_effect: None
+    paper_pointer:
+      section: "§5"
+      heading: "Section 5"
+    hypotheses:
+      - Discrete carrier complex K = (V, E, F), difference cochain delta in C^1(K, F), coboundary operators d^0 and d^1, and functorial projection maps.
+    depends_on: []
+    evidence:
+      - kind: prose_proof
+        relation: supports
+        pointer: "§5"
+      - kind: python
+        relation: tests
+        python_file_type: code
+        module_path: code.regge_relational_obstruction
+        file_location: code/regge_relational_obstruction.py
+      - kind: python
+        relation: tests
+        python_file_type: test
+        module_path: code.tests.test_regge_relational_obstruction
+        file_location: code/tests/test_regge_relational_obstruction.py
+    open_obligations:
+      - obligation_id: "OBL-R02-01"
+        release_blocking: true
+        text: "Retain identity transport zero control: for identity transport in scalar fibers, delta = -d^0 sigma has quotient norm 0 via alpha = -sigma; positive obstruction at stage 7 is an external condition rather than a consequence of stages 1-6."
+      - obligation_id: "OBL-R02-02"
+        release_blocking: true
+        text: "Formalize cross-fiber transport and covariant coboundary: supply explicit fiber connections, transition maps, and curvature laws across distinct fibers before defining covariant difference cochains."
+      - obligation_id: "OBL-R02-03"
+        release_blocking: true
+        text: "Formalize categorical functoriality: define categories, morphisms, and composition preservation before classifying the 8 stages as a functorial construction."
+    limitations:
+      - Algebraic and categorical specification across declared discrete carrier complexes; does not assert ambient continuum physics.
+      - Requires mathematical correction per review finding F4.
+
+  - claim_id: R03-REGGE-HOLONOMY
+    slug: r03_regge_holonomy
+    record_kind: mathematical_claim
+    claim_kind: written_theorem_group
+    title: "Section 6: Zero-Container Relational Regge Curvature and Discrete Bianchi Exactness"
+    statement: Regge deficit angle epsilon_h = 2*pi - sum theta on codimension-2 bones is identical to the irreducible cochain quotient holonomy Gamma_2 = d^1 delta mod im(d^0) without an ambient metric container, and satisfies exact discrete Bianchi identity d^1 o d^0 == 0.
+    claim_status: REQUIRES_CORRECTION
+    proof_status: PROSE_PROOF
+    mechanization_status: NO_NEW_GENERAL_LEAN_PROOF
+    applicability: UNDER_STATED_HYPOTHESES
+    release_criticality:
+      level: CORE
+      blocker_if_invalid: true
+    authority_effect: None
+    paper_pointer:
+      section: "§6"
+      heading: "Section 6"
+    hypotheses:
+      - Simplicial carrier complex K without background metric coordinates, relational edge differences, and codimension-2 bone stars.
+    depends_on: []
+    evidence:
+      - kind: prose_proof
+        relation: supports
+        pointer: "§6"
+      - kind: python
+        relation: tests
+        python_file_type: code
+        module_path: code.regge_relational_obstruction
+        file_location: code/regge_relational_obstruction.py
+      - kind: python
+        relation: tests
+        python_file_type: test
+        module_path: code.tests.test_regge_relational_obstruction
+        file_location: code/tests/test_regge_relational_obstruction.py
+      - kind: python
+        relation: tests
+        python_file_type: test
+        module_path: code.tests.test_adversarial_regge_relational_obstruction
+        file_location: code/tests/test_adversarial_regge_relational_obstruction.py
+    open_obligations:
+      - obligation_id: "OBL-R03-01"
+        release_blocking: true
+        text: "Decouple additive cochain curvature from metric Regge deficit: on the 6-triangle regular star fan, an additive gauge shift leaves d^1 delta = 1 and quotient norm 6 invariant while changing cosine-law Regge deficit angle from 0 to 2*pi - 6*acos(7/8) ~= 3.251 rad."
+      - obligation_id: "OBL-R03-02"
+        release_blocking: true
+        text: "Correct cochain and quotient space type errors: define sound map dbar^1: C^1/im(d^0) -> C^2 with kernel H^1; remove undefined quotient C^2/im(d^0) and avoid evaluating 2-cochains on 1-chains."
+      - obligation_id: "OBL-R03-03"
+        release_blocking: true
+        text: "Formulate geometric bridge conditions: state explicit metric edge lengths, nondegenerate simplex/star hypotheses, frame transport connections, and holonomy/deficit correspondence rather than asserting equality with scalar coboundaries."
+    limitations:
+      - Relational Regge angles are evaluated from intrinsic relational edge difference comparisons; ambient Euclidean embeddings are excluded.
+      - Requires mathematical correction per review finding F2.
+
+  - claim_id: R04-OPERATIONAL-STICKINESS
+    slug: r04_operational_stickiness
+    record_kind: mathematical_claim
+    claim_kind: written_theorem_group
+    title: "Section 7: Operational Stickiness and LP Duality Witness"
+    statement: Projection friction inf_alpha ||delta - d^0 alpha||_1 > 0 halts fluent continuation when a difference cochain cannot factor through local gauge repair, certified by a dual linear programming witness y in ker((d^0)^T) with ||y||_infty <= 1 and y^T delta > 0.
+    claim_status: REQUIRES_CORRECTION
+    proof_status: PROSE_PROOF
+    mechanization_status: NO_NEW_GENERAL_LEAN_PROOF
+    applicability: UNDER_STATED_HYPOTHESES
+    release_criticality:
+      level: CORE
+      blocker_if_invalid: true
+    paper_pointer:
+      section: "§7"
+      heading: "Section 7"
+    hypotheses:
+      - Discrete carrier complex K, difference cochain delta, and exact coboundary operator d^0 under l1 minimization.
+    depends_on: []
+    evidence:
+      - kind: prose_proof
+        relation: supports
+        pointer: "§7"
+      - kind: python
+        relation: tests
+        python_file_type: code
+        module_path: code.regge_relational_obstruction
+        file_location: code/regge_relational_obstruction.py
+      - kind: python
+        relation: tests
+        python_file_type: test
+        module_path: code.tests.test_regge_relational_obstruction
+        file_location: code/tests/test_regge_relational_obstruction.py
+      - kind: python
+        relation: tests
+        python_file_type: test
+        module_path: code.tests.test_adversarial_regge_relational_obstruction
+        file_location: code/tests/test_adversarial_regge_relational_obstruction.py
+    open_obligations:
+      - obligation_id: "OBL-R04-01"
+        release_blocking: true
+        text: "Remediate numerical LP false zeros: on small non-zero classes (e.g. 3-cycle with eps = 1e-8, certified Phi_1 = 3e-8), floating HiGHS LP solver accepts slack within feasibility tolerance and reports 0.0 ('AUTHORIZED'); implement exact rational dual certificates or rigorous interval enclosures, refusing undecided cases."
+      - obligation_id: "OBL-R04-02"
+        release_blocking: true
+        text: "Distinguish static gauge obstruction from dynamical halting: positive quotient distance precludes exact gauge repair but does not derive halting in arbitrary transition systems without an explicit operational transition and terminal policy."
+      - obligation_id: "OBL-R04-03"
+        release_blocking: true
+        text: "Provide operational measurement model: label claims regarding human experience and wave-function collapse as proposed interpretations, requiring a formal measurement model and empirical/operational states before asserting physical consequences."
+    limitations:
+      - Dual LP witness certification operates on finite carrier instances; continuous operator quotients require separate functional-analytic extensions.
+      - Requires mathematical correction per review findings F3 and F6.

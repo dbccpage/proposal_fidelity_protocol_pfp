@@ -1,0 +1,49 @@
+schema: pfp.po035-compact-round.v1
+authority_effect: None
+status: PLANNED
+source_base: 5452a476dd88d05d19de60c3ea7e6607ac14ede0
+recipe: PFP-R0001-v1.0.0
+question: Can a compact typed input/output contract with field bindings improve these five PO035 tasks?
+pilots: [pilot_0000199, pilot_0000200, pilot_0000201, pilot_0000202, pilot_0000203]
+design:
+  independent_pilot_runs: 5
+  maximum_provider_attempts: 15
+  model: nvidia/nemotron-3.5-lightning:free
+  temperature: 0
+  paired_seed: 20261012 plus pilot number
+  max_output_tokens: [2500, 600, 2500]
+  stage_order: [SINGLE_SHOT, PUBLIC_WORKPAD, FINAL_FROM_WORKPAD]
+  comparison: single-shot control versus two-call workpad/final bundle
+  carry: only a schema-valid own stage-2 workpad; never a control or its verdict
+  application_retries: 0
+  fallback_requested: false
+  further_adaptation_after_result: false
+  semantic_rewrite_axis: false
+  logit_axis: false
+  glyph_axis: false
+limits:
+  scope: all three calls and host stages share one cap per pilot; no reset or pooling
+  microusd: 50000
+  total_provider_tokens: 120000
+  seconds: 180
+  catalog_discovery_timeout_seconds: 20
+  aggregate_maximum_microusd: 250000
+  price_policy: only freshly verified zero-price route admitted; stop if unquoted or priced
+scoring:
+  stages_separate: [schema_and_identity, calculation_field_binding, original_finite_predicates, analytical_review]
+  joint_success: schema valid and exact typed field bindings match and unchanged finite predicates pass
+  full_task_success: joint success plus all essential analytical obligations satisfied under stated assumptions
+  formula_evaluation: calculation expressions are public evidence for review, not automatically evaluated
+  analytical_review: independent Codex agents using copies without arm/model/host verdict
+  discovery_target: at least two additional joint successes among five staged finals, with no control success lost
+  stop_after: five scheduled runs or first uncertain infrastructure/cap failure
+  typed_refusal: useful scoped output but not mathematical success
+  no_automatic_learning_admission: true
+claim_limits:
+  - Five heterogeneous tasks and one sample per arm cannot establish universal optimality or reliability.
+  - The new prompt/output/workpad bundle changes several ingredients together.
+  - Historical outcomes are descriptive references, not a randomized paired causal control.
+  - The two-call staged bundle has more compute than a single shot.
+  - Fixed control-first order and hosted seed behavior limit attribution.
+  - Offline replay verifies retained evidence; it cannot promise identical future hosted generations.
+validation: targeted local checks only; no full canonical or hosted CI

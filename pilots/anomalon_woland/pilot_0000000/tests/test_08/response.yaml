@@ -1,0 +1,543 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: rewrite_08_plain
+test_kind: plain_input
+pilot_id: pilot_0000000
+case_id: rewrite_08
+request_id: pilot_0000000_req_rewrite_08_plain
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: seed_rewrite_08.yaml
+  source_file_bytes: 1452
+  source_file_kb: 1.418
+  payload_bytes: 94
+  payload_kb: 0.092
+  messages_count: 1
+raw_reply: 'This looks like a **DiaGen** `delta` expression — a sequence of graph
+  transformation operations. It likely does the following, in order:
+
+
+  1. `NewDatum` — creates a new datum node.
+
+  2. `NewDatum` — creates a second datum node.
+
+  3. `NewForm(1)` — creates a form node of type 1.
+
+  4. `NewForm(2)` — creates a form node of type 2.
+
+  5. `NewInst(1,[1,2])` — creates an instance node of type 1, connected to nodes 1
+  and 2.
+
+  6. `NewInst(2,[3,1])` — creates an instance node of type 2, connected to nodes 3
+  and 1.
+
+  7. `NewRuleAll(1)` — applies rule 1 to all matches.
+
+
+  Assuming nodes are numbered sequentially, after the first six operations the graph
+  contains:
+
+  - Node 1: Datum
+
+  - Node 2: Datum
+
+  - Node 3: Form type 1
+
+  - Node 4: Form type 2
+
+  - Node 5: Instance type 1 → edges to 1, 2
+
+  - Node 6: Instance type 2 → edges to 3, 1
+
+
+  The final step `NewRuleAll(1)` depends on the definition of rule 1, so the final
+  graph cannot be determined without that rule. If you provide the rule or ask a specific
+  question (e.g., “draw the resulting graph” or “is this valid syntax?”), I can help
+  further.'
+reasoning_content: 'We need answer to user. Need parse. User wrote: "delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);NewRuleAll(1)>"
+
+
+  This looks like some formal notation? Maybe from graph rewriting / double pushout?
+  "delta<...>"? Need infer. They may be asking? They just provided string. Need respond
+  likely explain? We need determine intent. Maybe they want evaluate? The prompt is
+  just a term. Could be from "delta<...>" notation in some system? Need ask clarification?
+  But likely they expect something. We need inspect.
+
+
+  String: delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);NewRuleAll(1)>
+
+
+  Maybe "delta" is a command in some language? It lists operations separated by semicolons
+  inside angle brackets. NewDatum; NewDatum; NewForm(1); NewForm(2); NewInst(1,[1,2]);
+  NewInst(2,[3,1]); NewRuleAll(1). Could be from "Grape" or "GrGen"? "delta" maybe
+  in "PGR" graph rewriting? NewDatum, NewForm, NewInst, NewRuleAll? Hmm.
+
+
+  Maybe from "MPS" or "MetaEdit+"? "NewDatum" "NewForm" "NewInst" "NewRuleAll" sound
+  like operations in "DiaGen"? Let''s search memory internally.
+
+
+  "NewDatum", "NewForm", "NewInst", "NewRuleAll" maybe from "AtoM3" or "VMTS"? "delta"
+  in "Graph Rewriting and Transformation (GReAT)"? There is a language "GrGen" with
+  rules, patterns. "NewDatum" maybe in "PROGRES"? Hmm.
+
+
+  Could be from "Tiger" or "AGG"? "NewDatum" "NewForm" "NewInst" "NewRuleAll" are
+  constructors in "ELAN"? The notation delta<...> maybe from "Maude"? Actually "delta<...>"
+  resembles "rho" calculus? No.
+
+
+  Maybe it''s a "term" in "OBJ3" or "CafeOBJ"? "NewDatum" etc.
+
+
+  Maybe user wants to know what this expression means. We need maybe parse as a sequence
+  of commands in "delta" language. Could be from "DiaGen" tool? Let''s search memory.
+
+
+  I recall a graph transformation tool "DiaGen" (DiaGen: A tool for graph transformation).
+  It has commands like "NewDatum", "NewForm", "NewInst", "NewRuleAll"? Maybe "delta"
+  is a command in "DiaGen" to apply a sequence of graph transformation operations?
+  Let''s think.
+
+
+  DiaGen is a graph grammar tool. It uses "delta" for graph transformation? There
+  is a language "DiaGen" with "NewDatum", "NewForm", "NewInst", "NewRuleAll". I remember
+  from some papers: DiaGen uses "delta" to denote a sequence of rule applications?
+  The syntax: delta<NewDatum; NewDatum; NewForm(1); NewForm(2); NewInst(1,[1,2]);
+  NewInst(2,[3,1]); NewRuleAll(1)> maybe a "delta" operation in DiaGen? It might be
+  a "graph transformation" sequence.
+
+
+  Let''s search memory fragments. DiaGen is a tool for designing visual languages.
+  It uses hypergraph grammars. There is a "delta" operation? In DiaGen, a "delta"
+  is a sequence of graph transformation steps? The commands: NewDatum, NewForm, NewInst,
+  NewRuleAll. NewDatum creates a new data node? NewForm creates a new form? NewInst
+  creates a new instance? NewRuleAll applies a rule to all? Hmm.
+
+
+  Maybe the user is asking to "delta<...>"? They might want to know the result of
+  executing this delta? But no context. Could be from a programming exercise? They
+  might want to parse it? The string is a term. Maybe they want to know if it''s valid?
+  We need respond.
+
+
+  Let''s analyze the string syntactically:
+
+  delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);NewRuleAll(1)>
+
+
+  It''s a delta expression with a sequence of operations:
+
+  1. NewDatum
+
+  2. NewDatum
+
+  3. NewForm(1)
+
+  4. NewForm(2)
+
+  5. NewInst(1,[1,2])
+
+  6. NewInst(2,[3,1])
+
+  7. NewRuleAll(1)
+
+
+  Maybe "NewDatum" creates a new datum (node) with no arguments. Two NewDatum create
+  two data nodes. NewForm(1) creates a form of type 1? NewForm(2) creates a form of
+  type 2? NewInst(1,[1,2]) creates an instance of form 1 with children [1,2]? NewInst(2,[3,1])
+  creates an instance of form 2 with children [3,1]? NewRuleAll(1) applies rule 1
+  to all? Hmm.
+
+
+  Maybe it''s from "DiaGen" and the numbers refer to node IDs. The sequence might
+  build a graph. The result could be a graph with nodes and edges. But without knowing
+  the semantics, we can''t compute.
+
+
+  Maybe the user expects a response like "This is a delta expression in DiaGen that
+  creates two data nodes, two forms, two instances, and applies rule 1 to all." But
+  maybe they want to know what it does.
+
+
+  Let''s search memory more. I have seen "DiaGen" syntax. In DiaGen, a "delta" is
+  a sequence of graph transformation operations. The operations include:
+
+  - NewDatum: creates a new datum node.
+
+  - NewForm(id): creates a new form node with a given id?
+
+  - NewInst(id, [ids]): creates a new instance node?
+
+  - NewRuleAll(rule): applies a rule to all matches?
+
+  Actually, I recall a paper "DiaGen: A Tool for Designing Visual Languages" where
+  they use "delta" to specify graph transformations. The syntax might be:
+
+  delta<NewDatum; NewDatum; NewForm(1); NewForm(2); NewInst(1,[1,2]); NewInst(2,[3,1]);
+  NewRuleAll(1)>
+
+  This could be an example of a graph transformation sequence that creates a graph.
+  The numbers might be node identifiers. NewDatum creates a datum node. NewForm(1)
+  creates a form node with label 1? NewInst(1,[1,2]) creates an instance node with
+  label 1 and edges to nodes 1 and 2? NewRuleAll(1) applies rule 1 to all matches.
+
+
+  Maybe the user is asking to "evaluate" this delta? But no context. Could be from
+  a homework where they need to draw the resulting graph. We can try to infer the
+  graph.
+
+
+  Let''s think about DiaGen semantics. In DiaGen, a graph consists of nodes and edges.
+  There are different node types: Datum, Form, Inst? Actually, "NewDatum" creates
+  a datum node. "NewForm" creates a form node. "NewInst" creates an instance node.
+  The arguments might be the node IDs to connect. For example, NewForm(1) might create
+  a form node with ID 1. NewInst(1,[1,2]) might create an instance node with ID 1
+  and connect it to nodes 1 and 2? But then NewInst(2,[3,1]) creates instance node
+  2 connected to nodes 3 and 1. NewRuleAll(1) applies rule 1 to all matches.
+
+
+  Wait, the numbers in NewForm(1) and NewForm(2) might be the IDs of the new nodes.
+  NewInst(1,[1,2]) might create an instance node with ID 1 and connect it to nodes
+  1 and 2? But then there is already a node 1 (the form). So NewInst(1,...) would
+  conflict with node 1? Maybe the numbers are not IDs but types? Or the arguments
+  are the IDs of the nodes to connect to.
+
+
+  Let''s search memory of DiaGen syntax. I remember a paper "DiaGen: A Tool for Designing
+  Visual Languages" by Minas and Viehstaedt? They use a graph grammar. The operations
+  might be:
+
+  - NewDatum: creates a new datum node.
+
+  - NewForm(id): creates a new form node with a given id.
+
+  - NewInst(id, [ids]): creates a new instance node with a given id and connects it
+  to the given nodes.
+
+  - NewRuleAll(rule): applies a rule to all matches.
+
+
+  In the example, the sequence might be:
+
+  1. NewDatum -> creates node 1 (datum)
+
+  2. NewDatum -> creates node 2 (datum)
+
+  3. NewForm(1) -> creates node 3? Or maybe the argument is the ID of the new form?
+  If NewForm(1) creates a form node with ID 1, then node 1 is a form, but we already
+  created a datum? That would be a conflict. So maybe the numbers are not IDs but
+  types? Or the sequence is not about node IDs but about creating a graph with specific
+  labels.
+
+
+  Alternatively, maybe the numbers in NewForm(1) and NewForm(2) are the IDs of the
+  new nodes, and NewDatum creates nodes with automatically assigned IDs? The first
+  NewDatum creates node 1, second creates node 2. Then NewForm(1) creates a form node
+  with ID 1? That would overwrite? Unlikely.
+
+
+  Maybe the numbers are the arguments to the operations, not IDs. For example, NewForm(1)
+  might create a form of type 1. NewForm(2) creates a form of type 2. NewInst(1,[1,2])
+  creates an instance of type 1 with children [1,2]. NewInst(2,[3,1]) creates an instance
+  of type 2 with children [3,1]. NewRuleAll(1) applies rule 1 to all. This seems plausible:
+  the numbers are types or rule numbers.
+
+
+  Let''s look at the string: "NewInst(1,[1,2])" and "NewInst(2,[3,1])". The first
+  argument is likely the type of instance, and the second is a list of node IDs? Or
+  the first argument is the ID of the new instance, and the list is the nodes it connects
+  to. If it''s the ID, then NewInst(1,[1,2]) creates an instance node with ID 1, connected
+  to nodes 1 and 2. But then node 1 is already a form? Or maybe the IDs are assigned
+  sequentially: NewDatum creates node 1, NewDatum creates node 2, NewForm(1) creates
+  node 3? No, the argument 1 might be the ID of the form? If NewForm(1) creates a
+  form node with ID 1, then node 1 is a form, but we already have a datum at node
+  1? That doesn''t make sense.
+
+
+  Maybe the numbers in NewForm(1) and NewForm(2) are not IDs but the number of something?
+  NewForm(1) might create a form with one child? NewForm(2) with two children? NewInst(1,[1,2])
+  might create an instance with one child? No.
+
+
+  Let''s search memory of DiaGen. I recall a syntax like:
+
+  delta<NewDatum; NewDatum; NewForm(1); NewForm(2); NewInst(1,[1,2]); NewInst(2,[3,1]);
+  NewRuleAll(1)>
+
+  This might be from a paper on "DiaGen" where they show an example of a graph transformation.
+  The numbers might be node identifiers. In DiaGen, nodes are created with explicit
+  IDs. The operations might be:
+
+  - NewDatum: creates a new datum node with a new ID.
+
+  - NewForm(id): creates a new form node with the given ID.
+
+  - NewInst(id, [ids]): creates a new instance node with the given ID and connects
+  it to the nodes in the list.
+
+  - NewRuleAll(rule): applies the given rule to all matches.
+
+
+  If NewDatum creates a new node with an automatically assigned ID, then the first
+  NewDatum might create node 1, the second NewDatum creates node 2. Then NewForm(1)
+  might create a form node with ID 1? That would conflict. Unless NewDatum does not
+  assign an ID, but just creates a datum node without an ID? Or the IDs are not sequential?
+  Maybe the numbers in NewForm(1) and NewForm(2) are the IDs of the new form nodes,
+  and the NewDatum operations create nodes with IDs 1 and 2? That would conflict.
+  So maybe NewDatum creates a datum node with a new ID, but the ID is not specified.
+  Then NewForm(1) creates a form node with ID 1? That would mean the first NewDatum
+  created a node with some other ID, not 1. But then how do we refer to the datum
+  nodes? In NewInst(1,[1,2]), the list [1,2] might refer to the IDs of the datum nodes.
+  If the first NewDatum created node 1 and the second created node 2, then NewForm(1)
+  would create a form node with ID 1, which conflicts. So maybe NewForm(1) creates
+  a form node with ID 3? No, the argument is 1.
+
+
+  Wait, maybe the numbers in NewForm(1) and NewForm(2) are not IDs but the number
+  of children? NewForm(1) creates a form with one child? NewForm(2) creates a form
+  with two children? Then NewInst(1,[1,2]) creates an instance of form 1 with children
+  [1,2]? That doesn''t fit.
+
+
+  Let''s consider another possibility: The string is a term in a language called "Delta"
+  for graph rewriting. The operations are:
+
+  - NewDatum: creates a new datum node.
+
+  - NewForm(n): creates a new form node with n as its label.
+
+  - NewInst(n, list): creates a new instance node with n as its label and list as
+  its children.
+
+  - NewRuleAll(n): applies rule n to all matches.
+
+
+  In this case, the numbers are labels, not IDs. The sequence creates two datum nodes,
+  two form nodes (labels 1 and 2), two instance nodes (labels 1 and 2 with children
+  lists), and then applies rule 1 to all. The result would be a graph with these nodes
+  and edges. But without the rule definitions, we can''t know the final graph.
+
+
+  Maybe the user is asking to "parse" this string? Or they want to know what it means?
+  The prompt is just the string. It might be a test input for a parser. They might
+  want the output of a parser? But no question.
+
+
+  Given the ambiguity, the best response is to ask for clarification. But as an AI,
+  I should try to be helpful. I can explain what the expression likely is and ask
+  what they want to do with it. Or I can provide a general interpretation.
+
+
+  Let''s see if there''s any known context. The string "delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);NewRuleAll(1)>"
+  looks like a command in the "DiaGen" tool. I can search my memory for "NewDatum
+  NewForm NewInst NewRuleAll". I think I''ve seen this in a paper about "DiaGen" or
+  "DiaGen: A Tool for Designing Visual Languages". The syntax is exactly like that.
+  In DiaGen, a "delta" is a sequence of graph transformation operations. The operations
+  are:
+
+  - NewDatum: creates a new datum node.
+
+  - NewForm(id): creates a new form node with the given id.
+
+  - NewInst(id, [ids]): creates a new instance node with the given id and connects
+  it to the nodes in the list.
+
+  - NewRuleAll(rule): applies the given rule to all matches.
+
+
+  In the example, the numbers might be node IDs. Let''s try to reconstruct the graph.
+  Suppose we start with an empty graph. The operations are executed in order. The
+  IDs might be assigned automatically for NewDatum, but NewForm and NewInst take explicit
+  IDs. Let''s assume that NewDatum creates a new node with an automatically assigned
+  ID. The first NewDatum creates node 1. The second NewDatum creates node 2. Then
+  NewForm(1) creates a form node with ID 1? That would conflict with node 1. So maybe
+  NewDatum does not assign an ID, or the IDs are not sequential. Alternatively, maybe
+  the numbers in NewForm(1) and NewForm(2) are not IDs but the number of something.
+  Let''s look at NewInst(1,[1,2]) and NewInst(2,[3,1]). The first argument is 1 and
+  2, which could be the IDs of the new instance nodes. The second argument is a list
+  of node IDs. If NewInst(1,[1,2]) creates an instance node with ID 1, then it conflicts
+  with the form node with ID 1? Unless the form node with ID 1 is not created? Wait,
+  NewForm(1) creates a form node with ID 1. Then NewInst(1,[1,2]) creates an instance
+  node with ID 1? That would be a duplicate ID. So maybe the first argument of NewInst
+  is not an ID but a type. For example, NewInst(1,[1,2]) creates an instance of type
+  1, connected to nodes 1 and 2. NewInst(2,[3,1]) creates an instance of type 2, connected
+  to nodes 3 and 1. Then the numbers in NewForm(1) and NewForm(2) could be types.
+  NewForm(1) creates a form of type 1. NewForm(2) creates a form of type 2. Then NewDatum
+  creates datum nodes. The list [1,2] might refer to the IDs of the datum nodes? But
+  if NewDatum creates nodes with automatic IDs, the first two might be 1 and 2. Then
+  NewForm(1) creates a form of type 1, which might get ID 3. NewForm(2) gets ID 4.
+  Then NewInst(1,[1,2]) creates an instance of type 1, connected to nodes 1 and 2
+  (the datum nodes). NewInst(2,[3,1]) creates an instance of type 2, connected to
+  nodes 3 and 1. But node 3 is the form of type 1? That could be. Then NewRuleAll(1)
+  applies rule 1 to all matches. This seems plausible: the numbers in NewForm are
+  types, and the numbers in NewInst are types, and the lists are node IDs. But then
+  what are the IDs of the form nodes? They are not specified, so they must be assigned
+  automatically. The list [3,1] in NewInst(2,[3,1]) refers to node 3 (the first form)
+  and node 1 (the first datum). So the instance of type 2 connects to the first form
+  and the first datum. This makes sense: an instance of a form might connect to its
+  form and some data.
+
+
+  Let''s check the sequence:
+
+  1. NewDatum -> creates datum node 1.
+
+  2. NewDatum -> creates datum node 2.
+
+  3. NewForm(1) -> creates form node 3 of type 1.
+
+  4. NewForm(2) -> creates form node 4 of type 2.
+
+  5. NewInst(1,[1,2]) -> creates instance node 5 of type 1, connected to nodes 1 and
+  2.
+
+  6. NewInst(2,[3,1]) -> creates instance node 6 of type 2, connected to nodes 3 and
+  1.
+
+  7. NewRuleAll(1) -> applies rule 1 to all matches.
+
+
+  This seems like a coherent graph construction. The numbers in NewForm and NewInst
+  are types, and the lists are the nodes to connect to. The IDs of the new nodes are
+  assigned automatically in order: 1,2,3,4,5,6. The list [1,2] refers to the first
+  two datum nodes. The list [3,1] refers to the first form node (ID 3) and the first
+  datum node (ID 1). This is a typical example in DiaGen where you build a graph representing
+  a visual sentence. The rule 1 might be a rule that adds something, but we don''t
+  know.
+
+
+  If the user is asking to evaluate this delta, we could describe the resulting graph.
+  But the user didn''t ask a question. They just provided the string. Maybe they want
+  to know what it means. I can respond with an explanation of the likely meaning and
+  ask if they need help with a specific task.
+
+
+  Given the lack of context, I should probably say: "This looks like a DiaGen delta
+  expression. It creates two datum nodes, two form nodes (types 1 and 2), two instance
+  nodes (types 1 and 2 with connections), and then applies rule 1 to all matches.
+  If you want me to evaluate it or explain it further, please provide the rule definitions
+  or ask a specific question."
+
+
+  But maybe the user expects a direct answer like "The result is a graph with nodes..."
+  I can try to draw it. Let''s assume the above interpretation. The graph would have:
+
+  - Node 1: Datum
+
+  - Node 2: Datum
+
+  - Node 3: Form type 1
+
+  - Node 4: Form type 2
+
+  - Node 5: Instance type 1, edges to 1 and 2
+
+  - Node 6: Instance type 2, edges to 3 and 1
+
+  Then rule 1 is applied to all matches. Without rule 1, we can''t know the final
+  graph. So the delta expression itself just builds this graph and then applies rule
+  1. If rule 1 is not defined, the result is undefined.
+
+
+  Maybe the user is asking to "parse" this string into an AST? Or they want to know
+  if it''s syntactically correct? It looks syntactically correct.
+
+
+  Another possibility: This is from a programming language called "Delta" for graph
+  transformations, and the user wants to know the result of executing it. But without
+  the initial graph and rule definitions, it''s impossible.
+
+
+  I think the best response is to acknowledge the string and ask for clarification.
+  But since the user might be testing the AI, I can provide a general explanation.
+
+
+  Let''s check if there''s any other context. The string starts with "delta<". In
+  DiaGen, the command to apply a sequence of graph transformations is indeed "delta<...>".
+  The operations are separated by semicolons. The operations are exactly NewDatum,
+  NewForm, NewInst, NewRuleAll. I''m quite confident this is DiaGen.
+
+
+  I can write a response: "This is a DiaGen delta expression. It performs the following
+  operations in order: ... If you need the resulting graph, please provide the rule
+  definitions for NewRuleAll(1) and any initial graph."
+
+
+  But maybe the user wants to know what "delta" means. I can explain.
+
+
+  Let''s craft a helpful response. I''ll explain the likely meaning of each operation,
+  and note that the final result depends on the rule 1. I''ll also mention that the
+  numbers in NewForm and NewInst likely denote types, and the lists denote node IDs.
+  I''ll ask if they want a more detailed evaluation.
+
+
+  I should be concise but informative. Since the user just sent the string, I''ll
+  assume they want an explanation.
+
+
+  Let''s write:
+
+
+  "This looks like a DiaGen delta expression. It is a sequence of graph transformation
+  operations:
+
+  - NewDatum: creates a new datum node.
+
+  - NewDatum: creates another datum node.
+
+  - NewForm(1): creates a form node of type 1.
+
+  - NewForm(2): creates a form node of type 2.
+
+  - NewInst(1,[1,2]): creates an instance node of type 1 connected to nodes 1 and
+  2.
+
+  - NewInst(2,[3,1]): creates an instance node of type 2 connected to nodes 3 and
+  1.
+
+  - NewRuleAll(1): applies rule 1 to all matches.
+
+
+  Assuming nodes are numbered sequentially, the graph after the first six operations
+  has nodes 1 and 2 as data, 3 and 4 as forms, 5 and 6 as instances, with edges as
+  specified. The final step applies rule 1, so the final graph depends on the definition
+  of rule 1. If you provide the rule, I can help compute the result."
+
+
+  That seems good. I''ll output that.'
+parsed_response: null
+extracted_answer: null
+sanitization:
+  fence_stripped: false
+  is_valid_json: false
+  structure_leakage_debt_chars: 1066
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: null
+  status: MALFORMED
+  reason: Reply was not valid JSON dictionary
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: Ionstream
+  dispatch_id: gen-1791686309-TudFWwMAr0cSZ2ayNhif
+  system_fingerprint: null
+  duration_seconds: 50.275
+  tokens_per_second: 113.2
+  usage:
+    prompt_tokens: 74
+    completion_tokens: 5691
+    reasoning_tokens: 5364
+    total_tokens: 5765
+  cost:
+    total_cost_usd: 0.00427565
+    total_cost_microusd: 4276
+    cost_details:
+      upstream_inference_cost: 0.00427565
+      upstream_inference_prompt_cost: 7.4e-06
+      upstream_inference_completions_cost: 0.00426825
+  timestamp_utc: '2026-10-11T02:39:19.788808+00:00'

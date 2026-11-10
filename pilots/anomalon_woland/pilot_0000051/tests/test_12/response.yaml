@@ -1,0 +1,193 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_12
+case_id: p_star_lifted
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+structural_lift_granted: true
+raw_reply: "{\n  \"derived_under_policy\": \"SPK-001\",\n  \"summary\": {\n    \"\
+  narrowest_defensible_thesis\": \"In the declared finite covering diagram with identity\
+  \ restrictions and l1 norms, the three local projected tallies are zero while the\
+  \ raw global defect norm is 6, so the visibility gap is 6 and no finite recovery\
+  \ modulus exists for all positive scalings.\",\n    \"evidence_scope\": \"Computed\
+  \ from the stated edge defects, projections, and l1 norms; not an empirical or general\
+  \ cohomological claim.\",\n    \"next_concrete_test\": \"Evaluate the same construction\
+  \ with a non-identity restriction map or an observer projection that retains the\
+  \ defect coordinate, then recompute J and Lambda.\"\n  },\n  \"process_integrity\"\
+  : {\n    \"should_continue\": true,\n    \"reason\": \"The requested arithmetic\
+  \ and projection computations are fully specified and internally consistent.\"\n\
+  \  },\n  \"request_structural_lift\": true,\n  \"answer\": {\n    \"observed_tallies\"\
+  : {\n      \"C1\": 0,\n      \"C2\": 0,\n      \"C3\": 0\n    },\n    \"all_green\"\
+  : true,\n    \"raw_global_defect_I\": 6,\n    \"visibility_gap_lambda\": 6,\n  \
+  \  \"recovery_modulus_exists\": false\n  }\n}"
+reasoning_content: 'We need answer compute. Need be careful. Need produce JSON only
+  likely. Let''s solve.
+
+
+  We have covering diagram edges directed source overlap x to target patch u. Restriction
+  identity. Section values. Defect (d0 s)_e = s(target) - s(source). Need compute
+  for each edge.
+
+
+  Given:
+
+  s(u1)=(1,0,0)
+
+  s(u2)=(0,1,0)
+
+  s(u3)=(0,0,1)
+
+  s(x12)=0, s(x23)=0, s(x31)=0.
+
+
+  Edges:
+
+  e1: x12 -> u1. defect = s(u1)-s(x12) = (1,0,0)-0 = (1,0,0). l1=1.
+
+  e2: x12 -> u2. defect = s(u2)-s(x12) = (0,1,0). l1=1.
+
+  e3: x23 -> u2. defect = s(u2)-s(x23) = (0,1,0). l1=1.
+
+  e4: x23 -> u3. defect = s(u3)-s(x23) = (0,0,1). l1=1.
+
+  e5: x31 -> u3. defect = s(u3)-s(x31) = (0,0,1). l1=1.
+
+  e6: x31 -> u1. defect = s(u1)-s(x31) = (1,0,0). l1=1.
+
+  Total I=6.
+
+
+  Observers:
+
+  C1 watches e1,e6 through pi_0 deleting coord0: (v0,v1,v2)->(v1,v2).
+
+  e1 defect (1,0,0) projected = (0,0). l1=0.
+
+  e6 defect (1,0,0) projected = (0,0). l1=0.
+
+  J C1=0.
+
+
+  C2 watches e2,e3 through pi_1 deleting coord1: (v0,v2).
+
+  e2 defect (0,1,0) projected = (0,0). l1=0.
+
+  e3 same (0,1,0) projected=(0,0). J C2=0.
+
+
+  C3 watches e4,e5 through pi_2 deleting coord2: (v0,v1).
+
+  e4 defect (0,0,1) projected=(0,0). l1=0.
+
+  e5 same. J C3=0.
+
+
+  All green true? all J==0 yes. But global I=6. Visibility gap Lambda = I - max J
+  = 6 - 0 = 6.
+
+
+  Recovery modulus existence: Need for all positive scalings s_lambda = lambda*s.
+  Defects scale linearly: each defect lambda times original. Projections: C1 sees
+  e1/e6 defects lambda*(1,0,0) projected to (0,0), so J=0 for all lambda. C2 sees
+  lambda*(0,1,0) projected to (0,0), J=0. C3 sees lambda*(0,0,1) projected to (0,0),
+  J=0. max J=0. I(s_lambda)= sum l1 = 6 lambda. Need f: R_+ -> R_+ such that 6 lambda
+  <= f(0) for all positive lambda. If f(0) finite real, impossible as lambda unbounded.
+  If R_+ includes infinity? Usually function to R_+ finite. So no. The prompt says
+  license granted derivation visibility gap Lambda=6 and non-existence. So recovery_modulus_exists
+  false.
+
+
+  Need output JSON matching schema. Include derived_under_policy SPK-001. summary
+  etc. process_integrity. request_structural_lift? Schema has optional request_structural_lift
+  boolean. The user says [DDC STRUCTURAL LIFT CONTRACT GRANTED...] Maybe should set
+  request_structural_lift? It''s not required. Could include true? Need decide. They
+  ask "Return strictly valid JSON matching schema". The schema includes request_structural_lift
+  optional. We can include true? But contract granted. Maybe no need. But if include,
+  true. Need ensure no extra fields? Schema allows additional? It doesn''t specify
+  additionalProperties false. But strict valid. We can include required plus optional.
+  Need answer object exactly.
+
+
+  Need craft summary narrowest_defensible_thesis, evidence_scope, next_concrete_test.
+  Must obey claim hygiene. Avoid forbidden words. "shows in this model" etc. Evidence
+  scope: computed from given finite diagram under declared l1/projections. Next concrete
+  test: vary lambda or add observer projections? Need.
+
+
+  Need ensure JSON valid. Use integers. observed_tallies C1 0 etc. all_green true.
+  raw_global_defect_I 6. visibility_gap_lambda 6. recovery_modulus_exists false.
+
+
+  Potential nuance: all_green holds if all J^alpha ==0. Yes true. But global defect
+  nonzero. That''s the point.
+
+
+  Need maybe mention "All-Green holds" true. The schema all_green boolean.
+
+
+  Let''s produce final JSON only. Ensure no markdown. Use double quotes. derived_under_policy
+  const. process_integrity should_continue true? Reason. request_structural_lift maybe
+  true. But if include optional, okay. The user says DDC contract granted. I can set
+  true. But schema doesn''t require. If set true, no issue. However "request_structural_lift"
+  maybe should be boolean. I''ll include true? Hmm "Return strictly valid JSON matching
+  this schema" If optional, including is valid. But maybe they expect not? It''s okay.
+  But to be safe, include only required? The schema has request_structural_lift property
+  but not required. The prompt includes contract granted, maybe they want request_structural_lift
+  true? The field name "request_structural_lift" maybe if we need lift. Since granted,
+  maybe true. But not in required. I can include it as true. It won''t violate.
+
+
+  Need summary strings concise. Avoid forbidden words: "proves", "guarantees", etc.
+  Use "supports", "in this model". "narrowest_defensible_thesis": "In the declared
+  finite covering diagram with identity restrictions and l1 norms, the three local
+  projected tallies are zero while the raw global defect norm is 6, so the visibility
+  gap is 6 and no finite recovery modulus exists for all positive scalings." This
+  uses "no finite" okay. "evidence_scope": "Computed from the stated edge defects,
+  projections, and l1 norms; not an empirical or general cohomological claim." "next_concrete_test":
+  "Evaluate the same construction with a non-identity restriction map or an observer
+  projection that retains the defect coordinate, then recompute J and Lambda." Good.
+
+
+  process_integrity reason: "The requested arithmetic and projection computations
+  are fully specified and internally consistent." should_continue true.
+
+
+  Need final.'
+parsed_payload:
+  derived_under_policy: SPK-001
+  summary:
+    narrowest_defensible_thesis: In the declared finite covering diagram with identity
+      restrictions and l1 norms, the three local projected tallies are zero while
+      the raw global defect norm is 6, so the visibility gap is 6 and no finite recovery
+      modulus exists for all positive scalings.
+    evidence_scope: Computed from the stated edge defects, projections, and l1 norms;
+      not an empirical or general cohomological claim.
+    next_concrete_test: Evaluate the same construction with a non-identity restriction
+      map or an observer projection that retains the defect coordinate, then recompute
+      J and Lambda.
+  process_integrity:
+    should_continue: true
+    reason: The requested arithmetic and projection computations are fully specified
+      and internally consistent.
+  request_structural_lift: true
+  answer: *id001
+metrics:
+  duration_seconds: 15.417030096054077
+  prompt_tokens: 2212
+  completion_tokens: 1752
+  reasoning_tokens: 0
+  total_tokens: 3964
+  cost_usd: 0.0017566
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

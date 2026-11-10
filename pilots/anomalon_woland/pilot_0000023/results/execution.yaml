@@ -1,0 +1,31 @@
+schema: pfp.mode-trial-execution.v1
+authority_effect: None
+pilot_id: pilot_0000023
+mode_id: 2
+mode_contract: omega_engine_education/pfp/infrastructure/yaml/modes/mode_02_packets_and_sealed_envelopes/contract.yaml
+provider_calls: 0
+target_spend_usd: 0.0
+winning_condition_executed: true
+execution_limit: Existing spec mode mode_02 is kept.
+advantages:
+- The seal binds the sum to the row bytes, not to the variable names.
+disadvantages:
+- The seal does not say whether a name rotation was odd or even.
+variations:
+- variation_id: sealed_sum_is_name_invariant
+  role: winning
+  status: ACCEPTED
+  claim_held: true
+  failure_mode: null
+  observation: The sealed system sums to 6. A rotation of the names is recorded and does not edit the
+    rows.
+  evidence:
+    sum: 6
+- variation_id: row_replacement
+  role: advantage
+  status: REJECTED
+  claim_held: true
+  failure_mode: null
+  observation: Replacing the rows with a different system changes the problem digest.
+  evidence:
+    detected: true

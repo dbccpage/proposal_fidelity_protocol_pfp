@@ -1,0 +1,211 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_08
+case_id: rewrite_08_sn_downmap
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+witness_verified: null
+raw_reply: "{\n  \"answer\": {\n    \"observed_tallies\": {\"C1\": 0, \"C2\": 0, \"\
+  C3\": 0},\n    \"all_green\": true,\n    \"raw_global_defect_I\": 6,\n    \"visibility_gap_lambda\"\
+  : 6,\n    \"recovery_modulus_exists\": false\n  }\n}"
+reasoning_content: "We need answer. Need parse problem. Need compute. Need be careful.\
+  \ We need infer definitions. This seems from discrete geometry substrate S(n), 3-patch\
+  \ covering carrier C, boundary transition edges e1..e6 with fiber representation\
+  \ Omega_3 = (R^3, ||\xB7||_1). Active boundary configuration carries coboundary\
+  \ vectors:\ne1,e6 -> [1,0,0]^T\ne2,e3 -> [0,1,0]^T\ne4,e5 -> [0,0,1]^T\n\nDown-map\
+  \ retractions R_alpha: Omega_3 -> Omega_2 discard alpha-th fiber generator:\nR_0\
+  \ drops coordinate 0, applied to edges {e1,e6} by observer C1.\nR_1 drops coordinate\
+  \ 1, applied to edges {e2,e3} by observer C2.\nR_2 drops coordinate 2, applied to\
+  \ edges {e4,e5} by observer C3.\n\nCompute:\n1. Retracted boundary tally register\
+  \ J = {\"C1\": integer, \"C2\": integer, \"C3\": integer}.\n2. Global nullity predicate\
+  \ across retractions: all_green (boolean).\n3. Unretracted total raw boundary defect\
+  \ I = sum_e ||defect(e)||_1.\n4. Obstruction visibility gap Lambda = I - max_alpha\
+  \ J^alpha.\n5. Modulus preservation under dilation: does a recovery modulus exist\
+  \ (boolean)?\n\nNeed determine tallies. Need understand \"retracted boundary tally\"\
+  \ likely count of edges whose retracted vector is zero? Or sum of norms after retraction?\
+  \ Let's parse.\n\nCoboundary vectors assigned to edges. For each observer alpha,\
+  \ applies R_alpha to edges in its set. R_0 drops coordinate 0. For e1,e6 vector\
+  \ [1,0,0], dropping coord0 gives [0,0]? Wait Omega_2 maybe coordinates remaining?\
+  \ If drop coordinate 0 from R^3, vector becomes (0,0) in R^2? Actually [1,0,0] ->\
+  \ [0,0] (remaining coords 1,2 both 0). Norm L1 = 0. For e2,e3 [0,1,0], R_1 drops\
+  \ coord1 -> [0,0] norm 0. For e4,e5 [0,0,1], R_2 drops coord2 -> [0,0] norm 0. So\
+  \ each observer sees zero on its assigned edges. Tally maybe number of edges with\
+  \ zero retraction? C1 has 2, C2 2, C3 2. Or sum of norms = 0. Need infer from terms\
+  \ \"boundary tally register J\" and \"all_green\" nullity predicate. \"Global nullity\
+  \ predicate across retractions: all_green\" likely true if all retracted boundary\
+  \ tallies are zero? Hmm.\n\nLet's inspect wording. \"Retracted boundary tally register\
+  \ J = {\"C1\": integer, ...}\" Could be count of nonzero? \"tally\" maybe number\
+  \ of boundary transition edges that survive retraction? Need know from S(n) discrete\
+  \ geometry substrate? Maybe from prior tasks? Need reconstruct.\n\nThey give active\
+  \ boundary configuration carries coboundary vectors. Down-map retractions discard\
+  \ alpha-th fiber generator. Compute retracted boundary tally register J. Maybe for\
+  \ each observer, apply retraction to its edges and count how many have nonzero?\
+  \ Let's see.\n\nIf R_0 drops coordinate 0, applied to edges {e1,e6} by C1. e1,e6\
+  \ have vector [1,0,0]. After dropping coord0, vector becomes [0,0]^T. So retracted\
+  \ boundary defect is zero. Tally maybe sum of L1 norms of retracted vectors = 0.\
+  \ But then all_green? If all tallies zero, nullity predicate true. Raw global defect\
+  \ I = sum over all edges ||defect(e)||_1. Each vector has L1 norm 1, six edges =>\
+  \ I=6. Visibility gap Lambda = I - max J = 6 - 0 = 6. Recovery modulus exists? If\
+  \ all retractions kill assigned defects, maybe no? Need determine.\n\nBut maybe\
+  \ J counts number of edges with nonzero retracted vector? Then C1=0, C2=0, C3=0.\
+  \ all_green? If all zero, true? Or all_green means all observers see green (zero\
+  \ defect) yes true. Then Lambda=6. Recovery modulus? Need think.\n\nAlternatively,\
+  \ J might be sum of L1 norms of original vectors on edges assigned to observer?\
+  \ For C1 edges e1,e6 each norm 1 => J_C1=2. C2=2, C3=2. Then all_green? If J nonzero,\
+  \ not green? all_green false. I=6. Lambda=6 - max(2)=4. Recovery modulus? Maybe\
+  \ true? Need infer.\n\nLet's parse exact: \"Retracted boundary tally register J\
+  \ = {\"C1\": integer, \"C2\": integer, \"C3\": integer}.\" They mention \"Down-map\
+  \ retractions R_alpha ... applied to edges ... by observer\". So J likely after\
+  \ retraction. \"Global nullity predicate across retractions: all_green (boolean).\"\
+  \ Nullity predicate across retractions: all retracted defects zero? If yes all_green\
+  \ true. \"Unretracted total raw boundary defect I = sum_e ||defect(e)||_1.\" This\
+  \ explicitly raw before retraction. \"Obstruction visibility gap Lambda = I - max_alpha\
+  \ J^alpha.\" If J after retraction, gap large. If J original, gap smaller. \"Modulus\
+  \ preservation under dilation: does a recovery modulus exist (boolean)?\" Need know\
+  \ condition.\n\nMaybe there is a known theorem: In S(n), all_green iff max J = I?\
+  \ Or recovery modulus exists iff Lambda=0? Let's derive.\n\nThe problem likely designed\
+  \ with vectors aligned to dropped coordinates. Each observer's retraction discards\
+  \ exactly the coordinate that is nonzero on its assigned edges. Thus each observer\
+  \ sees zero defect on its own edges. But globally raw defect nonzero. This is an\
+  \ obstruction invisible to local observers. all_green? If all local retractions\
+  \ are zero, then all_green true? But \"global nullity predicate across retractions\"\
+  \ maybe all_green means all local tallies are zero. Then yes. Visibility gap = 6.\
+  \ Recovery modulus? If local observers all see zero but global defect nonzero, no\
+  \ recovery modulus? Or maybe recovery modulus exists if dilation can recover? Need\
+  \ inspect.\n\n\"Modulus preservation under dilation: does a recovery modulus exist\
+  \ (boolean)?\" This sounds from metric geometry: A recovery modulus exists if there\
+  \ is a function controlling defect from retracted tallies? If all local retractions\
+  \ zero but raw defect nonzero, no recovery modulus. But maybe if all_green true,\
+  \ then recovery modulus exists? Need not.\n\nLet's search memory. There are tasks\
+  \ about \"S(n) discrete geometry substrate\", \"3-patch covering carrier\", \"coboundary\
+  \ vectors\", \"down-map retractions\", \"all_green\", \"visibility gap lambda\"\
+  , \"recovery modulus\". Might be from a benchmark with hidden definitions. Need\
+  \ infer from terms.\n\nMaybe \"all_green\" is a boolean indicating all retracted\
+  \ boundary tallies are zero? \"Global nullity predicate across retractions\" = all_green.\
+  \ Nullity means zero. So if J all zero, all_green true. But if all_green true, then\
+  \ no obstruction? Yet raw defect I=6. Visibility gap = I - max J = 6. That indicates\
+  \ obstruction hidden. Recovery modulus? \"Modulus preservation under dilation\"\
+  \ maybe if Lambda=0? If gap >0, no recovery modulus. So likely false.\n\nBut let's\
+  \ not jump. Need compute J. Could be integer tally of edges per observer after retraction.\
+  \ Since each observer has 2 edges, and retraction maps each to zero. Tally could\
+  \ be 0 or 2 depending count. Let's examine \"tally register\" maybe counts \"number\
+  \ of nonzero retracted boundary vectors\" or \"sum of L1 norms\". They ask integer.\
+  \ If sum of norms, C1=0. If count of edges, C1=2? Wait \"retracted boundary tally\"\
+  \ might tally edges that are retracted? The retraction is applied to edges {e1,e6}\
+  \ by C1. So C1 tally could be number of edges assigned = 2. But then why compute\
+  \ retraction? The vectors after retraction are zero, but tally of retracted edges\
+  \ is 2. Hmm.\n\nLet's parse phrase: \"Down-map retractions R_alpha: Omega_3 -> Omega_2\
+  \ discard the alpha-th fiber generator:\nR_0 drops coordinate 0, applied to edges\
+  \ {e1, e6} by observer C1.\nR_1 drops coordinate 1, applied to edges {e2, e3} by\
+  \ observer C2.\nR_2 drops coordinate 2, applied to edges {e4, e5} by observer C3.\n\
+  \nCompute:\n1. Retracted boundary tally register J = {\"C1\": integer, \"C2\": integer,\
+  \ \"C3\": integer}.\"\n\n\"Retracted boundary tally\" likely after applying R to\
+  \ boundary vectors, tally maybe sum of L1 norms of retracted vectors. Because they\
+  \ mention fiber representation with L1 norm. Raw defect I uses L1 norm. J^alpha\
+  \ likely also L1 norm sum. The notation J^alpha maybe tally for observer alpha.\
+  \ If R_0 drops coordinate 0, the vector [1,0,0] becomes [0,0]? Actually if Omega_2\
+  \ = (R^2, ||\xB7||_1), dropping coordinate 0 from [1,0,0] leaves [0,0]^T. L1 norm\
+  \ 0. So J_C1 = ||R_0([1,0,0])||_1 + ||R_0([1,0,0])||_1 = 0+0=0. Similarly all zero.\
+  \ That seems too trivial but maybe intended.\n\nIf J were count of edges, C1=2,\
+  \ C2=2, C3=2. Then all_green? \"Global nullity predicate across retractions\" maybe\
+  \ all_green = (J_C1==0 and J_C2==0 and J_C3==0)? Then false. But if J counts edges,\
+  \ all_green false. Which is more plausible? Let's look at \"nullity predicate across\
+  \ retractions\": Nullity of retracted boundary? If J is sum of norms, nullity means\
+  \ J=0. If J is count of edges, nullity doesn't make sense. So J likely sum of norms.\
+  \ Thus J all zero. all_green true. But then \"all_green\" true despite raw defect?\
+  \ That's the point: local retractions see no defect. Visibility gap 6. Recovery\
+  \ modulus? If all_green true, maybe recovery modulus exists? Wait \"all_green\"\
+  \ might mean all local observers report green (no defect). But global raw defect\
+  \ nonzero. The \"obstruction visibility gap\" is I - max J = 6. If gap >0, obstruction\
+  \ not visible. \"Modulus preservation under dilation: does a recovery modulus exist?\"\
+  \ If there is a visibility gap, maybe no recovery modulus because cannot recover\
+  \ global defect from local retractions. So false.\n\nBut let's consider if recovery\
+  \ modulus exists when all_green? In sheaf theory, if all local sections agree on\
+  \ overlaps, global section exists. Here all local retractions zero, so they agree.\
+  \ But raw defect nonzero? Hmm.\n\nMaybe \"recovery modulus\" refers to existence\
+  \ of a constant C such that raw defect I <= C * max J? If max J=0 and I=6, no finite\
+  \ C. So false. That aligns.\n\nNeed ensure raw global defect I. \"Unretracted total\
+  \ raw boundary defect I = sum_{e} ||defect(e)||_1.\" Each edge vector has L1 norm\
+  \ 1. Six edges => 6. Yes.\n\nVisibility gap Lambda = I - max_alpha J^alpha. If J\
+  \ all zero, max=0, Lambda=6.\n\nNeed output JSON exactly.\n\nBut let's not ignore\
+  \ possibility J might be 2 each. Let's examine notation \"J^alpha\" maybe superscript\
+  \ alpha. They ask \"max_alpha J^alpha\". If J is tally per observer, maybe it's\
+  \ count of edges assigned to observer? Then max=2. Lambda=4. all_green? \"Global\
+  \ nullity predicate across retractions\" maybe all_green = (I == sum J?)? Hmm.\n\
+  \nLet's search memory of similar tasks. There is a benchmark \"S(n) discrete geometry\
+  \ substrate\" maybe from \"Topological obstruction\" tasks. Terms: \"3-patch covering\
+  \ carrier C\", \"boundary transition edges\", \"fiber representation Omega_3 = (R^3,\
+  \ ||\xB7||_1)\", \"coboundary vectors\", \"Down-map retractions\", \"Retracted boundary\
+  \ tally register J\", \"Global nullity predicate across retractions: all_green\"\
+  , \"Unretracted total raw boundary defect I\", \"Obstruction visibility gap Lambda\"\
+  , \"Modulus preservation under dilation\". This seems generated from a formal system.\
+  \ The expected computations likely follow simple rules:\n- For each observer, apply\
+  \ retraction to its edges, compute L1 norm sum. If zero, tally 0.\n- all_green =\
+  \ all J == 0.\n- I = sum L1 norms of all edge vectors.\n- Lambda = I - max J.\n\
+  - recovery_modulus_exists = (Lambda == 0)? Or maybe (all_green and I==0)? Need infer.\n\
+  \nLet's derive from terms:\n\"Modulus preservation under dilation: does a recovery\
+  \ modulus exist (boolean)?\" In metric geometry, a recovery modulus exists if there\
+  \ is a function f such that defect <= f(observed tallies). If observed tallies all\
+  \ zero but defect nonzero, no. If Lambda=0, then max J = I, so observed tallies\
+  \ capture all defect, recovery modulus exists. So boolean = (Lambda == 0). Here\
+  \ Lambda=6, false.\n\nWhat if J=2 each, Lambda=4, also false. So recovery modulus\
+  \ false either way. all_green differs. Need decide.\n\nLet's parse \"Global nullity\
+  \ predicate across retractions: all_green (boolean).\" Nullity predicate across\
+  \ retractions: For each retraction, is the retracted boundary null? If J is sum\
+  \ of norms after retraction, all zero => all_green true. If J is count of edges,\
+  \ nullity not directly. So J must be sum of norms. Thus all_green true.\n\nBut wait,\
+  \ \"all_green\" might mean all observers see green (no obstruction) if their retracted\
+  \ tally is zero. Yes.\n\nLet's compute J carefully:\nC1: R_0 drops coordinate 0.\
+  \ For e1 vector [1,0,0]^T. Dropping coordinate 0 means remove first coordinate,\
+  \ remaining [0,0]^T. L1 norm = 0. e6 same. Sum = 0.\nC2: R_1 drops coordinate 1.\
+  \ e2 [0,1,0] -> remove second coordinate, remaining [0,0]^T. L1=0. e3 same. Sum=0.\n\
+  C3: R_2 drops coordinate 2. e4 [0,0,1] -> remove third coordinate, remaining [0,0]^T.\
+  \ L1=0. e5 same. Sum=0.\n\nSo observed_tallies: {\"C1\":0,\"C2\":0,\"C3\":0}\nall_green:\
+  \ true (all zero)\nraw_global_defect_I: 6\nvisibility_gap_lambda: 6\nrecovery_modulus_exists:\
+  \ false\n\nNeed output JSON. Ensure no extra text. Use exact keys. \"observed_tallies\"\
+  \ not \"J\"? The requested JSON has \"observed_tallies\". We'll output.\n\nDouble-check\
+  \ if L1 norm of [1,0,0] is 1. Yes.\n\nPotential nuance: \"defect(e)\" maybe coboundary\
+  \ vector? They say \"active boundary configuration carries coboundary vectors\"\
+  . \"Unretracted total raw boundary defect I = sum_e ||defect(e)||_1.\" So defect(e)\
+  \ is the vector. Yes.\n\nPotential nuance: R_0 drops coordinate 0, applied to edges\
+  \ {e1,e6}. If dropping coordinate 0 from [1,0,0] leaves [0,0]? Actually if Omega_2\
+  \ = (R^2, ||\xB7||_1), coordinates might be reindexed? Dropping coordinate 0 means\
+  \ remove first coordinate, remaining coordinates 1 and 2: [0,0]. Yes.\n\nPotential\
+  \ nuance: \"all_green\" might be true if all retracted tallies are zero. Yes.\n\n\
+  Potential nuance: \"recovery modulus exists\" maybe if all_green? But if all_green\
+  \ true, maybe recovery modulus exists? Let's think. The term \"Modulus preservation\
+  \ under dilation\" might be a property: if all_green, then recovery modulus exists?\
+  \ But here all_green true, yet raw defect nonzero. Would that be contradictory?\
+  \ Maybe \"all_green\" means global nullity predicate across retractions, i.e., all\
+  \ retractions have zero nullity? Wait \"nullity predicate\" could mean \"is nullity\
+  \ zero?\" If all_green true, then all retractions are null (zero). But raw defect\
+  \ nonzero. The question asks \"does a recovery modulus exist?\" If all local retractions\
+  \ are zero, can we recover? No. So false.\n\nLet's see if there is any scenario\
+  \ where recovery modulus exists. If Lambda=0, then max J = I. Here Lambda=6. So\
+  \ false.\n\nI think final.\n\nNeed ensure JSON valid. Use integers and booleans\
+  \ lowercase. \n{\n  \"answer\": {\n    \"observed_tallies\": {\"C1\": 0, \"C2\"\
+  : 0, \"C3\": 0},\n    \"all_green\": true,\n    \"raw_global_defect_I\": 6,\n  \
+  \  \"visibility_gap_lambda\": 6,\n    \"recovery_modulus_exists\": false\n  }\n\
+  }\n\nLet's final."
+parsed_payload:
+  answer: *id001
+metrics:
+  duration_seconds: 24.247
+  prompt_tokens: 409
+  completion_tokens: 3920
+  reasoning_tokens: 3840
+  total_tokens: 4329
+  cost_usd: 0.0
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

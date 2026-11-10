@@ -19,7 +19,7 @@ The opening cell used a **chorded** triangle $A,B,C$ with a chord $A \to C$ and 
 - claims $c = (1,1,1)$
 - host $\Phi_1 = 3$  **[Pinned]** `compute_phi1` / `play_demo.py`
 
-Short video of this single example: `notebooks/scenes/three_cycle_phi1.py` (matplotlib+ffmpeg; optional Manim class `ThreeCyclePhi1`).
+Short video of this single example: `pilots/education/track_a/scenes/three_cycle_phi1.py` (matplotlib+ffmpeg; optional Manim class `ThreeCyclePhi1`).
 
 **Predict-then-run.** Before executing the next cell, write `CONSISTENT` / `CONTRADICTION` and $\Phi_1$. The checked-in values are the worked solution; change a claim without updating them and the cell fails.
 
@@ -61,7 +61,7 @@ $c(c \to a) = -2$ gives cycle sum $0$ and $\Phi_1 = 0$ (gauge $f(a)=0, f(b)=1, f
 - **Ledger IDs**: `PO032-C29` through `PO032-C36`
 - **Code**: `papers/032_the_symbol_game_three_layer_sovereignty_and_discrete_l1_projection/code/l1_symbol_game_governor.py` (`compute_phi1`, module-level)
 - **Code**: `papers/033_the_symbol_game_practitioners_field_manual/code/play_demo.py`
-- **Video**: `notebooks/scenes/three_cycle_phi1.py` (Track A video 3)
+- **Video**: `pilots/education/track_a/scenes/three_cycle_phi1.py` (Track A video 3)
 
 > **Claim-typing legend**
 > - **[Pinned]**: taken from a file this repository already has.

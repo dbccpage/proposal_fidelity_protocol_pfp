@@ -1,0 +1,102 @@
+{
+  "schema": "pfp.po035-documentation-review.v1",
+  "authority_effect": "None",
+  "reviewer": "/root/po035_derivation_review",
+  "review_kind": "INDEPENDENT_DOCUMENTATION_REVIEW",
+  "scope": {
+    "primary_document": "omega_engine_education/documentation/004_oepfp/docs/16_numbered_prompt_roles_and_po035_play.md",
+    "navigation_documents": [
+      "omega_engine_education/documentation/004_oepfp/docs/README.md",
+      "omega_engine_education/documentation/004_oepfp/README.md",
+      "omega_engine_education/documentation/004_oepfp/llms.txt",
+      "omega_engine_education/documentation/004_oepfp/_how_to_play/README.md"
+    ],
+    "focus": [
+      "Empirical accuracy",
+      "Experimental type and authority boundaries",
+      "Existing family tokens",
+      "Usable role selection and offline replay instructions"
+    ],
+    "limits": "Review of this new guide and its new navigation links, not a fresh audit of all legacy documentation or an independent execution of replay/frontmatter/link tooling.",
+    "final_document_sha256": "fdf4dd95636505e8c73bc1fdfd25b9c9fcd22c32f03494cd00d651f81cd0767a"
+  },
+  "status": "APPROVED_WITH_ADDRESSED_FINDING",
+  "findings": [
+    {
+      "id": "DOC-PO035-001",
+      "priority": "P2",
+      "path": "omega_engine_education/documentation/004_oepfp/docs/16_numbered_prompt_roles_and_po035_play.md",
+      "line": 45,
+      "title": "Do not infer an untested token-ceiling counterfactual",
+      "observed_text": "Shortening a contract can therefore remove necessary placement information while leaving a misleading response-shaped example. More token room would not fix this particular failure.",
+      "finding": "The retained replies establish layout-description copying without observed truncation. They do not isolate shortening as the cause, establish that placement information was removed, or compare a larger completion ceiling. The claim that more room would not fix the failure exceeds the measured comparison.",
+      "suggested_replacement": "The replies copied the layout description despite its placement instructions. No reply hit its token ceiling, so truncation does not explain these failures; the effect of a higher ceiling is untested.",
+      "disposition": "Owner changed the guide; reviewer inspected the final paragraph and verified the final document hash.",
+      "status": "ADDRESSED",
+      "resolution": "The final guide reports layout copying, observes that no ceiling was hit, and explicitly leaves the effect of a higher ceiling untested. The causal-shortening diagnosis was removed."
+    }
+  ],
+  "verified_claims": [
+    {
+      "claim": "Compact rerun comprised five runs, fifteen calls, 56450 reported tokens and zero reported cost, with all runs within their shared caps.",
+      "support": "po035_simplified_20261012/results.json; five run totals and fifteen stage records match the guide."
+    },
+    {
+      "claim": "All fifteen replies ended with stop, were schema refused and did not reach the finite certificate judge.",
+      "support": "Compact results stage finish_reason, schema_status and certificate_status fields."
+    },
+    {
+      "claim": "All five workpads were refused, so this round supplies no evidence for valid workpad assistance.",
+      "support": "Compact results and closeout custody review; consistent with the explicit fixed missing-workpad carry rule."
+    },
+    {
+      "claim": "Two independent Codex agents reviewed all ten finals with current arm/model/host-verdict metadata withheld; no full analytical goal was met, and one causal finite witness was correct.",
+      "support": "derivation_agent_review.json and execution_agent_review.json both cover ten blind IDs; the correct finite causal witness is ac9537cd4406. The reviewers had prior task/design knowledge, so this is treatment-identity blinding rather than ignorance of the experimental design."
+    },
+    {
+      "claim": "The preceding trial totals, workpad truncation count, schema-valid final count and mathematical failure boundary are accurately summarized.",
+      "support": "po035_experiments_20261012/README.md reports forty calls, 198952 tokens, USD0.017035, eight truncated workpads, five schema-valid finals out of thirty, and critical mathematical errors in all five reviewed valid packets."
+    },
+    {
+      "claim": "Role versions, recipe versions and dynamic rendered instances are distinguished correctly; the candidate is not a production-global default or canonical EBNF change.",
+      "support": "simplified_prompts.py plus the exact versioned role registry and version guide."
+    },
+    {
+      "claim": "Public workpad, final calculation binding and typed-refusal descriptions match the actual new schemas and checker.",
+      "support": "simplified_prompts.py; simplified_checking.py validates exact field/carrier/result types, checks same-packet equality and requires null calculations/certificate for typed refusal. Displayed expressions and analytical prose are not certified by binding."
+    },
+    {
+      "claim": "Duplicate keys, fenced JSON, wrong identity, additional properties and native-type substitution are rejected at ingress.",
+      "support": "omega_engine_providers/infrastructure/wire.py strict decoder and simplified_checking.py strict integer validator/schema checks."
+    },
+    {
+      "claim": "All five named PO035 task-family tokens already exist in the runtime catalog.",
+      "support": "task_families.yaml entries causal_refinement_derivation, microscopic_defect_current_derivation, covariant_relational_spine_derivation, metric_cochain_bridge_derivation and obstruction_terminal_policy_derivation; task_families.py loads this YAML catalog."
+    },
+    {
+      "claim": "The documented source snapshot uses thirty-two original source pins and three separately captured replay dependencies, with closeout capture explicitly distinguished from dispatch-time custody.",
+      "support": "sources.json, replay_dependencies.json and the retained replay wrapper."
+    },
+    {
+      "claim": "The new guide is discoverable through all four stated navigation documents.",
+      "support": "Each new link resolves by its stated relative path to docs/16_numbered_prompt_roles_and_po035_play.md."
+    }
+  ],
+  "usability_assessment": {
+    "strengths": [
+      "The role table distinguishes the direct control from the two-call staged offshoot.",
+      "The offline rendering example explicitly states that it makes no provider call and accepts only the five registered PO035 IDs.",
+      "The game table labels played, locally checked and proposed variants separately.",
+      "Replay commands are scoped to retained evidence interpretation and do not promise future hosted-text identity.",
+      "The next small round is a proposal, not a claim of measured success or an automatic dispatch."
+    ],
+    "blockers_other_than_finding": "None identified within the reviewed scope."
+  },
+  "actions": {
+    "provider_calls": 0,
+    "full_ci_run": false,
+    "guide_or_runtime_edits": false,
+    "new_file_only": "omega_engine_education/pilots/evidence/po035_simplified_20261012/documentation_agent_review.json",
+    "manifest_note": "Owner should include this final review and final documentation hash in the evidence inventory."
+  }
+}

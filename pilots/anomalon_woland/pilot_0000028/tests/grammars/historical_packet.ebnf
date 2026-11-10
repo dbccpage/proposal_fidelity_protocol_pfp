@@ -1,0 +1,14 @@
+(* historical-packet-v1: raw syntax owned by domain/tower/grammar.py.
+   Start: packet. Consume one complete input; no whitespace or comments.
+   An app may be empty or have a non-binary first atom. Opcode, arity,
+   numeric codecs and level activation are separate typed checks.
+   AuthorityEffect: None. *)
+packet = ground | atom | application ;
+ground = "<>" ;
+atom = "<", word, ">" ;
+application = "op<", { packet }, ">" ;
+word = glyph, { glyph } ;
+glyph = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+      | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
+      | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
+      | "u" | "v" | "w" | "x" | "y" | "z" ;

@@ -5,9 +5,9 @@ AuthorityEffect: None. Updated 2026-10-12 against application revision
 
 | Need | Read |
 | --- | --- |
-| Finite-QM prompt template, stages and mode | [Finite-QM workflow](docs/22_unified_pfp_v4_operad_workflow_and_hacks.md) |
+| Finite-QM prompt template, stages and mode | [Finite-QM workflow](../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md) |
 | Orientation, goals and evidence limits | [Documentation hub](README.md) |
-| Runnable examples and discovery experiments | [Practical PFP](_how_to_play/13_practical_pfp_and_discovery.md) |
+| Runnable examples and discovery experiments | [Practical PFP](../../pilots/education/runbooks/13_practical_pfp_and_discovery.md) |
 | Existing types, mode capability map and learned repairs | [Types and learnings](docs/16_current_types_and_learnings.md) |
 | Stage semantics | [Eight-stage pipeline](_how_to_play/10_eight_stage_pipeline.md) |
 | Capture files and troubleshooting | [Output layout](_how_to_play/12_output_layout_and_troubleshooting.md) |

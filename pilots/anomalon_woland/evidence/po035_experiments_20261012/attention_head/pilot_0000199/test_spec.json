@@ -1,0 +1,36 @@
+{
+  "pilot_id": "pilot_0000199",
+  "original_seed_sha256": "42c14c02d2e28ac9efa8a5b5b061ce57bcde4f9e8a9addeb7b6fd34df62e04ff",
+  "task_family": "causal_refinement_derivation",
+  "budget_scope": "all_arms_rounds_and_host_stages_share_one_run_cap",
+  "max_cost_microusd": 50000,
+  "max_total_provider_tokens": 120000,
+  "max_seconds": 180,
+  "expected_answers_in_prompts": false,
+  "judge": "original_independent_PO035_predicates",
+  "full_analytical_review_separate": true,
+  "test_id": "AH199",
+  "kind": "attention_head",
+  "status": "EXECUTION_UNAVAILABLE",
+  "max_provider_calls": 0,
+  "provider_retries": 0,
+  "model_candidate": "Qwen/Qwen2.5-0.5B-Instruct",
+  "planned_provider_calls": 2,
+  "control": "All head output scales equal one",
+  "intervention": {
+    "layer_fraction": 0.0,
+    "query_head_index": 0,
+    "head_output_scale": 0
+  },
+  "location": "One selected attention head context slice before output projection, across prefill and decode",
+  "required_controls": [
+    "identity_hook_numerical_equivalence",
+    "nonzero_preintervention_head",
+    "changed_selected_head_only",
+    "hook_removed_after_case"
+  ],
+  "reason": "Torch/Transformers are absent; existing C001 key masking is not per-head manipulation",
+  "local_token_ceiling": 120000,
+  "local_wall_seconds": 180,
+  "hypothesis": "A verified head intervention changes results; improve/degrade/unchanged all retained"
+}

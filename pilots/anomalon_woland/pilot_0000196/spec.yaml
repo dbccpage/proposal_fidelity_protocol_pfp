@@ -1,0 +1,35 @@
+schema: pfp.pilot-spec.v1
+authority_effect: None
+pilot_id: pilot_0000196
+phase: pfp_learning
+execution_mode: PLANNED
+source_family: e_formal_math
+coordinates:
+  task_family: pfp_e_formal_math
+  stage_count: 2
+  single_shot: false
+  target_spend_usd: 0.05
+  temperature: 0.0
+  model_id: not-dispatched
+arms:
+- baseline
+- typed_witness
+- transfer
+- NO_LLM_control
+host_gate:
+  checker_id: PFP-DEMO004-E_FORMAL_MATH
+  expected_outcome: PLANNED
+  independent_judges: challenge-specific; C005 and C042 have one task dispatcher
+test_plan:
+  path: testplan.yaml
+  tests: 40
+  cases: 40
+canonical_register: ../matrix/max_pilot_matrix.yaml#pfp_challenge_learning
+stopping_rules:
+- maximum two stages
+- stop on checker disagreement or infrastructure failure
+- stop before dispatch exceeding USD 0.05 per run
+- no automatic rule admission
+limitations:
+- Host controls do not measure LLM capability
+- Transfer benefit requires fresh held-out trials

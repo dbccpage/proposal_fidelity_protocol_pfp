@@ -1,0 +1,159 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: p_star_rewrite_06_v3
+test_kind: p_star_templated
+pilot_id: pilot_0000000
+case_id: rewrite_06
+request_id: pilot_0000000_req_p_star_rewrite_06_v3
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: p_star_rewrite_06_v3.yaml
+  source_file_bytes: 10505
+  source_file_kb: 10.259
+  payload_bytes: 5586
+  payload_kb: 5.455
+  messages_count: 2
+raw_reply: '{"derived_under_policy":"SPK-001","answer":3,"summary":{"narrowest_defensible_thesis":"Under
+  the explicit integer linear-system license, the parsed equations are x+2y=5 and
+  3x-y=1, yielding x=1, y=2, and target c^T x = x+y = 3.","evidence_scope":"Finite
+  integer arithmetic of the supplied surface form; no external corpus or broader theory
+  is invoked.","next_concrete_test":"Substitute x=1 and y=2 into both equations: 1+4=5
+  and 3-2=1; then evaluate c^T x=3."},"sections":[],"process_integrity":{"seed_allows_theory_refutation":true,"detected_prompt_biases":[],"should_continue":false}}'
+reasoning_content: "We need answer solve. Need parse given surface. Need obey policy\
+  \ manifest: include derived_under_policy SPK-001. Need JSON schema. Need compute\
+  \ integer.\n\nWe have user content:\n<<sys><<mat><<row><1><2>><<row><3><<neg><1>>>>><<vec><5><1>><<target><<vec><1><1>>>>\n\
+  \nNeed parse operators. License says mat, row, vec, sys denote standard finite linear\
+  \ system Ax = b over integers, where row defines rows of matrix A, vec defines column\
+  \ vectors, and target denotes linear functional c^T x to evaluate on solution vector\
+  \ [x, y]^T. Solve x,y evaluate target.\n\nNeed parse nested. Let's decode.\n\nSurface:\n\
+  <<sys>\n  <<mat>\n    <<row><1><2>>\n    <<row><3><<neg><1>>>>\n  >\n  <<vec><5><1>>\n\
+  \  <<target><<vec><1><1>>>\n>\n\nActually outer <<sys> ... >? There are tags. Atomic\
+  \ glyphs include < > and labels a-z, 0-9. neg? Is neg an operator? License doesn't\
+  \ mention neg but it's in input. Need interpret <<neg><1>> as -1 likely, granted?\
+  \ The license mentions integer linear system, neg denotes unary negation perhaps.\
+  \ Need handle.\n\nRows: row <1><2> means row [1, 2]. row <3><neg 1> means [3, -1].\
+  \ Matrix A = [[1,2],[3,-1]].\n\nVec <5><1> = b? Standard finite linear system Ax\
+  \ = b. Probably vec denotes column vector. So b = [5,1]^T.\n\nTarget <<vec><1><1>>\
+  \ = c = [1,1]^T. Evaluate c^T x on solution vector [x,y].\n\nSolve:\n1*x + 2*y =\
+  \ 5\n3*x - 1*y = 1\n\nFrom first x = 5 - 2y. Substitute 3(5-2y) - y = 1 => 15 -6y\
+  \ - y =1 => -7y = -14 => y=2. x=5-4=1. Target = 1*x + 1*y = 3. Answer 3.\n\nNeed\
+  \ produce JSON matching. Sections maxItems 0, so sections [].\n\nNeed summary: narrowest_defensible_thesis,\
+  \ evidence_scope, next_concrete_test. process_integrity: seed_allows_theory_refutation\
+  \ boolean, detected_prompt_biases array, should_continue boolean.\n\nNeed be careful\
+  \ with forbidden words? We as assistant must write strict claim discipline. We can\
+  \ avoid forbidden words? JSON summary strings. Need not include forbidden words\
+  \ maybe. \"proves\" etc avoided. Narrowest: \"Under the explicit matrix/vector license,\
+  \ the parsed system Ax=b with A=[[1,2],[3,-1]], b=[5,1]^T, and c=[1,1]^T has solution\
+  \ x=1,y=2, so c^T x=3.\" Contains \"solution\" okay. \"shows\"? Fine. Evidence_scope:\
+  \ \"Finite integer arithmetic check of the parsed surface form only.\" Next_concrete_test:\
+  \ \"Recompute the two equations by substitution and evaluate x+y.\" Good.\n\nProcess\
+  \ integrity: seed_allows_theory_refutation? Need infer. The field asks whether seed\
+  \ allows theory refutation. We didn't get a seed? It's a process integrity value.\
+  \ Should we set true/false? The prompt likely expects honest. It asks \"seed allows\
+  \ theory refutation\" meaning does initial prompt allow theory refutation? The task\
+  \ is computational. Could set false? But process_integrity maybe required. We need\
+  \ decide. \"detected_prompt_biases\": maybe [] or list. \"should_continue\": likely\
+  \ true? Need maybe false since final answer.\n\nGiven schema placeholders? It says\
+  \ descriptive strings and true|false placeholders belong only to template. But we\
+  \ need actual. There is no explicit seed. We can set seed_allows_theory_refutation\
+  \ true? The process_integrity likely used for auditing. Since no seed provided?\
+  \ Hmm.\n\nNeed adhere to \"derived_under_policy: SPK-001\". Answer integer.\n\n\
+  Need ensure no extra properties. sections [] exactly. JsonValue can be any. process_integrity\
+  \ additionalProperties false required three. detected_prompt_biases default [] but\
+  \ if omit? It's not in required? Required: seed_allows_theory_refutation, should_continue.\
+  \ detected optional. But schema says additionalProperties false; can include empty\
+  \ array.\n\nNeed think about \"ProcessIntegrityValue\": seed_allows_theory_refutation\
+  \ title, should_continue. It might expect booleans. Since task self-contained, no\
+  \ theory to refute? We can set seed_allows_theory_refutation false? Let's consider\
+  \ context: The system has antibodies maybe? There is \"antibody_injections\": []\
+  \ no. The user task includes \"rule_name_the_checker_field\", \"rule_carrier_is_the_whole_task\"\
+  , \"rule_license_the_operators\". It's likely a benchmark where model must not look\
+  \ up external, just solve. The process_integrity fields maybe anti-hallucination:\n\
+  - seed_allows_theory_refutation: Does the prompt allow the theory to be refuted?\
+  \ Maybe if there are discrepancies. For arithmetic task, yes? No seed. \n- detected_prompt_biases:\
+  \ detect prompt biases. The prompt itself licenses operators; no obvious bias? It\
+  \ says do not search external corpora. Could flag \"benchmark corpus avoidance direct\
+  \ instruction\" maybe bias? Hmm.\n- should_continue: should continue? Since answering,\
+  \ maybe true. But after final? In response, process_integrity maybe whether to continue\
+  \ processing. If should_continue true? Usually if task incomplete. Here complete,\
+  \ could be false.\n\nNeed infer expected from schema. It may be a generic response\
+  \ contract where process_integrity fields are not evaluated? Only answer evaluated\
+  \ per directive. \"The checker evaluates the top-level 'answer' field for the final\
+  \ computed integer.\" So process_integrity can be plausible. Need not perfect. But\
+  \ we need comply. It likely doesn't matter for answer. Still, we can set conservative:\n\
+  seed_allows_theory_refutation: true (we allow checking arithmetic)\ndetected_prompt_biases:\
+  \ [\"operator names supplied with explicit license to avoid default forbidden interpretations\"\
+  ]? This is a bias? maybe.\nshould_continue: false (task complete)\n\nBut if \"should_continue\"\
+  \ true means continue? I'd set false because final response.\n\nNeed ensure JSON\
+  \ valid no markdown? The instruction says Return JSON matching schema. So final\
+  \ should be raw JSON. Include derived_under_policy.\n\nLet's double-check parsing\
+  \ of neg. The surface has <<row><3><<neg><1>>>>. Atomic glyph count 38, node labels\
+  \ a..z, numeric 0..9, delimiters < >. \"neg\" uses letters n,e,g, not an atomic\
+  \ glyph? Wait \"neg\" is three node labels? The manifest says node_labels a..z,\
+  \ numeric labels 0..9. So symbols like neg are sequences of node labels? In surface,\
+  \ <<neg><1>> maybe label \"neg\" as a node? But node_labels a..z individually, not\
+  \ words. Hmm. But user explicitly grants matrix operations and neg appears. We interpret\
+  \ as negation. Fine.\n\nCould there be alternative parse: Matrix rows might be <<row><1><2>>\
+  \ and <<row><3><<neg><1>>>>. Vec <5><1>. Target vec <1><1>. Solve.\n\nCheck if target\
+  \ vector [1,1] maybe dot product with solution. Answer 3.\n\nNeed handle if system\
+  \ Ax=b where row defines rows, vec defines column vectors, target denotes c^T x.\
+  \ Yes.\n\nLet's craft final JSON. Need no sections? sections: [].\n\nSummary strings:\n\
+  narrowest_defensible_thesis: \"Under the explicit integer linear-system license,\
+  \ the parsed equations are x+2y=5 and 3x-y=1, yielding x=1, y=2, and target c^T\
+  \ x = x+y = 3.\"\nevidence_scope: \"Finite integer arithmetic of the supplied surface\
+  \ form; no external corpus or broader theory is invoked.\"\nnext_concrete_test:\
+  \ \"Substitute x=1 and y=2 into both equations: 1+4=5 and 3-2=1; then evaluate c^T\
+  \ x=3.\"\n\nprocess_integrity:\nseed_allows_theory_refutation: true? Hmm. If seed\
+  \ is task, allows refutation of parse? We'll set true, because arithmetic can be\
+  \ refuted by substitution. detected_prompt_biases: [] maybe. It asks detected biases;\
+  \ maybe there is a bias: \"The prompt grants an explicit license overriding default\
+  \ operator meanings; detected as task-scoped semantic bias.\" But not necessary.\
+  \ Empty array allowed default. Should_continue: false.\n\nNeed ensure no forbidden\
+  \ words: \"proves\", \"guarantees\", \"mathematically verifies\", \"fundamentally\"\
+  , \"true intelligence\", \"impossible\", \"universal\", \"flawless\", \"perfectly\"\
+  , \"clearly\", \"obviously\", \"simply\", \"merely\", \"weaponized\". None. \"verified\"\
+  \ appears? Evidence_scope says \"arithmetic\" no. \"validated\"? no.\n\nNeed final."
+parsed_response:
+  derived_under_policy: SPK-001
+  answer: 3
+  summary:
+    narrowest_defensible_thesis: Under the explicit integer linear-system license,
+      the parsed equations are x+2y=5 and 3x-y=1, yielding x=1, y=2, and target c^T
+      x = x+y = 3.
+    evidence_scope: Finite integer arithmetic of the supplied surface form; no external
+      corpus or broader theory is invoked.
+    next_concrete_test: 'Substitute x=1 and y=2 into both equations: 1+4=5 and 3-2=1;
+      then evaluate c^T x=3.'
+  sections: []
+  process_integrity:
+    seed_allows_theory_refutation: true
+    detected_prompt_biases: []
+    should_continue: false
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: true
+  structure_leakage_debt_chars: 0
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: REFUSED
+  reason: 'Compliant refusal: Under the explicit integer linear-system license, the
+    parsed equations are x+2y=5 and 3x-y=1, yielding x=1, y=2, and target c^T x =
+    x+y = 3.'
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: openrouter
+  duration_seconds: 11.416
+  tokens_per_second: 0.0
+  usage:
+    prompt_tokens: 1938
+    completion_tokens: 2179
+    reasoning_tokens: 1997
+    total_tokens: 4117
+  cost:
+    total_cost_usd: 0.0
+  timestamp_utc: '2026-10-11T03:29:12.289463+00:00'

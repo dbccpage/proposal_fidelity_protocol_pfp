@@ -1,0 +1,137 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_04
+case_id: rewrite_04_matrix_vector
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+witness_verified: null
+raw_reply: "{\n  \"answer\": {\n    \"observed_tallies\": {\n      \"C1\": 0,\n  \
+  \    \"C2\": 0,\n      \"C3\": 0\n    },\n    \"all_green\": true,\n    \"raw_global_defect_I\"\
+  : 6,\n    \"visibility_gap_lambda\": 6,\n    \"recovery_modulus_exists\": false\n\
+  \  }\n}"
+reasoning_content: 'We need answer. Need solve carefully. Need compute.
+
+
+  We have S vector 6 nodes each R3. Let''s parse.
+
+
+  Nodes order: u1, u2, u3, x12, x23, x31. S blocks:
+
+  u1 = [1,0,0]
+
+  u2 = [0,1,0]
+
+  u3 = [0,0,1]
+
+  x12 = [0,0,0]
+
+  x23 = [0,0,0]
+
+  x31 = [0,0,0]
+
+
+  D0 edges:
+
+  1: u1 - x12 = [1,0,0]
+
+  2: u2 - x12 = [0,1,0]
+
+  3: u2 - x23 = [0,1,0]
+
+  4: u3 - x23 = [0,0,1]
+
+  5: u3 - x31 = [0,0,1]
+
+  6: u1 - x31 = [1,0,0]
+
+
+  Projection matrices:
+
+  P0 = [[0,1,0],[0,0,1]] acting on edges 1 and 6. This maps R3 to R2 selecting components
+  y,z? Let''s see matrix 2x3 times vector [v0,v1,v2]^T = [v1, v2]^T. Yes selects second
+  and third coordinates.
+
+
+  P1 = [[1,0,0],[0,0,1]] selects first and third coordinates.
+
+  P2 = [[1,0,0],[0,1,0]] selects first and second coordinates.
+
+
+  Observer tallies:
+
+  J^C1 = ||P0 (D0 S)_1||_1 + ||P0 (D0 S)_6||_1.
+
+  Edge1 = [1,0,0]. P0 -> [0,0]. l1=0.
+
+  Edge6 = [1,0,0]. P0 -> [0,0]. l1=0.
+
+  C1=0.
+
+
+  C2: edges 2 and 3 both [0,1,0]. P1 selects [v0,v2] = [0,0]. l1=0 each. C2=0.
+
+
+  C3: edges 4 and 5 both [0,0,1]. P2 selects [v0,v1] = [0,0]. l1=0 each. C3=0.
+
+
+  All green true? all tallies equal 0 yes.
+
+
+  Global raw defect I = sum l1 of all edge vectors. Each edge vector has one component
+  1. There are 6 edges. l1 each =1. Sum=6.
+
+
+  Visibility gap Lambda = I - max J = 6 - 0 = 6.
+
+
+  Recovery modulus exists? Need interpret. They ask: Does there exist a recovery modulus
+  function f: R_+ -> R_+ bounding I(lambda * S) <= f(max_alpha J^alpha(lambda * S))
+  for all lambda > 0?
+
+
+  Need analyze. This is about linear discrete cochain system, observers projections.
+  We need determine if there exists f such that global raw defect can be bounded by
+  max observer tallies for all scalings of S. Since max J(lambda S) = 0 for all lambda?
+  Let''s check projections select components that are zero in all edge defects for
+  S. Scaling lambda scales edge defects. For S, edge defects have only x,y,z components
+  respectively. Observers select complementary components? Let''s see C1 observes
+  y,z on edges 1,6 which are x-only -> zero. C2 observes x,z on edges 2,3 which are
+  y-only -> zero. C3 observes x,y on edges 4,5 which are z-only -> zero. For lambda*S,
+  same zero. So max J = 0 for all lambda >0. I(lambda*S) = |lambda| * I(S) = 6 lambda
+  (assuming lambda>0). Need inequality 6 lambda <= f(0) for all lambda>0. If f(0)
+  finite real, impossible. If f: R_+ -> R_+ maybe can be infinite? Usually function
+  to R_+ finite. No. So recovery_modulus_exists false.
+
+
+  Need ensure no subtlety: Maybe f can depend on lambda? No. If max J=0, f(0) must
+  bound unbounded I(lambda S). No finite f. So false.
+
+
+  Need return JSON exactly. Need include integers. observed_tallies C1 0 C2 0 C3 0.
+  all_green true. raw_global_defect_I 6. visibility_gap_lambda 6. recovery_modulus_exists
+  false.
+
+
+  Need final only JSON. Ensure valid JSON.'
+parsed_payload:
+  answer: *id001
+metrics:
+  duration_seconds: 6.397
+  prompt_tokens: 845
+  completion_tokens: 1063
+  reasoning_tokens: 977
+  total_tokens: 1908
+  cost_usd: 0.0
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

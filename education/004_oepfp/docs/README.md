@@ -30,7 +30,7 @@ This directory contains reference manuals, architectural specifications, filtrat
 
 **Beginner:** read the [finite-QM workflow walkthrough](23_finite_qm_workflow_walkthrough.md), then work the [certificate lesson](../levels/level_finite_qm_certificate_walkthrough.md). You need signed arithmetic and a shell for preparation; the lesson introduces the required matrix notation. Preparation is offline and does not check a certificate.
 
-**Experienced researcher or implementer:** inspect the [prompt, stages and mode](22_unified_pfp_v4_operad_workflow_and_hacks.md), then the actual [prompt template](../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml), [workflow](../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml) and [mode](../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml). Read the [digest profiles](01_digest_and_canonical_serialization.md) before implementing a new packet producer.
+**Experienced researcher or implementer:** inspect the [prompt, stages and mode](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md), then the actual [prompt template](../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml), [workflow](../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml) and [mode](../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml). Read the [digest profiles](01_digest_and_canonical_serialization.md) before implementing a new packet producer.
 
 Keep three counts separate: the finite-QM research workflow names **six stages** (P0 to P5 in `workflow.yaml`), the existing public runtime exposes **eleven numbered stages** (`public_stage_count: 11` in [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml); model stages 2, 3, 4, 6 and 11, host stages 1, 5, 7, 8, 9 and 10), and the [levels catalogue](../levels/README.md) contains **101 numbered curriculum specifications** (101 files whose names match `level_<digits>_`, rechecked 2026-10-22; the directory also holds other unnumbered pages). A curriculum row is not evidence of an implemented runtime stage. P1 and P3 request preparation and candidate checking are connected. The six-stage workflow also includes research instructions and has no new automatic full live runner.
 
@@ -86,10 +86,10 @@ AuthorityEffect: None. Pin `c419cc6beb`. Each file below was read and its named 
 
 | Result | Pages |
 | --- | --- |
-| Describes a former estate or retired code; now marked historical with current homes | [00](00_master_synthesis_and_cartography.md), [02](02_surviving_ideas_ledger.md), [04](04_symbol_game_architecture.md), [06](06_prompt_packet_stage_synthesis.md), [12](12_pr_review_and_verification_loop.md), [13](13_review_findings_and_pilot_runbook.md), [21](21_prompt_template_contracts_and_single_prompt_standard.md) |
+| Describes a former estate or retired code; now marked historical with current homes | [00](00_master_synthesis_and_cartography.md), [02](02_surviving_ideas_ledger.md), [04](04_symbol_game_architecture.md), [06](06_prompt_packet_stage_synthesis.md), [12](12_pr_review_and_verification_loop.md), [13](../../../pilots/education/runbooks/13_review_findings_and_pilot_runbook.md), [21](21_prompt_template_contracts_and_single_prompt_standard.md) |
 | Object model mostly proposed (no matching classes) | [05](05_pfp_and_adversary_swarm_system_design.md), [07](07_sentinel_ai_integration.md) |
-| Current and corrected in place (paths, counts, limits) | [01](01_digest_and_canonical_serialization.md), [03](03_context_extension_calculus_and_foundations.md), [08](08_native_rust_host_architecture.md), [09](09_runtime_actions_and_governor.md), [10](10_functional_metric_ownership.md), [11](11_mss_n_machine_wire_registry.md), [14](14_release_checklist.md), [15](15_comparative_tooling_and_external_repositories.md), both 16s, [17](17_runtime_ownership_and_replay.md), [20](20_acsets_dpo_and_optional_backends.md), [22](22_unified_pfp_v4_operad_workflow_and_hacks.md), [23](23_finite_qm_workflow_walkthrough.md) |
-| Cites receipts and scripts that are not in the repository | [18](18_original_challenge_play.md) and [19](19_bounded_mechanism_sessions.md) (the 2026-10-16/17 `P*` campaigns); treat their ratios as unverified |
+| Current and corrected in place (paths, counts, limits) | [01](01_digest_and_canonical_serialization.md), [03](03_context_extension_calculus_and_foundations.md), [08](08_native_rust_host_architecture.md), [09](09_runtime_actions_and_governor.md), [10](10_functional_metric_ownership.md), [11](11_mss_n_machine_wire_registry.md), [14](14_release_checklist.md), [15](15_comparative_tooling_and_external_repositories.md), both 16s, [17](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md), [20](../../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md), [22](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md), [23](23_finite_qm_workflow_walkthrough.md) |
+| Cites receipts and scripts that are not in the repository | [18](../../../pilots/education/runbooks/18_original_challenge_play.md) and [19](../../../pilots/education/runbooks/19_bounded_mechanism_sessions.md) (the 2026-10-16/17 `P*` campaigns); treat their ratios as unverified |
 | Archived external text, scope note added | [deep research prompt](pfp_pciv_eis_llms_deep_research_prompt.md) |
 
 Two files share the number 16. They are separate documents with different scopes and are listed as 16a and 16b in section 4; their filenames are unchanged.
@@ -97,16 +97,16 @@ Two files share the number 16. They are separate documents with different scopes
 ## Current implementation and discoveries (2026-10-12)
 
 Start with [current types, capabilities and lessons](16_current_types_and_learnings.md)
-and the [practical play guide](../_how_to_play/13_practical_pfp_and_discovery.md).
+and the [practical play guide](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md).
 These describe the consolidated application, bounded live/replay discoveries and
 targeted failure learning. Older runbooks retain historical source references;
 use the current guide for execution. No fixed pilot count is required.
 
-[Adversary challenge play](18_original_challenge_play.md) composes the shared
+[Adversary challenge play](../../../pilots/education/runbooks/18_original_challenge_play.md) composes the shared
 workflow, PFP turns and original challenge judges for IDE/OpenRouter execution.
 It records actual bounded outcomes and the scientific obligations still open.
 
-[ACSets and DPO experiments](20_acsets_dpo_and_optional_backends.md) add bounded
+[ACSets and DPO experiments](../../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md) add bounded
 prompt/cochain controls, registered polygraph steps and one optional Julia/DSPy
 demo each. They do not add default runtime dependencies or model-efficacy claims.
 
@@ -149,11 +149,11 @@ demo each. They do not add default runtime dependencies or model-efficacy claims
 | Document | Semantic Role | Authority Status | Key Invariants |
 |---|---|---|---|
 | [`12_pr_review_and_verification_loop.md`](12_pr_review_and_verification_loop.md) | PR Verification Loop & Prompts | Verification Spec (proposed loop) | 5-stage adversary specification, AB-01–07 (labels, not implemented antibodies), targeted test replay, `SwarmEvidenceEnvelopeV1` (written by `swarm_developer.py`), and Claude Code review prompts. |
-| [`13_review_findings_and_pilot_runbook.md`](13_review_findings_and_pilot_runbook.md) | Review Findings & Runbook | Operational Runbook | Exact rational duality audit findings; the historical 50-demo command and the current PFP CLI subcommands over the 74-seed catalog. |
+| [`13_review_findings_and_pilot_runbook.md`](../../../pilots/education/runbooks/13_review_findings_and_pilot_runbook.md) | Review Findings & Runbook | Operational Runbook | Exact rational duality audit findings; the historical 50-demo command and the current PFP CLI subcommands over the 74-seed catalog. |
 | [`14_release_checklist.md`](14_release_checklist.md) | Release Discipline | Operational Contract | Step-by-step preflight checklist for repository releases, secret scrubbing, and receipt-claim bindings. |
 | [`15_comparative_tooling_and_external_repositories.md`](15_comparative_tooling_and_external_repositories.md) | Comparative Tooling Evaluation | Reference (unpinned) | Four-axis mapping and evaluation of 18 named external projects (Mathlib4, LeanDojo-v2, LeanCopilot, CivAgent, CatDock, CEO, AgentCiv, sharpen, AutoPrompt, gpt-prompt-engineer, TheBigPromptLibrary, DAIR guide, vLLM, SGLang, LLMLingua, RepE, llm-attacks, Prompt Guard); no commits pinned. |
 | 16a [`16_current_types_and_learnings.md`](16_current_types_and_learnings.md) | Current PFP Interfaces & Learning | Source-grounded Reference | Typed prompts/stages/witnesses, conditional mode availability (15 of 20 modes have executors), six guidance kinds, a worked DEMO_07 check and applied bounded-run repairs. |
-| 16b [`16_numbered_prompt_roles_and_po035_play.md`](16_numbered_prompt_roles_and_po035_play.md) | Empirical Prompt Contracts & Play | Experimental Reference | Numbered prompt roles (current registry v1.0.4), public workpads, calculation bindings and bounded PO035 failures. |
+| 16b [`16_numbered_prompt_roles_and_po035_play.md`](../../../pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md) | Empirical Prompt Contracts & Play | Experimental Reference | Numbered prompt roles (current registry v1.0.4), public workpads, calculation bindings and bounded PO035 failures. |
 
 ---
 
@@ -161,11 +161,11 @@ demo each. They do not add default runtime dependencies or model-efficacy claims
 
 | Document | Semantic Role | Authority Status | Key Invariants |
 |---|---|---|---|
-| [`17_runtime_ownership_and_replay.md`](17_runtime_ownership_and_replay.md) | Runtime Ownership & Replay | Source-grounded Runbook | Current owners and commands for demos, matrices, numbered stages, PO035 loops, Paper 008 benchmark and the finite gauge workbench; historical replay profiles. |
-| [`18_original_challenge_play.md`](18_original_challenge_play.md) | Original Challenge Play | Runbook with bounded observations | IDE and OpenRouter challenge play through PFP and the original judges; recorded paid attempts (87 replies, $0.03540475 known); untracked `P*` receipts flagged. |
-| [`19_bounded_mechanism_sessions.md`](19_bounded_mechanism_sessions.md) | Mechanism Sessions | Runbook; later sections unverified | C006 ASSERT/CUT/LIFT_REQUEST/VERIFY sessions and paid runs; the 2026-10-16/17 C001-C020 `P*` campaign sections cite absent scripts, receipts and functions. |
-| [`20_acsets_dpo_and_optional_backends.md`](20_acsets_dpo_and_optional_backends.md) | ACSets & DPO Experiments | Offline Controls | Two 25-case rewriting pilots and one Julia and one DSPy optional demo (14 controls). |
-| [`22_unified_pfp_v4_operad_workflow_and_hacks.md`](22_unified_pfp_v4_operad_workflow_and_hacks.md) | Finite-QM Prompt, Stages & Mode | Source-grounded Reference | Six research stages P0–P5, one mode with six techniques and two attempts, 744-entry operad catalog (rechecked 2026-10-22). |
+| [`17_runtime_ownership_and_replay.md`](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md) | Runtime Ownership & Replay | Source-grounded Runbook | Current owners and commands for demos, matrices, numbered stages, PO035 loops, Paper 008 benchmark and the finite gauge workbench; historical replay profiles. |
+| [`18_original_challenge_play.md`](../../../pilots/education/runbooks/18_original_challenge_play.md) | Original Challenge Play | Runbook with bounded observations | IDE and OpenRouter challenge play through PFP and the original judges; recorded paid attempts (87 replies, $0.03540475 known); untracked `P*` receipts flagged. |
+| [`19_bounded_mechanism_sessions.md`](../../../pilots/education/runbooks/19_bounded_mechanism_sessions.md) | Mechanism Sessions | Runbook; later sections unverified | C006 ASSERT/CUT/LIFT_REQUEST/VERIFY sessions and paid runs; the 2026-10-16/17 C001-C020 `P*` campaign sections cite absent scripts, receipts and functions. |
+| [`20_acsets_dpo_and_optional_backends.md`](../../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md) | ACSets & DPO Experiments | Offline Controls | Two 25-case rewriting pilots and one Julia and one DSPy optional demo (14 controls). |
+| [`22_unified_pfp_v4_operad_workflow_and_hacks.md`](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md) | Finite-QM Prompt, Stages & Mode | Source-grounded Reference | Six research stages P0–P5, one mode with six techniques and two attempts, 744-entry operad catalog (rechecked 2026-10-22). |
 | [`23_finite_qm_workflow_walkthrough.md`](23_finite_qm_workflow_walkthrough.md) | Finite-QM Walkthrough | Instructional | Prepare, bind, check and repair one C4 certificate turn offline. |
 
 ---
@@ -185,11 +185,11 @@ demo each. They do not add default runtime dependencies or model-efficacy claims
 2. **Zero Forbidden Hype Verbs:** All documents adhere to `RULE[user_global]` and the forbidden-word list in the PR scope rule (`rl_pr_scope_and_branch_diff_audit.md`); evidence is framed with scoped claims (`supports`, `demonstrates in this toy setting`). Verbatim archived external text, such as the model outputs in the deep research prompt, is quoted, not adopted.
 3. **No Redundant Facades:** Documents should correspond to an active, maintained subsystem. Where a page describes a retired subsystem, it is labelled historical in place rather than deleted. Merged documents consolidate redundant stubs and keep unified lineage under numerical prefixes.
 
-- [Runtime ownership and historical replay](17_runtime_ownership_and_replay.md)
-- [Adversary original challenge play](18_original_challenge_play.md)
-- [Bounded mechanism sessions](19_bounded_mechanism_sessions.md)
-- [ACSets and DPO experiments](20_acsets_dpo_and_optional_backends.md)
+- [Runtime ownership and historical replay](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md)
+- [Adversary original challenge play](../../../pilots/education/runbooks/18_original_challenge_play.md)
+- [Bounded mechanism sessions](../../../pilots/education/runbooks/19_bounded_mechanism_sessions.md)
+- [ACSets and DPO experiments](../../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md)
 - [Prompt template contracts & single prompt standard](21_prompt_template_contracts_and_single_prompt_standard.md)
-- [Finite-QM prompt, stages and execution mode](22_unified_pfp_v4_operad_workflow_and_hacks.md)
+- [Finite-QM prompt, stages and execution mode](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md)
 - [Finite-QM workflow walkthrough: prepare, derive, check and repair](23_finite_qm_workflow_walkthrough.md)
 

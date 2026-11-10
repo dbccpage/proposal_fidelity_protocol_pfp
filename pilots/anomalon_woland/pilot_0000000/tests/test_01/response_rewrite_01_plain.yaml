@@ -1,0 +1,145 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: rewrite_01_plain
+test_kind: plain_input
+pilot_id: pilot_0000000
+case_id: rewrite_01
+request_id: pilot_0000000_req_rewrite_01_plain
+trial_status: COMPLETED
+model_id: deepseek/deepseek-v4.1-flash
+input_metadata:
+  source_file: seed_rewrite_01.yaml
+  source_file_bytes: 1196
+  source_file_kb: 1.168
+  payload_bytes: 108
+  payload_kb: 0.105
+  messages_count: 1
+raw_reply: 'Solving:
+
+
+  - \(x + 2y = 5\)
+
+  - \(3x - y = 1\)
+
+
+  From \(3x - y = 1\), we get \(y = 3x - 1\).
+
+
+  Substitute into \(x + 2y = 5\):
+
+
+  \[
+
+  x + 2(3x - 1) = 5
+
+  \]
+
+  \[
+
+  x + 6x - 2 = 5
+
+  \]
+
+  \[
+
+  7x = 7
+
+  \]
+
+  \[
+
+  x = 1
+
+  \]
+
+
+  Then:
+
+
+  \[
+
+  y = 3(1) - 1 = 2
+
+  \]
+
+
+  So:
+
+
+  \[
+
+  x + y = 1 + 2 = 3
+
+  \]
+
+
+  Return:
+
+
+  ```text
+
+  record<pair<answer, 3>>
+
+  ```
+
+
+  or equivalently:
+
+
+  ```text
+
+  { answer: 3 }
+
+  ```'
+reasoning_content: "We need answer solve. Need parse weird syntax. User wrote:\nsolve<\n\
+  \  eq1<add<x, mul<2, y>>, 5>,\n  eq2<sub<mul<3, x>, y>, 1>,\n  return<record<pair<answer,\
+  \ add<x, y>>>>\n>\n\nNeed infer ask solve system equations? Likely notation: eq1:\
+  \ x + 2y = 5. eq2: 3x - y = 1. return record pair answer = x+y? Need solve.\n\n\
+  Let's parse:\neq1<add<x, mul<2, y>>, 5> means equation LHS = RHS: add(x, 2*y) =\
+  \ 5 => x + 2y = 5.\neq2<sub<mul<3,x>, y>, 1> => (3x - y)=1.\nreturn<record<pair<answer,\
+  \ add<x,y>>>> maybe return {answer: x+y}. Need compute.\n\nSolve:\nx + 2y = 5\n\
+  3x - y = 1\nFrom second y=3x-1. Substitute x+2(3x-1)=5 => x+6x-2=5 =>7x=7 => x=1.\
+  \ y=3-1=2. x+y=3.\nReturn record pair answer, add<x,y> => {answer: 3}? Maybe pair<answer,\
+  \ add<x,y>> = (\"answer\", x+y)? record<pair<answer, add<x,y>>> maybe record with\
+  \ field answer = x+y. Need final concise.\n\nNeed maybe respond in same syntax?\
+  \ \"record<answer, 3>\"? The notation uses pair<answer, add<x, y>>. \"return<record<pair<answer,\
+  \ add<x, y>>>>\" It may be a function to solve and return record with pair key answer\
+  \ and value x+y. The output might be record<pair<answer, 3>>. But need check.\n\n\
+  Maybe \"solve< eq1<...>, eq2<...>, return<record<pair<answer, add<x,y>>> >>\" This\
+  \ is some symbolic expression. They want solve. I can state solution.\n\nNeed maybe\
+  \ explain:\nx = 1, y = 2, answer = x+y = 3.\nReturn: record<pair<answer, 3>> or\
+  \ {answer: 3}.\n\nLet's craft final with calculation. Since desired overbrev 5,\
+  \ include brief derivation. Ensure no unsupported.\n\n"
+parsed_response: null
+extracted_answer: 3
+sanitization:
+  fence_stripped: false
+  is_valid_json: false
+  structure_leakage_debt_chars: 344
+evaluation:
+  checker_id: PFP-01-EXACT-LINALG
+  expected: 3
+  received: 3
+  status: MALFORMED
+  reason: Reply was not valid JSON dictionary
+receipt:
+  provider: openrouter
+  upstream_model: deepseek/deepseek-v4.1-flash
+  upstream_provider: DigitalOcean
+  dispatch_id: gen-1791686078-CvWv8pNrt08qjMf32ja8
+  system_fingerprint: null
+  duration_seconds: 3.338
+  tokens_per_second: 207.92
+  usage:
+    prompt_tokens: 81
+    completion_tokens: 694
+    reasoning_tokens: 514
+    total_tokens: 775
+  cost:
+    total_cost_usd: 0.000471405
+    total_cost_microusd: 471
+    cost_details:
+      upstream_inference_cost: 0.000471405
+      upstream_inference_prompt_cost: 1.3365e-05
+      upstream_inference_completions_cost: 0.00045804
+  timestamp_utc: '2026-10-11T02:34:41.256418+00:00'

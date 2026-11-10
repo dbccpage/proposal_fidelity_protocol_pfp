@@ -1,0 +1,31 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000011
+task_family: linear_algebra
+difficulty_rung: 1
+request_id: pilot_0000011_req_0
+rewrite_metadata:
+  rewrite_id: idea_02
+  name: Idea 02 - Paid-Token Truncation Budgeting
+  governing_specification: IDEAS.md#paid-token-truncation
+  governing_strategy: Strategy I2 (Token Budget Accounting)
+  target_stratum: Stratum 1 (Token Accounting & Budget Gates)
+  explanation: Compares equal task budgets across plain text and symbolic encodings;
+    records truncation separately from wrong answers.
+input_typing:
+  lexical_alphabet: Gamma_38 union {space, newline, '=', '+', '-', '*'}
+  syntactic_category: BudgetBoundedProposal
+  semantic_carrier: LinearSystem(dimension=2, field=Rational) under Bounded Token
+    Allocation
+  dialect_tier: Tier S (Budget Bounded)
+  boundary_format: pfp-budget-v1
+seed_prompt: '<budget max_tokens=128 cost_ceiling_microusd=0>
+
+  <solve eq1="x + 2y = 5" eq2="3x - y = 1" target="x + y">
+
+  <return format="json" key="answer">
+
+  '
+expected_outcome:
+  answer: 3
+  status: ACCEPTED

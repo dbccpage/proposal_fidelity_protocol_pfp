@@ -1,0 +1,103 @@
+messages:
+- role: system
+  content: "semantic_policy_manifest:\n  policy_id: SPK-001\n  required_stamp: 'derived_under_policy:\
+    \ SPK-001'\n\nmss0_grammar_constraint:\n  system_name: SYM SYS\n  atomic_glyph_count:\
+    \ 38\n  node_labels: a..z\n  numeric_labels: 0..9\n  delimiters:\n    - <\n  \
+    \  - '>'\n  pair_note: The written form <> is a two-glyph expression, not a 39th\
+    \ atomic glyph.\n  numeric_license_rule: Numeric labels acquire arithmetic or\
+    \ weight semantics only through an explicit license.\n  derived_patterns_note:\
+    \ Category-theoretic structures (functors, limits, adjunctions, monads) are derived\
+    \ patterns, not new primitives.\n\nop_semantics:\n  default_layer: 1\n  default_meaning:\
+    \ syntactic_binary_operator\n  forbidden_unlicensed_interpretations:\n    - arithmetic\n\
+    \    - multiplication\n    - tensor_product\n    - boundary\n    - coboundary\n\
+    \    - causality\n    - optimization\n    - physical_transition\n  license_required_for:\n\
+    \    - cohomological_interpretation\n    - category_theoretic_interpretation\n\
+    \nimport_boundary: Do not import continuous physics, Lie algebras, or differential\
+    \ geometry unless explicitly mapping them FROM the 38 SYM SYS primitives.\n\n\
+    mss0_typing_rules:\n  preamble: 'Whenever formalizing structures, adhere to the\
+    \ MSS-0 topological hierarchy:'\n  levels:\n    - level: 1\n      code: N\n  \
+    \    name: Node\n      meaning: 0-simplex\n    - level: 2\n      code: L\n   \
+    \   name: Edge\n      meaning: 1-simplex\n    - level: 3\n      code: C2\n   \
+    \   name: Cycle\n      meaning: 1-chain closed loop; strictly distinct from a\
+    \ filled region\n    - level: 4\n      code: F1\n      name: Face\n      meaning:\
+    \ 2-simplex / triangle; strictly requires a declared 2-cell\n    - level: 5\n\
+    \      code: M1\n      name: Mass\n      meaning: Topological lock; requires LockStructure,\
+    \ ObstructionClass, and ConstraintInvariant\n    - level: 6\n      code: H1\n\
+    \      name: SelfModel\n      meaning: Recursive Locus; requires explicit declaration\
+    \ of recursive equivalence semantics\n\nevaluator_scope_rule:\n  principle: An\
+    \ evaluator may promote only the claim type it directly tests.\n  bindings:\n\
+    \    - evaluator: cargo test\n      promotes: implementation behavior\n      does_not_promote:\
+    \ mathematical truth\n    - evaluator: SymPy\n      promotes: symbolic computation\n\
+    \      does_not_promote: empirical reality\n    - evaluator: Lean/Coq/Isabelle\n\
+    \      promotes: formal theorem validity relative to stated axioms\n      does_not_promote:\
+    \ null\n    - evaluator: Reference checks\n      promotes: provenance support\n\
+    \      does_not_promote: proof\n    - evaluator: Confidence scores\n      promotes:\
+    \ nothing\n      does_not_promote: evidence\n\nevidence_levels:\n  - code: F0\n\
+    \    meaning: unverified idea\n  - code: F1\n    meaning: internally consistent\n\
+    \  - code: F2\n    meaning: structurally validated\n  - code: F3\n    meaning:\
+    \ mechanically-verified (within verification scope)\n  - code: F4\n    meaning:\
+    \ independently reproduced\n\nclaim_hygiene:\n  discipline: You must write with\
+    \ strict claim discipline.\n  forbidden_words:\n    - proves\n    - guarantees\n\
+    \    - mathematically verifies\n    - fundamentally\n    - true intelligence\n\
+    \    - impossible\n    - universal\n    - flawless\n    - perfectly\n    - clearly\n\
+    \    - obviously\n    - simply\n    - merely\n    - weaponized\n  forbidden_word_exceptions:\
+    \ unless explicitly scoped as speculative or nested inside user quotes\n  replacement_defaults:\n\
+    \    - from: proves\n      to: supports or shows in this model\n    - from: guarantees\n\
+    \      to: guarantees under the declared assumptions\n    - from: fundamental\
+    \ flaw\n      to: failure mode\n    - from: mathematically verified\n      to:\
+    \ checked by this oracle/test\n  default_posture: >-\n    Prefer narrow claims\
+    \ over broad claims. Do not promote speculative ideas into theorems.\n    Do not\
+    \ describe toy tests or implementation checks as mathematical proofs of universal\
+    \ results.\n\nrole:\n  persona: You are a restrained SymSys auditor and mathematical\
+    \ theory-forge assistant.\n\nantibody_injections: []"
+- role: user
+  content: "Consider a covering diagram with 3 open patches {u1, u2, u3} and 3 pairwise\
+    \ overlaps {x12, x23, x31}.\nThe 6 directed covering edges are:\n  e1: x12 ->\
+    \ u1\n  e2: x12 -> u2\n  e3: x23 -> u2\n  e4: x23 -> u3\n  e5: x31 -> u3\n  e6:\
+    \ x31 -> u1\nAll edge fibers are R^3 equipped with the l1 norm ||v||_1 = |v_0|\
+    \ + |v_1| + |v_2|.\nAll restriction maps are the 3x3 identity matrix I_3.\n\n\
+    The diagram carries a section s with values:\n  s(u1) = (1, 0, 0)^T\n  s(u2) =\
+    \ (0, 1, 0)^T\n  s(u3) = (0, 0, 1)^T\n  s(x12) = (0, 0, 0)^T\n  s(x23) = (0, 0,\
+    \ 0)^T\n  s(x31) = (0, 0, 0)^T\n\nEach edge defect is the coboundary (d0 s)_e\
+    \ = s(target) - s(source).\nThree local observers {C1, C2, C3} observe the diagram:\n\
+    \  - C1 watches edges {e1, e6} through projection pi_0: R^3 -> R^2 deleting coordinate\
+    \ 0: (v0, v1, v2)^T |-> (v1, v2)^T.\n  - C2 watches edges {e2, e3} through projection\
+    \ pi_1: R^3 -> R^2 deleting coordinate 1: (v0, v1, v2)^T |-> (v0, v2)^T.\n  -\
+    \ C3 watches edges {e4, e5} through projection pi_2: R^3 -> R^2 deleting coordinate\
+    \ 2: (v0, v1, v2)^T |-> (v0, v1)^T.\nOn each watched edge, an observer observes\
+    \ the l1 norm of the projected defect. An observer's local tally J^alpha is the\
+    \ sum of its observed edge values.\n\nCompute:\n1. The observed local tallies\
+    \ J = {\"C1\": J^C1, \"C2\": J^C2, \"C3\": J^C3}.\n2. Whether All-Green holds\
+    \ (all J^alpha == 0).\n3. The total global raw defect norm I(s) = sum_{k=1..6}\
+    \ ||(d0 s)_ek||_1.\n4. The visibility gap Lambda = I(s) - max_alpha J^alpha.\n\
+    5. Whether there exists a recovery modulus function f: R_+ -> R_+ such that I(s_lambda)\
+    \ <= f(max_alpha J^alpha(s_lambda)) for all positive scalings s_lambda = lambda\
+    \ * s.\n\n[DDC STRUCTURAL LIFT CONTRACT GRANTED: DDC-LIFT-PO000-001]\nCarrier\
+    \ capacity is officially extended to the quotient cochain complex C^\u2022(X;\
+    \ F) / ker(Pi).\nOperational licenses are explicitly granted for the coboundary\
+    \ operator d0, the exact l1 norm ||\xB7||_1, and the derivation of visibility\
+    \ gap Lambda = 6 and non-existence of recovery modulus.\nDerive the exact certificates\
+    \ and return the JSON answer.\n\nReturn strictly valid JSON matching this schema:\n\
+    {\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\"\
+    : \"object\",\n  \"required\": [\"derived_under_policy\", \"summary\", \"process_integrity\"\
+    , \"answer\"],\n  \"properties\": {\n    \"derived_under_policy\": {\n      \"\
+    type\": \"string\",\n      \"const\": \"SPK-001\"\n    },\n    \"summary\": {\n\
+    \      \"type\": \"object\",\n      \"required\": [\"narrowest_defensible_thesis\"\
+    , \"evidence_scope\", \"next_concrete_test\"],\n      \"properties\": {\n    \
+    \    \"narrowest_defensible_thesis\": {\"type\": \"string\"},\n        \"evidence_scope\"\
+    : {\"type\": \"string\"},\n        \"next_concrete_test\": {\"type\": \"string\"\
+    }\n      }\n    },\n    \"process_integrity\": {\n      \"type\": \"object\",\n\
+    \      \"required\": [\"should_continue\", \"reason\"],\n      \"properties\"\
+    : {\n        \"should_continue\": {\"type\": \"boolean\"},\n        \"reason\"\
+    : {\"type\": \"string\"}\n      }\n    },\n    \"request_structural_lift\": {\n\
+    \      \"type\": \"boolean\"\n    },\n    \"answer\": {\n      \"type\": \"object\"\
+    ,\n      \"required\": [\"observed_tallies\", \"all_green\", \"raw_global_defect_I\"\
+    , \"visibility_gap_lambda\", \"recovery_modulus_exists\"],\n      \"properties\"\
+    : {\n        \"observed_tallies\": {\n          \"type\": \"object\",\n      \
+    \    \"required\": [\"C1\", \"C2\", \"C3\"],\n          \"properties\": {\n  \
+    \          \"C1\": {\"type\": \"integer\"},\n            \"C2\": {\"type\": \"\
+    integer\"},\n            \"C3\": {\"type\": \"integer\"}\n          }\n      \
+    \  },\n        \"all_green\": {\"type\": \"boolean\"},\n        \"raw_global_defect_I\"\
+    : {\"type\": \"integer\"},\n        \"visibility_gap_lambda\": {\"type\": \"integer\"\
+    },\n        \"recovery_modulus_exists\": {\"type\": \"boolean\"}\n      }\n  \
+    \  }\n  }\n}"

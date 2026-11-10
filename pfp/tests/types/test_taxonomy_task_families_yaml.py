@@ -30,7 +30,13 @@ _YAML = (
     / "task_families.yaml"
 )
 _DOMAIN = Path(__file__).resolve().parents[2] / "domain" / "value_objects" / "taxonomy.py"
-_MATRIX = Path(__file__).resolve().parents[3] / "pilots" / "matrix" / "max_pilot_matrix.yaml"
+_MATRIX = (
+    Path(__file__).resolve().parents[3]
+    / "pilots"
+    / "anomalon_woland"
+    / "matrix"
+    / "max_pilot_matrix.yaml"
+)
 _BEDROCK = frozenset(
     {
         "linear_algebra",
@@ -41,21 +47,6 @@ _BEDROCK = frozenset(
         "magma_associativity",
     }
 )
-_MATRIX = (
-    Path(__file__).resolve().parents[3]
-    / "education"
-    / "pilots"
-    / "matrix"
-    / "max_pilot_matrix.yaml"
-)
-_BEDROCK = frozenset({
-    "linear_algebra",
-    "graph_facts",
-    "graph_repair",
-    "refusal",
-    "cochain_defect",
-    "magma_associativity",
-})
 _DIRECTIVE = {
     "group_commutator": "Commutator Subgroups & Word Problem Invariants",
     "simplex_homology": "Simplicial Complex Betti Number Calculations",

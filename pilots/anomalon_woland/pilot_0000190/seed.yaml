@@ -1,0 +1,28 @@
+schema: pfp.seed-prompt.v1
+authority_effect: None
+pilot_id: pilot_0000190
+task_family: degree4_primal_dual_certificate
+difficulty_rung: 1
+request_id: pilot_0000190_dossier_seed
+input_typing:
+  lexical_alphabet: UTF-8
+  syntactic_category: FiniteWitnessCarrier
+  semantic_carrier: degree4_primal_dual_certificate
+  dialect_tier: SPK-001
+  boundary_format: JSON within wrapped prompt
+seed_prompt: 'Minimize sum_i weights_i*abs(flux_i-(matrix*potential)_i). Supply any
+  rational potential and dual satisfying transpose(matrix)*dual=0 and abs(dual_i)<=weights_i,
+  with equal primal objective and dot(flux,dual). Report that exact objective. A nonzero
+  gap is not a certificate.
+
+  {"kind": "lp", "matrix": [["1", "-1", "0", "1", "0", "0", "-1", "0", "0", "0", "1",
+  "0", "0", "0", "0"], ["1", "0", "-1", "0", "1", "0", "0", "-1", "0", "0", "0", "1",
+  "0", "0", "0"], ["0", "1", "-1", "0", "0", "1", "0", "0", "-1", "0", "0", "0", "1",
+  "0", "0"], ["0", "0", "0", "1", "-1", "1", "0", "0", "0", "-1", "0", "0", "0", "1",
+  "0"], ["0", "0", "0", "0", "0", "0", "1", "-1", "1", "-1", "0", "0", "0", "0", "1"],
+  ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "-1", "1", "-1", "1"]],
+  "flux": ["-1/12", "1/12", "-1/12", "1/12", "-1/12", "1/12"], "weights": ["1", "1",
+  "1", "1", "1", "1"], "degree": 4}'
+expected_outcome:
+  answer: null
+  status: HOST_CHECKED_WITNESS

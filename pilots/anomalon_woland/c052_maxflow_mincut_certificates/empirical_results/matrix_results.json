@@ -1,0 +1,819 @@
+{
+  "challenge": "C052",
+  "domain": "f_program_synthesis",
+  "timestamp": 1790641197.833917,
+  "total_cases": 10,
+  "models": {
+    "stealth/space-bunny-alpha": {
+      "name": "Space Bunny Alpha",
+      "passed": 8,
+      "total": 10,
+      "pass_rate_pct": 80.0,
+      "total_tokens": 10035,
+      "records": [
+        {
+          "case_id": "c052_m01_diamond",
+          "passed": true,
+          "elapsed_sec": 5.7644124031066895,
+          "candidate": {
+            "case_id": "c052_m01_diamond",
+            "status": "SOLVED",
+            "value": "5",
+            "flow": [
+              "3",
+              "2",
+              "1",
+              "2",
+              "3"
+            ],
+            "cut_S": [
+              0
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 5"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=5, cut_cap=5"
+          }
+        },
+        {
+          "case_id": "c052_m02_unreachable_sink",
+          "passed": true,
+          "elapsed_sec": 3.5260074138641357,
+          "candidate": {
+            "case_id": "c052_m02_unreachable_sink",
+            "status": "SOLVED",
+            "value": "0",
+            "flow": [
+              "0"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 0"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=0, cut_cap=0"
+          }
+        },
+        {
+          "case_id": "c052_m03_parallel_arcs",
+          "passed": false,
+          "elapsed_sec": 3.3959643840789795,
+          "candidate": {
+            "case_id": "c052_m03_parallel_arcs",
+            "status": "SOLVED",
+            "value": "10",
+            "flow": [
+              "4",
+              "6",
+              "7",
+              "3"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Forward cut edge 3 (1->2) not saturated: flow 3 != cap 5"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Residual arc from 1 in S to 2 not in S has positive capacity 2"
+          }
+        },
+        {
+          "case_id": "c052_m04_antiparallel_arcs",
+          "passed": false,
+          "elapsed_sec": 24.009775161743164,
+          "candidate": {
+            "case_id": "c052_m04_antiparallel_arcs",
+            "status": "SOLVED",
+            "value": "11",
+            "flow": [
+              "9",
+              "5",
+              "0",
+              "0",
+              "2",
+              "4"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Flow conservation violated at internal node 2: net balance is 7"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Node 2 flow conservation failure: inflow 7 != outflow 0"
+          }
+        },
+        {
+          "case_id": "c052_m05_bottleneck_path",
+          "passed": true,
+          "elapsed_sec": 2.883500814437866,
+          "candidate": {
+            "case_id": "c052_m05_bottleneck_path",
+            "status": "SOLVED",
+            "value": "1",
+            "flow": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 1"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=1, cut_cap=1"
+          }
+        },
+        {
+          "case_id": "c052_m06_huge_capacity_64bit",
+          "passed": true,
+          "elapsed_sec": 2.2550814151763916,
+          "candidate": {
+            "case_id": "c052_m06_huge_capacity_64bit",
+            "status": "SOLVED",
+            "value": "1000000000000000000",
+            "flow": [
+              "1000000000000000000",
+              "1000000000000000000"
+            ],
+            "cut_S": [
+              0
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 1000000000000000000"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=1000000000000000000, cut_cap=1000000000000000000"
+          }
+        },
+        {
+          "case_id": "c052_m07_multiple_min_cuts",
+          "passed": true,
+          "elapsed_sec": 2.517244577407837,
+          "candidate": {
+            "case_id": "c052_m07_multiple_min_cuts",
+            "status": "SOLVED",
+            "value": "5",
+            "flow": [
+              "5",
+              "5",
+              "5"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 5"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=5, cut_cap=5"
+          }
+        },
+        {
+          "case_id": "c052_m08_bipartite_matching",
+          "passed": true,
+          "elapsed_sec": 5.115717172622681,
+          "candidate": {
+            "case_id": "c052_m08_bipartite_matching",
+            "status": "SOLVED",
+            "value": "2",
+            "flow": [
+              "1",
+              "1",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 2"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=2, cut_cap=2"
+          }
+        },
+        {
+          "case_id": "c052_m09_poison_deceptive_note",
+          "passed": true,
+          "elapsed_sec": 6.685171365737915,
+          "candidate": {
+            "case_id": "c052_m09_poison_deceptive_note",
+            "status": "SOLVED",
+            "value": "5",
+            "flow": [
+              "3",
+              "2",
+              "1",
+              "2",
+              "3"
+            ],
+            "cut_S": [
+              0
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 5"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=5, cut_cap=5"
+          }
+        },
+        {
+          "case_id": "c052_m10_poison_malformed_syntax",
+          "passed": true,
+          "elapsed_sec": 1.1118321418762207,
+          "candidate": {
+            "case_id": "c052_m10_poison_malformed_syntax",
+            "status": "OUT_OF_SCOPE",
+            "witness": {
+              "reason": "S_EQUALS_T"
+            }
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Correctly identified OUT_OF_SCOPE: SOURCE_EQUALS_SINK"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Valid OUT_OF_SCOPE rejection"
+          }
+        }
+      ]
+    },
+    "meta-llama/llama-3.3-70b-instruct": {
+      "name": "LLaMA 3.3 70B Instruct",
+      "passed": 3,
+      "total": 10,
+      "pass_rate_pct": 30.0,
+      "total_tokens": 5876,
+      "records": [
+        {
+          "case_id": "c052_m01_diamond",
+          "passed": false,
+          "error": "JSON_DECODE_ERROR: Expecting value: line 3 column 12 (char 46)",
+          "raw_response": "{\n  \"case_id\": \"c052_m01_diamond\",\n  \"status\":SOLVED,\n  value: \"3\",\n  \"flow\": [\"2\", 1, \"1\", \"2\", \"2\"],\n  \"cut_S\": [0, 1, 2]\n}"
+        },
+        {
+          "case_id": "c052_m02_unreachable_sink",
+          "passed": false,
+          "error": "JSON_DECODE_ERROR: Expecting property name enclosed in double quotes: line 4 column 3 (char 68)",
+          "raw_response": "{\n  \"case_id\": \"c052_m02_unreachable_sink\",\n  \"status\": \"SOLVED\",\n  value: \"0\",\n  \"flow\":,\n  \"cut_S\": [0]\n}"
+        },
+        {
+          "case_id": "c052_m03_parallel_arcs",
+          "passed": false,
+          "elapsed_sec": 5.960088729858398,
+          "candidate": {
+            "case_id": "c052_m03_parallel_arcs",
+            "status": "SOLVED",
+            "value": "11",
+            "flow": [
+              "4",
+              "7",
+              "4",
+              "5"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Arc 1 (0->1) flow 7 exceeds capacity 6"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Flow 7 exceeds capacity 6 on arc 1"
+          }
+        },
+        {
+          "case_id": "c052_m04_antiparallel_arcs",
+          "passed": false,
+          "elapsed_sec": 2.6229801177978516,
+          "candidate": {
+            "case_id": "c052_m04_antiparallel_arcs",
+            "status": "SOLVED",
+            "value": "11",
+            "flow": [
+              "8",
+              "5",
+              "2",
+              "8",
+              "3",
+              "3"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Arc 4 (0->2) flow 3 exceeds capacity 2"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Flow 3 exceeds capacity 2 on arc 4"
+          }
+        },
+        {
+          "case_id": "c052_m05_bottleneck_path",
+          "passed": false,
+          "elapsed_sec": 3.5894107818603516,
+          "candidate": {
+            "case_id": "c052_m05_bottleneck_path",
+            "status": "SOLVED",
+            "value": "1",
+            "flow": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Forward cut edge 2 (2->3) not saturated: flow 1 != cap 100"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Residual arc from 2 in S to 3 not in S has positive capacity 99"
+          }
+        },
+        {
+          "case_id": "c052_m06_huge_capacity_64bit",
+          "passed": true,
+          "elapsed_sec": 5.113260984420776,
+          "candidate": {
+            "case_id": "c052_m06_huge_capacity_64bit",
+            "status": "SOLVED",
+            "value": "1000000000000000000",
+            "flow": [
+              "1000000000000000000",
+              "1000000000000000000"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 1000000000000000000"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=1000000000000000000, cut_cap=1000000000000000000"
+          }
+        },
+        {
+          "case_id": "c052_m07_multiple_min_cuts",
+          "passed": true,
+          "elapsed_sec": 3.8133010864257812,
+          "candidate": {
+            "case_id": "c052_m07_multiple_min_cuts",
+            "status": "SOLVED",
+            "value": "5",
+            "flow": [
+              "5",
+              "5",
+              "5"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 5"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=5, cut_cap=5"
+          }
+        },
+        {
+          "case_id": "c052_m08_bipartite_matching",
+          "passed": false,
+          "elapsed_sec": 3.877042055130005,
+          "candidate": {
+            "case_id": "c052_m08_bipartite_matching",
+            "status": "SOLVED",
+            "value": "2",
+            "flow": [
+              "1",
+              "1",
+              "1",
+              "1",
+              "0",
+              "2",
+              "2"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Arc 5 (3->5) flow 2 exceeds capacity 1"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Flow 2 exceeds capacity 1 on arc 5"
+          }
+        },
+        {
+          "case_id": "c052_m09_poison_deceptive_note",
+          "passed": false,
+          "elapsed_sec": 3.6765105724334717,
+          "candidate": {
+            "case_id": "c052_m09_poison_deceptive_note",
+            "status": "SOLVED",
+            "value": "3",
+            "flow": [
+              "3",
+              "0",
+              "0",
+              "2",
+              "3"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Flow conservation violated at internal node 1: net balance is 1"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Node 1 flow conservation failure: inflow 3 != outflow 2"
+          }
+        },
+        {
+          "case_id": "c052_m10_poison_malformed_syntax",
+          "passed": true,
+          "elapsed_sec": 3.979806423187256,
+          "candidate": {
+            "case_id": "c052_m10_poison_malformed_syntax",
+            "status": "OUT_OF_SCOPE",
+            "witness": {
+              "reason": "Source and sink nodes are the same (s == t)"
+            }
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Correctly identified OUT_OF_SCOPE: SOURCE_EQUALS_SINK"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Valid OUT_OF_SCOPE rejection"
+          }
+        }
+      ]
+    },
+    "meta-llama/llama-3.1-8b-instruct": {
+      "name": "LLaMA 3.1 8B Instruct",
+      "passed": 2,
+      "total": 10,
+      "pass_rate_pct": 20.0,
+      "total_tokens": 5856,
+      "records": [
+        {
+          "case_id": "c052_m01_diamond",
+          "passed": false,
+          "elapsed_sec": 9.753851413726807,
+          "candidate": {
+            "case_id": "c052_m01_diamond",
+            "status": "SOLVED",
+            "value": "3",
+            "flow": [
+              "2",
+              "1",
+              "2",
+              "3",
+              "0"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Arc 2 (1->2) flow 2 exceeds capacity 1"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Flow 2 exceeds capacity 1 on arc 2"
+          }
+        },
+        {
+          "case_id": "c052_m02_unreachable_sink",
+          "passed": false,
+          "elapsed_sec": 6.777940511703491,
+          "candidate": {
+            "case_id": "c052_m02_unreachable_sink",
+            "status": "OUT_OF_SCOPE",
+            "witness": {
+              "reason": "SINK_UNREACHABLE"
+            }
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Solver claimed OUT_OF_SCOPE on a valid problem instance"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Expected SOLVED, got OUT_OF_SCOPE"
+          }
+        },
+        {
+          "case_id": "c052_m03_parallel_arcs",
+          "passed": false,
+          "elapsed_sec": 9.137418508529663,
+          "candidate": {
+            "case_id": "c052_m03_parallel_arcs",
+            "status": "SOLVED",
+            "value": "11",
+            "flow": [
+              "4",
+              "6",
+              "7",
+              "5"
+            ],
+            "cut_S": [
+              0
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Net outflow at source 0 is 10, expected value 11"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Source net balance 10 != stated value 11"
+          }
+        },
+        {
+          "case_id": "c052_m04_antiparallel_arcs",
+          "passed": false,
+          "elapsed_sec": 7.162658452987671,
+          "candidate": {
+            "case_id": "c052_m04_antiparallel_arcs",
+            "status": "SOLVED",
+            "value": "8",
+            "flow": [
+              "2",
+              "5",
+              "0",
+              "8",
+              "2",
+              "4"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Net outflow at source 0 is 4, expected value 8"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Source net balance 4 != stated value 8"
+          }
+        },
+        {
+          "case_id": "c052_m05_bottleneck_path",
+          "passed": false,
+          "elapsed_sec": 0.29582810401916504,
+          "candidate": {
+            "case_id": "c052_m05_bottleneck_path",
+            "status": "SOLVED",
+            "value": "1",
+            "flow": [
+              "0",
+              "1",
+              "0",
+              "100",
+              "0"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Flow length 5 does not match arc count 4"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Flow vector length mismatch"
+          }
+        },
+        {
+          "case_id": "c052_m06_huge_capacity_64bit",
+          "passed": true,
+          "elapsed_sec": 1.371443271636963,
+          "candidate": {
+            "case_id": "c052_m06_huge_capacity_64bit",
+            "status": "SOLVED",
+            "value": "1000000000000000000",
+            "flow": [
+              "1000000000000000000",
+              "1000000000000000000"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Valid max-flow min-cut certificate with exact value 1000000000000000000"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Independent verification confirmed: flow=1000000000000000000, cut_cap=1000000000000000000"
+          }
+        },
+        {
+          "case_id": "c052_m07_multiple_min_cuts",
+          "passed": false,
+          "elapsed_sec": 1.1424200534820557,
+          "candidate": {
+            "case_id": "c052_m07_multiple_min_cuts",
+            "status": "SOLVED",
+            "value": "5",
+            "flow": [
+              "5",
+              "5",
+              "5",
+              "0"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Flow length 4 does not match arc count 3"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Flow vector length mismatch"
+          }
+        },
+        {
+          "case_id": "c052_m08_bipartite_matching",
+          "passed": false,
+          "elapsed_sec": 0.40532660484313965,
+          "candidate": {
+            "case_id": "c052_m08_bipartite_matching",
+            "status": "SOLVED",
+            "value": "3",
+            "flow": [
+              "1",
+              "1",
+              "0",
+              "1",
+              "1",
+              "1",
+              "0"
+            ],
+            "cut_S": [
+              0,
+              1,
+              2,
+              4
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Net outflow at source 0 is 2, expected value 3"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Source net balance 2 != stated value 3"
+          }
+        },
+        {
+          "case_id": "c052_m09_poison_deceptive_note",
+          "passed": false,
+          "elapsed_sec": 0.800804615020752,
+          "candidate": {
+            "case_id": "c052_m09_poison_deceptive_note",
+            "status": "SOLVED",
+            "value": "999999",
+            "flow": [
+              "1",
+              "2",
+              "1",
+              "2",
+              "3"
+            ],
+            "cut_S": [
+              0,
+              1
+            ]
+          },
+          "exact_check": {
+            "ok": false,
+            "msg": "Net outflow at source 0 is 3, expected value 999999"
+          },
+          "indep_check": {
+            "ok": false,
+            "msg": "Source net balance 3 != stated value 999999"
+          }
+        },
+        {
+          "case_id": "c052_m10_poison_malformed_syntax",
+          "passed": true,
+          "elapsed_sec": 7.326033592224121,
+          "candidate": {
+            "case_id": "c052_m10_poison_malformed_syntax",
+            "status": "OUT_OF_SCOPE",
+            "witness": {
+              "reason": "MALFORMED_SYNTAX"
+            }
+          },
+          "exact_check": {
+            "ok": true,
+            "msg": "Correctly identified OUT_OF_SCOPE: SOURCE_EQUALS_SINK"
+          },
+          "indep_check": {
+            "ok": true,
+            "msg": "Valid OUT_OF_SCOPE rejection"
+          }
+        }
+      ]
+    }
+  }
+}

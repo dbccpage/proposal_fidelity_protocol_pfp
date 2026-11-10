@@ -1,0 +1,123 @@
+schema: pfp.pilot-response.v1
+authority_effect: null
+test_id: pilot_0000003_test_01
+case_id: rewrite_01_verbal_covering
+model_id: deepseek/deepseek-v4.1-flash
+status: ACCEPTED
+extracted_answer: &id001
+  observed_tallies:
+    C1: 0
+    C2: 0
+    C3: 0
+  all_green: true
+  raw_global_defect_I: 6
+  visibility_gap_lambda: 6
+  recovery_modulus_exists: false
+refusal_code: null
+is_correct: true
+witness_verified: null
+raw_reply: "{\n  \"answer\": {\n    \"observed_tallies\": {\n      \"C1\": 0,\n  \
+  \    \"C2\": 0,\n      \"C3\": 0\n    },\n    \"all_green\": true,\n    \"raw_global_defect_I\"\
+  : 6,\n    \"visibility_gap_lambda\": 6,\n    \"recovery_modulus_exists\": false\n\
+  \  }\n}"
+reasoning_content: 'We need answer. Need solve. Need be careful. Need parse problem.
+  We need compute.
+
+
+  We have nerve with source overlaps to Ui. 0-cochain s assigns values to U1,U2,U3
+  and overlaps zero. Restriction maps identity. Coboundary along directed edge source
+  -> target = s(target)-s(source). For overlap source Xij (zero) to Ui or Uj. Thus
+  defects:
+
+
+  e1 X12 -> U1: s(U1)-0 = (1,0,0)
+
+  e2 X12 -> U2: (0,1,0)
+
+  e3 X23 -> U2: (0,1,0)
+
+  e4 X23 -> U3: (0,0,1)
+
+  e5 X31 -> U3: (0,0,1)
+
+  e6 X31 -> U1: (1,0,0)
+
+
+  Observers:
+
+  C1 inspects e1 and e6 through pi_0 dropping first coordinate (v0,v1,v2)->(v1,v2).
+  e1 defect (1,0,0) -> (0,0), l1=0. e6 same ->0. J_C1=0.
+
+  C2 inspects e2 and e3 through pi_1 dropping second coordinate -> (v0,v2). e2 defect
+  (0,1,0)->(0,0), norm 0. e3 same. J_C2=0.
+
+  C3 inspects e4 and e5 through pi_2 dropping third coordinate -> (v0,v1). e4 defect
+  (0,0,1)->(0,0), norm 0. e5 same. J_C3=0.
+
+
+  All-Green true.
+
+
+  Raw global defect sum across all six edges l1: e1 norm ||(1,0,0)||1=1; e2=1; e3=1;
+  e4=1; e5=1; e6=1. Sum=6.
+
+
+  Visibility gap Lambda = I - max J =6-0=6.
+
+
+  Question 5: Does there exist recovery modulus f: R_+ -> R_+ such that for all positive
+  scalings s_lambda = lambda*s, I(s_lambda) <= f(max_alpha J^alpha(s_lambda))? Need
+  parse. They ask exists any recovery modulus function f such that for all positive
+  scalings. If max J =0 for all lambda (since projections zero scaling), I =6 lambda.
+  For inequality to hold for all lambda>0, need 6 lambda <= f(0) for all lambda. If
+  f(0) finite real value, impossible. Unless R_+ includes infinity? Typically function
+  to R_+, finite. So no. Need consider if f is arbitrary R_+ -> R_+ may map 0 to infinity?
+  R_+ usually nonnegative reals, not infinity. So false.
+
+
+  Need ensure no subtlety: Observed tallies per edge may involve projected coboundary.
+  All defects along edges involving set with coordinate dropped. Let''s verify C assignments:
+
+  C1 inspects e1 and e6. e1 X12->U1, e6 X31->U1. Defects both U1 = (1,0,0). pi_0 drops
+  first coordinate -> (v1,v2)=(0,0). yes.
+
+  C2 e2 X12->U2, e3 X23->U2. defect U2=(0,1,0). pi_1 drops second -> (v0,v2)=(0,0).
+
+  C3 e4 X23->U3, e5 X31->U3. defect U3=(0,0,1). pi_2 drops third ->(v0,v1)=(0,0).
+
+  Thus all zero.
+
+
+  Could there be the projection applied to source/target before difference? Same as
+  identity. They say measures l1 norm of projected coboundary. We did.
+
+
+  Need return JSON only perhaps.
+
+
+  Let''s craft final JSON.
+
+
+  Need use integers: C1=0 etc. all_green boolean true. raw_global_defect_I 6. visibility_gap_lambda
+  6. recovery_modulus_exists false.
+
+
+  Double-check "recovery modulus function f: R_+ -> R_+" maybe if max alpha J=0, f(0)
+  could be +infty if R_+ extended? But standard R_+ not include infinity. Also "function"
+  finite. If allow extended nonnegative? Usually no. Could they expect false since
+  no f for all lambda. Let''s consider if f can be infinity at 0. They ask R_+ ->
+  R_+, no infinity. So false.
+
+
+  Need final only JSON.'
+parsed_payload:
+  answer: *id001
+metrics:
+  duration_seconds: 4.032
+  prompt_tokens: 812
+  completion_tokens: 1060
+  reasoning_tokens: 974
+  total_tokens: 1872
+  cost_usd: 0.0
+evaluation_reason: "Observer visibility defect certificate matches exact PO-000 \xA7\
+  7.4 oracle"

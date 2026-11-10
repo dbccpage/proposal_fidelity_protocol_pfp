@@ -1,0 +1,196 @@
+lineage:
+  prompt_id: pilot_0000003_pstar_span_witness_names
+  generation_id: 3
+  family_id: refusal
+  parent_id: prompt_0000003
+  mutation_kind: surface_dialect
+  mutation_notes: Planned surface pstar_span_witness_names. No provider dispatch.
+  authority_effect: 'None'
+guidance:
+  rules:
+  - rule_id: rule_refuse_missing
+    name: Refuse A Missing Edge
+    statement: If the queried edge is not in the edge set, refuse. Do not invent a length.
+  - rule_id: rule_code_slot
+    name: Code Slot
+    statement: Put the refusal token in answer.code. This rule does not state that token.
+  antibodies:
+  - antibody_id: AB_INTERMEDIATE_WITNESS
+    failure_class: heuristic_shortcut
+    target_pattern: ungrounded_composite_answer
+    description: Fire when a length is asserted for an edge that was not in the carrier.
+  antipatterns: []
+  helpful_patterns:
+  - pattern_id: HP_RESPONSE_ANSWER_SLOT
+    name: Response Answer Slot
+    description: Put the refusal record in the top-level answer object.
+system_prompt: |
+  semantic_policy_manifest:
+    policy_id: SPK-001
+    required_stamp: 'derived_under_policy: SPK-001'
+
+  mss0_grammar_constraint:
+    system_name: SYM SYS
+    atomic_glyph_count: 38
+    node_labels: a..z
+    numeric_labels: 0..9
+    delimiters:
+      - <
+      - '>'
+    pair_note: The written form <> is a two-glyph expression, not a 39th atomic glyph.
+    numeric_license_rule: Numeric labels acquire arithmetic or weight semantics only through an explicit license.
+    derived_patterns_note: Category-theoretic structures (functors, limits, adjunctions, monads) are derived patterns, not new primitives.
+
+  op_semantics:
+    default_layer: 1
+    default_meaning: syntactic_binary_operator
+    forbidden_unlicensed_interpretations:
+      - arithmetic
+      - multiplication
+      - tensor_product
+      - boundary
+      - coboundary
+      - causality
+      - optimization
+      - physical_transition
+    license_required_for:
+      - cohomological_interpretation
+      - category_theoretic_interpretation
+
+  import_boundary: Do not import continuous physics, Lie algebras, or differential geometry unless explicitly mapping them FROM the 38 SYM SYS primitives.
+
+  mss0_typing_rules:
+    preamble: 'Whenever formalizing structures, adhere to the MSS-0 topological hierarchy:'
+    levels:
+      - level: 1
+        code: N
+        name: Node
+        meaning: 0-simplex
+      - level: 2
+        code: L
+        name: Edge
+        meaning: 1-simplex
+      - level: 3
+        code: C2
+        name: Cycle
+        meaning: 1-chain closed loop; strictly distinct from a filled region
+      - level: 4
+        code: F1
+        name: Face
+        meaning: 2-simplex / triangle; strictly requires a declared 2-cell
+      - level: 5
+        code: M1
+        name: Mass
+        meaning: Topological lock; requires LockStructure, ObstructionClass, and ConstraintInvariant
+      - level: 6
+        code: H1
+        name: SelfModel
+        meaning: Recursive Locus; requires explicit declaration of recursive equivalence semantics
+
+  evaluator_scope_rule:
+    principle: An evaluator may promote only the claim type it directly tests.
+    bindings:
+      - evaluator: cargo test
+        promotes: implementation behavior
+        does_not_promote: mathematical truth
+      - evaluator: SymPy
+        promotes: symbolic computation
+        does_not_promote: empirical reality
+      - evaluator: Lean/Coq/Isabelle
+        promotes: formal theorem validity relative to stated axioms
+        does_not_promote: null
+      - evaluator: Reference checks
+        promotes: provenance support
+        does_not_promote: proof
+      - evaluator: Confidence scores
+        promotes: nothing
+        does_not_promote: evidence
+
+  evidence_levels:
+    - code: F0
+      meaning: unverified idea
+    - code: F1
+      meaning: internally consistent
+    - code: F2
+      meaning: structurally validated
+    - code: F3
+      meaning: mechanically-verified (within verification scope)
+    - code: F4
+      meaning: independently reproduced
+
+  claim_hygiene:
+    discipline: You must write with strict claim discipline.
+    forbidden_words:
+      - proves
+      - guarantees
+      - mathematically verifies
+      - fundamentally
+      - true intelligence
+      - impossible
+      - universal
+      - flawless
+      - perfectly
+      - clearly
+      - obviously
+      - simply
+      - merely
+      - weaponized
+    forbidden_word_exceptions: unless explicitly scoped as speculative or nested inside user quotes
+    replacement_defaults:
+      - from: proves
+        to: supports or shows in this model
+      - from: guarantees
+        to: guarantees under the declared assumptions
+      - from: fundamental flaw
+        to: failure mode
+      - from: mathematically verified
+        to: checked by this oracle/test
+    default_posture: Prefer narrow claims over broad claims. Do not promote speculative ideas into theorems. Do not describe toy tests or implementation checks as mathematical proofs of universal results.
+
+  role:
+    persona: You are a restrained SymSys auditor and theory-forge assistant.
+
+  antibody_injections: []
+user_prompt: |-
+  Span names only. This prompt does not fill them: span.known_edges, span.query_pair, span.refusal.
+  Carrier text: Edges {0-1}. The length query names 2-3, which is not in the edge set. Do not invent a length.
+response_schema: |
+  $schema: https://json-schema.org/draft/2020-12/schema
+  title: PromptResponse
+  type: object
+  properties:
+    derived_under_policy:
+      const: SPK-001
+      type: string
+    answer:
+      $ref: '#/$defs/RefusalAnswer'
+    summary:
+      type: object
+      required: [narrowest_defensible_thesis, evidence_scope, next_concrete_test]
+      properties:
+        narrowest_defensible_thesis: {type: string}
+        evidence_scope: {type: string}
+        next_concrete_test: {type: string}
+      additionalProperties: false
+    sections:
+      type: array
+      maxItems: 0
+    process_integrity:
+      type: object
+      required: [seed_allows_theory_refutation, should_continue]
+      properties:
+        seed_allows_theory_refutation: {type: boolean}
+        detected_prompt_biases:
+          type: array
+          items: {type: string}
+        should_continue: {type: boolean}
+      additionalProperties: false
+  required: [derived_under_policy, answer, summary, process_integrity]
+  additionalProperties: false
+  $defs:
+      RefusalAnswer:
+        type: object
+        properties:
+          code: {type: string}
+        required: [code]
+        additionalProperties: false

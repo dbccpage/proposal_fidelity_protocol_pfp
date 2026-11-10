@@ -1,0 +1,46 @@
+{
+  "authority_effect": "None",
+  "registration_sha256": "72bb0417944a10471f0f566191d3fbe93d7b022b0a3cc90fd1742fadac18ffad",
+  "source_archive": "registered_sources.zip",
+  "post_campaign_changes": {
+    "omega_engine_pfp/infrastructure/estimated_gateway.py": {
+      "preregistered_sha256": "7add50d6fdfa80ba40d855f4af89952ec32667f37f87ea02acc1bc52bab42833",
+      "final_sha256": "8f547b74cbe9ee8d3858dc300349d22c1699ba2a9f8def3857d56748ea562626"
+    },
+    "omega_engine_pfp/infrastructure/management_ladder.py": {
+      "preregistered_sha256": "317f8c3e4dc83d515c97e62edfb90de555921c0b592f0905ba9ec1bca36db2df",
+      "final_sha256": "275fed26ea49b9fae91f9830d080270f9b6a91f71f943a5d0b05b220f5d448ce"
+    },
+    "omega_engine_pfp/infrastructure/pfp_operad.py": {
+      "preregistered_sha256": "46107513ff2954ccbb9e6fa01f5aa69d2c9c6465abf74de695fbff291d5789c0",
+      "final_sha256": "30eba16a88e7803d66f88938ac6d6a8d7782eee9d46dee526ce023e732251364"
+    }
+  },
+  "additional_source_sha256": {
+    "omega_engine_woland/infrastructure/providers/adapters/model_backends.py": "e03115e13f167b382d2e5240b166c1c28c74845d334c7cf79384229c4ff29721",
+    "omega_engine_pfp/tests/test_pilot_grade_status.py": "91e3fce0b85a6ec9128bf27fe17fc11148b4bf10181ebe4dac267d9b97bdfd38",
+    "omega_engine_pfp/tests/test_seat_gateway_error_cost.py": "1da19c341d3fd0997cc09f13913447c4d1fc25148d8dffd0278172cc654fa8a2",
+    "omega_engine_woland/tests/test_model_backend_budget_reservation.py": "7e145000c718a46548437565e5f9840ce2935f2976999f56d755770151dd3873",
+    "omega_engine_pfp/tests/test_management_ladder.py": "d11fd5d22a2ad69e4213b941b3281494e4c521242c2330751953feaa36e4274d"
+  },
+  "changes": [
+    "Replayed parsed response must match retained raw bytes; counterfeit cached response control fails before fix and passes after.",
+    "PFP operation metadata retains actual generation identity, local experimental seed and explicit stage ancestry; provider seed unsupported.",
+    "Malformed OpenRouter choices raise ProviderError and leave retained turn bytes/accounting intact."
+  ],
+  "provider_calls_after_original_campaign": 0,
+  "original_accounting_preserved": true,
+  "historical_registration_not_reissued": true,
+  "post_campaign_checks": {
+    "command": "python -m pytest omega_engine_pfp/tests/test_pilot_grade_status.py omega_engine_pfp/tests/test_seat_gateway_error_cost.py omega_engine_woland/tests/test_model_backend_budget_reservation.py omega_engine_pfp/tests/test_management_ladder.py --basetemp .scratch/oewas012/provider-completion --junitxml .scratch/oewas012/pilot/post_campaign_checks.xml -q",
+    "passed": 24,
+    "failures": 0
+  },
+  "transport_diagnostic": {
+    "native_code": "TRANSPORT_ERROR",
+    "message": "HTTP request failed",
+    "sandbox": "use_default",
+    "possible_cause": "Sandbox network restrictions, TLS, DNS or another transport failure; exact cause not retained.",
+    "evidence_limit": "Native reqwest send maps its detailed error to this generic refusal before a response exists. No retry or fresh diagnostic network call was made."
+  }
+}

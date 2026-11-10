@@ -1,0 +1,90 @@
+"""Offline import and pre-dispatch boundaries after historical corpus migration."""
+
+import importlib
+from types import SimpleNamespace
+
+import pytest
+
+from omega_engine_woland.entrypoints.research import harness_cli
+from omega_engine_woland.infrastructure.research import harness_tasks
+from omega_engine_woland.infrastructure.research.harness_evaluator import HarnessEvaluator
+
+
+def missing_corpus(monkeypatch):
+    def missing(name):
+        raise ModuleNotFoundError("missing historical corpus", name="omega_engine_woland.tests.pilots")
+
+    monkeypatch.setattr(importlib, "import_module", missing)
+
+
+@pytest.mark.parametrize("kind", ["flow", "linear", "sql"])
+def test_missing_corpus_is_an_explicit_infrastructure_refusal(monkeypatch, kind):
+    missing_corpus(monkeypatch)
+    with pytest.raises(harness_tasks.HarnessCheckerUnavailable, match="CORPUS_UNAVAILABLE:" + kind):
+        harness_tasks.judge(kind, {}, {})
+    # Empty cases must not hide the unavailable checker or run the runner.
+    with pytest.raises(harness_tasks.HarnessCheckerUnavailable):
+        harness_tasks.execute_cases(None, "never executed", {"kind": kind}, [], None)
+
+
+def test_builtin_checks_do_not_import_the_relocated_corpus(monkeypatch):
+    def forbidden(name):
+        pytest.fail("built-in checks must not import corpus checkers")
+
+    monkeypatch.setattr(importlib, "import_module", forbidden)
+    harness_tasks.require_checkers(("exact_type", "stale_input", "workflow_sum", "workflow_prefix"))
+    assert harness_tasks.judge("exact_type", {"value": 1}, {"accepted": True})[0]
+    assert not harness_tasks.judge("exact_type", {"value": True}, {"accepted": True})[0]
+    assert harness_tasks.judge("workflow_sum", {"values": [1, 2], "factor": 2, "offset": 1}, {"result": 8})[0]
+
+
+def test_internal_checker_dependency_failure_is_not_hidden(monkeypatch):
+    original = ModuleNotFoundError("broken checker dependency", name="internal_dependency")
+
+    def broken(name):
+        raise original
+
+    monkeypatch.setattr(importlib, "import_module", broken)
+    with pytest.raises(ModuleNotFoundError) as error:
+        harness_tasks.require_checkers(("flow",))
+    assert error.value is original
+
+
+def test_checker_entrypoint_error_is_not_hidden(monkeypatch):
+    monkeypatch.setattr(importlib, "import_module", lambda name: SimpleNamespace())
+    with pytest.raises(AttributeError):
+        harness_tasks.require_checkers(("flow",))
+
+
+@pytest.mark.parametrize("kind", ["flow", "linear", "sql"])
+def test_missing_checker_refuses_trial_before_any_side_effect(monkeypatch, kind):
+    missing_corpus(monkeypatch)
+    # Every remaining dependency is absent: even a store lookup would fail this test.
+    evaluator = HarnessEvaluator(spec=None, store=None, provider=None, runner=None, tasks=[], repo=None)
+    with pytest.raises(harness_tasks.HarnessCheckerUnavailable):
+        evaluator.trial(None, {"kind": kind}, "discovery", "never-assigned", 0)
+
+
+@pytest.mark.parametrize("command,extra", [("run", []), ("resume", []), ("preflight", ["--live"])])
+def test_cli_missing_checker_refuses_before_store_provider_or_pricing_reads(monkeypatch, tmp_path, command, extra):
+    missing_corpus(monkeypatch)
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("missing corpus must refuse before resource construction")
+
+    monkeypatch.setattr(harness_cli, "HarnessStore", forbidden)
+    monkeypatch.setattr(harness_cli, "HarnessProvider", forbidden)
+    monkeypatch.setattr(harness_cli, "RootlessContainerRunner", forbidden)
+    with pytest.raises(harness_tasks.HarnessCheckerUnavailable):
+        harness_cli.main([command, "--output", str(tmp_path / "campaign"),
+                          "--prices", "absent-prices.json", "--pricing-evidence", "absent-evidence.json",
+                          *extra])
+    assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize("supplied", [["--prices", "absent.json"], ["--pricing-evidence", "absent.json"]])
+def test_cli_requires_both_explicit_pricing_inputs(tmp_path, supplied):
+    with pytest.raises(SystemExit) as error:
+        harness_cli.main(["preflight", "--output", str(tmp_path / "campaign"), *supplied])
+    assert error.value.code == 2
+    assert not list(tmp_path.iterdir())

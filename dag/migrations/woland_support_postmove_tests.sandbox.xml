@@ -1,0 +1,1202 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="27" skipped="0" tests="78" time="36.026" timestamp="2026-11-10T01:58:27.713341-05:00" hostname="offline-postmove-validation"><testcase classname="" name="test_confirmation_and_family_regression_are_real_selection_gates" time="0.219" /><testcase classname="" name="test_candidate_allowlist_and_exact_types" time="0.001" /><testcase classname="" name="test_memory_uses_candidate_errors_and_benign_controls" time="0.000" /><testcase classname="" name="test_reference_policy_records_fork_and_preserves_evidence_references" time="0.002" /><testcase classname="" name="test_output_schema_and_diagnosis_are_checked" time="0.001" /><testcase classname="" name="test_partition_counts_and_answer_free_projection" time="0.004" /><testcase classname="" name="test_cas_tamper_and_occurrence_conflict_fail_closed" time="0.014"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_cas_tamper_and_occurrence0\\objects\\.pending-epgtzwex' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_cas_tamper_and_occurrence0\\objects\\0d3e8a9b69451b50b664142f547dec7e0abf7a71162ff3a0c040963ff0ccfad9'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_cas_tamper_and_occurrence0')
+
+    def test_cas_tamper_and_occurrence_conflict_fail_closed(tmp_path):
+        store = HarnessStore(tmp_path)
+&gt;       key = store.record("occurrence", {"actual": "reply"})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_contracts.py:195: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25C58980&gt;
+raw = b'{"actual":"reply"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_cas_tamper_and_occurrence0\\objects\\.pending-epgtzwex' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_cas_tamper_and_occurrence0\\objects\\0d3e8a9b69451b50b664142f547dec7e0abf7a71162ff3a0c040963ff0ccfad9'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_public_only_improvement_fails_private_and_replays" time="2.714"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_public_only_improvement_f0\\objects\\.pending-961mk94h' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_public_only_improvement_f0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_public_only_improvement_f0')
+
+    def test_public_only_improvement_fails_private_and_replays(tmp_path):
+&gt;       store, spec, candidate, transport, evaluator = prepared(tmp_path)
+                                                       ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25B76D50&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_public_only_improvement_f0\\objects\\.pending-961mk94h' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_public_only_improvement_f0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resume_after_settlement_does_not_dispatch_again" time="1.534"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resume_after_settlement_d0\\objects\\.pending-5kjtbe4e' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resume_after_settlement_d0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resume_after_settlement_d0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25D748A0&gt;
+
+    def test_resume_after_settlement_does_not_dispatch_again(tmp_path, monkeypatch):
+&gt;       store, spec, candidate, transport, evaluator = prepared(tmp_path)
+                                                       ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25B76C10&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resume_after_settlement_d0\\objects\\.pending-5kjtbe4e' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resume_after_settlement_d0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_missing_usage_retains_reservation_and_halts_restart" time="1.513"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_missing_usage_retains_res0\\objects\\.pending-9e9nzl_d' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_missing_usage_retains_res0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_missing_usage_retains_res0')
+
+    def test_missing_usage_retains_reservation_and_halts_restart(tmp_path):
+&gt;       store, spec, _, _, evaluator = prepared(tmp_path)
+                                       ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25D749D0&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_missing_usage_retains_res0\\objects\\.pending-9e9nzl_d' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_missing_usage_retains_res0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_refresh_observation_keeps_original_budget_and_rates" time="1.599"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_refresh_observation_keeps0\\objects\\.pending-8yy7kuhr' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_refresh_observation_keeps0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_refresh_observation_keeps0')
+
+    def test_refresh_observation_keeps_original_budget_and_rates(tmp_path):
+&gt;       store, spec, _, _, _ = prepared(tmp_path)
+                               ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:197: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25D74180&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_refresh_observation_keeps0\\objects\\.pending-8yy7kuhr' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_refresh_observation_keeps0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resigned_false_evaluation_still_fails_independent_replay[public_pass-False-PUBLIC_VERDICT]" time="1.492"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation0\\objects\\.pending-emmuk6ti' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resigned_false_evaluation0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25D74D60&gt;
+field = 'public_pass', value = False, error = 'PUBLIC_VERDICT'
+
+    @pytest.mark.parametrize(
+        "field,value,error",
+        [
+            ("public_pass", False, "PUBLIC_VERDICT"),
+            ("private_pass", True, "PRIVATE_VERDICT"),
+            ("cost", 0, "TRIAL_COST"),
+            ("checker", digest("foreign-checker"), "EVALUATION_BINDING"),
+            ("parent", digest("foreign-parent"), "EVALUATION_BINDING"),
+        ],
+    )
+    def test_resigned_false_evaluation_still_fails_independent_replay(
+        tmp_path, monkeypatch, field, value, error
+    ):
+&gt;       store, spec, candidate, _, evaluator = prepared(tmp_path)
+                                               ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25C01C70&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation0\\objects\\.pending-emmuk6ti' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resigned_false_evaluation_still_fails_independent_replay[private_pass-True-PRIVATE_VERDICT]" time="1.428"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation1\\objects\\.pending-ggltc606' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation1\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resigned_false_evaluation1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD239F8710&gt;
+field = 'private_pass', value = True, error = 'PRIVATE_VERDICT'
+
+    @pytest.mark.parametrize(
+        "field,value,error",
+        [
+            ("public_pass", False, "PUBLIC_VERDICT"),
+            ("private_pass", True, "PRIVATE_VERDICT"),
+            ("cost", 0, "TRIAL_COST"),
+            ("checker", digest("foreign-checker"), "EVALUATION_BINDING"),
+            ("parent", digest("foreign-parent"), "EVALUATION_BINDING"),
+        ],
+    )
+    def test_resigned_false_evaluation_still_fails_independent_replay(
+        tmp_path, monkeypatch, field, value, error
+    ):
+&gt;       store, spec, candidate, _, evaluator = prepared(tmp_path)
+                                               ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25B8E9C0&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation1\\objects\\.pending-ggltc606' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation1\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resigned_false_evaluation_still_fails_independent_replay[cost-0-TRIAL_COST]" time="1.532"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation2\\objects\\.pending-8fcvodcm' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation2\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resigned_false_evaluation2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25B8E690&gt;
+field = 'cost', value = 0, error = 'TRIAL_COST'
+
+    @pytest.mark.parametrize(
+        "field,value,error",
+        [
+            ("public_pass", False, "PUBLIC_VERDICT"),
+            ("private_pass", True, "PRIVATE_VERDICT"),
+            ("cost", 0, "TRIAL_COST"),
+            ("checker", digest("foreign-checker"), "EVALUATION_BINDING"),
+            ("parent", digest("foreign-parent"), "EVALUATION_BINDING"),
+        ],
+    )
+    def test_resigned_false_evaluation_still_fails_independent_replay(
+        tmp_path, monkeypatch, field, value, error
+    ):
+&gt;       store, spec, candidate, _, evaluator = prepared(tmp_path)
+                                               ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25B8EF10&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation2\\objects\\.pending-8fcvodcm' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation2\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resigned_false_evaluation_still_fails_independent_replay[checker-fceebd73dde7e05eb9dd3952cfabac1380285b679de22204ee3f93b4e5777dce-EVALUATION_BINDING]" time="1.484"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation3\\objects\\.pending-nk_b0z45' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation3\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resigned_false_evaluation3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25B8F350&gt;
+field = 'checker'
+value = 'fceebd73dde7e05eb9dd3952cfabac1380285b679de22204ee3f93b4e5777dce'
+error = 'EVALUATION_BINDING'
+
+    @pytest.mark.parametrize(
+        "field,value,error",
+        [
+            ("public_pass", False, "PUBLIC_VERDICT"),
+            ("private_pass", True, "PRIVATE_VERDICT"),
+            ("cost", 0, "TRIAL_COST"),
+            ("checker", digest("foreign-checker"), "EVALUATION_BINDING"),
+            ("parent", digest("foreign-parent"), "EVALUATION_BINDING"),
+        ],
+    )
+    def test_resigned_false_evaluation_still_fails_independent_replay(
+        tmp_path, monkeypatch, field, value, error
+    ):
+&gt;       store, spec, candidate, _, evaluator = prepared(tmp_path)
+                                               ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25DE4B50&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation3\\objects\\.pending-nk_b0z45' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation3\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resigned_false_evaluation_still_fails_independent_replay[parent-3f9c915e07407a7f2d1160574c642f95a1493948e0bae5931870f53d70c6797b-EVALUATION_BINDING]" time="1.532"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation4\\objects\\.pending-0xad4sa3' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation4\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resigned_false_evaluation4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25DE4D50&gt;
+field = 'parent'
+value = '3f9c915e07407a7f2d1160574c642f95a1493948e0bae5931870f53d70c6797b'
+error = 'EVALUATION_BINDING'
+
+    @pytest.mark.parametrize(
+        "field,value,error",
+        [
+            ("public_pass", False, "PUBLIC_VERDICT"),
+            ("private_pass", True, "PRIVATE_VERDICT"),
+            ("cost", 0, "TRIAL_COST"),
+            ("checker", digest("foreign-checker"), "EVALUATION_BINDING"),
+            ("parent", digest("foreign-parent"), "EVALUATION_BINDING"),
+        ],
+    )
+    def test_resigned_false_evaluation_still_fails_independent_replay(
+        tmp_path, monkeypatch, field, value, error
+    ):
+&gt;       store, spec, candidate, _, evaluator = prepared(tmp_path)
+                                               ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25DE4750&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation4\\objects\\.pending-0xad4sa3' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_false_evaluation4\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_frozen_source_rejects_checker_substitution" time="1.482"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_frozen_source_rejects_che0\\objects\\.pending-ii7zfnnj' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_frozen_source_rejects_che0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_frozen_source_rejects_che0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25DE4950&gt;
+
+    def test_frozen_source_rejects_checker_substitution(tmp_path, monkeypatch):
+&gt;       store, *_ = prepared(tmp_path)
+                    ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:239: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25B0BA70&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_frozen_source_rejects_che0\\objects\\.pending-ii7zfnnj' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_frozen_source_rejects_che0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_loop_reenters_only_selected_bytes_and_resumes" time="0.019"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_loop_reenters_only_select0\\objects\\.pending-_k_chqig' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_loop_reenters_only_select0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_loop_reenters_only_select0')
+
+    def test_loop_reenters_only_selected_bytes_and_resumes(tmp_path):
+        store = HarnessStore(tmp_path)
+        spec = fixture_spec()
+        root = reference(spec.source)
+&gt;       store.retain(root)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:256: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25B0BC50&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_loop_reenters_only_select0\\objects\\.pending-_k_chqig' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_loop_reenters_only_select0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_budget_refusal_is_not_a_rejected_rewrite" time="0.020" /><testcase classname="" name="test_container_surface_does_not_mount_private_state_or_forward_credentials" time="0.001" /><testcase classname="" name="test_outer_context_keeps_root_champion_and_own_recent_attempts" time="0.021"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_outer_context_keeps_root_0\\objects\\.pending-0pvs8ovo' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_outer_context_keeps_root_0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_outer_context_keeps_root_0')
+
+    def test_outer_context_keeps_root_champion_and_own_recent_attempts(tmp_path):
+        from omega_engine_pfp.infrastructure.adapters.harness_provider import ModelCall
+        from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
+        from omega_engine_woland.infrastructure.providers.anthropic_messages import build_anthropic_body
+        from omega_engine_woland.infrastructure.research.harness_evaluator import HarnessProposer
+    
+        store = HarnessStore(tmp_path)
+        spec = fixture_spec()
+        root = reference(spec.source)
+        child = replace(root, parent=root.candidate_id, mutation="first")
+        for c in (root, child):
+&gt;           store.retain(c)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:354: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD239DC4B0&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_outer_context_keeps_root_0\\objects\\.pending-0pvs8ovo' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_outer_context_keeps_root_0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_uncompleted_provider_results_never_become_programs_or_rewrites[INCOMPLETE]" time="0.018"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_uncompleted_provider_resu0\\objects\\.pending-tip1x68i' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_uncompleted_provider_resu0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_uncompleted_provider_resu0')
+status = 'INCOMPLETE'
+
+    @pytest.mark.parametrize("status", ["INCOMPLETE", "TYPED_REFUSAL"])
+    def test_uncompleted_provider_results_never_become_programs_or_rewrites(tmp_path, status):
+        store = HarnessStore(tmp_path)
+        spec = fixture_spec()
+        root = reference(spec.source)
+&gt;       store.retain(root)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25DA0C80&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_uncompleted_provider_resu0\\objects\\.pending-tip1x68i' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_uncompleted_provider_resu0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_uncompleted_provider_results_never_become_programs_or_rewrites[TYPED_REFUSAL]" time="0.019"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_uncompleted_provider_resu1\\objects\\.pending-gfxveklr' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_uncompleted_provider_resu1\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_uncompleted_provider_resu1')
+status = 'TYPED_REFUSAL'
+
+    @pytest.mark.parametrize("status", ["INCOMPLETE", "TYPED_REFUSAL"])
+    def test_uncompleted_provider_results_never_become_programs_or_rewrites(tmp_path, status):
+        store = HarnessStore(tmp_path)
+        spec = fixture_spec()
+        root = reference(spec.source)
+&gt;       store.retain(root)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25B9F050&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_uncompleted_provider_resu1\\objects\\.pending-gfxveklr' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_uncompleted_provider_resu1\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_malformed_rewrite_files_are_rejections_not_attribute_errors[files0]" time="0.019"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a0\\objects\\.pending-29hdy2zv' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_malformed_rewrite_files_a0')
+files = []
+
+    @pytest.mark.parametrize("files", [[], None, "not a mapping", 42])
+    def test_malformed_rewrite_files_are_rejections_not_attribute_errors(tmp_path, files):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+&gt;       store.retain(root)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25B9F290&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a0\\objects\\.pending-29hdy2zv' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_malformed_rewrite_files_are_rejections_not_attribute_errors[None]" time="0.019"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a1\\objects\\.pending-2n4ngtdl' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a1\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_malformed_rewrite_files_a1')
+files = None
+
+    @pytest.mark.parametrize("files", [[], None, "not a mapping", 42])
+    def test_malformed_rewrite_files_are_rejections_not_attribute_errors(tmp_path, files):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+&gt;       store.retain(root)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25CB1650&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a1\\objects\\.pending-2n4ngtdl' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a1\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_malformed_rewrite_files_are_rejections_not_attribute_errors[not a mapping]" time="0.018"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a2\\objects\\.pending-74t6bqi5' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a2\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_malformed_rewrite_files_a2')
+files = 'not a mapping'
+
+    @pytest.mark.parametrize("files", [[], None, "not a mapping", 42])
+    def test_malformed_rewrite_files_are_rejections_not_attribute_errors(tmp_path, files):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+&gt;       store.retain(root)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25CB2150&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a2\\objects\\.pending-74t6bqi5' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a2\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_malformed_rewrite_files_are_rejections_not_attribute_errors[42]" time="0.018"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a3\\objects\\.pending-5z5z55pl' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a3\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_malformed_rewrite_files_a3')
+files = 42
+
+    @pytest.mark.parametrize("files", [[], None, "not a mapping", 42])
+    def test_malformed_rewrite_files_are_rejections_not_attribute_errors(tmp_path, files):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+&gt;       store.retain(root)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD2398AD50&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a3\\objects\\.pending-5z5z55pl' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_rewrite_files_a3\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_repeated_preflight_does_not_promote_a_settled_refusal" time="0.020"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_repeated_preflight_does_n0\\campaign\\objects\\.pending-b_9864o1' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_repeated_preflight_does_n0\\campaign\\objects\\62aa3972f2a9827c5d97758396ae96c55e9e9d4eec8351d6022a9d496634c2e2'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_repeated_preflight_does_n0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25D659A0&gt;
+
+    def test_repeated_preflight_does_not_promote_a_settled_refusal(tmp_path, monkeypatch):
+        store = HarnessStore(tmp_path / "campaign")
+&gt;       store.record("preflight/compatibility/inner/settled", {"status": "TYPED_REFUSAL"})
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD23988CD0&gt;
+raw = b'{"status":"TYPED_REFUSAL"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_repeated_preflight_does_n0\\campaign\\objects\\.pending-b_9864o1' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_repeated_preflight_does_n0\\campaign\\objects\\62aa3972f2a9827c5d97758396ae96c55e9e9d4eec8351d6022a9d496634c2e2'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resigned_provider_result_or_configuration_is_rejected[status-CALL_RESULT_CHANGED]" time="1.529"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_0\\objects\\.pending-n_un0lpu' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resigned_provider_result_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD23963070&gt;
+mutation = 'status', error = 'CALL_RESULT_CHANGED'
+
+    @pytest.mark.parametrize(
+        "mutation,error",
+        [
+            ("status", "CALL_RESULT_CHANGED"),
+            ("content", "CALL_RESULT_CHANGED"),
+            ("effort", "MODEL_CONFIGURATION_CHANGED"),
+        ],
+    )
+    def test_resigned_provider_result_or_configuration_is_rejected(
+        tmp_path, monkeypatch, mutation, error
+    ):
+        from omega_engine_operads.domain.autopoiesis.learning import canonical
+        from omega_engine_woland.infrastructure.research.harness_replay import replay
+        from omega_engine_woland.tests.research.test_harness_execution import ROOT, prepared
+    
+&gt;       store, _, candidate, _, evaluator = prepared(tmp_path)
+                                            ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD23991490&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_0\\objects\\.pending-n_un0lpu' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resigned_provider_result_or_configuration_is_rejected[content-CALL_RESULT_CHANGED]" time="1.578"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_1\\objects\\.pending-sbz0nn5m' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_1\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resigned_provider_result_1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD238B6CF0&gt;
+mutation = 'content', error = 'CALL_RESULT_CHANGED'
+
+    @pytest.mark.parametrize(
+        "mutation,error",
+        [
+            ("status", "CALL_RESULT_CHANGED"),
+            ("content", "CALL_RESULT_CHANGED"),
+            ("effort", "MODEL_CONFIGURATION_CHANGED"),
+        ],
+    )
+    def test_resigned_provider_result_or_configuration_is_rejected(
+        tmp_path, monkeypatch, mutation, error
+    ):
+        from omega_engine_operads.domain.autopoiesis.learning import canonical
+        from omega_engine_woland.infrastructure.research.harness_replay import replay
+        from omega_engine_woland.tests.research.test_harness_execution import ROOT, prepared
+    
+&gt;       store, _, candidate, _, evaluator = prepared(tmp_path)
+                                            ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD2613BC50&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_1\\objects\\.pending-sbz0nn5m' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_1\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_resigned_provider_result_or_configuration_is_rejected[effort-MODEL_CONFIGURATION_CHANGED]" time="1.536"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_2\\objects\\.pending-_8n_cmfs' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_2\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_resigned_provider_result_2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25BC6410&gt;
+mutation = 'effort', error = 'MODEL_CONFIGURATION_CHANGED'
+
+    @pytest.mark.parametrize(
+        "mutation,error",
+        [
+            ("status", "CALL_RESULT_CHANGED"),
+            ("content", "CALL_RESULT_CHANGED"),
+            ("effort", "MODEL_CONFIGURATION_CHANGED"),
+        ],
+    )
+    def test_resigned_provider_result_or_configuration_is_rejected(
+        tmp_path, monkeypatch, mutation, error
+    ):
+        from omega_engine_operads.domain.autopoiesis.learning import canonical
+        from omega_engine_woland.infrastructure.research.harness_replay import replay
+        from omega_engine_woland.tests.research.test_harness_execution import ROOT, prepared
+    
+&gt;       store, _, candidate, _, evaluator = prepared(tmp_path)
+                                            ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25F51950&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_2\\objects\\.pending-_8n_cmfs' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_resigned_provider_result_2\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_blank_diagnosis_is_not_a_rewrite" time="0.018"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_blank_diagnosis_is_not_a_0\\objects\\.pending-4stht_g4' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_blank_diagnosis_is_not_a_0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_blank_diagnosis_is_not_a_0')
+
+    def test_blank_diagnosis_is_not_a_rewrite(tmp_path):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+&gt;       store.retain(root)
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:95: in retain
+    key = self.put(canonical(candidate.to_dict()))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD23977620&gt;
+raw = b'{"files":{"context_policy.py":"import json\\ndef context(state,choice):\\n h=state[\'attempts\']; champion=max(h,key...ness-candidate.v1","source":"073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea","strategy":"reference"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_blank_diagnosis_is_not_a_0\\objects\\.pending-4stht_g4' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_blank_diagnosis_is_not_a_0\\objects\\6fdab5e22eedfff30a03b5886fc9bb1804bd5d3ad648e3b83a80bbec6b21e427'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_outer_proposal_replays_against_exact_provider_reply" time="1.504"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_outer_proposal_replays_ag0\\objects\\.pending-gsk0kx51' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_outer_proposal_replays_ag0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_outer_proposal_replays_ag0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002DD25B9F590&gt;
+
+    def test_outer_proposal_replays_against_exact_provider_reply(tmp_path, monkeypatch):
+        from omega_engine_operads.domain.autopoiesis.learning import canonical
+        from omega_engine_woland.infrastructure.research.harness_replay import replay
+        from omega_engine_woland.tests.research.test_harness_execution import (
+            ROOT,
+            pfp_reply,
+            prepared,
+        )
+    
+&gt;       store, _, candidate, transport, evaluator = prepared(tmp_path)
+                                                    ^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\research\test_harness_review_regressions.py:193: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_woland\tests\research\test_harness_execution.py:106: in prepared
+    spec = prepare(ROOT, store, PRICES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\research\harness_protocol.py:205: in prepare
+    store.record(name, value)
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD23932DD0&gt;
+raw = b'{"omega_engine/__init__.py":"92e7ba24c728a59c50741de632b96028061714592895efb2b5cfdfce183106cd","omega_engine/crates_...ga_engine_woland/use_cases/research/warm_cache.py":"34c39a7f72cddf3a8fc4a0654cb7925da71591141e0db5ecaa29c23257da00df"}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_outer_proposal_replays_ag0\\objects\\.pending-gsk0kx51' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_outer_proposal_replays_ag0\\objects\\9d47b9cccb95e894fe936e0594a9dd288969fa9ca22848c199126dc2856ebc3f'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_missing_corpus_is_an_explicit_infrastructure_refusal[flow]" time="0.001" /><testcase classname="" name="test_missing_corpus_is_an_explicit_infrastructure_refusal[linear]" time="0.001" /><testcase classname="" name="test_missing_corpus_is_an_explicit_infrastructure_refusal[sql]" time="0.002" /><testcase classname="" name="test_builtin_checks_do_not_import_the_relocated_corpus" time="0.001" /><testcase classname="" name="test_internal_checker_dependency_failure_is_not_hidden" time="0.000" /><testcase classname="" name="test_checker_entrypoint_error_is_not_hidden" time="0.001" /><testcase classname="" name="test_missing_checker_refuses_trial_before_any_side_effect[flow]" time="0.001" /><testcase classname="" name="test_missing_checker_refuses_trial_before_any_side_effect[linear]" time="0.001" /><testcase classname="" name="test_missing_checker_refuses_trial_before_any_side_effect[sql]" time="0.001" /><testcase classname="" name="test_cli_missing_checker_refuses_before_store_provider_or_pricing_reads[run-extra0]" time="0.008" /><testcase classname="" name="test_cli_missing_checker_refuses_before_store_provider_or_pricing_reads[resume-extra1]" time="0.011" /><testcase classname="" name="test_cli_missing_checker_refuses_before_store_provider_or_pricing_reads[preflight-extra2]" time="0.008" /><testcase classname="" name="test_cli_requires_both_explicit_pricing_inputs[supplied0]" time="0.010" /><testcase classname="" name="test_cli_requires_both_explicit_pricing_inputs[supplied1]" time="0.010" /><testcase classname="" name="test_direct_anthropic_liability_and_capabilities" time="0.108" /><testcase classname="" name="test_missing_cache_or_boolean_usage_is_never_zero_cost" time="0.001" /><testcase classname="" name="test_atomic_concurrency_restart_and_phase_reservations" time="0.562" /><testcase classname="" name="test_malformed_answer_still_settles_observed_usage" time="0.390"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_answer_still_se0\\objects\\.pending-6buhk0jj' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_answer_still_se0\\objects\\3b310108e00e5e00c46d1fd6846cb4eebc6b2095d0505b3c8682492568ca9042'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_malformed_answer_still_se0')
+
+    def test_malformed_answer_still_settles_observed_usage(tmp_path):
+        class FakeTransport(AnthropicTransport):
+            provenance = "fixture"
+    
+            def dispatch(self, admitted):
+                return json.dumps(
+                    {
+                        "id": "msg_test",
+                        "model": admitted.model,
+                        "content": [{"type": "text", "text": 42}],
+                        "usage": {"input_tokens": 10, "output_tokens": 5},
+                    }
+                ).encode()
+    
+        store = HarnessStore(tmp_path)
+        provider = HarnessProvider(
+            spec=spec(),
+            store=store,
+            prices=PRICES,
+            transport=FakeTransport(api_key="fixture"),
+            clock=lambda: "2026-10-23T15:00:00.000000Z",
+        )
+&gt;       call = provider.call("system", "task", role="inner", phase="preflight", occurrence="malformed")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\providers\test_harness_anthropic_budget.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_pfp\infrastructure\adapters\harness_provider.py:205: in call
+    result = gateway.complete_result(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\providers\gateway.py:153: in complete_result
+    return self._service().complete(p, m, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\use_cases\providers\completion.py:86: in complete
+    raw = self.dispatch(admitted)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\providers\gateway.py:132: in dispatch
+    return send(admitted)
+           ^^^^^^^^^^^^^^
+..\anomalon\omega_engine_pfp\infrastructure\adapters\harness_provider.py:105: in dispatch
+    self.store.record(
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD261247D0&gt;
+raw = b'{"attempt":"5913210d27ba4258a5b0e71b73adc097","body":{"max_tokens":2000,"messages":[{"content":"{\\"answer_schema\\"...c":"2026-10-23T14:50:07.000000Z","pricing_stale_after_utc":"2026-10-24T14:50:07.000000Z","spent_after_microusd":1800}}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_answer_still_se0\\objects\\.pending-6buhk0jj' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_malformed_answer_still_se0\\objects\\3b310108e00e5e00c46d1fd6846cb4eebc6b2095d0505b3c8682492568ca9042'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_http_failure_with_usage_is_settled_without_success_credit" time="0.385"><failure message="PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_http_failure_with_usage_i0\\objects\\.pending-ob13zegw' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_http_failure_with_usage_i0\\objects\\4f2507cac72f58f246621af90b4ba5d9533ca44d6e52f9a64ef85ba41dd642f5'">tmp_path = WindowsPath('C:/Users/a343o/source/repos/proposal_fidelity_protocol_pfp/dag/migrations/woland_support_postmove_tests_qz5lkxcx/pytest-tmp/test_http_failure_with_usage_i0')
+
+    def test_http_failure_with_usage_is_settled_without_success_credit(tmp_path):
+        from omega_engine_woland.domain.providers.attempt import TransportFailure
+    
+        class FailedTransport(AnthropicTransport):
+            provenance = "fixture"
+    
+            def dispatch(self, admitted):
+                raw = json.dumps(
+                    {
+                        "id": "msg_http_failure",
+                        "model": admitted.model,
+                        "content": [{"type": "text", "text": "{}"}],
+                        "usage": {"input_tokens": 10, "output_tokens": 5},
+                    }
+                ).encode()
+                raise TransportFailure("PROVIDER_HTTP_500", reply_bytes=raw, http_status=500)
+    
+        store = HarnessStore(tmp_path)
+        provider = HarnessProvider(
+            spec=spec(),
+            store=store,
+            prices=PRICES,
+            transport=FailedTransport(api_key="fixture"),
+            clock=lambda: "2026-10-23T15:00:00.000000Z",
+        )
+&gt;       call = provider.call("system", "task", role="inner", phase="preflight", occurrence="http")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+..\anomalon\omega_engine_woland\tests\providers\test_harness_anthropic_budget.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\anomalon\omega_engine_pfp\infrastructure\adapters\harness_provider.py:205: in call
+    result = gateway.complete_result(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\providers\gateway.py:153: in complete_result
+    return self._service().complete(p, m, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\use_cases\providers\completion.py:86: in complete
+    raw = self.dispatch(admitted)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+..\anomalon\omega_engine_woland\infrastructure\providers\gateway.py:132: in dispatch
+    return send(admitted)
+           ^^^^^^^^^^^^^^
+..\anomalon\omega_engine_pfp\infrastructure\adapters\harness_provider.py:105: in dispatch
+    self.store.record(
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:59: in record
+    key = self.put(canonical(value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_store.HarnessStore object at 0x000002DD25E885F0&gt;
+raw = b'{"attempt":"c45f086316c2425e810d694084e022ab","body":{"max_tokens":2000,"messages":[{"content":"{\\"answer_schema\\"...c":"2026-10-23T14:50:07.000000Z","pricing_stale_after_utc":"2026-10-24T14:50:07.000000Z","spent_after_microusd":1800}}'
+
+    def put(self, raw):
+        if type(raw) is not bytes:
+            raise TypeError("EXACT_BYTES_REQUIRED")
+        key = hashlib.sha256(raw).hexdigest()
+        path = self.root / "objects" / key
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, prefix=".pending-", delete=False
+            ) as out:
+                temporary = Path(out.name)
+                out.write(raw)
+                out.flush()
+                os.fsync(out.fileno())
+&gt;           os.link(temporary, path)
+E           PermissionError: [WinError 5] Access is denied: 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_http_failure_with_usage_i0\\objects\\.pending-ob13zegw' -&gt; 'C:\\Users\\a343o\\source\\repos\\proposal_fidelity_protocol_pfp\\dag\\migrations\\woland_support_postmove_tests_qz5lkxcx\\pytest-tmp\\test_http_failure_with_usage_i0\\objects\\4f2507cac72f58f246621af90b4ba5d9533ca44d6e52f9a64ef85ba41dd642f5'
+
+..\anomalon\omega_engine_woland\infrastructure\research\harness_store.py:42: PermissionError</failure></testcase><testcase classname="" name="test_phase_cap_survives_settlement_and_reopen" time="0.444" /><testcase classname="" name="test_family_reuses_the_existing_inventory_and_keeps_admission_separate" time="0.081" /><testcase classname="" name="test_effective_patch_has_actual_checks_and_one_identity_across_ports" time="1.126" /><testcase classname="" name="test_ineffective_and_regressive_patches_are_real_observations[n if n &lt; 0 else n - 2-INEFFECTIVE-after0]" time="1.292" /><testcase classname="" name="test_ineffective_and_regressive_patches_are_real_observations[n + 1-REGRESSION-after1]" time="0.996" /><testcase classname="" name="test_changed_source_refuses_without_rewriting_the_authored_edit" time="0.208" /><testcase classname="" name="test_source_changed_after_capture_is_refused_before_checks" time="0.312" /><testcase classname="" name="test_patch_cannot_edit_read_only_or_outside_paths[check.py]" time="0.692" /><testcase classname="" name="test_patch_cannot_edit_read_only_or_outside_paths[../outside.py]" time="0.610" /><testcase classname="" name="test_unavailable_executor_refuses_before_any_effect" time="0.100" /><testcase classname="" name="test_unavailable_check_is_not_a_motivating_failure" time="0.312" /><testcase classname="" name="test_existing_output_is_not_overwritten" time="0.133" /><testcase classname="" name="test_scope_wire_rejects_path_aliases[../app.py]" time="0.001" /><testcase classname="" name="test_scope_wire_rejects_path_aliases[/app.py]" time="0.001" /><testcase classname="" name="test_scope_wire_rejects_path_aliases[a/../app.py]" time="0.001" /><testcase classname="" name="test_scope_wire_rejects_path_aliases[.GIT/config]" time="0.001" /><testcase classname="" name="test_scope_wire_rejects_path_aliases[a\\b.py]" time="0.001" /><testcase classname="" name="test_scope_wire_rejects_path_aliases[NUL]" time="0.001" /><testcase classname="" name="test_scope_wire_rejects_path_aliases[app.py:stream]" time="0.001" /><testcase classname="" name="test_timeout_boolean_is_not_an_integer_budget" time="0.001" /><testcase classname="" name="test_cli_runs_the_same_bound_pipeline" time="1.052" /><testcase classname="" name="test_missing_selected_native_host_refuses_without_effects" time="0.046" /><testcase classname="" name="test_inherited_git_addresses_cannot_redirect_the_working_copy" time="1.030" /><testcase classname="test_windows_guard_without_runtime" name="test_actual_windows_guard[run-extra0]" time="0.010" /><testcase classname="test_windows_guard_without_runtime" name="test_actual_windows_guard[resume-extra1]" time="0.009" /><testcase classname="test_windows_guard_without_runtime" name="test_actual_windows_guard[preflight-extra2]" time="0.009" /></testsuite></testsuites>

@@ -1,0 +1,21 @@
+messages:
+- role: user
+  content: "Substrate: Genesis Relational Graph Nerve\nEntity Table [Cells]:\nu1:\
+    \ Section(1, 0, 0)\nu2: Section(0, 1, 0)\nu3: Section(0, 0, 1)\nx12: Section(0,\
+    \ 0, 0)\nx23: Section(0, 0, 0)\nx31: Section(0, 0, 0)\n\nRelation Table [DirectedEdges]:\n\
+    e1: (x12, u1) -> DifferenceVector (1, 0, 0)\ne2: (x12, u2) -> DifferenceVector\
+    \ (0, 1, 0)\ne3: (x23, u2) -> DifferenceVector (0, 1, 0)\ne4: (x23, u3) -> DifferenceVector\
+    \ (0, 0, 1)\ne5: (x31, u3) -> DifferenceVector (0, 0, 1)\ne6: (x31, u1) -> DifferenceVector\
+    \ (1, 0, 0)\n\nMetric: Taxicab norm ||(v0, v1, v2)||_1 = |v0| + |v1| + |v2| on\
+    \ all difference vectors.\n\nObserver Partition Table:\nObserver C1: Joins on\
+    \ Edges {e1, e6}, Projector = ProjectDropCoord(0)\nObserver C2: Joins on Edges\
+    \ {e2, e3}, Projector = ProjectDropCoord(1)\nObserver C3: Joins on Edges {e4,\
+    \ e5}, Projector = ProjectDropCoord(2)\n\nQueries:\n1. Evaluate Projected Aggregate\
+    \ Sums J for C1, C2, C3.\n2. Evaluate Predicate AllGreen (all sums == 0).\n3.\
+    \ Evaluate Unprojected Total Sum I across all 6 edges.\n4. Evaluate Visibility\
+    \ Gap Lambda = I - max(J).\n5. Evaluate Homothetic Modulus Solvency: \u2203 f:\
+    \ R_+ -> R_+ s.t. I(lambda * S) <= f(max J(lambda * S)) \u2200 lambda > 0?\n\n\
+    Return strictly valid JSON:\n{\n  \"answer\": {\n    \"observed_tallies\": {\"\
+    C1\": integer, \"C2\": integer, \"C3\": integer},\n    \"all_green\": boolean,\n\
+    \    \"raw_global_defect_I\": integer,\n    \"visibility_gap_lambda\": integer,\n\
+    \    \"recovery_modulus_exists\": boolean\n  }\n}"

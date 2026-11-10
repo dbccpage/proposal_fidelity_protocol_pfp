@@ -1,0 +1,460 @@
+"""Hodge dual solver for simplicial complexes encoded in Layer 1 Glyph Graph Mode.
+
+Alphabet: [0-9a-z<>]
+Vertex: single glyph.
+Directed edge: u>v or u<v.
+Edge separator: <>
+Optional edge weight suffix: [a-z][0-9], e.g. 0>1a8 means weight 8.
+
+Requires numpy. Run:
+    python hodge_solver.py --test
+    python hodge_solver.py "0>1<>0>2<>1>2" 1 1,2,3
+"""
+
+from __future__ import annotations
+
+import sys
+from itertools import combinations
+from math import comb
+from typing import Dict, List, Set, Tuple
+
+import numpy as np
+
+
+class HodgeSolver:
+    """Build and solve Hodge-theoretic operators on a small simplicial complex."""
+
+    def __init__(self, glyph_string: str):
+        self.vertices, self.edges, self.weights = self.parse_glyphs(glyph_string)
+        self.C, self.max_dim = self.build_complex()
+
+        # Undirected edge weights keyed by frozenset({u, v})
+        self.undirected_weights = {}
+        for (u, v), w in self.weights.items():
+            self.undirected_weights[frozenset({u, v})] = float(w)
+
+    # ------------------------------------------------------------------
+    # 1. Parser
+    # ------------------------------------------------------------------
+    @staticmethod
+    def parse_glyphs(s: str) -> Tuple[Set[str], List[Tuple[str, str]], Dict[Tuple[str, str], int]]:
+        """Parse a glyph string.
+
+        Returns:
+            vertices: set of vertex characters
+            edges: directed edges as (source, target)
+            weights: weight for each directed edge (default 1)
+        """
+        s = s.strip()
+        if not s:
+            return set(), [], {}
+
+        # The separator is exactly "<>". A reverse edge uses a single "<",
+        # so splitting on "<>" is safe.
+        tokens = [t for t in s.split("<>") if t]
+        vertices: Set[str] = set()
+        edges: List[Tuple[str, str]] = []
+        weights: Dict[Tuple[str, str], int] = {}
+
+        for tok in tokens:
+            # Isolated vertex, e.g. the 0-simplex "0"
+            if len(tok) == 1:
+                vertices.add(tok)
+                continue
+
+            if len(tok) not in (3, 5):
+                raise ValueError(f"Invalid token: {tok!r}")
+
+            u = tok[0]
+            op = tok[1]
+            v = tok[2]
+
+            if op not in (">", "<"):
+                raise ValueError(f"Invalid edge operator in token: {tok!r}")
+
+            if len(tok) == 5:
+                suffix_letter = tok[3]
+                suffix_digit = tok[4]
+                if not suffix_letter.isalpha() or not suffix_digit.isdigit():
+                    raise ValueError(f"Invalid weight suffix in token: {tok!r}")
+                w = int(suffix_digit)
+            else:
+                w = 1
+
+            if op == ">":
+                e = (u, v)
+            else:  # u<v means v -> u
+                e = (v, u)
+
+            edges.append(e)
+            weights[e] = w
+            vertices.add(u)
+            vertices.add(v)
+
+        return vertices, edges, weights
+
+    # ------------------------------------------------------------------
+    # 2. Complex builder
+    # ------------------------------------------------------------------
+    def build_complex(self) -> Tuple[List[List[Tuple[str, ...]]], int]:
+        """Build all simplices of dimensions 0..4 by finding cliques.
+
+        Returns:
+            C: C[k] is the list of k-simplices, each as a sorted vertex tuple.
+            max_dim: largest dimension present.
+        """
+        C: List[List[Tuple[str, ...]]] = [[] for _ in range(5)]  # dimensions 0,1,2,3,4
+
+        verts = sorted(self.vertices)
+        C[0] = [(v,) for v in verts]
+
+        adjacency = {frozenset({u, v}) for (u, v) in self.edges}
+
+        for size in range(2, 6):  # 2..5 vertices -> dimensions 1..4
+            for comb_verts in combinations(verts, size):
+                ok = True
+                for i in range(size):
+                    for j in range(i + 1, size):
+                        if frozenset({comb_verts[i], comb_verts[j]}) not in adjacency:
+                            ok = False
+                            break
+                    if not ok:
+                        break
+                if ok:
+                    C[size - 1].append(tuple(comb_verts))
+
+        max_dim = max(i for i, lst in enumerate(C) if lst)
+        return C, max_dim
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+    def edge_weight(self, u: str, v: str) -> float:
+        return self.undirected_weights.get(frozenset({u, v}), 1.0)
+
+    def simplex_weight(self, simplex: Tuple[str, ...]) -> float:
+        """Product of all edge weights in the simplex. Empty simplex has weight 1."""
+        w = 1.0
+        for i in range(len(simplex)):
+            for j in range(i + 1, len(simplex)):
+                w *= self.edge_weight(simplex[i], simplex[j])
+        return w
+
+    def is_full_simplex(self) -> bool:
+        """True iff the complex is exactly one full n-simplex."""
+        n = self.max_dim
+        if n < 0 or len(self.C[n]) != 1:
+            return False
+        full_verts = set(self.C[n][0])
+        if full_verts != set(self.vertices):
+            return False
+        for k in range(n + 1):
+            if len(self.C[k]) != comb(n + 1, k + 1):
+                return False
+        return True
+
+    def orientation_sign(self, a: Tuple[str, ...], b: Tuple[str, ...]) -> int:
+        """Sign of concatenating disjoint sorted tuples a and b to obtain the full sorted vertex order."""
+        all_vertices = (
+            self.C[self.max_dim][0] if self.is_full_simplex() else tuple(sorted(self.vertices))
+        )
+        pos = {v: i for i, v in enumerate(all_vertices)}
+        concat = list(a) + list(b)
+        indices = [pos[v] for v in concat]
+
+        inv = 0
+        for i in range(len(indices)):
+            for j in range(i + 1, len(indices)):
+                if indices[i] > indices[j]:
+                    inv += 1
+        return -1 if inv % 2 else 1
+
+    # ------------------------------------------------------------------
+    # 3. Boundary operators
+    # ------------------------------------------------------------------
+    def boundary(self, k: int) -> np.ndarray:
+        """Signed incidence matrix ∂_k : C_k -> C_{k-1}.
+
+        Shape: (len(C[k-1]), len(C[k])).
+        """
+        if k < 1 or k > self.max_dim:
+            return np.zeros((len(self.C[k - 1]) if k - 1 >= 0 else 0, len(self.C[k])))
+
+        B = np.zeros((len(self.C[k - 1]), len(self.C[k])))
+        face_index = {face: i for i, face in enumerate(self.C[k - 1])}
+
+        for j, simplex in enumerate(self.C[k]):
+            for i in range(k + 1):
+                face = simplex[:i] + simplex[i + 1 :]
+                if face in face_index:
+                    B[face_index[face], j] = (-1) ** i
+        return B
+
+    # ------------------------------------------------------------------
+    # 4. Coboundary operators
+    # ------------------------------------------------------------------
+    def coboundary(self, k: int) -> np.ndarray:
+        """d_k = ∂_{k+1}^T : C_k -> C_{k+1}."""
+        if k < 0 or k > self.max_dim:
+            raise ValueError(f"k must be in [0, {self.max_dim}]")
+        if k == self.max_dim:
+            return np.zeros((0, len(self.C[k])))
+        return self.boundary(k + 1).T
+
+    # ------------------------------------------------------------------
+    # 5. Hodge Laplacian
+    # ------------------------------------------------------------------
+    def hodge_laplacian(self, k: int) -> np.ndarray:
+        """Δ_k = ∂_{k+1} ∂_{k+1}^T + ∂_k^T ∂_k."""
+        if k < 0 or k > self.max_dim:
+            raise ValueError(f"k must be in [0, {self.max_dim}]")
+
+        N = len(self.C[k])
+        L = np.zeros((N, N))
+
+        if k < self.max_dim:
+            B_next = self.boundary(k + 1)  # C_{k+1} -> C_k
+            L += B_next @ B_next.T
+
+        if k >= 1:
+            B_prev = self.boundary(k)  # C_k -> C_{k-1}
+            L += B_prev.T @ B_prev
+
+        return L
+
+    # ------------------------------------------------------------------
+    # 6. Hodge star
+    # ------------------------------------------------------------------
+    def hodge_star(self, k: int, cochain):
+        """Hodge star for a full n-simplex, using the complement-face dual.
+
+        A k-simplex is mapped to its complementary (n-k-1)-simplex.
+        Edge weights scale the result by sqrt(weight(complement)/weight(simplex)).
+        For k = -1 the input is a scalar and the output is the n-cochain.
+        For k = n the output is a scalar.
+        """
+        if not self.is_full_simplex():
+            raise ValueError("hodge_star is implemented only for a full n-simplex")
+
+        n = self.max_dim
+        cochain = np.asarray(cochain, dtype=float).reshape(-1)
+
+        # Scalar -> n-cochain
+        if k == -1:
+            if len(cochain) != 1:
+                raise ValueError("Scalar cochain must have length 1")
+            sigma = self.C[n][0]
+            comp: Tuple[str, ...] = ()
+            sign = self.orientation_sign(comp, sigma)
+            w_sigma = self.simplex_weight(sigma)
+            w_comp = 1.0
+            scale = np.sqrt(w_sigma / w_comp)
+            out = np.zeros(len(self.C[n]))
+            out[0] = sign * scale * cochain[0]
+            return out
+
+        if k < 0 or k > n:
+            raise ValueError(f"k must be in [-1, {n}]")
+
+        target_dim = n - k - 1
+
+        if target_dim == -1:
+            target_index = {(): 0}
+            target_size = 1
+        else:
+            target_index = {s: i for i, s in enumerate(self.C[target_dim])}
+            target_size = len(self.C[target_dim])
+
+        if len(cochain) != len(self.C[k]):
+            raise ValueError(
+                f"cochain length {len(cochain)} != number of {k}-simplices {len(self.C[k])}"
+            )
+
+        out = np.zeros(target_size)
+
+        for j, sigma in enumerate(self.C[k]):
+            if cochain[j] == 0:
+                continue
+
+            comp = tuple(v for v in self.C[n][0] if v not in sigma)
+            sign = self.orientation_sign(sigma, comp)
+
+            w_sigma = self.simplex_weight(sigma)
+            w_comp = self.simplex_weight(comp) if comp else 1.0
+            scale = np.sqrt(w_comp / w_sigma) if w_sigma != 0 else 1.0
+
+            out[target_index[comp]] += sign * scale * cochain[j]
+
+        return out
+
+    # ------------------------------------------------------------------
+    # 7. Hodge decomposition
+    # ------------------------------------------------------------------
+    def hodge_decomposition(self, k: int, x):
+        """Decompose x = d α + δ β + h.
+
+        Returns:
+            exact: Image of d_{k-1}.
+            coexact: Image of δ_{k+1} = ∂_{k+1}.
+            harmonic: Component in ker(Δ_k).
+        """
+        if k < 0 or k > self.max_dim:
+            raise ValueError(f"k must be in [0, {self.max_dim}]")
+
+        N = len(self.C[k])
+        x = np.asarray(x, dtype=float).reshape(-1)
+        if len(x) != N:
+            raise ValueError(f"x length {len(x)} != number of {k}-simplices {N}")
+
+        cols = []
+        D_exact = None
+        D_coexact = None
+
+        # Exact part: d_{k-1} = ∂_k^T
+        if k > 0:
+            D_exact = self.boundary(k).T
+            cols.append(D_exact)
+
+        # Coexact part: δ_{k+1} = ∂_{k+1}
+        if k < self.max_dim:
+            D_coexact = self.boundary(k + 1)
+            cols.append(D_coexact)
+
+        if cols:
+            A = np.hstack(cols)
+            c, _, _, _ = np.linalg.lstsq(A, x, rcond=None)
+
+            idx = 0
+            if D_exact is not None:
+                exact = D_exact @ c[: D_exact.shape[1]]
+                idx += D_exact.shape[1]
+            else:
+                exact = np.zeros(N)
+
+            if D_coexact is not None:
+                coexact = D_coexact @ c[idx : idx + D_coexact.shape[1]]
+            else:
+                coexact = np.zeros(N)
+        else:
+            exact = np.zeros(N)
+            coexact = np.zeros(N)
+
+        h = x - exact - coexact
+        return exact, coexact, h
+
+
+# ----------------------------------------------------------------------
+# 8. Tests
+# ----------------------------------------------------------------------
+def run_tests():
+    examples = {
+        0: "0",
+        1: "0>1",
+        2: "0>1<>0>2<>1>2",
+        3: "0>1<>0>2<>0>3<>1>2<>1>3<>2>3",
+        4: "0>1<>0>2<>0>3<>0>4<>1>2<>1>3<>1>4<>2>3<>2>4<>3>4",
+    }
+
+    rng = np.random.default_rng(42)
+
+    for n, s in examples.items():
+        print(f"Testing {n}-simplex: {s}")
+        solver = HodgeSolver(s)
+        assert solver.max_dim == n
+
+        # ∂∂ = 0
+        for k in range(2, solver.max_dim + 1):
+            prod = solver.boundary(k - 1) @ solver.boundary(k)
+            assert np.allclose(prod, 0.0), f"∂∂ != 0 at k={k}"
+
+        # Δ symmetry and PSD
+        for k in range(solver.max_dim + 1):
+            L = solver.hodge_laplacian(k)
+            assert np.allclose(L, L.T), f"Δ_{k} not symmetric"
+            eig = np.linalg.eigvalsh(L)
+            assert np.all(eig > -1e-9), f"Δ_{k} not PSD"
+
+        # Decomposition reconstruction and harmonicity
+        for k in range(solver.max_dim + 1):
+            N = len(solver.C[k])
+            if N == 0:
+                continue
+            x = rng.normal(size=N)
+            exact, coexact, h = solver.hodge_decomposition(k, x)
+            assert np.allclose(exact + coexact + h, x), f"decomposition failed at k={k}"
+            L = solver.hodge_laplacian(k)
+            assert np.allclose(L @ h, 0.0, atol=1e-8), f"h not harmonic at k={k}"
+
+        # Dual-of-dual identity up to sign
+        if solver.is_full_simplex():
+            n_dim = solver.max_dim
+            for k in range(n_dim + 1):
+                N = len(solver.C[k])
+                if N == 0:
+                    continue
+                x = rng.normal(size=N)
+                star1 = solver.hodge_star(k, x)
+                star2 = solver.hodge_star(n_dim - k - 1, star1)
+                expected_sign = (-1) ** ((k + 1) * (n_dim - k))
+                assert np.allclose(star2, expected_sign * x), f"double star failed at k={k}"
+
+        print("  ok")
+
+    print("All tests passed.")
+
+
+# ----------------------------------------------------------------------
+# 9. CLI
+# ----------------------------------------------------------------------
+def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "--test":
+        run_tests()
+        return
+
+    if len(sys.argv) < 2:
+        print("Usage:")
+        print("  python hodge_solver.py '<glyph string>' [k] [coeffs]")
+        print("  python hodge_solver.py --test")
+        print()
+        print("Example:")
+        print("  python hodge_solver.py '0>1<>0>2<>1>2' 1 1,2,3")
+        return
+
+    glyph_string = sys.argv[1]
+    solver = HodgeSolver(glyph_string)
+
+    print("Vertices:", sorted(solver.vertices))
+    print("Edges:", solver.edges)
+    print("Max dimension:", solver.max_dim)
+    for k in range(solver.max_dim + 1):
+        print(f"  C_{k}: {solver.C[k]}")
+
+    k = int(sys.argv[2]) if len(sys.argv) > 2 else 0
+
+    if len(sys.argv) > 3:
+        x = np.array([float(v) for v in sys.argv[3].split(",")], dtype=float)
+    else:
+        x = np.ones(len(solver.C[k]), dtype=float)
+
+    print(f"\nInput {k}-cochain:", x)
+
+    if solver.is_full_simplex():
+        try:
+            star = solver.hodge_star(k, x)
+            print(f"Hodge star of {k}-cochain (target dim {solver.max_dim - k - 1}):", star)
+        except Exception as exc:
+            print("Hodge star error:", exc)
+    else:
+        print("Hodge star skipped: complex is not a full n-simplex.")
+
+    exact, coexact, h = solver.hodge_decomposition(k, x)
+
+    print(f"\nHodge decomposition for k={k}:")
+    print("  exact   :", exact)
+    print("  coexact :", coexact)
+    print("  harmonic:", h)
+    print("  reconstruction error:", np.linalg.norm(exact + coexact + h - x))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="7" time="5.585" timestamp="2026-10-23T13:44:01.757052-04:00" hostname="OOUTWIRE"><testcase classname="omega_engine_woland.tests.research.test_harness_review_regressions" name="test_malformed_rewrite_files_are_rejections_not_attribute_errors[files0]" time="0.026"><failure message="AttributeError: 'list' object has no attribute 'items'">tmp_path = WindowsPath('C:/Users/a343o/AppData/Local/Temp/aide2-review-red-tests/test_malformed_rewrite_files_a0')
+files = []
+
+    @pytest.mark.parametrize("files", [[], None, "not a mapping", 42])
+    def test_malformed_rewrite_files_are_rejections_not_attribute_errors(tmp_path, files):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+        store.retain(root)
+        content = json.dumps({"diagnosis": "Keep the checked interfaces", "strategy": "repair", "mutation": "bad shape", "files": files})
+        provider = SimpleNamespace(call=lambda *a, **kw: ModelCall(content, "PROVIDER_COMPLETED", 0, 1, 1, store.put(content.encode())))
+        with pytest.raises(ValueError, match="REWRITE_FILES"):
+&gt;           HarnessProposer(provider, store).propose(root, occurrence="trajectory/step-0/rewrite", evidence=(), phase="discovery")
+
+omega_engine_woland\tests\research\test_harness_review_regressions.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_evaluator.HarnessProposer object at 0x000002108CF094C0&gt;
+incumbent = HarnessCandidateV1(source='073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea', parent='073171f7f5e1438a...ue, "failure_memory": true}')), strategy='reference', mutation='initial_reference', schema='oeop.harness-candidate.v1')
+
+    def propose(self, incumbent, *, occurrence, evidence, phase):
+        root = incumbent
+        while root.parent != root.source:
+            root = self.store.load(root.parent)
+        # Keep at most two prior decisions from this trajectory. Other trajectories
+        # and transfer results never become outer-loop optimization context.
+        trajectory = occurrence.split("/step-", 1)[0] + "/"
+        recent = [
+            e["object"]
+            for e in self.store.events()
+            if e["name"].startswith(trajectory) and e["name"].endswith(("/decision", "/rejected"))
+        ][-2:]
+        by_task = {}
+        for row in evidence:
+            by_task.setdefault(row.task, []).append(row)
+        request = {
+            "role": "outer_rewrite",
+            "root": root.candidate_id,
+            "champion": incumbent.candidate_id,
+            "recent_attempts": recent,
+            "parent": incumbent.candidate_id,
+            "files": dict(incumbent.files),
+            "feedback": [
+                {
+                    "task": task,
+                    "private_passes": sum(r.private_pass for r in rows),
+                    "public_passes": sum(r.public_pass for r in rows),
+                    "assigned": len(rows),
+                    "evidence": rows[-1].receipt_id,
+                }
+                for task, rows in sorted(by_task.items())[:6]
+            ],
+        }
+        system = (
+            "Return only JSON with diagnosis, strategy, mutation and files. Files must contain exactly prompt.txt, "
+            "workflow.json, search_policy.py and context_policy.py as complete strings. Edit the current harness. "
+            "Keep choose(state) and context(state,choice) interfaces, evidence_refs, root/champion/recent evidence "
+            "and the four Boolean workflow options. Diagnose the concrete issue before repair. Never edit host "
+            "checkers, tasks, splits, transport, budget, credentials or admission. No external dependencies."
+        )
+        if self.outer is not None:
+            # The evolved outer policy selects and compresses the rewrite context;
+            # the fixed host rewrite contract and allowed paths remain mandatory.
+            files = dict(self.outer.files)
+            state = {
+                "seed": int(digest(occurrence)[:8], 16),
+                "root": incumbent.candidate_id,
+                "attempts": [],
+                "task": request,
+                "options": json.loads(files["workflow.json"]),
+                "memory": [],
+            }
+            policy = self.runner.execute({**files, "entrypoint.py": POLICY_ENTRYPOINT}, state)
+            self.store.record(occurrence + "/outer-policy", {"state": state, "execution": policy})
+            if policy["returncode"] or policy["timeout"] or policy["truncated"]:
+                raise ValueError("OUTER_POLICY_FAILED")
+            request = loads_strict_json(policy["stdout"])["user"]
+        call = self.provider.call(
+            system,
+            json.dumps(request, separators=(",", ":")),
+            role="outer",
+            phase=phase,
+            occurrence=occurrence,
+        )
+        body = loads_strict_json(call.content)
+        if (
+            set(body) != {"diagnosis", "strategy", "mutation", "files"}
+            or type(body["diagnosis"]) is not str
+            or len(body["diagnosis"]) &lt; 8
+        ):
+            raise ValueError("REWRITE_DIAGNOSIS_REQUIRED")
+        candidate = HarnessCandidateV1(
+            incumbent.source,
+            incumbent.candidate_id,
+&gt;           tuple(sorted(body["files"].items())),
+            body["strategy"],
+            body["mutation"],
+        )
+E       AttributeError: 'list' object has no attribute 'items'
+
+omega_engine_woland\infrastructure\research\harness_evaluator.py:405: AttributeError</failure></testcase><testcase classname="omega_engine_woland.tests.research.test_harness_review_regressions" name="test_malformed_rewrite_files_are_rejections_not_attribute_errors[None]" time="0.015"><failure message="AttributeError: 'NoneType' object has no attribute 'items'">tmp_path = WindowsPath('C:/Users/a343o/AppData/Local/Temp/aide2-review-red-tests/test_malformed_rewrite_files_a1')
+files = None
+
+    @pytest.mark.parametrize("files", [[], None, "not a mapping", 42])
+    def test_malformed_rewrite_files_are_rejections_not_attribute_errors(tmp_path, files):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+        store.retain(root)
+        content = json.dumps({"diagnosis": "Keep the checked interfaces", "strategy": "repair", "mutation": "bad shape", "files": files})
+        provider = SimpleNamespace(call=lambda *a, **kw: ModelCall(content, "PROVIDER_COMPLETED", 0, 1, 1, store.put(content.encode())))
+        with pytest.raises(ValueError, match="REWRITE_FILES"):
+&gt;           HarnessProposer(provider, store).propose(root, occurrence="trajectory/step-0/rewrite", evidence=(), phase="discovery")
+
+omega_engine_woland\tests\research\test_harness_review_regressions.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_evaluator.HarnessProposer object at 0x000002108CF08F50&gt;
+incumbent = HarnessCandidateV1(source='073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea', parent='073171f7f5e1438a...ue, "failure_memory": true}')), strategy='reference', mutation='initial_reference', schema='oeop.harness-candidate.v1')
+
+    def propose(self, incumbent, *, occurrence, evidence, phase):
+        root = incumbent
+        while root.parent != root.source:
+            root = self.store.load(root.parent)
+        # Keep at most two prior decisions from this trajectory. Other trajectories
+        # and transfer results never become outer-loop optimization context.
+        trajectory = occurrence.split("/step-", 1)[0] + "/"
+        recent = [
+            e["object"]
+            for e in self.store.events()
+            if e["name"].startswith(trajectory) and e["name"].endswith(("/decision", "/rejected"))
+        ][-2:]
+        by_task = {}
+        for row in evidence:
+            by_task.setdefault(row.task, []).append(row)
+        request = {
+            "role": "outer_rewrite",
+            "root": root.candidate_id,
+            "champion": incumbent.candidate_id,
+            "recent_attempts": recent,
+            "parent": incumbent.candidate_id,
+            "files": dict(incumbent.files),
+            "feedback": [
+                {
+                    "task": task,
+                    "private_passes": sum(r.private_pass for r in rows),
+                    "public_passes": sum(r.public_pass for r in rows),
+                    "assigned": len(rows),
+                    "evidence": rows[-1].receipt_id,
+                }
+                for task, rows in sorted(by_task.items())[:6]
+            ],
+        }
+        system = (
+            "Return only JSON with diagnosis, strategy, mutation and files. Files must contain exactly prompt.txt, "
+            "workflow.json, search_policy.py and context_policy.py as complete strings. Edit the current harness. "
+            "Keep choose(state) and context(state,choice) interfaces, evidence_refs, root/champion/recent evidence "
+            "and the four Boolean workflow options. Diagnose the concrete issue before repair. Never edit host "
+            "checkers, tasks, splits, transport, budget, credentials or admission. No external dependencies."
+        )
+        if self.outer is not None:
+            # The evolved outer policy selects and compresses the rewrite context;
+            # the fixed host rewrite contract and allowed paths remain mandatory.
+            files = dict(self.outer.files)
+            state = {
+                "seed": int(digest(occurrence)[:8], 16),
+                "root": incumbent.candidate_id,
+                "attempts": [],
+                "task": request,
+                "options": json.loads(files["workflow.json"]),
+                "memory": [],
+            }
+            policy = self.runner.execute({**files, "entrypoint.py": POLICY_ENTRYPOINT}, state)
+            self.store.record(occurrence + "/outer-policy", {"state": state, "execution": policy})
+            if policy["returncode"] or policy["timeout"] or policy["truncated"]:
+                raise ValueError("OUTER_POLICY_FAILED")
+            request = loads_strict_json(policy["stdout"])["user"]
+        call = self.provider.call(
+            system,
+            json.dumps(request, separators=(",", ":")),
+            role="outer",
+            phase=phase,
+            occurrence=occurrence,
+        )
+        body = loads_strict_json(call.content)
+        if (
+            set(body) != {"diagnosis", "strategy", "mutation", "files"}
+            or type(body["diagnosis"]) is not str
+            or len(body["diagnosis"]) &lt; 8
+        ):
+            raise ValueError("REWRITE_DIAGNOSIS_REQUIRED")
+        candidate = HarnessCandidateV1(
+            incumbent.source,
+            incumbent.candidate_id,
+&gt;           tuple(sorted(body["files"].items())),
+            body["strategy"],
+            body["mutation"],
+        )
+E       AttributeError: 'NoneType' object has no attribute 'items'
+
+omega_engine_woland\infrastructure\research\harness_evaluator.py:405: AttributeError</failure></testcase><testcase classname="omega_engine_woland.tests.research.test_harness_review_regressions" name="test_malformed_rewrite_files_are_rejections_not_attribute_errors[not a mapping]" time="0.011"><failure message="AttributeError: 'str' object has no attribute 'items'">tmp_path = WindowsPath('C:/Users/a343o/AppData/Local/Temp/aide2-review-red-tests/test_malformed_rewrite_files_a2')
+files = 'not a mapping'
+
+    @pytest.mark.parametrize("files", [[], None, "not a mapping", 42])
+    def test_malformed_rewrite_files_are_rejections_not_attribute_errors(tmp_path, files):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+        store.retain(root)
+        content = json.dumps({"diagnosis": "Keep the checked interfaces", "strategy": "repair", "mutation": "bad shape", "files": files})
+        provider = SimpleNamespace(call=lambda *a, **kw: ModelCall(content, "PROVIDER_COMPLETED", 0, 1, 1, store.put(content.encode())))
+        with pytest.raises(ValueError, match="REWRITE_FILES"):
+&gt;           HarnessProposer(provider, store).propose(root, occurrence="trajectory/step-0/rewrite", evidence=(), phase="discovery")
+
+omega_engine_woland\tests\research\test_harness_review_regressions.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_evaluator.HarnessProposer object at 0x000002108CF32AE0&gt;
+incumbent = HarnessCandidateV1(source='073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea', parent='073171f7f5e1438a...ue, "failure_memory": true}')), strategy='reference', mutation='initial_reference', schema='oeop.harness-candidate.v1')
+
+    def propose(self, incumbent, *, occurrence, evidence, phase):
+        root = incumbent
+        while root.parent != root.source:
+            root = self.store.load(root.parent)
+        # Keep at most two prior decisions from this trajectory. Other trajectories
+        # and transfer results never become outer-loop optimization context.
+        trajectory = occurrence.split("/step-", 1)[0] + "/"
+        recent = [
+            e["object"]
+            for e in self.store.events()
+            if e["name"].startswith(trajectory) and e["name"].endswith(("/decision", "/rejected"))
+        ][-2:]
+        by_task = {}
+        for row in evidence:
+            by_task.setdefault(row.task, []).append(row)
+        request = {
+            "role": "outer_rewrite",
+            "root": root.candidate_id,
+            "champion": incumbent.candidate_id,
+            "recent_attempts": recent,
+            "parent": incumbent.candidate_id,
+            "files": dict(incumbent.files),
+            "feedback": [
+                {
+                    "task": task,
+                    "private_passes": sum(r.private_pass for r in rows),
+                    "public_passes": sum(r.public_pass for r in rows),
+                    "assigned": len(rows),
+                    "evidence": rows[-1].receipt_id,
+                }
+                for task, rows in sorted(by_task.items())[:6]
+            ],
+        }
+        system = (
+            "Return only JSON with diagnosis, strategy, mutation and files. Files must contain exactly prompt.txt, "
+            "workflow.json, search_policy.py and context_policy.py as complete strings. Edit the current harness. "
+            "Keep choose(state) and context(state,choice) interfaces, evidence_refs, root/champion/recent evidence "
+            "and the four Boolean workflow options. Diagnose the concrete issue before repair. Never edit host "
+            "checkers, tasks, splits, transport, budget, credentials or admission. No external dependencies."
+        )
+        if self.outer is not None:
+            # The evolved outer policy selects and compresses the rewrite context;
+            # the fixed host rewrite contract and allowed paths remain mandatory.
+            files = dict(self.outer.files)
+            state = {
+                "seed": int(digest(occurrence)[:8], 16),
+                "root": incumbent.candidate_id,
+                "attempts": [],
+                "task": request,
+                "options": json.loads(files["workflow.json"]),
+                "memory": [],
+            }
+            policy = self.runner.execute({**files, "entrypoint.py": POLICY_ENTRYPOINT}, state)
+            self.store.record(occurrence + "/outer-policy", {"state": state, "execution": policy})
+            if policy["returncode"] or policy["timeout"] or policy["truncated"]:
+                raise ValueError("OUTER_POLICY_FAILED")
+            request = loads_strict_json(policy["stdout"])["user"]
+        call = self.provider.call(
+            system,
+            json.dumps(request, separators=(",", ":")),
+            role="outer",
+            phase=phase,
+            occurrence=occurrence,
+        )
+        body = loads_strict_json(call.content)
+        if (
+            set(body) != {"diagnosis", "strategy", "mutation", "files"}
+            or type(body["diagnosis"]) is not str
+            or len(body["diagnosis"]) &lt; 8
+        ):
+            raise ValueError("REWRITE_DIAGNOSIS_REQUIRED")
+        candidate = HarnessCandidateV1(
+            incumbent.source,
+            incumbent.candidate_id,
+&gt;           tuple(sorted(body["files"].items())),
+            body["strategy"],
+            body["mutation"],
+        )
+E       AttributeError: 'str' object has no attribute 'items'
+
+omega_engine_woland\infrastructure\research\harness_evaluator.py:405: AttributeError</failure></testcase><testcase classname="omega_engine_woland.tests.research.test_harness_review_regressions" name="test_malformed_rewrite_files_are_rejections_not_attribute_errors[42]" time="0.013"><failure message="AttributeError: 'int' object has no attribute 'items'">tmp_path = WindowsPath('C:/Users/a343o/AppData/Local/Temp/aide2-review-red-tests/test_malformed_rewrite_files_a3')
+files = 42
+
+    @pytest.mark.parametrize("files", [[], None, "not a mapping", 42])
+    def test_malformed_rewrite_files_are_rejections_not_attribute_errors(tmp_path, files):
+        store = HarnessStore(tmp_path)
+        root = reference(fixture_spec().source)
+        store.retain(root)
+        content = json.dumps({"diagnosis": "Keep the checked interfaces", "strategy": "repair", "mutation": "bad shape", "files": files})
+        provider = SimpleNamespace(call=lambda *a, **kw: ModelCall(content, "PROVIDER_COMPLETED", 0, 1, 1, store.put(content.encode())))
+        with pytest.raises(ValueError, match="REWRITE_FILES"):
+&gt;           HarnessProposer(provider, store).propose(root, occurrence="trajectory/step-0/rewrite", evidence=(), phase="discovery")
+
+omega_engine_woland\tests\research\test_harness_review_regressions.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;omega_engine_woland.infrastructure.research.harness_evaluator.HarnessProposer object at 0x000002108CF32FC0&gt;
+incumbent = HarnessCandidateV1(source='073171f7f5e1438ae632cb252bda87d19e1bfab1a0ba309e91bdd645886f24ea', parent='073171f7f5e1438a...ue, "failure_memory": true}')), strategy='reference', mutation='initial_reference', schema='oeop.harness-candidate.v1')
+
+    def propose(self, incumbent, *, occurrence, evidence, phase):
+        root = incumbent
+        while root.parent != root.source:
+            root = self.store.load(root.parent)
+        # Keep at most two prior decisions from this trajectory. Other trajectories
+        # and transfer results never become outer-loop optimization context.
+        trajectory = occurrence.split("/step-", 1)[0] + "/"
+        recent = [
+            e["object"]
+            for e in self.store.events()
+            if e["name"].startswith(trajectory) and e["name"].endswith(("/decision", "/rejected"))
+        ][-2:]
+        by_task = {}
+        for row in evidence:
+            by_task.setdefault(row.task, []).append(row)
+        request = {
+            "role": "outer_rewrite",
+            "root": root.candidate_id,
+            "champion": incumbent.candidate_id,
+            "recent_attempts": recent,
+            "parent": incumbent.candidate_id,
+            "files": dict(incumbent.files),
+            "feedback": [
+                {
+                    "task": task,
+                    "private_passes": sum(r.private_pass for r in rows),
+                    "public_passes": sum(r.public_pass for r in rows),
+                    "assigned": len(rows),
+                    "evidence": rows[-1].receipt_id,
+                }
+                for task, rows in sorted(by_task.items())[:6]
+            ],
+        }
+        system = (
+            "Return only JSON with diagnosis, strategy, mutation and files. Files must contain exactly prompt.txt, "
+            "workflow.json, search_policy.py and context_policy.py as complete strings. Edit the current harness. "
+            "Keep choose(state) and context(state,choice) interfaces, evidence_refs, root/champion/recent evidence "
+            "and the four Boolean workflow options. Diagnose the concrete issue before repair. Never edit host "
+            "checkers, tasks, splits, transport, budget, credentials or admission. No external dependencies."
+        )
+        if self.outer is not None:
+            # The evolved outer policy selects and compresses the rewrite context;
+            # the fixed host rewrite contract and allowed paths remain mandatory.
+            files = dict(self.outer.files)
+            state = {
+                "seed": int(digest(occurrence)[:8], 16),
+                "root": incumbent.candidate_id,
+                "attempts": [],
+                "task": request,
+                "options": json.loads(files["workflow.json"]),
+                "memory": [],
+            }
+            policy = self.runner.execute({**files, "entrypoint.py": POLICY_ENTRYPOINT}, state)
+            self.store.record(occurrence + "/outer-policy", {"state": state, "execution": policy})
+            if policy["returncode"] or policy["timeout"] or policy["truncated"]:
+                raise ValueError("OUTER_POLICY_FAILED")
+            request = loads_strict_json(policy["stdout"])["user"]
+        call = self.provider.call(
+            system,
+            json.dumps(request, separators=(",", ":")),
+            role="outer",
+            phase=phase,
+            occurrence=occurrence,
+        )
+        body = loads_strict_json(call.content)
+        if (
+            set(body) != {"diagnosis", "strategy", "mutation", "files"}
+            or type(body["diagnosis"]) is not str
+            or len(body["diagnosis"]) &lt; 8
+        ):
+            raise ValueError("REWRITE_DIAGNOSIS_REQUIRED")
+        candidate = HarnessCandidateV1(
+            incumbent.source,
+            incumbent.candidate_id,
+&gt;           tuple(sorted(body["files"].items())),
+            body["strategy"],
+            body["mutation"],
+        )
+E       AttributeError: 'int' object has no attribute 'items'
+
+omega_engine_woland\infrastructure\research\harness_evaluator.py:405: AttributeError</failure></testcase><testcase classname="omega_engine_woland.tests.research.test_harness_review_regressions" name="test_repeated_preflight_does_not_promote_a_settled_refusal" time="0.082"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">tmp_path = WindowsPath('C:/Users/a343o/AppData/Local/Temp/aide2-review-red-tests/test_repeated_preflight_does_n0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002108CF32270&gt;
+
+    def test_repeated_preflight_does_not_promote_a_settled_refusal(tmp_path, monkeypatch):
+        store = HarnessStore(tmp_path / "campaign")
+        store.record("preflight/compatibility/inner/settled", {"status": "TYPED_REFUSAL"})
+        binary = tmp_path / "fixture-host"
+        binary.write_bytes(b"fixture; never executed")
+        roles = []
+    
+        def call(*args, role, **kwargs):
+            roles.append(role)
+            return ModelCall("", "TYPED_REFUSAL" if role == "inner" else "PROVIDER_COMPLETED", 0, 0, 0, "0" * 64)
+    
+        monkeypatch.setattr(harness_cli, "prepare", lambda *a: fixture_spec())
+        monkeypatch.setattr(harness_cli, "RootlessContainerRunner", lambda image: SimpleNamespace(preflight=lambda: {"fixture": True}))
+        monkeypatch.setattr(harness_cli, "locate_host_binary", lambda: Ok(SimpleNamespace(binary=binary)))
+        monkeypatch.setattr(harness_cli, "HarnessProvider", lambda **kw: SimpleNamespace(call=call))
+        monkeypatch.setattr(harness_cli, "replay", lambda *a: {"status": "NOT_RUN"})
+        monkeypatch.setattr(harness_cli, "markdown_report", lambda value: "Fixture only")
+&gt;       with pytest.raises(ValueError, match="PROVIDER_COMPATIBILITY_FAILED"):
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+omega_engine_woland\tests\research\test_harness_review_regressions.py:52: Failed</failure></testcase><testcase classname="omega_engine_woland.tests.research.test_harness_review_regressions" name="test_package_refuses_linked_payload_directories" time="0.788"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">tmp_path = WindowsPath('C:/Users/a343o/AppData/Local/Temp/aide2-review-red-tests/test_package_refuses_linked_pa0')
+
+    def test_package_refuses_linked_payload_directories(tmp_path):
+        source, external = tmp_path / "source", tmp_path / "external"
+        source.mkdir(); external.mkdir()
+        (external / "evidence.json").write_bytes(b'{"result":"same bytes"}')
+        linked = source / "receipts"
+        if os.name == "nt":
+            quote = lambda p: "'" + str(p).replace("'", "''") + "'"
+            subprocess.run(["powershell", "-NoProfile", "-Command", f"New-Item -ItemType Junction -Path {quote(linked)} -Target {quote(external)} | Out-Null"], check=True, capture_output=True)
+        else:
+            linked.symlink_to(external, target_is_directory=True)
+        try:
+&gt;           with pytest.raises(ValueError, match="NONREGULAR_PACKAGE_PATH"):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+omega_engine_woland\tests\research\test_harness_review_regressions.py:69: Failed</failure></testcase><testcase classname="omega_engine_woland.tests.research.test_harness_review_regressions" name="test_package_traversal_errors_are_fatal" time="0.003"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">tmp_path = WindowsPath('C:/Users/a343o/AppData/Local/Temp/aide2-review-red-tests/test_package_traversal_errors_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002108CF31190&gt;
+
+    def test_package_traversal_errors_are_fatal(tmp_path, monkeypatch):
+        def unreadable(*args, **kwargs):
+            kwargs["onerror"](PermissionError("retained directory unreadable"))
+            return iter(())
+        monkeypatch.setattr(os, "walk", unreadable)
+&gt;       with pytest.raises(PermissionError, match="unreadable"):
+E       Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+omega_engine_woland\tests\research\test_harness_review_regressions.py:83: Failed</failure></testcase></testsuite></testsuites>

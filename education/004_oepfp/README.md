@@ -32,19 +32,19 @@ dimension registers offer choices, not a requirement to run every combination.
 
 | Task | Current route |
 | --- | --- |
-| Use the finite-QM derivation prompt, stages and mode | [Finite-QM PFP workflow](docs/22_unified_pfp_v4_operad_workflow_and_hacks.md); actual prompt template, six stages, six LLM techniques and native certificate checks |
-| Run a checked example, use an IDE-authored witness, or replay a live capture | [Practical PFP and discovery](_how_to_play/13_practical_pfp_and_discovery.md) |
+| Use the finite-QM derivation prompt, stages and mode | [Finite-QM PFP workflow](../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md); actual prompt template, six stages, six LLM techniques and native certificate checks |
+| Run a checked example, use an IDE-authored witness, or replay a live capture | [Practical PFP and discovery](../../pilots/education/runbooks/13_practical_pfp_and_discovery.md) |
 | Run ordinary Adversary work through PFP in Python or the current IDE | [Shared task turns](../../../pfp/documentation/pfp_task_turn.md#shared-adversary-use); checked prose remains explicitly unverified |
-| Attempt an original challenge with Adversary and its original judges | [Adversary challenge play](docs/18_original_challenge_play.md); IDE/OpenRouter commands, actual results and open experiment requirements |
-| Play a full bounded cochain-repair session | [Mechanism sessions](docs/19_bounded_mechanism_sessions.md); C006 moves, admission, replay and C004 slot decoding |
-| Examine bounded graph rewrites and optional Julia/DSPy demos | [ACSets and DPO experiments](docs/20_acsets_dpo_and_optional_backends.md); 25 prompt and 25 cochain controls, with no new default dependencies |
+| Attempt an original challenge with Adversary and its original judges | [Adversary challenge play](../../pilots/education/runbooks/18_original_challenge_play.md); IDE/OpenRouter commands, actual results and open experiment requirements |
+| Play a full bounded cochain-repair session | [Mechanism sessions](../../pilots/education/runbooks/19_bounded_mechanism_sessions.md); C006 moves, admission, replay and C004 slot decoding |
+| Examine bounded graph rewrites and optional Julia/DSPy demos | [ACSets and DPO experiments](../../pilots/education/runbooks/20_acsets_dpo_and_optional_backends.md); 25 prompt and 25 cochain controls, with no new default dependencies |
 | Understand the new interfaces, mode availability and lessons | [Current types and learnings](docs/16_current_types_and_learnings.md) |
 | Understand which stages use a model or host | [Eight-stage pipeline](_how_to_play/10_eight_stage_pipeline.md) |
 | Inspect captures or troubleshoot a refusal | [Output layout and troubleshooting](_how_to_play/12_output_layout_and_troubleshooting.md) |
 | Learn the board and basic moves | [Novice quickstart](_how_to_play/00_quickstart_how_to_play.md) and [ten useful routes](_how_to_play/06_ten_useful_ways_to_play.md) |
 | Explore other play profiles | [Modalities atlas](_how_to_play/07_all_ways_to_play_the_symbol_game.md); research profiles are not a runtime capability guarantee |
-| Inspect PO035 failures and experimental prompt roles | [Numbered prompt roles and PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md) |
-| Find current runtime owners and replay historical trials | [Runtime ownership and historical replay](docs/17_runtime_ownership_and_replay.md) |
+| Inspect PO035 failures and experimental prompt roles | [Numbered prompt roles and PO035 play](../../pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md) |
+| Find current runtime owners and replay historical trials | [Runtime ownership and historical replay](../../pilots/education/runbooks/17_runtime_ownership_and_replay.md) |
 | Verify installed integration, strict IDE handoffs and durable run budgets | [Migration execution plan](../../../pfp/documentation/pfp_migration_and_integration_plan.md); hard live liability remains a separate qualification |
 
 The active Python application is `pfp`, with `pfp`, `symbol-game`
@@ -75,7 +75,7 @@ pointed to them.
 | Dossier replay on a free Nemotron model | 300 | 0 accepted | same |
 | `deepseek-v4.1-flash` replies | 50 | 13 accepted | same |
 | PFP-PILOT-001, four representations | 64 | validation rate raw 0.938, structured 0.75, relational 0.75, symbolic 0.812; one call per cell | [`max_pilot_matrix.yaml:2337-2358`](../../../workflows/library/pilot_estate/matrix/max_pilot_matrix.yaml) |
-| PO035 | 40 | 0 accepted; a compact rerun (15 calls) had 0 schema-valid replies | [PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md), [compact rerun](../../../workflows/library/pilot_estate/evidence/po035_simplified_20261012/README.md) |
+| PO035 | 40 | 0 accepted; a compact rerun (15 calls) had 0 schema-valid replies | [PO035 play](../../pilots/education/runbooks/16_numbered_prompt_roles_and_po035_play.md), [compact rerun](../../../workflows/library/pilot_estate/evidence/po035_simplified_20261012/README.md) |
 | Claude gate runs, 2026-10-14 | 74 | Haiku 5.5 was 8 of 8 PFP-valid; 22 failures were Markdown-fenced replies; the SQLite form gave no advantage | [`empirical_observations_20261014.md`](../../../pfp/documentation/empirical_observations_20261014.md) |
 
 With one call per cell, the PFP-PILOT-001 rates do not separate the four
