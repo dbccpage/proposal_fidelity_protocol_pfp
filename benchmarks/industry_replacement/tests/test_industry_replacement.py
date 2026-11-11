@@ -219,8 +219,8 @@ def admitted(tmp_path):
 
 
 def live(tmp_path, src, digest, out, factory):
-    return run_live.main(['--manifest', str(src), '--admit', digest, '--out', str(out),
-                          '--registry', str(tmp_path / 'registry')], factory)
+    return run_live.main(['--manifest', str(src), '--admit', digest, '--out', str(out)], factory,
+                         registry=tmp_path / 'registry')
 
 
 def test_live_runner_refuses_unadmitted_manifest(tmp_path):
@@ -263,7 +263,11 @@ def test_branch_touches_only_allowed_paths():
     git = shutil.which('git')
     if git is None:
         pytest.skip('git unavailable')
-    diff = subprocess.run([git, 'diff', '--name-only', '84f8ea3a'], cwd=REPO, capture_output=True, text=True)
+    # Since #62 merged, the boundary is this branch's own change set relative to main.
+    base = subprocess.run([git, 'merge-base', 'HEAD', 'origin/main'], cwd=REPO, capture_output=True, text=True)
+    if base.returncode != 0:
+        pytest.skip('origin/main unavailable')
+    diff = subprocess.run([git, 'diff', '--name-only', base.stdout.strip()], cwd=REPO, capture_output=True, text=True)
     untracked = subprocess.run([git, 'ls-files', '--others', '--exclude-standard'], cwd=REPO,
                                capture_output=True, text=True)
     if diff.returncode != 0:
@@ -309,7 +313,8 @@ def test_malformed_worker_output_is_a_typed_failure():
         text = t1.CANDIDATES['faithful'].replace('```\n', tail + '```\n')
         code, host, danger = t1.public_check(text)  # no exception escapes
         assert danger is not None or host.failed == []
-        assert not _sealed(t1.TASK_ID, text)['correct'] or 'shutdown' in tail
+        # Extra stdout, including an unkeyed result line, no longer changes the verdict.
+        assert _sealed(t1.TASK_ID, text)['correct']
     out = run_isolated('', 'emit([])', validate=lambda r: isinstance(r, dict))
     assert out == {'error': 'result_schema'}
 
@@ -322,7 +327,8 @@ def test_batched_and_independent_runs_agree_for_same_length_candidates():
     sandbox.prewarm([a, b], driver)
     batched = [sandbox.run_isolated(c, driver) for c in (a, b)]
     independent = [sandbox._run_one(c, driver, None, 10) for c in (a, b)]
-    assert batched == independent == [{'result': {'answer': 1}}, {'result': {'answer': 2}}]
+    assert batched == independent
+    assert [r['result'] for r in batched] == [{'answer': 1}, {'answer': 2}]
 
 
 def test_prewarmed_sealed_results_match_sequential_runs():
@@ -357,7 +363,7 @@ def test_jail_blocks_secrets_outside_writes_processes_floods_and_hangs(tmp_path,
     from concurrent.futures import ThreadPoolExecutor
     with ThreadPoolExecutor(8) as pool:  # independent processes, run side by side
         results = dict(zip(probes, pool.map(lambda v: _run_one('', v, None, 1.5), probes.values())))
-    assert results['secret'] == {'result': None}
+    assert results['secret']['result'] is None
     assert all('error' in results[k] for k in ('write', 'read', 'spawn', 'socket')), results
     assert canary.read_text(encoding='utf-8') == 'intact'
     assert results['flood'] == {'error': 'output_limit'}
@@ -394,19 +400,71 @@ def test_admitted_output_ceiling_reaches_every_request(tmp_path):
         live(tmp_path, bad, bad_digest, tmp_path / 'd', lambda m: pytest.fail('provider built'))
 
 
-def test_custody_binds_regulation_providers_ledger_and_prices(monkeypatch, tmp_path):
+def test_custody_binds_regulation_providers_ledger_and_prices(tmp_path):
     current = build_manifests.custody()
     for required in ('pfp_core/immunity.py', 'pfp_core/fidelity.py', 'dag/benchmark/budget_ledger.py',
                      'dag/benchmark/anthropic_provider.py', 'dag/benchmark/openrouter_provider.py',
-                     'eis/domain/thymus.py', 'operads/domain/operad/planar.py'):
+                     'eis/domain/thymus.py', 'operads/domain/operad/planar.py', *run_live.ADMISSION_FILES):
         assert required in current['executed_code']
     assert current['pricing_evidence']
-    changed = json.loads(json.dumps(current))
-    changed['executed_code']['dag/benchmark/budget_ledger.py'] = '0' * 64
-    monkeypatch.setattr(build_manifests, 'custody', lambda: changed)
-    src, digest, out = admitted(tmp_path)
-    with pytest.raises(run_live.AdmissionError, match='custody'):
-        live(tmp_path, src, digest, out, lambda m: pytest.fail('provider built'))
+    m = json.loads((HERE / 'manifest_anthropic.json').read_text(encoding='utf-8'))
+    # Equivalent to editing build_manifests.py after the manifest was generated: its digest no longer matches.
+    for rel in ('benchmarks/industry_replacement/build_manifests.py', 'dag/benchmark/budget_ledger.py'):
+        stale = json.loads(json.dumps(m))
+        stale['custody']['executed_code'][rel] = '0' * 64
+        path, digest = manifest_copy(tmp_path, custody=stale['custody'])
+        with pytest.raises(run_live.AdmissionError, match='custody'):
+            live(tmp_path, path, digest, tmp_path / ('o' + rel[-8:-3]), lambda m: pytest.fail('provider built'))
+    # Dropping the admission code from the declared set is refused too.
+    unbound = json.loads(json.dumps(m))
+    del unbound['custody']['executed_code']['benchmarks/industry_replacement/build_manifests.py']
+    path, digest = manifest_copy(tmp_path, custody=unbound['custody'])
+    with pytest.raises(run_live.AdmissionError, match='not bound'):
+        live(tmp_path, path, digest, tmp_path / 'o3', lambda m: pytest.fail('provider built'))
+
+
+def test_nonempty_skill_genome_is_refused(tmp_path):
+    path, digest = manifest_copy(tmp_path, pfp_skill_genome=['config-migration'])
+    with pytest.raises(run_live.AdmissionError, match='pfp_skill_genome'):
+        live(tmp_path, path, digest, tmp_path / 'o', lambda m: pytest.fail('provider built'))
+
+
+def test_candidate_cannot_forge_or_suppress_the_result_channel():
+    from tasks.sandbox import _run_one
+    driver = 'import candidate\nemit({"balance": candidate.balance()})'
+    attacks = [
+        # The review's attack: emit a forged success, then replace the emitter.
+        'import __main__\n__main__.emit({"balance": "10.00"})\n__main__.emit = lambda r: None\n'
+        'def balance():\n    return "0.00"\n',
+        # A hand-written result line without the run key.
+        'import sys\nsys.stdout.write("@@RESULT@@" + "0" * 64 + " {\'balance\': \'10.00\'}\\n")\n'
+        'def balance():\n    return "0.00"\n',
+    ]
+    first = _run_one(attacks[0], driver, None, 10)
+    assert first.get('result') != {'balance': '10.00'}  # the forged success never arrives
+    second = _run_one(attacks[1], driver, None, 10)
+    assert second['result'] == {'balance': '0.00'} and second['forged_lines'] == 1  # the actual observation controls
+    assert second['observation_source'] == 'candidate_process'
+
+
+def test_os_open_write_is_refused_inside_a_read_only_root(tmp_path):
+    from tasks.sandbox import _run_one
+    canary = tmp_path / 'canary.txt'
+    canary.write_text('intact', encoding='utf-8')
+    probe = (f'import os\nfd = os.open({str(canary)!r}, os.O_WRONLY | os.O_TRUNC)\n'
+             'os.write(fd, b"x")\nemit("wrote")')
+    read = f'emit(open({str(canary)!r}).read())'
+    assert 'error' in _run_one('', probe, None, 10, extra_read_roots=(str(tmp_path),))
+    assert _run_one('', read, None, 10, extra_read_roots=(str(tmp_path),))['result'] == 'intact'
+    assert canary.read_text(encoding='utf-8') == 'intact'
+
+
+def test_timeout_results_are_not_reused_for_a_longer_budget():
+    from tasks import sandbox
+    sandbox.clear_cache()
+    slow = 'import time\nt = time.monotonic()\nwhile time.monotonic() - t < 1.5:\n    pass\nemit("done")'
+    assert sandbox.run_isolated('', slow, timeout=0.5) == {'error': 'timeout'}
+    assert sandbox.run_isolated('', slow, timeout=10)['result'] == 'done'
 
 
 def test_harness_failure_is_recorded_and_stops_the_campaign(tmp_path, monkeypatch):

@@ -105,14 +105,46 @@ def failed_budget(ledger_path: Path, run_id: str) -> dict:
     return base
 
 
+# Files that perform admission. They must be bound by the manifest they admit (review 2, finding 3).
+ADMISSION_FILES = ('benchmarks/industry_replacement/run_live.py', 'benchmarks/industry_replacement/build_manifests.py')
+REPO = HERE.parent.parent
+
+
+def verify_custody(declared: dict) -> None:
+    """Check every declared digest by hashing the named file directly, then check nothing is unbound.
+
+    The first pass does not trust the discovery code: it reads only the manifest's own
+    list. The second pass refuses a dependency the manifest does not name.
+    """
+    roots = {'industry_stack': HERE, 'sealed_evaluator': HERE, 'executed_code': REPO, 'pricing_evidence': REPO}
+    try:
+        for section, root in roots.items():
+            for rel, digest in declared[section].items():
+                if sha256_hex((root / rel).read_bytes()) != digest:
+                    raise AdmissionError(f'custody: {rel} changed since the manifest was prepared; nothing dispatched')
+        for task_id, digest in declared['task_prompts'].items():
+            if sha256_hex(arms.TASKS[task_id].PUBLIC_PROMPT) != digest:
+                raise AdmissionError(f'custody: prompt of {task_id} changed; nothing dispatched')
+    except (KeyError, OSError, TypeError, AttributeError) as exc:
+        raise AdmissionError(f'custody: declared set unreadable ({type(exc).__name__}); nothing dispatched') from None
+    missing = [f for f in ADMISSION_FILES if f not in declared['executed_code']]
+    if missing:
+        raise AdmissionError(f'custody: admission code {missing} is not bound by the manifest; nothing dispatched')
+    from build_manifests import custody
+    current = custody()
+    unbound = sorted(set(current['executed_code']) - set(declared['executed_code']))
+    if unbound or set(current) != set(declared):
+        raise AdmissionError(f'custody: unbound dependencies {unbound[:5]}; nothing dispatched')
+
+
 def admit(manifest_path: Path, admitted_sha: str) -> dict:
     raw = manifest_path.read_bytes()
     if sha256_hex(raw) != admitted_sha:
         raise AdmissionError('manifest digest does not match --admit; nothing dispatched')
     manifest = json.loads(raw)
-    from build_manifests import custody
-    if custody() != manifest['custody']:
-        raise AdmissionError('custody digests changed since the manifest was prepared; nothing dispatched')
+    verify_custody(manifest['custody'])
+    if manifest.get('pfp_skill_genome') != []:
+        raise AdmissionError('a non-empty pfp_skill_genome is not supported by this runner; nothing dispatched')
     if manifest['cap_microusd_per_run'] > 100_000 or manifest['aggregate_cap_microusd'] > \
             manifest['cap_microusd_per_run'] * len(manifest['runs']):
         raise AdmissionError('caps exceed the declared limits')
@@ -122,14 +154,19 @@ def admit(manifest_path: Path, admitted_sha: str) -> dict:
     return manifest
 
 
-def main(argv=None, provider_factory=None) -> dict:
+# The one campaign registry. A digest is dispatched at most once per checkout of this
+# repository (not across machines or clones). There is no command-line override.
+REGISTRY = HERE / '.campaigns'
+
+
+def main(argv=None, provider_factory=None, registry: Path | None = None) -> dict:
+    """``registry`` exists for tests only; the command line always uses REGISTRY."""
     ap = argparse.ArgumentParser(description='Admitted live campaign runner')
     ap.add_argument('--manifest', type=Path, required=True)
     ap.add_argument('--admit', required=True, help='SHA-256 of the manifest file the user authorized')
     ap.add_argument('--out', type=Path, required=True)
-    ap.add_argument('--registry', type=Path, default=HERE / '.campaigns',
-                    help='one record per admitted manifest digest; a digest is dispatched at most once')
     args = ap.parse_args(argv)
+    args.registry = registry if registry is not None else REGISTRY
     path = args.manifest if args.manifest.is_absolute() else HERE / args.manifest
     manifest = admit(path, args.admit)
     if provider_factory is None and not LIVE_EXECUTION_ENABLED:

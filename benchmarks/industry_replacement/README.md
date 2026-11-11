@@ -153,3 +153,25 @@ That is why live execution stays disabled.
 **Custody (review finding 6).** Manifests now bind:
 - every repository file imported by the live path, computed in a fresh interpreter (pfp_core, both providers, the budget ledger, the EIS/PCIV/OPERADS modules, the harness and the sealed scenarios);
 - the planning-time endpoint price observation.
+
+## Second review of PR #62 (fixes on top of main)
+
+1. **Result channel.**
+   - The candidate's process no longer has a usable `emit`.
+   - The driver body runs inside a function that receives a per-run key on stdin before the candidate is imported. The key stays in that function's frame and in a local closure that is never handed to candidate code.
+   - Each result line carries an HMAC-SHA256 of its body, computed with `_hashlib.hmac_digest` and `repr`, both captured before import.
+   - The parent accepts exactly one line that authenticates. Other result lines are counted as `forged_lines` and ignored.
+   - Replacing `__main__.emit` or writing a fake result line no longer changes the observation.
+   - Results are still labelled `observation_source: candidate_process`. Candidate code can still tamper with the driver's own helpers, for example builtins used to normalize values, so these are not independently certified host observations. An OS boundary remains the fix, and live execution stays disabled.
+2. **Write detection.**
+   - The jail now reads the integer `flags` of the `open` audit event: `O_WRONLY`, `O_RDWR`, `O_CREAT`, `O_TRUNC`, `O_APPEND`, `O_EXCL`.
+   - A write through `os.open` inside a read-only root is refused. The test uses a synthetic read-allowed root.
+3. **Admission custody.**
+   - `build_manifests.py` is now inside the bound closure.
+   - `run_live.verify_custody` hashes every file the manifest names directly, without running the discovery code.
+   - It requires the admission files (`run_live.py`, `build_manifests.py`) to be bound.
+   - It refuses any discovered dependency the manifest does not name.
+4. **Timeout caching.** The timeout is now part of the cache key, and timeout outcomes are never cached.
+5. **Authorization scope.**
+   - A non-empty `pfp_skill_genome` is refused at admission.
+   - There is one registry, `.campaigns/`, with no command-line override. A digest is dispatched at most once per checkout. That is not a cross-machine guarantee.
