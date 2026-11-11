@@ -17,7 +17,10 @@
                                                      TWO_SIGNAL_COLLAPSE recorded
   ======================  =========================  ===========================
 
-  A rule match alone never blocks. A failed host predicate alone is an exact
+  Signal 2 counts only when its observer is in ``HOST_OBSERVERS``; a danger
+  signal from any other producer (a model name, ``MODEL``, a detector) is
+  ignored and recorded as ``UNWITNESSED_DANGER_SIGNAL`` or
+  ``TWO_SIGNAL_COLLAPSE``. A rule match alone never blocks. A failed host predicate alone is an exact
   checker refusal, labelled as such rather than as two observers. Independence
   is checked by ``eis.domain.danger_signals.assert_signals_independent``, so a
   model- or detector-authored danger signal is refused.
@@ -82,7 +85,17 @@ class Decision:
     refusal_code: str | None = None
 
 
-def decide(matches: list[Signal1Match], danger: Signal2Danger | None) -> Decision:
+HOST_OBSERVERS = frozenset({'host.ast_parse', 'host.contract_check', 'host.public_smoke', 'host.transition_table'})
+
+
+def decide(matches: list[Signal1Match], danger: Signal2Danger | None,
+           host_observers: frozenset[str] = HOST_OBSERVERS) -> Decision:
+    """Disposition per the table above. Signal 2 counts only from an allowlisted host observer."""
+    if danger is not None and danger.observer_id not in host_observers:
+        code = 'TWO_SIGNAL_COLLAPSE' if matches else 'UNWITNESSED_DANGER_SIGNAL'
+        disposition = DIAGNOSTIC if matches else PASS
+        return Decision(disposition, f'danger from {danger.observer_id!r} is not an admitted host observer',
+                        matches, code)
     if not matches and danger is None:
         return Decision(PASS, 'no rule match and no host danger')
     if danger is None:

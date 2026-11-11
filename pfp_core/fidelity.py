@@ -115,10 +115,6 @@ class WholeRunBudget:
         self.refusals: list[str] = []
         self._started = time.perf_counter()
 
-    def can_afford(self, quote: int) -> bool:
-        s = self.ledger.summary(self.run_id)
-        return not s['blocked'] and quote <= s['available_microusd']
-
     def reserve(self, stage: str, request_digest: str, quote: int) -> str | None:
         """Reserve the upper quote before dispatch; None (reason recorded) when refused."""
         call_id = f'{self.run_id}:call:{self.calls + len(self.refusals) + 1}'
@@ -133,6 +129,10 @@ class WholeRunBudget:
     def settle(self, stage: str, call_id: str, actual: int, input_tokens: int, output_tokens: int,
                provider_wall_ms: int = 0, response_digest: str | None = None) -> bool:
         """Settle a known charge. An overrun is recorded, blocks the run and returns False."""
+        for value in (input_tokens, output_tokens, provider_wall_ms):
+            if type(value) is not int or value < 0:
+                self.hold_call(stage, call_id, 'invalid usage tally')
+                return False
         self.input_tokens += input_tokens
         self.output_tokens += output_tokens
         self.provider_wall_ms += provider_wall_ms

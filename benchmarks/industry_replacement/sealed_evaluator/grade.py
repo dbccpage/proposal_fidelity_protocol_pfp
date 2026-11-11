@@ -6,6 +6,7 @@ separately from a delivered wrong answer.
 """
 from __future__ import annotations
 
+import ast
 from pathlib import Path
 import sys
 
@@ -43,10 +44,42 @@ def sealed_path(task_id: str) -> Path:
     return HERE / SEALED[task_id]
 
 
+ALLOWED_IMPORTS = frozenset({'decimal', 'fractions', 'dataclasses', 'typing', 'collections', 'itertools',
+                             'functools', 'math', 're', 'json', 'enum', 'copy', '__future__'})
+DENIED_NAMES = frozenset({'builtins', '__builtins__', 'print', 'exec', 'eval', 'compile', 'open', '__import__',
+                          'globals', 'locals', 'vars', 'setattr', 'delattr', 'getattr', 'breakpoint', 'exit', 'quit'})
+DENIED_ATTRS = frozenset({'__globals__', '__subclasses__', '__builtins__', '__code__', '__dict__', '__class__',
+                          '__bases__', '__mro__', '_getframe', '_exit', 'stdout', 'stderr'})
+
+
+def tamper_findings(code: str) -> list[str]:
+    """Static gate before grading: the graded code shares the grader's interpreter, so code that can
+    reach the harness (stdout, builtins, frames, process exit, imports beyond the task's needs) is not
+    graded. This narrows, but does not close, the in-process forgery route (audit finding F2)."""
+    try:
+        tree = ast.parse(code)
+    except SyntaxError:
+        return []  # the import fails in the driver and is graded as failing
+    found = []
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            mods = [a.name for a in node.names] if isinstance(node, ast.Import) else [node.module or '']
+            found += [f'import {m}' for m in mods if m.split('.')[0] not in ALLOWED_IMPORTS]
+        elif isinstance(node, ast.Name) and node.id in DENIED_NAMES:
+            found.append(f'name {node.id}')
+        elif isinstance(node, ast.Attribute) and node.attr in DENIED_ATTRS:
+            found.append(f'attribute {node.attr}')
+    return sorted(set(found))
+
+
 def grade(task_id: str, delivered_text: str | None) -> dict:
     if delivered_text is None:
         return {'delivered': False, 'correct': False, 'passed': 0, 'total': None}
     code = extract_code(delivered_text)
+    tampering = tamper_findings(code)
+    if tampering:
+        return {'delivered': True, 'correct': False, 'passed': 0, 'total': None,
+                'failed': ['TAMPER_GATE: ' + ', '.join(tampering)]}
     tests = sealed_path(task_id).read_text(encoding='utf-8')
     result = run_isolated(code, DRIVER, {'sealed_tests.py': tests}, timeout=20)
     total = result.get('total')

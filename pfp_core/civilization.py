@@ -65,6 +65,14 @@ class Candidate:
     measured: bool = True
     is_baseline: bool = False
 
+    def __post_init__(self):
+        for name in ('passed', 'attempted', 'spent_microusd', 'total_tokens', 'wall_ms'):
+            value = getattr(self, name)
+            if type(value) is not int or value < 0:
+                raise ValueError(f'{name} must be a nonnegative int')
+        if self.passed > self.attempted:
+            raise ValueError('passed cannot exceed attempted')
+
     @property
     def pass_rate(self) -> Fraction:
         return Fraction(self.passed, self.attempted) if self.attempted else Fraction(0)

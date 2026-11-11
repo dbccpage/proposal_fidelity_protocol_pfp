@@ -97,7 +97,3 @@ def quotient_workflows(workflows: dict[str, list[TypedOp]]) -> dict[str, list[st
         classes.setdefault(trace_digest(workflows[name]), []).append(name)
     return classes
 
-
-def representatives(workflows: dict[str, list[TypedOp]]) -> dict[str, list[TypedOp]]:
-    """One workflow per class: the name that sorts first."""
-    return {names[0]: workflows[names[0]] for names in quotient_workflows(workflows).values()}

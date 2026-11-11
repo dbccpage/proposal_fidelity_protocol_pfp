@@ -20,7 +20,7 @@ changing code. Skills live in `skills/*/SKILL.md`; load the ones that match the 
 - Use type annotations on public functions.
 - Keep functions short and single-purpose; extract helpers for repeated logic.
 - Use `decimal.Decimal` for money and quantize to cents explicitly.
-- Money must never be handled as binary floating point. deny: `float\(`
+- Money must never be handled as binary floating point. deny: `\bfloat\s{0,4}\(`
 - No bare `except`; catch the narrowest exception that can occur. deny: `except:`
 - No wildcard imports. deny: `import \*`
 - Do not use mutable default arguments.

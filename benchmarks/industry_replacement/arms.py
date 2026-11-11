@@ -5,6 +5,9 @@ industry_all_skills_and_rules   AGENTS.md + every SKILL.md in context, one call;
                                 guardrails enforced as a pre-commit style hard block.
 industry_coder_reviewer_loop    the same context; a draft call then a review call that sees the task, the
                                 rules and the draft; guardrails enforced on the reviewed output.
+direct_with_public_checks       control: task prompt, the same public host checks, one repair on failure.
+industry_with_ci                control: industry context, public checks + AGENTS guardrails as a CI gate,
+                                one retry that is told which predicates and rules failed.
 pfp_eis_pciv_regulated          legacy_importer -> thymus screening of every imported guard against the
                                 task's public self panel -> PCIV-selected skill genome -> one call ->
                                 host normalizer + public host checks (Signal 2) + admitted guards
@@ -29,7 +32,11 @@ from tasks.common import extract_code
 HERE = Path(__file__).resolve().parent
 STACK = import_stack(HERE / 'industry_stack')
 TASKS = {t.TASK_ID: t for t in (t1_api_refactor, t2_sql_migration, t3_skill_triage, t4_protocol_synthesis)}
-ARMS = ('direct_baseline', 'industry_all_skills_and_rules', 'industry_coder_reviewer_loop', 'pfp_eis_pciv_regulated')
+ARMS = ('direct_baseline', 'industry_all_skills_and_rules', 'industry_coder_reviewer_loop',
+        'direct_with_public_checks', 'industry_with_ci', 'pfp_eis_pciv_regulated')
+# Arms that run the same public host checks with one feedback-driven retry. The two controls separate
+# what the host checks contribute from what the EIS/PCIV layers contribute.
+CHECKED_ARMS = ('direct_with_public_checks', 'industry_with_ci', 'pfp_eis_pciv_regulated')
 
 BASE_INSTRUCTION = 'You are a careful senior software engineer. Solve the task exactly as specified.'
 REVIEW_INSTRUCTION = ('Review the draft below against the task and the repository rules. Fix every defect you '
@@ -155,7 +162,7 @@ def run_arm(arm: str, task, solver, sample: str, *, skills=(), cap_microusd: int
         if arm == 'direct_baseline':
             text = _call(budget, solver, 'draft', [{'role': 'system', 'content': BASE_INSTRUCTION}, user], record)
             record.delivered, record.disposition = text, ('DELIVERED' if text is not None else 'REFUSED')
-        elif arm.startswith('industry_'):
+        elif arm in ('industry_all_skills_and_rules', 'industry_coder_reviewer_loop'):
             system = {'role': 'system', 'content': industry_system()}
             text = _call(budget, solver, 'draft', [system, user], record)
             if text is not None and arm == 'industry_coder_reviewer_loop':
@@ -165,28 +172,39 @@ def run_arm(arm: str, task, solver, sample: str, *, skills=(), cap_microusd: int
                 hits = immunity.signal1(extract_code(text), AGENTS_GUARDS)
                 record.signal1 = [h.detector_id for h in hits]
                 record.delivered, record.disposition = (None, 'GUARDRAIL_BLOCK') if hits else (text, 'DELIVERED')
-        elif arm == 'pfp_eis_pciv_regulated':
-            admitted, killed = screened_guards(task)
-            record.killed_guards = [k['rule_id'] for k in killed]
-            messages = [{'role': 'system', 'content': pfp_system(task, skills)}, user]
+        elif arm in CHECKED_ARMS:
+            if arm == 'pfp_eis_pciv_regulated':
+                admitted, killed = screened_guards(task)
+                record.killed_guards = [k['rule_id'] for k in killed]
+                system = pfp_system(task, skills)
+            elif arm == 'industry_with_ci':
+                admitted, system = AGENTS_GUARDS, industry_system()
+            else:  # direct_with_public_checks
+                admitted, system = [], BASE_INSTRUCTION
+            messages = [{'role': 'system', 'content': system}, user]
             text = _call(budget, solver, 'draft', messages, record)
             for attempt in range(2):
                 if text is None:
                     break
                 code, host, danger = public_check(task, text)
                 matches = immunity.signal1(code, admitted)
-                decision = immunity.decide(matches, danger)
                 record.host, record.signal1 = host.to_dict(), [m.detector_id for m in matches]
-                record.stages.append({'stage': f'regulate:{attempt}', 'disposition': decision.disposition,
-                                      'basis': decision.basis, 'refusal_code': decision.refusal_code})
-                if decision.disposition != immunity.HOLD:
+                if arm == 'industry_with_ci':  # CI: any failed check or guard hit fails the build
+                    ok, basis = danger is None and not matches, 'public checks + AGENTS guardrails'
+                else:
+                    decision = immunity.decide(matches, danger)
+                    ok, basis = decision.disposition != immunity.HOLD, decision.basis
+                record.stages.append({'stage': f'regulate:{attempt}', 'ok': ok, 'basis': basis})
+                if ok:
                     record.delivered, record.disposition = code, 'DELIVERED'
                     break
-                record.disposition = 'HOLD_REFUSED'
+                record.disposition = 'GUARDRAIL_BLOCK' if danger is None else 'HOLD_REFUSED'
                 if attempt == 1:
                     break
                 feedback = {'role': 'user', 'content': REPAIR_INSTRUCTION + f'\nFailed host predicates: {host.failed}'
-                            f'\nDanger kind: {danger.danger_type if danger else None}\n\nPrevious answer:\n{text}'}
+                            f'\nDanger kind: {danger.danger_type if danger else None}'
+                            f'\nRule hits: {record.signal1 if arm == "industry_with_ci" else []}'
+                            f'\n\nPrevious answer:\n{text}'}
                 text = _call(budget, solver, 'repair', messages + [feedback], record)
         else:
             raise ValueError(f'unknown arm {arm}')

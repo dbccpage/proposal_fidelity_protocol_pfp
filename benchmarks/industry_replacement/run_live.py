@@ -103,11 +103,19 @@ def main(argv=None, provider_factory=None) -> dict:
     ap.add_argument('--manifest', type=Path, required=True)
     ap.add_argument('--admit', required=True, help='SHA-256 of the manifest file the user authorized')
     ap.add_argument('--out', type=Path, required=True)
+    ap.add_argument('--registry', type=Path, default=HERE / '.campaigns',
+                    help='one record per admitted manifest digest; a digest is dispatched at most once')
     args = ap.parse_args(argv)
     path = args.manifest if args.manifest.is_absolute() else HERE / args.manifest
     manifest = admit(path, args.admit)
     if args.out.exists():
         raise AdmissionError('output directory exists; a campaign never resumes or overwrites')
+    args.registry.mkdir(parents=True, exist_ok=True)
+    try:  # exclusive create: a second invocation of the same admitted digest is refused, whatever --out says
+        with open(args.registry / f'{args.admit}.json', 'x', encoding='utf-8') as fh:
+            json.dump({'manifest_sha256': args.admit, 'out': str(args.out.resolve())}, fh)
+    except FileExistsError:
+        raise AdmissionError('this manifest digest was already dispatched once; prepare a new manifest') from None
     (args.out / 'runs').mkdir(parents=True)
     make = (provider_factory or default_factory)(manifest)
     ledger = args.out / 'ledger.sqlite'
@@ -145,7 +153,16 @@ def main(argv=None, provider_factory=None) -> dict:
         row['refused'] += delivered is None
         for k in ('spent_microusd', 'held_microusd', 'total_tokens', 'provider_wall_ms'):
             row[k] += budget[k]
-    summary = {'status': 'live_campaign_graded_post_freeze', 'stopped': stopped, 'arms': rows,
+    executed = set(deliveries)
+    for run in manifest['runs']:  # runs never executed after a stop stay in the denominators as refusals
+        if run['run_id'] not in executed:
+            row = rows.setdefault(run['arm'], {'runs': 0, 'correct': 0, 'refused': 0, 'spent_microusd': 0,
+                                               'held_microusd': 0, 'total_tokens': 0, 'provider_wall_ms': 0})
+            row['runs'] += 1
+            row['refused'] += 1
+    counts = {'planned': len(manifest['runs']), 'executed': len(executed),
+              'not_executed': len(manifest['runs']) - len(executed)}
+    summary = {'status': 'live_campaign_graded_post_freeze', 'stopped': stopped, 'counts': counts, 'arms': rows,
                'note': 'One sample per task and arm; distributions need repetitions.'}
     (args.out / 'summary.json').write_text(json.dumps(summary, indent=1), encoding='utf-8')
     return summary

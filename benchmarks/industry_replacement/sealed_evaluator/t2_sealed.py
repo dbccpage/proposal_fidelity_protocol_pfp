@@ -4,7 +4,7 @@ import sqlite3
 
 import candidate as m
 
-PUBLIC_CONTRACT_TOKENS = {'DESC', ':memory:', 'customer', 'amount_cents', 'created_at', 'paid', 'cancelled', 'status',
+PUBLIC_CONTRACT_TOKENS = {100, 'DESC', ':memory:', 'customer', 'amount_cents', 'created_at', 'paid', 'cancelled', 'status',
                           'region', 'orders', 'sort_by', '(none)'}
 
 DDL = ('CREATE TABLE orders(id INTEGER PRIMARY KEY, customer TEXT NOT NULL, region TEXT, '
