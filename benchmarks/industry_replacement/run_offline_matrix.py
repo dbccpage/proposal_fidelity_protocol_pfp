@@ -196,7 +196,7 @@ def main(argv=None) -> dict:
     args = ap.parse_args(argv)
     result = {'status': STATUS, 'sim_tariff': arms.SIM_TARIFF, 'arms': list(arms.ARMS),
               'policies': {p: evaluate(p) for p in POLICIES}}
-    args.out.write_text(json.dumps(result, indent=1, sort_keys=True, default=str) + '\n', encoding='utf-8')
+    args.out.write_text(json.dumps(result, indent=1, sort_keys=True, default=str) + '\n', encoding='utf-8', newline='\n')
     return result
 
 
