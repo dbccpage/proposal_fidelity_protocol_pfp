@@ -150,11 +150,14 @@ def _files(task_id):
     return {'scenarios.json': json.dumps(ops_only(scenarios(task_id)))}
 
 
+SEALED_TIMEOUT = 20
+
+
 def grade(task_id: str, delivered_text: str | None) -> dict:
     if delivered_text is None:
         return {'delivered': False, 'correct': False, 'passed': 0, 'total': None}
     scen = scenarios(task_id)
-    out = run_isolated(extract_code(delivered_text), DRIVER, _files(task_id), timeout=20,
+    out = run_isolated(extract_code(delivered_text), DRIVER, _files(task_id), timeout=SEALED_TIMEOUT,
                        validate=lambda r: _valid(r, scen))
     result = out.get('result') or {}
     if 'scenarios' not in result:
@@ -166,5 +169,9 @@ def grade(task_id: str, delivered_text: str | None) -> dict:
 
 
 def prewarm_offline(task_id: str, texts: list[str]) -> None:
-    """Grade many fixtures in parallel, each in its own fresh process (cache warm-up only)."""
-    prewarm([extract_code(t) for t in texts], DRIVER, _files(task_id))
+    """Grade many fixtures in parallel, each in its own fresh process (cache warm-up only).
+
+    Uses the same timeout grade() will use, so the warmed cache entries share grade()'s key
+    (the timeout is part of the cache key); a shorter prewarm would be discarded and re-run.
+    """
+    prewarm([extract_code(t) for t in texts], DRIVER, _files(task_id), timeout=SEALED_TIMEOUT)
