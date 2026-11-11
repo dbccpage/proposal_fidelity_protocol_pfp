@@ -1,0 +1,172 @@
+{
+  "schema": "pfp.additional_pending_reuse_slice.v1",
+  "generated_at_utc": "2026-11-11T02:45:00Z",
+  "status": "bounded_assessments_recorded",
+  "scope": "Comparative content-identity and packaging audit of 10 candidate files from pending_reuse_candidates.json against previously reviewed anchors across ops engines, dual-certificate solvers, and test harnesses. Evaluator firewall strictly observed; zero semantic credit granted from hash match alone.",
+  "prohibitions_observed": [
+    "Zero semantic credit from hash match alone",
+    "No full-source-read inflation (full_source_read: false for all candidate paths)",
+    "No paid provider dispatch",
+    "No private answer-key read",
+    "No fabricated run claims"
+  ],
+  "file_reviews": [
+    {
+      "path": "ops/engine/crates_rs/core_adversary/src/providers/anthropic/request.rs",
+      "sha256": "0035ab26f9497c24c576df4fbae30dbb99a02257a7407aa054022ed4d8fe4ccd",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "code/rust/core_adversary/src/providers/anthropic/request.rs",
+      "anchor_prior_report": "dag/reviews/additional_rust_adversary_remaining.json",
+      "assessment": "Candidate file in engine workspace crates_rs shares identical byte content (SHA-256: 0035ab26f9497c24c576df4fbae30dbb99a02257a7407aa054022ed4d8fe4ccd) with audited anchor code/rust/core_adversary/src/providers/anthropic/request.rs. Role & Packaging: Located in ops/engine monolithic workspace crate where Cargo.toml features, workspace-level dependency resolution, and engine build matrices govern compilation, whereas anchor resides in standalone verification tree. Consumer Expectations & Limitations: Request serialisation structs for Anthropic API expect engine-level timeout, proxy, and retry configurations; byte identity does not establish compilation against current engine crate features or valid runtime credential binding. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "ops/engine/crates_rs/core_linear_algebra/src/linear_algebra/density.rs",
+      "sha256": "2974c5ab99c4767cde13e2eb88e17f7b22834f5ece83090d0df82d3248fe0452",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "code/rust/core_linear_algebra/src/linear_algebra/density.rs",
+      "anchor_prior_report": "dag/reviews/additional_rust_linear_algebra_remaining.json",
+      "assessment": "Candidate file in engine workspace crates_rs shares identical byte content (SHA-256: 2974c5ab99c4767cde13e2eb88e17f7b22834f5ece83090d0df82d3248fe0452) with audited anchor code/rust/core_linear_algebra/src/linear_algebra/density.rs. Role & Packaging: Density matrix representations and trace/partial-trace operators within ops/engine/crates_rs/core_linear_algebra. Packaged as an internal submodule for quantum state density manipulations in the engine pipeline. Consumer Expectations & Limitations: Consumers in ops/engine expect integration with SIMD features and engine allocator configurations; exact syntactic match does not prove operational numerical equivalence or memory safety under alternative cargo feature flags. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "ops/engine/crates_rs/core_prompt_civilization/src/forge.rs",
+      "sha256": "3525036da193dd866d889490567b30d8582289e1d2ffd006523223baa65d49ea",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "code/rust/core_prompt_civilization/src/forge.rs",
+      "anchor_prior_report": "dag/reviews/additional_native_systems_03.json",
+      "assessment": "Candidate file in engine workspace crates_rs shares identical byte content (SHA-256: 3525036da193dd866d889490567b30d8582289e1d2ffd006523223baa65d49ea) with audited anchor code/rust/core_prompt_civilization/src/forge.rs. Role & Packaging: Prompt forge orchestrator and template synthesizer within core_prompt_civilization crate under ops/engine. Consumer Expectations & Limitations: Consumed by prompt evolution pipelines; packaging under ops/engine links against engine-wide civilization configurations and serialization pipelines. Content identity does not certify runtime compatibility with distinct prompt registries or absence of schema drift in consumers. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "ops/engine/crates_rs/core_functional/src/phi4.rs",
+      "sha256": "57c3040c83b7da01dfeb329c37a4ec32c38045f0c7265dc1b0e3c36b755cb6ef",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "code/rust/core_functional/src/phi4.rs",
+      "anchor_prior_report": "dag/reviews/additional_rust_functional_certifiers.json",
+      "assessment": "Candidate file in engine workspace crates_rs shares identical byte content (SHA-256: 57c3040c83b7da01dfeb329c37a4ec32c38045f0c7265dc1b0e3c36b755cb6ef) with audited anchor code/rust/core_functional/src/phi4.rs. Role & Packaging: Functional evaluation kernel (Phi_4 functional certifier) implementing lattice field theory / functional path integrals. Consumer Expectations & Limitations: Packaged as part of engine functional evaluation crate; consumers require specific precision/discretization parameterizations. Hash match confirms identical routine text but does not verify mathematical validity of discrete integration steps in engine simulation runs or compile-time convergence bounds. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "workflows/wf11_dual_certificate_synthesis/pilots/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+      "sha256": "e6482c51f19a450d1a5b12be62d2cf0975d603d469021746e9ab8e88421c19bb",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+      "anchor_prior_report": "dag/reviews/additional_challenges_051_059.json",
+      "assessment": "Candidate file shares identical byte content (SHA-256: e6482c51f19a450d1a5b12be62d2cf0975d603d469021746e9ab8e88421c19bb) with audited anchor in workflows/tasks/certified_challenges. Role & Packaging: Resides in WF11 pilot workflow directory (wf11_dual_certificate_synthesis/pilots) as an exploratory candidate solver, whereas anchor is a challenge reference solver evaluated against fixed challenge fixtures. Consumer Expectations & Limitations: In WF11, the solver is invoked by pilot synthesis harnesses where outputs undergo lift-grant verification; prior audit of anchor identified phase-I objective RHS sign error on feasible negative RHS systems (AC51-F01). Hash equality replicates the identical known failure mode into WF11; operational validity requires WF11-specific harness testing. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "workflows/wf11_dual_certificate_synthesis/pilots/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+      "sha256": "d6e8ad0490aaf2f3ecb8c354c6ff3ee196bb59e0c28f21121d0304b3be3c5782",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "workflows/tasks/certified_challenges/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+      "anchor_prior_report": "dag/reviews/additional_challenges_051_059.json",
+      "assessment": "Candidate file shares identical byte content (SHA-256: d6e8ad0490aaf2f3ecb8c354c6ff3ee196bb59e0c28f21121d0304b3be3c5782) with audited anchor in workflows/tasks/certified_challenges. Role & Packaging: Resides in WF11 pilot directory as an exploratory max-flow / min-cut certificate solver, whereas anchor serves as task challenge reference. Consumer Expectations & Limitations: Consumers in WF11 expect certificate synthesis outputs to satisfy dual witness schemas; content identity verifies identical BFS/Edmonds-Karp logic but does not establish correctness under WF11 pilot graph generators or capacity scaling assumptions. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "workflows/wf11_dual_certificate_synthesis/pilots/c054_exact_linear_systems/reference_solver/linear_solver.py",
+      "sha256": "bf61ce088a649a74fae8fd3664b4cbab08de353cb7f87d32a1a41e551a6a9658",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "workflows/tasks/certified_challenges/c054_exact_linear_systems/reference_solver/linear_solver.py",
+      "anchor_prior_report": "dag/reviews/additional_challenges_051_059.json",
+      "assessment": "Candidate file shares identical byte content (SHA-256: bf61ce088a649a74fae8fd3664b4cbab08de353cb7f87d32a1a41e551a6a9658) with audited anchor in workflows/tasks/certified_challenges. Role & Packaging: Resides in WF11 pilot directory as an exact linear system solver (Gaussian elimination with exact rational arithmetic), whereas anchor serves as benchmark reference oracle. Consumer Expectations & Limitations: In WF11 synthesis pipeline, solvers provide certificate witnesses for matrix invertibility and Fredholm alternative; exact syntax match does not verify error-handling behavior when WF11 callers supply non-canonical fraction string encodings. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "workflows/wf11_dual_certificate_synthesis/pilots/c055_assignment_with_potentials/reference_solver/hungarian.py",
+      "sha256": "da5fe8103bc6d5ffa7f70ca5a07e1936e0513b5f00666c62d5f7e7076d7668bc",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "workflows/tasks/certified_challenges/c055_assignment_with_potentials/reference_solver/hungarian.py",
+      "anchor_prior_report": "dag/reviews/additional_challenges_051_059.json",
+      "assessment": "Candidate file shares identical byte content (SHA-256: da5fe8103bc6d5ffa7f70ca5a07e1936e0513b5f00666c62d5f7e7076d7668bc) with audited anchor in workflows/tasks/certified_challenges. Role & Packaging: Resides in WF11 pilot directory as an exact Hungarian / Kuhn-Munkres assignment solver with dual potentials, whereas anchor is a challenge reference solver. Consumer Expectations & Limitations: WF11 consumers require exact integer/rational dual potential certificates u_i + v_j <= c_ij with equality on matching; byte identity does not guarantee compatibility with WF11 rectangular cost matrix inputs or asymmetric graph representations. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "pfp/infrastructure/tower_evidence/level_engine/v1/tests/reach_draft/checker_L002.py",
+      "sha256": "41ed3711f604b49a15b63be3118ef9a3a0ef11a9e19ba987a335ef9da56a13b9",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "pfp/tests/level_engine/reach_draft/checker_L002.py",
+      "anchor_prior_report": "dag/reviews/additional_pfp_tests_remaining.json",
+      "assessment": "Candidate file shares identical byte content (SHA-256: 41ed3711f604b49a15b63be3118ef9a3a0ef11a9e19ba987a335ef9da56a13b9) with audited anchor in pfp/tests/level_engine. Role & Packaging: Test harness checker located in pfp/infrastructure/tower_evidence/level_engine/v1/tests/reach_draft/. Explicitly marked in source header: 'Never registered, never a checker of record: it exists to prove that the harness\\'s completed records pass the receiving side\\'s checks up to the checker-of-record cap. AuthorityEffect: None.' Consumer Expectations & Limitations: Infrastructure test copy drafted to verify reach record formatting; granting authoritative checker status or full audit coverage based on hash match would directly violate its declared AuthorityEffect: None. Full source reading credit is not granted from hash match alone."
+    },
+    {
+      "path": "workflows/wf06_dialect_sweep/pilots/pilot_0000001/misc/retired_mode_trials_runner_v1/kernels.py",
+      "sha256": "31a621b4e486b5991f718888841f056261ab62ea6838a1552b57bf3af1d80534",
+      "full_source_read": false,
+      "review_level": "comparative_content_identity_and_packaging_audit",
+      "reviewed_anchor": "workflows/wf18_dossier_replay_campaign/pilots/replay_runners/mode_capsules/kernels.py",
+      "anchor_prior_report": "dag/reviews/additional_shared_runtime_reading.json",
+      "assessment": "Candidate file shares identical byte content (SHA-256: 31a621b4e486b5991f718888841f056261ab62ea6838a1552b57bf3af1d80534) with audited anchor in wf18 replay capsule runners. Role & Packaging: Resides in a deprecated/retired pilot directory (wf06_dialect_sweep/pilots/pilot_0000001/misc/retired_mode_trials_runner_v1/), whereas anchor is an active replay kernel in wf18. Consumer Expectations & Limitations: The enclosing runner is retired and not intended for active execution in current dialect sweeps; treating it as active or granting live verification credit based on hash match obscures its retired lifecycle status. Full source reading credit is not granted from hash match alone."
+    }
+  ],
+  "claims": [
+    {
+      "id": "REUSE-SLICE-C001",
+      "statement": "Exact byte identity between 10 pending candidate files and previously audited anchors establishes duplicate file content, but provides zero semantic credit, runtime verification, or operational validity in the candidate contexts.",
+      "claim": "Byte-level equality between candidate paths in ops/engine/, workflows/wf11/, pfp/infrastructure/, and workflows/wf06/ and their respective audited anchors confirms identical source bytes under SHA-256 verification, while substantive differences in packaging boundaries, Cargo workspaces, exploratory pilot status, explicit non-authoritative declarations (AuthorityEffect: None in L002), and retired execution lifecycles require separate, independent path-specific testing rather than inherited semantic credit.",
+      "evidence": [
+        {
+          "path": "ops/engine/crates_rs/core_adversary/src/providers/anthropic/request.rs",
+          "lines": [1, 20]
+        },
+        {
+          "path": "ops/engine/crates_rs/core_linear_algebra/src/linear_algebra/density.rs",
+          "lines": [1, 20]
+        },
+        {
+          "path": "ops/engine/crates_rs/core_prompt_civilization/src/forge.rs",
+          "lines": [1, 20]
+        },
+        {
+          "path": "ops/engine/crates_rs/core_functional/src/phi4.rs",
+          "lines": [1, 20]
+        },
+        {
+          "path": "workflows/wf11_dual_certificate_synthesis/pilots/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+          "lines": [1, 25]
+        },
+        {
+          "path": "workflows/wf11_dual_certificate_synthesis/pilots/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+          "lines": [1, 25]
+        },
+        {
+          "path": "workflows/wf11_dual_certificate_synthesis/pilots/c054_exact_linear_systems/reference_solver/linear_solver.py",
+          "lines": [1, 25]
+        },
+        {
+          "path": "workflows/wf11_dual_certificate_synthesis/pilots/c055_assignment_with_potentials/reference_solver/hungarian.py",
+          "lines": [1, 25]
+        },
+        {
+          "path": "pfp/infrastructure/tower_evidence/level_engine/v1/tests/reach_draft/checker_L002.py",
+          "lines": [1, 25]
+        },
+        {
+          "path": "workflows/wf06_dialect_sweep/pilots/pilot_0000001/misc/retired_mode_trials_runner_v1/kernels.py",
+          "lines": [1, 25]
+        }
+      ],
+      "dependencies": [
+        "code/rust/core_adversary/src/providers/anthropic/request.rs",
+        "code/rust/core_linear_algebra/src/linear_algebra/density.rs",
+        "code/rust/core_prompt_civilization/src/forge.rs",
+        "code/rust/core_functional/src/phi4.rs",
+        "workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+        "workflows/tasks/certified_challenges/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+        "workflows/tasks/certified_challenges/c054_exact_linear_systems/reference_solver/linear_solver.py",
+        "workflows/tasks/certified_challenges/c055_assignment_with_potentials/reference_solver/hungarian.py",
+        "pfp/tests/level_engine/reach_draft/checker_L002.py",
+        "workflows/wf18_dossier_replay_campaign/pilots/replay_runners/mode_capsules/kernels.py"
+      ],
+      "limitations": [
+        "Establishes content identity and bounded context analysis only; does not prove compilation, typecheck, or runtime correctness of candidate files in their specific subtrees.",
+        "Zero semantic credit granted from hash match alone; candidate files remain marked full_source_read: false and full-reading census counts are preserved.",
+        "Does not upgrade exploratory solvers or retired scripts to active verified production status.",
+        "Does not certify quantum mechanical answers, evaluator constants, or solver accuracy."
+      ]
+    }
+  ]
+}

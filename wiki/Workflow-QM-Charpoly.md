@@ -51,4 +51,32 @@ A separate post-run diagnostic applied a tested, value-preserving rational norma
 One attempt per procedure on one problem cannot establish a reliable benefit. Proposal and synthesis sampling can differ independently. If both initial proposals pass, the checked arm uses no repair and both arms apply the same procedure to their respective candidates; a score difference then does not isolate a checker effect. Native acceptance remains an intermediate polynomial guarantee only.
 <!-- END CHARPOLY RESULTS -->
 
+<!-- BEGIN HOST CHARPOLY WORKFLOWS -->
+## Coverage-first workflows and unexecuted campaign preparation
+
+**Plans:** `coverage_first_direct_v1`, `coverage_first_matrix_v1`, `coverage_first_charpoly_v1`, and `coverage_first_operad_composition_v1`.
+**DAG nodes:** `EXECUTABLE:coverage_first_direct_v1`, `EXECUTABLE:coverage_first_matrix_v1`, `EXECUTABLE:coverage_first_charpoly_v1`, and `EXECUTABLE:coverage_first_operad_composition_v1`.
+
+Four matched-resource comparison arms are implemented and verified offline:
+1. `coverage_first_direct_v1`: seed-only baseline under coverage-first instruction.
+2. `coverage_first_matrix_v1`: public matrix context derived by host from Pauli products.
+3. `coverage_first_charpoly_v1`: public matrix plus host-derived, native-replayed characteristic polynomial context with explicitly limited intermediate scope.
+4. `coverage_first_operad_composition_v1`: typed bounded composition integrating host characteristic polynomial with Epistemic Immune System (EIS) allosteric Hill consensus gate, Prompt Civilization (PCIV) non-empty task set Pareto selection, and planar Operad sequential associativity verification.
+
+### Offline semantic composition (PFP / EIS / PCIV / OPERADS)
+- **PFP Host Carrier**: Derives intermediate characteristic polynomial `det(lambda I - H)` in `Q[lambda, J, Delta, K]` under explicit degree bounds and 125-node grid native Rust sidecar replay (`final_answer_certified: False`).
+- **EIS Allosteric Consensus Gate**: Evaluates independent verification sensors (125-node grid match, monic degree-4 polynomial, trace-zero Hamiltonian in computational basis) under Hill parameters (n=2, K=2, t=1/2), requiring minimal quorum >= 2 distinct positive capped sensors and preventing single-sensor dominance or case-insensitive aliasing.
+- **PCIV Task Set Evaluator**: Enforces non-empty 5-part QM task portfolio (`part1_spectrum_degeneracies`, `part2_dynamics_transition_prob`, `part3_reduced_state_entanglement`, `part4_thermal_state_threshold`, `part5_algebraic_consistency_checks`), rejects empty candidate measurements (`MISSING_MEASUREMENTS`), and computes non-dominated Pareto fronts without heuristic scalarization.
+- **OPERADS Typed Port Pipeline**: Models composition as morphisms `f: (State) -> Contract` (Host Charpoly), `g: (Contract) -> Audit` (EIS Allosteric Gate), and `h: (Audit) -> Receipt` (PCIV Pareto Selection), formally certifying sequential associativity `(h o_0 g) o_0 f = h o_0 (g o_0 f)` via `TreeCompositionWitness`.
+
+### Offline validation status
+- All four workflows execute offline under synthetic provider tapes with strict source-pin enforcement.
+- Exact polynomial equivalence on the 125-point rational grid is verified offline via `qm_host_charpoly.py` using dual Leibniz/Laplace determinant engines and 3D tensor product Lagrange interpolation (`interpolate_trivariate_charpoly` and `interpolate_charpoly_from_grid`), cross-checked against native sidecar replay (69 unit, challenger, and workflow tests passing).
+- Compact serialized context schema `pfp.qm-host-charpoly.compact-certificate.v1` eliminates internal `failure_states` diagnostics and redundant wire metadata, reducing prompt context by over 74% (1,167 characters vs 4,507 original) while delivering standard descending-degree formulas and public matrices.
+- The intermediate certificate covers only `det(lambda I - H)`; downstream derivations, projectors, and final answers are explicitly uncertified.
+
+### Campaign preparation status
+No paid campaign allowance is currently authorized. These workflows have not been executed with live paid provider dispatch. Finite campaign manifests are prepared via `live_campaign.py prepare` awaiting explicit user authorization. Historical measured benchmark totals remain strictly at 24 runs (settled spend USD 0.055614, 0 held liability).
+<!-- END HOST CHARPOLY WORKFLOWS -->
+
 Return to [workflow results](Workflow-Results.md) or [choose a workflow](Workflows.md).
