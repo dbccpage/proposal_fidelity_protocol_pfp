@@ -1,0 +1,1519 @@
+{
+ "arms": [
+  "direct_baseline",
+  "industry_all_skills_and_rules",
+  "industry_coder_reviewer_loop",
+  "pfp_eis_pciv_regulated"
+ ],
+ "policies": {
+  "follows_context_rules": {
+   "antibody_status": [
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t1_api_refactor_under_contract:contract_drift",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t1_api_refactor_under_contract:subtly_buggy",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t1_api_refactor_under_contract:truncated",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t2_sql_security_and_analytics_migration:injection_vulnerable",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t2_sql_security_and_analytics_migration:subtly_buggy",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t2_sql_security_and_analytics_migration:truncated",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t3_bloated_skill_repository_triage:rule_poisoned",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t3_bloated_skill_repository_triage:subtly_buggy",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t3_bloated_skill_repository_triage:truncated",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t4_stateful_protocol_synthesis:subtly_buggy",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t4_stateful_protocol_synthesis:table_wrong",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t4_stateful_protocol_synthesis:truncated",
+     "support": 1
+    }
+   ],
+   "deliveries_frozen": 42,
+   "freeze_digest": "908890b9979d483b47ab45bc21edc63fe1c1032564e81de3de1f36ab70d8bb42",
+   "policy": "follows_context_rules",
+   "tasks": {
+    "t1_api_refactor_under_contract": {
+     "arm_selection": {
+      "Baseline": [
+       "direct_baseline"
+      ],
+      "Front": [
+       "pfp_eis_pciv_regulated"
+      ],
+      "Unmeasured": [],
+      "demoted": {
+       "industry_all_skills_and_rules": "dominated by direct baseline",
+       "industry_coder_reviewer_loop": "Pareto-dominated"
+      },
+      "slots": {
+       "Baseline": 1,
+       "Front": 6,
+       "Unmeasured": 3
+      }
+     },
+     "arms": {
+      "direct_baseline": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 92215,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 36707,
+       "total_tokens": 12863
+      },
+      "industry_all_skills_and_rules": {
+       "calls": 7,
+       "correct_refusal": 1,
+       "delivered_correct": 4,
+       "delivered_wrong": 2,
+       "false_refusal": 0,
+       "provider_wall_ms": 92215,
+       "refused": 1,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 76138,
+       "total_tokens": 52294
+      },
+      "industry_coder_reviewer_loop": {
+       "calls": 14,
+       "correct_refusal": 1,
+       "delivered_correct": 6,
+       "delivered_wrong": 0,
+       "false_refusal": 0,
+       "provider_wall_ms": 187370,
+       "refused": 1,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 159507,
+       "total_tokens": 111035
+      },
+      "pfp_eis_pciv_regulated": {
+       "calls": 9,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 116595,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 48032,
+       "total_tokens": 17900
+      }
+     },
+     "calibration": {
+      "candidates": [
+       {
+        "attempted": 7,
+        "id": "direct",
+        "measured": true,
+        "passed": 5,
+        "total_tokens": 12863
+       },
+       {
+        "attempted": 7,
+        "id": "host_only",
+        "measured": true,
+        "passed": 7,
+        "total_tokens": 17900
+       },
+       {
+        "attempted": 0,
+        "id": "relevant",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 605
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dups",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 976
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dup_one",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 788
+       },
+       {
+        "attempted": 0,
+        "id": "all_but_conflicting",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "all_skills",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+stale",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 782
+       }
+      ],
+      "chosen_genome": "host_only",
+      "quotient_classes": [
+       [
+        "all_but_conflicting",
+        "all_skills"
+       ],
+       [
+        "relevant+dup_one",
+        "relevant+dups"
+       ]
+      ],
+      "selection": {
+       "Baseline": [
+        "direct"
+       ],
+       "Front": [
+        "host_only"
+       ],
+       "Unmeasured": [
+        "relevant",
+        "relevant+stale",
+        "relevant+dup_one"
+       ],
+       "demoted": {},
+       "slots": {
+        "Baseline": 1,
+        "Front": 6,
+        "Unmeasured": 3
+       }
+      },
+      "tainted": []
+     },
+     "killed_guards": []
+    },
+    "t2_sql_security_and_analytics_migration": {
+     "arm_selection": {
+      "Baseline": [
+       "direct_baseline"
+      ],
+      "Front": [
+       "pfp_eis_pciv_regulated"
+      ],
+      "Unmeasured": [],
+      "demoted": {
+       "industry_all_skills_and_rules": "dominated by direct baseline",
+       "industry_coder_reviewer_loop": "Pareto-dominated"
+      },
+      "slots": {
+       "Baseline": 1,
+       "Front": 6,
+       "Unmeasured": 3
+      }
+     },
+     "arms": {
+      "direct_baseline": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 63190,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 24589,
+       "total_tokens": 8485
+      },
+      "industry_all_skills_and_rules": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 63685,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 64185,
+       "total_tokens": 47949
+      },
+      "industry_coder_reviewer_loop": {
+       "calls": 14,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 130940,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 133912,
+       "total_tokens": 100488
+      },
+      "pfp_eis_pciv_regulated": {
+       "calls": 9,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 77940,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 31322,
+       "total_tokens": 11498
+      }
+     },
+     "calibration": {
+      "candidates": [
+       {
+        "attempted": 7,
+        "id": "direct",
+        "measured": true,
+        "passed": 5,
+        "total_tokens": 8485
+       },
+       {
+        "attempted": 7,
+        "id": "host_only",
+        "measured": true,
+        "passed": 7,
+        "total_tokens": 11498
+       },
+       {
+        "attempted": 0,
+        "id": "relevant",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 605
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dups",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 976
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dup_one",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 788
+       },
+       {
+        "attempted": 0,
+        "id": "all_but_conflicting",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 4835
+       },
+       {
+        "attempted": 0,
+        "id": "all_skills",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+stale",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 782
+       }
+      ],
+      "chosen_genome": "host_only",
+      "quotient_classes": [
+       [
+        "relevant+dup_one",
+        "relevant+dups"
+       ]
+      ],
+      "selection": {
+       "Baseline": [
+        "direct"
+       ],
+       "Front": [
+        "host_only"
+       ],
+       "Unmeasured": [
+        "relevant",
+        "relevant+dup_one",
+        "relevant+dups"
+       ],
+       "demoted": {
+        "all_skills": "lineage taint",
+        "relevant+stale": "lineage taint"
+       },
+       "slots": {
+        "Baseline": 1,
+        "Front": 6,
+        "Unmeasured": 3
+       }
+      },
+      "tainted": [
+       "all_skills",
+       "relevant+stale"
+      ]
+     },
+     "killed_guards": [
+      "AGENTS:deny:5",
+      "skill:legacy-json-style:deny:1"
+     ]
+    },
+    "t3_bloated_skill_repository_triage": {
+     "arm_selection": {
+      "Baseline": [
+       "direct_baseline"
+      ],
+      "Front": [
+       "pfp_eis_pciv_regulated",
+       "industry_all_skills_and_rules"
+      ],
+      "Unmeasured": [],
+      "demoted": {
+       "industry_coder_reviewer_loop": "Pareto-dominated"
+      },
+      "slots": {
+       "Baseline": 1,
+       "Front": 6,
+       "Unmeasured": 3
+      }
+     },
+     "arms": {
+      "direct_baseline": {
+       "calls": 6,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 2,
+       "false_refusal": 0,
+       "provider_wall_ms": 41880,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 6,
+       "spent_microusd": 16634,
+       "total_tokens": 6106
+      },
+      "industry_all_skills_and_rules": {
+       "calls": 6,
+       "correct_refusal": 0,
+       "delivered_correct": 3,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 41865,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 6,
+       "spent_microusd": 50427,
+       "total_tokens": 39903
+      },
+      "industry_coder_reviewer_loop": {
+       "calls": 12,
+       "correct_refusal": 0,
+       "delivered_correct": 5,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 85335,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 6,
+       "spent_microusd": 104269,
+       "total_tokens": 82793
+      },
+      "pfp_eis_pciv_regulated": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 5,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 47065,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 6,
+       "spent_microusd": 19499,
+       "total_tokens": 7695
+      }
+     },
+     "calibration": {
+      "candidates": [
+       {
+        "attempted": 6,
+        "id": "direct",
+        "measured": true,
+        "passed": 5,
+        "total_tokens": 6106
+       },
+       {
+        "attempted": 6,
+        "id": "host_only",
+        "measured": true,
+        "passed": 6,
+        "total_tokens": 7695
+       },
+       {
+        "attempted": 0,
+        "id": "relevant",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 605
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dups",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 976
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dup_one",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 788
+       },
+       {
+        "attempted": 0,
+        "id": "all_but_conflicting",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 4835
+       },
+       {
+        "attempted": 0,
+        "id": "all_skills",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+stale",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 782
+       }
+      ],
+      "chosen_genome": "host_only",
+      "quotient_classes": [
+       [
+        "relevant+dup_one",
+        "relevant+dups"
+       ]
+      ],
+      "selection": {
+       "Baseline": [
+        "direct"
+       ],
+       "Front": [
+        "host_only"
+       ],
+       "Unmeasured": [
+        "relevant",
+        "relevant+dup_one",
+        "relevant+dups"
+       ],
+       "demoted": {
+        "all_skills": "lineage taint",
+        "relevant+stale": "lineage taint"
+       },
+       "slots": {
+        "Baseline": 1,
+        "Front": 6,
+        "Unmeasured": 3
+       }
+      },
+      "tainted": [
+       "all_skills",
+       "relevant+stale"
+      ]
+     },
+     "killed_guards": [
+      "skill:legacy-json-style:deny:1"
+     ]
+    },
+    "t4_stateful_protocol_synthesis": {
+     "arm_selection": {
+      "Baseline": [
+       "direct_baseline"
+      ],
+      "Front": [
+       "pfp_eis_pciv_regulated"
+      ],
+      "Unmeasured": [],
+      "demoted": {
+       "industry_all_skills_and_rules": "dominated by direct baseline",
+       "industry_coder_reviewer_loop": "Pareto-dominated"
+      },
+      "slots": {
+       "Baseline": 1,
+       "Front": 6,
+       "Unmeasured": 3
+      }
+     },
+     "arms": {
+      "direct_baseline": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 72880,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 26671,
+       "total_tokens": 7983
+      },
+      "industry_all_skills_and_rules": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 72880,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 66102,
+       "total_tokens": 47414
+      },
+      "industry_coder_reviewer_loop": {
+       "calls": 14,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 150350,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 138700,
+       "total_tokens": 100100
+      },
+      "pfp_eis_pciv_regulated": {
+       "calls": 9,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 92190,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 34833,
+       "total_tokens": 11209
+      }
+     },
+     "calibration": {
+      "candidates": [
+       {
+        "attempted": 7,
+        "id": "direct",
+        "measured": true,
+        "passed": 5,
+        "total_tokens": 7983
+       },
+       {
+        "attempted": 7,
+        "id": "host_only",
+        "measured": true,
+        "passed": 7,
+        "total_tokens": 11209
+       },
+       {
+        "attempted": 0,
+        "id": "relevant",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 605
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dups",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 976
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dup_one",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 788
+       },
+       {
+        "attempted": 0,
+        "id": "all_but_conflicting",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "all_skills",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+stale",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 782
+       }
+      ],
+      "chosen_genome": "host_only",
+      "quotient_classes": [
+       [
+        "all_but_conflicting",
+        "all_skills"
+       ],
+       [
+        "relevant+dup_one",
+        "relevant+dups"
+       ]
+      ],
+      "selection": {
+       "Baseline": [
+        "direct"
+       ],
+       "Front": [
+        "host_only"
+       ],
+       "Unmeasured": [
+        "relevant",
+        "relevant+stale",
+        "relevant+dup_one"
+       ],
+       "demoted": {},
+       "slots": {
+        "Baseline": 1,
+        "Front": 6,
+        "Unmeasured": 3
+       }
+      },
+      "tainted": []
+     },
+     "killed_guards": []
+    }
+   }
+  },
+  "ignores_context_rules": {
+   "antibody_status": [
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t1_api_refactor_under_contract:contract_drift",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t1_api_refactor_under_contract:subtly_buggy",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t1_api_refactor_under_contract:truncated",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t2_sql_security_and_analytics_migration:injection_vulnerable",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t2_sql_security_and_analytics_migration:subtly_buggy",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t2_sql_security_and_analytics_migration:truncated",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t3_bloated_skill_repository_triage:subtly_buggy",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t3_bloated_skill_repository_triage:truncated",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t4_stateful_protocol_synthesis:subtly_buggy",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t4_stateful_protocol_synthesis:table_wrong",
+     "support": 1
+    },
+    {
+     "authority_effect": "None",
+     "custody": "Candidate",
+     "pattern": "t4_stateful_protocol_synthesis:truncated",
+     "support": 1
+    }
+   ],
+   "deliveries_frozen": 35,
+   "freeze_digest": "2fd7dfefbe319a7421bff288e618447a32635340a1e2a41011f96f55c4fe589b",
+   "policy": "ignores_context_rules",
+   "tasks": {
+    "t1_api_refactor_under_contract": {
+     "arm_selection": {
+      "Baseline": [
+       "direct_baseline"
+      ],
+      "Front": [
+       "pfp_eis_pciv_regulated"
+      ],
+      "Unmeasured": [],
+      "demoted": {
+       "industry_all_skills_and_rules": "dominated by direct baseline",
+       "industry_coder_reviewer_loop": "Pareto-dominated"
+      },
+      "slots": {
+       "Baseline": 1,
+       "Front": 6,
+       "Unmeasured": 3
+      }
+     },
+     "arms": {
+      "direct_baseline": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 92215,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 36707,
+       "total_tokens": 12863
+      },
+      "industry_all_skills_and_rules": {
+       "calls": 7,
+       "correct_refusal": 1,
+       "delivered_correct": 4,
+       "delivered_wrong": 2,
+       "false_refusal": 0,
+       "provider_wall_ms": 92215,
+       "refused": 1,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 76138,
+       "total_tokens": 52294
+      },
+      "industry_coder_reviewer_loop": {
+       "calls": 14,
+       "correct_refusal": 1,
+       "delivered_correct": 6,
+       "delivered_wrong": 0,
+       "false_refusal": 0,
+       "provider_wall_ms": 187370,
+       "refused": 1,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 159507,
+       "total_tokens": 111035
+      },
+      "pfp_eis_pciv_regulated": {
+       "calls": 9,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 116595,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 48032,
+       "total_tokens": 17900
+      }
+     },
+     "calibration": {
+      "candidates": [
+       {
+        "attempted": 7,
+        "id": "direct",
+        "measured": true,
+        "passed": 5,
+        "total_tokens": 12863
+       },
+       {
+        "attempted": 7,
+        "id": "host_only",
+        "measured": true,
+        "passed": 7,
+        "total_tokens": 17900
+       },
+       {
+        "attempted": 0,
+        "id": "relevant",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 605
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dups",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 976
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dup_one",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 788
+       },
+       {
+        "attempted": 0,
+        "id": "all_but_conflicting",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "all_skills",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+stale",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 782
+       }
+      ],
+      "chosen_genome": "host_only",
+      "quotient_classes": [
+       [
+        "all_but_conflicting",
+        "all_skills"
+       ],
+       [
+        "relevant+dup_one",
+        "relevant+dups"
+       ]
+      ],
+      "selection": {
+       "Baseline": [
+        "direct"
+       ],
+       "Front": [
+        "host_only"
+       ],
+       "Unmeasured": [
+        "relevant",
+        "relevant+stale",
+        "relevant+dup_one"
+       ],
+       "demoted": {},
+       "slots": {
+        "Baseline": 1,
+        "Front": 6,
+        "Unmeasured": 3
+       }
+      },
+      "tainted": []
+     },
+     "killed_guards": []
+    },
+    "t2_sql_security_and_analytics_migration": {
+     "arm_selection": {
+      "Baseline": [
+       "direct_baseline"
+      ],
+      "Front": [
+       "pfp_eis_pciv_regulated"
+      ],
+      "Unmeasured": [],
+      "demoted": {
+       "industry_all_skills_and_rules": "no measured pass",
+       "industry_coder_reviewer_loop": "no measured pass"
+      },
+      "slots": {
+       "Baseline": 1,
+       "Front": 6,
+       "Unmeasured": 3
+      }
+     },
+     "arms": {
+      "direct_baseline": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 63190,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 24589,
+       "total_tokens": 8485
+      },
+      "industry_all_skills_and_rules": {
+       "calls": 7,
+       "correct_refusal": 3,
+       "delivered_correct": 0,
+       "delivered_wrong": 0,
+       "false_refusal": 4,
+       "provider_wall_ms": 63190,
+       "refused": 7,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 64020,
+       "total_tokens": 47916
+      },
+      "industry_coder_reviewer_loop": {
+       "calls": 14,
+       "correct_refusal": 1,
+       "delivered_correct": 0,
+       "delivered_wrong": 0,
+       "false_refusal": 6,
+       "provider_wall_ms": 129920,
+       "refused": 7,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 133538,
+       "total_tokens": 100386
+      },
+      "pfp_eis_pciv_regulated": {
+       "calls": 9,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 77940,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 31322,
+       "total_tokens": 11498
+      }
+     },
+     "calibration": {
+      "candidates": [
+       {
+        "attempted": 7,
+        "id": "direct",
+        "measured": true,
+        "passed": 5,
+        "total_tokens": 8485
+       },
+       {
+        "attempted": 7,
+        "id": "host_only",
+        "measured": true,
+        "passed": 7,
+        "total_tokens": 11498
+       },
+       {
+        "attempted": 0,
+        "id": "relevant",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 605
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dups",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 976
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dup_one",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 788
+       },
+       {
+        "attempted": 0,
+        "id": "all_but_conflicting",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 4835
+       },
+       {
+        "attempted": 0,
+        "id": "all_skills",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+stale",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 782
+       }
+      ],
+      "chosen_genome": "host_only",
+      "quotient_classes": [
+       [
+        "relevant+dup_one",
+        "relevant+dups"
+       ]
+      ],
+      "selection": {
+       "Baseline": [
+        "direct"
+       ],
+       "Front": [
+        "host_only"
+       ],
+       "Unmeasured": [
+        "relevant",
+        "relevant+dup_one",
+        "relevant+dups"
+       ],
+       "demoted": {
+        "all_skills": "lineage taint",
+        "relevant+stale": "lineage taint"
+       },
+       "slots": {
+        "Baseline": 1,
+        "Front": 6,
+        "Unmeasured": 3
+       }
+      },
+      "tainted": [
+       "all_skills",
+       "relevant+stale"
+      ]
+     },
+     "killed_guards": [
+      "AGENTS:deny:5",
+      "skill:legacy-json-style:deny:1"
+     ]
+    },
+    "t3_bloated_skill_repository_triage": {
+     "arm_selection": {
+      "Baseline": [
+       "direct_baseline"
+      ],
+      "Front": [
+       "pfp_eis_pciv_regulated"
+      ],
+      "Unmeasured": [],
+      "demoted": {
+       "industry_all_skills_and_rules": "dominated by direct baseline",
+       "industry_coder_reviewer_loop": "Pareto-dominated"
+      },
+      "slots": {
+       "Baseline": 1,
+       "Front": 6,
+       "Unmeasured": 3
+      }
+     },
+     "arms": {
+      "direct_baseline": {
+       "calls": 6,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 2,
+       "false_refusal": 0,
+       "provider_wall_ms": 41880,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 6,
+       "spent_microusd": 16634,
+       "total_tokens": 6106
+      },
+      "industry_all_skills_and_rules": {
+       "calls": 6,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 2,
+       "false_refusal": 0,
+       "provider_wall_ms": 41880,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 6,
+       "spent_microusd": 50432,
+       "total_tokens": 39904
+      },
+      "industry_coder_reviewer_loop": {
+       "calls": 12,
+       "correct_refusal": 0,
+       "delivered_correct": 5,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 85350,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 6,
+       "spent_microusd": 104276,
+       "total_tokens": 82796
+      },
+      "pfp_eis_pciv_regulated": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 5,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 47065,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 6,
+       "spent_microusd": 19499,
+       "total_tokens": 7695
+      }
+     },
+     "calibration": {
+      "candidates": [
+       {
+        "attempted": 6,
+        "id": "direct",
+        "measured": true,
+        "passed": 5,
+        "total_tokens": 6106
+       },
+       {
+        "attempted": 6,
+        "id": "host_only",
+        "measured": true,
+        "passed": 6,
+        "total_tokens": 7695
+       },
+       {
+        "attempted": 0,
+        "id": "relevant",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 605
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dups",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 976
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dup_one",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 788
+       },
+       {
+        "attempted": 0,
+        "id": "all_but_conflicting",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 4835
+       },
+       {
+        "attempted": 0,
+        "id": "all_skills",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+stale",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 782
+       }
+      ],
+      "chosen_genome": "host_only",
+      "quotient_classes": [
+       [
+        "relevant+dup_one",
+        "relevant+dups"
+       ]
+      ],
+      "selection": {
+       "Baseline": [
+        "direct"
+       ],
+       "Front": [
+        "host_only"
+       ],
+       "Unmeasured": [
+        "relevant",
+        "relevant+dup_one",
+        "relevant+dups"
+       ],
+       "demoted": {
+        "all_skills": "lineage taint",
+        "relevant+stale": "lineage taint"
+       },
+       "slots": {
+        "Baseline": 1,
+        "Front": 6,
+        "Unmeasured": 3
+       }
+      },
+      "tainted": [
+       "all_skills",
+       "relevant+stale"
+      ]
+     },
+     "killed_guards": [
+      "skill:legacy-json-style:deny:1"
+     ]
+    },
+    "t4_stateful_protocol_synthesis": {
+     "arm_selection": {
+      "Baseline": [
+       "direct_baseline"
+      ],
+      "Front": [
+       "pfp_eis_pciv_regulated"
+      ],
+      "Unmeasured": [],
+      "demoted": {
+       "industry_all_skills_and_rules": "dominated by direct baseline",
+       "industry_coder_reviewer_loop": "Pareto-dominated"
+      },
+      "slots": {
+       "Baseline": 1,
+       "Front": 6,
+       "Unmeasured": 3
+      }
+     },
+     "arms": {
+      "direct_baseline": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 72880,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 26671,
+       "total_tokens": 7983
+      },
+      "industry_all_skills_and_rules": {
+       "calls": 7,
+       "correct_refusal": 0,
+       "delivered_correct": 4,
+       "delivered_wrong": 3,
+       "false_refusal": 0,
+       "provider_wall_ms": 72880,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 66102,
+       "total_tokens": 47414
+      },
+      "industry_coder_reviewer_loop": {
+       "calls": 14,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 150350,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 138700,
+       "total_tokens": 100100
+      },
+      "pfp_eis_pciv_regulated": {
+       "calls": 9,
+       "correct_refusal": 0,
+       "delivered_correct": 6,
+       "delivered_wrong": 1,
+       "false_refusal": 0,
+       "provider_wall_ms": 92190,
+       "refused": 0,
+       "refused_by_budget": 0,
+       "runs": 7,
+       "spent_microusd": 34833,
+       "total_tokens": 11209
+      }
+     },
+     "calibration": {
+      "candidates": [
+       {
+        "attempted": 7,
+        "id": "direct",
+        "measured": true,
+        "passed": 5,
+        "total_tokens": 7983
+       },
+       {
+        "attempted": 7,
+        "id": "host_only",
+        "measured": true,
+        "passed": 7,
+        "total_tokens": 11209
+       },
+       {
+        "attempted": 0,
+        "id": "relevant",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 605
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dups",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 976
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+dup_one",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 788
+       },
+       {
+        "attempted": 0,
+        "id": "all_but_conflicting",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "all_skills",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 5012
+       },
+       {
+        "attempted": 0,
+        "id": "relevant+stale",
+        "measured": false,
+        "passed": 0,
+        "total_tokens": 782
+       }
+      ],
+      "chosen_genome": "host_only",
+      "quotient_classes": [
+       [
+        "all_but_conflicting",
+        "all_skills"
+       ],
+       [
+        "relevant+dup_one",
+        "relevant+dups"
+       ]
+      ],
+      "selection": {
+       "Baseline": [
+        "direct"
+       ],
+       "Front": [
+        "host_only"
+       ],
+       "Unmeasured": [
+        "relevant",
+        "relevant+stale",
+        "relevant+dup_one"
+       ],
+       "demoted": {},
+       "slots": {
+        "Baseline": 1,
+        "Front": 6,
+        "Unmeasured": 3
+       }
+      },
+      "tainted": []
+     },
+     "killed_guards": []
+    }
+   }
+  }
+ },
+ "sim_tariff": {
+  "call_latency_ms": 400,
+  "input_microusd_per_token": 1,
+  "ms_per_output_token": 15,
+  "output_microusd_per_token": 5
+ },
+ "status": "offline_policy_verification_not_live_llm_evidence"
+}
