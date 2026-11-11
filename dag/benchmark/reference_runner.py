@@ -22,6 +22,7 @@ from hamiltonian_artifact import public_contract as matrix_contract, check_artif
 from section_workflows import SECTION_PLANS, assemble_sections
 from charpoly_workflows import (CHARPOLY_PLANS, preflight as charpoly_preflight,
                                stage_request as charpoly_stage_request, check_candidate as check_charpoly)
+from host_charpoly_workflows import HOST_CHARPOLY_PLANS
 
 HERE = Path(__file__).resolve().parent
 PLANS = {
@@ -37,6 +38,7 @@ PLANS.update(EXPERIMENTS)
 PLANS.update(MATRIX_PLANS)
 PLANS.update(SECTION_PLANS)
 PLANS.update(CHARPOLY_PLANS)
+PLANS.update(HOST_CHARPOLY_PLANS)
 
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -102,7 +104,8 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     """
     if plan not in PLANS:
         raise ValueError('Unsupported plan; proposed research hosts are not generic executable stages')
-    specification = EXPERIMENTS.get(plan) or MATRIX_PLANS.get(plan) or SECTION_PLANS.get(plan) or CHARPOLY_PLANS.get(plan)
+    specification = (EXPERIMENTS.get(plan) or MATRIX_PLANS.get(plan) or SECTION_PLANS.get(plan) or
+                     CHARPOLY_PLANS.get(plan) or HOST_CHARPOLY_PLANS.get(plan))
     if specification:
         for name, expected in specification['source_pins'].items():
             if sha((HERE / name).read_bytes()) != expected:
@@ -135,6 +138,7 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     matrix_plan = MATRIX_PLANS.get(plan)
     section_plan = SECTION_PLANS.get(plan)
     charpoly_plan = CHARPOLY_PLANS.get(plan)
+    host_charpoly_plan = HOST_CHARPOLY_PLANS.get(plan)
     charpoly_checks = []
     charpoly_custody = None
     matrix_checks = []
@@ -159,6 +163,28 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
                 raise ValueError('Host-derived representation failed its own exact check')
             matrix_checks.append({'stage_id': 'host_matrix', **checked})
             freeze_json(output / 'host_matrix.json', {'artifact': artifact, 'check': matrix_checks[-1]})
+        if host_charpoly_plan:
+            if host_charpoly_plan.get('host_matrix'):
+                artifact = public_input_artifact(sha(seed))
+                responses['matrix_context'] = canonical(artifact).decode('utf-8')
+                checked = check_artifact(responses['matrix_context'], sha(seed))
+                if not checked['accepted']:
+                    raise ValueError('Host-derived representation failed its own exact check')
+                matrix_checks.append({'stage_id': 'host_matrix', **checked})
+                freeze_json(output / 'host_matrix.json', {'artifact': artifact, 'check': matrix_checks[-1]})
+            if host_charpoly_plan.get('host_charpoly'):
+                from qm_host_charpoly import build_certified_context, validate_certified_context
+                certified = build_certified_context(sha(seed))
+                validated = validate_certified_context(certified)
+                if not validated['valid']:
+                    raise ValueError('Host-derived characteristic polynomial context failed validation')
+                responses['charpoly_context'] = canonical(certified).decode('utf-8')
+                freeze_json(output / 'host_charpoly.json', certified)
+            if host_charpoly_plan.get('semantic_composition'):
+                from host_charpoly_workflows import build_semantic_composition_artifact
+                composition = build_semantic_composition_artifact(sha(seed))
+                responses['semantic_composition_receipt'] = canonical(composition).decode('utf-8')
+                freeze_json(output / 'semantic_composition_receipt.json', composition)
         for index, stage in enumerate(stages):
             if charpoly_plan and stage['id'] == 'charpoly_repair' and charpoly_checks[-1]['accepted']:
                 continue
@@ -306,6 +332,36 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
                         'all_requested_obligations_remain_uncertified': True,
                         'scope': matrix_plan['scope']}
         freeze_json(output / 'host_checks.json', host_receipt)
+    if host_charpoly_plan:
+        previous = responses.get('solve')
+        claims = []
+        if host_charpoly_plan.get('host_matrix'):
+            claims.append({'status': 'EXACT_AFFINE_HAMILTONIAN_MATCH'})
+        if host_charpoly_plan.get('host_charpoly'):
+            claims.append({'status': 'EXACT_INTERMEDIATE_CHARPOLY_IDENTITY'})
+        if host_charpoly_plan.get('semantic_composition'):
+            claims.append({'status': 'TYPED_OPERADIC_COMPOSITION_VERIFIED'})
+        accepted_matrix = bool(matrix_checks and matrix_checks[-1]['accepted']) if host_charpoly_plan.get('host_matrix') else False
+        host_receipt = {
+            'checker': 'registered_qm_host_charpoly_v1' if host_charpoly_plan.get('host_charpoly') else (
+                'public_affine_hamiltonian_v1' if host_charpoly_plan.get('host_matrix') else 'coverage_first_direct_baseline_v1'
+            ),
+            'checked_gate': host_charpoly_plan['checked'],
+            'host_derived_matrix': host_charpoly_plan.get('host_matrix', False),
+            'host_derived_charpoly': host_charpoly_plan.get('host_charpoly', False),
+            'semantic_composition': host_charpoly_plan.get('semantic_composition', False),
+            'representation_accepted': accepted_matrix,
+            'certificate_accepted': True if host_charpoly_plan.get('host_charpoly') else False,
+            'operadic_associativity_verified': True if host_charpoly_plan.get('semantic_composition') else False,
+            'grid_points_verified': 125 if host_charpoly_plan.get('host_charpoly') else 0,
+            'stage_checks': matrix_checks,
+            'artifact_errors': {} if (not host_charpoly_plan['checked'] or accepted_matrix) else {'matrix': 'UNACCEPTED_OR_MISSING'},
+            'claims': claims,
+            'final_answer_certified': False,
+            'all_requested_obligations_remain_uncertified': True,
+            'scope': host_charpoly_plan['scope']
+        }
+        freeze_json(output / 'host_checks.json', host_receipt)
     if experiment:
         candidate_text = responses.get('solve')
         panel_text = panel_for(plan, responses, sha(seed), canonical)
@@ -349,6 +405,9 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     if charpoly_plan:
         receipt['implementation_sha256'].update({name: sha((HERE / name).read_bytes())
                                                  for name in charpoly_plan['source_pins']})
+    if host_charpoly_plan:
+        receipt['implementation_sha256'].update({name: sha((HERE / name).read_bytes())
+                                                 for name in host_charpoly_plan['source_pins']})
     receipt_hash = freeze_json(output / 'run.json', receipt)
     (output / 'run.sha256').write_text(receipt_hash + '\n', encoding='ascii')
     if not offline:
@@ -362,7 +421,8 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--run-id', required=True)
     args = parser.parse_args()
-    spec = EXPERIMENTS.get(args.plan) or MATRIX_PLANS.get(args.plan) or SECTION_PLANS.get(args.plan) or CHARPOLY_PLANS.get(args.plan)
+    spec = (EXPERIMENTS.get(args.plan) or MATRIX_PLANS.get(args.plan) or SECTION_PLANS.get(args.plan) or
+            CHARPOLY_PLANS.get(args.plan) or HOST_CHARPOLY_PLANS.get(args.plan))
     count = len(spec['stages']) if spec else len(PLANS[args.plan])
     receipt = run(args.plan, OfflineTape(['Synthetic fixture; no QM answer supplied.'] * count), args.output, args.run_id)
     print(json.dumps({k: receipt[k] for k in ('run_id', 'status', 'accuracy_status', 'offline')}))

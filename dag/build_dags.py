@@ -306,6 +306,24 @@ def main():
                                            'Full PFP host and EIS/PCIV/OPERADS integration',
                                            'Repeated matched-resource evidence beyond one seed']})
         wedges.append({'from':'R01-I03','to':node_id,'kind':'native_exact_arithmetic_certificate_adaptation_or_ablation'})
+    from host_charpoly_workflows import HOST_CHARPOLY_PLANS
+    for plan, specification in HOST_CHARPOLY_PLANS.items():
+        node_id='EXECUTABLE:'+plan
+        wnodes.append({'id':node_id,'kind':'executable_bounded_research_adaptation','plan':plan,
+                       'source_idea':'R01-I03','implementation':'dag/benchmark/reference_runner.py',
+                       'specification':'dag/benchmark/host_charpoly_workflows.py',
+                       'checker':'dag/benchmark/qm_host_charpoly.py',
+                       'source_pins':specification['source_pins'],
+                       'max_paid_calls':len(specification['stages']),
+                       'max_output_tokens_total':sum(stage['max_output_tokens'] for stage in specification['stages']),
+                       'cost_ceiling_usd':'0.10','billing_scope':'Whole run single call; unknown liability stops dispatch.',
+                       'runnable':True,'evaluated':False,'evaluation_status':'offline_verified_prepared_unexecuted_campaign',
+                       'mathematical_scope':specification['scope'],'checked_gate':specification['checked'],
+                       'independent_review':'dag/reviews/additional_host_charpoly.json',
+                       'open_obligations':['Intermediate certificate does not certify final prose or whole-QM solution',
+                                           'Downstream derivations, projectors, and final answers are uncertified',
+                                           'Repeated matched-resource evidence beyond one seed awaiting campaign authorization']})
+        wedges.append({'from':'R01-I03','to':node_id,'kind':'host_derived_charpoly_coverage_first_adaptation'})
     from section_workflows import SECTION_PLANS
     for plan, specification in SECTION_PLANS.items():
         node_id='CONTROL:'+plan
