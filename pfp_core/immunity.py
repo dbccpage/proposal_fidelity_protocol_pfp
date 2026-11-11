@@ -13,9 +13,16 @@
   yes                     no                         DIAGNOSTIC_OR_NORMALIZE
   no                      yes                        HOLD_OR_REPAIR (host refusal)
   yes                     yes, independent           HOLD_OR_REPAIR (activation)
-  yes                     yes, collapsed             DIAGNOSTIC_OR_NORMALIZE +
-                                                     TWO_SIGNAL_COLLAPSE recorded
+  yes                     yes, collapsed             HOLD_OR_REPAIR (host refusal) +
+                                                     the refusal code recorded
   ======================  =========================  ===========================
+
+  The disposition is monotone in Signal 2: an allowlisted host failure holds
+  the candidate whatever Signal 1 says. A Signal 1 match that cannot be
+  separated from the host evidence only loses its own activation credit; it
+  never downgrades the host's refusal. (Before 2026-11-11 the collapsed row
+  returned DIAGNOSTIC_OR_NORMALIZE, so adding a rule could release a candidate
+  that the host check alone would hold.)
 
   Signal 2 counts only when its observer is in ``HOST_OBSERVERS``; a danger
   signal from any other producer (a model name, ``MODEL``, a detector) is
@@ -106,7 +113,8 @@ def decide(matches: list[Signal1Match], danger: Signal2Danger | None,
         basis = assert_signals_independent(matches, danger, detector_id=MATCHER_ID,
                                            detector_predicates=frozenset(), offsets_are_content=True)
     except SignalIndependenceRefusal as err:
-        return Decision(DIAGNOSTIC, f'second signal refused: {err.detail}', matches, err.code)
+        return Decision(HOLD, f'host predicate refusal: {danger.danger_type} by {danger.observer_id}; '
+                              f'Signal 1 adds no independent activation: {err.detail}', matches, err.code)
     return Decision(HOLD, basis, matches)
 
 
