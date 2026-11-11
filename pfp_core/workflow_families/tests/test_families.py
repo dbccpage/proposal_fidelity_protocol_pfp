@@ -97,3 +97,27 @@ def test_canonical_rejects_floats_as_fractions():
 def test_wiki_pages_and_dag_records_are_current():
     from pfp_core.workflow_families import docs
     assert docs.build(check=True) == []
+
+
+def test_an_unaffordable_call_is_never_dispatched():
+    from pfp_core.workflow_families.base import CallableProposer
+    calls = []
+
+    def fn(prompt):
+        calls.append(prompt)
+        return {'answer': [2, 1]}, Usage(actual_microusd=900)
+    family = REGISTRY['WF7']()
+    bundle, _ = family.fixtures()['solvable_answered']
+    out = family.execute(bundle, budget=new_budget('dear', bundle['task']),
+                         proposer=CallableProposer(fn, quote_microusd=1_000_000))
+    assert calls == [] and out.verdict == REFUSED and out.budget['spent_microusd'] == 0
+
+
+def test_a_short_sealed_answer_is_caught_as_a_whole_token():
+    family = REGISTRY['WF7']()
+    bundle = {'task': {'statement': 'the answer is 42', 'A': [[1]], 'b': [1]}, 'sealed': {'answer': 42},
+              'replies': [{'answer': [1]}]}
+    with pytest.raises(SealedLeakError):
+        family.execute(bundle, budget=new_budget('short', bundle['task']))
+    bundle['task']['statement'] = 'the answer is 421'
+    assert family.execute(bundle, budget=new_budget('ok', bundle['task'])).verdict == 'HOST_CERTIFIED'

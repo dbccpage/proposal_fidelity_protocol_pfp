@@ -328,8 +328,9 @@ class HintedRetraction(BoundedCheckAndRepair):
     Domain: XOR edge labels, as in WF9. Each rejected turn adds a hint built
     only from the host residual and the public graph: the vertex sets of the odd
     fundamental cycles, never an edge to flip. If the residual at turn ``t``
-    equals the residual at ``t - 3`` the loop is stationary and stops with the
-    typed code ``STATIONARY_LOOP``; exhausting the turn cap is refused.
+    equals the residual at ``t - 3`` the proposer is stuck: the run stops and is
+    refused with code ``STATIONARY_LOOP`` and the last hint. Malformed replies
+    never count as a stationary signal; exhausting the turn cap is refused.
     """
     spec = spec_from('WF27', 'Hinted retraction with a stationary-loop detector', 3, ['WF9'], 'WF9',
                      'xor_residual_gate_stationary_loop', 'wf27_hinted_retraction_with_a_stationary_loop_detector')
@@ -363,9 +364,11 @@ class HintedRetraction(BoundedCheckAndRepair):
             if result.accepted:
                 host.record('accepted_within_limit', True, canonical(trail).decode('utf-8'))
                 return certified('REPAIRED' if t else 'ACCEPTED_FIRST_TRY', attempts=t + 1, trail=trail)
-            if t >= self.period and trail[t - self.period]['residual'] == residual:
-                host.record('stationary_residual_repeats', True, canonical(trail).decode('utf-8'))
-                return typed_refusal('STATIONARY_LOOP', turn=t, repeats_turn=t - self.period, residual=residual)
+            earlier = trail[t - self.period]['residual'] if t >= self.period else None
+            if 'malformed' not in residual and earlier == residual:
+                host.record('residual_not_stationary', False, canonical(trail).decode('utf-8'))
+                return refused('STATIONARY_LOOP', turn=t, repeats_turn=t - self.period, residual=residual,
+                               hint=self.hint(task, residual))
             prompt = self.repair_prompt(task, residual)
         host.record('accepted_within_limit', False, canonical(trail).decode('utf-8'))
         return refused('TURN_CAP_EXHAUSTED', attempts=len(trail), trail=trail)
@@ -377,7 +380,9 @@ class HintedRetraction(BoundedCheckAndRepair):
         loop = [{'flip': [3]}, {'flip': [0, 3]}, {'flip': [1, 4]}, {'flip': [4]}]
         return {
             'repaired_after_hint': ({'task': task, 'replies': [{'flip': [3]}, {'flip': [1]}]}, 'HOST_CERTIFIED'),
-            'stationary_loop_stopped': ({'task': task, 'replies': loop + [{'flip': [0]}]}, 'TYPED_REFUSAL'),
+            'repaired_after_three_hints': ({'task': task, 'replies': [*loop[:3], {'flip': [1]}]}, 'HOST_CERTIFIED'),
+            'stationary_loop_stopped': ({'task': task, 'replies': loop + [{'flip': [0]}]}, 'REFUSED'),
+            'empty_replies_are_not_a_stationary_signal': ({'task': task, 'replies': [{}] * 4}, 'REFUSED'),
             'turn_cap_exhausted': ({'task': capped, 'replies': loop}, 'REFUSED'),
             'malformed_repairs_until_cap': ({'task': capped, 'replies': [{'flip': ['1']}, {'flip': [9]}, {}]},
                                             'REFUSED'),

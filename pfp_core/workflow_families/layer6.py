@@ -8,6 +8,7 @@ from ``pfp_core.immunity`` over candidate detector rules.
 """
 from __future__ import annotations
 
+import inspect
 import json
 from collections.abc import Mapping, Sequence
 from fractions import Fraction
@@ -257,7 +258,10 @@ def grade_cycle_duality(item: Mapping[str, Any], raw: str) -> str:
     two always exists, so a correct reply is always gradeable.
     """
     n = as_int(item['n'], 'n')
-    w = {(as_int(u, 'u'), as_int(v, 'v')): as_fraction(c, 'w') for u, v, c in item['edges']}
+    edges = [(as_int(u, 'u'), as_int(v, 'v'), as_fraction(c, 'w')) for u, v, c in item['edges']]
+    lightest: dict[tuple[int, int], Fraction] = {}  # parallel edges: a closed walk may take the lightest
+    for u, v, c in edges:
+        lightest[u, v] = min(c, lightest.get((u, v), c))
     try:
         obj = json.loads(raw)
     except ValueError:
@@ -267,25 +271,21 @@ def grade_cycle_duality(item: Mapping[str, Any], raw: str) -> str:
             phi = [as_fraction(x, 'phi') for x in obj['potential']]
         except ValueError:
             return REFUSED
-        return CERTIFIED if all(phi[v] - phi[u] <= c for (u, v), c in w.items()) else REFUSED
+        if not all(0 <= u < n and 0 <= v < n for u, v, _ in edges):
+            return REFUSED
+        return CERTIFIED if all(phi[v] - phi[u] <= c for u, v, c in edges) else REFUSED
     cyc = obj.get('negative_cycle') if isinstance(obj, dict) else None
     if isinstance(cyc, list) and len(cyc) >= 2 and all(type(x) is int for x in cyc):
         steps = list(zip(cyc, [*cyc[1:], cyc[0]], strict=True))
-        if all(s in w for s in steps) and sum(w[s] for s in steps) < 0:
+        if all(s in lightest for s in steps) and sum(lightest[s] for s in steps) < 0:
             return TYPED_REFUSAL
     return REFUSED
 
 
-def _code_bytes(code: Any) -> bytes:
-    parts = [code.co_code, repr(code.co_names).encode('utf-8')]
-    for c in code.co_consts:
-        parts.append(_code_bytes(c) if hasattr(c, 'co_code') else repr(c).encode('utf-8'))
-    return b'|'.join(parts)
-
-
 def source_pin(fn: Any) -> str:
-    """SHA-256 of a grader's bytecode, names and constants (nested code included): moves when the grader does."""
-    return sha256_bytes(_code_bytes(fn.__code__))
+    """SHA-256 of a grader's source text with LF line endings: stable across Python versions and checkouts."""
+    src = inspect.getsource(fn).replace('\r\n', '\n').replace('\r', '\n')
+    return sha256_bytes(src.encode('utf-8'))
 
 
 GRADERS = {'cycle_duality': grade_cycle_duality}
@@ -351,11 +351,13 @@ class DossierReplayCampaign(WorkflowFamily):
                              'dossier': {'grader': 'cycle_duality', 'source_pins': p, 'cells': cs}}, 'replies': []}
         edited = dict(cells[0], raw_reply='{"potential": [0, 2, 2]}')
         regraded = [cells[0], dict(cells[1], grade=CERTIFIED), cells[2]]
+        parallel = dossier_cell('c4', {'n': 2, 'edges': [[0, 1, -10], [0, 1, 5]]}, '{"potential": [0, 5]}', CERTIFIED)
         return {
             'replay_reproduces_every_grade': (case(cells), CERTIFIED),
             'reply_byte_drifted': (case([edited, *cells[1:]]), REFUSED),
             'grade_not_reproduced': (case(regraded), REFUSED),
             'grader_pin_drifted': (case(cells, {'cycle_duality': '0' * 64}), REFUSED),
+            'parallel_edge_violation_recorded_certified': (case([*cells, parallel]), REFUSED),
         }
 
 
@@ -391,7 +393,6 @@ class ProposalChannelComparison(WorkflowFamily):
         if not (same_checker and same_budget):
             return refused('ARMS_NOT_MATCHED')
         table: dict[str, list[bool]] = {}
-        by_bytes: dict[tuple[int, str], set[str]] = {}
         label_dependent = []
         for arm in arms:
             row = []
@@ -401,12 +402,10 @@ class ProposalChannelComparison(WorkflowFamily):
                 raw = content.get('text') if isinstance(content, Mapping) else None
                 grade = grade_cycle_duality(item, raw) if isinstance(raw, str) else REFUSED
                 ok = grade in (CERTIFIED, TYPED_REFUSAL)
-                by_bytes.setdefault((k, raw if isinstance(raw, str) else ''), set()).add(grade)
                 if isinstance(content, Mapping) and 'accepted' in content and content['accepted'] is not ok:
                     label_dependent.append(f"{arm['channel']}:{k}")
                 row.append(ok)
             table[arm['channel']] = row
-        host.record('same_bytes_same_verdict', all(len(g) == 1 for g in by_bytes.values()), str(len(by_bytes)))
         host.record('accept_set_depends_only_on_bytes', not label_dependent, str(label_dependent))
         a, b = (table[x['channel']] for x in arms[:2])
         return judge(host, 'CHANNELS_COMPARED', accepts={c: sum(r) for c, r in table.items()},
@@ -426,9 +425,11 @@ class ProposalChannelComparison(WorkflowFamily):
                    {'text': '{"negative_cycle": [0, 1, 2]}', 'accepted': True}]
         claimed = [*replies[:3], {'text': '{"negative_cycle": [0, 2]}', 'accepted': True}]
 
-        def case(arms, reps=replies):
-            return {'task': {'statement': 'Answer each weighted digraph item.', 'items': items, 'arms': arms},
+        def case(arms, reps=replies, its=items):
+            return {'task': {'statement': 'Answer each weighted digraph item.', 'items': its, 'arms': arms},
                     'replies': reps}
+        parallel = [{'n': 2, 'edges': [[0, 1, -10], [0, 1, 5]]}]
+        masked = [{'text': '{"potential": [0, 5]}'}, {'text': '{"potential": [0, 5]}', 'accepted': True}]
         return {
             'channels_compared_on_one_checker': (case([arm('prompt'), arm('grammar_mask')]), CERTIFIED),
             'arms_used_different_checkers': (case([arm('prompt'), arm('logit_mask', checker_pin='f' * 64)]), REFUSED),
@@ -436,4 +437,6 @@ class ProposalChannelComparison(WorkflowFamily):
                                                                                           'cap_microusd': 1})]),
                                             REFUSED),
             'channel_label_claims_acceptance': (case([arm('prompt'), arm('grammar_mask')], claimed), REFUSED),
+            'grammar_mask_accepts_parallel_edge_violation': (case([arm('prompt'), arm('grammar_mask')], masked,
+                                                                  parallel), REFUSED),
         }

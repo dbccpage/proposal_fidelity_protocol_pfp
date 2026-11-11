@@ -6,8 +6,9 @@
 
 > Audit a judge run: file hashes, answer-free participant bytes, sealed checker, stdout tags.
 
-The submission carries the participant files, their manifest and the judge run record. The host
-hashes every canonicalised file against the manifest, scans participant bytes and their trivial
+The submission carries the participant files and the judge run record. The host hashes every
+canonicalised file against the host-held manifest in ``sealed`` (a manifest in the reply is
+ignored, so recomputing it after an edit proves nothing), scans participant bytes and their trivial
 decodings for the sealed expected answer, checks the executed checker hash equals the recorded
 hash of the sealed checker source, and checks every stdout line's keyed tag. Leaks, stale
 checkers, edited files and forged stdout lines are refused. ``audit`` is reusable by later gates.
@@ -47,14 +48,15 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF23-"
 | `forged_stdout_line` | REFUSED | REFUSED | `STDOUT_LINES_AUTHENTIC` |
 | `stale_checker_executed` | REFUSED | REFUSED | `EXECUTED_CHECKER_IS_RECORDED` |
 | `file_edited_after_manifest` | REFUSED | REFUSED | `FILE_HASHES_MATCH` |
+| `edited_file_with_self_computed_manifest` | REFUSED | REFUSED | `FILE_HASHES_MATCH` |
 
 ## With a model
 
-`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn)` wraps a local open-weight runner or a provider client; every reply is reserved and settled against one `WholeRunBudget` before the host reads it, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
+`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn, quote_microusd=...)` wraps a local open-weight runner or a provider client. Its upper quote is reserved against one `WholeRunBudget` before the call is made and settled afterwards, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
 
 ## Claim scope
 
-- **Supports:** the host check certifies 1 positive fixture(s) and refuses 5 adversarial fixture(s), deterministically, offline, at zero spend.
+- **Supports:** the host check certifies 1 positive fixture(s) and refuses 6 adversarial fixture(s), deterministically, offline, at zero spend.
 - **Does not support:** any accuracy, cost or time advantage for a model run through this workflow.
 - **Narrowest claim:** on these fixtures, `judge_packet_custody_audit` separates the accepted outcomes from the listed failure modes.
 - **Next test:** a matched local or live campaign of WF23 against WF1 direct on held-out instances of the same family, with equal token and spend caps.

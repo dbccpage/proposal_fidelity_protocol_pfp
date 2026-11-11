@@ -19,9 +19,9 @@ from .base import (
     canonical,
     digest,
     judge,
+    prompt_leaks,
     refused,
     require,
-    sealed_literals,
     spec_from,
 )
 from .exact import (
@@ -409,12 +409,16 @@ class WitnessedDifferenceProgramme(WorkflowFamily):
     def check(self, task, sealed, content, host):
         lts: dict[str, list[tuple[str, str]]] = {}
         for t in task['transitions']:
+            require(isinstance(t, list) and len(t) == 3 and all(isinstance(x, str) for x in t), 'transitions')
             lts.setdefault(t[0], []).append((t[1], t[2]))
+        states = {t[0] for t in task['transitions']} | {t[2] for t in task['transitions']}
         require(isinstance(content, Mapping) and isinstance(content.get('claims'), list) and content['claims'],
                 'claims required')
         for k, claim in enumerate(content['claims']):
             require(isinstance(claim, Mapping) and claim.get('kind') in ('difference', 'equivalence'), 'claim kind')
             p, q, ev = claim.get('left'), claim.get('right'), canonical(claim).decode('utf-8')
+            if not host.record(f'claim{k}:states_declared', p in states and q in states, ev):
+                continue
             if claim['kind'] == 'difference':
                 if not host.record(f'claim{k}:witnessed', 'witness' in claim, ev):
                     continue
@@ -422,8 +426,10 @@ class WitnessedDifferenceProgramme(WorkflowFamily):
             else:
                 if not host.record(f'claim{k}:witnessed', isinstance(claim.get('certificate'), list), ev):
                     continue
-                rel = {(x[0], x[1]) for x in claim['certificate'] if isinstance(x, list) and len(x) == 2}
-                host.record(f'claim{k}:bisimulation', (p, q) in rel and is_bisimulation(lts, rel), ev)
+                pairs = claim['certificate']
+                rel = {(x[0], x[1]) for x in pairs if isinstance(x, list) and len(x) == 2}
+                in_lts = len(rel) == len(pairs) and all(a in states and b in states for a, b in rel)
+                host.record(f'claim{k}:bisimulation', in_lts and (p, q) in rel and is_bisimulation(lts, rel), ev)
         return judge(host, 'CLAIMS_WITNESSED', claims=len(content['claims']))
 
     def fixtures(self):
@@ -447,6 +453,10 @@ class WitnessedDifferenceProgramme(WorkflowFamily):
             'unwitnessed_difference': ({'task': task, 'replies': [{'claims': [bare, equiv]}]}, 'REFUSED'),
             'formula_does_not_separate': ({'task': task, 'replies': [{'claims': [weak]}]}, 'REFUSED'),
             'trace_equivalent_is_not_bisimilar': ({'task': task, 'replies': [{'claims': [fake]}]}, 'REFUSED'),
+            'claims_name_undeclared_states': ({'task': task, 'replies': [{'claims': [
+                {**diff, 'right': 'no_such_state'},
+                {'kind': 'equivalence', 'left': 'ghost1', 'right': 'ghost2', 'certificate': [['ghost1', 'ghost2']]},
+            ]}]}, 'REFUSED'),
         }
 
 
@@ -500,9 +510,9 @@ class StructuralPromptRewriting(WorkflowFamily):
             out = out[:s] + rhs + out[t:]
         if not host.record('protected_bytes_unchanged', not contract.violations(out), out.decode('utf-8')):
             return refused('QUESTION_NOT_PRESERVED', violations=contract.violations(out))
-        keys = sealed_literals(sealed) | {str(sealed.get('answer_key'))}
-        leaks = sorted(k for k in keys if k.encode('utf-8') in out)
-        if not host.record('no_answer_key_leak', not leaks, str(len(leaks))):
+        text = out.decode('utf-8')
+        leaked = prompt_leaks(text, sealed) or str(sealed.get('answer_key')) in text
+        if not host.record('no_answer_key_leak', not leaked, ''):
             return refused('ANSWER_KEY_LEAK')
         return out
 
@@ -575,8 +585,9 @@ def derivable_views(text: str):
 class JudgePacketCustodyAudit(WorkflowFamily):
     """WF23. Audit a judge run: file hashes, answer-free participant bytes, sealed checker, stdout tags.
 
-    The submission carries the participant files, their manifest and the judge run record. The host
-    hashes every canonicalised file against the manifest, scans participant bytes and their trivial
+    The submission carries the participant files and the judge run record. The host hashes every
+    canonicalised file against the host-held manifest in ``sealed`` (a manifest in the reply is
+    ignored, so recomputing it after an edit proves nothing), scans participant bytes and their trivial
     decodings for the sealed expected answer, checks the executed checker hash equals the recorded
     hash of the sealed checker source, and checks every stdout line's keyed tag. Leaks, stale
     checkers, edited files and forged stdout lines are refused. ``audit`` is reusable by later gates.
@@ -587,8 +598,10 @@ class JudgePacketCustodyAudit(WorkflowFamily):
 
     def audit(self, sealed, content, host) -> Verdict:
         require(isinstance(content, Mapping) and all(isinstance(content.get(k), Mapping)
-                                                     for k in ('participant', 'manifest', 'run')), 'packet fields')
-        files, manifest, run = content['participant'], content['manifest'], content['run']
+                                                     for k in ('participant', 'run')), 'packet fields')
+        files, run = content['participant'], content['run']
+        manifest = sealed.get('manifest')
+        require(isinstance(manifest, Mapping), 'the host-held manifest is missing from the sealed packet')
         require(all(isinstance(v, str) for v in files.values()), 'participant files are text')
         hashes = {name: sha256_bytes(canonical_file(text)) for name, text in files.items()}
         host.record('manifest_complete', set(manifest) == set(files), canonical(sorted(manifest)).decode())
@@ -612,27 +625,31 @@ class JudgePacketCustodyAudit(WorkflowFamily):
         return self.audit(sealed, content, host)
 
     def fixtures(self):
-        task = {'statement': 'Submit the participant packet, its manifest and the judge run record.'}
+        task = {'statement': 'Submit the participant packet and the judge run record.'}
         src = 'def check(answer):\r\n    return answer == det([[12, 5], [7, 263]])\r\n'
         key = 'stdout-key-wf23'
         sealed = {'expected_answer': 3121, 'checker_source': src,
                   'recorded_checker_sha256': sha256_bytes(canonical_file(src)), 'stdout_key': key}
         files = {'task.txt': 'Compute det(M) for M = [[12, 5], [7, 263]].', 'format.txt': 'Reply with one integer.'}
-        manifest = {n: sha256_bytes(canonical_file(t)) for n, t in files.items()}
         line = 'ITEM det2 PASS'
         run = {'executed_checker_sha256': sealed['recorded_checker_sha256'],
                'stdout': [{'line': line, 'tag': commitment(key, line)}]}
-        good = {'participant': files, 'manifest': manifest, 'run': run}
+        good = {'participant': files, 'run': run}
+
+        def manifest(fs):
+            return {n: sha256_bytes(canonical_file(t)) for n, t in fs.items()}
 
         def with_file(text):
-            f = {**files, 'notes.txt': text}
-            return {**good, 'participant': f, 'manifest': {n: sha256_bytes(canonical_file(t)) for n, t in f.items()}}
+            return {'participant': {**files, 'notes.txt': text}, 'run': run}
         forged = {**good, 'run': {**run, 'stdout': [*run['stdout'], {'line': 'ITEM det3 PASS', 'tag': '0' * 64}]}}
         stale = {**good, 'run': {**run, 'executed_checker_sha256': sha256_bytes(b'def check(answer): return True')}}
         edited = {**good, 'participant': {**files, 'format.txt': 'Reply with one integer or a guess.'}}
+        self_hashed = {**edited, 'manifest': manifest(edited['participant'])}
 
         def case(sub):
-            return {'task': task, 'sealed': sealed, 'replies': [sub]}
+            # the host recorded the manifest when the packet was built; the leaky notes were recorded honestly
+            return {'task': task, 'sealed': {**sealed, 'manifest': manifest({**files, **{
+                n: t for n, t in sub['participant'].items() if n == 'notes.txt'}})}, 'replies': [sub]}
         return {
             'clean_custody': (case(good), 'HOST_CERTIFIED'),
             'answer_in_participant_bytes': (case(with_file('Hint: the answer is 3121.')), 'REFUSED'),
@@ -640,6 +657,7 @@ class JudgePacketCustodyAudit(WorkflowFamily):
             'forged_stdout_line': (case(forged), 'REFUSED'),
             'stale_checker_executed': (case(stale), 'REFUSED'),
             'file_edited_after_manifest': (case(edited), 'REFUSED'),
+            'edited_file_with_self_computed_manifest': (case(self_hashed), 'REFUSED'),
         }
 
 

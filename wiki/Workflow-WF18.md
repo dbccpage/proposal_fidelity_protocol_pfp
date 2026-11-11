@@ -45,14 +45,15 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF18-"
 | `reply_byte_drifted` | REFUSED | REFUSED | `STORED_BYTES_DRIFTED` |
 | `grade_not_reproduced` | REFUSED | REFUSED | `EVERY_GRADE_REPRODUCES` |
 | `grader_pin_drifted` | REFUSED | REFUSED | `SOURCE_PIN_DRIFT` |
+| `parallel_edge_violation_recorded_certified` | REFUSED | REFUSED | `EVERY_GRADE_REPRODUCES` |
 
 ## With a model
 
-`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn)` wraps a local open-weight runner or a provider client; every reply is reserved and settled against one `WholeRunBudget` before the host reads it, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
+`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn, quote_microusd=...)` wraps a local open-weight runner or a provider client. Its upper quote is reserved against one `WholeRunBudget` before the call is made and settled afterwards, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
 
 ## Claim scope
 
-- **Supports:** the host check certifies 1 positive fixture(s) and refuses 3 adversarial fixture(s), deterministically, offline, at zero spend.
+- **Supports:** the host check certifies 1 positive fixture(s) and refuses 4 adversarial fixture(s), deterministically, offline, at zero spend.
 - **Does not support:** any accuracy, cost or time advantage for a model run through this workflow.
 - **Narrowest claim:** on these fixtures, `dossier_replay_reproduces_grades` separates the accepted outcomes from the listed failure modes.
 - **Next test:** a matched local or live campaign of WF18 against WF1 direct on held-out instances of the same family, with equal token and spend caps.

@@ -6,8 +6,9 @@
 
 > Accept a reply only when every guard in the vector passes.
 
-The reply is a payload (cochain plus potential) and a receipt. The host
-replays the registered verifier and checks: authority effect 'None' with no
+The task fixes the public cochain; the reply supplies only the witness
+potential and a receipt. The host replays the registered verifier on the
+task's own edges and values and checks: payload bound to the task, authority effect 'None' with no
 extra fields, verifier registered, witness bound to the exact payload hash,
 replay hash, replay match, zero defect and a fresh nonce. A failed guard
 becomes residual evidence; self-certifying or escalating receipts are refused.
@@ -45,15 +46,16 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF39-"
 | `authority_escalation` | REFUSED | REFUSED | `AUTHORITY_ESCALATION` |
 | `stale_nonce` | REFUSED | REFUSED | `FRESH_NONCE` |
 | `truthful_nonzero_defect` | REFUSED | REFUSED | `ZERO_DEFECT` |
+| `trivial_self_chosen_payload` | REFUSED | REFUSED | `PAYLOAD_NOT_BOUND_TO_TASK` |
 | `witness_bound_to_other_payload` | REFUSED | REFUSED | `WITNESS_BOUND_TO_PAYLOAD` |
 
 ## With a model
 
-`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn)` wraps a local open-weight runner or a provider client; every reply is reserved and settled against one `WholeRunBudget` before the host reads it, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
+`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn, quote_microusd=...)` wraps a local open-weight runner or a provider client. Its upper quote is reserved against one `WholeRunBudget` before the call is made and settled afterwards, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
 
 ## Claim scope
 
-- **Supports:** the host check certifies 1 positive fixture(s) and refuses 5 adversarial fixture(s), deterministically, offline, at zero spend.
+- **Supports:** the host check certifies 1 positive fixture(s) and refuses 6 adversarial fixture(s), deterministically, offline, at zero spend.
 - **Does not support:** any accuracy, cost or time advantage for a model run through this workflow.
 - **Narrowest claim:** on these fixtures, `authority_guard_vector` separates the accepted outcomes from the listed failure modes.
 - **Next test:** a matched local or live campaign of WF39 against WF1 direct on held-out instances of the same family, with equal token and spend caps.

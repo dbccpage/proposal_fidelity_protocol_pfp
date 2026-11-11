@@ -43,14 +43,15 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF35-"
 | `arms_used_different_checkers` | REFUSED | REFUSED | `ARMS_NOT_MATCHED` |
 | `arms_used_different_budgets` | REFUSED | REFUSED | `ARMS_NOT_MATCHED` |
 | `channel_label_claims_acceptance` | REFUSED | REFUSED | `ACCEPT_SET_DEPENDS_ONLY_ON_BYTES` |
+| `grammar_mask_accepts_parallel_edge_violation` | REFUSED | REFUSED | `ACCEPT_SET_DEPENDS_ONLY_ON_BYTES` |
 
 ## With a model
 
-`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn)` wraps a local open-weight runner or a provider client; every reply is reserved and settled against one `WholeRunBudget` before the host reads it, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
+`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn, quote_microusd=...)` wraps a local open-weight runner or a provider client. Its upper quote is reserved against one `WholeRunBudget` before the call is made and settled afterwards, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
 
 ## Claim scope
 
-- **Supports:** the host check certifies 1 positive fixture(s) and refuses 3 adversarial fixture(s), deterministically, offline, at zero spend.
+- **Supports:** the host check certifies 1 positive fixture(s) and refuses 4 adversarial fixture(s), deterministically, offline, at zero spend.
 - **Does not support:** any accuracy, cost or time advantage for a model run through this workflow.
 - **Narrowest claim:** on these fixtures, `channel_blind_fixed_oracle` separates the accepted outcomes from the listed failure modes.
 - **Next test:** a matched local or live campaign of WF35 against WF1 direct on held-out instances of the same family, with equal token and spend caps.

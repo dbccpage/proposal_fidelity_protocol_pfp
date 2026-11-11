@@ -353,30 +353,37 @@ class PinnedTokenScratchpad(WorkflowFamily):
 class ClaimScopedReceipt(WorkflowFamily):
     """WF32. Admit each atomic claim only through its own checker, bound to its own evidence digest.
 
-    Exact claims name a registered domain checker (the WF13 set) with an input and a
-    witness; quote claims need a declared source and a byte span whose bytes equal the
-    quoted text. Prose, universal and unsupported claims stay ``uncertified_obligations``.
-    The receipt lists admitted(J) with one digest per claim. A reply that lists a claim
-    as admitted outside J, forges a digest, or carries a failing witness is refused.
+    Exact claims cite an input the task declares (with its WF13 domain checker) and give
+    a witness; free text on an exact claim is never admitted with it. Quote claims need a
+    declared source and a non-empty byte span whose bytes equal the quoted text. Prose,
+    universal and unsupported claims stay ``uncertified_obligations``. The receipt lists
+    admitted(J) with one digest per claim. A reply that lists a claim as admitted outside
+    J, forges a digest, cites an undeclared input, or carries a failing witness is refused.
     """
     spec = spec_from('WF32', 'Claim-scoped receipt', 2, ['WF1', 'WF2'], None, 'per_claim_independent_checkers',
                      'wf32_claim_scoped_receipt')
 
     def validate(self, task):
         require(isinstance(task.get('sources', {}), Mapping), 'sources must be an object')
+        inputs = task.get('inputs', {})
+        require(isinstance(inputs, Mapping) and all(
+            isinstance(v, Mapping) and v.get('checker') in DOMAIN_CHECKERS and isinstance(v.get('input'), Mapping)
+            for v in inputs.values()), 'declared inputs need a registered checker and an input object')
         return task
 
     def check_claim(self, task, claim) -> tuple[bool, dict[str, Any]] | None:
         """(accepted, host witness) for a claim a checker covers; None leaves it unadmitted."""
         kind, sources = claim.get('kind'), task.get('sources', {})
-        if kind == 'exact' and claim.get('checker') in DOMAIN_CHECKERS:
-            require(isinstance(claim.get('input'), Mapping), 'exact claim needs an input object')
-            return DOMAIN_CHECKERS[claim['checker']](claim['input'], claim.get('witness'))
+        if kind == 'exact':
+            declared = task.get('inputs', {}).get(claim.get('input_ref'))
+            if declared is None or 'input' in claim or 'checker' in claim:
+                return False, {'undeclared_input': canonical(claim.get('input_ref')).decode('utf-8')}
+            return DOMAIN_CHECKERS[declared['checker']](declared['input'], claim.get('witness'))
         if kind == 'quote' and claim.get('source') in sources and isinstance(claim.get('span'), list):
             require(len(claim['span']) == 2 and isinstance(claim.get('text'), str), 'quote needs [start, end] and text')
             start, end = (as_int(x, 'span') for x in claim['span'])
             data = sources[claim['source']].encode('utf-8')
-            ok = 0 <= start <= end <= len(data) and data[start:end] == claim['text'].encode('utf-8')
+            ok = 0 <= start < end <= len(data) and data[start:end] == claim['text'].encode('utf-8')
             return ok, {'source_sha256': digest(sources[claim['source']]), 'span': [start, end]}
         return None
 
@@ -389,12 +396,15 @@ class ClaimScopedReceipt(WorkflowFamily):
         admitted: dict[str, str] = {}
         unadmitted: list[str] = []
         for claim in content['claims']:
-            checked = self.check_claim(task, claim)
+            kind, checked = claim.get('kind'), self.check_claim(task, claim)
             if checked is None:
                 unadmitted.append(claim['id'])
                 continue
             ok, witness = checked
-            bound = digest({'claim': {k: v for k, v in claim.items() if k != 'evidence_sha256'}, 'host': witness})
+            scope = {k: v for k, v in claim.items() if k != 'evidence_sha256' and (k != 'text' or kind == 'quote')}
+            if kind != 'quote' and 'text' in claim:
+                unadmitted.append(f"{claim['id']}:text")
+            bound = digest({'claim': scope, 'host': witness})
             host.record(f"claim:{claim['id']}", ok, canonical(witness).decode('utf-8'))
             if 'evidence_sha256' in claim:
                 host.record(f"claim:{claim['id']}:digest_bound", claim['evidence_sha256'] == bound, bound)
@@ -413,10 +423,13 @@ class ClaimScopedReceipt(WorkflowFamily):
 
     def fixtures(self):
         text = 'Charges 1, 5, -7, -8 and 9 cancel both U(1) anomalies.'
-        task = {'statement': 'Make atomic claims; give a checker input and witness, or a source span, for each.',
-                'sources': {'note': text}}
-        exact = {'id': 'c1', 'kind': 'exact', 'checker': 'u1_anomaly', 'input': {'charges': [1, 5, -7, -8, 9]},
-                 'witness': {'linear': 0, 'cubic': 0, 'anomaly_free': True}}
+        task = {'statement': 'Make atomic claims; cite a declared input and a witness, or a source span, for each.',
+                'sources': {'note': text},
+                'inputs': {'charges': {'checker': 'u1_anomaly', 'input': {'charges': [1, 5, -7, -8, 9]}}}}
+        free = {'linear': 0, 'cubic': 0, 'anomaly_free': True}
+        exact = {'id': 'c1', 'kind': 'exact', 'input_ref': 'charges', 'witness': free}
+        trivial = {'id': 'c5', 'kind': 'exact', 'checker': 'u1_anomaly', 'input': {'charges': [0]}, 'witness': free,
+                   'text': 'Every chiral theory is anomaly free.'}
         quote = {'id': 'c2', 'kind': 'quote', 'source': 'note', 'span': [0, 26], 'text': text[:26]}
         universal = {'id': 'c3', 'kind': 'universal', 'text': 'Any five charges summing to zero are anomaly free.'}
         prose = {'id': 'c4', 'kind': 'prose', 'text': 'This is the standard example.'}
@@ -429,6 +442,10 @@ class ClaimScopedReceipt(WorkflowFamily):
             'every_claim_checked': (bundle([exact, quote], ['c1', 'c2']), 'HOST_CERTIFIED'),
             'correct_witness_admits_universal': (bundle(claims, ['c1', 'c2', 'c3']), 'REFUSED'),
             'quote_span_off_by_one_byte': (bundle([exact, {**quote, 'span': [1, 27]}], ['c1', 'c2']), 'REFUSED'),
+            'exact_claim_text_stays_open': (bundle([{**exact, 'text': 'So all charge sets cancel.'}], ['c1']),
+                                            'HOST_CERTIFIED'),
+            'empty_quote_admits_nothing': (bundle([{**quote, 'span': [0, 0], 'text': ''}], ['c2']), 'REFUSED'),
+            'self_chosen_trivial_input_carries_prose': (bundle([trivial], ['c5']), 'REFUSED'),
             'forged_evidence_digest': (bundle([{**exact, 'evidence_sha256': '0' * 64}], ['c1']), 'REFUSED'),
             'prose_only_admits_nothing': (bundle([universal, prose], []), 'REFUSED'),
         }

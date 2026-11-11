@@ -238,8 +238,9 @@ RECEIPT_FIELDS = frozenset({'authority_effect', 'verifier_id', 'payload_sha256',
 class AuthorityFirewallGate(WorkflowFamily):
     """WF39. Accept a reply only when every guard in the vector passes.
 
-    The reply is a payload (cochain plus potential) and a receipt. The host
-    replays the registered verifier and checks: authority effect 'None' with no
+    The task fixes the public cochain; the reply supplies only the witness
+    potential and a receipt. The host replays the registered verifier on the
+    task's own edges and values and checks: payload bound to the task, authority effect 'None' with no
     extra fields, verifier registered, witness bound to the exact payload hash,
     replay hash, replay match, zero defect and a fresh nonce. A failed guard
     becomes residual evidence; self-certifying or escalating receipts are refused.
@@ -249,12 +250,18 @@ class AuthorityFirewallGate(WorkflowFamily):
 
     def validate(self, task):
         require(isinstance(task.get('nonce'), str) and isinstance(task.get('registered_verifiers'), list), 'nonce')
+        require(isinstance(task.get('edges'), list) and isinstance(task.get('c'), list), 'public cochain required')
         return task
 
     def check(self, task, sealed, content, host):
         require(isinstance(content, Mapping) and isinstance(content.get('payload'), Mapping)
                 and isinstance(content.get('receipt'), Mapping), 'payload and receipt objects required')
-        payload, receipt = content['payload'], content['receipt']
+        reply_payload, receipt = content['payload'], content['receipt']
+        # Only the witness phi comes from the reply; the cochain is the task's public data.
+        payload = {'edges': task['edges'], 'c': task['c'], 'phi': reply_payload.get('phi')}
+        if not host.record('payload_bound_to_task', set(reply_payload) <= {'edges', 'c', 'phi'} and all(
+                reply_payload.get(k, task[k]) == task[k] for k in ('edges', 'c')), canonical(reply_payload).decode()):
+            return refused('PAYLOAD_NOT_BOUND_TO_TASK', residual_evidence=['payload_bound_to_task'])
         extra = sorted(set(receipt) - RECEIPT_FIELDS)
         if not host.record('authority_effect_none', receipt.get('authority_effect') == AUTHORITY_NONE and not extra,
                            canonical({'effect': receipt.get('authority_effect'), 'extra': extra}).decode()):
@@ -271,10 +278,12 @@ class AuthorityFirewallGate(WorkflowFamily):
         return judge(host, 'ALL_GUARDS_PASS', residual_evidence=host.failed)
 
     def fixtures(self):
-        task = {'statement': 'Return the payload and a receipt from the registered verifier.', 'nonce': 'run-0042',
-                'registered_verifiers': ['exact.cochain_residual.v1']}
         good = {'edges': [[0, 1], [1, 2], [2, 0]], 'c': [1, 1, -2], 'phi': [0, 1, 2]}
-        bad = {**good, 'c': [1, 1, -1]}
+        bad = {**good, 'phi': [0, 1, 3]}
+        trivial = {'edges': [[0, 1]], 'c': [0], 'phi': [0, 0]}
+        task = {'statement': 'Give a potential phi for the public cochain and a receipt from the registered verifier.',
+                'nonce': 'run-0042', 'registered_verifiers': ['exact.cochain_residual.v1'],
+                'edges': good['edges'], 'c': good['c']}
 
         def packet(payload, bound=None, **over):
             replay = _replay_cochain_residual(payload)
@@ -288,6 +297,7 @@ class AuthorityFirewallGate(WorkflowFamily):
             'authority_escalation': (packet(good, authority_effect='Host'), 'REFUSED'),
             'stale_nonce': (packet(good, nonce='run-0041'), 'REFUSED'),
             'truthful_nonzero_defect': (packet(bad), 'REFUSED'),
+            'trivial_self_chosen_payload': (packet(trivial), 'REFUSED'),
             'witness_bound_to_other_payload': (packet(bad, bound=good, claimed={'residual': [0, 0, 0], 'defect': 0}),
                                                'REFUSED'),
         }
@@ -419,15 +429,27 @@ def gate_accepts(gate: Mapping[str, Any], task: Mapping[str, Any], reply: Mappin
     return (len(passed) == len(gate['checks']) if gate['mode'] == 'all' else bool(passed)), passed
 
 
+def _pq(v: Fraction) -> str:
+    return f'{v.numerator}/{v.denominator}'
+
+
+def _wrong_shifts(n: int, x: Sequence[Fraction]) -> list[list[Fraction]]:
+    """Offsets giving wrong answers in the valid p/q form: each coordinate off, all off, all zero, a half step."""
+    out = [[Fraction(int(i == j)) for j in range(n)] for i in range(n)]
+    out += [[Fraction(1)] * n, [-v for v in x], [Fraction(1, 2)] * n]
+    return [d for d in out if any(d)]
+
+
 @register
 class GateHonestyAudit(WorkflowFamily):
     """WF43. Replay answer-free probes against a proposed gate and refuse a gate that lets one pass.
 
     The proposer writes a gate in a small check language for the task
     ``A x = b``. The host replays an empty object, constant verdicts and
-    refusals, a templated receipt, keyword bait, a wrong answer and an input
-    replacement. Honest means no probe passes and the true solution does; every
-    probe verdict is traced to the checks that produced it.
+    refusals, a templated receipt, keyword bait, wrong answers in the same p/q
+    form as the true one and an input replacement. Honest means the gate checks
+    the task itself, no probe passes and the true solution does; every probe
+    verdict is traced to the checks that produced it.
     """
     spec = spec_from('WF43', 'Gate-honesty and answer-free leak audit', 5, ['WF23'], None,
                      'answer_free_probe_replay', 'wf43_gate_honesty_and_answer_free_leak_audit')
@@ -457,13 +479,17 @@ class GateHonestyAudit(WorkflowFamily):
             'constant_refusal': {'refusal': 'UNRESOLVED_INCONSISTENT'},
             'templated_receipt': {'receipt': {'checker': 'exact', 'sha256': '0' * 64}, 'status': 'solved'},
             'keyword_bait': {'status': 'solved', 'note': 'verified correct answer'},
-            'wrong_answer': {'answer': [f'{v + 1}' for v in x]},
+            **{f'wrong_answer_{k}': {'answer': [_pq(v + d) for v, d in zip(x, shift, strict=True)]}
+               for k, shift in enumerate(_wrong_shifts(len(x), x))},
             'input_replacement': {'A': [[1]], 'b': [1], 'answer': [1]},
         }
         trace = {name: gate_accepts(gate, task, p) for name, p in probes.items()}
         leaked = {name: ops for name, (ok, ops) in trace.items() if ok}
         host.record('no_answer_free_reply_passes', not leaked, canonical(leaked).decode())
         host.record('accepts_true_solution', gate_accepts(gate, task, valid)[0], str(gate['checks']))
+        ops = [ch[0] for ch in gate['checks']]
+        host.record('gate_verifies_task', 'solves_task' in ops if gate['mode'] == 'all'
+                    else all(op == 'solves_task' for op in ops), str(ops))
         return judge(host, 'GATE_HONEST', leaked=leaked, probes=len(probes))
 
     def fixtures(self):
@@ -478,6 +504,7 @@ class GateHonestyAudit(WorkflowFamily):
             'receipt_or_answer': (gate('any', ['solves_task'], ['has_field', 'receipt']), 'REFUSED'),
             'input_replacement_gate': (gate('all', ['solves_own']), 'REFUSED'),
             'constant_reject_gate': (gate('all', ['field_equals', 'status', 'never']), 'REFUSED'),
+            'slash_keyword_gate': (gate('all', ['has_field', 'answer'], ['keyword', 'answer', '/']), 'REFUSED'),
         }
 
 

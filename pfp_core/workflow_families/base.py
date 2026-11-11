@@ -29,6 +29,7 @@ run passes a ``proposer`` instead. Nothing in ``sealed`` may reach a prompt.
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from fractions import Fraction
@@ -121,29 +122,39 @@ class Proposer(Protocol):
 
 
 class FixtureProposer:
-    """Replays fixture replies in order; returns None when they run out."""
+    """Replays fixture replies in order; returns None when they run out.
+
+    Its upper quote is the largest quote among its replies, so a priced fixture
+    is refused by the budget before anything is read.
+    """
 
     def __init__(self, replies: Iterable[Any]):
-        self._replies = list(replies)
+        self._replies = [r if isinstance(r, Proposal) else Proposal(r) for r in replies]
         self._next = 0
+        self.quote_microusd = max((r.usage.quote_microusd for r in self._replies), default=0)
 
     def propose(self, request: ProposalRequest) -> Proposal | None:  # noqa: ARG002
         if self._next >= len(self._replies):
             return None
         reply = self._replies[self._next]
         self._next += 1
-        return reply if isinstance(reply, Proposal) else Proposal(reply)
+        return reply
 
 
 class CallableProposer:
-    """Adapter for a live or local open-weight model: ``fn(prompt) -> (text, Usage)``.
+    """Adapter for a live or local open-weight model: ``fn(prompt) -> (content, Usage)``.
 
+    ``quote_microusd`` is the honest upper cost of one call. The session reserves
+    it before ``fn`` runs, so a call the budget cannot cover is never dispatched.
     The adapter is how ``OpenWeightMechanismRunnerV1`` or a provider client is
     plugged in. No adapter in this package makes a network call.
     """
 
-    def __init__(self, fn: Callable[[str], tuple[Any, Usage]], source: str = 'local'):
+    def __init__(self, fn: Callable[[str], tuple[Any, Usage]], quote_microusd: int, source: str = 'local'):
+        if type(quote_microusd) is not int or quote_microusd < 0:
+            raise ValueError('quote_microusd must be a nonnegative int')
         self.fn = fn
+        self.quote_microusd = quote_microusd
         self.source = source
 
     def propose(self, request: ProposalRequest) -> Proposal | None:
@@ -155,25 +166,48 @@ class SealedLeakError(RuntimeError):
     """A prompt contained a sealed literal; the run must not dispatch."""
 
 
-def sealed_literals(sealed: Any) -> set[str]:
-    """String forms of every scalar in ``sealed`` that is long enough to be a leak."""
-    out: set[str] = set()
+ANSWER_KEYS = frozenset({'answer', 'answers', 'expected', 'expected_answer', 'solution', 'key', 'answer_key'})
 
-    def walk(v: Any) -> None:
+
+def sealed_literals(sealed: Any) -> tuple[set[str], set[str]]:
+    """(substrings, whole tokens) that must not occur in a prompt.
+
+    Any sealed scalar of four or more characters is a substring leak. A scalar
+    under an answer-like key is a leak at any length, matched as a whole token
+    so that a short answer such as ``42`` is still caught.
+    """
+    substrings: set[str] = set()
+    tokens: set[str] = set()
+
+    def walk(v: Any, answer: bool) -> None:
         if isinstance(v, Mapping):
-            for x in v.values():
-                walk(x)
+            for k, x in v.items():
+                walk(x, answer or str(k).lower() in ANSWER_KEYS)
         elif isinstance(v, (list, tuple, set, frozenset)):
             for x in v:
-                walk(x)
+                walk(x, answer)
         elif isinstance(v, bool) or v is None:
             return
         else:
             s = canonical(v).decode('utf-8').strip('"')
+            if answer and s:
+                tokens.add(s)
             if len(s) >= 4:
-                out.add(s)
-    walk(sealed)
-    return out
+                substrings.add(s)
+    walk(sealed, False)
+    return substrings, tokens
+
+
+def _leaks(prompt: str, substrings: set[str], tokens: set[str]) -> bool:
+    if any(s in prompt for s in substrings):
+        return True
+    words = set(re.findall(r'[^\s,:;\[\]{}()"\']+', prompt))
+    return bool(tokens & words)
+
+
+def prompt_leaks(prompt: str, sealed: Any) -> bool:
+    """True when ``prompt`` would be refused by the session's sealed-leak guard."""
+    return _leaks(prompt, *sealed_literals(sealed))
 
 
 class Session:
@@ -187,22 +221,35 @@ class Session:
         self.budget = budget
         self.proposer = proposer
         self.transcript: list[dict[str, Any]] = []
-        self._leak_literals = sealed_literals(sealed)
+        self._leak_substrings, self._leak_tokens = sealed_literals(sealed)
 
     def ask(self, stage: str, prompt: str, **context: Any) -> Proposal | None:
-        """One proposal, charged to the run. None means no reply or a budget refusal."""
-        leaked = sorted(s for s in self._leak_literals if s in prompt)
-        if leaked:
+        """One proposal, charged to the run. None means no reply or a budget refusal.
+
+        The proposer's upper quote is reserved before dispatch; a call the budget
+        cannot cover is never made. The actual charge is settled afterwards, and
+        an overrun blocks the run.
+        """
+        if _leaks(prompt, self._leak_substrings, self._leak_tokens):
             raise SealedLeakError(f'{self.spec.wf_id}:{stage} prompt contains sealed literal(s)')
         request = ProposalRequest(self.spec.wf_id, stage, prompt, context)
         request_digest = sha256_hex(prompt)
+        label = f'{self.spec.wf_id}:{stage}'
+        quote = getattr(self.proposer, 'quote_microusd', 0)
+        call_id = self.budget.reserve(label, request_digest, quote)
+        if call_id is None:
+            self.transcript.append({'stage': stage, 'request_sha256': request_digest, 'reply': 'BUDGET_REFUSED'})
+            return None
         reply = self.proposer.propose(request)
         if reply is None:
+            if quote:
+                self.budget.hold_call(label, call_id, 'no reply from a priced proposer')
+            else:
+                self.budget.settle(label, call_id, 0, 0, 0)
             self.transcript.append({'stage': stage, 'request_sha256': request_digest, 'reply': None})
             return None
         u = reply.usage
-        if not self.budget.charge(f'{self.spec.wf_id}:{stage}', request_digest, u.quote_microusd,
-                                  u.actual_microusd, u.input_tokens, u.output_tokens, u.wall_ms):
+        if not self.budget.settle(label, call_id, u.actual_microusd, u.input_tokens, u.output_tokens, u.wall_ms):
             self.transcript.append({'stage': stage, 'request_sha256': request_digest, 'reply': 'BUDGET_REFUSED'})
             return None
         self.transcript.append({'stage': stage, 'request_sha256': request_digest,

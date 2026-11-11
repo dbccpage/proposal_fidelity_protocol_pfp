@@ -37,6 +37,7 @@ from .layer6 import (
     CLEAN,
     DANGER_KIND,
     EPITOPES,
+    HOST_OBSERVER,
     SELF_PANEL,
     ImmuneFailureClassification,
     _parse_coefficients,
@@ -412,9 +413,10 @@ class DetectorAdequacyTwoSignal(WorkflowFamily):
     Domain: the WF14 polynomial replies for fixed roots. The submission must carry
     positive, negative, collision and metamorphic cases and one representative per
     epitope class, so detector and host classifier agree on a class-representative
-    set. The host also requires zero hits on the sealed self panel and an
-    allowlisted Signal 2 observer distinct from the matcher; a pattern alone stays
-    diagnostic. It refuses missing classes, self hits and inconsistent rewrites.
+    set. The host also requires zero hits on the sealed self panel and Signal 2
+    from its own classifier under a host-assigned observer; a reply that names a
+    danger observer is refused, so a pattern alone stays diagnostic. It also
+    refuses missing classes, self hits and inconsistent rewrites.
     """
     spec = spec_from('WF41', 'Detector adequacy and two-signal admission', 7, ['WF14'], 'WF14',
                      'detector_calibration_completeness', 'wf41_detector_adequacy_and_two_signal_admission')
@@ -457,10 +459,13 @@ class DetectorAdequacyTwoSignal(WorkflowFamily):
         host.record('detector_equals_host_on_representatives',
                     all(cls(t) == k and fires(t) == (k == target) for k, t in reps.items()), str(len(reps)))
         host.record('zero_self_panel_hits', not screen_rules([rule], panel)[1], str(len(panel)))
-        observer = content.get('signal2_observer', '')
-        held = [decide(signal1(t, [rule]), host_danger(DANGER_KIND, str(observer), t), HOST_OBSERVERS) for t in pos]
+        named = sorted(k for k in content if 'observer' in str(k) or 'danger' in str(k))
+        host.record('observer_assigned_by_host', not named, str(named))
+        fired = [t for t in [*pos, *reps.values(), *(x for p in meta for x in p)] if fires(t)]
+        held = [decide(signal1(t, [rule]), None if cls(t) == CLEAN else host_danger(DANGER_KIND, HOST_OBSERVER, t),
+                       HOST_OBSERVERS) for t in fired]
         host.record('two_independent_signals', all(d.disposition == HOLD and d.refusal_code is None for d in held),
-                    str([d.refusal_code for d in held]))
+                    str([d.disposition for d in held]))
         degrees = {len(_parse_coefficients(t) or []) - 1 for t in panel}
         return judge(host, 'DETECTOR_ADMITTED', rule=rule.rule_id,
                      self_panel={'size': len(panel), 'distinct_degrees': len(degrees)})
@@ -476,9 +481,9 @@ class DetectorAdequacyTwoSignal(WorkflowFamily):
                'collision': [text([2, -6, 4]), text([1, -3, 21])],
                'metamorphic': [[text([1, '-3/1', 2]), '{"coefficients":[1,"-3/1",2]}']], 'representatives': reps}
 
-        def case(pattern='/1"', observer='host.contract_check', calibration=cal):
+        def case(pattern='/1"', calibration=cal, **extra):
             reply = {'rule': {'rule_id': 'denominator_one', 'target_epitope': 'RATIONAL_NONCANONICAL',
-                              'pattern': pattern}, 'calibration': calibration, 'signal2_observer': observer}
+                              'pattern': pattern}, 'calibration': calibration, **extra}
             return {'task': task, 'sealed': {'self_panel': SELF_PANEL}, 'replies': [reply]}
         partial = {**cal, 'representatives': {k: v for k, v in reps.items() if k != 'SIGN_MISMATCH'}}
         return {
@@ -486,5 +491,6 @@ class DetectorAdequacyTwoSignal(WorkflowFamily):
             'missing_class_representative': (case(calibration=partial), REFUSED),
             'fires_on_sealed_self_panel': (case(pattern='/'), REFUSED),
             'whitespace_rewrite_changes_firing': (case(pattern=', "-3/1"'), REFUSED),
-            'pattern_alone_reported_as_danger': (case(observer='DETECTOR'), REFUSED),
+            'pattern_alone_reported_as_danger': (case(signal2_observer='DETECTOR'), REFUSED),
+            'reply_names_allowlisted_observer': (case(signal2_observer='host.contract_check'), REFUSED),
         }

@@ -9,8 +9,9 @@
 Domain: XOR edge labels, as in WF9. Each rejected turn adds a hint built
 only from the host residual and the public graph: the vertex sets of the odd
 fundamental cycles, never an edge to flip. If the residual at turn ``t``
-equals the residual at ``t - 3`` the loop is stationary and stops with the
-typed code ``STATIONARY_LOOP``; exhausting the turn cap is refused.
+equals the residual at ``t - 3`` the proposer is stuck: the run stops and is
+refused with code ``STATIONARY_LOOP`` and the last hint. Malformed replies
+never count as a stationary signal; exhausting the turn cap is refused.
 
 ## Procedure
 
@@ -41,17 +42,19 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF27-"
 | Fixture | Expected | Observed | Code |
 | --- | --- | --- | --- |
 | `repaired_after_hint` | HOST_CERTIFIED | HOST_CERTIFIED | `REPAIRED` |
-| `stationary_loop_stopped` | TYPED_REFUSAL | TYPED_REFUSAL | `STATIONARY_LOOP` |
+| `repaired_after_three_hints` | HOST_CERTIFIED | HOST_CERTIFIED | `REPAIRED` |
+| `stationary_loop_stopped` | REFUSED | REFUSED | `STATIONARY_LOOP` |
+| `empty_replies_are_not_a_stationary_signal` | REFUSED | REFUSED | `TURN_CAP_EXHAUSTED` |
 | `turn_cap_exhausted` | REFUSED | REFUSED | `TURN_CAP_EXHAUSTED` |
 | `malformed_repairs_until_cap` | REFUSED | REFUSED | `TURN_CAP_EXHAUSTED` |
 
 ## With a model
 
-`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn)` wraps a local open-weight runner or a provider client; every reply is reserved and settled against one `WholeRunBudget` before the host reads it, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
+`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn, quote_microusd=...)` wraps a local open-weight runner or a provider client. Its upper quote is reserved against one `WholeRunBudget` before the call is made and settled afterwards, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
 
 ## Claim scope
 
-- **Supports:** the host check certifies 2 positive fixture(s) and refuses 2 adversarial fixture(s), deterministically, offline, at zero spend.
+- **Supports:** the host check certifies 2 positive fixture(s) and refuses 4 adversarial fixture(s), deterministically, offline, at zero spend.
 - **Does not support:** any accuracy, cost or time advantage for a model run through this workflow.
 - **Narrowest claim:** on these fixtures, `xor_residual_gate_stationary_loop` separates the accepted outcomes from the listed failure modes.
 - **Next test:** a matched local or live campaign of WF27 against WF1 direct on held-out instances of the same family, with equal token and spend caps.

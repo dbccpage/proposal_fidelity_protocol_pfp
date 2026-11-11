@@ -9,9 +9,10 @@
 Domain: the WF14 polynomial replies for fixed roots. The submission must carry
 positive, negative, collision and metamorphic cases and one representative per
 epitope class, so detector and host classifier agree on a class-representative
-set. The host also requires zero hits on the sealed self panel and an
-allowlisted Signal 2 observer distinct from the matcher; a pattern alone stays
-diagnostic. It refuses missing classes, self hits and inconsistent rewrites.
+set. The host also requires zero hits on the sealed self panel and Signal 2
+from its own classifier under a host-assigned observer; a reply that names a
+danger observer is refused, so a pattern alone stays diagnostic. It also
+refuses missing classes, self hits and inconsistent rewrites.
 
 ## Procedure
 
@@ -45,15 +46,16 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF41-"
 | `missing_class_representative` | REFUSED | REFUSED | `ONE_REPRESENTATIVE_PER_CLASS` |
 | `fires_on_sealed_self_panel` | REFUSED | REFUSED | `ZERO_SELF_PANEL_HITS` |
 | `whitespace_rewrite_changes_firing` | REFUSED | REFUSED | `METAMORPHIC_CONSISTENT` |
-| `pattern_alone_reported_as_danger` | REFUSED | REFUSED | `TWO_INDEPENDENT_SIGNALS` |
+| `pattern_alone_reported_as_danger` | REFUSED | REFUSED | `OBSERVER_ASSIGNED_BY_HOST` |
+| `reply_names_allowlisted_observer` | REFUSED | REFUSED | `OBSERVER_ASSIGNED_BY_HOST` |
 
 ## With a model
 
-`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn)` wraps a local open-weight runner or a provider client; every reply is reserved and settled against one `WholeRunBudget` before the host reads it, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
+`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn, quote_microusd=...)` wraps a local open-weight runner or a provider client. Its upper quote is reserved against one `WholeRunBudget` before the call is made and settled afterwards, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
 
 ## Claim scope
 
-- **Supports:** the host check certifies 1 positive fixture(s) and refuses 4 adversarial fixture(s), deterministically, offline, at zero spend.
+- **Supports:** the host check certifies 1 positive fixture(s) and refuses 5 adversarial fixture(s), deterministically, offline, at zero spend.
 - **Does not support:** any accuracy, cost or time advantage for a model run through this workflow.
 - **Narrowest claim:** on these fixtures, `detector_calibration_completeness` separates the accepted outcomes from the listed failure modes.
 - **Next test:** a matched local or live campaign of WF41 against WF1 direct on held-out instances of the same family, with equal token and spend caps.

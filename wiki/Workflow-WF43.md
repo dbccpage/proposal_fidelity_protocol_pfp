@@ -8,9 +8,10 @@
 
 The proposer writes a gate in a small check language for the task
 ``A x = b``. The host replays an empty object, constant verdicts and
-refusals, a templated receipt, keyword bait, a wrong answer and an input
-replacement. Honest means no probe passes and the true solution does; every
-probe verdict is traced to the checks that produced it.
+refusals, a templated receipt, keyword bait, wrong answers in the same p/q
+form as the true one and an input replacement. Honest means the gate checks
+the task itself, no probe passes and the true solution does; every probe
+verdict is traced to the checks that produced it.
 
 ## Procedure
 
@@ -44,14 +45,15 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF43-"
 | `receipt_or_answer` | REFUSED | REFUSED | `NO_ANSWER_FREE_REPLY_PASSES` |
 | `input_replacement_gate` | REFUSED | REFUSED | `NO_ANSWER_FREE_REPLY_PASSES` |
 | `constant_reject_gate` | REFUSED | REFUSED | `ACCEPTS_TRUE_SOLUTION` |
+| `slash_keyword_gate` | REFUSED | REFUSED | `NO_ANSWER_FREE_REPLY_PASSES` |
 
 ## With a model
 
-`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn)` wraps a local open-weight runner or a provider client; every reply is reserved and settled against one `WholeRunBudget` before the host reads it, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
+`execute(bundle, budget=..., proposer=...)` takes any proposer. `CallableProposer(fn, quote_microusd=...)` wraps a local open-weight runner or a provider client. Its upper quote is reserved against one `WholeRunBudget` before the call is made and settled afterwards, and a prompt that contains a sealed value is refused before dispatch. No live or local model run of this family is recorded yet.
 
 ## Claim scope
 
-- **Supports:** the host check certifies 1 positive fixture(s) and refuses 4 adversarial fixture(s), deterministically, offline, at zero spend.
+- **Supports:** the host check certifies 1 positive fixture(s) and refuses 5 adversarial fixture(s), deterministically, offline, at zero spend.
 - **Does not support:** any accuracy, cost or time advantage for a model run through this workflow.
 - **Narrowest claim:** on these fixtures, `answer_free_probe_replay` separates the accepted outcomes from the listed failure modes.
 - **Next test:** a matched local or live campaign of WF43 against WF1 direct on held-out instances of the same family, with equal token and spend caps.
