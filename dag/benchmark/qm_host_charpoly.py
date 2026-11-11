@@ -53,6 +53,7 @@ ROOT = HERE.parents[1]
 
 # Canonical constants and specifications
 SCHEMA = "pfp.qm-host-charpoly.certified-context.v1"
+COMPACT_CHAR_BUDGET = 1300  # raised from 1,200 to carry the native receipt digest
 COMPACT_SCHEMA = "pfp.qm-host-charpoly.compact-certificate.v1"
 CANDIDATE_SCHEMA = "pfp.qm-affine-charpoly-candidate.v1"
 SOLVER_CONTEXT_SCHEMA = "pfp.charpoly-workflow.solver-context.v1"
@@ -107,6 +108,7 @@ FAILURE_STATES = {
     "PROMPT_INJECTION_DETECTED": "Untrusted prompt injection pattern detected in artifact metadata or context.",
     "NONCOMMUTING_SUBSTITUTION": "Parameters were substituted in non-standard order or non-commuting form.",
     "FORGED_CERTIFICATE": "Artifact claims certification without authentic native sidecar verification.",
+    "MISSING_NATIVE_EVIDENCE": "No native verification receipt backs the claimed certification, or it could not be re-executed.",
 }
 
 # Prompt injection signature patterns
@@ -713,6 +715,29 @@ def check_provenance_pins() -> dict[str, str]:
     return hashes
 
 
+def receipt_digest(receipt: dict[str, Any]) -> str:
+    """Canonical SHA-256 of a native verification receipt."""
+    return hashlib.sha256(json.dumps(receipt, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+def native_candidate_sha256(normalized_coefficients: list[list[dict[str, Any]]],
+                            seed_hash: str = SUPPORTED_SEED_SHA256) -> str:
+    """The candidate digest the native receipt binds for these coefficients (recomputed, not trusted)."""
+    public = bridge.prepare_public(seed_hash)["payload"]["native_public_input"]
+    assertion = sidecar.assertion_text(normalized_coefficients)
+    assertion_bytes = assertion.encode("utf-8")
+    candidate = {
+        "schema": CANDIDATE_SCHEMA,
+        "public_input_sha256": sidecar.digest(public),
+        "obligation_id": public["obligation_id"],
+        "answer_sha256": hashlib.sha256(assertion_bytes).hexdigest(),
+        "assertion_span": [0, len(assertion_bytes)],
+        "assertion_text": assertion,
+        "coefficients": normalized_coefficients,
+    }
+    return sidecar.digest(candidate)
+
+
 def verify_via_native_sidecar(
     normalized_coefficients: list[list[dict[str, Any]]],
     seed_hash: str = SUPPORTED_SEED_SHA256,
@@ -834,14 +859,22 @@ def build_compact_solver_context(
     seed_hash: str = SUPPORTED_SEED_SHA256,
     artifact_input: str | dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Build compact serialized solver context under schema pfp.qm-host-charpoly.compact-certificate.v1.
+    """Project verified evidence into the compact solver context
+    (schema pfp.qm-host-charpoly.compact-certificate.v1, canonical length <= COMPACT_CHAR_BUDGET).
 
-    Contains standard descending degree polynomial representation, public Hamiltonian matrix,
-    concise typed metadata (carrier Q, degree bounds, grid fingerprint), and explicit limitation notice.
-    Guarantees serialized canonical length <= 1,200 characters (saving >70% tokens).
+    The native verification fields are copied from a receipt produced by an actual
+    native run: either the given full ``certified_context`` (which must carry its
+    receipt), or a full context built here first. Without a native receipt this
+    refuses (``MISSING_NATIVE_EVIDENCE`` or the native refusal) instead of emitting
+    ``CERTIFIED_IDENTITY``.
     """
     if seed_hash != SUPPORTED_SEED_SHA256:
         raise HostCharpolyRefusalError("UNREGISTERED_SEED")
+    if certified_context is None:
+        certified_context = build_certified_context(seed_hash, artifact_input, compact=False)
+    receipt = certified_context.get("native_receipt") if isinstance(certified_context, dict) else None
+    if not isinstance(receipt, dict) or receipt.get("status") != "CERTIFIED_IDENTITY":
+        raise HostCharpolyRefusalError("MISSING_NATIVE_EVIDENCE", "compact projection needs a certified native receipt")
 
     matrices = admit_public_matrices(seed_hash, artifact_input)
     poly = derive_charpoly_polynomial(matrices)
@@ -861,8 +894,9 @@ def build_compact_solver_context(
             "degree_bounds": {"lambda": DEGREE_BOUND_LAMBDA, "parameters": DEGREE_BOUND_PER_VARIABLE},
         },
         "native_verification": {
-            "status": "CERTIFIED_IDENTITY",
-            "grid_points_verified": GRID_POINTS,
+            "status": receipt["status"],
+            "grid_points_verified": receipt.get("grid_points"),
+            "receipt_sha256": receipt_digest(receipt),
         },
         "public_hamiltonian": {
             "basis": list(BASIS),
@@ -881,7 +915,7 @@ def build_compact_certificate(
     seed_hash: str = SUPPORTED_SEED_SHA256,
     artifact_input: str | dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Alias for building the compact certificate."""
+    """Compact certificate: native verification runs first, then the result is projected."""
     return build_compact_solver_context(None, seed_hash, artifact_input)
 
 
@@ -896,17 +930,16 @@ def build_certified_context(
     (schema pfp.qm-host-charpoly.compact-certificate.v1, <= 1,200 characters).
     When compact=False, returns the complete artifact without internal failure_states.
     """
-    if compact:
-        check_provenance_pins()
-        return build_compact_certificate(seed_hash, artifact_input)
-
     source_hashes = check_provenance_pins()
     derived = derive_host_charpoly(seed_hash, artifact_input)
     coefficients = derived["normalized_coefficients"]
 
+    # Native verification happens before any certificate is written, on both paths.
     native_info = verify_via_native_sidecar(coefficients, seed_hash)
-
-    compact_cert = build_compact_certificate(seed_hash, artifact_input)
+    evidence = {"native_receipt": native_info["native_receipt"]}
+    compact_cert = build_compact_solver_context(evidence, seed_hash, artifact_input)
+    if compact:
+        return compact_cert
 
     solver_context = {
         "schema": SOLVER_CONTEXT_SCHEMA,
@@ -951,13 +984,13 @@ def build_certified_context(
             "transformations": derived["wire_receipt"]["transformations"],
         },
         "native_verification": {
-            "status": "CERTIFIED_IDENTITY",
+            "status": native_info["native_receipt"]["status"],
             "grid_points_verified": native_info["grid_points"],
             "public_packet_sha256": native_info["public_packet_sha256"],
-            "native_receipt_digest": hashlib.sha256(
-                json.dumps(native_info["native_receipt"], sort_keys=True).encode("utf-8")
-            ).hexdigest(),
+            "native_receipt_digest": receipt_digest(native_info["native_receipt"]),
+            "polynomial_sha256": derived["normalized_sha256"],
         },
+        "native_receipt": native_info["native_receipt"],
         "solver_context": solver_context,
         "limitations": {
             "certified_scope": [CLAIM_SCOPE],
@@ -971,8 +1004,55 @@ def build_certified_context(
     }
 
 
-def validate_certified_context(context_input: str | dict[str, Any]) -> dict[str, Any]:
-    """Strictly validate a certified context artifact, enforcing limitations and provenance."""
+def _verify_native_evidence(context: dict[str, Any], schema: str, seed_hash: str, reexecute_native: bool) -> dict:
+    """Check that the claimed native verification is backed by a receipt bound to the host polynomial.
+
+    The polynomial is re-derived here (exact Leibniz/Laplace determinant, independent of
+    the artifact). A full context must carry its native receipt; the receipt must bind
+    that polynomial's candidate digest and the admitted public input. With
+    ``reexecute_native`` (default) the native sidecar is run again on the re-derived
+    coefficients and must reproduce the claimed receipt digest exactly; if it cannot
+    run, validation refuses. A compact certificate carries only the receipt digest,
+    so it can be validated only by re-execution.
+    """
+    native = context["native_verification"]
+    derived = derive_host_charpoly(seed_hash)
+    claimed_digest = native.get("native_receipt_digest" if schema == SCHEMA else "receipt_sha256")
+    if not isinstance(claimed_digest, str) or not re.fullmatch(r"[0-9a-f]{64}", claimed_digest):
+        raise HostCharpolyRefusalError("MISSING_NATIVE_EVIDENCE", "no native receipt digest")
+    if schema == SCHEMA:
+        receipt = context.get("native_receipt")
+        if not isinstance(receipt, dict):
+            raise HostCharpolyRefusalError("MISSING_NATIVE_EVIDENCE", "full context carries no native receipt")
+        if receipt_digest(receipt) != claimed_digest:
+            raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "receipt digest does not match the receipt")
+        if native.get("polynomial_sha256") != derived["normalized_sha256"]:
+            raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "polynomial digest differs from host derivation")
+        solver = context.get("solver_context")
+        if not isinstance(solver, dict) or solver.get("coefficients") != derived["normalized_coefficients"]:
+            raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "certificate payload differs from host derivation")
+        public = bridge.prepare_public(seed_hash)["payload"]["native_public_input"]
+        if (receipt.get("status") != "CERTIFIED_IDENTITY" or receipt.get("grid_points") != GRID_POINTS
+                or receipt.get("candidate_sha256") != native_candidate_sha256(derived["normalized_coefficients"], seed_hash)
+                or receipt.get("public_input_sha256") != sidecar.digest(public)
+                or receipt.get("binary_sha256") != context.get("source_bindings", {}).get("native_binary_sha256")):
+            raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "native receipt is not bound to this polynomial")
+    if not reexecute_native:
+        return {"native_reexecuted": False, "receipt_sha256": claimed_digest}
+    try:
+        fresh = verify_via_native_sidecar(derived["normalized_coefficients"], seed_hash)
+    except HostCharpolyRefusalError as exc:
+        raise HostCharpolyRefusalError("MISSING_NATIVE_EVIDENCE", f"native re-execution unavailable: {exc.code}") from None
+    if receipt_digest(fresh["native_receipt"]) != claimed_digest:
+        raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "claimed receipt is not reproduced by native re-execution")
+    return {"native_reexecuted": True, "receipt_sha256": claimed_digest}
+
+
+def validate_certified_context(context_input: str | dict[str, Any], *, reexecute_native: bool = True) -> dict[str, Any]:
+    """Strictly validate a certified context artifact, enforcing limitations and provenance.
+
+    Declared verification fields are never sufficient: see ``_verify_native_evidence``.
+    """
     if isinstance(context_input, str):
         check_prompt_injection(context_input)
         try:
@@ -1112,10 +1192,11 @@ def validate_certified_context(context_input: str | dict[str, Any]) -> dict[str,
             check_prompt_injection(eval_role)
         solver_ctx = context.get("solver_context")
         if isinstance(solver_ctx, dict) and "compact_certificate" in solver_ctx:
-            validate_certified_context(solver_ctx["compact_certificate"])
+            validate_certified_context(solver_ctx["compact_certificate"], reexecute_native=reexecute_native)
 
     check_provenance_pins()
-    return {"valid": True, "context": context}
+    evidence = _verify_native_evidence(context, schema, seed_hash, reexecute_native)
+    return {"valid": True, "context": context, "evidence": evidence}
 
 
 # ---------------------------------------------------------------------------

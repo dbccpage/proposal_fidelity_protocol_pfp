@@ -324,6 +324,24 @@ def main():
                                            'Downstream derivations, projectors, and final answers are uncertified',
                                            'Repeated matched-resource evidence beyond one seed awaiting campaign authorization']})
         wedges.append({'from':'R01-I03','to':node_id,'kind':'host_derived_charpoly_coverage_first_adaptation'})
+    from eis_pciv_workflows import EIS_PCIV_PLANS
+    for plan, specification in EIS_PCIV_PLANS.items():
+        node_id='EXECUTABLE:'+plan
+        wnodes.append({'id':node_id,'kind':'executable_bounded_research_adaptation','plan':plan,
+                       'source_idea':'R01-I03','implementation':'dag/benchmark/reference_runner.py',
+                       'specification':'dag/benchmark/eis_pciv_workflows.py',
+                       'checker':'eis/use_cases/two_signal_regulation.py' if plan=='eis_two_signal_charpoly_v1' else 'pciv/use_cases/transitive_immunity.py',
+                       'source_pins':specification['source_pins'],
+                       'max_paid_calls':len(specification['stages']),
+                       'max_output_tokens_total':sum(stage['max_output_tokens'] for stage in specification['stages']),
+                       'cost_ceiling_usd':'0.10','billing_scope':'Whole run serial ledger within 100,000 microUSD cap; unknown liability or Stage 1 two-signal refusal stops dispatch.',
+                       'runnable':True,'evaluated':False,'evaluation_status':'offline_verified_prepared_unexecuted_campaign',
+                       'mathematical_scope':specification['scope'],'checked_gate':specification['checked'],
+                       'independent_review':'dag/reviews/additional_eis_pciv.json',
+                       'open_obligations':['Intermediate certificate or pre-dispatch quotient does not certify final prose or whole-QM solution',
+                                           'Coarse unnormalized prose watchers suffer split-fibre accuracy collisions; structured witnesses required',
+                                           'Live 5-arm paired campaign qm-eis-pciv-pilot-20261111 and multi-seed holdout split remain unexecuted']})
+        wedges.append({'from':'R01-I03','to':node_id,'kind':'eis_two_signal_or_pciv_quotient_bounded_adaptation'})
     from section_workflows import SECTION_PLANS
     for plan, specification in SECTION_PLANS.items():
         node_id='CONTROL:'+plan

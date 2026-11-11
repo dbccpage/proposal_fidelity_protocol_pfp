@@ -217,44 +217,46 @@ class TestChallengerEISAllostericGate(unittest.TestCase):
         self.assertEqual(decision["hill_value_str"], "0")
 
     def test_fake_trace_and_corrupted_matrix_deactivates_sensor(self):
-        """Fake trace attack: if Pauli matrix has non-zero trace, sensor_trace_zero is 0."""
+        """A corrupted matrix artifact turns off both matrix-derived sensors (symbolic and structural)."""
         corrupted_mat = json.loads(json.dumps(self.matrix_art))
-        # Corrupt the J matrix so diagonal sum != 0
-        corrupted_mat["coefficient_matrices"]["J"][0][0] = 1
-        decision = EISVerificationBridge.evaluate_charpoly_evidence(
-            self.charpoly_art, corrupted_mat
-        )
-        # 2 out of 3 sensors remaining positive -> S=2, still activated at boundary
-        self.assertTrue(decision["is_activated"])
-        self.assertEqual(decision["positive_sensors"], 2)
+        corrupted_mat["coefficient_matrices"]["J"][0][0] = 1  # nonzero trace, different determinant
+        decision = EISVerificationBridge.evaluate_charpoly_evidence(self.charpoly_art, corrupted_mat)
+        sensors = decision["sensor_evidence"]["sensors"]
+        self.assertFalse(sensors["sensor_symbolic_identity"]["ok"])
+        self.assertFalse(sensors["sensor_structural_constraints"]["ok"])
+        self.assertTrue(sensors["sensor_native_receipt"]["ok"])
+        self.assertEqual(decision["positive_sensors"], 1)
+        self.assertFalse(decision["is_activated"])
 
-        # Corrupt a second sensor (e.g. standard form not monic) -> only 1 positive -> refused
         corrupted_cp = json.loads(json.dumps(self.charpoly_art))
         corrupted_cp["polynomial"]["standard_form"] = "2*lambda^4 - 4*J^2"
-        decision_corrupted = EISVerificationBridge.evaluate_charpoly_evidence(
-            corrupted_cp, corrupted_mat
-        )
+        decision_corrupted = EISVerificationBridge.evaluate_charpoly_evidence(corrupted_cp, corrupted_mat)
         self.assertFalse(decision_corrupted["is_activated"])
-        self.assertEqual(decision_corrupted["positive_sensors"], 1)
+        self.assertEqual(decision_corrupted["positive_sensors"], 0)
 
     def test_corrupted_grid_points_count_deactivates_sensor(self):
-        """Grid points corruption: 124 points instead of 125 deactivates sensor_grid_identity."""
+        """A declared grid count is never itself a signal: editing it only breaks the native sensor."""
         corrupted_cp = json.loads(json.dumps(self.charpoly_art))
         corrupted_cp["native_verification"]["grid_points_verified"] = 124
-        decision = EISVerificationBridge.evaluate_charpoly_evidence(
-            corrupted_cp, self.matrix_art
-        )
+        decision = EISVerificationBridge.evaluate_charpoly_evidence(corrupted_cp, self.matrix_art)
+        sensors = decision["sensor_evidence"]["sensors"]
+        self.assertFalse(sensors["sensor_native_receipt"]["ok"])
+        self.assertEqual(decision["positive_sensors"], 2)  # symbolic and structural recompute from the matrix
         self.assertTrue(decision["is_activated"])
-        self.assertEqual(decision["positive_sensors"], 2)  # trace and degree bound sensors active
 
-        # Corrupt trace as well -> only 1 positive -> fails activation
         corrupted_mat = json.loads(json.dumps(self.matrix_art))
         corrupted_mat["coefficient_matrices"]["K"][1][1] = 5
-        decision_both = EISVerificationBridge.evaluate_charpoly_evidence(
-            corrupted_cp, corrupted_mat
-        )
+        decision_both = EISVerificationBridge.evaluate_charpoly_evidence(corrupted_cp, corrupted_mat)
         self.assertFalse(decision_both["is_activated"])
-        self.assertEqual(decision_both["positive_sensors"], 1)
+        self.assertEqual(decision_both["positive_sensors"], 0)
+
+    def test_self_reported_metadata_cannot_form_a_quorum(self):
+        """Review #63 item 4: declared status plus a string starting with lambda^4 yields no signal."""
+        forged = json.loads(json.dumps(self.charpoly_art))
+        forged["polynomial"]["standard_form"] = "lambda^4 + J"
+        decision = EISVerificationBridge.evaluate_charpoly_evidence(forged, self.matrix_art)
+        self.assertEqual(decision["positive_sensors"], 0)
+        self.assertFalse(decision["is_activated"])
 
     def test_gate_mathematical_invariance_hill_curve(self):
         """Direct HillParameters verification: H(S) = S^2 / (2^2 + S^2)."""

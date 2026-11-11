@@ -23,6 +23,8 @@ from section_workflows import SECTION_PLANS, assemble_sections
 from charpoly_workflows import (CHARPOLY_PLANS, preflight as charpoly_preflight,
                                stage_request as charpoly_stage_request, check_candidate as check_charpoly)
 from host_charpoly_workflows import HOST_CHARPOLY_PLANS
+from eis_pciv_workflows import (EIS_PCIV_PLANS, build_pciv_quotient_artifact,
+                                evaluate_eis_charpoly_stage, public_charpoly_input_context)
 
 HERE = Path(__file__).resolve().parent
 PLANS = {
@@ -39,6 +41,7 @@ PLANS.update(MATRIX_PLANS)
 PLANS.update(SECTION_PLANS)
 PLANS.update(CHARPOLY_PLANS)
 PLANS.update(HOST_CHARPOLY_PLANS)
+PLANS.update(EIS_PCIV_PLANS)
 
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -105,10 +108,11 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     if plan not in PLANS:
         raise ValueError('Unsupported plan; proposed research hosts are not generic executable stages')
     specification = (EXPERIMENTS.get(plan) or MATRIX_PLANS.get(plan) or SECTION_PLANS.get(plan) or
-                     CHARPOLY_PLANS.get(plan) or HOST_CHARPOLY_PLANS.get(plan))
+                     CHARPOLY_PLANS.get(plan) or HOST_CHARPOLY_PLANS.get(plan) or EIS_PCIV_PLANS.get(plan))
     if specification:
+        from source_custody import pin_path
         for name, expected in specification['source_pins'].items():
-            if sha((HERE / name).read_bytes()) != expected:
+            if sha(pin_path(name).read_bytes()) != expected:
                 raise ValueError('Loaded experiment source changed; restart and prepare a newly bound campaign')
         if plan in EXPERIMENTS and sha(canonical(EXPERIMENTS[plan]['contract'])) != EXPERIMENTS[plan]['contract_sha256']:
             raise ValueError('Experiment contract changed')
@@ -139,9 +143,14 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     section_plan = SECTION_PLANS.get(plan)
     charpoly_plan = CHARPOLY_PLANS.get(plan)
     host_charpoly_plan = HOST_CHARPOLY_PLANS.get(plan)
+    charpoly_verification = None  # set only from an observed, validated native receipt
+    composition_verified = False  # set only from an observed composition witness
+    eis_pciv_plan = EIS_PCIV_PLANS.get(plan)
     charpoly_checks = []
     charpoly_custody = None
     matrix_checks = []
+    eis_pciv_checks = []
+    pciv_quotient_receipt = None
     stages = specification['stages'] if specification else [
         {'id': f'control_{index}', 'instruction': instruction, 'max_output_tokens': max_output_tokens,
          'visible_artifacts': [f'control_{index - 1}'] if index else []}
@@ -178,18 +187,33 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
                 validated = validate_certified_context(certified)
                 if not validated['valid']:
                     raise ValueError('Host-derived characteristic polynomial context failed validation')
+                charpoly_verification = {
+                    'status': certified['native_verification']['status'],
+                    'grid_points_verified': certified['native_verification']['grid_points_verified'],
+                    'receipt_sha256': validated['evidence']['receipt_sha256'],
+                    'native_reexecuted': validated['evidence']['native_reexecuted'],
+                }
                 responses['charpoly_context'] = canonical(certified).decode('utf-8')
                 freeze_json(output / 'host_charpoly.json', certified)
             if host_charpoly_plan.get('semantic_composition'):
                 from host_charpoly_workflows import build_semantic_composition_artifact
                 composition = build_semantic_composition_artifact(sha(seed))
+                composition_verified = (composition.get('status') == 'VERIFIED_OFFLINE_COMPOSITION'
+                                        and composition.get('operad_composition_witness', {}).get('is_associative') is True)
                 responses['semantic_composition_receipt'] = canonical(composition).decode('utf-8')
                 freeze_json(output / 'semantic_composition_receipt.json', composition)
+        if eis_pciv_plan and plan == 'pciv_quotient_obligation_v1':
+            pciv_quotient_receipt = build_pciv_quotient_artifact(sha(seed))
+            responses['pciv_quotient_context'] = canonical(pciv_quotient_receipt).decode('utf-8')
+            freeze_json(output / 'pciv_quotient_receipt.json', pciv_quotient_receipt)
         for index, stage in enumerate(stages):
             if charpoly_plan and stage['id'] == 'charpoly_repair' and charpoly_checks[-1]['accepted']:
                 continue
             if charpoly_plan and stage['id'] == 'solve' and charpoly_plan['checked'] and not charpoly_checks[-1]['accepted']:
                 status = 'certificate_refused'
+                break
+            if plan == 'eis_two_signal_charpoly_v1' and stage['id'] == 'solve' and eis_pciv_plan['checked'] and (not eis_pciv_checks or not eis_pciv_checks[-1]['accepted']):
+                status = 'eis_two_signal_refused'
                 break
             if matrix_plan and stage['id'] == 'matrix_repair' and matrix_checks[-1]['accepted']:
                 continue
@@ -207,6 +231,8 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
                 messages.append({'role': 'user', 'content': 'Public characteristic-polynomial input contract:\n' + canonical(material['public_context']).decode('utf-8')})
                 for value in material['visible_artifacts'].values():
                     messages.append({'role': 'user', 'content': 'Untrusted previous candidate follows. It is not the answer key.\n' + canonical(value).decode('utf-8')})
+            if eis_pciv_plan and stage['id'] == 'charpoly_propose':
+                messages.append({'role': 'user', 'content': 'Public affine Hamiltonian contract:\n' + canonical(public_charpoly_input_context(sha(seed))).decode('utf-8')})
             if matrix_plan and stage['id'] != 'solve':
                 messages.append({'role': 'user', 'content': 'Public representation contract:\n' + canonical(matrix_contract(sha(seed))).decode('utf-8')})
             if not charpoly_plan:
@@ -280,6 +306,20 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
                     candidate = checked.get('canonical_candidate')
                     responses['matrix_context'] = canonical(candidate).decode('utf-8') if candidate is not None else reply.text
                     responses['matrix_feedback'] = canonical({'errors': checked['errors'], 'mismatches': checked['mismatches']}).decode('utf-8')
+                if plan == 'eis_two_signal_charpoly_v1' and stage['id'] != 'solve':
+                    try:
+                        checked = evaluate_eis_charpoly_stage(reply.text, sha(seed))
+                    except Exception as exc:
+                        checked = {'accepted': False, 'status': 'INFRASTRUCTURE_REFUSAL',
+                                   'eis_charpoly_context': None, 'refusal_code': type(exc).__name__,
+                                   'final_answer_certified': False}
+                    eis_pciv_checks.append({'stage_id': stage['id'], **checked})
+                    freeze_json(output / 'calls' / f'{index:03d}.eis_charpoly_check.json', eis_pciv_checks[-1])
+                    if checked.get('status') == 'INFRASTRUCTURE_REFUSAL':
+                        status = 'host_infrastructure_failure'
+                        break
+                    if checked['accepted'] and checked.get('eis_charpoly_context') is not None:
+                        responses['eis_charpoly_context'] = checked['eis_charpoly_context']
             except Exception as exc:
                 record.setdefault('provider_duration_seconds', time.perf_counter() - call_started)
                 record.update(error_class=type(exc).__name__, error=str(exc)[:300])
@@ -337,9 +377,10 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
         claims = []
         if host_charpoly_plan.get('host_matrix'):
             claims.append({'status': 'EXACT_AFFINE_HAMILTONIAN_MATCH'})
-        if host_charpoly_plan.get('host_charpoly'):
-            claims.append({'status': 'EXACT_INTERMEDIATE_CHARPOLY_IDENTITY'})
-        if host_charpoly_plan.get('semantic_composition'):
+        charpoly_accepted = bool(charpoly_verification and charpoly_verification['status'] == 'CERTIFIED_IDENTITY')
+        if charpoly_accepted:
+            claims.append({'status': 'EXACT_INTERMEDIATE_CHARPOLY_IDENTITY'})  # receipt in charpoly_verification
+        if composition_verified:
             claims.append({'status': 'TYPED_OPERADIC_COMPOSITION_VERIFIED'})
         accepted_matrix = bool(matrix_checks and matrix_checks[-1]['accepted']) if host_charpoly_plan.get('host_matrix') else False
         host_receipt = {
@@ -351,9 +392,10 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
             'host_derived_charpoly': host_charpoly_plan.get('host_charpoly', False),
             'semantic_composition': host_charpoly_plan.get('semantic_composition', False),
             'representation_accepted': accepted_matrix,
-            'certificate_accepted': True if host_charpoly_plan.get('host_charpoly') else False,
-            'operadic_associativity_verified': True if host_charpoly_plan.get('semantic_composition') else False,
-            'grid_points_verified': 125 if host_charpoly_plan.get('host_charpoly') else 0,
+            'certificate_accepted': charpoly_accepted,
+            'charpoly_verification': charpoly_verification,
+            'operadic_associativity_verified': composition_verified,
+            'grid_points_verified': charpoly_verification['grid_points_verified'] if charpoly_accepted else 0,
             'stage_checks': matrix_checks,
             'artifact_errors': {} if (not host_charpoly_plan['checked'] or accepted_matrix) else {'matrix': 'UNACCEPTED_OR_MISSING'},
             'claims': claims,
@@ -361,6 +403,38 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
             'all_requested_obligations_remain_uncertified': True,
             'scope': host_charpoly_plan['scope']
         }
+        freeze_json(output / 'host_checks.json', host_receipt)
+    if eis_pciv_plan:
+        previous = responses.get('solve')
+        if plan == 'eis_two_signal_charpoly_v1':
+            accepted = bool(eis_pciv_checks and eis_pciv_checks[-1]['accepted'])
+            host_receipt = {
+                'checker': 'eis_two_signal_charpoly_v1',
+                'status': 'HOST_INFRASTRUCTURE_FAILURE' if status == 'host_infrastructure_failure' else 'CHECKED_INTERMEDIATE_ONLY',
+                'checked_gate': eis_pciv_plan['checked'],
+                'certificate_accepted': accepted,
+                'stage_checks': eis_pciv_checks,
+                'artifact_errors': {} if accepted else {'charpoly': 'EIS_TWO_SIGNAL_REFUSED_OR_MISSING'},
+                'claims': [{'status': 'EXACT_INTERMEDIATE_CHARPOLY_IDENTITY_TWO_SIGNAL_REGULATED'}] if accepted else [],
+                'final_answer_certified': False,
+                'all_requested_obligations_remain_uncertified': True,
+                'scope': eis_pciv_plan['scope'],
+            }
+        else:
+            host_receipt = {
+                'checker': 'pciv_operational_quotient_v1',
+                'status': 'PRE_DISPATCH_QUOTIENT_AND_SEED_FENCE_ONLY',
+                'checked_gate': eis_pciv_plan['checked'],
+                'quotient_verified': pciv_quotient_receipt is not None and pciv_quotient_receipt['protected_seed_fence']['verified_byte_identical'],
+                'surviving_representative_count': pciv_quotient_receipt['surviving_representative_count'] if pciv_quotient_receipt else 0,
+                'collapsed_duplicate_count': pciv_quotient_receipt['collapsed_duplicate_count'] if pciv_quotient_receipt else 0,
+                'stage_checks': [],
+                'artifact_errors': {},
+                'claims': [{'status': 'PCIV_OPERATIONAL_QUOTIENT_AND_SEED_FENCE_VERIFIED'}] if pciv_quotient_receipt else [],
+                'final_answer_certified': False,
+                'all_requested_obligations_remain_uncertified': True,
+                'scope': eis_pciv_plan['scope'],
+            }
         freeze_json(output / 'host_checks.json', host_receipt)
     if experiment:
         candidate_text = responses.get('solve')
@@ -406,8 +480,13 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
         receipt['implementation_sha256'].update({name: sha((HERE / name).read_bytes())
                                                  for name in charpoly_plan['source_pins']})
     if host_charpoly_plan:
-        receipt['implementation_sha256'].update({name: sha((HERE / name).read_bytes())
+        from source_custody import pin_path
+        receipt['implementation_sha256'].update({name: sha(pin_path(name).read_bytes())
                                                  for name in host_charpoly_plan['source_pins']})
+    if eis_pciv_plan:
+        from source_custody import pin_path
+        receipt['implementation_sha256'].update({name: sha(pin_path(name).read_bytes())
+                                                 for name in eis_pciv_plan['source_pins']})
     receipt_hash = freeze_json(output / 'run.json', receipt)
     (output / 'run.sha256').write_text(receipt_hash + '\n', encoding='ascii')
     if not offline:
@@ -422,7 +501,7 @@ if __name__ == '__main__':
     parser.add_argument('--run-id', required=True)
     args = parser.parse_args()
     spec = (EXPERIMENTS.get(args.plan) or MATRIX_PLANS.get(args.plan) or SECTION_PLANS.get(args.plan) or
-            CHARPOLY_PLANS.get(args.plan) or HOST_CHARPOLY_PLANS.get(args.plan))
+            CHARPOLY_PLANS.get(args.plan) or HOST_CHARPOLY_PLANS.get(args.plan) or EIS_PCIV_PLANS.get(args.plan))
     count = len(spec['stages']) if spec else len(PLANS[args.plan])
     receipt = run(args.plan, OfflineTape(['Synthetic fixture; no QM answer supplied.'] * count), args.output, args.run_id)
     print(json.dumps({k: receipt[k] for k in ('run_id', 'status', 'accuracy_status', 'offline')}))

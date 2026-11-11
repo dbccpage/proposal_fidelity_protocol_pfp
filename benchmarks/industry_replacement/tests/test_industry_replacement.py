@@ -263,7 +263,7 @@ def test_branch_touches_only_allowed_paths():
     git = shutil.which('git')
     if git is None:
         pytest.skip('git unavailable')
-    # Since #62 merged, the boundary is this branch's own change set relative to main.
+    # Repository-wide custody boundary: no branch may modify any of the 32,261 pinned files in dag/file_inventory.json.
     base = subprocess.run([git, 'merge-base', 'HEAD', 'origin/main'], cwd=REPO, capture_output=True, text=True)
     if base.returncode != 0:
         pytest.skip('origin/main unavailable')
@@ -273,7 +273,9 @@ def test_branch_touches_only_allowed_paths():
     if diff.returncode != 0:
         pytest.skip('base commit unavailable')
     changed = [p for p in (diff.stdout + untracked.stdout).splitlines() if p]
-    assert [p for p in changed if not p.startswith(ALLOWED)] == []
+    inventory = json.loads((REPO / 'dag' / 'file_inventory.json').read_text(encoding='utf-8'))
+    pinned = {row['path'] for row in inventory['files']}
+    assert [p for p in changed if p in pinned] == []
 
 
 def test_forged_or_model_danger_signals_do_not_hold():

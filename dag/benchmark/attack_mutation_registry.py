@@ -50,6 +50,28 @@ from eis.domain.value_objects import AllosteryRefusal
 import pciv.use_cases.fitness as pciv_fitness
 import pciv.use_cases.research_selection as pciv_selection
 import operads.domain.operad as operads_operad
+import eis_pciv_workflows
+from eis.domain.danger_signals import SignalIndependenceRefusal
+from eis.domain.provisional_promotion import RawObservationV1
+from eis.domain.thymus import ThymusGate
+from eis.domain.value_objects import (
+    DangerSeverity,
+    DetectorRule,
+    REGEX_MATCHER_ID,
+    Signal1Match,
+    Signal2Danger,
+)
+from eis.use_cases.two_signal_regulation import (
+    AcquiredAntibodyPromotionV1,
+    ThymusSelfPanelBuilder,
+    TwoSignalRegulatorV1,
+)
+from pciv.infrastructure.verified_projection import VerifiedProjectionEngineV1
+from pciv.use_cases.genealogy import LineageEdgeV1, RelationshipType
+from pciv.use_cases.transitive_immunity import (
+    FixedPointLineageTaintEngineV1,
+    TransitiveImmunityEngineV1,
+)
 
 RECEIPT_SCHEMA = "pfp.attack-mutation-receipt.v1"
 SUPPORTED_SEED_SHA256 = host.SUPPORTED_SEED_SHA256
@@ -367,6 +389,86 @@ CATEGORIES: list[AttackCategory] = [
             "resolved by scalar charpoly alone without projector analysis (status='UNRESOLVED')."
         ),
     ),
+    AttackCategory(
+        category_id=18,
+        name="eis_thymus_autoimmune_selection",
+        display_name="EIS Thymus Autoimmune Detector Selection",
+        owning_boundary="Thymic Central Tolerance Gate (eis.domain.thymus.ThymusGate, eis.use_cases.two_signal_regulation.ThymusSelfPanelBuilder)",
+        mathematical_assumptions=(
+            "Any candidate antigen detector rule whose matcher fires on valid self-panel variants (benign rational "
+            "formatting or canonical wire syntax) causes autoimmune false refusals unless culled prior to deployment."
+        ),
+        metamorphic_relation=(
+            "Screening a raw regex rule that matches valid self-panel formatting quirks or canonical wire keys against "
+            "ThymusGate must produce autoimmune_violations > 0 and is_admitted=False, whereas NormalizedMatcher reduces "
+            "self-panel variants to canonical wire before matching and passes with zero autoimmune violations."
+        ),
+    ),
+    AttackCategory(
+        category_id=19,
+        name="eis_two_signal_and_correlated_mis",
+        display_name="EIS Two-Signal Collapse and Correlated MIS Promotion",
+        owning_boundary="Matzinger Two-Signal Danger Gate & MIS Support Policy (eis.use_cases.two_signal_regulation, eis.domain.provisional_promotion)",
+        mathematical_assumptions=(
+            "Enforcement requires independent Signal 1 (antigen) and Signal 2 (host danger). Self-observed danger "
+            "(observer_id='MODEL') or overlapping locus collapses independence. Multi-run antibody promotion requires "
+            "maximum independent set (MIS) size >= 3 over host-bound correlation keys, rejecting echoed references."
+        ),
+        metamorphic_relation=(
+            "Forbidden danger observers or overlapping Signal 1/Signal 2 loci raise SignalIndependenceRefusal('TWO_SIGNAL_COLLAPSE'); "
+            "correlated observations sharing model_family collapse to MIS support_count=1 ('Candidate'); propagated "
+            "lineage references raise ValueError."
+        ),
+    ),
+    AttackCategory(
+        category_id=20,
+        name="pciv_lineage_taint_and_horizon_custody",
+        display_name="PCIV Fixed-Point Lineage Taint and Horizon Custody",
+        owning_boundary="PCIV Genealogy, Taint & Transitive Immunity (pciv.use_cases.transitive_immunity)",
+        mathematical_assumptions=(
+            "Lineage taint over a finite witnessed DAG is the least fixed point of monotone OR/QUORUM propagation and "
+            "must be invariant under edge presentation order. Inheritance edges require SealedCausalWitness receipts, "
+            "and relaying children cannot reset backward attribution origin."
+        ),
+        metamorphic_relation=(
+            "Presenting multi-hop edges in reverse topological order still taints all reachable descendants at fixed point; "
+            "unwitnessed inheritance edges fail with CAUSAL_WITNESS_REQUIRED; pretend_as_new_origin=True fails with "
+            "HORIZON_RESET_PROHIBITED."
+        ),
+    ),
+    AttackCategory(
+        category_id=21,
+        name="pciv_hash_chained_projection_integrity",
+        display_name="PCIV Hash-Chained Crash Recovery and Projection Integrity",
+        owning_boundary="PCIV Verified Event Journal & Crash Replay (pciv.infrastructure.verified_projection.VerifiedProjectionEngineV1)",
+        mathematical_assumptions=(
+            "Durable projection state is consistent with its event log only if every record satisfies contiguous sequence "
+            "numbers seq=0..n-1, prev_sha256 chaining from genesis 0^64, and canonical SHA-256 payload digest agreement."
+        ),
+        metamorphic_relation=(
+            "Tampering with event payloads, deleting intermediate sequence records, forging prev_sha256 links, or "
+            "truncating a trailing JSONL line forces recover_from_crash().is_consistent=False with explicit corruption_code "
+            "and withholds corrupted projections."
+        ),
+    ),
+    AttackCategory(
+        category_id=22,
+        name="certification_state_fabrication",
+        display_name="Certification-State Fabrication (receipt-grounded verification)",
+        owning_boundary=(
+            "qm_host_charpoly.validate_certified_context / build_compact_solver_context and "
+            "host_charpoly_workflows.EISVerificationBridge (PR #63 review)"
+        ),
+        mathematical_assumptions=(
+            "A certificate may claim CERTIFIED_IDENTITY only if a native receipt exists, binds the host-derived "
+            "polynomial's candidate digest and the admitted public input, and is reproduced by native re-execution. "
+            "A consensus signal counts only when recomputed from evidence, never from a declared status field."
+        ),
+        metamorphic_relation=(
+            "Removing the receipt, disabling the native verifier, or replacing evidence with declared metadata "
+            "turns acceptance into refusal (MISSING_NATIVE_EVIDENCE / FORGED_CERTIFICATE) or zero positive sensors."
+        ),
+    ),
 ]
 
 
@@ -402,14 +504,14 @@ def _build_fixture_list() -> list[MutationFixture]:
         passed = (
             validated.get("valid") is True
             and cert.get("status") == "CERTIFIED_INTERMEDIATE_CHARPOLY"
-            and size <= 1200
+            and size <= host.COMPACT_CHAR_BUDGET
         )
         return passed, "ACCEPTED", {"schema": cert.get("schema"), "status": cert.get("status"), "size_bytes": size}
 
     fixtures.append(MutationFixture(
         fixture_id="pos_ctrl_compact_certificate",
         category_id=0,
-        description="Authentic compact certificate passes strict validation and <= 1,200 character budget",
+        description="Authentic compact certificate passes strict validation and fits the compact character budget",
         mutation_type="None (authentic compact certificate)",
         expected_behavior="ACCEPTED",
         expected_refusal_code=None,
@@ -485,6 +587,65 @@ def _build_fixture_list() -> list[MutationFixture]:
         expected_behavior="ACCEPTED",
         expected_refusal_code=None,
         runner=run_pos_ctrl_pciv_pareto,
+    ))
+
+    def run_pos_ctrl_eis_normalized_thymus():
+        _matcher, _rule, selection = eis_pciv_workflows.screen_normalized_charpoly_detector()
+        quirky_coeffs = deepcopy(base_coeffs)
+        quirky_coeffs[4] = [{"powers": [0, 0, 0], "q": " 2/2 "}]
+        quirky_coeffs[2].append({"powers": [1, 1, 1], "q": "+0"})
+        quirky_payload = json.dumps({"coefficients": quirky_coeffs}, indent=2)
+        stage_res = eis_pciv_workflows.evaluate_eis_charpoly_stage(quirky_payload)
+        passed = (
+            selection.is_admitted is True
+            and selection.autoimmune_violations == 0
+            and stage_res["accepted"] is True
+            and stage_res["disposition"] == "DIAGNOSTIC_NORMALIZED"
+            and stage_res["final_answer_certified"] is False
+        )
+        return passed, "ACCEPTED", {
+            "thymus_admitted": selection.is_admitted,
+            "autoimmune_violations": selection.autoimmune_violations,
+            "disposition": stage_res["disposition"],
+        }
+
+    fixtures.append(MutationFixture(
+        fixture_id="pos_ctrl_eis_normalized_thymus",
+        category_id=0,
+        description="Thymus-admitted NormalizedMatcher tolerates self-panel and salvages benign charpoly formatting quirks",
+        mutation_type="None (benign formatting quirks over authentic charpoly)",
+        expected_behavior="ACCEPTED",
+        expected_refusal_code=None,
+        runner=run_pos_ctrl_eis_normalized_thymus,
+    ))
+
+    def run_pos_ctrl_pciv_quotient_and_projection():
+        quotient_art = eis_pciv_workflows.build_pciv_quotient_artifact()
+        engine = VerifiedProjectionEngineV1()
+        engine.append_event(prompt_id="p_root", kind="ExecutionPass", payload={"run": 1})
+        engine.append_event(prompt_id="p_root", kind="ExecutionPass", payload={"run": 2})
+        recovered = engine.recover_from_crash()
+        passed = (
+            quotient_art["protected_seed_fence"]["verified_byte_identical"] is True
+            and quotient_art["surviving_representative_count"] == 4
+            and recovered.is_consistent is True
+            and recovered.verified_event_count == 2
+            and recovered["p_root"].pass_count == 2
+        )
+        return passed, "ACCEPTED", {
+            "surviving_representatives": quotient_art["surviving_representative_count"],
+            "verified_event_count": recovered.verified_event_count,
+            "is_consistent": recovered.is_consistent,
+        }
+
+    fixtures.append(MutationFixture(
+        fixture_id="pos_ctrl_pciv_quotient_and_projection",
+        category_id=0,
+        description="Authentic PCIV operational quotient fences seed_prompt.txt and hash-chained projection replays cleanly",
+        mutation_type="None (authentic workflow population and hash-chained event journal)",
+        expected_behavior="ACCEPTED",
+        expected_refusal_code=None,
+        runner=run_pos_ctrl_pciv_quotient_and_projection,
     ))
 
     # -----------------------------------------------------------------------
@@ -1736,6 +1897,390 @@ def _build_fixture_list() -> list[MutationFixture]:
         runner=run_unres_degeneracy,
     ))
 
+    # -----------------------------------------------------------------------
+    # Category 18: EIS Thymus Autoimmune Detector Selection (2 fixtures)
+    # -----------------------------------------------------------------------
+    def run_eis_thymus_raw_regex_culled():
+        thymus = ThymusGate(self_panel=ThymusSelfPanelBuilder.build_self_panel())
+        raw_rule = DetectorRule(
+            rule_id="raw_surface_rational_detector",
+            target_epitope="noncanonical_rational_surface",
+            match_pattern=r'"[+][0-9]{1,4}"|"[0-9]{1,4}/1"|"2/2"|"[+]4/2"',
+            matcher_id=REGEX_MATCHER_ID,
+        )
+        res = thymus.evaluate_rule(raw_rule)
+        killed = res.is_admitted is False and res.autoimmune_violations >= 3
+        return killed, f"CULLED [autoimmune_violations={res.autoimmune_violations}]", {
+            "is_admitted": res.is_admitted,
+            "autoimmune_violations": res.autoimmune_violations,
+        }
+
+    fixtures.append(MutationFixture(
+        fixture_id="eis_thymus_raw_regex_autoimmune_culled",
+        category_id=18,
+        description="Raw regex detector firing on valid self-panel formatting quirks is culled by ThymusGate",
+        mutation_type="Screen un-normalized raw regex detector against ThymusSelfPanelBuilder self-panel",
+        expected_behavior="CULLED",
+        expected_refusal_code="AUTOIMMUNE_APOPTOSIS",
+        runner=run_eis_thymus_raw_regex_culled,
+    ))
+
+    def run_eis_thymus_broad_self_reactive_culled():
+        thymus = ThymusGate(self_panel=ThymusSelfPanelBuilder.build_self_panel())
+        broad_rule = DetectorRule(
+            rule_id="broad_coefficients_key_detector",
+            target_epitope="canonical_wire_key",
+            match_pattern=r'"coefficients"',
+            matcher_id=REGEX_MATCHER_ID,
+        )
+        res = thymus.evaluate_rule(broad_rule)
+        killed = res.is_admitted is False and res.autoimmune_violations > 0
+        return killed, f"CULLED [autoimmune_violations={res.autoimmune_violations}]", {
+            "is_admitted": res.is_admitted,
+            "autoimmune_violations": res.autoimmune_violations,
+        }
+
+    fixtures.append(MutationFixture(
+        fixture_id="eis_thymus_broad_self_reactive_culled",
+        category_id=18,
+        description="Self-reactive detector matching canonical 'coefficients' wire key undergoes thymic apoptosis",
+        mutation_type="Screen broad canonical-key regex against self-panel",
+        expected_behavior="CULLED",
+        expected_refusal_code="AUTOIMMUNE_APOPTOSIS",
+        runner=run_eis_thymus_broad_self_reactive_culled,
+    ))
+
+    # -----------------------------------------------------------------------
+    # Category 19: EIS Two-Signal Collapse & Correlated MIS Promotion (3 fixtures)
+    # -----------------------------------------------------------------------
+    def run_eis_two_signal_collapse_model_observer():
+        reg = TwoSignalRegulatorV1()
+        hit = Signal1Match(
+            epitope_name="quirk",
+            pattern_matched="2/2",
+            confidence=1.0,
+            offset=0,
+            detector_id="surface_scanner",
+            matched_locus="wire.c4",
+            match_signature="sig_c4",
+        )
+        forged_danger = Signal2Danger(
+            danger_type="SELF_CRITIQUE_ALARM",
+            severity=DangerSeverity.HIGH,
+            defect_count=1,
+            evidence_digest="sha256:" + "a" * 64,
+            observer_id="MODEL",
+        )
+        try:
+            reg.evaluate(
+                content='{"coefficients":[]}',
+                matches=(hit,),
+                danger=forged_danger,
+                detector_id="surface_scanner",
+                offsets_are_content=False,
+            )
+            return False, "SURVIVOR", {}
+        except SignalIndependenceRefusal as exc:
+            killed = exc.code == "TWO_SIGNAL_COLLAPSE"
+            return killed, f"REFUSED [{exc.code}]", {"code": exc.code, "message": str(exc)}
+
+    fixtures.append(MutationFixture(
+        fixture_id="eis_two_signal_collapse_model_observer",
+        category_id=19,
+        description="Self-observed danger signal from forbidden observer 'MODEL' refused with TWO_SIGNAL_COLLAPSE",
+        mutation_type="Supply Signal2Danger(observer_id='MODEL') alongside Signal 1 match",
+        expected_behavior="REFUSED",
+        expected_refusal_code="TWO_SIGNAL_COLLAPSE",
+        runner=run_eis_two_signal_collapse_model_observer,
+    ))
+
+    def run_eis_correlated_mis_collapse():
+        promo = AcquiredAntibodyPromotionV1()
+        obs = tuple(
+            RawObservationV1(
+                occurrence_id=f"occ-{idx}",
+                generating_model_id="deepseek-v3.2",
+                scaffold_digest=f"scaf-{idx}",
+                precedent_set_digest=f"sha256:{idx:064x}",
+                inheritance_root=f"root-{idx}",
+            )
+            for idx in range(1, 6)
+        )
+        support, result = promo.evaluate_promotion("ab_correlated_test", obs)
+        killed = (
+            support.support_count == 1
+            and result.new_custody == "Candidate"
+            and result.enforcement_authorized is False
+        )
+        return killed, f"COLLAPSED [MIS={support.support_count}, custody={result.new_custody}]", {
+            "raw_count": len(obs),
+            "support_count": support.support_count,
+            "new_custody": result.new_custody,
+            "enforcement_authorized": result.enforcement_authorized,
+        }
+
+    fixtures.append(MutationFixture(
+        fixture_id="eis_correlated_observations_mis_collapse",
+        category_id=19,
+        description="Five observations sharing generating_model_id collapse under MIS branch-and-bound to support=1 ('Candidate')",
+        mutation_type="Submit 5 same-model-family failure observations to AcquiredAntibodyPromotionV1",
+        expected_behavior="COLLAPSED",
+        expected_refusal_code=None,
+        runner=run_eis_correlated_mis_collapse,
+    ))
+
+    def run_eis_propagated_ref_refused():
+        promo = AcquiredAntibodyPromotionV1()
+        obs = (
+            RawObservationV1(
+                occurrence_id="occ-echo-1",
+                generating_model_id="qwen3",
+                scaffold_digest="scaf-a",
+                precedent_set_digest="sha256:" + "1" * 64,
+                inheritance_root="root-a",
+                is_propagated_reference=True,
+            ),
+        )
+        try:
+            promo.evaluate_promotion("ab_echo_test", obs)
+            return False, "SURVIVOR", {}
+        except ValueError as exc:
+            return True, f"REFUSED [{exc}]", {"error": str(exc)}
+
+    fixtures.append(MutationFixture(
+        fixture_id="eis_propagated_reference_observation_refused",
+        category_id=19,
+        description="Echoed/propagated lineage reference observation refused from antibody support counting",
+        mutation_type="Submit RawObservationV1(is_propagated_reference=True)",
+        expected_behavior="REFUSED",
+        expected_refusal_code="propagated",
+        runner=run_eis_propagated_ref_refused,
+    ))
+
+    # -----------------------------------------------------------------------
+    # Category 20: PCIV Fixed-Point Lineage Taint & Horizon Custody (3 fixtures)
+    # -----------------------------------------------------------------------
+    def run_pciv_reverse_multihop_taint():
+        engine = FixedPointLineageTaintEngineV1(policy_rule="OR", initial_tainted=("p_A",))
+        reverse_edges = [("p_C", "p_D"), ("p_B", "p_C"), ("p_A", "p_B")]
+        tainted = engine.propagate_taint(reverse_edges)
+        killed = tainted == frozenset({"p_A", "p_B", "p_C", "p_D"})
+        return killed, f"TAINTED_FIXED_POINT [{sorted(tainted)}]", {"tainted_nodes": sorted(tainted)}
+
+    fixtures.append(MutationFixture(
+        fixture_id="pciv_reverse_ordered_multihop_taint_fixed_point",
+        category_id=20,
+        description="Reverse-ordered 3-hop inheritance chain converges to full descendant taint under fixed-point engine",
+        mutation_type="Present edges [(C,D), (B,C), (A,B)] in reverse topological order with root A tainted",
+        expected_behavior="TAINTED_FIXED_POINT",
+        expected_refusal_code=None,
+        runner=run_pciv_reverse_multihop_taint,
+    ))
+
+    def run_pciv_unwitnessed_edge_refused():
+        engine = FixedPointLineageTaintEngineV1(policy_rule="OR", initial_tainted=("p_0",))
+        unsealed = [LineageEdgeV1("p_0", "p_1", RelationshipType.DIRECT_MUTATION, witness_receipt=None)]
+        try:
+            engine.propagate_taint(unsealed)
+            return False, "SURVIVOR", {}
+        except ValueError as exc:
+            killed = "CAUSAL_WITNESS_REQUIRED" in str(exc)
+            return killed, f"REFUSED [{exc}]", {"error": str(exc)}
+
+    fixtures.append(MutationFixture(
+        fixture_id="pciv_unwitnessed_inheritance_edge_refused",
+        category_id=20,
+        description="Inheritance edge lacking SealedCausalWitness is refused with CAUSAL_WITNESS_REQUIRED",
+        mutation_type="Inject LineageEdgeV1 with witness_receipt=None",
+        expected_behavior="REFUSED",
+        expected_refusal_code="CAUSAL_WITNESS_REQUIRED",
+        runner=run_pciv_unwitnessed_edge_refused,
+    ))
+
+    def run_pciv_horizon_reset_refused():
+        imm = TransitiveImmunityEngineV1(max_backward_hops=5)
+        try:
+            imm.propagate_backward(
+                graph_or_edges=[("p_0", "p_1")],
+                current_prompt_id="p_1",
+                rule_id="rule_ab01",
+                pretend_as_new_origin=True,
+            )
+            return False, "SURVIVOR", {}
+        except ValueError as exc:
+            killed = "HORIZON_RESET_PROHIBITED" in str(exc)
+            return killed, f"REFUSED [{exc}]", {"error": str(exc)}
+
+    fixtures.append(MutationFixture(
+        fixture_id="pciv_horizon_reset_spoofing_refused",
+        category_id=20,
+        description="Relaying child attempting to reset backward attribution origin is refused with HORIZON_RESET_PROHIBITED",
+        mutation_type="Invoke propagate_backward(..., pretend_as_new_origin=True)",
+        expected_behavior="REFUSED",
+        expected_refusal_code="HORIZON_RESET_PROHIBITED",
+        runner=run_pciv_horizon_reset_refused,
+    ))
+
+    # -----------------------------------------------------------------------
+    # Category 21: PCIV Hash-Chained Projection Integrity (3 fixtures)
+    # -----------------------------------------------------------------------
+    def run_pciv_projection_digest_tampering():
+        engine = VerifiedProjectionEngineV1()
+        engine.append_event(prompt_id="p_alpha", kind="ExecutionPass", payload={"score": 1})
+        engine.append_event(prompt_id="p_alpha", kind="ExecutionPass", payload={"score": 2})
+        engine.events[0]["payload"]["score"] = 999
+        recovered = engine.recover_from_crash()
+        killed = (
+            recovered.is_consistent is False
+            and recovered.corruption_code == "EVENT_DIGEST_TAMPERED"
+            and len(recovered) == 0
+        )
+        return killed, f"REFUSED [{recovered.corruption_code}]", {
+            "is_consistent": recovered.is_consistent,
+            "corruption_code": recovered.corruption_code,
+            "exposed_projections": len(recovered),
+        }
+
+    fixtures.append(MutationFixture(
+        fixture_id="pciv_projection_event_digest_tampering",
+        category_id=21,
+        description="Mutating a historical event payload without hash-chain recomputation forces is_consistent=False",
+        mutation_type="Tamper payload in event seq=0 and replay crash recovery",
+        expected_behavior="REFUSED",
+        expected_refusal_code="EVENT_DIGEST_TAMPERED",
+        runner=run_pciv_projection_digest_tampering,
+    ))
+
+    def run_pciv_projection_sequence_gap():
+        engine = VerifiedProjectionEngineV1()
+        engine.append_event(prompt_id="p_beta", kind="ExecutionPass", payload={"step": 1})
+        engine.append_event(prompt_id="p_beta", kind="ExecutionPass", payload={"step": 2})
+        engine.append_event(prompt_id="p_beta", kind="ExecutionPass", payload={"step": 3})
+        del engine.events[1]
+        recovered = engine.recover_from_crash()
+        killed = recovered.is_consistent is False and recovered.corruption_code == "SEQUENCE_GAP"
+        return killed, f"REFUSED [{recovered.corruption_code}]", {
+            "is_consistent": recovered.is_consistent,
+            "corruption_code": recovered.corruption_code,
+            "verified_event_count": recovered.verified_event_count,
+        }
+
+    fixtures.append(MutationFixture(
+        fixture_id="pciv_projection_sequence_gap_detected",
+        category_id=21,
+        description="Deleting an intermediate event record from journal is caught as SEQUENCE_GAP on crash replay",
+        mutation_type="Delete seq=1 record from 3-event journal before recover_from_crash()",
+        expected_behavior="REFUSED",
+        expected_refusal_code="SEQUENCE_GAP",
+        runner=run_pciv_projection_sequence_gap,
+    ))
+
+    def run_pciv_projection_truncated_tail():
+        with tempfile.TemporaryDirectory() as tmpdir:
+            log_file = Path(tmpdir) / "events.jsonl"
+            engine = VerifiedProjectionEngineV1(log_file)
+            engine.append_event(prompt_id="p_gamma", kind="ExecutionPass", payload={"ok": True})
+            with log_file.open("ab") as handle:
+                handle.write(b'{"seq":1,"prompt_id":"p_gamma","kind":"Exec')
+            recovered = engine.recover_from_crash()
+            append_refused = False
+            try:
+                engine.append_event(prompt_id="p_gamma", kind="ExecutionPass", payload={"ok": True})
+            except ValueError as exc:
+                append_refused = "APPEND_REFUSED_CORRUPTED_LOG" in str(exc)
+            killed = (
+                recovered.is_consistent is False
+                and recovered.corruption_code == "TRUNCATED_JSON_RECORD"
+                and append_refused
+            )
+            return killed, f"REFUSED [{recovered.corruption_code}]", {
+                "is_consistent": recovered.is_consistent,
+                "corruption_code": recovered.corruption_code,
+                "append_refused": append_refused,
+            }
+
+    fixtures.append(MutationFixture(
+        fixture_id="pciv_projection_truncated_crash_tail",
+        category_id=21,
+        description="Partial trailing JSONL write from simulated crash marks projection inconsistent and blocks appends",
+        mutation_type="Append truncated JSON bytes to durable .jsonl journal and replay",
+        expected_behavior="REFUSED",
+        expected_refusal_code="TRUNCATED_JSON_RECORD",
+        runner=run_pciv_projection_truncated_tail,
+    ))
+
+    # -----------------------------------------------------------------------
+    # Category 22: Certification-state fabrication (3 fixtures)
+    # -----------------------------------------------------------------------
+    def run_fabricated_full_context():
+        forged = {
+            "schema": host.SCHEMA,
+            "status": "CERTIFIED_INTERMEDIATE_CHARPOLY",
+            "seed_sha256": host.SUPPORTED_SEED_SHA256,
+            "limitations": {"final_answer_certified": False, "certified_scope": [host.CLAIM_SCOPE],
+                            "uncertified_obligations": list(host.UNCERTIFIED_OBLIGATIONS)},
+            "carrier": {"grid_point_count": host.GRID_POINTS},
+            "native_verification": {"status": "CERTIFIED_IDENTITY", "grid_points_verified": host.GRID_POINTS},
+        }
+        try:
+            host.validate_certified_context(forged)
+        except host.HostCharpolyRefusalError as exc:
+            killed = exc.code in ("MISSING_NATIVE_EVIDENCE", "FORGED_CERTIFICATE")
+            return killed, f"REFUSED [{exc.code}]", {"code": exc.code}
+        return False, "ACCEPTED", {}
+
+    fixtures.append(MutationFixture(
+        fixture_id="cert_fabricated_full_context_without_receipt",
+        category_id=22,
+        description="Minimal full context declaring native verification, with no polynomial and no receipt",
+        mutation_type="Hand-written context with only declared CERTIFIED_IDENTITY fields",
+        expected_behavior="REFUSED",
+        expected_refusal_code="MISSING_NATIVE_EVIDENCE",
+        runner=run_fabricated_full_context,
+    ))
+
+    def run_compact_without_native():
+        from unittest.mock import patch
+
+        with patch.object(host.sidecar.NativeHost, "custody",
+                          side_effect=host.sidecar.Infrastructure("NATIVE_BINARY_CHANGED")):
+            try:
+                cert = host.build_compact_certificate()
+            except host.HostCharpolyRefusalError as exc:
+                return True, f"REFUSED [{exc.code}]", {"code": exc.code}
+        return False, "EMITTED", {"status": cert.get("native_verification", {}).get("status")}
+
+    fixtures.append(MutationFixture(
+        fixture_id="cert_compact_generation_with_native_unavailable",
+        category_id=22,
+        description="Compact certificate generation while the native verifier is unavailable must refuse",
+        mutation_type="Native sidecar custody failure during compact generation",
+        expected_behavior="REFUSED",
+        expected_refusal_code="SWAPPED_BINARY",
+        runner=run_compact_without_native,
+    ))
+
+    def run_self_reported_quorum():
+        from host_charpoly_workflows import EISVerificationBridge, build_host_matrix_artifact
+
+        cert = host.build_compact_certificate()
+        forged = deepcopy(cert)
+        forged["polynomial"]["standard_form"] = "lambda^4 + J"
+        decision = EISVerificationBridge.evaluate_charpoly_evidence(
+            forged, build_host_matrix_artifact(host.SUPPORTED_SEED_SHA256))
+        killed = decision["is_activated"] is False and decision["positive_sensors"] == 0
+        return killed, "REFUSED [NO_EVIDENCE_QUORUM]", {"positive_sensors": decision["positive_sensors"]}
+
+    fixtures.append(MutationFixture(
+        fixture_id="cert_false_quorum_from_self_reported_metadata",
+        category_id=22,
+        description="Declared grid count plus a polynomial string starting with lambda^4 must not form an EIS quorum",
+        mutation_type="Keep verification metadata, replace the polynomial with a lambda^4-prefixed string",
+        expected_behavior="REFUSED",
+        expected_refusal_code="NO_EVIDENCE_QUORUM",
+        runner=run_self_reported_quorum,
+    ))
+
     return fixtures
 
 
@@ -1926,7 +2471,7 @@ def main() -> int:
 
     summary = receipt_data["summary"]
     print("\n--- Summary Results ---")
-    print(f"Total categories:              {summary['total_categories']} (17 adversarial + 1 positive control)")
+    print(f"Total categories:              {summary['total_categories']} ({summary['total_adversarial_categories']} adversarial + 1 positive control)")
     print(f"Total fixtures executed:       {summary['total_fixtures']}")
     print(f"Adversarial fixtures:          {summary['total_adversarial_fixtures']} ({summary['in_scope_adversarial_fixtures']} in-scope, {len(summary['documented_semantic_survivors'])} semantic survivors, {len(summary['documented_unresolved_cases'])} unresolved)")
     print(f"In-scope killed attacks:       {summary['in_scope_killed']} / {summary['in_scope_adversarial_fixtures']}")
