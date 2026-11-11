@@ -554,6 +554,20 @@ class TestQMInvariantAntibodyFalsification:
         ):
             assert QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range(text).passed is False, text
 
+    def test_ab09_only_triggers_on_chsh_claims_and_parses_the_whole_rhs(self):
+        """PR #63 follow-up: Ab09 must not fire on unrelated 'expectation' text or words that
+        merely contain 'bell', and it must sum a compound right-hand side."""
+        check = QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range
+        for benign in (
+            "The energy expectation = 3.5 for this state.",
+            "The <H> expectation = 6 meV here.",
+            "Campbell = 5 in the dataset.",
+        ):
+            assert check(benign).passed is True, benign
+        # A compound expression above Tsirelson must be summed, not truncated to its first term.
+        for violation in ("CHSH = 2*sqrt(2) + 1.", "Maximal CHSH = 2*sqrt(3)."):
+            assert check(violation).passed is False, violation
+
     def test_ab10_decimal_leak_on_trace_normalization(self):
         """Ab10 rejects trace normalization violation Tr(rho) = 1.5."""
         text = "Density matrix trace normalization Tr(rho) = 1.5."

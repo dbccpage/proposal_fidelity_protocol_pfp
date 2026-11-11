@@ -62,6 +62,9 @@ IMPLEMENTATION_FILES = (
     "campaign_ledger.py",
     "openrouter_provider.py",
     "live_campaign.py",
+    # The custody module itself decides which files are pinned and how pin paths resolve,
+    # so it must be pinned too (PR #63 follow-up): a change to it invalidates a plan.
+    "source_custody.py",
 )
 
 
@@ -237,19 +240,37 @@ class EISVerificationBridge:
         )
 
         evidence: dict[str, Any] = {}
+        native_positive = True
         if custom_signals is not None:
             sensor_signals = custom_signals
         else:
             evidence = EISVerificationBridge.sensor_evidence(charpoly_artifact, matrix_artifact)
             target = evidence["artifact_polynomial_sha256"]
+
+            def _counts(name: str) -> bool:
+                row = evidence["sensors"].get(name, {})
+                return bool(row.get("ok")) and row.get("polynomial_sha256") == target
+
+            # Two independent sources feed the gate, and native re-execution is mandatory:
+            #   - 'sensor_native_receipt': the native sidecar reproduced the cited receipt.
+            #   - 'sensor_matrix_identity': the Pauli matrix artifact is admitted against the
+            #     seed AND its independent Laplace expansion equals the claimed polynomial AND
+            #     the structural constraints hold. The symbolic and structural checks share the
+            #     one matrix artifact, so they are one correlated source, counted once -- not
+            #     two votes that could reach quorum without any native evidence.
+            native_positive = _counts("sensor_native_receipt")
+            matrix_positive = _counts("sensor_symbolic_identity") and _counts("sensor_structural_constraints")
             sensor_signals = {
-                name: Fraction(1, 1) if (row["ok"] and row["polynomial_sha256"] == target) else Fraction(0, 1)
-                for name, row in evidence["sensors"].items()
+                "sensor_native_receipt": Fraction(1, 1) if native_positive else Fraction(0, 1),
+                "sensor_matrix_identity": Fraction(1, 1) if matrix_positive else Fraction(0, 1),
             }
 
         decision = gate.evaluate_quorum(sensor_signals)
+        # Native is a precondition, not merely one vote: a positive matrix identity can never
+        # activate the gate on its own, however the quorum arithmetic falls out.
+        is_activated = bool(decision.is_activated) and (custom_signals is not None or native_positive)
         return {
-            "is_activated": decision.is_activated,
+            "is_activated": is_activated,
             "hill_value_str": str(decision.hill_value),
             "aggregate_signal_str": str(decision.aggregate_signal),
             "threshold_str": str(decision.threshold),
@@ -267,10 +288,21 @@ class EISVerificationBridge:
         def digest(text: str) -> str:
             return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
-        claimed = charpoly_artifact.get("polynomial", {}).get("standard_form")
-        if not isinstance(claimed, str):
-            claimed = ""
+        claimed = EISVerificationBridge._claimed_polynomial(charpoly_artifact)
         sensors: dict[str, dict[str, Any]] = {}
+
+        # Admit the matrix artifact against the seed before any sensor trusts it. A forged
+        # matrix (e.g. every coefficient scaled) is rejected here, so the symbolic and
+        # structural sensors cannot be satisfied by an attacker-chosen matrix/polynomial pair.
+        matrix_admitted = False
+        try:
+            canonical = json.dumps(matrix_artifact, sort_keys=True, separators=(",", ":"))
+            matrix_admitted = bool(pauli.check_artifact(canonical, SUPPORTED_SEED_SHA256).get("accepted"))
+        except (TypeError, ValueError, KeyError):
+            matrix_admitted = False
+        if not matrix_admitted:
+            for name in ("sensor_symbolic_identity", "sensor_structural_constraints"):
+                sensors[name] = {"ok": False, "polynomial_sha256": None, "refusal": "MATRIX_NOT_ADMITTED"}
 
         # Native: re-execution must reproduce the receipt the artifact cites.
         try:
@@ -282,29 +314,53 @@ class EISVerificationBridge:
         except host_charpoly.HostCharpolyRefusalError as exc:
             sensors["sensor_native_receipt"] = {"ok": False, "polynomial_sha256": None, "refusal": exc.code}
 
-        # Symbolic and structural: from the separately admitted matrix artifact.
-        try:
-            raw = matrix_artifact["coefficient_matrices"]
-            matrices = {name: [[Fraction(x) for x in row] for row in raw[name]] for name in host_charpoly.PARAMETERS}
-            matrices["constant"] = [[Fraction(0)] * host_charpoly.DIMENSION for _ in range(host_charpoly.DIMENSION)]
-            poly = host_charpoly.det_laplace(host_charpoly.build_characteristic_matrix(matrices))
-            text = host_charpoly.format_charpoly_standard_form(poly, ("lambda", *host_charpoly.PARAMETERS))
-            sensors["sensor_symbolic_identity"] = {"ok": text == claimed, "polynomial_sha256": digest(text)}
-            symmetric_traceless = all(
-                m[i][j] == m[j][i] for m in matrices.values() for i in range(4) for j in range(4)
-            ) and all(sum(m[i][i] for i in range(4)) == 0 for m in matrices.values())
+        # Symbolic and structural: from the admitted matrix artifact (skipped when it was
+        # rejected -- its sensors were already set to MATRIX_NOT_ADMITTED above).
+        if matrix_admitted:
             try:
-                host_charpoly.check_degree_bounds(poly)
-                bounds_ok = True
-            except host_charpoly.HostCharpolyRefusalError:
-                bounds_ok = False
-            no_cubic = not any(exp[0] == 3 for exp, coeff in poly.items() if coeff != 0)
-            sensors["sensor_structural_constraints"] = {
-                "ok": symmetric_traceless and bounds_ok and no_cubic, "polynomial_sha256": digest(text)}
-        except (KeyError, TypeError, ValueError, ZeroDivisionError, IndexError) as exc:
-            for name in ("sensor_symbolic_identity", "sensor_structural_constraints"):
-                sensors[name] = {"ok": False, "polynomial_sha256": None, "refusal": type(exc).__name__}
+                raw = matrix_artifact["coefficient_matrices"]
+                matrices = {name: [[Fraction(x) for x in row] for row in raw[name]] for name in host_charpoly.PARAMETERS}
+                matrices["constant"] = [[Fraction(0)] * host_charpoly.DIMENSION for _ in range(host_charpoly.DIMENSION)]
+                poly = host_charpoly.det_laplace(host_charpoly.build_characteristic_matrix(matrices))
+                text = host_charpoly.format_charpoly_standard_form(poly, ("lambda", *host_charpoly.PARAMETERS))
+                sensors["sensor_symbolic_identity"] = {"ok": text == claimed, "polynomial_sha256": digest(text)}
+                symmetric_traceless = all(
+                    m[i][j] == m[j][i] for m in matrices.values() for i in range(4) for j in range(4)
+                ) and all(sum(m[i][i] for i in range(4)) == 0 for m in matrices.values())
+                try:
+                    host_charpoly.check_degree_bounds(poly)
+                    bounds_ok = True
+                except host_charpoly.HostCharpolyRefusalError:
+                    bounds_ok = False
+                no_cubic = not any(exp[0] == 3 for exp, coeff in poly.items() if coeff != 0)
+                sensors["sensor_structural_constraints"] = {
+                    "ok": symmetric_traceless and bounds_ok and no_cubic, "polynomial_sha256": digest(text)}
+            except (KeyError, TypeError, ValueError, ZeroDivisionError, IndexError) as exc:
+                for name in ("sensor_symbolic_identity", "sensor_structural_constraints"):
+                    sensors[name] = {"ok": False, "polynomial_sha256": None, "refusal": type(exc).__name__}
         return {"artifact_polynomial_sha256": digest(claimed), "sensors": sensors}
+
+    @staticmethod
+    def _claimed_polynomial(artifact: dict[str, Any]) -> str:
+        """The polynomial text an artifact claims, from a compact or a full certified context."""
+        def _standard_form(obj: Any) -> str | None:
+            if isinstance(obj, dict):
+                form = obj.get("polynomial", {})
+                if isinstance(form, dict) and isinstance(form.get("standard_form"), str):
+                    return form["standard_form"]
+            return None
+
+        if not isinstance(artifact, dict):
+            return ""
+        direct = _standard_form(artifact)
+        if direct is not None:
+            return direct
+        solver = artifact.get("solver_context")
+        if isinstance(solver, dict):
+            nested = _standard_form(solver) or _standard_form(solver.get("compact_certificate"))
+            if nested is not None:
+                return nested
+        return ""
 
 
 class PCIVTaskSetEvaluator:
