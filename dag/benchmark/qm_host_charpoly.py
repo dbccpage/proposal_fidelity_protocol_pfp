@@ -1031,11 +1031,14 @@ def _verify_native_evidence(context: dict[str, Any], schema: str, seed_hash: str
         solver = context.get("solver_context")
         if not isinstance(solver, dict) or solver.get("coefficients") != derived["normalized_coefficients"]:
             raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "certificate payload differs from host derivation")
+        bindings = context.get("source_bindings")
+        if not isinstance(bindings, dict):
+            raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "source_bindings must be an object")
         public = bridge.prepare_public(seed_hash)["payload"]["native_public_input"]
         if (receipt.get("status") != "CERTIFIED_IDENTITY" or receipt.get("grid_points") != GRID_POINTS
                 or receipt.get("candidate_sha256") != native_candidate_sha256(derived["normalized_coefficients"], seed_hash)
                 or receipt.get("public_input_sha256") != sidecar.digest(public)
-                or receipt.get("binary_sha256") != context.get("source_bindings", {}).get("native_binary_sha256")):
+                or receipt.get("binary_sha256") != bindings.get("native_binary_sha256")):
             raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "native receipt is not bound to this polynomial")
     if not reexecute_native:
         return {"native_reexecuted": False, "receipt_sha256": claimed_digest}
@@ -1190,9 +1193,29 @@ def validate_certified_context(context_input: str | dict[str, Any], *, reexecute
         eval_role = limitations.get("evaluation_role")
         if isinstance(eval_role, str):
             check_prompt_injection(eval_role)
+        # The theorem statement is free text and must be the host's own, screened for injection.
+        theorem = context.get("theorem")
+        if not isinstance(theorem, str):
+            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing theorem statement")
+        check_prompt_injection(theorem)
+        if theorem != THEOREM:
+            raise HostCharpolyRefusalError("CONTRADICTION_FINAL_ANSWER_CLAIM", "theorem does not match the host statement")
+        # The admitted public matrix must name the pinned source, not an attacker-chosen path.
+        admitted = context.get("admitted_public_matrix")
+        if not isinstance(admitted, dict):
+            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing admitted_public_matrix section")
+        if isinstance(admitted.get("source_path"), str):
+            check_prompt_injection(admitted["source_path"])
+        if (admitted.get("source_path") != "dag/benchmark/hamiltonian_artifact.py"
+                or admitted.get("source_sha256") != PINNED_SOURCES.get("hamiltonian_artifact.py")
+                or admitted.get("basis") != list(BASIS) or admitted.get("parameters") != list(PARAMETERS)):
+            raise HostCharpolyRefusalError("PUBLIC_INPUT_MISMATCH", "admitted_public_matrix is not the pinned host artifact")
+        # A full context must carry and bind its compact certificate, which validates the
+        # polynomial text itself; it is not optional.
         solver_ctx = context.get("solver_context")
-        if isinstance(solver_ctx, dict) and "compact_certificate" in solver_ctx:
-            validate_certified_context(solver_ctx["compact_certificate"], reexecute_native=reexecute_native)
+        if not isinstance(solver_ctx, dict) or not isinstance(solver_ctx.get("compact_certificate"), dict):
+            raise HostCharpolyRefusalError("MISSING_NATIVE_EVIDENCE", "full context carries no compact certificate")
+        validate_certified_context(solver_ctx["compact_certificate"], reexecute_native=reexecute_native)
 
     check_provenance_pins()
     evidence = _verify_native_evidence(context, schema, seed_hash, reexecute_native)

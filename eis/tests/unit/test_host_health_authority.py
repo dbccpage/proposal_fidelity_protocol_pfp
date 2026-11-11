@@ -50,3 +50,35 @@ def test_digest_fields_must_be_canonical():
     with pytest.raises(ValueError):
         HostHealthReceiptV1(observer_id="HOST_WATCHDOG", status="HEALTHY", subject_id="sha256:anything",
                             profile_digest=PROFILE)
+
+
+def test_malformed_mac_or_nonce_is_refused_not_raised():
+    """PR #66 follow-up review: a non-hex or non-ASCII mac, or a non-string/empty nonce, must
+    fail authentication rather than raise out of hmac.compare_digest or the membership test."""
+    authority = HostHealthAuthority()
+    good = authority.issue(observer_id="HOST_WATCHDOG", status="HEALTHY", subject_id=SUBJECT, profile_digest=PROFILE)
+    assert authority.authenticate(replace(good, mac="z" * 64), consume=False) is False
+    assert authority.authenticate(replace(good, mac="ÿ" * 64), consume=False) is False
+    assert authority.authenticate(replace(good, nonce=12345), consume=False) is False
+    assert authority.authenticate(replace(good, nonce=""), consume=False) is False
+    # The real record still authenticates: the guards reject only the malformed ones.
+    assert authority.authenticate(good, consume=False) is True
+
+
+def test_a_transient_downstream_refusal_does_not_spend_the_nonce():
+    """PR #66 follow-up review: the single-use nonce is spent only after activation proceeds, so
+    a caller-side mismatch does not burn a valid receipt and a corrected retry still activates."""
+    authority = HostHealthAuthority()
+    receipt = authority.issue(observer_id="HOST_WATCHDOG", status="HEALTHY", subject_id=SUBJECT, profile_digest=PROFILE)
+    other_subject = "sha256:" + "2" * 64
+    wrong_hit = replace(HIT, subject_id=other_subject)
+    with pytest.raises(ActivationRefusal) as mismatch:
+        evaluate_guard_activation(PROFILE, wrong_hit, DANGER, externally_admitted=True, suspended=False,
+                                  host_health=receipt, authority=authority)
+    assert mismatch.value.code == "SUBJECT_MISMATCH"
+    # The nonce survived the transient refusal: the corrected call authenticates and activates,
+    # and only then is the nonce consumed, so a replay is refused.
+    activate(receipt, authority)
+    with pytest.raises(ActivationRefusal) as replay:
+        activate(receipt, authority)
+    assert replay.value.code == "HOST_HEALTH_UNVERIFIED"

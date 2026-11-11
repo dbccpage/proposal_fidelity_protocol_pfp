@@ -727,29 +727,49 @@ class QMInvariantAntibodySuiteV1:
         Values below 2, including 0 for the maximally mixed state, are physical.
         """
         tsirelson = 2 * 2 ** 0.5
-        expr = (
-            r"(?P<sign>[+-]?\s*)"
-            r"(?:(?:(?P<rad_coeff>[0-9]+(?:\.[0-9]+)?)\s*\*?\s*)?\\?sqrt\s*[\{\(]?\s*(?P<rad>[0-9]+(?:\.[0-9]+)?)\s*[\}\)]?"
-            r"|(?P<plain>[0-9]+(?:\.[0-9]+)?)(?![0-9]|\.[0-9]|\s*\*?\s*\\?sqrt))"
+        # Trigger only on a CHSH/Bell (or |S|) claim with a comparison operator. The word
+        # boundaries keep unrelated words out (e.g. "Campbell"), and the bare "expectation"
+        # trigger is gone, so an unrelated "energy expectation = 3.5" is not a CHSH claim.
+        header = re.compile(
+            r"\b(?:maximal\s+)?(?:CHSH|Bell)\b(?:\s+(?:value|expectation|parameter))?\s*"
+            r"(?P<abs>\|S\|\s*)?(?P<op>=|<=|>=|<|>)\s*",
+            re.IGNORECASE,
         )
-        pattern = re.compile(
-            r"(?:(?:maximal\s+)?(?:CHSH|Bell)(?:\s+(?:value|expectation|parameter))?|expectation)\s*(?P<abs>\|S\|\s*)?(?P<op>=|<=|>=|<|>)\s*"
-            + expr,
+        # One additive term: an optional sign, then either coeff*sqrt(n) or a plain number.
+        term = re.compile(
+            r"\s*(?P<sign>[+-])?\s*(?:(?P<coeff>[0-9]+(?:\.[0-9]+)?)\s*\*\s*)?"
+            r"(?:\\?sqrt\s*[\{\(]?\s*(?P<rad>[0-9]+(?:\.[0-9]+)?)\s*[\}\)]?|(?P<plain>[0-9]+(?:\.[0-9]+)?))",
             re.IGNORECASE,
         )
 
-        def _eval_match(m: re.Match[str]) -> float:
-            sign = -1.0 if m.group("sign").strip() == "-" else 1.0
-            if m.group("rad") is not None:
-                coeff = float(m.group("rad_coeff")) if m.group("rad_coeff") is not None else 1.0
-                return sign * coeff * (float(m.group("rad")) ** 0.5)
-            return sign * float(m.group("plain"))
+        def _sum_rhs(start: int) -> tuple[float, int] | None:
+            """Sum the additive numeric terms from ``start``; None if nothing parses there."""
+            total, pos, first = 0.0, start, True
+            while True:
+                m = term.match(text, pos)
+                if not m or (not first and m.group("sign") is None):
+                    break
+                sign = -1.0 if (m.group("sign") == "-") else 1.0
+                if m.group("rad") is not None:
+                    coeff = float(m.group("coeff")) if m.group("coeff") else 1.0
+                    value = coeff * (float(m.group("rad")) ** 0.5)
+                elif m.group("coeff") is not None:
+                    break  # a bare "coeff * <non-sqrt>" is not a CHSH magnitude we parse
+                else:
+                    value = float(m.group("plain"))
+                total += sign * value
+                pos, first = m.end(), False
+            return (total, pos) if not first else None
 
         violations, notes = [], []
-        for match in pattern.finditer(text):
+        for match in header.finditer(text):
+            summed = _sum_rhs(match.end())
+            if summed is None:
+                continue  # a CHSH/Bell claim with no numeric right-hand side is not evaluated
+            v, end = summed
             op = match.group("op")
             has_abs = bool(match.group("abs"))
-            v = _eval_match(match)
+            claim = text[match.start():end]
             if (
                 (op == "=" and (abs(v) > tsirelson + 1e-9 or (has_abs and v < -1e-9)))
                 or (op in (">", ">=") and (v > tsirelson + 1e-9 or (op == ">" and abs(v - tsirelson) <= 1e-9)))
@@ -761,9 +781,9 @@ class QMInvariantAntibodySuiteV1:
                     )
                 )
             ):
-                violations.append(match.group(0))
+                violations.append(claim)
             elif op == "=":
-                notes.append(f"{match.group(0)} ({'Bell violation' if abs(v) > 2 + 1e-9 else 'within the LHV bound'})")
+                notes.append(f"{claim} ({'Bell violation' if abs(v) > 2 + 1e-9 else 'within the LHV bound'})")
         if violations:
             return AntibodyFinding(
                 antibody_id="Ab09_CHSHBoundRange",
@@ -950,7 +970,14 @@ class HostHealthAuthority:
         return replace(draft, mac=self._mac(draft))
 
     def authenticate(self, receipt: HostHealthReceiptV1, *, consume: bool = True) -> bool:
-        if type(receipt) is not HostHealthReceiptV1 or not receipt.nonce or not receipt.mac:
+        # Refuse, never raise, on a malformed record: a non-string or unhashable nonce would
+        # break the set membership test, and a non-hex (e.g. non-ASCII) mac would make
+        # hmac.compare_digest raise TypeError. Both are just authentication failures.
+        if type(receipt) is not HostHealthReceiptV1:
+            return False
+        if not isinstance(receipt.nonce, str) or not receipt.nonce:
+            return False
+        if not isinstance(receipt.mac, str) or not re.fullmatch(r"[0-9a-f]{64}", receipt.mac):
             return False
         if receipt.nonce not in self._issued or receipt.nonce in self._consumed:
             return False
@@ -997,7 +1024,10 @@ def evaluate_guard_activation(
             f"host health observer {host_health.observer_id!r} is a forbidden observer",
         )
 
-    if authority is not None and not authority.authenticate(host_health):
+    # Verify without consuming: the single-use nonce is burned only once activation actually
+    # proceeds, so an unrelated later refusal does not spend a legitimate record (its retry
+    # must not then fail as 'replayed').
+    if authority is not None and not authority.authenticate(host_health, consume=False):
         raise ActivationRefusal(
             "HOST_HEALTH_UNVERIFIED",
             f"host health record from {host_health.observer_id!r} did not authenticate (forged, altered or replayed)",
@@ -1030,7 +1060,7 @@ def evaluate_guard_activation(
             ),
         )
 
-    return evaluate_activation(
+    receipt = evaluate_activation(
         profile_digest=profile_digest,
         hit=hit,
         danger=danger,
@@ -1039,6 +1069,10 @@ def evaluate_guard_activation(
         disposition=disposition,
         policy=policy,
     )
+    # Activation proceeded (evaluate_activation did not refuse): spend the single-use nonce now.
+    if authority is not None:
+        authority.authenticate(host_health, consume=True)
+    return receipt
 
 
 __all__ = [
