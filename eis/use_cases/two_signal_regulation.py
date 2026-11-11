@@ -14,10 +14,12 @@ or paid API calls are referenced or accessed.
 
 from __future__ import annotations
 
+import hmac
 import json
 import re
+import secrets
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime
 
 # Domain imports
@@ -725,28 +727,43 @@ class QMInvariantAntibodySuiteV1:
         Values below 2, including 0 for the maximally mixed state, are physical.
         """
         tsirelson = 2 * 2 ** 0.5
-        number = r"(2\s*\*?\s*\\?sqrt\s*[\{\(]?\s*2\s*[\}\)]?|-?\s*[0-9]+(?:\.[0-9]+)?)"
+        expr = (
+            r"(?P<sign>[+-]?\s*)"
+            r"(?:(?:(?P<rad_coeff>[0-9]+(?:\.[0-9]+)?)\s*\*?\s*)?\\?sqrt\s*[\{\(]?\s*(?P<rad>[0-9]+(?:\.[0-9]+)?)\s*[\}\)]?"
+            r"|(?P<plain>[0-9]+(?:\.[0-9]+)?)(?![0-9]|\.[0-9]|\s*\*?\s*\\?sqrt))"
+        )
         pattern = re.compile(
-            r"(?:CHSH|Bell)(?:\s+(?:value|expectation|parameter))?\s*(?:\|S\|\s*)?(=|<=|>=|<|>)\s*" + number,
+            r"(?:(?:maximal\s+)?(?:CHSH|Bell)(?:\s+(?:value|expectation|parameter))?|expectation)\s*(?P<abs>\|S\|\s*)?(?P<op>=|<=|>=|<|>)\s*"
+            + expr,
             re.IGNORECASE,
         )
 
-        def value(raw: str) -> float:
-            raw = raw.replace(" ", "")
-            return tsirelson if "sqrt" in raw.lower() else float(raw)
+        def _eval_match(m: re.Match[str]) -> float:
+            sign = -1.0 if m.group("sign").strip() == "-" else 1.0
+            if m.group("rad") is not None:
+                coeff = float(m.group("rad_coeff")) if m.group("rad_coeff") is not None else 1.0
+                return sign * coeff * (float(m.group("rad")) ** 0.5)
+            return sign * float(m.group("plain"))
 
         violations, notes = [], []
         for match in pattern.finditer(text):
-            op, v = match.group(1), value(match.group(2))
-            if op == "=" and abs(v) > tsirelson + 1e-9:
-                violations.append(match.group(0))
-            elif op in (">", ">=") and (v > tsirelson + 1e-9 or (op == ">" and abs(v - tsirelson) <= 1e-9)):
+            op = match.group("op")
+            has_abs = bool(match.group("abs"))
+            v = _eval_match(match)
+            if (
+                (op == "=" and (abs(v) > tsirelson + 1e-9 or (has_abs and v < -1e-9)))
+                or (op in (">", ">=") and (v > tsirelson + 1e-9 or (op == ">" and abs(v - tsirelson) <= 1e-9)))
+                or (
+                    op in ("<", "<=")
+                    and (
+                        (has_abs and (v < -1e-9 or (op == "<" and abs(v) <= 1e-9)))
+                        or (not has_abs and (v < -tsirelson - 1e-9 or (op == "<" and abs(v + tsirelson) <= 1e-9)))
+                    )
+                )
+            ):
                 violations.append(match.group(0))
             elif op == "=":
-                notes.append(f"{match.group(0)} ({'Bell violation' if abs(v) > 2 else 'within the LHV bound'})")
-        for match in re.finditer(r"(?:maximal\s+CHSH|expectation)\s*=\s*([0-9]+(?:\.[0-9]+)?)", text, re.IGNORECASE):
-            if float(match.group(1)) > tsirelson + 1e-9 and match.group(0) not in violations:
-                violations.append(match.group(0))
+                notes.append(f"{match.group(0)} ({'Bell violation' if abs(v) > 2 + 1e-9 else 'within the LHV bound'})")
         if violations:
             return AntibodyFinding(
                 antibody_id="Ab09_CHSHBoundRange",
@@ -911,37 +928,28 @@ class HostHealthAuthority:
     """
 
     def __init__(self, key: bytes | None = None) -> None:
-        import secrets
-
         self._key = key if key is not None else secrets.token_bytes(32)
         self._issued: set[str] = set()
         self._consumed: set[str] = set()
 
     @staticmethod
-    def _body(receipt: "HostHealthReceiptV1") -> bytes:
+    def _body(receipt: HostHealthReceiptV1) -> bytes:
         fields = [receipt.observer_id, receipt.status, receipt.subject_id, receipt.profile_digest,
                   receipt.timestamp, receipt.authority_effect, receipt.nonce]
         return json.dumps(fields, separators=(",", ":"), ensure_ascii=True).encode("ascii")
 
-    def _mac(self, receipt: "HostHealthReceiptV1") -> str:
-        import hmac
-
+    def _mac(self, receipt: HostHealthReceiptV1) -> str:
         return hmac.new(self._key, self._body(receipt), "sha256").hexdigest()
 
     def issue(self, *, observer_id: str, status: str, subject_id: str, profile_digest: str,
-              timestamp: str = "2026-11-11T00:00:00Z") -> "HostHealthReceiptV1":
-        import secrets
-        from dataclasses import replace
-
+              timestamp: str = "2026-11-11T00:00:00Z") -> HostHealthReceiptV1:
         draft = HostHealthReceiptV1(observer_id=observer_id, status=status, subject_id=subject_id,
                                     profile_digest=profile_digest, timestamp=timestamp,
                                     nonce=secrets.token_hex(16))
         self._issued.add(draft.nonce)
         return replace(draft, mac=self._mac(draft))
 
-    def authenticate(self, receipt: "HostHealthReceiptV1", *, consume: bool = True) -> bool:
-        import hmac
-
+    def authenticate(self, receipt: HostHealthReceiptV1, *, consume: bool = True) -> bool:
         if type(receipt) is not HostHealthReceiptV1 or not receipt.nonce or not receipt.mac:
             return False
         if receipt.nonce not in self._issued or receipt.nonce in self._consumed:

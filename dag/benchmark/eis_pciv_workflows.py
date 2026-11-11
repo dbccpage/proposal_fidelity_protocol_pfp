@@ -39,6 +39,7 @@ for _path in (ROOT, HERE, OPS):
 import charpoly_wire as wire  # noqa: E402
 import hamiltonian_artifact as pauli  # noqa: E402
 import qm_host_charpoly as host_charpoly  # noqa: E402
+from source_custody import pin_path, regulation_pins  # noqa: E402
 
 from eis.domain.thymus import ThymusGate, ThymusSelectionResult  # noqa: E402
 from eis.domain.value_objects import (  # noqa: E402
@@ -124,8 +125,6 @@ def _file_sha256(path: Path) -> str:
 
 def prepare_source_pins() -> dict[str, str]:
     """Capture SHA-256 digests of live benchmark workflow dependencies."""
-    from source_custody import regulation_pins
-
     pins: dict[str, str] = {}
     for name in IMPLEMENTATION_FILES:
         filepath = HERE / name
@@ -733,8 +732,6 @@ def execute_eis_pciv_plan(
         raise ValueError(f"Unsupported seed hash: {seed_hash}")
 
     spec = EIS_PCIV_PLANS[plan_id]
-    from source_custody import pin_path
-
     for filename, expected_sha in spec["source_pins"].items():
         if _file_sha256(pin_path(filename)) != expected_sha:
             raise ValueError(f"Source pin changed for {filename}")

@@ -531,9 +531,27 @@ class TestQMInvariantAntibodyFalsification:
 
     def test_ab09_maximally_mixed_state_is_physical(self):
         """PR #63 review regression: rho = I/4 gives S = 0 for every CHSH setting."""
-        for text in ("For rho = I/4 the CHSH = 0.", "CHSH = -1.2", "CHSH = 2*sqrt(2)", "CHSH < 2"):
+        for text in (
+            "For rho = I/4 the CHSH = 0.",
+            "CHSH = -1.2",
+            "CHSH = 2*sqrt(2)",
+            "CHSH = -2*sqrt(2)",
+            "CHSH < 2",
+            "CHSH >= -2*sqrt(2)",
+        ):
             assert QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range(text).passed is True, text
-        for text in ("CHSH = 2.83", "CHSH = -3", "CHSH > 2*sqrt(2)"):
+        neg_tsirelson = QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range("CHSH = -2*sqrt(2)")
+        assert "Bell violation" in neg_tsirelson.evidence
+        for text in (
+            "CHSH = 2.83",
+            "CHSH = -3",
+            "CHSH > 2*sqrt(2)",
+            "CHSH < -2*sqrt(2)",
+            "CHSH < -3",
+            "CHSH <= -2.9",
+            "CHSH = 2.5*sqrt(2)",
+            "CHSH = 2*sqrt(3)",
+        ):
             assert QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range(text).passed is False, text
 
     def test_ab10_decimal_leak_on_trace_normalization(self):

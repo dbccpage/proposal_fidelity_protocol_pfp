@@ -729,6 +729,13 @@ class TestReceiptGroundedCertification(unittest.TestCase):
                 host.validate_certified_context(cert)
         self.assertEqual(exc.exception.code, "MISSING_NATIVE_EVIDENCE")
 
+    def test_committed_certified_context_artifact_validates(self):
+        artifact_path = host.HERE / "qm_host_charpoly_certified_context.json"
+        committed = json.loads(artifact_path.read_text(encoding="utf-8"))
+        validated = host.validate_certified_context(committed, reexecute_native=True)
+        self.assertTrue(validated["valid"])
+        self.assertTrue(validated["evidence"]["native_reexecuted"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
