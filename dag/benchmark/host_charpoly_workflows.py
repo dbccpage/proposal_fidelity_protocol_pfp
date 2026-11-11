@@ -70,12 +70,15 @@ def _file_sha(path: Path) -> str:
 
 
 def prepare_source_pins() -> dict[str, str]:
-    """Capture live source pins for all workflow dependencies."""
+    """Capture live source pins for workflow files and the EIS/PCIV/OPERADS code they invoke."""
+    from source_custody import regulation_pins
+
     pins: dict[str, str] = {}
     for filename in IMPLEMENTATION_FILES:
         filepath = HERE / filename
         if filepath.is_file():
             pins[filename] = _file_sha(filepath)
+    pins.update(regulation_pins())
     return pins
 
 
@@ -205,12 +208,24 @@ class EISVerificationBridge:
         *,
         custom_signals: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        """Collects independent signals and evaluates allosteric consensus.
+        """Collects verification signals from different evidence and evaluates allosteric consensus.
 
-        Sensors:
-          - 'sensor_grid_identity': 1 if 125 grid nodes verified by native Rust sidecar.
-          - 'sensor_degree_bounds': 1 if monic degree 4 in lambda and deg <= 4 in parameters.
-          - 'sensor_trace_zero': 1 if Tr(H) == 0 in computational basis.
+        No sensor reads a verification status the artifact declares about itself.
+        Each sensor recomputes from its own evidence and reports the SHA-256 of the
+        polynomial text it checked; a sensor counts only if that digest equals the
+        artifact's polynomial digest, so all signals refer to one polynomial.
+
+          - 'sensor_native_receipt': the native sidecar is re-run on the host-derived
+            coefficients and must reproduce the artifact's receipt digest
+            (``validate_certified_context(..., reexecute_native=True)``).
+          - 'sensor_symbolic_identity': an independent Laplace expansion of
+            det(lambda*I - H) built from the separately admitted Pauli matrix
+            artifact must equal the artifact's polynomial text exactly.
+          - 'sensor_structural_constraints': from that matrix artifact, every
+            coefficient matrix is real symmetric with zero trace, and the
+            recomputed polynomial is monic of degree 4 in lambda, has no lambda^3
+            term, and respects the per-variable degree bounds. These are necessary
+            conditions, not a proof of correctness.
         """
         import eis.domain.allostery as allostery
         from eis.domain.value_objects import HillParameters
@@ -221,25 +236,15 @@ class EISVerificationBridge:
             per_sensor_cap=Fraction(1),
         )
 
+        evidence: dict[str, Any] = {}
         if custom_signals is not None:
             sensor_signals = custom_signals
         else:
-            grid_verified = (
-                charpoly_artifact.get("native_verification", {}).get("grid_points_verified") == 125
-            )
-            standard_form = charpoly_artifact.get("polynomial", {}).get("standard_form", "")
-            monic_deg = standard_form.startswith("lambda^4")
-
-            matrices = matrix_artifact.get("coefficient_matrices", {})
-            trace_zero = bool(matrices) and all(
-                sum(Fraction(mat[i][i]) for i in range(4)) == 0
-                for mat in matrices.values()
-            )
-
+            evidence = EISVerificationBridge.sensor_evidence(charpoly_artifact, matrix_artifact)
+            target = evidence["artifact_polynomial_sha256"]
             sensor_signals = {
-                "sensor_grid_identity": Fraction(1, 1) if grid_verified else Fraction(0, 1),
-                "sensor_degree_bounds": Fraction(1, 1) if monic_deg else Fraction(0, 1),
-                "sensor_trace_zero": Fraction(1, 1) if trace_zero else Fraction(0, 1),
+                name: Fraction(1, 1) if (row["ok"] and row["polynomial_sha256"] == target) else Fraction(0, 1)
+                for name, row in evidence["sensors"].items()
             }
 
         decision = gate.evaluate_quorum(sensor_signals)
@@ -251,7 +256,55 @@ class EISVerificationBridge:
             "quorum_size": decision.quorum_size,
             "positive_sensors": decision.positive_sensors,
             "rationale": decision.rationale,
+            "sensor_evidence": evidence,
         }
+
+    @staticmethod
+    def sensor_evidence(charpoly_artifact: dict[str, Any], matrix_artifact: dict[str, Any]) -> dict[str, Any]:
+        """Recompute each sensor from its own evidence; never from declared status fields."""
+        import hashlib
+
+        def digest(text: str) -> str:
+            return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+        claimed = charpoly_artifact.get("polynomial", {}).get("standard_form")
+        if not isinstance(claimed, str):
+            claimed = ""
+        sensors: dict[str, dict[str, Any]] = {}
+
+        # Native: re-execution must reproduce the receipt the artifact cites.
+        try:
+            checked = host_charpoly.validate_certified_context(charpoly_artifact, reexecute_native=True)
+            ok = checked["evidence"]["native_reexecuted"] is True
+            sensors["sensor_native_receipt"] = {
+                "ok": ok, "polynomial_sha256": digest(host_charpoly.get_expected_charpoly_standard_form(SUPPORTED_SEED_SHA256)),
+                "receipt_sha256": checked["evidence"]["receipt_sha256"]}
+        except host_charpoly.HostCharpolyRefusalError as exc:
+            sensors["sensor_native_receipt"] = {"ok": False, "polynomial_sha256": None, "refusal": exc.code}
+
+        # Symbolic and structural: from the separately admitted matrix artifact.
+        try:
+            raw = matrix_artifact["coefficient_matrices"]
+            matrices = {name: [[Fraction(x) for x in row] for row in raw[name]] for name in host_charpoly.PARAMETERS}
+            matrices["constant"] = [[Fraction(0)] * host_charpoly.DIMENSION for _ in range(host_charpoly.DIMENSION)]
+            poly = host_charpoly.det_laplace(host_charpoly.build_characteristic_matrix(matrices))
+            text = host_charpoly.format_charpoly_standard_form(poly, ("lambda", *host_charpoly.PARAMETERS))
+            sensors["sensor_symbolic_identity"] = {"ok": text == claimed, "polynomial_sha256": digest(text)}
+            symmetric_traceless = all(
+                m[i][j] == m[j][i] for m in matrices.values() for i in range(4) for j in range(4)
+            ) and all(sum(m[i][i] for i in range(4)) == 0 for m in matrices.values())
+            try:
+                host_charpoly.check_degree_bounds(poly)
+                bounds_ok = True
+            except host_charpoly.HostCharpolyRefusalError:
+                bounds_ok = False
+            no_cubic = not any(exp[0] == 3 for exp, coeff in poly.items() if coeff != 0)
+            sensors["sensor_structural_constraints"] = {
+                "ok": symmetric_traceless and bounds_ok and no_cubic, "polynomial_sha256": digest(text)}
+        except (KeyError, TypeError, ValueError, ZeroDivisionError, IndexError) as exc:
+            for name in ("sensor_symbolic_identity", "sensor_structural_constraints"):
+                sensors[name] = {"ok": False, "polynomial_sha256": None, "refusal": type(exc).__name__}
+        return {"artifact_polynomial_sha256": digest(claimed), "sensors": sensors}
 
 
 class PCIVTaskSetEvaluator:

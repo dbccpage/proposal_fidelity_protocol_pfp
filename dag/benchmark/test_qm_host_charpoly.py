@@ -592,8 +592,8 @@ class TestCompactCertifiedContext(unittest.TestCase):
         compact = host.build_compact_certificate()
         serialized = json.dumps(compact, sort_keys=True, separators=(",", ":"))
         char_len = len(serialized)
-        # Check requirement: <= 1200 characters
-        self.assertLessEqual(char_len, 1200)
+        # Check requirement: within the compact character budget
+        self.assertLessEqual(char_len, host.COMPACT_CHAR_BUDGET)
 
         # Check reduction >= 70% compared to original 4,507 characters
         original_len = 4507
@@ -679,6 +679,55 @@ class TestCarrierAndTheoremBounds(unittest.TestCase):
         # Independent formula: (lambda - K)^2 * ((lambda + K)^2 - 4 Delta^2 - 4 J^2)
         # Expected = 16 * (-40) = -640
         self.assertEqual(total, Fraction(-640))
+
+
+class TestReceiptGroundedCertification(unittest.TestCase):
+    """PR #63 review P0 regressions: a verification claim needs a verification event."""
+
+    def test_compact_generation_refuses_without_native_verifier(self):
+        with patch.object(sidecar.NativeHost, "custody", side_effect=sidecar.Infrastructure("NATIVE_BINARY_CHANGED")):
+            with self.assertRaises(host.HostCharpolyRefusalError):
+                host.build_compact_certificate()
+            with self.assertRaises(host.HostCharpolyRefusalError):
+                host.build_certified_context(compact=True)
+
+    def test_compact_status_comes_from_a_real_receipt(self):
+        cert = host.build_compact_certificate()
+        full = host.build_certified_context(compact=False)
+        self.assertEqual(cert["native_verification"]["receipt_sha256"], full["native_verification"]["native_receipt_digest"])
+        self.assertEqual(cert["native_verification"]["status"], full["native_receipt"]["status"])
+
+    def test_fabricated_full_context_is_refused(self):
+        forged = {
+            "schema": host.SCHEMA, "status": "CERTIFIED_INTERMEDIATE_CHARPOLY", "seed_sha256": host.SUPPORTED_SEED_SHA256,
+            "limitations": {"final_answer_certified": False, "certified_scope": [host.CLAIM_SCOPE],
+                            "uncertified_obligations": list(host.UNCERTIFIED_OBLIGATIONS)},
+            "carrier": {"grid_point_count": 125},
+            "native_verification": {"status": "CERTIFIED_IDENTITY", "grid_points_verified": 125},
+        }
+        with self.assertRaises(host.HostCharpolyRefusalError) as exc:
+            host.validate_certified_context(forged)
+        self.assertIn(exc.exception.code, ("MISSING_NATIVE_EVIDENCE", "FORGED_CERTIFICATE"))
+
+    def test_tampered_receipt_or_payload_is_refused(self):
+        full = host.build_certified_context(compact=False)
+        receipt_edit = json.loads(json.dumps(full))
+        receipt_edit["native_receipt"]["grid_points"] = 124
+        payload_edit = json.loads(json.dumps(full))
+        payload_edit["solver_context"]["coefficients"][0] = []
+        digest_edit = json.loads(json.dumps(host.build_compact_certificate()))
+        digest_edit["native_verification"]["receipt_sha256"] = "0" * 64
+        for ctx in (receipt_edit, payload_edit, digest_edit):
+            with self.assertRaises(host.HostCharpolyRefusalError) as exc:
+                host.validate_certified_context(ctx)
+            self.assertEqual(exc.exception.code, "FORGED_CERTIFICATE")
+
+    def test_validation_refuses_when_native_cannot_be_reexecuted(self):
+        cert = host.build_compact_certificate()
+        with patch.object(sidecar.NativeHost, "custody", side_effect=sidecar.Infrastructure("NATIVE_BINARY_CHANGED")):
+            with self.assertRaises(host.HostCharpolyRefusalError) as exc:
+                host.validate_certified_context(cert)
+        self.assertEqual(exc.exception.code, "MISSING_NATIVE_EVIDENCE")
 
 
 if __name__ == "__main__":

@@ -32,9 +32,9 @@ class TestAttackMutationRegistryStructure(unittest.TestCase):
         cls.registry = amr.build_canonical_registry()
 
     def test_all_22_categories_registered(self):
-        """All 22 categories (0 to 21) must be registered."""
-        self.assertEqual(len(self.registry.categories), 22)
-        for cat_id in range(22):
+        """All 23 categories (0 to 22) must be registered."""
+        self.assertEqual(len(self.registry.categories), 23)
+        for cat_id in range(23):
             self.assertIn(cat_id, self.registry.categories)
             cat = self.registry.categories[cat_id]
             self.assertTrue(len(cat.name) > 0)
@@ -45,11 +45,11 @@ class TestAttackMutationRegistryStructure(unittest.TestCase):
 
     def test_fixtures_span_every_category(self):
         """Every category must have at least one reproducible fixture."""
-        fixtures_by_cat: dict[int, list[str]] = {i: [] for i in range(22)}
+        fixtures_by_cat: dict[int, list[str]] = {i: [] for i in range(23)}
         for fix in self.registry.fixtures.values():
             fixtures_by_cat[fix.category_id].append(fix.fixture_id)
 
-        for cat_id in range(22):
+        for cat_id in range(23):
             self.assertGreater(
                 len(fixtures_by_cat[cat_id]),
                 0,
@@ -57,8 +57,8 @@ class TestAttackMutationRegistryStructure(unittest.TestCase):
             )
 
     def test_total_fixture_count(self):
-        """Registry must contain 80 minimized fixtures."""
-        self.assertEqual(len(self.registry.fixtures), 80)
+        """Registry must contain 83 minimized fixtures."""
+        self.assertEqual(len(self.registry.fixtures), 83)
 
 
 class TestAttackMutationExecutionAndKillRates(unittest.TestCase):
@@ -107,7 +107,7 @@ class TestAttackMutationExecutionAndKillRates(unittest.TestCase):
         self.assertEqual(self.summary["in_scope_kill_rate"], 1.0)
         self.assertEqual(self.summary["kill_rate"], 1.0)
         self.assertEqual(self.summary["in_scope_killed"], self.summary["in_scope_adversarial_fixtures"])
-        self.assertEqual(self.summary["in_scope_killed"], 70)
+        self.assertEqual(self.summary["in_scope_killed"], 73)
 
     def test_all_positive_controls_accepted(self):
         """All positive control fixtures must be ACCEPTED."""
@@ -134,11 +134,11 @@ class TestAttackMutationReceiptSchemaAndEvidence(unittest.TestCase):
         self.assertEqual(data["seed_sha256"], host.SUPPORTED_SEED_SHA256)
 
     def test_categories_and_fixtures_in_receipt(self):
-        """Receipt must include all 22 categories with full fixture details."""
+        """Receipt must include all 23 categories with full fixture details."""
         with open(self.receipt_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        self.assertEqual(len(data["categories"]), 22)
+        self.assertEqual(len(data["categories"]), 23)
         total_fixtures_in_json = sum(len(c["fixtures"]) for c in data["categories"])
         self.assertEqual(total_fixtures_in_json, data["summary"]["total_fixtures"])
 

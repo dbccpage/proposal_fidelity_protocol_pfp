@@ -92,7 +92,8 @@ class TestEisPcivWorkflows(unittest.TestCase):
         self.assertIn("eis_pciv_workflows.py", pins)
         self.assertIn("qm_host_charpoly.py", pins)
         for filename, expected_sha in pins.items():
-            actual_sha = hashlib.sha256((HERE / filename).read_bytes()).hexdigest()
+            from source_custody import pin_path
+            actual_sha = hashlib.sha256(pin_path(filename).read_bytes()).hexdigest()
             self.assertEqual(actual_sha, expected_sha)
 
         eis_spec = EIS_PCIV_PLANS["eis_two_signal_charpoly_v1"]

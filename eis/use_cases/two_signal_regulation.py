@@ -14,6 +14,7 @@ or paid API calls are referenced or accessed.
 
 from __future__ import annotations
 
+import json
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -715,32 +716,50 @@ class QMInvariantAntibodySuiteV1:
 
     @staticmethod
     def _check_ab09_chsh_bound_range(text: str) -> AntibodyFinding:
-        """Ab09: CHSH expectation range: local projective floor >= 2, Tsirelson ceiling <= 2*sqrt(2)."""
-        violation = re.search(
-            r"(?:CHSH\s*>\s*(?:2\s*\\?sqrt\s*\{\s*2\s*\}|2\.8[3-9]|2\.9|[3-9])(?![0-9]|\.[0-9])|"
-            r"CHSH\s*<\s*2(?![0-9]|\.[0-9])|"
-            r"(?:maximal\s+)?CHSH\s*=\s*(?:-[0-9]+(?:\.[0-9]+)?|0(?:\.[0-9]+)?|1(?:\.[0-9]+)?|2\.8[3-9][0-9]*|2\.9[0-9]*|[3-9](?:\.[0-9]+)?|\d{2,}(?:\.[0-9]+)?)(?![0-9]|\.[0-9])|"
-            r"expectation\s*=\s*4(?![0-9]|\.[0-9])|"
-            r"maximal\s+CHSH\s*=\s*4(?![0-9]|\.[0-9]))",
-            text,
+        """Ab09: physical CHSH range |S| <= 2*sqrt(2) (Tsirelson), and nothing more.
+
+        Three predicates are kept apart (PR #63 review, item 5):
+          - physical expectation: |S| <= 2*sqrt(2); a claim outside it is refused;
+          - local-hidden-variable bound: |S| <= 2; reported, never refused;
+          - Bell violation: |S| > 2; reported, never required.
+        Values below 2, including 0 for the maximally mixed state, are physical.
+        """
+        tsirelson = 2 * 2 ** 0.5
+        number = r"(2\s*\*?\s*\\?sqrt\s*[\{\(]?\s*2\s*[\}\)]?|-?\s*[0-9]+(?:\.[0-9]+)?)"
+        pattern = re.compile(
+            r"(?:CHSH|Bell)(?:\s+(?:value|expectation|parameter))?\s*(?:\|S\|\s*)?(=|<=|>=|<|>)\s*" + number,
             re.IGNORECASE,
         )
-        if violation:
+
+        def value(raw: str) -> float:
+            raw = raw.replace(" ", "")
+            return tsirelson if "sqrt" in raw.lower() else float(raw)
+
+        violations, notes = [], []
+        for match in pattern.finditer(text):
+            op, v = match.group(1), value(match.group(2))
+            if op == "=" and abs(v) > tsirelson + 1e-9:
+                violations.append(match.group(0))
+            elif op in (">", ">=") and (v > tsirelson + 1e-9 or (op == ">" and abs(v - tsirelson) <= 1e-9)):
+                violations.append(match.group(0))
+            elif op == "=":
+                notes.append(f"{match.group(0)} ({'Bell violation' if abs(v) > 2 else 'within the LHV bound'})")
+        for match in re.finditer(r"(?:maximal\s+CHSH|expectation)\s*=\s*([0-9]+(?:\.[0-9]+)?)", text, re.IGNORECASE):
+            if float(match.group(1)) > tsirelson + 1e-9 and match.group(0) not in violations:
+                violations.append(match.group(0))
+        if violations:
             return AntibodyFinding(
                 antibody_id="Ab09_CHSHBoundRange",
-                name="CHSH Expectation Range [2, 2*sqrt(2)]",
+                name="CHSH physical range |S| <= 2*sqrt(2)",
                 passed=False,
-                evidence=(
-                    "CHSH expectation violates Tsirelson ceiling <= 2*sqrt(2) "
-                    f"or classical floor >= 2: '{violation.group(0)}'."
-                ),
+                evidence=f"CHSH expectation violates Tsirelson ceiling |S| <= 2*sqrt(2): '{violations[0]}'.",
             )
 
         return AntibodyFinding(
             antibody_id="Ab09_CHSHBoundRange",
-            name="CHSH Expectation Range [2, 2*sqrt(2)]",
+            name="CHSH physical range |S| <= 2*sqrt(2)",
             passed=True,
-            evidence="CHSH expectation satisfies local floor >= 2 and Tsirelson ceiling <= 2*sqrt(2).",
+            evidence="No CHSH claim exceeds 2*sqrt(2)." + (" " + "; ".join(notes) if notes else ""),
         )
 
     @staticmethod
@@ -836,7 +855,13 @@ class AcquiredAntibodyPromotionV1:
 
 @dataclass(frozen=True, slots=True)
 class HostHealthReceiptV1:
-    """Authenticated host health receipt required prior to guard activation."""
+    """Host health record required prior to guard activation.
+
+    By itself this is a *declared* record: its fields are validated, but nothing in
+    it shows that a trusted watchdog produced it (PR #63 review, item 6). It becomes
+    an *authenticated* record only when ``HostHealthAuthority.authenticate`` accepts
+    its ``nonce`` and ``mac``. ``evaluate_guard_activation`` reports which basis it used.
+    """
 
     observer_id: str
     status: str
@@ -844,6 +869,8 @@ class HostHealthReceiptV1:
     profile_digest: str
     timestamp: str = "2026-11-11T00:00:00Z"
     authority_effect: str = AUTHORITY_EFFECT_NONE
+    nonce: str = ""
+    mac: str = ""
 
     def __post_init__(self) -> None:
         if not isinstance(self.observer_id, str) or not self.observer_id.strip():
@@ -858,10 +885,10 @@ class HostHealthReceiptV1:
             raise ValueError(
                 f"invalid host health status: {self.status!r}; must be HEALTHY, UNHEALTHY, UNVERIFIED, or UNAVAILABLE"
             )
-        if not isinstance(self.subject_id, str) or not self.subject_id.startswith("sha256:"):
-            raise ValueError("subject_id must be a sha256 digest")
-        if not isinstance(self.profile_digest, str) or not self.profile_digest.startswith("sha256:"):
-            raise ValueError("profile_digest must be a sha256 digest")
+        for name in ("subject_id", "profile_digest"):
+            value = getattr(self, name)
+            if not isinstance(value, str) or re.fullmatch(r"sha256:[0-9a-f]{64}", value) is None:
+                raise ValueError(f"{name} must be a canonical sha256:<64 hex> digest")
         if not isinstance(self.timestamp, str) or not self.timestamp.strip():
             raise ValueError("timestamp must be a non-empty ISO-8601 UTC string")
         try:
@@ -874,6 +901,58 @@ class HostHealthReceiptV1:
             raise ValueError(f"authority_effect must be {AUTHORITY_EFFECT_NONE!r}")
 
 
+class HostHealthAuthority:
+    """In-process issuer and verifier of authenticated host-health records.
+
+    Records carry an HMAC-SHA256 over their canonical fields under a key that only
+    this authority object holds, plus a single-use nonce. Authentication shows that
+    this authority issued the record and that it was not replayed; it says nothing
+    about records from other processes, and the key must never reach candidate code.
+    """
+
+    def __init__(self, key: bytes | None = None) -> None:
+        import secrets
+
+        self._key = key if key is not None else secrets.token_bytes(32)
+        self._issued: set[str] = set()
+        self._consumed: set[str] = set()
+
+    @staticmethod
+    def _body(receipt: "HostHealthReceiptV1") -> bytes:
+        fields = [receipt.observer_id, receipt.status, receipt.subject_id, receipt.profile_digest,
+                  receipt.timestamp, receipt.authority_effect, receipt.nonce]
+        return json.dumps(fields, separators=(",", ":"), ensure_ascii=True).encode("ascii")
+
+    def _mac(self, receipt: "HostHealthReceiptV1") -> str:
+        import hmac
+
+        return hmac.new(self._key, self._body(receipt), "sha256").hexdigest()
+
+    def issue(self, *, observer_id: str, status: str, subject_id: str, profile_digest: str,
+              timestamp: str = "2026-11-11T00:00:00Z") -> "HostHealthReceiptV1":
+        import secrets
+        from dataclasses import replace
+
+        draft = HostHealthReceiptV1(observer_id=observer_id, status=status, subject_id=subject_id,
+                                    profile_digest=profile_digest, timestamp=timestamp,
+                                    nonce=secrets.token_hex(16))
+        self._issued.add(draft.nonce)
+        return replace(draft, mac=self._mac(draft))
+
+    def authenticate(self, receipt: "HostHealthReceiptV1", *, consume: bool = True) -> bool:
+        import hmac
+
+        if type(receipt) is not HostHealthReceiptV1 or not receipt.nonce or not receipt.mac:
+            return False
+        if receipt.nonce not in self._issued or receipt.nonce in self._consumed:
+            return False
+        if not hmac.compare_digest(receipt.mac, self._mac(receipt)):
+            return False
+        if consume:
+            self._consumed.add(receipt.nonce)
+        return True
+
+
 def evaluate_guard_activation(
     profile_digest: str,
     hit: DetectorHitRefV1 | None,
@@ -884,10 +963,14 @@ def evaluate_guard_activation(
     disposition: str = "FINDING",
     host_health: HostHealthReceiptV1 | None = None,
     policy: GuardActivationPolicyPort | None = None,
+    authority: HostHealthAuthority | None = None,
 ) -> GuardActivationReceiptV1:
     """Evaluate guard activation adapting to `eis.domain.guard_activation.evaluate_activation`.
 
-    Enforces host health authentication before evaluating the native four-conjunct law.
+    With ``authority`` the host-health record must authenticate (HMAC and unused
+    nonce) or activation refuses with ``HOST_HEALTH_UNVERIFIED``. Without it the
+    record is only *declared*: its fields are checked, its origin is not, and any
+    claim built on the result must say so.
     Refuses with typed codes (`HOST_HEALTH_UNAVAILABLE`, `HOST_HEALTH_UNHEALTHY`,
     `HOST_HEALTH_UNVERIFIED`, `SUBJECT_MISMATCH`, `TWO_SIGNAL_COLLAPSE`) upon failure.
     """
@@ -904,6 +987,12 @@ def evaluate_guard_activation(
         raise ActivationRefusal(
             "TWO_SIGNAL_COLLAPSE",
             f"host health observer {host_health.observer_id!r} is a forbidden observer",
+        )
+
+    if authority is not None and not authority.authenticate(host_health):
+        raise ActivationRefusal(
+            "HOST_HEALTH_UNVERIFIED",
+            f"host health record from {host_health.observer_id!r} did not authenticate (forged, altered or replayed)",
         )
 
     if host_health.status == "UNVERIFIED":
@@ -947,6 +1036,7 @@ def evaluate_guard_activation(
 __all__ = [
     "AcquiredAntibodyPromotionV1",
     "AntibodyFinding",
+    "HostHealthAuthority",
     "HostHealthReceiptV1",
     "NormalizedMatcher",
     "QMInvariantAntibodySuiteV1",

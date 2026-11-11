@@ -124,11 +124,14 @@ def _file_sha256(path: Path) -> str:
 
 def prepare_source_pins() -> dict[str, str]:
     """Capture SHA-256 digests of live benchmark workflow dependencies."""
+    from source_custody import regulation_pins
+
     pins: dict[str, str] = {}
     for name in IMPLEMENTATION_FILES:
         filepath = HERE / name
         if filepath.is_file():
             pins[name] = _file_sha256(filepath)
+    pins.update(regulation_pins())
     return pins
 
 
@@ -730,8 +733,10 @@ def execute_eis_pciv_plan(
         raise ValueError(f"Unsupported seed hash: {seed_hash}")
 
     spec = EIS_PCIV_PLANS[plan_id]
+    from source_custody import pin_path
+
     for filename, expected_sha in spec["source_pins"].items():
-        if _file_sha256(HERE / filename) != expected_sha:
+        if _file_sha256(pin_path(filename)) != expected_sha:
             raise ValueError(f"Source pin changed for {filename}")
 
     seed_bytes = (HERE / "seed_prompt.txt").read_bytes()

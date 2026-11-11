@@ -1012,11 +1012,11 @@ def test_qm_antibodies_reject_decimal_and_range_leaks():
     )
     assert f08_multi.passed is False
 
-    # Ab09 rejects CHSH = 2.95 and CHSH = 1.5
+    # Ab09 rejects CHSH = 2.95 (above Tsirelson); 1.5 is physical (PR #63 review, item 5)
     f09_ceil = QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range("Maximal CHSH = 2.95.")
     assert f09_ceil.passed is False
     f09_floor = QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range("Maximal CHSH = 1.5.")
-    assert f09_floor.passed is False
+    assert f09_floor.passed is True
 
     # Ab10 rejects Tr(rho) = 1.5
     f10 = QMInvariantAntibodySuiteV1._check_ab10_cross_section_consistency("Trace normalization Tr(rho) = 1.5.")

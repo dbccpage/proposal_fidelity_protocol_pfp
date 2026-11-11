@@ -110,8 +110,9 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     specification = (EXPERIMENTS.get(plan) or MATRIX_PLANS.get(plan) or SECTION_PLANS.get(plan) or
                      CHARPOLY_PLANS.get(plan) or HOST_CHARPOLY_PLANS.get(plan) or EIS_PCIV_PLANS.get(plan))
     if specification:
+        from source_custody import pin_path
         for name, expected in specification['source_pins'].items():
-            if sha((HERE / name).read_bytes()) != expected:
+            if sha(pin_path(name).read_bytes()) != expected:
                 raise ValueError('Loaded experiment source changed; restart and prepare a newly bound campaign')
         if plan in EXPERIMENTS and sha(canonical(EXPERIMENTS[plan]['contract'])) != EXPERIMENTS[plan]['contract_sha256']:
             raise ValueError('Experiment contract changed')
@@ -142,6 +143,8 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
     section_plan = SECTION_PLANS.get(plan)
     charpoly_plan = CHARPOLY_PLANS.get(plan)
     host_charpoly_plan = HOST_CHARPOLY_PLANS.get(plan)
+    charpoly_verification = None  # set only from an observed, validated native receipt
+    composition_verified = False  # set only from an observed composition witness
     eis_pciv_plan = EIS_PCIV_PLANS.get(plan)
     charpoly_checks = []
     charpoly_custody = None
@@ -184,11 +187,19 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
                 validated = validate_certified_context(certified)
                 if not validated['valid']:
                     raise ValueError('Host-derived characteristic polynomial context failed validation')
+                charpoly_verification = {
+                    'status': certified['native_verification']['status'],
+                    'grid_points_verified': certified['native_verification']['grid_points_verified'],
+                    'receipt_sha256': validated['evidence']['receipt_sha256'],
+                    'native_reexecuted': validated['evidence']['native_reexecuted'],
+                }
                 responses['charpoly_context'] = canonical(certified).decode('utf-8')
                 freeze_json(output / 'host_charpoly.json', certified)
             if host_charpoly_plan.get('semantic_composition'):
                 from host_charpoly_workflows import build_semantic_composition_artifact
                 composition = build_semantic_composition_artifact(sha(seed))
+                composition_verified = (composition.get('status') == 'VERIFIED_OFFLINE_COMPOSITION'
+                                        and composition.get('operad_composition_witness', {}).get('is_associative') is True)
                 responses['semantic_composition_receipt'] = canonical(composition).decode('utf-8')
                 freeze_json(output / 'semantic_composition_receipt.json', composition)
         if eis_pciv_plan and plan == 'pciv_quotient_obligation_v1':
@@ -366,9 +377,10 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
         claims = []
         if host_charpoly_plan.get('host_matrix'):
             claims.append({'status': 'EXACT_AFFINE_HAMILTONIAN_MATCH'})
-        if host_charpoly_plan.get('host_charpoly'):
-            claims.append({'status': 'EXACT_INTERMEDIATE_CHARPOLY_IDENTITY'})
-        if host_charpoly_plan.get('semantic_composition'):
+        charpoly_accepted = bool(charpoly_verification and charpoly_verification['status'] == 'CERTIFIED_IDENTITY')
+        if charpoly_accepted:
+            claims.append({'status': 'EXACT_INTERMEDIATE_CHARPOLY_IDENTITY'})  # receipt in charpoly_verification
+        if composition_verified:
             claims.append({'status': 'TYPED_OPERADIC_COMPOSITION_VERIFIED'})
         accepted_matrix = bool(matrix_checks and matrix_checks[-1]['accepted']) if host_charpoly_plan.get('host_matrix') else False
         host_receipt = {
@@ -380,9 +392,10 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
             'host_derived_charpoly': host_charpoly_plan.get('host_charpoly', False),
             'semantic_composition': host_charpoly_plan.get('semantic_composition', False),
             'representation_accepted': accepted_matrix,
-            'certificate_accepted': True if host_charpoly_plan.get('host_charpoly') else False,
-            'operadic_associativity_verified': True if host_charpoly_plan.get('semantic_composition') else False,
-            'grid_points_verified': 125 if host_charpoly_plan.get('host_charpoly') else 0,
+            'certificate_accepted': charpoly_accepted,
+            'charpoly_verification': charpoly_verification,
+            'operadic_associativity_verified': composition_verified,
+            'grid_points_verified': charpoly_verification['grid_points_verified'] if charpoly_accepted else 0,
             'stage_checks': matrix_checks,
             'artifact_errors': {} if (not host_charpoly_plan['checked'] or accepted_matrix) else {'matrix': 'UNACCEPTED_OR_MISSING'},
             'claims': claims,
@@ -467,10 +480,12 @@ def run(plan: str, provider: Provider, output: Path, run_id: str, *, max_output_
         receipt['implementation_sha256'].update({name: sha((HERE / name).read_bytes())
                                                  for name in charpoly_plan['source_pins']})
     if host_charpoly_plan:
-        receipt['implementation_sha256'].update({name: sha((HERE / name).read_bytes())
+        from source_custody import pin_path
+        receipt['implementation_sha256'].update({name: sha(pin_path(name).read_bytes())
                                                  for name in host_charpoly_plan['source_pins']})
     if eis_pciv_plan:
-        receipt['implementation_sha256'].update({name: sha((HERE / name).read_bytes())
+        from source_custody import pin_path
+        receipt['implementation_sha256'].update({name: sha(pin_path(name).read_bytes())
                                                  for name in eis_pciv_plan['source_pins']})
     receipt_hash = freeze_json(output / 'run.json', receipt)
     (output / 'run.sha256').write_text(receipt_hash + '\n', encoding='ascii')

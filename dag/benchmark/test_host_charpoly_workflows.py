@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from qm_host_charpoly import COMPACT_CHAR_BUDGET
 
 ROOT = Path(__file__).resolve().parents[2]
 for p in (ROOT, ROOT / "dag" / "benchmark", ROOT / "ops"):
@@ -56,7 +57,8 @@ class TestHostCharpolyWorkflows(unittest.TestCase):
         pins = prepare_source_pins()
         self.assertGreaterEqual(len(pins), 5)
         for filename, expected_hash in pins.items():
-            filepath = HERE / filename
+            from source_custody import pin_path
+            filepath = pin_path(filename)
             self.assertTrue(filepath.is_file())
             self.assertEqual(sha(filepath.read_bytes()), expected_hash)
 
@@ -83,7 +85,7 @@ class TestHostCharpolyWorkflows(unittest.TestCase):
         self.assertNotIn("failure_states", compact)
 
         compact_str = json.dumps(compact, sort_keys=True, separators=(",", ":"))
-        self.assertLessEqual(len(compact_str), 1200)
+        self.assertLessEqual(len(compact_str), COMPACT_CHAR_BUDGET)
 
         # Full certified context derivation (compact=False)
         full = build_host_charpoly_artifact(SUPPORTED_SEED_SHA256, compact=False)
@@ -151,6 +153,24 @@ class TestHostCharpolyWorkflows(unittest.TestCase):
             self.assertEqual(host_checks["claims"], [{"status": "EXACT_AFFINE_HAMILTONIAN_MATCH"}])
             self.assertFalse(host_checks["final_answer_certified"])
 
+    def test_charpoly_failure_yields_no_certification_claims(self):
+        """PR #63 review item 3: receipt fields follow the observed outcome, not the plan flag."""
+        from unittest import mock
+        import qm_host_charpoly
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            out_dir = Path(tmp_dir) / "run_charpoly_failure"
+            with mock.patch.object(qm_host_charpoly, "build_certified_context",
+                                   side_effect=qm_host_charpoly.HostCharpolyRefusalError("SWAPPED_BINARY")):
+                receipt = run("coverage_first_charpoly_v1", OfflineTape(["unused"]), out_dir,
+                              "test:charpoly_failure:000", max_output_tokens=16000)
+            self.assertNotEqual(receipt["status"], "offline_fixture_completed")
+            host_checks = json.loads((out_dir / "host_checks.json").read_text(encoding="utf-8"))
+            self.assertFalse(host_checks["certificate_accepted"])
+            self.assertEqual(host_checks["grid_points_verified"], 0)
+            self.assertIsNone(host_checks["charpoly_verification"])
+            self.assertNotIn({"status": "EXACT_INTERMEDIATE_CHARPOLY_IDENTITY"}, host_checks["claims"])
+
     def test_offline_run_coverage_first_charpoly(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_dir = Path(tmp_dir) / "run_charpoly"
@@ -177,7 +197,7 @@ class TestHostCharpolyWorkflows(unittest.TestCase):
             self.assertNotIn("failure_states", req_messages[3]["content"])
             charpoly_msg = req_messages[3]["content"]
             json_text = charpoly_msg.split("\n", 1)[1] if "\n" in charpoly_msg else charpoly_msg
-            self.assertLessEqual(len(json_text), 1200)
+            self.assertLessEqual(len(json_text), COMPACT_CHAR_BUDGET)
 
             host_checks = json.loads((out_dir / "host_checks.json").read_text(encoding="utf-8"))
             self.assertTrue(host_checks["host_derived_matrix"])

@@ -137,8 +137,8 @@ class TestChallengerTautologyAndHarnessSensitivity(unittest.TestCase):
         self.assertLess(summary["in_scope_kill_rate"], 1.0)
         self.assertLess(summary["kill_rate"], 1.0)
         self.assertEqual(summary["total_adversarial_fixtures"], initial_adv_count + 1)
-        self.assertEqual(summary["in_scope_adversarial_fixtures"], 71)
-        self.assertEqual(summary["in_scope_killed"], 70)
+        self.assertEqual(summary["in_scope_adversarial_fixtures"], 74)
+        self.assertEqual(summary["in_scope_killed"], 73)
 
         # Asserting zero in-scope survivors must raise AssertionError
         with self.assertRaises(AssertionError):

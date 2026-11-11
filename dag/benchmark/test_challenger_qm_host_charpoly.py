@@ -311,12 +311,12 @@ class TestChallengerLagrangeAndCompactContext(unittest.TestCase):
                 self.assertEqual(actual, expected)
 
     def test_challenger_compact_context_budget_and_absence_of_internal_tokens(self):
-        """Verify strict character count <= 1,200 and zero internal error token leakage."""
+        """Verify the compact character budget and zero internal error token leakage."""
         compact = host.build_compact_certificate()
         serialized = json.dumps(compact, sort_keys=True, separators=(",", ":"))
 
         # Budget ceiling
-        self.assertLessEqual(len(serialized), 1200)
+        self.assertLessEqual(len(serialized), host.COMPACT_CHAR_BUDGET)
 
         # Zero failure state names or descriptions
         for err_code, err_desc in host.FAILURE_STATES.items():

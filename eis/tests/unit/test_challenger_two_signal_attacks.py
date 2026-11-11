@@ -519,16 +519,22 @@ class TestQMInvariantAntibodyFalsification:
         assert "Single-qubit entropy exceeds 1-bit physical bound" in finding2.evidence
 
     def test_ab09_tsirelson_and_classical_floor_leak(self):
-        """Ab09 rejects CHSH violations: ceiling violation (2.95) and floor violation (1.5)."""
+        """Ab09 rejects only values outside the physical range |S| <= 2*sqrt(2)."""
         text1 = "The maximal CHSH = 2.95."
         finding1 = QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range(text1)
         assert finding1.passed is False
         assert "CHSH expectation violates Tsirelson ceiling" in finding1.evidence
 
+        # Below the local-hidden-variable bound is still physical (no Bell violation).
         text2 = "The maximal CHSH = 1.5."
-        finding2 = QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range(text2)
-        assert finding2.passed is False
-        assert "CHSH expectation violates Tsirelson ceiling" in finding2.evidence
+        assert QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range(text2).passed is True
+
+    def test_ab09_maximally_mixed_state_is_physical(self):
+        """PR #63 review regression: rho = I/4 gives S = 0 for every CHSH setting."""
+        for text in ("For rho = I/4 the CHSH = 0.", "CHSH = -1.2", "CHSH = 2*sqrt(2)", "CHSH < 2"):
+            assert QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range(text).passed is True, text
+        for text in ("CHSH = 2.83", "CHSH = -3", "CHSH > 2*sqrt(2)"):
+            assert QMInvariantAntibodySuiteV1._check_ab09_chsh_bound_range(text).passed is False, text
 
     def test_ab10_decimal_leak_on_trace_normalization(self):
         """Ab10 rejects trace normalization violation Tr(rho) = 1.5."""

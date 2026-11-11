@@ -451,6 +451,24 @@ CATEGORIES: list[AttackCategory] = [
             "and withholds corrupted projections."
         ),
     ),
+    AttackCategory(
+        category_id=22,
+        name="certification_state_fabrication",
+        display_name="Certification-State Fabrication (receipt-grounded verification)",
+        owning_boundary=(
+            "qm_host_charpoly.validate_certified_context / build_compact_solver_context and "
+            "host_charpoly_workflows.EISVerificationBridge (PR #63 review)"
+        ),
+        mathematical_assumptions=(
+            "A certificate may claim CERTIFIED_IDENTITY only if a native receipt exists, binds the host-derived "
+            "polynomial's candidate digest and the admitted public input, and is reproduced by native re-execution. "
+            "A consensus signal counts only when recomputed from evidence, never from a declared status field."
+        ),
+        metamorphic_relation=(
+            "Removing the receipt, disabling the native verifier, or replacing evidence with declared metadata "
+            "turns acceptance into refusal (MISSING_NATIVE_EVIDENCE / FORGED_CERTIFICATE) or zero positive sensors."
+        ),
+    ),
 ]
 
 
@@ -486,14 +504,14 @@ def _build_fixture_list() -> list[MutationFixture]:
         passed = (
             validated.get("valid") is True
             and cert.get("status") == "CERTIFIED_INTERMEDIATE_CHARPOLY"
-            and size <= 1200
+            and size <= host.COMPACT_CHAR_BUDGET
         )
         return passed, "ACCEPTED", {"schema": cert.get("schema"), "status": cert.get("status"), "size_bytes": size}
 
     fixtures.append(MutationFixture(
         fixture_id="pos_ctrl_compact_certificate",
         category_id=0,
-        description="Authentic compact certificate passes strict validation and <= 1,200 character budget",
+        description="Authentic compact certificate passes strict validation and fits the compact character budget",
         mutation_type="None (authentic compact certificate)",
         expected_behavior="ACCEPTED",
         expected_refusal_code=None,
@@ -2189,6 +2207,78 @@ def _build_fixture_list() -> list[MutationFixture]:
         expected_behavior="REFUSED",
         expected_refusal_code="TRUNCATED_JSON_RECORD",
         runner=run_pciv_projection_truncated_tail,
+    ))
+
+    # -----------------------------------------------------------------------
+    # Category 22: Certification-state fabrication (3 fixtures)
+    # -----------------------------------------------------------------------
+    def run_fabricated_full_context():
+        forged = {
+            "schema": host.SCHEMA,
+            "status": "CERTIFIED_INTERMEDIATE_CHARPOLY",
+            "seed_sha256": host.SUPPORTED_SEED_SHA256,
+            "limitations": {"final_answer_certified": False, "certified_scope": [host.CLAIM_SCOPE],
+                            "uncertified_obligations": list(host.UNCERTIFIED_OBLIGATIONS)},
+            "carrier": {"grid_point_count": host.GRID_POINTS},
+            "native_verification": {"status": "CERTIFIED_IDENTITY", "grid_points_verified": host.GRID_POINTS},
+        }
+        try:
+            host.validate_certified_context(forged)
+        except host.HostCharpolyRefusalError as exc:
+            killed = exc.code in ("MISSING_NATIVE_EVIDENCE", "FORGED_CERTIFICATE")
+            return killed, f"REFUSED [{exc.code}]", {"code": exc.code}
+        return False, "ACCEPTED", {}
+
+    fixtures.append(MutationFixture(
+        fixture_id="cert_fabricated_full_context_without_receipt",
+        category_id=22,
+        description="Minimal full context declaring native verification, with no polynomial and no receipt",
+        mutation_type="Hand-written context with only declared CERTIFIED_IDENTITY fields",
+        expected_behavior="REFUSED",
+        expected_refusal_code="MISSING_NATIVE_EVIDENCE",
+        runner=run_fabricated_full_context,
+    ))
+
+    def run_compact_without_native():
+        from unittest.mock import patch
+
+        with patch.object(host.sidecar.NativeHost, "custody",
+                          side_effect=host.sidecar.Infrastructure("NATIVE_BINARY_CHANGED")):
+            try:
+                cert = host.build_compact_certificate()
+            except host.HostCharpolyRefusalError as exc:
+                return True, f"REFUSED [{exc.code}]", {"code": exc.code}
+        return False, "EMITTED", {"status": cert.get("native_verification", {}).get("status")}
+
+    fixtures.append(MutationFixture(
+        fixture_id="cert_compact_generation_with_native_unavailable",
+        category_id=22,
+        description="Compact certificate generation while the native verifier is unavailable must refuse",
+        mutation_type="Native sidecar custody failure during compact generation",
+        expected_behavior="REFUSED",
+        expected_refusal_code="SWAPPED_BINARY",
+        runner=run_compact_without_native,
+    ))
+
+    def run_self_reported_quorum():
+        from host_charpoly_workflows import EISVerificationBridge, build_host_matrix_artifact
+
+        cert = host.build_compact_certificate()
+        forged = deepcopy(cert)
+        forged["polynomial"]["standard_form"] = "lambda^4 + J"
+        decision = EISVerificationBridge.evaluate_charpoly_evidence(
+            forged, build_host_matrix_artifact(host.SUPPORTED_SEED_SHA256))
+        killed = decision["is_activated"] is False and decision["positive_sensors"] == 0
+        return killed, "REFUSED [NO_EVIDENCE_QUORUM]", {"positive_sensors": decision["positive_sensors"]}
+
+    fixtures.append(MutationFixture(
+        fixture_id="cert_false_quorum_from_self_reported_metadata",
+        category_id=22,
+        description="Declared grid count plus a polynomial string starting with lambda^4 must not form an EIS quorum",
+        mutation_type="Keep verification metadata, replace the polynomial with a lambda^4-prefixed string",
+        expected_behavior="REFUSED",
+        expected_refusal_code="NO_EVIDENCE_QUORUM",
+        runner=run_self_reported_quorum,
     ))
 
     return fixtures
