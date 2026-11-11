@@ -92,3 +92,8 @@ def test_canonical_rejects_floats_as_fractions():
     with pytest.raises(base.MalformedCandidateError):
         base.as_fraction('0.5', 'x')
     assert base.as_fraction('1/2', 'x') == base.Fraction(1, 2)
+
+
+def test_wiki_pages_and_dag_records_are_current():
+    from pfp_core.workflow_families import docs
+    assert docs.build(check=True) == []
