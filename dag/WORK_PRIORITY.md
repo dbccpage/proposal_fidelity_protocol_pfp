@@ -49,3 +49,23 @@ are published in companion PR59. This session is paused for the requested handof
 ## User-requested publication checkpoint
 
 New experiments and audit expansion are stopped. Publish the existing work and continue from `dag/handoff/README.md` in a new Claude/Gemini session. The broader objective remains incomplete. The host-derived charpoly idea has preparation-only evaluator records; no implementation or campaign exists. Do not resume old paid sessions. The companion checkpoint PR preserves the previously local migration, DAG and evidence artifacts.
+
+## November 11, 2026 — 5-Seam LLM Mechanism Engine & 44-Workflow Implementation Target
+
+1. **Completed & Merged (`main` at `85f25e2c`, PR #63):**
+   - PFP + EIS + PCIV + OPERADS continuation workflows (`dag/benchmark/eis_pciv_workflows.py`, `dag/benchmark/host_charpoly_workflows.py`) and industry replacement benchmark (`pfp_core/`, `benchmarks/industry_replacement/`) merged into `main`.
+   - Total settled provider charges remain frozen at `USD 0.055614` (`55,614` microUSD) with `USD 0.000000` new paid spend.
+2. **Completed in PR #70 (`codex/gemini-five-seam-mechanisms-20261111`):**
+   - Implemented the unified 5-seam LLM intervention & receipt-to-weight engine in `pfp_core/llm_mechanisms.py` and `benchmarks/llm_mechanisms/`:
+     - **Seam 1 (Sampling Parameters):** `SamplingConfigV1`, `evaluate_sampling_seam` (`WholeRunBudget`, $T=0$ replicate quotient collapse, `certificate_first` vs. `majority_vote`).
+     - **Seam 2 (Logit & Grammar Decode):** `LogitGrammarControllerV1`, `verify_decode_receipt_exact` (`CARRIER_MASK`, `LOGIT_BIAS`, `JSON_SCHEMA`, `GBNF`, Layer-2 vs. Layer-3 separation).
+     - **Seam 3 (Host-Controlled Scratchpad):** `HostScratchSessionV1`, `detect_stationary_attractor_exact` ($K_4$ coboundary repair, `AM-4` detector, `Treg` circuit-breaker).
+     - **Seam 4 (Attention Heads, KV Surgery & Activation Steering):** `OpenWeightMechanismRunnerV1`, `resolve_transformer_layers` (`Llama`/`Qwen` `model.model.layers` and `Gemma 4` `model.language_model.layers`), `evaluate_attention_intervention_gate` (EIS Two-Signal gate + equal-norm orthogonal random vector control).
+     - **Seam 5 (Weights / `finetune_on_antibodies` from PFP Verified Receipt Triples):** `ReceiptToWeightPipelineV1`, `LowRankWeightAdapterV1`, `VerifiedReceiptTripleV1`, `WeightAdapterReceiptV1` (hold-out disjointness, PCIV taint refusal, witness-multiplicity protection, `SealedCausalWitness`-bound SFT/DPO JSONL, frozen-base LoRA vs. equal-Frobenius-norm random LoRA control).
+3. **This Week's Priority Build Targets (Handoff in `dag/handoff/CLAUDE_44_WORKFLOWS_AND_GEMMA4_HANDOFF.md`):**
+   - **Target A — Implement the Remaining 44 Workflow Families (`WF6` through `WF49`):**
+     - `dag/workflows_dag.json` currently has 5 `implemented` workflow families (`WF1`–`WF5`) and 44 `proposal` families (`WF6`–`WF49`) across Layers 1–9.
+     - Implement executable runners, deterministic offline positive/negative fixture tests, and Wiki documentation bindings for all 44 remaining workflow families (`WF6`–`WF49`) in topological dependency order without modifying any of the `32,261` pinned files in `dag/file_inventory.json`.
+   - **Target B — Pinned Local Open-Weight Gemma 4 Execution:**
+     - Once local disk space (`>20 GB` free) and a pinned local Gemma 4 safetensors checkpoint (e.g., `google/gemma-4-9b-it` or `google/gemma-3-4b-it` / `SmolLM2-135M-Instruct` in `eager` attention mode) are staged, execute `OpenWeightMechanismRunnerV1` and `ReceiptToWeightPipelineV1` over the 3-family algebraic pilot (`cycle_sum`, `product_sign`, `commutation`) and the 4-task industry replacement suite (`t1`–`t4`) under a pre-authorized `WholeRunBudget`.
+
