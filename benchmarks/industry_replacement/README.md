@@ -35,7 +35,7 @@ python benchmarks/industry_replacement/build_manifests.py         # writes manif
 python benchmarks/industry_replacement/run_live.py --manifest manifest_anthropic.json --admit <sha256 of file> --out <new dir>
 ```
 
-**Live execution is disabled** (`run_live.LIVE_EXECUTION_ENABLED = False`). It stays off until candidate code runs in an OS-enforced sandbox (PR #62 review, finding 2). Once enabled, the live command spends money: run it only after the user authorizes that exact manifest digest.
+**Live execution requires the container sandbox.** `run_live.LIVE_EXECUTION_ENABLED` is `True`. A real campaign refuses to start, before anything is recorded, unless Docker and the pinned image are available. It then forces every candidate into the container backend (see *Container backend* below). The live command spends money: run it only after the user authorizes that exact manifest digest.
 
 - Each digest can be dispatched once. The record is kept in `.campaigns/`, which git ignores.
 - No live call was made while building this directory, and spend was USD 0.
@@ -212,4 +212,4 @@ They are skipped when Docker or the pinned image is not available.
 - the whole offline matrix (37 containers) runs in about 15 s;
 - the results are byte-identical to the process backend.
 
-Live campaigns are still disabled (`run_live.LIVE_EXECUTION_ENABLED = False`). Enabling them, and requiring the container backend for them, is a separate decision.
+Live campaigns run only on this backend. `run_live.require_container_sandbox()` refuses to start without it and sets `BACKEND = 'container'` for the whole campaign. Offline runs and tests keep the host `process` backend unless `PFP_SANDBOX=container` is set.

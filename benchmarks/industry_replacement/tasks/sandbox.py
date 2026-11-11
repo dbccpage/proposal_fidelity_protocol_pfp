@@ -30,8 +30,8 @@ What the process backend is not: an operating-system sandbox. An audit-hook jail
 in-process, and native code or interpreter bugs can defeat it; memory is not
 capped on Windows. Verdicts never come from this process: sealed scenarios
 return observations only, and the parent judges them (see
-the sealed grader). Live campaigns stay disabled until candidate
-execution moves to an OS-enforced sandbox (``run_live.LIVE_EXECUTION_ENABLED``).
+the sealed grader). Live campaigns never use this backend:
+``run_live.require_container_sandbox`` forces the container backend or refuses to start.
 """
 from __future__ import annotations
 

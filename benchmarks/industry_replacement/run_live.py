@@ -32,9 +32,19 @@ class AdmissionError(RuntimeError):
     pass
 
 
-# Paid live dispatch stays off until candidate code runs in an OS-enforced sandbox (review finding 2).
-# The audit-hook jail in tasks/sandbox.py narrows what candidate code can reach; it is not that sandbox.
-LIVE_EXECUTION_ENABLED = False
+# Paid live dispatch is on, but only with candidate code in the container sandbox (review finding 2):
+# a real (non-injected) campaign refuses to start unless Docker and the pinned image are available,
+# and it forces tasks.sandbox.BACKEND = 'container' for every candidate it runs.
+LIVE_EXECUTION_ENABLED = True
+
+
+def require_container_sandbox() -> None:
+    from tasks import sandbox
+    if not sandbox.container_available():
+        raise AdmissionError('live execution requires the container sandbox (Docker with the pinned image '
+                             f'{sandbox.CONTAINER_IMAGE}); nothing dispatched')
+    sandbox.BACKEND = 'container'
+    sandbox.clear_cache()
 
 
 def merged(request: dict) -> dict:
@@ -191,8 +201,10 @@ def main(argv=None, provider_factory=None, registry: Path | None = None) -> dict
     args.registry = registry if registry is not None else REGISTRY
     path = args.manifest if args.manifest.is_absolute() else HERE / args.manifest
     manifest = admit(path, args.admit)
-    if provider_factory is None and not LIVE_EXECUTION_ENABLED:
-        raise AdmissionError('live execution is disabled until candidate code runs in an OS-enforced sandbox')
+    if provider_factory is None:
+        if not LIVE_EXECUTION_ENABLED:
+            raise AdmissionError('live execution is disabled')
+        require_container_sandbox()
     if args.out.exists():
         raise AdmissionError('output directory exists; a campaign never resumes or overwrites')
     args.registry.mkdir(parents=True, exist_ok=True)
