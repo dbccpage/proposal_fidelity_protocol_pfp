@@ -2,7 +2,7 @@
 
 **Layer:** 9 · **Builds on:** [WF9](Workflow-WF9.md), [WF20](Workflow-WF20.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer9.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer9.py) (`RecursiveReentryWithSharedFuel`) · **Folder:** [`workflows/wf33_recursive_re_entry_with_shared_fuel`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf33_recursive_re_entry_with_shared_fuel) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer9.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer9.py) (`RecursiveReentryWithSharedFuel`) · **Folder:** [`workflows/wf33_recursive_re_entry_with_shared_fuel`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf33_recursive_re_entry_with_shared_fuel) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Split a repair into child derivations that share one fuel counter and one budget.
 
@@ -19,7 +19,9 @@ counter. A stale parent receipt, a changed task or a fuel reset is refused.
 3. Bind the parent receipt
 4. Charge every prefix against one original budget
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - at most floor(B / delta) operations under budget B; stale parent, changed task or fuel reset is refused
 

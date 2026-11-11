@@ -2,7 +2,7 @@
 
 **Layer:** 3 · **Builds on:** [WF4](Workflow-WF4.md), [WF9](Workflow-WF9.md) · **Merges into:** WF4 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer3.py) (`ObstructionCertificate`) · **Folder:** [`workflows/wf10_local_to_global_obstruction_certificate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf10_local_to_global_obstruction_certificate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`ObstructionCertificate`) · **Folder:** [`workflows/wf10_local_to_global_obstruction_certificate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf10_local_to_global_obstruction_certificate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Glue local sections of an edge cochain into a global potential, or certify the obstruction.
 
@@ -20,7 +20,9 @@ zero-sum cycles are refused. Later families call ``certify_gluing`` and
 3. Host computes the global obstruction class
 4. Accept a gluing witness or an obstruction certificate, never a prose claim
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - H^1 = ker(delta_1) / im(delta_0); a class [c] != 0 means local green, global red
 - three-patch observer visibility: each observer sees zero on its edges, yet sum_alpha J^alpha(s) > 0 for the glued section

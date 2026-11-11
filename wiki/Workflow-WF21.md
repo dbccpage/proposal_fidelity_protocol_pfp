@@ -2,7 +2,7 @@
 
 **Layer:** 4 · **Builds on:** [WF5](Workflow-WF5.md) · **Merges into:** WF5 · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer4.py) (`StructuralPromptRewriting`) · **Folder:** [`workflows/wf21_structural_prompt_rewriting`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf21_structural_prompt_rewriting) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`StructuralPromptRewriting`) · **Folder:** [`workflows/wf21_structural_prompt_rewriting`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf21_structural_prompt_rewriting) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Rewrite a prompt only outside its protected fences, then solve the rewritten prompt.
 
@@ -19,7 +19,9 @@ and the answer judged exactly (a 2x2 determinant).
 3. Check protected bytes are unchanged
 4. Refuse a rewrite whose normal form drops the question
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - double-pushout rewrite: L <- K -> R with injective match m: L -> G; the pushout complement must exist (gluing condition)
 - protected invariant: bytes(protected(G')) = bytes(protected(G))

@@ -37,7 +37,8 @@ HUB = 'Workflow-Families'
 
 
 def _tree(path: str) -> str:
-    return f'[`{path}`]({REPO_URL}/tree/main/{path})'
+    kind = 'blob' if path.endswith('.py') else 'tree'
+    return f'[`{path}`]({REPO_URL}/{kind}/main/{path})'
 
 
 def _docstring(cls) -> tuple[str, str]:
@@ -73,7 +74,10 @@ def render(cls, node: dict, rows: list[dict]) -> str:
         '',
         *[f'{i}. {step}' for i, step in enumerate(node.get('process', []), 1)],
         '',
-        '## Mathematics',
+        '## Design mathematics',
+        '',
+        'From the DAG node. The runner checks the instance described above; items it does not exercise '
+        'remain design.',
         '',
         *[f'- {m}' for m in node.get('math', [])],
         '',

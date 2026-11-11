@@ -2,7 +2,7 @@
 
 **Layer:** 3 · **Builds on:** [WF24](Workflow-WF24.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer3.py) (`HierarchicalDecimation`) · **Folder:** [`workflows/wf25_hierarchical_decimation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf25_hierarchical_decimation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`HierarchicalDecimation`) · **Folder:** [`workflows/wf25_hierarchical_decimation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf25_hierarchical_decimation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Decimate tree and degree-2 parts of a cochain graph without changing any cycle residual.
 
@@ -19,7 +19,9 @@ every cycle residual survives). A changed label or a dropped loop is refused.
 3. Check that the remaining holonomies commute
 4. Optional second pass aggregates macro-blocks
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - flat blocks contribute the identity; global flatness reduces to the cycle holonomies of the quotient
 

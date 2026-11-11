@@ -2,7 +2,7 @@
 
 **Layer:** 2 · **Builds on:** [WF7](Workflow-WF7.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer2.py) (`FiniteTerminalSelector`) · **Folder:** [`workflows/wf45_finite_terminal_selector_and_plenitude_test`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf45_finite_terminal_selector_and_plenitude_test) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer2.py) (`FiniteTerminalSelector`) · **Folder:** [`workflows/wf45_finite_terminal_selector_and_plenitude_test`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf45_finite_terminal_selector_and_plenitude_test) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Select within a declared finite candidate family, or name why no unique selection exists.
 
@@ -21,7 +21,9 @@ is refused.
 3. Add indistinguishable candidates and check the survivor count rises
 4. Deleting competitors is not evidence
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - unique acceptance is only relative to the declared family
 

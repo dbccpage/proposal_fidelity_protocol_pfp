@@ -2,7 +2,7 @@
 
 **Layer:** 3 · **Builds on:** [WF9](Workflow-WF9.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer3.py) (`ResumableFrontierSearch`) · **Folder:** [`workflows/wf47_resumable_bounded_frontier_search`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf47_resumable_bounded_frontier_search) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`ResumableFrontierSearch`) · **Folder:** [`workflows/wf47_resumable_bounded_frontier_search`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf47_resumable_bounded_frontier_search) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > A bounded sign-gauge search in deterministic batches, resumable under one ledger.
 
@@ -19,7 +19,9 @@ replays are refused; exhausting a frustrated graph is a typed obstruction.
 2. Statuses: verified, unknown with suffix, restricted obstruction
 3. Continuing requires replaying the contiguous chain from index 0
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - the presentation key includes basis and representation, so a resumed search cannot silently change problem
 

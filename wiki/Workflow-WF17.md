@@ -2,7 +2,7 @@
 
 **Layer:** 4 · **Builds on:** [WF10](Workflow-WF10.md), [WF11](Workflow-WF11.md) · **Merges into:** WF10 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer4.py) (`WitnessedDifferenceProgramme`) · **Folder:** [`workflows/wf17_witnessed_difference_programme`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf17_witnessed_difference_programme) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`WitnessedDifferenceProgramme`) · **Folder:** [`workflows/wf17_witnessed_difference_programme`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf17_witnessed_difference_programme) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Every claimed difference needs a separating formula; every equivalence needs a bisimulation.
 
@@ -18,7 +18,9 @@ Unwitnessed claims, non-separating formulas and false bisimulations are refused.
 3. Pair every theorem with countermodels
 4. Host checks witnesses on finite instances
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - behavioral equivalence: a bisimulation relation B with (p, q) in B and matching transitions
 - Fenchel-Rockafellar: inf_x f(x) + g(Ax) = sup_y -f^*(A^T y) - g^*(-y) under the stated qualification

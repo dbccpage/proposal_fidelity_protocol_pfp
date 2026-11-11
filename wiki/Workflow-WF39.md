@@ -2,7 +2,7 @@
 
 **Layer:** 5 · **Builds on:** [WF1](Workflow-WF1.md), [WF23](Workflow-WF23.md) · **Merges into:** nothing · **Kind:** harness gate
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer5.py) (`AuthorityFirewallGate`) · **Folder:** [`workflows/wf39_authority_firewall_gate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf39_authority_firewall_gate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`AuthorityFirewallGate`) · **Folder:** [`workflows/wf39_authority_firewall_gate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf39_authority_firewall_gate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Accept a reply only when every guard in the vector passes.
 
@@ -19,7 +19,9 @@ becomes residual evidence; self-certifying or escalating receipts are refused.
 3. Packet gates C1-C8 keep tool halt separate from authority
 4. Witness must be bound to a registered verifier and the exact payload hash
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - accept iff AllGuardsPass; a non-zero obstruction class cannot satisfy a truthful zero-defect guard
 

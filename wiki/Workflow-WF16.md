@@ -2,7 +2,7 @@
 
 **Layer:** 4 · **Builds on:** [WF5](Workflow-WF5.md), [WF10](Workflow-WF10.md) · **Merges into:** WF5 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer4.py) (`SubstrateCrosswalk`) · **Folder:** [`workflows/wf16_substrate_crosswalk`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf16_substrate_crosswalk) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`SubstrateCrosswalk`) · **Folder:** [`workflows/wf16_substrate_crosswalk`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf16_substrate_crosswalk) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Map one finite task between two substrates and require the same host verdict in both.
 
@@ -19,7 +19,9 @@ crosswalks differ (non-unique choices). A broken relation or a verdict mismatch 
 3. Check that relations are preserved on the target
 4. Record every non-unique choice
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - a crosswalk F: C -> D is accepted iff F(r) holds in D for every relation r of C
 - non-uniqueness: F and F' both preserve relations yet differ on a generator; both are recorded

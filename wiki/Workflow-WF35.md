@@ -2,7 +2,7 @@
 
 **Layer:** 6 · **Builds on:** [WF6](Workflow-WF6.md), [WF12](Workflow-WF12.md) · **Merges into:** nothing · **Kind:** experiment design
 
-**Code:** [`pfp_core/workflow_families/layer6.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer6.py) (`ProposalChannelComparison`) · **Folder:** [`workflows/wf35_proposal_channel_comparison`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf35_proposal_channel_comparison) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer6.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer6.py) (`ProposalChannelComparison`) · **Folder:** [`workflows/wf35_proposal_channel_comparison`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf35_proposal_channel_comparison) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Compare proposal channels under one fixed host check; acceptance depends only on reply bytes.
 
@@ -18,7 +18,9 @@ checkers or budgets and any channel whose self-reported accept set differs.
 2. Vary only the channel: prompt, glyph code, logit mask, grammar mask, typed tree, attention or activation bias
 3. Compare per item
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - channel invariance: the accept set depends on the reply, never on the channel that produced it
 

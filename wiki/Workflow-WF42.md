@@ -2,7 +2,7 @@
 
 **Layer:** 5 · **Builds on:** [WF10](Workflow-WF10.md), [WF21](Workflow-WF21.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer5.py) (`ReasoningTraceValidation`) · **Folder:** [`workflows/wf42_reasoning_trace_validation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf42_reasoning_trace_validation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`ReasoningTraceValidation`) · **Folder:** [`workflows/wf42_reasoning_trace_validation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf42_reasoning_trace_validation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Extract a claim graph from a trace and certify it, or certify its obstruction.
 
@@ -19,7 +19,9 @@ Hidden obstructions and conclusions that contradict the steps are refused.
 3. Emit a typed status
 4. Run an adversarial battery against the extractor
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - Exact only describes the extractor's image; a three-claim cycle with Phi = 1 and phi = (1,1,1) is the worked obstruction
 

@@ -2,7 +2,7 @@
 
 **Layer:** 6 · **Builds on:** [WF7](Workflow-WF7.md), [WF12](Workflow-WF12.md) · **Merges into:** nothing · **Kind:** meta workflow
 
-**Code:** [`pfp_core/workflow_families/layer6.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer6.py) (`ImmuneFailureClassification`) · **Folder:** [`workflows/wf14_immune_failure_classification`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf14_immune_failure_classification) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer6.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer6.py) (`ImmuneFailureClassification`) · **Folder:** [`workflows/wf14_immune_failure_classification`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf14_immune_failure_classification) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Classify refused runs into epitopes and admit detector rules only on two signals.
 
@@ -19,7 +19,9 @@ It refuses autoimmune rules, pattern-only matches and mislabelled epitopes.
 3. Reject any detector that fires on the self panel
 4. Admit a detector only with two signals: a failure match and a host check
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - negative selection: keep d iff for all s in Self, match(d, s) < theta
 - two-signal gate: admit iff signal_1 (pattern) and signal_2 (host evidence)

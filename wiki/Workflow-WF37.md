@@ -2,7 +2,7 @@
 
 **Layer:** 8 · **Builds on:** [WF19](Workflow-WF19.md), [WF22](Workflow-WF22.md) · **Merges into:** nothing · **Kind:** meta workflow
 
-**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer8.py) (`EvidenceBoundHarnessEvolution`) · **Folder:** [`workflows/wf37_evidence_bound_harness_evolution`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf37_evidence_bound_harness_evolution) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer8.py) (`EvidenceBoundHarnessEvolution`) · **Folder:** [`workflows/wf37_evidence_bound_harness_evolution`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf37_evidence_bound_harness_evolution) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Replace the incumbent harness only on untainted, Pareto-front, privately confirmed evidence.
 
@@ -20,7 +20,9 @@ on a fresh panel. A tainted, dominated or unconfirmed replacement is refused.
 4. Fresh confirmation before replacing the incumbent
 5. Untouched transfer and ablation panels
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - paired bootstrap, exact sign test, Holm correction over transfer and ablation contrasts
 

@@ -2,7 +2,7 @@
 
 **Layer:** 9 · **Builds on:** [WF9](Workflow-WF9.md), [WF20](Workflow-WF20.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer9.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer9.py) (`RestartBoundaryAfterExhaustedRepair`) · **Folder:** [`workflows/wf40_restart_boundary_after_exhausted_repair`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf40_restart_boundary_after_exhausted_repair) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer9.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer9.py) (`RestartBoundaryAfterExhaustedRepair`) · **Folder:** [`workflows/wf40_restart_boundary_after_exhausted_repair`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf40_restart_boundary_after_exhausted_repair) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > After repair ends with a positive residual, take exactly the boundary action the cochain admits.
 
@@ -19,7 +19,9 @@ the immutable spec and verified refusal receipts. A changed claim set is refused
 2. A lift needs a preservation witness
 3. A changed claim set is a new problem, not a repair
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - cochain trichotomy: exact / unclosed / closed non-exact; lift authorised only with Delta > 0
 

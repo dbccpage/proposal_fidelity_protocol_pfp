@@ -2,7 +2,7 @@
 
 **Layer:** 7 · **Builds on:** [WF14](Workflow-WF14.md) · **Merges into:** WF14 · **Kind:** meta workflow
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer7.py) (`DetectorAdequacyTwoSignal`) · **Folder:** [`workflows/wf41_detector_adequacy_and_two_signal_admission`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf41_detector_adequacy_and_two_signal_admission) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`DetectorAdequacyTwoSignal`) · **Folder:** [`workflows/wf41_detector_adequacy_and_two_signal_admission`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf41_detector_adequacy_and_two_signal_admission) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Admit a detector only with a complete calibration record and two independent signals.
 
@@ -20,7 +20,9 @@ diagnostic. It refuses missing classes, self hits and inconsistent rewrites.
 3. Bind a human decision to the receipt digest
 4. Report effective diversity of the self panel
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - finite calibration completeness: D = A iff D = A on a class-representative set R (sharp)
 

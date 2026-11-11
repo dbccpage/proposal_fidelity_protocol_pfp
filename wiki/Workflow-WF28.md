@@ -2,7 +2,7 @@
 
 **Layer:** 8 · **Builds on:** [WF15](Workflow-WF15.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer8.py) (`EightRoleAuditDialogue`) · **Folder:** [`workflows/wf28_eight_role_audit_dialogue`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf28_eight_role_audit_dialogue) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer8.py) (`EightRoleAuditDialogue`) · **Folder:** [`workflows/wf28_eight_role_audit_dialogue`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf28_eight_role_audit_dialogue) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Eight roles in fixed order repair a potential; only the host defect decides.
 
@@ -18,7 +18,9 @@ defect 0. A stale view, a non-descending step or any acceptance claim is refused
 2. Each role sees only frozen earlier outputs
 3. Host check decides; the arbiter cannot accept
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - strict descent of the l1 defect across the role sequence
 

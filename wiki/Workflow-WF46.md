@@ -2,7 +2,7 @@
 
 **Layer:** 3 · **Builds on:** [WF4](Workflow-WF4.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer3.py) (`BoundarySufficiency`) · **Folder:** [`workflows/wf46_boundary_sufficiency_and_gluing_diagnostic`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf46_boundary_sufficiency_and_gluing_diagnostic) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`BoundarySufficiency`) · **Folder:** [`workflows/wf46_boundary_sufficiency_and_gluing_diagnostic`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf46_boundary_sufficiency_and_gluing_diagnostic) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Test whether boundary packets between patch agents decide global consistency.
 
@@ -19,7 +19,9 @@ and refuses when a packet passes but the glued trace fails.
 2. Report NGD over runs; undefined when no run is locally accepted
 3. Report completed share and backlog
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - NGD = Pr(global fail | all locals pass)
 

@@ -2,7 +2,7 @@
 
 **Layer:** 5 · **Builds on:** [WF11](Workflow-WF11.md), [WF23](Workflow-WF23.md) · **Merges into:** WF23 · **Kind:** harness gate
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer5.py) (`CommitRevealMutationGate`) · **Folder:** [`workflows/wf48_commit_reveal_with_a_hostile_mutation_gate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf48_commit_reveal_with_a_hostile_mutation_gate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`CommitRevealMutationGate`) · **Folder:** [`workflows/wf48_commit_reveal_with_a_hostile_mutation_gate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf48_commit_reveal_with_a_hostile_mutation_gate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Commit an artifact before reveal, then require two checkers to kill every mutant.
 
@@ -19,7 +19,9 @@ changed artifact after commit, or a surviving mutant, is refused.
 3. Reveal hidden cases (base, relabel/gauge controls, poison bait) and score
 4. Kill a hostile certificate-mutation suite with both checkers
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - commit H(salt || artifact) before reveal; both checkers must reject every mutant
 

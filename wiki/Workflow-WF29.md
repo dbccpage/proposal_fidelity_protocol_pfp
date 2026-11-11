@@ -2,7 +2,7 @@
 
 **Layer:** 4 · **Builds on:** [WF11](Workflow-WF11.md) · **Merges into:** WF11 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer4.py) (`CheckerSynthesisMutationKill`) · **Folder:** [`workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`CheckerSynthesisMutationKill`) · **Folder:** [`workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Score a proposed checker by its mutation kill rate, after it passes every valid case.
 
@@ -17,7 +17,9 @@ checker (zero false rejections) whose kill rate meets the declared bar.
 2. Run it against valid cases and a hostile mutation suite
 3. Score by kills and by false rejections
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - kill rate = killed / mutants; soundness requires zero false rejections on valid cases
 

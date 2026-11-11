@@ -2,7 +2,7 @@
 
 **Layer:** 2 · **Builds on:** [WF2](Workflow-WF2.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer2.py) (`PinnedTokenScratchpad`) · **Folder:** [`workflows/wf24_pinned_token_operational_scratchpad`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf24_pinned_token_operational_scratchpad) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer2.py) (`PinnedTokenScratchpad`) · **Folder:** [`workflows/wf24_pinned_token_operational_scratchpad`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf24_pinned_token_operational_scratchpad) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Loop holonomy with pinned edge tokens, an exact scratchpad and two agreeing checkers.
 
@@ -19,7 +19,9 @@ wrong flatness claim is refused.
 2. Require an operational scratchpad of the exact computation (e.g. path products)
 3. Check the final answer with dual independent checkers
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - holonomy along a loop: g_acc <- g_acc * U(e) for each edge e, compared with the identity
 

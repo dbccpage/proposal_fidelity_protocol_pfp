@@ -2,7 +2,7 @@
 
 **Layer:** 2 · **Builds on:** [WF2](Workflow-WF2.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer2.py) (`BoundedCheckAndRepair`) · **Folder:** [`workflows/wf09_bounded_check_and_repair`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf09_bounded_check_and_repair) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer2.py) (`BoundedCheckAndRepair`) · **Folder:** [`workflows/wf09_bounded_check_and_repair`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf09_bounded_check_and_repair) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Check, return only the typed residual, allow at most L repairs.
 
@@ -21,7 +21,9 @@ Subclasses reuse the loop by overriding ``assess`` and ``repair_prompt``.
 3. Allow at most L repair attempts
 4. Stop at the first accepted reply or at the limit
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - XOR cycle: a consistent assignment exists iff the cycle sum of edge labels is 0 mod 2
 - minimal repair: argmin |Delta| subject to c + Delta in im(delta_0) for the edge cochain c

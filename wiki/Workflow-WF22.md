@@ -2,7 +2,7 @@
 
 **Layer:** 7 · **Builds on:** [WF6](Workflow-WF6.md), [WF8](Workflow-WF8.md), [WF18](Workflow-WF18.md) · **Merges into:** Sweep · **Kind:** experiment design
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer7.py) (`CertifiedCostLadder`) · **Folder:** [`workflows/wf22_certified_cost_ladder`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf22_certified_cost_ladder) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`CertifiedCostLadder`) · **Folder:** [`workflows/wf22_certified_cost_ladder`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf22_certified_cost_ladder) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Escalate from cheap to expensive arms only after a host refusal, on one budget.
 
@@ -19,7 +19,9 @@ refuses unordered ladders, a spend past the single cap, and exhausted ladders.
 3. Run every item under every arm
 4. Evaluate hypotheses item by item with refutation criteria
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - cost to certified correct: C_arm = total spend / #accepted
 - paired test on discordant items (McNemar-style): b = #(A ok, B fail), c = #(A fail, B ok)

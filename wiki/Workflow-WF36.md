@@ -2,7 +2,7 @@
 
 **Layer:** 5 · **Builds on:** [WF8](Workflow-WF8.md) · **Merges into:** WF8 · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer5.py) (`GuardedStagedSlotMaterialisation`) · **Folder:** [`workflows/wf36_guarded_staged_slot_materialisation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf36_guarded_staged_slot_materialisation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`GuardedStagedSlotMaterialisation`) · **Folder:** [`workflows/wf36_guarded_staged_slot_materialisation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf36_guarded_staged_slot_materialisation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Stage 1 fills typed cochain slots; a complete guard with one retry gates stage 2.
 
@@ -20,7 +20,9 @@ false-green kernel witness.
 3. Two-stage tree-then-chord for higher cycle rank
 4. A dichotomic guard removes the lazy false-refusal attractor
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - syndrome r* = S c shared across verdict, repair and audit; a partial guard leaves a false-green kernel
 

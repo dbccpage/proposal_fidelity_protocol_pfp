@@ -2,7 +2,7 @@
 
 **Layer:** 1 · **Builds on:** [WF1](Workflow-WF1.md) · **Merges into:** nothing · **Kind:** experiment design
 
-**Code:** [`pfp_core/workflow_families/layer1.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer1.py) (`HeldOutTournament`) · **Folder:** [`workflows/wf31_multi_agent_tournament_with_held_out_cross_validation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf31_multi_agent_tournament_with_held_out_cross_validation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer1.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer1.py) (`HeldOutTournament`) · **Folder:** [`workflows/wf31_multi_agent_tournament_with_held_out_cross_validation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf31_multi_agent_tournament_with_held_out_cross_validation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Several proposers fit a public training share; the host scores a sealed held-out share.
 
@@ -18,7 +18,9 @@ and no winner is certified unless it strictly beats the baseline.
 3. Proposers see a training share of the instance; the host scores the held-out share
 4. Rank per budget
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - exact referee: SO(4N), det = +1, defect <= tolerance; held-out score on the 30% the proposer never saw
 

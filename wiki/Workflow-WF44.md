@@ -2,7 +2,7 @@
 
 **Layer:** 4 · **Builds on:** [WF11](Workflow-WF11.md), [WF10](Workflow-WF10.md) · **Merges into:** WF11 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer4.py) (`ExactCertificatePresets`) · **Folder:** [`workflows/wf44_exact_certificate_presets`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf44_exact_certificate_presets) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`ExactCertificatePresets`) · **Folder:** [`workflows/wf44_exact_certificate_presets`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf44_exact_certificate_presets) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Check a certificate against a registered exact schema; type-check before evaluating.
 
@@ -16,7 +16,9 @@ float, a wrong shape or the wrong schema is refused before any equation is evalu
 1. The model emits a certificate: l1 potential, residual and dual circulation; a sparse representative; an equal-weight pairing involution; or a typed DSL program
 2. The host checks it exactly; ill-typed programs are refused before evaluation
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - r = w + B f, B^T z = 0, |z_e| <= w_e, w . z = ||r||_1 (weak duality)
 

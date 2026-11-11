@@ -2,7 +2,7 @@
 
 **Layer:** 5 · **Builds on:** [WF6](Workflow-WF6.md), [WF3](Workflow-WF3.md) · **Merges into:** Sweep · **Kind:** experiment design
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer5.py) (`MechanismControlArms`) · **Folder:** [`workflows/wf12_mechanism_control_arms`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf12_mechanism_control_arms) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`MechanismControlArms`) · **Folder:** [`workflows/wf12_mechanism_control_arms`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf12_mechanism_control_arms) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Run a mechanism arm against matched null and random controls on the same items.
 
@@ -20,7 +20,9 @@ exact squared norm.
 3. Grade with one registered checker
 4. Compare arms item by item
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - rank difference: r_i - r_j recovered from a gauge-fixed assignment; gauge freedom r -> r + c leaves differences unchanged
 - paired effect: d_i = 1[check(arm_B, i)] - 1[check(arm_A, i)]

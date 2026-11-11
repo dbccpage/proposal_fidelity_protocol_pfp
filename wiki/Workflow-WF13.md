@@ -2,7 +2,7 @@
 
 **Layer:** 2 · **Builds on:** [WF1](Workflow-WF1.md), [WF7](Workflow-WF7.md) · **Merges into:** WF1 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer2.py) (`ExactDomainCapsuleBattery`) · **Folder:** [`workflows/wf13_exact_domain_capsule_battery`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf13_exact_domain_capsule_battery) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer2.py) (`ExactDomainCapsuleBattery`) · **Folder:** [`workflows/wf13_exact_domain_capsule_battery`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf13_exact_domain_capsule_battery) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Run a battery of exact-domain capsules, each judged by its own registered checker.
 
@@ -19,7 +19,9 @@ a missing or malformed reply counts as a failure, and no cross-domain average is
 3. One reply or typed refusal per capsule
 4. Results stay per domain; no cross-domain average is claimed
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - stabilizer codes: generators commute iff their symplectic product is 0 mod 2
 - U(1) anomaly freedom: sum_i q_i = 0 and sum_i q_i^3 = 0 over the declared charges

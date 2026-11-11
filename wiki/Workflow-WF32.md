@@ -2,7 +2,7 @@
 
 **Layer:** 2 · **Builds on:** [WF1](Workflow-WF1.md), [WF2](Workflow-WF2.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer2.py) (`ClaimScopedReceipt`) · **Folder:** [`workflows/wf32_claim_scoped_receipt`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf32_claim_scoped_receipt) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer2.py) (`ClaimScopedReceipt`) · **Folder:** [`workflows/wf32_claim_scoped_receipt`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf32_claim_scoped_receipt) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Admit each atomic claim only through its own checker, bound to its own evidence digest.
 
@@ -19,7 +19,9 @@ as admitted outside J, forges a digest, or carries a failing witness is refused.
 3. A correct witness admits nothing around it (prose, universals, quotes)
 4. Quotes need source bytes and a span
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - admitted(J) = {j : C_j(witness_j) = accept}; everything else stays unadmitted
 

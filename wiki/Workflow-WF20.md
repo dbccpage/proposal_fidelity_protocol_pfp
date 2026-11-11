@@ -2,7 +2,7 @@
 
 **Layer:** 8 · **Builds on:** [WF9](Workflow-WF9.md), [WF10](Workflow-WF10.md), [WF19](Workflow-WF19.md) · **Merges into:** WF9 · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer8.py) (`DerivationLoopWithLiftGrants`) · **Folder:** [`workflows/wf20_derivation_loop_with_lift_grants`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf20_derivation_loop_with_lift_grants) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer8.py) (`DerivationLoopWithLiftGrants`) · **Folder:** [`workflows/wf20_derivation_loop_with_lift_grants`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf20_derivation_loop_with_lift_grants) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > The WF9 repair loop, with structural lift grants when the defect stalls.
 
@@ -20,7 +20,9 @@ on budget or on the limit of 5; a request for non-structural data is refused.
 4. Negative control
 5. Learning refinement for the next loop; stop at the loop limit
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - loop state (P_t, G_t, W_t); P_{t+1} = refine(P_t, residual_t) with t <= 5
 - metric/cochain bridge: additive curvature and metric Regge holonomy are checked separately

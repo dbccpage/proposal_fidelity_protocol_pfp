@@ -2,7 +2,7 @@
 
 **Layer:** 5 · **Builds on:** [WF23](Workflow-WF23.md) · **Merges into:** nothing · **Kind:** harness gate
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer5.py) (`GateHonestyAudit`) · **Folder:** [`workflows/wf43_gate_honesty_and_answer_free_leak_audit`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf43_gate_honesty_and_answer_free_leak_audit) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`GateHonestyAudit`) · **Folder:** [`workflows/wf43_gate_honesty_and_answer_free_leak_audit`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf43_gate_honesty_and_answer_free_leak_audit) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Replay answer-free probes against a proposed gate and refuse a gate that lets one pass.
 
@@ -18,7 +18,9 @@ probe verdict is traced to the checks that produced it.
 2. Probe with input replacement, keyword adjudication, phantom evidence and templated receipts
 3. Replay constant refusals, empty objects and constant verdicts against both checkers
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - a gate is honest only if no answer-free reply passes and every verdict traces to a check
 

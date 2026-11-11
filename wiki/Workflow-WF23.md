@@ -2,7 +2,7 @@
 
 **Layer:** 4 · **Builds on:** [WF11](Workflow-WF11.md) · **Merges into:** nothing · **Kind:** harness gate
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer4.py) (`JudgePacketCustodyAudit`) · **Folder:** [`workflows/wf23_judge_packet_custody_audit`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf23_judge_packet_custody_audit) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`JudgePacketCustodyAudit`) · **Folder:** [`workflows/wf23_judge_packet_custody_audit`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf23_judge_packet_custody_audit) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Audit a judge run: file hashes, answer-free participant bytes, sealed checker, stdout tags.
 
@@ -19,7 +19,9 @@ checkers, edited files and forged stdout lines are refused. ``audit`` is reusabl
 3. Test that no expected answer is derivable from participant bytes
 4. Verify the judge executes the sealed checker version
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - leakage test: the expected answer does not appear in, and is not a declared function of, participant bytes
 - custody: recorded SHA-256 equals the hash of the executed bytes

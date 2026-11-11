@@ -2,7 +2,7 @@
 
 **Layer:** 7 · **Builds on:** [WF4](Workflow-WF4.md), [WF14](Workflow-WF14.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer7.py) (`AdversaryTribunal`) · **Folder:** [`workflows/wf15_adversary_tribunal`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf15_adversary_tribunal) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`AdversaryTribunal`) · **Folder:** [`workflows/wf15_adversary_tribunal`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf15_adversary_tribunal) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Prosecutor and defender commit before either reveals; only the model check rules.
 
@@ -19,7 +19,9 @@ that does not match its commitment and a true but unwitnessed prosecution.
 3. The host checks each claim on the finite model
 4. Verdict comes only from the check; rhetoric is not evidence
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - Kripke model M = (W, R, V); M, w |= box phi iff phi holds at every R-successor of w
 - argument acceptance: grounded extension of the attack graph, computed by the host

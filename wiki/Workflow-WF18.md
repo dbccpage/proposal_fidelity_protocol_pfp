@@ -2,7 +2,7 @@
 
 **Layer:** 6 · **Builds on:** [WF6](Workflow-WF6.md), [WF12](Workflow-WF12.md) · **Merges into:** nothing · **Kind:** harness gate
 
-**Code:** [`pfp_core/workflow_families/layer6.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer6.py) (`DossierReplayCampaign`) · **Folder:** [`workflows/wf18_dossier_replay_campaign`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf18_dossier_replay_campaign) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer6.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer6.py) (`DossierReplayCampaign`) · **Folder:** [`workflows/wf18_dossier_replay_campaign`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf18_dossier_replay_campaign) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Replay a frozen campaign dossier with zero model calls; every grade must reproduce.
 
@@ -18,7 +18,9 @@ refuses any drifted byte, drifted pin or grade that does not reproduce.
 3. Run five matched guidance trials
 4. Replay from stored bytes and extract learning
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - frustrated spin triangle: no s in {+1,-1}^3 satisfies s_i s_j = -1 on all three edges (odd cycle)
 - weighted cycle duality: a feasible potential exists iff no negative cycle exists

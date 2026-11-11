@@ -2,7 +2,7 @@
 
 **Layer:** 4 · **Builds on:** [WF2](Workflow-WF2.md), [WF5](Workflow-WF5.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer4.py) (`StagedSealedPackets`) · **Folder:** [`workflows/wf08_staged_sealed_packets`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf08_staged_sealed_packets) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`StagedSealedPackets`) · **Folder:** [`workflows/wf08_staged_sealed_packets`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf08_staged_sealed_packets) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Run a task as declared stages; seal each stage packet before the next stage reads it.
 
@@ -19,7 +19,9 @@ Subclasses override ``stages``, ``same_payload`` and ``final_check``.
 3. Seal each stage output (hash chain) before the next stage reads it
 4. Check every stage receipt and the final answer
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - composition F = f_k o ... o f_1 with typed interfaces between stages
 - seal chain h_0 = H(seed), h_i = H(h_{i-1} || payload_i); any edit breaks every later h_j

@@ -2,7 +2,7 @@
 
 **Layer:** 3 · **Builds on:** [WF3](Workflow-WF3.md), [WF9](Workflow-WF9.md) · **Merges into:** WF1 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer3.py) (`DualCertificateSynthesis`) · **Folder:** [`workflows/wf11_dual_certificate_synthesis`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf11_dual_certificate_synthesis) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`DualCertificateSynthesis`) · **Folder:** [`workflows/wf11_dual_certificate_synthesis`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf11_dual_certificate_synthesis) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Certify an LP optimum with an exact dual, or infeasibility with a Farkas vector.
 
@@ -19,7 +19,9 @@ weak-duality bound, not a certificate, and is refused.
 3. Commit H(salt || solver) before hidden cases are revealed
 4. Judge checks each certificate with exact dot products
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - LP optimality: x >= 0, A x <= b, y >= 0, A^T y >= c, c.x = b.y (weak duality closes the gap)
 - infeasibility (Farkas): y >= 0, A^T y >= 0, b.y < 0

@@ -2,7 +2,7 @@
 
 **Layer:** 8 · **Builds on:** [WF8](Workflow-WF8.md), [WF22](Workflow-WF22.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer8.py) (`FutureFaithfulCompression`) · **Folder:** [`workflows/wf34_future_faithful_compression_and_bounded_context`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf34_future_faithful_compression_and_bounded_context) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer8.py) (`FutureFaithfulCompression`) · **Folder:** [`workflows/wf34_future_faithful_compression_and_bounded_context`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf34_future_faithful_compression_and_bounded_context) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Compress a repair history to root, champion, two recent attempts and evidence references.
 
@@ -19,7 +19,9 @@ compression that drops needed state, or forges the root, is refused.
 3. Bounded context keeps root, champion, two recent attempts and evidence references
 4. Compare with a full-history arm at the same ceiling
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - coarsest stable refinement; states equal under every finite continuation
 

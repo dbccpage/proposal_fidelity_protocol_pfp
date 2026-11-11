@@ -2,7 +2,7 @@
 
 **Layer:** 3 · **Builds on:** [WF9](Workflow-WF9.md) · **Merges into:** WF9 · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer3.py) (`DiagnosticTraceSelection`) · **Folder:** [`workflows/wf38_diagnostic_trace_proposal_selection`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf38_diagnostic_trace_proposal_selection) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`DiagnosticTraceSelection`) · **Folder:** [`workflows/wf38_diagnostic_trace_proposal_selection`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf38_diagnostic_trace_proposal_selection) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Rank candidate repairs by the host's own defect recomputation, never the model's score.
 
@@ -19,7 +19,9 @@ the selection is refused.
 3. Filter by strict lexicographic decrease and a ratio ceiling
 4. Rank with fixed weights; ties by name; every observer must pass in the multi-observer form
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - primal-dual witness: B^T phi = 0, ||phi||_inf <= 1, phi . c = ||h||_1; Gamma <= ||D|| Phi
 

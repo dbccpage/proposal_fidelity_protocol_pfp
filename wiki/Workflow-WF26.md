@@ -2,7 +2,7 @@
 
 **Layer:** 7 · **Builds on:** [WF9](Workflow-WF9.md), [WF14](Workflow-WF14.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer7.py) (`MultiRoundAntibodyDialogue`) · **Folder:** [`workflows/wf26_multi_round_antibody_dialogue`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf26_multi_round_antibody_dialogue) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`MultiRoundAntibodyDialogue`) · **Folder:** [`workflows/wf26_multi_round_antibody_dialogue`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf26_multi_round_antibody_dialogue) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Each host-classified failure becomes a typed negative constraint carried into later rounds.
 
@@ -19,7 +19,9 @@ round limit and replies that never parse.
 3. Carry accumulated antibodies into the next round
 4. Accept only on the exact oracle
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - antibody set A_{t+1} = A_t ∪ {typed constraint from failure_t}; stop when check passes or t = R
 

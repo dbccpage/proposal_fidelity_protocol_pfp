@@ -2,7 +2,7 @@
 
 **Layer:** 4 · **Builds on:** [WF5](Workflow-WF5.md) · **Merges into:** Sweep · **Kind:** experiment design
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer4.py) (`DialectSweep`) · **Folder:** [`workflows/wf06_dialect_sweep`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf06_dialect_sweep) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`DialectSweep`) · **Folder:** [`workflows/wf06_dialect_sweep`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf06_dialect_sweep) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Pose each seed item in k query-preserving dialects and grade every reply with one checker.
 
@@ -19,7 +19,9 @@ dialect, item by item. A dialect that changes the query or an incomplete sweep i
 4. Grade every reply with the same host checker
 5. Report acceptance per dialect, item by item
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - dialect family {rho_k}: decode(rho_k(s)) = q(s) for every k (preservation precondition)
 - acceptance A_k = (1/N) sum_i 1[check(r_ik)] compared pairwise on the same items

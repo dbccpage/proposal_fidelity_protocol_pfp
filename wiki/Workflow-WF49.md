@@ -2,7 +2,7 @@
 
 **Layer:** 8 · **Builds on:** [WF8](Workflow-WF8.md), [WF22](Workflow-WF22.md) · **Merges into:** nothing · **Kind:** experiment design
 
-**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer8.py) (`QueryPreservationCampaign`) · **Folder:** [`workflows/wf49_query_preservation_stage_and_mode_campaign`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf49_query_preservation_stage_and_mode_campaign) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer8.py) (`QueryPreservationCampaign`) · **Folder:** [`workflows/wf49_query_preservation_stage_and_mode_campaign`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf49_query_preservation_stage_and_mode_campaign) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Run staged, sealed packets through mode lanes; a stage passes only if the query is unchanged.
 
@@ -18,7 +18,9 @@ at its first safety regression (an unlisted field such as an answer).
 2. Independent oracle per family
 3. Stop a lane on any safety regression
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - a stage passes only if the decoded query is unchanged
 

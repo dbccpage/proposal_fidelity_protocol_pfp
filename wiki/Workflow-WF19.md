@@ -2,7 +2,7 @@
 
 **Layer:** 7 · **Builds on:** [WF12](Workflow-WF12.md), [WF14](Workflow-WF14.md) · **Merges into:** nothing · **Kind:** experiment design
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer7.py) (`FailureDerivedRuleTransfer`) · **Folder:** [`workflows/wf19_failure_derived_rule_transfer`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf19_failure_derived_rule_transfer) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`FailureDerivedRuleTransfer`) · **Folder:** [`workflows/wf19_failure_derived_rule_transfer`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf19_failure_derived_rule_transfer) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Rules extracted from training failures are admitted only if they transfer to held-out tasks.
 
@@ -19,7 +19,9 @@ overlapping splits, and halts when two independent clean checkers disagree.
 3. Allow at most two stages; checker disagreement stops the run
 4. A rule stays a candidate until transfer and self-tolerance are measured
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - transfer gain = acc(rule, held-out) - acc(baseline, held-out) on disjoint items
 - a rule is admitted only if gain > 0 and self-tolerance holds (WF14)

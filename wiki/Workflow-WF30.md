@@ -2,7 +2,7 @@
 
 **Layer:** 1 · **Builds on:** [WF1](Workflow-WF1.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer1.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer1.py) (`ConstraintForcingAntiRecitation`) · **Folder:** [`workflows/wf30_constraint_forcing_anti_recitation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf30_constraint_forcing_anti_recitation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer1.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer1.py) (`ConstraintForcingAntiRecitation`) · **Folder:** [`workflows/wf30_constraint_forcing_anti_recitation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf30_constraint_forcing_anti_recitation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > A sorting network under constraints that a memorised network breaks.
 
@@ -15,7 +15,9 @@ a comparator network sorts every input iff it sorts all ``2^n`` binary ones.
 1. Add task constraints that break memorised textbook answers (forced prefix, forbidden step)
 2. Check with the exact property (e.g. the 0-1 principle)
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - a comparator network sorts all inputs iff it sorts all 2^n binary inputs
 

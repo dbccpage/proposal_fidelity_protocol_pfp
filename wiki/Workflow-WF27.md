@@ -2,7 +2,7 @@
 
 **Layer:** 3 · **Builds on:** [WF9](Workflow-WF9.md) · **Merges into:** WF9 · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/layer3.py) (`HintedRetraction`) · **Folder:** [`workflows/wf27_hinted_retraction_with_a_stationary_loop_detector`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf27_hinted_retraction_with_a_stationary_loop_detector) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_core/workflow_families/tests/test_families.py)
+**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`HintedRetraction`) · **Folder:** [`workflows/wf27_hinted_retraction_with_a_stationary_loop_detector`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf27_hinted_retraction_with_a_stationary_loop_detector) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > The WF9 repair loop with answer-free structural hints and a stationary-loop stop.
 
@@ -19,7 +19,9 @@ typed code ``STATIONARY_LOOP``; exhausting the turn cap is refused.
 3. Force a structural lift or reframe
 4. Stop at the turn cap
 
-## Mathematics
+## Design mathematics
+
+From the DAG node. The runner checks the instance described above; items it does not exercise remain design.
 
 - residual r_t = d c_t; stationary if r_t = r_{t-3}; path-integrated retry uses B_T^{-1}, not edge-local B_T
 
