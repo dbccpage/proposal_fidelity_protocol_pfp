@@ -1,0 +1,278 @@
+{
+ "audited_commit": "309e3f23",
+ "verdict": "pass_with_findings",
+ "summary": "Mechanics, accounting and the declared offline numbers check out, and 55 tests pass. The README's comparative reading is stronger than the code supports. In the offline matrix the PFP arm behaves as 'direct prompt + public host checks + one repair': thymus screening and Signal 1 guards have no effect on its outcomes, it carries no skills and no AGENTS.md prose, and the industry arms get neither public checks nor feedback after a guardrail block. The sealed grader can be forged by candidate code that patches builtins.print.",
+ "baseline_fairness": {
+  "industry_stack_quality": "AGENTS.md (31 bullet rules, 642 est. tokens) and the 10 SKILL.md files (5,654 est. tokens with AGENTS.md) read as realistic, competently written house guidance. The two duplicate skills and the stale legacy-json-style skill are deliberate and declared. The rules the sealed tests depend on (Decimal, bound parameters, allowlist, monotonic clock, mark-sent-after-send, integer ms, frozen byte-for-byte) are stated to the industry arms. Not a strawman on content.",
+  "guardrail_patterns": "The `deny:` regex convention is invented by this benchmark; real stacks enforce such rules through linters (for example ruff S608 or bandit B608 for SQL built with f-strings), which are AST-aware. `\\bf\"` bans every double-quoted f-string, which is wider than the prose rule ('Never build SQL with f-strings') and conflicts with python-style ('Use f-strings for human-readable messages'). `float\\(` is evaded by `float (x)` (own mutation M7). Both arms use the same regexes, but only the industry arms act on a hit.",
+  "guardrail_hit_handling": "Asymmetric. In the industry arms a guard hit ends the run (GUARDRAIL_BLOCK): no feedback and no retry. In real pre-commit, CI or agent-hook setups the failure normally goes back to the agent. PFP gets one repair with the failed predicate names. All industry false refusals under ignores_context_rules (t2: 4/7 one-call, 6/7 reviewer) come from this rule plus the f-string guard.",
+  "host_checks": "Asymmetric. Only the PFP arm runs the public host checks (syntax, fence, signatures, worked examples), even though those checks use only material from the public prompt, which a CI step in an industry setup would run. No arm of the form 'industry stack + public tests + one retry' exists, so the PFP gain over the industry one-call arm can't be credited to pfp_core rather than to running the public tests.",
+  "reviewer_model": "The reviewer fixes a REPAIRABLE tier even though it sees no host evidence (for example t2 injection_vulnerable). This is generous to the industry arm and symmetric with the PFP repair map. Reviewer accuracy equals PFP accuracy by construction (README states this).",
+  "context_assembly": "Asymmetric in a way that drives the cost result. PFP gets BASE_INSTRUCTION, the selected skills (always none: chosen_genome is host_only in every task and policy) and, for t3, the host-computed schema_diff. It never sees AGENTS.md prose. Industry arms get AGENTS.md plus all 10 skills and no BASE_INSTRUCTION. Most of the '9 to 16 percent of reviewer tokens' result comes from leaving out about 5.6k tokens of context per call and skipping the second call.",
+  "budget": "Symmetric. The cap is 100,000 microUSD per run for every arm, and no run is refused by budget offline (refused_by_budget = 0 everywhere).",
+  "offline_solver_policy": {
+   "FixtureSolver": "Same candidate tiers per task for every arm. A non-draft stage (review or repair) turns any REPAIRABLE tier into 'faithful'. Symmetric.",
+   "REPAIRABLE": "One map per task, used for the reviewer and for the PFP repair. Symmetric.",
+   "exposure_slot": "Under follows_context_rules, every industry run is exposed to the conflicting skill. PFP and direct never are, because PFP selects no skills. In t3 this costs industry one-call one correct answer (3/6 against 4/6 under ignores). PFP avoids the poisoned skill by carrying no skills; lineage taint excluding it changes nothing here, because the unmeasured genomes are never chosen.",
+   "RULE_COMPLIANT": "Defined only for t2 and applied only when AGENTS.md is in context, so only to industry arms. Under follows it removes the false refusals. Under ignores (sensitivity) the faithful f-string SQL hits the guard and is blocked with no feedback.",
+   "t2_self_panel": "The t2 thymus self panel consists of f-string SQL examples written by the benchmark author. It kills AGENTS:deny:5, the repository owner's explicit rule. Calling the industry blocks 'false refusals' therefore rests on the sealed grader, which accepts f-string SQL with placeholders, overriding the stated repository rule."
+  },
+  "where_pfp_wins_by_assumption": [
+   "Against the industry one-call arm (t1 to t4, both policies): only PFP runs public host checks plus one repair (arms.py run_arm, pfp branch). A guard hit is terminal only for industry (arms.py, the line setting GUARDRAIL_BLOCK).",
+   "Against the reviewer loop (cost): PFP leaves AGENTS.md and all skills out of context (arms.pfp_system with skills=[]), and the reviewer always makes a second call.",
+   "t2 ignores_context_rules false refusals: these depend on the author-written self panel killing the f-string rule, the terminal guard block and the grader's view that f-string SQL is correct.",
+   "Own mutation M14: removing thymus screening (all guards admitted) or removing all guards leaves every PFP row in both policies unchanged. The two-signal disposition is HOLD exactly when host danger is present, so Signal 1 never changes a PFP delivery in this design."
+  ]
+ },
+ "firewall": {
+  "sealed_import_paths": "pfp_core never imports or reads sealed_evaluator. Sealed content is read only by build_manifests.custody and run_live.admit (SHA-256 commitments) and, after the freeze line, by run_offline_matrix and run_live through grade and prewarm_offline. test_only_the_harness_imports_the_sealed_evaluator pins this list.",
+  "pre_freeze_grading": "None found. In run_offline_matrix.evaluate the sealed import, prewarm_offline and grade_text all run after freeze_digest is computed. calibrate() uses public_check only. The offline freeze is in memory, not persisted. In run_live, freeze.json is written before the sealed import.",
+  "model_facing_leaks_found": "No sealed-only literal reaches a public prompt, a pfp_system prompt, industry_system, the arm instructions or a self panel. A broad same-task scan (strings of 3 or more characters, spaces allowed) found only 'missing', 'boot' and 'ASC', which are generic words or part of the public legacy code.",
+  "design_knowledge_caveat": "The offline fixtures (subtly_buggy tiers) and the t2 prompt's enumeration of edge cases (NULL regions, ties, empty status lists, LIKE wildcards, limit clamping) were written with knowledge of the sealed tests. All arms see the prompt equally, and the README acknowledges that the controller has seen the sealed tests.",
+  "leak_test_strength": "Weak in three reproducible ways (own mutations M1 to M3). It drops literals that contain a space ('Saint John's' added to the t2 prompt passes). It doesn't scan integers (seeds 11 to 17, the 29-row count). It doesn't scan model-facing text in arms.py (BASE, REVIEW and REPAIR instructions, pfp_system host facts): 'Bo_b' and 'ledger-sync' put into REPAIR_INSTRUCTION pass, while the same literal in the prompt is caught (control M2b).",
+  "grader_integrity": "The sealed driver and the candidate share one interpreter, and the driver's result is the last stdout line. A 5-line candidate that patches builtins.print is graded correct=True, 15/15, on t1 without implementing anything (M12). The public smoke checks read results the same way. In offline prewarm, builtins patches would also persist across trusted fixtures batched in one process."
+ },
+ "mutation_matrix": [
+  {
+   "item": "autoimmune rule killed by ThymusGate vs valid rule admitted",
+   "evidence": "pfp_core/tests/test_pfp_core.py::test_thymus_kills_autoimmune_rule_and_admits_valid_rule passed; test_thymus_is_domain_specific passed (AGENTS:deny:5 killed in t2 only)",
+   "outcome": "killed"
+  },
+  {
+   "item": "TWO_SIGNAL_COLLAPSE when a model emits its own danger signal",
+   "evidence": "test_two_signal_table_and_collapse passed (observer 'MODEL' plus a Signal 1 match gives DIAGNOSTIC with TWO_SIGNAL_COLLAPSE). Scope gap: without a match, or with observer 'claude-haiku-5-5', the forged signal yields HOLD (own mutations M4, M5).",
+   "outcome": "killed (with a Signal 1 match only)"
+  },
+  {
+   "item": "5 correlated failures on one scaffold stay at support 1",
+   "evidence": "test_correlated_failures_do_not_promote_antibody passed. offline_matrix_results.json antibody_status shows support 1 and custody Candidate for every pattern.",
+   "outcome": "killed"
+  },
+  {
+   "item": "reverse-ordered lineage edges still taint descendants",
+   "evidence": "test_lineage_taint_is_edge_order_independent passed (all 24 permutations of the 4 edges give the same taint set; a cycle is refused)",
+   "outcome": "killed"
+  },
+  {
+   "item": "byte fence rejects a 1-byte edit and a zero-width insertion",
+   "evidence": "test_fence_rejects_one_byte_edit_and_zero_width_insertion passed. Own M11: a duplicated fence block is rejected. Own M6: a frozen class shadowed after the fence passes the fence and every public check.",
+   "outcome": "killed (byte scope only)"
+  },
+  {
+   "item": "ambiguous HTTP 502 / socket timeout on AnthropicProvider holds the reservation and blocks retry",
+   "evidence": "test_http_502_and_timeout_hold_full_quote_and_block passed (the test calls ledger.mark_uncertain itself). Own end-to-end check: AnthropicProvider with a 502 transport through run_live.ProviderSolver and arms.run_arm, all 4 arms: 1 dispatch, full quote held, run blocked, no later stage dispatched. test_live_runner_holds_ambiguous_delivery_and_stops passed.",
+   "outcome": "killed"
+  },
+  {
+   "item": "git diff --name-only 84f8ea3a..HEAD touches only allowed paths",
+   "evidence": "All 45 changed paths are under pfp_core/, benchmarks/industry_replacement/ or are dag/benchmark/anthropic_provider.py and test_anthropic_provider.py. A grep for anything else returned nothing. test_branch_touches_only_allowed_paths passed.",
+   "outcome": "killed"
+  },
+  {
+   "item": "full suite",
+   "evidence": "python -m pytest pfp_core benchmarks/industry_replacement dag/benchmark/test_anthropic_provider.py -q gives 55 passed in 4.07s",
+   "outcome": "pass"
+  }
+ ],
+ "own_mutations": [
+  {
+   "description": "M1: sealed t2 literal \"Saint John's\" (contains a space) appended to the t2 public prompt in memory; then run test_sealed_constants_do_not_leak_into_public_material",
+   "outcome": "survived",
+   "evidence": "the leak test passed; it skips literals that contain a space"
+  },
+  {
+   "description": "M2: sealed literals 'Bo_b', '100%Co' and 'ledger-sync' appended to arms.REPAIR_INSTRUCTION (model-facing)",
+   "outcome": "survived",
+   "evidence": "the leak test passed; arms.py text is not part of public_material(). Control M2b: 'Bo_b' in the t2 prompt is killed."
+  },
+  {
+   "description": "M3: sealed integers (dataset seeds 11 to 17, 29 rows) added to the t2 prompt",
+   "outcome": "survived",
+   "evidence": "the leak test passed; only str and float constants are scanned"
+  },
+  {
+   "description": "M4: immunity.decide([], host_danger('REPLAY_FAILURE', 'MODEL', ...)), a model-authored danger with no Signal 1 match",
+   "outcome": "survived",
+   "evidence": "disposition HOLD_OR_REPAIR, basis 'host predicate refusal: REPLAY_FAILURE by MODEL'; the independence check runs only when a match exists"
+  },
+  {
+   "description": "M5: a Signal 1 match plus danger with observer_id 'claude-haiku-5-5', a model name not on the denylist",
+   "outcome": "survived",
+   "evidence": "disposition HOLD_OR_REPAIR, refusal_code None; FORBIDDEN_DANGER_OBSERVERS is a denylist (MODEL, LLM, AGENT, DETECTOR, MATCHER)"
+  },
+  {
+   "description": "M6: t1 candidate keeps the frozen block byte-for-byte but redefines LedgerError and ERROR_CODES after it",
+   "outcome": "survived",
+   "evidence": "fence violations [] and t1.public_check danger None"
+  },
+  {
+   "description": "M7: t1 subtly_buggy with 'float(value)' rewritten to 'float (value)'",
+   "outcome": "survived",
+   "evidence": "signal1 against AGENTS_GUARDS gives []; the industry float guard is evaded"
+  },
+  {
+   "description": "M8: civ.Candidate('bogus', passed=5, attempted=1) with very high cost",
+   "outcome": "survived",
+   "evidence": "pass_rate 5, and select() places it on the Front over the baseline; passed <= attempted is not validated"
+  },
+  {
+   "description": "M9: WholeRunBudget.settle with input/output tokens of -500",
+   "outcome": "survived",
+   "evidence": "settled True and total_tokens -1000"
+  },
+  {
+   "description": "M10: WholeRunBudget.settle with actual = -1",
+   "outcome": "killed",
+   "evidence": "settle returns False, and the 100 microUSD quote stays held"
+  },
+  {
+   "description": "M11: candidate contains the frozen block twice",
+   "outcome": "killed",
+   "evidence": "violations ['frozen']"
+  },
+  {
+   "description": "M12: t1 candidate that only patches builtins.print to emit {\"passed\":15,\"total\":15}",
+   "outcome": "survived",
+   "evidence": "sealed_evaluator.grade.grade returns correct True, 15/15"
+  },
+  {
+   "description": "M13: run_live.main rerun with the same admitted manifest into a second new --out directory after the first campaign held a run",
+   "outcome": "survived",
+   "evidence": "the second campaign dispatches again with a fresh ledger; held liability from the first ledger is not consulted"
+  },
+  {
+   "description": "M14: arms.screened_guards replaced with (all guards admitted, no kills) and with (no guards); evaluate() rerun for both policies",
+   "outcome": "survived",
+   "evidence": "PFP rows (runs, correct, wrong, refused, false_refusal, tokens, calls) are identical to the unmutated run in all 4 tasks and both policies; thymus screening and Signal 1 are not load-bearing for any reported PFP number"
+  }
+ ],
+ "accounting": {
+  "reserve_before_dispatch": "Yes for every stage. draft, review and repair all go through arms._call, which runs upper_quote, then reserve (RunLedger, under BEGIN IMMEDIATE), then one complete. An admission exception refuses before any reservation.",
+  "settle_or_hold": "A known charge is settled. microusd None or an exception from complete leads to hold_call (mark_uncertain, quote held, run blocked). A known charge with an accounting_error is settled and then blocked. An overrun is recorded, blocks the run and is not delivered. A pre-network ProviderError (changed request, expired quote) is also held, which is conservative.",
+  "denominators_offline": "Every arm has the same run count per task, and failed, refused and held runs stay in 'runs' (test_offline_matrix_mechanics). Candidate.pass_rate uses attempted.",
+  "denominators_live": "Executed runs, including refused and held ones, are counted. Runs not executed after a stop are absent from summary.json; nothing records the 16 planned runs or the unexecuted count.",
+  "retry_resume_overwrite": "Within one --out: no resume and no overwrite (an existing directory is refused); RunLedger refuses a duplicate run id or call id and any reserve on a blocked run. Across campaigns, a rerun into a new --out builds a fresh ledger and redispatches the same manifest (M13), so 'no retry' holds only per output directory.",
+  "aggregate_cap": "Checked per campaign only (spent_or_held plus the per-run cap against the aggregate cap). There is no cross-campaign ledger keyed by the manifest digest.",
+  "token_tally": "WholeRunBudget.settle accepts negative token counts (M9). Low impact, since the adapters validate nonnegative ints."
+ },
+ "claim_hygiene": [
+  "README table row 'pfp ... PCIV-selected skills': in every task and policy the chosen genome is host_only, so the PFP arm runs with no skills and no AGENTS.md prose. The row should say so.",
+  "README 'Narrowest defensible claim': 'same correct-answer count as the reviewer ... 9 to 16 percent of its estimated tokens' matches the JSON (t1 17,900/111,035 = 16.1%, t2 11.4%, t3 9.3%, t4 11.2%). It omits that the saving comes mostly from leaving out the 5,654-token industry context and the always-on second call, not from regulation.",
+  "README 'PFP has no false refusals': true but vacuous. The PFP arm refused 0 runs of any kind, in every task and policy, so the result says nothing about refusal precision.",
+  "README 'blocked no correct answer that the public host checks could tell apart': PFP blocked no answer at all. The sentence should be reworded or removed.",
+  "README 'What this supports' lists thymus kills, lineage taint and the quotient as running end to end. That is accurate as mechanics, but none of them affects a reported PFP number (M14). The README should say they are not load-bearing in this matrix.",
+  "Missing from 'does not support': (a) the industry arms get no public tests and no feedback after a guard block, so the comparison isn't against an industry setup with CI; (b) the t2 self panel that kills the owner's f-string rule is author-chosen, and the 'false refusal' label depends on the grader overriding that rule; (c) the sealed grader can be forged by candidate code; (d) the live runs are one sample per cell, and planned runs not executed are not in the summary.",
+  "immunity.py docstring: 'a model- or detector-authored danger signal is refused' holds only when a Signal 1 match exists, and only for observer names on the denylist (M4, M5).",
+  "Checked numbers: README offline table (t1 to t4 correct/runs, the t1 correct refusal, t1 token figures 12.9k/52.3k/111k/17.9k), '31 rules', '~5,650 estimated tokens', 'about 3,860' unrelated-skill tokens (3,859) and 'false refusals 4 of 7 one call, 6 reviewer' all match offline_matrix_results.json and a fresh computation.",
+  "Hedging is generally good: the status label, 'consequences of declared assumptions, not measurements' and the list of unsupported live claims are present."
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "high",
+   "file": "benchmarks/industry_replacement/arms.py",
+   "issue": "The industry arms get no public host checks and no feedback or retry after a guard hit (GUARDRAIL_BLOCK is terminal), while PFP gets public checks plus one repair. With thymus and Signal 1 having no effect (M14) and no skills selected, the PFP arm amounts to 'direct + public checks + one repair'. No comparable industry arm exists, so the PFP gains can't be credited to pfp_core.",
+   "suggested_fix": "Add an arm 'industry_with_ci': AGENTS.md plus skills, the same public_check, and one retry that returns failed predicates and guard hits to the model. Also add an arm 'direct_with_public_checks'. Report PFP against both, and state in the README that the PFP result equals direct plus public checks plus repair in this matrix."
+  },
+  {
+   "id": "F2",
+   "severity": "high",
+   "file": "benchmarks/industry_replacement/sealed_evaluator/grade.py",
+   "issue": "The sealed driver reads the last stdout line from an interpreter that also runs candidate code. A candidate that patches builtins.print is graded correct 15/15 without implementing anything (M12). tasks/common.py public smoke drivers share the same weakness, and so do batched offline prewarms.",
+   "suggested_fix": "Bind an output channel before importing the candidate: open a result file or os.pipe fd at driver start, capture os.write as a local, and write the result with a per-run random nonce that the parent checks. Better: run each sealed test in a fresh subprocess, with the parent deciding pass or fail from exit codes. Do not batch untrusted code."
+  },
+  {
+   "id": "F3",
+   "severity": "medium",
+   "file": "benchmarks/industry_replacement/tasks/t2_sql_migration.py",
+   "issue": "The t2 SELF_PANEL is author-written f-string SQL. It kills AGENTS:deny:5, an explicit rule from the repository owner ('Never build SQL with f-strings'). The industry 'false refusals' under ignores_context_rules count only because the sealed grader accepts f-string SQL that the stated repo rule forbids.",
+   "suggested_fix": "Derive self panels only from material the repo owner certifies (for example existing passing repo code), or report the t2 guard hits as 'rule-compliant refusals' next to 'false refusals'. Replace the `\\bf\"` guard with an AST-level check on SQL-call arguments so the guard matches the prose rule."
+  },
+  {
+   "id": "F4",
+   "severity": "medium",
+   "file": "benchmarks/industry_replacement/README.md",
+   "issue": "Claims to fix. 'PCIV-selected skills': none are ever selected. 'No false refusals': PFP refused nothing. 'Blocked no correct answer': PFP blocked nothing. Mechanism bullets are presented without noting they don't affect any reported PFP number. The token saving is mostly the 5.6k-token context left out and the reviewer's always-on second call.",
+   "suggested_fix": "State that chosen_genome is host_only everywhere, that PFP refused 0 runs, and that M14-style ablation leaves the results unchanged. Add the missing 'does not support' items listed in claim_hygiene."
+  },
+  {
+   "id": "F5",
+   "severity": "medium",
+   "file": "benchmarks/industry_replacement/run_live.py",
+   "issue": "'Never retries' holds only per --out directory. Rerunning the same admitted manifest into a new directory redispatches with a fresh ledger and ignores the earlier held liability (M13). summary.json doesn't record planned runs or runs not executed after a stop.",
+   "suggested_fix": "Keep one campaign ledger keyed by the manifest SHA-256 outside --out (or require --out to be derived from the digest), and refuse admission while that ledger has a held or blocked run. Add planned_runs, executed_runs and not_executed to summary.json and count not-executed runs in each arm's denominator as refused."
+  },
+  {
+   "id": "F6",
+   "severity": "medium",
+   "file": "benchmarks/industry_replacement/tests/test_industry_replacement.py",
+   "issue": "test_sealed_constants_do_not_leak_into_public_material skips literals that contain spaces, integers, and model-facing text in arms.py (instructions, pfp_system host facts, repair feedback template). M1 to M3 each pass it.",
+   "suggested_fix": "Scan every str (spaces allowed) plus int and float constants, excluding a small reviewed allowlist. Add arms.BASE_INSTRUCTION, REVIEW_INSTRUCTION, REPAIR_INSTRUCTION, industry_system() and pfp_system(task, all skills) to public_material(). Add a mutation test that injects a spaced literal and expects failure."
+  },
+  {
+   "id": "F7",
+   "severity": "medium",
+   "file": "pfp_core/immunity.py",
+   "issue": "decide() returns HOLD for any danger when there is no Signal 1 match, without checking independence, so a model-authored danger is accepted as a host refusal (M4). The independence check is a denylist, so an observer such as 'claude-haiku-5-5' passes (M5). The docstring claims model-authored danger is refused.",
+   "suggested_fix": "Call assert_signals_independent (or an allowlist of host observer ids, for example a 'host.' prefix registry) before every HOLD, including the no-match branch, and add tests for both cases."
+  },
+  {
+   "id": "F8",
+   "severity": "low",
+   "file": "pfp_core/civilization.py",
+   "issue": "Candidate accepts passed > attempted and negative counts. A pass_rate of 5 reaches the Front (M8).",
+   "suggested_fix": "Validate 0 <= passed <= attempted and nonnegative int cost axes in __post_init__."
+  },
+  {
+   "id": "F9",
+   "severity": "low",
+   "file": "pfp_core/fidelity.py",
+   "issue": "WholeRunBudget.settle tallies negative token counts (M9). can_afford is unused. charge and hold are used only by tests.",
+   "suggested_fix": "Validate token and wall-time arguments with budget_ledger.integer. Remove can_afford, or use it in arms._call."
+  },
+  {
+   "id": "F10",
+   "severity": "low",
+   "file": "benchmarks/industry_replacement/run_offline_matrix.py",
+   "issue": "The skill-genome, lineage and quotient machinery in calibrate() is computed and reported but can never change chosen_genome, because unmeasured genomes are never on the Front. operad_pipe.representatives is unused. The extra code reads as evidence of selection that doesn't happen.",
+   "suggested_fix": "Mark it as diagnostic-only in the output, or remove it until a skill genome is measured. Remove operad_pipe.representatives."
+  },
+  {
+   "id": "F11",
+   "severity": "low",
+   "file": "benchmarks/industry_replacement/arms.py",
+   "issue": "Context differs beyond the arm definition: only PFP gets BASE_INSTRUCTION and the t3 host-computed schema_diff, and it never sees AGENTS.md prose. No offline effect, but it will affect live comparisons.",
+   "suggested_fix": "Give every arm the same BASE_INSTRUCTION, and either give the industry arms the same host facts or report the PFP arm as 'no repo rules in context'."
+  },
+  {
+   "id": "F12",
+   "severity": "low",
+   "file": "pfp_core/fidelity.py",
+   "issue": "The byte fence passes a candidate that keeps the frozen block but shadows LedgerError and ERROR_CODES later in the module (M6). This is within the declared byte-only scope, but t1 relies on the fence as the contract check.",
+   "suggested_fix": "For code tasks, add a host check that the frozen top-level names are not rebound after the fenced block (AST scan of module-level assignments and defs)."
+  }
+ ],
+ "limitations": [
+  "Audit ran offline on Windows with no network calls and USD 0 spent; I couldn't check live provider behaviour or pricing (the AnthropicProvider PRICING table, including claude-haiku-5-5 at 0.10/0.50 USD per Mtoken, was not checked against a live price list).",
+  "Own mutations were in-memory monkeypatches and crafted inputs in scratch scripts under the session scratchpad; no repository file other than this report was edited.",
+  "Judgements about which setups are 'realistic' rest on common practice for agent hooks, CI and linters; no external survey was done.",
+  "Only the offline fixture policy was exercised; conclusions about which mechanisms are load-bearing apply to this matrix and these fixtures.",
+  "openrouter_provider.py was compared only at the level of the shared quote/hold contract and the two-call cap test, not line by line."
+ ],
+ "resolutions": {
+  "resolved_in": "commit following 309e3f23 on the same branch",
+  "F1": "Added direct_with_public_checks and industry_with_ci arms with the same public checks and one feedback retry. Offline, PFP equals direct_with_public_checks on every task and policy (asserted in tests); README now credits the gain to public checks plus repair, not to EIS/PCIV.",
+  "F2": "Added a static tamper gate in sealed_evaluator/grade.py (import allowlist; denies print, builtins, exec, frames, stdout, process exit and similar). The forged-print candidate is refused (test). Residual risk stated in README: in-process forgery is narrowed, not closed; public smoke checks have no gate.",
+  "F3": "Not changed in code. README now states the t2 refusals are false only against the functional grader and are rule-compliant under the owner policy, and that PFP overriding the owner rule is a policy choice.",
+  "F4": "README rewritten: no PCIV skill is selected, PFP refused nothing, mechanisms move no PFP number, token figures attributed to context size and skipped second calls, added does-not-support items.",
+  "F5": "run_live.py keeps a registry of dispatched manifest digests (exclusive create) and refuses a second dispatch whatever --out is; summary reports planned/executed/not_executed and counts not-executed runs as refusals (tests).",
+  "F6": "Leak scan now covers spaced strings, integers (same-task) and model-facing text in arms.py, industry_system() and pfp_system().",
+  "F7": "decide() counts Signal 2 only from HOST_OBSERVERS; model or detector observers are ignored with UNWITNESSED_DANGER_SIGNAL or TWO_SIGNAL_COLLAPSE (test).",
+  "F8": "Candidate validates nonnegative ints and passed <= attempted.",
+  "F9": "settle() holds the call on negative or non-int tallies; can_afford removed.",
+  "F10": "Kept; README states the genome machinery changes no offline outcome.",
+  "F11": "Documented in README (PFP gets the t3 host key list; direct control does not).",
+  "F12": "Documented in README as a byte-scope limitation.",
+  "M7": "AGENTS float guard widened to \\bfloat\\s{0,4}\\(."
+ }
+}
