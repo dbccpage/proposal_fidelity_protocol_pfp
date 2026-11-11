@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.additional_host_charpoly_review.v1",
+  "generated_at_utc": "2026-11-10T23:45:00Z",
+  "status": "substantive_review_recorded",
+  "scope": "Review of host-derived characteristic polynomial implementation and workflow specifications. Evaluator firewall strictly observed.",
+  "prohibitions_observed": [
+    "No paid provider dispatch",
+    "No private answer-key read",
+    "No rubric or evaluator leakage",
+    "No fabricated run claims"
+  ],
+  "file_reviews": [
+    {
+      "path": "dag/benchmark/qm_host_charpoly.py",
+      "sha256": "53882a6bcc7d180dc3b304f4edd19ef0246d56a5a32d5ac9628b2087aa33d055",
+      "full_source_read": true,
+      "assessment": "Host-derived characteristic polynomial implementation with exact 125-point tensor Lagrange interpolation, scalar determinant cross-check, compact serialized context, and native sidecar integration.",
+      "total_lines": 1137
+    },
+    {
+      "path": "dag/benchmark/host_charpoly_workflows.py",
+      "sha256": "0c92381e7ec231007507ac9f6876f3392fbb0e6f1fb4d23b7f1a6ebec3ab5f3c",
+      "full_source_read": true,
+      "assessment": "Matched-resource 3-arm coverage-first workflow specifications (direct, matrix, charpoly) transmitting compact serialized certificate under 16,000 output token limit.",
+      "total_lines": 474
+    }
+  ],
+  "claims": [
+    {
+      "id": "HOST-CHARPOLY-C001",
+      "claim": "Exact host-derived characteristic polynomial P(lambda) = lambda^4 - 2(K^2 + 2J^2 + 2Delta^2)lambda^2 - 8K(J^2+Delta^2)lambda + K^2[K^2 - 4(J^2+Delta^2)] derived via exact symbolic expansion and verified across 125 Cartesian grid points under exact rational arithmetic identically matches det(lambda I - H) for every real parameter triple (J, Delta, K).",
+      "statement": "Exact host-derived characteristic polynomial matches det(lambda I - H) across all real (J, Delta, K) under 125-point rational grid verification.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/qm_host_charpoly.py",
+          "lines": [
+            462,
+            545
+          ]
+        }
+      ],
+      "dependencies": [
+        "NATIVE-CHARPOLY-C001",
+        "dag/benchmark/qm_host_charpoly.py",
+        "dag/benchmark/host_charpoly_workflows.py"
+      ],
+      "limitations": [
+        "Intermediate characteristic-polynomial identity only. Does not certify final prose, projectors, dynamics, entropy, or CHSH bounds.",
+        "Grid certification establishes polynomial equality for degree-bounded affine Hamiltonians; does not certify non-affine or infinite-dimensional models."
+      ]
+    }
+  ]
+}

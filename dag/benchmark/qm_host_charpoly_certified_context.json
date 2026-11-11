@@ -1,0 +1,196 @@
+{
+  "schema": "pfp.qm-host-charpoly.certified-context.v1",
+  "status": "CERTIFIED_INTERMEDIATE_CHARPOLY",
+  "seed_sha256": "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+  "obligation_id": "registered-qm-charpoly:9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7",
+  "theorem": "Per-variable degree <= 4 in (J, Delta, K) and degree 4 in lambda, agreeing on Cartesian grid {-2, -1, 0, 1, 2}^3 (125 points) certifies exact polynomial identity det(lambda*I - H(J,Delta,K)) in Q[lambda, J, Delta, K].",
+  "carrier": {
+    "domain": "Rational field Q with exact rational arithmetic (fractions.Fraction)",
+    "variables": [
+      "lambda",
+      "J",
+      "Delta",
+      "K"
+    ],
+    "basis": [
+      "00",
+      "01",
+      "10",
+      "11"
+    ],
+    "degree_bounds": {
+      "lambda": 4,
+      "J": 4,
+      "Delta": 4,
+      "K": 4
+    },
+    "grid_nodes": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "grid_point_count": 125
+  },
+  "source_bindings": {
+    "pinned_sources": {
+      "hamiltonian_artifact.py": "bf28b8371f11d2ac34256d3699a1653a2e44562e9d7b4a60e12221c750938925",
+      "charpoly_wire.py": "c6e2733092d8224d1e2303b4a988c1d8735829d10bbb790a97423d451f6c5b50",
+      "native_sidecar.py": "67feada49e7e73a45897c81b1353aed7251964ed43bb463767cc2434b9c0fc3c",
+      "qm_native_charpoly.py": "73af367aa213f9822fe63e4373773914172f65735b652e2376e1edfad786f394"
+    },
+    "native_binary_sha256": "1c75e9c5f7f4cf4347efcf05a52f8b8dc3de72b67ba8400f93d0b4f2f394e27c",
+    "native_build_receipt_sha256": "90d6041923a26597cbef6dc1d8d7c7247ca941f5befc55094fedf5dd84e2325e"
+  },
+  "admitted_public_matrix": {
+    "source_path": "dag/benchmark/hamiltonian_artifact.py",
+    "source_sha256": "bf28b8371f11d2ac34256d3699a1653a2e44562e9d7b4a60e12221c750938925",
+    "basis": [
+      "00",
+      "01",
+      "10",
+      "11"
+    ],
+    "parameters": [
+      "J",
+      "Delta",
+      "K"
+    ]
+  },
+  "wire_normalization": {
+    "wire_schema": "pfp.charpoly-wire.normalization.v1",
+    "normalized_sha256": "624dc534e62a937165385eb85d59596e0b96cad841ce75239a710ba42571564c",
+    "transformations": [
+      {
+        "operation": "canonical_json_serialization",
+        "profile": "sorted-object-keys,compact,ASCII-escaped,no-floats",
+        "changed_bytes": false
+      }
+    ]
+  },
+  "native_verification": {
+    "status": "CERTIFIED_IDENTITY",
+    "grid_points_verified": 125,
+    "public_packet_sha256": "052334035b5206aee706d24dcc830f9e0d56fef054cab2dd7d17c384fc58e92b",
+    "native_receipt_digest": "01cc7e6d548744ea4f10f4be2a932610d7c8fb274e9aeaab7590f41a294c042a"
+  },
+  "solver_context": {
+    "schema": "pfp.charpoly-workflow.solver-context.v1",
+    "representation": "coefficients",
+    "coefficients": [
+      [
+        {
+          "powers": [
+            0,
+            0,
+            4
+          ],
+          "q": "1"
+        },
+        {
+          "powers": [
+            0,
+            2,
+            2
+          ],
+          "q": "-4"
+        },
+        {
+          "powers": [
+            2,
+            0,
+            2
+          ],
+          "q": "-4"
+        }
+      ],
+      [
+        {
+          "powers": [
+            0,
+            2,
+            1
+          ],
+          "q": "8"
+        },
+        {
+          "powers": [
+            2,
+            0,
+            1
+          ],
+          "q": "8"
+        }
+      ],
+      [
+        {
+          "powers": [
+            0,
+            0,
+            2
+          ],
+          "q": "-2"
+        },
+        {
+          "powers": [
+            0,
+            2,
+            0
+          ],
+          "q": "-4"
+        },
+        {
+          "powers": [
+            2,
+            0,
+            0
+          ],
+          "q": "-4"
+        }
+      ],
+      [],
+      [
+        {
+          "powers": [
+            0,
+            0,
+            0
+          ],
+          "q": "1"
+        }
+      ]
+    ]
+  },
+  "limitations": {
+    "certified_scope": [
+      "intermediate_characteristic_polynomial_det(lambda*I - H)"
+    ],
+    "uncertified_obligations": [
+      "eigenvalues/spectrum branches",
+      "eigenvectors/projectors",
+      "thermal states/partition functions",
+      "dynamics/time evolution",
+      "final answer mathematical accuracy"
+    ],
+    "final_answer_certified": false,
+    "evaluation_role": "Host-derived intermediate prompt context ONLY; not a full QM solution, not evidence of solver accuracy."
+  },
+  "failure_states": {
+    "UNREGISTERED_SEED": "The supplied seed SHA-256 does not match the supported benchmark seed.",
+    "SEED_HASH_MISMATCH": "The seed SHA-256 in artifact headers contradicts the request seed.",
+    "PUBLIC_INPUT_MISMATCH": "The Hamiltonian coefficient matrices do not match the admitted public artifact.",
+    "MATRIX_SHAPE_MISMATCH": "The Hamiltonian matrices are not 4x4 or have invalid affine parameter count.",
+    "MALFORMED_RATIONAL": "Rational coefficients fail the canonical wire format, range, or bit limits.",
+    "DUPLICATE_POWERS": "Sparse monomial representation contains duplicate exponent vectors before zero removal.",
+    "NONMONIC_LEADING_COEFFICIENT": "The degree-4 characteristic polynomial leading coefficient is not 1.",
+    "DEGREE_LIMIT_EXCEEDED": "Polynomial exceeds degree 4 in lambda or per-variable degree 4 in (J, Delta, K).",
+    "GRID_ALIASING_DETECTED": "Polynomial degree aliasing or divergence outside the 125-point Cartesian grid.",
+    "STALE_SOURCE_HASH": "Pinned source dependencies have been modified or tampered with.",
+    "SWAPPED_BINARY": "Native sidecar binary hash does not match the verified build custody receipt.",
+    "CONTRADICTION_FINAL_ANSWER_CLAIM": "Artifact improperly claims to certify full QM solution or eigenvectors.",
+    "PROMPT_INJECTION_DETECTED": "Untrusted prompt injection pattern detected in artifact metadata or context.",
+    "NONCOMMUTING_SUBSTITUTION": "Parameters were substituted in non-standard order or non-commuting form.",
+    "FORGED_CERTIFICATE": "Artifact claims certification without authentic native sidecar verification."
+  }
+}

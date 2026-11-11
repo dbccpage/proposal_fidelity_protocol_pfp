@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-10T20:20:04.095319+00:00",
+  "generated_at_utc": "2026-11-11T03:51:01.729301+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -160,6 +160,7 @@
     "dag/reviews/additional_governance_remaining.json",
     "dag/reviews/additional_hamiltonian_benchmark.json",
     "dag/reviews/additional_historical_context.json",
+    "dag/reviews/additional_host_charpoly.json",
     "dag/reviews/additional_imported_acset.json",
     "dag/reviews/additional_lab_clients_formal.json",
     "dag/reviews/additional_migrated_eis_pciv_teaching.json",
@@ -204,6 +205,7 @@
     "dag/reviews/additional_paper_support.json",
     "dag/reviews/additional_paper_support_12_21.json",
     "dag/reviews/additional_pciv_notebooks_remaining.json",
+    "dag/reviews/additional_pending_reuse_slice.json",
     "dag/reviews/additional_pfp_adapters.json",
     "dag/reviews/additional_pfp_application_remaining.json",
     "dag/reviews/additional_pfp_domain_remaining.json",
@@ -5881,6 +5883,30 @@
       ],
       "dependencies": [
         "The claim concerns the declared observation-price model, not a measurement of actual compute or model-token cost."
+      ]
+    },
+    {
+      "id": "HOST-CHARPOLY-C001",
+      "kind": "mathematical_or_implementation_claim",
+      "claim": "Exact host-derived characteristic polynomial P(lambda) = lambda^4 - 2(K^2 + 2J^2 + 2Delta^2)lambda^2 - 8K(J^2+Delta^2)lambda + K^2[K^2 - 4(J^2+Delta^2)] derived via exact symbolic expansion and verified across 125 Cartesian grid points under exact rational arithmetic identically matches det(lambda I - H) for every real parameter triple (J, Delta, K).",
+      "statement": "Exact host-derived characteristic polynomial matches det(lambda I - H) across all real (J, Delta, K) under 125-point rational grid verification.",
+      "evidence": [
+        {
+          "path": "dag/benchmark/qm_host_charpoly.py",
+          "lines": [
+            462,
+            545
+          ]
+        }
+      ],
+      "dependencies": [
+        "NATIVE-CHARPOLY-C001",
+        "dag/benchmark/qm_host_charpoly.py",
+        "dag/benchmark/host_charpoly_workflows.py"
+      ],
+      "limitations": [
+        "Intermediate characteristic-polynomial identity only. Does not certify final prose, projectors, dynamics, entropy, or CHSH bounds.",
+        "Grid certification establishes polynomial equality for degree-bounded affine Hamiltonians; does not certify non-affine or infinite-dimensional models."
       ]
     },
     {
@@ -14819,6 +14845,102 @@
             ]
           ]
         }
+      ]
+    },
+    {
+      "id": "REUSE-SLICE-C001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Exact byte identity between 10 pending candidate files and previously audited anchors establishes duplicate file content, but provides zero semantic credit, runtime verification, or operational validity in the candidate contexts.",
+      "claim": "Byte-level equality between candidate paths in ops/engine/, workflows/wf11/, pfp/infrastructure/, and workflows/wf06/ and their respective audited anchors confirms identical source bytes under SHA-256 verification, while substantive differences in packaging boundaries, Cargo workspaces, exploratory pilot status, explicit non-authoritative declarations (AuthorityEffect: None in L002), and retired execution lifecycles require separate, independent path-specific testing rather than inherited semantic credit.",
+      "evidence": [
+        {
+          "path": "ops/engine/crates_rs/core_adversary/src/providers/anthropic/request.rs",
+          "lines": [
+            1,
+            20
+          ]
+        },
+        {
+          "path": "ops/engine/crates_rs/core_linear_algebra/src/linear_algebra/density.rs",
+          "lines": [
+            1,
+            20
+          ]
+        },
+        {
+          "path": "ops/engine/crates_rs/core_prompt_civilization/src/forge.rs",
+          "lines": [
+            1,
+            20
+          ]
+        },
+        {
+          "path": "ops/engine/crates_rs/core_functional/src/phi4.rs",
+          "lines": [
+            1,
+            20
+          ]
+        },
+        {
+          "path": "workflows/wf11_dual_certificate_synthesis/pilots/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+          "lines": [
+            1,
+            25
+          ]
+        },
+        {
+          "path": "workflows/wf11_dual_certificate_synthesis/pilots/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+          "lines": [
+            1,
+            25
+          ]
+        },
+        {
+          "path": "workflows/wf11_dual_certificate_synthesis/pilots/c054_exact_linear_systems/reference_solver/linear_solver.py",
+          "lines": [
+            1,
+            25
+          ]
+        },
+        {
+          "path": "workflows/wf11_dual_certificate_synthesis/pilots/c055_assignment_with_potentials/reference_solver/hungarian.py",
+          "lines": [
+            1,
+            25
+          ]
+        },
+        {
+          "path": "pfp/infrastructure/tower_evidence/level_engine/v1/tests/reach_draft/checker_L002.py",
+          "lines": [
+            1,
+            25
+          ]
+        },
+        {
+          "path": "workflows/wf06_dialect_sweep/pilots/pilot_0000001/misc/retired_mode_trials_runner_v1/kernels.py",
+          "lines": [
+            1,
+            25
+          ]
+        }
+      ],
+      "dependencies": [
+        "code/rust/core_adversary/src/providers/anthropic/request.rs",
+        "code/rust/core_linear_algebra/src/linear_algebra/density.rs",
+        "code/rust/core_prompt_civilization/src/forge.rs",
+        "code/rust/core_functional/src/phi4.rs",
+        "workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+        "workflows/tasks/certified_challenges/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+        "workflows/tasks/certified_challenges/c054_exact_linear_systems/reference_solver/linear_solver.py",
+        "workflows/tasks/certified_challenges/c055_assignment_with_potentials/reference_solver/hungarian.py",
+        "pfp/tests/level_engine/reach_draft/checker_L002.py",
+        "workflows/wf18_dossier_replay_campaign/pilots/replay_runners/mode_capsules/kernels.py"
+      ],
+      "limitations": [
+        "Establishes content identity and bounded context analysis only; does not prove compilation, typecheck, or runtime correctness of candidate files in their specific subtrees.",
+        "Zero semantic credit granted from hash match alone; candidate files remain marked full_source_read: false and full-reading census counts are preserved.",
+        "Does not upgrade exploratory solvers or retired scripts to active verified production status.",
+        "Does not certify quantum mechanical answers, evaluator constants, or solver accuracy."
       ]
     },
     {
@@ -33035,9 +33157,9 @@
         {
           "path": "dag/benchmark/reference_runner.py",
           "reviewed_sha256": "a7930e9091f2edc88e5bdb54709e46185295aee1d0aa20841553d2610b3574d2",
-          "current_sha256": "ff1e08a6e6b082cf5f90154565254bf54ff0d1025095842214427e6e7500ff2c",
+          "current_sha256": "4373186f7cee3c6b144ef728d3fdc1dc5f16c76d729053368f76bff62f8b9b9e",
           "scope": "Historical review remains at its original hashes; separate exact-representation workflow delta.",
-          "change": "Add bounded matrix proposal/check/one-correction/synthesis and ungated/host controls, retaining the shared cost ledger and prior recipes. Add five isolated public-task sections and deterministic partial-preserving raw assembly under the existing whole-run ledger. Add native characteristic-polynomial proposal/check/one-repair/synthesis and ungated control, intermediate-only certification, custody preflight and host-failure stops."
+          "change": "Add bounded matrix proposal/check/one-correction/synthesis and ungated/host controls, retaining the shared cost ledger and prior recipes. Add five isolated public-task sections and deterministic partial-preserving raw assembly under the existing whole-run ledger. Add native characteristic-polynomial proposal/check/one-repair/synthesis and ungated control, intermediate-only certification, custody preflight and host-failure stops. Add host-derived characteristic-polynomial coverage-first runner wiring (coverage_first_direct_v1, coverage_first_matrix_v1, coverage_first_charpoly_v1, coverage_first_operad_composition_v1) under frozen QM seed, exact 125-point rational grid verification, EIS allosteric consensus, PCIV Pareto portfolio selection, and typed planar operadic sequential associativity verification."
         },
         {
           "path": "dag/benchmark/live_campaign.py",
@@ -33668,6 +33790,24 @@
       "id": "ASSUMPTION-09376e1b2797d8a5",
       "kind": "explicit_assumption_or_obligation",
       "statement": "The claim concerns the declared observation-price model, not a measurement of actual compute or model-token cost.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ac4e11ae1d2255f9",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "NATIVE-CHARPOLY-C001",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-210080baa1276108",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "dag/benchmark/qm_host_charpoly.py",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e5d920f49f5e9984",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "dag/benchmark/host_charpoly_workflows.py",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -34832,6 +34972,66 @@
       "id": "ASSUMPTION-7dd300aaab1adcac",
       "kind": "explicit_assumption_or_obligation",
       "statement": "The sign formula and swap map stated by the manuscript",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-a31102e7f4b2af77",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "code/rust/core_adversary/src/providers/anthropic/request.rs",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-10db6f1417c76c56",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "code/rust/core_linear_algebra/src/linear_algebra/density.rs",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-965e15d6bfa1db39",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "code/rust/core_prompt_civilization/src/forge.rs",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-40dea08b800874ce",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "code/rust/core_functional/src/phi4.rs",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-cdaa2a81414ca312",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b0e0f31179e9e96d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "workflows/tasks/certified_challenges/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-61744a2fa6df1fcf",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "workflows/tasks/certified_challenges/c054_exact_linear_systems/reference_solver/linear_solver.py",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-9924ef2c24d819da",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "workflows/tasks/certified_challenges/c055_assignment_with_potentials/reference_solver/hungarian.py",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-9b3313c49f475c38",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "pfp/tests/level_engine/reach_draft/checker_L002.py",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-8eaf4e8279816d7d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "workflows/wf18_dossier_replay_campaign/pilots/replay_runners/mode_capsules/kernels.py",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -44260,6 +44460,76 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:ops/engine/crates_rs/core_adversary/src/providers/anthropic/request.rs",
+      "kind": "pinned_source_file",
+      "path": "ops/engine/crates_rs/core_adversary/src/providers/anthropic/request.rs",
+      "sha256": "0035ab26f9497c24c576df4fbae30dbb99a02257a7407aa054022ed4d8fe4ccd",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/engine/crates_rs/core_linear_algebra/src/linear_algebra/density.rs",
+      "kind": "pinned_source_file",
+      "path": "ops/engine/crates_rs/core_linear_algebra/src/linear_algebra/density.rs",
+      "sha256": "2974c5ab99c4767cde13e2eb88e17f7b22834f5ece83090d0df82d3248fe0452",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/engine/crates_rs/core_prompt_civilization/src/forge.rs",
+      "kind": "pinned_source_file",
+      "path": "ops/engine/crates_rs/core_prompt_civilization/src/forge.rs",
+      "sha256": "3525036da193dd866d889490567b30d8582289e1d2ffd006523223baa65d49ea",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/engine/crates_rs/core_functional/src/phi4.rs",
+      "kind": "pinned_source_file",
+      "path": "ops/engine/crates_rs/core_functional/src/phi4.rs",
+      "sha256": "57c3040c83b7da01dfeb329c37a4ec32c38045f0c7265dc1b0e3c36b755cb6ef",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf11_dual_certificate_synthesis/pilots/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf11_dual_certificate_synthesis/pilots/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+      "sha256": "e6482c51f19a450d1a5b12be62d2cf0975d603d469021746e9ab8e88421c19bb",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf11_dual_certificate_synthesis/pilots/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf11_dual_certificate_synthesis/pilots/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+      "sha256": "d6e8ad0490aaf2f3ecb8c354c6ff3ee196bb59e0c28f21121d0304b3be3c5782",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf11_dual_certificate_synthesis/pilots/c054_exact_linear_systems/reference_solver/linear_solver.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf11_dual_certificate_synthesis/pilots/c054_exact_linear_systems/reference_solver/linear_solver.py",
+      "sha256": "bf61ce088a649a74fae8fd3664b4cbab08de353cb7f87d32a1a41e551a6a9658",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf11_dual_certificate_synthesis/pilots/c055_assignment_with_potentials/reference_solver/hungarian.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf11_dual_certificate_synthesis/pilots/c055_assignment_with_potentials/reference_solver/hungarian.py",
+      "sha256": "da5fe8103bc6d5ffa7f70ca5a07e1936e0513b5f00666c62d5f7e7076d7668bc",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/infrastructure/tower_evidence/level_engine/v1/tests/reach_draft/checker_L002.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/infrastructure/tower_evidence/level_engine/v1/tests/reach_draft/checker_L002.py",
+      "sha256": "41ed3711f604b49a15b63be3118ef9a3a0ef11a9e19ba987a335ef9da56a13b9",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf06_dialect_sweep/pilots/pilot_0000001/misc/retired_mode_trials_runner_v1/kernels.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf06_dialect_sweep/pilots/pilot_0000001/misc/retired_mode_trials_runner_v1/kernels.py",
+      "sha256": "31a621b4e486b5991f718888841f056261ab62ea6838a1552b57bf3af1d80534",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:pfp/infrastructure/adapters/finite_gauge/sign_graph.py",
       "kind": "pinned_source_file",
       "path": "pfp/infrastructure/adapters/finite_gauge/sign_graph.py",
@@ -51693,6 +51963,21 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-ac4e11ae1d2255f9",
+      "to": "HOST-CHARPOLY-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-210080baa1276108",
+      "to": "HOST-CHARPOLY-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e5d920f49f5e9984",
+      "to": "HOST-CHARPOLY-C001",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-24776725bdb6e087",
       "to": "ACSET-C01",
       "kind": "requires"
@@ -52665,6 +52950,56 @@
     {
       "from": "ASSUMPTION-7dd300aaab1adcac",
       "to": "PAPER011-SUPPORT-PARITY-OBSTRUCTION",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-a31102e7f4b2af77",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-10db6f1417c76c56",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-965e15d6bfa1db39",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-40dea08b800874ce",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-cdaa2a81414ca312",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b0e0f31179e9e96d",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-61744a2fa6df1fcf",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-9924ef2c24d819da",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-9b3313c49f475c38",
+      "to": "REUSE-SLICE-C001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-8eaf4e8279816d7d",
+      "to": "REUSE-SLICE-C001",
       "kind": "requires"
     },
     {
@@ -65146,6 +65481,126 @@
             21,
             30
           ]
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:ops/engine/crates_rs/core_adversary/src/providers/anthropic/request.rs",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "ops/engine/crates_rs/core_adversary/src/providers/anthropic/request.rs",
+        "lines": [
+          1,
+          20
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:ops/engine/crates_rs/core_linear_algebra/src/linear_algebra/density.rs",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "ops/engine/crates_rs/core_linear_algebra/src/linear_algebra/density.rs",
+        "lines": [
+          1,
+          20
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:ops/engine/crates_rs/core_prompt_civilization/src/forge.rs",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "ops/engine/crates_rs/core_prompt_civilization/src/forge.rs",
+        "lines": [
+          1,
+          20
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:ops/engine/crates_rs/core_functional/src/phi4.rs",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "ops/engine/crates_rs/core_functional/src/phi4.rs",
+        "lines": [
+          1,
+          20
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:workflows/wf11_dual_certificate_synthesis/pilots/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "workflows/wf11_dual_certificate_synthesis/pilots/c051_exact_lp_solver_with_duals/reference_solver/simplex.py",
+        "lines": [
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:workflows/wf11_dual_certificate_synthesis/pilots/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "workflows/wf11_dual_certificate_synthesis/pilots/c052_maxflow_mincut_certificates/reference_solver/max_flow.py",
+        "lines": [
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:workflows/wf11_dual_certificate_synthesis/pilots/c054_exact_linear_systems/reference_solver/linear_solver.py",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "workflows/wf11_dual_certificate_synthesis/pilots/c054_exact_linear_systems/reference_solver/linear_solver.py",
+        "lines": [
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:workflows/wf11_dual_certificate_synthesis/pilots/c055_assignment_with_potentials/reference_solver/hungarian.py",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "workflows/wf11_dual_certificate_synthesis/pilots/c055_assignment_with_potentials/reference_solver/hungarian.py",
+        "lines": [
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/tower_evidence/level_engine/v1/tests/reach_draft/checker_L002.py",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "pfp/infrastructure/tower_evidence/level_engine/v1/tests/reach_draft/checker_L002.py",
+        "lines": [
+          1,
+          25
+        ]
+      }
+    },
+    {
+      "from": "SOURCE:workflows/wf06_dialect_sweep/pilots/pilot_0000001/misc/retired_mode_trials_runner_v1/kernels.py",
+      "to": "REUSE-SLICE-C001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": {
+        "path": "workflows/wf06_dialect_sweep/pilots/pilot_0000001/misc/retired_mode_trials_runner_v1/kernels.py",
+        "lines": [
+          1,
+          25
         ]
       }
     },
@@ -134030,8 +134485,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3126,
-    "edges": 3060,
+    "unique_nodes": 3151,
+    "edges": 3083,
     "acyclic": true
   }
 }
