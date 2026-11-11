@@ -1,95 +1,170 @@
 """Post-freeze sealed grading. Imported only by the harness after deliveries freeze.
 
-Each task's sealed tests run in an isolated process against the delivered
-code. A refusal (no delivery) scores zero delivered points; it is reported
-separately from a delivered wrong answer.
+The child process (jailed, see ``tasks/sandbox.py``) receives the candidate
+and the scenario *operations* only. It returns one observation per
+operation. This module, in the parent, holds the expectations and builds the
+verdict, so code in the candidate's process cannot write a verdict: the most
+it can do is report its own observations, which is what an implementation
+does anyway. A refusal (no delivery) scores zero and is reported separately
+from a delivered wrong answer.
 """
 from __future__ import annotations
 
-import ast
+import importlib
+import json
 from pathlib import Path
 import sys
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
-from tasks.common import extract_code, run_isolated  # noqa: E402
+from tasks.common import extract_code, prewarm, run_isolated  # noqa: E402
+
+from .scenario import judge, ops_only  # noqa: E402
 
 SEALED = {
-    't1_api_refactor_under_contract': 't1_sealed.py',
-    't2_sql_security_and_analytics_migration': 't2_sealed.py',
-    't3_bloated_skill_repository_triage': 't3_sealed.py',
-    't4_stateful_protocol_synthesis': 't4_sealed.py',
+    't1_api_refactor_under_contract': 't1_sealed',
+    't2_sql_security_and_analytics_migration': 't2_sealed',
+    't3_bloated_skill_repository_triage': 't3_sealed',
+    't4_stateful_protocol_synthesis': 't4_sealed',
 }
 
-DRIVER = '''
-import json, sys, traceback
-sys.path.insert(0, '.')
+DRIVER = r'''
+import json, sqlite3
+from decimal import Decimal
 try:
-    import sealed_tests
+    import candidate
 except BaseException as exc:
-    print(json.dumps({"passed": 0, "total": -1, "error": "import failed: " + type(exc).__name__}))
+    emit({"import_error": type(exc).__name__})
     raise SystemExit(0)
-names = sorted(n for n in dir(sealed_tests) if n.startswith("test_"))
-failed = []
-for n in names:
-    try:
-        getattr(sealed_tests, n)()
-    except BaseException as exc:
-        failed.append(n)
-print(json.dumps({"passed": len(names) - len(failed), "total": len(names), "failed": failed}))
+
+DDL = ("CREATE TABLE orders(id INTEGER PRIMARY KEY, customer TEXT NOT NULL, region TEXT, "
+       "amount_cents INTEGER NOT NULL, status TEXT NOT NULL, created_at TEXT NOT NULL);")
+
+
+class Clock:
+    def __init__(self, t):
+        self.t = t
+
+    def __call__(self):
+        return self.t
+
+
+class Sender:
+    def __init__(self, fail_on):
+        self.calls, self.fail_on = [], fail_on
+
+    def __call__(self, msg_id, payload):
+        self.calls.append([msg_id, payload])
+        if msg_id == self.fail_on:
+            raise ConnectionError("down")
+
+
+def norm(v, depth=0):
+    if depth > 20:
+        return {"type": "too_deep"}
+    if v is None or type(v) in (bool, int, float, str):
+        return v
+    if type(v) is Decimal:
+        return {"decimal": str(v)}
+    if type(v) in (list, tuple):
+        return [norm(x, depth + 1) for x in v]
+    if type(v) is dict:
+        return {str(k): norm(x, depth + 1) for k, x in v.items()}
+    return {"type": type(v).__name__}
+
+
+def resolve(a, env):
+    if type(a) is dict and set(a) == {"$"}:
+        return env[a["$"]]
+    if type(a) is list:
+        return [resolve(x, env) for x in a]
+    if type(a) is dict:
+        return {k: resolve(x, env) for k, x in a.items()}
+    return a
+
+
+def make(kind, p, env):
+    if kind == "clock":
+        return Clock(p["t"])
+    if kind == "sender":
+        return Sender(p["fail_on"])
+    if kind == "dict":
+        return {}
+    if kind == "db":
+        conn = sqlite3.connect(":memory:")
+        conn.executescript(DDL)
+        conn.executemany("INSERT INTO orders VALUES (?,?,?,?,?,?)", p["rows"])
+        return conn
+    if kind == "count":
+        return env[p["db"]].execute("SELECT COUNT(*) FROM orders").fetchone()[0]
+    raise KeyError(kind)
+
+
+out = {}
+for name, ops in json.load(open("scenarios.json", encoding="utf-8")).items():
+    env, obs = {}, []
+    for op in ops:
+        try:
+            kind = op["op"]
+            if kind == "call":
+                target = getattr(env[op["obj"]], op["fn"]) if op["obj"] else getattr(candidate, op["fn"])
+                value = target(*resolve(op["args"], env), **resolve(op["kwargs"], env))
+            elif kind == "get":
+                value = getattr(env[op["obj"]], op["attr"])
+            elif kind == "echo":
+                value = env[op["obj"]]
+            elif kind == "let":
+                value = op["value"]
+            elif kind == "make":
+                value = make(op["kind"], op["params"], env)
+            elif kind == "tick":
+                env[op["obj"]].t += op["dt"]
+                value = None
+            elif kind == "sent":
+                value = env[op["obj"]].calls
+            if op.get("as"):
+                env[op["as"]] = value
+            obs.append({"ok": norm(value)})
+        except BaseException as exc:
+            obs.append({"exc": type(exc).__name__, "code": norm(getattr(exc, "code", None))})
+    out[name] = obs
+emit({"scenarios": out})
 '''
 
 
-def sealed_path(task_id: str) -> Path:
-    return HERE / SEALED[task_id]
+def scenarios(task_id: str) -> dict:
+    return importlib.import_module(f'sealed_evaluator.{SEALED[task_id]}').SCENARIOS
 
 
-ALLOWED_IMPORTS = frozenset({'decimal', 'fractions', 'dataclasses', 'typing', 'collections', 'itertools',
-                             'functools', 'math', 're', 'json', 'enum', 'copy', '__future__'})
-DENIED_NAMES = frozenset({'builtins', '__builtins__', 'print', 'exec', 'eval', 'compile', 'open', '__import__',
-                          'globals', 'locals', 'vars', 'setattr', 'delattr', 'getattr', 'breakpoint', 'exit', 'quit'})
-DENIED_ATTRS = frozenset({'__globals__', '__subclasses__', '__builtins__', '__code__', '__dict__', '__class__',
-                          '__bases__', '__mro__', '_getframe', '_exit', 'stdout', 'stderr'})
+def _valid(result, names) -> bool:
+    if not isinstance(result, dict):
+        return False
+    if set(result) == {'import_error'}:
+        return True
+    obs = result.get('scenarios')
+    return (set(result) == {'scenarios'} and isinstance(obs, dict) and set(obs) == set(names)
+            and all(isinstance(v, list) and all(isinstance(o, dict) for o in v) for v in obs.values()))
 
 
-def tamper_findings(code: str) -> list[str]:
-    """Static gate before grading: the graded code shares the grader's interpreter, so code that can
-    reach the harness (stdout, builtins, frames, process exit, imports beyond the task's needs) is not
-    graded. This narrows, but does not close, the in-process forgery route (audit finding F2)."""
-    try:
-        tree = ast.parse(code)
-    except SyntaxError:
-        return []  # the import fails in the driver and is graded as failing
-    found = []
-    for node in ast.walk(tree):
-        if isinstance(node, (ast.Import, ast.ImportFrom)):
-            mods = [a.name for a in node.names] if isinstance(node, ast.Import) else [node.module or '']
-            found += [f'import {m}' for m in mods if m.split('.')[0] not in ALLOWED_IMPORTS]
-        elif isinstance(node, ast.Name) and node.id in DENIED_NAMES:
-            found.append(f'name {node.id}')
-        elif isinstance(node, ast.Attribute) and node.attr in DENIED_ATTRS:
-            found.append(f'attribute {node.attr}')
-    return sorted(set(found))
+def _files(task_id):
+    return {'scenarios.json': json.dumps(ops_only(scenarios(task_id)))}
 
 
 def grade(task_id: str, delivered_text: str | None) -> dict:
     if delivered_text is None:
         return {'delivered': False, 'correct': False, 'passed': 0, 'total': None}
-    code = extract_code(delivered_text)
-    tampering = tamper_findings(code)
-    if tampering:
-        return {'delivered': True, 'correct': False, 'passed': 0, 'total': None,
-                'failed': ['TAMPER_GATE: ' + ', '.join(tampering)]}
-    tests = sealed_path(task_id).read_text(encoding='utf-8')
-    result = run_isolated(code, DRIVER, {'sealed_tests.py': tests}, timeout=20)
-    total = result.get('total')
-    correct = bool(total and total > 0 and result.get('passed') == total)
-    return {'delivered': True, 'correct': correct, 'passed': result.get('passed', 0), 'total': total,
-            'failed': result.get('failed', [result.get('error', 'unknown')])}
+    scen = scenarios(task_id)
+    out = run_isolated(extract_code(delivered_text), DRIVER, _files(task_id), timeout=20,
+                       validate=lambda r: _valid(r, scen))
+    result = out.get('result') or {}
+    if 'scenarios' not in result:
+        return {'delivered': True, 'correct': False, 'passed': 0, 'total': len(scen),
+                'failed': [result.get('import_error') or out.get('error', 'unknown')]}
+    failed = sorted(n for n, steps in scen.items() if not judge(steps, result['scenarios'][n]))
+    return {'delivered': True, 'correct': not failed, 'passed': len(scen) - len(failed), 'total': len(scen),
+            'failed': failed}
 
 
 def prewarm_offline(task_id: str, texts: list[str]) -> None:
-    """Batch-grade trusted offline fixtures in one process (cache warm-up only)."""
-    from tasks.common import prewarm
-    tests = sealed_path(task_id).read_text(encoding='utf-8')
-    prewarm([extract_code(t) for t in texts], DRIVER, {'sealed_tests.py': tests})
+    """Grade many fixtures in parallel, each in its own fresh process (cache warm-up only)."""
+    prewarm([extract_code(t) for t in texts], DRIVER, _files(task_id))

@@ -31,6 +31,11 @@ class AdmissionError(RuntimeError):
     pass
 
 
+# Paid live dispatch stays off until candidate code runs in an OS-enforced sandbox (review finding 2).
+# The audit-hook jail in tasks/sandbox.py narrows what candidate code can reach; it is not that sandbox.
+LIVE_EXECUTION_ENABLED = False
+
+
 def merged(request: dict) -> dict:
     """Merge consecutive same-role messages (provider APIs expect alternating turns)."""
     out = []
@@ -84,6 +89,22 @@ class ProviderSolver:
                 'wall_ms': int((time.perf_counter() - started) * 1000)}
 
 
+def failed_budget(ledger_path: Path, run_id: str) -> dict:
+    """Ledger totals for a run whose record could not be built; unknown charges stay held."""
+    from budget_ledger import BudgetError, RunLedger
+    base = {'spent_microusd': 0, 'held_microusd': 0, 'blocked': True, 'total_tokens': 0, 'provider_wall_ms': 0}
+    try:
+        ledger = RunLedger(ledger_path)
+        try:
+            base.update({k: v for k, v in ledger.summary(run_id).items() if k in base})
+        finally:
+            ledger.close()
+    except (BudgetError, OSError):
+        pass
+    base['blocked'] = True
+    return base
+
+
 def admit(manifest_path: Path, admitted_sha: str) -> dict:
     raw = manifest_path.read_bytes()
     if sha256_hex(raw) != admitted_sha:
@@ -95,6 +116,9 @@ def admit(manifest_path: Path, admitted_sha: str) -> dict:
     if manifest['cap_microusd_per_run'] > 100_000 or manifest['aggregate_cap_microusd'] > \
             manifest['cap_microusd_per_run'] * len(manifest['runs']):
         raise AdmissionError('caps exceed the declared limits')
+    ceiling = manifest.get('max_output_tokens')
+    if type(ceiling) is not int or not 1 <= ceiling <= arms.MAX_OUTPUT_TOKENS:
+        raise AdmissionError('max_output_tokens must be an int in [1, %d]' % arms.MAX_OUTPUT_TOKENS)
     return manifest
 
 
@@ -108,6 +132,8 @@ def main(argv=None, provider_factory=None) -> dict:
     args = ap.parse_args(argv)
     path = args.manifest if args.manifest.is_absolute() else HERE / args.manifest
     manifest = admit(path, args.admit)
+    if provider_factory is None and not LIVE_EXECUTION_ENABLED:
+        raise AdmissionError('live execution is disabled until candidate code runs in an OS-enforced sandbox')
     if args.out.exists():
         raise AdmissionError('output directory exists; a campaign never resumes or overwrites')
     args.registry.mkdir(parents=True, exist_ok=True)
@@ -125,12 +151,20 @@ def main(argv=None, provider_factory=None) -> dict:
             stopped = 'aggregate cap reached'
             break
         task = arms.TASKS[run['task_id']]
-        record = arms.run_arm(run['arm'], task, ProviderSolver(make), 'live', skills=[],
-                              cap_microusd=manifest['cap_microusd_per_run'], ledger_path=ledger,
-                              run_id=run['run_id'])
+        try:
+            record = arms.run_arm(run['arm'], task, ProviderSolver(make), 'live', skills=[],
+                                  cap_microusd=manifest['cap_microusd_per_run'], ledger_path=ledger,
+                                  run_id=run['run_id'], max_output_tokens=manifest['max_output_tokens'])
+        except Exception as exc:  # never lose a possibly charged run: record it from the durable ledger
+            record = arms.RunRecord(run['arm'], run['task_id'], 'live', None, 'HARNESS_FAILURE',
+                                    stages=[{'error': f'{type(exc).__name__}: {str(exc)[:200]}'}])
+            record.budget = failed_budget(ledger, run['run_id'])
         body = {'run': run, 'record': record.__dict__}
         (args.out / 'runs' / f'{run["run_id"]}.json').write_text(json.dumps(body, indent=1, default=str), encoding='utf-8')
         spent_or_held += record.budget['spent_microusd'] + record.budget['held_microusd']
+        if record.disposition == 'HARNESS_FAILURE':
+            stopped = f'run {run["run_id"]} stopped by a harness failure; no retry'
+            break
         if record.budget['held_microusd'] or record.budget['blocked']:
             stopped = f'run {run["run_id"]} blocked with unknown or failed accounting'
             break

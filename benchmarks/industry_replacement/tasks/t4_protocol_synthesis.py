@@ -60,7 +60,7 @@ for s in {STATES!r}:
             out[s + "|" + e] = None
         except Exception as exc:
             out[s + "|" + e] = "error:" + type(exc).__name__
-print(json.dumps({{"table": out}}))
+emit({{"table": out}})
 '''
 EXPECTED_TABLE = {f'{s}|{e}': TABLE.get((s, e)) for s in STATES for e in EVENTS}
 
@@ -71,7 +71,7 @@ def public_check(text: str):
     err = parses(code)
     if not host.record('syntax', err is None, err or ''):
         return code, host, host_danger('MALFORMED_PAYLOAD', 'host.ast_parse', err)
-    result = run_isolated(code, TABLE_DRIVER)
+    result = run_isolated(code, TABLE_DRIVER, validate=lambda r: isinstance(r, dict)).get('result') or {}
     if not host.record('transition_table_exhaustive', result.get('table') == EXPECTED_TABLE, str(result)):
         return code, host, host_danger('REPLAY_FAILURE', 'host.transition_table', str(result))
     return code, host, None

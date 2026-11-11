@@ -34,12 +34,37 @@ def file_digests(paths) -> dict:
     return {p.relative_to(HERE).as_posix(): sha256_hex(p.read_bytes()) for p in sorted(paths)}
 
 
+REPO = HERE.parent.parent
+CLOSURE_PROBE = '''
+import json, sys
+sys.path[:0] = [sys.argv[1], sys.argv[2]]
+import pfp_core, arms, run_live, sealed_evaluator.grade
+from sealed_evaluator import t1_sealed, t2_sealed, t3_sealed, t4_sealed
+import anthropic_provider, openrouter_provider, budget_ledger
+root = sys.argv[2]
+files = sorted({m.__file__ for m in list(sys.modules.values()) if getattr(m, '__file__', None)
+                and m.__file__.startswith(root)})
+print(json.dumps(files))
+'''
+PRICING_EVIDENCE = (REPO / 'dag' / 'benchmark' / 'deepseek_endpoint_observation_20261110.json',)
+
+
+def executed_closure() -> list[Path]:
+    """Every repository file imported by the live path, found in a fresh interpreter (deterministic)."""
+    import subprocess
+    out = subprocess.run([sys.executable, '-I', '-B', '-c', CLOSURE_PROBE, str(HERE), str(REPO)],
+                         capture_output=True, text=True, check=True)
+    return [Path(p) for p in json.loads(out.stdout)]
+
+
 def custody() -> dict:
     return {
         'task_prompts': {tid: sha256_hex(t.PUBLIC_PROMPT) for tid, t in arms.TASKS.items()},
         'industry_stack': file_digests((HERE / 'industry_stack').rglob('*.md')),
-        'harness_code': file_digests([HERE / 'arms.py', HERE / 'run_live.py', *(HERE / 'tasks').glob('*.py')]),
         'sealed_evaluator': file_digests((HERE / 'sealed_evaluator').glob('*.py')),
+        # Regulation, providers, ledger and the reused EIS/PCIV/OPERADS modules, plus planning-time prices.
+        'executed_code': {p.relative_to(REPO).as_posix(): sha256_hex(p.read_bytes()) for p in executed_closure()},
+        'pricing_evidence': {p.relative_to(REPO).as_posix(): sha256_hex(p.read_bytes()) for p in PRICING_EVIDENCE},
     }
 
 

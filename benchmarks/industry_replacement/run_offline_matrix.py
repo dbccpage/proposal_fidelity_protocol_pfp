@@ -38,6 +38,7 @@ import arms  # noqa: E402
 from tasks.common import extract_code, prewarm  # noqa: E402
 
 POLICIES = ('follows_context_rules', 'ignores_context_rules')
+PREWARM = True  # --no-prewarm runs every check sequentially
 STATUS = 'offline_policy_verification_not_live_llm_evidence'
 GENERATE = TypedOp('generate', 'Contract', 'Code', 'generate', prompt_digest='task')
 CHECK = TypedOp('host_check', 'Code', 'Code', 'check', checker_id='public_check')
@@ -137,7 +138,8 @@ def evaluate(policy: str) -> dict:
     records = []
     for task in arms.TASKS.values():
         fixtures = list(task.CANDIDATES.values()) + list(getattr(task, 'RULE_COMPLIANT', {}).values())
-        prewarm([extract_code(t) for t in fixtures], task.SMOKE)  # public host checks only
+        if PREWARM:
+            prewarm([extract_code(t) for t in fixtures], task.SMOKE)  # public host checks only
         cal = calibrate(task, policy)
         skills = cal.pop('_skills')
         report[task.TASK_ID] = {'calibration': cal, 'killed_guards': [k['rule_id'] for k in arms.screened_guards(task)[1]],
@@ -151,7 +153,7 @@ def evaluate(policy: str) -> dict:
     freeze_digest = sha256_hex(json.dumps(sorted(frozen), separators=(',', ':')))
     # ---- deliveries frozen; sealed grading starts here ----
     from sealed_evaluator.grade import prewarm_offline
-    for tid in arms.TASKS:
+    for tid in arms.TASKS if PREWARM else ():
         prewarm_offline(tid, [t for t_id, t in frozen.values() if t_id == tid] +
                         [r.last_text for r in records if r.task_id == tid and r.last_text is not None])
     for d, (tid, text) in sorted(frozen.items()):
@@ -193,7 +195,14 @@ def evaluate(policy: str) -> dict:
 def main(argv=None) -> dict:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument('--out', type=Path, default=HERE / 'offline_matrix_results.json')
+    ap.add_argument('--no-prewarm', action='store_true', help='run every check in its own sequential process')
     args = ap.parse_args(argv)
+    global PREWARM
+    PREWARM = not args.no_prewarm
+    from tasks.common import clear_cache
+    clear_cache()  # every run starts from fresh processes, whatever ran earlier in this interpreter
+    _GRADES.clear()
+    arms._CHECK_CACHE.clear()
     result = {'status': STATUS, 'sim_tariff': arms.SIM_TARIFF, 'arms': list(arms.ARMS),
               'policies': {p: evaluate(p) for p in POLICIES}}
     args.out.write_text(json.dumps(result, indent=1, sort_keys=True, default=str) + '\n', encoding='utf-8', newline='\n')

@@ -35,7 +35,7 @@ python benchmarks/industry_replacement/build_manifests.py         # writes manif
 python benchmarks/industry_replacement/run_live.py --manifest manifest_anthropic.json --admit <sha256 of file> --out <new dir>
 ```
 
-The live command spends money. Run it only after the user authorizes that exact manifest digest.
+**Live execution is disabled** (`run_live.LIVE_EXECUTION_ENABLED = False`). It stays off until candidate code runs in an OS-enforced sandbox (PR #62 review, finding 2). Once enabled, the live command spends money: run it only after the user authorizes that exact manifest digest.
 
 - Each digest can be dispatched once. The record is kept in `.campaigns/`, which git ignores.
 - No live call was made while building this directory, and spend was USD 0.
@@ -88,7 +88,7 @@ Read the accuracy columns as consequences of declared assumptions. Every second 
 - **"PFP refuses fewer correct answers":** PFP refused nothing at all offline, correct or not, so its zero false-refusal count says nothing about its discrimination.
 - **That PFP catches hidden semantic bugs:** subtly buggy answers pass every public host check in all four tasks. In t1, the industry `float(` guardrail refuses a float-rounding bug that PFP delivers.
 - **That a certified intermediate carries over to the final answer:** in t4 the exhaustive table check passes for an answer whose recovery and clock-skew behaviour is wrong.
-- **That the sealed grader resists adversarial candidates:** the static tamper gate narrows the in-process forgery route but does not close it, and the public smoke checks have no such gate (audit F2).
+- **That candidate execution is sandboxed at the OS level:** it is not. See "Candidate execution" below.
 - **That the byte fence blocks shadowing:** the fence protects bytes, not meaning; a frozen name can be redefined later in the module (audit F12).
 
 ## Narrowest defensible claim
@@ -111,4 +111,45 @@ On these fixture sets, under the declared solver, repair and exposure assumption
 
 - Offline pricing and latency use a declared simulation tariff: 1 and 5 microUSD per input and output token. The live adapters quote from pinned or observed prices.
 - At 3 and 15 microUSD per token with conservative quotes, the reviewer loop's second call exceeds the USD 0.10 cap on the full industry context. That is why the manifests pin `claude-haiku-5-5` and `deepseek/deepseek-v3.2`.
-- Candidate code runs only in `python -I` subprocesses. Offline fixtures are batch-graded in one process for speed; live grading uses one process per delivery.
+- Each offline matrix run starts with empty caches. The committed results are produced with parallel prewarming. The test suite recomputes them with `--no-prewarm` (sequential, one fresh process per check) and requires identical output.
+
+## Candidate execution and grading (after the PR #62 review)
+
+**One candidate per process (review finding 1).**
+- Each candidate runs in its own fresh `python -I -B` process in its own temporary directory.
+- The earlier single-process batch is gone: it could reuse a previous candidate's bytecode and attribute that candidate's result to the next one.
+- Prewarming now means running independent processes in parallel.
+- Recomputing the full matrix without prewarming gives byte-identical results, and no committed count changed against the previous commit.
+
+**Jail (review finding 2).** The child process:
+- gets a scrubbed environment, with no provider keys or user variables;
+- runs under an audit-hook jail, installed before the candidate is imported, which refuses:
+  - writes outside its directory;
+  - reads outside its directory and the Python installation;
+  - sockets, process creation and ctypes;
+  - frame and garbage-collector introspection;
+  - SQLite files;
+- is killed, with its whole process tree, past a 1 MB output cap or a timeout.
+
+This is an in-process boundary, not an OS sandbox:
+- native code or interpreter bugs can defeat it;
+- memory is not capped on Windows.
+
+That is why live execution stays disabled.
+
+**Verdicts outside the candidate (review finding 3).**
+- Sealed tests are scenarios: the child receives inputs and operations only, and returns one observation per operation.
+- The parent holds every expected value and builds the verdict.
+- Patching `json`, `print`, `stdout` or `atexit`, or writing a second result line, can no longer produce a pass. The forgery from the review is a regression test.
+
+**Typed failures (review finding 4).**
+- A worker result is accepted only if it is exactly one `@@RESULT@@` line that parses and matches the caller's schema. Anything else becomes a typed error.
+- A host-side exception inside a run is recorded as `HARNESS_FAILURE`, with its ledger spend, and stops the campaign. Freeze and summary files are still written.
+
+**Output ceiling (review finding 5).**
+- `max_output_tokens` must be an int in [1, 4000] at admission.
+- That value is passed to every stage's request.
+
+**Custody (review finding 6).** Manifests now bind:
+- every repository file imported by the live path, computed in a fresh interpreter (pfp_core, both providers, the budget ledger, the EIS/PCIV/OPERADS modules, the harness and the sealed scenarios);
+- the planning-time endpoint price observation.

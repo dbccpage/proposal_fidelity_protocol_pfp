@@ -88,7 +88,7 @@ try:
            "search": candidate.search_customers(conn, "O'", "amount_cents", True)}}
 except Exception as exc:
     out = {{"error": type(exc).__name__}}
-print(json.dumps(out))
+emit(out)
 '''
 SMOKE_EXPECTED = {'top': [["O'Neil", 500]], 'status': [[1, "O'Neil", 'paid'], [2, 'Ada', 'paid']],
                   'search': [[1, "O'Neil", 500]]}
@@ -111,7 +111,7 @@ def public_check(text: str):
     err = parses(code)
     if not host.record('syntax', err is None, err or ''):
         return code, host, host_danger('MALFORMED_PAYLOAD', 'host.ast_parse', err)
-    smoke = run_isolated(code, SMOKE)
+    smoke = run_isolated(code, SMOKE, validate=lambda r: isinstance(r, dict)).get('result') or {}
     if not host.record('public_smoke', smoke == SMOKE_EXPECTED, str(smoke)):
         return code, host, host_danger('REPLAY_FAILURE', 'host.public_smoke', str(smoke))
     return code, host, None

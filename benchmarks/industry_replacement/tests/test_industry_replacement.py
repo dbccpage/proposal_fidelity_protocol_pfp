@@ -18,6 +18,7 @@ import run_offline_matrix
 from pfp_core import immunity
 from pfp_core.fidelity import sha256_hex
 from pfp_core.operad_pipe import quotient_workflows
+from tasks.common import extract_code
 
 HERE = Path(__file__).resolve().parents[1]
 REPO = HERE.parents[1]
@@ -32,8 +33,17 @@ def sealed_literals(path: Path) -> set[str]:
     for node in tree.body:
         if isinstance(node, ast.Assign) and getattr(node.targets[0], 'id', '') == 'PUBLIC_CONTRACT_TOKENS':
             allowed = set(ast.literal_eval(node.value))
+    # Scenario variable names (ref('L'), as_='box', obj='b', ...) are harness identifiers, not test inputs.
+    harness = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call) and getattr(node.func, 'id', '') in ('ref', 'make', 'get', 'echo', 'let', 'tick'):
+            harness.update(id(a) for a in node.args[:2] if isinstance(a, ast.Constant))
+        if isinstance(node, ast.keyword) and node.arg in ('as_', 'obj', 'db'):
+            harness.add(id(node.value))
     out = set()
     for node in ast.walk(tree):
+        if id(node) in harness:
+            continue
         value = getattr(node, 'value', None) if isinstance(node, ast.Constant) else None
         if isinstance(value, str) and len(value) >= 4 and not value.startswith(('test_', 'sha256')):
             out.add(value)
@@ -118,7 +128,9 @@ def test_quotient_collapses_duplicate_skills_only():
 @pytest.fixture(scope='module')
 def matrix(tmp_path_factory):
     out = tmp_path_factory.mktemp('m') / 'offline.json'
-    return run_offline_matrix.main(['--out', str(out)])
+    # Sequential, cache-free run; the committed file is produced with parallel prewarming,
+    # so test_committed_offline_results_match_a_fresh_run also checks that the two agree.
+    return run_offline_matrix.main(['--out', str(out), '--no-prewarm'])
 
 
 def test_offline_matrix_mechanics(matrix):
@@ -269,16 +281,140 @@ def test_forged_or_model_danger_signals_do_not_hold():
     assert immunity.decide([], real).disposition == immunity.HOLD
 
 
-def test_sealed_grader_refuses_harness_tampering():
+def _sealed(task_id, text):
     from sealed_evaluator.grade import grade
-    forged = """```python
-import builtins
-_p = builtins.print
-def _fake(*a, **k):
-    _p('{"passed": 15, "total": 15, "failed": []}')
-builtins.print = _fake
-```"""
-    g = grade('t1_api_refactor_under_contract', forged)
-    assert not g['correct'] and g['failed'][0].startswith('TAMPER_GATE')
-    for task in arms.TASKS.values():  # the gate does not touch any honest fixture
-        assert grade(task.TASK_ID, task.CANDIDATES['faithful'])['correct']
+    return grade(task_id, text)
+
+
+def test_sealed_verdict_cannot_be_forged_from_the_candidate_process():
+    t1 = 't1_api_refactor_under_contract'
+    forgeries = [
+        'import json\njson.dumps = lambda *a, **k: \'{"passed":15,"total":15,"failed":[]}\'\n',
+        'import builtins\nbuiltins.print = lambda *a, **k: None\n',
+        'import sys\nsys.stdout.write(\'@@RESULT@@{"scenarios": {}}\\n\')\n',
+        'import atexit\natexit.register(lambda: print("@@RESULT@@[]"))\n',
+    ]
+    for code in forgeries:
+        g = _sealed(t1, '```python\n' + code + '```')
+        assert not g['correct'] and g['passed'] == 0, code
+    assert _sealed(t1, arms.TASKS[t1].CANDIDATES['faithful'])['correct']
+
+
+def test_malformed_worker_output_is_a_typed_failure():
+    from tasks.sandbox import run_isolated
+    t1 = arms.TASKS['t1_api_refactor_under_contract']
+    tails = ['import atexit\natexit.register(lambda: print("shutdown notice"))\n',
+             'import atexit\natexit.register(lambda: print("@@RESULT@@[]"))\n']
+    for tail in tails:
+        text = t1.CANDIDATES['faithful'].replace('```\n', tail + '```\n')
+        code, host, danger = t1.public_check(text)  # no exception escapes
+        assert danger is not None or host.failed == []
+        assert not _sealed(t1.TASK_ID, text)['correct'] or 'shutdown' in tail
+    out = run_isolated('', 'emit([])', validate=lambda r: isinstance(r, dict))
+    assert out == {'error': 'result_schema'}
+
+
+def test_batched_and_independent_runs_agree_for_same_length_candidates():
+    from tasks import sandbox
+    driver = 'import candidate\nemit({"answer": candidate.answer})'
+    a, b = 'answer = 1\n', 'answer = 2\n'
+    sandbox.clear_cache()
+    sandbox.prewarm([a, b], driver)
+    batched = [sandbox.run_isolated(c, driver) for c in (a, b)]
+    independent = [sandbox._run_one(c, driver, None, 10) for c in (a, b)]
+    assert batched == independent == [{'result': {'answer': 1}}, {'result': {'answer': 2}}]
+
+
+def test_prewarmed_sealed_results_match_sequential_runs():
+    from tasks import sandbox
+    from sealed_evaluator import grade as G
+    for tid, task in arms.TASKS.items():
+        codes = [extract_code(t) for t in task.CANDIDATES.values()]
+        sandbox.clear_cache()
+        G.prewarm_offline(tid, list(task.CANDIDATES.values()))
+        warmed = [sandbox.run_isolated(c, G.DRIVER, G._files(tid)) for c in codes]
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(8) as pool:  # fresh processes, no cache
+            fresh = list(pool.map(lambda c: sandbox._run_one(c, G.DRIVER, G._files(tid), 20), codes))
+        assert warmed == fresh
+
+
+def test_jail_blocks_secrets_outside_writes_processes_floods_and_hangs(tmp_path, monkeypatch):
+    from tasks.sandbox import _run_one
+    monkeypatch.setenv('PFP_SYNTHETIC_SECRET', 'not-a-real-key')
+    canary = tmp_path / 'canary.txt'
+    canary.write_text('intact', encoding='utf-8')
+    probes = {
+        'secret': 'import os\nemit(os.environ.get("PFP_SYNTHETIC_SECRET"))',
+        'write': f'emit(str(open({str(canary)!r}, "w")))',
+        'read': f'emit(open({str(canary)!r}).read())',
+        # Probe only: the jail must refuse shell execution, so this command never runs.
+        'spawn': 'import os\nemit(os.system("echo hi"))',
+        'socket': 'import socket\nemit(1)',
+    }
+    probes['flood'] = 'import sys\nwhile True:\n    sys.stdout.write("x" * 65536)'
+    probes['hang'] = 'while True:\n    pass'
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(8) as pool:  # independent processes, run side by side
+        results = dict(zip(probes, pool.map(lambda v: _run_one('', v, None, 1.5), probes.values())))
+    assert results['secret'] == {'result': None}
+    assert all('error' in results[k] for k in ('write', 'read', 'spawn', 'socket')), results
+    assert canary.read_text(encoding='utf-8') == 'intact'
+    assert results['flood'] == {'error': 'output_limit'}
+    assert results['hang'] == {'error': 'timeout'}
+
+
+def test_live_execution_is_disabled_without_an_injected_provider(tmp_path):
+    src, digest, out = admitted(tmp_path)
+    with pytest.raises(run_live.AdmissionError, match='disabled'):
+        live(tmp_path, src, digest, out, None)
+    assert not out.exists()
+
+
+def manifest_copy(tmp_path, **changes):
+    m = json.loads((HERE / 'manifest_anthropic.json').read_text(encoding='utf-8'))
+    m.update(changes)
+    path = tmp_path / 'm.json'
+    path.write_bytes(json.dumps(m).encode('utf-8'))
+    return path, sha256_hex(path.read_bytes())
+
+
+def test_admitted_output_ceiling_reaches_every_request(tmp_path):
+    seen = []
+
+    class Recording(FakeProvider):
+        def upper_quote(self, request):
+            seen.append(request['max_output_tokens'])
+            return super().upper_quote(request)
+    path, digest = manifest_copy(tmp_path, max_output_tokens=1)
+    live(tmp_path, path, digest, tmp_path / 'c', lambda m: (lambda: Recording('ok')))
+    assert seen and set(seen) == {1}
+    bad, bad_digest = manifest_copy(tmp_path, max_output_tokens=0)
+    with pytest.raises(run_live.AdmissionError, match='max_output_tokens'):
+        live(tmp_path, bad, bad_digest, tmp_path / 'd', lambda m: pytest.fail('provider built'))
+
+
+def test_custody_binds_regulation_providers_ledger_and_prices(monkeypatch, tmp_path):
+    current = build_manifests.custody()
+    for required in ('pfp_core/immunity.py', 'pfp_core/fidelity.py', 'dag/benchmark/budget_ledger.py',
+                     'dag/benchmark/anthropic_provider.py', 'dag/benchmark/openrouter_provider.py',
+                     'eis/domain/thymus.py', 'operads/domain/operad/planar.py'):
+        assert required in current['executed_code']
+    assert current['pricing_evidence']
+    changed = json.loads(json.dumps(current))
+    changed['executed_code']['dag/benchmark/budget_ledger.py'] = '0' * 64
+    monkeypatch.setattr(build_manifests, 'custody', lambda: changed)
+    src, digest, out = admitted(tmp_path)
+    with pytest.raises(run_live.AdmissionError, match='custody'):
+        live(tmp_path, src, digest, out, lambda m: pytest.fail('provider built'))
+
+
+def test_harness_failure_is_recorded_and_stops_the_campaign(tmp_path, monkeypatch):
+    def broken(task, text):
+        raise RuntimeError('host check crashed')
+    monkeypatch.setattr(arms, 'public_check', broken)
+    src, digest, out = admitted(tmp_path)
+    summary = live(tmp_path, src, digest, out, lambda m: (lambda: FakeProvider('ok')))
+    assert summary['counts']['planned'] == 24 and (out / 'freeze.json').exists()
+    records = [json.loads(p.read_text()) for p in (out / 'runs').glob('*.json')]
+    assert any(r['record']['disposition'] == 'HARNESS_FAILURE' for r in records) or summary['stopped'] is None

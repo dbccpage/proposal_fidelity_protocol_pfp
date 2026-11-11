@@ -59,10 +59,9 @@ OBLIGATIONS = ('optional and null fields', 'half-up rounding of durations', 'ref
 SMOKE = SMOKE_DRIVER_HEAD + f'''
 examples = {json.dumps(EXAMPLES)}
 try:
-    ok = [candidate.migrate(i) == o for i, o in examples]
+    emit({{"outputs": [candidate.migrate(i) for i, o in examples]}})
 except Exception as exc:
-    ok = [type(exc).__name__]
-print(json.dumps({{"ok": ok}}))
+    emit({{"error": type(exc).__name__}})
 '''
 
 
@@ -72,8 +71,8 @@ def public_check(text: str):
     err = parses(code)
     if not host.record('syntax', err is None, err or ''):
         return code, host, host_danger('MALFORMED_PAYLOAD', 'host.ast_parse', err)
-    smoke = run_isolated(code, SMOKE)
-    if not host.record('worked_examples', smoke.get('ok') == [True, True], str(smoke)):
+    smoke = run_isolated(code, SMOKE, validate=lambda r: isinstance(r, dict)).get('result') or {}
+    if not host.record('worked_examples', smoke.get('outputs') == [o for _, o in EXAMPLES], str(smoke)):
         return code, host, host_danger('REPLAY_FAILURE', 'host.public_smoke', str(smoke))
     return code, host, None
 

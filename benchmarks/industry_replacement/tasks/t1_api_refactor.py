@@ -137,9 +137,12 @@ OBLIGATIONS = ('rounding and quantization preserved', 'idempotent replay and con
                'refunds atomic on failure', 'split conserves the total')
 
 SMOKE = SMOKE_DRIVER_HEAD + '''
-L = candidate.new_ledger()
-candidate.post_payment(L, "k1", "acct", "10")
-print(json.dumps({"balance": candidate.balance(L, "acct")}))
+try:
+    L = candidate.new_ledger()
+    candidate.post_payment(L, "k1", "acct", "10")
+    emit({"balance": candidate.balance(L, "acct")})
+except Exception as exc:
+    emit({"error": type(exc).__name__})
 '''
 
 
@@ -155,7 +158,7 @@ def public_check(text: str):
     host.record('public_signatures', sig_ok)
     if fence or not sig_ok:
         return code, host, host_danger('PROTECTED_FIELD_VIOLATION', 'host.contract_check', code)
-    smoke = run_isolated(code, SMOKE)
+    smoke = run_isolated(code, SMOKE, validate=lambda r: isinstance(r, dict)).get('result') or {}
     if not host.record('worked_example', smoke.get('balance') == '10.00', str(smoke)):
         return code, host, host_danger('REPLAY_FAILURE', 'host.public_smoke', str(smoke))
     return code, host, None

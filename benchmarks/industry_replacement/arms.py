@@ -112,14 +112,15 @@ def simulated_usage(request: dict, text: str) -> dict:
             'wall_ms': t['call_latency_ms'] + out_tok * t['ms_per_output_token'], 'accounting_error': None}
 
 
-def _call(budget: WholeRunBudget, solver, stage: str, messages: list[dict], record: RunRecord) -> str | None:
+def _dispatch(budget: WholeRunBudget, solver, stage: str, messages: list[dict], record: RunRecord,
+              max_output_tokens: int = MAX_OUTPUT_TOKENS) -> str | None:
     """Quote, reserve, dispatch once, then settle or hold. None when the call is refused or fails.
 
     ``solver`` implements ``upper_quote(stage, request) -> int`` and
     ``complete(stage, request) -> dict(text, input_tokens, output_tokens, microusd, wall_ms,
     accounting_error)``; ``microusd`` None means unknown liability.
     """
-    request = {'messages': messages, 'max_output_tokens': MAX_OUTPUT_TOKENS, 'tools': [], 'retries': 0}
+    request = {'messages': messages, 'max_output_tokens': max_output_tokens, 'tools': [], 'retries': 0}
     digest = sha256_hex(json.dumps(request, sort_keys=True, separators=(',', ':')))
     try:
         quote = solver.upper_quote(stage, request)
@@ -153,7 +154,14 @@ def _call(budget: WholeRunBudget, solver, stage: str, messages: list[dict], reco
 
 
 def run_arm(arm: str, task, solver, sample: str, *, skills=(), cap_microusd: int = 100_000,
-            ledger_path=':memory:', run_id: str | None = None) -> RunRecord:
+            ledger_path=':memory:', run_id: str | None = None,
+            max_output_tokens: int = MAX_OUTPUT_TOKENS) -> RunRecord:
+    if type(max_output_tokens) is not int or not 1 <= max_output_tokens <= MAX_OUTPUT_TOKENS:
+        raise ValueError('max_output_tokens out of range')
+
+    def _call(budget, solver, stage, messages, record):  # every stage uses the admitted ceiling
+        return _dispatch(budget, solver, stage, messages, record, max_output_tokens)
+
     record = RunRecord(arm, task.TASK_ID, sample, None, 'REFUSED')
     budget = WholeRunBudget(run_id or f'{arm}:{task.TASK_ID}:{sample}', sha256_hex(task.PUBLIC_PROMPT),
                             cap_microusd, ledger_path)
@@ -208,6 +216,9 @@ def run_arm(arm: str, task, solver, sample: str, *, skills=(), cap_microusd: int
                 text = _call(budget, solver, 'repair', messages + [feedback], record)
         else:
             raise ValueError(f'unknown arm {arm}')
+    except Exception as exc:  # a host-side failure is recorded with its spend, never retried
+        record.delivered, record.disposition = None, 'HARNESS_FAILURE'
+        record.stages.append({'error': f'{type(exc).__name__}: {str(exc)[:200]}'})
     finally:
         record.budget = budget.summary()
         budget.close()
