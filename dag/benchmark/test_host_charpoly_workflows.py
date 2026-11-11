@@ -257,10 +257,30 @@ class TestHostCharpolyWorkflows(unittest.TestCase):
         cp = build_host_charpoly_artifact(SUPPORTED_SEED_SHA256, compact=True)
         decision = EISVerificationBridge.evaluate_charpoly_evidence(cp, mat)
         self.assertTrue(decision["is_activated"])
-        self.assertEqual(decision["positive_sensors"], 3)
+        # Two independent sources: native re-execution and the seed-admitted matrix identity
+        # (symbolic + structural share the one matrix artifact, so they count once).
+        self.assertEqual(decision["positive_sensors"], 2)
         self.assertEqual(decision["quorum_size"], 2)
-        self.assertEqual(decision["aggregate_signal_str"], "3")
-        self.assertEqual(decision["hill_value_str"], "9/13")
+        self.assertEqual(decision["aggregate_signal_str"], "2")
+        self.assertEqual(decision["hill_value_str"], "1/2")
+
+    def test_eis_verification_bridge_requires_native_and_admitted_matrix(self):
+        import qm_host_charpoly
+        mat = build_host_matrix_artifact(SUPPORTED_SEED_SHA256)
+        true_poly = qm_host_charpoly.get_expected_charpoly_standard_form(SUPPORTED_SEED_SHA256)
+        # A genuine matrix and the true polynomial, with no native receipt, is the matrix
+        # identity alone -- one correlated source. Native is mandatory, so the gate stays shut.
+        no_native = EISVerificationBridge.evaluate_charpoly_evidence(
+            {"polynomial": {"standard_form": true_poly}}, mat)
+        self.assertFalse(no_native["is_activated"])
+        self.assertEqual(no_native["positive_sensors"], 1)
+        # A forged matrix (every coefficient scaled) is not admitted against the seed, so the
+        # symbolic and structural sensors refuse and the gate never sees two positives.
+        forged = {"schema_version": mat["schema_version"], "seed_sha256": mat["seed_sha256"],
+                  "coefficient_matrices": {n: [[str(3 * Fraction(x)) for x in row] for row in m]
+                                           for n, m in mat["coefficient_matrices"].items()}}
+        ev = EISVerificationBridge.sensor_evidence({"polynomial": {"standard_form": true_poly}}, forged)
+        self.assertEqual(ev["sensors"]["sensor_symbolic_identity"]["refusal"], "MATRIX_NOT_ADMITTED")
 
     def test_eis_verification_bridge_refusal_single_sensor(self):
         mat = build_host_matrix_artifact(SUPPORTED_SEED_SHA256)

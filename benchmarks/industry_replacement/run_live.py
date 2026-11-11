@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import subprocess
 import sys
 import time
 
@@ -127,14 +128,35 @@ def verify_custody(declared: dict) -> None:
                 raise AdmissionError(f'custody: prompt of {task_id} changed; nothing dispatched')
     except (KeyError, OSError, TypeError, AttributeError) as exc:
         raise AdmissionError(f'custody: declared set unreadable ({type(exc).__name__}); nothing dispatched') from None
-    missing = [f for f in ADMISSION_FILES if f not in declared['executed_code']]
+    missing = [f for f in ADMISSION_FILES if f not in declared.get('executed_code', {})]
     if missing:
         raise AdmissionError(f'custody: admission code {missing} is not bound by the manifest; nothing dispatched')
-    from build_manifests import custody
-    current = custody()
-    unbound = sorted(set(current['executed_code']) - set(declared['executed_code']))
-    if unbound or set(current) != set(declared):
-        raise AdmissionError(f'custody: unbound dependencies {unbound[:5]}; nothing dispatched')
+    # Recompute custody in a fresh ``python -I -B`` process so a stale or tampered in-process
+    # ``.pyc`` of build_manifests cannot forge the cross-check, then require every section to
+    # match exactly -- membership and digests. The earlier pass already hashed each declared
+    # file from source; this pass refuses any file the manifest does not name, in any section.
+    current = _recompute_custody()
+    for section in set(current) | set(declared):
+        drift = sorted(set(current.get(section, {})) ^ set(declared.get(section, {})))
+        if drift:
+            raise AdmissionError(f'custody: {section} membership changed ({drift[:5]}); nothing dispatched')
+    if current != declared:
+        raise AdmissionError('custody: digests changed since the manifest was prepared; nothing dispatched')
+
+
+def _recompute_custody() -> dict:
+    """Return build_manifests.custody() computed in a fresh -I -B interpreter (no bytecode cache)."""
+    probe = ('import json,sys; sys.path[:0]=[%r,%r]; import build_manifests; '
+             'sys.stdout.write(json.dumps(build_manifests.custody()))' % (str(HERE), str(REPO)))
+    try:
+        out = subprocess.run([sys.executable, '-I', '-B', '-c', probe],
+                             capture_output=True, text=True, check=True, cwd=str(HERE))
+    except (subprocess.SubprocessError, OSError) as exc:
+        raise AdmissionError(f'custody: recomputation failed ({type(exc).__name__}); nothing dispatched') from None
+    try:
+        return json.loads(out.stdout)
+    except ValueError:
+        raise AdmissionError('custody: recomputation produced no manifest; nothing dispatched') from None
 
 
 def admit(manifest_path: Path, admitted_sha: str) -> dict:

@@ -9,8 +9,8 @@ import sys
 import unittest
 
 import source_custody
-from host_charpoly_workflows import HOST_CHARPOLY_PLANS
-from eis_pciv_workflows import EIS_PCIV_PLANS
+from host_charpoly_workflows import HOST_CHARPOLY_PLANS, IMPLEMENTATION_FILES as HOST_IMPLEMENTATION_FILES
+from eis_pciv_workflows import EIS_PCIV_PLANS, IMPLEMENTATION_FILES as EIS_IMPLEMENTATION_FILES
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -28,12 +28,17 @@ print(json.dumps(sorted({m.__file__ for m in list(sys.modules.values())
 
 
 class TestSourceCustody(unittest.TestCase):
-    def test_runtime_closure_outside_dag_is_pinned(self):
+    def test_runtime_closure_is_pinned(self):
         out = subprocess.run([sys.executable, "-I", "-B", "-c", PROBE, str(HERE), str(ROOT), str(ROOT / "ops")],
                              capture_output=True, text=True, check=True)
         imported = {Path(p).resolve().relative_to(ROOT).as_posix() for p in json.loads(out.stdout)}
-        outside = {p for p in imported if not p.startswith("dag/")}
-        self.assertEqual(sorted(outside - set(source_custody.REGULATION_FILES)), [])
+        # Every imported module -- including the dag/benchmark files, which were previously
+        # skipped -- must be pinned: the regulation files by repo-relative path, the benchmark
+        # files (source_custody.py among them) by their dag/benchmark implementation pins.
+        dag_pinned = {f"dag/benchmark/{name}" for name in set(HOST_IMPLEMENTATION_FILES) | set(EIS_IMPLEMENTATION_FILES)}
+        pinned = set(source_custody.REGULATION_FILES) | dag_pinned
+        self.assertEqual(sorted(imported - pinned), [])
+        self.assertIn("source_custody.py", HOST_IMPLEMENTATION_FILES)
 
     def test_plans_pin_regulation_modules(self):
         for plans in (HOST_CHARPOLY_PLANS, EIS_PCIV_PLANS):

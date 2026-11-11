@@ -4,6 +4,7 @@ from __future__ import annotations
 import ast
 import json
 from pathlib import Path
+import tempfile
 import re
 import shutil
 import subprocess
@@ -478,3 +479,93 @@ def test_harness_failure_is_recorded_and_stops_the_campaign(tmp_path, monkeypatc
     assert summary['counts']['planned'] == 24 and (out / 'freeze.json').exists()
     records = [json.loads(p.read_text()) for p in (out / 'runs').glob('*.json')]
     assert any(r['record']['disposition'] == 'HARNESS_FAILURE' for r in records) or summary['stopped'] is None
+
+
+def test_sys_monitoring_cannot_reach_the_result_channel():
+    # Second review follow-up: a candidate installs a sys.monitoring CALL callback to read the
+    # per-run key from the hmac call or rewrite the emitted object before it is signed. The jail
+    # removes sys.monitoring before the candidate runs, so the import fails and nothing is emitted.
+    from tasks.sandbox import _run_one
+    driver = 'import candidate\nemit({"balance": candidate.balance()})'
+    attack = (
+        'import sys, _hashlib\n'
+        'M = sys.monitoring\n'
+        'M.use_tool_id(3, "x")\n'
+        'def cb(code, off, fn, arg0):\n'
+        '    if type(arg0) is dict and "balance" in arg0:\n'
+        '        arg0["balance"] = "10.00"\n'
+        '    return None\n'
+        'M.register_callback(3, M.events.CALL, cb)\n'
+        'M.set_events(3, M.events.CALL)\n'
+        'def balance():\n    return "0.00"\n')
+    out = _run_one(attack, driver, None, 10)
+    assert out.get('result') != {'balance': '10.00'}  # the forged value never reaches the parent
+
+
+def test_candidate_repr_cannot_inject_into_the_signed_result():
+    # The result channel serializes structurally, so a hostile __repr__ lands inside one JSON
+    # string value and cannot add a key or restructure the observation.
+    from tasks.sandbox import _run_one
+    driver = 'import candidate\nemit({"balance": candidate.balance()})'
+    inj = ('class X:\n    def __repr__(self):\n        return "\'0.00\', \'injected\': True"\n'
+           'def balance():\n    return X()\n')
+    result = _run_one(inj, driver, None, 10)['result']
+    assert set(result) == {'balance'} and 'injected' not in result
+
+
+def test_os_open_write_with_dir_fd_is_refused():
+    # A relative write path resolves against dir_fd, not the cwd, so the jail refuses relative
+    # write paths outright; the canary inside a read-allowed root is untouched.
+    from tasks.sandbox import _run_one
+    read_root = Path(tempfile.mkdtemp())
+    try:
+        canary = read_root / 'canary.txt'
+        canary.write_text('intact', encoding='utf-8')
+        probe = ('import os\n'
+                 f'd = os.open({str(read_root)!r}, os.O_RDONLY)\n'
+                 'fd = os.open("canary.txt", os.O_WRONLY | os.O_TRUNC, dir_fd=d)\n'
+                 'os.write(fd, b"PWNED")\nemit("wrote")')
+        assert 'error' in _run_one('', probe, None, 10, extra_read_roots=(str(read_root),))
+        assert canary.read_text(encoding='utf-8') == 'intact'
+    finally:
+        shutil.rmtree(read_root, ignore_errors=True)
+
+
+def test_sqlite_attach_and_dir_creation_are_refused():
+    from tasks.sandbox import _run_one
+    outside = Path(tempfile.mkdtemp())
+    try:
+        attach = ('import sqlite3\nc = sqlite3.connect(":memory:")\n'
+                  f'c.execute("ATTACH DATABASE \'{(outside / "e.db").as_posix()}\' AS e")\n'
+                  'c.execute("CREATE TABLE e.t(x)")\nemit("ok")')
+        _run_one('', attach, None, 10)
+        assert not (outside / 'e.db').exists()
+        mkdir = f'import os\nos.mkdir({str(outside / "made")!r})\nemit("ok")'
+        assert 'error' in _run_one('', mkdir, None, 10)
+        assert not (outside / 'made').exists()
+    finally:
+        shutil.rmtree(outside, ignore_errors=True)
+
+
+def test_a_non_ascii_forged_line_is_counted_not_crashing():
+    # A forged line with a non-hex tag (here a non-ASCII character) is counted and discarded;
+    # it does not raise and does not displace the authentic result.
+    from tasks.sandbox import run_isolated
+    driver = 'import candidate\nemit({"balance": candidate.balance()})'
+    candidate = 'import sys\nsys.stdout.write("@@RESULT@@\u00e9 body\\n")\ndef balance():\n    return "1.00"\n'
+    out = run_isolated(candidate, driver)
+    assert out['result'] == {'balance': '1.00'} and out.get('forged_lines') == 1
+
+
+def test_a_new_unbound_stack_file_is_refused():
+    # Second review follow-up: a skill file added after the manifest was prepared must be refused,
+    # not admitted, even though it is outside executed_code.
+    m = json.loads((HERE / 'manifest_anthropic.json').read_text(encoding='utf-8'))
+    injected = HERE / 'industry_stack' / 'skills' / 'zz_regression_injected'
+    injected.mkdir(parents=True, exist_ok=True)
+    try:
+        (injected / 'SKILL.md').write_text('# injected\n', encoding='utf-8')
+        with pytest.raises(run_live.AdmissionError, match='custody'):
+            run_live.verify_custody(m['custody'])
+    finally:
+        shutil.rmtree(injected, ignore_errors=True)
