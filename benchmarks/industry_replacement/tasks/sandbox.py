@@ -25,8 +25,10 @@ execution moves to an OS-enforced sandbox (``run_live.LIVE_EXECUTION_ENABLED``).
 """
 from __future__ import annotations
 
+import ast
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
+import hmac
 import json
 import os
 from pathlib import Path
@@ -41,6 +43,14 @@ MARKER = '@@RESULT@@'
 
 JAIL = r'''
 import json as _json, os as _os, sys as _sys
+import _hashlib as _hashlib_c
+# Captured before the candidate exists: C functions and bound C methods that candidate code
+# cannot rebind for us (it can only rebind module attributes, which we no longer read).
+_hmac_digest, _srepr = _hashlib_c.hmac_digest, repr
+_stdout_write, _stdout_flush, _stdin_readline = _sys.__stdout__.write, _sys.__stdout__.flush, _sys.stdin.readline
+_WRITE_FLAGS = 0
+for _flag in ('O_WRONLY', 'O_RDWR', 'O_CREAT', 'O_TRUNC', 'O_APPEND', 'O_EXCL', 'O_TEMPORARY'):
+    _WRITE_FLAGS |= getattr(_os, _flag, 0)
 _ROOT = _os.path.realpath(_os.getcwd())
 _READ = [_ROOT] + sorted({_os.path.realpath(p) for p in (_sys.prefix, _sys.base_prefix, _sys.exec_prefix,
                                                         _os.path.dirname(_os.__file__))})
@@ -65,9 +75,11 @@ def _inside(path, roots):
 def _hook(event, args):
     if event == 'open':
         path, mode = args[0], args[1]
+        flags = args[2] if len(args) > 2 and isinstance(args[2], int) else 0
         if isinstance(path, int) or path is None:
             return
-        writing = mode is not None and any(c in str(mode) for c in 'wax+')
+        # os.open reports mode=None and carries write intent in its integer flags.
+        writing = (mode is not None and any(c in str(mode) for c in 'wax+')) or bool(flags & _WRITE_FLAGS)
         if not _inside(path, [_ROOT] if writing else _READ):
             raise PermissionError('jail: ' + event)
     elif event in ('os.listdir', 'os.scandir') and args and args[0] is not None:
@@ -87,20 +99,33 @@ def _hook(event, args):
 
 _sys.addaudithook(_hook)
 _sys.path.insert(0, _ROOT)
-_write = _sys.__stdout__.write
+'''
 
-
-def emit(obj):
-    _write('@@RESULT@@' + _json.dumps(obj, default=repr) + '\n')
-    _sys.__stdout__.flush()
+# The driver body runs inside this function. The per-run key arrives on stdin before the
+# candidate is imported and lives only in this frame and in the local ``emit`` closure, which
+# is never handed to candidate code; frame and closure introspection are refused by the jail.
+MAIN_HEAD = '''
+def __pfp_main(__pfp_key, __pfp_hd=_hmac_digest, __pfp_repr=_srepr, __pfp_w=_stdout_write, __pfp_f=_stdout_flush):
+    def emit(obj):
+        body = __pfp_repr(obj)
+        __pfp_w('@@RESULT@@' + __pfp_hd(__pfp_key, body.encode('utf-8'), 'sha256').hex() + ' ' + body + '\\n')
+        __pfp_f()
+'''
+MAIN_TAIL = '''
+__pfp_main(bytes.fromhex(_stdin_readline().strip()))
 '''
 
 _RESULTS: dict[str, dict] = {}
 
 
-def _key(code: str, driver: str, extra_files: dict | None) -> str:
-    raw = json.dumps([code, driver, sorted((extra_files or {}).items())]).encode('utf-8')
+def _key(code: str, driver: str, extra_files: dict | None, timeout: float) -> str:
+    raw = json.dumps([code, driver, sorted((extra_files or {}).items()), timeout]).encode('utf-8')
     return hashlib.sha256(raw).hexdigest()
+
+
+def _script(driver: str) -> str:
+    import textwrap
+    return JAIL + MAIN_HEAD + textwrap.indent(driver, '    ') + '\n' + MAIN_TAIL
 
 
 def _env() -> dict:
@@ -123,18 +148,29 @@ def _kill_tree(proc: subprocess.Popen) -> None:
     proc.wait()
 
 
-def _run_one(code: str, driver: str, extra_files: dict | None, timeout: float) -> dict:
+def _run_one(code: str, driver: str, extra_files: dict | None, timeout: float,
+             extra_read_roots: tuple[str, ...] = ()) -> dict:
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         (root / 'candidate.py').write_text(code, encoding='utf-8')
-        (root / 'driver.py').write_text(JAIL + '\n' + driver, encoding='utf-8')
+        script = _script(driver)
+        if extra_read_roots:  # tests only: a synthetic read-allowed root
+            script = script.replace('_sys.addaudithook(_hook)', '_READ.extend(%r)\n_sys.addaudithook(_hook)'
+                                    % [os.path.realpath(r) for r in extra_read_roots], 1)
+        (root / 'driver.py').write_text(script, encoding='utf-8')
+        run_key = os.urandom(32)
         for name, body in (extra_files or {}).items():
             (root / name).write_text(body, encoding='utf-8')
         kwargs = {'start_new_session': True} if os.name != 'nt' else {
             'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP}
         proc = subprocess.Popen([sys.executable, '-I', '-B', 'driver.py'], cwd=root, env=_env(),
-                                stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                                 **kwargs)
+        try:
+            proc.stdin.write(run_key.hex().encode('ascii') + b'\n')
+            proc.stdin.close()
+        except OSError:
+            pass
         chunks, size, flooded = [], 0, threading.Event()
 
         def read():
@@ -162,13 +198,35 @@ def _run_one(code: str, driver: str, extra_files: dict | None, timeout: float) -
             text = b''.join(chunks).decode('utf-8')
         except UnicodeDecodeError:
             return {'error': 'output_not_utf8'}
-        lines = [line[len(MARKER):] for line in text.splitlines() if line.startswith(MARKER)]
-        if len(lines) != 1:
-            return {'error': f'result_lines={len(lines)}'}  # none, or a forged second result
+        authentic, forged = [], 0
+        for line in text.splitlines():
+            if not line.startswith(MARKER):
+                continue
+            tag, _, body = line[len(MARKER):].partition(' ')
+            expected = hmac.new(run_key, body.encode('utf-8'), 'sha256').hexdigest()
+            if hmac.compare_digest(tag, expected):
+                authentic.append(body)
+            else:
+                forged += 1  # written by candidate code without the run key: never a result
+        if len(authentic) != 1:
+            return {'error': f'authenticated_result_lines={len(authentic)}', 'forged_lines': forged}
         try:
-            return {'result': json.loads(lines[0])}
-        except json.JSONDecodeError:
-            return {'error': 'result_not_json'}
+            value = ast.literal_eval(authentic[0])
+        except (ValueError, SyntaxError, MemoryError, RecursionError):
+            return {'error': 'result_not_literal', 'forged_lines': forged}
+        out = {'result': _plain(value), 'observation_source': 'candidate_process'}
+        if forged:
+            out['forged_lines'] = forged
+        return out
+
+
+def _plain(value):
+    """JSON-like view of a literal: tuples become lists, keys stay as written."""
+    if isinstance(value, (list, tuple)):
+        return [_plain(v) for v in value]
+    if isinstance(value, dict):
+        return {k: _plain(v) for k, v in value.items()}
+    return value
 
 
 def run_isolated(code: str, driver: str, extra_files: dict[str, str] | None = None, timeout: float = 10,
@@ -179,10 +237,12 @@ def run_isolated(code: str, driver: str, extra_files: dict[str, str] | None = No
     ``validate(value)`` holds, else ``{'error': label}``. Never raises for
     candidate behaviour. Results are cached by content.
     """
-    key = _key(code, driver, extra_files)
-    if key not in _RESULTS:
-        _RESULTS[key] = _run_one(code, driver, extra_files, timeout)
-    out = _RESULTS[key]
+    key = _key(code, driver, extra_files, timeout)
+    out = _RESULTS.get(key)
+    if out is None:
+        out = _run_one(code, driver, extra_files, timeout)
+        if out.get('error') != 'timeout':  # a timeout says nothing about a longer run
+            _RESULTS[key] = out
     if 'result' in out and validate is not None:
         try:
             ok = bool(validate(out['result']))
@@ -193,12 +253,14 @@ def run_isolated(code: str, driver: str, extra_files: dict[str, str] | None = No
     return out
 
 
-def prewarm(codes: list[str], driver: str, extra_files: dict[str, str] | None = None, workers: int = 8) -> None:
+def prewarm(codes: list[str], driver: str, extra_files: dict[str, str] | None = None, workers: int = 8,
+            timeout: float = 10) -> None:
     """Fill the cache with independent processes run in parallel (one candidate per process)."""
-    todo = sorted({c for c in codes if _key(c, driver, extra_files) not in _RESULTS})
+    todo = sorted({c for c in codes if _key(c, driver, extra_files, timeout) not in _RESULTS})
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        for code, out in zip(todo, pool.map(lambda c: _run_one(c, driver, extra_files, 10), todo)):
-            _RESULTS[_key(code, driver, extra_files)] = out
+        for code, out in zip(todo, pool.map(lambda c: _run_one(c, driver, extra_files, timeout), todo)):
+            if out.get('error') != 'timeout':
+                _RESULTS[_key(code, driver, extra_files, timeout)] = out
 
 
 def clear_cache() -> None:
