@@ -35,7 +35,7 @@ python benchmarks/industry_replacement/build_manifests.py         # writes manif
 python benchmarks/industry_replacement/run_live.py --manifest manifest_anthropic.json --admit <sha256 of file> --out <new dir>
 ```
 
-**Live execution is disabled** (`run_live.LIVE_EXECUTION_ENABLED = False`). It stays off until candidate code runs in an OS-enforced sandbox (PR #62 review, finding 2). Once enabled, the live command spends money: run it only after the user authorizes that exact manifest digest.
+**Live execution requires the container sandbox.** `run_live.LIVE_EXECUTION_ENABLED` is `True`. A real campaign refuses to start, before anything is recorded, unless Docker and the pinned image are available. It then forces every candidate into the container backend (see *Container backend* below). The live command spends money: run it only after the user authorizes that exact manifest digest.
 
 - Each digest can be dispatched once. The record is kept in `.campaigns/`, which git ignores.
 - No live call was made while building this directory, and spend was USD 0.
@@ -175,3 +175,41 @@ That is why live execution stays disabled.
 5. **Authorization scope.**
    - A non-empty `pfp_skill_genome` is refused at admission.
    - There is one registry, `.campaigns/`, with no command-line override. A digest is dispatched at most once per checkout. That is not a cross-machine guarantee.
+
+## Container backend (OS-enforced boundary)
+
+You can run candidates in throwaway Docker containers instead of host processes. Set `PFP_SANDBOX=container`, or set `tasks.sandbox.BACKEND = 'container'`. The default is still `process`.
+
+**What each candidate container gets:**
+- the pinned image `python:3.12-slim`, referenced by digest in `CONTAINER_IMAGE` and never pulled during a run;
+- no network: only the `lo` interface exists;
+- a read-only root filesystem, every Linux capability dropped, `no-new-privileges`, and user `65534`;
+- memory capped at 256 MB with no swap, 1 CPU, 64 processes, and 256 open files;
+- the candidate's files mounted read-only, then copied into a 16 MB tmpfs `/work`, the only place it can write besides a 4 MB `/tmp`;
+- no host environment: only the image's own variables plus `PYTHONHASHSEED` and `PYTHONIOENCODING`.
+
+**Limits and cleanup:**
+- The candidate is killed at the time limit inside the container (`timeout -s KILL`).
+- If the container hangs, the host force-removes it.
+- Every container runs with `--rm`, so none are left behind.
+
+The audit-hook jail still runs inside the container as a second layer.
+
+`tests/test_container_sandbox.py` runs the escape attempts with the jail switched off. This shows the container holds on its own. The tests cover:
+- network access;
+- host files, the Docker socket, and secret environment variables;
+- writes outside `/work`;
+- filling the scratch disk;
+- fork bombs;
+- a 1 GB allocation;
+- hangs, including a check that no container is left behind;
+- output floods.
+
+They are skipped when Docker or the pinned image is not available.
+
+**Measured on Windows 11 with Docker Desktop on WSL2:**
+- about 0.6 s per candidate;
+- the whole offline matrix (37 containers) runs in about 15 s;
+- the results are byte-identical to the process backend.
+
+Live campaigns run only on this backend. `run_live.require_container_sandbox()` refuses to start without it and sets `BACKEND = 'container'` for the whole campaign. Offline runs and tests keep the host `process` backend unless `PFP_SANDBOX=container` is set.

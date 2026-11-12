@@ -16,12 +16,22 @@ cache). The process gets:
 * a result channel: exactly one ``@@RESULT@@`` line, parsed as JSON and
   checked against the caller's schema. Anything else is a typed failure.
 
-What this is not: an operating-system sandbox. An audit-hook jail is
+Container backend (``BACKEND = 'container'``, or ``PFP_SANDBOX=container``): the
+same jailed process runs inside a throwaway Docker container instead of on the
+host. The container has no network, a read-only root filesystem, every Linux
+capability dropped, ``no-new-privileges``, an unprivileged user, memory, CPU
+and process limits, and only a small tmpfs to write to. The candidate's files
+are mounted read-only and copied into that tmpfs. The container is removed
+when the run ends, and force-removed on timeout or output flood. The image is
+pinned by digest (``CONTAINER_IMAGE``). This is the OS-enforced boundary; the
+audit-hook jail stays inside it as a second layer.
+
+What the process backend is not: an operating-system sandbox. An audit-hook jail is
 in-process, and native code or interpreter bugs can defeat it; memory is not
 capped on Windows. Verdicts never come from this process: sealed scenarios
 return observations only, and the parent judges them (see
-the sealed grader). Live campaigns stay disabled until candidate
-execution moves to an OS-enforced sandbox (``run_live.LIVE_EXECUTION_ENABLED``).
+the sealed grader). Live campaigns never use this backend:
+``run_live.require_container_sandbox`` forces the container backend or refuses to start.
 """
 from __future__ import annotations
 
@@ -35,9 +45,14 @@ import subprocess
 import sys
 import tempfile
 import threading
+import time
 from typing import Callable
 
 MAX_OUTPUT_BYTES = 1_000_000
+# 'process' runs on the host (offline matrix, tests); 'container' runs in Docker.
+BACKEND = os.environ.get('PFP_SANDBOX', 'process')
+CONTAINER_IMAGE = 'python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b'  # python:3.12-slim
+CONTAINER_LIMITS = {'memory': '256m', 'cpus': '1', 'pids': '64', 'tmpfs': '16m'}
 MARKER = '@@RESULT@@'
 
 JAIL = r'''
@@ -191,7 +206,7 @@ _RESULTS: dict[str, dict] = {}
 
 
 def _key(code: str, driver: str, extra_files: dict | None, timeout: float) -> str:
-    raw = json.dumps([code, driver, sorted((extra_files or {}).items()), timeout]).encode('utf-8')
+    raw = json.dumps([code, driver, sorted((extra_files or {}).items()), timeout, BACKEND]).encode('utf-8')
     return hashlib.sha256(raw).hexdigest()
 
 
@@ -205,6 +220,56 @@ def _env() -> dict:
     if os.name == 'nt':
         env['SYSTEMROOT'] = os.environ.get('SYSTEMROOT', r'C:\Windows')
     return env
+
+
+def docker_exe() -> str | None:
+    import shutil
+    found = shutil.which('docker')
+    if found:
+        return found
+    default = Path(r'C:\Program Files\Docker\Docker\resources\bin\docker.exe')
+    return str(default) if default.exists() else None
+
+
+_CONTAINER_OK = False
+
+
+def container_available() -> bool:
+    """True when Docker answers and the pinned image is present locally (nothing is pulled)."""
+    global _CONTAINER_OK
+    if _CONTAINER_OK:
+        return True
+    exe = docker_exe()
+    if exe is None:
+        return False
+    try:
+        r = subprocess.run([exe, 'image', 'inspect', CONTAINER_IMAGE, '--format', '{{.Id}}'],
+                           capture_output=True, text=True, timeout=30)
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+    _CONTAINER_OK = r.returncode == 0
+    return _CONTAINER_OK
+
+
+def _container_cmd(root: Path, name: str, timeout: float) -> list[str]:
+    lim = CONTAINER_LIMITS
+    return [docker_exe(), 'run', '--rm', '-i', '--name', name,
+            '--network', 'none', '--read-only', '--cap-drop', 'ALL',
+            '--security-opt', 'no-new-privileges', '--user', '65534:65534',
+            '--memory', lim['memory'], '--memory-swap', lim['memory'], '--cpus', lim['cpus'],
+            '--pids-limit', lim['pids'], '--ulimit', 'nofile=256:256',
+            '--tmpfs', f"/work:rw,size={lim['tmpfs']},mode=1777", '--tmpfs', '/tmp:rw,size=4m,mode=1777',
+            '-v', f'{root}:/src:ro', '-w', '/work', '--env', 'PYTHONHASHSEED=0',
+            '--env', 'PYTHONIOENCODING=utf-8', '--pull', 'never', '--log-driver', 'none',
+            '--entrypoint', '/bin/sh', CONTAINER_IMAGE,
+            '-c', f'cp -r /src/. /work/ && exec timeout -s KILL {timeout:g} python -I -B driver.py']
+
+
+def _remove_container(name: str) -> None:
+    try:
+        subprocess.run([docker_exe(), 'rm', '-f', name], capture_output=True, timeout=30)
+    except (OSError, subprocess.TimeoutExpired):
+        pass
 
 
 def _kill_tree(proc: subprocess.Popen) -> None:
@@ -221,83 +286,120 @@ def _kill_tree(proc: subprocess.Popen) -> None:
 
 
 def _run_one(code: str, driver: str, extra_files: dict | None, timeout: float,
-             extra_read_roots: tuple[str, ...] = ()) -> dict:
+             extra_read_roots: tuple[str, ...] = (), backend: str | None = None,
+             _jail: bool = True) -> dict:
+    """``_jail=False`` exists for the container escape tests only: it proves the OS boundary
+    holds with the in-process jail switched off. It is refused on the process backend."""
+    backend = backend or BACKEND
+    if backend not in ('process', 'container'):
+        return {'error': f'unknown_backend:{backend}'}
+    if not _jail and backend != 'container':
+        return {'error': 'jail_required_on_process_backend'}
     with tempfile.TemporaryDirectory() as tmp:
-        root = Path(tmp)
-        (root / 'candidate.py').write_text(code, encoding='utf-8')
-        script = _script(driver)
-        if extra_read_roots:  # tests only: a synthetic read-allowed root
-            script = script.replace('_sys.addaudithook(_hook)', '_READ.extend(%r)\n_sys.addaudithook(_hook)'
-                                    % [os.path.realpath(r) for r in extra_read_roots], 1)
-        (root / 'driver.py').write_text(script, encoding='utf-8')
-        run_key = os.urandom(32)
-        for name, body in (extra_files or {}).items():
-            (root / name).write_text(body, encoding='utf-8')
-        kwargs = {'start_new_session': True} if os.name != 'nt' else {
-            'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP}
-        proc = subprocess.Popen([sys.executable, '-I', '-B', 'driver.py'], cwd=root, env=_env(),
-                                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-                                **kwargs)
-        try:
-            proc.stdin.write(run_key.hex().encode('ascii') + b'\n')
-            proc.stdin.close()
-        except OSError:
-            pass
-        chunks, size, flooded = [], 0, threading.Event()
+        return _run_in(Path(tmp), code, driver, extra_files, timeout, extra_read_roots, backend, _jail)
 
-        def read():
-            nonlocal size
-            for block in iter(lambda: proc.stdout.read(65536), b''):
-                size += len(block)
-                if size > MAX_OUTPUT_BYTES:
-                    flooded.set()
-                    _kill_tree(proc)
-                    return
-                chunks.append(block)
-        reader = threading.Thread(target=read, daemon=True)
-        reader.start()
-        try:
-            proc.wait(timeout=timeout)
-        except subprocess.TimeoutExpired:
-            _kill_tree(proc)
-            reader.join(5)
-            return {'error': 'timeout'}
+
+def _run_in(root: Path, code: str, driver: str, extra_files: dict | None, timeout: float,
+            extra_read_roots: tuple[str, ...], backend: str, jail: bool) -> dict:
+    (root / 'candidate.py').write_text(code, encoding='utf-8')
+    script = _script(driver)
+    if extra_read_roots:  # tests only: a synthetic read-allowed root
+        script = script.replace('_sys.addaudithook(_hook)', '_READ.extend(%r)\n_sys.addaudithook(_hook)'
+                                % [os.path.realpath(r) for r in extra_read_roots], 1)
+    if not jail:
+        assert script.count('_sys.addaudithook(_hook)') == 1
+        script = script.replace('_sys.addaudithook(_hook)', 'pass  # jail off: container escape test', 1)
+    (root / 'driver.py').write_text(script, encoding='utf-8')
+    run_key = os.urandom(32)
+    for name, body in (extra_files or {}).items():
+        (root / name).write_text(body, encoding='utf-8')
+    kwargs = {'start_new_session': True} if os.name != 'nt' else {
+        'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP}
+    container = None
+    if backend == 'container':
+        if extra_read_roots:
+            return {'error': 'extra_read_roots_not_supported_in_container'}
+        if not container_available():
+            return {'error': 'container_unavailable'}
+        container = 'pfp-cand-' + os.urandom(8).hex()
+        # The candidate is killed inside the container at ``timeout``; the host allows extra
+        # time only for container start and teardown, then force-removes it.
+        argv, env, cwd = _container_cmd(root, container, timeout), None, None
+        host_timeout = timeout + 15
+    else:
+        argv, env, cwd = [sys.executable, '-I', '-B', 'driver.py'], _env(), root
+        host_timeout = timeout
+    started = time.monotonic()
+    proc = subprocess.Popen(argv, cwd=cwd, env=env,
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                            **kwargs)
+    try:
+        proc.stdin.write(run_key.hex().encode('ascii') + b'\n')
+        proc.stdin.close()
+    except OSError:
+        pass
+    chunks, size, flooded = [], 0, threading.Event()
+
+    def read():
+        nonlocal size
+        for block in iter(lambda: proc.stdout.read(65536), b''):
+            size += len(block)
+            if size > MAX_OUTPUT_BYTES:
+                flooded.set()
+                if container:
+                    _remove_container(container)
+                _kill_tree(proc)
+                return
+            chunks.append(block)
+    reader = threading.Thread(target=read, daemon=True)
+    reader.start()
+    try:
+        proc.wait(timeout=host_timeout)
+    except subprocess.TimeoutExpired:
+        if container:
+            _remove_container(container)
+        _kill_tree(proc)
         reader.join(5)
-        proc.stdout.close()
-        if flooded.is_set():
-            return {'error': 'output_limit'}
-        try:
-            text = b''.join(chunks).decode('utf-8')
-        except UnicodeDecodeError:
-            return {'error': 'output_not_utf8'}
-        authentic, forged = [], 0
-        for line in text.splitlines():
-            if not line.startswith(MARKER):
-                continue
-            tag, _, body = line[len(MARKER):].partition(' ')
-            # Reject a non-hex tag before compare_digest, which raises TypeError on a non-ASCII
-            # character. A candidate line can therefore never crash the reader; it is only counted.
-            if len(tag) != 64 or any(c not in '0123456789abcdef' for c in tag):
-                forged += 1
-                continue
-            expected = hmac.new(run_key, body.encode('utf-8'), 'sha256').hexdigest()
-            if hmac.compare_digest(tag, expected):
-                authentic.append(body)
-            else:
-                forged += 1  # written by candidate code without the run key: never a result
-        if len(authentic) != 1:
-            return {'error': f'authenticated_result_lines={len(authentic)}', 'forged_lines': forged}
-        # The body is structural JSON built by the trusted emit from a type-exact normalization,
-        # so parsing it cannot run candidate code and cannot raise on an unhashable key or a
-        # non-literal value the old repr/literal_eval channel choked on.
-        try:
-            value = json.loads(authentic[0])
-        except (ValueError, RecursionError):
-            return {'error': 'result_not_json', 'forged_lines': forged}
-        out = {'result': value, 'observation_source': 'candidate_process'}
-        if forged:
-            out['forged_lines'] = forged
-        return out
+        return {'error': 'timeout'}
+    reader.join(5)
+    proc.stdout.close()
+    if container and proc.returncode == 137 and not flooded.is_set():
+        # SIGKILL: the in-container time limit, or the kernel's memory cap.
+        return {'error': 'timeout' if time.monotonic() - started >= timeout else 'killed'}
+    if flooded.is_set():
+        return {'error': 'output_limit'}
+    # Candidate stdout is untrusted and need not be UTF-8 (under ``-I`` on Windows it is the
+    # locale code page). Undecodable bytes become U+FFFD; such a line can never carry a valid
+    # tag, so it is counted as forged instead of discarding the authentic result.
+    text = b''.join(chunks).decode('utf-8', errors='replace')
+    authentic, forged = [], 0
+    for line in text.splitlines():
+        if not line.startswith(MARKER):
+            continue
+        tag, _, body = line[len(MARKER):].partition(' ')
+        # Reject a non-hex tag before compare_digest, which raises TypeError on a non-ASCII
+        # character. A candidate line can therefore never crash the reader; it is only counted.
+        if len(tag) != 64 or any(c not in '0123456789abcdef' for c in tag):
+            forged += 1
+            continue
+        expected = hmac.new(run_key, body.encode('utf-8'), 'sha256').hexdigest()
+        if hmac.compare_digest(tag, expected):
+            authentic.append(body)
+        else:
+            forged += 1  # written by candidate code without the run key: never a result
+    if len(authentic) != 1:
+        return {'error': f'authenticated_result_lines={len(authentic)}', 'forged_lines': forged}
+    # The body is structural JSON built by the trusted emit from a type-exact normalization,
+    # so parsing it cannot run candidate code and cannot raise on an unhashable key or a
+    # non-literal value the old repr/literal_eval channel choked on.
+    try:
+        value = json.loads(authentic[0])
+    except (ValueError, RecursionError):
+        return {'error': 'result_not_json', 'forged_lines': forged}
+    out = {'result': value, 'observation_source': 'candidate_process', 'backend': backend}
+    if forged:
+        out['forged_lines'] = forged
+    return out
 
 
 def run_isolated(code: str, driver: str, extra_files: dict[str, str] | None = None, timeout: float = 10,
