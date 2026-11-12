@@ -1,0 +1,29 @@
+# AuthorityEffect: None.
+# Planned transmutation. Not a provider run.
+schema: pfp.test-spec.v1
+authority_effect: None
+pilot_id: pilot_0000054
+test_folder: test_02
+test_id: d1_suboptimal_gauge
+case_id: d1_suboptimal
+test_index: 2
+generation_id: 0
+dialect_name: Positive-gap audit (planned, not dispatched)
+input_source_file: input.yaml
+response_file: response.yaml
+model_id: not-dispatched
+expected_outcome:
+  answer: |
+    actual_status=REFUSED_POSITIVE_DUALITY_GAP; file_expected_refusal=POSITIVE_DUALITY_GAP; primal_obj=8/3; dual_obj=1; duality_gap=5/3; rejected_as_expected=true; source=dossier_1_hollow_5simplex_b4_1/checker_output.json near_miss_suboptimal_gauge
+  status: PLANNED
+actual_outcome:
+  extracted_answer: null
+  gate_status: PLANNED
+  reason: |
+    PFP-054-DEGREE4-FINITE-LP is not registered in checker_registry.py. No provider reply was copied. Terminal status is PLANNED, not accepted. The expected string transcribes the named historic file. This layout did not execute that file's checker.
+  status: PLANNED
+  refusal_code: null
+metrics: {}
+notes: |-
+  The historic gap 5/3 is host-side.
+  source_markdown: the source repository/pilots/demo_003/demo_9/9_demo.md source_artifact: the source repository/pilots/demo_003/demo_9/dossier_1_hollow_5simplex_b4_1/checker_output.json checker_registered: false

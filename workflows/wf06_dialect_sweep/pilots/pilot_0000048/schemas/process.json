@@ -1,0 +1,37 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "status": {
+      "enum": [
+        "PRESERVED",
+        "REJECTED",
+        "REFUSED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Output"
+    },
+    "reason": {
+      "maxLength": 1200,
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "output",
+    "reason"
+  ],
+  "title": "Process",
+  "type": "object"
+}

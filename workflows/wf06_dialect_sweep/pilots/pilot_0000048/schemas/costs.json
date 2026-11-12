@@ -1,0 +1,78 @@
+{
+  "$defs": {
+    "Measure": {
+      "additionalProperties": false,
+      "properties": {
+        "utf8_bytes": {
+          "minimum": 0,
+          "title": "Utf8 Bytes",
+          "type": "integer"
+        },
+        "codepoints": {
+          "minimum": 0,
+          "title": "Codepoints",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "utf8_bytes",
+        "codepoints"
+      ],
+      "title": "Measure",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "payload": {
+      "$ref": "#/$defs/Measure"
+    },
+    "body_glyphs": {
+      "$ref": "#/$defs/Measure"
+    },
+    "body_json": {
+      "$ref": "#/$defs/Measure"
+    },
+    "alphabet_key_json": {
+      "$ref": "#/$defs/Measure"
+    },
+    "legend_json": {
+      "$ref": "#/$defs/Measure"
+    },
+    "framing_json": {
+      "$ref": "#/$defs/Measure"
+    },
+    "packet_json": {
+      "$ref": "#/$defs/Measure"
+    },
+    "overhead_bytes": {
+      "minimum": 0,
+      "title": "Overhead Bytes",
+      "type": "integer"
+    },
+    "overhead_codepoints": {
+      "minimum": 0,
+      "title": "Overhead Codepoints",
+      "type": "integer"
+    },
+    "tokens": {
+      "const": "NOT_MEASURED",
+      "title": "Tokens",
+      "type": "string"
+    }
+  },
+  "required": [
+    "payload",
+    "body_glyphs",
+    "body_json",
+    "alphabet_key_json",
+    "legend_json",
+    "framing_json",
+    "packet_json",
+    "overhead_bytes",
+    "overhead_codepoints",
+    "tokens"
+  ],
+  "title": "Costs",
+  "type": "object"
+}
