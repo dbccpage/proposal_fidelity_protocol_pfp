@@ -35,7 +35,15 @@ python benchmarks/industry_replacement/build_manifests.py         # writes manif
 python benchmarks/industry_replacement/run_live.py --manifest manifest_anthropic.json --admit <sha256 of file> --out <new dir>
 ```
 
-**Live execution requires the container sandbox.** `run_live.LIVE_EXECUTION_ENABLED` is `True`. A real campaign refuses to start, before anything is recorded, unless Docker and the pinned image are available. It then forces every candidate into the container backend (see *Container backend* below). The live command spends money: run it only after the user authorizes that exact manifest digest.
+**Live execution requires an isolated sandbox.** `run_live.LIVE_EXECUTION_ENABLED` is `True`.
+
+A real campaign checks for a sandbox before anything is recorded, and refuses to start if neither is available:
+- **Vercel Sandbox** is preferred. It needs a `VERCEL_TOKEN`.
+- **Docker** with the pinned image is the fallback.
+
+Once a sandbox is found, every candidate runs in it (see *Vercel Sandbox backend* and *Container backend* below).
+
+The live command spends money. Run it only after the user authorizes that exact manifest digest.
 
 - Each digest can be dispatched once. The record is kept in `.campaigns/`, which git ignores.
 - No live call was made while building this directory, and spend was USD 0.
@@ -212,4 +220,41 @@ They are skipped when Docker or the pinned image is not available.
 - the whole offline matrix (37 containers) runs in about 15 s;
 - the results are byte-identical to the process backend.
 
-Live campaigns run only on this backend. `run_live.require_container_sandbox()` refuses to start without it and sets `BACKEND = 'container'` for the whole campaign. Offline runs and tests keep the host `process` backend unless `PFP_SANDBOX=container` is set.
+`run_live.require_isolated_sandbox()` uses this backend for live campaigns when Vercel Sandbox is unavailable. Offline runs and tests keep the host `process` backend unless `PFP_SANDBOX` is set.
+
+## Vercel Sandbox backend (cloud micro-VM)
+
+Set `PFP_SANDBOX=vercel` to run each candidate in its own throwaway Vercel Sandbox VM. Live campaigns prefer this backend. Docker Desktop was too heavy to keep running on the development machine, so this backend moves the boundary off it entirely.
+
+**What each candidate VM gets:**
+- the pinned image `vercel/sandbox/universal@sha256:…`, which has Python 3.14;
+- 1 vCPU and 2 GB, and it is non-persistent;
+- `networkPolicy: deny-all`, so there is no outbound traffic at all, even as root inside the VM;
+- shell limits: 512 MB address space per process, 32 MB per file, and 256 open files;
+- a time limit enforced by Vercel, which kills the candidate with SIGKILL;
+- an output cap enforced by the host, which stops reading;
+- a stop in a `finally` block, with the VM's own timeout as the backstop.
+
+**The token stays on the host:**
+- The runner reads `VERCEL_TOKEN` from the environment, or from `PFP_ENV_FILE` or the repository's git-ignored `.env`.
+- The token never enters the VM.
+- Optional: `PFP_VERCEL_PROJECT` (default `pfp-sandbox`) and `PFP_VERCEL_TEAM`.
+
+`tests/test_vercel_sandbox.py` runs the escape attempts against the cloud VM with the jail switched off. It covers:
+- network access, including `sudo curl` to huggingface.co;
+- secrets and host files;
+- a fresh VM for every run;
+- file size;
+- memory;
+- a fork bomb;
+- hangs;
+- output floods.
+
+The tests are skipped without a token.
+
+RLIMIT_NPROC is set but not enforced inside the VM. A fork bomb is contained by the 1-vCPU VM and the time limit instead.
+
+**Measured:**
+- about 2 s per candidate;
+- the offline matrix runs in about 50 s, at 8 VMs at a time (Hobby allows 10 at once);
+- the results are byte-identical to the process backend.

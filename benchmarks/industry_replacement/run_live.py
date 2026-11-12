@@ -32,19 +32,25 @@ class AdmissionError(RuntimeError):
     pass
 
 
-# Paid live dispatch is on, but only with candidate code in the container sandbox (review finding 2):
-# a real (non-injected) campaign refuses to start unless Docker and the pinned image are available,
-# and it forces tasks.sandbox.BACKEND = 'container' for every candidate it runs.
+# Paid live dispatch is on, but only with candidate code in an OS-enforced sandbox (review finding 2):
+# a real (non-injected) campaign refuses to start unless one is available, and it forces
+# tasks.sandbox.BACKEND for every candidate it runs. Vercel Sandbox (a throwaway micro-VM in the
+# cloud, no network) is preferred; local Docker is the fallback.
 LIVE_EXECUTION_ENABLED = True
 
 
-def require_container_sandbox() -> None:
-    from tasks import sandbox
-    if not sandbox.container_available():
-        raise AdmissionError('live execution requires the container sandbox (Docker with the pinned image '
-                             f'{sandbox.CONTAINER_IMAGE}); nothing dispatched')
-    sandbox.BACKEND = 'container'
+def require_isolated_sandbox() -> str:
+    from tasks import sandbox, vercel_sandbox
+    if vercel_sandbox.available():
+        backend = 'vercel'
+    elif sandbox.container_available():
+        backend = 'container'
+    else:
+        raise AdmissionError('live execution requires an isolated sandbox (Vercel Sandbox with VERCEL_TOKEN, '
+                             f'or Docker with the pinned image {sandbox.CONTAINER_IMAGE}); nothing dispatched')
+    sandbox.BACKEND = backend
     sandbox.clear_cache()
+    return backend
 
 
 def merged(request: dict) -> dict:
@@ -204,7 +210,7 @@ def main(argv=None, provider_factory=None, registry: Path | None = None) -> dict
     if provider_factory is None:
         if not LIVE_EXECUTION_ENABLED:
             raise AdmissionError('live execution is disabled')
-        require_container_sandbox()
+        require_isolated_sandbox()
     if args.out.exists():
         raise AdmissionError('output directory exists; a campaign never resumes or overwrites')
     args.registry.mkdir(parents=True, exist_ok=True)

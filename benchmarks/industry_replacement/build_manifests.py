@@ -39,6 +39,7 @@ CLOSURE_PROBE = '''
 import json, sys
 sys.path[:0] = [sys.argv[1], sys.argv[2]]
 import pfp_core, arms, run_live, build_manifests, sealed_evaluator.grade
+from tasks import sandbox, vercel_sandbox
 from sealed_evaluator import t1_sealed, t2_sealed, t3_sealed, t4_sealed
 import anthropic_provider, openrouter_provider, budget_ledger
 root = sys.argv[2]
