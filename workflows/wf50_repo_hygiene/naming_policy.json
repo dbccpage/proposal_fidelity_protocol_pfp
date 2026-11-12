@@ -1,0 +1,34 @@
+{
+  "rule": "Every tracked file and folder name is lowercase snake_case: segments of [a-z0-9_] joined by dots for extensions. README.md is the one deliberate exception.",
+  "keep_basenames": {
+    "README.md": "the rule's own exception",
+    "Cargo.toml": "Cargo only reads this exact name",
+    "Cargo.lock": "Cargo only reads this exact name",
+    "SKILL.md": "the Agent Skills format requires this exact name",
+    "AGENTS.md": "agent tools look for this exact name",
+    "CLAUDE.md": "Claude Code looks for this exact name",
+    "lean-toolchain": "elan only reads this exact name",
+    "lake-manifest.json": "Lake only reads this exact name",
+    "lakefile.lean": "Lake only reads this exact name",
+    "lakefile.toml": "Lake only reads this exact name",
+    "FUNDING.yml": "GitHub only reads this exact name",
+    "CODEOWNERS": "GitHub only reads this exact name",
+    "Home.md": "GitHub wiki front page",
+    "_Sidebar.md": "GitHub wiki sidebar",
+    "_Footer.md": "GitHub wiki footer"
+  },
+  "keep_globs": {
+    "**/*.lean": "Lean module names are imports; renaming them rewrites every import and proof",
+    "csharp/**": ".NET project, namespace and assembly names follow PascalCase",
+    "**/*.csproj": ".NET project files",
+    "**/*.sln": ".NET solution files",
+    "operads/skills/*": "a skill folder must match the hyphenated name in its SKILL.md",
+    "benchmarks/industry_replacement/industry_stack/skills/*": "a skill folder must match the hyphenated name in its SKILL.md"
+  },
+  "frozen_bundle_markers": ["MANIFEST.sha256", "SHA256SUMS"],
+  "frozen_bundle_note": "A folder holding one of these files is a hash-pinned bundle. Nothing inside it is renamed, so the manifest keeps matching.",
+  "rewrite_exclude_globs": {
+    "papers/**": "papers keep their content byte for byte"
+  },
+  "max_rewrite_bytes": 8000000
+}
