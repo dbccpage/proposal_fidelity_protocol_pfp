@@ -171,8 +171,11 @@ def build_maps(moves: dict[str, str], files: list[str]):
     suffix: dict[str, str] = {}
     for old, new in moves.items():
         op, np_ = old.split("/"), new.split("/")
-        for k in range(2, len(op) + 1):
-            suffix.setdefault("/".join(op[-k:]), "/".join(np_[-k:]))
+        for j in range(len(op), 1, -1):  # the file itself, then each parent folder
+            if op[j - 1] == np_[j - 1] and j < len(op):
+                continue
+            for k in range(2, j + 1):
+                suffix.setdefault("/".join(op[j - k:j]), "/".join(np_[j - k:j]))
     py_modules = {}
     for old, new in moves.items():
         if old.endswith(".py"):
@@ -202,15 +205,15 @@ def rewrite_text(text: str, uniform, suffix, py_modules, is_code: bool) -> tuple
         sep = "\\" if "\\" in run and "/" not in run else "/"
         core = norm.rstrip(".")
         tail = norm[len(core):]
-        for key in sorted((k for k in suffix if core.endswith(k)), key=len, reverse=True):
-            head = core[: len(core) - len(key)]
-            if head == "" or head.endswith("/"):
-                new_head = "/".join(uniform.get(s, s) for s in head.split("/"))
+        segs = core.split("/")
+        for i in range(len(segs) - 1):
+            key = "/".join(segs[i:])
+            if key in suffix:
+                new_head = "".join(uniform.get(s, s) + "/" for s in segs[:i])
                 out = (new_head + suffix[key] + tail).replace("/", sep)
                 if out != run:
                     count += 1
                 return out
-        segs = core.split("/")
         new_segs = []
         for seg in segs:
             if seg in uniform and ("." in seg or has_sep or enclosed):
