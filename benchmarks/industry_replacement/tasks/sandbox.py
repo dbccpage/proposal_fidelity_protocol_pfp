@@ -291,9 +291,9 @@ def _run_one(code: str, driver: str, extra_files: dict | None, timeout: float,
     """``_jail=False`` exists for the container escape tests only: it proves the OS boundary
     holds with the in-process jail switched off. It is refused on the process backend."""
     backend = backend or BACKEND
-    if backend not in ('process', 'container'):
+    if backend not in ('process', 'container', 'vercel'):
         return {'error': f'unknown_backend:{backend}'}
-    if not _jail and backend != 'container':
+    if not _jail and backend == 'process':
         return {'error': 'jail_required_on_process_backend'}
     with tempfile.TemporaryDirectory() as tmp:
         return _run_in(Path(tmp), code, driver, extra_files, timeout, extra_read_roots, backend, _jail)
@@ -313,6 +313,52 @@ def _run_in(root: Path, code: str, driver: str, extra_files: dict | None, timeou
     run_key = os.urandom(32)
     for name, body in (extra_files or {}).items():
         (root / name).write_text(body, encoding='utf-8')
+    if backend == 'vercel':
+        if extra_read_roots:
+            return {'error': 'extra_read_roots_not_supported_in_vercel'}
+        from tasks import vercel_sandbox
+        ran = vercel_sandbox.run(root, timeout, run_key, MAX_OUTPUT_BYTES)
+    else:
+        ran = _exec_local(root, timeout, run_key, backend, extra_read_roots)
+    if 'error' in ran:
+        return ran
+    # Candidate stdout is untrusted and need not be UTF-8 (under ``-I`` on Windows it is the
+    # locale code page). Undecodable bytes become U+FFFD; such a line can never carry a valid
+    # tag, so it is counted as forged instead of discarding the authentic result.
+    text = ran['stdout'].decode('utf-8', errors='replace')
+    authentic, forged = [], 0
+    for line in text.splitlines():
+        if not line.startswith(MARKER):
+            continue
+        tag, _, body = line[len(MARKER):].partition(' ')
+        # Reject a non-hex tag before compare_digest, which raises TypeError on a non-ASCII
+        # character. A candidate line can therefore never crash the reader; it is only counted.
+        if len(tag) != 64 or any(c not in '0123456789abcdef' for c in tag):
+            forged += 1
+            continue
+        expected = hmac.new(run_key, body.encode('utf-8'), 'sha256').hexdigest()
+        if hmac.compare_digest(tag, expected):
+            authentic.append(body)
+        else:
+            forged += 1  # written by candidate code without the run key: never a result
+    if len(authentic) != 1:
+        return {'error': f'authenticated_result_lines={len(authentic)}', 'forged_lines': forged}
+    # The body is structural JSON built by the trusted emit from a type-exact normalization,
+    # so parsing it cannot run candidate code and cannot raise on an unhashable key or a
+    # non-literal value the old repr/literal_eval channel choked on.
+    try:
+        value = json.loads(authentic[0])
+    except (ValueError, RecursionError):
+        return {'error': 'result_not_json', 'forged_lines': forged}
+    out = {'result': value, 'observation_source': 'candidate_process', 'backend': backend}
+    if forged:
+        out['forged_lines'] = forged
+    return out
+
+
+def _exec_local(root: Path, timeout: float, run_key: bytes, backend: str,
+                extra_read_roots: tuple[str, ...]) -> dict:
+    """Run driver.py on the host or in Docker. ``{'stdout': bytes}`` or ``{'error': label}``."""
     kwargs = {'start_new_session': True} if os.name != 'nt' else {
         'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP}
     container = None
@@ -368,38 +414,7 @@ def _run_in(root: Path, code: str, driver: str, extra_files: dict | None, timeou
         return {'error': 'timeout' if time.monotonic() - started >= timeout else 'killed'}
     if flooded.is_set():
         return {'error': 'output_limit'}
-    # Candidate stdout is untrusted and need not be UTF-8 (under ``-I`` on Windows it is the
-    # locale code page). Undecodable bytes become U+FFFD; such a line can never carry a valid
-    # tag, so it is counted as forged instead of discarding the authentic result.
-    text = b''.join(chunks).decode('utf-8', errors='replace')
-    authentic, forged = [], 0
-    for line in text.splitlines():
-        if not line.startswith(MARKER):
-            continue
-        tag, _, body = line[len(MARKER):].partition(' ')
-        # Reject a non-hex tag before compare_digest, which raises TypeError on a non-ASCII
-        # character. A candidate line can therefore never crash the reader; it is only counted.
-        if len(tag) != 64 or any(c not in '0123456789abcdef' for c in tag):
-            forged += 1
-            continue
-        expected = hmac.new(run_key, body.encode('utf-8'), 'sha256').hexdigest()
-        if hmac.compare_digest(tag, expected):
-            authentic.append(body)
-        else:
-            forged += 1  # written by candidate code without the run key: never a result
-    if len(authentic) != 1:
-        return {'error': f'authenticated_result_lines={len(authentic)}', 'forged_lines': forged}
-    # The body is structural JSON built by the trusted emit from a type-exact normalization,
-    # so parsing it cannot run candidate code and cannot raise on an unhashable key or a
-    # non-literal value the old repr/literal_eval channel choked on.
-    try:
-        value = json.loads(authentic[0])
-    except (ValueError, RecursionError):
-        return {'error': 'result_not_json', 'forged_lines': forged}
-    out = {'result': value, 'observation_source': 'candidate_process', 'backend': backend}
-    if forged:
-        out['forged_lines'] = forged
-    return out
+    return {'stdout': b''.join(chunks)}
 
 
 def run_isolated(code: str, driver: str, extra_files: dict[str, str] | None = None, timeout: float = 10,

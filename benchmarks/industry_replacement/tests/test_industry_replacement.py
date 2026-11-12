@@ -373,11 +373,12 @@ def test_jail_blocks_secrets_outside_writes_processes_floods_and_hangs(tmp_path,
     assert results['hang'] == {'error': 'timeout'}
 
 
-def test_live_execution_requires_the_container_sandbox(tmp_path, monkeypatch):
-    from tasks import sandbox
+def test_live_execution_requires_an_isolated_sandbox(tmp_path, monkeypatch):
+    from tasks import sandbox, vercel_sandbox
     src, digest, out = admitted(tmp_path)
     monkeypatch.setattr(sandbox, 'container_available', lambda: False)
-    with pytest.raises(run_live.AdmissionError, match='container sandbox'):
+    monkeypatch.setattr(vercel_sandbox, 'available', lambda: False)
+    with pytest.raises(run_live.AdmissionError, match='isolated sandbox'):
         live(tmp_path, src, digest, out, None)
     assert not out.exists() and not (tmp_path / 'registry').exists()  # refused before anything is recorded
     monkeypatch.setattr(run_live, 'LIVE_EXECUTION_ENABLED', False)
@@ -385,14 +386,16 @@ def test_live_execution_requires_the_container_sandbox(tmp_path, monkeypatch):
         live(tmp_path, src, digest, out, None)
 
 
-def test_live_execution_forces_the_container_backend(tmp_path, monkeypatch):
-    from tasks import sandbox
+@pytest.mark.parametrize('vercel, docker, expected', [(True, True, 'vercel'), (False, True, 'container')])
+def test_live_execution_forces_an_isolated_backend(tmp_path, monkeypatch, vercel, docker, expected):
+    from tasks import sandbox, vercel_sandbox
     src, digest, out = admitted(tmp_path)
-    monkeypatch.setattr(sandbox, 'container_available', lambda: True)
+    monkeypatch.setattr(vercel_sandbox, 'available', lambda: vercel)
+    monkeypatch.setattr(sandbox, 'container_available', lambda: docker)
     monkeypatch.setattr(sandbox, 'BACKEND', 'process')
 
     def factory(manifest):
-        assert sandbox.BACKEND == 'container'
+        assert sandbox.BACKEND == expected
         raise RuntimeError('stop before any provider is built')
     monkeypatch.setattr(run_live, 'default_factory', factory)
     with pytest.raises(RuntimeError, match='stop before'):
