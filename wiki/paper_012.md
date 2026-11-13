@@ -1,7 +1,7 @@
 # Paper 012: PFP shape, review findings and the next test campaign
 
 **Status:** Author-review draft; not an external deposit  
-**Folder:** [`papers/pfp/012_pfp_the_minimum_theorem`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/012_pfp_the_minimum_theorem)
+**Folder:** [`atlas/archive/pfp/012_pfp_the_minimum_theorem`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/012_pfp_the_minimum_theorem)
 
 ## In brief
 
@@ -14,7 +14,7 @@ States the strongest defensible shape of PFP: a typed graph of proposals and che
 
 ## Reading and running it
 
-Read [`paper.md`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/012_pfp_the_minimum_theorem/paper.md), which lists the manuscript, claim ledger and change log.
+Read [`paper.md`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md), which lists the manuscript, claim ledger and change log.
 
 ---
 

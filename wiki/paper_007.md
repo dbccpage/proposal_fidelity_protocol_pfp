@@ -1,7 +1,7 @@
 # Paper 007: PFP VII: Designing executable lessons with explicit evidence boundaries
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/pfp/007_pfp_executable_lessons_and_evidence_boundaries`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/007_pfp_executable_lessons_and_evidence_boundaries)  
+**Folder:** [`atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries)  
 **Record:** [Zenodo 23114712](https://zenodo.org/records/23114712)
 
 ## In brief
@@ -16,7 +16,7 @@ A lesson can run successfully and still teach the wrong claim. This guide builds
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/007_pfp_executable_lessons_and_evidence_boundaries/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/README.md), which lists the manuscript, claim ledger and change log.
 
 ---
 

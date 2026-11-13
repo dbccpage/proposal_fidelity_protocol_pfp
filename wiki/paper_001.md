@@ -1,7 +1,7 @@
 # Paper 001: PFP I: Exact graph repair and the boundary between a proposal and a certificate
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions)  
+**Folder:** [`atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions)  
 **Record:** [Zenodo 23114044](https://zenodo.org/records/23114044)
 
 ## In brief
@@ -17,7 +17,7 @@ A worked example with inconsistent differences on a small graph. A proposer supp
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [pfp package](pfp_package.md)
 

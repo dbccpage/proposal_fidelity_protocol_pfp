@@ -1,7 +1,7 @@
 # Paper 018: Operadic PFP: typed composition and bounded DDC repair
 
 **Status:** Author-review draft; not an external deposit, v0.2.0; implementation study  
-**Folder:** [`papers/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair)
+**Folder:** [`atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair)
 
 ## In brief
 
@@ -15,7 +15,7 @@ How the proposal/check/permission split is organised across subsystems: capabili
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [Operads](operads.md), [Epistemic Immune System](eis.md), [Prompt Civilization](pciv.md)
 

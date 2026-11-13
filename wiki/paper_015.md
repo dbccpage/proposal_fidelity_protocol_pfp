@@ -1,7 +1,7 @@
 # Paper 015: Local witnesses and global compatibility in agent composition
 
 **Status:** Author-review draft; not an external deposit, v0.2.0  
-**Folder:** [`papers/pfp/015_pfp_local_to_global_agent_composition`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/015_pfp_local_to_global_agent_composition)
+**Folder:** [`atlas/archive/pfp/015_pfp_local_to_global_agent_composition`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/015_pfp_local_to_global_agent_composition)
 
 ## In brief
 
@@ -15,7 +15,7 @@ Independently checked local answers can disagree on shared variables.
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/015_pfp_local_to_global_agent_composition/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/015_pfp_local_to_global_agent_composition/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [Operads](operads.md)
 

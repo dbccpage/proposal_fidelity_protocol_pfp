@@ -1,7 +1,7 @@
 # Paper 006: PFP VI: Retained failure evidence and controlled reuse
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining)  
+**Folder:** [`atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining)  
 **Record:** [Zenodo 23114681](https://zenodo.org/records/23114681)
 
 ## In brief
@@ -16,7 +16,7 @@ Keeping rejected proposals is useful, but the record must stay interpretable and
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [Epistemic Immune System](eis.md)
 

@@ -16,7 +16,7 @@ an experiment may spend, and which evidence the next attempt may reuse.
 · [Workflow chooser](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflows)
 · [Run a local example](#try-a-local-example)
 · [Mathematical capabilities](#mathematics-and-formal-verification)
-· [Papers](papers/README.md)
+· [Atlas](atlas/README.md)
 
 Known gaps in PFP, PCIV, EIS and operads are listed in the [gap report](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/gap_report).
 
@@ -161,7 +161,7 @@ checkers and evidence; the integer-sum examples establish that finite integratio
 
 | Area | Contents |
 | --- | --- |
-| [`papers/`](papers/README.md) | Research manuscripts, claim ledgers, implementations, reproduction instructions and publication records. The register distinguishes deposited packages from author-review drafts. |
+| [`atlas/`](atlas/README.md) | The research record: the atlas paper, its claim ledger and change log, and [`archive/`](atlas/archive/README.md), the source manuscripts with their claim ledgers, implementations, reproduction instructions and publication records. |
 | [`education/`](education/) | Learning routes for PFP, operads, EIS and Prompt Civilization, including mathematical foundations and worked exercises. |
 | [`workflows/`](workflows/README.md) | **Every workflow, numbered WF1–WF49** (`wf01_…` to `wf49_…`), each with a README: how to run and replay it, its check, and links to its code. Also `tasks/` (the offline examples and 50 certified challenges the workflows run on), the dependency graph and the evidence library. Former `pilots/` experiments live inside their workflow folders. |
 | [`pfp/`](pfp/), [`operads/`](operads/), [`eis/`](eis/), [`pciv/`](pciv/) | The protocol, composition, immune and evolution systems described above. |
@@ -170,12 +170,12 @@ checkers and evidence; the integer-sum examples establish that finite integratio
 | [`contracts/`](contracts/), [`governance/`](governance/README.md), [`SCORING.md`](SCORING.md) | Wire schemas, source-bound assessments and the repository acceptance policy. |
 | [`wiki/`](wiki/), [`docs/`](docs/) | User guides, subsystem references, plans and validation records. |
 
-Useful research routes include [the practitioner field manual](papers/pfp/005_pfp_practitioners_field_manual/README.md),
-[local-to-global agent composition](papers/pfp/015_pfp_local_to_global_agent_composition/paper.md),
-[future-faithful compression](papers/pfp/016_pfp_future_faithful_compression_and_cost/paper.md),
-[proposal-channel interventions](papers/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md),
-[operadic bounded repair](papers/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md)
-and [evidence-bound harness evolution](papers/pfp/019_pfp_evidence_bound_harness_evolution/paper.md).
+Useful research routes include [the practitioner field manual](atlas/archive/pfp/005_pfp_practitioners_field_manual/README.md),
+[local-to-global agent composition](atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md),
+[future-faithful compression](atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md),
+[proposal-channel interventions](atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md),
+[operadic bounded repair](atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md)
+and [evidence-bound harness evolution](atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md).
 
 ## Evidence and development
 

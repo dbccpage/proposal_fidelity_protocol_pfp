@@ -1,20 +1,20 @@
 # Papers
 
 The paper collection lives in
-[`papers/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers)
+[`atlas/archive/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive)
 in two series:
 
-- [`papers/pfp/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp):
+- [`atlas/archive/pfp/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp):
   the Proposal Fidelity Protocol papers. Their
-  [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/README.md)
+  [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/README.md)
   is the authoritative register.
-- [`papers/non_pfp/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp):
+- [`atlas/archive/non_pfp/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp):
   the finite obstruction calculus and authority papers moved in from the
   research repository.
 
 Both series are numbered in the order a reader would meet them, as if they were
 posted to arXiv one after another. The papers were renumbered on 2026-11-06;
-[`papers/RENUMBERING.md`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/RENUMBERING.md)
+[`atlas/archive/RENUMBERING.md`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/RENUMBERING.md)
 maps every old number to its new one. Manuscripts, receipts and frozen
 renderings keep their bytes, so a number written inside a paper is its old
 number.
@@ -68,22 +68,22 @@ systems, then the authority papers, each after the papers it cites.
 
 | ID | Was | Paper |
 | --- | --- | --- |
-| [001](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/001_l1_native_cohomology) | 002 | ℓ¹-native cohomology of finite defect fields |
-| [002](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/002_l1_obstruction_framework) | 003 | Finite ℓ¹ coboundary obstructions: primal–dual certificates |
-| [003](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/003_degree_wise_dsl) | 004 | Degree-wise obstruction calculus and symbolic DSL |
-| [004](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects) | 001 | Covering-edge descent and coherence defects |
-| [005](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/005_operator_lifts_trace_metrics_and_representation_limits) | 013 | Operator lifts, trace metrics and representation limits |
-| [006](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/006_operator_proposal_layer_for_finite_l1_obstruction_systems) | 026 | Proposal selection and continuation-stable diagnostics on finite graphs |
-| [007](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/007_constraint_level_regulation_via_multi_channel_obstruction_diagnostics) | 018 | Candidate selection with residual and constraint diagnostics |
-| [008](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/008_observer_robust_control_of_obstruction_diagnostics) | 019 | Observer-relative control of cochain residuals |
-| [009](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/009_reasoning_trace_validation_via_l1_obstruction_geometry) | 033 | Path-additive coboundary defects for reasoning-trace validation |
-| [010](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/010_the_authority_firewall_a_machine_checked_separation_of_evidence_from_authority_in_finite_systems) | 027 | The authority firewall |
-| [011](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/011_authority_firewall_and_verification_limits) | 030 | The authority firewall and verification limits |
-| [012](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/012_role_non_impersonation_and_authority_preservation) | 004 | Role non-impersonation and authority preservation |
-| [013](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/013_the_authority_gap) | 005 | The authority gap |
-| [014](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/014_finite_authority_and_non_terminal_computation) | 028 | Finite authority and non-terminal computation |
-| [015](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/non_pfp/015_representation_abundance_is_not_physical_authority) | 003 | Representation abundance is not physical authority |
-| [016](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/non_pfp/README.md) | 029 | Primitive difference, structure and the authority boundary of meaning |
+| [001](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/001_l1_native_cohomology) | 002 | ℓ¹-native cohomology of finite defect fields |
+| [002](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/002_l1_obstruction_framework) | 003 | Finite ℓ¹ coboundary obstructions: primal–dual certificates |
+| [003](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/003_degree_wise_dsl) | 004 | Degree-wise obstruction calculus and symbolic DSL |
+| [004](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects) | 001 | Covering-edge descent and coherence defects |
+| [005](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/005_operator_lifts_trace_metrics_and_representation_limits) | 013 | Operator lifts, trace metrics and representation limits |
+| [006](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/006_operator_proposal_layer_for_finite_l1_obstruction_systems) | 026 | Proposal selection and continuation-stable diagnostics on finite graphs |
+| [007](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/007_constraint_level_regulation_via_multi_channel_obstruction_diagnostics) | 018 | Candidate selection with residual and constraint diagnostics |
+| [008](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/008_observer_robust_control_of_obstruction_diagnostics) | 019 | Observer-relative control of cochain residuals |
+| [009](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/009_reasoning_trace_validation_via_l1_obstruction_geometry) | 033 | Path-additive coboundary defects for reasoning-trace validation |
+| [010](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/010_the_authority_firewall_a_machine_checked_separation_of_evidence_from_authority_in_finite_systems) | 027 | The authority firewall |
+| [011](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/011_authority_firewall_and_verification_limits) | 030 | The authority firewall and verification limits |
+| [012](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/012_role_non_impersonation_and_authority_preservation) | 004 | Role non-impersonation and authority preservation |
+| [013](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/013_the_authority_gap) | 005 | The authority gap |
+| [014](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/014_finite_authority_and_non_terminal_computation) | 028 | Finite authority and non-terminal computation |
+| [015](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/non_pfp/015_representation_abundance_is_not_physical_authority) | 003 | Representation abundance is not physical authority |
+| [016](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/non_pfp/README.md) | 029 | Primitive difference, structure and the authority boundary of meaning |
 
 ## Reading the claims
 

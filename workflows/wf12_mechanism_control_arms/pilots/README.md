@@ -12,7 +12,7 @@ and checkers, and as the record of what was tried. Live runs happen in the
 private repository.
 
 Model scores from these runs are exploratory. Where a pilot's notes and a paper
-in `papers/` disagree, the paper is authoritative.
+in `atlas/archive/` disagree, the paper is authoritative.
 
 ## `llm_mechanism/`
 

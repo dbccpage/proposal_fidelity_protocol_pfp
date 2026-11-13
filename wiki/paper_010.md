@@ -1,7 +1,7 @@
 # Paper 010: PFP X: Exact host checking of model verdicts on small finite algebraic challenges
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/pfp/010_pfp_holonomy_checks_and_model_pilots`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/010_pfp_holonomy_checks_and_model_pilots)  
+**Folder:** [`atlas/archive/pfp/010_pfp_holonomy_checks_and_model_pilots`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/010_pfp_holonomy_checks_and_model_pilots)  
 **Record:** [Zenodo 23115720](https://zenodo.org/records/23115720)
 
 ## In brief
@@ -16,7 +16,7 @@ Exact host checking separates a model's proposed verdict from a verified certifi
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/010_pfp_holonomy_checks_and_model_pilots/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/010_pfp_holonomy_checks_and_model_pilots/README.md), which lists the manuscript, claim ledger and change log.
 
 ---
 

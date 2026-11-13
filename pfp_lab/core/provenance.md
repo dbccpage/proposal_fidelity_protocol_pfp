@@ -7,7 +7,7 @@ the Paper 005 practitioner guide:
 
 | Field | Value |
 | --- | --- |
-| Source | `papers/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py` |
+| Source | `atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py` |
 | Source blob (git) | `984718747f35c6dd495d4d1a78bed277bf52bf4b` |
 | Source SHA-256 (committed bytes) | `7e2eb54566f3b92a25130ca2cf781c5bc35b62d7b645adabd4ad0c383a35a263` |
 | Commit that last touched it | `a9eaa83e3da69662da7b6e6e10e69b223f3284dd` |

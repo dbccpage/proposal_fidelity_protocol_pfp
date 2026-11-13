@@ -35,7 +35,7 @@ Edits made directly in the GitHub wiki tab are overwritten by the next publish.
 
 The repository is licensed under Apache 2.0 (see
 [`LICENSE`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/LICENSE)).
-Paper packages under `papers/` carry their own terms: text under CC BY 4.0 and
+Paper packages under `atlas/archive/` carry their own terms: text under CC BY 4.0 and
 code under PolyForm Noncommercial 1.0.0.
 
 ## Support

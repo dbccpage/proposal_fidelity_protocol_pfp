@@ -27,7 +27,7 @@ are deserved is for review, by reading the cited evidence.
 
 [`policy.json`](policy.json) lists the populations: every Python, C#, Rust and
 Lean 4 source in `pfp_lab/`, `governance/`, `csharp/` and the imported trees
-(`pfp/`, `eis/`, `operads/`, `pciv/`, `ops/`, `papers/`, `education/`, `wiki/`, `workflows/`,
+(`pfp/`, `eis/`, `operads/`, `pciv/`, `ops/`, `atlas/archive/`, `education/`, `wiki/`, `workflows/`,
 `code/`), discovered with `git ls-files --cached --others --exclude-standard`.
 Runtime sources must reach L4D. Test sources are in the `test` support category
 (L2D or better, still complete and byte-bound); Jeremy approved that category on

@@ -4,7 +4,7 @@ Checked 2026-11-13 against `main` at f3533f29. Each item was confirmed by readin
 
 ## PFP
 
-- **The Paper 005 oracle test looks in the wrong place.** `pfp_lab/tests/test_differential.py` line 6 points to `papers/005_...`, but the paper is now at `papers/pfp/005_...`. Fix: update the path to match `pfp_lab/core/PROVENANCE.md`.
+- **The Paper 005 oracle test looks in the wrong place.** `pfp_lab/tests/test_differential.py` line 6 points to `papers/005_...`, but the paper is now at `atlas/archive/pfp/005_...`. Fix: update the path to match `pfp_lab/core/PROVENANCE.md`.
 - **CI runs almost none of the tests.** `.github/workflows/` has four jobs. Nothing runs `pfp_lab`, `pfp_core`, `benchmarks/`, `governance/tools/tests`, mypy, ruff or `governance.tools.checker check`, and `pyproject.toml` `testpaths` lists only two folders. Fix: add one job that runs the default suite and the floor check.
 - **`pfp_core/` and `benchmarks/` are outside governance.** `governance/policy.json` does not list them, yet it says "Every tree is governed". No `pfp_core/*.score.json` exists. Fix: add both trees to the policy and score them, or list them under `not_yet_governed`.
 - **The wheel leaves out `pfp_core`.** The `packages` list in `pyproject.toml` has no `pfp_core`, which only works from a checkout through its own `sys.path` changes. Fix: package it, and move `budget_ledger` out of `dag/benchmark`.

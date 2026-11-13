@@ -136,7 +136,7 @@ Test-Certified-Run-Replay-Store).
 `findings/` holds the working notes from the model runs (C043 to C060). Read
 their dated notices first: the model scores are exploratory, every
 `PASS_TO_MASTER` label is a reference self-score, and where a note and a paper
-in `papers/` disagree, the paper is authoritative.
+in `atlas/archive/` disagree, the paper is authoritative.
 
 `conftest.py` puts this folder on `sys.path`, so the packages import by their
 own names (for example `c054_exact_linear_systems.judge_packet.exact_checker`).

@@ -1,7 +1,7 @@
 # Paper 003: PFP III: Admitting failure detectors and testing their effects
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/pfp/003_pfp_host_admitted_failure_detectors`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/003_pfp_host_admitted_failure_detectors)  
+**Folder:** [`atlas/archive/pfp/003_pfp_host_admitted_failure_detectors`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/003_pfp_host_admitted_failure_detectors)  
 **Record:** [Zenodo 23114331](https://zenodo.org/records/23114331)
 
 ## In brief
@@ -17,7 +17,7 @@ A failure detector decides whether a recurring pattern should change how later p
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/003_pfp_host_admitted_failure_detectors/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [Epistemic Immune System](eis.md)
 

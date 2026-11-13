@@ -1,7 +1,7 @@
 # Paper 019: Evidence-bound harness evolution: search, failure memory and held-out transfer
 
 **Status:** Author-review draft; not an external deposit  
-**Folder:** [`papers/pfp/019_pfp_evidence_bound_harness_evolution`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/019_pfp_evidence_bound_harness_evolution)
+**Folder:** [`atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution)
 
 ## In brief
 
@@ -15,7 +15,7 @@ An agent can propose changes to the software that organises its own attempts. Wh
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/019_pfp_evidence_bound_harness_evolution/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [Prompt Civilization](pciv.md)
 
