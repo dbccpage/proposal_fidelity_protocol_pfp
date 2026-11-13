@@ -1,5 +1,11 @@
 # Papers
 
+The [atlas paper](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/atlas.md) states every claim of these papers, and every
+derivation in the repository DAG, in one argument. Its
+[claim ledger](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/atlas_claim_ledger.md) gives each claim an atlas ID, its
+status and a link to the line it comes from, and corresponds one to one with
+the derivation nodes of `dag/derivations_dag.json`.
+
 The paper collection lives in
 [`atlas/archive/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive)
 in two series:

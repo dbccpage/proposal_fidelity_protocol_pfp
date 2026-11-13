@@ -34,7 +34,10 @@ Rebuild the catalogs with the repository Python environment:
 .venv\Scripts\python.exe -X utf8 dag\reviews\build_coverage.py
 .venv\Scripts\python.exe -X utf8 dag\enumerate_workflows.py
 .venv\Scripts\python.exe -X utf8 dag\build_dags.py
+.venv\Scripts\python.exe -X utf8 dag\build_atlas.py
 ```
+
+`build_dags.py` rewrites `derivations_dag.json` from the frozen reviews, so run `build_atlas.py` after it: it adds one `archive_claim` node per claim copied from `atlas/archive/`, gives every derivation node its `atlas_ledger_id`, and regenerates `atlas/atlas_claim_ledger.md`, its JSON form and the claim index of `atlas/atlas.md`. `build_atlas.py --check` fails if any of them is stale or the ledger and the DAG stop corresponding one to one.
 
 Run the focused offline checks:
 
