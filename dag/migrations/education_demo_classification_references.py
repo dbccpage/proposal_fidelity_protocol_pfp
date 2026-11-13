@@ -26,7 +26,7 @@ for p in subprocess.check_output(['git','ls-files'],cwd=ROOT,text=True).splitlin
     parts=Path(p).parts
     if any(v.startswith('.') for v in parts) or p.startswith('dag/benchmark/') or '.benchmark_private' in p or p.startswith('dag/migrations/education_demo_classification'):
         excluded['private_hidden_benchmark_or_own_report']+=1; continue
-    if p.startswith(('dag/','pilots/anomalon_woland/')):
+    if p.startswith(('dag/','pilots/imported_pilots/')):
         excluded['historical_custody_or_large_imported_corpus_not_consumer_scan']+=1; continue
     if Path(p).suffix not in extensions: excluded['non_text_suffix']+=1; continue
     fp=ROOT/p
@@ -50,7 +50,7 @@ for p in subprocess.check_output(['git','ls-files'],cwd=ROOT,text=True).splitlin
     if found:
         role='historical_audit_or_migration_custody' if p.startswith(('dag/reviews/','dag/migrations/','dag/pilot_triage/')) else 'runtime_or_build_consumer' if Path(p).suffix in {'.py','.rs','.js','.cjs','.mjs','.ts','.toml','.cfg','.ini','.sh','.ps1'} else 'notebook_consumer' if p.endswith('.ipynb') else 'documentation_or_configuration_consumer'
         refs.append({'id':f'EDREF-{len(refs)+1:04d}','path':p,'sha256':hashlib.sha256(raw).hexdigest(),'role':role,'occurrences':found})
-out={'method':'Literal basename/module-name candidates, not proof of dynamic import resolution. Tracked public allowed text <=4MB; hidden directories, entire dag/, large incoming pilots/anomalon_woland custody corpus and private material excluded. Historical receipts must retain old source paths and hashes, with a migration map instead of in-place rewriting. Generic basename matches require manual disambiguation.','scanned_files':scanned,'excluded_counts':dict(excluded),'consumers':refs}
+out={'method':'Literal basename/module-name candidates, not proof of dynamic import resolution. Tracked public allowed text <=4MB; hidden directories, entire dag/, large incoming pilots/imported_pilots custody corpus and private material excluded. Historical receipts must retain old source paths and hashes, with a migration map instead of in-place rewriting. Generic basename matches require manual disambiguation.','scanned_files':scanned,'excluded_counts':dict(excluded),'consumers':refs}
 (HERE/(PREFIX+'_references_scoped.json')).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print('scanned',scanned,'consumers',len(refs),'roles',dict(collections.Counter(r['role'] for r in refs)))
 for r in refs:

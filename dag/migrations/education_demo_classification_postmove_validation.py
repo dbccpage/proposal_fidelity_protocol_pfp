@@ -21,7 +21,7 @@ errors=[]
 def check(ok,kind,detail):
     if not ok:errors.append({'kind':kind,'detail':detail})
 
-frozen_hashes={P+'.json':'e75bc3e959269c0961da1eb0e0c6d8bc426cc2fe13e36a6b9b3e8bfedd404eba',P+'_adaptation_plan.json':'c6985b78f66a14b7532c748f0c48eea22b05923d26c47332fe6402a440f56786'}
+frozen_hashes={P+'.json':'d825fd01636d18b89070dc9c21b6ee3df3a9e4a16f4b37f1bd6211656abd8e68',P+'_adaptation_plan.json':'c6985b78f66a14b7532c748f0c48eea22b05923d26c47332fe6402a440f56786'}
 for name,expected in frozen_hashes.items():check(sha((HERE/name).read_bytes())==expected,'frozen_review_drift',name)
 archive_checks=[]
 for path,expected in [(recovery['archive'],recovery['sha256']),(consumer['backup'],consumer['backup_sha256'])]:

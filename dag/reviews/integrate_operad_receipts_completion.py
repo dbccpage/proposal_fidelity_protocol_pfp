@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]; REV=ROOT/'dag/reviews'
 name='additional_operad_receipts_remaining'; path=REV/(name+'.json')
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-assert sha(path)=='a007d5d364781610d85b2fd8b19769c754ba35b4965130724189c6d13978de3f'
+assert sha(path)=='2fcbcc6129de8f8f56def8969ad092b99804eec1d238618e1df5c78278b746cb'
 report=json.loads(path.read_text()); check=json.loads((REV/(name+'_validation.json')).read_text())
 assert check['status']=='pass' and check['report_sha256']==sha(path)
 assert report['summary']['full_source_reads']==351 and report['summary']['bounded_assessments']==271

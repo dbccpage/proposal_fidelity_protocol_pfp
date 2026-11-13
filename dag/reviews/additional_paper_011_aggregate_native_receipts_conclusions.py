@@ -21,7 +21,7 @@ new=[
 [ev(runner,[[143,145],[179,314],[326,438]]),ev(dialogue,[[43,49],[85,89],[100,105],[116,127],[144,164]])],
 'Treat these as scripted presentation fixtures; a general workflow needs checked score provenance, actual carrier-preserving repair and complete evidence binding.'),
 ('P011-AGG-F004','F09 provenance addendum: multiword-role parser failure follows checkout transformation',
-'P011CORE-F09 remains valid for the reviewed current checkout: parse_rounds uses (\\w+) yet requires Gauge Breaker, Defect Hunter and other names containing spaces. The original ZIP copy of the same recovered runner instead requires Begemot, Koroviev, Jeremy, Polina, Liudmila, Yaroslava, Yeshua and Woland, all matching the lexical shape. This pins a transformation regression and does not by itself prove that full archived dialogue validation or its120 comparisons succeeded.',
+'P011CORE-F09 remains valid for the reviewed current checkout: parse_rounds uses (\\w+) yet requires Gauge Breaker, Defect Hunter and other names containing spaces. The original ZIP copy of the same recovered runner instead requires Begemot, Koroviev, Jeremy, Polina, Liudmila, Yaroslava, Yeshua and private engine, all matching the lexical shape. This pins a transformation regression and does not by itself prove that full archived dialogue validation or its120 comparisons succeeded.',
 [ev(recovered,[[288,324]])],
 'Preserve the earlier core finding and add this archive provenance; validate current name/format adaptations separately from any replay of the original archive.'),
 ('P011-AGG-F005','Fourteen archived capability/job artifact bindings remain unresolved',

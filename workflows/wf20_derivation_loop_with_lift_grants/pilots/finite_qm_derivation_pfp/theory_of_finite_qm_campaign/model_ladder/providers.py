@@ -3,7 +3,7 @@
 AuthorityEffect: None. Adapters send one request per call, never retry silently, never log a key, and
 return every field the receipt needs (provider, model, tokens, cost, request id, stop reason).
 
-Reference: upstream_repo omega_engine_woland/infrastructure/providers (provider_b_compat.py, http.py,
+Reference: upstream_repo private_engine/infrastructure/providers (provider_b_compat.py, http.py,
 local_host_local.py, adapters/model_backends.py with its MODEL_PROVIDER selector). Ported ideas:
 a bounded reply read, redacted classified failures, an unreported cost is unknown (not zero), Local_host
 reached on the loopback host and probed before use. Not ported: the native Rust host, the SQLite

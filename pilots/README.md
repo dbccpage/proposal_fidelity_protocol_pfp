@@ -9,7 +9,8 @@ The imported pilot estate that used to sit beside it was removed on 2026-11-12.
 Its four reusable pilots moved first, into
 `workflows/wf06_dialect_sweep/pilots/`, `workflows/wf08_staged_sealed_packets/pilots/`,
 `workflows/wf11_dual_certificate_synthesis/pilots/` and
-`workflows/wf16_substrate_crosswalk/pilots/`. The custody manifests are in
-`dag/migrations/`, and the old bytes are in git history (commit `90228464`).
+`workflows/wf16_substrate_crosswalk/pilots/`. Its custody manifests were removed
+from `dag/migrations/` on 2026-11-13; they and the old bytes are in git
+history (commit `90228464`).
 
 `.gitattributes` keeps every file here byte for byte (`* -text`).

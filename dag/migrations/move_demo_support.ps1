@@ -1,7 +1,7 @@
 param([switch]$Apply)
 $ErrorActionPreference = 'Stop'
 $pfpRoot = [IO.Path]::GetFullPath('C:\Users\a343o\source\repos\proposal_fidelity_protocol_pfp')
-$anomalonRoot = [IO.Path]::GetFullPath('C:\Users\a343o\source\repos\anomalon')
+$private_engine_repoRoot = [IO.Path]::GetFullPath('C:\Users\a343o\source\repos\private_engine_repo')
 $planPath = Join-Path $pfpRoot 'dag\migrations\demo_support_move_plan.json'
 $receiptPath = Join-Path $pfpRoot 'dag\migrations\demo_support_move_receipt.json'
 $plan = Get-Content -LiteralPath $planPath -Raw | ConvertFrom-Json
@@ -55,13 +55,13 @@ $seenSources = @{}
 $seenTargets = @{}
 $resolved = @()
 foreach ($entry in $plan.entries) {
-    $sourceRoot = switch ($entry.source_repo) { 'anomalon' { $anomalonRoot }; 'pfp' { $pfpRoot }; default { throw 'Unknown source repository.' } }
-    $allowed = if ($entry.source_repo -eq 'anomalon') {
-        ($entry.source_relative_path -match '^omega_engine_woland/(documentation|_fixtures|program_profiles|evidence)/') -or
+    $sourceRoot = switch ($entry.source_repo) { 'private_engine_repo' { $private_engine_repoRoot }; 'pfp' { $pfpRoot }; default { throw 'Unknown source repository.' } }
+    $allowed = if ($entry.source_repo -eq 'private_engine_repo') {
+        ($entry.source_relative_path -match '^private_engine/(documentation|_fixtures|program_profiles|evidence)/') -or
         ($entry.source_relative_path -in @($plan.ancillary_source_tests))
     } else { $entry.source_relative_path.StartsWith('education/') }
     if (-not $allowed) { throw "Source outside reviewed scope: $($entry.source_relative_path)" }
-    if (-not ($entry.destination_relative_path -match '^pilots/(anomalon_woland_support|education)/')) {
+    if (-not ($entry.destination_relative_path -match '^pilots/(imported_pilots_support|education)/')) {
         throw 'Destination outside fixed pilot import roots.'
     }
     $source = Contained-Path $sourceRoot $entry.source_relative_path
@@ -102,7 +102,7 @@ $receipt.state = 'removing_verified_sources'
 Save-Receipt $receipt
 for ($index = 0; $index -lt $resolved.Count; $index++) {
     $row = $resolved[$index]
-    $sourceRoot = if ($row.entry.source_repo -eq 'anomalon') { $anomalonRoot } else { $pfpRoot }
+    $sourceRoot = if ($row.entry.source_repo -eq 'private_engine_repo') { $private_engine_repoRoot } else { $pfpRoot }
     $checkedSource = Contained-Path $sourceRoot $row.entry.source_relative_path
     $checkedTarget = Contained-Path $pfpRoot $row.entry.destination_relative_path
     Verify-Bytes $checkedSource $row.entry
@@ -118,7 +118,7 @@ for ($index = 0; $index -lt $resolved.Count; $index++) {
 $parents = @{}
 foreach ($row in $resolved) {
     $parent = Split-Path -Parent $row.source
-    $boundary = if ($row.entry.source_repo -eq 'anomalon') { Join-Path $anomalonRoot 'omega_engine_woland' } else { Join-Path $pfpRoot 'education' }
+    $boundary = if ($row.entry.source_repo -eq 'private_engine_repo') { Join-Path $private_engine_repoRoot 'private_engine' } else { Join-Path $pfpRoot 'education' }
     while ($parent.StartsWith($boundary + '\', [StringComparison]::OrdinalIgnoreCase)) {
         $parents[$parent] = $boundary
         $parent = Split-Path -Parent $parent

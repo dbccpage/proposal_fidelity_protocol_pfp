@@ -10,7 +10,7 @@ PREFIX = 'papers/pfp/003_pfp_host_admitted_failure_detectors/'
 scope = json.loads((OUT / 'additional_paper_003_support_scope.json').read_text())
 pins = {x['path']: x for x in scope['files']}
 assessments = {
-    'README.md': 'Complete package and reproduction instructions read. October 23 lemma extension is explicitly newer than the historical release PDFs and archive; live extension experiment is NOT_RUN. Native host and canonical Woland implementation have distinct scopes.',
+    'README.md': 'Complete package and reproduction instructions read. October 23 lemma extension is explicitly newer than the historical release PDFs and archive; live extension experiment is NOT_RUN. Native host and canonical private engine implementation have distinct scopes.',
     'paper_claim_ledger.md': 'Every claim, withdrawal and extension read, including P3-23 through P3-25 separately after truncated output. States finite fuel/state/receipt limits, phrase-detector non-admission, supplied-evidence boundary, and three elementary detector lemmas without claiming model accuracy.',
     'pyproject.toml': 'Complete Python dependency, package and pytest configuration read. No environment installation performed.',
     'code/detector_lemmas.py': 'All exact rational two-signal, Hill-gate and finite-mask controls read. Canonical gate collapse needs the stated high-severity self-derived signal; half-activation threshold is K independently of Hill exponent; universal finite-panel safety is exactly executed-mask inclusion in screened-mask. These are conditional finite facts, not detector adequacy or empirical improvement.',

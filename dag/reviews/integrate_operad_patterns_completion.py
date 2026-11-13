@@ -11,7 +11,7 @@ REV = ROOT / 'dag/reviews'
 STEM = 'additional_operad_patterns_remaining'
 sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 report_path = REV / (STEM + '.json')
-assert sha(report_path) == '75ff5071eded43b314f78297409f28195f136371564993111b8e679d9732f652'
+assert sha(report_path) == '626a6881a9aad57a69a8fcf9c6b09e2d3f3a1ed7d017697aba1fe6d163a0ed68'
 report = json.loads(report_path.read_text())
 with contextlib.redirect_stdout(io.StringIO()):
     runpy.run_path(str(REV / (STEM + '_validate.py')))

@@ -84,7 +84,7 @@ new_findings = [
     },
     {
         'id': 'PAPER000-SUPPORT-EDITION-NAMING-DRIFT', 'severity': 'version_binding_gap',
-        'statement': 'All six current PDFs are byte-identical to the archived edition and retain Landau/Woland naming; current Markdown/TeX and filenames use Examiner/Adversary naming. The code and finite mathematics need not differ, but these PDFs are historical editions rather than renderings of the current named sources. Label that relationship explicitly.',
+        'statement': 'All six current PDFs are byte-identical to the archived edition and retain Landau/adversary-persona naming; current Markdown/TeX and filenames use Examiner/Adversary naming. The code and finite mathematics need not differ, but these PDFs are historical editions rather than renderings of the current named sources. Label that relationship explicitly.',
         'evidence': [P + '000_paper.pdf', P + '000_pfp_examiner_companion.pdf', P + 'paper.tex', archive_path],
         'validation': 'dag/reviews/additional_paper_000_custody.json',
     },

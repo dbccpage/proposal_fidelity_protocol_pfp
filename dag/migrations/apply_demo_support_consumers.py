@@ -11,7 +11,7 @@ import zipfile
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-SOURCES = {'pfp': ROOT, 'anomalon': ROOT.parent / 'anomalon'}
+SOURCES = {'pfp': ROOT, 'private_engine_repo': ROOT.parent / 'private_engine_repo'}
 BACKUP = Path(r'C:\Users\a343o\.codex\visualizations\2026\11\10\01a1c373-155b-7b31-94f8-3156bd6dbc35\.support_recovery\consumer_originals_before_adaptation.zip')
 RECEIPT = HERE / 'demo_support_consumer_receipt.json'
 
@@ -51,7 +51,7 @@ def main():
         raise ValueError('Complete byte-preserving move required first')
     removed = {(r['source_repo'], r['source_relative_path']): r for r in moves['entries']}
     changes = []
-    for row in read('woland_support_consumer_patch.json')['changes']:
+    for row in read('imported_pilots_support_consumer_patch.json')['changes']:
         target = contained(row['repository'], row['path'])
         if row['after'] is None:
             if (row['repository'], row['path']) not in removed or target.exists():
@@ -73,11 +73,11 @@ def main():
         changes.append({'repository': 'pfp', 'path': row['post_move_path'],
                         'before_sha256': row['original_sha256'], 'after_sha256': row['post_adaptation_sha256'],
                         'after_bytes': after, 'reason': 'Explicit education navigation/path adaptation after unchanged relocation.'})
-    spec = importlib.util.spec_from_file_location('navigation_review', HERE / 'woland_documentation_demo_classification_navigation_patch.py')
+    spec = importlib.util.spec_from_file_location('navigation_review', HERE / 'private_documentation_demo_classification_navigation_patch.py')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    for row in module.plans(SOURCES['anomalon']):
-        changes.append({'repository': 'anomalon', 'path': row['path'], 'before_sha256': row['source_sha256'],
+    for row in module.plans(SOURCES['private_engine_repo']):
+        changes.append({'repository': 'private_engine_repo', 'path': row['path'], 'before_sha256': row['source_sha256'],
                         'after_sha256': row['proposed_sha256'], 'after_bytes': row['proposed_raw'],
                         'reason': 'Retained operator guide navigation and explicit live pricing references.'})
     if len(changes) != len({(r['repository'], r['path'].casefold()) for r in changes}):

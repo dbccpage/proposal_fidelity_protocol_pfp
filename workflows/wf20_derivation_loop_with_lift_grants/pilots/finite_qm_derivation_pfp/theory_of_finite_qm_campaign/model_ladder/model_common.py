@@ -3,7 +3,7 @@
 AuthorityEffect: None. Nothing here accepts a theorem.
 
 Credential discovery is ported (with attribution) from upstream_repo
-omega_engine_woland/infrastructure/providers/credential_source.py: an explicit .env path, then the
+private_engine/infrastructure/providers/credential_source.py: an explicit .env path, then the
 process environment, then the .env at the checkout root, then the .env of the main checkout when
 running in a linked git worktree. Only those files are read, nothing walks parent directories,
 nothing is written to os.environ, and a value is never placed in a log, a receipt or an error.

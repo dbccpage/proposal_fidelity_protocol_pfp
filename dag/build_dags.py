@@ -62,7 +62,7 @@ def validate(nodes, edges):
     return {'unique_nodes':len(ids),'edges':len(edges),'acyclic':True}
 
 def main():
-    inventory=read('file_inventory.json',read('file_inventory_before_cleanup.json',{}))
+    inventory=read('file_inventory.json',{})
     systems=read('reviews/systems_audit.json',{})
     papers=read('reviews/papers_audit.json',{})
     pfp=read('reviews/pfp_audit.json',{})
@@ -100,16 +100,6 @@ def main():
             claim['source_scope'] = 'Historical benchmark review at its recorded source hashes; subsequent targeted deltas are separate and do not extend this review.'
             claim['subsequent_implementation_revisions']=changed_review_sources
         additional.append((benchmark_review_path, benchmark_review))
-    pilot_catalog=read('pilot_triage/catalog.json',{})
-    pilot_findings=[]
-    for report_path in pilot_catalog.get('reports',[]):
-        report=json.loads((ROOT/report_path).read_text(encoding='utf-8'))
-        for index,finding in enumerate(report.get('findings',[])+report.get('substantive_findings',[])):
-            if not isinstance(finding,dict): continue
-            pilot_findings.append({**finding,
-                'id':'IMPORTED-FINDING:'+Path(report_path).stem+':'+str(finding.get('id',index)),
-                'kind':'imported_pilot_finding','report':report_path,
-                'custody_scope':'Separate imported Anomalon corpus; not an expansion of the original pinned source audit.'})
     common={'schema_version':'1.0','generated_at_utc':timestamp,
             'repository':'https://github.com/dbccpage/proposal_fidelity_protocol_pfp',
             'source_commit':inventory.get('local_head'),
@@ -127,7 +117,6 @@ def main():
                               'status':'requires_evidence_not_discharged_by_this_edge'}
             edges.append({'from':key,'to':claim['id'],'kind':'requires'})
     nodes.extend(assumptions.values())
-    nodes.extend(pilot_findings)
     for foundation in pfp.get('additional_mathematical_foundations',[]):
         nodes.append({'kind':'mathematical_foundation',**foundation})
     for paper in papers.get('papers',[]):
@@ -135,7 +124,6 @@ def main():
     inventory_by_path={r['path']:r for r in inventory.get('files',[])}
     for row in benchmark_review.get('file_reviews', []):
         inventory_by_path[row['path']] = {'sha256':row['sha256'], 'outside_original_inventory':True}
-    migration=read('migrations/anomalon_pilots_move.json',{})
     support_migration=read('migrations/demo_support_verification.json',{})
     source_revisions={}
     support_summary={k:support_migration.get(k) for k in ('status','moved_files','move_counts','original_bytes','source_originals_absent','all_original_recovery_hashes_verified')}
@@ -163,11 +151,6 @@ def main():
             'sha256':row['current_sha256'],'outside_original_inventory':True,
             'original_sha256':row['original_sha256'],
             'revision_custody':row['revision_custody']}
-    for row in migration.get('entries',[]):
-        inventory_by_path[migration['destination_relative_path']+'/'+row['path']]={
-            'sha256':row['sha256'],'custody_scope':'imported_anomalon_pilots',
-            'custody_manifest':'dag/migrations/anomalon_pilots_move.json',
-            'recovery_receipt':'dag/migrations/pilot_recovery_archive.json'}
     source_nodes={}
     for node in list(nodes):
         for citation in node.get('evidence',[]):
@@ -184,8 +167,6 @@ def main():
                     'assessment_scope':'Authorized migration navigation revision, separately pinned from the original source; no additional original-inventory coverage.',
                     'original_sha256':record['original_sha256'],
                     'revision_custody':record['revision_custody']})
-            if record.get('custody_scope'):
-                source_nodes[key].update({k:record[k] for k in ('custody_scope','custody_manifest','recovery_receipt')})
             if record.get('current_location'):
                 source_nodes[key]['current_location']=record['current_location']
             edges.append({'from':key,'to':node['id'],'kind':'source_evidence_not_automatic_proof','citation':citation})
@@ -200,11 +181,9 @@ def main():
                 'pdf_inspection':'dag/reviews/pdf_artifacts.json',
                 'review_reports':['dag/reviews/pfp_audit.json','dag/reviews/systems_audit.json','dag/reviews/papers_audit.json','dag/reviews/workflows_audit.json']+[path.relative_to(ROOT).as_posix() for path,_ in additional],
                 'historical_report_supersessions':supersessions,
-                'imported_pilot_reports':pilot_catalog.get('reports',[]),
-                'imported_source_custody':'dag/migrations/anomalon_pilots_move.json',
                 'demo_support_relocation':support_summary,
                 'nodes':nodes,'edges':edges,
-                'findings':systems.get('findings',[])+pfp.get('findings',[])+[finding for _,report in additional for finding in report.get('findings',[])]+pilot_findings,
+                'findings':systems.get('findings',[])+pfp.get('findings',[])+[finding for _,report in additional for finding in report.get('findings',[])],
                 'remaining_work':['Complete per-file substantive audit; hashing and parsing do not satisfy this obligation.',
                                   'Complete supporting-paper artifact, reference, proof/source and reproduction assessments; all 38 primary manuscripts have a first substantive assessment.',
                                   'Audit native implementations and claimed Lean correspondence at pinned source.']}
@@ -357,20 +336,6 @@ def main():
                        'validation':'dag/benchmark/section_validation.xml',
                        'open_obligations':['Cross-section consistency','Final-answer correctness','Matched-resource repeated comparison']})
         wedges.append({'from':'CONTROL:direct','to':node_id,'kind':'public_task_output_allocation_control'})
-    for pilot in pilot_catalog.get('pilots',[])+pilot_catalog.get('shared_owners',[]):
-        if pilot.get('review_status')=='pending': continue
-        node_id='IMPORTED:'+pilot['id']
-        wnodes.append({'id':node_id,'kind':'imported_pilot_assessment','pilot_id':pilot['id'],
-                       **{key:pilot.get(key) for key in ('path','report','verdict','contribution','mathematical_basis',
-                                                       'reusable_mechanism_name','qm_seed_transfer','rationale','next_action',
-                                                       'deletion_status','retirement_plan','retirement_receipt',
-                                                       'preserved_mechanism','archive_prefix')},
-                       'evaluation_status':'not_run_on_sealed_seed',
-                       'composition_scope':'Triage evidence outside the executable macro grammar; not an additional workflow family.'})
-        for mapping in pilot.get('workflow_mapping',[]):
-            wedges.append({'from':node_id,'to':mapping['family_id'],
-                           'kind':'candidate_fixture_or_mechanism_for_existing_family',
-                           'status':'requires_extraction_and_preservation_checks'})
     live_summary=read('benchmark/results_summary.json',{})
     live_rows=live_summary.get('raw_runs',[])
     for node in wnodes:
@@ -405,7 +370,6 @@ def main():
         'existing_nested_components':registry.get('component_nodes',[]),
         'existing_manifest_registry':registry.get('manifest_registry',[]),
         'recorded_setting_variations':registry.get('recorded_variations',[]),
-        'imported_pilot_triage':{k:pilot_catalog.get(k) for k in ('status','numbered_pilots','initially_assessed','shared_owners_assessed','retired_numbered_pilots','verdict_counts','reports')},
         'demo_support_relocation':support_summary,
         'historical_result_policy':'Historical percentages and live labels are retained source assertions, not verified new outcomes or evidence of this benchmark.',
         'research_agent_reports':ideas,

@@ -11,7 +11,7 @@ PREFIX='additional_challenges_051_059_artifacts'
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 load=lambda p:json.loads(p.read_text(encoding='utf-8'))
 prior_path=REV/'additional_challenges_051_059.json'
-assert sha(prior_path)=='580e0dadca0ce5561f597c1e58b896e0e8adaf24bead64da27c960cb641082ba'
+assert sha(prior_path)=='8175357110053b873a866103d05292d9e0f3e1f02025104662e741819ef5d305'
 prior=load(prior_path);scope=load(REV/(PREFIX+'_scope.json'));selected=load(REV/(PREFIX+'_selected.json'))
 frozen={r['path']:r for r in scope['files']};full={r['path'] for r in selected}
 auto={r['path']:(i,r) for i,r in enumerate(prior['automated_reviews'])}

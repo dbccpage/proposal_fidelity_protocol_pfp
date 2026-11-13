@@ -103,7 +103,7 @@ finding('Carrier and matrix admission do not establish the intended topology aut
  'Centralize validated complex construction and bind/recompute oriented incidence matrices from that carrier before using cohomology or LP certificates as task evidence.',('RA-T09','RA-T10'))
 
 prior=R/'dag/reviews/additional_ops_adversary_remaining.json';pb=prior.read_bytes()
-assert h(pb)=='a20c3a9547c61ae99346e13a2f008f53ba5f34d0c540e8f93e043185be594df4'
+assert h(pb)=='caecb3f4bd44905896516a0c56c485747f146eefd877fa70a8426521bd8a73f0'
 reconciliation=[
  {'prior_ids':['OAR-F06'],'assessment':'PFP gateway now reviewed here has explicit reservation/unknown/settled accounting; the prior finding concerns the separate Python researcher dispatch path. Do not equate those owners or claim the Python crash window is repaired.'},
  {'prior_ids':['OAR-F14'],'assessment':'Rust complete_bout compares an exact DDC prefix. This is a different owner/buffer from the Python event mirror that only counts lines; stronger Rust behavior does not retroactively repair the mirror.'},

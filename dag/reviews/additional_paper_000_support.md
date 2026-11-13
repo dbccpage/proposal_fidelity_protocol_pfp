@@ -48,7 +48,7 @@ Seven specific findings need attention:
    equation and the key's duality/boundary calculations. The Markdown retains
    the intended formulas. This is visible in the rendered pages, not merely a
    text-extraction defect.
-7. All six PDFs retain the older Landau/Woland edition, while current source
+7. All six PDFs retain the older Landau/adversary-persona edition, while current source
    naming uses Examiner/Adversary. Identify that edition relationship explicitly.
 
 The optional six-page fictional preface is clearly labeled fiction and adds no
