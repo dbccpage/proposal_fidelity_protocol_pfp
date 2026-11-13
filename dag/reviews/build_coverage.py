@@ -91,34 +91,6 @@ def main():
                 'scope': 'Selected schema/accounting/custody predicates only; does not change source-reading status.',
             })
 
-    # Pilot triage also reads canonical owners in the original pinned corpus.
-    # Incoming paths are outside this inventory and therefore never inflate it.
-    for report in sorted((DAG / 'pilot_triage').glob('*.json')):
-        if report.name == 'catalog.json':
-            continue
-        content = json.loads(report.read_text(encoding='utf-8'))
-        if not isinstance(content, dict) or not isinstance(content.get('pilots'), list):
-            continue
-        seen = set()
-        for pilot in content['pilots']:
-            for evidence in pilot.get('source_evidence', []):
-                level = evidence.get('review_level', '')
-                if level == 'canonical_full_file_hash_and_diff_review_body_coverage_follows_imported_read_ledger':
-                    # Explicit body-coverage receipts are supplied separately; diff-only rows remain pending.
-                    continue
-                if any(word in level for word in ('mechanically', 'parsed_public', 'schema_fields')):
-                    continue
-                if not ('read' in level or 'emitted_for_review' in level or level.startswith('full_')):
-                    continue
-                key = (evidence['path'], evidence['sha256'], level)
-                if key in seen:
-                    continue
-                seen.add(key)
-                add(evidence['path'], report.relative_to(ROOT).as_posix(), level.startswith('full_'),
-                    {'review_level': level, 'reviewed_lines': evidence.get('lines'),
-                     'assessment': pilot.get('contribution'), 'mathematical_basis': pilot.get('mathematical_basis')},
-                    evidence['sha256'])
-
     relocation_path = DAG / 'migrations' / 'demo_support_verification.json'
     if relocation_path.exists():
         relocation = json.loads(relocation_path.read_text(encoding='utf-8'))
