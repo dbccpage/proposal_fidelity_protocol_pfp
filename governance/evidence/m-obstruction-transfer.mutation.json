@@ -1,0 +1,159 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_obstruction_transfer/src/lib.rs",
+  "target_sha256": "87331e324919471e8ccc001c3cf055e24dabc6c7aad1f2ea913937e8fb077e24",
+  "test_command": "cargo test --release -p core_obstruction_transfer",
+  "counts": {
+    "killed": 23,
+    "survived": 1,
+    "invalid": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "dphi orientation",
+      "old": "    phi[v] - phi[u]\n}",
+      "new": "    phi[u] - phi[v]\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "defect drops abs",
+      "old": "(c[e] - dphi(g, phi, e)).abs()",
+      "new": "(c[e] - dphi(g, phi, e))",
+      "outcome": "killed"
+    },
+    {
+      "name": "integrate sign",
+      "old": "phi[u] + c[e] } else",
+      "new": "phi[u] - c[e] } else",
+      "outcome": "killed"
+    },
+    {
+      "name": "score headroom strict",
+      "old": "if &d0 > phi1 {",
+      "new": "if &d0 >= phi1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "score numerator",
+      "old": "(d0.clone() - dtau)",
+      "new": "(d0.clone() + dtau)",
+      "outcome": "killed"
+    },
+    {
+      "name": "score below-optimum guard",
+      "old": "if &dtau < phi1 {",
+      "new": "if &dtau > phi1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "gauge drops vertex map",
+      "old": "phi[pi[x]] = optimum[x];",
+      "new": "phi[x] = optimum[x];",
+      "outcome": "killed"
+    },
+    {
+      "name": "gauge subtracts psi",
+      "old": "phi.iter().zip(&psi).map(|(a, b)| a + b)",
+      "new": "phi.iter().zip(&psi).map(|(a, b)| a - b)",
+      "outcome": "killed"
+    },
+    {
+      "name": "classify L1 test",
+      "old": "if pushed == b.c {",
+      "new": "if pushed != b.c {",
+      "outcome": "killed"
+    },
+    {
+      "name": "classify keeps worst",
+      "old": "if best.as_ref().is_none_or(|(l, _)| level < *l)",
+      "new": "if best.as_ref().is_none_or(|(l, _)| level > *l)",
+      "outcome": "killed"
+    },
+    {
+      "name": "map_cochain ignores orientation",
+      "old": "out[j] = if oriented { s * x[e] } else { x[e] };",
+      "new": "out[j] = x[e];",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay repeated cut",
+      "old": "if cut[f] {",
+      "new": "if !cut[f] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "chord map position",
+      "old": "target_chords.iter().position(|&f| f == j)",
+      "new": "target_chords.iter().position(|&f| f != j)",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle not reversed",
+      "old": "    path.reverse();\n    let mut cycle",
+      "new": "    let mut cycle",
+      "outcome": "killed"
+    },
+    {
+      "name": "class coords sign",
+      "old": ".map(|e| c[e] - dphi(g, &phi, e))",
+      "new": ".map(|e| c[e] + dphi(g, &phi, e))",
+      "outcome": "killed"
+    },
+    {
+      "name": "row S=1 count",
+      "old": "if s.is_one() {",
+      "new": "if !s.is_one() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "graph canonical filter",
+      "old": "canonical_edges(&g, &perms) == g.edges",
+      "new": "canonical_edges(&g, &perms) != g.edges",
+      "outcome": "killed"
+    },
+    {
+      "name": "coordinate range",
+      "old": "(-2..=2).map(move |x|",
+      "new": "(-2..=1).map(move |x|",
+      "outcome": "killed"
+    },
+    {
+      "name": "weight orbit minimum",
+      "old": "w <= image",
+      "new": "w < image",
+      "outcome": "killed"
+    },
+    {
+      "name": "support pairs",
+      "old": "if va != vb && support(va) == support(vb) {",
+      "new": "if va != vb {",
+      "outcome": "killed"
+    },
+    {
+      "name": "boundary sign",
+      "old": "row[u] = -BigRational::one();",
+      "new": "row[u] = BigRational::one();",
+      "outcome": "killed"
+    },
+    {
+      "name": "no-headroom excess sign",
+      "old": "Ok(Outcome::NoHeadroom(dtau - d0))",
+      "new": "Ok(Outcome::NoHeadroom(d0 - dtau))",
+      "outcome": "killed"
+    },
+    {
+      "name": "record tree-first order",
+      "old": "filter(|&e| tree[e] && zero[e])",
+      "new": "filter(|&e| zero[e])",
+      "outcome": "survived"
+    },
+    {
+      "name": "cross-betti guard",
+      "old": "if a.graph.betti() != b.graph.betti() {\n        return None;",
+      "new": "if a.graph.betti() == b.graph.betti() + 9 {\n        return None;",
+      "outcome": "killed"
+    }
+  ]
+}
