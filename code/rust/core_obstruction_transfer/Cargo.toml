@@ -1,0 +1,26 @@
+[package]
+name = "core_obstruction_transfer"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+description = "Exact obstruction-class transfer test: replay a solved case's structural DDC trace on another case and score it with certified Phi1"
+
+# Kept as its own crate beside core_wdp::ddc: adding a module to core_wdp would
+# change the governance-pinned bytes of core_wdp/src/lib.rs, and this test needs
+# only the Phi1 verifier, the exact Phi1 solver and the DDC alphabet.
+[dependencies]
+core_functional = { path = "../core_functional" }
+core_solvers = { path = "../core_solvers" }
+core_operad_canon = { path = "../core_operad_canon" }
+num-bigint = "0.4"
+num-rational = "0.4"
+num-traits = "0.2"
+sha2 = "0.10"
+
+[[bin]]
+name = "obstruction_transfer_table"
+path = "src/bin/obstruction_transfer_table.rs"
+
+[[test]]
+name = "transfer"
+path = "tests/transfer.rs"

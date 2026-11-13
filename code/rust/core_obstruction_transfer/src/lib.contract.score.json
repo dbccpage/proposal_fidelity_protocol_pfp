@@ -1,0 +1,142 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_obstruction_transfer/src/lib.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_obstruction_transfer/src/lib.rs",
+      "language": "Rust",
+      "sha256": "87331e324919471e8ccc001c3cf055e24dabc6c7aad1f2ea913937e8fb077e24"
+    },
+    "contract_urn": "urn:pfp:obstruction-transfer:lib:v1",
+    "symbols": [
+      "Graph",
+      "permutations",
+      "map_cochain",
+      "canonical_tree",
+      "chords",
+      "integrate",
+      "defect",
+      "fundamental_cycle",
+      "class_coords",
+      "Instance",
+      "WeightedGraph",
+      "Family",
+      "enumerate_graphs",
+      "coordinate_vectors",
+      "enumerate_family",
+      "CertifiedPhi1",
+      "certify_phi1",
+      "TraceStep",
+      "Trace",
+      "Refusal",
+      "record_trace",
+      "replay",
+      "chord_map_from_vertex_map",
+      "Injection",
+      "gauge_transport",
+      "Level",
+      "classify",
+      "Outcome",
+      "score",
+      "Cohort",
+      "Pair",
+      "generate_pairs",
+      "Row",
+      "RunConfig",
+      "RunOutput",
+      "census",
+      "run",
+      "receipt_json"
+    ],
+    "owned_invariants": [
+      "No float: integers and BigRational only, including every score and sum.",
+      "Every Phi1 comes from core_solvers::solve_exact_phi1 and is re-checked by Phi1Functional::verify_exact_certificate; no second Phi1.",
+      "No trace step calls a solver; replay reads only chord indices, cycle positions and the target's claims.",
+      "Same max_n, same table bytes and digests."
+    ],
+    "boundaries": [
+      "AuthorityEffect None: measures, licenses no transfer or lift.",
+      "Family is n <= 5, beta1 in {1,2}, weights {1,2}; L5 pairs use negated or reversed coordinates only."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_obstruction_transfer/src/lib.rs",
+      "language": "Rust",
+      "sha256": "87331e324919471e8ccc001c3cf055e24dabc6c7aad1f2ea913937e8fb077e24"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "See basis.",
+    "gates": {
+      "G1": "C",
+      "G2": "B",
+      "G3": "C",
+      "G4": "B",
+      "G5": "D"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the question; public items match this contract and the report docs/research/obstruction_transfer_report.md. Not B: no requirement-to-symbol trace beyond the report.",
+      "G2": "Exact profile: integer cochains and BigRational scores; Phi1 values are certificate-checked by the shared verifier; Lemma 2 (gauge transport) is confirmed on every L1/L2 pair of the n<=5 family with zero defects; receipts replay byte for byte at n<=4 and n<=5. Not A: lemmas are written proofs, not Lean.",
+      "G3": "Typed refusals (Refusal enum) for every replay failure; solver and certificate refusals propagate as errors; D_tau < Phi1 is collected as a defect, never scored. Not B: a few internal unwrap_or_default/unwrap_or paths on invariants shown by construction, panic-freedom tested not proven.",
+      "G4": "9 integration tests pass (counterexamples, class invariance, census, determinism, mutation injections, committed n<=4 receipt); clippy -D warnings and rustfmt pass. Lexical mutation campaign R = 23/24 (one survivor: dropping the tree-first tie-break is unobservable on n<=4).",
+      "G5": "lizard: worst cyclomatic 24 (run), nesting 5; ceiling D. Cognitive complexity not measured for Rust. complexipy was stubbed for the metrics run because it is only used for .py files."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-13T05:59:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/obstruction-transfer-test.run.json",
+        "sha256": "acc8f66c50c483e018747949983292d78d2be4c0ce412e52711b8d9b766865e6",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/obstruction-transfer-clippy.run.json",
+        "sha256": "22d777c874236399ad9b9d0b8b82a8cdfab45cf2e2c031f0c804dc20266c5cb1",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/obstruction-transfer-fmt.run.json",
+        "sha256": "b10c853e649eff7f1d77c8c1eddd4629f36b9b50d15d306fc7cf17393d5817ba",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/obstruction-transfer-receipt-n4.run.json",
+        "sha256": "9cf3a488c89d51144453bb3be0a16096ffe74ba4250a9197341e127ecd6ab456",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/obstruction-transfer-metrics.run.json",
+        "sha256": "80738325d24ce5ca4f8e69b06e64898a3b6db15f75d7ee95c1e85570971b91fe",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/obstruction-transfer-metrics.json",
+        "sha256": "6d510989e7990dfdd285bf2a19f299a49fbb6af4d65457e6218d80b32af35e2d",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 23,
+      "survived": 1,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.9583333333333334,
+      "report": {
+        "path": "governance/evidence/m-obstruction-transfer.mutation.json",
+        "sha256": "57a7f48864c5b035306414efbe4f42839758b58bd2339ade105d5cbae03b1d3b",
+        "note": "lexical campaign, 24 one-line mutants, crate tests as oracle"
+      }
+    }
+  },
+  "history": []
+}
