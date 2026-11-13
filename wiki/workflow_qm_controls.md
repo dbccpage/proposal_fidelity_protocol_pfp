@@ -2,7 +2,7 @@
 
 **Status: implemented and measured in the initial Qwen pilot and a later DeepSeek comparison.** The initial Qwen calls hit their output limits; the later DeepSeek calls stopped normally. See the comparison below and the [initial results](workflow_qm_pilot_2026_11_10.md).
 
-Both use `dag/benchmark/reference_runner.py` and retain the exact seed in every call. They have no tools, retrieval, private-answer input or automatic correctness judge. Implementation identity and campaign bindings are retained in the run evidence. The implementation is available in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58), not yet on main; raw run evidence remains in the working checkout.
+Both use `workflows/wf52_finite_qm_benchmark/reference_runner.py` and retain the exact seed in every call. They have no tools, retrieval, private-answer input or automatic correctness judge. Implementation identity and campaign bindings are retained in the run evidence. The implementation is available in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58), not yet on main; raw run evidence remains in the working checkout.
 
 <a id="direct"></a>
 
@@ -31,7 +31,7 @@ The normal path has two serial calls, each with a 4,000-token completion ceiling
 From the repository root in PowerShell:
 
 ```powershell
-.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py prepare --campaign-id qm-controls-001 --model AUTHOR/MODEL --endpoint PROVIDER/ENDPOINT --plans direct self_critique --repetitions 1 --cap-microusd 200000 --order-seed 70719 --output dag\benchmark\qm_controls_campaign.json
+.venv\Scripts\python.exe -X utf8 workflows\wf52_finite_qm_benchmark\live_campaign.py prepare --campaign-id qm-controls-001 --model AUTHOR/MODEL --endpoint PROVIDER/ENDPOINT --plans direct self_critique --repetitions 1 --cap-microusd 200000 --order-seed 70719 --output workflows\wf52_finite_qm_benchmark\qm_controls_campaign.json
 ```
 
 This prepares two runs in reproducibly shuffled order with a USD 0.20 aggregate ceiling. It makes no provider request and is an example configuration, not an executed campaign. Use a fresh output path; replace the model and endpoint placeholders before initialization. Follow the [shared execution steps](workflow_qm_benchmark.md#run-and-retain-evidence).
@@ -40,7 +40,7 @@ These defaults compare one versus two calls and different total token allowances
 
 ## Evidence and failure handling
 
-The 119-test checkpoint in `dag/benchmark/rational_panel_validation.json` includes `test_reference_runner.py`, `test_live_admission.py`, `test_budget_ledger.py` and `test_summarize_runs.py`. It covers synthetic dispatch, preservation, accounting and result handling. It is not a live provider test.
+The 119-test checkpoint in `workflows/wf52_finite_qm_benchmark/rational_panel_validation.json` includes `test_reference_runner.py`, `test_live_admission.py`, `test_budget_ledger.py` and `test_summarize_runs.py`. It covers synthetic dispatch, preservation, accounting and result handling. It is not a live provider test.
 
 Keep both draft and final response records for self-critique. Treat a refused request as a refusal, an incomplete account as unknown cost, and a truncated answer as an attempted outcome. Do not restart with a fresh ledger to erase an earlier charge. Review accuracy only after freezing the answer. The first direct run used 4,432 total tokens, USD 0.001239 and 83.5 seconds; self-critique used 12,882 total tokens, USD 0.002840 and 176.6 seconds. The direct answer and both self-critique responses were truncated. These single observations do not establish a general accuracy advantage.
 

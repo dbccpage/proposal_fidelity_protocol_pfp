@@ -23,17 +23,17 @@ python workflows/wf52_finite_qm_benchmark/live_campaign.py initialize --manifest
 python workflows/wf52_finite_qm_benchmark/live_campaign.py run --ledger NEW_LEDGER_SQLITE --run-id RUN_ID --output NEW_RUN_DIR
 ```
 
-`pfp_core` puts this folder on `sys.path`, so its modules import flat (`import budget_ledger`). About a fifth of the tests need the native Rust checker built from [`native_sidecar_host/`](native_sidecar_host/) or private evaluator material, and fail without them. Only `run` reads `OPENROUTER_API_KEY` and can spend. Full instructions: [`LIVE_RUNNER.md`](LIVE_RUNNER.md), [`EXPERIMENT_PROTOCOL.md`](EXPERIMENT_PROTOCOL.md), [`ACCOUNTING.md`](ACCOUNTING.md).
+`pfp_core` puts this folder on `sys.path`, so its modules import flat (`import budget_ledger`). About a fifth of the tests need the native Rust checker built from [`native_sidecar_host/`](native_sidecar_host/) or private evaluator material, and fail without them. Only `run` reads `OPENROUTER_API_KEY` and can spend. Full instructions: [`live_runner.md`](live_runner.md), [`experiment_protocol.md`](experiment_protocol.md), [`accounting.md`](accounting.md).
 
 ## Recorded variations
 
 | Plan | Procedure | Calls | Spec | Recorded runs |
 | --- | --- | ---: | --- | --- |
 | `direct`, `self_critique` | Solve once; draft then audit and revise | 1, 2 | [`reference_runner.py`](reference_runner.py) | [`pilot_20261110/`](pilot_20261110/), [`length_control_20261110/`](length_control_20261110/), [`deepseek_critique_20261110/`](deepseek_critique_20261110/), [`model_control_20261110/`](model_control_20261110/), [`model_control_repaired_20261110/`](model_control_repaired_20261110/) |
-| `rational_blind_panel_v1`, `rational_visible_panel_v1`, `rational_fixed_panel_v1`, `rational_fixed_panel_v2` | Solve, then a challenge panel or twelve fixed host probes | 1-2 | [`rational_workflows.py`](rational_workflows.py), [`RATIONAL_PANEL.md`](RATIONAL_PANEL.md) | [`pilot_20261110/`](pilot_20261110/) |
-| `hamiltonian_checked_v1`, `hamiltonian_ungated_v1`, `hamiltonian_host_matrix_v1` | Exact Hamiltonian check before synthesis, without it, or host-computed | 1-3 | [`hamiltonian_workflows.py`](hamiltonian_workflows.py), [`HAMILTONIAN_WORKFLOWS.md`](HAMILTONIAN_WORKFLOWS.md) | [`hamiltonian_pilot_20261110/`](hamiltonian_pilot_20261110/), [`hamiltonian_large_model_20261110/`](hamiltonian_large_model_20261110/) |
+| `rational_blind_panel_v1`, `rational_visible_panel_v1`, `rational_fixed_panel_v1`, `rational_fixed_panel_v2` | Solve, then a challenge panel or twelve fixed host probes | 1-2 | [`rational_workflows.py`](rational_workflows.py), [`rational_panel.md`](rational_panel.md) | [`pilot_20261110/`](pilot_20261110/) |
+| `hamiltonian_checked_v1`, `hamiltonian_ungated_v1`, `hamiltonian_host_matrix_v1` | Exact Hamiltonian check before synthesis, without it, or host-computed | 1-3 | [`hamiltonian_workflows.py`](hamiltonian_workflows.py), [`hamiltonian_workflows.md`](hamiltonian_workflows.md) | [`hamiltonian_pilot_20261110/`](hamiltonian_pilot_20261110/), [`hamiltonian_large_model_20261110/`](hamiltonian_large_model_20261110/) |
 | `section_allocated_v1` | Five public parts solved separately | 5 | [`section_workflows.py`](section_workflows.py) | [`section_control_20261110/`](section_control_20261110/) |
-| `qm_charpoly_checked_v1`, `qm_charpoly_ungated_v1` | Characteristic polynomial checked natively, or not | 2-3 | [`charpoly_workflows.py`](charpoly_workflows.py), [`CHARPOLY_WORKFLOWS.md`](CHARPOLY_WORKFLOWS.md) | [`charpoly_pilot_20261110/`](charpoly_pilot_20261110/), [`host_charpoly_pilot_20261110/`](host_charpoly_pilot_20261110/) |
+| `qm_charpoly_checked_v1`, `qm_charpoly_ungated_v1` | Characteristic polynomial checked natively, or not | 2-3 | [`charpoly_workflows.py`](charpoly_workflows.py), [`charpoly_workflows.md`](charpoly_workflows.md) | [`charpoly_pilot_20261110/`](charpoly_pilot_20261110/), [`host_charpoly_pilot_20261110/`](host_charpoly_pilot_20261110/) |
 | EIS/PCIV arms | Two-signal regulation on the same seed | — | [`eis_pciv_workflows.py`](eis_pciv_workflows.py) | [`eis_pciv_pilot_20261110/`](eis_pciv_pilot_20261110/) |
 
 Scores so far: best 88/100 (DeepSeek self-critique), 83/100 for the direct run of the same model; every delivered answer kept mathematical errors. All results: [`results_summary.json`](results_summary.json).

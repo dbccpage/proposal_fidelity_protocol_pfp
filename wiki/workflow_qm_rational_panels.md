@@ -54,7 +54,7 @@ This is one repair of the existing fixed-panel recipe, not another mathematical 
 From the repository root in PowerShell:
 
 ```powershell
-.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py prepare --campaign-id qm-rational-panel-001 --model AUTHOR/MODEL --endpoint PROVIDER/ENDPOINT --plans rational_blind_panel_v1 rational_visible_panel_v1 rational_fixed_panel_v1 --repetitions 1 --cap-microusd 300000 --order-seed 70719 --output dag\benchmark\qm_panel_campaign.json
+.venv\Scripts\python.exe -X utf8 workflows\wf52_finite_qm_benchmark\live_campaign.py prepare --campaign-id qm-rational-panel-001 --model AUTHOR/MODEL --endpoint PROVIDER/ENDPOINT --plans rational_blind_panel_v1 rational_visible_panel_v1 rational_fixed_panel_v1 --repetitions 1 --cap-microusd 300000 --order-seed 70719 --output workflows\wf52_finite_qm_benchmark\qm_panel_campaign.json
 ```
 
 This prepares three runs with a USD 0.30 aggregate ceiling and USD 0.10 per run. It does not initialize or execute a campaign. The model and endpoint are placeholders. Follow the [shared execution steps](workflow_qm_benchmark.md#run-and-retain-evidence) only after freezing the actual campaign settings. Implementation is available in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58); raw receipts remain in the working checkout.
@@ -67,6 +67,6 @@ The host limits artifacts to 24 claims, 12 challenges and eight guards per claim
 
 The historical shared validation receipt records 119 passing tests, including blind-request invariance, visible-artifact inclusion, exact false-equality witnesses, undefined expressions, malformed artifacts, preservation and accounting. The independent review's 80 passing tests use a fabricated task and overlap that suite. The repaired runner passes 121 tests, including the v2 execution contract and explicit truncation reporting. These checks do not establish checker completeness, native PFP/EIS/PCIV/OPERADS integration, or better QM answers. Consult the live pilot page for measured outcomes rather than inferring performance from tests.
 
-Implementation: `dag/benchmark/rational_workflows.py`, `rational_panel.py` and `reference_runner.py`. Detailed contract and limits: `dag/benchmark/RATIONAL_PANEL.md`. Validation and independent review: `dag/benchmark/rational_panel_validation.json` and `rational_panel_review.json`.
+Implementation: `workflows/wf52_finite_qm_benchmark/rational_workflows.py`, `rational_panel.py` and `reference_runner.py`. Detailed contract and limits: `workflows/wf52_finite_qm_benchmark/rational_panel.md`. Validation and independent review: `workflows/wf52_finite_qm_benchmark/rational_panel_validation.json` and `rational_panel_review.json`.
 
 **Next:** compare frozen outputs using the [benchmark protocol](workflow_qm_benchmark.md#interpret-results).

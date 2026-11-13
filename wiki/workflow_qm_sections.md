@@ -18,19 +18,19 @@ This is an output-allocation control, not a mathematical certificate or a native
 
 ## Run and inspect
 
-The first finite manifest is `dag/benchmark/section_control_20261110/manifest.json`. It freezes one Qwen235B/DeepInfra attempt, the seed, compiled plan, source hashes and USD0.10 campaign ceiling. Implementation is available in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58); raw experimental evidence remains in the working checkout. Neither is yet on main.
+The first finite manifest is `workflows/wf52_finite_qm_benchmark/section_control_20261110/manifest.json`. It freezes one Qwen235B/DeepInfra attempt, the seed, compiled plan, source hashes and USD0.10 campaign ceiling. Implementation is available in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58); raw experimental evidence remains in the working checkout. Neither is yet on main.
 
 To prepare another campaign, choose a currently available concrete model and endpoint:
 
 ```powershell
-.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py prepare --campaign-id UNIQUE_ID --model MODEL_ID --endpoint ENDPOINT_SLUG --plans section_allocated_v1 --repetitions 1 --cap-microusd 100000 --order-seed 20261110 --max-output-tokens 16000 --output NEW_MANIFEST.json
+.venv\Scripts\python.exe -X utf8 workflows\wf52_finite_qm_benchmark\live_campaign.py prepare --campaign-id UNIQUE_ID --model MODEL_ID --endpoint ENDPOINT_SLUG --plans section_allocated_v1 --repetitions 1 --cap-microusd 100000 --order-seed 20261110 --max-output-tokens 16000 --output NEW_MANIFEST.json
 ```
 
 Preparation does not make provider requests. Use the [benchmark execution commands](workflow_qm_benchmark.md#run-and-retain-evidence) to initialize and run the exact manifest once. Never restart a live request merely because it is slow. Inspect `run.json`, request/response receipts, `host_checks.json` and both ledgers. Unknown charges retain their reservation and stop dispatch.
 
 The expanded benchmark suite passes **190 tests plus 27 subtests**, including five end-to-end allocation controls and thirteen focused specification/assembly controls. These demonstrate orchestration behavior on synthetic outputs, not model accuracy. Live measurements are recorded below; software tests do not establish a performance advantage.
 
-Implementation: `section_workflows.py` and `reference_runner.py` under `dag/benchmark/`. DAG node: `CONTROL:section_allocated_v1`. Compare the [direct output-allowance experiment](workflow_qm_hamiltonian.md#output-allowance-control), then return to the [workflow overview](workflow_qm_benchmark.md).
+Implementation: `section_workflows.py` and `reference_runner.py` under `workflows/wf52_finite_qm_benchmark/`. DAG node: `CONTROL:section_allocated_v1`. Compare the [direct output-allowance experiment](workflow_qm_hamiltonian.md#output-allowance-control), then return to the [workflow overview](workflow_qm_benchmark.md).
 
 <!-- BEGIN SECTION RESULTS -->
 ## Measured comparison

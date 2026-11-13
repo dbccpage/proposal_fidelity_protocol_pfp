@@ -49,6 +49,7 @@ Model experiments for this workflow, recorded on earlier runs with an older harn
 - [`pilots/c005_hosted_decode_controls/`](pilots/c005_hosted_decode_controls/) — a bake-off of hosted decoding controls (budgets, scratchpads, hybrids) on checkable cases
 - [`pilots/consistency_teaching/`](pilots/consistency_teaching/) — rank-difference tasks, clean or poisoned, with direct and chain-of-thought prompts
 - [`pilots/planned/`](pilots/planned/) — the C006 host scratch-space protocol (the other planned write-ups were removed)
+- [`pilots/track_a_scenes/`](pilots/track_a_scenes/) — teaching scenes for the consistency-teaching arms (prompt laundering, three-cycle defect, homoglyph allowlist, sealed packet, eight stages), with rendered videos and the captured model replies they show
 
 ## Team
 

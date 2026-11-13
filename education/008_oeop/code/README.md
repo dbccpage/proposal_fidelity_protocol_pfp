@@ -23,5 +23,5 @@ This package contains diagnostic, verification, and simulation engines for WAS, 
 Execute targeted tests using Python 3.12:
 
 ```bash
-py -3.12 -m pytest pilots/education/operad_simulation/code/tests/test_was_operad_levels.py -v
+py -3.12 -m pytest education/008_oeop/code/tests/test_was_operad_levels.py -v
 ```

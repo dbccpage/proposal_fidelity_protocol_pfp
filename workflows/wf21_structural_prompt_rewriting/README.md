@@ -48,6 +48,7 @@ Model experiments for this workflow, recorded on earlier runs with an older harn
 - [`pilots/acset_cochain_rewriting/`](pilots/acset_cochain_rewriting/) — Finite ACSet/DPO cochain rewriting v001
 - [`pilots/acset_prompt_rewriting/`](pilots/acset_prompt_rewriting/) — ACSets and DPO prompt rewriting pilot
 - [`pilots/optional_rewrite_backends/`](pilots/optional_rewrite_backends/) — Optional Julia and DSPy demonstrations
+- [`pilots/acsets_dpo_and_optional_backends.md`](pilots/acsets_dpo_and_optional_backends.md) — runbook for the ACSet/DPO controls and the optional Julia and DSPy backends
 
 ## Team
 
