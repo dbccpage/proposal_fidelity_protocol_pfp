@@ -131,5 +131,5 @@ fn cli_needs_a_catalogue_and_the_mcp_flag() {
 fn unlicensed_skill_is_explained() {
     let o = pfp(&["explain", "unlicensed-skill"]);
     assert_eq!(o.status.code(), Some(0));
-    assert!(stdout(&o).contains("Operads-Skills-and-Catalog"));
+    assert!(stdout(&o).contains("operads_skills_and_catalog"));
 }

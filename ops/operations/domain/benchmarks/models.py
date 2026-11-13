@@ -233,7 +233,7 @@ def _sync_protected_edges(problem: BenchmarkProblem) -> None:
 
 @dataclass(frozen=True)
 class BenchmarkProblem:
-    """Canonical Benchmark Problem matching PROJECT.md Interface Contracts."""
+    """Canonical Benchmark Problem matching project.md Interface Contracts."""
     problem_id: str
     topology: str
     trap_type: Optional[str]

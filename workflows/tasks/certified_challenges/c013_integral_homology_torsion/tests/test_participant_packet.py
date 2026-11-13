@@ -1,7 +1,7 @@
 """Tests for C013 Participant Packet.
 
 Verifies:
-1. TASK.md existence, formal specifications, closed refusal enum, closed out-of-scope enum.
+1. task.md existence, formal specifications, closed refusal enum, closed out-of-scope enum.
 2. 20 public examples existence, JSON validity, required keys.
 3. Sandboxed runner execution and accounting.json conformity.
 
@@ -22,9 +22,9 @@ EXAMPLES_DIR = PACKET_DIR / "examples"
 
 
 def test_task_md_specification_invariants():
-    """Asserts that TASK.md contains all formal problem definitions and bounds."""
-    task_file = PACKET_DIR / "TASK.md"
-    assert task_file.exists(), "TASK.md missing"
+    """Asserts that task.md contains all formal problem definitions and bounds."""
+    task_file = PACKET_DIR / "task.md"
+    assert task_file.exists(), "task.md missing"
     content = task_file.read_text(encoding="utf-8")
 
     # Formal problem elements
@@ -42,7 +42,7 @@ def test_task_md_specification_invariants():
         "MALFORMED_INPUT",
         "MALFORMED_CASE_STRUCTURE",
     ]:
-        assert r in content, f"TASK.md missing refusal enum {r}"
+        assert r in content, f"task.md missing refusal enum {r}"
 
     assert "OUT_OF_SCOPE" in content
     assert "missing_face" in content

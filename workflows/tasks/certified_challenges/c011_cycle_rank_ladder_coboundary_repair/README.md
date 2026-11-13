@@ -35,9 +35,9 @@ The challenge separates outcomes into strictly typed states:
 ```
 workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/
 ├── README.md                                 # This overview and verification guide
-├── TEST_READY.md                             # Test readiness report and Examiner falsification matrix
+├── test_ready.md                             # Test readiness report and Examiner falsification matrix
 ├── participant_packet/                       # Visible to participant models & solvers
-│   ├── TASK.md                               # Mathematical specification & JSON schemas
+│   ├── task.md                               # Mathematical specification & JSON schemas
 │   ├── runner.py                             # Sandboxed execution runner -> answers.jsonl
 │   ├── accounting.json                       # Provenance, tokens, and cost accounting template
 │   └── examples/                             # 12 Public worked examples with exact input & output

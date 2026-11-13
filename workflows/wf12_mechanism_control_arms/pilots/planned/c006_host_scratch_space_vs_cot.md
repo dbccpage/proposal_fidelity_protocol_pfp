@@ -37,7 +37,7 @@ The frozen deliverable is a session pipeline: `pipeline.json` (model, route or l
 
 ## 5. Participant Packet
 
-- `TASK.md` with the move grammar, admission rules, fuel and the scratch-space schema.
+- `task.md` with the move grammar, admission rules, fuel and the scratch-space schema.
 - `examples/`: 12 public boards (two per b₁ from 3 to 7, excluding the Round-5 board) with exact input JSON, a reference admitted session and its final cochain.
 - `runner.py`, `accounting.json`.
 

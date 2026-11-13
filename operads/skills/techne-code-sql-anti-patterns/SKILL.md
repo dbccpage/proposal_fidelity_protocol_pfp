@@ -23,8 +23,8 @@ Operates directly against database adapters, migration scripts, and repository q
 
 | ID | Anti-Pattern | Hazard | Dual Healthy Pattern |
 |---|---|---|---|
-| `AP_SQL_001` | Unparameterized String Concatenation | SQL injection vulnerabilities, query cache defeat | [`HP_SQL_001`](../../patterns/helpful/sql/HP_SQL_001_parameterized_query_binding.md) Parameterized Query Binding |
-| `AP_SQL_002` | Unbounded Transaction Leak | Database lock deadlocks, connection exhaustion | [`HP_SQL_002`](../../patterns/helpful/sql/HP_SQL_002_unit_of_work_transaction_fence.md) Unit of Work Transaction Fence |
+| `AP_SQL_001` | Unparameterized String Concatenation | SQL injection vulnerabilities, query cache defeat | [`HP_SQL_001`](../../patterns/helpful/sql/hp_sql_001_parameterized_query_binding.md) Parameterized Query Binding |
+| `AP_SQL_002` | Unbounded Transaction Leak | Database lock deadlocks, connection exhaustion | [`HP_SQL_002`](../../patterns/helpful/sql/hp_sql_002_unit_of_work_transaction_fence.md) Unit of Work Transaction Fence |
 
 ## Review & Audit Rubric
 

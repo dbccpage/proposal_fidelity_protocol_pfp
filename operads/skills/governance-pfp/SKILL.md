@@ -128,7 +128,7 @@ Directly mined from the comprehensive audit review of 338 registered entries and
      3. `tests/test_pilot.py`: Focused regression checks for demonstrated defects; no fixed mutation count.
      4. `README.md`: Concise problem specification and mathematical invariant description.
 7. **Optional Research Derivation Profiles (`RULE_PFP_PILOT_MODUS_OPERANDI_AND_LIFT_PROTOCOL_001`)**
-   - Historical recipe in [`MODUS_OPERANDI.md`](../../../adversary/tests/pilots/MODUS_OPERANDI.md) for empirical pilots (`pilot_0000000` through `pilot_0000099`):
+   - Historical recipe in [`modus_operandi.md`](../../../adversary/tests/pilots/modus_operandi.md) for empirical pilots (`pilot_0000000` through `pilot_0000099`):
      - **Mechanized Paper Claim Grounding:** Advanced pilots (Rungs 2â€“6) must reject trivial toy seeds and ground problems in verified Lean 4 Mathlib theorems and Python certified oracles in `coda_atlas/F004_papers/`.
      - **Root Directory Hygiene:** Pilot roots contain only sovereign specs (`spec.yaml`, `seed.yaml`, `prompt_template.yaml`, `p_star.yaml`, `README.md`, `results/`, `tests/`).
      - **Granular Test Capsules:** Every run is encapsulated in sequential zero-padded folders (`tests/test_00/` through `tests/test_99/`) containing `test_spec.yaml`, `input.yaml`, and `response.yaml`.

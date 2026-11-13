@@ -31,4 +31,4 @@ Pattern `research_cell`: deep_researcher ×2 (run_o); adversary ×1 (run_f); cod
 
 Boost: when countermodel found: claim is narrowed or withdrawn; run_o restates it once (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf17) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf17) · [machine-readable entry](../dag/workflow_dag.json)

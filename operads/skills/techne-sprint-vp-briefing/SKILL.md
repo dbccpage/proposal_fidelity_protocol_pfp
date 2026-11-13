@@ -76,7 +76,7 @@ When in doubt, send the issue to Blackrod with evidence.
 
 ---
 
-**Relationship to the svp council:** See [`council-relationship.md`](references/council-relationship.md).
+**Relationship to the svp council:** See [`council_relationship.md`](references/council_relationship.md).
 
 ## Phase 1 — Artifact Intake & Structural Pre-Gate (HARD BLOCK)
 
@@ -231,7 +231,7 @@ CRITICAL: Kill-gate violation. Send to Blackrod.
 
 ---
 
-**Root cause analysis:** See [`root-cause-analysis.md`](references/root-cause-analysis.md).
+**Root cause analysis:** See [`root_cause_analysis.md`](references/root_cause_analysis.md).
 
 ## If everything passes
 
@@ -273,7 +273,7 @@ Blackrod intervention required.
 
 ``` ext
 
-**Architecture drift response:** See [`architecture-drift.md`](references/architecture-drift.md).
+**Architecture drift response:** See [`architecture_drift.md`](references/architecture_drift.md).
 
 ## Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)
 

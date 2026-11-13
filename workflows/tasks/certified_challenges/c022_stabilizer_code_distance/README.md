@@ -29,9 +29,9 @@ A valid solution must provide both:
 ```
 workflows/tasks/certified_challenges/c022_stabilizer_code_distance/
 ├── README.md                                 # Overview, mathematical invariants, and verification guide
-├── TEST_READY.md                             # Test readiness report and Examiner falsification matrix
+├── test_ready.md                             # Test readiness report and Examiner falsification matrix
 ├── participant_packet/                       # Visible to participant models & solvers
-│   ├── TASK.md                               # Mathematical specification & JSON wire schemas
+│   ├── task.md                               # Mathematical specification & JSON wire schemas
 │   ├── runner.py                             # Sandboxed execution runner -> answers.jsonl
 │   ├── accounting.json                       # Provenance, tokens, and cost accounting template
 │   └── examples/                             # 12 Public worked examples with exact inputs & outputs

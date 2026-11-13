@@ -140,7 +140,7 @@ def test_compute_obstruction_score_holonomy_fractional_defect() -> None:
 def test_q_rejects_float_comparisons(op: str) -> None:
     """Verify Q raises ExactError('RR-FLOAT') on floating point comparisons.
 
-    Invariant: Zero-Float Law and PROJECT.md:
+    Invariant: Zero-Float Law and project.md:
       'Rejections: float raises ExactError(\"RR-FLOAT\")'
       'There is no float path: a float ... is refused by name.'
     """
@@ -165,7 +165,7 @@ def test_q_exact_type_equality_rejects_float() -> None:
 def test_obstruction_score_rejects_float_arguments() -> None:
     """Verify ObstructionScore rejects floating point inputs for gamma_2 and phi_1.
 
-    Invariant: Zero-Float Invariant in PROJECT.md:
+    Invariant: Zero-Float Invariant in project.md:
       'All discrete state evaluation ... and obstruction scoring operate on
       exact rationals (Q, Fraction) or F_2. Floating-point arithmetic is forbidden.'
     """

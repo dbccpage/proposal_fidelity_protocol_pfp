@@ -146,13 +146,13 @@ def test_non_canonical_rational_string_is_rejected() -> None:
 
 
 def test_task_states_the_canonical_rational_rule_the_checker_enforces() -> None:
-    """Review of e6fbc15cf: case_model rejects "2/2" and "-0", but C014's TASK.md did
-    not say so; the rule appeared only in the theme-level b_cohomology/TASK.md."""
+    """Review of e6fbc15cf: case_model rejects "2/2" and "-0", but C014's task.md did
+    not say so; the rule appeared only in the theme-level b_cohomology/task.md."""
     task = " ".join(
         (
             Path(sys.modules[evaluate_dual.__module__].__file__).resolve().parents[2]
             / "participant_packet"
-            / "TASK.md"
+            / "task.md"
         )
         .read_text(encoding="utf-8")
         .split()

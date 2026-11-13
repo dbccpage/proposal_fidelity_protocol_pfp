@@ -31,9 +31,9 @@ For each target cochain $b \in C^1$, the solver returns:
 ```
 workflows/tasks/certified_challenges/c012_cellular_sheaf_h0_h1/
 ├── README.md                                 # Overview, mathematical invariants, and verification guide
-├── TEST_READY.md                             # Test readiness report and Examiner falsification matrix
+├── test_ready.md                             # Test readiness report and Examiner falsification matrix
 ├── participant_packet/                       # Visible to participant models & solvers
-│   ├── TASK.md                               # Mathematical specification & JSON wire schemas
+│   ├── task.md                               # Mathematical specification & JSON wire schemas
 │   ├── runner.py                             # Sandboxed execution runner -> answers.jsonl
 │   ├── accounting.json                       # Provenance, tokens, and cost accounting template
 │   └── examples/                             # 20 Public worked examples with exact inputs & outputs

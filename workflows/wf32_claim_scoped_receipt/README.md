@@ -29,4 +29,4 @@ Pattern `solo`: coder ×1 (sonnet); host_checker ×1 (none).
 
 Boost: when unchecked claim found: drop it from the receipt (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf32) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf32) · [machine-readable entry](../dag/workflow_dag.json)

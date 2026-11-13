@@ -51,7 +51,7 @@ The certificate is complete when capacity bounds and conservation hold exactly, 
 
 ## 5. Participant Packet
 
-- `TASK.md` with the JSON Schema itself.
+- `task.md` with the JSON Schema itself.
 - 10 public examples with verbatim input and output JSON: the diamond above; an unreachable sink; parallel arcs; an antiparallel pair; a self-loop; a capacity of `10¹⁸`; two minimum cuts; `s = t`; a negative capacity.
 - `runner.py`, which runs `solve` in the sandbox and checks outputs.
 - `accounting.json`.

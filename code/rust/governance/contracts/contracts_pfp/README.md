@@ -11,7 +11,7 @@ create them, does not move files, and does not merge homes.
 
 This directory, `contracts_pfp/`, is the corpus that is present.
 Excluding this README, it holds 161 files: 160 `*.contract.yaml` files and
-`UNCONTRACTED.md`. The catalog below indexes those 161 files. The strategy
+`uncontracted.md`. The catalog below indexes those 161 files. The strategy
 figure of 145 is not this listing.
 
 The product-boundary file in this directory is
@@ -31,7 +31,7 @@ one of them.
 
 Of the 160 YAML files, 158 have `kind: packet_contract`, `layer: 40_packets`, and `status: active`. The other two are the product contracts named above (`kind: product_contract`, `layer: 07_products`).
 
-Each purpose is that file's YAML `title`, or the first heading of `UNCONTRACTED.md`.
+Each purpose is that file's YAML `title`, or the first heading of `uncontracted.md`.
 
 ## Catalog
 
@@ -334,4 +334,4 @@ Each purpose is that file's YAML `title`, or the first heading of `UNCONTRACTED.
 
 | File | Purpose |
 | --- | --- |
-| [UNCONTRACTED.md](UNCONTRACTED.md) | Types this directory deliberately does not contract |
+| [uncontracted.md](uncontracted.md) | Types this directory deliberately does not contract |

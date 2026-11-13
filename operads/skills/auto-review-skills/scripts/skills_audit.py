@@ -62,7 +62,7 @@ def audit_meta_and_shared(repo_root: Path) -> dict[str, bool]:
     required_registry_files = [
         "aliases.yaml",
         "capabilities.yaml",
-        "compatibility-epoch.yaml",
+        "compatibility_epoch.yaml",
         "lifecycle.yaml",
         "providers.yaml",
         "roles.yaml",

@@ -28,4 +28,4 @@ Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×
 
 Boost: when checker rejects: run_o repairs the scratchpad from the residual (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf24) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf24) · [machine-readable entry](../dag/workflow_dag.json)

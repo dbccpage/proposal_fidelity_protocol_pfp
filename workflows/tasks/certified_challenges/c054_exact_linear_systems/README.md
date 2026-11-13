@@ -1,6 +1,6 @@
 # Challenge C054
 
-See `participant_packet/TASK.md` for the problem statement and answer format.
+See `participant_packet/task.md` for the problem statement and answer format.
 
 Tests (from the repository root):
 

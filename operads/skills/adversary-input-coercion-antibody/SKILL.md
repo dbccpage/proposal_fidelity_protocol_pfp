@@ -4,7 +4,7 @@ description: "Use a prompt-attached candidate to review silent structured-input 
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-input-coercion-antibody.json"
-  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
+  core-contracts-digest: "sha256:03b547c08b380fbaf25fbc7616ba7cd0543a70719149fcdfead78968c2fd159c"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "antibody"
   core-residual: "unknown"
@@ -80,7 +80,7 @@ Use the bound prompt when reviewing this failure class. Candidate only; the exis
 
 Ordered signature: `(code: Code) -> findings: Audit`.
 
-Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
+Contracts: `sha256:03b547c08b380fbaf25fbc7616ba7cd0543a70719149fcdfead78968c2fd159c`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

@@ -38,7 +38,7 @@ MUT_DIR = JUDGE_DIR / "mutation_suite" / "mutations"
 
 def test_tier1_participant_packet_conformance(tmp_path: Path):
     """Tier 1: Validates participant artifacts and CLI runner."""
-    task_file = PARTICIPANT_DIR / "TASK.md"
+    task_file = PARTICIPANT_DIR / "task.md"
     assert task_file.is_file()
 
     acc_file = PARTICIPANT_DIR / "accounting.json"

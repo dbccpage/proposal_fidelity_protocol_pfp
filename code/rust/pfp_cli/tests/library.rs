@@ -335,7 +335,7 @@ fn explain_wraps_at_78_columns_under_a_hanging_label() {
          \x20 Why:     Models produce digest-shaped strings that were never computed. They\n\
          \x20          pass a glance and fail any check.\n\
          \x20 Instead: Compute digests in code. Never accept one from model output.\n\
-         \x20 Read:    https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/EIS\n"
+         \x20 Read:    https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/eis\n"
     );
     for entry in pfp_cli::catalog::ENTRIES {
         let shown = pfp_cli::render_explain(entry);

@@ -119,7 +119,7 @@ Track daily:
 - Blockers active
 - Team velocity
 
-**Agent progress monitoring:** See [`agent-progress-monitoring.md`](references/agent-progress-monitoring.md).
+**Agent progress monitoring:** See [`agent_progress_monitoring.md`](references/agent_progress_monitoring.md).
 
 ## UROS Tier Mapping
 
@@ -203,7 +203,7 @@ Summary:
 - All quality gates must pass before story completion (QUALITY_GATES)
 - Blockers must be escalated immediately to blackrod
 
-**Example session:** See [`example-session.md`](references/example-session.md).
+**Example session:** See [`example_session.md`](references/example_session.md).
 
 ## Integration Points
 

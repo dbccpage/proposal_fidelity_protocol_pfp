@@ -131,7 +131,7 @@ class CorporaScraper:
             pattern_id = frontmatter.get("pattern_id") or file_path.stem
             name = frontmatter.get("name") or file_path.stem
             lang = frontmatter.get("language") or file_path.parent.name
-            category = frontmatter.get("category") or ("anti_pattern" if "AP_" in file_path.name else "healthy_pattern")
+            category = frontmatter.get("category") or ("anti_pattern" if "AP_" in file_path.name.upper() else "healthy_pattern")
             dual = frontmatter.get("dual_pattern") or ""
 
             # Extract sections

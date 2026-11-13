@@ -61,7 +61,7 @@ An answer is complete when both queries parse in both engines, the main query's 
 
 ## 5. Participant Packet
 
-- `TASK.md` with the spec grammar, the Kleene truth tables, the dialect subset and the JSON Schema. It quotes rule §3 verbatim.
+- `task.md` with the spec grammar, the Kleene truth tables, the dialect subset and the JSON Schema. It quotes rule §3 verbatim.
 - 12 public cases, each with its spec, 2 public databases, and exact expected result bags and SQL: the preflight example above; `NOT IN` against null-safe anti-join; a left join with a right-side filter; `COUNT(*)` against `COUNT(col)`; `SUM` over an empty group; grouping on a nullable key; `distinct` on duplicates; `coalesce`; De Morgan under three-valued logic; an unknown column; an unsupported node; a three-node join chain.
 - `runner.py`, which executes the SQL in both pinned engines inside the sandbox.
 - `accounting.json`.
@@ -77,7 +77,7 @@ An answer is complete when both queries parse in both engines, the main query's 
 
 ## 7. Arms and Baselines
 
-Arms A to D follow the protocol. **Arm E** is a deterministic spec-to-SQL compiler written by the operator from `TASK.md`, with fixed emission rules per node, and no model. Because the specification language is formal, E is expected to be perfect, and a tie with E is the expected ceiling. What this spec measures is whether synthesis reaches null-correct emission. Arm F is not in the catalog row.
+Arms A to D follow the protocol. **Arm E** is a deterministic spec-to-SQL compiler written by the operator from `task.md`, with fixed emission rules per node, and no model. Because the specification language is formal, E is expected to be perfect, and a tie with E is the expected ceiling. What this spec measures is whether synthesis reaches null-correct emission. Arm F is not in the catalog row.
 
 ## 8. Budget, Models and Provenance
 

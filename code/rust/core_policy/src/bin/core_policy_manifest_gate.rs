@@ -4,7 +4,7 @@
 //! Zenodo Release Envelopes, and Lean 4 Axiom Censuses.
 //!
 //! Input protocol: stdin JSON or CLI arguments.
-//! Output protocol: stdout JSON per PROJECT.md § Interface Contracts.
+//! Output protocol: stdout JSON per project.md § Interface Contracts.
 //! Exit codes: 0 = PASS, 1 = FAIL, 2 = REFUSAL / Argument error.
 
 use core_policy::custody_manifest::{

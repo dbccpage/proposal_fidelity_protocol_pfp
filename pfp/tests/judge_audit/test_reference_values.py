@@ -17,7 +17,7 @@ def test_quintic_gv_invariants_match_candelas_et_al() -> None:
 
 
 def test_sextic_n3_disagrees_with_the_c036_task_value() -> None:
-    # counterexample: C036 TASK.md publishes n_3 = 9299696544 for the sextic
+    # counterexample: C036 task.md publishes n_3 = 9299696544 for the sextic
     computed = rv.gv_invariants([1, 1, 1, 1, 2], 3)["n"]
     assert computed["3"] == "11900417220"
     assert computed["3"] != "9299696544"

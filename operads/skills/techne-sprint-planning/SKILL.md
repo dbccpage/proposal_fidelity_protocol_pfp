@@ -51,10 +51,10 @@ operad_residual: "unknown"
 
 **Reference material** (moved out of this file to keep it under the 300-line ceiling):
 
-- Pre-flight checklist — [`preflight-checklist.md`](references/preflight-checklist.md)
+- Pre-flight checklist — [`preflight_checklist.md`](references/preflight_checklist.md)
 - Planning instructions — [`instructions.md`](references/instructions.md)
-- Async work tracking protocol — [`async-work-tracking.md`](references/async-work-tracking.md)
-- Sprint pivot process — [`sprint-pivot-process.md`](references/sprint-pivot-process.md)
+- Async work tracking protocol — [`async_work_tracking.md`](references/async_work_tracking.md)
+- Sprint pivot process — [`sprint_pivot_process.md`](references/sprint_pivot_process.md)
 
 ## Story Point Scale
 
@@ -203,7 +203,7 @@ Summary:
 - Story estimates must be justified with evidence (EVIDENCE_BASED)
 - Quality gates must be measurable and enforceable
 
-**Example session:** See [`example-session.md`](references/example-session.md).
+**Example session:** See [`example_session.md`](references/example_session.md).
 
 ## Next Workflow
 

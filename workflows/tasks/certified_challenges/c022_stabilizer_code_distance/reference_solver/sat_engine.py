@@ -3,7 +3,7 @@
 Implements a small DPLL search over the canonical lower-bound CNF. It emits no
 refutation proof: an earlier version wrote a one-line "LRAT" trace that was not a
 derivation, and the judge compared submissions with those bytes. The judge now
-certifies distance lower bounds by exhaustive enumeration instead (TASK.md).
+certifies distance lower bounds by exhaustive enumeration instead (task.md).
 """
 
 from __future__ import annotations

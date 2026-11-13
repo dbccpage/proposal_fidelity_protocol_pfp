@@ -101,7 +101,7 @@ python .agents/operad/skill_compiler/eval_runner.py
 | `../residual_honesty.py` | Scalar observations cannot mint `contractive` (recursive admitted packages) |
 | `../bulk_operad_ingest.py` | DEF-OP-01 quarantine (dry-run; `CORE_BULK_OPERAD_INGEST=1` to write) |
 | `../operad_signature.json` | High-traffic meta SPOEs typed with residual `unknown` |
-| `../_docs/SEMANTICS_MAP.md` | PROPOSED_DESIGN fence for ∞-operad / HoTT minting |
+| `../_docs/semantics_map.md` | PROPOSED_DESIGN fence for ∞-operad / HoTT minting |
 
 ```bash
 python .agents/operad/residual_honesty.py

@@ -29,7 +29,7 @@ The challenge separates outcomes into three strictly typed states:
 workflows/tasks/certified_challenges/c021_q40_r/
 ├── README.md                                 # This overview and verification guide
 ├── participant_packet/                       # Visible to participant models & solvers
-│   ├── TASK.md                               # Mathematical specification & JSON schemas
+│   ├── task.md                               # Mathematical specification & JSON schemas
 │   ├── runner.py                             # Sandboxed execution runner -> answers.jsonl
 │   ├── accounting.json                       # Provenance, tokens, and cost accounting template
 │   └── examples/                             # 12 Public worked examples with exact input & output

@@ -11,7 +11,7 @@ Install `python -m pip install ".[workflows]"` from the repository root.
 | `wf0004` | One miner, five simultaneous solvers and LGGR | 6 |
 | `wf0005` | Full checked PFP packet rewrite, then WF4 structure | 6 |
 
-Use [the runnable guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-Running).
+Use [the runnable guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_running).
 The installed console commands are `pfp-wf1` through `pfp-wf5`.
 
 Shared task custody lives in `pfp.infrastructure.workflow_runtime`; atomic

@@ -183,7 +183,7 @@ def audit_catalog(catalog: Path) -> List[Dict[str, Any]]:
                 )
 
     for pattern in sorted(anti_root.glob("*/*.md")):
-        if not pattern.name.startswith("AP_"):
+        if not pattern.name.upper().startswith("AP_"):
             continue
         fields = _frontmatter(pattern.read_text(encoding="utf-8"))
         dual = fields.get("dual_pattern", "")

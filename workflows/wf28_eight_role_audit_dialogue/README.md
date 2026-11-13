@@ -28,4 +28,4 @@ Pattern `tribunal`: coder ×1 (sonnet); adversary ×1 (run_f); defender ×1 (run
 
 Boost: when arbiter and host disagree: host wins; record the disagreement (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf28) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf28) · [machine-readable entry](../dag/workflow_dag.json)

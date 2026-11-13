@@ -8,7 +8,7 @@ answer, and where its code and evidence are.
 **Start here:** [WF1 — typed answer](wf01_typed_answer/README.md). Install once
 with `pip install ".[workflows]"`, then every runnable workflow has offline
 commands (no model, no cost) and live commands in its README. The step-by-step
-guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflows).
+guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflows).
 
 | WF | Workflow | Status | Kind | Builds on | Pilots |
 | --- | --- | --- | --- | --- | ---: |

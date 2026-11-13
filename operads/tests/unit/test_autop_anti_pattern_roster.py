@@ -85,8 +85,8 @@ def test_catalog_slots_and_lean4_skill_exist() -> None:
     for name in CATALOG_SLOTS:
         assert (catalog / "anti" / name).is_dir(), f"anti/{name}"
         assert (catalog / "helpful" / name).is_dir(), f"helpful/{name}"
-    assert (catalog / "anti" / "json" / "CATALOG_EMPTY.txt").is_file()
-    assert (catalog / "helpful" / "json" / "CATALOG_EMPTY.txt").is_file()
+    assert (catalog / "anti" / "json" / "catalog_empty.txt").is_file()
+    assert (catalog / "helpful" / "json" / "catalog_empty.txt").is_file()
     assert (
         REPO / "operads" / "skills" / "techne-code-lean4-anti-patterns" / "SKILL.md"
     ).is_file()
@@ -205,3 +205,44 @@ def test_auto_anti_pattern_lint_scans_files(tmp_path: Path) -> None:
     assert passed.returncode == 0
     assert "Anti-pattern file findings: 0" in passed.stdout
 
+
+# Pattern files are lowercase since WF50; the corpus adapter and the lint still find every one.
+import shutil  # noqa: E402
+import tempfile  # noqa: E402
+
+from operads.infrastructure.fs.governance_corpus_adapter import FsGovernanceCorpusAdapter  # noqa: E402
+
+PATTERN_ROOT = REPO / "operads" / "patterns"
+# Before the WF50 rename the case-sensitive "AP_"/"HP_" filter found 185 pattern files
+# and silently skipped the two already-lowercase *_rs_007_* files. All 187 count now.
+PATTERN_COUNT_BEFORE_RENAME = 185
+ALREADY_LOWERCASE_BEFORE_RENAME = 2
+
+
+def test_corpus_adapter_finds_lowercase_pattern_files() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        workspace = Path(tmp)
+        shutil.copytree(PATTERN_ROOT, workspace / ".agents" / "patterns")
+        corpus = FsGovernanceCorpusAdapter(workspace).load()
+    assert len(corpus.patterns) == PATTERN_COUNT_BEFORE_RENAME + ALREADY_LOWERCASE_BEFORE_RENAME
+    assert all(Path(p.relative_path).name == Path(p.relative_path).name.lower() for p in corpus.patterns)
+    assert {p.pattern_id[:3] for p in corpus.patterns if p.pattern_id} == {"AP_", "HP_"}
+
+
+def test_anti_pattern_lint_audits_lowercase_pattern_files() -> None:
+    script = REPO / "operads" / "skills" / "auto-anti-pattern-lint" / "scripts" / "anti_pattern_lint.py"
+    spec = importlib.util.spec_from_file_location("wf50_anti_pattern_lint", script)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    with tempfile.TemporaryDirectory() as tmp:
+        catalog = Path(tmp) / "patterns"
+        shutil.copytree(PATTERN_ROOT, catalog)
+        target = catalog / "anti" / "python" / "ap_py_001_blanket_mypy_ignore.md"
+        text = target.read_text(encoding="utf-8")
+        target.write_text(
+            "".join(line for line in text.splitlines(keepends=True) if not line.startswith("dual_pattern:")),
+            encoding="utf-8",
+        )
+        findings = module.audit_catalog(catalog)
+    assert any(f["id"] == "DUAL_MISSING" and f["file"].endswith("ap_py_001_blanket_mypy_ignore.md") for f in findings)

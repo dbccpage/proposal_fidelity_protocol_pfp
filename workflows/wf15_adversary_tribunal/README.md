@@ -37,4 +37,4 @@ Boost: when both submissions fail the check: one fresh run_o round per side with
 | --- | --- | --- | --- | --- |
 | role omitted | each of six roles in turn | named failure label per omission | code | P004(role) §3 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf15) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf15) · [machine-readable entry](../dag/workflow_dag.json)

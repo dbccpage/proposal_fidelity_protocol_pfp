@@ -1,7 +1,7 @@
 """Tier 3 E2E Test Suite: Cross-Feature Pairwise Combinatorial Interactions.
 
 AuthorityEffect: None.
-Reference: TEST_INFRA.md Tier 3 Specification.
+Reference: test_infra.md Tier 3 Specification.
 Examiner Falsification Methodology:
 Every test explicitly documents Invariant, Break, Witness, and Mutation.
 Claim Hygiene: Uses bounded, defensible phrasing; zero forbidden hype words.

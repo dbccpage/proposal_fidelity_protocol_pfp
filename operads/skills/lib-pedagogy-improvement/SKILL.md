@@ -79,7 +79,7 @@ operad_residual: "unknown"
 
 ### Step 4: Style Guide Compliance
 
-**Misconception inventory:** See [`misconception-inventory.md`](references/misconception-inventory.md).
+**Misconception inventory:** See [`misconception_inventory.md`](references/misconception_inventory.md).
 
 ## Review Workflow
 
@@ -101,8 +101,8 @@ operad_residual: "unknown"
 
 **Reference material** (moved out of this file to keep it under the 300-line ceiling):
 
-- Rubric and workflow detail — [`rubric-and-workflow.md`](references/rubric-and-workflow.md)
-- Domain expert quality gate — [`domain-expert-gate.md`](references/domain-expert-gate.md)
+- Rubric and workflow detail — [`rubric_and_workflow.md`](references/rubric_and_workflow.md)
+- Domain expert quality gate — [`domain_expert_gate.md`](references/domain_expert_gate.md)
 
 ## Calibration Appendix
 
@@ -167,7 +167,7 @@ Use this appendix to translate "great thinkers" into **concrete review checks**.
 | **Pask** | Conversation as control system | Step 0.5 + re-probe; Step 0.6; Reporting | Add explicit "teach → check → adjust" loops; log wrong answers and fixes |
 | **Wiener / Bateson / Maturana–Varela** | Feedback, control, structural coupling | Step 4.6 + Escalation | Treat teaching as regulation: measure error, adjust signal; don't "push harder," redesign coupling |
 
-**Domain-specific translations:** See [`domain-translations.md`](references/domain-translations.md).
+**Domain-specific translations:** See [`domain_translations.md`](references/domain_translations.md).
 
 ## Reviewer Cheatsheet (Minimal)
 
@@ -196,7 +196,7 @@ This skill is invoked by the pedagogy agent as part of the review cycle:
 6. Skill validates improvements
 7. Agent approves final version
 
-**Section scaffolding template:** See [`section-scaffolding.md`](references/section-scaffolding.md).
+**Section scaffolding template:** See [`section_scaffolding.md`](references/section_scaffolding.md).
 
 ## Claim Hygiene Quick Reference
 
@@ -229,8 +229,8 @@ Inline tags for epistemic labeling (append to claims):
 
 **Reference material** (moved out of this file to keep it under the 300-line ceiling):
 
-- Cross-reference validation report — [`cross-reference-validation.md`](references/cross-reference-validation.md)
-- Example session — [`example-session.md`](references/example-session.md)
+- Cross-reference validation report — [`cross_reference_validation.md`](references/cross_reference_validation.md)
+- Example session — [`example_session.md`](references/example_session.md)
 
 ## Related Skills
 

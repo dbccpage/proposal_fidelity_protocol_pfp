@@ -1,7 +1,7 @@
 """Tier 4 E2E Test Suite: Real-World Application Scenarios.
 
 AuthorityEffect: None.
-Reference: TEST_INFRA.md Tier 4 Specification.
+Reference: test_infra.md Tier 4 Specification.
 Examiner Falsification Methodology:
 Every test explicitly documents Invariant, Break, Witness, and Mutation.
 Claim Hygiene: Uses bounded, defensible phrasing; zero forbidden hype words.

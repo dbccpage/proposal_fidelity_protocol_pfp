@@ -18,7 +18,7 @@ EXAMPLES_DIR = PARTICIPANT_DIR / "examples"
 
 
 def test_participant_packet_files_exist():
-    assert (PARTICIPANT_DIR / "TASK.md").is_file()
+    assert (PARTICIPANT_DIR / "task.md").is_file()
     assert (PARTICIPANT_DIR / "accounting.json").is_file()
     assert (PARTICIPANT_DIR / "runner.py").is_file()
     assert EXAMPLES_DIR.is_dir()

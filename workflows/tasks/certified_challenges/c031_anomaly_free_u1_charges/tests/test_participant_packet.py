@@ -21,8 +21,8 @@ EXAMPLES_DIR = PARTICIPANT_DIR / "examples"
 
 
 def test_task_markdown_exists_and_contains_formal_invariants():
-    task_file = PARTICIPANT_DIR / "TASK.md"
-    assert task_file.is_file(), "TASK.md must exist in participant_packet"
+    task_file = PARTICIPANT_DIR / "task.md"
+    assert task_file.is_file(), "task.md must exist in participant_packet"
 
     content = task_file.read_text(encoding="utf-8")
 
@@ -57,7 +57,7 @@ def test_task_markdown_exists_and_contains_formal_invariants():
         "MALFORMED_CASE_STRUCTURE",
     ]
     for code in required_codes:
-        assert code in content, f"Refusal code {code} missing from TASK.md"
+        assert code in content, f"Refusal code {code} missing from task.md"
 
     # OUT_OF_SCOPE witness kinds
     required_witness_kinds = [
@@ -66,7 +66,7 @@ def test_task_markdown_exists_and_contains_formal_invariants():
         "too_many_fixed_charges",
     ]
     for kind in required_witness_kinds:
-        assert kind in content, f"Witness kind {kind} missing from TASK.md"
+        assert kind in content, f"Witness kind {kind} missing from task.md"
 
     # Schema definition presence
     assert "SOLVED" in content

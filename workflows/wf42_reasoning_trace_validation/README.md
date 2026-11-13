@@ -29,4 +29,4 @@ Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); deep_researc
 
 Boost: when extractor collapses: CarrierFailure (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf42) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf42) · [machine-readable entry](../dag/workflow_dag.json)

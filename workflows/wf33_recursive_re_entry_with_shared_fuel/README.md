@@ -29,4 +29,4 @@ Pattern `relay`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker �
 
 Boost: when stale parent: refuse (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf33) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf33) · [machine-readable entry](../dag/workflow_dag.json)

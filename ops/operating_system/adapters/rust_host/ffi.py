@@ -1037,7 +1037,7 @@ def verify_exact_rational_witness(
 ) -> tuple[bool, str, dict[str, Any]]:
     """Contract reference for Rust FFI rational witness verification.
 
-    Bridges PROJECT.md line 124 interface contract to the Clean Architecture domain port.
+    Bridges project.md line 124 interface contract to the Clean Architecture domain port.
     Unpacks Result[WitnessVerificationResult, Refusal] to (is_valid, residual_digest, details).
     AuthorityEffect: None.
     """

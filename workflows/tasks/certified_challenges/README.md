@@ -22,7 +22,7 @@ One challenge at a time:
     python -m pytest workflows/tasks/certified_challenges/c045_knot_polynomials_from_pd -q
 
 Each package's `participant_packet/runner.py` runs the reference solver on the
-public examples, and `CHALLENGE.md` (or `README.md` for C051 to C054 and C059)
+public examples, and `challenge.md` (or `README.md` for C051 to C054 and C059)
 states the problem and what counts as a valid answer.
 
 ## Index
@@ -120,7 +120,7 @@ file, if any.
 - **C052.** Has no package tests of its own, only the replay test below.
 - **C058.** Acceptance is a proof only at 8 bits; at 16 to 64 bits the
   checkers sample a few thousand inputs.
-- **C055.** Its `CHALLENGE.md` is headed C053, the number it was planned under.
+- **C055.** Its `challenge.md` is headed C053, the number it was planned under.
 
 ## Other files
 

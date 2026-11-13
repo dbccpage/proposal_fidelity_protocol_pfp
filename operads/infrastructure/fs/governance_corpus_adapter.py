@@ -139,7 +139,7 @@ class FsGovernanceCorpusAdapter(GovernanceCorpusPort):
             return []
         docs: list[PatternDoc] = []
         for path in sorted(root.rglob("*.md")):
-            if not path.name.startswith(_PATTERN_NAMES):
+            if not path.name.upper().startswith(_PATTERN_NAMES):
                 continue
             text = _read(path)
             fields, body = _frontmatter(text)

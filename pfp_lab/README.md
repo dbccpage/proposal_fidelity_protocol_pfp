@@ -78,5 +78,5 @@ are in `contracts/schema/`.
 
 Every runtime source here is held to the `SCORING.md` acceptance floor (L4D or
 better) by `governance/`. See `governance/README.md` for how scores are
-recorded and checked, and `pfp_lab/core/PROVENANCE.md` for where the governor
+recorded and checked, and `pfp_lab/core/provenance.md` for where the governor
 came from.

@@ -1,6 +1,6 @@
 """Tests for C040 Participant Packet.
 
-Validates TASK.md, accounting.json, runner.py, and all 8 canonical example files.
+Validates task.md, accounting.json, runner.py, and all 8 canonical example files.
 
 AuthorityEffect: None.
 """
@@ -29,9 +29,9 @@ class TestParticipantPacket(unittest.TestCase):
     """Validates participant artifacts for challenge C040."""
 
     def test_task_md_exists_and_declares_bounds(self) -> None:
-        """TASK.md must exist, declare formulas, schemas, and AuthorityEffect: None without forbidden hype."""
-        task_file = PARTICIPANT_DIR / "TASK.md"
-        self.assertTrue(task_file.is_file(), "TASK.md must exist in participant_packet")
+        """task.md must exist, declare formulas, schemas, and AuthorityEffect: None without forbidden hype."""
+        task_file = PARTICIPANT_DIR / "task.md"
+        self.assertTrue(task_file.is_file(), "task.md must exist in participant_packet")
         content = task_file.read_text(encoding="utf-8")
 
         self.assertIn("AuthorityEffect: None", content)
@@ -53,7 +53,7 @@ class TestParticipantPacket(unittest.TestCase):
         ]
         for word in forbidden:
             self.assertNotIn(
-                word, content.lower(), f"Forbidden hype verb '{word}' found in TASK.md"
+                word, content.lower(), f"Forbidden hype verb '{word}' found in task.md"
             )
 
     def test_accounting_json_specifies_tier_t4(self) -> None:

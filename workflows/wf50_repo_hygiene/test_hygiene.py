@@ -54,3 +54,47 @@ def test_rewrite_paths_links_and_imports():
     assert "other/license" in out
     assert "the LICENSE file" in out  # kept elsewhere, so a bare mention is left alone
     assert n >= 5
+
+
+def _maps(moves, extra=()):
+    return hygiene.build_maps(moves, list(moves) + list(extra))
+
+
+def test_escaped_text_is_left_alone():
+    uniform, suffix, mods = _maps({"docs/TASK.md": "docs/task.md"})
+    text = r"x = 3/7.\ny"  # an escaped newline inside YAML or JSON text
+    out, n = hygiene.rewrite_text(text, uniform, suffix, mods, is_code=True)
+    assert out == text
+    assert n == 0
+
+
+def test_md_stem_only_inside_a_path():
+    uniform, suffix, mods = _maps({"docs/OWNERSHIP.md": "docs/ownership.md"})
+    text = 'kind: "OWNERSHIP"\nsee docs/OWNERSHIP.md\n'
+    out, n = hygiene.rewrite_text(text, uniform, suffix, mods, is_code=True)
+    assert 'kind: "OWNERSHIP"' in out
+    assert "see docs/ownership.md" in out
+    assert n == 1
+
+
+def test_md_stem_needs_its_own_parent_folder():
+    uniform, suffix, mods = _maps({"wiki/EIS.md": "wiki/eis.md", "docs/CHALLENGE.md": "docs/challenge.md"})
+    text = r"PFP/EIS/PCIV stack; DISPOSITION=CHALLENGE\nNEXT; see wiki/EIS#gate"
+    out, n = hygiene.rewrite_text(text, uniform, suffix, mods, is_code=True)
+    assert "PFP/EIS/PCIV stack" in out
+    assert r"CHALLENGE\nNEXT" in out
+    assert "wiki/eis#gate" in out
+    assert n == 1
+
+
+def test_windows_path_keeps_backslash():
+    uniform, suffix, mods = _maps({"docs/TASK.md": "docs/task.md"})
+    out, n = hygiene.rewrite_text(r"open docs\TASK.md now", uniform, suffix, mods, is_code=False)
+    assert out == r"open docs\task.md now"
+    assert n == 1
+
+
+def test_tool_folder_is_not_rewritten():
+    policy = hygiene.Policy(hygiene.load_policy(), [])
+    assert not policy.rewritable("workflows/wf50_repo_hygiene/test_hygiene.py")
+    assert policy.rewritable("workflows/wf51_other/notes.md")

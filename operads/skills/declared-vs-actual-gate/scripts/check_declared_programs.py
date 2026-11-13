@@ -80,7 +80,7 @@ DECLARED_PROGRAMS: tuple[tuple[str, str], ...] = (
     ("auto-review-skills", "operads/registry/roles.yaml"),
     ("auto-review-skills", "operads/registry/providers.yaml"),
     ("auto-review-skills", "operads/registry/aliases.yaml"),
-    ("auto-review-skills", "operads/registry/compatibility-epoch.yaml"),
+    ("auto-review-skills", "operads/registry/compatibility_epoch.yaml"),
 )
 
 SKILLS_DIRNAME = "skills"

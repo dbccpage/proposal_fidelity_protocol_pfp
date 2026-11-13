@@ -17,16 +17,16 @@ older papers and code.
 
 | If you want to... | Go to |
 | --- | --- |
-| Put PFP into a workflow | [Choose WF1–WF5](Workflows.md) · [Start in a few steps](Workflow-Start-Here.md) |
-| Understand the idea in plain language | [Getting started](Getting-Started.md) |
-| Learn the vocabulary (packets, obstruction, retraction, receipts) | [Core concepts](Core-Concepts.md) |
-| Read the research papers in order | [Papers](Papers.md), with a page per paper |
-| Understand the code | [pfp package](PFP-Package.md), [Operads](Operads.md), [Epistemic Immune System](EIS.md), [Prompt Civilization](PCIV.md) |
-| See how proposals are rewritten, layer by layer | [Rewriting](Rewriting.md): Pre-Genesis, Genesis, S(n), MSS-N, PFP and WDP |
-| Try ideas in a small interactive tool | [PFP Lab](PFP-Lab.md) |
-| See how language models were steered, and replicate it here | [Steering examples](Steering.md) |
-| Find your way around the code | [Repository layout](Repository-Layout.md) |
-| Contribute, or check licensing | [Contributing](Contributing.md) |
+| Put PFP into a workflow | [Choose WF1–WF5](workflows.md) · [Start in a few steps](workflow_start_here.md) |
+| Understand the idea in plain language | [Getting started](getting_started.md) |
+| Learn the vocabulary (packets, obstruction, retraction, receipts) | [Core concepts](core_concepts.md) |
+| Read the research papers in order | [Papers](papers.md), with a page per paper |
+| Understand the code | [pfp package](pfp_package.md), [Operads](operads.md), [Epistemic Immune System](eis.md), [Prompt Civilization](pciv.md) |
+| See how proposals are rewritten, layer by layer | [Rewriting](rewriting.md): Pre-Genesis, Genesis, S(n), MSS-N, PFP and WDP |
+| Try ideas in a small interactive tool | [PFP Lab](pfp_lab.md) |
+| See how language models were steered, and replicate it here | [Steering examples](steering.md) |
+| Find your way around the code | [Repository layout](repository_layout.md) |
+| Contribute, or check licensing | [Contributing](contributing.md) |
 
 ## Status
 

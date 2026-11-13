@@ -22,7 +22,7 @@ RS_ORDERED_HEADING = "## Rust Ordered Key Collection Invariant (`RULE_RUST_ORDER
 RS_COLLISION_HEADING = "## Rust Crate File Collision Prevention Invariant (`RULE_RUST_CRATE_COLLISION_PREVENTION_001`)"
 RS_002_ROW = (
     "| `AP_RS_002` | Domain Enum Missing Ord/PartialOrd | Non-deterministic `HashMap` fallback, broken Merkle trees | "
-    "[`HP_RS_002`](../../patterns/helpful/rust/HP_RS_002_deterministic_key_trait_derive.md) "
+    "[`HP_RS_002`](../../patterns/helpful/rust/hp_rs_002_deterministic_key_trait_derive.md) "
     "Deterministic Key Trait Derive |"
 )
 LEAN_LINK = (
@@ -49,7 +49,7 @@ MYPY_BLOCK = (
 )
 RS_003_ROW = (
     "\n| `AP_RS_003` | Incremental Cache Disk Exhaustion | Incremental `target/debug/incremental` fills the disk | "
-    "[`HP_RS_003`](../../patterns/helpful/rust/HP_RS_003_incremental_cache_pruning.md) Incremental Cache Pruning |"
+    "[`HP_RS_003`](../../patterns/helpful/rust/hp_rs_003_incremental_cache_pruning.md) Incremental Cache Pruning |"
 )
 LEAN_REPLACEMENT = "[**`techne-code-lean4-anti-patterns`**](../techne-code-lean4-anti-patterns/SKILL.md)"
 

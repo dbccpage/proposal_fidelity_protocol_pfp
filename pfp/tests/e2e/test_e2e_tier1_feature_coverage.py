@@ -1,7 +1,7 @@
 """Tier 1 E2E Test Suite: Feature Coverage (Equivalence Classes).
 
 AuthorityEffect: None.
-Reference: TEST_INFRA.md Tier 1 Specification.
+Reference: test_infra.md Tier 1 Specification.
 Examiner Falsification Methodology:
 Every test explicitly documents Invariant, Break, Witness, and Mutation.
 Claim Hygiene: Uses bounded, defensible phrasing; zero forbidden hype words.

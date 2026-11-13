@@ -17,7 +17,7 @@ class TestParticipantPacket(unittest.TestCase):
         self.pkg_root = Path(__file__).resolve().parent.parent
         self.ex_dir = self.pkg_root / "participant_packet" / "examples"
         self.answers_path = self.pkg_root / "participant_packet" / "answers.jsonl"
-        self.task_md = self.pkg_root / "participant_packet" / "TASK.md"
+        self.task_md = self.pkg_root / "participant_packet" / "task.md"
         self.accounting_json = self.pkg_root / "participant_packet" / "accounting.json"
 
     def test_artifacts_exist(self):

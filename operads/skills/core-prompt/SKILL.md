@@ -16,7 +16,7 @@ families: [prompt-civilization, prompt-typing]
 ## Workflow
 
 1. Preserve the operator's original prompt as exact UTF-8 bytes. Never overwrite it.
-2. Propose the strict structure in [prompt-proposal.md](references/prompt-proposal.md). Treat every model-filled field as untrusted.
+2. Propose the strict structure in [prompt_proposal.md](references/prompt_proposal.md). Treat every model-filled field as untrusted.
 3. Run `scripts/core_prompt.py review` with the original file, proposal JSON, and v0 runtime registry. The registry must remain empty until an external admission validator exists.
 4. Present the original, typed rewrite, findings, nonclaims, unresolved questions, and requested effects. Do not hide an error finding.
 5. If clarification is required, ask for it and repeat review. Do not approve a red bundle.

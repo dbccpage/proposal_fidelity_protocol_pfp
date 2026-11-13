@@ -42,4 +42,4 @@ Boost: when leak found: block the challenge until it is resealed (limit 0).
 | --- | --- | --- | --- | --- |
 | witness integrity | fabricated verifier id, unbound witness, tampered hash | all refused | code | P030 §4.2 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf23) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf23) · [machine-readable entry](../dag/workflow_dag.json)

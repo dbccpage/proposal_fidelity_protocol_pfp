@@ -13,7 +13,7 @@ PKG_DIR = Path(__file__).resolve().parent.parent / "participant_packet"
 
 
 def test_participant_packet_files_exist():
-    assert (PKG_DIR / "TASK.md").exists()
+    assert (PKG_DIR / "task.md").exists()
     assert (PKG_DIR / "accounting.json").exists()
     assert (PKG_DIR / "runner.py").exists()
     assert (PKG_DIR / "examples").is_dir()

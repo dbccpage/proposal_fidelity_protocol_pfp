@@ -1,7 +1,7 @@
 """Tier 2 E2E Test Suite: Boundary & Corner Cases (Domain Limits).
 
 AuthorityEffect: None.
-Reference: TEST_INFRA.md Tier 2 Specification.
+Reference: test_infra.md Tier 2 Specification.
 Examiner Falsification Methodology:
 Every test explicitly documents Invariant, Break, Witness, and Mutation.
 Claim Hygiene: Uses bounded, defensible phrasing; zero forbidden hype words.

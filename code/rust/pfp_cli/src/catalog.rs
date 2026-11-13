@@ -26,7 +26,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The output fills a field only the host may fill (verified, admitted, receipt, ...), or a line is just \"verified\".",
         why: "A model cannot certify its own work. Downstream code that trusts `verified: true` from a model trusts a guess.",
         instead: "Let your code set verification fields after it checks. Ask the model for evidence, not a verdict.",
-        wiki: "EIS",
+        wiki: "eis",
     },
     Entry {
         code: "FAKE_RECEIPT",
@@ -34,7 +34,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "A host-only field holds a 64-hex-digit value that looks like a SHA-256 digest.",
         why: "Models produce digest-shaped strings that were never computed. They pass a glance and fail any check.",
         instead: "Compute digests in code. Never accept one from model output.",
-        wiki: "EIS",
+        wiki: "eis",
     },
     Entry {
         code: "CONCLUSION_PRELOAD",
@@ -42,7 +42,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The prompt tells the model the outcome (\"confirm that it passes\", \"conclude that it is safe\", \"the answer must be ...\").",
         why: "A prompt that states the conclusion gets the conclusion back, whatever the evidence says.",
         instead: "Ask whether it holds and what evidence decides it. Allow \"no\" as an answer.",
-        wiki: "Rewriting",
+        wiki: "rewriting",
     },
     Entry {
         code: "SCHEMA_SEMANTIC_LAUNDERING",
@@ -50,7 +50,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The output proposes changes (`proposed_claim_deltas`) that no replay has checked.",
         why: "Well-formed JSON is not a checked result. Valid syntax can stand in for work that never happened.",
         instead: "Replay or test the proposed change before acting on it; until then treat it as parsed, not checked.",
-        wiki: "Rewriting-PFP",
+        wiki: "rewriting_pfp",
     },
     Entry {
         code: "THEOREM_NAME_LAUNDERING",
@@ -58,7 +58,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "A line says \"by ... theorem\" without stating any assumption.",
         why: "Naming a theorem is not applying it. Its conditions may not hold here.",
         instead: "State the theorem's assumptions and show they hold, or drop the appeal.",
-        wiki: "Rewriting",
+        wiki: "rewriting",
     },
     Entry {
         code: "OPTIMALITY_HALLUCINATION",
@@ -66,7 +66,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "A superlative (optimal, minimal, fastest, best possible, ...) with no stated objective or bound.",
         why: "\"Optimal\" is a claim about every alternative. Without a class and a bound it is unsupported.",
         instead: "Say what was compared, by which measure, and what bound shows nothing better exists.",
-        wiki: "Rewriting",
+        wiki: "rewriting",
     },
     Entry {
         code: "COMPLEXITY_HALLUCINATION",
@@ -74,7 +74,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "A complexity claim (O(n), linear time, ...) with no algorithm, cost model or measurement.",
         why: "Complexity claims are easy to state and often wrong.",
         instead: "Name the algorithm and cost model, or measure.",
-        wiki: "Rewriting",
+        wiki: "rewriting",
     },
     Entry {
         code: "PERSONA_AUTHORITY_LEAK",
@@ -82,7 +82,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "A persona, role or actor field claims authority (admin, executive, authorize, ...), in any of several languages.",
         why: "A role name in a prompt grants no permission. Code that reads it as one can be talked into anything.",
         instead: "Keep permissions in code. Never derive them from model-written role fields.",
-        wiki: "EIS",
+        wiki: "eis",
     },
     Entry {
         code: "PRIVATE_COT_DEPENDENCY",
@@ -90,7 +90,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The output leans on hidden reasoning (<think>, \"my internal reasoning\", ...).",
         why: "A conclusion that rests on reasoning nobody can see cannot be checked.",
         instead: "Ask for the evidence and steps in the answer itself.",
-        wiki: "Rewriting",
+        wiki: "rewriting",
     },
     Entry {
         code: "VERSION_DUPLICATION",
@@ -98,7 +98,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The same payload appears again under another version label.",
         why: "A relabelled duplicate looks like progress and is not.",
         instead: "Keep one copy; change the content, not the label.",
-        wiki: "PCIV",
+        wiki: "pciv",
     },
     Entry {
         code: "DETECT_REPAIR_COUPLING",
@@ -106,7 +106,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "One output both reports problems (`objections`) and applies fixes (`proposed_claim_deltas`).",
         why: "A detector that also repairs can hide its own mistakes. Detection and repair must be reviewed separately.",
         instead: "Split the finding and the fix into two artifacts.",
-        wiki: "Operads-Rewriting-and-Packetization",
+        wiki: "operads_rewriting_and_packetization",
     },
     Entry {
         code: "NO_REFUSAL_PATH",
@@ -114,7 +114,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The prompt never says what to do when the task cannot be done.",
         why: "With no way out, a model guesses. PFP law 4: refuse with a type, leave the state unchanged.",
         instead: "Add a line like: \"If you cannot answer from the given material, reply exactly: CANNOT_ANSWER: <reason>.\"",
-        wiki: "Rewriting",
+        wiki: "rewriting",
     },
     Entry {
         code: "MALFORMED_JSON",
@@ -122,7 +122,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The output looks like JSON (or has a ```json block) but does not parse strictly: a syntax error, a trailing comma, or a duplicate key.",
         why: "Lenient parsers disagree about such JSON, so two programs can read different values from it. Its fields were checked as plain text only.",
         instead: "Make the model emit strict JSON (structured output or a schema), and parse it strictly before use.",
-        wiki: "EIS",
+        wiki: "eis",
     },
     Entry {
         code: "DIGEST_MISMATCH",
@@ -130,7 +130,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "A sealed file's bytes changed after sealing.",
         why: "The packet no longer describes what is on disk.",
         instead: "Restore the sealed bytes, or seal again and say why it changed.",
-        wiki: "Operads-Rewriting-and-Packetization",
+        wiki: "operads_rewriting_and_packetization",
     },
     Entry {
         code: "FILE_MISSING",
@@ -138,7 +138,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "A file named in the packet is not there.",
         why: "Nothing can be replayed against a missing file.",
         instead: "Run replay from the folder you sealed in, or pass --root.",
-        wiki: "Operads-Rewriting-and-Packetization",
+        wiki: "operads_rewriting_and_packetization",
     },
     Entry {
         code: "ENVELOPE_TAMPERED",
@@ -146,7 +146,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The envelope does not match its own hashes.",
         why: "Someone edited the packet after sealing. The hashes catch naive edits; they are not a signature.",
         instead: "Get the original packet from its author.",
-        wiki: "Operads-Rewriting-and-Packetization",
+        wiki: "operads_rewriting_and_packetization",
     },
     Entry {
         code: "UNSUPPORTED_FORMAT",
@@ -154,7 +154,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The file is not a pfp.packet.v1 envelope.",
         why: "Unknown fields and formats are refused rather than guessed at.",
         instead: "Pass the JSON that `pfp seal` printed.",
-        wiki: "Operads-Rewriting-and-Packetization",
+        wiki: "operads_rewriting_and_packetization",
     },
     Entry {
         code: "PATH_OUTSIDE_ROOT",
@@ -162,7 +162,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "A path is absolute, has a drive letter, or climbs out with `..`.",
         why: "Packets only name files below the folder they were sealed in, so replay never reads elsewhere.",
         instead: "Use relative paths below the current folder.",
-        wiki: "Operads-Rewriting-and-Packetization",
+        wiki: "operads_rewriting_and_packetization",
     },
     Entry {
         code: "UNLICENSED_SKILL",
@@ -170,7 +170,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The skill's input or output colours are not all in the role's licensed colours.",
         why: "A role's licence is the colours it may consume and produce. A skill outside it handles material the role was not given.",
         instead: "Give the work to a role whose licence covers those colours, or widen the role in operads/registry/roles.yaml and recompile.",
-        wiki: "Operads-Skills-and-Catalog",
+        wiki: "operads_skills_and_catalog",
     },
     Entry {
         code: "DUPLICATE_PATH",
@@ -178,7 +178,7 @@ pub const ENTRIES: &[Entry] = &[
         what: "The same file was named twice.",
         why: "Each file is sealed once.",
         instead: "Name each file once.",
-        wiki: "Operads-Rewriting-and-Packetization",
+        wiki: "operads_rewriting_and_packetization",
     },
 ];
 

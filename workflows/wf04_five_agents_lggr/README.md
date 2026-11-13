@@ -6,7 +6,7 @@
 
 ## Run it
 
-Step-by-step guide: [Workflow-WF4 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-WF4). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-Running).
+Step-by-step guide: [Workflow-WF4 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf4). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_running).
 
 Offline, from the repository root after `pip install ".[workflows]"` (fixture replies: no model call, no cost):
 
@@ -57,4 +57,4 @@ Boost: when global disagreement: none on the base path (limit 0).
 | consensus | majority vote vs component-level descent | — | code | P030 |
 | trials for a zero-failure bound | n = 8 vs n = 299 | upper bound ~31% vs <1% | planning | P003 §7 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf4) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf4) · [machine-readable entry](../dag/workflow_dag.json)

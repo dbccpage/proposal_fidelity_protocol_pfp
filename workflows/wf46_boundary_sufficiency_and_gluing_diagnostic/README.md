@@ -28,4 +28,4 @@ Pattern `parallel_isolated_then_global`: coder ×1 (sonnet); deep_researcher ×1
 
 Boost: when none: diagnostic only (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf46) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf46) · [machine-readable entry](../dag/workflow_dag.json)

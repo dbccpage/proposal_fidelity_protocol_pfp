@@ -23,7 +23,7 @@ families: [prompt-civilization, anti-skills]
 5. Write resulting candidates only under `eis/antiskills/ooutwire/`.
 6. Record the learning through the existing auto-skill episode/resolve pipeline. Frequency and confidence never grant admission.
 
-Read [admission-boundary.md](references/admission-boundary.md) before recommending promotion.
+Read [admission_boundary.md](references/admission_boundary.md) before recommending promotion.
 
 ## Boundaries
 

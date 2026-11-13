@@ -54,7 +54,7 @@ A certificate is complete by the source spec's definition. An adapter that edits
 
 ## 5. Participant Packet
 
-- `TASK.md` with the skeleton interface, stage budgets, the rotation, and the three family contracts with their JSON Schemas.
+- `task.md` with the skeleton interface, stage budgets, the rotation, and the three family contracts with their JSON Schemas.
 - The public examples of C051 (14), C052 (10) and C021, each with verbatim JSON.
 - `runner.py`, which runs `skeleton.run` with each adapter in the sandbox and enforces the hash freeze.
 - `accounting.json`, with one row per stage and control.

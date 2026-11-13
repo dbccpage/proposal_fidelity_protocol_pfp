@@ -179,7 +179,7 @@ Summary:
 - Check if retrospective process itself needs improvement (SELF_REFERENCE)
 - Lessons learned must be actionable and assigned owners
 
-**Example session:** See [`example-session.md`](references/example-session.md).
+**Example session:** See [`example_session.md`](references/example_session.md).
 
 ## Integration Points
 

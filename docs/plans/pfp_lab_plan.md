@@ -11,7 +11,7 @@ identical to `theory_of_finite_quantum_mechanics/SCORING.md`).
 
 | Plan | Built | Where |
 | --- | --- | --- |
-| Python core from the Paper 005 governor | As planned; a differential test runs the unmodified Paper 005 file as an oracle | `pfp_lab/core/`, `pfp_lab/core/PROVENANCE.md` |
+| Python core from the Paper 005 governor | As planned; a differential test runs the unmodified Paper 005 file as an oracle | `pfp_lab/core/`, `pfp_lab/core/provenance.md` |
 | CLI and JSON-RPC stdio server | As planned (`python -m pfp_lab.cli.main`, script `pfp-lab`) | `pfp_lab/cli/` |
 | Local web page | As planned (`pfp-lab-web`, loopback by default) | `pfp_lab/web/` |
 | C# WPF app over the JSON-RPC contract | As planned. The machine's NuGet source mapping blocks the xUnit runner and SonarAnalyzer, so tests use a small self-hosted runner and the build uses only the SDK analyzers (CA1502 cyclomatic limit 10 as an error) | `csharp/` |
@@ -153,7 +153,7 @@ pfp_lab/                     new Python package; imports nothing from the old up
     domain/                  graph, cochains, Phi_1, governor, moves, verdicts (pure, exact)
     contracts/               Pydantic v2 models for every external input and output
     receipts/                canonical JSON + SHA-256 receipts, replay and verify
-    errors.py                typed failure variants; Result[T, E] in the style of pfp's CONTEXT.md
+    errors.py                typed failure variants; Result[T, E] in the style of pfp's context.md
     admission.py             the single place integers and rationals are admitted
   packs/                     idea packs behind one port: scenarios from papers, then eis, operads, pciv
   cli/                       argparse front end, including `serve --stdio` for the C# app

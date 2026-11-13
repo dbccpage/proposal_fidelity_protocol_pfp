@@ -19,12 +19,12 @@ Read the paper register, in the order it already gives:
 
 ## Internal note
 
-`CONTEXT.md` in this directory is the internal engineering definition and
+`context.md` in this directory is the internal engineering definition and
 is not the newcomer entry.
 
 ## What this page is not
 
-It does not restate `CONTEXT.md`. It does not replace either door above.
+It does not restate `context.md`. It does not replace either door above.
 
 ## Native migration
 

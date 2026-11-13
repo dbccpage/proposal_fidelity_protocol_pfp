@@ -63,7 +63,7 @@ def test_selection_does_not_run_other_package_special_checks(tmp_path, monkeypat
     (source / "a_mechanism/c001_attention_distractor_mask/pipeline.json").write_text("{}")
     (source / "a_mechanism/c005_hosted_decode_controls").mkdir()
     (source / "d_physics_mtheory/c032_trace").mkdir(parents=True)
-    task = source / "d_physics_mtheory/c036_values/participant_packet/TASK.md"
+    task = source / "d_physics_mtheory/c036_values/participant_packet/task.md"
     task.parent.mkdir(parents=True)
     task.write_text("Unselected reference-value task")
     def forbidden(*args, **kwargs):

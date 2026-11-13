@@ -6,7 +6,7 @@
 
 ## Run it
 
-Step-by-step guide: [Workflow-WF1 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-WF1). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-Running).
+Step-by-step guide: [Workflow-WF1 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf1). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_running).
 
 Offline, from the repository root after `pip install ".[workflows]"` (fixture replies: no model call, no cost):
 
@@ -65,4 +65,4 @@ Boost: when host check rejects: none on the base path; WF9 adds bounded repair (
 | self-report | self-critique or self-verified flag included vs stripped | never read by the host | code | P028 §7; P030 |
 | schema examples | with vs without example values | 8B copied placeholder keys | live | F c043-c059 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf1) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf1) · [machine-readable entry](../dag/workflow_dag.json)

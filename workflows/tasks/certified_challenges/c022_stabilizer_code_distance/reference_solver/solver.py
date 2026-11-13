@@ -183,7 +183,7 @@ def solve(case: dict[str, Any]) -> dict[str, Any]:
         }
 
     # 5. The lower bound is certified by the judge's exhaustive enumeration of all
-    # Pauli operators below weight d (TASK.md section 3); no proof object is emitted.
+    # Pauli operators below weight d (task.md section 3); no proof object is emitted.
     lower_bound: dict[str, Any] | None = None
 
     return {

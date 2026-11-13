@@ -29,4 +29,4 @@ Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); host_checker ×1 
 
 Boost: when stationary loop: forced lift or reframe (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf27) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf27) · [machine-readable entry](../dag/workflow_dag.json)
