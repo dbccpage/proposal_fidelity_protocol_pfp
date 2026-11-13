@@ -27,7 +27,7 @@ python workflows/wf50_repo_hygiene/hygiene.py residue workflows/wf50_repo_hygien
 
 `survey` lists every name that breaks the rule and proposes a new one. `apply
 PLAN [--dry-run]` moves the files and rewrites references in every tracked text
-file; it never edits `papers/` and never renames inside a hash-pinned bundle.
+file; it never edits `atlas/archive/` and never renames inside a hash-pinned bundle.
 `residue PLAN` shows old names still mentioned anywhere. `rebaseline --reason
 TEXT PATH...` re-pins listed governed files after a mechanical edit. `run/` is
 ignored by git.

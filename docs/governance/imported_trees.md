@@ -21,7 +21,7 @@ then run `checker baseline --write` so its stale entry is dropped.
 | `operads/` | 483 / 190 | 1 | 0 |
 | `pciv/` | 63 / 30 | 0 | 0 |
 | `ops/` | 774 / 67 | 25 | 4 |
-| `papers/` | 387 / 154 | 99 | 239 |
+| `atlas/archive/` | 387 / 154 | 99 | 239 |
 | `education/` | 25 / 13 | 0 | 8 |
 | **Total** | **3,328 / 1,972** | **125** | **368** |
 
@@ -43,7 +43,7 @@ debug invariant is allowed by RULE_PY_003.
 | `isinstance(x, int)` with no bool guard nearby (RULE_PY_002) | 8 | 0 | 0 | 1 | 0 | 0 | 0 |
 | Python files with an `AuthorityEffect` header (Gate 1 needs it) | 2,134 | 52 | 309 | 73 | 564 | 61 | 30 |
 
-Lean: 8 files in `papers/` contain `sorry` and 6 declare an `axiom`. Under
+Lean: 8 files in `atlas/archive/` contain `sorry` and 6 declare an `axiom`. Under
 RULE_LEAN_003 a theorem that depends on `sorry` cannot be a completed proof
 (Gate 3 E) until it is discharged or the claim is narrowed.
 
@@ -60,5 +60,5 @@ not exist in this repository (the rename work addresses those), and that no
 3. In `pfp/`, start with `domain/` and `use_cases/`. The assert-heavy
    `infrastructure/tower_*` research code is better kept baselined, or moved
    out of the governed population, than scored.
-4. Treat `papers/` per paper: each is a self-contained deposit with its own
+4. Treat `atlas/archive/` per paper: each is a self-contained deposit with its own
    checksums, so changing its code also changes its release record.

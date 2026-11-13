@@ -1,0 +1,34 @@
+{
+  "schema_version": "pfp.atlas-path-map.v1",
+  "AuthorityEffect": "None",
+  "effective_date": "2026-11-13",
+  "base_commit": "0e47e7fe9bdfa39815ee2a73e553f50a224f763f",
+  "moves": [
+    {
+      "from_prefix": "papers/",
+      "to_prefix": "atlas/archive/",
+      "method": "git mv; every file keeps its exact bytes"
+    }
+  ],
+  "rewritten_roots": [
+    "README.md",
+    "dag/*.json",
+    "docs/",
+    "governance/README.md",
+    "governance/baseline.json",
+    "governance/policy.json",
+    "lean4/",
+    "pfp_lab/core/provenance.md",
+    "wiki/",
+    "workflows/"
+  ],
+  "frozen_roots": [
+    "atlas/archive/",
+    "dag/handoff/",
+    "dag/migrations/",
+    "dag/research/",
+    "dag/reviews/",
+    "governance/evidence/"
+  ],
+  "frozen_rule": "A path that starts with papers/ inside a frozen root names the file now at atlas/archive/ plus the rest of the path. Frozen records are hash-pinned by other records, so their bytes are not edited."
+}

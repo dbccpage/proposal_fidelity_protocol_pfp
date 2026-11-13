@@ -39,7 +39,7 @@ Three kinds of agent, each doing one job:
 1. **Survey (Sonnet).** Eight agents each read one slice of the repo and report
    facts: junk with evidence and its consumers, renames that must not happen,
    renames that need a code change, and names that must not appear outside
-   `papers/`. Four more agents list weaknesses in PFP, PCIV, EIS and operads,
+   `atlas/archive/`. Four more agents list weaknesses in PFP, PCIV, EIS and operads,
    and one lists the state of every workflow's documentation.
 2. **Review (Opus).** Four agents check the survey claims themselves, settle
    the final lists and each write one long, self-contained prompt: deletions,
@@ -59,7 +59,7 @@ editing thousands of files:
 | `python workflows/wf50_repo_hygiene/hygiene.py residue run/plan.json` | Show old names still mentioned anywhere, for hand fixes |
 | `python workflows/wf50_repo_hygiene/hygiene.py rebaseline --reason TEXT PATH...` | Re-pin only the listed governed files after a mechanical edit |
 
-`apply` never edits files under `papers/` and never renames anything inside a
+`apply` never edits files under `atlas/archive/` and never renames anything inside a
 hash-pinned bundle (a folder holding `MANIFEST.sha256` or `SHA256SUMS`).
 
 ## Run the agent workflow

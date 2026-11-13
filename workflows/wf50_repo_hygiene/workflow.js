@@ -20,8 +20,8 @@ const A = args || {}
 const RUN = A.run_dir || 'workflows/wf50_repo_hygiene/run'
 const RULES = `House rules for this repository:
 - Names: every file and folder except README.md is lowercase snake_case. Exemptions and their reasons are in workflows/wf50_repo_hygiene/naming_policy.json.
-- papers/ keep their content byte for byte.
-- Never write the owner's private engine, project or persona names (the owner keeps the list outside this repo) in any file outside papers/, nor in commit messages.
+- atlas/archive/ keep their content byte for byte.
+- Never write the owner's private engine, project or persona names (the owner keeps the list outside this repo) in any file outside atlas/archive/, nor in commit messages.
 - Do not rewrite git history. Do not touch uncommitted work you did not create. Keep the branch backup/main-folder-wip-20261106.
 - Delete junk outright; do not archive it.
 - Documentation is plain language first, short, no filler.`
@@ -33,7 +33,7 @@ const SLICES = [
   { key: 'records', paths: 'dag/, governance/, benchmarks/, .github/ and the files at the repository root' },
   { key: 'docs', paths: 'wiki/, docs/, education/, _ic/, contracts/' },
   { key: 'code', paths: 'code/, csharp/, lean4/, ops/, eis/, pciv/, pfp_core/, pfp_lab/' },
-  { key: 'papers', paths: 'papers/ (renames only where nothing pins the name; content is never edited)' },
+  { key: 'papers', paths: 'atlas/archive/ (renames only where nothing pins the name; content is never edited)' },
   { key: 'pilots', paths: 'pilots/ (approved for deletion; find the pilots dag/pilot_triage/catalog.json marks retain_mechanism or needs_more_evidence and say which workflows/wfNN_* folder each belongs in)' },
 ]
 const SUBSYSTEMS = [
@@ -98,7 +98,7 @@ Report:
 1. junk: files or folders that should be deleted outright: build output, caches, logs of one-off runs, generated files nothing reads, empty stubs, duplicates of content kept elsewhere, planned-but-never-run material. For each, give evidence and list what references it (grep). Do not list anything a test, import, CI step or pinned manifest needs unless you name that consumer.
 2. keep_name: planned renames in your slice that must not happen because a tool, a hash pin, an external URL contract or generated code requires the exact name.
 3. rename_hazards: planned renames that will break something the plain path rewrite cannot see (f-string or computed file names, globs, case-sensitive lookups, hashes over paths) and the code change that fixes it.
-4. secret_name_leaks: files outside papers/ whose names or text contain the owner's private engine, project or persona names.
+4. secret_name_leaks: files outside atlas/archive/ whose names or text contain the owner's private engine, project or persona names.
 ${RULES}`,
   { label: `survey:${s.key}`, phase: 'Survey', model: 'sonnet', schema: SLICE_SCHEMA })
 const gapTask = g => agent(

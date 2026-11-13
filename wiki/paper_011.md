@@ -1,7 +1,7 @@
 # Paper 011: PFP XI: The broken referee, an archive audit and self-falsification ledger
 
 **Status:** Retained draft, v0.1.1  
-**Folder:** [`papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence)
+**Folder:** [`atlas/archive/pfp/011_recreated_demos_and_proposal_fidelity_evidence`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/011_recreated_demos_and_proposal_fidelity_evidence)
 
 ## In brief
 
@@ -14,7 +14,7 @@ Reconstructs the demonstration corpus through a source-bound inventory and repla
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/011_recreated_demos_and_proposal_fidelity_evidence/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/011_recreated_demos_and_proposal_fidelity_evidence/README.md), which lists the manuscript, claim ledger and change log.
 
 ---
 

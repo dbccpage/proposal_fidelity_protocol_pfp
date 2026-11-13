@@ -167,7 +167,7 @@ The `Pnnn` citations below (for example `P026 §3-4`) use the paper numbers in
 force when the nodes were written, before the papers were split and renumbered
 on 2026-11-06. Several old numbers named two papers, which is why some
 citations carry a hint such as `P027(firewall)` or `P004(role)`.
-[`papers/RENUMBERING.md`](../../papers/RENUMBERING.md)
+[`atlas/archive/RENUMBERING.md`](../../atlas/archive/RENUMBERING.md)
 translates each one. The unambiguous ones: P000-P010 are PFP 000-010;
 P011 is PFP 012; P021 is PFP 011; P022 is PFP 020; P023-P025 are PFP 013-015;
 P034 is PFP 021; P013, P018, P019, P030 and P033 are non-PFP 005, 007, 008,
@@ -252,7 +252,7 @@ new workflow. `merge_into` names where a node is expected to fold in.
 WF24–WF49 cite their findings notes (F) and papers (P###) directly. Pilot numbers are directory numbers in the source estate; `c051`–`c059` are
 its commit-reveal challenge folders. The process and mathematics of each
 family are summarised in
-[Paper 021](../../papers/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md).
+[Paper 021](../../atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md).
 
 ## Goal and boost per family
 

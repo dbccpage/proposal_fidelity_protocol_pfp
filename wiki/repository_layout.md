@@ -2,7 +2,7 @@
 
 | Folder | What is in it |
 | --- | --- |
-| [`papers/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers) | The paper collection; see [Papers](papers.md) |
+| [`atlas/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas) | The atlas paper, its claim ledger and change log; `archive/` holds the source papers (see [Papers](papers.md)) |
 | [`education/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/education) | Teaching material: `004` PFP and the Symbol Game, `008` operads, `009` epistemic immune system, `010` prompt civilization |
 | [`pfp/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp) ([page](pfp_package.md)) | The core Python package: packets, evaluators, retraction, receipts, replay. `context.md` is its engineering glossary |
 | [`eis/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/eis) ([page](eis.md)) | Epistemic Immune System: antibodies, screening and custody of rejected proposals |

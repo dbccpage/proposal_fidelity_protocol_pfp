@@ -1,7 +1,7 @@
 # Paper 005: PFP V: A practitioner's guide to checked proposals
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/pfp/005_pfp_practitioners_field_manual`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/005_pfp_practitioners_field_manual)  
+**Folder:** [`atlas/archive/pfp/005_pfp_practitioners_field_manual`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/005_pfp_practitioners_field_manual)  
 **Record:** [Zenodo 23114578](https://zenodo.org/records/23114578)
 
 ## In brief
@@ -17,7 +17,7 @@ A hands-on workflow on a three-edge directed graph with exact rational claims (1
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/005_pfp_practitioners_field_manual/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/005_pfp_practitioners_field_manual/README.md), which lists the manuscript, claim ledger and change log.
 
 From the package folder, with plain Python:
 

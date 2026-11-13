@@ -54,7 +54,7 @@ Python files, 690 test modules) and is organised by layer.
 
 The package was imported from an earlier repository and its imports still use
 the older package name, so it does not yet run from this repository as-is. The
-paper packages under `papers/` carry their own self-contained code, which does
+paper packages under `atlas/archive/` carry their own self-contained code, which does
 run; see [Getting started](getting_started.md).
 
 Related papers: [000](paper_000.md), [001](paper_001.md), [004](paper_004.md),

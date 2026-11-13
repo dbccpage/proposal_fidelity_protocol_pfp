@@ -1,7 +1,7 @@
 # Paper 008: PFP VIII: Conservative grammar growth and source-bound evidence in the MSS pipeline
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks)  
+**Folder:** [`atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks)  
 **Record:** [Zenodo 23115542](https://zenodo.org/records/23115542)
 
 ## In brief
@@ -16,7 +16,7 @@ Adding a symbol, checking a finite example and proving a semantic theorem are di
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [pfp package](pfp_package.md)
 

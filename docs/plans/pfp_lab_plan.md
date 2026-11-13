@@ -32,7 +32,7 @@ gives the unit of work:
   and its edge claims, as in the Paper 005 worked triangle with claims (1,1,1)
   and weights (1,2,3).
 - A **proposal** is one move from the four-move vocabulary in
-  `papers/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py`:
+  `atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py`:
   ASSERT, CUT, VERIFY, RETRACT.
 - The **governor** returns a verdict (MonotonicDescent, ExactRepair,
   IdempotentStationary, DefectIncrease, InvariantViolation, CarrierViolation,
@@ -59,7 +59,7 @@ proposer is an optional later phase.
 | `operads/` | Typed composition, registry, skills, StructureBench (673 Python files) | Second idea pack: check that a composed plan type-checks before it runs. |
 | `pciv/` | Prompt Civilization lineage and presenters (93 Python files) | Third idea pack: record which proposal descended from which. |
 | `ops/` | Operations, governance, the only `pyproject.toml` (package name `the-symbol-game`, Pydantic 2, Hypothesis, FastAPI) | Source of toolchain pins, not a dependency of the core. |
-| `papers/` | Papers 000 to 029, each with code, tests, a claim ledger and checksums | Self-contained, standard-library replays. The Paper 005 governor (917 lines) is the cleanest seed for the core, and its worked examples give an independent test basis. |
+| `atlas/archive/` | Papers 000 to 029, each with code, tests, a claim ledger and checksums | Self-contained, standard-library replays. The Paper 005 governor (917 lines) is the cleanest seed for the core, and its worked examples give an independent test basis. |
 
 There is no C# code, no `SCORING.md` and no `governance/` folder in this
 repository yet.

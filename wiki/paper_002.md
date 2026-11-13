@@ -1,7 +1,7 @@
 # Paper 002: PFP II: Signed certificates, resumable search and a restricted path-pairing obstruction
 
 **Status:** Published preprint, v0.1.0 (2026-10-02)  
-**Folder:** [`papers/pfp/002_pfp_signed_presentations_and_search_frontier`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/papers/pfp/002_pfp_signed_presentations_and_search_frontier)  
+**Folder:** [`atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier)  
 **Record:** [Zenodo 23114127](https://zenodo.org/records/23114127)
 
 ## In brief
@@ -16,7 +16,7 @@ When a search fails to find a sign transformation, it may not exist, the search 
 
 ## Reading and running it
 
-Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/papers/pfp/002_pfp_signed_presentations_and_search_frontier/README.md), which lists the manuscript, claim ledger and change log.
+Start with the package [README](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/README.md), which lists the manuscript, claim ledger and change log.
 
 **Related code:** [pfp package](pfp_package.md)
 
