@@ -27,9 +27,18 @@ manuscript for the six papers whose ledger is missing or holds only shared
 process text (PFP 011 and 014–018). Part II holds the 740 derivation nodes that
 the audit wrote directly into the DAG. Every ledger row is exactly one DAG node
 and every derivation node is exactly one row; the correspondence is checked by
-`python dag/build_atlas.py --check`. No archive claim is identified with an
-audit node, because a claim-level match needs a reviewer's reading. Where both
-concern the same paper, the ledger's paper column shows it.
+`python dag/build_atlas.py --check`.
+
+Each archive claim was then reviewed against the audit derivations. 73 are
+*matched*: an audit node states the same result under the same or weaker
+hypotheses. 115 are *partial*: a node supports part of the claim (96) or treats
+the same object under narrower hypotheses (19). 419 are *gaps*, with no audit
+node behind them. The review adds an edge from each matched or partial node to
+the archive claim, and each gap has a proposed derivation in
+[`dag/derivations/`](../dag/derivations/README.md). Gaps concentrate where the
+audit never read the paper: most of the operator, regulation, authority and
+proposal-channel papers, the run records of the model pilots, and the
+packaging, scope and withdrawn rows (123 of the gaps), which need no derivation.
 
 The status attached to each row is a coarse reading of the source's own status
 and evidence text, in the vocabulary *proved*, *mechanized*, *computed*,
@@ -413,7 +422,8 @@ establishes model improvement, general detector efficacy, learner effect, a
 physical or semantic foundation, or authority from evidence
 (ATL-P007-008, ATL-P018-005, ATL-P019-009, ATL-P011-023, ATL-N003-017,
 ATL-N010-011). The audit itself is unfinished: per-file reading, supporting
-artifact assessment and native-to-formal correspondence remain open in the DAG.
+artifact assessment and native-to-formal correspondence remain open in the DAG,
+and the 419 proposed derivations in `dag/derivations/` are plans, not results.
 
 ## Claim index
 

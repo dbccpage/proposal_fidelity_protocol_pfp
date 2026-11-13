@@ -2,6 +2,16 @@
 
 AuthorityEffect: None.
 
+## 2026-11-13: claim-level review against the DAG
+
+- Every archive claim reviewed against the audit derivations
+  (`atlas_claim_matches.json`): 73 matched, 115 partial (96 supports,
+  19 narrows), 419 gaps.
+- Matched and partial claims gain 265 DAG edges from the audit nodes
+  (`states_same_claim_as`, `partially_supports`, `narrows`).
+- 504 proposed derivations written to `dag/derivations/`, one per gap and per
+  partial claim that has one.
+
 ## 2026-11-13: paper, claim ledger and DAG correspondence
 
 - Added `atlas.md`, `atlas_claim_ledger.md` and `atlas_claim_ledger.json`,
