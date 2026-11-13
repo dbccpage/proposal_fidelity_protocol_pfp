@@ -21,7 +21,7 @@ const RUN = A.run_dir || 'workflows/wf50_repo_hygiene/run'
 const RULES = `House rules for this repository:
 - Names: every file and folder except README.md is lowercase snake_case. Exemptions and their reasons are in workflows/wf50_repo_hygiene/naming_policy.json.
 - papers/ keep their content byte for byte.
-- Never write the words Omega, Anomalon, Woland or persona names in any file outside papers/, nor in commit messages.
+- Never write the owner's private engine, project or persona names (the owner keeps the list outside this repo) in any file outside papers/, nor in commit messages.
 - Do not rewrite git history. Do not touch uncommitted work you did not create. Keep the branch backup/main-folder-wip-20261106.
 - Delete junk outright; do not archive it.
 - Documentation is plain language first, short, no filler.`
@@ -98,7 +98,7 @@ Report:
 1. junk: files or folders that should be deleted outright: build output, caches, logs of one-off runs, generated files nothing reads, empty stubs, duplicates of content kept elsewhere, planned-but-never-run material. For each, give evidence and list what references it (grep). Do not list anything a test, import, CI step or pinned manifest needs unless you name that consumer.
 2. keep_name: planned renames in your slice that must not happen because a tool, a hash pin, an external URL contract or generated code requires the exact name.
 3. rename_hazards: planned renames that will break something the plain path rewrite cannot see (f-string or computed file names, globs, case-sensitive lookups, hashes over paths) and the code change that fixes it.
-4. secret_name_leaks: files outside papers/ whose names or text contain Omega, Anomalon, Woland or persona names.
+4. secret_name_leaks: files outside papers/ whose names or text contain the owner's private engine, project or persona names.
 ${RULES}`,
   { label: `survey:${s.key}`, phase: 'Survey', model: 'sonnet', schema: SLICE_SCHEMA })
 const gapTask = g => agent(
@@ -126,7 +126,7 @@ const PROMPT_SHAPE = `Write a long-horizon executor prompt that a capable model 
 
 const reviews = await parallel([
   () => agent(`${REVIEW_COMMON}
-Job: deletions. Decide the final list of junk to delete across all slices, including pilots/anomalon_woland and pilots/anomalon_woland_support (deletion approved by the owner), after the keeper pilots are moved into their workflows/wfNN_* folders with names scrubbed. Write the final list to ${RUN}/delete_list.txt (one path per line) and the executor prompt to ${RUN}/prompt_deletions.md. ${PROMPT_SHAPE} Return the two paths and the count of paths.`,
+Job: deletions. Decide the final list of junk to delete across all slices, including the two imported pilot estate folders under pilots/ (deletion approved by the owner), after the keeper pilots are moved into their workflows/wfNN_* folders with names scrubbed. Write the final list to ${RUN}/delete_list.txt (one path per line) and the executor prompt to ${RUN}/prompt_deletions.md. ${PROMPT_SHAPE} Return the two paths and the count of paths.`,
     { label: 'review:deletions', phase: 'Review', model: 'opus' }),
   () => agent(`${REVIEW_COMMON}
 Job: renames. Starting from ${RUN}/plan.json, remove entries that must keep their name and write ${RUN}/plan_final.json in the same format. The executor will run \`python workflows/wf50_repo_hygiene/hygiene.py apply ${RUN}/plan_final.json\`, then \`residue\`, then fix each rename hazard and residue hit by hand. Renames run after deletions, so re-run \`hygiene.py survey --out ${RUN}/plan.json\` first and re-apply your removals if the tree changed. Write the executor prompt to ${RUN}/prompt_renames.md, covering imports, links, wiki page names (wiki/publish_wiki.py), CI files, pyproject packaging and package data. ${PROMPT_SHAPE} Return the paths and counts.`,
