@@ -49,6 +49,38 @@ for i in range(1,6):
         assert not (output/'accounting.sqlite3').exists()
     checks[-1]['no_live_provider_calls']=True
 
+SCRIPTED_PROBE = r"""
+import json, sys, sysconfig
+from pathlib import Path
+from pfp.workflows import scripted
+from pfp.workflows.wf0002 import scripted as wf2_scripted
+from pfp.workflows.wf0003 import runner as wf3_runner, scripted as wf3_scripted
+from pfp.workflows.wf0004 import runner as wf4_runner, scripted as wf4_scripted
+from pfp.workflows.wf0005 import scripted as wf5_scripted
+purelib = Path(sysconfig.get_paths()["purelib"]).resolve()
+modules = [scripted, wf2_scripted, wf3_scripted, wf4_scripted, wf5_scripted]
+outside = [m.__name__ for m in modules if not Path(m.__file__).resolve().is_relative_to(purelib)]
+if outside:
+    raise SystemExit(f"SCRIPTED_MODULE_NOT_INSTALLED: {outside}")
+assert wf2_scripted.candidate()["task_result"] == {"total": 38}
+root = Path(sys.argv[1])
+spec = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+calls = []
+wf3 = wf3_runner.run(spec, root / "wf3", "fixture/model", wf3_scripted.factory_for(calls))
+assert wf3["status"] == "HOST_ACCEPTED" and len(calls) == 2, (wf3, len(calls))
+assert wf3_runner.replay_run(root / "wf3")["replay_verified"] is True
+calls = []
+wf4 = wf4_runner.run(scripted.SPEC, root / "wf4", gateway_factory=wf4_scripted.scripted_factory(calls))
+assert wf4["status"] == "HOST_ACCEPTED", wf4
+assert wf4_runner.replay_run(root / "wf4")["replay_verified"] is True
+print(json.dumps({"wf3_calls": 2, "wf4_status": wf4["status"]}))
+"""
+scripted_root=root/'scripted'
+scripted_root.mkdir()
+run('Scripted gateways import from the wheel and run at zero cost',
+    [sys.executable,'-I','-c',SCRIPTED_PROBE,str(scripted_root),str(root/'examples/wf0003/integer_sum.task.json')])
+checks[-1]['no_live_provider_calls']=True
+
 if args.checkout:
     for number in range(1,6):
         done=subprocess.run([sys.executable,"-m",f"pfp.workflows.wf{number:04}","--help"],cwd=args.checkout,env=env,capture_output=True,text=True,encoding="utf-8")
