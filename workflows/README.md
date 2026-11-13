@@ -3,7 +3,9 @@
 **One folder per workflow, numbered to match the wiki.** WF1-WF5 have their
 own runners. WF6-WF49 and WF51 run offline on a shared family runtime
 ([`pfp_core/workflow_families/`](../pfp_core/workflow_families/)): fixtures only,
-no model campaign yet. WF50 is a maintenance workflow. Open a folder's README
+no model campaign yet. WF50 is a maintenance workflow. WF52-WF54 have their
+own runners: the finite-QM benchmark (live runs recorded), and the industry
+replacement benchmark and five-seam showcase (offline only). Open a folder's README
 to see what the workflow is for, its status, how to run it offline, what checks
 the answer, and where its code is.
 
@@ -25,16 +27,16 @@ guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fid
 | 9 | [Bounded check-and-repair](wf09_bounded_check_and_repair/README.md) | runnable offline | procedure extension | WF2 | — |
 | 10 | [Local-to-global obstruction certificate](wf10_local_to_global_obstruction_certificate/README.md) | runnable offline | task preset | WF4, WF9 | 1 |
 | 11 | [Dual-certificate synthesis](wf11_dual_certificate_synthesis/README.md) | runnable offline | task preset | WF3, WF9 | 6 |
-| 12 | [Mechanism-control arms](wf12_mechanism_control_arms/README.md) | runnable offline | experiment design | WF6, WF3 | 4 |
+| 12 | [Mechanism-control arms](wf12_mechanism_control_arms/README.md) | runnable offline | experiment design | WF6, WF3 | 5 |
 | 13 | [Exact-domain capsule battery](wf13_exact_domain_capsule_battery/README.md) | runnable offline | task preset | WF1, WF7 | — |
 | 14 | [Immune failure classification](wf14_immune_failure_classification/README.md) | runnable offline | meta workflow | WF7, WF12 | 1 |
 | 15 | [Adversary tribunal](wf15_adversary_tribunal/README.md) | runnable offline | procedure extension | WF4, WF14 | — |
 | 16 | [Substrate crosswalk](wf16_substrate_crosswalk/README.md) | runnable offline | task preset | WF5, WF10 | — |
 | 17 | [Witnessed-difference programme](wf17_witnessed_difference_programme/README.md) | runnable offline | task preset | WF10, WF11 | — |
-| 18 | [Dossier replay campaign](wf18_dossier_replay_campaign/README.md) | runnable offline | harness gate | WF6, WF12 | 5 |
-| 19 | [Failure-derived rule transfer](wf19_failure_derived_rule_transfer/README.md) | runnable offline | experiment design | WF12, WF14 | 2 |
-| 20 | [Derivation loop with lift grants](wf20_derivation_loop_with_lift_grants/README.md) | runnable offline | procedure extension | WF9, WF10, WF19 | 9 |
-| 21 | [Structural prompt rewriting](wf21_structural_prompt_rewriting/README.md) | runnable offline | procedure extension | WF5 | 3 |
+| 18 | [Dossier replay campaign](wf18_dossier_replay_campaign/README.md) | runnable offline | harness gate | WF6, WF12 | 6 |
+| 19 | [Failure-derived rule transfer](wf19_failure_derived_rule_transfer/README.md) | runnable offline | experiment design | WF12, WF14 | 4 |
+| 20 | [Derivation loop with lift grants](wf20_derivation_loop_with_lift_grants/README.md) | runnable offline | procedure extension | WF9, WF10, WF19 | 10 |
+| 21 | [Structural prompt rewriting](wf21_structural_prompt_rewriting/README.md) | runnable offline | procedure extension | WF5 | 4 |
 | 22 | [Certified cost ladder](wf22_certified_cost_ladder/README.md) | runnable offline | experiment design | WF6, WF8, WF18 | 2 |
 | 23 | [Judge-packet custody audit](wf23_judge_packet_custody_audit/README.md) | runnable offline | harness gate | WF11 | 1 |
 | 24 | [Pinned-token operational scratchpad](wf24_pinned_token_operational_scratchpad/README.md) | runnable offline | procedure extension | WF2 | — |
@@ -65,13 +67,16 @@ guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fid
 | 49 | [Query-preservation stage and mode campaign](wf49_query_preservation_stage_and_mode_campaign/README.md) | runnable offline | experiment design | WF8, WF22 | — |
 | 50 | [Repo hygiene](wf50_repo_hygiene/README.md) | runnable | maintenance workflow | — | — |
 | 51 | [Exclusion hypotheses with cheapest falsifiers](wf51_exclusion_hypotheses_with_cheapest_falsifiers/README.md) | runnable offline | meta workflow | WF14, WF31 | — |
+| 52 | [Finite-QM benchmark](wf52_finite_qm_benchmark/README.md) | **runnable** | experiment design | WF1, WF9, WF12 | — |
+| 53 | [Industry replacement benchmark](wf53_industry_replacement_benchmark/README.md) | runnable offline | experiment design | WF12, WF14 | — |
+| 54 | [Five-seam mechanism showcase](wf54_five_seam_mechanism_showcase/README.md) | runnable offline | experiment design | WF12, WF24, WF27 | — |
 
 ## Other folders here
 
 | Folder | What it is |
 | --- | --- |
 | [`tasks/`](tasks/README.md) | The problems workflows run on: 29 offline examples and 50 certified challenges, each with exact checkers |
-| [`dag/`](dag/README.md) | The dependency graph of WF1–WF49 and WF51 (JSON, Mermaid, SVG), plus the recorded variations of each workflow |
+| [`dag/`](dag/README.md) | The dependency graph of WF1–WF54 (JSON, Mermaid; the SVG draws WF1–WF49), plus the recorded variations of each workflow |
 | [`library/`](library/README.md) | Recipe catalogue, contracts, the raw evidence of the WF1–WF5 runs, and the shared pilot-estate registers |
 
 **Where the code is.** The runnable code for WF1–WF5 is the installable
@@ -90,4 +95,5 @@ a variation of an existing workflow (a different setting or step) goes under
 that workflow's "Recorded variations", not into a new folder.
 
 **Paths in older records.** Historical records keep their bytes and may still
-name `demos/`, `docs/workflows/`, `pilots/` or the pre-`tasks/` paths.
+name `demos/`, `docs/workflows/`, `pilots/`, `dag/benchmark/` (now WF52),
+`benchmarks/` (now WF53 and WF54) or the pre-`tasks/` paths.

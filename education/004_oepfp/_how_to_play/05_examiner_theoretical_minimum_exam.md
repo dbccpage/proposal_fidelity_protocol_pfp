@@ -19,7 +19,7 @@ authority_effect: "None"
 **Presiding Tribunal:** Examiner, Adversary, Defect Hunter (alias Bassoon), and Gauge Breaker the Cat  
 **Location:** Sadovaya 302-bis, Apartment 50, the city  
 **AuthorityEffect:** `None`. Host execution receipts certify local protocol state, not universal truth.  
-**Companion Automated Test Fixture:** [`test_examiner_theoretical_minimum.py`](../../../pilots/education/symbol_game/test_examiner_theoretical_minimum.py)  
+**Companion Automated Test Fixture:** [`test_examiner_theoretical_minimum.py`](test_examiner_theoretical_minimum.py)  
 
 ---
 
@@ -703,7 +703,7 @@ In `adversary`, dialectical bouts between candidate solvers and the adversarial 
 
 ## Qualification Attestation & Conclusion
 
-A candidate who achieves 100% on the companion test suite [`test_examiner_theoretical_minimum.py`](../../../pilots/education/symbol_game/test_examiner_theoretical_minimum.py) has demonstrated:
+A candidate who achieves 100% on the companion test suite [`test_examiner_theoretical_minimum.py`](test_examiner_theoretical_minimum.py) has demonstrated:
 1. Complete fluency in exact rational cochain arithmetic ($\mathbb{Q}$) with zero floating-point leakage.
 2. Complete adherence to the Discrete Deformation Calculus (DDC) and the Authority Firewall.
 3. The ability to formulate, verify, and certify exact primal-dual witnesses with zero duality gap.

@@ -60,7 +60,7 @@ def test_system_prompt_requests_derivation_and_does_not_serialize_the_catalog():
     assert len(system.encode("utf-8")) < 20_000
     saved = (
         ROOT
-        / "pilots/education/finite_qm_workflow/finite_qm_pfp_system_prompt.md"
+        / "workflows/wf20_derivation_loop_with_lift_grants/pilots/finite_qm_prompt/finite_qm_pfp_system_prompt.md"
     )
     assert saved.read_text(encoding="utf-8") == system
 

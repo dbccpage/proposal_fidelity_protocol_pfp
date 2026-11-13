@@ -12,7 +12,8 @@
 
 - [Choose a workflow](workflows.md) · [Start here](workflow_start_here.md)
 - [Workflow DAG: WF1–WF49](workflow_dag.md)
-- [QM benchmark and implementations](workflow_qm_benchmark.md)
+- [WF52: QM benchmark and implementations](workflow_qm_benchmark.md)
+- [WF53: industry replacement](workflow_wf53.md) · [WF54: five seams](workflow_wf54.md)
 - [QM live pilot results](workflow_qm_pilot_2026_11_10.md)
 - [QM Hamiltonian checks and results](workflow_qm_hamiltonian.md)
 - [QM native polynomial checks](workflow_qm_charpoly.md)

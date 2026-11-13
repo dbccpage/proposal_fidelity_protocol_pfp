@@ -22,7 +22,7 @@ verification_scope: module paths and symbol names checked against tracked source
 
 For the finite-QM prompt template, staged workflow, execution mode and attached
 LLM techniques, see the
-[finite-QM reference workflow](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md).
+[finite-QM reference workflow](../../../workflows/wf20_derivation_loop_with_lift_grants/pilots/finite_qm_prompt/stages_and_mode.md).
 That candidate profile reuses the shared task-turn envelope; it does not rename
 this page's packet contracts or the existing numbered stage machine.
 

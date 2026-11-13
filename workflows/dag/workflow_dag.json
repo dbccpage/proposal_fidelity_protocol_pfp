@@ -2,7 +2,7 @@
   "schema_version": "pfp.workflow-dag.v1",
   "AuthorityEffect": "None",
   "date": "2026-11-05",
-  "scope": "Workflow families WF1-WF5 (implemented, own runners in pfp/workflows), WF6-WF49 and WF51 (implemented_offline: one class each in pfp_core/workflow_families, checked on offline fixtures with no model call; no live or local model campaign is recorded). WF6-WF23 were first designed from the retained pilot experiments (pilots 0000000-0000203 and their auxiliary folders, recorded with an older harness), WF24-WF49 on 2026-11-06 from workflows/tasks/certified_challenges/findings and atlas/archive/, and WF51 on 2026-11-13; their sources are cited per node. All were classified by kind after the 2026-11-05 research committee (docs/research/2026_11_05_committee_report.md). A node's status says what code exists, not a measured result.",
+  "scope": "Workflow families WF1-WF5 (implemented, own runners in pfp/workflows), WF6-WF49 and WF51 (implemented_offline: one class each in pfp_core/workflow_families, checked on offline fixtures with no model call; no live or local model campaign is recorded), WF52 (implemented, own runner with recorded live runs) and WF53-WF54 (implemented_offline, own runners). WF6-WF23 were first designed from the retained pilot experiments (pilots 0000000-0000203 and their auxiliary folders, recorded with an older harness), WF24-WF49 on 2026-11-06 from workflows/tasks/certified_challenges/findings and atlas/archive/, and WF51 on 2026-11-13; their sources are cited per node. All were classified by kind after the 2026-11-05 research committee (docs/research/2026_11_05_committee_report.md). A node's status says what code exists, not a measured result.",
   "kinds": {
     "base": "The typed task turn: frozen task, one typed reply, independent host check, replay, accounting.",
     "procedure_extension": "Adds one step or contract to the base (or to another extension). A real procedure.",
@@ -3083,6 +3083,163 @@
           "limit": 0
         }
       }
+    },
+    {
+      "id": "WF52",
+      "name": "Finite-QM benchmark",
+      "status": "implemented",
+      "kind": "experiment_design",
+      "merge_into": null,
+      "depends_on": [
+        "WF1",
+        "WF9",
+        "WF12"
+      ],
+      "layer": 6,
+      "sources": [
+        "workflows/wf52_finite_qm_benchmark/README.md"
+      ],
+      "task_families": [],
+      "source_evidence": "24 graded frozen attempts across 12 plans, USD 0.055614 settled; best 88/100, no fully correct answer.",
+      "process": [
+        "Freeze the seed and commit to a privately held worked answer",
+        "Run one plan under a whole-run budget shared by all its calls",
+        "Host checks may refuse an intermediate artifact before synthesis",
+        "Freeze outputs, then grade once on a fixed 100-point rubric"
+      ],
+      "math": [
+        "an intermediate certificate (Hamiltonian matrices, characteristic polynomial, rational probes) never certifies the final answer",
+        "grading happens after freezing, with no feedback into the run"
+      ],
+      "host_check": "exact Hamiltonian and native characteristic-polynomial checks on intermediates; post-freeze rubric grading of the answer",
+      "model_calls_normal_path": "1-5, by plan",
+      "team": {
+        "goal": "Compare whole workflows on one frozen problem by cost, tokens, time and graded accuracy.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Run the plans and keep every receipt."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "none",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF53",
+      "name": "Industry replacement benchmark",
+      "status": "implemented_offline",
+      "kind": "experiment_design",
+      "merge_into": null,
+      "depends_on": [
+        "WF12",
+        "WF14"
+      ],
+      "layer": 7,
+      "sources": [
+        "workflows/wf53_industry_replacement_benchmark/README.md"
+      ],
+      "task_families": [],
+      "source_evidence": "Offline policy verification only; live campaign prepared, not run.",
+      "process": [
+        "Four engineering tasks with a public host check and a sealed post-freeze grader",
+        "Six arms: plain, industry skills and rules, coder-reviewer loop, public checks, CI gate, PFP with two-signal regulation",
+        "Candidates run in a throwaway sandbox",
+        "Grade frozen outputs with the sealed grader"
+      ],
+      "math": [
+        "the two control arms give non-PFP runs the same public checks and one repair, so a PFP gain is not just the checks"
+      ],
+      "host_check": "public host checks per task; sealed graders after freezing",
+      "model_calls_normal_path": "1-2, by arm",
+      "team": {
+        "goal": "Measure whether PFP regulation beats industry skills and rules on engineering tasks, at equal checks.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Solve each task under its arm."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "none",
+          "limit": 0
+        }
+      }
+    },
+    {
+      "id": "WF54",
+      "name": "Five-seam mechanism showcase",
+      "status": "implemented_offline",
+      "kind": "experiment_design",
+      "merge_into": null,
+      "depends_on": [
+        "WF12",
+        "WF24",
+        "WF27"
+      ],
+      "layer": 6,
+      "sources": [
+        "workflows/wf54_five_seam_mechanism_showcase/README.md"
+      ],
+      "task_families": [],
+      "source_evidence": "Offline fixtures; the open-weight seam needs torch. No live campaign.",
+      "process": [
+        "Sampling seam: certificate-first selection against majority vote",
+        "Logit and grammar seam: token masks remove format errors, not wrong answers",
+        "Scratchpad seam: host-held memory with a stationary-loop detector",
+        "Attention and residual seam: interventions paired with null controls",
+        "Weight seam: training pairs only from host-certified receipts"
+      ],
+      "math": [
+        "each seam has a null control; a passing grammar or attention probe is not a semantic certificate"
+      ],
+      "host_check": "host oracle per seam",
+      "model_calls_normal_path": "1 per seam",
+      "team": {
+        "goal": "Show where a host can intervene in a model call and what each place can certify.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Run each seam against its control."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "none",
+          "limit": 0
+        }
+      }
     }
   ],
   "perturbations": [
@@ -3763,6 +3920,38 @@
     {
       "from": "WF31",
       "to": "WF51"
+    },
+    {
+      "from": "WF1",
+      "to": "WF52"
+    },
+    {
+      "from": "WF9",
+      "to": "WF52"
+    },
+    {
+      "from": "WF12",
+      "to": "WF52"
+    },
+    {
+      "from": "WF12",
+      "to": "WF53"
+    },
+    {
+      "from": "WF14",
+      "to": "WF53"
+    },
+    {
+      "from": "WF12",
+      "to": "WF54"
+    },
+    {
+      "from": "WF24",
+      "to": "WF54"
+    },
+    {
+      "from": "WF27",
+      "to": "WF54"
     }
   ]
 }

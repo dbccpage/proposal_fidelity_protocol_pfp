@@ -37,7 +37,7 @@ ignored by git.
 - The naming rule: `survey` must find nothing that is not an exemption.
 - `residue`: no old name is left anywhere after a rename.
 - The custody test
-  `benchmarks/industry_replacement/tests/test_industry_replacement.py::test_branch_touches_only_allowed_paths`:
+  `workflows/wf53_industry_replacement_benchmark/tests/test_industry_replacement.py::test_branch_touches_only_allowed_paths`:
   no file pinned in `dag/file_inventory.json` may change without its row being
   handled on purpose.
 - After each job, the full test suites and `python -m governance.tools.checker check`

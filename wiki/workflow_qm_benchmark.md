@@ -8,7 +8,7 @@ The subsequent larger-model and output-allowance comparisons are on that same re
 
 The [native characteristic-polynomial workflows](workflow_qm_charpoly.md) now connect an exact Rust checker to the capped runner. Their first comparison produced a checked refusal and a truncated unchecked answer. An intermediate certificate never certifies the final solution.
 
-The runnable implementation is published in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58), under `dag/benchmark/`; it is not yet on main. Raw run and evaluation artifacts remain in the working checkout. The source-only PR excludes private evaluator material. The earlier [WF1–WF5 results](workflow_results.md) concern integer addition and are a separate experiment.
+The runnable implementation is [WF52](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf52_finite_qm_benchmark) in `workflows/wf52_finite_qm_benchmark/`. Raw run and evaluation artifacts remain in the working checkout. The source-only PR excludes private evaluator material. The earlier [WF1–WF5 results](workflow_results.md) concern integer addition and are a separate experiment.
 
 ## Choose a plan
 
@@ -31,13 +31,13 @@ Every plan has one **USD 0.10 whole-run cap** shared by all its calls. These are
 
 ## The frozen task and separate evaluator
 
-The seed asks for spectrum, dynamics, pure-state entanglement and thermal properties of a two-spin system. Every model call receives the unchanged full seed from `dag/benchmark/seed_prompt.txt` as a separate message. Its SHA-256 commitment is:
+The seed asks for spectrum, dynamics, pure-state entanglement and thermal properties of a two-spin system. Every model call receives the unchanged full seed from `workflows/wf52_finite_qm_benchmark/seed_prompt.txt` as a separate message. Its SHA-256 commitment is:
 
 ```text
 9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7
 ```
 
-The worked answer is kept in separate private storage. Its hash is committed in `dag/benchmark/commitment.json`; its contents and storage path are never workflow inputs or Wiki content. Online checks use only public contracts and candidate artifacts. The trusted evaluator reviews frozen outputs afterward, with no feedback into the workflow.
+The worked answer is kept in separate private storage. Its hash is committed in `workflows/wf52_finite_qm_benchmark/commitment.json`; its contents and storage path are never workflow inputs or Wiki content. Online checks use only public contracts and candidate artifacts. The trusted evaluator reviews frozen outputs afterward, with no feedback into the workflow.
 
 The fixed 100-point rubric allocates 20 points to spectrum, 20 to dynamics, 25 to pure entanglement, 25 to thermal results and 10 to conventions and checks. Accurate formulas require review of derivations and exceptional parameter cases. Schema acceptance, model agreement and passing numerical probes do not supply that score.
 
@@ -46,9 +46,9 @@ The fixed 100-point rubric allocates 20 points to spectrum, 20 to dynamics, 25 t
 Use PowerShell at the repository root with the repository virtual environment. The [control](workflow_qm_controls.md) and [panel](workflow_qm_rational_panels.md) pages give manifest preparation commands. `prepare` and `initialize` make no paid requests. Replace model and endpoint placeholders with a currently available concrete pair and freeze the aggregate campaign budget, repetition count and order before dispatch.
 
 ```powershell
-.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py initialize --manifest CAMPAIGN_JSON --ledger NEW_CAMPAIGN_SQLITE
-.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py run --ledger NEW_CAMPAIGN_SQLITE --run-id EXACT_RUN_ID_FROM_MANIFEST --output NEW_RUN_DIRECTORY
-.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py status --ledger NEW_CAMPAIGN_SQLITE
+.venv\Scripts\python.exe -X utf8 workflows\wf52_finite_qm_benchmark\live_campaign.py initialize --manifest CAMPAIGN_JSON --ledger NEW_CAMPAIGN_SQLITE
+.venv\Scripts\python.exe -X utf8 workflows\wf52_finite_qm_benchmark\live_campaign.py run --ledger NEW_CAMPAIGN_SQLITE --run-id EXACT_RUN_ID_FROM_MANIFEST --output NEW_RUN_DIRECTORY
+.venv\Scripts\python.exe -X utf8 workflows\wf52_finite_qm_benchmark\live_campaign.py status --ledger NEW_CAMPAIGN_SQLITE
 ```
 
 Only `run` reads `OPENROUTER_API_KEY` from the environment and can incur charges. Each output directory must be new. Execute runs serially in their frozen manifest order. There is no automatic campaign loop, retry or fallback. An uncertain charge keeps its reservation and blocks further dispatch until reconciled. Direct Anthropic billing is not implemented in this runner.
@@ -59,13 +59,13 @@ Keep `run.json`, `run.sha256`, `ledger.sqlite3` and `calls/`; panel plans also r
 
 ## Interpret results
 
-The first campaign ran one sample of each original plan on the same Qwen/SiliconFlow endpoint, with USD 0.50 aggregate admission and USD 0.007364 recorded spend. Its failed artifacts and truncated responses remain in the results. A separate one-run, USD 0.10-capped exploratory repair tests clearer JSON instructions and response budgeting. The [pilot page](workflow_qm_pilot_2026_11_10.md) reports costs, tokens, timing, post-freeze grades and limitations; `dag/benchmark/results_summary.json` contains the machine-readable comparison. This is an operational pilot, not evidence of a reproducible mechanism advantage.
+The first campaign ran one sample of each original plan on the same Qwen/SiliconFlow endpoint, with USD 0.50 aggregate admission and USD 0.007364 recorded spend. Its failed artifacts and truncated responses remain in the results. A separate one-run, USD 0.10-capped exploratory repair tests clearer JSON instructions and response budgeting. The [pilot page](workflow_qm_pilot_2026_11_10.md) reports costs, tokens, timing, post-freeze grades and limitations; `workflows/wf52_finite_qm_benchmark/results_summary.json` contains the machine-readable comparison. This is an operational pilot, not evidence of a reproducible mechanism advantage.
 
-The pinned validation receipt `dag/benchmark/rational_panel_validation.json` records 119 passing synthetic tests across the checker, runner, accounting and summarizer. An independent review records 80 passing tests in an isolated fabricated-task environment in `dag/benchmark/rational_panel_review_focused_tests_verified.json`; these overlap the larger suite and must not be added as 199 distinct tests. No test count is evidence of improved model performance.
+The pinned validation receipt `workflows/wf52_finite_qm_benchmark/rational_panel_validation.json` records 119 passing synthetic tests across the checker, runner, accounting and summarizer. An independent review records 80 passing tests in an isolated fabricated-task environment in `workflows/wf52_finite_qm_benchmark/rational_panel_review_focused_tests_verified.json`; these overlap the larger suite and must not be added as 199 distinct tests. No test count is evidence of improved model performance.
 
 The native-workflow suite passes 249 tests plus 48 subtests, including an isolated export of committed source after a fresh native build. The earlier 190-test section checkpoint and other counts describe historical or overlapping snapshots; do not add them together. The separate unregistered transport-normalization helper has 12 focused tests and does not change the measured v1 workflows.
 
-Report raw outcomes and all failed attempts before averages. Compare equal-money, equal-token and equal-time experiments separately. Repeated samples of this single problem measure within-item behavior; they do not establish general performance on graduate QM problems. Full protocol: `dag/benchmark/EXPERIMENT_PROTOCOL.md`. Accounting and execution details: `dag/benchmark/LIVE_RUNNER.md` and `dag/benchmark/ACCOUNTING.md`.
+Report raw outcomes and all failed attempts before averages. Compare equal-money, equal-token and equal-time experiments separately. Repeated samples of this single problem measure within-item behavior; they do not establish general performance on graduate QM problems. Full protocol: `workflows/wf52_finite_qm_benchmark/experiment_protocol.md`. Accounting and execution details: `workflows/wf52_finite_qm_benchmark/live_runner.md` and `workflows/wf52_finite_qm_benchmark/accounting.md`.
 
 ## Relationship to the workflow DAG
 

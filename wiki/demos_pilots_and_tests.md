@@ -6,7 +6,7 @@ folder, which mixed offline checks, model experiments and harness code.
 
 | Kind | Where | Calls a model? | What it is |
 | --- | --- | --- | --- |
-| Workflows WF1–WF49 | [`workflows/wfNN_*/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows) | WF1–WF5 can | One numbered folder per workflow, matching [Workflows](workflows.md) |
+| Workflows WF1–WF54 | [`workflows/wfNN_*/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows) | WF1–WF5 can | One numbered folder per workflow, matching [Workflows](workflows.md) |
 | Task examples | [`workflows/tasks/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/tasks) | No | Offline examples that run with the standard library and pytest |
 | Certified challenges | [`workflows/tasks/certified_challenges/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/tasks/certified_challenges) | No | Fifty hard exact problems judged by certificate checkers |
 | Pilots | inside their workflow folder: `workflows/wf06_…/pilots/` to `wf23_…/pilots/` (the whole pilot estate, moved 2026-11-06); shared registers in [`workflows/library/pilot_estate/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/library/pilot_estate) | Yes | Experiments that ran language models; most need the private runtime |

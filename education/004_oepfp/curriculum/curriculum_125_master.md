@@ -337,14 +337,14 @@ Tracks numbered 700 and above are shorter sittings split from the former 500 not
 
 ### [How to Play The Symbol Game: Operational Playbook, Interactive Notebooks & Governance Manual](../_how_to_play/README.md)
 A comprehensive curriculum and player manual guiding humans, developers, and models from basic moves to advanced discrete governance:
-- **[00. Interactive Walkthrough Notebook](../../../pilots/education/symbol_game/00_interactive_how_to_play_walkthrough.ipynb)**: Step-by-step browser walkthrough consuming `test_how_to_play_scenarios.py` with reactive `ipywidgets` workbench and instant visual defect gauges.
-- **[01. Interactive Scenarios Lab](../../../pilots/education/symbol_game/01_interactive_scenarios_lab.ipynb)**: Diagnostic laboratory testing boundary probes: carrier smuggling, non-monotonic rollbacks, premature verification, and post-terminal state locks.
+- **[00. Interactive Walkthrough Notebook](../_how_to_play/00_interactive_how_to_play_walkthrough.ipynb)**: Step-by-step browser walkthrough consuming `test_how_to_play_scenarios.py` with reactive `ipywidgets` workbench and instant visual defect gauges.
+- **[01. Interactive Scenarios Lab](../_how_to_play/01_interactive_scenarios_lab.ipynb)**: Diagnostic laboratory testing boundary probes: carrier smuggling, non-monotonic rollbacks, premature verification, and post-terminal state locks.
 - **[00. Quickstart Guide](../_how_to_play/00_quickstart_how_to_play.md)**: 5-minute visual walkthrough, dual-space loop, and first playable triangle repair game.
 - **[01. The Three Editions](../_how_to_play/01_the_three_game_editions_and_evolution.md)**: Historical evolution from v1 LP-forcing to v2 SPK-002, to v3 L1 Oracle Governor.
 - **[02. Rules of the Board](../_how_to_play/02_the_rules_of_the_board.md)**: The 5-tuple state, bit-level carrier firewall, the 4 legal moves, and Lyapunov descent invariants.
 - **[03. Developer Handbook](../_how_to_play/03_developer_and_player_handbook.md)**: Model integration, defeating the AM-4 stationary loop with chord decoupling, and Python host patterns.
 - **[04. Visual Reference & Cheat Sheet](../_how_to_play/04_visual_reference_and_cheat_sheet.md)**: System flowcharts, refusal code dictionary, canonical topologies, and 4-file receipt layout.
 - **[Visual Assets & Infographics](../_how_to_play/assets/)**: High-resolution vector diagrams for the dual-space loop, 3-cycle triangle, four legal moves, and Lyapunov descent staircase.
-- **[Executable Test Scenarios](../../../pilots/education/symbol_game/test_how_to_play_scenarios.py)**: Automated unit test suite validating move mechanics and rollback on defect increase (7/7 passed).
+- **[Executable Test Scenarios](../_how_to_play/test_how_to_play_scenarios.py)**: Automated unit test suite validating move mechanics and rollback on defect increase (7/7 passed).
 - **Automated Notebook Test Suite**: Automated nbformat and headless code cell execution verifier (4/4 passed).
 

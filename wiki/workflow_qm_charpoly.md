@@ -30,7 +30,7 @@ Malformed proposals, refusals, unsuccessful repairs, native failures, truncated 
 
 ## Implementation and evidence
 
-The implementation is published in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58), commit `4cdacabfd7d5a03ab346004559724335906558e2`, under `dag/benchmark/`. It is not yet on main. An isolated committed export with a fresh native build passed 249 tests and 48 subtests. Controls exercise correct and false identities, one-repair admission, identical-context ablations, missing native custody and budget/accounting stops. See `CHARPOLY_WORKFLOWS.md` for build and run commands.
+The implementation is published in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58), commit `4cdacabfd7d5a03ab346004559724335906558e2`, under `workflows/wf52_finite_qm_benchmark/`. It is not yet on main. An isolated committed export with a fresh native build passed 249 tests and 48 subtests. Controls exercise correct and false identities, one-repair admission, identical-context ablations, missing native custody and budget/accounting stops. See `charpoly_workflows.md` for build and run commands.
 
 <!-- BEGIN CHARPOLY RESULTS -->
 ## First measured native-checker comparison
@@ -70,7 +70,7 @@ Four matched-resource comparison arms are implemented and verified offline:
 - **OPERADS Typed Port Pipeline**: Models composition as morphisms `f: (State) -> Contract` (Host Charpoly), `g: (Contract) -> Audit` (EIS Allosteric Gate), and `h: (Audit) -> Receipt` (PCIV Pareto Selection), formally certifying sequential associativity `(h o_0 g) o_0 f = h o_0 (g o_0 f)` via `TreeCompositionWitness`.
 
 ### Offline validation status
-- All four workflows execute offline under synthetic provider tapes with strict source-pin enforcement covering both `dag/benchmark/` and the 72-file runtime import closure in `source_custody.py`.
+- All four workflows execute offline under synthetic provider tapes with strict source-pin enforcement covering both `workflows/wf52_finite_qm_benchmark/` and the 72-file runtime import closure in `source_custody.py`.
 - Exact polynomial equivalence on the 125-point rational grid is verified offline via `qm_host_charpoly.py` using dual Leibniz/Laplace determinant engines and 3D tensor product Lagrange interpolation (`interpolate_trivariate_charpoly` and `interpolate_charpoly_from_grid`), cross-checked against receipt-grounded native sidecar replay.
 - Compact serialized context schema `pfp.qm-host-charpoly.compact-certificate.v1` (`COMPACT_CHAR_BUDGET = 1,300` characters) eliminates internal `failure_states` diagnostics and redundant wire metadata while binding `receipt_sha256`, reducing prompt context by over 72% (1,252 characters vs 4,507 original) while delivering standard descending-degree formulas and public matrices.
 - The intermediate certificate covers only `det(lambda I - H)`; downstream derivations, projectors, and final answers are explicitly uncertified.

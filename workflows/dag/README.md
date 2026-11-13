@@ -1,10 +1,13 @@
-# Workflow DAG: WF1–WF49
+# Workflow DAG: WF1–WF54
 
 AuthorityEffect: None. This folder describes workflow designs and their
 sources. It adds no measured result.
 
 **WF1–WF5 are implemented** (`pfp.workflows`, offline-verified).
-**WF6–WF49 and WF51 run offline** on the family runtime in
+**WF52 has its own runner and recorded live runs; WF53 and WF54 have their own
+offline runners** (folders `workflows/wf52_…` to `wf54_…`, formerly
+`dag/benchmark/` and `benchmarks/`; [`workflow_dag.svg`](workflow_dag.svg) still
+draws WF1–WF49 only). **WF6–WF49 and WF51 run offline** on the family runtime in
 [`pfp_core/workflow_families/`](../../pfp_core/workflow_families/) (status
 `implemented_offline`: fixtures only, no model campaign yet). WF6–WF23 were
 designed on 2026-11-05 by reading the retained pilot estate (`pilot_0000000`
@@ -78,6 +81,10 @@ flowchart TD
   WF47("WF47 Resumable bounded frontier search<br/><small>procedure extension</small>")
   WF48("WF48 Commit-reveal with a hostile mutation gate<br/><small>harness gate</small>")
   WF49("WF49 Query-preservation stage and mode campaign<br/><small>experiment design</small>")
+  WF51("WF51 Exclusion hypotheses with cheapest falsifiers<br/><small>meta workflow</small>")
+  WF52["WF52 Finite-QM benchmark<br/><small>experiment design</small>"]
+  WF53("WF53 Industry replacement benchmark<br/><small>experiment design</small>")
+  WF54("WF54 Five-seam mechanism showcase<br/><small>experiment design</small>")
   WF1 --> WF2
   WF1 --> WF3
   WF3 --> WF4
@@ -153,11 +160,21 @@ flowchart TD
   WF23 --> WF48
   WF8 --> WF49
   WF22 --> WF49
+  WF14 --> WF51
+  WF31 --> WF51
+  WF1 --> WF52
+  WF9 --> WF52
+  WF12 --> WF52
+  WF12 --> WF53
+  WF14 --> WF53
+  WF12 --> WF54
+  WF24 --> WF54
+  WF27 --> WF54
   classDef implemented fill:#dbeafe,stroke:#1d4ed8,color:#0f172a
   classDef gate fill:#e5e7eb,stroke:#4b5563,color:#0f172a
   classDef derived fill:#fef3c7,stroke:#b45309,color:#0f172a
-  class WF1,WF2,WF3,WF4,WF5 implemented
-  class WF6,WF7,WF8,WF9,WF10,WF11,WF12,WF13,WF14,WF15,WF16,WF17,WF19,WF20,WF21,WF22,WF24,WF25,WF26,WF27,WF28,WF29,WF30,WF31,WF32,WF33,WF34,WF35,WF36,WF37,WF38,WF40,WF41,WF42,WF44,WF45,WF46,WF47,WF49 derived
+  class WF1,WF2,WF3,WF4,WF5,WF52 implemented
+  class WF6,WF7,WF8,WF9,WF10,WF11,WF12,WF13,WF14,WF15,WF16,WF17,WF19,WF20,WF21,WF22,WF24,WF25,WF26,WF27,WF28,WF29,WF30,WF31,WF32,WF33,WF34,WF35,WF36,WF37,WF38,WF40,WF41,WF42,WF44,WF45,WF46,WF47,WF49,WF51,WF53,WF54 derived
   class WF18,WF23,WF39,WF43,WF48 gate
 ```
 

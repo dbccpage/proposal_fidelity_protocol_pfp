@@ -168,7 +168,7 @@ $$\boxed{
 \end{aligned}
 }$$
 
-Stage count at the 2026-10-20 pin: the earlier text said "8-Stage". The public controller [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml) declares `public_stage_count: 11`, `StageName` in [stages.py](../../../../pfp/domain/stages/stages.py) lists the same eleven names (admit through evidence_plan), and `run-seed --stages` accepts 1 to 11 with default 5 ([pfp.py](../../../../pfp/entrypoints/cli/pfp.py) line 75). The separate finite-QM research workflow has six stages P0 to P5 ([22](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md)).
+Stage count at the 2026-10-20 pin: the earlier text said "8-Stage". The public controller [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml) declares `public_stage_count: 11`, `StageName` in [stages.py](../../../../pfp/domain/stages/stages.py) lists the same eleven names (admit through evidence_plan), and `run-seed --stages` accepts 1 to 11 with default 5 ([pfp.py](../../../../pfp/entrypoints/cli/pfp.py) line 75). The separate finite-QM research workflow has six stages P0 to P5 ([22](../../../workflows/wf20_derivation_loop_with_lift_grants/pilots/finite_qm_prompt/stages_and_mode.md)).
 
 ### Verdict on Needing CEC:
 1. **For fixed-context PFP runs:** CEC is **not** invoked. PFP verifies candidates against the declared context contracts; if an obstruction cannot be repaired at depth $n$, PFP fails closed and emits a typed refusal (`REFUSED`, `NO_ACTIVE_OBSTRUCTION`, or `OpenObstruction`).

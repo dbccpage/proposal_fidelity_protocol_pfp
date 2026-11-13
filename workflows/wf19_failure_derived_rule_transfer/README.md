@@ -47,6 +47,8 @@ Model experiments for this workflow, recorded on earlier runs with an older harn
 
 - [`pilots/challenge_suite/`](pilots/challenge_suite/) — pilot material
 - [`pilots/evidence/`](pilots/evidence/) — recorded campaign evidence (raw replies, ledgers, receipts)
+- [`pilots/challenge_findings/`](pilots/challenge_findings/) — per-challenge findings for c043-c059, with their corrections and withdrawals
+- [`pilots/runbooks/`](pilots/runbooks/) — how the original challenges and the bounded mechanism sessions were played; `challenge_suite/protocol_collation.py` reads both
 
 ## Team
 

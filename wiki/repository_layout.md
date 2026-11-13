@@ -10,7 +10,7 @@
 | [`operads/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/operads) ([page](operads.md)) | Typed composition of capabilities, workflows and skills |
 | [`pfp_lab/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_lab) | [PFP Lab](pfp_lab.md) and its scenario packs |
 | [`ops/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/ops) | Operations, governance and supporting infrastructure |
-| [`workflows/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows) ([page](workflows.md)) | Every workflow in one numbered folder each (`wf01_…`–`wf49_…`), plus `tasks/` (offline examples and the fifty certified challenges), `dag/` and `library/`. Pilot experiments sit inside their workflow folder. |
+| [`workflows/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows) ([page](workflows.md)) | Every workflow in one numbered folder each (`wf01_…`–`wf54_…`), plus `tasks/` (offline examples and the fifty certified challenges), `dag/` and `library/`. Pilot experiments sit inside their workflow folder. |
 | `wiki/` | The source for this wiki |
 
 ## Code layout

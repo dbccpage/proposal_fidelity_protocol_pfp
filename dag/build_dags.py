@@ -83,10 +83,10 @@ def main():
         report=json.loads(path.read_text(encoding='utf-8'))
         # Count-only validation summaries do not contribute claims or sources.
         if isinstance(report,dict) and isinstance(report.get('file_reviews'),list): additional.append((path,report))
-    benchmark_review_path = DAG/'benchmark/rational_panel_review.json'
-    benchmark_review = read('benchmark/rational_panel_review.json', {})
+    benchmark_review_path = ROOT/'workflows'/'wf52_finite_qm_benchmark'/'rational_panel_review.json'
+    benchmark_review = read('../workflows/wf52_finite_qm_benchmark/rational_panel_review.json', {})
     if benchmark_review:
-        delta_registry=read('benchmark/pilot_20261110/implementation_revisions.json',{})
+        delta_registry=read('../workflows/wf52_finite_qm_benchmark/pilot_20261110/implementation_revisions.json',{})
         deltas={row['path']:row for row in delta_registry.get('revisions',[])}
         changed_review_sources=[]
         for row in benchmark_review['file_reviews']:
@@ -191,7 +191,7 @@ def main():
     write('derivations_dag.json',derivation)
     registry=workflows.get('registry',{})
     wnodes=[{**n,'kind':'existing_workflow_family','evaluation_status':'not_run_on_sealed_seed'} for n in registry.get('family_nodes',[])]
-    for correction in read('pilot_triage/workflow_corrections.json',{}).get('corrections',[]):
+    for correction in read('../workflows/wf18_dossier_replay_campaign/pilots/workflow_corrections.json',{}).get('corrections',[]):
         node=next(n for n in wnodes if n['id']==correction['workflow_id'])
         source=ROOT/correction['source']
         if hashlib.sha256(source.read_bytes()).hexdigest()!=correction['source_sha256']:
@@ -217,26 +217,26 @@ def main():
     composition_metadata={k:v for k,v in catalog.items() if k!='candidates'}
     for control, calls in [('direct',1),('self_critique',2)]:
         wnodes.append({'id':'CONTROL:'+control,'kind':'executable_benchmark_control','plan':control,
-                       'implementation':'dag/benchmark/reference_runner.py','max_paid_calls':calls,
+                       'implementation':'workflows/wf52_finite_qm_benchmark/reference_runner.py','max_paid_calls':calls,
                        'supported_provider':'guarded OpenRouter with exact finite campaign admission',
                        'cost_ceiling_usd':'0.10','billing_scope':'whole run; conditional on recorded provider enforcement premises',
                        'evaluation_status':'synthetic_transport_tested_not_live_evaluated',
                        'composition_scope':'Control arm outside the finite research-macro permutation grammar.'})
     # Importing these inert specifications reads only public checker source bytes;
     # it performs no provider, credential or private-evaluator access.
-    sys.path.insert(0, str(DAG/'benchmark'))
+    sys.path.insert(0, str(ROOT/'workflows'/'wf52_finite_qm_benchmark'))
     from rational_workflows import EXPERIMENTS
     for plan, specification in EXPERIMENTS.items():
         node_id = 'EXECUTABLE:' + plan
         wnodes.append({'id':node_id,'kind':'executable_bounded_research_adaptation','plan':plan,
-                       'source_idea':'R05-I02','implementation':'dag/benchmark/reference_runner.py',
-                       'specification':'dag/benchmark/rational_workflows.py',
-                       'checker':'dag/benchmark/rational_panel.py',
+                       'source_idea':'R05-I02','implementation':'workflows/wf52_finite_qm_benchmark/reference_runner.py',
+                       'specification':'workflows/wf52_finite_qm_benchmark/rational_workflows.py',
+                       'checker':'workflows/wf52_finite_qm_benchmark/rational_panel.py',
                        'specification_sha256':hashlib.sha256(json.dumps(specification,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()).hexdigest(),
                        'checker_source_sha256':specification['source_pins']['rational_panel.py'],
                        'public_contract_sha256':specification['contract_sha256'],
-                       'synthetic_validation':'dag/benchmark/rational_panel_validation.json',
-                       'independent_review':'dag/benchmark/rational_panel_review.json',
+                       'synthetic_validation':'workflows/wf52_finite_qm_benchmark/rational_panel_validation.json',
+                       'independent_review':'workflows/wf52_finite_qm_benchmark/rational_panel_review.json',
                        'visibility':specification['visibility'],
                        'max_paid_calls':len(specification['stages']),
                        'max_output_tokens_total':sum(stage['max_output_tokens'] for stage in specification['stages']),
@@ -251,9 +251,9 @@ def main():
     for plan, specification in MATRIX_PLANS.items():
         node_id='EXECUTABLE:'+plan
         wnodes.append({'id':node_id,'kind':'executable_bounded_research_adaptation','plan':plan,
-                       'source_idea':'R01-I03','implementation':'dag/benchmark/reference_runner.py',
-                       'specification':'dag/benchmark/hamiltonian_workflows.py',
-                       'checker':'dag/benchmark/hamiltonian_artifact.py',
+                       'source_idea':'R01-I03','implementation':'workflows/wf52_finite_qm_benchmark/reference_runner.py',
+                       'specification':'workflows/wf52_finite_qm_benchmark/hamiltonian_workflows.py',
+                       'checker':'workflows/wf52_finite_qm_benchmark/hamiltonian_artifact.py',
                        'specification_sha256':hashlib.sha256(json.dumps(specification,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()).hexdigest(),
                        'source_pins':specification['source_pins'],
                        'max_paid_calls':len(specification['stages']),
@@ -263,24 +263,24 @@ def main():
                        'mathematical_scope':specification['scope'],
                        'checked_gate':specification['checked'],'host_matrix_control':specification['host_matrix'],
                        'repair_policy':specification['repair_policy'],
-                       'independent_review':'dag/benchmark/hamiltonian_workflows_review.json',
+                       'independent_review':'workflows/wf52_finite_qm_benchmark/hamiltonian_workflows_review.json',
                        'open_obligations':['Final-answer correctness is not certified by intermediate acceptance','Native PFP/EIS/PCIV/OPERADS interface integration','Repeated matched-resource evidence beyond one item']})
         wedges.append({'from':'R01-I03','to':node_id,'kind':'bounded_representation_transport_adaptation_or_ablation'})
     from charpoly_workflows import CHARPOLY_PLANS
     for plan, specification in CHARPOLY_PLANS.items():
         node_id='EXECUTABLE:'+plan
         wnodes.append({'id':node_id,'kind':'executable_bounded_research_adaptation','plan':plan,
-                       'source_idea':'R01-I03','implementation':'dag/benchmark/reference_runner.py',
-                       'specification':'dag/benchmark/charpoly_workflows.py',
-                       'checker':'dag/benchmark/qm_native_charpoly.py',
+                       'source_idea':'R01-I03','implementation':'workflows/wf52_finite_qm_benchmark/reference_runner.py',
+                       'specification':'workflows/wf52_finite_qm_benchmark/charpoly_workflows.py',
+                       'checker':'workflows/wf52_finite_qm_benchmark/qm_native_charpoly.py',
                        'source_pins':specification['source_pins'],
                        'max_paid_calls':len(specification['stages']),
                        'max_output_tokens_total':sum(stage['max_output_tokens'] for stage in specification['stages']),
                        'cost_ceiling_usd':'0.10','billing_scope':'Whole run including optional repair and synthesis; unknown liability stops dispatch.',
                        'runnable':True,'evaluated':False,'evaluation_status':'offline_integration_tested_awaiting_live_results',
                        'mathematical_scope':specification['scope'],'checked_gate':specification['checked'],
-                       'validation':'dag/benchmark/charpoly_validation.xml',
-                       'independent_review':'dag/benchmark/charpoly_workflows_review.json',
+                       'validation':'workflows/wf52_finite_qm_benchmark/charpoly_validation.xml',
+                       'independent_review':'workflows/wf52_finite_qm_benchmark/charpoly_workflows_review.json',
                        'open_obligations':['Intermediate certificate does not certify final prose or whole-QM solution',
                                            'Full PFP host and EIS/PCIV/OPERADS integration',
                                            'Repeated matched-resource evidence beyond one seed']})
@@ -289,9 +289,9 @@ def main():
     for plan, specification in HOST_CHARPOLY_PLANS.items():
         node_id='EXECUTABLE:'+plan
         wnodes.append({'id':node_id,'kind':'executable_bounded_research_adaptation','plan':plan,
-                       'source_idea':'R01-I03','implementation':'dag/benchmark/reference_runner.py',
-                       'specification':'dag/benchmark/host_charpoly_workflows.py',
-                       'checker':'dag/benchmark/qm_host_charpoly.py',
+                       'source_idea':'R01-I03','implementation':'workflows/wf52_finite_qm_benchmark/reference_runner.py',
+                       'specification':'workflows/wf52_finite_qm_benchmark/host_charpoly_workflows.py',
+                       'checker':'workflows/wf52_finite_qm_benchmark/qm_host_charpoly.py',
                        'source_pins':specification['source_pins'],
                        'max_paid_calls':len(specification['stages']),
                        'max_output_tokens_total':sum(stage['max_output_tokens'] for stage in specification['stages']),
@@ -307,8 +307,8 @@ def main():
     for plan, specification in EIS_PCIV_PLANS.items():
         node_id='EXECUTABLE:'+plan
         wnodes.append({'id':node_id,'kind':'executable_bounded_research_adaptation','plan':plan,
-                       'source_idea':'R01-I03','implementation':'dag/benchmark/reference_runner.py',
-                       'specification':'dag/benchmark/eis_pciv_workflows.py',
+                       'source_idea':'R01-I03','implementation':'workflows/wf52_finite_qm_benchmark/reference_runner.py',
+                       'specification':'workflows/wf52_finite_qm_benchmark/eis_pciv_workflows.py',
                        'checker':'eis/use_cases/two_signal_regulation.py' if plan=='eis_two_signal_charpoly_v1' else 'pciv/use_cases/transitive_immunity.py',
                        'source_pins':specification['source_pins'],
                        'max_paid_calls':len(specification['stages']),
@@ -325,25 +325,25 @@ def main():
     for plan, specification in SECTION_PLANS.items():
         node_id='CONTROL:'+plan
         wnodes.append({'id':node_id,'kind':'executable_benchmark_control','plan':plan,
-                       'implementation':'dag/benchmark/reference_runner.py',
-                       'specification':'dag/benchmark/section_workflows.py',
+                       'implementation':'workflows/wf52_finite_qm_benchmark/reference_runner.py',
+                       'specification':'workflows/wf52_finite_qm_benchmark/section_workflows.py',
                        'source_pins':specification['source_pins'],
                        'max_paid_calls':5,'max_output_tokens_total':16000,
                        'cost_ceiling_usd':'0.10','billing_scope':'One serial run ledger across five isolated calls; failures stop later dispatch.',
                        'runnable':True,'evaluated':False,'evaluation_status':'offline_tested_not_live_evaluated',
                        'mathematical_scope':specification['scope'],
                        'composition_scope':'Output-allocation control outside the research-macro grammar; no certificate-shard claim.',
-                       'validation':'dag/benchmark/section_validation.xml',
+                       'validation':'workflows/wf52_finite_qm_benchmark/section_validation.xml',
                        'open_obligations':['Cross-section consistency','Final-answer correctness','Matched-resource repeated comparison']})
         wedges.append({'from':'CONTROL:direct','to':node_id,'kind':'public_task_output_allocation_control'})
-    live_summary=read('benchmark/results_summary.json',{})
+    live_summary=read('../workflows/wf52_finite_qm_benchmark/results_summary.json',{})
     live_rows=live_summary.get('raw_runs',[])
     for node in wnodes:
         observations=[row for row in live_rows if row['plan']==node.get('plan')]
         if observations:
             node['evaluation_status']='live_pilot_observed_not_validated_improvement'
             node['observed_run_snapshots']=observations
-            node['results_source']='dag/benchmark/results_summary.json'
+            node['results_source']='workflows/wf52_finite_qm_benchmark/results_summary.json'
             node['evaluated']=all(row.get('score') is not None for row in observations)
     documentation=read('wiki/workflow_documentation.json',{})
     documented={entry['node_id']:entry for entry in documentation.get('entries',[])}
@@ -365,7 +365,7 @@ def main():
         if hashlib.sha256(page.read_bytes()).hexdigest()!=entry['page_sha256']:
             raise ValueError('Workflow Wiki source changed; refresh documentation mapping: '+entry['page'])
         node['wiki_documentation']=entry
-    wf={**common,'benchmark':read('benchmark/commitment.json',{}),
+    wf={**common,'benchmark':read('../workflows/wf52_finite_qm_benchmark/commitment.json',{}),
         'nodes':wnodes,'edges':wedges,
         'existing_nested_components':registry.get('component_nodes',[]),
         'existing_manifest_registry':registry.get('manifest_registry',[]),
@@ -375,7 +375,7 @@ def main():
         'research_agent_reports':ideas,
         'composition_space':composition_metadata or {'status':'awaiting_enumeration'},
         'evaluation':{'status':'live_pilot_observed' if live_rows else 'not_run','seed_cases':1,'per_run_cap_usd':'0.10',
-                      'observed_runs':len(live_rows),'results_source':'dag/benchmark/results_summary.json',
+                      'observed_runs':len(live_rows),'results_source':'workflows/wf52_finite_qm_benchmark/results_summary.json',
                       'cap_scope':'aggregate all model calls, parallel branches, retries and chargeable model judges in one workflow execution',
                       'metrics':['total_money_usd','input_tokens','output_tokens','reasoning_tokens_when_reported','wall_time_seconds','sum_provider_time_seconds','accuracy_by_frozen_rubric','refusal_rate','checker_error_rate'],
                       'controls':['direct same-model baseline','equal-token baseline','equal-spend baseline','equal-time baseline','ablated mechanisms','randomized execution order','repeated provider sampling'],
@@ -384,8 +384,8 @@ def main():
                                 'Unknown cost or timeout retains the reservation and stops dependent calls.',
                                 'Model agreement and schema success are not mathematical accuracy.'],
                       'private_evaluator':'separate trusted process after outputs are frozen; no key in prompts or retrieval'},
-        'executable_control_documentation':'dag/benchmark/LIVE_RUNNER.md',
-        'executable_adaptation_documentation':'dag/benchmark/RATIONAL_PANEL.md',
+        'executable_control_documentation':'workflows/wf52_finite_qm_benchmark/live_runner.md',
+        'executable_adaptation_documentation':'workflows/wf52_finite_qm_benchmark/rational_panel.md',
         'workflow_wiki_documentation':documentation,
         'remaining_work':['Finish existing workflow/source audit','Complete ten distinct research-agent reports' if len(ideas)<10 else 'Review all ten research reports and their independent source claims','Bind remaining candidate adapters to concrete schemas/checkers; design enumeration and one bounded adaptation are not admission of the entire registry','Repair observed workflow failures and test useful mathematical checks beyond the rational-only panel','Repeat matched-resource comparisons before claiming an accuracy/cost/time advantage']}
     wf['graph_validation']=validate(wnodes,wedges)

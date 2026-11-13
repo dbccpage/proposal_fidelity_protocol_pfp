@@ -17,7 +17,7 @@ An isolated committed export rebuilt the native wrapper and passed249tests plus
 48subtests. The full PFP host and EIS/PCIV/OPERADS are not integrated. Certificates
 cover an exact intermediate characteristic polynomial, never the full answer.
 
-New campaign:dag/benchmark/charpoly_pilot_20261110/.
+New campaign:workflows/wf52_finite_qm_benchmark/charpoly_pilot_20261110/.
 Checked:certificate_refused,USD0.001685,2680input/2596output,70.413seconds.
 Initial rational format refused; only repair was malformed/length-truncated.
 Neither proposal reached native computation. Final answer is absent:score0delivery,
@@ -53,10 +53,10 @@ New experiments and audit expansion are stopped. Publish the existing work and c
 ## November 11, 2026 — 5-Seam LLM Mechanism Engine & 44-Workflow Implementation Target
 
 1. **Completed & Merged (`main` at `85f25e2c`, PR #63):**
-   - PFP + EIS + PCIV + OPERADS continuation workflows (`dag/benchmark/eis_pciv_workflows.py`, `dag/benchmark/host_charpoly_workflows.py`) and industry replacement benchmark (`pfp_core/`, `benchmarks/industry_replacement/`) merged into `main`.
+   - PFP + EIS + PCIV + OPERADS continuation workflows (`workflows/wf52_finite_qm_benchmark/eis_pciv_workflows.py`, `workflows/wf52_finite_qm_benchmark/host_charpoly_workflows.py`) and industry replacement benchmark (`pfp_core/`, `workflows/wf53_industry_replacement_benchmark/`) merged into `main`.
    - Total settled provider charges remain frozen at `USD 0.055614` (`55,614` microUSD) with `USD 0.000000` new paid spend.
 2. **Completed in PR #70 (`codex/gemini-five-seam-mechanisms-20261111`):**
-   - Implemented the unified 5-seam LLM intervention & receipt-to-weight engine in `pfp_core/llm_mechanisms.py` and `benchmarks/llm_mechanisms/`:
+   - Implemented the unified 5-seam LLM intervention & receipt-to-weight engine in `pfp_core/llm_mechanisms.py` and `workflows/wf54_five_seam_mechanism_showcase/`:
      - **Seam 1 (Sampling Parameters):** `SamplingConfigV1`, `evaluate_sampling_seam` (`WholeRunBudget`, $T=0$ replicate quotient collapse, `certificate_first` vs. `majority_vote`).
      - **Seam 2 (Logit & Grammar Decode):** `LogitGrammarControllerV1`, `verify_decode_receipt_exact` (`CARRIER_MASK`, `LOGIT_BIAS`, `JSON_SCHEMA`, `GBNF`, Layer-2 vs. Layer-3 separation).
      - **Seam 3 (Host-Controlled Scratchpad):** `HostScratchSessionV1`, `detect_stationary_attractor_exact` ($K_4$ coboundary repair, `AM-4` detector, `Treg` circuit-breaker).

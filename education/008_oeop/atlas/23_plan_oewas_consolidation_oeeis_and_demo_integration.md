@@ -45,7 +45,7 @@ Three Treg mechanisms stay named apart. They are not one policy.
 | --- | --- | --- |
 | OEEIS [`domain/treg.py`](../../../../eis/domain/treg.py) `TregSupervisor` | Inclusive `toxicity >= Fraction(1, 5)` on signal-1-only firings. A pinned benign corpus is a separate mode: any firing on that corpus is signal 1 alone, so tau is not the decision. | `IMPLEMENTED` |
 | OEWAS [`domain/operad/treg.py`](../../../../operads/domain/operad/treg.py) `OperadTregSupervisor` | Strict `toxicity > Fraction(2, 5)` after at least three suppressions (`min_suppressions` default 3). | `IMPLEMENTED` |
-| Education [`was_operad_core.py`](../../../pilots/education/operad_simulation/code/was_operad_core.py) `OperadTregSupervisor` | Per-second execution-count rate limit. It is a third mechanism, and it is not the false-suppression monitor. | `IMPLEMENTED` teaching code |
+| Education [`was_operad_core.py`](../code/was_operad_core.py) `OperadTregSupervisor` | Per-second execution-count rate limit. It is a third mechanism, and it is not the false-suppression monitor. | `IMPLEMENTED` teaching code |
 
 ### Operad JSON homes
 

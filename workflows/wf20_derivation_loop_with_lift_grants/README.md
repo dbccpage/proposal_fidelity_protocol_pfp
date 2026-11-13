@@ -57,6 +57,7 @@ Model experiments for this workflow, recorded on earlier runs with an older harn
 - [`pilots/pilot_0000202/`](pilots/pilot_0000202/) — pilot_0000202: Separate additive curvature from metric Regge holonomy
 - [`pilots/pilot_0000203/`](pilots/pilot_0000203/) — pilot_0000203: Exact obstruction certificate and operational halting conditions
 - [`pilots/relational_spacetime/`](pilots/relational_spacetime/) — Relational spacetime derivation pilots
+- [`pilots/finite_qm_prompt/`](pilots/finite_qm_prompt/README.md) — the finite-QM derivation prompt, its six stages and execution mode, the decoy ablation and the validation report; [WF52](../wf52_finite_qm_benchmark/README.md) is the benchmark that followed
 
 ## Team
 

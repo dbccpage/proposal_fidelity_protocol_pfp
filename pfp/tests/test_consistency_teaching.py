@@ -27,7 +27,7 @@ def test_teaching_scene_import_is_offline_and_has_no_retired_bench_dependencies(
 
     monkeypatch.setattr(builtins, "__import__", checked_import)
     module = importlib.import_module(
-        "pilots.education.track_a.scenes.naked_prompt_launder")
+        "workflows.wf12_mechanism_control_arms.pilots.track_a_scenes.naked_prompt_launder")
     assert callable(module.record_one) and callable(module.render_mp4)
     assert attempted == []
 
@@ -148,7 +148,7 @@ def test_cli_reuses_one_gateway_and_stops_before_hard_case(tmp_path, monkeypatch
 
 def test_renderer_existing_output_refuses_before_optional_import(tmp_path, monkeypatch):
     scene = importlib.import_module(
-        "pilots.education.track_a.scenes.naked_prompt_launder")
+        "workflows.wf12_mechanism_control_arms.pilots.track_a_scenes.naked_prompt_launder")
     output = tmp_path / "old.mp4"
     output.write_bytes(b"original movie")
     original = builtins.__import__

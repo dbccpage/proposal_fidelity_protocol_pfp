@@ -51,6 +51,7 @@ Model experiments for this workflow, recorded on earlier runs with an older harn
 - [`pilots/pilot_0000190/`](pilots/pilot_0000190/) — pilot_0000190: degree4_primal_dual_certificate
 - [`pilots/pilot_0000191/`](pilots/pilot_0000191/) — pilot_0000191: chain_topology_scope_audit
 - [`pilots/replay_runners/`](pilots/replay_runners/) — pilot material
+- [`pilots/workflow_corrections.json`](pilots/workflow_corrections.json) — audited correction of this workflow's math statement (weighted L1 quotient optimum, not a negative-cycle check), from the pilot 189 review
 
 ## Team
 

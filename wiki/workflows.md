@@ -6,8 +6,8 @@ Add another mechanism when your work needs it. You can stop at any workflow.
 **QM benchmark:** [five recipes and one repair](workflow_qm_benchmark.md) cover
 a direct solver, self-critique, and rational counterexample panels. The
 [first live pilot](workflow_qm_pilot_2026_11_10.md) cost USD 0.008398 across six
-attempts; none produced a complete solution. Implementation is in [draft PR #58](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/pull/58); raw receipts remain in
-the working checkout, pending publication to main. The WF1–WF5 measurements below
+attempts; none produced a complete solution. It is now [WF52](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf52_finite_qm_benchmark),
+with its code and run records in one folder. The WF1–WF5 measurements below
 concern the earlier integer-addition task.
 
 The [Hamiltonian workflows](workflow_qm_hamiltonian.md) now add an exact public-input
@@ -32,7 +32,7 @@ arm; this provides no evidence of a performance improvement.
 
 Every workflow has one folder in the repository, numbered the same as here:
 [`workflows/wf01_typed_answer/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf01_typed_answer)
-through `workflows/wf51_…`. Each folder's README says what the workflow is for,
+through `workflows/wf54_…`. Each folder's README says what the workflow is for,
 its status, how to run it offline, what checks the answer, and where its code is. The full list is the
 [workflows index](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/README.md).
 
@@ -99,7 +99,9 @@ workflows solve arbitrary research problems or eliminate hallucinations.
 - [Workflow DAG](workflow_dag.md): WF1–WF49, their dependencies, teams and boost steps.
 - [Workflow families](workflow_families.md): WF6–WF49 and WF51, each runnable offline.
 - [WF50: repo hygiene](workflow_wf50.md): the maintenance workflow that keeps names and docs in order.
-- [Frozen QM benchmark](workflow_qm_benchmark.md): controls, rational panels, budgets and evidence limits.
+- [WF52: frozen QM benchmark](workflow_qm_benchmark.md): controls, rational panels, budgets and evidence limits.
+- [WF53: industry replacement benchmark](workflow_wf53.md): six ways to run a coding model on four engineering tasks.
+- [WF54: five-seam mechanism showcase](workflow_wf54.md): where a host can intervene in a model call, and what each place can certify.
 - [Workflow library](workflow_library.md): base families and versioned recipes.
 - [Troubleshooting](workflow_troubleshooting.md): what a refusal means and what to do.
 - [Results and costs](workflow_results.md): successful paths **and** failed attempts.

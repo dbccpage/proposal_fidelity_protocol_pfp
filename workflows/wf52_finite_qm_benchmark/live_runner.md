@@ -1,0 +1,33 @@
+# Guarded control runner
+
+The OpenRouter adapter and finite campaign ledger are implemented. The first live pilot and one exploratory repair ran on November 10, 2026; see [pilot evidence](pilot_20261110/README.md) and `results_summary.json`. Supported controls are `direct` and `self_critique`. Three original plans implement a limited rational-counterexample adaptation and its visibility/fixed-panel ablations; `rational_fixed_panel_v2` revises the output instructions after observed live failures. Their contracts and limits are in [rational_panel.md](rational_panel.md). Other research DAG entries remain design proposals, with explicit missing hosts and checkers. Campaign preparation still defaults to the original two controls.
+
+Each call refreshes public endpoint metadata and reserves the cost of the **entire advertised input context** plus the requested completion ceiling. This is deliberately conservative: an expensive or long-context endpoint may be refused even for a short prompt. There is no character/token heuristic. Only one unambiguous endpoint slug, ordinary text output, explicit `max_tokens`, and known token tariffs are admitted. Conditional tariffs, extra charges, cache writes, automatic routing variants and ambiguous provider slugs are refused. Cache reads may be cheaper than the reserved prompt tariff.
+
+The wire request fixes the model and endpoint, disables fallback, requires supported parameters and supplies numeric price ceilings. Those controls follow the [provider routing documentation](https://openrouter.ai/docs/guides/routing/provider-selection). Endpoint ceilings and tariffs come from the [endpoint API](https://openrouter.ai/docs/api/api-reference/endpoints/list-all-endpoints-for-a-model); conditional pricing is described in the [model metadata](https://openrouter.ai/docs/guides/overview/models).
+
+The monetary implication is conditional: the provider must honour its advertised input/context and completion bounds, routing restrictions and tariff, including how reasoning tokens are charged. A metadata refresh cannot eliminate a subsequent provider change or defect. A local ledger cannot reverse an external overcharge. The code records actual overruns and blocks further dispatch. Provider account/key caps are useful additional controls, but OpenRouter's [documented budget checks](https://openrouter.ai/docs/api_reference/limits) are not a substitute for this reservation argument. In particular, an in-flight estimate does not cover every kind of fee and is not enabled for every account.
+
+Every model request contains the exact frozen seed, with no repository retrieval, shell, tools or private-evaluator input. Full wire requests, endpoint snapshots, response text, usage, request identifiers, hashes, reservations, durations and failure status are retained. The transport performs one HTTP request with no redirect, proxy, streaming or retry loop. A timeout or missing charge retains the run reservation and blocks the campaign. Actual cost is read from [usage accounting](https://openrouter.ai/docs/cookbook/administration/usage-accounting), never inferred from an absent token field.
+
+Preparation and initialization perform no paid work. Use the repository virtual environment. Replace the model and endpoint placeholders with a currently available concrete pair; there is no built-in claim that any model is sufficiently accurate.
+
+`prepare --max-output-tokens N` now freezes a configurable per-call allowance (default 4,000). The monetary cap remains USD0.10 per run, and fixed adaptation stages can impose lower ceilings. Larger allowances still require endpoint support and a sufficient cost reservation; they are not an approval to exceed the run ledger. The Hamiltonian comparison and its limits are described in [hamiltonian_workflows.md](hamiltonian_workflows.md).
+
+```powershell
+.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py prepare --campaign-id qm-controls-001 --model AUTHOR/MODEL --endpoint PROVIDER/ENDPOINT --cap-microusd 200000 --order-seed 70719 --output dag\benchmark\campaign.json
+.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py initialize --manifest dag\benchmark\campaign.json --ledger dag\benchmark\campaign.sqlite3
+```
+
+The first command prepares one run of each control, in a reproducible shuffled order, with a total ceiling of USD 0.20 and USD 0.10 per run. This is a configuration example, not an approved or executed campaign. Review the exact manifest before initialization. The `run` command below is the only command that reads `OPENROUTER_API_KEY` and can incur charges; supply the key through the environment, never a command-line argument. Read the exact run ID from the manifest.
+
+```powershell
+.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py run --ledger dag\benchmark\campaign.sqlite3 --run-id RUN_ID --output dag\benchmark\live_runs\RUN_DIRECTORY
+.venv\Scripts\python.exe -X utf8 dag\benchmark\live_campaign.py status --ledger dag\benchmark\campaign.sqlite3
+```
+
+There is no automatic campaign loop. Each planned run may be admitted once, in the frozen order, and its output directory cannot already exist. Campaign runs are serial: an unfinished admission blocks the next run, including after a crash. Known charges settle before later response validation or artifact writes; unknown charges retain durable reservations. Reconciliation is intentionally manual and is not implemented as a budget-reset switch. Candidate grades are supplied only after output freezing through `summarize_runs.py`; no score is fed back into the run. Anthropic direct billing is not implemented; the permitted OpenRouter path satisfies the provider alternative for these controls when its admission conditions hold.
+
+Evidence JSON preserves malformed Unicode through ASCII escaping, while invalid answer/provider metadata blocks successful admission and retains the known bill. The summarizer verifies the adjacent `run.sha256`, answer hash, exact budget bindings/arithmetic and metric types before using a receipt. Local digest consistency is not provider authentication. The rational-panel review and repair checkpoint is recorded in `rational_panel_review.json`; its original failure probes are retained separately.
+
+The independent review in `guard_review.json` reproduced three local guard defects before correction. `guard_review_resolution.json` records the separate fixes and 41 passing focused tests; the historical review is preserved. `provider_preflight.json` records a public metadata-only observation of one concrete endpoint. Neither artifact is a live model result or a provider billing guarantee.
