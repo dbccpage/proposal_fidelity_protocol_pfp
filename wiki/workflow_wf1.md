@@ -1,5 +1,7 @@
 # WF1: one task, one typed answer
 
+**Status:** implemented and runnable (own runner, `pfp/workflows/wf0001`). Live run recorded: Nov 6, DeepSeek V4.1 Flash, accepted ($0.00005).
+
 **Folder:** [`workflows/wf01_typed_answer/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf01_typed_answer) · **Code:** [`pfp/workflows/wf0001/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0001)
 
 > **Adds:** nothing; this is the base. **Costs:** 1 call. **Shown so far:** accepted live calls on integer addition with two models: the Oct 28 prototype ($0.00017) and the shipped runner on DeepSeek V4.1 Flash ($0.00005).
@@ -12,6 +14,19 @@ The example below uses the current repository's pure PFP task-turn API.
 
 For the automated runner, use [Install and run](workflow_running.md).
 The walkthrough below remains a small manual API example.
+
+## Run it offline
+
+No model call and no cost. From the repository root, after `pip install ".[workflows]"`:
+
+```powershell
+python -m pfp.workflows.wf0001 prepare pfp/workflows/wf0001/examples/integer_sum.task.json --output runs/wf1
+python -m pfp.workflows.wf0001 check runs/wf1 pfp/workflows/wf0001/examples/integer_sum.reply.fixture.json --fixture
+python -m pfp.workflows.wf0001 replay runs/wf1
+python -m pytest pfp/workflows/wf0001 -q
+```
+
+**The check:** the reply must parse as the typed envelope, and an independent host recomputes the exact sum (`typed_envelope_and_independent_exact_sum`).
 
 ## Before you start
 

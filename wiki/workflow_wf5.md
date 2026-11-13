@@ -1,5 +1,7 @@
 # WF5: rewrite the task without losing its meaning
 
+**Status:** implemented and runnable (own runner, `pfp/workflows/wf0005`). Live run recorded: Nov 6, DeepSeek V4.1 Flash, refused: the miner reply failed the strict schema.
+
 **Folder:** [`workflows/wf05_checked_rewrite/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf05_checked_rewrite) · **Code:** [`pfp/workflows/wf0005/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0005)
 
 > **Adds to WF4:** a deterministic rewrite of the seed with preservation checks. **Costs:** 6 calls (the rewrite adds none). **Shown so far:** one accepted run after 4 failed miners on Oct 28 ($0.0015 in total); on Nov 6 the miner reply failed the strict schema and the run stopped, by design. The rewrite supports one sentence pattern ("Calculate the exact sum of …").
@@ -10,6 +12,19 @@ five-agent procedure. **Normal model calls in the demonstrated variant:** six.
 The demonstrated rewrite is deterministic: zero rewrite model calls, one miner,
 five concurrent solvers. A future model-written rewrite must add its calls and
 costs explicitly.
+
+## Run it offline
+
+No model call and no cost. From the repository root, after `pip install ".[workflows]"`:
+
+```powershell
+python -m pfp.workflows.wf0005 prepare --task pfp/workflows/wf0005/examples/integer_sum.task.json --output runs/wf5-preview
+python -m pytest pfp/workflows/wf0005 -q
+```
+
+`prepare` builds the prompts and schemas without calling a model; the full five-agent path needs a live model. The tests run the full path with scripted replies, in process.
+
+**The check:** the rewrite must decode to the same query (`decode(rewrite(s)) = query(s)`), then WF4 runs on the original input.
 
 ## Before you start
 

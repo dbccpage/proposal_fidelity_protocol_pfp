@@ -1,5 +1,7 @@
 # WF3: mine guidance, then solve once
 
+**Status:** implemented and runnable (own runner, `pfp/workflows/wf0003`). Live run recorded: Nov 6, DeepSeek V4.1 Flash, refused: the solver hit its fixed 1,300-token limit.
+
 **Folder:** [`workflows/wf03_mine_then_solve/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf03_mine_then_solve) · **Code:** [`pfp/workflows/wf0003/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0003)
 
 > **Adds to WF2:** a mining call whose guidance is screened and frozen before the solver runs. **Costs:** 2 calls on the normal path. **Shown so far:** the "2 calls" figure is stitched from a miner in one run and a solver in another; the actual development path took 10 actions ($0.0043) with 7 failures. On Nov 6 the shipped runner was refused: the solver hit its fixed 1,300-token limit mid-report. The L2 slot check re-checks values the solver schema already pins, so it cannot fail on a valid reply.
@@ -9,6 +11,20 @@ guidance prepared before its answer. **Normal model calls:** two.
 
 There is one preparatory miner and one main solver. The mining response is not
 an answer, and the solver does not silently fall back to WF2 if mining fails.
+
+## Run it offline
+
+No model call and no cost. From the repository root, after `pip install ".[workflows]"`:
+
+```powershell
+python -m pfp.workflows.wf0003 prepare pfp/workflows/wf0003/examples/integer_sum.task.json --output runs/wf3
+python -m pfp.workflows.wf0003 check-mining runs/wf3 pfp/workflows/wf0003/examples/mining.reply.fixture.json --fixture
+python -m pfp.workflows.wf0003 check runs/wf3 pfp/workflows/wf0003/examples/solver.reply.fixture.json --fixture
+python -m pfp.workflows.wf0003 replay runs/wf3
+python -m pytest pfp/workflows/wf0003 -q
+```
+
+**The check:** the mining reply is screened and frozen first; the solver reply then gets the WF1 check.
 
 ## Before you start
 

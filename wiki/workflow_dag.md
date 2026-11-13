@@ -1,6 +1,6 @@
 # Workflow DAG: WF1–WF49
 
-**WF1–WF5 are the implemented runners. WF6–WF49 are proposals, not runners.** WF6–WF23 were read off the retained pilot experiments, and WF24–WF49 off the certified-challenge findings notes and the papers: what the pilots
+**WF1–WF5 have their own runners. WF6–WF49 run offline on the family runtime; see [Workflow families](workflow_families.md).** WF6–WF23 were read off the retained pilot experiments, and WF24–WF49 off the certified-challenge findings notes and the papers: what the pilots
 did, which check decided, and which earlier workflow they reuse. No new model
 call was made to build this graph, and most of the source pilots from 52 to
 187 are planned capsules that were never dispatched.
@@ -323,7 +323,7 @@ success.
 
 **Folder:** [`workflows/wf06_dialect_sweep/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf06_dialect_sweep)
 
-**Status:** proposal (no runner, no run). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF5. **Model calls on the normal path:** 2 + 2k per seed.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF5. **Model calls on the normal path:** 2 + 2k per seed.
 
 **Goal:** Measure, item by item, which presentation of the same task the host accepts more often, without changing the task.
 
@@ -355,7 +355,7 @@ success.
 
 **Folder:** [`workflows/wf07_typed_refusal/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf07_typed_refusal)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF1. **Model calls on the normal path:** 1.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF1. **Model calls on the normal path:** 1.
 
 **Goal:** Return the correct refusal code whenever the premises do not determine an answer.
 
@@ -385,7 +385,7 @@ success.
 
 **Folder:** [`workflows/wf08_staged_sealed_packets/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf08_staged_sealed_packets)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF2, WF5. **Model calls on the normal path:** k.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF2, WF5. **Model calls on the normal path:** k.
 
 **Goal:** Each stage produces a sealed, typed output; the final answer checks.
 
@@ -415,7 +415,7 @@ success.
 
 **Folder:** [`workflows/wf09_bounded_check_and_repair/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf09_bounded_check_and_repair)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF2. **Model calls on the normal path:** 1..L.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF2. **Model calls on the normal path:** 1..L.
 
 **Goal:** An accepted reply within L attempts, or a recorded stop at the limit.
 
@@ -446,7 +446,7 @@ success.
 
 **Folder:** [`workflows/wf10_local_to_global_obstruction_certificate/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf10_local_to_global_obstruction_certificate)
 
-**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF4. **Builds on:** WF4, WF9. **Model calls on the normal path:** 1 + n_patches.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** task preset, expected to fold into WF4. **Builds on:** WF4, WF9. **Model calls on the normal path:** 1 + n_patches.
 
 **Goal:** A checked gluing witness or a checked obstruction class for the declared cover.
 
@@ -478,7 +478,7 @@ success.
 
 **Folder:** [`workflows/wf11_dual_certificate_synthesis/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf11_dual_certificate_synthesis)
 
-**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF1. **Builds on:** WF3, WF9. **Model calls on the normal path:** planned, budget-capped.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** task preset, expected to fold into WF1. **Builds on:** WF3, WF9. **Model calls on the normal path:** planned, budget-capped.
 
 **Goal:** A frozen solver whose every output carries a certificate the judge accepts on hidden cases.
 
@@ -510,7 +510,7 @@ success.
 
 **Folder:** [`workflows/wf12_mechanism_control_arms/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf12_mechanism_control_arms)
 
-**Status:** proposal (no runner, no run). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF6, WF3. **Model calls on the normal path:** arms x items.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF6, WF3. **Model calls on the normal path:** arms x items.
 
 **Goal:** An arm comparison on a fixed carrier whose only difference is the mechanism note.
 
@@ -540,7 +540,7 @@ success.
 
 **Folder:** [`workflows/wf13_exact_domain_capsule_battery/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf13_exact_domain_capsule_battery)
 
-**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF1. **Builds on:** WF1, WF7. **Model calls on the normal path:** 1 per capsule.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** task preset, expected to fold into WF1. **Builds on:** WF1, WF7. **Model calls on the normal path:** 1 per capsule.
 
 **Goal:** One checked answer or refusal per domain capsule.
 
@@ -572,7 +572,7 @@ success.
 
 **Folder:** [`workflows/wf14_immune_failure_classification/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf14_immune_failure_classification)
 
-**Status:** proposal (no runner, no run). **Kind:** meta workflow. **Builds on:** WF7, WF12. **Model calls on the normal path:** per candidate.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** meta workflow. **Builds on:** WF7, WF12. **Model calls on the normal path:** per candidate.
 
 **Goal:** Detectors that catch the recorded failures and never fire on the sealed self panel.
 
@@ -603,7 +603,7 @@ success.
 
 **Folder:** [`workflows/wf15_adversary_tribunal/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf15_adversary_tribunal)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF4, WF14. **Model calls on the normal path:** 2 per claim.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF4, WF14. **Model calls on the normal path:** 2 per claim.
 
 **Goal:** A verdict that the finite check supports, with both sides frozen first.
 
@@ -634,7 +634,7 @@ success.
 
 **Folder:** [`workflows/wf16_substrate_crosswalk/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf16_substrate_crosswalk)
 
-**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF5. **Builds on:** WF5, WF10. **Model calls on the normal path:** 1 per capsule.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** task preset, expected to fold into WF5. **Builds on:** WF5, WF10. **Model calls on the normal path:** 1 per capsule.
 
 **Goal:** A translation that preserves every declared relation, with alternatives recorded.
 
@@ -664,7 +664,7 @@ success.
 
 **Folder:** [`workflows/wf17_witnessed_difference_programme/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf17_witnessed_difference_programme)
 
-**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF10. **Builds on:** WF10, WF11. **Model calls on the normal path:** research budget, capped.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** task preset, expected to fold into WF10. **Builds on:** WF10, WF11. **Model calls on the normal path:** research budget, capped.
 
 **Goal:** Each claimed difference has a checked witness and each equivalence a checked certificate.
 
@@ -695,7 +695,7 @@ success.
 
 **Folder:** [`workflows/wf18_dossier_replay_campaign/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf18_dossier_replay_campaign)
 
-**Status:** proposal (no runner, no run). **Kind:** harness gate. **Builds on:** WF6, WF12. **Model calls on the normal path:** 30 per pilot.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** harness gate. **Builds on:** WF6, WF12. **Model calls on the normal path:** 30 per pilot.
 
 **Goal:** A replayable 5 x 5 + 5 campaign whose every grade reproduces from stored bytes.
 
@@ -726,7 +726,7 @@ success.
 
 **Folder:** [`workflows/wf19_failure_derived_rule_transfer/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf19_failure_derived_rule_transfer)
 
-**Status:** proposal (no runner, no run). **Kind:** experiment design. **Builds on:** WF12, WF14. **Model calls on the normal path:** arms x held-out items.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** experiment design. **Builds on:** WF12, WF14. **Model calls on the normal path:** arms x held-out items.
 
 **Goal:** A rule that improves held-out acceptance without new false positives.
 
@@ -756,7 +756,7 @@ success.
 
 **Folder:** [`workflows/wf20_derivation_loop_with_lift_grants/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf20_derivation_loop_with_lift_grants)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9, WF10, WF19. **Model calls on the normal path:** 5 per pilot.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9, WF10, WF19. **Model calls on the normal path:** 5 per pilot.
 
 **Goal:** Discharge the named obligations or stop with a typed record at the loop limit.
 
@@ -788,7 +788,7 @@ success.
 
 **Folder:** [`workflows/wf21_structural_prompt_rewriting/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf21_structural_prompt_rewriting)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF5. **Builds on:** WF5. **Model calls on the normal path:** 0 (deterministic) or 1 per proposed rule.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension, expected to fold into WF5. **Builds on:** WF5. **Model calls on the normal path:** 0 (deterministic) or 1 per proposed rule.
 
 **Goal:** Rewrites that attach hints or encodings without touching protected bytes.
 
@@ -818,7 +818,7 @@ success.
 
 **Folder:** [`workflows/wf22_certified_cost_ladder/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf22_certified_cost_ladder)
 
-**Status:** proposal (no runner, no run). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF6, WF8, WF18. **Model calls on the normal path:** items x arms.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** experiment design, expected to fold into Sweep. **Builds on:** WF6, WF8, WF18. **Model calls on the normal path:** items x arms.
 
 **Goal:** Decide each pre-registered hypothesis on this bank, at this rung, with this gate.
 
@@ -849,7 +849,7 @@ success.
 
 **Folder:** [`workflows/wf23_judge_packet_custody_audit/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf23_judge_packet_custody_audit)
 
-**Status:** proposal (no runner, no run). **Kind:** harness gate. **Builds on:** WF11. **Model calls on the normal path:** 0.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** harness gate. **Builds on:** WF11. **Model calls on the normal path:** 0.
 
 **Goal:** Show that every challenge packet is sealed and leak-free before any team runs it.
 
@@ -879,11 +879,11 @@ success.
 
 **Folder:** [`workflows/wf24_pinned_token_operational_scratchpad/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf24_pinned_token_operational_scratchpad)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF2. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF2. **Model calls on the normal path:** see process.
 
 **Goal:** An accepted answer whose scratchpad follows the pinned grammar.
 
-**Sources:** F symbol_game_challenge_and_demos_findings §3.4, F challenges_findings_and_updates §8.2 (C017). Live, 5 cases: 0/5 became 3/5 on a 70B model and on a reasoning model. Historical; the findings carry errata.
+**Sources:** the demos findings note in [`tasks/certified_challenges/findings/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/README.md) §3.4, [challenges_findings_and_updates](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/challenges_findings_and_updates.md) §8.2 (C017). Live, 5 cases: 0/5 became 3/5 on a 70B model and on a reasoning model. Historical; the findings carry errata.
 
 **Process:**
 
@@ -907,11 +907,11 @@ success.
 
 **Folder:** [`workflows/wf25_hierarchical_decimation/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf25_hierarchical_decimation)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF24. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF24. **Model calls on the normal path:** see process.
 
 **Goal:** Fit large lattices inside the token limit without losing exactness.
 
-**Sources:** F symbol_game_challenge_and_demos_findings §3.6, §15, F challenges_findings_and_updates §12. Live on one torus case: tokens fell from over 8,000 to 2,810 and overall 4/5 passed. Two-pass quad-tree aggregation is proposed, not run.
+**Sources:** the demos findings note in [`tasks/certified_challenges/findings/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/README.md) §3.6, §15, [challenges_findings_and_updates](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/challenges_findings_and_updates.md) §12. Live on one torus case: tokens fell from over 8,000 to 2,810 and overall 4/5 passed. Two-pass quad-tree aggregation is proposed, not run.
 
 **Process:**
 
@@ -936,11 +936,11 @@ success.
 
 **Folder:** [`workflows/wf26_multi_round_antibody_dialogue/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf26_multi_round_antibody_dialogue)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF9, WF14. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF9, WF14. **Model calls on the normal path:** see process.
 
 **Goal:** Converge to an accepted answer as antibodies accumulate, without leaking the answer.
 
-**Sources:** F symbol_game_challenge_and_demos_findings §2. Live: 5 models, 22 calls, $0.015; two models reached 4/4 by round 2-3. The prompts leaked the answer (erratum), so this is plumbing evidence only.
+**Sources:** the demos findings note in [`tasks/certified_challenges/findings/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/README.md) §2. Live: 5 models, 22 calls, $0.015; two models reached 4/4 by round 2-3. The prompts leaked the answer (erratum), so this is plumbing evidence only.
 
 **Process:**
 
@@ -965,11 +965,11 @@ success.
 
 **Folder:** [`workflows/wf27_hinted_retraction_with_a_stationary_loop_detector/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf27_hinted_retraction_with_a_stationary_loop_detector)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9. **Model calls on the normal path:** see process.
 
 **Goal:** Repair to zero residual within the turn cap, with unassisted and assisted arms kept separate.
 
-**Sources:** F challenges_findings_and_updates §4, §10.1, P008 §10, P027 §5.9. Live, 28 trials on 7-8B models: baseline 0%, hinted 100% (the hint was the full repair, so only copying is shown).
+**Sources:** [challenges_findings_and_updates](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/challenges_findings_and_updates.md) §4, §10.1, P008 §10, P027 §5.9. Live, 28 trials on 7-8B models: baseline 0%, hinted 100% (the hint was the full repair, so only copying is shown).
 
 **Process:**
 
@@ -994,11 +994,11 @@ success.
 
 **Folder:** [`workflows/wf28_eight_role_audit_dialogue/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf28_eight_role_audit_dialogue)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF15. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF15. **Model calls on the normal path:** see process.
 
 **Goal:** A role sequence whose final packet the host accepts or refuses with a typed reason.
 
-**Sources:** F challenges_findings_and_updates §2. 6 run folders; verdict counts are reference self-scores.
+**Sources:** [challenges_findings_and_updates](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/challenges_findings_and_updates.md) §2. 6 run folders; verdict counts are reference self-scores.
 
 **Process:**
 
@@ -1022,11 +1022,11 @@ success.
 
 **Folder:** [`workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate)
 
-**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF11. **Builds on:** WF11. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** task preset, expected to fold into WF11. **Builds on:** WF11. **Model calls on the normal path:** see process.
 
 **Goal:** A checker that kills every mutant and accepts every valid case.
 
-**Sources:** F challenges_findings_and_updates §11 (C060). Live: reasoning model 10/10, 70B 5/10, 8B 0/10.
+**Sources:** [challenges_findings_and_updates](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/challenges_findings_and_updates.md) §11 (C060). Live: reasoning model 10/10, 70B 5/10, 8B 0/10.
 
 **Process:**
 
@@ -1050,7 +1050,7 @@ success.
 
 **Folder:** [`workflows/wf30_constraint_forcing_anti_recitation/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf30_constraint_forcing_anti_recitation)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF1. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF1. **Model calls on the normal path:** see process.
 
 **Goal:** Separate solving from recall.
 
@@ -1077,7 +1077,7 @@ success.
 
 **Folder:** [`workflows/wf31_multi_agent_tournament_with_held_out_cross_validation/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf31_multi_agent_tournament_with_held_out_cross_validation)
 
-**Status:** proposal (no runner, no run). **Kind:** experiment design. **Builds on:** WF1. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** experiment design. **Builds on:** WF1. **Model calls on the normal path:** see process.
 
 **Goal:** A ranking that holds on held-out parts of each instance.
 
@@ -1106,7 +1106,7 @@ success.
 
 **Folder:** [`workflows/wf32_claim_scoped_receipt/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf32_claim_scoped_receipt)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF1, WF2. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF1, WF2. **Model calls on the normal path:** see process.
 
 **Goal:** A receipt that says exactly which claims were checked.
 
@@ -1135,7 +1135,7 @@ success.
 
 **Folder:** [`workflows/wf33_recursive_re_entry_with_shared_fuel/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf33_recursive_re_entry_with_shared_fuel)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF9, WF20. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF9, WF20. **Model calls on the normal path:** see process.
 
 **Goal:** Chains of re-entry that never reset their budget or lose their parent.
 
@@ -1164,7 +1164,7 @@ success.
 
 **Folder:** [`workflows/wf34_future_faithful_compression_and_bounded_context/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf34_future_faithful_compression_and_bounded_context)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF8, WF22. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF8, WF22. **Model calls on the normal path:** see process.
 
 **Goal:** Smaller context with no lost future operation.
 
@@ -1193,7 +1193,7 @@ success.
 
 **Folder:** [`workflows/wf35_proposal_channel_comparison/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf35_proposal_channel_comparison)
 
-**Status:** proposal (no runner, no run). **Kind:** experiment design. **Builds on:** WF6, WF12. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** experiment design. **Builds on:** WF6, WF12. **Model calls on the normal path:** see process.
 
 **Goal:** Find which channel changes acceptance on the same items.
 
@@ -1221,7 +1221,7 @@ success.
 
 **Folder:** [`workflows/wf36_guarded_staged_slot_materialisation/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf36_guarded_staged_slot_materialisation)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF8. **Builds on:** WF8. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension, expected to fold into WF8. **Builds on:** WF8. **Model calls on the normal path:** see process.
 
 **Goal:** Admit only complete stage-1 packets; abstain otherwise.
 
@@ -1250,7 +1250,7 @@ success.
 
 **Folder:** [`workflows/wf37_evidence_bound_harness_evolution/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf37_evidence_bound_harness_evolution)
 
-**Status:** proposal (no runner, no run). **Kind:** meta workflow. **Builds on:** WF19, WF22. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** meta workflow. **Builds on:** WF19, WF22. **Model calls on the normal path:** see process.
 
 **Goal:** A harness change that wins on fresh confirmation and transfers.
 
@@ -1280,7 +1280,7 @@ success.
 
 **Folder:** [`workflows/wf38_diagnostic_trace_proposal_selection/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf38_diagnostic_trace_proposal_selection)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension, expected to fold into WF9. **Builds on:** WF9. **Model calls on the normal path:** see process.
 
 **Goal:** Select repairs only by host-recomputed diagnostics.
 
@@ -1309,7 +1309,7 @@ success.
 
 **Folder:** [`workflows/wf39_authority_firewall_gate/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf39_authority_firewall_gate)
 
-**Status:** proposal (no runner, no run). **Kind:** harness gate. **Builds on:** WF1, WF23. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** harness gate. **Builds on:** WF1, WF23. **Model calls on the normal path:** see process.
 
 **Goal:** No path from a fluent wrong answer to authority.
 
@@ -1338,7 +1338,7 @@ success.
 
 **Folder:** [`workflows/wf40_restart_boundary_after_exhausted_repair/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf40_restart_boundary_after_exhausted_repair)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF9, WF20. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF9, WF20. **Model calls on the normal path:** see process.
 
 **Goal:** End every exhausted repair with a lawful typed outcome.
 
@@ -1366,7 +1366,7 @@ success.
 
 **Folder:** [`workflows/wf41_detector_adequacy_and_two_signal_admission/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf41_detector_adequacy_and_two_signal_admission)
 
-**Status:** proposal (no runner, no run). **Kind:** meta workflow, expected to fold into WF14. **Builds on:** WF14. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** meta workflow, expected to fold into WF14. **Builds on:** WF14. **Model calls on the normal path:** see process.
 
 **Goal:** Detectors whose adequacy is shown, not assumed.
 
@@ -1395,7 +1395,7 @@ success.
 
 **Folder:** [`workflows/wf42_reasoning_trace_validation/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf42_reasoning_trace_validation)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF10, WF21. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF10, WF21. **Model calls on the normal path:** see process.
 
 **Goal:** Validate the structure of a reasoning trace, not its fluency.
 
@@ -1424,7 +1424,7 @@ success.
 
 **Folder:** [`workflows/wf43_gate_honesty_and_answer_free_leak_audit/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf43_gate_honesty_and_answer_free_leak_audit)
 
-**Status:** proposal (no runner, no run). **Kind:** harness gate. **Builds on:** WF23. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** harness gate. **Builds on:** WF23. **Model calls on the normal path:** see process.
 
 **Goal:** Show no answer-free reply can pass.
 
@@ -1452,7 +1452,7 @@ success.
 
 **Folder:** [`workflows/wf44_exact_certificate_presets/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf44_exact_certificate_presets)
 
-**Status:** proposal (no runner, no run). **Kind:** task preset, expected to fold into WF11. **Builds on:** WF11, WF10. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** task preset, expected to fold into WF11. **Builds on:** WF11, WF10. **Model calls on the normal path:** see process.
 
 **Goal:** Verify-easy, solve-hard tasks for every other workflow to use.
 
@@ -1479,7 +1479,7 @@ success.
 
 **Folder:** [`workflows/wf45_finite_terminal_selector_and_plenitude_test/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf45_finite_terminal_selector_and_plenitude_test)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF7. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF7. **Model calls on the normal path:** see process.
 
 **Goal:** Never report a unique answer the evidence cannot separate.
 
@@ -1508,7 +1508,7 @@ success.
 
 **Folder:** [`workflows/wf46_boundary_sufficiency_and_gluing_diagnostic/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf46_boundary_sufficiency_and_gluing_diagnostic)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF4. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF4. **Model calls on the normal path:** see process.
 
 **Goal:** Measure how often local passes hide a global failure.
 
@@ -1536,7 +1536,7 @@ success.
 
 **Folder:** [`workflows/wf47_resumable_bounded_frontier_search/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf47_resumable_bounded_frontier_search)
 
-**Status:** proposal (no runner, no run). **Kind:** procedure extension. **Builds on:** WF9. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** procedure extension. **Builds on:** WF9. **Model calls on the normal path:** see process.
 
 **Goal:** Search that can stop and resume without changing the question.
 
@@ -1564,11 +1564,11 @@ success.
 
 **Folder:** [`workflows/wf48_commit_reveal_with_a_hostile_mutation_gate/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf48_commit_reveal_with_a_hostile_mutation_gate)
 
-**Status:** proposal (no runner, no run). **Kind:** harness gate, expected to fold into WF23. **Builds on:** WF11, WF23. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** harness gate, expected to fold into WF23. **Builds on:** WF11, WF23. **Model calls on the normal path:** see process.
 
 **Goal:** Scores that could not have been tuned to the hidden cases.
 
-**Sources:** F symbol_game_challenge_and_demos_findings §7-14, F challenges_findings_and_updates §9.3-9.5, F c043-c059 template. All C043-C060 reference solvers passed 64/64 and killed 48/48 mutants; these are reference self-scores, not model results.
+**Sources:** the demos findings note in [`tasks/certified_challenges/findings/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/README.md) §7-14, [challenges_findings_and_updates](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/tasks/certified_challenges/findings/challenges_findings_and_updates.md) §9.3-9.5, F c043-c059 template. All C043-C060 reference solvers passed 64/64 and killed 48/48 mutants; these are reference self-scores, not model results.
 
 **Process:**
 
@@ -1593,7 +1593,7 @@ success.
 
 **Folder:** [`workflows/wf49_query_preservation_stage_and_mode_campaign/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf49_query_preservation_stage_and_mode_campaign)
 
-**Status:** proposal (no runner, no run). **Kind:** experiment design. **Builds on:** WF8, WF22. **Model calls on the normal path:** see process.
+**Status:** runnable offline (family runner, fixtures only; no model run of this runner yet). **Kind:** experiment design. **Builds on:** WF8, WF22. **Model calls on the normal path:** see process.
 
 **Goal:** Measure which stages and modes preserve the query at scale.
 

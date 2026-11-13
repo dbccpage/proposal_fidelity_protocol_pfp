@@ -1,5 +1,7 @@
 # WF14: Immune failure classification
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
+
 **Layer:** 6 · **Builds on:** [WF7](workflow_wf7.md), [WF12](workflow_wf12.md) · **Merges into:** nothing · **Kind:** meta workflow
 
 **Code:** [`pfp_core/workflow_families/layer6.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer6.py) (`ImmuneFailureClassification`) · **Folder:** [`workflows/wf14_immune_failure_classification`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf14_immune_failure_classification) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

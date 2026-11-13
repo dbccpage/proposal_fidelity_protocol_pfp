@@ -1,5 +1,7 @@
 # WF45: Finite terminal selector and plenitude test
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 2 · **Builds on:** [WF7](workflow_wf7.md) · **Merges into:** nothing · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer2.py) (`FiniteTerminalSelector`) · **Folder:** [`workflows/wf45_finite_terminal_selector_and_plenitude_test`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf45_finite_terminal_selector_and_plenitude_test) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

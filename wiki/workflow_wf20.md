@@ -1,5 +1,7 @@
 # WF20: Derivation loop with lift grants
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
+
 **Layer:** 8 · **Builds on:** [WF9](workflow_wf9.md), [WF10](workflow_wf10.md), [WF19](workflow_wf19.md) · **Merges into:** WF9 · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer8.py) (`DerivationLoopWithLiftGrants`) · **Folder:** [`workflows/wf20_derivation_loop_with_lift_grants`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf20_derivation_loop_with_lift_grants) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

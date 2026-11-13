@@ -18,6 +18,8 @@ an experiment may spend, and which evidence the next attempt may reuse.
 · [Mathematical capabilities](#mathematics-and-formal-verification)
 · [Papers](papers/README.md)
 
+Known gaps in PFP, PCIV, EIS and operads are listed in the [gap report](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/gap_report).
+
 ## What the systems do
 
 | System | Capabilities in this repository | Explore |

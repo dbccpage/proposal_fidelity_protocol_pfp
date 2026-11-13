@@ -1,5 +1,7 @@
 # WF10: Local-to-global obstruction certificate
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
+
 **Layer:** 3 · **Builds on:** [WF4](workflow_wf4.md), [WF9](workflow_wf9.md) · **Merges into:** WF4 · **Kind:** task preset
 
 **Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`ObstructionCertificate`) · **Folder:** [`workflows/wf10_local_to_global_obstruction_certificate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf10_local_to_global_obstruction_certificate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

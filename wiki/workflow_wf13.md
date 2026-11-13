@@ -1,5 +1,7 @@
 # WF13: Exact-domain capsule battery
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 2 · **Builds on:** [WF1](workflow_wf1.md), [WF7](workflow_wf7.md) · **Merges into:** WF1 · **Kind:** task preset
 
 **Code:** [`pfp_core/workflow_families/layer2.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer2.py) (`ExactDomainCapsuleBattery`) · **Folder:** [`workflows/wf13_exact_domain_capsule_battery`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf13_exact_domain_capsule_battery) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

@@ -1,5 +1,7 @@
 # WF16: Substrate crosswalk
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
+
 **Layer:** 4 · **Builds on:** [WF5](workflow_wf5.md), [WF10](workflow_wf10.md) · **Merges into:** WF5 · **Kind:** task preset
 
 **Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`SubstrateCrosswalk`) · **Folder:** [`workflows/wf16_substrate_crosswalk`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf16_substrate_crosswalk) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

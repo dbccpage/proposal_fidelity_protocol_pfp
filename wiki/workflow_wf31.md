@@ -1,5 +1,7 @@
 # WF31: Multi-agent tournament with held-out cross-validation
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 1 · **Builds on:** [WF1](workflow_wf1.md) · **Merges into:** nothing · **Kind:** experiment design
 
 **Code:** [`pfp_core/workflow_families/layer1.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer1.py) (`HeldOutTournament`) · **Folder:** [`workflows/wf31_multi_agent_tournament_with_held_out_cross_validation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf31_multi_agent_tournament_with_held_out_cross_validation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

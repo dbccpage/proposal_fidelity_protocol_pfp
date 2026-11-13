@@ -1,5 +1,7 @@
 # WF26: Multi-round antibody dialogue
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 7 · **Builds on:** [WF9](workflow_wf9.md), [WF14](workflow_wf14.md) · **Merges into:** nothing · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`MultiRoundAntibodyDialogue`) · **Folder:** [`workflows/wf26_multi_round_antibody_dialogue`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf26_multi_round_antibody_dialogue) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

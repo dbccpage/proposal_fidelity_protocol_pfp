@@ -1,5 +1,7 @@
 # WF2: collect the operations in one response
 
+**Status:** implemented and runnable (own runner, `pfp/workflows/wf0002`). Live run recorded: Nov 6, DeepSeek V4.1 Flash, accepted ($0.00084).
+
 **Folder:** [`workflows/wf02_full_slots/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf02_full_slots) · **Code:** [`pfp/workflows/wf0002/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0002)
 
 > **Adds to WF1:** a 31-slot response contract (operations, missing information, repair moves). **Costs:** 1 call, about 3.5× WF1's tokens. **Shown so far:** accepted runs on integer addition with two models (Nov 6: $0.00084, after turning reasoning off); the slot checks are structural, and no repair move has ever been exercised.
@@ -9,6 +11,19 @@ missing information and proposed DDC moves. **Normal model calls:** one.
 
 WF2 keeps WF1's typed task envelope and adds a full slot report. The host
 collects records from that same reply; collection makes no extra model call.
+
+## Run it offline
+
+No model call and no cost. From the repository root, after `pip install ".[workflows]"`:
+
+```powershell
+python -m pfp.workflows.wf0002 prepare pfp/workflows/wf0002/examples/integer_sum.task.json --output runs/wf2
+python -m pfp.workflows.wf0002 check runs/wf2 pfp/workflows/wf0002/examples/integer_sum.reply.fixture.json --fixture
+python -m pfp.workflows.wf0002 replay runs/wf2
+python -m pytest pfp/workflows/wf0002 -q
+```
+
+**The check:** the WF1 check plus slot coverage: every declared slot has a typed value or an explicit absence.
 
 ## Before you start
 

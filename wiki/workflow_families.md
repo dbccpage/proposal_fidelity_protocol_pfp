@@ -55,4 +55,6 @@ python -m pfp_core.workflow_families check-all
 | [WF33](workflow_wf33.md) | Recursive re-entry with shared fuel | 9 | WF9, WF20 | `shared_fuel_parent_bound_reentry` |
 | [WF40](workflow_wf40.md) | Restart boundary after exhausted repair | 9 | WF9, WF20 | `cochain_trichotomy_boundary` |
 
+WF1-WF5 have their own runners ([Workflows](workflows.md)); WF50 is a maintenance workflow ([WF50](workflow_wf50.md)).
+
 Every page states what its fixtures support and what they do not. No family has a recorded live or local model campaign yet.

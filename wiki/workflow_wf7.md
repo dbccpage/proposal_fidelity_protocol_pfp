@@ -1,5 +1,7 @@
 # WF7: Typed refusal
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
+
 **Layer:** 1 · **Builds on:** [WF1](workflow_wf1.md) · **Merges into:** nothing · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer1.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer1.py) (`TypedRefusal`) · **Folder:** [`workflows/wf07_typed_refusal`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf07_typed_refusal) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

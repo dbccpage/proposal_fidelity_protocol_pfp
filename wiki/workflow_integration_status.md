@@ -30,7 +30,7 @@ its absence is a typed refusal rather than an import-time failure.
 
 ## Historical evidence stays historical
 
-The October 28 measurements used the older `omega_engine_pfp` integration.
+The October 28 measurements used the older integration module.
 Their versions remain WF1/WF2 0.1.0, WF3 0.3.0, WF4 0.1.0 and WF5 0.1.4.
 Migrated versions are WF1/WF2/WF4/WF5 0.2.0 and WF3 0.4.0.
 Old manifests and replies were not rewritten to match the new namespace.

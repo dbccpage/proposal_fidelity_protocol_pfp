@@ -1,5 +1,7 @@
 # WF44: Exact certificate presets
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 4 · **Builds on:** [WF11](workflow_wf11.md), [WF10](workflow_wf10.md) · **Merges into:** WF11 · **Kind:** task preset
 
 **Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`ExactCertificatePresets`) · **Folder:** [`workflows/wf44_exact_certificate_presets`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf44_exact_certificate_presets) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

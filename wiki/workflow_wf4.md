@@ -1,5 +1,7 @@
 # WF4: five agents and a global check
 
+**Status:** implemented and runnable (own runner, `pfp/workflows/wf0004`). Live run recorded: Nov 6, DeepSeek V4.1 Flash, accepted, all five agents correct ($0.00059).
+
 **Folder:** [`workflows/wf04_five_agents_lggr/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf04_five_agents_lggr) · **Code:** [`pfp/workflows/wf0004/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp/workflows/wf0004)
 
 > **Adds to WF3:** five isolated solvers and a global check. **Costs:** 6 calls, about 4.4× WF1. **Shown so far:** live runs on two models, all five agents correct each time. Each agent's receipt now checks its own total, so a wrong agent is visible locally; the global check adds agreement across agents.
@@ -9,6 +11,19 @@ task and against their shared requirements. **Normal model calls:** six.
 
 One miner prepares frozen guidance. Five solvers then run simultaneously.
 All calls share one allowance. The global checker does not grade by majority vote.
+
+## Run it offline
+
+No model call and no cost. From the repository root, after `pip install ".[workflows]"`:
+
+```powershell
+python -m pfp.workflows.wf0004 prepare --task pfp/workflows/wf0004/examples/integer_sum.task.json --output runs/wf4-preview
+python -m pytest pfp/workflows/wf0004 -q
+```
+
+`prepare` builds the prompts and schemas without calling a model; the full five-agent path needs a live model. The tests run the full path with scripted replies, in process.
+
+**The check:** each agent passes its local check, and the global check accepts only if all five answers equal the recomputed sum.
 
 ## Before you start
 

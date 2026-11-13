@@ -1,5 +1,7 @@
 # WF38: Diagnostic-trace proposal selection
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 3 · **Builds on:** [WF9](workflow_wf9.md) · **Merges into:** WF9 · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`DiagnosticTraceSelection`) · **Folder:** [`workflows/wf38_diagnostic_trace_proposal_selection`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf38_diagnostic_trace_proposal_selection) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

@@ -24,6 +24,8 @@
 - [WF3: mine first](workflow_wf3.md)
 - [WF4: five agents + LGGR](workflow_wf4.md)
 - [WF5: checked seed rewrite](workflow_wf5.md)
+- [Workflow families: WF6–WF49, WF51](workflow_families.md)
+- [WF50: repo hygiene](workflow_wf50.md) · [Gap report](gap_report.md)
 - [Results and costs](workflow_results.md) · [Troubleshooting](workflow_troubleshooting.md)
 - [Library](workflow_library.md) · [Integration status](workflow_integration_status.md)
 - [Contracts](workflow_contracts.md) · [Glossary](workflow_glossary.md)

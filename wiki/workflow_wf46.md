@@ -1,5 +1,7 @@
 # WF46: Boundary sufficiency and gluing diagnostic
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 3 · **Builds on:** [WF4](workflow_wf4.md) · **Merges into:** nothing · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`BoundarySufficiency`) · **Folder:** [`workflows/wf46_boundary_sufficiency_and_gluing_diagnostic`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf46_boundary_sufficiency_and_gluing_diagnostic) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
