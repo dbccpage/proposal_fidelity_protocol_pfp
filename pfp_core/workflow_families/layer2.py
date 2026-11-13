@@ -62,6 +62,9 @@ class BoundedCheckAndRepair(WorkflowFamily):
     def validate(self, task):
         require(isinstance(task.get('edges'), list) and isinstance(task.get('labels'), list), 'edges, labels')
         require(len(task['edges']) == len(task['labels']), 'one label per edge')
+        require(all(isinstance(e, list) and len(e) == 2 for e in task['edges']), 'each edge is a pair')
+        # Exact 0/1 labels only: a float, string, bool or non-finite value is refused, never coerced.
+        require(all(type(x) is int and x in (0, 1) for x in task['labels']), 'labels must be exact int 0 or 1')
         self.max_attempts(task)
         return task
 

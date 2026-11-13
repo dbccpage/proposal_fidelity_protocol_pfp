@@ -33,6 +33,7 @@ small, exact rule, and none of them grants authority.
 | [Two-signal gate](EIS-Two-Signal-Gate.md) | See why a detector match alone never blocks, how the second signal is kept independent, and how a quorum of sensors is counted |
 | [Antibody lifecycle](EIS-Antibody-Lifecycle.md) | Follow an antibody from farming to admission or retirement: negative selection, safe patterns, distinct observations and the retirement register |
 | [Regulation and custody](EIS-Regulation-and-Custody.md) | See how detectors that suppress valid answers are downgraded, and how admission decisions are signed and checked |
+| [Exclusion hypotheses](EIS-Exclusion-Hypotheses.md) | See why every exclusion carries its cheapest falsifier, how agreement is counted by model family, and which dead branches are still tested |
 
 ## Rules that hold throughout
 
@@ -47,7 +48,9 @@ small, exact rule, and none of them grants authority.
    unavailable, is recorded as not measured. It is never read as "no problem".
 5. **Named, not deleted.** A detector that was wrong is retired by name, so the
    same mistake cannot be farmed again unnoticed.
-6. **AuthorityEffect: None.** Screening, promotion and retirement compute
+6. **Exclusions are hypotheses.** Every exclusion names the cheapest test that
+   would refute it, and agreement among seats of one model family counts once.
+7. **AuthorityEffect: None.** Screening, promotion and retirement compute
    eligibility or remove a guard. They never admit or promote anything by
    themselves.
 
