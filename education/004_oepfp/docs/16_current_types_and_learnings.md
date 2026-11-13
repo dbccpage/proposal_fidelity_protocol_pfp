@@ -24,7 +24,7 @@ historical manuals are not current command locations. Python orchestration and
 both native Symbol Game crates share the existing boundaries; this update adds
 documentation, not another framework.
 
-Start with the [practical play guide](../../../pilots/education/runbooks/13_practical_pfp_and_discovery.md).
+Start with the [practical play guide](../_how_to_play/13_practical_pfp_and_discovery.md).
 The tables below reference existing code. They distinguish wire/type validity,
 host evaluation, captured evidence and admission rather than treating them as
 interchangeable PASS labels.
@@ -146,7 +146,7 @@ python -m operads.infrastructure.typed_contract_compiler --repo-root . --write
 
 ## Discoveries and applied repairs
 
-The [Adversary challenge runbook](../../../pilots/education/runbooks/18_original_challenge_play.md) adds the
+The [Adversary challenge runbook](../../../workflows/wf19_failure_derived_rule_transfer/pilots/runbooks/18_original_challenge_play.md) adds the
 original-judge play route, actual IDE/OpenRouter outcomes and repairs to replay,
 candidate progress, learning feedback and C023/C024/C027 checking. It keeps
 finite witness acceptance separate from original experiment completion.

@@ -25,7 +25,7 @@ verification_scope: runtime names checked against the tracked file list; design 
 > `review_findings.md` and a PFP50 inventory under
 > `001_finite_obstruction_calculus/plans/`; neither file is present at the
 > 2026-10-20 pin. The nearest current records are
-> [13_review_findings_and_pilot_runbook.md](../../../pilots/education/runbooks/13_review_findings_and_pilot_runbook.md)
+> [13_review_findings_and_pilot_runbook.md](13_review_findings_and_pilot_runbook.md)
 > and the PFP50 derivation control
 > [plan_7d_pfp50_catalog](../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/derivation_controls/plan_7d_pfp50_catalog/derivation.md).
 > Gate/mode YAML is not evidence of execution. These reference demos are not

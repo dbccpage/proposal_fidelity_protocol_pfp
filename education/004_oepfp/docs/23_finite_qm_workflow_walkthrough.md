@@ -124,7 +124,7 @@ After saving a complete schema-conforming response as `reply.json`, the checking
 py -3.12 -m pfp.entrypoints.cli.finite_qm_prompt check pfp/fixtures/finite_qm_workflow/c4_work_unit.json reply.json --source-root . --attempt docs-walkthrough-1 --stage P1_DERIVE
 ```
 
-This is an instruction for a later checking step, not a command executed by this documentation review. It requires an existing discoverable native host; an externally located host can be selected through the existing `CORE_SYMBOL_GAME_HOST` setting. Use the [runtime ownership guide](../../../pilots/education/runbooks/17_runtime_ownership_and_replay.md) for that environment. An unavailable host is an infrastructure limitation, not a false mathematical certificate and not an accepted result.
+This is an instruction for a later checking step, not a command executed by this documentation review. It requires an existing discoverable native host; an externally located host can be selected through the existing `CORE_SYMBOL_GAME_HOST` setting. Use the [runtime ownership guide](17_runtime_ownership_and_replay.md) for that environment. An unavailable host is an infrastructure limitation, not a false mathematical certificate and not an accepted result.
 
 The [native judge adapter](../../../../pfp/infrastructure/finite_qm_cochain_judge.py) parses the supplied rational witnesses and calls the existing cochain evaluator. It checks the submitted candidate against the problem; it does not establish validity by comparing it with a stored answer. The required equations are:
 

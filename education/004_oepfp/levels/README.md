@@ -30,7 +30,7 @@ verification_scope: 2026-10-22 recheck at 305b9690f9 of the catalogue voice, the
 
 Begin with the [finite-QM certificate walkthrough](level_finite_qm_certificate_walkthrough.md): four vertices, four signed edge values, one potential and one independently checkable lower bound. It teaches a complete finite calculation before introducing the larger catalogue. Follow the [workflow walkthrough](../docs/23_finite_qm_workflow_walkthrough.md) to prepare the actual offline request, understand source pins, and distinguish preparation from judging.
 
-Experienced readers can go directly to [the actual prompt, six research stages and mode](../../../pilots/education/runbooks/22_unified_pfp_v4_operad_workflow_and_hacks.md). Those **six workflow stages**, the **eleven public runtime stages**, and these **101 curriculum specifications** name different objects. The [current interfaces](../docs/16_current_types_and_learnings.md) describe runtime availability. The table below retains proposed evaluator names and error labels as teaching specifications; their presence does not establish executable dispatch or implementation coverage.
+Experienced readers can go directly to [the actual prompt, six research stages and mode](../../../workflows/wf20_derivation_loop_with_lift_grants/pilots/finite_qm_prompt/stages_and_mode.md). Those **six workflow stages**, the **eleven public runtime stages**, and these **101 curriculum specifications** name different objects. The [current interfaces](../docs/16_current_types_and_learnings.md) describe runtime availability. The table below retains proposed evaluator names and error labels as teaching specifications; their presence does not establish executable dispatch or implementation coverage.
 
 ## Listen, then watch
 
@@ -220,10 +220,10 @@ graph TD
 | [`level_finite_qm_certificate_walkthrough.md`](level_finite_qm_certificate_walkthrough.md) | Worked C4 certificate lesson (supplement, no stage number) |
 | [`curriculum_lesson_crosswalk.md`](curriculum_lesson_crosswalk.md) | Level-to-lesson crosswalk; links repointed to [`../curriculum/`](../curriculum/) on 2026-10-20 |
 | [`meta_00_symbol_game_foundations.md`](meta_00_symbol_game_foundations.md) to [`meta_03_symbol_game_proof_ledger.md`](meta_03_symbol_game_proof_ledger.md) | The four canonical monographs listed at the top |
-| [`level_challenge_findings_readme.md`](../../../pilots/education/challenge_findings/level_challenge_findings_readme.md) | Index of the challenge findings notes |
-| [`level_c043_space_bunny_and_combinatorial_findings.md`](../../../pilots/education/challenge_findings/level_c043_space_bunny_and_combinatorial_findings.md) to [`level_c059_space_bunny_and_sql_findings.md`](../../../pilots/education/challenge_findings/level_c059_space_bunny_and_sql_findings.md) | Seventeen per-challenge findings notes, C043 to C059 (copies of the atlas notes; see their 2026-10-20 source checks) |
-| [`level_challenges_findings_and_updates.md`](../../../pilots/education/challenge_findings/level_challenges_findings_and_updates.md) | Hub of challenge findings and updates |
-| [`level_symbol_game_challenge_and_demos_findings.md`](../../../pilots/education/challenge_findings/level_symbol_game_challenge_and_demos_findings.md) | Hub of challenge and demo findings |
+| [`level_challenge_findings_readme.md`](../../../workflows/wf19_failure_derived_rule_transfer/pilots/challenge_findings/level_challenge_findings_readme.md) | Index of the challenge findings notes |
+| [`level_c043_space_bunny_and_combinatorial_findings.md`](../../../workflows/wf19_failure_derived_rule_transfer/pilots/challenge_findings/level_c043_space_bunny_and_combinatorial_findings.md) to [`level_c059_space_bunny_and_sql_findings.md`](../../../workflows/wf19_failure_derived_rule_transfer/pilots/challenge_findings/level_c059_space_bunny_and_sql_findings.md) | Seventeen per-challenge findings notes, C043 to C059 (copies of the atlas notes; see their 2026-10-20 source checks) |
+| [`level_challenges_findings_and_updates.md`](../../../workflows/wf19_failure_derived_rule_transfer/pilots/challenge_findings/level_challenges_findings_and_updates.md) | Hub of challenge findings and updates |
+| [`level_symbol_game_challenge_and_demos_findings.md`](../../../workflows/wf19_failure_derived_rule_transfer/pilots/challenge_findings/level_symbol_game_challenge_and_demos_findings.md) | Hub of challenge and demo findings |
 
 The folder holds 128 files: 101 numbered levels, these 26 files and this README.
 

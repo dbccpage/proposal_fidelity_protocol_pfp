@@ -364,7 +364,7 @@ class QMInvariantReceiptV1:
 class QMInvariantAntibodySuiteV1:
     """Suite of 10 executable host-side antibodies evaluating public textbook invariants.
 
-    Derived exclusively from `dag/benchmark/seed_prompt.txt` public wording and
+    Derived exclusively from `workflows/wf52_finite_qm_benchmark/seed_prompt.txt` public wording and
     universal domain-axiomatic physics bounds. Zero evaluator rubric constants or
     private answers are accessed.
     """
