@@ -243,11 +243,11 @@ def build_openai_compat_body(
                     and fmt.get("type") == "json_schema" and isinstance(fmt.get("json_schema"), dict)
                     and isinstance(fmt["json_schema"].get("schema"), dict)):
                 from adversary.infrastructure.providers.anthropic_messages import (
-                    provider_output_schema,
+                    provider_response_schema,
                 )
 
                 fmt = {**fmt, "json_schema": {**fmt["json_schema"],
-                    "schema": provider_output_schema(fmt["json_schema"]["schema"])}}
+                    "schema": provider_response_schema(fmt["json_schema"]["schema"])}}
             body["response_format"] = fmt
         if dec.logit_bias is not None:
             body["logit_bias"] = thaw_json(dec.logit_bias)

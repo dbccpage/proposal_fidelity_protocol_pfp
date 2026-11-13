@@ -263,20 +263,17 @@ def test_mining_uses_provider_schema_and_fixed_public_interface(tmp_path):
     assert "Schema: response_format." in req.system
 
 
-def test_provider_wire_uses_typed_enums_without_weakening_host_constants():
+def test_the_miner_sends_its_exact_declared_schema():
     from jsonschema import Draft202012Validator
 
+    from adversary.infrastructure.providers.anthropic_messages import provider_response_schema
+
     turn = workflow.MiningContract.prepare_task(SPEC)
-    wire = runner.mining_wire_schema(turn.prompt.response_schema)
+    wire = provider_response_schema(turn.prompt.response_schema)
     Draft202012Validator.check_schema(wire)
+    # The host constants travel as constants; no provider-specific re-encoding.
     props = wire["properties"]["answer"]["properties"]["operad_candidates"]["items"]["properties"]
-    assert props["target_colour"] == dict(type="string", enum=["Integer"])
-    assert props["witness_refs"] == dict(
-        type="array", items=dict(type="string", enum=["task_result"]), minItems=1, maxItems=1
-    )
-    assert turn.task.answer_schema["properties"]["operad_candidates"]["items"]["properties"][
-        "target_colour"
-    ] == {"const": "Integer"}
+    assert props["target_colour"] == {"const": "Integer"}
     good = mining_answer()
     good["operad_candidates"][0]["source"]["quote"] = "<sum>"
     for row in good["l2_guidance"]:
@@ -290,7 +287,8 @@ def test_observed_malformed_mining_json_is_not_repaired():
     assert not checked["schema_valid"]
 
 
-def test_final_provider_body_omits_only_redundant_arity_union(tmp_path):
+def test_final_provider_body_is_the_projection_of_the_declared_schema(tmp_path):
+    from adversary.infrastructure.providers.anthropic_messages import provider_response_schema
     from adversary.infrastructure.providers.openai_compat import build_openai_compat_body
 
     root = tmp_path / "wire"
@@ -299,16 +297,9 @@ def test_final_provider_body_omits_only_redundant_arity_union(tmp_path):
     body = build_openai_compat_body(
         request, model=runner.MODEL, max_tokens=runner.MINER_TOKENS, provider=Provider.OPENROUTER
     )
-    schema = body["response_format"]["json_schema"]["schema"]
-    op = schema["properties"]["answer"]["properties"]["operad_candidates"]["items"]
-    assert "allOf" not in op and "oneOf" not in json.dumps(schema)
-    assert op["properties"]["arity"] == dict(type="integer", enum=[1])
-    assert op["properties"]["source_colours"]["items"] == dict(type="string", enum=["IntegerList"])
+    assert body["response_format"]["json_schema"]["strict"] is True
     host = workflow.MiningContract.prepare_task(SPEC).prompt.response_schema
-    assert "allOf" in host["properties"]["answer"]["properties"]["operad_candidates"]["items"]
-    bad = deepcopy(host)
-    bad["properties"]["answer"]["properties"]["operad_candidates"]["items"]["properties"][
-        "arity"
-    ] = {"const": 2}
-    with pytest.raises(ValueError, match="FIXED_PUBLIC_SIGNATURE"):
-        runner.mining_wire_schema(bad)
+    assert body["response_format"]["json_schema"]["schema"] == provider_response_schema(host)
+    op = body["response_format"]["json_schema"]["schema"]["properties"]["answer"]["properties"][
+        "operad_candidates"]["items"]
+    assert "allOf" in op  # the arity union is enforced by the provider, not pruned

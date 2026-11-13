@@ -2,7 +2,6 @@
 
 import argparse
 import json
-from dataclasses import replace
 from decimal import Decimal
 from pathlib import Path
 from time import perf_counter
@@ -23,7 +22,6 @@ from pfp.workflows.measurement import measure_seed
 from pfp.workflows.wf0003 import workflow as wf3
 from pfp.workflows.wf0004 import runner as shared
 from adversary.domain.providers.types import Provider
-from adversary.infrastructure.providers.anthropic_messages import provider_output_schema
 
 from . import rewrite, workflow
 
@@ -68,73 +66,8 @@ def gateway(root, model, tokens):
 
 
 def request(runtime, phase):
-    req = shared.request(runtime, phase)
-    if runtime.workflow.WORKFLOW_ID == "WF5_MINER":
-        _, turn = runtime._load_preparation(phase)
-        req = replace(
-            req,
-            decoding=replace(
-                req.decoding,
-                response_format={
-                    "type": "json_schema",
-                    "json_schema": {
-                        "name": "wf5_mining",
-                        "strict": True,
-                        "schema": mining_wire_schema(turn.prompt.response_schema),
-                    },
-                },
-            ),
-        )
-    return req
-
-
-def mining_wire_schema(schema):
-    """Provider encoding of singleton public constants; host schema stays exact."""
-    original = schema["properties"]["answer"]["properties"]["operad_candidates"]["items"][
-        "properties"
-    ]
-    if any(
-        original[name] != {"const": fixed}
-        for name, fixed in dict(
-            arity=1,
-            source_colours=["IntegerList"],
-            target_colour="Integer",
-            witness_refs=["task_result"],
-        ).items()
-    ):
-        raise ValueError("WF5_WIRE_REQUIRES_FIXED_PUBLIC_SIGNATURE")
-
-    def convert(value):
-        if type(value) is list:
-            return [convert(item) for item in value]
-        if type(value) is not dict:
-            return value
-        if "const" in value:
-            fixed = value["const"]
-            if type(fixed) is str:
-                return dict(type="string", enum=[fixed])
-            if type(fixed) is int:
-                return dict(type="integer", enum=[fixed])
-            if type(fixed) is list and len(fixed) == 1 and type(fixed[0]) is str:
-                return dict(
-                    type="array", items=dict(type="string", enum=fixed), minItems=1, maxItems=1
-                )
-            raise ValueError("WF5_UNSUPPORTED_PROVIDER_CONSTANT")
-        result = {key: convert(item) for key, item in value.items()}
-        if (
-            "enum" in result
-            and "type" not in result
-            and all(type(item) is str for item in result["enum"])
-        ):
-            result["type"] = "string"
-        return result
-
-    wire = convert(provider_output_schema(schema))
-    # Generic WF3 arity union is redundant under this fixed unary signature.
-    # Keep it in the exact host schema; avoid contradictory branches in the
-    # provider grammar projection, whose bounds are pruned again by its codec.
-    wire["properties"]["answer"]["properties"]["operad_candidates"]["items"].pop("allOf", None)
-    return wire
+    # Miner and solvers alike send their exact declared schema (shared with WF4).
+    return shared.request(runtime, phase)
 
 
 def prior_binding(path, spec, _seen=()):

@@ -73,6 +73,17 @@ def validate_task_spec(spec: dict, schema, workflow_id) -> dict:
     return spec
 
 
+def typed_response_format(name: str, response_schema: dict) -> dict:
+    """The structured-output contract of one prepared turn: its exact response schema.
+
+    Every PFP model call is typed this way. The provider adapter projects the schema
+    for the provider and keeps its references meaningful; the host still checks the
+    reply against this exact schema.
+    """
+    return {"type": "json_schema",
+            "json_schema": {"name": name, "strict": True, "schema": response_schema}}
+
+
 def basic_task_template(instruction) -> PfpPromptTemplate:
     """Reuse the canonical base manifest with the shared task-turn answer schema."""
     source = yaml.safe_load(

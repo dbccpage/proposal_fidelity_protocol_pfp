@@ -10,7 +10,7 @@ from time import perf_counter
 from operations.domain.rop.result import Err
 from pfp.infrastructure.adapters.pfp_campaign import canonical, digest, write_new
 from pfp.infrastructure.workflow_accounting import create_accounted_openrouter_gateway
-from pfp.infrastructure.workflow_tasks import reasoning_policy
+from pfp.infrastructure.workflow_tasks import reasoning_policy, typed_response_format
 from pfp.infrastructure.workflow_runtime import WorkflowRuntime, source_bytes
 from pfp.workflows.measurement import measure_seed
 from pfp.workflows.wf0003 import workflow as wf3
@@ -104,7 +104,9 @@ def request(runtime, phase):
             allow_fallbacks=False,
             require_parameters=True,
             thinking=reasoning_policy(),
-            response_format={"type": "json_object"},
+            response_format=typed_response_format(
+                runtime.workflow.WORKFLOW_ID.lower(), turn.prompt.response_schema
+            ),
         ),
     )
 

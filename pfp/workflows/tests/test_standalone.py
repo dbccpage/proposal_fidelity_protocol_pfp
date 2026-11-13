@@ -201,3 +201,19 @@ def test_reasoning_off_reaches_the_wire_request(monkeypatch):
     assert body()["reasoning"] == {"enabled": False}
     monkeypatch.delenv("PFP_REASONING")
     assert "reasoning" not in body()
+
+
+def test_provider_response_schema_lifts_answer_definitions_to_the_root():
+    # Dropping the answer's $id would leave its #/$defs references pointing at the
+    # envelope; the codec moves the definitions there so they still resolve.
+    from adversary.domain.providers.types import ProviderConfigError
+    from adversary.infrastructure.providers.anthropic_messages import provider_response_schema
+
+    answer = {"$id": "urn:pfp:answer:x", "$defs": {"V": {"type": "integer", "minimum": 0}},
+              "type": "object", "properties": {"total": {"$ref": "#/$defs/V"}}}
+    envelope = {"type": "object", "properties": {"answer": answer}, "required": ["answer"]}
+    wire = provider_response_schema(envelope)
+    assert wire["$defs"] == {"V": {"type": "integer"}}
+    assert wire["properties"]["answer"] == {"type": "object", "properties": {"total": {"$ref": "#/$defs/V"}}}
+    with pytest.raises(ProviderConfigError, match="DEFS_COLLISION"):
+        provider_response_schema(dict(envelope, **{"$defs": {"W": {}}}))
