@@ -45,6 +45,9 @@ def main() -> None:
         subprocess.run(["git", "clone", "-q", args.remote, str(clone)], check=True)
         for old in clone.glob("*.md"):
             old.unlink()
+        # Drop every page from the index so a case-only rename (Papers.md ->
+        # papers.md) is recorded even where core.ignorecase is true (Windows, macOS).
+        git("rm", "-r", "-q", "--cached", "--ignore-unmatch", "--", "*.md", cwd=clone)
         for page in pages:
             (clone / page.name).write_text(
                 to_wiki_links(page.read_text(encoding="utf-8")), encoding="utf-8", newline="\n"
