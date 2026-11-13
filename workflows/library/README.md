@@ -12,7 +12,6 @@ The human entry point is the [workflow wiki](https://github.com/dbccpage/proposa
 - `evidence/raw/`: unchanged submitted reply bytes, including failed attempts.
 - `validation.json`: initial Oct 31 documentation checks, before runner migration.
 - `migration_validation.json`: current automated-runner validation and its scope.
-- `migration_custody.json`: unchanged historical file identities and preserved WF5 budget continuation.
 - [`.github/scripts/check_workflow_install.py`](../../.github/scripts/check_workflow_install.py) (moved out of this folder): repeatable offline checks for a clean wheel installation.
 
 Historical measurements were captured October 28, 2026. Documentation checks

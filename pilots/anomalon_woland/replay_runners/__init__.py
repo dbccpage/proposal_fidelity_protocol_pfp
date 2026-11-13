@@ -1,1 +1,0 @@
-"""Replay runners that materialize and verify concrete PFP pilot capsules."""
