@@ -1,0 +1,29 @@
+# AuthorityEffect: None.
+# Planned transmutation. Not a provider run.
+schema: pfp.test-spec.v1
+authority_effect: None
+pilot_id: pilot_0000054
+test_folder: test_04
+test_id: d1_float_injection
+case_id: d1_float
+test_index: 4
+generation_id: 0
+dialect_name: Decimal witness audit (planned, not dispatched)
+input_source_file: input.yaml
+response_file: response.yaml
+model_id: not-dispatched
+expected_outcome:
+  answer: |
+    actual_status=REFUSED_FLOAT_DETECTED; file_expected_refusal=REFUSED_FLOAT_DETECTED; detail=float encountered 0.0; rejected_as_expected=true; source=dossier_1_hollow_5simplex_b4_1/checker_output.json near_miss_float_injection
+  status: PLANNED
+actual_outcome:
+  extracted_answer: null
+  gate_status: PLANNED
+  reason: |
+    PFP-054-DEGREE4-FINITE-LP is not registered in checker_registry.py. No provider reply was copied. Terminal status is PLANNED, not accepted. The expected string transcribes the named historic file. This layout did not execute that file's checker.
+  status: PLANNED
+  refusal_code: null
+metrics: {}
+notes: |-
+  The historic detail names the decimal 0.0. That detail is host-side. The decimals in the prompt are the candidate.
+  source_markdown: the source repository/pilots/demo_003/demo_9/9_demo.md source_artifact: the source repository/pilots/demo_003/demo_9/dossier_1_hollow_5simplex_b4_1/witness_near_miss.json checker_registered: false
