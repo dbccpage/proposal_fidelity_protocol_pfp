@@ -1,4 +1,4 @@
-"""Layer 7 families: tribunal, rule transfer, cost ladder, antibody dialogue and detector adequacy.
+"""Layer 7 families: tribunal, rule transfer, cost ladder, antibody dialogue, detector adequacy and exclusion retests.
 
 WF19, WF26 and WF41 reuse the immune domain of WF14 (``layer6``). WF22 is the
 cost ladder that WF34 and WF49 build on: subclass ``CertifiedCostLadder`` and
@@ -11,6 +11,7 @@ from collections.abc import Mapping, Sequence
 from fractions import Fraction
 from typing import Any
 
+from ..exclusions import REFUTED, ExclusionError, ExclusionHypothesisV1, ExclusionVoteV1, plan_retests, run_plan
 from ..fidelity import HostOracleContext
 from ..immunity import HOLD, HOST_OBSERVERS, decide, host_danger, screen_rules, signal1
 from .base import (
@@ -29,6 +30,7 @@ from .base import (
     refused,
     require,
     spec_from,
+    typed_refusal,
 )
 from .exact import commitment
 from .layer1 import TypedRefusal
@@ -493,4 +495,145 @@ class DetectorAdequacyTwoSignal(WorkflowFamily):
             'whitespace_rewrite_changes_firing': (case(pattern=', "-3/1"'), REFUSED),
             'pattern_alone_reported_as_danger': (case(signal2_observer='DETECTOR'), REFUSED),
             'reply_names_allowlisted_observer': (case(signal2_observer='host.contract_check'), REFUSED),
+        }
+
+
+def _poly(coefficients: Sequence[int], x: int) -> int:
+    """Exact integer value of sum(c_i * x**i) by Horner's rule."""
+    out = 0
+    for c in reversed(coefficients):
+        out = out * x + c
+    return out
+
+
+@register
+class ExclusionHypothesisRetest(WorkflowFamily):
+    """WF51. Treat every "don't search here" as a hypothesis and spend tests where models disagree.
+
+    Domain: integer roots of an integer polynomial over named, disjoint integer
+    branches. Stage ``exclude`` returns exclusions: a branch, the seats that
+    voted on it with their model family, and a falsifier (witness points inside
+    the branch, cost = number of points). The host classifies each exclusion
+    with ``pfp_core.exclusions`` (seats of one family are one vote), plans
+    falsifiers frontier first, then uncorroborated, then probably-dead ones no
+    dearer than ``dead_floor``, under ``retest_budget``, and evaluates them
+    exactly. A refuted exclusion reopens its branch. Stage ``solve`` sees only
+    open branches and returns a root, or ``null`` to claim there is none; the
+    host checks the root or scans every open branch. With ``retest`` false the
+    same task is the control arm: no falsifier runs, and a wrong exclusion
+    can hide the answer behind a lawful typed refusal.
+    """
+    spec = spec_from('WF51', 'Exclusion hypotheses with cheapest falsifiers', 7, ['WF14', 'WF31'], None,
+                     'exact_falsifier_and_open_branch_check', 'wf51_exclusion_hypotheses_with_cheapest_falsifiers')
+    MAX_WIDTH = 4096
+
+    def validate(self, task):
+        super().validate(task)
+        coefficients = task.get('coefficients')
+        require(isinstance(coefficients, list) and coefficients, 'coefficients must be a nonempty list')
+        for i, c in enumerate(coefficients):
+            as_int(c, f'coefficients[{i}]')
+        branches = task.get('branches')
+        require(isinstance(branches, Mapping) and branches, 'branches must be a nonempty object')
+        spans = sorted((as_int(b[0], name), as_int(b[1], name), name) for name, b in branches.items()
+                       if isinstance(b, list) and len(b) == 2)
+        require(len(spans) == len(branches), 'each branch is [lo, hi]')
+        require(all(lo <= hi for lo, hi, _ in spans), 'each branch needs lo <= hi')
+        require(all(a[1] < b[0] for a, b in zip(spans, spans[1:], strict=False)), 'branches must be disjoint')
+        require(sum(hi - lo + 1 for lo, hi, _ in spans) <= self.MAX_WIDTH, 'branches too wide to scan')
+        for key in ('retest_budget', 'dead_floor', 'min_families'):
+            require(as_int(task.get(key), key) >= (1 if key == 'min_families' else 0), f'{key} out of range')
+        require(type(task.get('retest')) is bool, 'retest must be a bool')
+        return task
+
+    @staticmethod
+    def hypotheses(task, content) -> tuple[list[Any], dict[str, list[int]]]:
+        require(isinstance(content, Mapping) and isinstance(content.get('exclusions'), list), 'exclusions')
+        out, points = [], {}
+        for row in content['exclusions']:
+            require(isinstance(row, Mapping) and row.get('branch') in task['branches'], 'unknown branch')
+            pts = row.get('falsifier') or []
+            require(isinstance(pts, list), 'falsifier must be a list of points')
+            pts = [as_int(x, 'falsifier point') for x in pts]
+            votes = tuple(ExclusionVoteV1(v.get('seat'), v.get('family'), v.get('excludes'))
+                          for v in row.get('votes', ()) if isinstance(v, Mapping))
+            out.append(ExclusionHypothesisV1(row.get('id'), row['branch'], f'no root in {row["branch"]}',
+                                             canonical(pts).decode('utf-8') if pts else '', len(pts), votes))
+            points[row.get('id')] = pts
+        return out, points
+
+    def run(self, session: Session, host: HostOracleContext) -> Verdict:
+        task = session.task
+        reply = session.ask('exclude', self.prompt(task))
+        if reply is None:
+            return refused('NO_ADMISSIBLE_REPLY')
+        try:
+            hyps, points = self.hypotheses(task, reply.content)
+        except ExclusionError as exc:
+            return refused(str(exc).split(':', 1)[0], reason=str(exc))
+        for h in hyps:
+            lo, hi = task['branches'][h.branch]
+            inside = all(lo <= x <= hi for x in points[h.exclusion_id])
+            if not host.record(f'falsifier_within_branch:{h.exclusion_id}', inside, h.falsifier):
+                return refused('FALSIFIER_OUTSIDE_BRANCH', exclusion=h.exclusion_id)
+        budget = task['retest_budget'] if task['retest'] else 0
+        plan = plan_retests(hyps, budget=budget, dead_floor=task['dead_floor'], min_families=task['min_families'])
+        coefficients = task['coefficients']
+        status = run_plan(plan, hyps, lambda h: any(_poly(coefficients, x) == 0 for x in points[h.exclusion_id]))
+        host.record('retest_within_budget', plan.cost <= budget, f'{plan.cost}|{budget}')
+        closed = sorted({h.branch for h in hyps if status[h.exclusion_id] != REFUTED})
+        open_ = sorted(b for b in task['branches'] if b not in closed)
+        detail = {'plan': plan.to_dict(), 'status': status, 'open': open_, 'closed': closed}
+        return self.solve(session, host, open_, detail)
+
+    def solve(self, session: Session, host: HostOracleContext, open_: list[str], detail: dict[str, Any]) -> Verdict:
+        """Ask for a root in the open branches; certify it, or check a no-root claim by full scan."""
+        task, coefficients = session.task, session.task['coefficients']
+        reply = session.ask('solve', self.prompt(task) + f'\nOpen branches: {", ".join(open_)}')
+        if reply is None:
+            return refused('NO_ADMISSIBLE_REPLY', **detail)
+        require(isinstance(reply.content, Mapping) and 'root' in reply.content, 'solve reply needs root')
+        root = reply.content['root']
+        if root is None:
+            scan = [x for b in open_ for x in range(task['branches'][b][0], task['branches'][b][1] + 1)]
+            if not host.record('no_root_in_open_branches', all(_poly(coefficients, x) != 0 for x in scan),
+                               canonical(open_).decode('utf-8')):
+                return refused('MISSED_ROOT_IN_OPEN_BRANCH', **detail)
+            return typed_refusal('NO_ROOT_IN_OPEN_BRANCHES', **detail)
+        root = as_int(root, 'root')
+        in_open = any(task['branches'][b][0] <= root <= task['branches'][b][1] for b in open_)
+        if not host.record('root_in_open_branch', in_open, str(root)):
+            return refused('ANSWER_IN_CLOSED_BRANCH', root=root, **detail)
+        host.record('root_verified', _poly(coefficients, root) == 0, str(root))
+        return judge(host, 'ROOT_CERTIFIED', root=root, **detail)
+
+    def fixtures(self):
+        task = {'statement': 'Find an integer root of the polynomial inside the branches.',
+                'coefficients': [-35, -2, 1],
+                'branches': {'b0': [-4, 0], 'b1': [1, 5], 'b2': [6, 10], 'b3': [11, 15]},
+                'retest_budget': 10, 'dead_floor': 3, 'min_families': 2, 'retest': True}
+
+        def ex(eid, branch, pts, *votes):
+            return {'id': eid, 'branch': branch, 'falsifier': pts,
+                    'votes': [{'seat': s, 'family': f, 'excludes': e} for s, f, e in votes]}
+        both = (('s1', 'family_a', True), ('s2', 'family_b', True))
+        frontier = ex('e_b0', 'b0', [-4, -3, -2, -1, 0], ('s1', 'family_a', True), ('s2', 'family_b', False))
+        wrong = ex('e_b2', 'b2', [6, 7, 8], *both)
+        right = ex('e_b3', 'b3', [11, 12, 13, 14, 15], *both)
+        exclusions = [frontier, wrong, right]
+
+        def bundle(root, exs=None, **over):
+            return {'task': {**task, **over}, 'replies': [{'exclusions': exs or exclusions}, {'root': root}]}
+        one_family = ex('e_b2', 'b2', [6, 7, 8], ('s1', 'family_a', True), ('s2', 'family_a', True),
+                        ('s3', 'family_a', True))
+        return {
+            'planted_wrong_exclusion_refuted_by_cheap_retest': (bundle(7), 'HOST_CERTIFIED'),
+            'same_family_agreement_is_one_vote': (bundle(7, [frontier, one_family, right], retest_budget=3),
+                                                  'HOST_CERTIFIED'),
+            'control_without_retest_hides_the_answer': (bundle(None, retest=False), 'TYPED_REFUSAL'),
+            'exclusion_without_falsifier': (bundle(7, [ex('e_b2', 'b2', [], *both)]), 'REFUSED'),
+            'falsifier_outside_its_branch': (bundle(7, [ex('e_b2', 'b2', [3], *both)]), 'REFUSED'),
+            'answer_in_closed_branch': (bundle(12), 'REFUSED'),
+            'false_no_root_claim': (bundle(None), 'REFUSED'),
+            'wrong_root': (bundle(3), 'REFUSED'),
         }

@@ -128,7 +128,7 @@ def render_hub(registry, nodes) -> str:
             f'`{c.spec.host_check_id}` |' for w, c in sorted(registry.items(), key=lambda kv: (kv[1].spec.layer,
                                                                                               kv[1].spec.number))]
     return '\n'.join([
-        '# Workflow families WF6-WF49',
+        '# Workflow families WF6-WF49 and WF51',
         '',
         'Each family is one class in `pfp_core/workflow_families/` on a shared runtime: one spec, one '
         'budget per run, one host check that alone can certify, and offline fixtures that must be accepted or '

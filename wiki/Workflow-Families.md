@@ -1,4 +1,4 @@
-# Workflow families WF6-WF49
+# Workflow families WF6-WF49 and WF51
 
 Each family is one class in `pfp_core/workflow_families/` on a shared runtime: one spec, one budget per run, one host check that alone can certify, and offline fixtures that must be accepted or refused. WF1-WF5 keep their own runners (see [Workflows](Workflows.md)).
 
@@ -46,6 +46,7 @@ python -m pfp_core.workflow_families check-all
 | [WF22](Workflow-WF22.md) | Certified cost ladder | 7 | WF6, WF8, WF18 | `cost_ladder_refusal_escalation` |
 | [WF26](Workflow-WF26.md) | Multi-round antibody dialogue | 7 | WF9, WF14 | `epitope_antibody_exact_oracle` |
 | [WF41](Workflow-WF41.md) | Detector adequacy and two-signal admission | 7 | WF14 | `detector_calibration_completeness` |
+| [WF51](Workflow-WF51.md) | Exclusion hypotheses with cheapest falsifiers | 7 | WF14, WF31 | `exact_falsifier_and_open_branch_check` |
 | [WF20](Workflow-WF20.md) | Derivation loop with lift grants | 8 | WF9, WF10, WF19 | `structural_lift_grant_loop` |
 | [WF28](Workflow-WF28.md) | Eight-role audit dialogue | 8 | WF15 | `strict_l1_defect_descent` |
 | [WF34](Workflow-WF34.md) | Future-faithful compression and bounded context | 8 | WF8, WF22 | `continuation_verdict_equality` |
