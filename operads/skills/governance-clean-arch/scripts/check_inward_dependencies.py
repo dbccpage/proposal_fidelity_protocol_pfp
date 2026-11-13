@@ -82,6 +82,7 @@ def check_pure_domain_sink(repo_root: Path, outer_layers: frozenset[str]) -> lis
         file
         for file in repo_root.glob("**/domain/**/*.py")
         if not any(part in IGNORE_PARTS for part in file.parts)
+        and not file.is_relative_to(repo_root / "dag" / "reviews")  # deliberate violation fixtures
     ]
     for file in domain_files:
         try:
