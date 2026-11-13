@@ -34,7 +34,7 @@ bounded('docs/runtime_environment_v1.json','all_record_schema_digest_format_and_
         'All16497 declared file rows have well-formed entry/path/digest fields;26 distribution names/versions/counts and per-distribution uniqueness inspected. Captured Python3.12.10 and torch2.6.0+cu124 do not satisfy an assertion of a fresh current Python3.12/torch>=2.13 installation. External runtime files were not opened; this profile excludes OS/std-lib closure.',
         detail_receipt='dag/reviews/paper_011_support_inspection/bounded_data_checks.json')
 bounded('paper.pdf','complete_extracted_text_and_rendered_page_review_not_binary_source_read',
-        'All14 pages read through full extracted text and complete contact-sheet inspection alongside the full TeX body. No clipping/overlap observed at inspected resolution; formulas are visible. PDF retains old title/version, old paths and Woland name. The half-instanton parity contradiction appears on page14. It is not the13-page edition bound by manuscript inventory receipt.',
+        'All14 pages read through full extracted text and complete contact-sheet inspection alongside the full TeX body. No clipping/overlap observed at inspected resolution; formulas are visible. PDF retains old title/version, old paths and private engine name. The half-instanton parity contradiction appears on page14. It is not the13-page edition bound by manuscript inventory receipt.',
         page_review={'pages':14,'direct_visual_pages':list(range(1,15)),'sheets':pdf['sheets'],'extracted_text':'dag/reviews/paper_011_support_inspection/pdf_text.txt'})
 zip_name=Path(archive['archive']).name
 bounded(zip_name,'complete_safe_member_inventory_CRC_SHA_and_internal_manifest_checks',

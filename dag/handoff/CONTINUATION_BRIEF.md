@@ -6,7 +6,7 @@ Find useful, defensible mathematical mechanisms in PFP, EIS, PCIV and OPERADS, t
 
 This checkpoint stops all experimentation at the user's request. Resume only in the new session where the user invokes the continuation. Neither this brief nor a design catalog grants an unlimited paid campaign. The existing hard constraint is USD 0.10 **per whole run**, including all paid stages, repair attempts and retries. Freeze a finite campaign and aggregate ceiling before dispatch. No new run was launched during this handoff.
 
-The user originally requested: clean the checkout; seal a graduate QM seed and correct answer; review every original file outside dot-prefixed directories; assess the mathematical foundations and usefulness of papers; build derivation and workflow DAGs; use ten researchers to propose meaningful typed compositions; relocate Anomalon pilots/demo material with source deletions in PRs; turn useful pilots into workflows; publish completed workflows in the Wiki; and compare every implemented workflow on the same exact seed. The mathematical audit, pilot consolidation and complete benchmark program remain unfinished.
+The user originally requested: clean the checkout; seal a graduate QM seed and correct answer; review every original file outside dot-prefixed directories; assess the mathematical foundations and usefulness of papers; build derivation and workflow DAGs; use ten researchers to propose meaningful typed compositions; relocate private engine pilots/demo material with source deletions in PRs; turn useful pilots into workflows; publish completed workflows in the Wiki; and compare every implemented workflow on the same exact seed. The mathematical audit, pilot consolidation and complete benchmark program remain unfinished.
 
 ## Where to start
 
@@ -23,7 +23,7 @@ Read these small entry points before broad searching:
 3. `dag/benchmark/reference_runner.py`, `live_campaign.py`, `budget_ledger.py`, `campaign_ledger.py`, `openrouter_provider.py`, `summarize_runs.py` when changing execution or accounting.
 4. `dag/derivations_dag.json`, `workflows_dag.json`, `composition_catalog.json`, `validation.json`; query them programmatically rather than loading megabytes into a model context.
 5. `dag/reviews/coverage.json`, `pending_reuse_candidates.json`, `papers_audit.json`, and the specific `additional_*.json` reports implicated by the next mechanism.
-6. `dag/pilot_triage/README.md`, `dag/migrations/demo_support_publication.json`, `demo_support_verification.json`, `anomalon_followup.json` before changing relocated material.
+6. `dag/pilot_triage/README.md`, `dag/migrations/demo_support_publication.json`, `demo_support_verification.json`, `private_engine_repo_followup.json` before changing relocated material.
 
 Use the repository Python environment, PowerShell, and explicit UTF-8. Do not overwrite `dag/PROGRESS.md` through a lossy decode: it has a historical non-UTF-8 byte; append bytes or preserve the original exactly. Keep secrets out of logs, prompts, command lines and commits. No provider key should be printed. There are no project AGENTS.md instructions in the checkpoint inventory.
 
@@ -129,9 +129,9 @@ Each completed increment must deliver code, a precise claim, a meaningful offlin
 
 ## Migration and remaining audit obligations
 
-Anomalon pilot deletion PR #1572 and follow-up #1573 were merged earlier. The later support migration [PR #1575](https://github.com/dbccpage/anomalon/pull/1575) is recorded merged at `9fadd347e8b7203dcab3f95a4a8d1336bac062c1e`. The destination checkpoint preserves imported pilots, 216 moved Anomalon support files and 84 moved PFP education files, source-path deletions and consumer fixes. 138 stub/trivial pilot folders were retired with recoverable originals; 204 numbered pilots and 17 shared owners received initial triage. Do not re-delete source trees or restore retired stubs accidentally.
+private engine pilot deletion PR #1572 and follow-up #1573 were merged earlier. The later support migration PR #1575 in the private engine repository is recorded merged at `9fadd347e8b7203dcab3f95a4a8d1336bac062c1e`. The destination checkpoint preserves imported pilots, 216 moved private engine support files and 84 moved PFP education files, source-path deletions and consumer fixes. 138 stub/trivial pilot folders were retired with recoverable originals; 204 numbered pilots and 17 shared owners received initial triage. Do not re-delete source trees or restore retired stubs accidentally.
 
-The retained pilot corpus is historical source material, not a claim that every pilot runs independently. Some owners need the separate Anomalon runtime. Migration receipts record focused validation and known pre-existing catalog failures; there was no full monorepo replay. Preserve source/destination bytes and follow-up revisions. Do not rewrite old receipts to imply later work happened earlier.
+The retained pilot corpus is historical source material, not a claim that every pilot runs independently. Some owners need the separate private engine runtime. Migration receipts record focused validation and known pre-existing catalog failures; there was no full monorepo replay. Preserve source/destination bytes and follow-up revisions. Do not rewrite old receipts to imply later work happened earlier.
 
 The final `pending_reuse_candidates.json` checked census agreement for all 32,261 rows and byte equality for 487 nonempty duplicates plus 713 empty files. One RuntimeLimits.lean target remains metadata-only at its read boundary. **Zero new semantic coverage credit was granted.** Reuse a full-read anchor only after checking path-specific semantics, consumers, packaging, provenance and modifications. Largest pending groups include certified challenges (5,292), tower evidence (2,905) and Paper011 (1,793). Batch full-population structured checks with explicit limits; avoid opening thousands of identical JSON files one at a time.
 

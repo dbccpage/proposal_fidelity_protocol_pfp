@@ -8,7 +8,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-SOURCES = {'pfp': ROOT, 'anomalon': ROOT.parent / 'anomalon'}
+SOURCES = {'pfp': ROOT, 'private_engine_repo': ROOT.parent / 'private_engine_repo'}
 
 
 def sha(raw):
@@ -88,7 +88,7 @@ def main():
         'retained_files_verified': len(plan['retained']), 'retained_files_with_explicit_consumer_edits': len(retained_changes),
         'consumer_changes_verified': len(consumer.get('changes', [])), 'provider_calls': 0,
         'locations': locations, 'retained_source_revisions': retained_changes,
-        'limits': 'Byte custody and relocation only. Historical claims are not freshly validated. Moved runnable owners may require the separate Anomalon runtime and explicit adapters.'}
+        'limits': 'Byte custody and relocation only. Historical claims are not freshly validated. Moved runnable owners may require the separate private engine runtime and explicit adapters.'}
     (HERE / 'demo_support_verification.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({k: v for k, v in report.items() if k not in ('locations', 'retained_source_revisions')}))
 

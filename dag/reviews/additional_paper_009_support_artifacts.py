@@ -5,7 +5,7 @@ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1];P='additional_paper_00
 def sha(b):return hashlib.sha256(b).hexdigest()
 def write(s,x):(HERE/(P+s)).write_text(json.dumps(x,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
 def lf(b):return b.decode('utf-8').replace('\r\n','\n').replace('\r','\n')
-def rename(p):return p.replace('_lev_landau_','_lev_examiner_').replace('_pfp_landau_companion','_pfp_examiner_companion').replace('woland','adversary')
+def rename(p):return p.replace('_lev_landau_','_lev_examiner_').replace('_pfp_landau_companion','_pfp_examiner_companion').replace('private','adversary')
 def pairs(raw):
  out={}
  for line in lf(raw).splitlines():

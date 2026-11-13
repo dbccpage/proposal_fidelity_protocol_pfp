@@ -8,7 +8,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-SOURCES = {'pfp': ROOT, 'anomalon': Path(r'C:\Users\a343o\source\repos\anomalon')}
+SOURCES = {'pfp': ROOT, 'private_engine_repo': Path(r'C:\Users\a343o\source\repos\private_engine_repo')}
 ARCHIVE = Path(r'C:\Users\a343o\.codex\visualizations\2026\11\10\01a1c373-155b-7b31-94f8-3156bd6dbc35\.support_recovery\demo_support_before_move.zip')
 PLAN = HERE / 'demo_support_move_plan.json'
 RECEIPT = HERE / 'demo_support_recovery.json'

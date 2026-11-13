@@ -32,8 +32,9 @@ _YAML = (
 _DOMAIN = Path(__file__).resolve().parents[2] / "domain" / "value_objects" / "taxonomy.py"
 _MATRIX = (
     Path(__file__).resolve().parents[3]
-    / "pilots"
-    / "anomalon_woland"
+    / "workflows"
+    / "library"
+    / "pilot_estate"
     / "matrix"
     / "max_pilot_matrix.yaml"
 )

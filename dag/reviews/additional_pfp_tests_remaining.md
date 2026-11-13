@@ -4,7 +4,7 @@
 
 The frozen slice contains 4,248,364 original bytes and 102,095 original logical lines. Every full read has an exact original path, SHA256, complete line ranges and substantive assessment in the JSON report and durable read ledger. The remaining 2,758 lines belong to parsed JSON artifacts and receive no full-body reading credit.
 
-Canonical report SHA256: `95c6f4e30e8f1102014090ffe2b71a4ea9246b5d5168978a33dd29d17081bb21`. Scope SHA256: `7115e58d1e58cdb435e049f568f282c3efc85061919468c1158c45d531d0d7e9`. Control-artifact manifest SHA256: `f5412dcad17d0d9e8513dcdd153e809181d4bffaa3e4b8e4cec9dafa5009992c`.
+Canonical report SHA256: `16d091dc2bc9d781e573857d156eaa76f1cb35f1cc5a623d6b3bf21ec7c3ee3c`. Scope SHA256: `7115e58d1e58cdb435e049f568f282c3efc85061919468c1158c45d531d0d7e9`. Control-artifact manifest SHA256: `32d140d2c0b0f45e6b43512d88547eb8ab6fb09e9d0093fddfef8a1f97639cec`.
 
 The report records 126 findings (87 medium, 39 low), 61 bounded claims and 81 controls. These counts are an audit inventory, not an aggregate test-pass count. No broad suite, native/Cargo build, retained executable, provider call or private benchmark access was performed. Bounded helpers used the workspace Python 3.14.2 runtime.
 

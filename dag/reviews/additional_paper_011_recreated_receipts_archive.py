@@ -9,7 +9,7 @@ assert archive_sha=='8bf43405313439d05383552f1281eaec96442dac7eb733134bcae139486
 with zipfile.ZipFile(R/AR)as z:
  names=set(z.namelist());used=set()
  for path,x in files.items():
-  member=PREFIX+path[len(B):].replace('/demo_adversary_tribunal/','/demo_woland_tribunal/')
+  member=PREFIX+path[len(B):].replace('/demo_adversary_tribunal/','/demo_private_tribunal/')
   assert member in names and member not in used;used.add(member);raw=z.read(member);data[path]=raw;current=(R/path).read_bytes();assert sha(current)==x['sha256']
   rows.append({'path':path,'sha256':x['sha256'],'archive_member':member,'archive_member_sha256':sha(raw),'archive_bytes':len(raw),'raw_equal':raw==current,'LF_equal':raw.replace(b'\r\n',b'\n')==current.replace(b'\r\n',b'\n')})
  assert len(used)==len([n for n in names if'/docs/recreated_run/'in n])==1164
@@ -20,7 +20,7 @@ def map_recorded(path):
  else:
   marker='011_recreated_demos_and_proposal_fidelity_evidence/'
   if marker in s:s=B+s.split(marker,1)[1]
- return s.replace('/demo_woland_tribunal/','/demo_adversary_tribunal/')
+ return s.replace('/demo_private_tribunal/','/demo_adversary_tribunal/')
 leaves=[];batches=[];matrices=[]
 for path in files:
  name=pathlib.PurePosixPath(path).name

@@ -21,7 +21,7 @@ def sha(p):
 
 def main():
     report = read(path('.json'))
-    assert sha(path('.json')) == '95c6f4e30e8f1102014090ffe2b71a4ea9246b5d5168978a33dd29d17081bb21'
+    assert sha(path('.json')) == '16d091dc2bc9d781e573857d156eaa76f1cb35f1cc5a623d6b3bf21ec7c3ee3c'
     assert report['status'] == 'complete' and report['analysis_complete']
     assert not report['repository_wide_audit_complete']
     scope = {r['path']: r for r in read(path('_scope.json'))['files']}

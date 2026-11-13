@@ -6,13 +6,13 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-SOURCE = ROOT.parent / 'anomalon'
+SOURCE = ROOT.parent / 'private_engine_repo'
 plan = json.loads((HERE / 'demo_support_move_plan.json').read_text())
 consumers = json.loads((HERE / 'demo_support_consumer_receipt.json').read_text())
 entries = [{'path': row['source_relative_path'], 'mode': row['git_mode'], 'type': 'blob', 'sha': None}
-           for row in plan['entries'] if row['source_repo'] == 'anomalon' and row['source_git_tracked']]
+           for row in plan['entries'] if row['source_repo'] == 'private_engine_repo' and row['source_git_tracked']]
 for row in consumers['changes']:
-    if row['repository'] != 'anomalon':
+    if row['repository'] != 'private_engine_repo':
         continue
     raw = (SOURCE / row['path']).read_bytes()
     assert hashlib.sha256(raw).hexdigest() == row['after_sha256']

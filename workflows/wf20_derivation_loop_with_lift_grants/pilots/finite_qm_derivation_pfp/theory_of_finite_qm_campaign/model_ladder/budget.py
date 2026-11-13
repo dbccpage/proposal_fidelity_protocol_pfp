@@ -2,7 +2,7 @@
 
 AuthorityEffect: None. Ported in spirit (with attribution) from upstream_repo omega_engine_pfp
 (infrastructure/seat_transport/routing.py BudgetPolicy / admit_spend, router_r_seat_gateway.py
-CallLedger, omega_engine_woland budget_ledger.py): money is integer micro-USD, the worst case is
+CallLedger, private_engine budget_ledger.py): money is integer micro-USD, the worst case is
 admitted BEFORE dispatch, an ambiguous outcome keeps its reservation, and an unreported cost is
 unknown rather than zero. The reference keeps its ledger in SQLite behind a native host; this
 version is a JSON file behind a lock so the ledger can be reviewed and committed.

@@ -25,7 +25,7 @@ with zipfile.ZipFile(archive) as source:
         if not row['destination_relative_path'].endswith('.pyc'):
             continue
         path = ROOT / row['destination_relative_path']
-        assert path.resolve().is_relative_to(ROOT / 'pilots/anomalon_woland_support')
+        assert path.resolve().is_relative_to(ROOT / 'pilots/imported_pilots_support')
         current = path.read_bytes()
         if sha(current) == row['sha256']:
             continue

@@ -24,7 +24,7 @@ run_refactoring_packet(max_steps=1) unconditionally reports PASS_TO_MASTER with 
 
 **P011-AGG-F004 — F09 provenance addendum: multiword-role parser failure follows checkout transformation**
 
-P011CORE-F09 remains valid for the reviewed current checkout: parse_rounds uses (\w+) yet requires Gauge Breaker, Defect Hunter and other names containing spaces. The original ZIP copy of the same recovered runner instead requires Begemot, Koroviev, Jeremy, Polina, Liudmila, Yaroslava, Yeshua and Woland, all matching the lexical shape. This pins a transformation regression and does not by itself prove that full archived dialogue validation or its120 comparisons succeeded.
+P011CORE-F09 remains valid for the reviewed current checkout: parse_rounds uses (\w+) yet requires Gauge Breaker, Defect Hunter and other names containing spaces. The original ZIP copy of the same recovered runner instead requires Begemot, Koroviev, Jeremy, Polina, Liudmila, Yaroslava, Yeshua and private engine, all matching the lexical shape. This pins a transformation regression and does not by itself prove that full archived dialogue validation or its120 comparisons succeeded.
 
 **P011-AGG-F005 — Fourteen archived capability/job artifact bindings remain unresolved**
 
