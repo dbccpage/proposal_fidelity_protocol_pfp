@@ -37,4 +37,4 @@ Pattern `research_cell`: deep_researcher ×1 (run_o); adversary ×1 (run_f); cod
 
 Boost: when rule shows no gain: one revised rule from run_o; otherwise the rule is retired (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf19) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf19) · [machine-readable entry](../dag/workflow_dag.json)

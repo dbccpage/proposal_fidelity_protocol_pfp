@@ -19,7 +19,7 @@ each node's `source_evidence` says so.
 | [`workflow_dag.json`](workflow_dag.json) | Machine-readable graph (`pfp.workflow-dag.v1`): nodes, edges, process, mathematics, host check, team, goal and boost |
 | [`workflow_dag.mmd`](workflow_dag.mmd) | The same graph as Mermaid source |
 | [`workflow_dag.svg`](workflow_dag.svg) | A rendered, layered drawing |
-| [`ORCHESTRATION.md`](ORCHESTRATION.md) | How goal, team and boost work for every node, and which model tier does what |
+| [`orchestration.md`](orchestration.md) | How goal, team and boost work for every node, and which model tier does what |
 
 An edge `A → B` means B reuses A's procedure or acceptance rule as a step, so
 A should be understood and working first. The graph is acyclic: every node's
@@ -176,7 +176,7 @@ P004(role) is non-PFP 012, P004(DSL) is non-PFP 003 and P003(rep) is non-PFP 015
 ## Structure: one base and its extensions
 
 The 2026-11-05 research committee
-([report](../../docs/research/2026-11-05_committee_report.md)) found about six
+([report](../../docs/research/2026_11_05_committee_report.md)) found about six
 real procedures behind the first 23 nodes; WF24–WF49 were added on 2026-11-06 from the findings notes and the papers. Each node now has a `kind`:
 
 | Kind | Meaning | Nodes |

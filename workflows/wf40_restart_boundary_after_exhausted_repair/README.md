@@ -28,4 +28,4 @@ Pattern `proposer_with_residual_feedback`: coder ×1 (sonnet); deep_researcher �
 
 Boost: when none: terminal by design (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf40) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf40) · [machine-readable entry](../dag/workflow_dag.json)

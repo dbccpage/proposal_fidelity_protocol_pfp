@@ -121,7 +121,7 @@ pub enum CustodyError {
     UnqualifiedDeclarationName { short_name: String },
 }
 
-/// Gate status enum matching PROJECT.md interface contract.
+/// Gate status enum matching project.md interface contract.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum CustodyGateStatus {
     PASS,
@@ -887,14 +887,14 @@ pub struct CustodyGateInput {
     pub lean_axiom_report_path: Option<String>,
 }
 
-/// Axiom census summary matching `PROJECT.md § Interface Contracts`.
+/// Axiom census summary matching `project.md § Interface Contracts`.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AxiomCensusSummary {
     pub total_declarations: usize,
     pub unadmitted_axioms: Vec<String>,
 }
 
-/// Output outcome structure matching `PROJECT.md § Interface Contracts`.
+/// Output outcome structure matching `project.md § Interface Contracts`.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CustodyGateOutcome {
     pub status: CustodyGateStatus,

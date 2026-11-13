@@ -1,6 +1,6 @@
-"""C036: every invariant published in TASK.md must equal the reference solver's value.
+"""C036: every invariant published in task.md must equal the reference solver's value.
 
-Counterexample named by this test: TASK.md once published the sextic n_3 as 9299696544
+Counterexample named by this test: task.md once published the sextic n_3 as 9299696544
 (solver: 11900417220), the octic n_2 and n_3 as 72970528 and 384813583808 (solver:
 128834912 and 1423720546880) and the decic n_1 and n_2 as 168280 and 1403698640 (solver:
 231200 and 12215785600). A participant copying those values was scored wrong.
@@ -16,7 +16,7 @@ from c036_quintic_gromov_witten_mirror.reference_solver.solver import (
     solve,
 )
 
-TASK_MD = Path(__file__).resolve().parent.parent / "participant_packet" / "TASK.md"
+TASK_MD = Path(__file__).resolve().parent.parent / "participant_packet" / "task.md"
 
 FAMILY_RE = re.compile(
     r"\*\*(?P<name>\w+)\*\*: \$\\mathbb\{WP\}\((?P<weights>[\d, ]+)\)\$, \$d = (?P<degree>\d+)\$, "

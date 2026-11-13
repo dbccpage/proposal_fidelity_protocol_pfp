@@ -163,7 +163,7 @@ def test_stimulus_drops_bare_expected_and_keeps_allowed_fields():
 
 
 def test_task_examples_cannot_supply_solved_values(tmp_path):
-    path = tmp_path / "TASK.md"
+    path = tmp_path / "task.md"
     path.write_text('Contract\n```json\n{"answer": {"phi1": "938456"}}\n```', encoding="utf-8")
     result = task_contract(path.read_text(encoding="utf-8"))
     assert "938456" not in result
@@ -240,7 +240,7 @@ def test_observed_failure_routes_to_answer_free_rule(judge, reason, expected):
 
 
 def test_redacted_contract_withholds_status_and_phi1_values(tmp_path):
-    task = tmp_path / "TASK.md"
+    task = tmp_path / "task.md"
     task.write_text('```json\n{"status":"SOLVED","phi1":"938456"}\n```', encoding="utf-8")
     result = task_contract(task.read_text(encoding="utf-8"))
     assert "SOLVED" not in result

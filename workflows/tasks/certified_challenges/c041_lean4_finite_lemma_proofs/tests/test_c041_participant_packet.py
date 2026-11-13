@@ -8,7 +8,7 @@ _pkg_root = Path(__file__).resolve().parent.parent
 
 
 def test_participant_task_md_exists():
-    task_file = _pkg_root / "participant_packet" / "TASK.md"
+    task_file = _pkg_root / "participant_packet" / "task.md"
     assert task_file.exists()
     content = task_file.read_text(encoding="utf-8")
     assert "C041" in content

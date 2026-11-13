@@ -30,4 +30,4 @@ Pattern `research_cell`: coder ×1 (sonnet); deep_researcher ×1 (run_o); advers
 
 Boost: when Lean or table check fails: run_o repairs the encoding from the error (limit 2).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf16) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf16) · [machine-readable entry](../dag/workflow_dag.json)

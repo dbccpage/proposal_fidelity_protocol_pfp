@@ -46,4 +46,4 @@ Boost: when local checks pass but the global check fails: run_o receives the cob
 | local tolerance | tau 1/10 vs 1/5 on a hexagon | holonomy 3/5 vs bound 6/5 | code | P003(rep) Cor 3.3 |
 | extractor carrier | claim, citation, tool-trace, proof-obligation or reasoning-step graph | — | code | P033 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf10) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf10) · [machine-readable entry](../dag/workflow_dag.json)

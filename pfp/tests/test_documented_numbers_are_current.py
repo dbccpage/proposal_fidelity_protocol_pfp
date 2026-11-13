@@ -95,9 +95,9 @@ def test_every_uncontracted_type_is_a_named_deliberate_omission() -> None:
     from fourteen nobody has looked at, and the count alone cannot tell them
     apart.
     """
-    ledger = (CONTRACTS / "UNCONTRACTED.md").read_text(encoding="utf-8")
+    ledger = (CONTRACTS / "uncontracted.md").read_text(encoding="utf-8")
     unexplained = sorted(name for name in measured_uncontracted() if name not in ledger)
     assert not unexplained, (
-        "these types carry no contract and no entry in UNCONTRACTED.md, so nothing "
+        "these types carry no contract and no entry in uncontracted.md, so nothing "
         f"records whether the omission was a decision: {unexplained}"
     )

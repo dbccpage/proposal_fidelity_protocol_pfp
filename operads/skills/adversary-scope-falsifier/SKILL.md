@@ -4,7 +4,7 @@ description: "Detect claim scope exceeding declared evidence scope at PRE_SEAL w
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/adversary_scope_falsifier.json"
-  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
+  core-contracts-digest: "sha256:03b547c08b380fbaf25fbc7616ba7cd0543a70719149fcdfead78968c2fd159c"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "anti_skill"
   core-residual: "unknown"
@@ -27,7 +27,7 @@ Ordered signature: `(subject: Contract) -> findings: Audit`.
 
 ## Evidence and execution boundary
 
-Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`
+Contracts: `sha256:03b547c08b380fbaf25fbc7616ba7cd0543a70719149fcdfead78968c2fd159c`
 
 Spec: `sha256:ba117ed5180c684520793d18bdc614b102fc6eda2eb8e90d9e6e951ce0f94912`
 

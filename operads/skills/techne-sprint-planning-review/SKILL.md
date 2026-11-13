@@ -157,7 +157,7 @@ Summary:
 | Inbound | `techne-code-inspector` | Techne Code Inspector audit (Step 7) must pass before Blackrod quality review proceeds |
 | Outbound | sprint-planning | If changes requested, review sends feedback back to planning for revision |
 
-**Example session:** See [`example-session.md`](references/example-session.md).
+**Example session:** See [`example_session.md`](references/example_session.md).
 
 ## Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)
 

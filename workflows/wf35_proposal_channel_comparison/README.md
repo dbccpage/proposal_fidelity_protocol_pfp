@@ -28,4 +28,4 @@ Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (run_
 
 Boost: when none: channels are arms, not boosts (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf35) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf35) · [machine-readable entry](../dag/workflow_dag.json)

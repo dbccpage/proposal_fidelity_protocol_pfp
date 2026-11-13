@@ -55,7 +55,7 @@ When reviewing or creating agents, assign model tiers based on reasoning complex
 
 **Default bias:** When uncertain, lean toward the higher tier. Run O adaptive thinking manages cost automatically by scaling reasoning effort to task complexity.
 
-**Audit steps:** See [`audit-steps.md`](references/audit-steps.md).
+**Audit steps:** See [`audit_steps.md`](references/audit_steps.md).
 
 ## Authority Safety Check
 
@@ -214,7 +214,7 @@ Summary:
 - All archive/delete decisions require explicit approval (APPROVAL_REQUIRED)
 - Recommendations must cite specific evidence (relevance score, usage data) (EVIDENCE_BASED)
 
-**Example session:** See [`example-session.md`](references/example-session.md).
+**Example session:** See [`example_session.md`](references/example_session.md).
 
 ## Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)
 

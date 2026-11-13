@@ -12,7 +12,7 @@ PARTICIPANT_DIR = Path(__file__).resolve().parent.parent / "participant_packet"
 
 
 def test_participant_packet_structure():
-    assert (PARTICIPANT_DIR / "TASK.md").exists()
+    assert (PARTICIPANT_DIR / "task.md").exists()
     assert (PARTICIPANT_DIR / "accounting.json").exists()
     assert (PARTICIPANT_DIR / "runner.py").exists()
 

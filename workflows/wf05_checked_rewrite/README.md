@@ -6,7 +6,7 @@
 
 ## Run it
 
-Step-by-step guide: [Workflow-WF5 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-WF5). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-Running).
+Step-by-step guide: [Workflow-WF5 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf5). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_running).
 
 Offline, from the repository root after `pip install ".[workflows]"` (fixture replies: no model call, no cost):
 
@@ -55,4 +55,4 @@ Boost: when preservation check fails: stop; never solve an unpreserved task (lim
 | --- | --- | --- | --- | --- |
 | representation | raw edge list, distractor-masked, 8-letter glyphs, full hybrid | glyphs compressed prompts 56-74% | live | F §2.3 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf5) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf5) · [machine-readable entry](../dag/workflow_dag.json)

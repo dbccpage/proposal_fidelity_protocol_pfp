@@ -29,4 +29,4 @@ Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker
 
 Boost: when a class is missing: DetectorInadequate (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf41) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf41) · [machine-readable entry](../dag/workflow_dag.json)

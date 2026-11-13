@@ -29,4 +29,4 @@ Pattern `solo`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (non
 
 Boost: when none: typed verdict (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf45) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf45) · [machine-readable entry](../dag/workflow_dag.json)

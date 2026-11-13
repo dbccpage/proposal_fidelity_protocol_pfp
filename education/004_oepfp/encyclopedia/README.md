@@ -4,7 +4,7 @@
 
 ## 1. Role
 
-A single subfolder, `entries/`, holding 95 markdown entries named `enc-NNNN-<slug>.md` (first `enc-0080`, last `enc-1209`; the numbering has gaps). Each entry has YAML frontmatter, a `# ENC-NNNN` heading, and a `## Statement` section.
+A single subfolder, `entries/`, holding 95 markdown entries named `enc_NNNN_<slug>.md` (first `enc_0080`, last `enc_1209`; the numbering has gaps). Each entry has YAML frontmatter, a `# ENC-NNNN` heading, and a `## Statement` section.
 
 ## 2. Directory Inventory
 

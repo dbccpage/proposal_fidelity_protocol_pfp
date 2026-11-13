@@ -18,8 +18,8 @@ EXAMPLES_DIR = PARTICIPANT_DIR / "examples"
 
 
 def test_participant_packet_files_exist():
-    """Asserts that TASK.md, accounting.json, and runner.py exist."""
-    assert (PARTICIPANT_DIR / "TASK.md").is_file(), "TASK.md missing"
+    """Asserts that task.md, accounting.json, and runner.py exist."""
+    assert (PARTICIPANT_DIR / "task.md").is_file(), "task.md missing"
     assert (PARTICIPANT_DIR / "accounting.json").is_file(), "accounting.json missing"
     assert (PARTICIPANT_DIR / "runner.py").is_file(), "runner.py missing"
 

@@ -4,7 +4,7 @@ description: "Find malformed workflow inputs silently wrapped or filtered into v
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-silent-coercion-antipattern.json"
-  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
+  core-contracts-digest: "sha256:03b547c08b380fbaf25fbc7616ba7cd0543a70719149fcdfead78968c2fd159c"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "anti_pattern"
   core-residual: "unknown"
@@ -24,7 +24,7 @@ Repair through HP_PY_013 at the same boundary with an explicit typed refusal. Pr
 
 ## Digested lesson
 
-Source: `operads/patterns/anti/python/AP_PY_013_silent_input_schema_coercion.md` @ `827d3b47743393a96441751de40e1b4be2b33d9e` (sha256:b03088d05c0abaa5a8282c73dca6e67414d1ade537a8ba4834c4afbb0bb36f26).
+Source: `operads/patterns/anti/python/ap_py_013_silent_input_schema_coercion.md` @ `827d3b47743393a96441751de40e1b4be2b33d9e` (sha256:b03088d05c0abaa5a8282c73dca6e67414d1ade537a8ba4834c4afbb0bb36f26).
 
 Source excerpt (evidence to inspect):
 
@@ -56,7 +56,7 @@ A parser, workflow runner, or ingress boundary silently accepts malformed input 
 
 Ordered signature: `(code: Code) -> findings: Audit`.
 
-Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
+Contracts: `sha256:03b547c08b380fbaf25fbc7616ba7cd0543a70719149fcdfead78968c2fd159c`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

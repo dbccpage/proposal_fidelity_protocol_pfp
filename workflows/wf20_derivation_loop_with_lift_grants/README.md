@@ -47,4 +47,4 @@ Pattern `research_cell`: deep_researcher ×1 (run_o); adversary ×1 (run_f); cod
 
 Boost: when witness check fails twice: next loop starts from the adversary's counterexample (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf20) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf20) · [machine-readable entry](../dag/workflow_dag.json)

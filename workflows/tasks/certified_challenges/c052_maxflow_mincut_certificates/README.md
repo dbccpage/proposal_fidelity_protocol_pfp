@@ -1,6 +1,6 @@
 # Challenge C052
 
-See `participant_packet/TASK.md` for the problem statement and answer format.
+See `participant_packet/task.md` for the problem statement and answer format.
 
 This package has no test folder of its own. Its test is the replay-custody
 test (from the repository root):

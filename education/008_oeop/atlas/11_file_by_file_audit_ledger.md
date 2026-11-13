@@ -21,8 +21,8 @@ verified byte-identical across `_img` and `_docs/_img`.
 
 | # | Path | Blob | Kind | Owner |
 | ---: | --- | --- | --- | ---: |
-| 1 | `.agents/operad/OWNERSHIP.md` | `93fccd6397bf` | document | [08](08_reference_operad_and_skill_compiler.md) |
-| 2 | `.agents/operad/SEMANTICS_MAP.md` | `20edb7a8de53` | document | [08](08_reference_operad_and_skill_compiler.md) |
+| 1 | `.agents/operad/ownership.md` | `93fccd6397bf` | document | [08](08_reference_operad_and_skill_compiler.md) |
+| 2 | `.agents/operad/semantics_map.md` | `20edb7a8de53` | document | [08](08_reference_operad_and_skill_compiler.md) |
 | 3 | `.agents/operad/agent_capability_slices.json` | `43d1f60df748` | manifest/data | [08](08_reference_operad_and_skill_compiler.md) |
 | 4 | `.agents/operad/antibodies.py` | `3c90299e7cf9` | source | [08](08_reference_operad_and_skill_compiler.md) |
 | 5 | `.agents/operad/application/__init__.py` | `da3953074bd9` | package marker | [08](08_reference_operad_and_skill_compiler.md) |

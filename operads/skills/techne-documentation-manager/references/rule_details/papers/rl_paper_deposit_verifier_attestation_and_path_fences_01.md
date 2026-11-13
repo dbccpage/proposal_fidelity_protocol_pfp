@@ -76,4 +76,4 @@ This rule codifies cross-component path case collision fences, historical defect
 >    - Deselected tests corresponding to unrequested native integration tiers must be reported as explicit deselections, never converted into passing assertions.
 >
 > 3. **Receipt and Build Transient Snapshot Parity:**
->    - Deposit manifests and readiness receipts (e.g. `TEST_READY.md`) must bind the exact tested git commit digest, toolchain versions, outcome counts, and output page counts matching the compiled manuscript build logs (with 0 missing glyphs). Stale compilation logs or historical test counts must not be packaged without their matching artifact snapshots.
+>    - Deposit manifests and readiness receipts (e.g. `test_ready.md`) must bind the exact tested git commit digest, toolchain versions, outcome counts, and output page counts matching the compiled manuscript build logs (with 0 missing glyphs). Stale compilation logs or historical test counts must not be packaged without their matching artifact snapshots.

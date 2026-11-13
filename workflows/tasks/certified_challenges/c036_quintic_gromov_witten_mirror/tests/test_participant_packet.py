@@ -1,6 +1,6 @@
 """Tests for C036 Participant Packet.
 
-Validates TASK.md, accounting.json, runner.py, and all canonical example files.
+Validates task.md, accounting.json, runner.py, and all canonical example files.
 
 AuthorityEffect: None.
 """
@@ -24,9 +24,9 @@ RUNNER_FILE = PARTICIPANT_DIR / "runner.py"
 
 
 def test_task_md_exists_and_declares_bounds():
-    """TASK.md must exist and declare mirror symmetry formulas and AuthorityEffect: None."""
-    task_file = PARTICIPANT_DIR / "TASK.md"
-    assert task_file.is_file(), "TASK.md must exist in participant_packet"
+    """task.md must exist and declare mirror symmetry formulas and AuthorityEffect: None."""
+    task_file = PARTICIPANT_DIR / "task.md"
+    assert task_file.is_file(), "task.md must exist in participant_packet"
     content = task_file.read_text(encoding="utf-8")
     assert "AuthorityEffect" in content and "None" in content
     assert "Tier" in content and "T2" in content

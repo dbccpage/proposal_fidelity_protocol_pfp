@@ -2,7 +2,7 @@
 
 Shorter sittings split from the former interactive notebooks: how to read, widgets, agents, and the alpha lab.
 
-The pre-split build spec is [NOTEBOOK_PLAN.md](NOTEBOOK_PLAN.md). The catalog is [COURSE_100_SYLLABUS.md](COURSE_100_SYLLABUS.md). This table is the current map.
+The pre-split build spec is [notebook_plan.md](notebook_plan.md). The catalog is [course_100_syllabus.md](course_100_syllabus.md). This table is the current map.
 
 ## Lessons
 

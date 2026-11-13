@@ -48,4 +48,4 @@ Boost: when a dialect fails preservation: run_o proposes a corrected rewrite fro
 | channel | free, null, carrier filter, grammar mask | 0/8 for all on a 0.5B model | live | P027 T1 |
 | gauge and relabel twins | 8-16 invariance controls per challenge | — | offline | F c011, c051 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf6) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf6) · [machine-readable entry](../dag/workflow_dag.json)

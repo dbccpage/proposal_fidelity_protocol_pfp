@@ -190,9 +190,9 @@ papers. It is not a second copy of that curriculum.
 | `product_planning_office/receipts/` | Planning-office receipts |
 | `_ic/` | Intelligence-community custody trees (`odni`, `nsa`, `nro`, and the other agency folders on disk) |
 | `_ooutwire/` | Ooutwire textbook and product backlog |
-| `TEST_INFRA.md`, `TEST_READY.md` | Test-infrastructure note and a dated e2e manifest |
+| `test_infra.md`, `test_ready.md` | Test-infrastructure note and a dated e2e manifest |
 
-Package tests also live inside each package. A green line in `TEST_READY.md`
+Package tests also live inside each package. A green line in `test_ready.md`
 is that file's recorded run. It is not a live census of `main`.
 
 ## Other root documents

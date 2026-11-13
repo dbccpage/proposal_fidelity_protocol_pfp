@@ -96,7 +96,7 @@ def test_consumed_prompt_inputs_are_captured_and_drift_refuses_before_replay(
     challenge = root / "c005_fixture"
     challenge.mkdir(parents=True)
     paths = {
-        "task": challenge / "TASK.md",
+        "task": challenge / "task.md",
         "template": root / "template.yaml",
         "case": challenge / "cases.json",
     }

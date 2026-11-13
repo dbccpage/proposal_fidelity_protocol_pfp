@@ -6,7 +6,7 @@
 
 ## Run it
 
-Step-by-step guide: [Workflow-WF3 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-WF3). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-Running).
+Step-by-step guide: [Workflow-WF3 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf3). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_running).
 
 Offline, from the repository root after `pip install ".[workflows]"` (fixture replies: no model call, no cost):
 
@@ -59,4 +59,4 @@ Boost: when guidance screen rejects: none on the base path (limit 0).
 | priming | gauge-fixing algorithm primed first vs not | primed: 0% (pure-gauge bias) | live | F §3.4 |
 | antibodies | prompt antibodies alone vs antibodies plus pinned tokens | alone: 0% on non-abelian; with pinned tokens helped | live | F synthesis |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf3) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf3) · [machine-readable entry](../dag/workflow_dag.json)

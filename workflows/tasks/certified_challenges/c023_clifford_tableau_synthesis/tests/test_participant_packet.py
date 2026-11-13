@@ -13,7 +13,7 @@ from c023_clifford_tableau_synthesis.participant_packet.runner import (
 
 def test_participant_packet_files_exist():
     pkg_dir = Path(__file__).resolve().parent.parent / "participant_packet"
-    assert (pkg_dir / "TASK.md").is_file()
+    assert (pkg_dir / "task.md").is_file()
     assert (pkg_dir / "accounting.json").is_file()
     assert (pkg_dir / "runner.py").is_file()
     assert (pkg_dir / "examples").is_dir()

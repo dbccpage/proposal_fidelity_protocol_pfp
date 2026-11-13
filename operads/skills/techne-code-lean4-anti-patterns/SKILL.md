@@ -19,9 +19,9 @@ Specialist skill for the Lean 4 catalog at `operads/patterns/anti/lean4/`. OEAUT
 
 | ID | Anti-Pattern | Hazard | Dual Healthy Pattern |
 |---|---|---|---|
-| `AP_LN_001` | Unmechanized `sorry` in Lean source | A proof claim that the kernel did not check | [`HP_LN_001`](../../patterns/helpful/lean4/HP_LN_001_zero_sorry_axiom_allowlist.md) |
-| `AP_LN_002` | `lake build` or `lake update` without `lake exe cache get` in the same shell script | Uncached Mathlib rebuild | [`HP_LN_002`](../../patterns/helpful/lean4/HP_LN_002_scoped_target_cache_build.md) |
-| `AP_LN_003` | `theorem` naming `thermodynamic_limit` without a finite envelope on that line | Unhedged infinite-limit claim | [`HP_LN_003`](../../patterns/helpful/lean4/HP_LN_003_finite_difference_envelope.md) |
+| `AP_LN_001` | Unmechanized `sorry` in Lean source | A proof claim that the kernel did not check | [`HP_LN_001`](../../patterns/helpful/lean4/hp_ln_001_zero_sorry_axiom_allowlist.md) |
+| `AP_LN_002` | `lake build` or `lake update` without `lake exe cache get` in the same shell script | Uncached Mathlib rebuild | [`HP_LN_002`](../../patterns/helpful/lean4/hp_ln_002_scoped_target_cache_build.md) |
+| `AP_LN_003` | `theorem` naming `thermodynamic_limit` without a finite envelope on that line | Unhedged infinite-limit claim | [`HP_LN_003`](../../patterns/helpful/lean4/hp_ln_003_finite_difference_envelope.md) |
 
 `sorry` inside a `--` comment or a `/- -/` block is not `AP_LN_001`.
 

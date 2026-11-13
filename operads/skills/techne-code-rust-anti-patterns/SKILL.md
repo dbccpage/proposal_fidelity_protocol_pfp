@@ -19,9 +19,9 @@ Static matches are review leads, not compiler findings or certification.
 
 | Pattern | Failure | Supported alternative |
 | --- | --- | --- |
-| `AP_RS_001` | Worktree target duplication | [Shared cache](../../patterns/helpful/rust/HP_RS_001_shared_cargo_target_cache.md) |
-| `AP_RS_002` | Missing total order on actual ordered keys | [Meaningful ordered keys](../../patterns/helpful/rust/HP_RS_002_deterministic_key_trait_derive.md) |
-| `AP_RS_003` | Incremental cache disk exhaustion | [Selective cache hygiene](../../patterns/helpful/rust/HP_RS_003_incremental_cache_pruning.md) |
+| `AP_RS_001` | Worktree target duplication | [Shared cache](../../patterns/helpful/rust/hp_rs_001_shared_cargo_target_cache.md) |
+| `AP_RS_002` | Missing total order on actual ordered keys | [Meaningful ordered keys](../../patterns/helpful/rust/hp_rs_002_deterministic_key_trait_derive.md) |
+| `AP_RS_003` | Incremental cache disk exhaustion | [Selective cache hygiene](../../patterns/helpful/rust/hp_rs_003_incremental_cache_pruning.md) |
 | `AP_RS_007` | Assumed boundary completion | [Explicit bounded completion](../../patterns/helpful/rust/hp_rs_007_explicit_boundary_completion.md) |
 
 Read [Rust engineering standards](../../rules/engineering/rl_rust_engineering_standards.md)

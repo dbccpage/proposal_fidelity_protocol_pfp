@@ -83,7 +83,7 @@ AuthorityEffect: None.
 * **Confidence:** HIGH
 * **Target Folder:** `.agents/skills/auto-antiskill/`
 * **Signal:** Dialogue correction episodes and model repair failures require structured segmentation and candidate anti-skill mining into provenance-bound envelopes under `.agents/antiskills/ooutwire/`. Candidate generation must remain strictly distinct from detector activation and human admission review.
-* **Evidence:** Promoted from `prompt-civilization-v0-drafts/auto-antiskill/DRAFT.md` into canonical `.agents/skills/auto-antiskill/SKILL.md`, activated `agents/openai.yaml`, preserved `references/admission-boundary.md`, wired wrapper `scripts/auto_antiskill.py`, and verified under unit tests.
+* **Evidence:** Promoted from `prompt-civilization-v0-drafts/auto-antiskill/DRAFT.md` into canonical `.agents/skills/auto-antiskill/SKILL.md`, activated `agents/openai.yaml`, preserved `references/admission_boundary.md`, wired wrapper `scripts/auto_antiskill.py`, and verified under unit tests.
 * **Implementation Status:** `ADMITTED` 2026-09-18 under the 2026-09-01 amendment. Written to `.agents/skills/auto-antiskill/SKILL.md` and mirrored across all six host roots.
 
 #### Entry 0276: `core-prompt`
@@ -92,7 +92,7 @@ AuthorityEffect: None.
 * **Confidence:** HIGH
 * **Target Folder:** `.agents/skills/core-prompt/`
 * **Signal:** Consequential IDE prompts (code modifications, proof/verification claims, publication, external side effects) require deterministic pre-send review, typing, acceptance criteria verification, and non-claim bounding before dispatch.
-* **Evidence:** Promoted from `prompt-civilization-v0-drafts/core-prompt/DRAFT.md` into canonical `.agents/skills/core-prompt/SKILL.md`, activated `agents/openai.yaml`, preserved `references/prompt-proposal.md`, wired wrapper `scripts/core_prompt.py`, and verified under unit tests.
+* **Evidence:** Promoted from `prompt-civilization-v0-drafts/core-prompt/DRAFT.md` into canonical `.agents/skills/core-prompt/SKILL.md`, activated `agents/openai.yaml`, preserved `references/prompt_proposal.md`, wired wrapper `scripts/core_prompt.py`, and verified under unit tests.
 * **Implementation Status:** `ADMITTED` 2026-09-18 under the 2026-09-01 amendment. Written to `.agents/skills/core-prompt/SKILL.md` and mirrored across all six host roots.
 
 #### Entry 0277: `core-paper-review-swarm`

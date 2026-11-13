@@ -45,4 +45,4 @@ Boost: when a detector fires on Self: discard it; run_o may propose one narrower
 | toxicity threshold and decay | 1/5 threshold; decay tau = 5 | policy arithmetic, not a rate | offline | P006 §8 |
 | self-panel diversity | 1000 rows, 40 distinct | effective n = 40 | offline | P003; P006 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf14) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf14) · [machine-readable entry](../dag/workflow_dag.json)

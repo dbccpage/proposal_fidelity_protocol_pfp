@@ -30,32 +30,32 @@ In the engine operad architecture, code analysis, defect detection, and refactor
 .agents/patterns/
 ├── README.md               # This architectural specification
 ├── anti/                   # Anti-patterns (AP_* morphisms into Witness)
-│   ├── autop/              # OEAUTOP slot (CATALOG_EMPTY.txt)
-│   ├── html/               # HTML slot (CATALOG_EMPTY.txt)
-│   ├── javascript/         # JavaScript slot (CATALOG_EMPTY.txt)
-│   ├── json/               # JSON slot (CATALOG_EMPTY.txt)
+│   ├── autop/              # OEAUTOP slot (catalog_empty.txt)
+│   ├── html/               # HTML slot (catalog_empty.txt)
+│   ├── javascript/         # JavaScript slot (catalog_empty.txt)
+│   ├── json/               # JSON slot (catalog_empty.txt)
 │   ├── lean4/              # Lean 4 anti-patterns (AP_LN_*.md)
-│   ├── manim/              # Manim slot (CATALOG_EMPTY.txt)
+│   ├── manim/              # Manim slot (catalog_empty.txt)
 │   ├── markdown/           # Markdown anti-patterns (AP_MD_*.md)
 │   ├── python/             # Python anti-patterns (AP_PY_*.md)
 │   ├── rust/               # Rust anti-patterns (AP_RS_*.md)
 │   ├── sql/                # SQL anti-patterns (AP_SQL_*.md)
-│   └── svg/                # SVG slot (CATALOG_EMPTY.txt)
+│   └── svg/                # SVG slot (catalog_empty.txt)
 └── helpful/                # Paired helpful / healthy patterns (HP_* contractive endomorphisms)
-    ├── autop/              # OEAUTOP slot (CATALOG_EMPTY.txt)
-    ├── html/               # HTML slot (CATALOG_EMPTY.txt)
-    ├── javascript/         # JavaScript slot (CATALOG_EMPTY.txt)
-    ├── json/               # JSON slot (CATALOG_EMPTY.txt)
+    ├── autop/              # OEAUTOP slot (catalog_empty.txt)
+    ├── html/               # HTML slot (catalog_empty.txt)
+    ├── javascript/         # JavaScript slot (catalog_empty.txt)
+    ├── json/               # JSON slot (catalog_empty.txt)
     ├── lean4/              # Lean 4 healthy patterns (HP_LN_*.md)
-    ├── manim/              # Manim slot (CATALOG_EMPTY.txt)
+    ├── manim/              # Manim slot (catalog_empty.txt)
     ├── markdown/           # Markdown healthy patterns (HP_MD_*.md)
     ├── python/             # Python healthy patterns (HP_PY_*.md)
     ├── rust/               # Rust healthy patterns (HP_RS_*.md)
     ├── sql/                # SQL healthy patterns (HP_SQL_*.md)
-    └── svg/                # SVG slot (CATALOG_EMPTY.txt)
+    └── svg/                # SVG slot (catalog_empty.txt)
 ```
 
-`json`, `html`, `javascript`, `manim`, `svg`, and `autop` are tracked catalog homes. Each holds `CATALOG_EMPTY.txt` until a pattern is admitted. An empty slot is not a discovered anti-pattern. `markdown` holds admitted prose-contract patterns.
+`json`, `html`, `javascript`, `manim`, `svg`, and `autop` are tracked catalog homes. Each holds `catalog_empty.txt` until a pattern is admitted. An empty slot is not a discovered anti-pattern. `markdown` holds admitted prose-contract patterns.
 
 ## 3. Pattern Header Specification
 
@@ -84,10 +84,12 @@ The `patterns/` tree is a shared governance and verification surface. In accorda
 ## 5. Filename & ID Allocation Discipline
 
 1. **Canonical Filename Syntax**:
-   Every pattern file name must strictly match the regex:
-   - Anti-patterns: `^AP_[A-Z0-9]+_\d{3}_[a-z0-9_]+\.md$` (e.g. `AP_MD_058_markdown_asterisk_list_syntax.md`)
-   - Healthy patterns: `^HP_[A-Z0-9]+_\d{3}_[a-z0-9_]+\.md$` (e.g. `HP_MD_057_claim_ledger_pytest_addressing.md`)
-   - Lowercase prefixes (`ap_...`, `hp_...`) and filenames omitting the 3-digit ID are strictly forbidden.
+   Every pattern file name is lowercase and must match the regex
+   `^(ap|hp)_[a-z0-9]+_\d{3}_[a-z0-9_]+\.md$`:
+   - Anti-patterns: `ap_md_058_markdown_asterisk_list_syntax.md`
+   - Healthy patterns: `hp_md_057_claim_ledger_pytest_addressing.md`
+   - File names without the 3-digit ID are forbidden.
+   - The `pattern_id` in the front matter stays uppercase (`AP_MD_058`, `HP_MD_057`); ids are keys and do not follow the file name's case.
 
 2. **Sequential Non-Colliding ID Allocation**:
    - Pattern IDs must be strictly monotonic sequential numbers per language family (`001`, `002`, ...).

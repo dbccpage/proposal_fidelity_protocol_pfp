@@ -47,4 +47,4 @@ answer more often than the control arm at a small extra cost (the falsifier
 points), and seats of one family agree on wrong exclusions more often than
 seats of different families. Neither is measured yet.
 
-More: [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-WF51) · [machine-readable entry](../../dag/reviews/workflows_audit.json)
+More: [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf51) · [machine-readable entry](../../dag/reviews/workflows_audit.json)

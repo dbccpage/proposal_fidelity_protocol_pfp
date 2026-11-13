@@ -12,7 +12,7 @@
 
 Read this note before citing the register.
 
-1. **Count.** The register lists 29 entries, not 31: ENC-0111 to ENC-0120, ENC-0122 to ENC-0124, ENC-0126 to ENC-0140, and ENC-0195. The card [ENC-0121](../encyclopedia/entries/enc-0121-equal-route-legacy-enums.md) (equal-route legacy enums, `PROVED-PROSE`) exists but is not listed here. No card ENC-0125 exists, and no card ENC-0195 exists in `../encyclopedia/entries/`.
+1. **Count.** The register lists 29 entries, not 31: ENC-0111 to ENC-0120, ENC-0122 to ENC-0124, ENC-0126 to ENC-0140, and ENC-0195. The card [ENC-0121](../encyclopedia/entries/enc_0121_equal_route_legacy_enums.md) (equal-route legacy enums, `PROVED-PROSE`) exists but is not listed here. No card ENC-0125 exists, and no card ENC-0195 exists in `../encyclopedia/entries/`.
 2. **Statements are paraphrases.** Each "Invariant" line below paraphrases the card of the same number. For several entries the card states a different result, and the card is the source:
 
 | Entry | What this register says | What the card states |

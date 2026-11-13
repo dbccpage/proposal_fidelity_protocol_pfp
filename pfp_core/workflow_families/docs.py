@@ -7,7 +7,7 @@ Pages are rendered from the family's spec and docstring, the DAG node's
 process and mathematics, and a fresh offline run of its fixtures, so the page
 cannot drift from the code. The command then:
 
-* writes ``wiki/Workflow-WFn.md`` for each family and ``wiki/Workflow-Families.md``;
+* writes ``wiki/workflow_wfn.md`` for each family and ``wiki/workflow_families.md``;
 * pins each page's SHA-256 in ``dag/wiki/workflow_documentation.json``;
 * marks the node ``implemented`` in ``dag/reviews/workflows_audit.json`` with its
   runner source and tests.
@@ -33,7 +33,12 @@ WIKI_URL = REPO_URL + '/wiki/'
 TESTS = 'pfp_core/workflow_families/tests/test_families.py'
 AUDIT = REPO_ROOT / 'dag' / 'reviews' / 'workflows_audit.json'
 DOCS = REPO_ROOT / 'dag' / 'wiki' / 'workflow_documentation.json'
-HUB = 'Workflow-Families'
+HUB = 'workflow_families'
+
+
+def page_name(wf_id: str) -> str:
+    """Wiki page name (file stem and URL tail) of one family, such as workflow_wf6."""
+    return f'workflow_{wf_id.lower()}'
 
 
 def _tree(path: str) -> str:
@@ -49,7 +54,7 @@ def _docstring(cls) -> tuple[str, str]:
 
 
 def _links(ids) -> str:
-    return ', '.join(f'[{i}](Workflow-{i}.md)' for i in ids) or 'nothing'
+    return ', '.join(f'[{i}]({page_name(i)}.md)' for i in ids) or 'nothing'
 
 
 def render(cls, node: dict, rows: list[dict]) -> str:
@@ -124,7 +129,7 @@ def render(cls, node: dict, rows: list[dict]) -> str:
 
 
 def render_hub(registry, nodes) -> str:
-    rows = [f'| [{w}](Workflow-{w}.md) | {c.spec.name} | {c.spec.layer} | {", ".join(c.spec.depends_on)} | '
+    rows = [f'| [{w}]({page_name(w)}.md) | {c.spec.name} | {c.spec.layer} | {", ".join(c.spec.depends_on)} | '
             f'`{c.spec.host_check_id}` |' for w, c in sorted(registry.items(), key=lambda kv: (kv[1].spec.layer,
                                                                                               kv[1].spec.number))]
     return '\n'.join([
@@ -132,7 +137,7 @@ def render_hub(registry, nodes) -> str:
         '',
         'Each family is one class in `pfp_core/workflow_families/` on a shared runtime: one spec, one '
         'budget per run, one host check that alone can certify, and offline fixtures that must be accepted or '
-        'refused. WF1-WF5 keep their own runners (see [Workflows](Workflows.md)).',
+        'refused. WF1-WF5 keep their own runners (see [Workflows](workflows.md)).',
         '',
         '```powershell',
         'python -m pfp_core.workflow_families list',
@@ -175,10 +180,10 @@ def build(check: bool) -> list[str]:
             out = run_fixture(fam, name)
             rows.append({'fixture': name, 'expected': expected, 'verdict': out.verdict, 'code': out.code})
         text = render(cls, nodes[wf_id], rows)
-        page = f'wiki/Workflow-{wf_id}.md'
+        page = f'wiki/{page_name(wf_id)}.md'
         pages[REPO_ROOT / page] = text
         entries[wf_id] = {**entries.get(wf_id, {}), 'node_id': wf_id, 'page': page, 'page_sha256': _sha(text),
-                          'wiki_url': WIKI_URL + f'Workflow-{wf_id}',
+                          'wiki_url': WIKI_URL + page_name(wf_id),
                           'evidence_status': 'offline_fixture_checks_only_no_model_campaign'}
         entries[wf_id].setdefault('publication_status', 'source_only_not_yet_published')
         node = nodes[wf_id]

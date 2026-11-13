@@ -1,6 +1,6 @@
 """Tests for C032 Participant Packet.
 
-Validates TASK.md, accounting.json, runner.py, and all canonical example files.
+Validates task.md, accounting.json, runner.py, and all canonical example files.
 
 AuthorityEffect: None.
 """
@@ -20,9 +20,9 @@ EXAMPLES_DIR = PARTICIPANT_DIR / "examples"
 
 
 def test_task_md_exists_and_declares_bounds():
-    """TASK.md must exist and specify mathematical anomaly conditions."""
-    task_file = PARTICIPANT_DIR / "TASK.md"
-    assert task_file.is_file(), "TASK.md must exist in participant_packet"
+    """task.md must exist and specify mathematical anomaly conditions."""
+    task_file = PARTICIPANT_DIR / "task.md"
+    assert task_file.is_file(), "task.md must exist in participant_packet"
     content = task_file.read_text(encoding="utf-8")
     assert "H - V + 29T = 273" in content
     assert "B_{\\text{adj}} = \\sum_R x_R B^R" in content or "B_adj = sum_R x_R B^R" in content

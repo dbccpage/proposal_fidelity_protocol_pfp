@@ -23,8 +23,8 @@ Operates directly against Python modules in `engine/`, `operations/`, and compan
 
 | ID | Anti-Pattern | Hazard | Dual Healthy Pattern |
 |---|---|---|---|
-| `AP_PY_001` | Blanket Mypy Ignore (`# type: ignore`) | Conceals interface defects and type erosion | [`HP_PY_001`](../../patterns/helpful/python/HP_PY_001_scoped_mypy_overrides.md) Scoped Mypy Overrides |
-| `AP_PY_002` | Array Hash/Equality Asymmetry | `UnhashableType` crashes, non-deterministic sets | [`HP_PY_002`](../../patterns/helpful/python/HP_PY_002_canonical_immutable_array.md) Canonical Immutable Array |
+| `AP_PY_001` | Blanket Mypy Ignore (`# type: ignore`) | Conceals interface defects and type erosion | [`HP_PY_001`](../../patterns/helpful/python/hp_py_001_scoped_mypy_overrides.md) Scoped Mypy Overrides |
+| `AP_PY_002` | Array Hash/Equality Asymmetry | `UnhashableType` crashes, non-deterministic sets | [`HP_PY_002`](../../patterns/helpful/python/hp_py_002_canonical_immutable_array.md) Canonical Immutable Array |
 | `AP_PY_003` | Bare Exception Swallowing (`except Exception: pass`) | Silences syntax and runtime errors, masking critical failure states | Typed error logging or explicit `Result[T, E]` refusal |
 | `AP_PY_004` | Unmanaged File Handle (`open()` without context manager) | Resource descriptor leak on crash or early return | `with open(...) as handle:` context manager |
 | `AP_PY_005` | Mutable Default Arguments (`def f(x=[])`) | Leaked state across invocations causing non-deterministic mutation | Default to `None` and instantiate within body |

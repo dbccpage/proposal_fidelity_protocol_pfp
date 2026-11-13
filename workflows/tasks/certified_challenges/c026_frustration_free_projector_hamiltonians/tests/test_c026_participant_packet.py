@@ -29,7 +29,7 @@ def test_accounting_json_structure(participant_dir):
 
 
 def test_task_md_exists(participant_dir):
-    task_path = participant_dir / "TASK.md"
+    task_path = participant_dir / "task.md"
     assert task_path.is_file()
     text = task_path.read_text(encoding="utf-8")
     assert "C026: Frustration-Free Projector Hamiltonians" in text

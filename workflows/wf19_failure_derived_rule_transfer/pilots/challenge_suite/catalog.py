@@ -180,7 +180,7 @@ def prompt_input_paths(row):
         if "challenge_path" in row
         else next(p for p in source.parents if p.name[:4] == row["challenge"].lower())
     )
-    task = challenge / ("TASK.md" if row["challenge"] == "C005" else "participant_packet/TASK.md")
+    task = challenge / ("task.md" if row["challenge"] == "C005" else "participant_packet/task.md")
     return TEMPLATE, source, task
 
 

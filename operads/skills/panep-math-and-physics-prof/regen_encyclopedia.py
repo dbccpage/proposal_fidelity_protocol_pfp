@@ -399,8 +399,8 @@ def load_and_validate() -> tuple[list[dict], list[str], list[str]]:
             by_id[eid] = rel
         if path_name != path_name.lower():
             errors.append(f"{rel}: V1 filename must be lowercase")
-        if _ID_RE.match(eid) and not path_name.startswith(f"enc-{eid[4:]}-"):
-            errors.append(f"{rel}: V1 filename prefix must be 'enc-{eid[4:]}-'")
+        if _ID_RE.match(eid) and not path_name.startswith(f"enc_{eid[4:]}_"):
+            errors.append(f"{rel}: V1 filename prefix must be 'enc_{eid[4:]}_'")
 
         # V3 -- enums (+ layer dir agreement)
         layer_dir = ent["path"].parent.name

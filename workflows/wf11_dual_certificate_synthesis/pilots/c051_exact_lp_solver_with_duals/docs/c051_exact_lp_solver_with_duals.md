@@ -60,7 +60,7 @@ The first example is degenerate: three constraints are tight at `(3, 1)`. A cert
 
 ## 5. Participant Packet
 
-- `TASK.md`, which includes the JSON Schema itself, not a prose description of it.
+- `task.md`, which includes the JSON Schema itself, not a prose description of it.
 - 14 public examples with verbatim input and output JSON: three degenerate optima; a degenerate program on which Dantzig's rule cycles; two infeasible programs (one needing phase one); two unbounded programs; zero rows and columns; `m = n = 1`; a large-integer case; two malformed inputs.
 - `runner.py`, which runs `solve` in the sandbox and checks every public output with the reference checker.
 - `accounting.json`.
@@ -89,7 +89,7 @@ Arms A to D follow the protocol.
 
 $0.50 per arm covers every call used to construct, debug and select. That is about 1.4 million tokens at the Q40 blended rate ([review](../00_q40_review.md)). Candidate models: `meta-llama/llama-3.3-70b-instruct`, `qwen/qwen3-30b-a3b`, `deepseek/deepseek-r1-distill-llama-70b`. The module's SHA-256 is published before reveal.
 
-Q40 harness defects this spec closes: (1) the schema and verbatim examples are in every prompt; (2) every repair turn carries `TASK.md`, the schema, the full current module, the failing input, the expected and actual output, and the checker's typed rejection; (3) arm A samples at least 4 candidates per turn, and arm D spends the whole budget on best-of-N; (4) execution happens only in the U09 subprocess sandbox; (5) `BudgetController` refuses over-budget calls before they are made; (6) checker exceptions pause scoring.
+Q40 harness defects this spec closes: (1) the schema and verbatim examples are in every prompt; (2) every repair turn carries `task.md`, the schema, the full current module, the failing input, the expected and actual output, and the checker's typed rejection; (3) arm A samples at least 4 candidates per turn, and arm D spends the whole budget on best-of-N; (4) execution happens only in the U09 subprocess sandbox; (5) `BudgetController` refuses over-budget calls before they are made; (6) checker exceptions pause scoring.
 
 ## 9. Pass Gates and Statistics
 

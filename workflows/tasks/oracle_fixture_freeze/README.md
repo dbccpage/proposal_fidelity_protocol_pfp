@@ -19,4 +19,4 @@ Write the fixtures to a folder:
     python workflows/tasks/oracle_fixture_freeze/freeze_python_repr.py --out oracle_fixtures
     python workflows/tasks/oracle_fixture_freeze/freeze_json_acceptance.py --out oracle_fixtures
 
-Wiki page: `wiki/Test-Oracle-Fixture-Freeze.md`.
+Wiki page: `wiki/test_oracle_fixture_freeze.md`.

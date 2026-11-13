@@ -24,7 +24,7 @@ never grant admission.
 
 The executable implementation lives in
 `engine/crates/prompt_civilization/`. The source archive described in
-[PROVENANCE.md](PROVENANCE.md) is never imported by the runtime.
+[provenance.md](provenance.md) is never imported by the runtime.
 
 Historical PR and conversation-DAG mining follows the shared
 [Historical PR Immunity Campaign Contract](../../operads/skills/_shared/historical_pr_immunity_campaign.md).
@@ -68,7 +68,7 @@ allocation IDs. Retained loose-source harness results are not package tests.
 The bounded allocation test certifies only its measured allocator/input/carrier.
 
 Apply [the Rust anti-pattern skill](../skills/techne-code-rust-anti-patterns/SKILL.md)
-and [ordered-key pattern](../patterns/anti/rust/AP_RS_002_domain_enum_missing_ord.md)
+and [ordered-key pattern](../patterns/anti/rust/ap_rs_002_domain_enum_missing_ord.md)
 before promoting a match. Record file coverage separately from semantic review,
 retain raw reports as historical evidence, and bind fresh repair results to the
 current candidate. Creating prose guidance does not admit or activate a typed

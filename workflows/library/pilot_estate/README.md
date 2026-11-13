@@ -14,8 +14,8 @@ private runtime and is kept as a record, not as runnable code.
 
 | Folder or file | Files |
 | --- | ---: |
-| `MODUS_OPERANDI.md` | 1 |
-| `ORIGINAL_README.md` | 1 (the estate's own overview) |
+| `modus_operandi.md` | 1 |
+| `original_readme.md` | 1 (the estate's own overview) |
 | `__init__.py` | 1 |
 | `cot_miner.py` | 1 |
 | `dimensions` | 1 |

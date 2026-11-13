@@ -3,7 +3,7 @@
 AuthorityEffect: None.
 
 Tests:
-  Tier 1: Participant packet structure, TASK.md, accounting.json, and canonical examples.
+  Tier 1: Participant packet structure, task.md, accounting.json, and canonical examples.
   Tier 2: Reference solver execution on examples and base cases.
   Tier 3: Dual certifier 100% concordance on all 42 judge cases.
   Tier 4: 100% hostile mutation kill rate across all 40 corrupted certificates.
@@ -31,7 +31,7 @@ MUT_DIR = JUDGE_DIR / "mutation_suite" / "mutations"
 
 def test_tier1_participant_packet_integrity():
     """Tier 1: Asserts that participant packet is well-formed and adheres to Tier T3 bounds."""
-    assert (PARTICIPANT_DIR / "TASK.md").is_file()
+    assert (PARTICIPANT_DIR / "task.md").is_file()
     assert (PARTICIPANT_DIR / "accounting.json").is_file()
     assert (PARTICIPANT_DIR / "runner.py").is_file()
 

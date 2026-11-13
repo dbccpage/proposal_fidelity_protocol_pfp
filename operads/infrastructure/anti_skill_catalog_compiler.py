@@ -1,6 +1,6 @@
 """Compile the anti-pattern estate into anti-skill records.
 
-Each ``operads/patterns/anti/**/AP_*.md`` becomes one record: the negative twin of a skill,
+Each ``operads/patterns/anti/**/ap_*.md`` becomes one record: the negative twin of a skill,
 with its declared colours read through the canon (``Witness`` is a finding, so ``Audit``),
 its residual, and its dual healthy pattern. A dual is ``reciprocal`` when the healthy
 pattern names this anti-pattern back, ``one_sided`` when it names another, and

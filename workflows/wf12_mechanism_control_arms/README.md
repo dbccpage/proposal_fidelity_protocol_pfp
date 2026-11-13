@@ -46,4 +46,4 @@ Boost: when leak found: rebuild the carrier; discard affected runs (limit 0).
 | validity gate | baseline, null-hook gate, distractor mask, string delete (0.5B) | null hook matched baseline tokens 100% | live | F §8.1 |
 | C017 prompt arms | arms 1, 2, 5, 6 | 0/5, 0/5, 3/5, 3/5 (4/5 with decimation) | live | P010 §3 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf12) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf12) · [machine-readable entry](../dag/workflow_dag.json)

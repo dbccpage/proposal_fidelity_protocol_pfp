@@ -4,7 +4,7 @@ description: "Check learned guards against the current task."
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-stale-task-antibody.json"
-  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
+  core-contracts-digest: "sha256:03b547c08b380fbaf25fbc7616ba7cd0543a70719149fcdfead78968c2fd159c"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "antibody"
   core-residual: "unknown"
@@ -44,7 +44,7 @@ stopping a branch retains evidence and never changes an answer into PASS.
 
 ## Digested lesson
 
-Source: `_ic/nara/historical/oewas007/research/briefs/2026-10-06_glm53_recursive_reentry.md` @ `32454fda2b42454792f6d49ec22e7304a4e30ba6` (sha256:9663019947e0595bf1159ff8b50a421753e682d361cfee0e9ca378060a832eb2).
+Source: `_ic/nara/historical/oewas007/research/briefs/2026_10_06_glm53_recursive_reentry.md` @ `32454fda2b42454792f6d49ec22e7304a4e30ba6` (sha256:9663019947e0595bf1159ff8b50a421753e682d361cfee0e9ca378060a832eb2).
 
 Source excerpt (evidence to inspect):
 
@@ -94,7 +94,7 @@ Use the bound prompt when reviewing this failure class. Candidate only; the exis
 
 Ordered signature: `(candidate: Code) -> findings: Audit`.
 
-Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
+Contracts: `sha256:03b547c08b380fbaf25fbc7616ba7cd0543a70719149fcdfead78968c2fd159c`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

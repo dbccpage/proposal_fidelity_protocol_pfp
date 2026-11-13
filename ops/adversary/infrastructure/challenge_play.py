@@ -61,7 +61,7 @@ def context(row):
     challenge = (ROOT / relocated(row["challenge_path"]) if "challenge_path" in row else
         next(p for p in source.parents if p.name[:4] == row["challenge"].lower()))
     case = normalized_case(row["challenge"], load_case(row))
-    task = challenge / ("TASK.md" if row["challenge"] == "C005" else "participant_packet/TASK.md")
+    task = challenge / ("task.md" if row["challenge"] == "C005" else "participant_packet/task.md")
     if row["challenge"] == "C001":
         from workflows.wf19_failure_derived_rule_transfer.pilots.challenge_suite.c001 import TASK_PATH
         task = TASK_PATH

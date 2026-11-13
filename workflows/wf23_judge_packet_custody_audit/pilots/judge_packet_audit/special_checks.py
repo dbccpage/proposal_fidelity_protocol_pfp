@@ -4,7 +4,7 @@
   trivial inputs.
 - C005 has checker functions but no judge-case files; its generated hidden
   consistency cases are driven with a constant verdict.
-- C036's TASK.md publishes Gopakumar-Vafa invariants that are recomputed
+- C036's task.md publishes Gopakumar-Vafa invariants that are recomputed
   independently.
 - C032's trace coefficients are checked against weight identities.
 """
@@ -40,7 +40,7 @@ def available_package_ids(repo_root: Path) -> set[str]:
         "C001": "a_mechanism/c001_attention_distractor_mask/pipeline.json",
         "C005": "a_mechanism/c005_hosted_decode_controls",
         "C032": "d_physics_mtheory/c032_*",
-        "C036": "d_physics_mtheory/c036_*/participant_packet/TASK.md",
+        "C036": "d_physics_mtheory/c036_*/participant_packet/task.md",
     }
     return {pid for pid, pattern in sources.items() if any(root.glob(pattern))}
 
@@ -209,7 +209,7 @@ def c005_constant_verdict(
 def reference_value_checks(repo_root: Path, options: argparse.Namespace) -> dict[str, Any]:
     out: dict[str, Any] = {}
     theme = layout.challenges_root(repo_root) / "d_physics_mtheory"
-    task = next(iter(sorted(theme.glob("c036_*/participant_packet/TASK.md"))), None)
+    task = next(iter(sorted(theme.glob("c036_*/participant_packet/task.md"))), None)
     if _selected(options, "C036") and task is not None:
         comparison = reference_values.compare_gv_table(
             reference_values.parse_task_gv_table(task.read_text(encoding="utf-8"))

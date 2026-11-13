@@ -29,4 +29,4 @@ Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×
 
 Boost: when token ceiling reached: split into macro-blocks and rerun once (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf25) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf25) · [machine-readable entry](../dag/workflow_dag.json)

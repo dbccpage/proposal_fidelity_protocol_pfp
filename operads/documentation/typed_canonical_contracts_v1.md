@@ -125,8 +125,8 @@ The first four entries reuse existing owners rather than migrating the estate:
 | Kind | Canonical entry | Existing owner |
 | --- | --- | --- |
 | Rule | [Complete typed answer](../catalog/contracts/v1/lessons/adversary-typed-answer-rule.json) | `.agents/rules/engineering/rl_python_contracts_and_runtime_invariants.md` |
-| Helpful pattern | [Strict input refusal](../catalog/contracts/v1/lessons/adversary-strict-input-pattern.json) | `HP_PY_013_strict_input_typed_refusal.md` |
-| Anti-pattern | [Silent input coercion](../catalog/contracts/v1/lessons/adversary-silent-coercion-antipattern.json) | `AP_PY_013_silent_input_schema_coercion.md` |
+| Helpful pattern | [Strict input refusal](../catalog/contracts/v1/lessons/adversary-strict-input-pattern.json) | `hp_py_013_strict_input_typed_refusal.md` |
+| Anti-pattern | [Silent input coercion](../catalog/contracts/v1/lessons/adversary-silent-coercion-antipattern.json) | `ap_py_013_silent_input_schema_coercion.md` |
 | Antibody | [Prompt-attached coercion review](../catalog/contracts/v1/lessons/adversary-input-coercion-antibody.json) | `ab_silent_input_schema_coercion`, still candidate |
 
 Rule contracts separate trigger, predicate and response. Helpful patterns state

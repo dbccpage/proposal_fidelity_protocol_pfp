@@ -30,4 +30,4 @@ Pattern `research_cell`: coder ×1 (sonnet); deep_researcher ×1 (run_o); advers
 
 Boost: when no confirmed gain: retain incumbent (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf37) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf37) · [machine-readable entry](../dag/workflow_dag.json)

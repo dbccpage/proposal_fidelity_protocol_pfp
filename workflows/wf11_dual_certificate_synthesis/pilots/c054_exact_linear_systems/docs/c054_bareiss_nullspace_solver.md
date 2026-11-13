@@ -54,7 +54,7 @@ A certificate is complete when every stated equality holds exactly, both minors 
 
 ## 5. Participant Packet
 
-- `TASK.md` with the JSON Schema and the empty-matrix conventions.
+- `task.md` with the JSON Schema and the empty-matrix conventions.
 - 10 public examples with verbatim input and output JSON: the two examples above; a nonsingular 3×3; the zero matrix; `b = 0`; a tall inconsistent system; a rational-entry case; a growth case; `n = 0`; a malformed row.
 - `runner.py` and `accounting.json`.
 

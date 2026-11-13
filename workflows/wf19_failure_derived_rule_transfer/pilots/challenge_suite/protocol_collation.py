@@ -102,7 +102,7 @@ def build(*, local_trials=None, local_learned=None, baseline_calibration_repair=
         if not paths:
             folders = sorted(source.glob(f"*/{cid.lower()}*"))
             paths = [path for folder in folders for path in
-                (folder / "participant_packet/TASK.md", folder / "TASK.md") if path.is_file()]
+                (folder / "participant_packet/task.md", folder / "task.md") if path.is_file()]
         if not paths:
             raise ValueError("ORIGINAL_TASK_SOURCE_MISSING:" + cid)
         task = paths[0]

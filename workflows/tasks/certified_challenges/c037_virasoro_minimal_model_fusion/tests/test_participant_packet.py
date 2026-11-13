@@ -1,6 +1,6 @@
 """Tests for C037 Participant Packet.
 
-Validates TASK.md, accounting.json, runner.py, and all canonical example files.
+Validates task.md, accounting.json, runner.py, and all canonical example files.
 
 AuthorityEffect: None.
 """
@@ -24,9 +24,9 @@ RUNNER_FILE = PARTICIPANT_DIR / "runner.py"
 
 
 def test_task_md_exists_and_declares_bounds():
-    """TASK.md must exist, declare formulas, schemas, and AuthorityEffect: None without forbidden hype."""
-    task_file = PARTICIPANT_DIR / "TASK.md"
-    assert task_file.is_file(), "TASK.md must exist in participant_packet"
+    """task.md must exist, declare formulas, schemas, and AuthorityEffect: None without forbidden hype."""
+    task_file = PARTICIPANT_DIR / "task.md"
+    assert task_file.is_file(), "task.md must exist in participant_packet"
     content = task_file.read_text(encoding="utf-8")
     assert "AuthorityEffect" in content and "None" in content
     assert "Verlinde" in content
@@ -46,7 +46,7 @@ def test_task_md_exists_and_declares_bounds():
         "weaponized",
     ]
     for word in forbidden:
-        assert word not in content.lower(), f"Forbidden hype verb '{word}' found in TASK.md"
+        assert word not in content.lower(), f"Forbidden hype verb '{word}' found in task.md"
 
 
 def test_accounting_json_specifies_tier_t3():

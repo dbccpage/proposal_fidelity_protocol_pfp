@@ -39,7 +39,7 @@ pub struct NormalFormContractIdentity {
 }
 
 impl NormalFormContractIdentity {
-    /// Helper returning the contract ID (matches PROJECT.md `contract_id` field).
+    /// Helper returning the contract ID (matches project.md `contract_id` field).
     pub fn contract_id(&self) -> &str {
         &self.id
     }

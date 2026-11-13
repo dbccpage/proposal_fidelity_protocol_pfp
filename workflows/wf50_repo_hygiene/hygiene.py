@@ -153,6 +153,9 @@ def build_maps(moves: dict[str, str], files: list[str]):
     occurrence of that name is renamed the same way, so a bare mention is safe.
     suffix:  'parent/old_name' style path tails -> new tails, for names that are
     renamed in some places and kept in others.
+    A renamed .md file also gets an extension-less 'parent/stem' entry in
+    suffix (wiki/Paper-008 -> wiki/paper_008), so a link without '.md' is
+    fixed while a bare word such as "OWNERSHIP" is left alone.
     """
     seg_new: dict[str, set[str]] = defaultdict(set)
     seg_kept: set[str] = set()
@@ -165,9 +168,6 @@ def build_maps(moves: dict[str, str], files: list[str]):
             else:
                 seg_new[o].add(n)
     uniform = {o: next(iter(ns)) for o, ns in seg_new.items() if len(ns) == 1 and o not in seg_kept}
-    for o, n in list(uniform.items()):
-        if o.endswith(".md") and n.endswith(".md"):
-            uniform.setdefault(o[:-3], n[:-3])
     suffix: dict[str, str] = {}
     for old, new in moves.items():
         op, np_ = old.split("/"), new.split("/")
@@ -176,6 +176,8 @@ def build_maps(moves: dict[str, str], files: list[str]):
                 continue
             for k in range(2, j + 1):
                 suffix.setdefault("/".join(op[j - k:j]), "/".join(np_[j - k:j]))
+        if len(op) > 1 and op[-1].endswith(".md") and np_[-1].endswith(".md") and op[-1] != np_[-1]:
+            suffix.setdefault(f"{op[-2]}/{op[-1][:-3]}", f"{np_[-2]}/{np_[-1][:-3]}")
     py_modules = {}
     for old, new in moves.items():
         if old.endswith(".py"):
@@ -191,6 +193,13 @@ OPEN_CLOSE = {'"': '"', "'": "'", "`": "`", "(": ")", "[": "]", "<": ">"}
 
 
 def rewrite_text(text: str, uniform, suffix, py_modules, is_code: bool) -> tuple[str, int]:
+    """Rewrite old path and file names in text; return the new text and the number of changed runs.
+
+    A backslash is a separator only in a run with no '/' (a Windows path), so
+    escapes such as '3/7.\\ny' are left alone. A run whose segments do not
+    change is returned untouched and not counted. A '#anchor' on the last
+    segment is kept.
+    """
     count = 0
 
     def fix_run(m: re.Match) -> str:
@@ -199,18 +208,18 @@ def rewrite_text(text: str, uniform, suffix, py_modules, is_code: bool) -> tuple
         start, end = m.start(), m.end()
         before = text[start - 1] if start else ""
         after = text[end] if end < len(text) else ""
-        has_sep = "/" in run or "\\" in run
+        sep = "\\" if ("\\" in run and "/" not in run) else "/"
+        has_sep = sep in run
         enclosed = before in OPEN_CLOSE and after == OPEN_CLOSE[before]
-        norm = run.replace("\\", "/")
-        sep = "\\" if "\\" in run and "/" not in run else "/"
-        core = norm.rstrip(".")
-        tail = norm[len(core):]
-        segs = core.split("/")
+        core = run.rstrip(".")
+        tail = run[len(core):]
+        segs = core.split(sep)
+        last, hash_, anchor = segs[-1].partition("#")
         for i in range(len(segs) - 1):
-            key = "/".join(segs[i:])
+            key = "/".join(segs[i:-1] + [last])
             if key in suffix:
-                new_head = "".join(uniform.get(s, s) + "/" for s in segs[:i])
-                out = (new_head + suffix[key] + tail).replace("/", sep)
+                new_head = "".join(uniform.get(s, s) + sep for s in segs[:i])
+                out = new_head + suffix[key].replace("/", sep) + hash_ + anchor + tail
                 if out != run:
                     count += 1
                 return out
@@ -222,10 +231,10 @@ def rewrite_text(text: str, uniform, suffix, py_modules, is_code: bool) -> tuple
                 new_segs.append(".".join(py_modules.get(p, p) for p in seg.split(".")))
             else:
                 new_segs.append(seg)
-        out = "/".join(new_segs).replace("/", sep) + tail
-        if out != run:
-            count += 1
-        return out
+        if new_segs == segs:
+            return run
+        count += 1
+        return sep.join(new_segs) + tail
 
     return RUN.sub(fix_run, text), count
 

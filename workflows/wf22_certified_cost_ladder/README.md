@@ -46,4 +46,4 @@ Boost: when none: a ladder run never escalates mid-campaign: boosted arms are se
 | context policy | compressed vs full history at the same ceiling | — | not run | P026; P029 |
 | arrival vs completion rate | cohort vs window counting | — | code | P005(gap) §3.3 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-DAG#wf22) · [machine-readable entry](../dag/workflow_dag.json)
+More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf22) · [machine-readable entry](../dag/workflow_dag.json)

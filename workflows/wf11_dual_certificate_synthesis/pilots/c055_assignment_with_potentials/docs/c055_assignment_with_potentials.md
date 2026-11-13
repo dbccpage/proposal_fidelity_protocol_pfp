@@ -57,7 +57,7 @@ A certificate is complete when:
 
 ## 5. Participant Packet
 
-- `TASK.md` with the JSON Schema.
+- `task.md` with the JSON Schema.
 - 14 public examples with verbatim input and output JSON.
 - `runner.py` and `accounting.json`.
 

@@ -10,4 +10,4 @@ Run from the repository root (Python 3.12+, pytest):
 
 Expected: `13 passed`.
 
-Wiki page: `wiki/Test-Qa-Receipt-Invariants.md`.
+Wiki page: `wiki/test_qa_receipt_invariants.md`.

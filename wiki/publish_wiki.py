@@ -19,7 +19,7 @@ from pathlib import Path
 WIKI_DIR = Path(__file__).resolve().parent
 DEFAULT_REMOTE = "https://github.com/dbccpage/proposal_fidelity_protocol_pfp.wiki.git"
 EXCLUDED = {"README.md"}
-# Relative links to sibling pages, e.g. "](Papers.md)" or "](Papers.md#section)".
+# Relative links to sibling pages, e.g. "](papers.md)" or "](papers.md#section)".
 _PAGE_LINK = re.compile(r"\]\(([A-Za-z0-9_-]+)\.md(#[^)]*)?\)")
 
 

@@ -2,9 +2,9 @@
 
 ## Ownership boundary
 
-`.agents/operad/OWNERSHIP.md` (a historical path: `.agents/operad/` does not exist at `201dc8d`;
+`.agents/operad/ownership.md` (a historical path: `.agents/operad/` does not exist at `201dc8d`;
 the surviving ownership note is
-`operads/skill_operad/_docs/OWNERSHIP.md`) describes the intended structure as a coloured
+`operads/skill_operad/_docs/ownership.md`) describes the intended structure as a coloured
 non-symmetric multicategory. The root `coloured_operad.py` is a historical JSON
 compatibility API; `domain/` is the newer domain surface. Symmetric scaffolding is
 experimental, and scalar quotient observations must not be promoted into
@@ -14,7 +14,7 @@ The audit found 65 tracked files: six governance/data files, ten domain files,
 eight application/infrastructure files, eighteen root runtimes/scripts, fifteen
 skill-compiler files, and eight tests.
 
-During this review, `SEMANTICS_MAP.md` was repaired to close its YAML fence and to
+During this review, `semantics_map.md` was repaired to close its YAML fence and to
 replace stale typing-coverage and equivariance statements with the live bounded
 counts below. This documentation repair does not alter runtime semantics.
 
