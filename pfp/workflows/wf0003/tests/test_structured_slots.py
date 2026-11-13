@@ -8,7 +8,7 @@ from jsonschema import Draft202012Validator
 
 from pfp.infrastructure.adapters.pfp_campaign import digest, write_new
 from pfp.workflows.wf0003 import runner, workflow
-from pfp.workflows.wf0003.structured import wire_schema
+from adversary.infrastructure.providers.anthropic_messages import provider_response_schema
 from pfp.workflows.wf0003.tests.test_wf0003 import (
     attachment,
     factory_for,
@@ -23,9 +23,12 @@ def spec():
 
 
 def test_wire_schema_resolves_references_and_keeps_all_keyed_slots(spec):
+    # The solver sends its exact schema; the provider codec drops $id and lifts the
+    # answer's $defs to the root, where its local references still resolve.
     contract = workflow.SolverContract(attachment(spec))
     turn = contract.prepare_task(spec)
-    schema = wire_schema(turn.prompt.response_schema)
+    schema = provider_response_schema(turn.prompt.response_schema)
+    assert "$defs" in schema and "$defs" not in schema["properties"]["answer"]
     Draft202012Validator.check_schema(schema)
     candidate = json.loads(reply(turn, solver_answer()))
     Draft202012Validator(schema).validate(candidate)

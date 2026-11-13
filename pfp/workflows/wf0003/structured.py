@@ -4,7 +4,6 @@ from copy import deepcopy
 
 from pfp.infrastructure.adapters.pfp_campaign import canonical
 from pfp.workflows.wf0002 import workflow as codec
-from adversary.infrastructure.providers.anthropic_messages import provider_output_schema
 
 
 def object_schema(properties):
@@ -83,15 +82,6 @@ def answer_schema(spec, required, operations):
     schema["properties"]["slot_report"] = object_schema(properties)
     schema["$defs"] = definitions
     return schema
-
-
-def wire_schema(schema):
-    # The shared OpenRouter codec removes $id. Move definitions to the envelope
-    # root so its local references retain their meaning after that transform.
-    value = provider_output_schema(schema)
-    answer = value["properties"]["answer"]
-    value["$defs"] = answer.pop("$defs")
-    return value
 
 
 def codec_check(spec, checked):

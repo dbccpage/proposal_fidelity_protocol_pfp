@@ -177,7 +177,8 @@ def test_fences_remain_rejected_and_json_mode_is_in_the_actual_wire(tmp_path, sp
     result = runner.run(spec, root, "fixture/model", factory_for(calls))
     for phase in result["phases"].values():
         wire = phase["provider"]["request"]
-        assert wire["response_format"]["type"] in {"json_object", "json_schema"}
+        assert wire["response_format"]["type"] == "json_schema"
+        assert wire["response_format"]["json_schema"]["strict"] is True
         assert wire["provider"] == {"allow_fallbacks": False, "require_parameters": True}
     contract = workflow.SolverContract(json.loads((root / "attachment.json").read_text()))
     raw = b"```json\n" + reply(contract.prepare_task(spec), solver_answer()) + b"\n```"

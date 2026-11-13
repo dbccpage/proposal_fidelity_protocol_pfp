@@ -56,6 +56,22 @@ def provider_output_schema(schema: Any) -> Any:
     return copied
 
 
+def provider_response_schema(schema: Any) -> Any:
+    """The structured-output schema sent for a declared PFP response envelope.
+
+    ``provider_output_schema`` drops ``$id``, so an embedded answer that carried its own
+    resource root would resolve its ``#/$defs/...`` references against the envelope
+    instead. Its ``$defs`` therefore move to the envelope root, where those references
+    then name the same definitions. A root that already has ``$defs`` is refused.
+    """
+    projected = provider_output_schema(schema)
+    answer = projected.get("properties", {}).get("answer") if isinstance(projected, dict) else None
+    if isinstance(answer, dict) and "$defs" in answer:
+        if "$defs" in projected:
+            raise ProviderConfigError("STRUCTURED_SCHEMA_DEFS_COLLISION")
+        projected["$defs"] = answer.pop("$defs")
+    return projected
+
 def build_anthropic_headers(*, api_key: str) -> dict[str, str]:
     if not api_key.strip():
         raise ProviderConfigError("ANTHROPIC_API_KEY required for live anthropic")
@@ -106,7 +122,7 @@ def build_anthropic_body(
             if fmt.get("type") != "json_schema" or type(declared.get("schema")) is not dict:
                 raise ProviderConfigError("ANTHROPIC_STRUCTURED_SCHEMA_REQUIRED")
             body["output_config"] = {"format": {"type": "json_schema",
-                "schema": provider_output_schema(declared["schema"])}}
+                "schema": provider_response_schema(declared["schema"])}}
         if dec.effort is not None:
             body.setdefault("output_config", {})["effort"] = dec.effort
         if dec.temperature is not None:
