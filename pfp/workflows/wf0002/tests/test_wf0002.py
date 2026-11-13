@@ -161,6 +161,17 @@ def test_schema_invalid_records_are_still_collected_and_quarantined(spec):
     assert result["operads"][0]["disposition"] == "QUARANTINED"
 
 
+def test_wf2_sends_its_exact_response_schema_as_strict_structured_output(tmp_path, spec):
+    from adversary.domain.providers.types import thaw_json
+
+    gateway, provider = make_gateway(tmp_path, max_calls=1, answer=candidate())
+    runtime.run_accounted(spec, tmp_path / "typed", gateway=gateway, model="vendor/model",
+                          max_output_tokens=256)
+    fmt = thaw_json(provider.calls[0].decoding.response_format)
+    assert fmt["type"] == "json_schema" and fmt["json_schema"]["strict"] is True
+    assert fmt["json_schema"]["schema"] == wf2.prepare_task(spec).prompt.response_schema
+
+
 def test_accounted_wf2_uses_one_call_and_replays_collection(tmp_path, spec):
     gateway, provider = make_gateway(tmp_path, max_calls=1, answer=candidate())
     root = tmp_path / "wf2"

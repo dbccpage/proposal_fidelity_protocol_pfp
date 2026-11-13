@@ -84,12 +84,9 @@ def factory_for(calls, *, bad_mining=False, unknown_cost=False, quote="input.val
             unbudgeted_max_output_tokens = tokens
 
             def complete_result(self, request, **options):
-                expected_format = (
-                    "json_object"
-                    if json.loads(request.user)["attempt_id"] == workflow.MiningContract.ATTEMPT_ID
-                    else "json_schema"
-                )
-                if thaw_json(request.decoding.response_format)["type"] != expected_format:
+                # Miner and solver alike must send a strict, typed response contract.
+                fmt = thaw_json(request.decoding.response_format)
+                if fmt["type"] != "json_schema" or fmt["json_schema"].get("strict") is not True:
                     raise ScriptedInvariantError("SCRIPTED_RESPONSE_FORMAT_MISMATCH")
                 with gateway.ledger.transaction(gateway.limit) as state:
                     if not any(row["state"] == "reserved" for row in state["attempts"].values()):
