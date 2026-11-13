@@ -264,7 +264,7 @@ def test_branch_touches_only_allowed_paths():
     git = shutil.which('git')
     if git is None:
         pytest.skip('git unavailable')
-    # Repository-wide custody boundary: no branch may modify any of the 32,057 pinned files in dag/file_inventory.json.
+    # Repository-wide custody boundary: no branch may modify any of the 32,056 pinned files in dag/file_inventory.json.
     base = subprocess.run([git, 'merge-base', 'HEAD', 'origin/main'], cwd=REPO, capture_output=True, text=True)
     if base.returncode != 0:
         pytest.skip('origin/main unavailable')
