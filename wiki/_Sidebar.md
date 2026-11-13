@@ -43,6 +43,7 @@
 - [Epistemic Immune System](EIS.md)
   - [Two-signal gate](EIS-Two-Signal-Gate.md) · [Antibodies](EIS-Antibody-Lifecycle.md)
   - [Regulation and custody](EIS-Regulation-and-Custody.md)
+  - [Exclusion hypotheses](EIS-Exclusion-Hypotheses.md)
 - [Prompt Civilization](PCIV.md)
   - [Genomes and lineage](PCIV-Genomes-and-Lineage.md) · [Mutation](PCIV-Mutation-and-Inheritance.md)
   - [Selection](PCIV-Selection-and-Retrieval.md) · [Safety](PCIV-Safety-and-Persistence.md)

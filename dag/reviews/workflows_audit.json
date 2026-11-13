@@ -4288,6 +4288,81 @@
           "reason": "Use explicitly typed stage/mode contracts and the unchanged QM query; existing proposal reports zero campaign cases, so it supplies no new effect estimate."
         },
         "runner_class": "QueryPreservationCampaign"
+      },
+      {
+        "id": "WF51",
+        "name": "Exclusion hypotheses with cheapest falsifiers",
+        "status": "implemented",
+        "kind": "meta_workflow",
+        "merge_into": null,
+        "depends_on": [
+          "WF14",
+          "WF31"
+        ],
+        "layer": 7,
+        "sources": [
+          "Jeremy, 2026-11-13: an exclusion is a hypothesis, not a fact"
+        ],
+        "task_families": [],
+        "source_evidence": "Offline fixtures only; no model campaign.",
+        "process": [
+          "Seats from several model families propose exclusions, each with a falsifier and its cost",
+          "The host counts agreement by model family: disagreement is frontier, one family is uncorroborated, several agreeing families are probably dead",
+          "Falsifiers run frontier first, then uncorroborated, then probably-dead ones no dearer than the dead floor, under one retest budget",
+          "A refuted exclusion reopens its branch; the solver sees only open branches",
+          "Control arm: the same task with retests off"
+        ],
+        "math": [
+          "seats of one family are one vote, because shared training makes their errors correlated",
+          "an exclusion with no falsifier is refused before any test runs",
+          "a no-root claim is checked by exhaustive scan of the open branches, so the control arm's typed refusal is lawful but can hide the answer"
+        ],
+        "host_check": "exact polynomial evaluation of each falsifier and of the answer",
+        "model_calls_normal_path": "2 (exclude, solve)",
+        "team": {
+          "goal": "Spend test effort where model families disagree, and still test cheap dead branches.",
+          "pattern": "panel",
+          "roles": [
+            {
+              "role": "proposer",
+              "model_tier": "mixed families",
+              "count": 3,
+              "task": "Vote on exclusions and name the cheapest falsifier for each."
+            },
+            {
+              "role": "coder",
+              "model_tier": "sonnet",
+              "count": 1,
+              "task": "Solve inside the open branches."
+            },
+            {
+              "role": "host_checker",
+              "model_tier": "none",
+              "count": 1,
+              "task": "Deterministic check; the only component that can accept. Never a model."
+            }
+          ],
+          "boost": {
+            "trigger": "none",
+            "action": "a refuted exclusion reopens its branch",
+            "limit": 0
+          }
+        },
+        "path": "workflows/wf51_exclusion_hypotheses_with_cheapest_falsifiers",
+        "definition": "workflows/wf51_exclusion_hypotheses_with_cheapest_falsifiers/README.md",
+        "audited_availability": "offline_family_runner_with_fixture_tests",
+        "substantive_evidence_status": {
+          "family_definition_read": true,
+          "source_evidence_statement": "Offline fixtures only; no model campaign.",
+          "status_scope": "Documentation claims preserved as claims, not independently reproduced results",
+          "execution_verified_in_this_audit": false
+        },
+        "runner_source": "pfp_core/workflow_families/layer7.py",
+        "tests": "pfp_core/workflow_families/tests/test_families.py",
+        "pilot_python_sources": [],
+        "pilot_test_sources": [],
+        "file_count": 1,
+        "runner_class": "ExclusionHypothesisRetest"
       }
     ],
     "family_edges": [
@@ -4664,6 +4739,16 @@
       {
         "from": "WF22",
         "to": "WF49",
+        "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
+      },
+      {
+        "from": "WF14",
+        "to": "WF51",
+        "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
+      },
+      {
+        "from": "WF31",
+        "to": "WF51",
         "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
       }
     ],

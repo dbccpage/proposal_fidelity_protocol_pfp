@@ -61,6 +61,7 @@ guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fid
 | 47 | [Resumable bounded frontier search](wf47_resumable_bounded_frontier_search/README.md) | proposal | procedure extension | WF9 | — |
 | 48 | [Commit-reveal with a hostile mutation gate](wf48_commit_reveal_with_a_hostile_mutation_gate/README.md) | proposal | harness gate | WF11, WF23 | — |
 | 49 | [Query-preservation stage and mode campaign](wf49_query_preservation_stage_and_mode_campaign/README.md) | proposal | experiment design | WF8, WF22 | — |
+| 51 | [Exclusion hypotheses with cheapest falsifiers](wf51_exclusion_hypotheses_with_cheapest_falsifiers/README.md) | offline runner | meta workflow | WF14, WF31 | — |
 
 ## Other folders here
 
