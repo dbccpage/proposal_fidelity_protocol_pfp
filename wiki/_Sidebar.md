@@ -4,6 +4,7 @@
 - [Getting started](getting_started.md)
 - [Core concepts](core_concepts.md)
 - [Papers](papers.md)
+- [Atlas paper](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/atlas.md) · [claim ledger](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/atlas/atlas_claim_ledger.md)
 - [PFP Lab](pfp_lab.md)
 - [Repository layout](repository_layout.md)
 - [Demos, pilots and tests](demos_pilots_and_tests.md) · [Test catalog](test_catalog.md)
