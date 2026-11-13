@@ -5,7 +5,7 @@ before requesting another response. A refusal can be the correct result.
 
 | What you see | What it means | Next action |
 | --- | --- | --- |
-| `ModuleNotFoundError: omega_engine_pfp` | You used an older integration command in the standalone repo. | Use [Integration status](workflow_integration_status.md) and the current WF1 walkthrough. |
+| `ModuleNotFoundError` naming the older integration module | You used an older integration command in the standalone repo. | Use [Integration status](workflow_integration_status.md) and the current WF1 walkthrough. |
 | `ModuleNotFoundError: jsonschema` | The optional pure task-turn checker dependency is missing. | Install the pinned dependency on the WF1 page in the same Python environment. |
 | The run folder already exists | A fresh attempt would overwrite evidence. | Keep it; choose a new run folder for a new attempt. |
 | Wrong task/attempt ID or input digest | The reply belongs to a different prepared turn. | Match the reply to its original task; do not edit the raw reply to make it fit. |
@@ -45,8 +45,8 @@ For a new paid attempt, preserve lineage and the remaining original allowance.
 ## Migrated runners
 
 Install with `python -m pip install ".[workflows]"` using Python 3.12+.
-Use `pfp.workflows.wf0001` through `wf0005`; keep older `omega_engine_pfp`
-commands with their original integration. `NATIVE_BUDGET_UNAVAILABLE` applies
+Use `pfp.workflows.wf0001` through `wf0005`; keep commands for the older integration module
+with that integration. `NATIVE_BUDGET_UNAVAILABLE` applies
 to the optional native hard-budget path; the documented commands use the
 accounted estimated path. Never switch to unbounded billing to bypass a refusal.
 See [Install and run](workflow_running.md) for the exact argument shapes.

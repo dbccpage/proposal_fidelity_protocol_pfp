@@ -1,10 +1,32 @@
 # WF50: Repo hygiene
 
-**Status:** runnable. **Kind:** maintenance workflow. **Builds on:** nothing.
+**What it is for:** keeping this repository tidy. It finds files and folders
+whose names break the naming rule, renames them and fixes every reference,
+deletes junk, refreshes the workflow documentation and writes a short gap report.
 
-**What it does:** keeps this repository tidy. It finds files and folders whose
-names break the naming rule, renames them and fixes every reference, deletes
-junk, refreshes the workflow documentation and writes a short gap report.
+**Status:** runnable: `hygiene.py` and its tests run offline; the agent workflow
+`workflow.js` needs Claude Code. It is not a workflow family, so
+`python -m pfp_core.workflow_families` does not list it.
+
+**Run it offline** (no model call, no cost), from the repository root:
+
+```powershell
+python -m pytest workflows/wf50_repo_hygiene -q
+python workflows/wf50_repo_hygiene/hygiene.py survey --out workflows/wf50_repo_hygiene/run/plan.json
+python workflows/wf50_repo_hygiene/hygiene.py residue workflows/wf50_repo_hygiene/run/plan.json
+```
+
+**The check:** the naming rule in [naming_policy.json](naming_policy.json)
+(`survey` lists every name that breaks it), `residue` (no old name left
+anywhere) and the custody test
+`benchmarks/industry_replacement/tests/test_industry_replacement.py::test_branch_touches_only_allowed_paths`
+(no file pinned in `dag/file_inventory.json` changes unrecorded).
+
+**Code:** [hygiene.py](hygiene.py), [test_hygiene.py](test_hygiene.py),
+[naming_policy.json](naming_policy.json), [workflow.js](workflow.js). Wiki page:
+[workflow_wf50](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf50).
+
+**Kind:** maintenance workflow. **Builds on:** nothing.
 
 **Rule it enforces:** every file and folder name is lowercase snake_case, except
 `README.md` and the names a tool requires. The exceptions and the reason for each
@@ -40,7 +62,7 @@ editing thousands of files:
 `apply` never edits files under `papers/` and never renames anything inside a
 hash-pinned bundle (a folder holding `MANIFEST.sha256` or `SHA256SUMS`).
 
-## Run it
+## Run the agent workflow
 
 From the repository root, in Claude Code:
 
@@ -53,8 +75,8 @@ From the repository root, in Claude Code:
 
 `run/` is ignored by git; it holds one run's working files.
 
-## The check
+## After each job
 
 `python -m pytest workflows/wf50_repo_hygiene -q` tests the naming and rewrite
-rules. After each job: the full test suites, `python -m governance.tools.checker check`
+rules. Then run the full test suites, `python -m governance.tools.checker check`
 (no new failures against `main`) and `hygiene.py residue`.

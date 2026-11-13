@@ -4,15 +4,17 @@ AuthorityEffect: None. This folder describes workflow designs and their
 sources. It adds no measured result.
 
 **WF1–WF5 are implemented** (`pfp.workflows`, offline-verified).
-**WF6–WF49 are proposals.** They were derived on 2026-11-05 by reading
-the retained pilot estate of the sibling research repository (`pilot_0000000`
+**WF6–WF49 and WF51 run offline** on the family runtime in
+[`pfp_core/workflow_families/`](../../pfp_core/workflow_families/) (status
+`implemented_offline`: fixtures only, no model campaign yet). WF6–WF23 were
+designed on 2026-11-05 by reading the retained pilot estate (`pilot_0000000`
 through `pilot_0000203` and its auxiliary folders: the certified cost ladder,
 the commit-reveal challenge folders, the ACSet rewriting pilots and the
-judge-packet audit). No model was called to make this graph. A proposal node
-records a procedure, its mathematics, its host check and the evidence the
-pilots hold; it is not a runner and it is not a performance claim. Most
-pilots from 52 to 187 are planned capsules that were never dispatched, and
-each node's `source_evidence` says so.
+judge-packet audit), recorded with an older harness. No model was called to make
+this graph. A node records a procedure, its mathematics, its host check and the
+evidence the pilots hold; it is not a performance claim. Most pilots from 52 to
+187 are planned capsules that were never dispatched, and each node's
+`source_evidence` says so.
 
 | File | What it is |
 | --- | --- |
@@ -220,9 +222,9 @@ new workflow. `merge_into` names where a node is expected to fold in.
 | WF21 | Structural prompt rewriting | procedure extension → WF5 | WF5 | 0000028, 0000030, 0000050, acset_prompt_rewriting, acset_cochain_rewriting | `red_team_pair` | sonnet: coder; run_f: adversary |
 | WF22 | Certified cost ladder | experiment design → Sweep | WF6, WF8, WF18 | certified_ladder | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher; run_f: adversary |
 | WF23 | Judge-packet custody audit | harness gate | WF11 | judge_packet_audit | `red_team_pair` | sonnet: coder; run_f: adversary |
-| WF24 | Pinned-token operational scratchpad | procedure extension | WF2 | F symbol_game_challenge_and_demos_findings §3.4, F challenges_findings_and_updates §8.2 (C017) | `solo` | sonnet: coder; run_o: deep_researcher |
-| WF25 | Hierarchical decimation | procedure extension | WF24 | F symbol_game_challenge_and_demos_findings §3.6, §15, F challenges_findings_and_updates §12 | `solo` | sonnet: coder; run_o: deep_researcher |
-| WF26 | Multi-round antibody dialogue | procedure extension | WF9, WF14 | F symbol_game_challenge_and_demos_findings §2 | `proposer_with_residual_feedback` | sonnet: coder; run_f: adversary |
+| WF24 | Pinned-token operational scratchpad | procedure extension | WF2 | F demos findings note §3.4, F challenges_findings_and_updates §8.2 (C017) | `solo` | sonnet: coder; run_o: deep_researcher |
+| WF25 | Hierarchical decimation | procedure extension | WF24 | F demos findings note §3.6, §15, F challenges_findings_and_updates §12 | `solo` | sonnet: coder; run_o: deep_researcher |
+| WF26 | Multi-round antibody dialogue | procedure extension | WF9, WF14 | F demos findings note §2 | `proposer_with_residual_feedback` | sonnet: coder; run_f: adversary |
 | WF27 | Hinted retraction with a stationary-loop detector | procedure extension → WF9 | WF9 | F challenges_findings_and_updates §4, §10.1, P008 §10, P027 §5.9 | `proposer_with_residual_feedback` | sonnet: coder |
 | WF28 | Eight-role audit dialogue | procedure extension | WF15 | F challenges_findings_and_updates §2 | `tribunal` | sonnet: coder; run_o: defender; run_f: adversary |
 | WF29 | Checker synthesis scored by mutation kill rate | task preset → WF11 | WF11 | F challenges_findings_and_updates §11 (C060) | `red_team_pair` | sonnet: coder; run_f: adversary |
@@ -244,7 +246,7 @@ new workflow. `merge_into` names where a node is expected to fold in.
 | WF45 | Finite terminal selector and plenitude test | procedure extension | WF7 | P003(representation) §2-5 | `solo` | sonnet: coder; run_f: adversary |
 | WF46 | Boundary sufficiency and gluing diagnostic | procedure extension | WF4 | P028(finite authority) §11, P005(authority gap) §3 | `parallel_isolated_then_global` | sonnet: coder; run_o: deep_researcher |
 | WF47 | Resumable bounded frontier search | procedure extension | WF9 | P002(signed) §4 | `relay` | sonnet: coder |
-| WF48 | Commit-reveal with a hostile mutation gate | harness gate → WF23 | WF11, WF23 | F symbol_game_challenge_and_demos_findings §7-14, F challenges_findings_and_updates §9.3-9.5, F c043-c059 template | `red_team_pair` | sonnet: coder; run_f: adversary |
+| WF48 | Commit-reveal with a hostile mutation gate | harness gate → WF23 | WF11, WF23 | F demos findings note §7-14, F challenges_findings_and_updates §9.3-9.5, F c043-c059 template | `red_team_pair` | sonnet: coder; run_f: adversary |
 | WF49 | Query-preservation stage and mode campaign | experiment design | WF8, WF22 | P011 §3-5 | `sweep_with_shared_judge` | sonnet: coder; run_o: deep_researcher |
 
 WF24–WF49 cite their findings notes (F) and papers (P###) directly. Pilot numbers are directory numbers in the source estate; `c051`–`c059` are

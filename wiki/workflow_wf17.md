@@ -1,5 +1,7 @@
 # WF17: Witnessed-difference programme
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 4 · **Builds on:** [WF10](workflow_wf10.md), [WF11](workflow_wf11.md) · **Merges into:** WF10 · **Kind:** task preset
 
 **Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`WitnessedDifferenceProgramme`) · **Folder:** [`workflows/wf17_witnessed_difference_programme`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf17_witnessed_difference_programme) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

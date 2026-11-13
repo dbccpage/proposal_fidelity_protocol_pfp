@@ -1,5 +1,7 @@
 # WF51: Exclusion hypotheses with cheapest falsifiers
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 7 · **Builds on:** [WF14](workflow_wf14.md), [WF31](workflow_wf31.md) · **Merges into:** nothing · **Kind:** meta workflow
 
 **Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`ExclusionHypothesisRetest`) · **Folder:** [`workflows/wf51_exclusion_hypotheses_with_cheapest_falsifiers`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf51_exclusion_hypotheses_with_cheapest_falsifiers) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

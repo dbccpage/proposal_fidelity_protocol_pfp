@@ -1,5 +1,7 @@
 # WF37: Evidence-bound harness evolution
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 8 · **Builds on:** [WF19](workflow_wf19.md), [WF22](workflow_wf22.md) · **Merges into:** nothing · **Kind:** meta workflow
 
 **Code:** [`pfp_core/workflow_families/layer8.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer8.py) (`EvidenceBoundHarnessEvolution`) · **Folder:** [`workflows/wf37_evidence_bound_harness_evolution`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf37_evidence_bound_harness_evolution) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

@@ -1,5 +1,7 @@
 # WF22: Certified cost ladder
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
+
 **Layer:** 7 · **Builds on:** [WF6](workflow_wf6.md), [WF8](workflow_wf8.md), [WF18](workflow_wf18.md) · **Merges into:** Sweep · **Kind:** experiment design
 
 **Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`CertifiedCostLadder`) · **Folder:** [`workflows/wf22_certified_cost_ladder`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf22_certified_cost_ladder) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

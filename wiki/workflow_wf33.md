@@ -1,5 +1,7 @@
 # WF33: Recursive re-entry with shared fuel
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 9 · **Builds on:** [WF9](workflow_wf9.md), [WF20](workflow_wf20.md) · **Merges into:** nothing · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer9.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer9.py) (`RecursiveReentryWithSharedFuel`) · **Folder:** [`workflows/wf33_recursive_re_entry_with_shared_fuel`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf33_recursive_re_entry_with_shared_fuel) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

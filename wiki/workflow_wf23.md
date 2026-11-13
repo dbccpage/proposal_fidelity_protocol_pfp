@@ -1,5 +1,7 @@
 # WF23: Judge-packet custody audit
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
+
 **Layer:** 4 · **Builds on:** [WF11](workflow_wf11.md) · **Merges into:** nothing · **Kind:** harness gate
 
 **Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`JudgePacketCustodyAudit`) · **Folder:** [`workflows/wf23_judge_packet_custody_audit`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf23_judge_packet_custody_audit) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

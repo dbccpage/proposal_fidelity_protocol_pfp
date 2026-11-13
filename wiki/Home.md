@@ -26,6 +26,7 @@ older papers and code.
 | Try ideas in a small interactive tool | [PFP Lab](pfp_lab.md) |
 | See how language models were steered, and replicate it here | [Steering examples](steering.md) |
 | Find your way around the code | [Repository layout](repository_layout.md) |
+| See the known gaps in PFP, PCIV, EIS and operads | [Gap report](gap_report.md) |
 | Contribute, or check licensing | [Contributing](contributing.md) |
 
 ## Status

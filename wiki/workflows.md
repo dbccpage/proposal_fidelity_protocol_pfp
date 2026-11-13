@@ -32,8 +32,8 @@ arm; this provides no evidence of a performance improvement.
 
 Every workflow has one folder in the repository, numbered the same as here:
 [`workflows/wf01_typed_answer/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf01_typed_answer)
-through `workflows/wf49_…`. Each folder's README says how to run and replay
-it and links to its code. The full list is the
+through `workflows/wf51_…`. Each folder's README says what the workflow is for,
+its status, how to run it offline, what checks the answer, and where its code is. The full list is the
 [workflows index](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/workflows/README.md).
 
 ## Pick the problem you have
@@ -45,6 +45,7 @@ it and links to its code. The full list is the
 | Prepare operation guidance before solving | [WF3 — mine, then solve](workflow_wf3.md) | a mining stage | 2 | 1 task; the Oct 28 2-call figure is stitched from two runs (real path 10 actions, $0.0043); refused on Nov 6 at its 1,300-token solver limit |
 | Compare five isolated answers against one global check | [WF4 — five agents + LGGR](workflow_wf4.md) | five isolated solvers and a global check | 6 | 1 task; all five correct on two models |
 | Preserve the task through a grammar rewrite before WF4 | [WF5 — checked rewrite](workflow_wf5.md) | a deterministic rewrite step | 6 | 1 task; accepted Oct 28 after 4 failed miners; Nov 6 miner refused on schema |
+| Keep this repository's names, junk and workflow docs in order | [WF50 — repo hygiene](workflow_wf50.md) | (maintenance, not a task workflow) | 0 offline | its own tests only |
 
 **What the evidence shows.** Every result so far is one integer-addition task.
 On the earlier prototype all five gave the right answer, and none was cheaper, faster or
@@ -63,8 +64,11 @@ mining stage before solving (WF3), five isolated solvers with a global check
 (WF4), and a deterministic rewrite before WF4 (WF5). The
 [workflow DAG](workflow_dag.md) uses that shape for everything else: one base
 workflow, a few procedure extensions, experiment designs that wrap any
-workflow, and design proposals (WF6–WF23) that have **no runner and no run
-yet**. WF24–WF49 were added on 2026-11-06 from the certified-challenge
+workflow, and more families. WF6–WF49 and WF51 each have an offline runner on
+one shared runtime ([Workflow families](workflow_families.md)): their fixtures
+are checked with no model call, and no live or local model run of them is
+recorded yet. WF6–WF23 were designed from the retained pilot experiments;
+WF24–WF49 were added on 2026-11-06 from the certified-challenge
 findings notes and the papers, together with 46 recorded perturbations
 (variations of an existing workflow's settings or steps, such as scratchpad
 on or off, completion ceilings, hint levels or neutral case identifiers).
@@ -93,6 +97,8 @@ workflows solve arbitrary research problems or eliminate hallucinations.
 ## Find the next thing
 
 - [Workflow DAG](workflow_dag.md): WF1–WF49, their dependencies, teams and boost steps.
+- [Workflow families](workflow_families.md): WF6–WF49 and WF51, each runnable offline.
+- [WF50: repo hygiene](workflow_wf50.md): the maintenance workflow that keeps names and docs in order.
 - [Frozen QM benchmark](workflow_qm_benchmark.md): controls, rational panels, budgets and evidence limits.
 - [Workflow library](workflow_library.md): base families and versioned recipes.
 - [Troubleshooting](workflow_troubleshooting.md): what a refusal means and what to do.

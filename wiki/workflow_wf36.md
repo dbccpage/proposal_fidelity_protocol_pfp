@@ -1,5 +1,7 @@
 # WF36: Guarded staged slot materialisation
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 5 · **Builds on:** [WF8](workflow_wf8.md) · **Merges into:** WF8 · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`GuardedStagedSlotMaterialisation`) · **Folder:** [`workflows/wf36_guarded_staged_slot_materialisation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf36_guarded_staged_slot_materialisation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

@@ -99,6 +99,50 @@ def test_wiki_pages_and_dag_records_are_current():
     assert docs.build(check=True) == []
 
 
+def test_a_private_name_in_a_source_field_is_refused(audit_nodes):
+    from pfp_core.workflow_families import docs
+    private = 'run it on the ' + 'om' + 'ega' + '_engine host'
+    node = {**audit_nodes['WF7'], 'process': ['Freeze the task', private]}
+    with pytest.raises(ValueError, match=r"WF7: field 'process'"):
+        docs.render(REGISTRY['WF7'], node, [])
+    with pytest.raises(ValueError, match='readme'):
+        docs.guard('WF7', 'readme block', 'see the ' + 'wo' + 'land gate')
+    # The Greek letter as a math symbol is not a name.
+    sym = 'om' + 'ega'
+    math = f'\\{sym}_1 and {sym}_2 and {sym}1'
+    assert docs.guard('WF7', 'math', math) == math
+
+
+def test_a_readme_without_the_generated_markers_is_refused():
+    from pfp_core.workflow_families import docs
+    block = docs.render_readme_block(REGISTRY['WF7'])
+    with pytest.raises(ValueError, match='WF7: README lacks'):
+        docs.splice_readme('WF7', '# WF7: Typed refusal\n\nhand-written\n', block)
+    spliced = docs.splice_readme('WF7', f'# WF7\n\n{docs.README_BEGIN}\nold\n{docs.README_END}\n\nkept\n', block)
+    assert spliced == f'# WF7\n\n{block}\n\nkept\n'
+
+
+def test_every_generated_readme_block_is_current_and_says_runnable_offline():
+    from pfp_core.workflow_families import docs
+    for wf_id in sorted(docs.README_BLOCK_IDS):
+        cls = REGISTRY[wf_id]
+        text = (REPO_ROOT / cls.spec.folder / 'README.md').read_text(encoding='utf-8')
+        assert docs.render_readme_block(cls) in text.replace('\r\n', '\n'), wf_id
+        assert 'no runner and no run yet' not in text, wf_id
+
+
+def test_drift_in_the_index_or_the_dag_status_is_reported():
+    from pfp_core.workflow_families import docs
+    reg = {'WF7': REGISTRY['WF7']}
+    index = '| WF | Workflow | Status |\n| --- | --- | --- |\n| 7 | [Typed refusal](x) | runnable offline |\n'
+    dag = {'nodes': [{'id': 'WF7', 'status': docs.DAG_STATUS}]}
+    assert docs.drift(reg, index, dag) == []
+    assert docs.drift(reg, index.replace('runnable offline', 'proposal'), dag) == [
+        "workflows/README.md#WF7: status 'proposal', expected 'runnable offline'"]
+    assert docs.drift(reg, index, {'nodes': [{'id': 'WF7', 'status': 'proposal'}]}) == [
+        "workflows/dag/workflow_dag.json#WF7: status 'proposal', expected 'implemented_offline'"]
+
+
 def test_an_unaffordable_call_is_never_dispatched():
     from pfp_core.workflow_families.base import CallableProposer
     calls = []

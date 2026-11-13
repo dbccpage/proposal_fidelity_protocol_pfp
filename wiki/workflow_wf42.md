@@ -1,5 +1,7 @@
 # WF42: Reasoning-trace validation
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 5 · **Builds on:** [WF10](workflow_wf10.md), [WF21](workflow_wf21.md) · **Merges into:** nothing · **Kind:** procedure extension
 
 **Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`ReasoningTraceValidation`) · **Folder:** [`workflows/wf42_reasoning_trace_validation`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf42_reasoning_trace_validation) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

@@ -1,5 +1,7 @@
 # WF39: Authority firewall gate
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 5 · **Builds on:** [WF1](workflow_wf1.md), [WF23](workflow_wf23.md) · **Merges into:** nothing · **Kind:** harness gate
 
 **Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`AuthorityFirewallGate`) · **Folder:** [`workflows/wf39_authority_firewall_gate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf39_authority_firewall_gate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)

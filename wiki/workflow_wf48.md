@@ -1,5 +1,7 @@
 # WF48: Commit-reveal with a hostile mutation gate
 
+**Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
+
 **Layer:** 5 · **Builds on:** [WF11](workflow_wf11.md), [WF23](workflow_wf23.md) · **Merges into:** WF23 · **Kind:** harness gate
 
 **Code:** [`pfp_core/workflow_families/layer5.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer5.py) (`CommitRevealMutationGate`) · **Folder:** [`workflows/wf48_commit_reveal_with_a_hostile_mutation_gate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf48_commit_reveal_with_a_hostile_mutation_gate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
