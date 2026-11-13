@@ -11,7 +11,8 @@ export const meta = {
 
 // Usage (from the repository root, after `hygiene.py survey --out <run_dir>/plan.json`):
 //   plan mode:    args = { mode: 'plan', run_dir: 'workflows/wf50_repo_hygiene/run' }
-//   execute mode: args = { mode: 'execute', run_dir: '...', job: 'deletions' | 'renames' | 'docs' }
+//   execute mode: args = { mode: 'execute', run_dir: '...', job: 'deletions' | 'renames' | 'docs', model?: 'fable' | 'opus' }
+//   (model defaults to fable; pass opus when Fable is unavailable)
 // Plan mode writes <run_dir>/survey/*.json, <run_dir>/prompt_<job>.md and <run_dir>/gap_report.md.
 // Execute mode hands one prompt to one executor. Run the jobs in order, one PR each.
 
@@ -84,7 +85,7 @@ if (A.mode === 'execute') {
   if (!['deletions', 'renames', 'docs'].includes(job)) throw new Error('job must be deletions, renames or docs')
   const out = await agent(
     `You are the executor for the "${job}" job of the WF50 repo hygiene workflow. Read ${RUN}/prompt_${job}.md and carry it out completely, then commit on the current branch. ${RULES}\nReturn a short plain-text report: what changed, test and governance-checker results with numbers, and anything left undone.`,
-    { label: `execute:${job}`, phase: 'Execute', model: 'fable' })
+    { label: `execute:${job}`, phase: 'Execute', model: A.model || 'fable' })
   return { job, report: out }
 }
 
