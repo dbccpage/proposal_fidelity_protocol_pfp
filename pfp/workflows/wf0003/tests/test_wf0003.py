@@ -6,13 +6,10 @@ from copy import deepcopy
 
 import pytest
 
-from operations.domain.rop.result import Ok
 from pfp.infrastructure.adapters.pfp_campaign import canonical, digest
-from pfp.infrastructure.workflow_accounting import EstimatedBudgetGateway
-from pfp.workflows.wf0002.tests.test_wf0002 import candidate as wf2_answer
 from pfp.workflows.wf0003 import runner, workflow
-from adversary.domain.providers.attempt import AdmittedRequest, CompletionOutcome
-from adversary.domain.providers.types import CandidateResponse, Provider
+from pfp.workflows.wf0003.scripted import factory_for as _scripted_factory_for
+from pfp.workflows.wf0003.scripted import mining_answer, reply, solver_answer
 
 
 @pytest.fixture
@@ -20,60 +17,10 @@ def spec():
     return json.loads(workflow.resource_text("examples/integer_sum.task.json"))
 
 
-def mining_answer():
-    return dict(
-        operad_candidates=[
-            dict(
-                id="sum",
-                operation="Sum the integer list without computing a result here.",
-                source_colours=["IntegerList"],
-                target_colour="Integer",
-                arity=1,
-                source=dict(kind="seed_prompt", quote="input.values"),
-                witness_refs=["task_result"],
-            )
-        ],
-        focus_slots=["concrete_spans", "parameter_bindings", "invariant_witnesses"],
-        failure_triggers=["Reject floating point substitutes and preserve every input operand."],
-        l2_guidance=[
-            dict(
-                slot=slot,
-                source=dict(kind="seed_prompt", quote="input.values"),
-                guidance="Bind the entire public signed integer list exactly once without rounding.",
-            )
-            for slot in sorted(workflow.SUM_L2)
-        ],
-    )
 
 
-def solver_answer():
-    answer = wf2_answer()
-    answer["operad_candidates"] = deepcopy(mining_answer()["operad_candidates"])
-    values = [17, 25, -4]
-    bindings = dict(
-        concrete_spans=dict(source="input.values", literal=values),
-        parameter_bindings=dict(values=values, arithmetic="integer_exact"),
-        instantiated_arguments=dict(operad_id="sum", arguments=values),
-        preservation_obligations=dict(
-            all_operands_once=True, signed_integers=True, rounding="forbidden"
-        ),
-    )
-    for row in answer["slot_report"]:
-        if row["slot"] in bindings:
-            row["value"] = bindings[row["slot"]]
-        row["reason"] = ""
-    answer["slot_report"] = {row.pop("slot"): row for row in answer["slot_report"]}
-    return answer
 
 
-def reply(turn, answer):
-    return json.dumps(
-        {
-            **{k: turn.binding[k] for k in ("task_id", "attempt_id", "input_sha256")},
-            "answer": answer,
-        },
-        ensure_ascii=False,
-    ).encode()
 
 
 def attachment(spec):
@@ -85,89 +32,12 @@ def attachment(spec):
     return workflow.freeze_attachment(raw, checked, screen)
 
 
-def factory_for(calls, *, bad_mining=False, unknown_cost=False, quote="input.values"):
-    def factory(root, model, tokens):
-        class Scripted:
-            unbudgeted_max_output_tokens = tokens
+def factory_for(calls, **options):
+    """The suite's scripted gateway, billed at the suite's figure of one micro-dollar per call."""
+    options.setdefault("cost_usd", 0.000001)
+    return _scripted_factory_for(calls, **options)
 
-            def complete_result(self, request, **options):
-                from adversary.domain.providers.types import thaw_json
 
-                expected_format = (
-                    "json_object"
-                    if json.loads(request.user)["attempt_id"] == workflow.MiningContract.ATTEMPT_ID
-                    else "json_schema"
-                )
-                assert thaw_json(request.decoding.response_format)["type"] == expected_format
-                with gateway.ledger.transaction(gateway.limit) as state:
-                    assert any(row["state"] == "reserved" for row in state["attempts"].values())
-                public = json.loads(request.user)
-                calls.append(public)
-                is_miner = public["attempt_id"] == workflow.MiningContract.ATTEMPT_ID
-                answer = mining_answer() if is_miner else solver_answer()
-                if is_miner:
-                    answer["operad_candidates"][0]["source"]["quote"] = quote
-                    if bad_mining:
-                        answer["operad_candidates"][0]["operation"] = "The result is 38."
-                content = json.dumps(
-                    {
-                        **{k: public[k] for k in ("task_id", "attempt_id", "input_sha256")},
-                        "answer": answer,
-                    }
-                )
-                wire = json.dumps(
-                    dict(
-                        id=f"fixture-{len(calls)}",
-                        choices=[dict(message=dict(content=content))],
-                        usage=dict(
-                            prompt_tokens=15,
-                            completion_tokens=25,
-                            cost=None if unknown_cost else 0.000001,
-                        ),
-                    )
-                ).encode()
-                c = CandidateResponse(
-                    content,
-                    model,
-                    "openrouter",
-                    input_tokens=15,
-                    output_tokens=25,
-                    cost_usd=None if unknown_cost else 0.000001,
-                    generation_id=f"fixture-{len(calls)}",
-                    transport="fixture",
-                )
-                admitted = AdmittedRequest(
-                    f"fixture-{len(calls)}",
-                    "",
-                    "",
-                    Provider.OPENROUTER,
-                    model,
-                    request,
-                    tokens,
-                    None,
-                    None,
-                )
-                return Ok(CompletionOutcome(c, admitted, reply_bytes=wire))
-
-        gateway = EstimatedBudgetGateway(
-            Scripted(),
-            model=model,
-            price=dict(
-                catalog_sha256="fixture",
-                row=dict(id=model, pricing={"prompt": "0.000000001", "completion": "0.000000001"}),
-            ),
-            limit_microusd=json.loads((root / "plan.json").read_text())[
-                "estimated_run_cap_microusd"
-            ],
-            max_calls=json.loads((root / "plan.json").read_text())["maximum_new_provider_calls"],
-            accounting_path=root / "accounting.sqlite3",
-            run_id="test-wf3:" + root.name,
-            objective_sha256=digest(canonical(json.loads((root / "task.json").read_text()))),
-            max_output_tokens=tokens,
-        )
-        return gateway
-
-    return factory
 
 
 def test_miner_cannot_see_or_solve_with_host_answers(spec):

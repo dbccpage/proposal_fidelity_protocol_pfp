@@ -73,7 +73,7 @@ def test_cli_runs_accounted_pipeline_and_readonly_replay(tmp_path, monkeypatch, 
         workflow = runner.workflow
         task = json.loads(workflow.resource_text("examples/integer_sum.task.json"))
         if number == 2:
-            from pfp.workflows.wf0002.tests.test_wf0002 import candidate
+            from pfp.workflows.wf0002.scripted import candidate
             answer = candidate()
         else:
             answer = {"total": 38}

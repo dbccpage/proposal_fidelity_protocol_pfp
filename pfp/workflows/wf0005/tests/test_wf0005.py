@@ -2,18 +2,15 @@
 
 import json
 from copy import deepcopy
-from threading import Barrier, Lock
 
 import pytest
 
-from operations.domain.rop.result import Ok
 from pfp.infrastructure.adapters.pfp_campaign import canonical, digest
-from pfp.infrastructure.workflow_accounting import EstimatedBudgetGateway
 from pfp.workflows.tests.fixtures import SPEC
-from pfp.workflows.wf0003.tests.test_wf0003 import mining_answer, reply
+from pfp.workflows.wf0003.scripted import mining_answer, reply
 from pfp.workflows.wf0005 import rewrite, runner, workflow
-from adversary.domain.providers.attempt import AdmittedRequest, CompletionOutcome
-from adversary.domain.providers.types import CandidateResponse, Provider
+from pfp.workflows.wf0005.scripted import factory_for as _scripted_factory_for
+from adversary.domain.providers.types import Provider
 
 
 @pytest.mark.parametrize(
@@ -147,105 +144,12 @@ def test_wire_seed_replaces_original_and_binds_rewrite_without_answer():
     assert all(row["id"] in turn.prompt.system for row in workflow.wf4.codec.catalogue()["slots"])
 
 
-def factory_for(
-    calls, *, wrong=False, unknown=False, bad_mining=False, bad_colour=False, bad_ref=False
-):
-    barrier, lock = Barrier(5), Lock()
 
-    def factory(root, model, tokens):
-        class Scripted:
-            unbudgeted_max_output_tokens = tokens
 
-            def complete_result(self, request, **options):
-                public = json.loads(request.user)
-                miner = public["attempt_id"] == workflow.MiningContract.ATTEMPT_ID
-                if not miner:
-                    assert public["objective"] == rewrite.lower(SPEC)["payload"]["wire"]
-                    with bound.ledger.transaction(bound.limit) as state:
-                        assert len(state["attempts"]) == 6
-                    barrier.wait(timeout=15)
-                with lock:
-                    calls.append(public)
-                    generation = f"wf5-fixture-{len(calls)}"
-                if miner:
-                    a = mining_answer()
-                    if bad_colour:
-                        a["operad_candidates"][0]["target_colour"] = "total"
-                    if bad_ref:
-                        a["operad_candidates"][0]["witness_refs"] = ["sum"]
-                    a["operad_candidates"][0]["source"]["quote"] = (
-                        "not in seed" if bad_mining else "<sum>"
-                    )
-                    for row in a["l2_guidance"]:
-                        row["source"]["quote"] = "<sum>"
-                else:
-                    c = public["input"]
-                    a = dict(
-                        task_result=dict(total=39 if wrong else 38),
-                        values=c["values"],
-                        profile_ref=c["profile_ref"],
-                        operad_ids=[c["mined"]["operads"][0]["id"]],
-                        ddc_moves=[],
-                    )
-                content = workflow.wf4.compact(
-                    {
-                        **{k: public[k] for k in ("task_id", "attempt_id", "input_sha256")},
-                        "answer": a,
-                    }
-                )
-                cost = None if unknown else 0.000001
-                wire = canonical(
-                    dict(
-                        id=generation,
-                        choices=[dict(message=dict(content=content), finish_reason="stop")],
-                        usage=dict(prompt_tokens=15, completion_tokens=25, cost=cost),
-                    )
-                )
-                candidate = CandidateResponse(
-                    content,
-                    model,
-                    "openrouter",
-                    input_tokens=15,
-                    output_tokens=25,
-                    cost_usd=cost,
-                    generation_id=generation,
-                    transport="fixture",
-                )
-                return Ok(
-                    CompletionOutcome(
-                        candidate,
-                        AdmittedRequest(
-                            generation,
-                            "",
-                            "",
-                            Provider.OPENROUTER,
-                            model,
-                            request,
-                            tokens,
-                            None,
-                            None,
-                        ),
-                        reply_bytes=wire,
-                    )
-                )
-
-        bound = EstimatedBudgetGateway(
-            Scripted(),
-            model=model,
-            price=dict(
-                catalog_sha256="fixture",
-                row=dict(id=model, pricing={"prompt": "0.0000001", "completion": "0.00000032"}),
-            ),
-            limit_microusd=runner.read(root / "plan.json")["estimated_run_cap_microusd"],
-            max_calls=6,
-            accounting_path=root / "accounting.sqlite3",
-            run_id="wf0005:" + root.resolve().name,
-            objective_sha256=digest(canonical(SPEC)),
-            max_output_tokens=tokens,
-        )
-        return bound
-
-    return factory
+def factory_for(calls, **options):
+    """The suite's scripted gateway, billed at the suite's figure of one micro-dollar per call."""
+    options.setdefault("cost_usd", 0.000001)
+    return _scripted_factory_for(calls, **options)
 
 
 @pytest.mark.parametrize("wrong", [False, True])
