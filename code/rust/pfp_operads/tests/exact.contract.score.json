@@ -1,0 +1,107 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/exact.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/exact.rs",
+      "language": "Rust",
+      "sha256": "2855e9d70aa6f6b437cbf863444682305767b9b579e55ba2be0a5690bf0cc251"
+    },
+    "contract_urn": "urn:pfp-operads:exact-tests:v1",
+    "symbols": [
+      "q",
+      "whole",
+      "row",
+      "matrix",
+      "text",
+      "an_integer_and_the_form_p_over_q_are_rationals",
+      "a_rational_is_read_at_any_size",
+      "any_other_text_is_not_a_rational",
+      "no_other_kind_of_value_is_a_rational",
+      "a_list_is_read_whole_or_not_at_all",
+      "a_rational_is_written_in_lowest_terms_with_its_denominator",
+      "row_reduction_gives_the_reduced_form_and_the_pivot_columns",
+      "row_reduction_swaps_rows_and_skips_a_column_with_no_pivot",
+      "row_reduction_clears_the_rows_above_a_pivot_and_leaves_fractions_exact",
+      "row_reduction_stops_when_every_row_has_a_pivot",
+      "an_empty_or_zero_matrix_has_no_pivot",
+      "a_short_row_is_read_as_ending_in_zeros",
+      "rank_counts_the_independent_rows",
+      "a_system_with_one_solution_is_unique_and_the_solution_is_exact",
+      "more_equations_than_unknowns_can_still_have_one_solution",
+      "a_system_whose_ranks_differ_is_inconsistent",
+      "a_consistent_system_with_too_little_rank_is_underdetermined",
+      "a_polynomial_is_evaluated_exactly_with_the_constant_term_first"
+    ],
+    "owned_invariants": [
+      "Each accepted and each refused spelling of a rational is asserted on its own.",
+      "Reduced forms, pivots, ranks and solutions are asserted against values worked by hand, with fractions and with integers beyond 64 bits.",
+      "Ragged and empty matrices are asserted to give a result rather than a panic."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/exact.rs",
+      "language": "Rust",
+      "sha256": "2855e9d70aa6f6b437cbf863444682305767b9b579e55ba2be0a5690bf0cc251"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 18 pass in the recorded run; the suite they belong to killed 49 of 49 eligible exact mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v8-test.run.json",
+        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.json",
+        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

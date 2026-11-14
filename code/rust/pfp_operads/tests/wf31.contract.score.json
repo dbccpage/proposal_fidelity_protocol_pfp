@@ -1,0 +1,108 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf31.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf31.rs",
+      "language": "Rust",
+      "sha256": "db3a9b6f350df93a9ed76de396fa1ac3150ff59b87e84bad68150e9be3e99aed"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf31-tests:v1",
+    "symbols": [
+      "sha",
+      "points",
+      "task",
+      "held_out",
+      "request",
+      "coefficients",
+      "run",
+      "turn",
+      "bad_task",
+      "the_family_is_registered_under_its_names",
+      "each_proposer_is_asked_in_turn_with_the_public_task_only",
+      "the_proposer_that_fits_the_held_out_points_wins_and_is_certified",
+      "a_winner_that_only_ties_the_baseline_is_refused",
+      "a_partial_fit_scores_the_points_it_hits_and_the_baseline_is_scored_the_same_way",
+      "the_baseline_is_the_zero_polynomial_when_the_task_names_none",
+      "a_shared_id_refuses_the_run_before_any_proposer_is_asked",
+      "a_proposer_with_no_reply_has_no_score",
+      "a_run_where_no_proposer_replies_is_refused",
+      "a_reply_that_cannot_be_read_scores_minus_one",
+      "a_tie_goes_to_the_name_that_sorts_first",
+      "a_run_with_no_held_out_points_certifies_nobody",
+      "the_training_share_is_a_nonempty_list_of_points_with_integer_ids",
+      "the_number_of_proposers_is_an_exact_integer_from_one_to_sixty_four",
+      "the_baseline_and_the_held_out_share_are_read_strictly"
+    ],
+    "owned_invariants": [
+      "Score tables, the winner and the baseline score are asserted whole for a win, a tie on top, a tie with the baseline and a loss.",
+      "The proposer limit is written as the value 64 and asserted one inside and one outside.",
+      "A prompt is asserted to carry no held-out value, and an overlap to be refused before any prompt."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf31.rs",
+      "language": "Rust",
+      "sha256": "db3a9b6f350df93a9ed76de396fa1ac3150ff59b87e84bad68150e9be3e99aed"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 15 pass in the recorded run; the suite they belong to killed 62 of 62 eligible WF31 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v8-test.run.json",
+        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.json",
+        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

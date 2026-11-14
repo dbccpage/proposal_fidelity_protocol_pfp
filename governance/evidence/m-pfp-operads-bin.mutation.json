@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/bin/pfp_operad.rs",
-  "target_sha256": "58b2a52a5fa41d295df9be9318c9f03d854ce85f46256bc7e4f3091cabadb9e2",
+  "target_sha256": "ba01e68c6282a16bb63601a4a4a58f1cf842b879a2bf76e633f294dd0fdcc487",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 34,
+    "killed": 45,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -215,6 +215,72 @@
       "name": "repair gives its checks no host",
       "old": "            std::env::current_exe().ok().as_deref(),",
       "new": "            None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "family list renamed",
+      "old": "        [\"family\", \"list\"] => return Ok(families::list()),",
+      "new": "        [\"family\", \"lists\"] => return Ok(families::list()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family list takes any second word",
+      "old": "        [\"family\", \"list\"] => return Ok(families::list()),",
+      "new": "        [\"family\", _] => return Ok(families::list()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family list takes a file",
+      "old": "        [\"family\", \"list\"] => return Ok(families::list()),",
+      "new": "        [\"family\", \"list\", _] => return Ok(families::list()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family next runs judge",
+      "old": "        [\"family\", \"next\", request] => return Ok(families::next(&read(request)?)),",
+      "new": "        [\"family\", \"next\", request] => return Ok(families::judge(&read(request)?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family judge runs next",
+      "old": "        [\"family\", \"judge\", request] => return Ok(families::judge(&read(request)?)),",
+      "new": "        [\"family\", \"judge\", request] => return Ok(families::next(&read(request)?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family next renamed",
+      "old": "        [\"family\", \"next\", request] => return Ok(families::next(&read(request)?)),",
+      "new": "        [\"family\", \"following\", request] => return Ok(families::next(&read(request)?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family judge renamed",
+      "old": "        [\"family\", \"judge\", request] => return Ok(families::judge(&read(request)?)),",
+      "new": "        [\"family\", \"grade\", request] => return Ok(families::judge(&read(request)?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family next lists",
+      "old": "        [\"family\", \"next\", request] => return Ok(families::next(&read(request)?)),",
+      "new": "        [\"family\", \"next\", _] => return Ok(families::list()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family judge lists",
+      "old": "        [\"family\", \"judge\", request] => return Ok(families::judge(&read(request)?)),",
+      "new": "        [\"family\", \"judge\", _] => return Ok(families::list()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family commands fall through",
+      "old": "        [\"family\", \"list\"] => return Ok(families::list()),\n        [\"family\", \"next\", request] => return Ok(families::next(&read(request)?)),\n        [\"family\", \"judge\", request] => return Ok(families::judge(&read(request)?)),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "family prefix dropped from judge",
+      "old": "        [\"family\", \"judge\", request] => return Ok(families::judge(&read(request)?)),",
+      "new": "        [\"judge\", request] => return Ok(families::judge(&read(request)?)),",
       "outcome": "killed"
     }
   ]

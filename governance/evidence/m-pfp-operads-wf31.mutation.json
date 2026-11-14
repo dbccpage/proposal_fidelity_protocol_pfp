@@ -1,0 +1,397 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf31.rs",
+  "target_sha256": "5e37cbb08c9f9f55f4aef412f7f6be8468aa2f44b42f43de0527f3b46e915147",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31",
+  "counts": {
+    "killed": 62,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "most proposers is 63",
+      "old": "pub const MAX_PROPOSERS: usize = 64;",
+      "new": "pub const MAX_PROPOSERS: usize = 63;",
+      "outcome": "killed"
+    },
+    {
+      "name": "most proposers is 65",
+      "old": "pub const MAX_PROPOSERS: usize = 64;",
+      "new": "pub const MAX_PROPOSERS: usize = 65;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF31\",",
+      "new": "    workflow: \"WF13\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Multi-agent tournament with held-out cross-validation\",",
+      "new": "    name: \"Tournament\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"exact_held_out_referee\",",
+      "new": "    host_check: \"referee\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "id read from x",
+      "old": "    point.get(\"id\").and_then(Datum::as_int).cloned()",
+      "new": "    point.get(\"x\").and_then(Datum::as_int).cloned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out x read from y",
+      "old": "        x: rational(point.get(\"x\")?)?,",
+      "new": "        x: rational(point.get(\"y\")?)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out y read from x",
+      "old": "        y: rational(point.get(\"y\")?)?,",
+      "new": "        y: rational(point.get(\"x\")?)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "train read from another key",
+      "old": "        .get(\"train\")",
+      "new": "        .get(\"training\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty training share accepted",
+      "old": "        .filter(|points| !points.is_empty())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "train message changed",
+      "old": "        .ok_or(\"train must be a nonempty list of points\")?",
+      "new": "        .ok_or(\"train\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "training points without ids skipped",
+      "old": "        .iter()\n        .map(id)\n        .collect::<Option<_>>()\n        .ok_or(\"every training point needs an exact integer id\")?;",
+      "new": "        .iter()\n        .filter_map(id)\n        .collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "train id message changed",
+      "old": "        .ok_or(\"every training point needs an exact integer id\")?;",
+      "new": "        .ok_or(\"id\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "proposers read from another key",
+      "old": "        .get(\"proposers\")",
+      "new": "        .get(\"proposer\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "any proposer count accepted",
+      "old": "        .filter(|count| (1..=MAX_PROPOSERS).contains(count))\n",
+      "new": "",
+      "note": "zero proposers then ask nobody and a huge count never ends",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero proposers accepted",
+      "old": "        .filter(|count| (1..=MAX_PROPOSERS).contains(count))",
+      "new": "        .filter(|count| (0..=MAX_PROPOSERS).contains(count))",
+      "outcome": "killed"
+    },
+    {
+      "name": "proposer message changed",
+      "old": "            \"proposers must be an exact integer from 1 to {MAX_PROPOSERS}\"",
+      "new": "            \"proposers must be from 1 to {MAX_PROPOSERS}\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline read from another key",
+      "old": "    let baseline = match public.get(\"baseline_coefficients\") {",
+      "new": "    let baseline = match public.get(\"baseline\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "default baseline is the constant one",
+      "old": "        None => vec![Rational::from_integer(BigInt::from(0))],",
+      "new": "        None => vec![Rational::from_integer(BigInt::from(1))],",
+      "outcome": "killed"
+    },
+    {
+      "name": "default baseline is empty",
+      "old": "        None => vec![Rational::from_integer(BigInt::from(0))],",
+      "new": "        None => Vec::new(),",
+      "equivalent": "the polynomial with no coefficients and the polynomial with the one coefficient zero both take the value zero everywhere, so they hit the same points",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "unreadable baseline read as empty",
+      "old": "            rationals(list).ok_or(\"baseline_coefficients must be a list of exact rationals\")?",
+      "new": "            rationals(list).unwrap_or_default()",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline message changed",
+      "old": ".ok_or(\"baseline_coefficients must be a list of exact rationals\")?",
+      "new": ".ok_or(\"baseline_coefficients\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out read from the public task",
+      "old": "    let held_out = match sealed.get(\"held_out\") {",
+      "new": "    let held_out = match public.get(\"held_out\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out read from another key",
+      "old": "    let held_out = match sealed.get(\"held_out\") {",
+      "new": "    let held_out = match sealed.get(\"heldout\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-list held-out read as empty",
+      "old": "            .as_list()\n            .ok_or(\"held_out must be a list of points\")?",
+      "new": "            .as_list()\n            .unwrap_or_default()",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out list message changed",
+      "old": "            .ok_or(\"held_out must be a list of points\")?",
+      "new": "            .ok_or(\"held_out\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad held-out points skipped",
+      "old": "            .map(held_out_point)\n            .collect::<Option<_>>()\n            .ok_or(\"every held-out point needs an integer id and exact rational x and y\")?,",
+      "new": "            .filter_map(held_out_point)\n            .collect(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out point message changed",
+      "old": "            .ok_or(\"every held-out point needs an integer id and exact rational x and y\")?,",
+      "new": "            .ok_or(\"point\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation accepts everything",
+      "old": "    task(public, sealed).map(|_| ())",
+      "new": "    task(public, sealed).map(|_| ()).or(Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation ignores the sealed part",
+      "old": "    task(public, sealed).map(|_| ())",
+      "new": "    task(public, &Datum::map([])).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "hits counts the misses",
+      "old": "        .filter(|point| polynomial(coefficients, &point.x) == point.y)",
+      "new": "        .filter(|point| polynomial(coefficients, &point.x) != point.y)",
+      "outcome": "killed"
+    },
+    {
+      "name": "hits evaluates at y",
+      "old": "        .filter(|point| polynomial(coefficients, &point.x) == point.y)",
+      "new": "        .filter(|point| polynomial(coefficients, &point.y) == point.y)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tie goes to the later name",
+      "old": "        if best.is_none_or(|(_, top)| score > top) {",
+      "new": "        if best.is_none_or(|(_, top)| score >= top) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "lowest score wins",
+      "old": "        if best.is_none_or(|(_, top)| score > top) {",
+      "new": "        if best.is_none_or(|(_, top)| score < top) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "first proposer always wins",
+      "old": "        if best.is_none_or(|(_, top)| score > top) {",
+      "new": "        if best.is_none() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlap is every held-out id",
+      "old": "        .filter(|id| task.train_ids.contains(id))",
+      "new": "        .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlap is the ids not shared",
+      "old": "        .filter(|id| task.train_ids.contains(id))",
+      "new": "        .filter(|id| !task.train_ids.contains(id))",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlap keeps repeats and order",
+      "old": "        .collect::<BTreeSet<_>>()\n        .into_iter()\n        .cloned()",
+      "new": "        .cloned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "split predicate renamed",
+      "old": "        \"splits_disjoint\",",
+      "new": "        \"disjoint\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlap never refused",
+      "old": "        overlap == Datum::List(Vec::new()),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "disjoint splits refused",
+      "old": "        overlap == Datum::List(Vec::new()),",
+      "new": "        overlap != Datum::List(Vec::new()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "split evidence dropped",
+      "old": "        overlap == Datum::List(Vec::new()),\n        &overlap,",
+      "new": "        overlap == Datum::List(Vec::new()),\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlap has another code",
+      "old": "return Ok(refused(\"SPLIT_OVERLAP\", Datum::map([(\"overlap\", overlap)])));",
+      "new": "return Ok(refused(\"OVERLAP\", Datum::map([(\"overlap\", overlap)])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlap detail dropped",
+      "old": "return Ok(refused(\"SPLIT_OVERLAP\", Datum::map([(\"overlap\", overlap)])));",
+      "new": "return Ok(refused(\"SPLIT_OVERLAP\", Datum::map([])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "stages numbered from one",
+      "old": "        let stage = format!(\"proposer:{proposer}\");",
+      "new": "        let stage = format!(\"proposer:{}\", proposer + 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage prefix renamed",
+      "old": "        let stage = format!(\"proposer:{proposer}\");",
+      "new": "        let stage = format!(\"agent:{proposer}\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "one proposer fewer is asked",
+      "old": "    for proposer in 0..task.proposers {",
+      "new": "    for proposer in 1..task.proposers {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply ends the round",
+      "old": "        let Some(reply) = run.ask(&stage, run.prompt())? else {\n            continue;\n        };",
+      "new": "        let Some(reply) = run.ask(&stage, run.prompt())? else {\n            break;\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "coefficients read from another key",
+      "old": "        let score = match reply.get(\"coefficients\").and_then(rationals) {",
+      "new": "        let score = match reply.get(\"coefficient\").and_then(rationals) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "score is the held-out size",
+      "old": "                i64::try_from(hits(&coefficients, &task.held_out)).unwrap_or(i64::MAX)",
+      "new": "                i64::try_from(task.held_out.len()).unwrap_or(i64::MAX)",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable reply scores zero",
+      "old": "            None => -1,",
+      "new": "            None => 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable reply has no score",
+      "old": "            None => -1,\n        };\n        scores.insert(stage, score);",
+      "new": "            None => continue,\n        };\n        scores.insert(stage, score);",
+      "outcome": "killed"
+    },
+    {
+      "name": "no replies reported as malformed",
+      "old": "        return Ok(super::no_reply());",
+      "new": "        return Err(Stop::Malformed(String::new()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline scored as zero",
+      "old": "    let baseline = i64::try_from(hits(&task.baseline, &task.held_out)).unwrap_or(i64::MAX);",
+      "new": "    let baseline = 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline predicate renamed",
+      "old": "        \"winner_beats_baseline\",",
+      "new": "        \"beats_baseline\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a tie with the baseline wins",
+      "old": "        top > baseline,",
+      "new": "        top >= baseline,",
+      "outcome": "killed"
+    },
+    {
+      "name": "winner never compared",
+      "old": "        top > baseline,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline evidence dropped",
+      "old": "        &Datum::map([\n            (\"scores\", table.clone()),\n            (\"baseline\", Datum::from(baseline)),\n        ]),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified under another code",
+      "old": "        \"WINNER_SELECTED\",",
+      "new": "        \"CERTIFIED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail names no winner",
+      "old": "            (\"winner\", Datum::text(name.clone())),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail drops the scores",
+      "old": "            (\"scores\", table),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail reports the top score as baseline",
+      "old": "            (\"scores\", table),\n            (\"baseline\", Datum::from(baseline)),",
+      "new": "            (\"scores\", table),\n            (\"baseline\", Datum::from(top)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail counts the training ids",
+      "old": "            (\"held_out\", Datum::from(task.held_out.len())),",
+      "new": "            (\"held_out\", Datum::from(task.train_ids.len())),",
+      "outcome": "killed"
+    }
+  ]
+}

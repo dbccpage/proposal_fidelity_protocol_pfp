@@ -1,0 +1,210 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/sealed.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/sealed.rs",
+      "language": "Rust",
+      "sha256": "543b5cdbea5508a63e58f19907fbd0712a2241b55f16c0dcf90ef726af95a871"
+    },
+    "contract_urn": "urn:pfp-operads:families-sealed:v1",
+    "symbols": [
+      "ANSWER_KEYS",
+      "SUBSTRING_LENGTH",
+      "Guard",
+      "Guard::new",
+      "Guard::leaks"
+    ],
+    "owned_invariants": [
+      "Every number and text in the sealed part is collected, at any depth of objects and lists. Null and booleans are not guarded.",
+      "A sealed value of four or more characters, as canonical JSON writes it without the outer quotes of text, is a leak wherever it occurs in a prompt.",
+      "A value under a key in ANSWER_KEYS (compared without regard to case), or anywhere beneath such a key, is a leak at any length when it stands in the prompt as a whole word.",
+      "Words are separated by white space and by the characters , : ; [ ] { } ( ) and both quotes. A word is also looked up with the full stops, question marks and exclamation marks at its end taken off one at a time.",
+      "An empty sealed text guards nothing."
+    ],
+    "boundaries": [
+      "The guard reads text. A prompt that paraphrases, splits, re-bases or encodes a sealed value passes it.",
+      "A short sealed value outside an answer key is not guarded, because short numbers occur in honest prompts.",
+      "Length is counted in characters, and comparison is by code point, without Unicode normalisation or case folding of values."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/sealed.rs",
+      "language": "Rust",
+      "sha256": "543b5cdbea5508a63e58f19907fbd0712a2241b55f16c0dcf90ef726af95a871"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: one length threshold, SUBSTRING_LENGTH = 4, asserted by value, one below and at the threshold, in characters rather than bytes.",
+      "G3": "Total on every input: leaks returns a boolean and has no failure path. The loop that removes closing marks shortens the word each turn. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "13 guard tests assert substring leaks at and below the threshold, whole-word leaks for each answer key and each separating character, closing marks one and several, nesting through lists and objects, text with escapes, decimals, and the cases that must not leak (a number inside a longer number, a leading point, an unguarded short value). Mutation campaign R = 56/56. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 3; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v8-test.run.json",
+        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.json",
+        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 56,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-sealed.mutation.json",
+        "sha256": "0a0c6f80e4cba9b433a0ff30444ce6685254a33ebba727660f35a809b0eee6e0",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 56 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T12:56:04.892000Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/sealed.rs",
+          "language": "Rust",
+          "sha256": "543b5cdbea5508a63e58f19907fbd0712a2241b55f16c0dcf90ef726af95a871"
+        },
+        "contract_urn": "urn:pfp-operads:families-sealed:v1",
+        "symbols": [
+          "ANSWER_KEYS",
+          "SUBSTRING_LENGTH",
+          "Guard",
+          "Guard::new",
+          "Guard::leaks"
+        ],
+        "owned_invariants": [
+          "Every number and text in the sealed part is collected, at any depth of objects and lists. Null and booleans are not guarded.",
+          "A sealed value of four or more characters, as canonical JSON writes it without the outer quotes of text, is a leak wherever it occurs in a prompt.",
+          "A value under a key in ANSWER_KEYS (compared without regard to case), or anywhere beneath such a key, is a leak at any length when it stands in the prompt as a whole word.",
+          "Words are separated by white space and by the characters , : ; [ ] { } ( ) and both quotes. A word is also looked up with the full stops, question marks and exclamation marks at its end taken off one at a time.",
+          "An empty sealed text guards nothing."
+        ],
+        "boundaries": [
+          "The guard reads text. A prompt that paraphrases, splits, re-bases or encodes a sealed value passes it.",
+          "A short sealed value outside an answer key is not guarded, because short numbers occur in honest prompts.",
+          "Length is counted in characters, and comparison is by code point, without Unicode normalisation or case folding of values."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/sealed.rs",
+          "language": "Rust",
+          "sha256": "543b5cdbea5508a63e58f19907fbd0712a2241b55f16c0dcf90ef726af95a871"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Non-numeric: one length threshold, SUBSTRING_LENGTH = 4, asserted by value, one below and at the threshold, in characters rather than bytes.",
+          "G3": "Total on every input: leaks returns a boolean and has no failure path. The loop that removes closing marks shortens the word each turn. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+          "G4": "13 guard tests assert substring leaks at and below the threshold, whole-word leaks for each answer key and each separating character, closing marks one and several, nesting through lists and objects, text with escapes, decimals, and the cases that must not leak (a number inside a longer number, a leading point, an unguarded short value). Mutation campaign R = 56/56. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 3; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T12:55:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v8-test.run.json",
+            "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+            "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+            "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+            "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+            "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.json",
+            "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 56,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-families-sealed.mutation.json",
+            "sha256": "0a0c6f80e4cba9b433a0ff30444ce6685254a33ebba727660f35a809b0eee6e0",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 56 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

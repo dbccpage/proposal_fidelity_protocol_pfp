@@ -1,9 +1,10 @@
 # pfp_operads
 
 The operad host for PFP workflows, in Rust. A workflow hands it typed JSON; it
-answers with one typed outcome. Nothing here calls a model. WF1 to WF5 call it
-through `pfp/infrastructure/operad_host.py`, which carries the request and the
-outcome and decides nothing. AuthorityEffect: None.
+answers with one typed outcome. Nothing here calls a model. WF1 to WF5 and
+the workflow families call it through `pfp/infrastructure/operad_host.py`,
+which carries the request and the outcome and decides nothing.
+AuthorityEffect: None.
 
 ## What it checks
 
@@ -21,6 +22,9 @@ outcome and decides nothing. AuthorityEffect: None.
 | `pfp_operad trial REQUEST.json` | How did a rule do on held-out cases? The host judges each baseline and treated answer and writes the trial record. |
 | `pfp_operad witness-turn REQUEST.json` | Did this stored turn of a WF1 to WF5 run fail? The host reads the turn's `task.json` and `receipt.json` itself, judges the task result and writes the failure record, named after its case. |
 | `pfp_operad repair SOURCE_DIR RUN_DIR REQUEST.json` | Does a supplied patch make the failing checks pass without breaking a passing one? The host copies the declared sources to a new run folder, runs the request's check commands before and after the patch, and keeps a record. The sources are never written. |
+| `pfp_operad family list` | Which workflow families does this host check? |
+| `pfp_operad family next REQUEST.json` | What must be asked next in this family run, word for word? Nothing, once the replies sent so far are enough for a verdict. |
+| `pfp_operad family judge REQUEST.json` | What is the verdict of this family run, and which predicates did the host record on the way? |
 | `pfp_operad version` | Which host and which canon is this? Workflows record it in every run. |
 | `pfp_operad laws REQUEST.json` | Do these operations obey the operad laws on this panel of inputs? |
 | `pfp_operad ledger append LEDGER.jsonl RECORD.json` | Is this record lawful? If so, add it to the failure ledger. |
@@ -54,6 +58,8 @@ cargo run -p pfp_operads -- run pfp_operads/examples/run.json
 cargo run -p pfp_operads -- witness-turn pfp_operads/examples/witness_turn.json
 cargo run -p pfp_operads -- ledger load ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl pfp_operads/examples/load.json
 cargo run -p pfp_operads -- ledger loaded ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl pfp_operads/examples/loaded.json
+cargo run -p pfp_operads -- family next pfp_operads/examples/family_next.json
+cargo run -p pfp_operads -- family judge pfp_operads/examples/family_judge.json
 cargo run -p pfp_operads -- ledger append my_ledger.jsonl pfp_operads/examples/failure.json
 cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 ```
@@ -163,6 +169,29 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
   not fit the sources or the write set (`StructuralNonFit`). A missing tool,
   a changed source or a full disk blames no candidate.
+- **Family runs**: a workflow family (WF7, WF30 and WF31 so far) is a walk
+  the host owns. The request is the family's id, the public `task`, the
+  `sealed` part and the `replies` received so far, each `null` or
+  `{"content": ...}`. `family next` returns the stage and the exact prompt to
+  send, and `family judge` returns `HOST_CERTIFIED`, `TYPED_REFUSAL` or
+  `REFUSED` with a code, a detail and every predicate the host recorded. Both
+  are functions of the request alone, so a stored run can be judged again
+  from its replies. The host refuses a malformed task (`BAD_TASK`), a run
+  that is still waiting for a reply (`REPLIES_INCOMPLETE`), replies beyond
+  the end of the run, and any prompt that carries a sealed value
+  (`SEALED_LEAK`). Whatever a family's own code concludes, a certified
+  verdict or a typed refusal stands only when at least one predicate was
+  recorded and every one passed. The caller sends each prompt to a model and
+  appends the reply; it checks nothing.
+- **Exact numbers** in a family run: an integer is read from its digits and
+  has no size limit. A number written with a fraction or an exponent is never
+  an integer. A rational is an integer or the text `p/q`: an optional minus,
+  ASCII digits and a nonzero denominator, with no plus sign, space, point or
+  exponent. An object with the same key twice is refused.
+- **Sealed-value guard**: a sealed number or text of four or more characters
+  is a leak anywhere in a prompt. A value under an answer-like key (`answer`,
+  `expected`, `solution`, `key` and their variants) is a leak at any length
+  when it is a whole word, with or without closing `.`, `!` or `?` marks.
 
 ## Limits
 
@@ -194,3 +223,9 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
 - When no check fails before the patch, the patch is not read or applied.
 
 Plan and status: [`docs/plans/operads_redesign.md`](../../../docs/plans/operads_redesign.md).
+- A family verdict covers the replies in the request. The host does not see
+  that a reply came from a model, or from the prompt it wrote; the workflow's
+  transcript records the hash of each prompt sent. The run budget and the
+  transcript are still kept by Python.
+- The sealed-value guard reads text. A prompt that paraphrases, splits or
+  encodes a sealed value passes it.

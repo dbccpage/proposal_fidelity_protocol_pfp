@@ -1,0 +1,348 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf07.rs",
+  "target_sha256": "e000944ca74187ab236ff2367a2fb8cb151ca22b8699adca28770d5f09a60fd0",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31",
+  "counts": {
+    "killed": 54,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "inconsistent code misspelt",
+      "old": "pub const INCONSISTENT: &str = \"UNRESOLVED_INCONSISTENT\";",
+      "new": "pub const INCONSISTENT: &str = \"UNRESOLVED_INCONSISTENT_\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "underdetermined code misspelt",
+      "old": "pub const UNDERDETERMINED: &str = \"UNRESOLVED_UNDERDETERMINED\";",
+      "new": "pub const UNDERDETERMINED: &str = \"UNRESOLVED_UNDERDETERMINED_\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF7\",",
+      "new": "    workflow: \"WF07\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Typed refusal\",",
+      "new": "    name: \"Typed Refusal\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"typed_refusal_rank_test\",",
+      "new": "    host_check: \"rank_test\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrix read from b",
+      "old": "        .get(\"A\")",
+      "new": "        .get(\"b\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty matrix accepted",
+      "old": "        .filter(|rows| !rows.is_empty())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrix refusal message changed",
+      "old": "        .ok_or(\"A must be a nonempty list of rows\")?;",
+      "new": "        .ok_or(\"A\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "row refusal message changed",
+      "old": "        .ok_or(\"every row of A must be a list of exact rationals\")?;",
+      "new": "        .ok_or(\"A rows\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "right side read from A",
+      "old": "        .get(\"b\")\n        .and_then(rationals)",
+      "new": "        .get(\"A\")\n        .and_then(rationals)",
+      "outcome": "killed"
+    },
+    {
+      "name": "right side refusal message changed",
+      "old": "        .ok_or(\"b must be a list of exact rationals\")?;",
+      "new": "        .ok_or(\"b\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "width taken from the last row",
+      "old": "    let width = a.first().map_or(0, Vec::len);\n    if width == 0",
+      "new": "    let width = a.last().map_or(0, Vec::len);\n    if width == 0",
+      "equivalent": "the next line refuses any row whose length differs from this width, so a ragged matrix is refused whichever row gives the width, and a rectangular one has one width",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "zero-width matrix accepted",
+      "old": "    if width == 0 || a.iter().any(|row| row.len() != width) || b.len() != a.len() {",
+      "new": "    if a.iter().any(|row| row.len() != width) || b.len() != a.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "ragged matrix accepted",
+      "old": "    if width == 0 || a.iter().any(|row| row.len() != width) || b.len() != a.len() {",
+      "new": "    if width == 0 || b.len() != a.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "right side of the wrong length accepted",
+      "old": "    if width == 0 || a.iter().any(|row| row.len() != width) || b.len() != a.len() {",
+      "new": "    if width == 0 || a.iter().any(|row| row.len() != width) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "right side compared with the width",
+      "old": "|| b.len() != a.len() {",
+      "new": "|| b.len() != width {",
+      "outcome": "killed"
+    },
+    {
+      "name": "shape refusal message changed",
+      "old": "return Err(\"A must be rectangular, with a column, and match b\".to_owned());",
+      "new": "return Err(\"shape\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation accepts everything",
+      "old": "    system(task).map(|_| ())",
+      "new": "    system(task).map(|_| ()).or(Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "    let Some(reply) = run.ask(\"solve\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"answer\", run.prompt())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing reply reported as malformed",
+      "old": "        return Ok(no_reply());",
+      "new": "        return Err(Stop::Malformed(String::new()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness swaps the ranks",
+      "old": "        (\"rank_A\", Datum::from(status.rank_a)),\n        (\"rank_Ab\", Datum::from(status.rank_ab)),",
+      "new": "        (\"rank_A\", Datum::from(status.rank_ab)),\n        (\"rank_Ab\", Datum::from(status.rank_a)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness counts the equations as unknowns",
+      "old": "        (\"n\", Datum::from(a.first().map_or(0, Vec::len))),",
+      "new": "        (\"n\", Datum::from(a.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness has no status",
+      "old": "        (\"status\", Datum::from(status.solvability.name())),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail is the bare witness",
+      "old": "    let detail = Datum::map([(\"witness\", witness.clone())]);",
+      "new": "    let detail = witness.clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-object reply read as empty",
+      "old": "    require(reply.is_map(), \"the reply must be an object\")?;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-object reason changed",
+      "old": "    require(reply.is_map(), \"the reply must be an object\")?;",
+      "new": "    require(reply.is_map(), \"reply\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal key renamed",
+      "old": "    if let Some(code) = reply.get(\"refusal\") {",
+      "new": "    if let Some(code) = reply.get(\"refuse\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "inconsistent expects the other code",
+      "old": "            Solvability::Inconsistent => INCONSISTENT,",
+      "new": "            Solvability::Inconsistent => UNDERDETERMINED,",
+      "outcome": "killed"
+    },
+    {
+      "name": "underdetermined expects the other code",
+      "old": "            Solvability::Underdetermined => UNDERDETERMINED,",
+      "new": "            Solvability::Underdetermined => INCONSISTENT,",
+      "outcome": "killed"
+    },
+    {
+      "name": "false refusal recorded as passed",
+      "old": "                checks.record(\"no_false_refusal\", false, &witness);",
+      "new": "                checks.record(\"no_false_refusal\", true, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "false refusal not recorded",
+      "old": "                checks.record(\"no_false_refusal\", false, &witness);\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "false refusal has another code",
+      "old": "                return Ok(refused(\"FALSE_REFUSAL\", detail));",
+      "new": "                return Ok(refused(\"BLUFF\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "false refusal is a typed refusal",
+      "old": "                return Ok(refused(\"FALSE_REFUSAL\", detail));",
+      "new": "                return Ok(typed_refusal(\"FALSE_REFUSAL\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "any refusal code matches",
+      "old": "        let matches = code.as_text() == Some(expected);",
+      "new": "        let matches = code.as_text().is_some();",
+      "outcome": "killed"
+    },
+    {
+      "name": "no refusal code matches",
+      "old": "        let matches = code.as_text() == Some(expected);",
+      "new": "        let matches = code.as_text() != Some(expected);",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal predicate renamed",
+      "old": "checks.record(\"refusal_code_matches_rank_test\", matches, &witness)",
+      "new": "checks.record(\"refusal_code_matches\", matches, &witness)",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal predicate evidence dropped",
+      "old": "checks.record(\"refusal_code_matches_rank_test\", matches, &witness)",
+      "new": "checks.record(\"refusal_code_matches_rank_test\", matches, &Datum::Null)",
+      "outcome": "killed"
+    },
+    {
+      "name": "typed refusal reported as certified",
+      "old": "                typed_refusal(expected, detail)",
+      "new": "                super::certified(expected, detail)",
+      "outcome": "killed"
+    },
+    {
+      "name": "typed refusal under a fixed code",
+      "old": "                typed_refusal(expected, detail)",
+      "new": "                typed_refusal(INCONSISTENT, detail)",
+      "outcome": "killed"
+    },
+    {
+      "name": "wrong code is a typed refusal",
+      "old": "                refused(\"WRONG_REFUSAL_CODE\", detail)",
+      "new": "                typed_refusal(\"WRONG_REFUSAL_CODE\", detail)",
+      "outcome": "killed"
+    },
+    {
+      "name": "wrong code renamed",
+      "old": "                refused(\"WRONG_REFUSAL_CODE\", detail)",
+      "new": "                refused(\"FALSE_REFUSAL\", detail)",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer key renamed",
+      "old": "    let answer = match reply.get(\"answer\") {",
+      "new": "    let answer = match reply.get(\"answers\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable answer read as empty",
+      "old": "        Some(given) => rationals(given).ok_or_else(|| {\n            Stop::Malformed(\"answer must be a list of exact rationals\".to_owned())\n        })?,",
+      "new": "        Some(given) => rationals(given).unwrap_or_default(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable answer reason changed",
+      "old": "Stop::Malformed(\"answer must be a list of exact rationals\".to_owned())",
+      "new": "Stop::Malformed(\"answer\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "bluff recorded as passed",
+      "old": "        checks.record(\"no_bluff\", false, &witness);",
+      "new": "        checks.record(\"no_bluff\", true, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "bluff not recorded",
+      "old": "        checks.record(\"no_bluff\", false, &witness);\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "bluff has another code",
+      "old": "        return Ok(refused(\"BLUFF\", detail));",
+      "new": "        return Ok(refused(\"FALSE_REFUSAL\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "bluff is certified",
+      "old": "        return Ok(refused(\"BLUFF\", detail));",
+      "new": "        return Ok(super::certified(\"BLUFF\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer predicate renamed",
+      "old": "        \"answer_equals_unique_solution\",",
+      "new": "        \"answer_equals_solution\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "any answer accepted",
+      "old": "        answer == solution,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "right answer refused",
+      "old": "        answer == solution,",
+      "new": "        answer != solution,",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer compared by length",
+      "old": "        answer == solution,",
+      "new": "        answer.len() == solution.len(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer predicate evidence dropped",
+      "old": "        answer == solution,\n        &witness,",
+      "new": "        answer == solution,\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified under another code",
+      "old": "    Ok(checks.judge(super::CERTIFIED_CODE, detail))",
+      "new": "    Ok(checks.judge(\"OK\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "final detail dropped",
+      "old": "    Ok(checks.judge(super::CERTIFIED_CODE, detail))",
+      "new": "    Ok(checks.judge(super::CERTIFIED_CODE, Datum::map([])))",
+      "outcome": "killed"
+    }
+  ]
+}

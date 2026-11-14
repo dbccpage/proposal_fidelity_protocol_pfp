@@ -24,6 +24,9 @@
 //! pfp_operad witness-turn REQUEST.json     judge a stored turn and write its failure record
 //! pfp_operad run REQUEST.json              run candidates on the task's input against the judge
 //! pfp_operad repair SOURCE_DIR RUN_DIR REQUEST.json   test a supplied patch on a working copy
+//! pfp_operad family list                    the workflow families this host checks
+//! pfp_operad family next REQUEST.json      the step of a family run to put to the model next
+//! pfp_operad family judge REQUEST.json     the verdict of a family run that has every reply
 //! pfp_operad version                       name, version and canon of this host
 //! ```
 //!
@@ -35,10 +38,11 @@ use std::io::Write;
 use std::path::Path;
 use std::process::ExitCode;
 
+use pfp_operads::families;
 use pfp_operads::host::{respond, Command, Outcome};
 use pfp_operads::workshop::repair_in;
 
-const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | mining FILE | typing FILE | grounding FILE | reuse FILE | witness FILE | trial FILE | witness-turn FILE | run FILE | repair SOURCE_DIR RUN_DIR FILE | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD | ledger load FILE REQUEST | ledger loaded FILE REQUEST | ledger trial FILE REQUEST";
+const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | mining FILE | typing FILE | grounding FILE | reuse FILE | witness FILE | trial FILE | witness-turn FILE | run FILE | repair SOURCE_DIR RUN_DIR FILE | family list | family next FILE | family judge FILE | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD | ledger load FILE REQUEST | ledger loaded FILE REQUEST | ledger trial FILE REQUEST";
 
 fn read(path: &str) -> Result<String, String> {
     fs::read_to_string(path).map_err(|error| format!("cannot read {path}: {error}"))
@@ -110,6 +114,12 @@ fn run(args: &[&str]) -> Result<Outcome, String> {
             Path::new(folder),
             std::env::current_exe().ok().as_deref(),
         ));
+    }
+    match args {
+        ["family", "list"] => return Ok(families::list()),
+        ["family", "next", request] => return Ok(families::next(&read(request)?)),
+        ["family", "judge", request] => return Ok(families::judge(&read(request)?)),
+        _ => {}
     }
     let outcome = respond(&command(args)?);
     if let ["ledger", "append", file, _] = args {
