@@ -223,12 +223,8 @@ def frozen(root):
         read(root / "mining/receipt.json")["check"],
     )
     screening = wf3.screen_mining(rewritten, raw, checked)
-    if screening["accepted"] and not any(
-        op["arity"] == 1
-        and op["source_colours"] == ["IntegerList"]
-        and op["target_colour"] == "Integer"
-        for op in checked["answer"]["operad_candidates"]
-    ):
+    # licensed_as is the host's verdict on each mined candidate's signature.
+    if screening["accepted"] and not any(row["licensed_as"] for row in screening["candidates"]):
         screening["accepted"] = False
         screening["errors"].append("WF5_MINED_INTEGER_LIST_OPERATION_REQUIRED")
     attachment = wf3.freeze_attachment(raw, checked, screening) if screening["accepted"] else None

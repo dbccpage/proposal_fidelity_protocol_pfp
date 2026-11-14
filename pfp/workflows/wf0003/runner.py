@@ -8,6 +8,7 @@ from pathlib import Path
 from time import perf_counter
 
 from operations.domain.rop.result import Err
+from pfp.infrastructure import operad_host
 from pfp.infrastructure.adapters.pfp_campaign import canonical, digest, write_new
 from pfp.infrastructure.workflow_accounting import create_accounted_openrouter_gateway
 from pfp.infrastructure.workflow_tasks import reasoning_policy, typed_response_format
@@ -285,21 +286,7 @@ def _summary(root):
     mined = attachment["payload"]["operads"]
     emitted = [row["record"] for row in collection["operads"]]
 
-    def signature(op):
-        if (
-            type(op) is not dict
-            or type(op.get("source_colours")) is not list
-            or any(type(value) is not str for value in op["source_colours"])
-            or type(op.get("target_colour")) is not str
-            or type(op.get("arity")) is not int
-        ):
-            return None
-        return tuple(op["source_colours"]), op["target_colour"], op["arity"]
-
-    signatures = {signature(op) for op in mined}
-    matched = [
-        op["id"] for op in emitted if signature(op) is not None and signature(op) in signatures
-    ]
+    matched = operad_host.reuse(mined, emitted)
     check = receipts["solver"]["check"]
     return dict(
         workflow_id="WF3",

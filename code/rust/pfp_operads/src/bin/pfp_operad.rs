@@ -11,6 +11,10 @@
 //! pfp_operad ledger append LEDGER.jsonl RECORD.json   check a record and add it to the ledger
 //! pfp_operad envelope REQUEST.json         check a full-slot reply: slots, candidates, DDC moves
 //! pfp_operad judge REQUEST.json            compare a reply's task result with the host's own
+//! pfp_operad mining REQUEST.json           screen a mining reply: digits, candidates, guidance
+//! pfp_operad typing REQUEST.json           type candidates and bind the licensed ones
+//! pfp_operad grounding REQUEST.json        recheck a solver reply's grounded slots
+//! pfp_operad reuse REQUEST.json            list emitted candidates that reuse a mined signature
 //! pfp_operad version                       name, version and canon of this host
 //! ```
 //!
@@ -23,7 +27,7 @@ use std::process::ExitCode;
 
 use pfp_operads::host::{respond, Command, Outcome};
 
-const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD";
+const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | mining FILE | typing FILE | grounding FILE | reuse FILE | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD";
 
 fn read(path: &str) -> Result<String, String> {
     fs::read_to_string(path).map_err(|error| format!("cannot read {path}: {error}"))
@@ -44,6 +48,10 @@ fn command(args: &[&str]) -> Result<Command, String> {
         ["check", file] => Ok(Command::Check(read(file)?)),
         ["envelope", file] => Ok(Command::Envelope(read(file)?)),
         ["judge", file] => Ok(Command::Judge(read(file)?)),
+        ["mining", file] => Ok(Command::Mining(read(file)?)),
+        ["typing", file] => Ok(Command::Typing(read(file)?)),
+        ["grounding", file] => Ok(Command::Grounding(read(file)?)),
+        ["reuse", file] => Ok(Command::Reuse(read(file)?)),
         ["version"] => Ok(Command::Version),
         ["ledger", "verify", file] => Ok(Command::LedgerVerify(read(file)?)),
         ["ledger", "admitted", file] => Ok(Command::LedgerAdmitted(read(file)?)),

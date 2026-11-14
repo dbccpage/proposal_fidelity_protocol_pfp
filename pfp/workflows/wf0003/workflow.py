@@ -1,7 +1,6 @@
 """WF3 contracts; WF2's pinned pure codec is reused, never its runtime or state."""
 
 import json
-import re
 from copy import deepcopy
 from importlib.resources import files
 
@@ -13,6 +12,7 @@ from pfp.domain.contracts.pfp_runtime import (
     PfpTaskPrompt,
 )
 from pfp.domain.pfp_ingress import strict_json
+from pfp.infrastructure import operad_host
 from pfp.infrastructure.adapters.pfp_campaign import canonical, digest
 from pfp.infrastructure.task_turn import PreparedTaskTurn
 from pfp.infrastructure.workflow_tasks import (
@@ -141,56 +141,32 @@ class MiningContract:
 
 
 def screen_mining(spec, raw, checked):
-    """Reject answer-bearing/nongrounded guidance; never silently fall back to WF2."""
+    """Attach the Rust host's screen of a mining reply. No rule is applied here."""
     if not checked["schema_valid"]:
         return dict(accepted=False, errors=["MINING_REPLY_SCHEMA"], candidates=[])
     answer = checked["answer"]
-    errors = []
-    retained = []
-    seen = {}
     public_spec = deepcopy(spec)
     public_spec["input"] = stimulus(spec["input"])
-    sources = operad_codec.source_texts(public_spec)
-    slots = {row["id"] for row in operad_codec.catalogue()["slots"]}
-
-    def text_screen(value, path=()):
-        if type(value) is str and path[-2:] != ("source", "quote") and re.search(r"\d", value):
-            errors.append("NUMERICAL_GUIDANCE_FORBIDDEN:" + "/".join(map(str, path)))
-        elif type(value) is dict:
-            for key, item in value.items():
-                text_screen(item, (*path, key))
-        elif type(value) is list:
-            for index, item in enumerate(value):
-                text_screen(item, (*path, index))
-
-    text_screen(answer)
-    ids = [op["id"] for op in answer["operad_candidates"]]
-    if len(set(ids)) != len(ids):
-        errors.append("DUPLICATE_MINED_OPERAD_ID")
-    for index, op in enumerate(answer["operad_candidates"]):
-        if op["arity"] != len(op["source_colours"]):
-            errors.append("MINED_ARITY_MISMATCH:" + op["id"])
-        if op["source"]["quote"] not in sources[op["source"]["kind"]]:
-            errors.append("MINED_SOURCE_QUOTE_MISSING:" + op["id"])
-        if set(op["witness_refs"]) - slots - {"task_result"}:
-            errors.append("MINED_WITNESS_REF_UNKNOWN:" + op["id"])
-        checksum = digest(canonical(op))
-        row = dict(
-            record=op,
-            source_pointer=f"/answer/operad_candidates/{index}",
-            duplicate_of=seen.get(checksum),
-        )
-        retained.append(row)
-        seen.setdefault(checksum, row["source_pointer"])
-    guidance = answer["l2_guidance"]
-    if len({row["slot"] for row in guidance}) != len(guidance):
-        errors.append("DUPLICATE_L2_GUIDANCE_SLOT")
-    if spec["checker"] == "integer_sum_v1" and {row["slot"] for row in guidance} != SUM_L2:
-        errors.append("MISSING_TASK_L2_GUIDANCE")
-    for row in guidance:
-        if row["source"]["quote"] not in sources[row["source"]["kind"]]:
-            errors.append("L2_SOURCE_QUOTE_MISSING:" + row["slot"])
-    return dict(accepted=not errors, errors=errors, candidates=retained)
+    report = operad_host.mining(
+        catalogue=[row["id"] for row in operad_codec.catalogue()["slots"]],
+        sources=operad_codec.source_texts(public_spec),
+        checker=spec["checker"],
+        answer=answer,
+    )
+    return dict(
+        accepted=report["accepted"],
+        errors=report["errors"],
+        candidates=[
+            dict(
+                record=op,
+                source_pointer=row["pointer"],
+                duplicate_of=row["duplicate_of"],
+                typed=row["typed"],
+                licensed_as=row["licensed_as"],
+            )
+            for op, row in zip(answer["operad_candidates"], report["candidates"], strict=True)
+        ],
+    )
 
 
 def freeze_attachment(raw, checked, screening):
@@ -319,46 +295,23 @@ class SolverContract:
 
 
 def assess_l2(spec, checked):
-    """Recheck the four L2 slots against the host's public facts.
+    """Attach the Rust host's recheck of the four L2 slots against the public input.
 
     The WF3 solver schema pins these slots to the same host-computed constants
     (see ``structured.answer_schema``), so a schema-valid reply always passes:
     this is a defence-in-depth recheck of the copied bindings, not evidence that
-    the model grounded anything. ``WF3_L2_GROUNDING`` can only fire if schema
-    validation is bypassed.
+    the model grounded anything.
     """
     if not checked["schema_valid"] or spec["checker"] != "integer_sum_v1":
         return dict(l2_grounding_valid=None, l2_errors=[], l2_checked_slots=[])
-    rows = checked["answer"]["slot_report"]
-    values = spec["input"]["values"]
-    expected = {
-        "concrete_spans": dict(source="input.values", literal=values),
-        "parameter_bindings": dict(values=values, arithmetic="integer_exact"),
-        "preservation_obligations": dict(
-            all_operands_once=True, signed_integers=True, rounding="forbidden"
-        ),
-    }
-    errors, valid = [], []
-    for slot in sorted(SUM_L2):
-        try:
-            value = rows[slot]["value"]
-            if slot == "instantiated_arguments":
-                op_id = value.get("operad_id") if type(value) is dict else None
-                ops = checked["answer"]["operad_candidates"]
-                if not any(
-                    op["id"] == op_id
-                    and op["arity"] == 1
-                    and op["source_colours"] == ["IntegerList"]
-                    and op["target_colour"] == "Integer"
-                    for op in ops
-                ):
-                    raise ValueError("UNBOUND_INTEGER_LIST_OPERATION")
-                target = dict(operad_id=op_id, arguments=values)
-            else:
-                target = expected[slot]
-            if canonical(value) != canonical(target):
-                raise ValueError("PUBLIC_BINDING_OR_DECLARED_CONSTRAINT_MISMATCH")
-            valid.append(slot)
-        except (ValueError, KeyError, TypeError) as exc:
-            errors.append("L2_GROUNDING:" + slot + ":" + str(exc))
-    return dict(l2_grounding_valid=not errors, l2_errors=errors, l2_checked_slots=valid)
+    report = operad_host.grounding(
+        checker=spec["checker"],
+        values=spec["input"]["values"],
+        slot_report=checked["answer"]["slot_report"],
+        candidates=checked["answer"]["operad_candidates"],
+    )
+    return dict(
+        l2_grounding_valid=report["valid"],
+        l2_errors=report["errors"],
+        l2_checked_slots=report["checked_slots"],
+    )

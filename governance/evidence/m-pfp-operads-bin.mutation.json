@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/bin/pfp_operad.rs",
-  "target_sha256": "fd52625f8e20565bf7e6e001055ad2f40a0dfe65cf8ea0afe41faaf884f7ab70",
+  "target_sha256": "9b69fd92fc911baa7ef0404c27cac37e0b5379c6bf7925c864bee90c33e788d1",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 13,
+    "killed": 17,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -89,6 +89,30 @@
       "name": "version takes a file",
       "old": "        [\"version\"] => Ok(Command::Version),",
       "new": "        [\"version\", _] => Ok(Command::Version),",
+      "outcome": "killed"
+    },
+    {
+      "name": "mining routed to envelope",
+      "old": "Ok(Command::Mining(read(file)?))",
+      "new": "Ok(Command::Envelope(read(file)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "typing routed to mining",
+      "old": "Ok(Command::Typing(read(file)?))",
+      "new": "Ok(Command::Mining(read(file)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "grounding routed to typing",
+      "old": "Ok(Command::Grounding(read(file)?))",
+      "new": "Ok(Command::Typing(read(file)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "reuse routed to typing",
+      "old": "Ok(Command::Reuse(read(file)?))",
+      "new": "Ok(Command::Typing(read(file)?))",
       "outcome": "killed"
     }
   ]

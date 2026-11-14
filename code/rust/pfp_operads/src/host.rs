@@ -10,10 +10,12 @@ use core_operad_canon::DdcOp;
 use serde::{Deserialize, Serialize};
 use serde_json::Value as Json;
 
-use crate::envelope::envelope;
+use crate::envelope::{envelope, typing};
+use crate::grounding::grounding;
 use crate::judge::judge;
 use crate::laws::{run_battery, Panel};
 use crate::ledger::{Ledger, Record};
+use crate::mining::{mining, reuse};
 use crate::term::{Body, Colour, Operation, Term, Value, Variant};
 use crate::Refusal;
 
@@ -133,6 +135,10 @@ pub enum Command {
     LedgerAppend { ledger: String, record: String },
     Envelope(String),
     Judge(String),
+    Mining(String),
+    Typing(String),
+    Grounding(String),
+    Reuse(String),
     Version,
 }
 
@@ -362,6 +368,12 @@ fn answer(command: &Command) -> Result<(bool, Json), Refusal> {
             envelope(text).and_then(|report| verdict(report.accepted, &report))
         }
         Command::Judge(text) => judge(text).and_then(|found| verdict(found.accepted, &found)),
+        Command::Mining(text) => mining(text).and_then(|report| verdict(report.accepted, &report)),
+        Command::Typing(text) => typing(text).and_then(|report| verdict(true, &report)),
+        Command::Grounding(text) => {
+            grounding(text).and_then(|report| verdict(report.valid, &report))
+        }
+        Command::Reuse(text) => reuse(text).and_then(|report| verdict(true, &report)),
         Command::LedgerVerify(text) => Ledger::from_lines(text).map(|ledger| {
             (
                 true,

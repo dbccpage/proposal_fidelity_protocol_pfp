@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/host.rs",
-  "target_sha256": "51af3117a38175bba410504107b3d7a4c634d47e7c2733aacbf0bb39ca2786ae",
+  "target_sha256": "70eb918181d6af4cbc19425dc87c5573629b5c30cdcc8bcb6b310e11f1ff90ae",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 25,
+    "killed": 29,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -161,6 +161,30 @@
       "name": "verify counts no entries",
       "old": "\"entries\": ledger.entries().len()",
       "new": "\"entries\": 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "mining verdict ignored",
+      "old": "mining(text).and_then(|report| verdict(report.accepted, &report))",
+      "new": "mining(text).and_then(|report| verdict(true, &report))",
+      "outcome": "killed"
+    },
+    {
+      "name": "grounding verdict ignored",
+      "old": "verdict(report.valid, &report)",
+      "new": "verdict(true, &report)",
+      "outcome": "killed"
+    },
+    {
+      "name": "typing reported as a failure",
+      "old": "typing(text).and_then(|report| verdict(true, &report))",
+      "new": "typing(text).and_then(|report| verdict(false, &report))",
+      "outcome": "killed"
+    },
+    {
+      "name": "reuse reported as a failure",
+      "old": "reuse(text).and_then(|report| verdict(true, &report))",
+      "new": "reuse(text).and_then(|report| verdict(false, &report))",
       "outcome": "killed"
     }
   ]

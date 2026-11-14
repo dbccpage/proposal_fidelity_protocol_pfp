@@ -405,6 +405,12 @@ fn a_request_is_closed_and_typed() {
         "BAD_REQUEST"
     );
     assert_eq!(
+        refused(&edited(|r| {
+            r["answer"]["operad_candidates"][0]["source"]["page"] = json!("one");
+        })),
+        "BAD_REQUEST"
+    );
+    assert_eq!(
         refused(&edited(|r| r["answer"]["ddc_moves"][0]["cost"] = json!(1))),
         "BAD_REQUEST"
     );

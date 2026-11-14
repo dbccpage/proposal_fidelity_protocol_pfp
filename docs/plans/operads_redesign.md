@@ -30,7 +30,7 @@ SCORING.md checker (`governance/tools/checker.py`) and the atlas builder
 model reply (typed JSON)
       │
       ▼
-pfp_operad judge / envelope / check ──► PASS / FAIL / REFUSED
+pfp_operad judge / envelope / mining / grounding / check ──► PASS / FAIL / REFUSED
       │ a refusal or a wrong answer is a failure
       ▼
 pfp_operad ledger append   failure ─► candidate rule ─► held-out trial ─► admission
@@ -65,7 +65,7 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 | 1. (cont.) no workflow writes or reads it | Failure-to-antibody workflow; WF1-WF5 and WF52 write failures, every run loads admitted rules | 2c | planned |
 | 2. Workflows do not use the canon | `pfp_operad check` types candidates by canon colours and runs them | 1 | **built** |
 | 2. (cont.) WF2-WF5 used their own colours | The colours they prompt for are now the canon type `task_value_colour`. `pfp_operad envelope` checks the reply envelope and types every candidate; `pfp_operad judge` is the exact integer sum. The Python versions are deleted | 2a | **built** |
-| 2. (cont.) WF3-WF5 keep extra operad checks in Python | Mining screen, mined-versus-emitted signatures and the eligible-operation binding move to the host | 2b | planned |
+| 2. (cont.) WF3-WF5 kept extra operad checks in Python | `pfp_operad mining` screens a mining reply, `grounding` rechecks the four L2 slots, `typing` says which mined operation is licensed, `reuse` compares mined and emitted signatures. The Python versions are deleted | 2b | **built** |
 | 2. (cont.) candidates in WF2-WF5 stay unverified | Their meaning is free text. A workflow whose candidates carry a body from the closed list lets the host run the candidate itself | 2c | planned |
 | 3. Laws are signature-level only | Law battery on values, cost and tree | 1 | **built** |
 | 3. (cont.) no Lean statement | Lean 4 theorems for the term model: associativity, unit, composition is evaluation | 6 | planned |
@@ -88,7 +88,9 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      stay comparable, and every run is bound to the host's version. Each
      candidate is typed against the canon and, when its signature is the one
      the task licenses, bound to that licensed operation.
-   - **2b.** The operad checks still written in Python inside WF3-WF5.
+   - **2b (built).** The operad checks that were still Python inside WF3-WF5:
+     the mining screen, the L2 recheck, the licensed-operation binding and
+     mined-versus-emitted signature reuse. Same error codes in the same order.
    - **2c.** A workflow whose candidates carry a body, so the host can run the
      candidate and not only the licensed operation; and the
      failure-to-antibody workflow, which turns recorded failures into rules,
@@ -116,6 +118,10 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 - No workflow writes to the ledger yet, so nothing is learned across runs.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
+- WF4's own local contract (public binding, native integer result, agreement
+  of the five totals) is still Python. It is a workflow host check and moves
+  in slice 4.
 - No live model run has been made since 2a. Prompts are unchanged, and the
-  old and new checks agree on 4,000 random reply envelopes and 3,000 random
-  task results, but that is a comparison of checkers, not a model result.
+  old and new checks agree on random inputs (4,000 reply envelopes, 3,000
+  task results, 3,000 mining replies, 3,000 L2 rechecks, 1,500 signature
+  comparisons), but that is a comparison of checkers, not a model result.

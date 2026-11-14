@@ -1,0 +1,209 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/grounding.rs",
+  "target_sha256": "1d9f489e07c09c5e29514f6070febd3c32f67b893380d14749d3c1689a1574ef",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 32,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "sum checker grounds nothing",
+      "old": "    if checker == INTEGER_SUM {",
+      "new": "    if checker != INTEGER_SUM {",
+      "outcome": "killed"
+    },
+    {
+      "name": "every checker grounds the sum slots",
+      "old": "    if checker == INTEGER_SUM {",
+      "new": "    if true || checker == INTEGER_SUM {",
+      "outcome": "killed"
+    },
+    {
+      "name": "null counts as a missing value",
+      "old": "    <&RawValue>::deserialize(deserializer).map(Some)",
+      "new": "    Option::<&RawValue>::deserialize(deserializer)",
+      "outcome": "killed"
+    },
+    {
+      "name": "span source not checked",
+      "old": "spans.source == \"input.values\" && same(&spans.literal)",
+      "new": "same(&spans.literal)",
+      "outcome": "killed"
+    },
+    {
+      "name": "span literal not checked",
+      "old": "spans.source == \"input.values\" && same(&spans.literal)",
+      "new": "spans.source == \"input.values\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "binding arithmetic not checked",
+      "old": "bound.arithmetic == \"integer_exact\" && same(&bound.values)",
+      "new": "same(&bound.values)",
+      "outcome": "killed"
+    },
+    {
+      "name": "binding values not checked",
+      "old": "bound.arithmetic == \"integer_exact\" && same(&bound.values)",
+      "new": "bound.arithmetic == \"integer_exact\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "any named operation binds",
+      "old": "                .is_some_and(|named| licensed.contains(named.operad_id.as_str()));",
+      "new": "                .is_some();",
+      "outcome": "killed"
+    },
+    {
+      "name": "unbound operation reported as a mismatch",
+      "old": "                return Err(UNBOUND);",
+      "new": "                return Err(MISMATCH);",
+      "outcome": "killed"
+    },
+    {
+      "name": "arguments not compared",
+      "old": "read::<Arguments>(value).is_some_and(|applied| same(&applied.arguments))",
+      "new": "read::<Arguments>(value).is_some()",
+      "outcome": "killed"
+    },
+    {
+      "name": "operands-once obligation dropped",
+      "old": "kept.all_operands_once && kept.signed_integers",
+      "new": "kept.signed_integers",
+      "outcome": "killed"
+    },
+    {
+      "name": "signed obligation dropped",
+      "old": "kept.all_operands_once && kept.signed_integers",
+      "new": "kept.all_operands_once",
+      "outcome": "killed"
+    },
+    {
+      "name": "rounding obligation dropped",
+      "old": " && kept.rounding == \"forbidden\"",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "values compared as a prefix",
+      "old": "integers(literals).as_deref() == Some(values)",
+      "new": "integers(literals).is_some_and(|found| values.starts_with(&found))",
+      "outcome": "killed"
+    },
+    {
+      "name": "values compared by count",
+      "old": "integers(literals).as_deref() == Some(values)",
+      "new": "integers(literals).is_some_and(|found| found.len() == values.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "slot always holds",
+      "old": "    if holds {\n        Ok(())",
+      "new": "    if true || holds {\n        Ok(())",
+      "outcome": "killed"
+    },
+    {
+      "name": "checker without slots is not refused",
+      "old": "    if slots.is_empty() {\n        return Err(",
+      "new": "    if false && slots.is_empty() {\n        return Err(",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown checker gets another code",
+      "old": "            \"UNKNOWN_CHECKER\",",
+      "new": "            \"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-integer task values accepted",
+      "old": "        .ok_or_else(|| Refusal::new(\"BAD_CASE\", \"the task values are not all integers\"))?;",
+      "new": "        .unwrap_or_default();",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-integer task values get another code",
+      "old": "Refusal::new(\"BAD_CASE\", \"the task values are not all integers\")",
+      "new": "Refusal::new(\"BAD_REQUEST\", \"the task values are not all integers\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "every candidate counts as licensed",
+      "old": "        .filter(|typing| typing.licensed_as.is_some())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "only unlicensed candidates count",
+      "old": "        .filter(|typing| typing.licensed_as.is_some())",
+      "new": "        .filter(|typing| typing.licensed_as.is_none())",
+      "outcome": "killed"
+    },
+    {
+      "name": "licence ignores the checker",
+      "old": "    let typed = typings(&request.candidates, &request.checker)?;",
+      "new": "    let typed = typings(&request.candidates, \"\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing slot passes",
+      "old": "            None => Err(\"MISSING_SLOT\"),",
+      "new": "            None => Ok(()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing value passes",
+      "old": "            Some(Row { value: None }) => Err(\"MISSING_VALUE\"),",
+      "new": "            Some(Row { value: None }) => Ok(()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "failed slots listed as checked",
+      "old": "            Err(reason) => errors.push(format!(\"L2_GROUNDING:{slot}:{reason}\")),",
+      "new": "            Err(reason) => {\n                checked_slots.push(*slot);\n                errors.push(format!(\"L2_GROUNDING:{slot}:{reason}\"))\n            }",
+      "outcome": "killed"
+    },
+    {
+      "name": "passing slots not listed",
+      "old": "            Ok(()) => checked_slots.push(*slot),",
+      "new": "            Ok(()) => {}",
+      "outcome": "killed"
+    },
+    {
+      "name": "valid whatever the errors",
+      "old": "        valid: errors.is_empty(),",
+      "new": "        valid: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "slot order changed",
+      "old": "    \"concrete_spans\",\n    \"instantiated_arguments\",",
+      "new": "    \"instantiated_arguments\",\n    \"concrete_spans\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "request left open",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct Request<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct Request<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra span fields accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct Spans<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct Spans<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra argument fields accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct Arguments<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct Arguments<'a> {",
+      "outcome": "killed"
+    }
+  ]
+}
