@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T15:31:27.441236+00:00",
+  "generated_at_utc": "2026-11-14T16:08:50.135017+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10920,6 +10920,23 @@
       ],
       "limits": "Sufficient condition only; failure of condition is not a nonuniqueness certificate; requires strictly positive penalties.",
       "atlas_ledger_id": "ATL-D-PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS"
+    },
+    {
+      "id": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The native Rust solver enumerates spanning forests exactly, caps the search at 100,000 forests, refuses with EnumerationLimit beyond the cap, and returns phi1, gauge, and forests_checked.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pinned Rust source in code/rust/core_solvers/src/solver_graph_phi1_distance.rs with cargo test harness.",
+        "Independent exact primal-dual evaluation via Phi1Functional certification."
+      ],
+      "evidence": [
+        "code/rust/core_solvers/src/solver_graph_phi1_distance.rs",
+        "code/rust/core_solvers/src/bin/solve_graph_phi1.rs",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py"
+      ],
+      "limits": "No dual circulation in return struct; worst-case exponential complexity; Python adapter does not pin binary hash.",
+      "atlas_ledger_id": "ATL-D-PAPER001-NATIVE-FOREST-SOLVER-REVIEW"
     },
     {
       "id": "PAPER002-FINITE-SIGNED-BALANCE",
@@ -35701,6 +35718,18 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-f1a919c7a50e60d1",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Pinned Rust source in code/rust/core_solvers/src/solver_graph_phi1_distance.rs with cargo test harness.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d9e247df737f4fcc",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Independent exact primal-dual evaluation via Phi1Functional certification.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-168b6c31415d60f5",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Declared vertices, edges and binary labels; trusted finite checker.",
@@ -43054,6 +43083,27 @@
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/demo1_holonomy.py",
       "sha256": "aec3a39d90e033806d6dd9e9c32532b0fcb3bcf9806f037c4efb3bbc5b201f76",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:code/rust/core_solvers/src/solver_graph_phi1_distance.rs",
+      "kind": "pinned_source_file",
+      "path": "code/rust/core_solvers/src/solver_graph_phi1_distance.rs",
+      "sha256": "fe7e810dd7111771e444c021375427f62f77be839b6fd70129899c9a82e7c938",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:code/rust/core_solvers/src/bin/solve_graph_phi1.rs",
+      "kind": "pinned_source_file",
+      "path": "code/rust/core_solvers/src/bin/solve_graph_phi1.rs",
+      "sha256": "445c5ff6c1690f32a09109e0a32cb17eb4d522f97180fc66df573d0f077ad40f",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py",
+      "sha256": "3354511931ea000f9557c0a1a79502462fe70795647ddf615f58f2dd2a35f061",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -50822,11 +50872,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER001-NATIVE-FOREST-SOLVER-REVIEW"
+        ],
         "relation": null,
-        "note": "No node reviews the native graph_phi1 spanning-forest solver.",
-        "proposed_derivation_file": "dag/derivations/atl_p001_008.md"
+        "note": "The native Rust solver enumerates spanning forests exactly, caps search at 100,000 forests, refuses with EnumerationLimit beyond cap, and returns phi1, gauge, and forests_checked; certified in PAPER001-NATIVE-FOREST-SOLVER-REVIEW."
       }
     },
     {
@@ -69553,6 +69604,16 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-f1a919c7a50e60d1",
+      "to": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d9e247df737f4fcc",
+      "to": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-168b6c31415d60f5",
       "to": "PAPER002-FINITE-SIGNED-BALANCE",
       "kind": "requires"
@@ -78573,6 +78634,24 @@
       "to": "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+    },
+    {
+      "from": "SOURCE:code/rust/core_solvers/src/solver_graph_phi1_distance.rs",
+      "to": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/core_solvers/src/solver_graph_phi1_distance.rs"
+    },
+    {
+      "from": "SOURCE:code/rust/core_solvers/src/bin/solve_graph_phi1.rs",
+      "to": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/core_solvers/src/bin/solve_graph_phi1.rs"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py",
+      "to": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py",
@@ -97774,6 +97853,12 @@
       "to": "ATL-P001-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper_claim_ledger.md:20"
+    },
+    {
+      "from": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "to": "ATL-P001-008",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions",
@@ -153540,8 +153625,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3604,
-    "edges": 3801,
+    "unique_nodes": 3610,
+    "edges": 3807,
     "acyclic": true
   }
 }
