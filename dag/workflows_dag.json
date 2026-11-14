@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T09:42:49.223294+00:00",
+  "generated_at_utc": "2026-11-14T11:12:06.509159+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -4815,6 +4815,172 @@
         "page": "wiki/workflow_wf51.md",
         "page_sha256": "d4bd7acbb0186ddb1e1dd843ff7a089bf6b919d0faff5b9fd5ca6d280cbb5335",
         "wiki_url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf51",
+        "evidence_status": "offline_fixture_checks_only_no_model_campaign",
+        "publication_status": "source_only_not_yet_published"
+      }
+    },
+    {
+      "id": "WF55",
+      "name": "Failure ledger with trial-gated rules",
+      "status": "implemented",
+      "kind": "existing_workflow_family",
+      "merge_into": null,
+      "depends_on": [
+        "WF1",
+        "WF14"
+      ],
+      "layer": 7,
+      "sources": [
+        "Jeremy, 2026-11-14: Python checks nothing; failures must persist and be reused across runs"
+      ],
+      "task_families": [],
+      "source_evidence": "Offline fixtures only; no model campaign.",
+      "process": [
+        "The host replays the ledger's hash chain and lists the rules already admitted",
+        "The host judges each reported failure itself and writes its record; a correct answer cannot be recorded as a failure",
+        "A model proposes one rule from the recorded failures",
+        "Each held-out case is answered twice: without the proposed rule and with it",
+        "The host judges both answers of every case and writes the trial record",
+        "The ledger admits the rule only on that trial; the next run loads every admitted rule"
+      ],
+      "math": [
+        "admit iff treated_correct > baseline_correct and clean_panel_hits = 0, on the rule's latest trial",
+        "clean_panel_hits = number of held-out cases the baseline answered correctly and the treated run did not",
+        "held out: the trial's case ids share nothing with the failures the rule was derived from",
+        "entry hash = SHA-256(domain line, seq, previous hash, record), so an edited, reordered or cut ledger does not replay"
+      ],
+      "host_check": "Rust ledger admission on a trial the host judged itself (pfp_operad witness, trial, ledger)",
+      "model_calls_normal_path": "1 + 2 per held-out case (propose, baseline, treated)",
+      "team": {
+        "goal": "Rules that are loaded in later runs only after they fixed held-out cases and broke none.",
+        "pattern": "sweep_with_shared_judge",
+        "roles": [
+          {
+            "role": "proposer",
+            "model_tier": "run_o",
+            "count": 1,
+            "task": "Propose one rule from the recorded failures."
+          },
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Answer every held-out case without the rule and with it."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "a rejected rule stays in the ledger and can be tried again in a later run",
+          "limit": 0
+        }
+      },
+      "path": "workflows/wf55_failure_ledger_with_trial_gated_rules",
+      "definition": "workflows/wf55_failure_ledger_with_trial_gated_rules/README.md",
+      "audited_availability": "offline_family_runner_with_fixture_tests",
+      "substantive_evidence_status": {
+        "family_definition_read": true,
+        "source_evidence_statement": "Offline fixtures only; no model campaign.",
+        "status_scope": "Documentation claims preserved as claims, not independently reproduced results",
+        "execution_verified_in_this_audit": false
+      },
+      "runner_source": "pfp_core/workflow_families/learning.py",
+      "tests": "pfp_core/workflow_families/tests/test_families.py",
+      "pilot_python_sources": [],
+      "pilot_test_sources": [],
+      "file_count": 2,
+      "runner_class": "FailureLedgerTrialGatedRules",
+      "evaluation_status": "not_run_on_sealed_seed",
+      "wiki_documentation": {
+        "node_id": "WF55",
+        "page": "wiki/workflow_wf55.md",
+        "page_sha256": "ab3f00a2b1859ec673ad86633bb4876c686c08596787efafb16eff4e66177031",
+        "wiki_url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf55",
+        "evidence_status": "offline_fixture_checks_only_no_model_campaign",
+        "publication_status": "source_only_not_yet_published"
+      }
+    },
+    {
+      "id": "WF56",
+      "name": "Host-run operad candidates",
+      "status": "implemented",
+      "kind": "existing_workflow_family",
+      "merge_into": null,
+      "depends_on": [
+        "WF2"
+      ],
+      "layer": 2,
+      "sources": [
+        "docs/plans/operads_redesign.md slice 2d: a candidate with a body the host can run"
+      ],
+      "task_families": [
+        "finite_integer_sum"
+      ],
+      "source_evidence": "Offline fixtures only; no model campaign.",
+      "process": [
+        "One reply gives candidates and an answer; each candidate names source colours, a target colour and a body from the host's closed list",
+        "The host types every candidate by the canon's task value colours",
+        "The host runs each candidate that has a body on the task's case and on sealed probe cases",
+        "The host compares each result with its own judge's result; the caller supplies no expected value",
+        "The host judges the answer"
+      ],
+      "math": [
+        "HOST_VERIFIED(c) iff body(c) is in the closed list and eval(c, x) = f(x) for every case x, with f the host judge",
+        "REFUSED(c) iff c is ill typed, its id repeats, or eval(c, x) != f(x) for some case x it fits",
+        "certified iff some candidate is HOST_VERIFIED, none is REFUSED and the answer equals f(x0) on the task's case x0",
+        "probes: cases the prompt never carries, so a body that agrees on x0 by coincidence is still refused"
+      ],
+      "host_check": "Rust run of each candidate body against the host's own judge (pfp_operad run, judge)",
+      "model_calls_normal_path": "1",
+      "team": {
+        "goal": "An accepted answer together with an operation the host ran itself and found to give the same result.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Answer the task and name the operation used, with a body from the closed list."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "none; a refused run is reported with the host's code for each candidate",
+          "limit": 0
+        }
+      },
+      "path": "workflows/wf56_host_run_operad_candidates",
+      "definition": "workflows/wf56_host_run_operad_candidates/README.md",
+      "audited_availability": "offline_family_runner_with_fixture_tests",
+      "substantive_evidence_status": {
+        "family_definition_read": true,
+        "source_evidence_statement": "Offline fixtures only; no model campaign.",
+        "status_scope": "Documentation claims preserved as claims, not independently reproduced results",
+        "execution_verified_in_this_audit": false
+      },
+      "runner_source": "pfp_core/workflow_families/candidates.py",
+      "tests": "pfp_core/workflow_families/tests/test_families.py",
+      "pilot_python_sources": [],
+      "pilot_test_sources": [],
+      "file_count": 2,
+      "runner_class": "HostRunOperadCandidates",
+      "evaluation_status": "not_run_on_sealed_seed",
+      "wiki_documentation": {
+        "node_id": "WF56",
+        "page": "wiki/workflow_wf56.md",
+        "page_sha256": "d8f36b7d03b4d3a5aaff44e0fa779e92b192049434b8fb97a910152f61a3102e",
+        "wiki_url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf56",
         "evidence_status": "offline_fixture_checks_only_no_model_campaign",
         "publication_status": "source_only_not_yet_published"
       }
@@ -109197,6 +109363,24 @@
     },
     {
       "from": "WF1",
+      "to": "WF55",
+      "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof",
+      "kind": "documented_design_dependency"
+    },
+    {
+      "from": "WF14",
+      "to": "WF55",
+      "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof",
+      "kind": "documented_design_dependency"
+    },
+    {
+      "from": "WF2",
+      "to": "WF56",
+      "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof",
+      "kind": "documented_design_dependency"
+    },
+    {
+      "from": "WF1",
       "to": "COMPOSE:0ccbeef03dc038d42b14436a",
       "kind": "uses_mechanism_under_explicit_bridge_obligations"
     },
@@ -167342,6 +167526,22 @@
         "wiki_url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf51",
         "evidence_status": "offline_fixture_checks_only_no_model_campaign",
         "publication_status": "source_only_not_yet_published"
+      },
+      {
+        "node_id": "WF55",
+        "page": "wiki/workflow_wf55.md",
+        "page_sha256": "ab3f00a2b1859ec673ad86633bb4876c686c08596787efafb16eff4e66177031",
+        "wiki_url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf55",
+        "evidence_status": "offline_fixture_checks_only_no_model_campaign",
+        "publication_status": "source_only_not_yet_published"
+      },
+      {
+        "node_id": "WF56",
+        "page": "wiki/workflow_wf56.md",
+        "page_sha256": "d8f36b7d03b4d3a5aaff44e0fa779e92b192049434b8fb97a910152f61a3102e",
+        "wiki_url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf56",
+        "evidence_status": "offline_fixture_checks_only_no_model_campaign",
+        "publication_status": "source_only_not_yet_published"
       }
     ],
     "publication_receipt": "dag/wiki/workflow_publication_charpoly_20261110.json",
@@ -167364,8 +167564,8 @@
     "Repeat matched-resource comparisons before claiming an accuracy/cost/time advantage"
   ],
   "graph_validation": {
-    "unique_nodes": 4348,
-    "edges": 9067,
+    "unique_nodes": 4350,
+    "edges": 9070,
     "acyclic": true
   }
 }
