@@ -29,7 +29,7 @@ from pfp.infrastructure.adapters.pfp_campaign import write_new
 TASK = "task.json"
 RECEIPT = "receipt.json"
 LOAD_RECEIPT_SUFFIX = ".rules.json"
-HOST_PASS = "PASS"
+HELD = "PASS"
 
 
 def read(path: Path) -> dict:
@@ -70,7 +70,7 @@ def record(ledger: Path, runs: list[Path]) -> list[dict]:
         for label, folder in turns(run):
             request = {"run": label, "turn": stored_turn(folder)}
             row = {"turn": label, "witness": operad_host.outcome("witness-turn", request)}
-            if row["witness"]["status"] == HOST_PASS:
+            if row["witness"]["status"] == HELD:
                 row["entry"] = ledger_call("append", ledger, row["witness"]["result"]["record"])
             rows.append(row)
     return rows
@@ -80,7 +80,7 @@ def load(ledger: Path, task: Path, output: Path, on_trial: str | None = None) ->
     """Write the task with the seed the host loads, and the host's account of it beside it."""
     spec = read(task)
     outcome = ledger_call("load", ledger, {"seed_prompt": spec["seed_prompt"], "on_trial": on_trial})
-    if outcome["status"] == HOST_PASS:
+    if outcome["status"] == HELD:
         account = dict(outcome["result"])
         write_new(output, {**spec, "seed_prompt": account.pop("seed_prompt")})
         write_new(load_receipt(output), {"base_seed_prompt": spec["seed_prompt"], **account})
@@ -113,7 +113,7 @@ def trial(ledger: Path, rule: str, pairs: list[tuple[Path, Path, Path]]) -> dict
             }
         )
     row = {"trial": ledger_call("trial", ledger, {"candidate": rule, "cases": cases})}
-    if row["trial"]["status"] == HOST_PASS:
+    if row["trial"]["status"] == HELD:
         row["entry"] = ledger_call("append", ledger, row["trial"]["result"]["record"])
     return row
 
@@ -170,7 +170,7 @@ def main(argv: list[str] | None = None) -> int:
         print(error, file=sys.stderr)
         return 2
     print(json.dumps(shown, ensure_ascii=True, sort_keys=True))
-    return int(any(outcome["status"] != HOST_PASS for outcome in decisive))
+    return int(any(outcome["status"] != HELD for outcome in decisive))
 
 
 if __name__ == "__main__":
