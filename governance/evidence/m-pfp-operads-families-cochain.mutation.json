@@ -1,0 +1,281 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/cochain.rs",
+  "target_sha256": "0fb8e2763fd4db48ef38dc9d760b0bb225014ada5fadac89dc67ed3b07c3b265",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test cochain --test wf10 --test wf25 --test wf38 --test wf46 --test wf47",
+  "counts": {
+    "killed": 44,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "an empty edge list is a task graph",
+      "old": ".filter(|graph| !graph.edges().is_empty())",
+      "new": ".filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "only an empty edge list is a task graph",
+      "old": ".filter(|graph| !graph.edges().is_empty())",
+      "new": ".filter(|graph| graph.edges().is_empty())",
+      "outcome": "killed"
+    },
+    {
+      "name": "graph error reworded",
+      "old": ".ok_or(\"edges must be a nonempty list of pairs of exact integers\")?;",
+      "new": ".ok_or(\"edges\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges read from another key",
+      "old": "        .get(\"edges\")",
+      "new": "        .get(\"edge\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "unnumbered vertices accepted",
+      "old": "    if !graph.is_numbered() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "numbered vertices refused",
+      "old": "    if !graph.is_numbered() {",
+      "new": "    if graph.is_numbered() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "numbering error reworded",
+      "old": "return Err(\"vertices must be 0..n-1\".to_owned());",
+      "new": "return Err(\"vertices\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "names looked up one along",
+      "old": ".filter_map(|name| graph.vertex(&BigInt::from(name)))",
+      "new": ".filter_map(|name| graph.vertex(&BigInt::from(name + 1)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a name is taken for its number",
+      "old": "        .filter_map(|name| graph.vertex(&BigInt::from(name)))\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "label count not checked",
+      "old": ".filter(|values| values.len() == named.graph.edges().len())",
+      "new": ".filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "labels counted against the vertices",
+      "old": ".filter(|values| values.len() == named.graph.edges().len())",
+      "new": ".filter(|values| values.len() == named.graph.names().len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "label error reworded",
+      "old": ".ok_or(\"labels must be one exact rational per edge\")?;",
+      "new": ".ok_or(\"labels\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "labels read from another key",
+      "old": "        .get(\"labels\")",
+      "new": "        .get(\"label\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an index equal to the edge count is in range",
+      "old": "let index = |entry: &Datum| entry.as_count().filter(|&index| index < edges);",
+      "new": "let index = |entry: &Datum| entry.as_count().filter(|&index| index <= edges);",
+      "outcome": "killed"
+    },
+    {
+      "name": "an index is not range checked",
+      "old": "let index = |entry: &Datum| entry.as_count().filter(|&index| index < edges);",
+      "new": "let index = |entry: &Datum| entry.as_count();",
+      "outcome": "killed"
+    },
+    {
+      "name": "an entry that is not an index is skipped",
+      "old": "    listed.as_list()?.iter().map(index).collect()",
+      "new": "    Some(listed.as_list()?.iter().filter_map(index).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a longer list is a step",
+      "old": "    let [edge, sign] = entry.as_list()? else {",
+      "new": "    let [edge, sign, ..] = entry.as_list()? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a step edge equal to the edge count is in range",
+      "old": "    let edge = edge.as_count().filter(|&edge| edge < edges)?;",
+      "new": "    let edge = edge.as_count().filter(|&edge| edge <= edges)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "plus one is read as backwards",
+      "old": "        sign if *sign == BigInt::from(1) => 1,",
+      "new": "        sign if *sign == BigInt::from(1) => -1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "minus one is read as forwards",
+      "old": "        sign if *sign == BigInt::from(-1) => -1,",
+      "new": "        sign if *sign == BigInt::from(-1) => 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "any other sign is forwards",
+      "old": "        _ => return None,\n    };\n    Some((edge, sign))",
+      "new": "        _ => 1,\n    };\n    Some((edge, sign))",
+      "outcome": "killed"
+    },
+    {
+      "name": "two is a sign",
+      "old": "        sign if *sign == BigInt::from(1) => 1,",
+      "new": "        sign if *sign == BigInt::from(1) || *sign == BigInt::from(2) => 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty chain is read",
+      "old": "        .filter(|steps| !steps.is_empty())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain error reworded",
+      "old": ".ok_or(\"a chain must be a nonempty list of steps\")?;",
+      "new": ".ok_or(\"a chain\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "step error reworded",
+      "old": "\"a chain step is [edge, sign] with the edge in range and sign 1 or -1\".to_owned()",
+      "new": "\"a chain step\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a step that cannot be read is skipped",
+      "old": "    let read: Option<Vec<Step>> = steps.iter().map(|entry| step(entry, edges)).collect();",
+      "new": "    let read: Option<Vec<Step>> =\n        Some(steps.iter().filter_map(|entry| step(entry, edges)).collect());",
+      "outcome": "killed"
+    },
+    {
+      "name": "departures counted as arrivals",
+      "old": "            *net.entry(from).or_default() -= i64::from(sign);",
+      "new": "            *net.entry(from).or_default() += i64::from(sign);",
+      "outcome": "killed"
+    },
+    {
+      "name": "arrivals counted as departures",
+      "old": "            *net.entry(to).or_default() += i64::from(sign);",
+      "new": "            *net.entry(to).or_default() -= i64::from(sign);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a departure ignores the sign",
+      "old": "            *net.entry(from).or_default() -= i64::from(sign);",
+      "new": "            *net.entry(from).or_default() -= 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an arrival ignores the sign",
+      "old": "            *net.entry(to).or_default() += i64::from(sign);",
+      "new": "            *net.entry(to).or_default() += 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the boundary keeps its zero entries",
+      "old": "    net.retain(|_, count| *count != 0);\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "the boundary keeps only its zero entries",
+      "old": "    net.retain(|_, count| *count != 0);",
+      "new": "    net.retain(|_, count| *count == 0);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a backwards step is walked forwards",
+      "old": "let (leaves, arrives) = if sign == 1 { (from, to) } else { (to, from) };",
+      "new": "let (leaves, arrives) = if sign != 1 { (from, to) } else { (to, from) };",
+      "outcome": "killed"
+    },
+    {
+      "name": "every step continues the walk",
+      "old": "        (at == leaves).then_some(arrives)",
+      "new": "        Some(arrives)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a walk never leaves its start",
+      "old": "        (at == leaves).then_some(arrives)",
+      "new": "        (at == leaves).then_some(at)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a step on a missing edge is skipped",
+      "old": "        let &(from, to) = graph.edges().get(edge)?;",
+      "new": "        let Some(&(from, to)) = graph.edges().get(edge) else {\n            return Some(at);\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vertex name is taken for its number",
+      "old": "        self.numbered.get(name.as_count()?).copied()",
+      "new": "        name.as_count().filter(|&name| name < self.numbered.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential count not checked",
+      "old": "            .filter(|values| values.len() == self.numbered.len())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential error reworded",
+      "old": ".ok_or(\"potential must be one exact rational per vertex\")?;",
+      "new": ".ok_or(\"potential\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential is taken in graph order",
+      "old": "        for (value, &vertex) in by_name.into_iter().zip(&self.numbered) {\n            potential[vertex] = value;\n        }\n        Ok(potential)",
+      "new": "        let _ = &mut potential;\n        Ok(by_name)",
+      "outcome": "killed"
+    },
+    {
+      "name": "every patch is exact",
+      "old": "        Graph::of(picked).defect(&values).is_zero()",
+      "new": "        true",
+      "outcome": "killed"
+    },
+    {
+      "name": "no patch is exact",
+      "old": "        Graph::of(picked).defect(&values).is_zero()",
+      "new": "        false",
+      "outcome": "killed"
+    },
+    {
+      "name": "a patch is judged on the whole graph",
+      "old": "        Graph::of(picked).defect(&values).is_zero()",
+      "new": "        self.named.graph.defect(&self.values).is_zero()",
+      "outcome": "killed"
+    },
+    {
+      "name": "patch values taken from the start of the list",
+      "old": "            .filter_map(|&edge| self.values.get(edge).cloned())",
+      "new": "            .enumerate()\n            .filter_map(|(at, _)| self.values.get(at).cloned())",
+      "outcome": "killed"
+    }
+  ]
+}

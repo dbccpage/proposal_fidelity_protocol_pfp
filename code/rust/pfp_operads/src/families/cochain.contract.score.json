@@ -1,0 +1,228 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/cochain.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/cochain.rs",
+      "language": "Rust",
+      "sha256": "0fb8e2763fd4db48ef38dc9d760b0bb225014ada5fadac89dc67ed3b07c3b265"
+    },
+    "contract_urn": "urn:pfp-operads:families-cochain:v1",
+    "symbols": [
+      "Named",
+      "Cochain",
+      "graph",
+      "read",
+      "indices",
+      "chain",
+      "boundary",
+      "walk_end",
+      "Named::vertex",
+      "Named::potential",
+      "Cochain::exact_on"
+    ],
+    "owned_invariants": [
+      "graph reads the edges of a task: a nonempty list of [u, v] pairs of exact integers whose vertex names are 0 up to the vertex count less one. Anything else is an error with its reason.",
+      "read is graph and then labels, one exact rational per edge. A graph error is reported before a label error.",
+      "indices reads a list of exact integers, each below the edge count, and gives nothing for any other value.",
+      "chain reads a nonempty list of [edge, sign] steps with the edge below the edge count and the sign 1 or -1. An empty or missing list and an unreadable step have separate reasons.",
+      "boundary gives, for each vertex where it is not zero, the number of steps that arrive less the number that leave. A chain is closed exactly when its boundary is empty. A loop adds nothing, and so does a step whose edge is not in the graph.",
+      "walk_end gives the vertex a chain ends at when walked from a start, and nothing as soon as a step does not start where the walk stands.",
+      "Named::vertex gives the graph's number for a vertex name. Named::potential reads one exact rational per vertex, listed by vertex name, and returns it in the graph's vertex order, so it can be handed to the graph functions as it is.",
+      "Cochain::exact_on says whether the values on the listed edges are a coboundary on the graph of those edges alone. Values on other edges are not read."
+    ],
+    "boundaries": [
+      "These are the readers the cochain families share. What a potential, a chain or a patch means for a verdict is each family's to say.",
+      "boundary and walk_end take graph vertex numbers and edge indices, not names. Callers translate names with Named::vertex.",
+      "exact_on rebuilds a graph and its forest on every call. Callers bound the size of the task."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/cochain.rs",
+      "language": "Rust",
+      "sha256": "0fb8e2763fd4db48ef38dc9d760b0bb225014ada5fadac89dc67ed3b07c3b265"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: vertex names and edge indices are exact integers, values are exact rationals, signs are 1 or -1, and boundary counts are whole numbers. Boundaries, walk ends, potentials and exactness on a patch are asserted against values worked by hand on a graph whose edges name its vertices out of order. Not B: tested on examples, not proven.",
+      "G3": "graph, read, chain and potential return an error with a reason; indices and walk_end return nothing; boundary and exact_on are total and skip an edge that is not in the graph. No unwrap or expect. The one indexed write, in potential, is by a vertex number the same graph gave, into a list of the vertex count. Not B: panic-freedom is tested, not proven.",
+      "G4": "20 tests assert the vertex order of a task graph, lookup by name, each way a task's edges and labels are unreadable and which is reported first, edge lists, chains step by step with both reasons, boundaries of open and closed chains, loops and edges out of range, walk ends and a walk that breaks, potentials listed by name against the values they explain, and exactness on patches that do and do not close an odd cycle. Mutation campaign R = 44/44. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 44,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-cochain.mutation.json",
+        "sha256": "dabf8adfe57af0364f4ed6deb5df96d9e004076b4f61c1d245ead30d7e602b08",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 44 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:43.522770Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/cochain.rs",
+          "language": "Rust",
+          "sha256": "0fb8e2763fd4db48ef38dc9d760b0bb225014ada5fadac89dc67ed3b07c3b265"
+        },
+        "contract_urn": "urn:pfp-operads:families-cochain:v1",
+        "symbols": [
+          "Named",
+          "Cochain",
+          "graph",
+          "read",
+          "indices",
+          "chain",
+          "boundary",
+          "walk_end",
+          "Named::vertex",
+          "Named::potential",
+          "Cochain::exact_on"
+        ],
+        "owned_invariants": [
+          "graph reads the edges of a task: a nonempty list of [u, v] pairs of exact integers whose vertex names are 0 up to the vertex count less one. Anything else is an error with its reason.",
+          "read is graph and then labels, one exact rational per edge. A graph error is reported before a label error.",
+          "indices reads a list of exact integers, each below the edge count, and gives nothing for any other value.",
+          "chain reads a nonempty list of [edge, sign] steps with the edge below the edge count and the sign 1 or -1. An empty or missing list and an unreadable step have separate reasons.",
+          "boundary gives, for each vertex where it is not zero, the number of steps that arrive less the number that leave. A chain is closed exactly when its boundary is empty. A loop adds nothing, and so does a step whose edge is not in the graph.",
+          "walk_end gives the vertex a chain ends at when walked from a start, and nothing as soon as a step does not start where the walk stands.",
+          "Named::vertex gives the graph's number for a vertex name. Named::potential reads one exact rational per vertex, listed by vertex name, and returns it in the graph's vertex order, so it can be handed to the graph functions as it is.",
+          "Cochain::exact_on says whether the values on the listed edges are a coboundary on the graph of those edges alone. Values on other edges are not read."
+        ],
+        "boundaries": [
+          "These are the readers the cochain families share. What a potential, a chain or a patch means for a verdict is each family's to say.",
+          "boundary and walk_end take graph vertex numbers and edge indices, not names. Callers translate names with Named::vertex.",
+          "exact_on rebuilds a graph and its forest on every call. Callers bound the size of the task."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/cochain.rs",
+          "language": "Rust",
+          "sha256": "0fb8e2763fd4db48ef38dc9d760b0bb225014ada5fadac89dc67ed3b07c3b265"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: vertex names and edge indices are exact integers, values are exact rationals, signs are 1 or -1, and boundary counts are whole numbers. Boundaries, walk ends, potentials and exactness on a patch are asserted against values worked by hand on a graph whose edges name its vertices out of order. Not B: tested on examples, not proven.",
+          "G3": "graph, read, chain and potential return an error with a reason; indices and walk_end return nothing; boundary and exact_on are total and skip an edge that is not in the graph. No unwrap or expect. The one indexed write, in potential, is by a vertex number the same graph gave, into a list of the vertex count. Not B: panic-freedom is tested, not proven.",
+          "G4": "20 tests assert the vertex order of a task graph, lookup by name, each way a task's edges and labels are unreadable and which is reported first, edge lists, chains step by step with both reasons, boundaries of open and closed chains, loops and edges out of range, walk ends and a walk that breaks, potentials listed by name against the values they explain, and exactness on patches that do and do not close an odd cycle. Mutation campaign R = 44/44. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 44,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-families-cochain.mutation.json",
+            "sha256": "dabf8adfe57af0364f4ed6deb5df96d9e004076b4f61c1d245ead30d7e602b08",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 44 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

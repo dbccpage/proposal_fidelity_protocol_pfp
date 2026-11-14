@@ -45,6 +45,22 @@ fn vertices_are_numbered_in_the_order_the_edges_name_them() {
 }
 
 #[test]
+fn a_graph_of_named_pairs_is_the_graph_read_from_the_same_pairs() {
+    let names: Vec<BigInt> = [5, -2, 7].into_iter().map(BigInt::from).collect();
+    let made = Graph::of([
+        (&names[0], &names[1]),
+        (&names[2], &names[0]),
+        (&names[1], &names[2]),
+        (&names[1], &names[1]),
+    ]);
+    assert_eq!(made, graph("[[5, -2], [7, 5], [-2, 7], [-2, -2]]"));
+    assert_eq!(made.names(), names);
+    assert_eq!(made.edges(), [(0, 1), (2, 0), (1, 2), (1, 1)]);
+    let none: [(&BigInt, &BigInt); 0] = [];
+    assert_eq!(Graph::of(none), graph("[]"));
+}
+
+#[test]
 fn an_empty_edge_list_is_a_graph_with_nothing_in_it() {
     let read = graph("[]");
     assert!(read.names().is_empty() && read.edges().is_empty());

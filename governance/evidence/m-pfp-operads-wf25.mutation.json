@@ -1,0 +1,437 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf25.rs",
+  "target_sha256": "3461420360d2e770342697f77d04234795e3f8fad930c4b39721147b42fe0d28",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf25",
+  "counts": {
+    "killed": 70,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF25\",",
+      "new": "    workflow: \"WF250\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Hierarchical decimation\",",
+      "new": "    name: \"Decimation\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"cycle_residual_preserving_decimation\",",
+      "new": "    host_check: \"decimation\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the labels",
+      "old": "    cochain::read(task).map(|_| ())",
+      "new": "    cochain::graph(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reduced edge is read backwards",
+      "old": "[from, to] => Some((from.as_int()?.clone(), to.as_int()?.clone())),",
+      "new": "[from, to] => Some((to.as_int()?.clone(), from.as_int()?.clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a longer list is a reduced edge",
+      "old": "        [from, to] => Some(",
+      "new": "        [from, to, ..] => Some(",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges read from another key",
+      "old": "reply.get(\"edges\").and_then(Datum::as_list),",
+      "new": "reply.get(\"edge\").and_then(Datum::as_list),",
+      "outcome": "killed"
+    },
+    {
+      "name": "labels read from another key",
+      "old": "reply.get(\"labels\").and_then(Datum::as_list),",
+      "new": "reply.get(\"label\").and_then(Datum::as_list),",
+      "outcome": "killed"
+    },
+    {
+      "name": "paths read from another key",
+      "old": "reply.get(\"paths\").and_then(Datum::as_list),",
+      "new": "reply.get(\"path\").and_then(Datum::as_list),",
+      "outcome": "killed"
+    },
+    {
+      "name": "lists error reworded",
+      "old": "return Err(\"edges, labels and paths must be lists\".to_owned());",
+      "new": "return Err(\"lists\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty reduced graph is read",
+      "old": "if edges.is_empty() || edges.len() != labels.len() || edges.len() != paths.len() {",
+      "new": "if edges.len() != labels.len() || edges.len() != paths.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "label count not checked",
+      "old": "if edges.is_empty() || edges.len() != labels.len() || edges.len() != paths.len() {",
+      "new": "if edges.is_empty() || edges.len() != paths.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "path count not checked",
+      "old": "if edges.is_empty() || edges.len() != labels.len() || edges.len() != paths.len() {",
+      "new": "if edges.is_empty() || edges.len() != labels.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "counts error reworded",
+      "old": "return Err(\"one label and one path per reduced edge, and at least one edge\".to_owned());",
+      "new": "return Err(\"counts\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "pairs error reworded",
+      "old": ".ok_or(\"reduced edges must be pairs of exact integers\")?;",
+      "new": ".ok_or(\"pairs\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vertex outside the task is read",
+      "old": "    if !ends.iter().all(|(from, to)| known(from) && known(to)) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "one known end is enough",
+      "old": "    if !ends.iter().all(|(from, to)| known(from) && known(to)) {",
+      "new": "    if !ends.iter().all(|(from, to)| known(from) || known(to)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "one known edge is enough",
+      "old": "    if !ends.iter().all(|(from, to)| known(from) && known(to)) {",
+      "new": "    if !ends.iter().any(|(from, to)| known(from) && known(to)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "known error reworded",
+      "old": "return Err(\"reduced vertices must be vertices of the task\".to_owned());",
+      "new": "return Err(\"vertices\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "reduced labels error reworded",
+      "old": ".ok_or(\"reduced labels must be exact rationals\")?;",
+      "new": ".ok_or(\"labels\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a path may name as many edges as vertices",
+      "old": ".map(|path| cochain::chain(path, cochain.values.len()))",
+      "new": ".map(|path| cochain::chain(path, cochain.named.graph.names().len()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "tails add nothing to a degree",
+      "old": "        *degree.entry(from).or_default() += 1;\n",
+      "new": "        let _ = from;\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "heads add nothing to a degree",
+      "old": "        *degree.entry(to).or_default() += 1;\n",
+      "new": "        let _ = to;\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(\"solve\", run.prompt())?",
+      "new": "run.ask(\"decimate\", run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply is malformed",
+      "old": "        return Ok(no_reply());",
+      "new": "        return Err(Stop::Malformed(\"no reply\".to_owned()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply of any kind is read",
+      "old": "    if !reply.is_map() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "object error reworded",
+      "old": "Stop::Malformed(\"reply must be an object\".to_owned())",
+      "new": "Stop::Malformed(\"reply\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "one walk is enough",
+      "old": "let walks = reduced.ends.iter().zip(&reduced.paths).all(|(ends, path)| {",
+      "new": "let walks = reduced.ends.iter().zip(&reduced.paths).any(|(ends, path)| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a walk is checked from head to tail",
+      "old": "(graph.vertex(&ends.0), graph.vertex(&ends.1))",
+      "new": "(graph.vertex(&ends.1), graph.vertex(&ends.0))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a walk may end anywhere",
+      "old": "        cochain::walk_end(graph, from, path) == Some(to)",
+      "new": "        cochain::walk_end(graph, from, path).is_some()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a broken walk passes when it would end right",
+      "old": "        cochain::walk_end(graph, from, path) == Some(to)",
+      "new": "        cochain::walk_end(graph, from, path).is_none_or(|end| end == to)",
+      "outcome": "killed"
+    },
+    {
+      "name": "every path is a walk",
+      "old": "checks.record(\"paths_are_walks\", walks, &paths);",
+      "new": "checks.record(\"paths_are_walks\", true, &paths);",
+      "outcome": "killed"
+    },
+    {
+      "name": "walk predicate renamed",
+      "old": "checks.record(\"paths_are_walks\", walks, &paths);",
+      "new": "checks.record(\"walks\", walks, &paths);",
+      "outcome": "killed"
+    },
+    {
+      "name": "walk evidence dropped",
+      "old": "checks.record(\"paths_are_walks\", walks, &paths);",
+      "new": "checks.record(\"paths_are_walks\", walks, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a path sum counts every step forwards",
+      "old": "        .map(|path| walk_sum(path, &cochain.values))",
+      "new": "        .map(|path| path.iter().filter_map(|step| cochain.values.get(step.0)).sum())",
+      "outcome": "killed"
+    },
+    {
+      "name": "labels are compared with themselves",
+      "old": "        reduced.labels == sums,",
+      "new": "        reduced.labels == reduced.labels,",
+      "outcome": "killed"
+    },
+    {
+      "name": "only wrong labels pass",
+      "old": "        reduced.labels == sums,",
+      "new": "        reduced.labels != sums,",
+      "outcome": "killed"
+    },
+    {
+      "name": "label predicate renamed",
+      "old": "        \"labels_are_path_sums\",",
+      "new": "        \"labels\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "label evidence swapped",
+      "old": "&Datum::List(vec![written(&reduced.labels), written(&sums)]),",
+      "new": "&Datum::List(vec![written(&sums), written(&reduced.labels)]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the cycle rank is compared with itself",
+      "old": "    let betti = graph.forest().chords.len();",
+      "new": "    let betti = small.forest().chords.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "fewer cycles pass",
+      "old": "        cycles.len() == betti,",
+      "new": "        cycles.len() <= betti,",
+      "outcome": "killed"
+    },
+    {
+      "name": "more cycles pass",
+      "old": "        cycles.len() == betti,",
+      "new": "        cycles.len() >= betti,",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank predicate renamed",
+      "old": "        \"cycle_rank_preserved\",",
+      "new": "        \"cycle_rank\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank evidence swapped",
+      "old": "&Datum::from(vec![cycles.len(), betti]),",
+      "new": "&Datum::from(vec![betti, cycles.len()]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a lifted cycle ignores how the cycle takes an edge",
+      "old": "*coefficient += Rational::from_integer(BigInt::from(sign * turn));",
+      "new": "*coefficient += Rational::from_integer(BigInt::from(turn));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a lifted cycle ignores how a path takes an edge",
+      "old": "*coefficient += Rational::from_integer(BigInt::from(sign * turn));",
+      "new": "*coefficient += Rational::from_integer(BigInt::from(sign));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a lifted cycle is negated",
+      "old": "*coefficient += Rational::from_integer(BigInt::from(sign * turn));",
+      "new": "*coefficient -= Rational::from_integer(BigInt::from(sign * turn));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a lifted cycle counts only its last step on an edge",
+      "old": "*coefficient += Rational::from_integer(BigInt::from(sign * turn));",
+      "new": "*coefficient = Rational::from_integer(BigInt::from(sign * turn));",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated cycles span",
+      "old": "        rank(&lifted) == betti,",
+      "new": "        rank(&lifted) <= betti,",
+      "outcome": "killed"
+    },
+    {
+      "name": "any lifted cycles span",
+      "old": "        rank(&lifted) == betti,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "span predicate renamed",
+      "old": "        \"lifted_cycles_span_h1\",",
+      "new": "        \"span\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "span evidence dropped",
+      "old": "&Datum::List(lifted.iter().map(|row| written(row)).collect()),",
+      "new": "&Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a leaf is allowed",
+      "old": "    let no_leaf = degree.values().all(|&count| count > 1);",
+      "new": "    let no_leaf = degree.values().all(|&count| count > 0);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vertex of degree two is a leaf",
+      "old": "    let no_leaf = degree.values().all(|&count| count > 1);",
+      "new": "    let no_leaf = degree.values().all(|&count| count > 2);",
+      "outcome": "killed"
+    },
+    {
+      "name": "one vertex that is not a leaf is enough",
+      "old": "    let no_leaf = degree.values().all(|&count| count > 1);",
+      "new": "    let no_leaf = degree.values().any(|&count| count > 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "degree evidence written count first",
+      "old": "Datum::List(vec![Datum::Int((*name).clone()), Datum::from(count)])",
+      "new": "Datum::List(vec![Datum::from(count), Datum::Int((*name).clone())])",
+      "outcome": "killed"
+    },
+    {
+      "name": "a graph of the same size is smaller",
+      "old": "        reduced.ends.len() < cochain.values.len() && no_leaf,",
+      "new": "        reduced.ends.len() <= cochain.values.len() && no_leaf,",
+      "outcome": "killed"
+    },
+    {
+      "name": "leaves are not checked",
+      "old": "        reduced.ends.len() < cochain.values.len() && no_leaf,",
+      "new": "        reduced.ends.len() < cochain.values.len(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "size is not checked",
+      "old": "        reduced.ends.len() < cochain.values.len() && no_leaf,",
+      "new": "        no_leaf,",
+      "outcome": "killed"
+    },
+    {
+      "name": "smaller or leafless is enough",
+      "old": "        reduced.ends.len() < cochain.values.len() && no_leaf,",
+      "new": "        reduced.ends.len() < cochain.values.len() || no_leaf,",
+      "outcome": "killed"
+    },
+    {
+      "name": "smaller predicate renamed",
+      "old": "        \"strictly_smaller_without_leaves\",",
+      "new": "        \"smaller\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "smaller evidence dropped",
+      "old": "        &Datum::List(listed.collect()),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle residuals are taken on the path sums",
+      "old": ".map(|cycle| Datum::text(show(&walk_sum(cycle, &reduced.labels))));",
+      "new": ".map(|cycle| Datum::text(show(&walk_sum(cycle, &sums))));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the detail counts the task edges",
+      "old": "        (\"edges\", Datum::from(reduced.ends.len())),",
+      "new": "        (\"edges\", Datum::from(cochain.values.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges key renamed",
+      "old": "        (\"edges\", Datum::from(reduced.ends.len())),",
+      "new": "        (\"size\", Datum::from(reduced.ends.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the detail counts the reduced cycles",
+      "old": "        (\"b1\", Datum::from(betti)),",
+      "new": "        (\"b1\", Datum::from(cycles.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "b1 key renamed",
+      "old": "        (\"b1\", Datum::from(betti)),",
+      "new": "        (\"betti\", Datum::from(betti)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "residuals key renamed",
+      "old": "        (\"cycle_residuals\", Datum::List(residuals.collect())),",
+      "new": "        (\"residuals\", Datum::List(residuals.collect())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "decimated code renamed",
+      "old": "Ok(checks.judge(\"DECIMATED\", detail))",
+      "new": "Ok(checks.judge(\"REDUCED\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a decimation is certified whatever the checks say",
+      "old": "Ok(checks.judge(\"DECIMATED\", detail))",
+      "new": "Ok(super::certified(\"DECIMATED\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

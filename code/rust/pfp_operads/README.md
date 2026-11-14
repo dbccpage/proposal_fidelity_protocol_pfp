@@ -169,9 +169,10 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
   not fit the sources or the write set (`StructuralNonFit`). A missing tool,
   a changed source or a full disk blames no candidate.
-- **Family runs**: a workflow family (WF7, WF9, WF13, WF20, WF24, WF26, WF27,
-  WF30, WF31, WF32, WF33, WF40 and WF45 so far) is a walk the host owns. The request is the family's id, the public `task`, the
-  `sealed` part and the `replies` received so far, each `null` or
+- **Family runs**: a workflow family (WF7, WF9, WF10, WF11, WF13, WF20, WF24,
+  WF25, WF26, WF27, WF30, WF31, WF32, WF33, WF38, WF40, WF45, WF46 and WF47
+  so far) is a walk the host owns. The request is the family's id, the
+  public `task`, the `sealed` part and the `replies` received so far, each `null` or
   `{"content": ...}`. `family next` returns the stage and the exact prompt to
   send, and `family judge` returns `HOST_CERTIFIED`, `TYPED_REFUSAL` or
   `REFUSED` with a code, a detail and every predicate the host recorded. Both
@@ -213,6 +214,28 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   vertex order and neighbours in edge order, so the fundamental cycles of a
   task are the same on every machine (`src/graph.rs`). An XOR task has at
   most 20 edges; the least repair is found by trying every set of flips.
+- **Edge cochains**: WF10, WF25, WF38 and WF46 read a rational value on
+  every edge of a graph whose vertices are named `0..n-1`
+  (`src/families/cochain.rs`). A reply shows its work as data the host can
+  check: a potential by vertex name, a chain of `[edge, sign]` steps, or
+  corrections by edge index. WF10 certifies a potential whose coboundary is
+  the values, or lets a closed chain with a nonzero sum stand as the
+  obstruction. WF25 certifies a smaller graph whose edges are walks in the
+  task's graph, when the walks, their sums, the cycle count and the span of
+  the lifted cycles all check; a loop counts twice toward a degree. WF38
+  ranks corrections by the defect the host recomputes and reads nothing a
+  candidate says of itself. WF46 glues two patch potentials on a packet of
+  shared vertices over 1 to 64 runs and reports how often the glued result
+  fails.
+- **Dual certificates**: WF11 certifies the optimum of a linear programme
+  from a primal point and a dual point with no gap, and its infeasibility
+  from a Farkas vector. A feasible pair with a gap is a bound and is
+  refused.
+- **Resumable search**: WF47 recomputes every batch of a sign-gauge search
+  on at most 16 vertices and at most 64 sessions. A resumed session replays
+  the sealed chain from its first record; ten custody rules are applied in a
+  fixed order and the first one broken names the refusal. Numbers in a
+  record are compared as exact values, so `2.0` is not `2`.
 - **Exact numbers** in a family run: an integer is read from its digits and
   has no size limit. A number written with a fraction or an exponent is never
   an integer. A rational is an integer or the text `p/q`: an optional minus,

@@ -158,7 +158,14 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      bounded repair, WF27's hint and stationary-loop stop, WF20's structural
      grants, WF26's antibodies, WF33's children on one fuel counter bound by
      receipts, and WF40's boundary action after a failed repair.
-   - **Next.** The remaining families of layers 3 to 9. Then the WF1-WF5 and
+   - **4d (built, offline).** The rest of layer 3: WF10, WF11, WF25, WF38,
+     WF46 and WF47. The host now has edge cochains on a task graph
+     (`families/cochain.rs`: potentials by vertex name, signed chains, their
+     boundary, walks) and on them WF10's gluing or obstruction cycle, WF25's
+     decimation, WF38's recomputed ranking and WF46's glued patches. WF11
+     checks a dual pair or a Farkas vector over the rationals. WF47
+     recomputes every batch of a sealed, resumable search.
+   - **Next.** The remaining families of layers 4 to 8. Then the WF1-WF5 and
      WF52-WF54 host checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
@@ -196,8 +203,8 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
-- After 4c the host checks WF7, WF9, WF13, WF20, WF24, WF26, WF27, WF30,
-  WF31, WF32, WF33, WF40 and WF45.
+- After 4d the host checks WF7, WF9, WF10, WF11, WF13, WF20, WF24, WF25,
+  WF26, WF27, WF30, WF31, WF32, WF33, WF38, WF40, WF45, WF46 and WF47.
   Every other family still runs its check and its sealed-value guard in
   Python. WF6 and WF22 grade with WF7's check and so reach the host for that
   part.
@@ -238,6 +245,29 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   those readings: 10,899 identical, 709 tasks both refuse, 156 tasks now
   refused before asking, 229 runs that differ only in the wording of a
   reason, and 7 tasks on which the old check crashed.
+- The 4d host differs from the Python it replaces in these ways. One changes
+  a verdict the other way: WF25 counts a loop twice toward the degree of its
+  vertex, so a cycle reduced to one loop is certified where Python refused
+  it as a leaf. The rest are stricter. A WF25 path that is not a walk
+  between its edge's ends fails the predicate `paths_are_walks`; Python
+  called the reply malformed. WF11 needs at least one variable. WF46 takes
+  1 to 64 runs and packet vertices that lie on both patches. WF47 takes at
+  most 16 vertices and 64 sessions, needs `representation`, compares the
+  numbers in a record as exact values (`2.0` is not `2`), and refuses a
+  record after the batch that tries the last candidate.
+- Old and new agree on 12,000 random runs of those six families apart from
+  those readings: 8,964 identical, 1,005 replies both call malformed in
+  other words, 923 tasks both refuse, 269 tasks now refused before asking,
+  292 runs on which the old check crashed, 491 WF25 runs under the two
+  WF25 readings (188 of them now certified) and 56 WF47 runs under the two
+  WF47 readings.
+- WF47's code `EXHAUSTED_WITHOUT_OBSTRUCTION` is kept as a guard. A signed
+  graph with no gauge always has a fundamental cycle with an odd number of
+  -1 edges, so no reply reaches it.
+- WF25 takes the span of the reduced cycles over the rationals, as the
+  Python did. A reduced loop that goes twice round a cycle of the task
+  passes all five checks with twice that cycle's sum. Requiring an integer
+  basis of the cycles would close this; it is not built.
 - WF9's least repair is found by trying every set of flips, so its cost
   doubles with each edge up to the limit of 20. WF20's grant shows the
   structure of the graph; it has not been shown to help a model.

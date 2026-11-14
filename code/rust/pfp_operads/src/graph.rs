@@ -55,20 +55,25 @@ fn pair(edge: &Datum) -> Option<(&BigInt, &BigInt)> {
 }
 
 impl Graph {
-    /// The graph a value denotes: a list of `[u, v]` pairs of exact integers. The list may be
-    /// empty.
-    pub fn read(edges: &Datum) -> Option<Self> {
+    /// The graph with these edges, each given by the names of its two vertices.
+    pub fn of<'n>(pairs: impl IntoIterator<Item = (&'n BigInt, &'n BigInt)>) -> Self {
         let mut graph = Graph {
             names: Vec::new(),
             edges: Vec::new(),
         };
-        for edge in edges.as_list()? {
-            let (from, to) = pair(edge)?;
+        for (from, to) in pairs {
             let from = graph.number(from);
             let to = graph.number(to);
             graph.edges.push((from, to));
         }
-        Some(graph)
+        graph
+    }
+
+    /// The graph a value denotes: a list of `[u, v]` pairs of exact integers. The list may be
+    /// empty.
+    pub fn read(edges: &Datum) -> Option<Self> {
+        let pairs: Option<Vec<_>> = edges.as_list()?.iter().map(pair).collect();
+        Some(Self::of(pairs?))
     }
 
     fn number(&mut self, name: &BigInt) -> usize {

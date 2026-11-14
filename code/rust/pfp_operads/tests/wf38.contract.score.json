@@ -1,0 +1,226 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf38.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf38.rs",
+      "language": "Rust",
+      "sha256": "582a80ad6403aeeaa937f5093f02e181bae8bdc1a5476a1c2a3916ac70c5aee6"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf38-tests:v1",
+    "symbols": [
+      "sha",
+      "task",
+      "prompt",
+      "request",
+      "all",
+      "run",
+      "ask",
+      "bad_task",
+      "malformed",
+      "outcomes",
+      "evidence",
+      "candidate",
+      "reply",
+      "first_only",
+      "both",
+      "shared",
+      "the_family_is_registered_under_its_names",
+      "the_one_question_is_the_task_as_written",
+      "the_candidate_that_leaves_the_least_defect_is_selected",
+      "only_a_strict_decrease_is_ranked",
+      "equal_defects_are_ranked_by_the_size_of_the_correction_then_by_name",
+      "a_smaller_defect_outranks_a_smaller_correction",
+      "what_a_candidate_says_of_itself_is_not_read",
+      "no_strict_decrease_is_refused_with_every_score",
+      "nothing_lowers_the_defect_of_a_coboundary",
+      "a_candidate_list_the_host_cannot_read_is_malformed",
+      "candidate_names_are_distinct",
+      "each_correction_is_an_edge_in_range_and_an_exact_rational",
+      "a_missing_reply_is_refused",
+      "a_task_the_host_cannot_read_is_refused_before_anything_is_asked"
+    ],
+    "owned_invariants": [
+      "Defects before and after each candidate are worked by hand, and the ranking is asserted with ties on defect and on size.",
+      "A candidate's own score is asserted to change nothing.",
+      "Each unreadable candidate list, name and correction is asserted by its reason."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf38.rs",
+      "language": "Rust",
+      "sha256": "582a80ad6403aeeaa937f5093f02e181bae8bdc1a5476a1c2a3916ac70c5aee6"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 14 pass in the recorded run; the suite they belong to killed 51 of 51 eligible WF38 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:46.494827Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf38.rs",
+          "language": "Rust",
+          "sha256": "582a80ad6403aeeaa937f5093f02e181bae8bdc1a5476a1c2a3916ac70c5aee6"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf38-tests:v1",
+        "symbols": [
+          "sha",
+          "task",
+          "prompt",
+          "request",
+          "all",
+          "run",
+          "ask",
+          "bad_task",
+          "malformed",
+          "outcomes",
+          "evidence",
+          "candidate",
+          "reply",
+          "first_only",
+          "both",
+          "shared",
+          "the_family_is_registered_under_its_names",
+          "the_one_question_is_the_task_as_written",
+          "the_candidate_that_leaves_the_least_defect_is_selected",
+          "only_a_strict_decrease_is_ranked",
+          "equal_defects_are_ranked_by_the_size_of_the_correction_then_by_name",
+          "a_smaller_defect_outranks_a_smaller_correction",
+          "what_a_candidate_says_of_itself_is_not_read",
+          "no_strict_decrease_is_refused_with_every_score",
+          "nothing_lowers_the_defect_of_a_coboundary",
+          "a_candidate_list_the_host_cannot_read_is_malformed",
+          "candidate_names_are_distinct",
+          "each_correction_is_an_edge_in_range_and_an_exact_rational",
+          "a_missing_reply_is_refused",
+          "a_task_the_host_cannot_read_is_refused_before_anything_is_asked"
+        ],
+        "owned_invariants": [
+          "Defects before and after each candidate are worked by hand, and the ranking is asserted with ties on defect and on size.",
+          "A candidate's own score is asserted to change nothing.",
+          "Each unreadable candidate list, name and correction is asserted by its reason."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf38.rs",
+          "language": "Rust",
+          "sha256": "582a80ad6403aeeaa937f5093f02e181bae8bdc1a5476a1c2a3916ac70c5aee6"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 14 pass in the recorded run; the suite they belong to killed 51 of 51 eligible WF38 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

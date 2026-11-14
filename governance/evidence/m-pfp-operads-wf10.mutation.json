@@ -1,0 +1,341 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf10.rs",
+  "target_sha256": "c2a1bdd18bd2811b457bdeda8750f03b48aac9cafafdab581baab972eba613c7",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf10",
+  "counts": {
+    "killed": 54,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF10\",",
+      "new": "    workflow: \"WF100\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Local-to-global obstruction certificate\",",
+      "new": "    name: \"Obstruction\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"cochain_gluing_or_cycle_obstruction\",",
+      "new": "    host_check: \"gluing\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a task without patches is refused",
+      "old": "        return Ok(Vec::new());",
+      "new": "        return Err(\"patches required\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "patches read from another key",
+      "old": "task.get(\"patches\")",
+      "new": "task.get(\"patch\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "a patch may name one edge past the last",
+      "old": "listed.map(|patch| cochain::indices(patch, edges)).collect()",
+      "new": "listed.map(|patch| cochain::indices(patch, edges + 1)).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "patches error reworded",
+      "old": "\"patches must be lists of edge indices\".to_owned()",
+      "new": "\"patches\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the patches",
+      "old": "    let cochain = cochain::read(task)?;\n    patches(task, cochain.values.len()).map(|_| ())",
+      "new": "    cochain::read(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the residual is that of the zero potential",
+      "old": "cochain.named.graph.residual(&cochain.values, &potential);",
+      "new": "cochain.named.graph.residual(&cochain.values, &[]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the support lists the explained edges",
+      "old": ".filter(|&edge| left.get(edge).is_some_and(|value| !value.is_zero()))",
+      "new": ".filter(|&edge| left.get(edge).is_some_and(|value| value.is_zero()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the support skips the first edge",
+      "old": "    let support: Vec<usize> = (0..left.len())",
+      "new": "    let support: Vec<usize> = (1..left.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "any residual glues",
+      "old": "    let exact = support.is_empty();",
+      "new": "    let exact = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a residual glues",
+      "old": "    let exact = support.is_empty();",
+      "new": "    let exact = !support.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual predicate renamed",
+      "old": "checks.record(\"zero_residual_on_every_edge\", exact, &support);",
+      "new": "checks.record(\"zero_residual\", exact, &support);",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual evidence dropped",
+      "old": "checks.record(\"zero_residual_on_every_edge\", exact, &support);",
+      "new": "checks.record(\"zero_residual_on_every_edge\", exact, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual support key renamed",
+      "old": "[(\"residual_support\", support), (\"local_sections\", local)]",
+      "new": "[(\"support\", support), (\"local_sections\", local)]",
+      "outcome": "killed"
+    },
+    {
+      "name": "glued detail drops the local sections",
+      "old": "[(\"residual_support\", support), (\"local_sections\", local)]",
+      "new": "[(\"residual_support\", support)]",
+      "outcome": "killed"
+    },
+    {
+      "name": "glued code renamed",
+      "old": "Ok(checks.judge(\"GLUED\", detail))",
+      "new": "Ok(checks.judge(\"GLUE\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential is certified whatever its residual",
+      "old": "Ok(checks.judge(\"GLUED\", detail))",
+      "new": "Ok(super::certified(\"GLUED\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "an open chain passes as closed",
+      "old": "    let closed = open.is_empty();",
+      "new": "    let closed = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "only an open chain passes as closed",
+      "old": "    let closed = open.is_empty();",
+      "new": "    let closed = !open.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the boundary is named by vertex number",
+      "old": "Some((graph.names().get(vertex)?.to_string(), count))",
+      "new": "Some((vertex.to_string(), count))",
+      "outcome": "killed"
+    },
+    {
+      "name": "boundary counts negated",
+      "old": "named.map(|(name, count)| (name, count.into()))",
+      "new": "named.map(|(name, count)| (name, (-count).into()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "closed predicate renamed",
+      "old": "checks.record(\"witness_is_closed_cycle\", closed, &boundary)",
+      "new": "checks.record(\"closed\", closed, &boundary)",
+      "outcome": "killed"
+    },
+    {
+      "name": "closed evidence dropped",
+      "old": "checks.record(\"witness_is_closed_cycle\", closed, &boundary)",
+      "new": "checks.record(\"witness_is_closed_cycle\", closed, &Datum::Null)",
+      "outcome": "killed"
+    },
+    {
+      "name": "open detail boundary key renamed",
+      "old": "[(\"boundary\", boundary), (\"local_sections\", local)]",
+      "new": "[(\"open\", boundary), (\"local_sections\", local)]",
+      "outcome": "killed"
+    },
+    {
+      "name": "open detail drops the local sections",
+      "old": "[(\"boundary\", boundary), (\"local_sections\", local)]",
+      "new": "[(\"boundary\", boundary)]",
+      "outcome": "killed"
+    },
+    {
+      "name": "open witness code renamed",
+      "old": "return Ok(refused(\"OPEN_CYCLE_WITNESS\", detail));",
+      "new": "return Ok(refused(\"OPEN\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an open witness is a typed refusal",
+      "old": "return Ok(refused(\"OPEN_CYCLE_WITNESS\", detail));",
+      "new": "return Ok(typed_refusal(\"OPEN_CYCLE_WITNESS\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the holonomy is summed over the first edges",
+      "old": "    let holonomy = walk_sum(&chain, &cochain.values);",
+      "new": "    let holonomy = cochain.values.iter().take(chain.len()).sum::<crate::exact::Rational>();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a zero holonomy is an obstruction",
+      "old": "checks.record(\"nonzero_holonomy\", !holonomy.is_zero(), &shown)",
+      "new": "checks.record(\"nonzero_holonomy\", true, &shown)",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a zero holonomy is an obstruction",
+      "old": "checks.record(\"nonzero_holonomy\", !holonomy.is_zero(), &shown)",
+      "new": "checks.record(\"nonzero_holonomy\", holonomy.is_zero(), &shown)",
+      "outcome": "killed"
+    },
+    {
+      "name": "holonomy predicate renamed",
+      "old": "checks.record(\"nonzero_holonomy\", !holonomy.is_zero(), &shown)",
+      "new": "checks.record(\"holonomy\", !holonomy.is_zero(), &shown)",
+      "outcome": "killed"
+    },
+    {
+      "name": "holonomy evidence dropped",
+      "old": "checks.record(\"nonzero_holonomy\", !holonomy.is_zero(), &shown)",
+      "new": "checks.record(\"nonzero_holonomy\", !holonomy.is_zero(), &Datum::Null)",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero holonomy detail drops the local sections",
+      "old": "let detail = Datum::map([(\"local_sections\", local)]);",
+      "new": "let detail = Datum::map([]);\n        let _ = local;",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero holonomy code renamed",
+      "old": "return Ok(refused(\"ZERO_HOLONOMY_WITNESS\", detail));",
+      "new": "return Ok(refused(\"ZERO_HOLONOMY\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a zero holonomy witness is a typed refusal",
+      "old": "return Ok(refused(\"ZERO_HOLONOMY_WITNESS\", detail));",
+      "new": "return Ok(typed_refusal(\"ZERO_HOLONOMY_WITNESS\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle signs negated",
+      "old": "Datum::List(vec![Datum::from(edge), Datum::from(i64::from(sign))])",
+      "new": "Datum::List(vec![Datum::from(edge), Datum::from(i64::from(-sign))])",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle steps written sign first",
+      "old": "Datum::List(vec![Datum::from(edge), Datum::from(i64::from(sign))])",
+      "new": "Datum::List(vec![Datum::from(i64::from(sign)), Datum::from(edge)])",
+      "outcome": "killed"
+    },
+    {
+      "name": "holonomy key renamed",
+      "old": "        (\"holonomy\", shown),",
+      "new": "        (\"sum\", shown),",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle key renamed",
+      "old": "        (\"cycle\", Datum::List(steps.collect())),",
+      "new": "        (\"chain\", Datum::List(steps.collect())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction detail drops the local sections",
+      "old": "        (\"cycle\", Datum::List(steps.collect())),\n        (\"local_sections\", local),",
+      "new": "        (\"cycle\", Datum::List(steps.collect())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction code renamed",
+      "old": "Ok(typed_refusal(\"GLOBAL_OBSTRUCTION\", detail))",
+      "new": "Ok(typed_refusal(\"OBSTRUCTION\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a sound obstruction is refused",
+      "old": "Ok(typed_refusal(\"GLOBAL_OBSTRUCTION\", detail))",
+      "new": "Ok(refused(\"GLOBAL_OBSTRUCTION\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(\"solve\", run.prompt())?",
+      "new": "run.ask(\"glue\", run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply is malformed",
+      "old": "        return Ok(no_reply());",
+      "new": "        return Err(Stop::Malformed(\"no reply\".to_owned()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply of any kind is read",
+      "old": "    if !reply.is_map() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "object error reworded",
+      "old": "Stop::Malformed(\"reply must be an object\".to_owned())",
+      "new": "Stop::Malformed(\"reply\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "every patch is reported exact",
+      "old": "patches.iter().map(|patch| cochain.exact_on(patch));",
+      "new": "patches.iter().map(|_| true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "every patch is reported on the first patch",
+      "old": "patches.iter().map(|patch| cochain.exact_on(patch));",
+      "new": "patches.iter().map(|_| patches.first().is_some_and(|patch| cochain.exact_on(patch)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an obstruction is read before a potential",
+      "old": "if let Some(potential) = reply.get(\"potential\") {",
+      "new": "if let Some(potential) = reply\n        .get(\"potential\")\n        .filter(|_| reply.get(\"obstruction\").is_none())\n    {",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential read from another key",
+      "old": "reply.get(\"potential\")",
+      "new": "reply.get(\"phi\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction read from another key",
+      "old": "reply.get(\"obstruction\")",
+      "new": "reply.get(\"cycle\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim error reworded",
+      "old": "\"reply must carry a potential or an obstruction cycle, not a claim\".to_owned(),",
+      "new": "\"reply\".to_owned(),",
+      "outcome": "killed"
+    }
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf10.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf10.rs",
+      "language": "Rust",
+      "sha256": "c2a1bdd18bd2811b457bdeda8750f03b48aac9cafafdab581baab972eba613c7"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf10:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is the cochain task of cochain.rs: edges on vertices named 0 to n-1 and one exact rational per edge. It may also carry patches, lists of edge indices. A task the host cannot read is refused before anything is asked.",
+      "One question is asked, the task as written. The reply must be an object that carries potential or obstruction; a potential is read first, and a reply with neither is malformed.",
+      "A potential is one exact rational per vertex, listed by vertex name. The run is certified as GLUED exactly when the edge values are its coboundary. Otherwise it is refused under zero_residual_on_every_edge with the indices of the edges left unexplained.",
+      "An obstruction is a chain. A chain that is not closed is refused as OPEN_CYCLE_WITNESS with its boundary by vertex name. A closed chain round which the values sum to zero is refused as ZERO_HOLONOMY_WITNESS. A closed chain with a nonzero sum stands as the typed refusal GLOBAL_OBSTRUCTION with the sum and the chain.",
+      "Every verdict that reads a reply carries local_sections: for each patch, whether the values on that patch alone are a coboundary. It is reported and never decides the verdict."
+    ],
+    "boundaries": [
+      "An obstruction shows that the given values do not glue. It is not checked to be a simple cycle or a shortest one.",
+      "A potential is checked on every edge of the task. The patches are not used to check it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf10.rs",
+      "language": "Rust",
+      "sha256": "c2a1bdd18bd2811b457bdeda8750f03b48aac9cafafdab581baab972eba613c7"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: values, potentials and holonomy are exact rationals compared exactly; boundary counts are whole numbers. Residual supports, boundaries and sums are asserted against values worked by hand, with a chain walked backwards and twice. Not B: tested on examples, not proven.",
+      "G3": "An unreadable task, potential, chain or patch list has its own reason, and each refusal its own code with the evidence that decided it. No unwrap or expect, and no index: edges are read with get. Not B: panic-freedom is tested, not proven.",
+      "G4": "16 WF10 tests assert the registry entry, the prompt byte for byte, a potential certified and one shifted by a constant, the edges a wrong potential leaves, values that twist round a cycle, an obstruction with its sum and chain, a chain walked backwards and twice, an open chain with its boundary by name, a closed chain that sums to zero, the report on each patch, which form is read first, and each malformed reply and task by its reason. Mutation campaign R = 54/54. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 8, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 54,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf10.mutation.json",
+        "sha256": "738d00c1e715c271e3d1d7a2b3bf02e5016d0de0ecc9af5a0eecd963b5adc1b7",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 54 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:43.744379Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf10.rs",
+          "language": "Rust",
+          "sha256": "c2a1bdd18bd2811b457bdeda8750f03b48aac9cafafdab581baab972eba613c7"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf10:v1",
+        "symbols": [
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is the cochain task of cochain.rs: edges on vertices named 0 to n-1 and one exact rational per edge. It may also carry patches, lists of edge indices. A task the host cannot read is refused before anything is asked.",
+          "One question is asked, the task as written. The reply must be an object that carries potential or obstruction; a potential is read first, and a reply with neither is malformed.",
+          "A potential is one exact rational per vertex, listed by vertex name. The run is certified as GLUED exactly when the edge values are its coboundary. Otherwise it is refused under zero_residual_on_every_edge with the indices of the edges left unexplained.",
+          "An obstruction is a chain. A chain that is not closed is refused as OPEN_CYCLE_WITNESS with its boundary by vertex name. A closed chain round which the values sum to zero is refused as ZERO_HOLONOMY_WITNESS. A closed chain with a nonzero sum stands as the typed refusal GLOBAL_OBSTRUCTION with the sum and the chain.",
+          "Every verdict that reads a reply carries local_sections: for each patch, whether the values on that patch alone are a coboundary. It is reported and never decides the verdict."
+        ],
+        "boundaries": [
+          "An obstruction shows that the given values do not glue. It is not checked to be a simple cycle or a shortest one.",
+          "A potential is checked on every edge of the task. The patches are not used to check it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf10.rs",
+          "language": "Rust",
+          "sha256": "c2a1bdd18bd2811b457bdeda8750f03b48aac9cafafdab581baab972eba613c7"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: values, potentials and holonomy are exact rationals compared exactly; boundary counts are whole numbers. Residual supports, boundaries and sums are asserted against values worked by hand, with a chain walked backwards and twice. Not B: tested on examples, not proven.",
+          "G3": "An unreadable task, potential, chain or patch list has its own reason, and each refusal its own code with the evidence that decided it. No unwrap or expect, and no index: edges are read with get. Not B: panic-freedom is tested, not proven.",
+          "G4": "16 WF10 tests assert the registry entry, the prompt byte for byte, a potential certified and one shifted by a constant, the edges a wrong potential leaves, values that twist round a cycle, an obstruction with its sum and chain, a chain walked backwards and twice, an open chain with its boundary by name, a closed chain that sums to zero, the report on each patch, which form is read first, and each malformed reply and task by its reason. Mutation campaign R = 54/54. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 8, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 54,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf10.mutation.json",
+            "sha256": "738d00c1e715c271e3d1d7a2b3bf02e5016d0de0ecc9af5a0eecd963b5adc1b7",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 54 mutants"
+          }
+        }
+      }
+    }
+  ]
+}
