@@ -22,15 +22,24 @@
 //! family's walk returns, a certified verdict or a typed refusal stands only when at least one
 //! predicate was recorded and every one passed; otherwise the host refuses the run.
 
+pub mod attempts;
 pub mod domains;
+pub mod monic;
 pub mod sealed;
 pub mod wf07;
+pub mod wf09;
 pub mod wf13;
+pub mod wf20;
 pub mod wf24;
+pub mod wf26;
+pub mod wf27;
 pub mod wf30;
 pub mod wf31;
 pub mod wf32;
+pub mod wf33;
+pub mod wf40;
 pub mod wf45;
+pub mod xor;
 
 use serde::{Deserialize, Serialize};
 use serde_json::value::RawValue;
@@ -74,11 +83,17 @@ pub struct Family {
 /// Every family this host checks, in workflow order.
 pub const FAMILIES: &[&Family] = &[
     &wf07::FAMILY,
+    &wf09::FAMILY,
     &wf13::FAMILY,
+    &wf20::FAMILY,
     &wf24::FAMILY,
+    &wf26::FAMILY,
+    &wf27::FAMILY,
     &wf30::FAMILY,
     &wf31::FAMILY,
     &wf32::FAMILY,
+    &wf33::FAMILY,
+    &wf40::FAMILY,
     &wf45::FAMILY,
 ];
 

@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass, field
 from fractions import Fraction
 from math import comb
 from typing import Any
@@ -10,6 +9,7 @@ from typing import Any
 from ..civilization import Candidate, Lineage, select
 from ..fidelity import HostOracleContext
 from .base import (
+    HostedFamily,
     MalformedCandidateError,
     Session,
     Verdict,
@@ -25,40 +25,7 @@ from .base import (
     spec_from,
 )
 from .exact import Graph, seal_chain, transpose
-from .layer2 import Assessment, BoundedCheckAndRepair
 from .registry import register
-
-STRUCTURAL_LIFTS = ('fundamental_cycles', 'chords')
-STRUCTURE_KEYS = ('edges', 'faces')
-
-
-class SharedFuel:
-    """A shared integer fuel counter that only ever decreases."""
-
-    def __init__(self, value: int):
-        self.value = as_int(value, 'fuel')
-        self.trace = [self.value]
-
-    def draw(self, cost: int = 1) -> bool:
-        if cost <= 0 or self.value < cost:
-            return False
-        self.value -= cost
-        self.trace.append(self.value)
-        return True
-
-    @property
-    def strictly_decreasing(self) -> bool:
-        return all(a > b for a, b in zip(self.trace, self.trace[1:], strict=False))
-
-
-@dataclass
-class LoopResult:
-    """End state of one derivation loop. ``status`` is certificate, budget, fuel, limit or scope."""
-    status: str
-    trail: list[dict[str, Any]] = field(default_factory=list)
-    grants: list[dict[str, Any]] = field(default_factory=list)
-    last: Assessment | None = None
-    content: Any = None
 
 
 def odd_cycle_count(g: Graph, labels: list[int], flips: list[int]) -> int:
@@ -74,7 +41,7 @@ def flip_list(value: Any, m: int) -> list[int]:
 
 
 @register
-class DerivationLoopWithLiftGrants(BoundedCheckAndRepair):
+class DerivationLoopWithLiftGrants(HostedFamily):
     """WF20. The WF9 repair loop, with structural lift grants when the defect stalls.
 
     Domain: XOR edge labels, as in WF9. When the host defect (odd fundamental
@@ -85,74 +52,6 @@ class DerivationLoopWithLiftGrants(BoundedCheckAndRepair):
     """
     spec = spec_from('WF20', 'Derivation loop with lift grants', 8, ['WF9', 'WF10', 'WF19'], 'WF9',
                      'structural_lift_grant_loop', 'wf20_derivation_loop_with_lift_grants')
-    LOOP_LIMIT = 5
-
-    def max_attempts(self, task):
-        limit = as_int(task.get('max_attempts', self.LOOP_LIMIT), 'max_attempts')
-        require(1 <= limit <= self.LOOP_LIMIT, f'max_attempts must be in 1..{self.LOOP_LIMIT}')
-        return limit
-
-    def lift_grant(self, task: Mapping[str, Any], kind: str) -> dict[str, Any]:
-        g = Graph.of(task['edges'])
-        if kind == 'chords':
-            return {'chords': g.spanning_forest()[1]}
-        return {'fundamental_cycles': [[[i, s] for i, s in cyc] for cyc in g.fundamental_cycles()]}
-
-    def grant_is_structural(self, task: Mapping[str, Any], grant: Mapping[str, Any]) -> bool:
-        """The grant recomputed from the structure keys alone must be identical."""
-        blind = {k: v for k, v in task.items() if k in STRUCTURE_KEYS}
-        return grant['kind'] in STRUCTURAL_LIFTS and self.lift_grant(blind, grant['kind']) == grant['data']
-
-    def derive(self, session: Session, task: Mapping[str, Any], prefix: str = '',
-               fuel: SharedFuel | None = None) -> LoopResult:
-        out = LoopResult('limit')
-        prompt, previous, granted = self.prompt(task), None, ''
-        for t in range(self.max_attempts(task)):
-            if fuel is not None and not fuel.draw():
-                out.status = 'fuel'
-                return out
-            reply = session.ask(f'{prefix}attempt:{t}', prompt)
-            if reply is None:
-                out.status = 'budget'
-                return out
-            content = reply.content
-            kind = content.get('lift_request') if isinstance(content, Mapping) else None
-            if kind is not None and kind not in STRUCTURAL_LIFTS:
-                out.status = 'scope'
-                out.trail.append({'attempt': t, 'lift_request': str(kind)})
-                return out
-            try:
-                result = self.assess(task, session.sealed, content)
-            except MalformedCandidateError as exc:
-                result = Assessment(False, {'malformed': str(exc)}, None)
-            out.last, out.content = result, content
-            out.trail.append({'attempt': t, 'measure': result.measure, 'residual': dict(result.residual)})
-            if result.accepted:
-                out.status = 'certificate'
-                return out
-            stalled = previous is not None and (result.measure is None or result.measure >= previous)
-            if stalled:
-                grant = {'attempt': t, 'kind': kind or STRUCTURAL_LIFTS[0]}
-                grant['data'] = self.lift_grant(task, grant['kind'])
-                out.grants.append(grant)
-                granted += '\nLIFT_REQUEST grant: ' + canonical(grant['data']).decode('utf-8')
-            previous = result.measure if result.measure is not None else previous
-            prompt = self.repair_prompt(task, result.residual) + granted
-        return out
-
-    def run(self, session: Session, host: HostOracleContext) -> Verdict:
-        task = session.task
-        res = self.derive(session, task)
-        grants = [{'attempt': g['attempt'], 'kind': g['kind']} for g in res.grants]
-        host.record('lift_grants_structural', all(self.grant_is_structural(task, g) for g in res.grants),
-                    canonical(grants).decode('utf-8'))
-        if res.status == 'scope':
-            host.record('lift_request_structural', False, canonical(res.trail[-1]).decode('utf-8'))
-            return refused('LIFT_SCOPE_VIOLATION', trail=res.trail)
-        host.record('certificate_within_loop_limit', res.status == 'certificate', res.status)
-        if res.status != 'certificate':
-            return refused(f'HALTED_ON_{res.status.upper()}', attempts=len(res.trail), grants=grants)
-        return judge(host, 'DERIVED', attempts=len(res.trail), grants=grants)
 
     def fixtures(self):
         task = {'statement': 'Flip the fewest edge labels so every cycle has an even label sum.',

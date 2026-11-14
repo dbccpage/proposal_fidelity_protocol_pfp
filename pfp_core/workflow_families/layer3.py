@@ -7,6 +7,7 @@ from typing import Any
 
 from ..fidelity import HostOracleContext
 from .base import (
+    HostedFamily,
     MalformedCandidateError,
     Session,
     Verdict,
@@ -14,7 +15,6 @@ from .base import (
     as_fraction,
     as_int,
     canonical,
-    certified,
     digest,
     judge,
     refused,
@@ -23,7 +23,6 @@ from .base import (
     typed_refusal,
 )
 from .exact import Graph, dot, matvec, rank, seal_chain, transpose
-from .layer2 import Assessment, BoundedCheckAndRepair
 from .registry import register
 
 # ---------------------------------------------------------------- shared parsing helpers
@@ -322,7 +321,7 @@ class HierarchicalDecimation(WorkflowFamily):
 
 
 @register
-class HintedRetraction(BoundedCheckAndRepair):
+class HintedRetraction(HostedFamily):
     """WF27. The WF9 repair loop with answer-free structural hints and a stationary-loop stop.
 
     Domain: XOR edge labels, as in WF9. Each rejected turn adds a hint built
@@ -334,44 +333,6 @@ class HintedRetraction(BoundedCheckAndRepair):
     """
     spec = spec_from('WF27', 'Hinted retraction with a stationary-loop detector', 3, ['WF9'], 'WF9',
                      'xor_residual_gate_stationary_loop', 'wf27_hinted_retraction_with_a_stationary_loop_detector')
-    period = 3
-
-    def hint(self, task, residual: Mapping[str, Any]) -> dict[str, Any]:
-        g = Graph.of(task['edges'])
-        cycles = g.fundamental_cycles()
-        odd = [k for k in residual.get('odd_cycles', []) if 0 <= k < len(cycles)]
-        return {'odd_cycles': odd,
-                'cycle_vertices': [sorted({x for i, _ in cycles[k] for x in g.edges[i]}) for k in odd]}
-
-    def repair_prompt(self, task, residual):
-        return super().repair_prompt(task, residual) + '\nStructural hint: ' + canonical(
-            self.hint(task, residual)).decode('utf-8')
-
-    def run(self, session: Session, host: HostOracleContext) -> Verdict:
-        task = session.task
-        prompt = self.prompt(task)
-        trail: list[dict[str, Any]] = []
-        for t in range(self.max_attempts(task)):
-            reply = session.ask(f'attempt:{t}', prompt)
-            if reply is None:
-                break
-            try:
-                result = self.assess(task, session.sealed, reply.content)
-            except MalformedCandidateError as exc:
-                result = Assessment(False, {'malformed': str(exc)}, None)
-            residual = dict(result.residual)
-            trail.append({'attempt': t, 'measure': result.measure, 'residual': residual})
-            if result.accepted:
-                host.record('accepted_within_limit', True, canonical(trail).decode('utf-8'))
-                return certified('REPAIRED' if t else 'ACCEPTED_FIRST_TRY', attempts=t + 1, trail=trail)
-            earlier = trail[t - self.period]['residual'] if t >= self.period else None
-            if 'malformed' not in residual and earlier == residual:
-                host.record('residual_not_stationary', False, canonical(trail).decode('utf-8'))
-                return refused('STATIONARY_LOOP', turn=t, repeats_turn=t - self.period, residual=residual,
-                               hint=self.hint(task, residual))
-            prompt = self.repair_prompt(task, residual)
-        host.record('accepted_within_limit', False, canonical(trail).decode('utf-8'))
-        return refused('TURN_CAP_EXHAUSTED', attempts=len(trail), trail=trail)
 
     def fixtures(self):
         task = {'statement': 'Flip the fewest edge labels so every cycle has an even label sum.',

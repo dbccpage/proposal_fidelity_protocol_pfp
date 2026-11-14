@@ -151,9 +151,15 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      failure. WF32 binds each admitted claim to a digest of the claim and the
      host's witness, and a verdict now lists what no predicate covers
      (`uncertified_obligations`).
-   - **Next.** The WF9 inheritance group (WF9, WF20, WF26, WF27, WF33, WF40)
-     in one step, then layers 3 to 9. Then the WF1-WF5 and WF52-WF54 host
-     checks, the run budget and run custody.
+   - **4c (built, offline).** The WF9 inheritance group: WF9, WF20, WF26,
+     WF27, WF33 and WF40. The host now has graphs (`graph.rs`: spanning
+     forest, fundamental cycles, coboundaries over the rationals), the XOR
+     repair and monic-polynomial domains, and the loops built on them: WF9's
+     bounded repair, WF27's hint and stationary-loop stop, WF20's structural
+     grants, WF26's antibodies, WF33's children on one fuel counter bound by
+     receipts, and WF40's boundary action after a failed repair.
+   - **Next.** The remaining families of layers 3 to 9. Then the WF1-WF5 and
+     WF52-WF54 host checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
 6. **Lean.** State and prove the laws for the term model, and link each
@@ -190,7 +196,8 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
-- After 4b the host checks WF7, WF13, WF24, WF30, WF31, WF32 and WF45.
+- After 4c the host checks WF7, WF9, WF13, WF20, WF24, WF26, WF27, WF30,
+  WF31, WF32, WF33, WF40 and WF45.
   Every other family still runs its check and its sealed-value guard in
   Python. WF6 and WF22 grade with WF7's check and so reach the host for that
   part.
@@ -211,6 +218,32 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   not fail. A refused WF32 run now lists its open claims as obligations too.
   Old and new agree on 6,000 random runs apart from those readings, reworded
   reasons, and tasks on which the old check crashed.
+- The WF9 group's host is stricter than the Python it replaces in these
+  ways. A task it cannot read is refused before anything is asked: more than
+  20 edges, a vertex that is not an exact integer, WF26 roots that are not
+  rationals, and for WF40 vertices other than `0..n-1`, values that are not
+  one rational per edge, or a face that is not a closed walk of `[edge, sign]`
+  steps. A WF40 restart seed must carry the task's spec exactly as written
+  (`1` is not `1.0`). The loose-number notation WF26 sorts as non-canonical
+  is ASCII only. A `lift_request` that is not text is named by its JSON.
+  An unreadable rational has one wording, which changes the residual and the
+  receipt after such a reply.
+- Five predicates of the Python are not recorded, because in the Rust design
+  nothing can make them fail: `lift_grants_structural` (the grant builder is
+  given only the graph), `fuel_strictly_decreasing` and `ops_within_fuel`
+  (the counter has no other operation), `prior_spend_locked` (Python keeps
+  the budget) and `antibodies_answer_free` (antibodies are fixed sentences).
+  They were guards on the host's own code, not checks of a reply.
+- Old and new agree on 12,000 random runs of the six families apart from
+  those readings: 10,899 identical, 709 tasks both refuse, 156 tasks now
+  refused before asking, 229 runs that differ only in the wording of a
+  reason, and 7 tasks on which the old check crashed.
+- WF9's least repair is found by trying every set of flips, so its cost
+  doubles with each edge up to the limit of 20. WF20's grant shows the
+  structure of the graph; it has not been shown to help a model.
+- A WF33 or WF40 receipt is a digest the host recomputes from the replies it
+  is handed. It is not a signature: it shows that a reply quotes what the
+  host showed in this run, not who wrote the reply.
 - In WF32 a digest covers a claim as written. A claim that contains a number
   with a fraction or an exponent is hashed with that number's own text,
   where the Python hashed its re-rendered value.

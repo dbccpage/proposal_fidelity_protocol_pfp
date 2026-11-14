@@ -175,7 +175,8 @@ def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
     listed = operad_host.result(operad_host.call(('family', 'list')))['families']
     assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
                       for wf_id, cls in HOSTED.items()]
-    assert {'WF7', 'WF13', 'WF24', 'WF30', 'WF31', 'WF32', 'WF45'} <= set(HOSTED)
+    assert set(HOSTED) == {'WF7', 'WF9', 'WF13', 'WF20', 'WF24', 'WF26', 'WF27', 'WF30', 'WF31', 'WF32', 'WF33',
+                           'WF40', 'WF45'}
 
 
 @pytest.mark.parametrize('wf_id', sorted(HOSTED))
@@ -262,16 +263,11 @@ def test_the_python_guard_of_the_unported_families_reads_a_closing_mark_as_the_h
     assert not base.prompt_leaks('choose a', {'answer': 'a.'})
 
 
-XOR_FAMILIES = sorted(wf for wf, cls in REGISTRY.items()
-                      if cls.validate is REGISTRY['WF9'].validate)
-
-
-def test_the_wf9_task_admission_covers_wf9_wf20_and_wf27():
-    assert XOR_FAMILIES == ['WF20', 'WF27', 'WF9']
+XOR_FAMILIES = ['WF9', 'WF20', 'WF27', 'WF33']
 
 
 @pytest.mark.parametrize('wf_id', XOR_FAMILIES)
-@pytest.mark.parametrize('label', [0.9, 0.0, 1.0, float('nan'), float('inf'), '0', '1', True, False, 2, -1, None])
+@pytest.mark.parametrize('label', [0.9, 0.0, 1.0, '0', '1', True, False, 2, -1, None])
 def test_a_non_binary_edge_label_is_refused_before_any_proposal(wf_id, label):
     # Regression: int(x) % 2 read 0.9 as 0 and certified the empty repair of a different task.
     from pfp_core.workflow_families.base import CallableProposer
@@ -282,11 +278,21 @@ def test_a_non_binary_edge_label_is_refused_before_any_proposal(wf_id, label):
         return {'flip': []}, Usage()
     family = REGISTRY[wf_id]()
     bundle = {'task': {'statement': 'Flip the fewest labels.', 'edges': [[0, 1], [1, 2], [2, 0]],
-                       'labels': [label, 0, 0]}, 'replies': [{'flip': []}]}
+                       'labels': [label, 0, 0], 'fuel': 9}, 'replies': [{'flip': []}]}
     budget = new_budget(f'{wf_id}:label', bundle['task'])
-    with pytest.raises(base.MalformedCandidateError, match='exact int 0 or 1'):
+    with pytest.raises(base.MalformedCandidateError, match='exact integer 0 or 1'):
         family.execute(bundle, budget=budget, proposer=CallableProposer(fn, quote_microusd=0))
     assert calls == [] and budget.summary()['calls'] == 0
+
+
+@pytest.mark.parametrize('label', [float('nan'), float('inf')])
+def test_a_label_that_is_not_json_never_reaches_the_host(label):
+    family = REGISTRY['WF9']()
+    bundle = {'task': {'edges': [[0, 1], [1, 2], [2, 0]], 'labels': [label, 0, 0]}, 'replies': [{'flip': []}]}
+    budget = new_budget('WF9:nan', bundle['task'])
+    with pytest.raises(ValueError, match='not JSON compliant'):
+        family.execute(bundle, budget=budget)
+    assert budget.summary()['calls'] == 0
 
 
 @pytest.mark.parametrize('edges', [[[0, 1], [1, 2], [2, 0, 5]], [[0, 1], [1, 2], 'ab']])
@@ -300,5 +306,5 @@ def test_a_malformed_edge_is_refused_before_any_proposal(edges):
 @pytest.mark.parametrize('wf_id', XOR_FAMILIES)
 def test_exact_binary_labels_are_still_admitted(wf_id):
     family = REGISTRY[wf_id]()
-    task = {'edges': [[0, 1], [1, 2], [2, 0]], 'labels': [1, 0, 0]}
+    task = {'edges': [[0, 1], [1, 2], [2, 0]], 'labels': [1, 0, 0], 'fuel': 9}
     assert family.validate(task) is task

@@ -1,0 +1,106 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/xor.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/xor.rs",
+      "language": "Rust",
+      "sha256": "3516ef08b6030158541a65f67296cfef272a84454951c84a5b05b5d7fa6a3d69"
+    },
+    "contract_urn": "urn:pfp-operads:families-xor-tests:v1",
+    "symbols": [
+      "datum",
+      "labelled",
+      "refused",
+      "set",
+      "kite",
+      "a_task_is_its_edges_with_one_binary_label_each",
+      "a_task_without_two_lists_of_one_length_is_refused",
+      "an_edge_that_is_not_a_pair_of_integers_is_refused",
+      "a_label_other_than_the_integer_zero_or_one_is_refused",
+      "a_task_has_at_most_twenty_edges",
+      "a_flip_list_is_a_set_of_edge_indices",
+      "a_flip_list_that_cannot_be_read_says_why",
+      "a_cycle_is_odd_when_its_labels_after_the_flips_sum_to_an_odd_number",
+      "an_edge_on_no_cycle_never_makes_one_odd",
+      "the_least_repair_is_the_size_of_the_smallest_set_that_leaves_no_cycle_odd",
+      "the_least_repair_may_be_the_last_edge_alone",
+      "cycles_that_share_no_edge_each_need_their_own_flip",
+      "a_loop_and_a_doubled_edge_are_cycles_of_their_own",
+      "the_least_repair_is_found_on_the_largest_task",
+      "a_reply_is_accepted_only_when_no_cycle_is_odd_and_no_smaller_repair_exists",
+      "the_empty_repair_is_accepted_only_when_nothing_is_odd",
+      "a_reply_without_a_readable_flip_list_is_an_error_with_the_reason"
+    ],
+    "owned_invariants": [
+      "Odd cycles and least repairs are worked by hand on graphs drawn in the comments, including one whose least repair is its last edge alone.",
+      "Each unreadable task and flip list is asserted by its reason, and the edge limit as the value 20.",
+      "A repair that is even and not least is asserted rejected, and the residual is asserted field by field."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/xor.rs",
+      "language": "Rust",
+      "sha256": "3516ef08b6030158541a65f67296cfef272a84454951c84a5b05b5d7fa6a3d69"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 17 pass in the recorded run; the suite they belong to killed 46 of 46 eligible XOR mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T15:01:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v10-test.run.json",
+        "sha256": "2ac3c78c0d43c1d8afccff41082ba5766a3c997b4958118d8411ec48197bb9e4",
+        "note": "597 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-clippy.run.json",
+        "sha256": "bca267d7753f15b816eccc1004bdc6ce881b1819f40ee74e5c1c57e840c95cdb",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-fmt.run.json",
+        "sha256": "f6d1c8480e66c3f0cfb6f83e0bb819d7a7d861989fc9164bee66d15943552e9b",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.run.json",
+        "sha256": "896842a84d07003d020cd4e1e29115b2a6a075310f83be82779b4ac28bfdc7f3",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.json",
+        "sha256": "f0123515ac77c4cf93d96d509948e04b751df51b9f0d39da5f53a058f3164656",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

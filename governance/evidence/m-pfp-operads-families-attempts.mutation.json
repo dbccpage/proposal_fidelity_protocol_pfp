@@ -1,0 +1,197 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/attempts.rs",
+  "target_sha256": "a0ab5ac70356a6809da3537826cfc7b81dafa74549ec2d7df0f1209637330ae3",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test attempts --test wf09 --test wf20 --test wf26 --test wf27 --test wf33 --test wf40",
+  "counts": {
+    "killed": 30,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "an unread reply is accepted",
+      "old": "        accepted: false,\n        residual: Datum::map([(\"malformed\"",
+      "new": "        accepted: true,\n        residual: Datum::map([(\"malformed\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "unread reason under another key",
+      "old": "residual: Datum::map([(\"malformed\", Datum::text(reason))]),",
+      "new": "residual: Datum::map([(\"error\", Datum::text(reason))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unread reply has a measure",
+      "old": "        measure: Datum::Null,\n",
+      "new": "        measure: Datum::from(0usize),\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "row attempt key renamed",
+      "old": "        (\"attempt\", Datum::from(attempt)),",
+      "new": "        (\"turn\", Datum::from(attempt)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "row counts attempts from one",
+      "old": "        (\"attempt\", Datum::from(attempt)),",
+      "new": "        (\"attempt\", Datum::from(attempt + 1)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "row measure key renamed",
+      "old": "        (\"measure\", assessment.measure.clone()),",
+      "new": "        (\"size\", assessment.measure.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "row residual key renamed",
+      "old": "        (\"residual\", assessment.residual.clone()),",
+      "new": "        (\"left\", assessment.residual.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "row measure holds the residual",
+      "old": "        (\"measure\", assessment.measure.clone()),",
+      "new": "        (\"measure\", assessment.residual.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "row residual holds the measure",
+      "old": "        (\"residual\", assessment.residual.clone()),",
+      "new": "        (\"residual\", assessment.measure.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "limit read from another key",
+      "old": "let Some(stated) = task.get(\"max_attempts\") else {",
+      "new": "let Some(stated) = task.get(\"attempts\") else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no stated limit means the ceiling",
+      "old": "        return Ok(default);",
+      "new": "        return Ok(ceiling);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a limit that is no integer passes the type test",
+      "old": "    if stated.as_int().is_none() {\n",
+      "new": "    if false && stated.as_int().is_none() {\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "limit type message changed",
+      "old": "return Err(\"max_attempts must be an exact int\".to_owned());",
+      "new": "return Err(\"max_attempts\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a limit of zero is allowed",
+      "old": "        .filter(|limit| (1..=ceiling).contains(limit))",
+      "new": "        .filter(|limit| (0..=ceiling).contains(limit))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ceiling itself is refused",
+      "old": "        .filter(|limit| (1..=ceiling).contains(limit))",
+      "new": "        .filter(|limit| (1..ceiling).contains(limit))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a limit of one is refused",
+      "old": "        .filter(|limit| (1..=ceiling).contains(limit))",
+      "new": "        .filter(|limit| (2..=ceiling).contains(limit))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a limit above the ceiling is allowed",
+      "old": "        .filter(|limit| (1..=ceiling).contains(limit))",
+      "new": "        .filter(|limit| (1..=ceiling + 1).contains(limit))",
+      "outcome": "killed"
+    },
+    {
+      "name": "limit range message changed",
+      "old": ".ok_or_else(|| format!(\"max_attempts must be in 1..{ceiling}\"))",
+      "new": ".ok_or_else(|| format!(\"max_attempts must be at most {ceiling}\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual line reworded",
+      "old": "format!(\"{prompt}\\nHost residual: {}\", residual.canonical())",
+      "new": "format!(\"{prompt}\\nResidual: {}\", residual.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual on the same line",
+      "old": "format!(\"{prompt}\\nHost residual: {}\", residual.canonical())",
+      "new": "format!(\"{prompt} Host residual: {}\", residual.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual replaces the prompt",
+      "old": "format!(\"{prompt}\\nHost residual: {}\", residual.canonical())",
+      "new": "format!(\"Host residual: {}\", residual.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace does not start with the units",
+      "old": "            trace: vec![units.clone()],",
+      "new": "            trace: Vec::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last unit cannot be drawn",
+      "old": "        if self.left < BigInt::one() {",
+      "new": "        if self.left <= BigInt::one() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel may go below zero",
+      "old": "        if self.left < BigInt::one() {",
+      "new": "        if self.left < BigInt::from(-1) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty counter still draws",
+      "old": "            return false;\n        }\n        self.left -= 1;",
+      "new": "            return true;\n        }\n        self.left -= 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a draw takes two units",
+      "old": "        self.left -= 1;",
+      "new": "        self.left -= 2;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a draw gives a unit back",
+      "old": "        self.left -= 1;",
+      "new": "        self.left += 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace records one instead of the amount left",
+      "old": "        self.trace.push(self.left.clone());",
+      "new": "        self.trace.push(BigInt::one());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a successful draw reports failure",
+      "old": "        self.trace.push(self.left.clone());\n        true",
+      "new": "        self.trace.push(self.left.clone());\n        false",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace is listed newest first",
+      "old": "Datum::List(self.trace.iter().cloned().map(Datum::Int).collect())",
+      "new": "Datum::List(self.trace.iter().rev().cloned().map(Datum::Int).collect())",
+      "outcome": "killed"
+    }
+  ]
+}
