@@ -1,0 +1,40 @@
+name: eis-pciv-rust
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "code/rust/core_epistemic_immune_system/**"
+      - "code/rust/core_prompt_civilization/**"
+      - "code/rust/tests/core_epistemic_immune_system/**"
+      - "code/rust/Cargo.toml"
+      - "code/rust/Cargo.lock"
+      - ".github/workflows/eis_pciv_rust.yml"
+  pull_request:
+    paths:
+      - "code/rust/core_epistemic_immune_system/**"
+      - "code/rust/core_prompt_civilization/**"
+      - "code/rust/tests/core_epistemic_immune_system/**"
+      - "code/rust/Cargo.toml"
+      - "code/rust/Cargo.lock"
+      - ".github/workflows/eis_pciv_rust.yml"
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: code/rust
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - run: cargo fmt -p core_epistemic_immune_system -p core_prompt_civilization --check
+      - run: cargo clippy --locked -p core_epistemic_immune_system -p core_prompt_civilization --all-targets --no-deps -- -D warnings
+      - run: cargo test --locked -p core_epistemic_immune_system
+      - run: cargo test --locked -p core_prompt_civilization --lib

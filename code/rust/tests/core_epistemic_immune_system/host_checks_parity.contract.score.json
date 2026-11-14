@@ -1,0 +1,82 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/tests/core_epistemic_immune_system/host_checks_parity.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/tests/core_epistemic_immune_system/host_checks_parity.rs",
+      "language": "Rust",
+      "sha256": "561e474a3c75fc5aa3133013e0e204e33f95c2d159823a41621ec67b6cfcab87"
+    },
+    "contract_urn": "urn:code-rust:tests:core-epistemic-immune-system:host-checks-parity:v1",
+    "symbols": [
+      "evaluate_host_check_row",
+      "frozen_python_ordered_loci_and_character_spans",
+      "raw_host_check_ingress_refuses_ambiguous_or_unbounded_payloads"
+    ],
+    "owned_invariants": [
+      "Verification harness exercising host_checks_parity behaviors and contract boundaries.",
+      "Deterministic evaluation with no live network or external service dependencies.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Test support harness; does not export production runtime symbols."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/tests/core_epistemic_immune_system/host_checks_parity.rs",
+      "language": "Rust",
+      "sha256": "561e474a3c75fc5aa3133013e0e204e33f95c2d159823a41621ec67b6cfcab87"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration and unit test suite for host_checks_parity.rs.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T11:42:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m3-fmt.run.json",
+        "sha256": "ee0cf45c0c4a88adf304254411111489bd42a8b6397a49a328f5434e5e077bbf",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m3-clippy.run.json",
+        "sha256": "2b8d54d83cd7a0c5fea071e1a4fe0f1ed36ff23a282ebef9e09b239e9ea33674",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m3-eis-test.run.json",
+        "sha256": "a7a021aa5f4ae706efc307e5461f003d1fc888de86fc6916cc2c5211e6249235",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m3-pciv-test.run.json",
+        "sha256": "a221369912bbfcd1f33264affc13f0af927b10c6bdf0a426c3f806a05200dd47",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

@@ -2,7 +2,6 @@
 //! Admission records are read from the composition's trusted catalog snapshot;
 //! this endpoint does not authenticate a human or manufacture an admission act.
 
-
 #[allow(dead_code, non_camel_case_types, missing_docs)]
 trait CheckedInvariantExt_9e4ed1b5<T> {
     fn checked_invariant_9e4ed1b5(self, msg: &str) -> T;
@@ -338,9 +337,7 @@ fn attach_candidate_hits(candidate: &Value, result: &mut Value) -> Result<(), Re
     let content = candidate["content"]
         .as_str()
         .filter(|s| s.len() <= 64 * 1024)
-        .ok_or_else(|| {
-            Refusal::new("PHARMACY_CANDIDATE_INVALID", "text must be at most 64 KiB")
-        })?;
+        .ok_or_else(|| Refusal::new("PHARMACY_CANDIDATE_INVALID", "text must be at most 64 KiB"))?;
     let subject_digest = digest(content.as_bytes());
     if candidate["sha256"] != subject_digest {
         return Err(Refusal::new(
@@ -531,7 +528,13 @@ mod l4_boundary_tests_9e4ed1b5 {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecord9e4ed1b5::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryError9e4ed1b5::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryError9e4ed1b5::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryError9e4ed1b5::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryError9e4ed1b5::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

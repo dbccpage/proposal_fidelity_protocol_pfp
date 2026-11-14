@@ -1,0 +1,85 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/tests/core_epistemic_immune_system/support_falsifiers_parity.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/tests/core_epistemic_immune_system/support_falsifiers_parity.rs",
+      "language": "Rust",
+      "sha256": "7823a733fe68a1604d7d0afc00201ecb1409e6b62fb98a29ef281df2e14db2b0"
+    },
+    "contract_urn": "urn:code-rust:tests:core-epistemic-immune-system:support-falsifiers-parity:v1",
+    "symbols": [
+      "test_f_support_01_support_is_independent_of_ingestion_order",
+      "test_f_support_02_non_transitive_overlap_case",
+      "test_f_support_03_support_is_feasible_without_relabelling",
+      "test_f_support_04_support_is_monotone",
+      "test_f_pharm_01_duplicate_collapse_replays_count_as_one",
+      "test_f_res_05_propagated_references_are_never_observations",
+      "l4_boundary_admits_and_refuses_086bbf92"
+    ],
+    "owned_invariants": [
+      "Integration tests verifying the 6 PCIV admission and support falsifiers (F-SUPPORT-01..04, F-PHARM-01, F-RES-05).",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Integration test suite verifying support calculation invariants."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/tests/core_epistemic_immune_system/support_falsifiers_parity.rs",
+      "language": "Rust",
+      "sha256": "7823a733fe68a1604d7d0afc00201ecb1409e6b62fb98a29ef281df2e14db2b0"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Module-level verification for code/rust/tests/core_epistemic_immune_system/support_falsifiers_parity.rs.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Test module states AuthorityEffect None and tests PCIV support falsifiers.",
+      "G2": "Exact combinatorial assertions without floating-point arithmetic.",
+      "G3": "Typed verification of graph independence and observation isolation.",
+      "G4": "All 7 integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
+      "G5": "Standard test function layout within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T11:42:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m3-fmt.run.json",
+        "sha256": "ee0cf45c0c4a88adf304254411111489bd42a8b6397a49a328f5434e5e077bbf",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m3-clippy.run.json",
+        "sha256": "2b8d54d83cd7a0c5fea071e1a4fe0f1ed36ff23a282ebef9e09b239e9ea33674",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m3-eis-test.run.json",
+        "sha256": "a7a021aa5f4ae706efc307e5461f003d1fc888de86fc6916cc2c5211e6249235",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m3-pciv-test.run.json",
+        "sha256": "a221369912bbfcd1f33264affc13f0af927b10c6bdf0a426c3f806a05200dd47",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}
