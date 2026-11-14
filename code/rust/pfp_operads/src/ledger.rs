@@ -15,6 +15,10 @@
 //! A later run loads [`Ledger::admitted`]. A rejected rule may be tried again: a rejection is a
 //! hypothesis about the rule, not a fact. Admission here means "may be loaded"; it is not a claim
 //! that the rule is correct.
+//!
+//! An id may name its case: in `CASE@RUN` the case is the part before the first `@` (see
+//! [`case_of`]). A trial is refused when a held-out case is the case of a failure its rule came
+//! from, whatever the run.
 
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -148,6 +152,11 @@ fn distinct(ids: &[String], what: &str) -> Result<BTreeSet<String>, Refusal> {
     Ok(set)
 }
 
+/// The case an id names: the part before the first `@`, or the whole id.
+pub fn case_of(id: &str) -> &str {
+    id.split_once('@').map_or(id, |(case, _)| case)
+}
+
 fn is_sha256(text: &str) -> bool {
     text.len() == 64
         && text
@@ -175,6 +184,56 @@ impl Ledger {
 
     pub fn status(&self, candidate: &str) -> Option<Status> {
         self.rules.get(candidate).map(|rule| rule.status)
+    }
+
+    /// The hash of the last entry, which names this state of the ledger.
+    pub fn head(&self) -> &str {
+        self.entries
+            .last()
+            .map_or(GENESIS, |entry| entry.hash.as_str())
+    }
+
+    /// The ledger as it stood when its head was `head`.
+    pub fn at(&self, head: &str) -> Result<Self, Refusal> {
+        let kept = if head == GENESIS {
+            0
+        } else {
+            match self.entries.iter().position(|entry| entry.hash == head) {
+                Some(last) => last + 1,
+                None => {
+                    return refuse(
+                        "UNKNOWN_LEDGER_HEAD",
+                        "no entry of the ledger has that hash",
+                    )
+                }
+            }
+        };
+        let mut earlier = Self::new();
+        for entry in &self.entries[..kept] {
+            earlier.append(entry.record.clone())?;
+        }
+        Ok(earlier)
+    }
+
+    /// A rule that may be put on trial: proposed, and neither admitted nor retired.
+    pub fn on_trial(&self, candidate: &str) -> Result<AdmittedRule, Refusal> {
+        match self.rules.get(candidate) {
+            Some(rule) if matches!(rule.status, Status::Candidate | Status::Rejected) => {
+                Ok(AdmittedRule {
+                    id: candidate.to_owned(),
+                    capability_kind: rule.capability_kind.clone(),
+                    constraint: rule.constraint.clone(),
+                })
+            }
+            Some(rule) => refuse(
+                "NOT_ON_TRIAL",
+                format!("{candidate} is {}", rule.status.as_str()),
+            ),
+            None => refuse(
+                "UNKNOWN_CANDIDATE",
+                format!("{candidate} was never proposed"),
+            ),
+        }
     }
 
     /// The rules a later run may load, in id order.
@@ -300,7 +359,8 @@ impl Ledger {
             } => {
                 let rule = self.rule(candidate)?;
                 let cases = distinct(held_out, "held_out")?;
-                if !cases.is_disjoint(&rule.derived_from) {
+                let seen: BTreeSet<&str> = rule.derived_from.iter().map(|id| case_of(id)).collect();
+                if cases.iter().any(|id| seen.contains(case_of(id))) {
                     return refuse(
                         "SPLIT_OVERLAP",
                         "a held-out case is one of the failures the rule came from",
@@ -340,11 +400,7 @@ impl Ledger {
     /// Check a record against the rules above and add it to the chain. A refused record changes nothing.
     pub fn append(&mut self, record: Record) -> Result<&Entry, Refusal> {
         let seq = self.entries.len() as u64;
-        let prev = self
-            .entries
-            .last()
-            .map_or(GENESIS, |entry| entry.hash.as_str())
-            .to_owned();
+        let prev = self.head().to_owned();
         let hash = chain_hash(seq, &prev, &record)?;
         self.apply(seq, &record)?;
         self.entries.push(Entry {

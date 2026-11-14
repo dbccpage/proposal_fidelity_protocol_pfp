@@ -49,7 +49,7 @@ pub struct Witnessed {
 }
 
 /// The SHA-256 that binds a failure record to the checker, the case and the answer it was seen on.
-fn evidence(checker: &str, case: &RawValue, answer: &RawValue) -> String {
+pub(crate) fn evidence(checker: &str, case: &RawValue, answer: &RawValue) -> String {
     let mut hasher = Sha256::new();
     for part in [EVIDENCE_DOMAIN, checker, case.get(), answer.get()] {
         hasher.update(part.as_bytes());
@@ -138,9 +138,14 @@ pub fn trial(text: &str) -> Result<Scored, Refusal> {
             treated: accepts(&request.checker, case.case, case.treated)?,
         });
     }
+    scored(request.candidate, cases)
+}
+
+/// The trial record of a rule, counted from the judge's verdicts on its held-out cases.
+pub(crate) fn scored(candidate: String, cases: Vec<CaseVerdict>) -> Result<Scored, Refusal> {
     Ok(Scored {
         record: Record::Trial {
-            candidate: request.candidate,
+            candidate,
             held_out: cases.iter().map(|case| case.id.clone()).collect(),
             baseline_correct: count(&cases, |case| case.baseline)?,
             treated_correct: count(&cases, |case| case.treated)?,

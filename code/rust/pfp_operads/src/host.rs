@@ -16,9 +16,11 @@ use crate::judge::judge;
 use crate::laws::{run_battery, Panel};
 use crate::learning::{trial, witness};
 use crate::ledger::{Ledger, Record};
+use crate::loading::{load, loaded};
 use crate::mining::{mining, reuse};
 use crate::running::run;
 use crate::term::{Body, Colour, Operation, Term, Value, Variant};
+use crate::turns::{trial_turns, witness_turn};
 use crate::Refusal;
 
 /// An operation as a workflow writes it. Colours are names in the request's `colour_type`.
@@ -135,6 +137,9 @@ pub enum Command {
     LedgerVerify(String),
     LedgerAdmitted(String),
     LedgerAppend { ledger: String, record: String },
+    LedgerLoad { ledger: String, request: String },
+    LedgerLoaded { ledger: String, request: String },
+    LedgerTrial { ledger: String, request: String },
     Envelope(String),
     Judge(String),
     Mining(String),
@@ -143,6 +148,7 @@ pub enum Command {
     Reuse(String),
     Witness(String),
     Trial(String),
+    WitnessTurn(String),
     Run(String),
     Version,
 }
@@ -381,6 +387,7 @@ fn answer(command: &Command) -> Result<(bool, Json), Refusal> {
         Command::Reuse(text) => reuse(text).and_then(|report| verdict(true, &report)),
         Command::Witness(text) => witness(text).and_then(|found| verdict(true, &found)),
         Command::Trial(text) => trial(text).and_then(|scored| verdict(true, &scored)),
+        Command::WitnessTurn(text) => witness_turn(text).and_then(|found| verdict(true, &found)),
         Command::Run(text) => run(text).and_then(|report| verdict(report.accepted, &report)),
         Command::LedgerVerify(text) => Ledger::from_lines(text).map(|ledger| {
             (
@@ -392,6 +399,15 @@ fn answer(command: &Command) -> Result<(bool, Json), Refusal> {
             Ledger::from_lines(text).and_then(|ledger| verdict(true, &ledger.admitted()))
         }
         Command::LedgerAppend { ledger, record } => appended(ledger, record),
+        Command::LedgerLoad { ledger, request } => {
+            load(ledger, request).and_then(|seed| verdict(true, &seed))
+        }
+        Command::LedgerLoaded { ledger, request } => {
+            loaded(ledger, request).and_then(|found| verdict(found.accepted, &found))
+        }
+        Command::LedgerTrial { ledger, request } => {
+            trial_turns(ledger, request).and_then(|scored| verdict(true, &scored))
+        }
         Command::Version => Ok((true, version())),
     }
 }
