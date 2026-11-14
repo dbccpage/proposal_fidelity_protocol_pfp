@@ -1,0 +1,87 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp/workflows/tests/test_operad_host.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp/workflows/tests/test_operad_host.py",
+      "language": "Python",
+      "sha256": "71085a92f6934ef750022ec74a6a89f2c0bc9b9b752bcf59bda657ea090bf3a3"
+    },
+    "contract_urn": "urn:pfp-workflows:pfp-workflows-tests-test_operad_host-py:v1",
+    "symbols": [
+      "test_the_host_states_its_name_version_and_canon",
+      "test_the_binary_is_taken_from_the_environment_then_path_then_a_checkout",
+      "test_a_host_that_cannot_run_or_answer_is_an_error_not_a_verdict",
+      "test_outcomes_pass_through_and_a_refusal_has_no_result",
+      "test_the_integer_sum_judge_is_the_hosts_exact_sum",
+      "test_wf2_records_the_hosts_typing_and_ddc_word",
+      "test_a_colour_outside_the_canon_is_reported_untyped_and_does_not_change_the_verdict",
+      "test_a_structure_error_comes_from_the_host_with_its_code",
+      "test_a_run_is_bound_to_the_host_that_checked_it"
+    ],
+    "owned_invariants": [
+      "Tests run the real pfp_operad binary; none replaces the host's verdict with a Python one.",
+      "The run-custody test asserts that a manifest names the host's version and canon."
+    ],
+    "boundaries": [
+      "Offline fixtures only; fixtures are not live model trials."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp/workflows/tests/test_operad_host.py",
+      "language": "Python",
+      "sha256": "71085a92f6934ef750022ec74a6a89f2c0bc9b9b752bcf59bda657ea090bf3a3"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "L2 verification support: explicit fixtures and finite negative controls with source-bound outcomes.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected verdicts and error codes follow from the reply written in the test.",
+      "G3": "Each way the host can fail to answer is asserted by its error code.",
+      "G4": "All 9 pass in the recorded run; with the WF2 tests they killed 20 of 22 transport mutants and 28 of 35 WF2 workflow mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive 1, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T09:19:59Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/operad-host-workflow-tests.run.json",
+        "sha256": "523445ab4609eab30f99821f9d35596d414944d3758003ce25462d98853bc3d3",
+        "note": "633 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.2.0; exact source inputs bound. No live model performance claim."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v2-metrics.run.json",
+        "sha256": "6d4fa19db7517c42c27a749136736ea17ad009a615fe2dca3f9eba5ed7173d67",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v2-metrics.json",
+        "sha256": "9b625cca33d29cb7f52e956c11372a8dc6d20a99e53f359a84e92db405df975b",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      },
+      {
+        "path": "governance/evidence/m-operad-host-py.mutation.json",
+        "sha256": "7dc9d4a2caabb02cc78813573580622acb594959006905f05ac8a0b83a6b4160",
+        "note": "Transport campaign these tests are the oracle for."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

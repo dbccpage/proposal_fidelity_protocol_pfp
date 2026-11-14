@@ -45,7 +45,7 @@ they were written.
   data and skill sources that declare or use it, and record a decision: `SETTLED` when the
   sources agree, `PROPOSED` when they differ and a human choice is pending. The gate
   `py -3.12 -m operads.skill_operad.skill_compiler.operad_type_registry --repo-root .`
-  reads every source and exits 1 on drift. At this revision it reports 56 types, 49 settled and 7
+  reads every source and exits 1 on drift. At this revision it reports 57 types, 50 settled and 7
   proposed, with 0 findings. The registry records decisions; it does not change the sources.
 - **Self-digestion.** `adversary/entrypoints/self_digestion_cli.py` reads finished
   Adversary run folders, asks a model for candidate operads under a ledger cap, and admits a

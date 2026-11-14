@@ -1,14 +1,18 @@
 # pfp_operads
 
 The operad host for PFP workflows, in Rust. A workflow hands it typed JSON; it
-answers with one typed outcome. Nothing here calls a model, and no Python
-checks anything. AuthorityEffect: None.
+answers with one typed outcome. Nothing here calls a model. WF1 to WF5 call it
+through `pfp/infrastructure/operad_host.py`, which carries the request and the
+outcome and decides nothing. AuthorityEffect: None.
 
 ## What it checks
 
 | Command | Question it answers |
 | --- | --- |
 | `pfp_operad check REQUEST.json` | Are the model's proposed operations typed by the canon's colours, and do the ones with a body give the host's expected answers? |
+| `pfp_operad envelope REQUEST.json` | Does a full-slot reply (WF2 to WF5) report every slot once, and do its operad candidates and DDC moves quote real sources and cite known things? Which candidates are typed by the canon, and which have the licensed operation's signature? |
+| `pfp_operad judge REQUEST.json` | Does the reply's task result equal the host's own exact answer? (Integer sum, on unbounded integers.) |
+| `pfp_operad version` | Which host and which canon is this? Workflows record it in every run. |
 | `pfp_operad laws REQUEST.json` | Do these operations obey the operad laws on this panel of inputs? |
 | `pfp_operad ledger append LEDGER.jsonl RECORD.json` | Is this record lawful? If so, add it to the failure ledger. |
 | `pfp_operad ledger verify LEDGER.jsonl` | Has the ledger been edited, reordered or cut? |
@@ -24,6 +28,8 @@ From `code/rust`:
 
 ```
 cargo run -p pfp_operads -- check pfp_operads/examples/check.json
+cargo run -p pfp_operads -- envelope pfp_operads/examples/envelope.json
+cargo run -p pfp_operads -- judge pfp_operads/examples/judge.json
 cargo run -p pfp_operads -- laws pfp_operads/examples/laws.json
 cargo run -p pfp_operads -- ledger append my_ledger.jsonl pfp_operads/examples/failure.json
 cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
@@ -33,6 +39,12 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 
 - **Colours** are values of the canon's `prompt_colour` or `operad_colour`
   (`core_operad_canon`). Any other name is refused.
+- **Task value colours** (`task_value_colour`: `Integer`, `IntegerList`) type
+  the candidates in a workflow reply. A candidate with another colour is
+  reported as untyped; that alone does not fail the reply.
+- **Licensed operations** are the ones a task's checker allows, by signature.
+  `integer_sum_v1` licenses `integer_list_sum: IntegerList -> Integer`, and
+  the judge runs it.
 - **Operations** have ordered source colours, a target colour, an exact cost,
   a variant (`Planar` or `Symmetric`) and a body from a closed list:
   `identity`, `sum`, `product`, `difference`, `pack`, `sum_list`. No body means
@@ -56,5 +68,8 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 - The ledger checks that a trial's numbers are well formed and held out. It
   does not rerun the trial.
 - Admission means "may be loaded", not "is correct".
+- `envelope` never verifies a candidate. A candidate's meaning is free text;
+  the host can only say it is well formed, typed, and has the licensed
+  signature.
 
 Plan and status: [`docs/plans/operads_redesign.md`](../../../docs/plans/operads_redesign.md).

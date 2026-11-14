@@ -1,0 +1,40 @@
+{
+  "catalogue": ["carrier", "operands", "terminal"],
+  "required": ["carrier", "terminal"],
+  "sources": {
+    "seed_prompt": "Add every integer in input.values. Return the exact total in answer.total.",
+    "input_json": "{\"values\":[17,25,-4]}"
+  },
+  "checker": "integer_sum_v1",
+  "answer": {
+    "task_result": {"total": 38},
+    "slot_report": [
+      {"slot": "carrier", "disposition": "provided", "value": "Integers under addition.", "reason": ""},
+      {"slot": "operands", "disposition": "provided", "value": "input.values = [17,25,-4].", "reason": ""},
+      {"slot": "terminal", "disposition": "provided", "value": "One integer total.", "reason": ""}
+    ],
+    "operad_candidates": [
+      {
+        "id": "sum",
+        "operation": "sum the inputs",
+        "source_colours": ["IntegerList"],
+        "target_colour": "Integer",
+        "arity": 1,
+        "source": {"kind": "seed_prompt", "quote": "input.values"},
+        "witness_refs": ["task_result"]
+      }
+    ],
+    "ddc_moves": [
+      {
+        "id": "t1",
+        "op": "T",
+        "operad_id": "sum",
+        "before": "input list",
+        "after": "proposed sum",
+        "local_log": "Candidate total emitted; host must check it.",
+        "refusal": null,
+        "witness_refs": ["task_result"]
+      }
+    ]
+  }
+}

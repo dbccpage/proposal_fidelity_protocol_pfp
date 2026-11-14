@@ -1,4 +1,4 @@
-"""WF2 prompt, typed candidate response and deterministic structural checks."""
+"""WF2 prompt and typed candidate response; the reply envelope is checked by the Rust host."""
 
 import json
 from copy import deepcopy
@@ -7,6 +7,7 @@ from importlib.resources import files
 
 from pfp.domain.contracts.pfp_runtime import PfpPrompt, PfpTaskPrompt
 from pfp.domain.pfp_ingress import strict_json
+from pfp.infrastructure import operad_host
 from pfp.infrastructure.task_turn import PreparedTaskTurn
 from pfp.infrastructure.workflow_tasks import (
     BASE_TEMPLATE,
@@ -37,6 +38,7 @@ SOURCE_FILES = tuple(
     )
 )
 COLLECTION_FILES = ("collection.json",)
+REQUIRED_SLOTS = ("carrier", "equality_policy", "operands", "colours", "operators", "terminal")
 
 
 def resource_text(name):
@@ -130,57 +132,27 @@ def source_texts(spec):
 
 
 def finalize_check(spec, checked):
+    """Attach the Rust host's reading of the reply envelope. No rule is applied here."""
     checked = deepcopy(checked)
-    errors = []
     if not checked["schema_valid"]:
         checked.update(operad_structure_valid=False, structure_errors=["REPLY_SCHEMA_INVALID"])
         return checked
-    answer = checked["answer"]
-    slots = {row["id"] for row in catalogue()["slots"]}
-    rows = answer["slot_report"]
-    if len({row["slot"] for row in rows}) != len(rows) or {row["slot"] for row in rows} != slots:
-        errors.append("SLOT_COVERAGE_OR_DUPLICATES")
-    required = {"carrier", "equality_policy", "operands", "colours", "operators", "terminal"}
-    for row in rows:
-        if row["disposition"] == "provided":
-            if not row["value"].strip():
-                errors.append("EMPTY_PROVIDED_SLOT:" + row["slot"])
-        elif row["value"] or not row["reason"].strip():
-            errors.append("MISSING_SLOT_REASON:" + row["slot"])
-        if row["slot"] in required and row["disposition"] != "provided":
-            errors.append("REQUIRED_SLOT_UNRESOLVED:" + row["slot"])
-    ops = answer["operad_candidates"]
-    ids = [op["id"] for op in ops]
-    if len(set(ids)) != len(ids):
-        errors.append("DUPLICATE_OPERAD_ID")
-    known = slots | set(ids) | {"task_result"}
-    sources = source_texts(spec)
-    for op in ops:
-        if op["arity"] != len(op["source_colours"]):
-            errors.append("ARITY_MISMATCH:" + op["id"])
-        if op["source"]["quote"] not in sources[op["source"]["kind"]]:
-            errors.append("SOURCE_QUOTE_MISSING:" + op["id"])
-        if set(op["witness_refs"]) - known:
-            errors.append("UNKNOWN_WITNESS_REF:" + op["id"])
-    moves = answer["ddc_moves"]
-    if len({move["id"] for move in moves}) != len(moves):
-        errors.append("DUPLICATE_DDC_ID")
-    for move in moves:
-        if not any(
-            type(move[key]) is str and move[key].strip() for key in ("local_log", "refusal")
-        ):
-            errors.append("DDC_LOG_OR_REFUSAL_REQUIRED:" + move["id"])
-        if move["operad_id"] is not None and move["operad_id"] not in ids:
-            errors.append("UNKNOWN_OPERAD_REF:" + move["id"])
-        if set(move["witness_refs"]) - known:
-            errors.append("UNKNOWN_WITNESS_REF:" + move["id"])
+    report = operad_host.envelope(
+        catalogue=[row["id"] for row in catalogue()["slots"]],
+        required=list(REQUIRED_SLOTS),
+        sources=source_texts(spec),
+        checker=spec["checker"],
+        answer=checked["answer"],
+    )
     checked.update(
-        operad_structure_valid=not errors,
-        structure_errors=errors,
+        operad_structure_valid=report["accepted"],
+        structure_errors=report["errors"],
+        operad_typing=report["candidates"],
+        ddc_trace=report["ddc_trace"],
         task_status=checked["status"],
         task_failure_class=checked["failure_class"],
     )
-    if errors and checked["status"] != "CHECKER_DEFECT":
+    if not report["accepted"] and checked["status"] != "CHECKER_DEFECT":
         checked.update(status="PROVIDER_COMPLETED", failure_class="WF2_OPERAD_STRUCTURE")
     return checked
 

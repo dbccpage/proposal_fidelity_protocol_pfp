@@ -20,7 +20,18 @@ The commands below use the explicit PowerShell `$pfpPython` variable, so they
 keep using the environment you just installed. On macOS/Linux, run them with
 `.venv/bin/python` in place of `& $pfpPython`.
 The package also installs `pfp-wf1` through `pfp-wf5` console commands.
-No separate engine checkout or native build is needed for these estimated-budget workflows.
+
+The checks themselves run in a small Rust program, `pfp_operad`. Build it once
+(install Rust from <https://rustup.rs> first):
+
+```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
+```
+
+The workflows find it in `code/rust/target/release`. To keep the binary
+somewhere else, put it on `PATH` or set `PFP_OPERAD_BIN` to its full path.
+Without it a run stops with `OPERAD_HOST_NOT_FOUND`. No engine checkout is
+needed.
 
 ## 2. Get a first checked receipt, offline
 

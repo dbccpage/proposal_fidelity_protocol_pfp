@@ -11,13 +11,18 @@
 //!   structure, cost and behaviour over a finite panel of inputs.
 //! * [`ledger`]: a hash-chained record of host-witnessed failures, the rules proposed from them, the
 //!   held-out trial each rule must win, and the rules a later run may load.
+//! * [`envelope`]: the reply envelope of the full-slot workflows (slot report, operad candidates,
+//!   DDC moves), with each candidate typed against the canon.
+//! * [`judge`]: the host's own exact answer to a finite task, compared with the reply's.
 //! * [`host`]: the JSON entry points a workflow calls, also exposed by the `pfp_operad` binary.
 //!
 //! Every vocabulary (colours, DDC letters, failure classes, capability kinds, statuses) is read
 //! from `core_operad_canon`. A pass here covers the supplied operations on the supplied panel; it
 //! is not a proof for all terms.
 
+pub mod envelope;
 pub mod host;
+pub mod judge;
 pub mod laws;
 pub mod ledger;
 pub mod term;

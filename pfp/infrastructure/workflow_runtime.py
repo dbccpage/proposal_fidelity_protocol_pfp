@@ -10,6 +10,7 @@ from importlib.resources import files
 from pathlib import Path
 
 from pfp.domain.pfp_ingress import MAX_REPLY_BYTES, strict_json
+from pfp.infrastructure import operad_host
 from pfp.infrastructure.adapters.pfp_campaign import canonical, digest, write_new
 from pfp.infrastructure.task_turn import PreparedTaskTurn
 
@@ -45,6 +46,7 @@ class WorkflowRuntime:
             "infrastructure/task_turn.py",
             "infrastructure/adapters/pfp_campaign.py",
             "infrastructure/workflow_tasks.py",
+            "infrastructure/operad_host.py",
             "infrastructure/workflow_runtime.py",
             "infrastructure/workflow_accounting.py",
             *workflow.SOURCE_FILES,
@@ -57,6 +59,7 @@ class WorkflowRuntime:
                 name: digest(root.joinpath(name).read_bytes()) for name in self.source_files
             },
             "dependencies": {name: version(name) for name in ("jsonschema", "PyYAML")},
+            "operad_host": operad_host.identity(),
         }
 
     def _read_json(self, path: Path) -> dict:
