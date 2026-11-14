@@ -4363,6 +4363,83 @@
         "pilot_test_sources": [],
         "file_count": 1,
         "runner_class": "ExclusionHypothesisRetest"
+      },
+      {
+        "id": "WF55",
+        "name": "Failure ledger with trial-gated rules",
+        "status": "implemented",
+        "kind": "meta_workflow",
+        "merge_into": null,
+        "depends_on": [
+          "WF1",
+          "WF14"
+        ],
+        "layer": 7,
+        "sources": [
+          "Jeremy, 2026-11-14: Python checks nothing; failures must persist and be reused across runs"
+        ],
+        "task_families": [],
+        "source_evidence": "Offline fixtures only; no model campaign.",
+        "process": [
+          "The host replays the ledger's hash chain and lists the rules already admitted",
+          "The host judges each reported failure itself and writes its record; a correct answer cannot be recorded as a failure",
+          "A model proposes one rule from the recorded failures",
+          "Each held-out case is answered twice: without the proposed rule and with it",
+          "The host judges both answers of every case and writes the trial record",
+          "The ledger admits the rule only on that trial; the next run loads every admitted rule"
+        ],
+        "math": [
+          "admit iff treated_correct > baseline_correct and clean_panel_hits = 0, on the rule's latest trial",
+          "clean_panel_hits = number of held-out cases the baseline answered correctly and the treated run did not",
+          "held out: the trial's case ids share nothing with the failures the rule was derived from",
+          "entry hash = SHA-256(domain line, seq, previous hash, record), so an edited, reordered or cut ledger does not replay"
+        ],
+        "host_check": "Rust ledger admission on a trial the host judged itself (pfp_operad witness, trial, ledger)",
+        "model_calls_normal_path": "1 + 2 per held-out case (propose, baseline, treated)",
+        "team": {
+          "goal": "Rules that are loaded in later runs only after they fixed held-out cases and broke none.",
+          "pattern": "sweep_with_shared_judge",
+          "roles": [
+            {
+              "role": "proposer",
+              "model_tier": "run_o",
+              "count": 1,
+              "task": "Propose one rule from the recorded failures."
+            },
+            {
+              "role": "coder",
+              "model_tier": "sonnet",
+              "count": 1,
+              "task": "Answer every held-out case without the rule and with it."
+            },
+            {
+              "role": "host_checker",
+              "model_tier": "none",
+              "count": 1,
+              "task": "Deterministic check; the only component that can accept. Never a model."
+            }
+          ],
+          "boost": {
+            "trigger": "none",
+            "action": "a rejected rule stays in the ledger and can be tried again in a later run",
+            "limit": 0
+          }
+        },
+        "path": "workflows/wf55_failure_ledger_with_trial_gated_rules",
+        "definition": "workflows/wf55_failure_ledger_with_trial_gated_rules/README.md",
+        "audited_availability": "offline_family_runner_with_fixture_tests",
+        "substantive_evidence_status": {
+          "family_definition_read": true,
+          "source_evidence_statement": "Offline fixtures only; no model campaign.",
+          "status_scope": "Documentation claims preserved as claims, not independently reproduced results",
+          "execution_verified_in_this_audit": false
+        },
+        "runner_source": "pfp_core/workflow_families/learning.py",
+        "tests": "pfp_core/workflow_families/tests/test_families.py",
+        "pilot_python_sources": [],
+        "pilot_test_sources": [],
+        "file_count": 2,
+        "runner_class": "FailureLedgerTrialGatedRules"
       }
     ],
     "family_edges": [
@@ -4749,6 +4826,16 @@
       {
         "from": "WF31",
         "to": "WF51",
+        "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
+      },
+      {
+        "from": "WF1",
+        "to": "WF55",
+        "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
+      },
+      {
+        "from": "WF14",
+        "to": "WF55",
         "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
       }
     ],
