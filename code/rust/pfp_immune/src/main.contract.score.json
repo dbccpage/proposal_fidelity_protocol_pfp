@@ -1,0 +1,114 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_immune/src/main.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_immune/src/main.rs",
+      "language": "Rust",
+      "sha256": "3c135d0524264040e5353fc9d1628464f664c45642cb21c44c3927473fac3e1e"
+    },
+    "contract_urn": "urn:code-rust:pfp-immune:main:v1",
+    "symbols": [
+      "Outcome",
+      "WireRational",
+      "ScreenCandidateWire",
+      "ScreenInput",
+      "PurgedCandidateWire",
+      "ScreenOutput",
+      "DecideInput",
+      "DecideOutput",
+      "LineageEdgeWire",
+      "TaintInput",
+      "TaintOutput",
+      "TaintRefusalOutput",
+      "PopulationMemberWire",
+      "SelectInput",
+      "SelectOutput",
+      "ExclusionInput",
+      "FalsifierWire",
+      "ExclusionOutput",
+      "handle_screen",
+      "handle_decide",
+      "handle_taint",
+      "handle_select",
+      "handle_exclusion",
+      "run",
+      "main"
+    ],
+    "owned_invariants": [
+      "Strict typing: all payload exchanges are structured Rust structs with serde deny_unknown_fields.",
+      "Zero floating point arithmetic: check paths use exact rationals via BigRational.",
+      "Subcommands execute screening, two-signal disposition, lineage taint, 60/30/10 reserve selection, and multi-family exclusion.",
+      "Exit code discipline: 0 for PASS, 1 for FAIL or refusal, 2 for syntax or I/O failure."
+    ],
+    "boundaries": [
+      "CLI presentation layer calling domain crates core_epistemic_immune_system and core_prompt_civilization.",
+      "AuthorityEffect: None."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_immune/src/main.rs",
+      "language": "Rust",
+      "sha256": "3c135d0524264040e5353fc9d1628464f664c45642cb21c44c3927473fac3e1e"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Production host binary entry point with strict typing, closed schemas, and exact rational arithmetic.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Module declares AuthorityEffect: None and unique contract URN. All symbols match public API.",
+      "G2": "Exact profile: check paths use BigRational and BigInt arithmetic without floating point numbers.",
+      "G3": "Closed JSON deserialization with deny_unknown_fields; syntax errors and divide by zero return typed error messages with exit 2.",
+      "G4": "21 integration tests pass exercising compiled binary. 8 decisive mutants killed (R = 1.0). Clippy and rustfmt pass cleanly.",
+      "G5": "Bounded control flow; worst cyclomatic complexity is within modular limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:45:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m5-test.run.json",
+        "sha256": "8fbe01296099d5b9005469970f0d0ebf355f40b70d0728e4e51e10823b64f5e7",
+        "note": "21 parity and integration tests pass cleanly for pfp_immune."
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m5-clippy.run.json",
+        "sha256": "5161f16174ee1d3d53f34e86269f4ffc84f9a94e377bd39dc572504545e84a9e",
+        "note": "clippy with -D warnings passes cleanly with zero warnings."
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m5-fmt.run.json",
+        "sha256": "a2573551fcf54ba429fa6931576bc5b630ca5826a966b0357143b8b508c05d10",
+        "note": "rustfmt --check passes cleanly with zero diffs."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 8,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp_immune-main.mutation.json",
+        "sha256": "9d25a9ff728fff1d056bdcac01e416b625796b4de21fcb1165f08a4f0d35b3d9",
+        "note": "lexical mutation report for pfp_immune main host binary"
+      }
+    }
+  },
+  "history": []
+}
