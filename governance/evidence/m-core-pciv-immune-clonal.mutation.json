@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_prompt_civilization/src/immune/clonal.rs",
+  "target_sha256": "541651a8613f87e8db32ed5ee25f49e86c91c4d57c3de050ebac5c9cccc93866",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "admitted_items zero check inverted",
+      "old": "if admitted_items == 0",
+      "new": "if admitted_items != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity_bound zero check inverted",
+      "old": "if capacity_bound == 0",
+      "new": "if capacity_bound != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity overflow check inverted",
+      "old": "if admitted_items > capacity_bound",
+      "new": "if admitted_items < capacity_bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "affinity threshold prune condition inverted",
+      "old": "if aff >= threshold",
+      "new": "if aff < threshold",
+      "outcome": "killed"
+    },
+    {
+      "name": "halving steps calculation inverted",
+      "old": "let halving_steps = elapsed / half_life_generations;",
+      "new": "let halving_steps = elapsed * half_life_generations;",
+      "outcome": "killed"
+    },
+    {
+      "name": "to_detector_rule affinity denominator inverted",
+      "old": "assert!(affinity_den > 0",
+      "new": "assert!(affinity_den <= 0",
+      "outcome": "killed"
+    }
+  ]
+}

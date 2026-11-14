@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_epistemic_immune_system/src/formulary.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_epistemic_immune_system/src/formulary.rs",
+      "language": "Rust",
+      "sha256": "484a8472b8c529d888563017415b9676083a35bfc59bc97e246ddf6feec84579"
+    },
+    "contract_urn": "urn:code-rust:core-epistemic-immune-system:formulary:v1",
+    "symbols": [
+      "AdmissionReceiptV1",
+      "BoundaryErrorf54af0a7",
+      "BoundaryRecordf54af0a7",
+      "Formulary",
+      "admit_with_receipt",
+      "get",
+      "list_active",
+      "new",
+      "register_candidate",
+      "try_admit"
+    ],
+    "owned_invariants": [
+      "Public invariants and deterministic checks for formulary.",
+      "Strict typed outcomes and refusal boundaries without unhandled floats or panic conditions.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Bounded execution within declared capability limits.",
+      "Does not claim authority promotion outside declared finite bounds."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_epistemic_immune_system/src/formulary.rs",
+      "language": "Rust",
+      "sha256": "484a8472b8c529d888563017415b9676083a35bfc59bc97e246ddf6feec84579"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Module-level verification for code/rust/core_epistemic_immune_system/src/formulary.rs with typed error handling and boundary invariants.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:30:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m4-fmt.run.json",
+        "sha256": "430797cf43ad75a5f96969e5ec859e09902b689dad99022de742708a0ba62ca2",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-clippy.run.json",
+        "sha256": "3e06011e0ba37ffc31b45734c5a6aadddb27ba75bdeafc415f3d0b7dd5039a74",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-eis-test.run.json",
+        "sha256": "935b915107b09a3de6c9744d93b1f7ebc6dc4a234d484dfa0f2d361277a0a5c7",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-pciv-test.run.json",
+        "sha256": "4d29a149eb26c3b5988e5107c6989c58e8e293a5e0e327e1523405087031b4bc",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core_epistemic_immune_system-formulary.mutation.json",
+        "sha256": "87f471b8d50a9dfd3a9a8feefa230b6d9c7ae91e9c2131b522b292a32876f1f2",
+        "note": "lexical mutation report for formulary"
+      }
+    }
+  },
+  "history": []
+}

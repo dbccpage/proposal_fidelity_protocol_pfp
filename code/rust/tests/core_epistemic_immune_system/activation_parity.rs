@@ -18,7 +18,10 @@ fn fixture() -> Result<Value, serde_json::Error> {
     serde_json::from_str(include_str!("fixtures/python_activation_v1.json"))
 }
 
-fn evaluate_hit_row(input: Value, expected: &Value) -> Result<(Value, bool), Box<dyn std::error::Error>> {
+fn evaluate_hit_row(
+    input: Value,
+    expected: &Value,
+) -> Result<(Value, bool), Box<dyn std::error::Error>> {
     let value = DetectorHitRefV1::new(serde_json::from_value::<DetectorHitInput>(input.clone())?);
     if let Ok(hit) = &value {
         assert_eq!(hit.hit_id(), expected["ok"]["hit_id"]);
@@ -26,28 +29,49 @@ fn evaluate_hit_row(input: Value, expected: &Value) -> Result<(Value, bool), Box
         assert_eq!(hit.failure_code(), expected["ok"]["failure_code"]);
         assert_eq!(hit.subject_id(), expected["ok"]["subject_id"]);
     }
-    Ok((outcome(value), serde_json::from_value::<DetectorHitRefV1>(input).is_ok()))
+    Ok((
+        outcome(value),
+        serde_json::from_value::<DetectorHitRefV1>(input).is_ok(),
+    ))
 }
 
-fn evaluate_danger_row(input: Value, expected: &Value) -> Result<(Value, bool), Box<dyn std::error::Error>> {
-    let value = DangerSignalReceiptV1::new(serde_json::from_value::<DangerSignalInput>(input.clone())?);
+fn evaluate_danger_row(
+    input: Value,
+    expected: &Value,
+) -> Result<(Value, bool), Box<dyn std::error::Error>> {
+    let value =
+        DangerSignalReceiptV1::new(serde_json::from_value::<DangerSignalInput>(input.clone())?);
     if let Ok(danger) = &value {
         assert_eq!(danger.receipt_id(), expected["ok"]["receipt_id"]);
         assert_eq!(danger.observer_id(), expected["ok"]["observer_id"]);
         assert_eq!(danger.subject_id(), expected["ok"]["subject_id"]);
         assert_eq!(danger.evidence_digest(), expected["ok"]["evidence_digest"]);
     }
-    Ok((outcome(value), serde_json::from_value::<DangerSignalReceiptV1>(input).is_ok()))
+    Ok((
+        outcome(value),
+        serde_json::from_value::<DangerSignalReceiptV1>(input).is_ok(),
+    ))
 }
 
-fn evaluate_activation_row(input: Value, expected: &Value) -> Result<(Value, bool), Box<dyn std::error::Error>> {
-    let value = GuardActivationReceiptV1::new(serde_json::from_value::<GuardActivationInput>(input.clone())?);
+fn evaluate_activation_row(
+    input: Value,
+    expected: &Value,
+) -> Result<(Value, bool), Box<dyn std::error::Error>> {
+    let value = GuardActivationReceiptV1::new(serde_json::from_value::<GuardActivationInput>(
+        input.clone(),
+    )?);
     if let Ok(activation) = &value {
         assert_eq!(activation.receipt_id(), expected["ok"]["receipt_id"]);
         assert_eq!(activation.disposition(), expected["ok"]["disposition"]);
-        assert_eq!(activation.independence_basis(), expected["ok"]["independence_basis"]);
+        assert_eq!(
+            activation.independence_basis(),
+            expected["ok"]["independence_basis"]
+        );
     }
-    Ok((outcome(value), serde_json::from_value::<GuardActivationReceiptV1>(input).is_ok()))
+    Ok((
+        outcome(value),
+        serde_json::from_value::<GuardActivationReceiptV1>(input).is_ok(),
+    ))
 }
 
 fn evaluate_record_row(row: &Value) -> Result<(Value, bool), Box<dyn std::error::Error>> {
@@ -69,7 +93,11 @@ fn frozen_python_receipt_constructors_and_checked_decode() -> Result<(), Box<dyn
     for (index, row) in rows.iter().enumerate() {
         let (actual, admitted) = evaluate_record_row(row)?;
         assert_eq!(actual, row["expected"], "record vector {index}");
-        assert_eq!(admitted, row["expected"].get("ok").is_some(), "decode vector {index}");
+        assert_eq!(
+            admitted,
+            row["expected"].get("ok").is_some(),
+            "decode vector {index}"
+        );
     }
     Ok(())
 }

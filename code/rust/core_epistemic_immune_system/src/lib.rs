@@ -12,14 +12,15 @@ pub mod activation;
 pub mod activation_ports;
 pub mod activation_use_case;
 pub mod admission;
-pub mod authenticated;
 pub mod allostery;
 pub mod anti_skill;
+pub mod authenticated;
 pub mod clonal_selection;
 pub mod danger_gate;
 pub mod formulary;
 pub mod host_checks;
 pub mod independence;
+pub mod normalization;
 pub mod pharmacy_search;
 pub mod regulation;
 pub mod signal_gate;
@@ -28,6 +29,12 @@ pub mod thymus;
 pub use anti_skill::{AntiSkillSpecV2, AntiSkillStatus, FailureClass, ANTI_SKILL_SCHEMA};
 pub use danger_gate::{DangerGateVerdict, IndependentDangerSignal, TwoSignalDangerGate};
 pub use formulary::{AdmissionReceiptV1, Formulary};
+pub use host_checks::{
+    check_ab09_chsh_bound_range, verify_ab09_chsh_bound_range, ChshCheckFinding,
+};
+pub use normalization::{
+    normalize_candidate, NormalizationReceipt, NormalizedMatcher, PRESERVATION_SCOPE, SCHEMA,
+};
 pub use regulation::{DetectorTelemetry, TregSupervisor};
 pub use thymus::{ThymusGate, ThymusVerdict};
 
@@ -201,6 +208,34 @@ mod tests {
     }
 
     #[test]
+    fn thymus_normalized_matcher_prevents_autoimmune_false_alarms() {
+        let self_panel = vec![
+            r#"{"coefficients": [[{"powers": [0, 0, 0], "q": "+0"}], [], [], [], [{"powers": [0, 0, 0], "q": "2/2"}]]}"#
+                .to_string(),
+            r#"{"coefficients": [[{"powers": [2, 0, 0], "q": "1"}, {"powers": [0, 2, 0], "q": "1"}], [], [], [], [{"powers": [0, 0, 0], "q": "1/1"}]]}"#
+                .to_string(),
+            "{\n  \"coefficients\": [\n    [],\n    [{\"powers\": [1, 1, 0], \"q\": \"+4/2\"}],\n    [],\n    [],\n    [{\"powers\": [0, 0, 0], \"q\": \"1\"}]\n  ]\n}"
+                .to_string(),
+        ];
+        let thymus = ThymusGate::new(self_panel);
+
+        let mut fraction_detector = AntiSkillSpecV2::propose(
+            r#""q":\s*"[0-9]{1,5}/[0-9]{1,5}""#,
+            FailureClass::ApproximateContradiction,
+            "charpoly",
+            "Catches rational representation variants",
+            100,
+        );
+
+        let verdict = thymus.screen(&mut fraction_detector);
+        assert!(
+            matches!(verdict, ThymusVerdict::Survived { .. }),
+            "Normalized matcher must reduce 2/2, 1/1, +4/2 and drop +0, preventing false autoimmune apoptosis"
+        );
+        assert_eq!(fraction_detector.status, AntiSkillStatus::Candidate);
+    }
+
+    #[test]
     fn two_signal_conjunction_rejects_unadmitted_and_uncorroborated() {
         let thymus = ThymusGate::standard_baseline();
         let mut formulary = Formulary::new();
@@ -304,7 +339,13 @@ mod l4_boundary_tests_427bb0b3 {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecord427bb0b3::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryError427bb0b3::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryError427bb0b3::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryError427bb0b3::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryError427bb0b3::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

@@ -1,0 +1,99 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_prompt_civilization/src/immune/allostery.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_prompt_civilization/src/immune/allostery.rs",
+      "language": "Rust",
+      "sha256": "657335e355ca70d660b28af5910fc4d3c95424a9f08923c7a3b68e1c35934a83"
+    },
+    "contract_urn": "urn:code-rust:core-prompt-civilization:immune-allostery:v1",
+    "symbols": [
+      "QuorumState",
+      "AllostericGate",
+      "AllostericConsensusGate",
+      "HillParameters",
+      "BoundaryRecord4e00f2f7",
+      "BoundaryError4e00f2f7"
+    ],
+    "owned_invariants": [
+      "Exact rational response: AllostericGate computes cooperative responses utilizing core_epistemic_immune_system::allostery::HillParameters.",
+      "QuorumState partitioning into Quiescent, Indeterminate, Active with exact rational threshold bounds.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Bounded admission within capacity_bound.",
+      "Does not claim authority promotion outside declared finite bounds."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_prompt_civilization/src/immune/allostery.rs",
+      "language": "Rust",
+      "sha256": "657335e355ca70d660b28af5910fc4d3c95424a9f08923c7a3b68e1c35934a83"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/immune/allostery.rs.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header states AuthorityEffect None and declares quorum state types; public symbols match contract.",
+      "G2": "Exact rational response evaluation via HillParameters; zero floating-point arithmetic.",
+      "G3": "Typed QuorumState outcomes returned without silent fallback; asserts positive Hill parameters.",
+      "G4": "All unit and integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:20:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m4-fmt.run.json",
+        "sha256": "430797cf43ad75a5f96969e5ec859e09902b689dad99022de742708a0ba62ca2",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-clippy.run.json",
+        "sha256": "3e06011e0ba37ffc31b45734c5a6aadddb27ba75bdeafc415f3d0b7dd5039a74",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-pciv-test.run.json",
+        "sha256": "4d29a149eb26c3b5988e5107c6989c58e8e293a5e0e327e1523405087031b4bc",
+        "note": "cargo test for core_prompt_civilization --lib"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-pciv-oeeis.run.json",
+        "sha256": "6272866546268dec0c3911bcd2a82c8e80a579ddefd9e39e992585e34520116b",
+        "note": "cargo test for core_prompt_civilization --test oeeis_kernel"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core-pciv-immune-allostery.mutation.json",
+        "sha256": "ef87f391c5cf2e2e7163914e5f163cb6535ff2e3523f3d595ae2f07bbed52ad0",
+        "note": "lexical mutation report for PCIV allostery"
+      }
+    }
+  },
+  "history": []
+}
