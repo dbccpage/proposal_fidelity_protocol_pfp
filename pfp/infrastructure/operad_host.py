@@ -128,3 +128,16 @@ def grounding(*, checker: str, values: list, slot_report: dict, candidates: list
 def reuse(mined: list, emitted: list) -> list:
     """The ids of the emitted candidates whose signature a mined candidate also has."""
     return ask("reuse", mined=mined, emitted=emitted)["reused"]
+
+
+def outcome(command: str, request: dict) -> dict:
+    """Send one request and return the host's whole outcome, for a caller that reports a refusal."""
+    return call((command,), request)
+
+
+def ledger(action: str, path: Path | str, record: dict | None = None) -> dict:
+    """Run ``verify``, ``admitted`` or ``append`` on a failure ledger file and return the outcome.
+
+    Only the host writes the file: an ``append`` it passes adds one line, a refused one adds none.
+    """
+    return call(("ledger", action, str(path)), record)
