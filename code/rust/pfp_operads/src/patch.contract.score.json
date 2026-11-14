@@ -1,0 +1,107 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/patch.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/patch.rs",
+      "language": "Rust",
+      "sha256": "c6e55b469fe769d93f2968feb36aa1ff76fd405a00188f9aab3d0b8981c5a756"
+    },
+    "contract_urn": "urn:pfp-operads:patch:v1",
+    "symbols": [
+      "REFUSED",
+      "SCOPE_REFUSED",
+      "FilePatch",
+      "parse",
+      "FilePatch::apply"
+    ],
+    "owned_invariants": [
+      "A patch is a unified diff of existing text files: each file has a --- a/PATH line, a +++ b/PATH line with the same path, and one or more hunks. diff --git and index lines are skipped; any other line outside a hunk is refused.",
+      "Creating, deleting, renaming, copying or re-moding a file, /dev/null on either side and binary data are refused as PATCH_SCOPE_REFUSED before any hunk is read. Every other malformed patch is refused as PATCH_REFUSED.",
+      "A file may be patched once. A hunk's rows must add up to exactly the two counts its header declares, and old lines are counted from 1.",
+      "apply places each hunk at the line its header names, with no offset and no fuzz: every context and removed line must equal the file's line at that position, and hunks must be in order without overlap. Otherwise the whole file's patch is refused and nothing is returned.",
+      "Lines the hunks do not touch are returned byte for byte, and a no-newline marker removes the line end of the row before it and of nothing else.",
+      "parse and apply read text and return text. Neither touches a file."
+    ],
+    "boundaries": [
+      "apply does not decide which files may be patched; the caller compares FilePatch::path with its write set.",
+      "Line ends are bytes of the line: a file with CRLF line ends needs a patch written with them.",
+      "No rename detection, no three-way merge and no partial application."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/patch.rs",
+      "language": "Rust",
+      "sha256": "c6e55b469fe769d93f2968feb36aa1ff76fd405a00188f9aab3d0b8981c5a756"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: line counts and positions are usize parsed from decimal digits; a count that does not fit is refused. Position arithmetic is start minus one for a non-empty old side, guarded by the line-zero refusal. Not B: no proof.",
+      "G3": "Two typed refusal codes with a sentence that names the file and the old line. No unwrap, expect or index; slices are taken with get. Not B: panic-freedom is tested, not proven.",
+      "G4": "12 patch tests assert the parsed structure, exact output text for insertions, removals, several hunks and missing final line ends, and each refusal by code and message; the repair and workshop tests apply patches through the same two functions. Mutation campaign R = 85/85. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 16, cognitive complexity is not measured for Rust, nesting 3; ceiling C, recorded C."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:02:21Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v7-test.run.json",
+        "sha256": "9b7778a188f186ec10f4e986bf1a4e4b3e3458c9f51b257b6a11602be9610931",
+        "note": "207 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-clippy.run.json",
+        "sha256": "057448407c0033d3fda7a7cd83d4d797bc94e8b3357614105306a6fc87721e96",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-fmt.run.json",
+        "sha256": "2cd5a739ad1076b1545ad6c1b8d6457d3b2a762894a68ed2a22fc6054b9226a6",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.run.json",
+        "sha256": "ba5ee46c693f69310d6324c43ea86730991805ba640c610e4b72939092c1e590",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.json",
+        "sha256": "c413c3096f439bebae18fa810948a064789b07da627848f3289df544344be4c3",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 85,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-patch.mutation.json",
+        "sha256": "1e0f1ec6d79232f5eec7c0cdfd97165923ea931c1c2e4bc615e93f9bf36813ac",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 85 mutants"
+      }
+    }
+  },
+  "history": []
+}

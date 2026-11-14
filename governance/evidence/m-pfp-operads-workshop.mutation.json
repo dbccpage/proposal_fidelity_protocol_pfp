@@ -1,0 +1,670 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/workshop.rs",
+  "target_sha256": "3f65566c295e2222f943fa1cdb390a68b37b3d4f84ed71b95af0480a2365a7e2",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test patch --test repair --test workshop",
+  "counts": {
+    "killed": 104,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "working copy under another name",
+      "old": "pub const WORKSPACE: &str = \"workspace\";",
+      "new": "pub const WORKSPACE: &str = \"copy\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "source limit one byte larger",
+      "old": "pub const MAX_SOURCE_BYTES: u64 = 2 * 1024 * 1024;",
+      "new": "pub const MAX_SOURCE_BYTES: u64 = 2 * 1024 * 1024 + 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "source limit one byte smaller",
+      "old": "pub const MAX_SOURCE_BYTES: u64 = 2 * 1024 * 1024;",
+      "new": "pub const MAX_SOURCE_BYTES: u64 = 2 * 1024 * 1024 - 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "head one byte longer",
+      "old": "pub const HEAD_BYTES: usize = 4096;",
+      "new": "pub const HEAD_BYTES: usize = 4097;",
+      "outcome": "killed"
+    },
+    {
+      "name": "head one byte shorter",
+      "old": "pub const HEAD_BYTES: usize = 4096;",
+      "new": "pub const HEAD_BYTES: usize = 4095;",
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_DIR is inherited",
+      "old": "    \"GIT_DIR\",\n",
+      "new": "    \"X_GIT_DIR\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_WORK_TREE is inherited",
+      "old": "    \"GIT_WORK_TREE\",\n",
+      "new": "    \"X_GIT_WORK_TREE\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_INDEX_FILE is inherited",
+      "old": "    \"GIT_INDEX_FILE\",\n",
+      "new": "    \"X_GIT_INDEX_FILE\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_COMMON_DIR is inherited",
+      "old": "    \"GIT_COMMON_DIR\",\n",
+      "new": "    \"X_GIT_COMMON_DIR\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_NAMESPACE is inherited",
+      "old": "    \"GIT_NAMESPACE\",\n",
+      "new": "    \"X_GIT_NAMESPACE\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_OBJECT_DIRECTORY is inherited",
+      "old": "    \"GIT_OBJECT_DIRECTORY\",\n",
+      "new": "    \"X_GIT_OBJECT_DIRECTORY\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_ALTERNATE_OBJECT_DIRECTORIES is inherited",
+      "old": "    \"GIT_ALTERNATE_OBJECT_DIRECTORIES\",\n",
+      "new": "    \"X_GIT_ALTERNATE_OBJECT_DIRECTORIES\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_CONFIG is inherited",
+      "old": "    \"GIT_CONFIG\",\n",
+      "new": "    \"X_GIT_CONFIG\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_CONFIG_PARAMETERS is inherited",
+      "old": "    \"GIT_CONFIG_PARAMETERS\",\n",
+      "new": "    \"X_GIT_CONFIG_PARAMETERS\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "GIT_CONFIG_COUNT is inherited",
+      "old": "    \"GIT_CONFIG_COUNT\",\n",
+      "new": "    \"X_GIT_CONFIG_COUNT\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "PYTHONPYCACHEPREFIX is inherited",
+      "old": "    \"PYTHONPYCACHEPREFIX\",\n",
+      "new": "    \"X_PYTHONPYCACHEPREFIX\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "PYTHONOPTIMIZE is inherited",
+      "old": "    \"PYTHONOPTIMIZE\",\n",
+      "new": "    \"X_PYTHONOPTIMIZE\",\n",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "bytecode writes not disabled",
+      "old": "    (\"PYTHONDONTWRITEBYTECODE\", \"1\"),",
+      "new": "    (\"PYTHONDONTWRITEBYTECODE\", \"0\"),",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "system git config not disabled",
+      "old": "    (\"GIT_CONFIG_NOSYSTEM\", \"1\"),",
+      "new": "    (\"GIT_CONFIG_NOSYSTEM\", \"0\"),",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "poll interval a thousand times longer",
+      "old": "const POLL: Duration = Duration::from_millis(10);",
+      "new": "const POLL: Duration = Duration::from_secs(10);",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "unavailable check has another code",
+      "old": "const UNAVAILABLE: &str = \"CHECK_UNAVAILABLE\";",
+      "new": "const UNAVAILABLE: &str = \"CHECK_REFUSED\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "io refusal does not name the path",
+      "old": "format!(\"{}: {error}\", path.display())",
+      "new": "format!(\"{error}\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "stream stops after one chunk",
+      "old": "    while let Ok(count @ 1..) = reader.read(&mut chunk) {",
+      "new": "    if let Ok(count @ 1..) = reader.read(&mut chunk) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash covers whole chunks",
+      "old": "        let bytes = chunk.get(..count).unwrap_or_default();",
+      "new": "        let bytes = &chunk[..];",
+      "outcome": "killed"
+    },
+    {
+      "name": "stream not hashed",
+      "old": "        hasher.update(bytes);\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "head keeps every byte",
+      "old": "        let room = HEAD_BYTES.saturating_sub(head.len());",
+      "new": "        let room = usize::MAX;",
+      "outcome": "killed"
+    },
+    {
+      "name": "head keeps one chunk prefix only",
+      "old": "        let room = HEAD_BYTES.saturating_sub(head.len());",
+      "new": "        let room = if head.is_empty() { HEAD_BYTES } else { 0 };",
+      "outcome": "killed"
+    },
+    {
+      "name": "total not counted",
+      "old": "        total += count;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "head is empty",
+      "old": "        head: String::from_utf8_lossy(&head).into_owned(),",
+      "new": "        head: String::from_utf8_lossy(&head[..0]).into_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "truncated when exactly full",
+      "old": "        truncated: total > HEAD_BYTES,",
+      "new": "        truncated: total >= HEAD_BYTES,",
+      "outcome": "killed"
+    },
+    {
+      "name": "never truncated",
+      "old": "        truncated: total > HEAD_BYTES,",
+      "new": "        truncated: false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "source root not canonical",
+      "old": "let source = fs::canonicalize(source).map_err(failed(\"SOURCE_ROOT_REFUSED\", source))?;",
+      "new": "let source = fs::canonicalize(source).map_err(failed(\"OUTPUT_SCOPE_REFUSED\", source))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a file accepted as the source root",
+      "old": "        if !source.is_dir() {",
+      "new": "        if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "source root refusal has another code",
+      "old": "            return refuse(\n                \"SOURCE_ROOT_REFUSED\",",
+      "new": "            return refuse(\n                \"OUTPUT_SCOPE_REFUSED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "nameless run folder has another code",
+      "old": "return refuse(\"OUTPUT_SCOPE_REFUSED\", \"the run folder needs a name\");",
+      "new": "return refuse(\"SOURCE_ROOT_REFUSED\", \"the run folder needs a name\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "bare run name not resolved",
+      "old": "        let parent = if parent.as_os_str().is_empty() {\n            Path::new(\".\")\n        } else {\n            parent\n        };\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "run parent refusal has another code",
+      "old": "            .map_err(failed(\"OUTPUT_SCOPE_REFUSED\", parent))?",
+      "new": "            .map_err(failed(\"SOURCE_ROOT_REFUSED\", parent))?",
+      "outcome": "killed"
+    },
+    {
+      "name": "run folder may be inside the source",
+      "old": "        if run.starts_with(&source) || source.starts_with(&run) {",
+      "new": "        if source.starts_with(&run) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "source may be inside the run folder",
+      "old": "        if run.starts_with(&source) || source.starts_with(&run) {",
+      "new": "        if run.starts_with(&source) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the source itself is refused as run folder",
+      "old": "        if run.starts_with(&source) || source.starts_with(&run) {",
+      "new": "        if run == source {",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope refusal has another code",
+      "old": "            return refuse(\n                \"OUTPUT_SCOPE_REFUSED\",\n                \"the run folder must be outside the source tree\",",
+      "new": "            return refuse(\n                \"OUTPUT_CONFLICT\",\n                \"the run folder must be outside the source tree\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy is the run folder",
+      "old": "        self.run.join(WORKSPACE)",
+      "new": "        self.run.clone()",
+      "outcome": "killed"
+    },
+    {
+      "name": "existing run folder reused",
+      "old": "            fs::create_dir(&self.run).map_err(failed(\"OUTPUT_CONFLICT\", &self.run))?;",
+      "new": "            fs::create_dir_all(&self.run).map_err(failed(\"OUTPUT_CONFLICT\", &self.run))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "run folder conflict has another code",
+      "old": "            fs::create_dir(&self.run).map_err(failed(\"OUTPUT_CONFLICT\", &self.run))?;",
+      "new": "            fs::create_dir(&self.run).map_err(failed(\"IO_UNAVAILABLE\", &self.run))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "run folder made again on every write",
+      "old": "            self.opened = true;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "kept name not validated",
+      "old": "        relative_file(name)?;\n        let path = self.run.join(name);",
+      "new": "        let path = self.run.join(name);",
+      "outcome": "killed"
+    },
+    {
+      "name": "kept file may be overwritten",
+      "old": "            .create_new(true)",
+      "new": "            .create(true)\n            .truncate(true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "kept file is empty",
+      "old": "            .and_then(|mut file| file.write_all(bytes))",
+      "new": "            .and_then(|mut file| file.write_all(b\"\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "kept conflict has another code",
+      "old": "            .map_err(failed(\"OUTPUT_CONFLICT\", &path))",
+      "new": "            .map_err(failed(\"IO_UNAVAILABLE\", &path))",
+      "outcome": "killed"
+    },
+    {
+      "name": "file path not validated",
+      "old": "    relative_file(relative)?;\n    let mut path = root.to_path_buf();",
+      "new": "    let mut path = root.to_path_buf();",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing part has another code",
+      "old": "fs::symlink_metadata(&path).map_err(failed(\"SOURCE_FILE_REFUSED\", &path))?;",
+      "new": "fs::symlink_metadata(&path).map_err(failed(\"SOURCE_LINK_REFUSED\", &path))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "links followed",
+      "old": "        let found = fs::symlink_metadata(&path)",
+      "new": "        let found = fs::metadata(&path)",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "links accepted",
+      "old": "        if found.file_type().is_symlink() {",
+      "new": "        if false {",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "link refusal has another code",
+      "old": "            return refuse(\n                \"SOURCE_LINK_REFUSED\",",
+      "new": "            return refuse(\n                \"SOURCE_FILE_REFUSED\",",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "link refusal does not name the file",
+      "old": "format!(\"{relative} goes through a link\"),",
+      "new": "format!(\"the file goes through a link\"),",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "a folder accepted as a file",
+      "old": "        Some(found) if found.is_file() && found.len() <= MAX_SOURCE_BYTES => Ok(path),",
+      "new": "        Some(found) if found.len() <= MAX_SOURCE_BYTES => Ok(path),",
+      "outcome": "killed"
+    },
+    {
+      "name": "size not bounded",
+      "old": "        Some(found) if found.is_file() && found.len() <= MAX_SOURCE_BYTES => Ok(path),",
+      "new": "        Some(found) if found.is_file() => Ok(path),",
+      "outcome": "killed"
+    },
+    {
+      "name": "file at the limit refused",
+      "old": "found.len() <= MAX_SOURCE_BYTES => Ok(path),",
+      "new": "found.len() < MAX_SOURCE_BYTES => Ok(path),",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-file refusal has another code",
+      "old": "        _ => refuse(\n            \"SOURCE_FILE_REFUSED\",",
+      "new": "        _ => refuse(\n            \"SOURCE_LINK_REFUSED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-file refusal does not name the file",
+      "old": "format!(\"{relative} is not a regular file of at most {MAX_SOURCE_BYTES} bytes\"),",
+      "new": "format!(\"not a regular file of at most {MAX_SOURCE_BYTES} bytes\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "read refusal has another code",
+      "old": "    fs::read(&path).map_err(failed(\"SOURCE_FILE_REFUSED\", &path))",
+      "new": "    fs::read(&path).map_err(failed(\"IO_UNAVAILABLE\", &path))",
+      "outcome": "killed"
+    },
+    {
+      "name": "output not captured",
+      "old": "    thread::spawn(move || pipe.map(stream).unwrap_or_default())",
+      "new": "    thread::spawn(move || pipe.map(|_| Stream::default()).unwrap_or_default())",
+      "outcome": "killed"
+    },
+    {
+      "name": "no deadline",
+      "old": "            Ok(None) if Instant::now() < deadline => thread::sleep(POLL),",
+      "new": "            Ok(None) => thread::sleep(POLL),",
+      "unix_only": true,
+      "note": "the timeout test then waits 30 s for sleep and fails its bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "deadline already passed",
+      "old": "            Ok(None) if Instant::now() < deadline => thread::sleep(POLL),",
+      "new": "            Ok(None) if Instant::now() > deadline => thread::sleep(POLL),",
+      "outcome": "killed"
+    },
+    {
+      "name": "overrunning child left running",
+      "old": "                let _ = child.kill();\n                let _ = child.wait();\n                return None;",
+      "new": "                return None;",
+      "outcome": "killed"
+    },
+    {
+      "name": "source read from the working copy",
+      "old": "    fn source(&mut self, path: &str) -> Result<Vec<u8>, Refusal> {\n        read_plain(&self.source, path)",
+      "new": "    fn source(&mut self, path: &str) -> Result<Vec<u8>, Refusal> {\n        read_plain(&self.workspace(), path)",
+      "outcome": "killed"
+    },
+    {
+      "name": "open does not make the run folder",
+      "old": "    ) -> Result<(), Refusal> {\n        self.ensure_run()?;\n        let workspace = self.workspace();",
+      "new": "    ) -> Result<(), Refusal> {\n        let workspace = self.workspace();",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy name not validated",
+      "old": "            relative_file(name)?;\n            let target = workspace.join(name);",
+      "new": "            let target = workspace.join(name);",
+      "outcome": "killed"
+    },
+    {
+      "name": "nested folders not made",
+      "old": "            fs::create_dir_all(folder)\n                .and_then(|()| fs::write(&target, bytes))",
+      "new": "            fs::create_dir(folder)\n                .and_then(|()| fs::write(&target, bytes))",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy files are empty",
+      "old": "                .and_then(|()| fs::write(&target, bytes))",
+      "new": "                .and_then(|()| fs::write(&target, b\"\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy refusal has another code",
+      "old": "                .map_err(failed(\"IO_UNAVAILABLE\", &target))?;",
+      "new": "                .map_err(failed(\"OUTPUT_CONFLICT\", &target))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "kept files not written at open",
+      "old": "        kept.iter()\n            .try_for_each(|(name, bytes)| self.keep_new(name, bytes))",
+      "new": "        kept.iter().try_for_each(|_| Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first kept file is written",
+      "old": "        kept.iter()\n            .try_for_each(",
+      "new": "        kept.iter()\n            .take(1)\n            .try_for_each(",
+      "outcome": "killed"
+    },
+    {
+      "name": "copy read from the source",
+      "old": "    fn copy(&mut self, path: &str) -> Result<Vec<u8>, Refusal> {\n        read_plain(&self.workspace(), path)",
+      "new": "    fn copy(&mut self, path: &str) -> Result<Vec<u8>, Refusal> {\n        read_plain(&self.source, path)",
+      "outcome": "killed"
+    },
+    {
+      "name": "write goes to the source",
+      "old": "        let target = plain(&self.workspace(), path)?;",
+      "new": "        let target = plain(&self.source, path)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "write may create a file",
+      "old": "        let target = plain(&self.workspace(), path)?;",
+      "new": "        relative_file(path)?;\n        let target = self.workspace().join(path);",
+      "outcome": "killed"
+    },
+    {
+      "name": "write writes nothing",
+      "old": "        fs::write(&target, bytes).map_err(failed(\"IO_UNAVAILABLE\", &target))\n    }\n\n    fn run",
+      "new": "        fs::write(&target, b\"\").map_err(failed(\"IO_UNAVAILABLE\", &target))\n    }\n\n    fn run",
+      "outcome": "killed"
+    },
+    {
+      "name": "unavailable check not named",
+      "old": "format!(\"{}: {why}\", check.check_id)",
+      "new": "format!(\"{why}\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "arguments dropped",
+      "old": "            .args(arguments)\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "check runs in the source tree",
+      "old": "            .current_dir(self.workspace())",
+      "new": "            .current_dir(&self.source)",
+      "outcome": "killed"
+    },
+    {
+      "name": "check runs in the run folder",
+      "old": "            .current_dir(self.workspace())",
+      "new": "            .current_dir(&self.run)",
+      "outcome": "killed"
+    },
+    {
+      "name": "input inherited",
+      "old": "            .stdin(Stdio::null())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "stdout not captured",
+      "old": "            .stdout(Stdio::piped())",
+      "new": "            .stdout(Stdio::null())",
+      "outcome": "killed"
+    },
+    {
+      "name": "stderr not captured",
+      "old": "            .stderr(Stdio::piped())",
+      "new": "            .stderr(Stdio::null())",
+      "outcome": "killed"
+    },
+    {
+      "name": "pinned variables not set",
+      "old": "            .envs(PINNED)\n",
+      "new": "",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "global git config not redirected",
+      "old": "                \"GIT_CONFIG_GLOBAL\",\n                if cfg!(windows) { \"NUL\" } else { \"/dev/null\" },",
+      "new": "                \"GIT_CONFIG_GLOBAL_X\",\n                if cfg!(windows) { \"NUL\" } else { \"/dev/null\" },",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "global git config redirected to NUL here",
+      "old": "if cfg!(windows) { \"NUL\" } else { \"/dev/null\" },",
+      "new": "if cfg!(unix) { \"NUL\" } else { \"/dev/null\" },",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "scrubbed variables kept",
+      "old": "        for name in SCRUBBED {\n            command.env_remove(name);\n        }\n",
+      "new": "",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "environment emptied",
+      "old": "            command.env_remove(name);\n        }",
+      "new": "            command.env_remove(name);\n        }\n        command.env_clear();",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "streams swapped",
+      "old": "let (stdout, stderr) = (reader(child.stdout.take()), reader(child.stderr.take()));",
+      "new": "let (stderr, stdout) = (reader(child.stdout.take()), reader(child.stderr.take()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "timeout read as milliseconds",
+      "old": "let limit = Duration::from_secs(u64::from(check.timeout_seconds));",
+      "new": "let limit = Duration::from_millis(u64::from(check.timeout_seconds));",
+      "outcome": "killed"
+    },
+    {
+      "name": "timeout doubled",
+      "old": "let limit = Duration::from_secs(u64::from(check.timeout_seconds));",
+      "new": "let limit = Duration::from_secs(20 * u64::from(check.timeout_seconds));",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "timeout message names another limit",
+      "old": "                \"no exit within {} s\",\n                check.timeout_seconds",
+      "new": "                \"no exit within {} s\",\n                check.timeout_seconds + 1",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "a signal is reported as exit 0",
+      "old": "        let Some(code) = status.code() else {\n            return Err(unavailable(\"ended without an exit code\".to_owned()));\n        };",
+      "new": "        let code = status.code().unwrap_or(0);",
+      "unix_only": true,
+      "outcome": "killed"
+    },
+    {
+      "name": "exit code negated",
+      "old": "            (Ok(stdout), Ok(stderr)) => Ok(Exit {\n                code,",
+      "new": "            (Ok(stdout), Ok(stderr)) => Ok(Exit {\n                code: -code,",
+      "outcome": "killed"
+    },
+    {
+      "name": "exit code is always 0",
+      "old": "            (Ok(stdout), Ok(stderr)) => Ok(Exit {\n                code,",
+      "new": "            (Ok(stdout), Ok(stderr)) => Ok(Exit {\n                code: code - code,",
+      "outcome": "killed"
+    },
+    {
+      "name": "keep does not make the run folder",
+      "old": "    fn keep(&mut self, name: &str, bytes: &[u8]) -> Result<(), Refusal> {\n        self.ensure_run()?;\n",
+      "new": "    fn keep(&mut self, name: &str, bytes: &[u8]) -> Result<(), Refusal> {\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bad binding is run anyway",
+      "old": "        Err(refusal) => Outcome::Refused { refusal },\n    }\n}",
+      "new": "        Err(refusal) => Outcome::Fail {\n            result: serde_json::json!(refusal.code),\n        },\n    }\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "host name renamed",
+      "old": "pub const HOST: &str = \"pfp_operad\";",
+      "new": "pub const HOST: &str = \"pfp-operad\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "given host forgotten",
+      "old": "        self.host = host.map(Path::to_path_buf);",
+      "new": "        self.host = host.map(Path::to_path_buf).filter(|_| false);",
+      "outcome": "killed"
+    },
+    {
+      "name": "every program is the host",
+      "old": "            Some(host) if program == HOST => host.as_os_str(),",
+      "new": "            Some(host) if !program.is_empty() => host.as_os_str(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "host name runs any other program",
+      "old": "            Some(host) if program == HOST => host.as_os_str(),",
+      "new": "            Some(host) if program != HOST => host.as_os_str(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "host name looked up like any other",
+      "old": "            Some(host) if program == HOST => host.as_os_str(),",
+      "new": "            Some(_) if program == HOST => OsStr::new(program),",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair drops the host",
+      "old": "        Ok(bench) => repair::respond(request, &mut bench.hosted(host)),",
+      "new": "        Ok(bench) => repair::respond(request, &mut bench.hosted(host.filter(|_| false))),",
+      "outcome": "killed"
+    }
+  ]
+}

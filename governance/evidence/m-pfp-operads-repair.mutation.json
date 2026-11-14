@@ -1,0 +1,1463 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/repair.rs",
+  "target_sha256": "2f07a802c15b5e5271db5eaaefccf636b01958ec584323aaeeaecd59afe11ce2",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test patch --test repair --test workshop",
+  "counts": {
+    "killed": 234,
+    "survived": 0,
+    "demonstrably_equivalent": 6,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "stage C renamed",
+      "old": "    (\"C\", \"capture\"),",
+      "new": "    (\"C\", \"xcapture\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage R renamed",
+      "old": "    (\"R\", \"observe\"),",
+      "new": "    (\"R\", \"xobserve\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage E renamed",
+      "old": "    (\"E\", \"evaluate\"),",
+      "new": "    (\"E\", \"xevaluate\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage I renamed",
+      "old": "    (\"I\", \"incorporate\"),",
+      "new": "    (\"I\", \"xincorporate\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage M renamed",
+      "old": "    (\"M\", \"disposition\"),",
+      "new": "    (\"M\", \"xdisposition\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage T renamed",
+      "old": "    (\"T\", \"terminal\"),",
+      "new": "    (\"T\", \"xterminal\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stages C and R swap letters",
+      "old": "    (\"C\", \"capture\"),\n    (\"R\", \"observe\"),",
+      "new": "    (\"R\", \"capture\"),\n    (\"C\", \"observe\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "request kept under another name",
+      "old": "pub const REQUEST_FILE: &str = \"request.json\";",
+      "new": "pub const REQUEST_FILE: &str = \"request.txt\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "patch kept under another name",
+      "old": "pub const PATCH_FILE: &str = \"candidate.patch\";",
+      "new": "pub const PATCH_FILE: &str = \"candidate.diff\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "record kept under another name",
+      "old": "pub const RECORD_FILE: &str = \"record.json\";",
+      "new": "pub const RECORD_FILE: &str = \"terminal.json\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "counterfeit class swapped",
+      "old": "pub const COUNTERFEIT: &str = \"CounterfeitExactness\";",
+      "new": "pub const COUNTERFEIT: &str = \"SycophanticAgreement\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak class swapped",
+      "old": "pub const LEAK: &str = \"BoundaryLeakage\";",
+      "new": "pub const LEAK: &str = \"ToyPromotion\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "misfit class swapped",
+      "old": "pub const MISFIT: &str = \"StructuralNonFit\";",
+      "new": "pub const MISFIT: &str = \"SelfContradiction\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "65 sources allowed",
+      "old": "pub const MAX_SOURCES: usize = 64;",
+      "new": "pub const MAX_SOURCES: usize = 65;",
+      "outcome": "killed"
+    },
+    {
+      "name": "63 sources at most",
+      "old": "pub const MAX_SOURCES: usize = 64;",
+      "new": "pub const MAX_SOURCES: usize = 63;",
+      "outcome": "killed"
+    },
+    {
+      "name": "33 write paths allowed",
+      "old": "pub const MAX_WRITE_PATHS: usize = 32;",
+      "new": "pub const MAX_WRITE_PATHS: usize = 33;",
+      "outcome": "killed"
+    },
+    {
+      "name": "31 write paths at most",
+      "old": "pub const MAX_WRITE_PATHS: usize = 32;",
+      "new": "pub const MAX_WRITE_PATHS: usize = 31;",
+      "outcome": "killed"
+    },
+    {
+      "name": "17 checks allowed",
+      "old": "pub const MAX_CHECKS: usize = 16;",
+      "new": "pub const MAX_CHECKS: usize = 17;",
+      "outcome": "killed"
+    },
+    {
+      "name": "15 checks at most",
+      "old": "pub const MAX_CHECKS: usize = 16;",
+      "new": "pub const MAX_CHECKS: usize = 15;",
+      "outcome": "killed"
+    },
+    {
+      "name": "33 arguments allowed",
+      "old": "pub const MAX_ARGUMENTS: usize = 32;",
+      "new": "pub const MAX_ARGUMENTS: usize = 33;",
+      "outcome": "killed"
+    },
+    {
+      "name": "31 arguments at most",
+      "old": "pub const MAX_ARGUMENTS: usize = 32;",
+      "new": "pub const MAX_ARGUMENTS: usize = 31;",
+      "outcome": "killed"
+    },
+    {
+      "name": "61 s timeout allowed",
+      "old": "pub const MAX_TIMEOUT_SECONDS: u32 = 60;",
+      "new": "pub const MAX_TIMEOUT_SECONDS: u32 = 61;",
+      "outcome": "killed"
+    },
+    {
+      "name": "59 s timeout at most",
+      "old": "pub const MAX_TIMEOUT_SECONDS: u32 = 60;",
+      "new": "pub const MAX_TIMEOUT_SECONDS: u32 = 59;",
+      "outcome": "killed"
+    },
+    {
+      "name": "patch may be one byte longer",
+      "old": "pub const MAX_PATCH_BYTES: usize = 65536;",
+      "new": "pub const MAX_PATCH_BYTES: usize = 65537;",
+      "outcome": "killed"
+    },
+    {
+      "name": "patch one byte shorter",
+      "old": "pub const MAX_PATCH_BYTES: usize = 65536;",
+      "new": "pub const MAX_PATCH_BYTES: usize = 65535;",
+      "outcome": "killed"
+    },
+    {
+      "name": "objective may be one char longer",
+      "old": "pub const MAX_OBJECTIVE_CHARS: usize = 2048;",
+      "new": "pub const MAX_OBJECTIVE_CHARS: usize = 2049;",
+      "outcome": "killed"
+    },
+    {
+      "name": "objective one char shorter",
+      "old": "pub const MAX_OBJECTIVE_CHARS: usize = 2048;",
+      "new": "pub const MAX_OBJECTIVE_CHARS: usize = 2047;",
+      "outcome": "killed"
+    },
+    {
+      "name": "run key may be 81 long",
+      "old": "const RUN_KEY: &str = \"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$\";",
+      "new": "const RUN_KEY: &str = \"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,80}$\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "run key 79 at most",
+      "old": "const RUN_KEY: &str = \"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$\";",
+      "new": "const RUN_KEY: &str = \"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,78}$\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "run key may start with a dash",
+      "old": "const RUN_KEY: &str = \"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$\";",
+      "new": "const RUN_KEY: &str = \"^[a-zA-Z0-9_-]{1,80}$\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "run key matched as a prefix",
+      "old": "const RUN_KEY: &str = \"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$\";",
+      "new": "const RUN_KEY: &str = \"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "check id may be 65 long",
+      "old": "const CHECK_ID: &str = \"^[a-z][a-z0-9_-]{0,63}$\";",
+      "new": "const CHECK_ID: &str = \"^[a-z][a-z0-9_-]{0,64}$\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "check id 63 at most",
+      "old": "const CHECK_ID: &str = \"^[a-z][a-z0-9_-]{0,63}$\";",
+      "new": "const CHECK_ID: &str = \"^[a-z][a-z0-9_-]{0,62}$\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "check id may start with a digit",
+      "old": "const CHECK_ID: &str = \"^[a-z][a-z0-9_-]{0,63}$\";",
+      "new": "const CHECK_ID: &str = \"^[a-z0-9][a-z0-9_-]{0,63}$\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "check id may hold capitals",
+      "old": "const CHECK_ID: &str = \"^[a-z][a-z0-9_-]{0,63}$\";",
+      "new": "const CHECK_ID: &str = \"^[a-zA-Z][a-zA-Z0-9_-]{0,63}$\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "device name CON allowed",
+      "old": "const DEVICES: [&str; 4] = [\"CON\", \"PRN\", \"AUX\", \"NUL\"];",
+      "new": "const DEVICES: [&str; 4] = [\"\\u{0}\", \"PRN\", \"AUX\", \"NUL\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "device name PRN allowed",
+      "old": "const DEVICES: [&str; 4] = [\"CON\", \"PRN\", \"AUX\", \"NUL\"];",
+      "new": "const DEVICES: [&str; 4] = [\"CON\", \"\\u{0}\", \"AUX\", \"NUL\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "device name AUX allowed",
+      "old": "const DEVICES: [&str; 4] = [\"CON\", \"PRN\", \"AUX\", \"NUL\"];",
+      "new": "const DEVICES: [&str; 4] = [\"CON\", \"PRN\", \"\\u{0}\", \"NUL\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "device name NUL allowed",
+      "old": "const DEVICES: [&str; 4] = [\"CON\", \"PRN\", \"AUX\", \"NUL\"];",
+      "new": "const DEVICES: [&str; 4] = [\"CON\", \"PRN\", \"AUX\", \"\\u{0}\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "case domain changed",
+      "old": "const CASE_DOMAIN: &str = \"pfp.operads.repair.case.v1\";",
+      "new": "const CASE_DOMAIN: &str = \"pfp.operads.repair.case.v2\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "request domain changed",
+      "old": "const REQUEST_DOMAIN: &str = \"pfp.operads.repair.request.v1\";",
+      "new": "const REQUEST_DOMAIN: &str = \"pfp.operads.repair.request.v2\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence domain changed",
+      "old": "const EVIDENCE_DOMAIN: &str = \"pfp.operads.repair.evidence.v1\";",
+      "new": "const EVIDENCE_DOMAIN: &str = \"pfp.operads.repair.evidence.v2\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash covers the first part only",
+      "old": "    for part in parts {\n        hasher.update(part);\n    }",
+      "new": "    for part in parts.iter().take(1) {\n        hasher.update(part);\n    }",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pattern matches nothing",
+      "old": "Regex::new(pattern).is_ok_and(|compiled| compiled.is_match(text))",
+      "new": "Regex::new(pattern).is_ok_and(|_| false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pattern matches everything",
+      "old": "Regex::new(pattern).is_ok_and(|compiled| compiled.is_match(text))",
+      "new": "Regex::new(pattern).is_ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "default timeout is 21",
+      "old": "fn default_timeout() -> u32 {\n    20\n}",
+      "new": "fn default_timeout() -> u32 {\n    21\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "default workflow renamed",
+      "old": "\"bounded_repair\".to_owned()",
+      "new": "\"repair\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "check accepts unknown fields",
+      "old": "#[serde(deny_unknown_fields)]\npub struct Check {",
+      "new": "pub struct Check {",
+      "outcome": "killed"
+    },
+    {
+      "name": "request accepts unknown fields",
+      "old": "#[serde(deny_unknown_fields)]\npub struct Request {",
+      "new": "pub struct Request {",
+      "outcome": "killed"
+    },
+    {
+      "name": "device stem keeps its extension",
+      "old": "        .split('.')\n        .next()\n        .unwrap_or_default()\n        .to_ascii_uppercase();",
+      "new": "        .to_ascii_uppercase();",
+      "outcome": "killed"
+    },
+    {
+      "name": "device name compared with case",
+      "old": "        .unwrap_or_default()\n        .to_ascii_uppercase();",
+      "new": "        .unwrap_or_default()\n        .to_owned();",
+      "outcome": "killed"
+    },
+    {
+      "name": "COM0 and COM10 are devices",
+      "old": "matches!(rest.as_bytes(), [b'1'..=b'9']))",
+      "new": "matches!(rest.as_bytes(), [b'0'..=b'9', ..]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "COM with no digit is a device",
+      "old": "matches!(rest.as_bytes(), [b'1'..=b'9']))",
+      "new": "matches!(rest.as_bytes(), [] | [b'1'..=b'9']))",
+      "outcome": "killed"
+    },
+    {
+      "name": "plain device names allowed",
+      "old": "DEVICES.contains(&stem.as_str()) || numbered(\"COM\") || numbered(\"LPT\")",
+      "new": "numbered(\"COM\") || numbered(\"LPT\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "COM ports allowed",
+      "old": "|| numbered(\"COM\") || numbered(\"LPT\")",
+      "new": "|| numbered(\"LPT\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "LPT ports allowed",
+      "old": "|| numbered(\"COM\") || numbered(\"LPT\")",
+      "new": "|| numbered(\"COM\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "backslash allowed in a path",
+      "old": "matches!(c, '\\\\' | ':' | '\\0' | '\\r' | '\\n' | '\\t'));",
+      "new": "matches!(c, ':' | '\\0' | '\\r' | '\\n' | '\\t'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "colon allowed in a path",
+      "old": "matches!(c, '\\\\' | ':' | '\\0' | '\\r' | '\\n' | '\\t'));",
+      "new": "matches!(c, '\\\\' | '\\0' | '\\r' | '\\n' | '\\t'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "NUL allowed in a path",
+      "old": "matches!(c, '\\\\' | ':' | '\\0' | '\\r' | '\\n' | '\\t'));",
+      "new": "matches!(c, '\\\\' | ':' | '\\r' | '\\n' | '\\t'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "CR allowed in a path",
+      "old": "matches!(c, '\\\\' | ':' | '\\0' | '\\r' | '\\n' | '\\t'));",
+      "new": "matches!(c, '\\\\' | ':' | '\\0' | '\\n' | '\\t'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "LF allowed in a path",
+      "old": "matches!(c, '\\\\' | ':' | '\\0' | '\\r' | '\\n' | '\\t'));",
+      "new": "matches!(c, '\\\\' | ':' | '\\0' | '\\r' | '\\t'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "tab allowed in a path",
+      "old": "| '\\n' | '\\t'));",
+      "new": "| '\\n'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty path part allowed",
+      "old": "matches!(part, \"\" | \".\" | \"..\")",
+      "new": "matches!(part, \".\" | \"..\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "dot part allowed",
+      "old": "matches!(part, \"\" | \".\" | \"..\")",
+      "new": "matches!(part, \"\" | \"..\")",
+      "equivalent": "a part that is \".\" ends with a dot, which the next clause of the same test refuses with the same code",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "dot-dot part allowed",
+      "old": "matches!(part, \"\" | \".\" | \"..\")",
+      "new": "matches!(part, \"\" | \".\")",
+      "equivalent": "a part that is \"..\" ends with a dot, which the next clause of the same test refuses with the same code",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": ".git allowed",
+      "old": "            || part.eq_ignore_ascii_case(\".git\")\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": ".GIT allowed",
+      "old": "            || part.eq_ignore_ascii_case(\".git\")",
+      "new": "            || part == \".git\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "trailing dot allowed",
+      "old": "part.ends_with(['.', ' '])",
+      "new": "part.ends_with([' '])",
+      "outcome": "killed"
+    },
+    {
+      "name": "trailing space allowed",
+      "old": "part.ends_with(['.', ' '])",
+      "new": "part.ends_with(['.'])",
+      "outcome": "killed"
+    },
+    {
+      "name": "device names allowed in a path",
+      "old": "            || device(part)\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "odd characters allowed",
+      "old": "    if odd || path.split('/').any(bad_part) {",
+      "new": "    if path.split('/').any(bad_part) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the last path part is examined",
+      "old": "    if odd || path.split('/').any(bad_part) {",
+      "new": "    if odd || path.rsplit('/').take(1).any(bad_part) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "path refusal has another code",
+      "old": "            \"SOURCE_PATH_REFUSED\",",
+      "new": "            \"SOURCE_FILE_REFUSED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "path refusal does not name the path",
+      "old": "format!(\"{path:?} is not a plain relative path\"),",
+      "new": "format!(\"the path is not a plain relative path\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash may be any length",
+      "old": "    text.len() == 64 && text.bytes()",
+      "new": "    text.bytes()",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash may hold capitals",
+      "old": "matches!(b, b'0'..=b'9' | b'a'..=b'f'))",
+      "new": "matches!(b, b'0'..=b'9' | b'a'..=b'f' | b'A'..=b'F'))",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash may hold g",
+      "old": "matches!(b, b'0'..=b'9' | b'a'..=b'f'))",
+      "new": "matches!(b, b'0'..=b'9' | b'a'..=b'g'))",
+      "outcome": "killed"
+    },
+    {
+      "name": "no argument required",
+      "old": "let arguments = (1..=MAX_ARGUMENTS).contains(&self.argv.len())",
+      "new": "let arguments = (0..=MAX_ARGUMENTS).contains(&self.argv.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty argument allowed",
+      "old": ".all(|arg| !arg.is_empty() && !arg.contains('\\0'));",
+      "new": ".all(|arg| !arg.contains('\\0'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "NUL in an argument allowed",
+      "old": ".all(|arg| !arg.is_empty() && !arg.contains('\\0'));",
+      "new": ".all(|arg| !arg.is_empty());",
+      "outcome": "killed"
+    },
+    {
+      "name": "check id not validated",
+      "old": "        if !matches(CHECK_ID, &self.check_id)\n            || !arguments",
+      "new": "        if !arguments",
+      "outcome": "killed"
+    },
+    {
+      "name": "arguments not validated",
+      "old": "            || !arguments\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "timeout not validated",
+      "old": "            || !(1..=MAX_TIMEOUT_SECONDS).contains(&self.timeout_seconds)\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero timeout allowed",
+      "old": "!(1..=MAX_TIMEOUT_SECONDS).contains(&self.timeout_seconds)",
+      "new": "!(0..=MAX_TIMEOUT_SECONDS).contains(&self.timeout_seconds)",
+      "outcome": "killed"
+    },
+    {
+      "name": "check refusal has another code",
+      "old": "                \"CHECK_REFUSED\",",
+      "new": "                \"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "check refusal does not name the check",
+      "old": "format!(\"check {:?} is not well formed\", self.check_id),",
+      "new": "format!(\"check {:?} is not well formed\", \"\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable request has another code",
+      "old": "Refusal::new(\"BAD_REQUEST\", error.to_string())",
+      "new": "Refusal::new(\"REPAIR_SCOPE_REFUSED\", error.to_string())",
+      "outcome": "killed"
+    },
+    {
+      "name": "names not validated",
+      "old": "        request.named()?;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope not validated",
+      "old": "        request.scoped()?;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "checks not validated",
+      "old": "        request.checks.iter().try_for_each(Check::valid)?;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first check is validated",
+      "old": "request.checks.iter().try_for_each(Check::valid)?;",
+      "new": "request.checks.iter().take(1).try_for_each(Check::valid)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "run key not validated",
+      "old": "        if !matches(RUN_KEY, &self.run_key) {",
+      "new": "        if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "run key refusal has another code",
+      "old": "                \"RUN_KEY_REFUSED\",",
+      "new": "                \"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "workflow name not bounded",
+      "old": "let words = [&self.objective, &self.workflow];",
+      "new": "let words = [&self.objective, &self.objective];",
+      "outcome": "killed"
+    },
+    {
+      "name": "objective not bounded",
+      "old": "let words = [&self.objective, &self.workflow];",
+      "new": "let words = [&self.workflow, &self.workflow];",
+      "outcome": "killed"
+    },
+    {
+      "name": "blank objective allowed",
+      "old": ".any(|text| text.trim().is_empty() || text.chars().count() > MAX_OBJECTIVE_CHARS)",
+      "new": ".any(|text| text.is_empty() || text.chars().count() > MAX_OBJECTIVE_CHARS)",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty objective allowed",
+      "old": ".any(|text| text.trim().is_empty() || text.chars().count() > MAX_OBJECTIVE_CHARS)",
+      "new": ".any(|text| text.chars().count() > MAX_OBJECTIVE_CHARS)",
+      "outcome": "killed"
+    },
+    {
+      "name": "objective bounded in bytes",
+      "old": "text.chars().count() > MAX_OBJECTIVE_CHARS)",
+      "new": "text.len() > MAX_OBJECTIVE_CHARS)",
+      "outcome": "killed"
+    },
+    {
+      "name": "objective refusal has another code",
+      "old": "                \"OBJECTIVE_REFUSED\",",
+      "new": "                \"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty patch allowed",
+      "old": "if !(1..=MAX_PATCH_BYTES).contains(&self.candidate_patch.len()) {",
+      "new": "if !(0..=MAX_PATCH_BYTES).contains(&self.candidate_patch.len()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "patch size refusal has another code",
+      "old": "return refuse(patch::REFUSED, \"a patch is 1 to 65536 bytes\");",
+      "new": "return refuse(patch::SCOPE_REFUSED, \"a patch is 1 to 65536 bytes\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "source paths not validated",
+      "old": "            relative_file(name)?;\n            if !is_sha256(digest) {",
+      "new": "            if !is_sha256(digest) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "source hashes not validated",
+      "old": "            if !is_sha256(digest) {",
+      "new": "            if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash refusal has another code",
+      "old": "                    \"SOURCE_DIGEST_REFUSED\",",
+      "new": "                    \"SOURCE_PATH_REFUSED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "sources compared with case",
+      "old": "            .map(|name| name.to_lowercase())",
+      "new": "            .map(|name| name.to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "sources folded in ASCII only",
+      "old": "            .map(|name| name.to_lowercase())",
+      "new": "            .map(|name| name.to_ascii_lowercase())",
+      "outcome": "killed"
+    },
+    {
+      "name": "no source required",
+      "old": "let counted = (1..=MAX_SOURCES).contains(&self.sources.len())",
+      "new": "let counted = (0..=MAX_SOURCES).contains(&self.sources.len())",
+      "equivalent": "with no source the write set, which must be nonempty, names a path that is not a source, and that is refused with the same code and message",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "no write path required",
+      "old": "&& (1..=MAX_WRITE_PATHS).contains(&self.write_paths.len())",
+      "new": "&& (0..=MAX_WRITE_PATHS).contains(&self.write_paths.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "no check required",
+      "old": "&& (1..=MAX_CHECKS).contains(&self.checks.len());",
+      "new": "&& (0..=MAX_CHECKS).contains(&self.checks.len());",
+      "outcome": "killed"
+    },
+    {
+      "name": "source count not bounded",
+      "old": "let counted = (1..=MAX_SOURCES).contains(&self.sources.len())\n            && ",
+      "new": "let counted = ",
+      "outcome": "killed"
+    },
+    {
+      "name": "write path count not bounded",
+      "old": "            && (1..=MAX_WRITE_PATHS).contains(&self.write_paths.len())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "check count not bounded",
+      "old": "\n            && (1..=MAX_CHECKS).contains(&self.checks.len());",
+      "new": ";",
+      "outcome": "killed"
+    },
+    {
+      "name": "case-folded duplicate sources allowed",
+      "old": "let distinct = folded.len() == self.sources.len()\n            && ",
+      "new": "let distinct = ",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate write paths allowed",
+      "old": "            && writes.len() == self.write_paths.len()\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate check ids allowed",
+      "old": "\n            && checks.len() == self.checks.len();",
+      "new": ";",
+      "outcome": "killed"
+    },
+    {
+      "name": "counts not enforced",
+      "old": "        if !counted || !distinct ||",
+      "new": "        if !distinct ||",
+      "outcome": "killed"
+    },
+    {
+      "name": "distinctness not enforced",
+      "old": "        if !counted || !distinct ||",
+      "new": "        if !counted ||",
+      "outcome": "killed"
+    },
+    {
+      "name": "write path need not be a source",
+      "old": "|| !writes.iter().all(|path| self.sources.contains_key(*path)) {",
+      "new": "|| false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "one write path that is a source suffices",
+      "old": "!writes.iter().all(|path| self.sources.contains_key(*path))",
+      "new": "!writes.iter().any(|path| self.sources.contains_key(*path))",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope refusal has another code",
+      "old": "                \"REPAIR_SCOPE_REFUSED\",",
+      "new": "                \"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidate id has no scheme",
+      "old": "format!(\"sha256:{}\", sha256(&[self.candidate_patch.as_bytes()]))",
+      "new": "sha256(&[self.candidate_patch.as_bytes()])",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidate id hashes the objective",
+      "old": "sha256(&[self.candidate_patch.as_bytes()]))",
+      "new": "sha256(&[self.objective.as_bytes()]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "request digest has no domain",
+      "old": "sha256(&[REQUEST_DOMAIN.as_bytes(), b\"\\n\", &encoded(self)?])",
+      "new": "sha256(&[&encoded(self)?])",
+      "outcome": "killed"
+    },
+    {
+      "name": "request digest covers the patch only",
+      "old": "sha256(&[REQUEST_DOMAIN.as_bytes(), b\"\\n\", &encoded(self)?])",
+      "new": "sha256(&[REQUEST_DOMAIN.as_bytes(), b\"\\n\", self.candidate_patch.as_bytes()])",
+      "outcome": "killed"
+    },
+    {
+      "name": "case covers the sources only",
+      "old": "            &encoded(&self.sources)?,\n            b\"\\n\",\n            &encoded(&self.checks)?,",
+      "new": "            &encoded(&self.sources)?,\n            b\"\\n\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "case covers the checks only",
+      "old": "            &encoded(&self.sources)?,\n            b\"\\n\",\n            &encoded(&self.checks)?,",
+      "new": "            b\"\\n\",\n            &encoded(&self.checks)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "case name has 8 digits",
+      "old": "Ok(format!(\"r{}\", digest.get(..16).unwrap_or_default()))",
+      "new": "Ok(format!(\"r{}\", digest.get(..8).unwrap_or_default()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "case name has another prefix",
+      "old": "Ok(format!(\"r{}\", digest.get(..16).unwrap_or_default()))",
+      "new": "Ok(format!(\"c{}\", digest.get(..16).unwrap_or_default()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "observation drops its exit",
+      "old": "    #[serde(flatten)]\n    pub exit: Exit,",
+      "new": "    #[serde(skip)]\n    pub exit: Exit,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a zero exit counts as failing",
+      "old": "        .filter(|seen| seen.exit.code != 0)",
+      "new": "        .filter(|seen| seen.exit.code == 0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "only positive exits count as failing",
+      "old": "        .filter(|seen| seen.exit.code != 0)",
+      "new": "        .filter(|seen| seen.exit.code > 0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "only exit 1 counts as failing",
+      "old": "        .filter(|seen| seen.exit.code != 0)",
+      "new": "        .filter(|seen| seen.exit.code == 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal ignored by the disposition",
+      "old": "    if refused {\n        Disposition::Refused\n    } else if before.is_empty() {",
+      "new": "    if before.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "clean baseline assessed as repaired",
+      "old": "    } else if before.is_empty() {\n        Disposition::NoRepairNeeded",
+      "new": "    } else if before.is_empty() {\n        Disposition::Repaired",
+      "outcome": "killed"
+    },
+    {
+      "name": "clean baseline not special",
+      "old": "    } else if before.is_empty() {\n        Disposition::NoRepairNeeded\n    } else if !after.is_subset(&before) {",
+      "new": "    } else if !after.is_subset(&before) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "regression not detected",
+      "old": "    } else if !after.is_subset(&before) {\n        Disposition::Regression\n    } else if after.is_empty() {",
+      "new": "    } else if after.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "regression judged by count",
+      "old": "    } else if !after.is_subset(&before) {",
+      "new": "    } else if after.len() > before.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "repaired when anything was fixed",
+      "old": "    } else if after.is_empty() {\n        Disposition::Repaired",
+      "new": "    } else if after.len() < before.len() {\n        Disposition::Repaired",
+      "outcome": "killed"
+    },
+    {
+      "name": "partial and ineffective swapped",
+      "old": "    } else if after.len() < before.len() {\n        Disposition::Partial\n    } else {\n        Disposition::Ineffective",
+      "new": "    } else if after.len() < before.len() {\n        Disposition::Ineffective\n    } else {\n        Disposition::Partial",
+      "outcome": "killed"
+    },
+    {
+      "name": "partial includes no change",
+      "old": "    } else if after.len() < before.len() {\n        Disposition::Partial",
+      "new": "    } else if after.len() <= before.len() {\n        Disposition::Partial",
+      "outcome": "killed"
+    },
+    {
+      "name": "stages run after a refusal",
+      "old": "        let status = if self.refusal.is_some() && !always {",
+      "new": "        let status = if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "always-stages skipped after a refusal",
+      "old": "        let status = if self.refusal.is_some() && !always {",
+      "new": "        let status = if self.refusal.is_some() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "skipped stage reported done",
+      "old": "                Ok(Ran::Skipped) => StageStatus::Skipped,",
+      "new": "                Ok(Ran::Skipped) => StageStatus::Done,",
+      "outcome": "killed"
+    },
+    {
+      "name": "done stage reported skipped",
+      "old": "                Ok(Ran::Done) => StageStatus::Done,",
+      "new": "                Ok(Ran::Done) => StageStatus::Skipped,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a later refusal replaces the first",
+      "old": "                    self.refusal.get_or_insert(StageRefusal {",
+      "new": "                    self.refusal = Some(StageRefusal {",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal not kept",
+      "old": "                    self.refusal.get_or_insert(StageRefusal {\n                        stage,\n                        code: refusal.code,\n                        message: refusal.message,\n                    });\n",
+      "new": "                    let _ = (refusal.code, refusal.message);\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "refused stage reported done",
+      "old": "                    StageStatus::Refused\n                }",
+      "new": "                    StageStatus::Done\n                }",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal loses its message",
+      "old": "                        message: refusal.message,\n                    });",
+      "new": "                        message: String::new(),\n                    });",
+      "outcome": "killed"
+    },
+    {
+      "name": "source hash not compared",
+      "old": "            if &sha256(&[&bytes]) != declared {",
+      "new": "            if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "source refusal has another code",
+      "old": "                    \"SOURCE_CHANGED\",",
+      "new": "                    \"SOURCE_FILE_REFUSED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "changed source not named",
+      "old": "format!(\"{name} does not have its declared hash\"),",
+      "new": "format!(\"a source does not have its declared hash\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first source is captured",
+      "old": "            files.insert(name.clone(), bytes);",
+      "new": "            files.entry(String::new()).or_insert(bytes);",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy not compared",
+      "old": "            if &sha256(&[&self.bench.copy(name)?]) != expected {",
+      "new": "            if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy refusal has another code",
+      "old": "                    \"WORKING_COPY_CHANGED\",",
+      "new": "                    \"SOURCE_CHANGED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy file not named",
+      "old": "format!(\"{name} changed in the working copy outside the patch\"),",
+      "new": "format!(\"a file changed in the working copy outside the patch\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy not compared before a check",
+      "old": "            self.copy_intact()?;\n            let exit = self.bench.run(check)?;",
+      "new": "            let exit = self.bench.run(check)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy not compared after a check",
+      "old": "            let exit = self.bench.run(check)?;\n            self.copy_intact()?;",
+      "new": "            let exit = self.bench.run(check)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "observation named after another check",
+      "old": "                check_id: check.check_id.clone(),",
+      "new": "                check_id: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first check runs",
+      "old": "        for check in &self.request.checks {\n            self.copy_intact()?;",
+      "new": "        for check in self.request.checks.iter().take(1) {\n            self.copy_intact()?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "request not kept",
+      "old": "            (REQUEST_FILE, encoded(self.request)?),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "patch not kept",
+      "old": "            (\n                PATCH_FILE,\n                self.request.candidate_patch.clone().into_bytes(),\n            ),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "patch kept as the request",
+      "old": "                PATCH_FILE,\n                self.request.candidate_patch.clone().into_bytes(),",
+      "new": "                PATCH_FILE,\n                encoded(self.request)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "working copy not opened",
+      "old": "        self.bench.open(&files, &kept)?;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "working manifest left empty",
+      "old": "        self.working = self.request.sources.clone();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "source not re-read at observe",
+      "old": "    fn observe(&mut self) -> Result<Ran, Refusal> {\n        self.sources()?;\n",
+      "new": "    fn observe(&mut self) -> Result<Ran, Refusal> {\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline not kept",
+      "old": "        self.baseline = self.checks()?;\n",
+      "new": "        self.checks()?;\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty patch accepted",
+      "old": "        if edits.is_empty() {\n            return refuse(patch::SCOPE_REFUSED, \"the patch edits no file\");\n        }\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty patch is malformed, not out of scope",
+      "old": "return refuse(patch::SCOPE_REFUSED, \"the patch edits no file\");",
+      "new": "return refuse(patch::REFUSED, \"the patch edits no file\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "write set not enforced",
+      "old": "            .find(|edit| !self.request.write_paths.contains(&edit.path))",
+      "new": "            .find(|_| false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "write set read as the sources",
+      "old": "            .find(|edit| !self.request.write_paths.contains(&edit.path))",
+      "new": "            .find(|edit| !self.request.sources.contains_key(&edit.path))",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first edit is scope checked",
+      "old": "        match edits\n            .iter()\n            .find(",
+      "new": "        match edits\n            .iter()\n            .take(1)\n            .find(",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope refusal is malformed, not out of scope",
+      "old": "            Some(edit) => refuse(\n                patch::SCOPE_REFUSED,",
+      "new": "            Some(edit) => refuse(\n                patch::REFUSED,",
+      "outcome": "killed"
+    },
+    {
+      "name": "out-of-scope file not named",
+      "old": "format!(\"{} is not in the write set\", edit.path),",
+      "new": "format!(\"{} is not in the write set\", \"\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "source not re-read at evaluate",
+      "old": "    fn evaluate(&mut self) -> Result<Ran, Refusal> {\n        self.sources()?;\n",
+      "new": "    fn evaluate(&mut self) -> Result<Ran, Refusal> {\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "patch applied on a clean baseline",
+      "old": "        if failing(&self.baseline).is_empty() {\n            return Ok(Ran::Skipped);\n        }\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "clean baseline reported as evaluated",
+      "old": "        if failing(&self.baseline).is_empty() {\n            return Ok(Ran::Skipped);",
+      "new": "        if failing(&self.baseline).is_empty() {\n            return Ok(Ran::Done);",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-text refusal has another code",
+      "old": "return refuse(patch::REFUSED, format!(\"{} is not UTF-8 text\", edit.path));",
+      "new": "return refuse(patch::SCOPE_REFUSED, format!(\"{} is not UTF-8 text\", edit.path));",
+      "outcome": "killed"
+    },
+    {
+      "name": "unchanged file counted as changed",
+      "old": "            if new != text {\n                patched.push((edit.path, new));\n            }",
+      "new": "            patched.push((edit.path, new));",
+      "outcome": "killed"
+    },
+    {
+      "name": "no-op patch accepted",
+      "old": "        if patched.is_empty() {\n            return refuse(patch::REFUSED, \"the patch changes no byte\");\n        }\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "no-op refusal has another code",
+      "old": "return refuse(patch::REFUSED, \"the patch changes no byte\");",
+      "new": "return refuse(patch::SCOPE_REFUSED, \"the patch changes no byte\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "patched text not written",
+      "old": "            self.bench.write(&path, text.as_bytes())?;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "working manifest not updated",
+      "old": "            self.working\n                .insert(path.clone(), sha256(&[text.as_bytes()]));\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "changed path not recorded",
+      "old": "            self.changed.push(path);\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "checks not rerun after the patch",
+      "old": "        self.after = self.checks()?;\n        Ok(Ran::Done)",
+      "new": "        self.after = self.baseline.clone();\n        Ok(Ran::Done)",
+      "outcome": "killed"
+    },
+    {
+      "name": "malformed patch blames no candidate",
+      "old": "[patch::REFUSED, patch::SCOPE_REFUSED].contains(&refusal.code);",
+      "new": "[patch::SCOPE_REFUSED].contains(&refusal.code);",
+      "outcome": "killed"
+    },
+    {
+      "name": "out-of-scope patch blames no candidate",
+      "old": "[patch::REFUSED, patch::SCOPE_REFUSED].contains(&refusal.code);",
+      "new": "[patch::REFUSED].contains(&refusal.code);",
+      "outcome": "killed"
+    },
+    {
+      "name": "any refusal blames the candidate",
+      "old": "            (Some(refusal), _) if patch_refused(refusal) => Some(MISFIT),",
+      "new": "            (Some(_), _) => Some(MISFIT),",
+      "outcome": "killed"
+    },
+    {
+      "name": "misfit recorded as counterfeit",
+      "old": "            (Some(refusal), _) if patch_refused(refusal) => Some(MISFIT),",
+      "new": "            (Some(refusal), _) if patch_refused(refusal) => Some(COUNTERFEIT),",
+      "outcome": "killed"
+    },
+    {
+      "name": "regression blames no candidate",
+      "old": "            (None, Disposition::Regression) => Some(LEAK),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "regression recorded as counterfeit",
+      "old": "            (None, Disposition::Regression) => Some(LEAK),",
+      "new": "            (None, Disposition::Regression) => Some(COUNTERFEIT),",
+      "outcome": "killed"
+    },
+    {
+      "name": "partial blames no candidate",
+      "old": "            (None, Disposition::Partial | Disposition::Ineffective) => Some(COUNTERFEIT),",
+      "new": "            (None, Disposition::Ineffective) => Some(COUNTERFEIT),",
+      "outcome": "killed"
+    },
+    {
+      "name": "ineffective blames no candidate",
+      "old": "            (None, Disposition::Partial | Disposition::Ineffective) => Some(COUNTERFEIT),",
+      "new": "            (None, Disposition::Partial) => Some(COUNTERFEIT),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repair is recorded as a failure",
+      "old": "            (None, Disposition::Partial | Disposition::Ineffective) => Some(COUNTERFEIT),",
+      "new": "            (None, Disposition::Partial | Disposition::Ineffective | Disposition::Repaired) => Some(COUNTERFEIT),",
+      "outcome": "killed"
+    },
+    {
+      "name": "disposition ignores the refusal",
+      "old": "        self.outcome = assess(self.refusal.is_some(), &self.baseline, &self.after);",
+      "new": "        self.outcome = assess(false, &self.baseline, &self.after);",
+      "outcome": "killed"
+    },
+    {
+      "name": "disposition always refused",
+      "old": "        self.outcome = assess(self.refusal.is_some(), &self.baseline, &self.after);",
+      "new": "        self.outcome = assess(true, &self.baseline, &self.after);",
+      "outcome": "killed"
+    },
+    {
+      "name": "disposition compares baseline with itself",
+      "old": "        self.outcome = assess(self.refusal.is_some(), &self.baseline, &self.after);",
+      "new": "        self.outcome = assess(self.refusal.is_some(), &self.baseline, &self.baseline);",
+      "outcome": "killed"
+    },
+    {
+      "name": "source reported intact without a look",
+      "old": "        self.source_intact = intact.is_ok();",
+      "new": "        self.source_intact = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "source reported changed always",
+      "old": "        self.source_intact = intact.is_ok();\n        if !self.source_intact {",
+      "new": "        self.source_intact = false;\n        if intact.is_err() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "late drift keeps the failure record",
+      "old": "            self.fault = None;\n            self.outcome = Disposition::Refused;",
+      "new": "            self.outcome = Disposition::Refused;",
+      "outcome": "killed"
+    },
+    {
+      "name": "late drift keeps the outcome",
+      "old": "            self.fault = None;\n            self.outcome = Disposition::Refused;",
+      "new": "            self.fault = None;",
+      "outcome": "killed"
+    },
+    {
+      "name": "late drift is not a refusal",
+      "old": "        intact.map(|_| Ran::Done)",
+      "new": "        Ok(Ran::Done)",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence ignores the exit codes",
+      "old": "            .map(|seen| (seen.check_id.as_str(), seen.exit.code))",
+      "new": "            .map(|seen| (seen.check_id.as_str(), 0))",
+      "outcome": "killed"
+    },
+    {
+      "name": "no failure record is written",
+      "old": "        let Some(class) = self.fault else {\n            return Ok(None);\n        };",
+      "new": "        let Some(class) = self.fault.filter(|_| false) else {\n            return Ok(None);\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence ignores the request",
+      "old": "        let seen = encoded(&(\n            digest,",
+      "new": "        let seen = encoded(&(\n            \"\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence ignores the refusal",
+      "old": "            self.refusal.as_ref().map(|refusal| refusal.code),\n            Self::exits(&self.baseline),",
+      "new": "            None::<&str>,\n            Self::exits(&self.baseline),",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence ignores the baseline",
+      "old": "            Self::exits(&self.baseline),\n            Self::exits(&self.after),",
+      "new": "            Self::exits(&self.after),\n            Self::exits(&self.after),",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence ignores the results after the patch",
+      "old": "            Self::exits(&self.baseline),\n            Self::exits(&self.after),",
+      "new": "            Self::exits(&self.baseline),\n            Self::exits(&self.baseline),",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure id drops the run",
+      "old": "            id: format!(\"{case}@{}\", self.request.run_key),",
+      "new": "            id: case.to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure id drops the case",
+      "old": "            id: format!(\"{case}@{}\", self.request.run_key),",
+      "new": "            id: format!(\"@{}\", self.request.run_key),",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure workflow is the run key",
+      "old": "            workflow: self.request.workflow.clone(),",
+      "new": "            workflow: self.request.run_key.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure run is the workflow",
+      "old": "            run: self.request.run_key.clone(),",
+      "new": "            run: self.request.workflow.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure trace is fixed",
+      "old": "            ddc_trace: trace.to_owned(),",
+      "new": "            ddc_trace: \"CREIMT\".to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence has no domain",
+      "old": "            evidence_sha256: sha256(&[EVIDENCE_DOMAIN.as_bytes(), b\"\\n\", &seen]),",
+      "new": "            evidence_sha256: sha256(&[&seen]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace lists every stage",
+      "old": "            .filter(|report| report.status == StageStatus::Done)",
+      "new": "            .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace lists the stages that did not run",
+      "old": "            .filter(|report| report.status == StageStatus::Done)",
+      "new": "            .filter(|report| report.status != StageStatus::Done)",
+      "outcome": "killed"
+    },
+    {
+      "name": "record run key is the workflow",
+      "old": "            run_key: self.request.run_key.clone(),\n            candidate_id",
+      "new": "            run_key: self.request.workflow.clone(),\n            candidate_id",
+      "outcome": "killed"
+    },
+    {
+      "name": "record candidate id is the request digest",
+      "old": "            candidate_id: self.request.candidate_id(),",
+      "new": "            candidate_id: request_digest.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "record source manifest is the working manifest",
+      "old": "            source_manifest: self.request.sources.clone(),",
+      "new": "            source_manifest: self.working.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "record working manifest is the source manifest",
+      "old": "            working_manifest: self.working,",
+      "new": "            working_manifest: self.request.sources.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence source_application changed",
+      "old": "            source_application: \"NOT_PERFORMED\",",
+      "new": "            source_application: \"GRANTED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence admission changed",
+      "old": "            admission: \"Unadmitted\",",
+      "new": "            admission: \"GRANTED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence production_activation changed",
+      "old": "            production_activation: \"HOLD\",",
+      "new": "            production_activation: \"GRANTED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence evidence_scope changed",
+      "old": "            evidence_scope: \"FIXED_LOCAL_COMMANDS\",",
+      "new": "            evidence_scope: \"GRANTED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence mathematical_measurement changed",
+      "old": "            mathematical_measurement: \"NOT_MEASURED\",",
+      "new": "            mathematical_measurement: \"GRANTED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence authority_effect changed",
+      "old": "            authority_effect: \"None\",",
+      "new": "            authority_effect: \"GRANTED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a run starts as repaired",
+      "old": "        outcome: Disposition::Refused,\n        source_intact: false,",
+      "new": "        outcome: Disposition::Repaired,\n        source_intact: false,",
+      "equivalent": "dispose always runs and overwrites the initial value before any record is built",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a run starts with its source intact",
+      "old": "        outcome: Disposition::Refused,\n        source_intact: false,",
+      "new": "        outcome: Disposition::Refused,\n        source_intact: true,",
+      "equivalent": "terminal always runs and overwrites the initial value before any record is built",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "observe runs after a refusal",
+      "old": "        (Run::observe, false),",
+      "new": "        (Run::observe, true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "evaluate runs after a refusal",
+      "old": "        (Run::evaluate, false),",
+      "new": "        (Run::evaluate, true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "incorporate skipped after a refusal",
+      "old": "        (Run::incorporate, true),",
+      "new": "        (Run::incorporate, false),",
+      "outcome": "killed"
+    },
+    {
+      "name": "disposition skipped after a refusal",
+      "old": "        (Run::dispose, true),",
+      "new": "        (Run::dispose, false),",
+      "outcome": "killed"
+    },
+    {
+      "name": "terminal skipped after a refusal",
+      "old": "        (Run::terminal, true),",
+      "new": "        (Run::terminal, false),",
+      "outcome": "killed"
+    },
+    {
+      "name": "evaluate before observe",
+      "old": "        (Run::observe, false),\n        (Run::evaluate, false),",
+      "new": "        (Run::evaluate, false),\n        (Run::observe, false),",
+      "outcome": "killed"
+    },
+    {
+      "name": "disposition before incorporate",
+      "old": "        (Run::incorporate, true),\n        (Run::dispose, true),",
+      "new": "        (Run::dispose, true),\n        (Run::incorporate, true),",
+      "equivalent": "incorporate reads the refusal and the observations, dispose writes only the outcome; only the two stage labels would swap, and the labels come from the fixed STAGES table by index",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "record not kept",
+      "old": "    let kept = bench.keep(RECORD_FILE, &encoded(&record)?);",
+      "new": "    let kept: Result<(), Refusal> = Ok(());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a clean run survives an unkept record",
+      "old": "    if record.refusal.is_none() {\n        kept?;\n    }",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refused run is lost when its record cannot be kept",
+      "old": "    if record.refusal.is_none() {\n        kept?;\n    }",
+      "new": "    kept?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a failed candidate passes",
+      "old": "            Ok(result) if outcome == Disposition::Repaired => Outcome::Pass { result },",
+      "new": "            Ok(result) if outcome != Disposition::Refused => Outcome::Pass { result },",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repair fails",
+      "old": "            Ok(result) if outcome == Disposition::Repaired => Outcome::Pass { result },\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "a request refusal is reported as a failure",
+      "old": "        Err(refusal) => Outcome::Refused { refusal },\n        Ok((outcome, bytes))",
+      "new": "        Err(refusal) => Outcome::Fail { result: serde_json::json!(refusal.code) },\n        Ok((outcome, bytes))",
+      "outcome": "killed"
+    }
+  ]
+}
