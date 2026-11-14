@@ -76,7 +76,7 @@ are offline fixtures. Regenerate with `python dag/operad_coverage.py`
 | --- | --- | --- |
 | Rust `core_operad_canon` | 7 pass | Canon table well formed; Python/JSON renderings current. Not run in CI. |
 | Rust `core_operad_theory` lib | 72 pass, 2 fail | Rename slip in two expected strings (fix held back, below). |
-| Rust `core_operad_theory` `canonical_parity` | 3 pass, **5 fail** | Frozen Python fixture was hashed with the old `omega.*` domain strings; the Rust kernel now hashes `core.*`, so every canonical ID changed. Not fixed: needs a decision (see gaps). |
+| Rust `core_operad_theory` `canonical_parity` | 3 pass, **5 fail** | Frozen Python fixture was hashed with the pre-rename domain strings; the Rust kernel now hashes `core.*`, so every canonical ID changed. Not fixed: needs a decision (see gaps). |
 | Rust `core_operads` | 56 pass | |
 | Python `operads/tests` + operad-using `pfp/tests` | 1,853 pass, 297 fail, 23 errors | About 195 need engine files absent from this repo (the `core_symbol_game` binary, `.agents/`, `engine/crates_rs/`); 13 are API drift (`persist_bout_run_folder` signature); 7 need a real OpenSSH signer; the rest are mixed. CI (`operad_gates.yml`) runs 5 of these test files. |
 | Python workflow families + `pfp/workflows` | all pass but 1 | `test_standalone::test_missing_optional_native_budget_is_a_typed_refusal` (message regex). |
@@ -113,6 +113,10 @@ are offline fixtures. Regenerate with `python dag/operad_coverage.py`
 
 ## Proposed workflows (not built)
 
+Superseded on 2026-11-14 by the redesign in
+[`docs/plans/operads_redesign.md`](../docs/plans/operads_redesign.md): checks move to
+Rust, and gaps 1 to 3 have a first fix in `code/rust/pfp_operads`.
+
 - **Failure-to-antibody loop.** Read frozen failure records from WF1-WF5 and
   WF52 runs, classify them with WF14, write each admitted antibody or
   anti-skill to one typed, hash-chained failure ledger with its DDC trace, and
@@ -138,7 +142,7 @@ grandfathered only while its bytes are unchanged; editing it needs a completed
 score first. They are listed here so a scoring pass can apply them.
 
 - `code/rust/core_operad_theory/src/kernel/canonical.rs` (L4D): two unit tests
-  still expect the pre-rename `"domain":"omega.test"`; the code under test now
+  still expect the pre-rename test domain; the code under test now
   writes `core.test`. Change the expected strings to `core.test` and both pass
   (verified: 74/74).
 - `operads/tests/unit/test_prompt_hierarchy.py` and

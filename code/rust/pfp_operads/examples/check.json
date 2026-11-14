@@ -1,0 +1,25 @@
+{
+  "colour_type": "prompt_colour",
+  "operations": [
+    {
+      "id": "sum",
+      "sources": ["RationalValue", "RationalValue"],
+      "target": "TargetResult",
+      "body": "sum",
+      "variant": "Symmetric",
+      "cost": 1
+    },
+    {
+      "id": "explain",
+      "sources": ["TargetResult"],
+      "target": "RawTextSpan"
+    }
+  ],
+  "ddc_moves": [
+    {"id": "m1", "op": "C"},
+    {"id": "m2", "op": "T", "operad_id": "sum"}
+  ],
+  "checks": [
+    {"operation": "sum", "inputs": [17, 21], "expected": 38}
+  ]
+}

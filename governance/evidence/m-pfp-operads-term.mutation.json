@@ -1,0 +1,143 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/term.rs",
+  "target_sha256": "41e80380804bcb6fb356d9ad46f49c50dc92da66bd0026248741b0bb9d83a232",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 21,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "colour type lookup inverted",
+      "old": "            .find(|known| **known == colour_type)",
+      "new": "            .find(|known| **known != colour_type)",
+      "outcome": "killed"
+    },
+    {
+      "name": "colour name lookup inverted",
+      "old": "            .find(|known| **known == name)",
+      "new": "            .find(|known| **known != name)",
+      "outcome": "killed"
+    },
+    {
+      "name": "sum starts at one",
+      "old": "(Body::Sum, _) => fold(&integers(args)?, 0, i64::checked_add)",
+      "new": "(Body::Sum, _) => fold(&integers(args)?, 1, i64::checked_add)",
+      "outcome": "killed"
+    },
+    {
+      "name": "product starts at zero",
+      "old": "fold(&integers(args)?, 1, i64::checked_mul)",
+      "new": "fold(&integers(args)?, 0, i64::checked_mul)",
+      "outcome": "killed"
+    },
+    {
+      "name": "product becomes sum",
+      "old": "fold(&integers(args)?, 1, i64::checked_mul)",
+      "new": "fold(&integers(args)?, 1, i64::checked_add)",
+      "outcome": "killed"
+    },
+    {
+      "name": "difference becomes sum",
+      "old": ".checked_sub(*right)",
+      "new": ".checked_add(*right)",
+      "outcome": "killed"
+    },
+    {
+      "name": "sum-list becomes product",
+      "old": "fold(&integers(items)?, 0, i64::checked_add)",
+      "new": "fold(&integers(items)?, 0, i64::checked_mul)",
+      "outcome": "killed"
+    },
+    {
+      "name": "blank name accepted",
+      "old": "        if name.trim().is_empty() {",
+      "new": "        if false && name.trim().is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "body arity check inverted",
+      "old": "            .is_some_and(|arity| arity != sources.len())",
+      "new": "            .is_some_and(|arity| arity == sources.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "identity may change colour",
+      "old": "sources.first() != Some(&target)",
+      "new": "sources.first() == Some(&target)",
+      "outcome": "killed"
+    },
+    {
+      "name": "identity has a cost",
+      "old": "            cost: 0,",
+      "new": "            cost: 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "graft takes the next leaf",
+      "old": "            (Term::Leaf(colour), Some(0)) => {",
+      "new": "            (Term::Leaf(colour), Some(1)) => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "graft ignores the colour",
+      "old": "                if inner.target() == colour {",
+      "new": "                if inner.target() == colour || true {",
+      "outcome": "killed"
+    },
+    {
+      "name": "graft inverts the colour test",
+      "old": "                if inner.target() == colour {",
+      "new": "                if inner.target() != colour {",
+      "outcome": "killed"
+    },
+    {
+      "name": "graft does not count down",
+      "old": "                *remaining = Some(left - 1);",
+      "new": "                *remaining = Some(left);",
+      "outcome": "killed"
+    },
+    {
+      "name": "cost drops the children",
+      "old": "                    total.checked_add(child.cost().ok()?)",
+      "new": "                    total.checked_add(child.cost().ok()? * 0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "cost wraps instead of refusing",
+      "old": "                    total.checked_add(child.cost().ok()?)",
+      "new": "                    Some(total.wrapping_add(child.cost().ok()?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra inputs accepted",
+      "old": "            Some(_) => Err(Refusal::new(\"ARITY\", \"more inputs than open leaves\")),",
+      "new": "            Some(_) => Ok(value),",
+      "outcome": "killed"
+    },
+    {
+      "name": "normalise keeps identities",
+      "old": "                (Body::Identity, [only]) => only.normalise(),",
+      "new": "                (Body::Identity, [only]) if false => only.normalise(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "Difference arity is one",
+      "old": "            Body::Difference => Some(2),",
+      "new": "            Body::Difference => Some(1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "difference accepts lists",
+      "old": "            (Body::Difference, [_, _]) => Err(Refusal::new(",
+      "new": "            (Body::Difference, [_, _]) if false => Err(Refusal::new(",
+      "outcome": "killed"
+    }
+  ]
+}

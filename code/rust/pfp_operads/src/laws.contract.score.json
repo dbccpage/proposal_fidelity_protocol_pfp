@@ -1,0 +1,109 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/laws.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/laws.rs",
+      "language": "Rust",
+      "sha256": "5fbf7dfd00ec8ef5a9b744e8998c1b2e8f8427c79532dfb6806d097f9c1164b5"
+    },
+    "contract_urn": "urn:pfp-operads:laws:v1",
+    "symbols": [
+      "MAX_CHECKS",
+      "Panel",
+      "compare",
+      "composition_defect",
+      "sequential",
+      "parallel",
+      "Violation",
+      "LawReport",
+      "run_battery",
+      "run_battery_within"
+    ],
+    "owned_invariants": [
+      "Two terms agree only if their values on every panel assignment, their costs and their normal-form trees all agree.",
+      "The battery checks sequential and parallel associativity, both units, composition against a two-step run, and symmetry only where it is declared.",
+      "A battery over the bound is refused as BATTERY_TOO_LARGE, never truncated silently.",
+      "A panel with no sample for a needed colour is refused as NO_SAMPLES."
+    ],
+    "boundaries": [
+      "A pass covers the supplied operations on the supplied panel; it is not a proof for all terms.",
+      "Two refusals count as equal outcomes whatever their codes, because the two runs meet errors in different orders."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/laws.rs",
+      "language": "Rust",
+      "sha256": "5fbf7dfd00ec8ef5a9b744e8998c1b2e8f8427c79532dfb6806d097f9c1164b5"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed vocabularies from the canon, checked arithmetic, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact profile: comparisons are on exact values and checked costs; slot arithmetic for the parallel law is bounded by the arity already checked. Not B: the law statements are tested on finite panels only, with no Lean counterpart yet.",
+      "G3": "Refusals are typed; one modulo index and one swap are bounds-justified in comments. Not B: panic-freedom is tested, not proven.",
+      "G4": "16 law tests, including a false symmetry claim, a value/cost/tree disagreement each seen by compare, the bound, and panel rotation. The one survivor disables the composite-versus-two-step value comparison, which cannot fire while substitute and eval are correct. clippy -D warnings and rustfmt pass. Lexical mutation campaign R = 22/23. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "lizard: worst cyclomatic 15, nesting 4; ceiling B. Cognitive complexity is not measured for Rust; complexipy was stubbed for the metrics run because it only reads .py files."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T08:36:12Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-test.run.json",
+        "sha256": "a98628c622710b3433ac689084a9393ca7f394d014d35a58ad140c96a0ac3523",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-clippy.run.json",
+        "sha256": "b73240025baeebf5e429e6c5cbefadab2e5d0efe4179bb490bcf8f2b7d821666",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-fmt.run.json",
+        "sha256": "51fd4d11c9b69b408b5a92411dfd070c9a2830397b43c963872a75b4c20d6739",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-metrics.run.json",
+        "sha256": "59cf7a252170a119e7410df970e38fa653699d5a3ca9af18cc5d4e73bb688c8e",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-metrics.json",
+        "sha256": "b28e4ee0fe0b90ebe32e55eeac9cabb6abf278d16e8744c2a8c3e16a7190419d",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 22,
+      "survived": 1,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.9565217391304348,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-laws.mutation.json",
+        "sha256": "9091fc4157ff8ba75d927409d8e32ba2c0fe9940c9ef9b46de3ebbee52992013",
+        "note": "lexical campaign, 23 one-line mutants, crate tests as oracle"
+      }
+    }
+  },
+  "history": []
+}

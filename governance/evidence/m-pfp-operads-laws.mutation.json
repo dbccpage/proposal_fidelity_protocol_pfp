@@ -1,0 +1,156 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/laws.rs",
+  "target_sha256": "5fbf7dfd00ec8ef5a9b744e8998c1b2e8f8427c79532dfb6806d097f9c1164b5",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 22,
+    "survived": 1,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "panel rounds use the shortest column",
+      "old": "            .max()",
+      "new": "            .min()",
+      "outcome": "killed"
+    },
+    {
+      "name": "panel does not rotate",
+      "old": "samples[(round + leaf) % samples.len()].clone()",
+      "new": "samples[round % samples.len()].clone()",
+      "outcome": "killed"
+    },
+    {
+      "name": "compare ignores values",
+      "old": "        if outcome(left, &inputs) != outcome(right, &inputs) {",
+      "new": "        if false && outcome(left, &inputs) != outcome(right, &inputs) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "compare ignores cost",
+      "old": "    if left.cost()? != right.cost()? {",
+      "new": "    if false && left.cost()? != right.cost()? {",
+      "outcome": "killed"
+    },
+    {
+      "name": "compare ignores the tree",
+      "old": "    if left.normalise() != right.normalise() {",
+      "new": "    if false && left.normalise() != right.normalise() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "two-step run feeds the wrong span",
+      "old": "inputs.get(slot..end)?",
+      "new": "inputs.get(..end - slot)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "two-step run drops the prefix",
+      "old": "    let mut fed = inputs.get(..slot)?.to_vec();",
+      "new": "    let mut fed = Vec::<Value>::new();",
+      "outcome": "killed"
+    },
+    {
+      "name": "composition cost not checked",
+      "old": "    if outer.cost()?.checked_add(inner.cost()?) != Some(whole.cost()?) {",
+      "new": "    if false && outer.cost()?.checked_add(inner.cost()?) != Some(whole.cost()?) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "composition values not checked",
+      "old": "        if whole.eval(&inputs).ok() != in_two_steps(outer, slot, inner, &inputs) {",
+      "new": "        if false && whole.eval(&inputs).ok() != in_two_steps(outer, slot, inner, &inputs) {",
+      "note": "Unobservable while substitute and eval are correct: the comparison guards against a later defect in either and cannot fire on the current code.",
+      "outcome": "survived"
+    },
+    {
+      "name": "sequential right side uses slot i",
+      "old": "    let right = theta.substitute(i, &phi)?.substitute(i + j, &psi)?;",
+      "new": "    let right = theta.substitute(i, &phi)?.substitute(i, &psi)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "parallel allows i == k",
+      "old": "    if i >= k {",
+      "new": "    if i > k {",
+      "outcome": "killed"
+    },
+    {
+      "name": "parallel shift off by one",
+      "old": "    let shifted = k + phi.sources().len() - 1;",
+      "new": "    let shifted = k + phi.sources().len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "parallel left side plugs phi first",
+      "old": "    let left = theta.substitute(k, &psi)?.substitute(i, &phi)?;",
+      "new": "    let left = theta.substitute(i, &phi)?.substitute(k, &psi)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "battery bound off by one",
+      "old": "        if self.compared() >= self.limit {",
+      "new": "        if self.compared() > self.limit {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unit not counted",
+      "old": "            \"unit\" => self.unit += 1,",
+      "new": "            \"unit\" => self.unit += 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "sequential not counted",
+      "old": "            \"sequential_associativity\" => self.sequential += 1,",
+      "new": "            \"sequential_associativity\" => self.sequential += 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "fitting ignores colours",
+      "old": "        .filter(move |candidate| theta.sources().get(slot) == Some(candidate.target()))",
+      "new": "        .filter(move |candidate| theta.sources().get(slot) == Some(candidate.target()) || true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "symmetry checked for planar operations",
+      "old": "    if theta.variant() != Variant::Symmetric {",
+      "new": "    if theta.variant() == Variant::Symmetric {",
+      "outcome": "killed"
+    },
+    {
+      "name": "symmetry swaps nothing",
+      "old": "            swapped.swap(slot, slot + 1);",
+      "new": "            swapped.swap(slot, slot);",
+      "outcome": "killed"
+    },
+    {
+      "name": "symmetry ignores colour boundary",
+      "old": "        if left != right {\n            continue;",
+      "new": "        if false && left != right {\n            continue;",
+      "outcome": "killed"
+    },
+    {
+      "name": "parallel pairs start at i",
+      "old": "                for k in i + 1..theta.sources().len() {",
+      "new": "                for k in i + 2..theta.sources().len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "composition not counted",
+      "old": "    report.composition += 1;",
+      "new": "    report.composition += 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "two-step run drops the suffix",
+      "old": "    fed.extend_from_slice(inputs.get(end..)?);",
+      "new": "    let _ = inputs.get(end..)?;",
+      "outcome": "killed"
+    }
+  ]
+}

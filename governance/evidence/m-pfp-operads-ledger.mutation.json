@@ -1,0 +1,174 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/ledger.rs",
+  "target_sha256": "3ab517976a8825412725954cba51004049abb069ee495a99d01334ad58195c2e",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 25,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "blank field accepted",
+      "old": "    if text.trim().is_empty() {",
+      "new": "    if false && text.trim().is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty id list accepted",
+      "old": "    if ids.is_empty() || set.len() != ids.len() {",
+      "new": "    if set.len() != ids.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated ids accepted",
+      "old": "    if ids.is_empty() || set.len() != ids.len() {",
+      "new": "    if ids.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash length not checked",
+      "old": "    text.len() == 64",
+      "new": "    text.len() >= 63",
+      "outcome": "killed"
+    },
+    {
+      "name": "uppercase hex accepted",
+      "old": "            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))",
+      "new": "            .all(|b| b.is_ascii_hexdigit())",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash domain dropped",
+      "old": "    hasher.update(DOMAIN.as_bytes());",
+      "new": "    hasher.update(b\"\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "admitted lists candidates",
+      "old": "            .filter(|(_, rule)| rule.status == Status::Admitted)",
+      "new": "            .filter(|(_, rule)| rule.status != Status::Retired)",
+      "outcome": "killed"
+    },
+    {
+      "name": "retired rules stay usable",
+      "old": "            Some(rule) if rule.status != Status::Retired => Ok(rule),",
+      "new": "            Some(rule) => Ok(rule),",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate failure accepted",
+      "old": "        if self.failures.contains(id) {",
+      "new": "        if false && self.failures.contains(id) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "anti-skill classes dropped",
+      "old": "            .chain(canon_values(\"anti_skill_failure_class\")?)",
+      "new": "            .chain(canon_values(\"capability_kind\")?)",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty DDC trace accepted",
+      "old": "        if ddc_trace.is_empty() || !lawful {",
+      "new": "        if !lawful {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unlawful DDC letter accepted",
+      "old": "        if ddc_trace.is_empty() || !lawful {",
+      "new": "        if ddc_trace.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate candidate accepted",
+      "old": "                if self.rules.contains_key(id) {",
+      "new": "                if false && self.rules.contains_key(id) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidate from unknown failure accepted",
+      "old": "                if !derived_from.is_subset(&self.failures) {",
+      "new": "                if false && !derived_from.is_subset(&self.failures) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "train/test overlap accepted",
+      "old": "                if !cases.is_disjoint(&rule.derived_from) {",
+      "new": "                if false && !cases.is_disjoint(&rule.derived_from) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "count check uses the smaller number",
+      "old": "                if (*baseline_correct).max(*treated_correct) as usize > cases.len() {",
+      "new": "                if (*baseline_correct).min(*treated_correct) as usize > cases.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a tie counts as a gain",
+      "old": "                let passed = treated_correct > baseline_correct && *clean_panel_hits == 0;",
+      "new": "                let passed = treated_correct >= baseline_correct && *clean_panel_hits == 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "hits on clean work ignored",
+      "old": "                let passed = treated_correct > baseline_correct && *clean_panel_hits == 0;",
+      "new": "                let passed = treated_correct > baseline_correct;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a failed trial demotes an admitted rule",
+      "old": "                if rule.status != Status::Admitted {",
+      "new": "                if true {",
+      "outcome": "killed"
+    },
+    {
+      "name": "admission ignores the trial",
+      "old": "                if rule.status != Status::Candidate || rule.last_trial != Some((*trial, true)) {",
+      "new": "                if rule.status != Status::Candidate {",
+      "outcome": "killed"
+    },
+    {
+      "name": "admission accepts a failed trial",
+      "old": "rule.last_trial != Some((*trial, true))",
+      "new": "rule.last_trial.map(|last| last.0) != Some(*trial)",
+      "equivalent": "A rule has status candidate after a trial only if that trial passed (a failed trial sets rejected in the same step), so with the status test in place the pass flag of the latest trial is implied.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "re-admission allowed",
+      "old": "                if rule.status != Status::Candidate || rule.last_trial != Some((*trial, true)) {",
+      "new": "                if rule.last_trial != Some((*trial, true)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "first entry not linked to genesis",
+      "old": "            .map_or(GENESIS, |entry| entry.hash.as_str())",
+      "new": "            .map_or(\"\", |entry| entry.hash.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "entries not linked",
+      "old": "            .map_or(GENESIS, |entry| entry.hash.as_str())",
+      "new": "            .map_or(GENESIS, |_| GENESIS)",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay does not compare",
+      "old": "            if *replayed != stored {",
+      "new": "            if false && *replayed != stored {",
+      "outcome": "killed"
+    },
+    {
+      "name": "sequence starts at one",
+      "old": "        let seq = self.entries.len() as u64;",
+      "new": "        let seq = self.entries.len() as u64 + 1;",
+      "outcome": "killed"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/lib.rs",
+  "target_sha256": "275dc50601f2dfc63b23fa18865407b8e3ad718215dd4da7ffeb2987b6c5ffb3",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "display drops the code",
+      "old": "write!(f, \"{}: {}\", self.code, self.message)",
+      "new": "write!(f, \"{}\", self.message)",
+      "outcome": "killed"
+    },
+    {
+      "name": "display swaps code and message",
+      "old": "write!(f, \"{}: {}\", self.code, self.message)",
+      "new": "write!(f, \"{}: {}\", self.message, self.code)",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal drops its message",
+      "old": "            message: message.into(),",
+      "new": "            message: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing canon type gets another code",
+      "old": "Refusal::new(\"CANON_TYPE_MISSING\", format!",
+      "new": "Refusal::new(\"BAD_REQUEST\", format!",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing canon type is not named",
+      "old": "format!(\"canon has no type {type_id}\")",
+      "new": "format!(\"canon has no type\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "canon values come back empty",
+      "old": "        .map(|entry| entry.values)",
+      "new": "        .map(|_| &[][..])",
+      "outcome": "killed"
+    }
+  ]
+}

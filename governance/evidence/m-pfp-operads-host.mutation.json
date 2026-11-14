@@ -1,0 +1,125 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/host.rs",
+  "target_sha256": "9036ef33875bf3311e9df837d0ddf75f30298cb6c44b1994d02bdb7388c06863",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 18,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "missing body defaults to sum",
+      "old": "            self.body.unwrap_or(Body::Opaque),",
+      "new": "            self.body.unwrap_or(Body::Sum),",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing variant defaults to symmetric",
+      "old": "            self.variant.unwrap_or(Variant::Planar),",
+      "new": "            self.variant.unwrap_or(Variant::Symmetric),",
+      "outcome": "killed"
+    },
+    {
+      "name": "declared cost dropped",
+      "old": "            self.cost,\n        )",
+      "new": "            0,\n        )",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate operation accepted",
+      "old": "        if !seen.insert(wire.id.as_str()) {\n            findings.push(finding(\n                \"DUPLICATE_OPERATION\"",
+      "new": "        if false && !seen.insert(wire.id.as_str()) {\n            findings.push(finding(\n                \"DUPLICATE_OPERATION\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "first duplicate stays typed",
+      "old": "            typed.remove(&wire.id);",
+      "new": "            let _ = &typed;",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown DDC letter accepted",
+      "old": "        if DdcOp::LETTERS.contains(&step.op.as_str()) {",
+      "new": "        if true || DdcOp::LETTERS.contains(&step.op.as_str()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace omits letters",
+      "old": "            trace.push_str(&step.op);",
+      "new": "            trace.push_str(\"\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown operation reference accepted",
+      "old": "            .is_some_and(|id| !known.contains_key(id))",
+      "new": "            .is_some_and(|id| known.contains_key(id) && false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "wrong answer accepted",
+      "old": "            Ok(value) if value == check.expected => {}",
+      "new": "            Ok(_) if true => {}",
+      "outcome": "killed"
+    },
+    {
+      "name": "checked operations not recorded",
+      "old": "        checked.insert(check.operation.clone());",
+      "new": "        let _ = &mut checked;",
+      "outcome": "killed"
+    },
+    {
+      "name": "move findings blame operations",
+      "old": "        .filter(|found| found.scope == OPERATION)",
+      "new": "        .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "bodiless operation counted verified",
+      "old": "                    if operation.body() != Body::Opaque && checked.contains(&wire.id) =>",
+      "new": "                    if checked.contains(&wire.id) || operation.body() != Body::Opaque =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "unchecked operation counted verified",
+      "old": "                    if operation.body() != Body::Opaque && checked.contains(&wire.id) =>",
+      "new": "                    if operation.body() != Body::Opaque =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted despite findings",
+      "old": "        accepted: findings.is_empty(),",
+      "new": "        accepted: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "law violations pass",
+      "old": "            Ok((report.holds(), encode(&report)?))",
+      "new": "            Ok((true, encode(&report)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "refused candidates pass",
+      "old": "            Ok((report.accepted, encode(&report)?))",
+      "new": "            Ok((true, encode(&report)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "pass and fail swapped",
+      "old": "        Ok((true, result)) => Outcome::Pass { result },\n        Ok((false, result)) => Outcome::Fail { result },",
+      "new": "        Ok((false, result)) => Outcome::Pass { result },\n        Ok((true, result)) => Outcome::Fail { result },",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate rows listed twice",
+      "old": "        .filter(|wire| listed.insert(wire.id.as_str()))",
+      "new": "        .filter(|wire| listed.insert(wire.id.as_str()) || true)",
+      "outcome": "killed"
+    }
+  ]
+}
