@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T13:29:21.349134+00:00",
+  "generated_at_utc": "2026-11-14T14:14:30.486023+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10871,6 +10871,23 @@
       ],
       "limits": "Applies to finite graphs with positive rational penalties; changing reports arbitrarily outside im B changes the quotient class and problem.",
       "atlas_ledger_id": "ATL-D-PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM"
+    },
+    {
+      "id": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A directed cycle has minimum min_e w_e |sum_e c_e|; the manuscript triangle costs 6 at zero, 3 at an optimum, and has dual value 3.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite directed cycle carrier with positive rational edge penalties and exact rational arithmetic.",
+        "Telescoping potential sum along closed directed cycle is zero."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/demo1_holonomy.py"
+      ],
+      "limits": "Applies to finite directed cycles with strictly positive penalties; does not assert residual uniqueness when multiple edges achieve minimum penalty, nor does cycle rank bound optimal residual face dimension.",
+      "atlas_ledger_id": "ATL-D-PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA"
     },
     {
       "id": "PAPER002-FINITE-SIGNED-BALANCE",
@@ -35622,6 +35639,18 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-49d613b2539cec93",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite directed cycle carrier with positive rational edge penalties and exact rational arithmetic.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e3f1a3885d6a90be",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Telescoping potential sum along closed directed cycle is zero.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-168b6c31415d60f5",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Declared vertices, edges and binary labels; trusted finite checker.",
@@ -42968,6 +42997,13 @@
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/lean4/OddCycleObstruction.lean",
       "sha256": "ecb27ef446280e15a2288d545f16e04ac9e2eaa91e859944459402bf34616d3f",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/demo1_holonomy.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/demo1_holonomy.py",
+      "sha256": "aec3a39d90e033806d6dd9e9c32532b0fcb3bcf9806f037c4efb3bbc5b201f76",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -50620,14 +50656,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER000-CYCLE-CAPSTONE",
-          "PAPER004-WEIGHTED-CYCLE"
+          "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA"
         ],
-        "relation": "supports",
-        "note": "The nodes prove the cycle formula min_e w_e |sum c_e|; the specific manuscript triangle values 6, 3 and 3 are not recorded.",
-        "proposed_derivation_file": "dag/derivations/atl_p001_004.md"
+        "relation": null,
+        "note": "A directed cycle has minimum min_e w_e |sum_e c_e|; the manuscript triangle costs 6 at zero, 3 at an optimum, and has dual value 3; certified by PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA."
       }
     },
     {
@@ -69439,6 +69473,16 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-49d613b2539cec93",
+      "to": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e3f1a3885d6a90be",
+      "to": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-168b6c31415d60f5",
       "to": "PAPER002-FINITE-SIGNED-BALANCE",
       "kind": "requires"
@@ -78417,6 +78461,24 @@
       "to": "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+      "to": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
+      "to": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/demo1_holonomy.py",
+      "to": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/demo1_holonomy.py"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py",
@@ -97572,15 +97634,9 @@
       "citation": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper_claim_ledger.md:16"
     },
     {
-      "from": "PAPER000-CYCLE-CAPSTONE",
+      "from": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
       "to": "ATL-P001-004",
-      "kind": "partially_supports",
-      "citation": "atlas/atlas_claim_matches.json"
-    },
-    {
-      "from": "PAPER004-WEIGHTED-CYCLE",
-      "to": "ATL-P001-004",
-      "kind": "partially_supports",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -153384,8 +153440,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3595,
-    "edges": 3788,
+    "unique_nodes": 3599,
+    "edges": 3792,
     "acyclic": true
   }
 }
