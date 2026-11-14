@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/tests/host.rs",
       "language": "Rust",
-      "sha256": "61885ec3c240c261201f15f58bd2e80921033097a28fc41a646b355aaf705d22"
+      "sha256": "5106eda5b515741cec7fb83f75b2c4d29cd5f3f0dcaf077f55e137a15877e77c"
     },
     "contract_urn": "urn:pfp-operads:tests-host:v1",
     "symbols": [
@@ -30,10 +30,14 @@
       "the_command_appends_only_lawful_records_to_the_ledger_file",
       "defaults_are_planar_and_the_declared_cost_is_used",
       "neither_copy_of_a_duplicated_operation_stays_typed",
-      "the_shipped_examples_pass"
+      "the_shipped_examples_pass",
+      "stored_turn",
+      "stored_turns_and_loaded_seeds_are_reachable_through_respond",
+      "the_command_reads_stored_turns_and_loads_seeds_from_a_ledger_file"
     ],
     "owned_invariants": [
-      "Outcomes are asserted on the JSON a workflow would read, including exit codes of the built binary."
+      "Outcomes are asserted on the JSON a workflow would read, including exit codes of the built binary.",
+      "The stored-turn and loaded-seed commands are run through respond and through the built binary on files, from a first failure to an admitted rule, and the ledger file is asserted unchanged by every command but append."
     ],
     "boundaries": [
       "Test support only; no production path imports it."
@@ -45,7 +49,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/tests/host.rs",
       "language": "Rust",
-      "sha256": "61885ec3c240c261201f15f58bd2e80921033097a28fc41a646b355aaf705d22"
+      "sha256": "5106eda5b515741cec7fb83f75b2c4d29cd5f3f0dcaf077f55e137a15877e77c"
     },
     "profile": "Exact",
     "level": "L2",
@@ -61,42 +65,142 @@
       "G1": "Each test name states the behaviour it checks.",
       "G2": "Expected dispositions and counts follow from the request written in the test.",
       "G3": "Findings are asserted by code and scope.",
-      "G4": "All 12 pass in the recorded run; the crate suite they belong to killed 18 of 18 host mutants and 10 of 10 command-line mutants.",
-      "G5": "lizard: worst cyclomatic 4, nesting 1; ceiling A+. Cognitive complexity is not measured for Rust; complexipy was stubbed for the metrics run because it only reads .py files."
+      "G4": "All 14 pass in the recorded run; the crate suite they belong to killed 41 of 41 eligible host mutants and 27 of 27 eligible command-line mutants.",
+      "G5": "Measured worst cyclomatic 4, cognitive complexity is not measured for Rust, nesting 3; ceiling A+, recorded A."
     },
     "composite_grade": "C",
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T08:36:12Z",
+    "evaluation_timestamp": "2026-11-14T11:17:42Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-test.run.json",
-        "sha256": "a98628c622710b3433ac689084a9393ca7f394d014d35a58ad140c96a0ac3523",
-        "note": ""
+        "path": "governance/evidence/pfp-operads-v6-test.run.json",
+        "sha256": "0015073cbbd4f3cb71a51765a6ccd8e96f1ce21307d35dc85a893ccf1a61dbc1",
+        "note": "143 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-clippy.run.json",
-        "sha256": "b73240025baeebf5e429e6c5cbefadab2e5d0efe4179bb490bcf8f2b7d821666",
-        "note": ""
+        "path": "governance/evidence/pfp-operads-v6-clippy.run.json",
+        "sha256": "aec4e9e626e30e4c8b04b8e691152730e9fdbb1e9629cfb80f3c4025103af479",
+        "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-fmt.run.json",
-        "sha256": "51fd4d11c9b69b408b5a92411dfd070c9a2830397b43c963872a75b4c20d6739",
-        "note": ""
+        "path": "governance/evidence/pfp-operads-v6-fmt.run.json",
+        "sha256": "22353a3ef8d432002b2b4f873ced27261b5407a14b0c8309850e2644b6b2665e",
+        "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-metrics.run.json",
-        "sha256": "59cf7a252170a119e7410df970e38fa653699d5a3ca9af18cc5d4e73bb688c8e",
-        "note": ""
+        "path": "governance/evidence/pfp-operads-v6-metrics.run.json",
+        "sha256": "273342cfbdbee0e1cf5add613769ef5b3b0619f76d17ed8ddece27c29aa2f63d",
+        "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-metrics.json",
-        "sha256": "b28e4ee0fe0b90ebe32e55eeac9cabb6abf278d16e8744c2a8c3e16a7190419d",
-        "note": ""
+        "path": "governance/evidence/pfp-operads-v6-metrics.json",
+        "sha256": "4f688b29cf8d50a27c6a468c7882cf8bfbc736317214f74fc958e01364fe4dd8",
+        "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": null
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-11-14T11:17:44.725418Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/host.rs",
+          "language": "Rust",
+          "sha256": "61885ec3c240c261201f15f58bd2e80921033097a28fc41a646b355aaf705d22"
+        },
+        "contract_urn": "urn:pfp-operads:tests-host:v1",
+        "symbols": [
+          "sum_request",
+          "codes",
+          "dispositions",
+          "a_candidate_with_a_body_and_a_passing_host_check_is_verified",
+          "a_wrong_answer_or_a_colour_outside_the_canon_is_refused",
+          "ids_letters_and_references_are_checked",
+          "requests_are_closed_and_typed",
+          "laws_request",
+          "the_law_battery_runs_from_a_request",
+          "failure_record",
+          "status",
+          "respond_reports_pass_fail_and_refused",
+          "the_ledger_is_reachable_through_respond",
+          "scratch",
+          "run",
+          "the_command_exits_0_1_or_2_and_prints_one_outcome",
+          "the_command_appends_only_lawful_records_to_the_ledger_file",
+          "defaults_are_planar_and_the_declared_cost_is_used",
+          "neither_copy_of_a_duplicated_operation_stays_typed",
+          "the_shipped_examples_pass"
+        ],
+        "owned_invariants": [
+          "Outcomes are asserted on the JSON a workflow would read, including exit codes of the built binary."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/host.rs",
+          "language": "Rust",
+          "sha256": "61885ec3c240c261201f15f58bd2e80921033097a28fc41a646b355aaf705d22"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the behaviour it checks.",
+          "G2": "Expected dispositions and counts follow from the request written in the test.",
+          "G3": "Findings are asserted by code and scope.",
+          "G4": "All 12 pass in the recorded run; the crate suite they belong to killed 18 of 18 host mutants and 10 of 10 command-line mutants.",
+          "G5": "lizard: worst cyclomatic 4, nesting 1; ceiling A+. Cognitive complexity is not measured for Rust; complexipy was stubbed for the metrics run because it only reads .py files."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T08:36:12Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-test.run.json",
+            "sha256": "a98628c622710b3433ac689084a9393ca7f394d014d35a58ad140c96a0ac3523",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pfp-operads-clippy.run.json",
+            "sha256": "b73240025baeebf5e429e6c5cbefadab2e5d0efe4179bb490bcf8f2b7d821666",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pfp-operads-fmt.run.json",
+            "sha256": "51fd4d11c9b69b408b5a92411dfd070c9a2830397b43c963872a75b4c20d6739",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pfp-operads-metrics.run.json",
+            "sha256": "59cf7a252170a119e7410df970e38fa653699d5a3ca9af18cc5d4e73bb688c8e",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pfp-operads-metrics.json",
+            "sha256": "b28e4ee0fe0b90ebe32e55eeac9cabb6abf278d16e8744c2a8c3e16a7190419d",
+            "note": ""
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
 }

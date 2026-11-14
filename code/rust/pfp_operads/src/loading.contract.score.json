@@ -1,0 +1,108 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/loading.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/loading.rs",
+      "language": "Rust",
+      "sha256": "6f0dc70df42e07330ee94baf6472353cdfc544573fda17a295f2bbee80d0f4de"
+    },
+    "contract_urn": "urn:pfp-operads:loading:v1",
+    "symbols": [
+      "HEAD_DIGITS",
+      "Loaded",
+      "load",
+      "LoadCheck",
+      "loaded"
+    ],
+    "owned_invariants": [
+      "With no rule to load, the seed comes back byte for byte and its two hashes are equal.",
+      "The rules written are exactly the ledger's admitted rules in id order, followed by the one rule under trial when the request names it. A proposed rule is never loaded unless it is named as under trial.",
+      "The rules follow the seed after one blank line, under a line that carries the first 16 hex digits of the ledger head, one line per rule: its id in brackets, then its constraint.",
+      "A rule whose id or constraint contains a line feed or a carriage return is refused as RULE_NOT_ONE_LINE, so a rule cannot write a second rule's line.",
+      "The account returned with the seed states the full ledger head, the entry count, the rules, the rule under trial and the SHA-256 of the base seed and of the loaded seed.",
+      "loaded recomputes the seed from the base seed and the ledger as it stood at the stated head and accepts only an exact match. It keeps answering the same for an old head after the ledger grows.",
+      "The ledger is replayed before anything is read from it; an edited ledger is refused as CHAIN_BROKEN."
+    ],
+    "boundaries": [
+      "A loaded rule is text after the seed. Nothing here shows that a model obeys it.",
+      "The seed names 16 hex digits of the head; the full head is in the account, and loaded compares against the full head.",
+      "loaded shows that a seed is what the ledger loads. It does not show that a run used that seed; the workflow's replay binds a run to its task."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/loading.rs",
+      "language": "Rust",
+      "sha256": "6f0dc70df42e07330ee94baf6472353cdfc544573fda17a295f2bbee80d0f4de"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: string construction and equality only. Hashes are SHA-256 of UTF-8 text, asserted against hashes the tests compute themselves. Not B: the hash library is trusted.",
+      "G3": "Typed refusals: BAD_REQUEST, RULE_NOT_ONE_LINE, NOT_ON_TRIAL, UNKNOWN_CANDIDATE, UNKNOWN_LEDGER_HEAD and every ledger replay refusal. Requests are closed. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "9 loading tests assert the loaded seed as exact text, the whole account, the rule under trial, each refusal, a check that holds after the ledger grows and each way a seed can fail to match; the host tests run both commands through respond, the built binary and the shipped examples. Mutation campaign R = 38/38. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 6, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T11:17:42Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v6-test.run.json",
+        "sha256": "0015073cbbd4f3cb71a51765a6ccd8e96f1ce21307d35dc85a893ccf1a61dbc1",
+        "note": "143 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-clippy.run.json",
+        "sha256": "aec4e9e626e30e4c8b04b8e691152730e9fdbb1e9629cfb80f3c4025103af479",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-fmt.run.json",
+        "sha256": "22353a3ef8d432002b2b4f873ced27261b5407a14b0c8309850e2644b6b2665e",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.run.json",
+        "sha256": "273342cfbdbee0e1cf5add613769ef5b3b0619f76d17ed8ddece27c29aa2f63d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.json",
+        "sha256": "4f688b29cf8d50a27c6a468c7882cf8bfbc736317214f74fc958e01364fe4dd8",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 38,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-loading.mutation.json",
+        "sha256": "960b29ce81bfa24df9dbcdd41984f676e42c8a2ae51a7f54c8671ca58ae17893",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 38 mutants"
+      }
+    }
+  },
+  "history": []
+}

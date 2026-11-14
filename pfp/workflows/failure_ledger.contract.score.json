@@ -1,0 +1,108 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp/workflows/failure_ledger.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp/workflows/failure_ledger.py",
+      "language": "Python",
+      "sha256": "2a47df131878f9ebeeb77b8f12890aa453e434949995e85cf1aabe8d6fe8eae3"
+    },
+    "contract_urn": "urn:pfp-workflows:pfp-workflows-failure_ledger-py:v1",
+    "symbols": [
+      "TASK",
+      "RECEIPT",
+      "LOAD_RECEIPT_SUFFIX",
+      "HELD",
+      "read",
+      "stored_turn",
+      "turns",
+      "ledger_call",
+      "load_receipt",
+      "record",
+      "load",
+      "check",
+      "trial",
+      "parser",
+      "answer",
+      "main"
+    ],
+    "owned_invariants": [
+      "This module decides nothing about an answer: whether a turn failed, what a seed loads, whether a seed matches and how a trial went are the host's outcomes, passed through whole.",
+      "A turn is a folder that holds both task.json and receipt.json: the run folder itself or one of its children. Both files reach the host as they were read.",
+      "A record is appended only from a record the host wrote in the same call, and only the host writes the ledger file.",
+      "load writes the task with the host's seed and, beside it, the host's account plus the base seed. It writes neither file unless the host passed, and it never overwrites a file.",
+      "The command exits 0 when the host passed every decisive outcome, 1 when it did not, and 2 with nothing on standard output when the host did not run."
+    ],
+    "boundaries": [
+      "It branches only on the host's status field, to decide whether there is a record to append or a file to write.",
+      "A run is named after its folder. Two runs in folders of the same name get the same failure id, and the ledger refuses the second.",
+      "It reads run folders and does not replay them; a workflow's own replay checks a run's custody.",
+      "WF5 refuses a task whose seed carries rules; that refusal is WF5's and is not worked around here."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp/workflows/failure_ledger.py",
+      "language": "Python",
+      "sha256": "2a47df131878f9ebeeb77b8f12890aa453e434949995e85cf1aabe8d6fe8eae3"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "A transport with one job: it finds a run's turn folders, hands their two files to the Rust host unread, and writes down the host's outcome. No verdict, comparison or count is made here, and a host that did not run gives no outcome.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module docstring states the role, the four commands and AuthorityEffect None; the contract names every exported symbol. Not B: no requirement-to-symbol trace beyond pfp/workflows/README.md and docs/plans/operads_redesign.md.",
+      "G2": "No arithmetic and no comparison of answers. Files are read with the strict JSON reader and written as canonical JSON.",
+      "G3": "A host that is missing or does not answer raises OperadHostError and the command exits 2; a host refusal is printed whole and exits 1. Files are opened for exclusive creation. Not B: unreadable or malformed run files raise the reader's own error rather than a code of this module.",
+      "G4": "9 tests in pfp/workflows/tests/test_failure_ledger.py drive every command on real WF1-WF5 run folders, through main, directly and once as a module. The first pass left six survivors (required arguments, the module entry point and the output format); a test now asserts each. Not B: one generated campaign, no property tests. Mutation campaign R = 34/34.",
+      "G5": "Measured worst cyclomatic 7, cognitive 6, nesting 3; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T11:17:42Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/operad-host-workflow-tests-v6.run.json",
+        "sha256": "4b9aa33a920ebe8bd5867ec9181d8eed9758387a6e63b2485c9ec1d5cfd23ae7",
+        "note": "689 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.6.0; exact source inputs bound. No live model performance claim."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.run.json",
+        "sha256": "273342cfbdbee0e1cf5add613769ef5b3b0619f76d17ed8ddece27c29aa2f63d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.json",
+        "sha256": "4f688b29cf8d50a27c6a468c7882cf8bfbc736317214f74fc958e01364fe4dd8",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 34,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-failure-ledger-py.mutation.json",
+        "sha256": "c06af16a938fdbe19a0541299c38f1a25e4df84872924809ed8bccce0b472785",
+        "note": "AST campaign, governance.tools.mutation, pytest as oracle; 34 mutants"
+      }
+    }
+  },
+  "history": []
+}

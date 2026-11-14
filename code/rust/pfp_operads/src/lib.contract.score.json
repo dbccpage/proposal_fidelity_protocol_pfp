@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/lib.rs",
       "language": "Rust",
-      "sha256": "e7094b481aca4ba22c11ee2f6a5647a5664880e80bc9cc901cfc60b21765745c"
+      "sha256": "99a755c5f4f56c85360b98b920333dce194c71aa9e5cc5a509ed7cc57f893a02"
     },
     "contract_urn": "urn:pfp-operads:lib:v1",
     "symbols": [
@@ -18,9 +18,11 @@
       "laws",
       "learning",
       "ledger",
+      "loading",
       "mining",
       "running",
       "term",
+      "turns",
       "Refusal",
       "Refusal::new",
       "canon_values"
@@ -39,7 +41,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/lib.rs",
       "language": "Rust",
-      "sha256": "e7094b481aca4ba22c11ee2f6a5647a5664880e80bc9cc901cfc60b21765745c"
+      "sha256": "99a755c5f4f56c85360b98b920333dce194c71aa9e5cc5a509ed7cc57f893a02"
     },
     "profile": "Non-Numeric",
     "level": "L4",
@@ -62,31 +64,31 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T10:39:32Z",
+    "evaluation_timestamp": "2026-11-14T11:17:42Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-v5-test.run.json",
-        "sha256": "d24976ad71618d7ae906357de3cbca2484addbf3d257209698d0301595f30ee9",
-        "note": "117 tests: pfp_operads and core_operad_canon, locked build."
+        "path": "governance/evidence/pfp-operads-v6-test.run.json",
+        "sha256": "0015073cbbd4f3cb71a51765a6ccd8e96f1ce21307d35dc85a893ccf1a61dbc1",
+        "note": "143 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-v5-clippy.run.json",
-        "sha256": "f424c6bab08e8e49af0145fba5a8b82d78da36288c141de01049f03745a9607b",
+        "path": "governance/evidence/pfp-operads-v6-clippy.run.json",
+        "sha256": "aec4e9e626e30e4c8b04b8e691152730e9fdbb1e9629cfb80f3c4025103af479",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-v5-fmt.run.json",
-        "sha256": "ba4662166f75a022bcc7eca23ee0cc87df06d2f826f2d5dbee77651753ca28ea",
+        "path": "governance/evidence/pfp-operads-v6-fmt.run.json",
+        "sha256": "22353a3ef8d432002b2b4f873ced27261b5407a14b0c8309850e2644b6b2665e",
         "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-v5-metrics.run.json",
-        "sha256": "c64f925ce96ad6ab9b0e7f64dde29e2167847314a98eebd23403c4c73c70389b",
+        "path": "governance/evidence/pfp-operads-v6-metrics.run.json",
+        "sha256": "273342cfbdbee0e1cf5add613769ef5b3b0619f76d17ed8ddece27c29aa2f63d",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v5-metrics.json",
-        "sha256": "21b436e07296cecdf333b73efb72baefe1c8f180e3f8b055cd903799bc8e1f92",
+        "path": "governance/evidence/pfp-operads-v6-metrics.json",
+        "sha256": "4f688b29cf8d50a27c6a468c7882cf8bfbc736317214f74fc958e01364fe4dd8",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
@@ -100,7 +102,7 @@
       "conservative_ratio": 1.0,
       "report": {
         "path": "governance/evidence/m-pfp-operads-lib.mutation.json",
-        "sha256": "cb88a099f96f50b71d2c67efa4ebc50dff5a9b1b6d519c12cb4fb8c9934b27bc",
+        "sha256": "2e58b9db90313d027c19d41bbcf578c427f62227bdb7de1d9a1920f7cd63e12b",
         "note": "lexical campaign of one-line mutants, crate tests as oracle; 6 mutants"
       }
     }
@@ -512,6 +514,112 @@
           "report": {
             "path": "governance/evidence/m-pfp-operads-lib.mutation.json",
             "sha256": "986d5f2644ac14aab82bb9caee21b4999722f02bf5d7969416fed034c39d2d8a",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 6 mutants"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-11-14T11:17:43.531447Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/lib.rs",
+          "language": "Rust",
+          "sha256": "e7094b481aca4ba22c11ee2f6a5647a5664880e80bc9cc901cfc60b21765745c"
+        },
+        "contract_urn": "urn:pfp-operads:lib:v1",
+        "symbols": [
+          "envelope",
+          "grounding",
+          "host",
+          "judge",
+          "laws",
+          "learning",
+          "ledger",
+          "mining",
+          "running",
+          "term",
+          "Refusal",
+          "Refusal::new",
+          "canon_values"
+        ],
+        "owned_invariants": [
+          "Every refusal carries a stable code and a sentence; Display prints code, colon, message.",
+          "Vocabularies are read from core_operad_canon; a type the canon lacks is refused as CANON_TYPE_MISSING, never defaulted."
+        ],
+        "boundaries": [
+          "AuthorityEffect None: the crate checks and records and admits nothing outside its own ledger."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/lib.rs",
+          "language": "Rust",
+          "sha256": "e7094b481aca4ba22c11ee2f6a5647a5664880e80bc9cc901cfc60b21765745c"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "No arithmetic. Canon lookups return the canon's own slices unchanged.",
+          "G3": "The one failure (a missing canon type) is a typed refusal; no panic path.",
+          "G4": "3 unit tests in the file plus the integration tests that depend on it. Mutation campaign R = 6/6. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T10:39:32Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v5-test.run.json",
+            "sha256": "d24976ad71618d7ae906357de3cbca2484addbf3d257209698d0301595f30ee9",
+            "note": "117 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v5-clippy.run.json",
+            "sha256": "f424c6bab08e8e49af0145fba5a8b82d78da36288c141de01049f03745a9607b",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v5-fmt.run.json",
+            "sha256": "ba4662166f75a022bcc7eca23ee0cc87df06d2f826f2d5dbee77651753ca28ea",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v5-metrics.run.json",
+            "sha256": "c64f925ce96ad6ab9b0e7f64dde29e2167847314a98eebd23403c4c73c70389b",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v5-metrics.json",
+            "sha256": "21b436e07296cecdf333b73efb72baefe1c8f180e3f8b055cd903799bc8e1f92",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 6,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-lib.mutation.json",
+            "sha256": "cb88a099f96f50b71d2c67efa4ebc50dff5a9b1b6d519c12cb4fb8c9934b27bc",
             "note": "lexical campaign of one-line mutants, crate tests as oracle; 6 mutants"
           }
         }

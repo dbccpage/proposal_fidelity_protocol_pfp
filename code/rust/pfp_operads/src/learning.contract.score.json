@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/learning.rs",
       "language": "Rust",
-      "sha256": "ba53f83c2d603b5f9d2f19a89e5241bf2decd86cef7874596072199bb8dcc22a"
+      "sha256": "90f906a1ee74b200483719f18b338d77314cd668495591637f1d35dc146e5c9f"
     },
     "contract_urn": "urn:pfp-operads:learning:v1",
     "symbols": [
@@ -25,7 +25,8 @@
       "evidence_sha256 is the SHA-256 of the domain tag, the checker, the case and the answer, each as given and each followed by a line feed, so the record is bound to what the host saw.",
       "A trial record's counts are the judge's own verdicts on the baseline and the treated answer of every case; a clean-panel hit is a case the baseline had right and the treated run did not.",
       "held_out lists the case ids in request order, and the per-case verdicts behind the counts are returned next to the record.",
-      "Requests are closed: a caller cannot supply a failure class, a verdict or a count."
+      "Requests are closed: a caller cannot supply a failure class, a verdict or a count.",
+      "One function counts a trial from per-case verdicts, for answers handed over directly and for stored turns (turns.rs), so the two cannot count differently."
     ],
     "boundaries": [
       "The host judges the answers it is given. It does not see how they were produced, so it cannot tell that a treated answer came from a run with the rule loaded.",
@@ -39,7 +40,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/learning.rs",
       "language": "Rust",
-      "sha256": "ba53f83c2d603b5f9d2f19a89e5241bf2decd86cef7874596072199bb8dcc22a"
+      "sha256": "90f906a1ee74b200483719f18b338d77314cd668495591637f1d35dc146e5c9f"
     },
     "profile": "Exact",
     "level": "L4",
@@ -55,38 +56,38 @@
       "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
       "G2": "Exact profile: every verdict is judge.rs's exact comparison of unbounded integers. Counts are checked conversions to u32; the hash is SHA-256 over raw request text, asserted against a hash the test computes itself. Not B: no proof, and the hash and big-integer libraries are trusted.",
       "G3": "Typed refusals: BAD_REQUEST, BAD_CASE, UNKNOWN_CHECKER, NOT_A_FAILURE, BAD_COUNT. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
-      "G4": "9 learning tests assert the record byte for byte, the hash against an independent computation, the DDC word, every refusal, case-by-case scoring, admission through the ledger and the binary's exit codes. One mutant is recorded as demonstrably equivalent with its justification in the report, and one did not compile and is recorded as invalid. Mutation campaign R = 38/38. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
-      "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+      "G4": "9 learning tests assert the record byte for byte, the hash against an independent computation, the DDC word, every refusal, case-by-case scoring, admission through the ledger and the binary's exit codes; the turns tests reach the same counting. One mutant is recorded as demonstrably equivalent with its justification in the report, and one did not compile and is recorded as invalid. Mutation campaign R = 38/38. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
     },
     "composite_grade": "C",
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T10:19:38Z",
+    "evaluation_timestamp": "2026-11-14T11:17:42Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-v4-test.run.json",
-        "sha256": "e2335bf167572ce371f769568750355a94ea28413587512a269245897cf0a44b",
-        "note": "106 tests: pfp_operads and core_operad_canon, locked build."
+        "path": "governance/evidence/pfp-operads-v6-test.run.json",
+        "sha256": "0015073cbbd4f3cb71a51765a6ccd8e96f1ce21307d35dc85a893ccf1a61dbc1",
+        "note": "143 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-v4-clippy.run.json",
-        "sha256": "50e8407fcca0920444a54b335c9b3bc7d511a28f7f59c9cc5f815f333e798bf8",
+        "path": "governance/evidence/pfp-operads-v6-clippy.run.json",
+        "sha256": "aec4e9e626e30e4c8b04b8e691152730e9fdbb1e9629cfb80f3c4025103af479",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-v4-fmt.run.json",
-        "sha256": "98c566bcff32e22301ec7729f9091905ea96c5379103c2f7926988d74098dc10",
+        "path": "governance/evidence/pfp-operads-v6-fmt.run.json",
+        "sha256": "22353a3ef8d432002b2b4f873ced27261b5407a14b0c8309850e2644b6b2665e",
         "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-v4-metrics.run.json",
-        "sha256": "30e6dfd7118ba3803b13a0cccc337eaf306ee526196ec05528758e1c91976c52",
+        "path": "governance/evidence/pfp-operads-v6-metrics.run.json",
+        "sha256": "273342cfbdbee0e1cf5add613769ef5b3b0619f76d17ed8ddece27c29aa2f63d",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v4-metrics.json",
-        "sha256": "afaa67dcbd70b24057f91e560fb879f19a245d886517a285e46b26b6fc5842f1",
+        "path": "governance/evidence/pfp-operads-v6-metrics.json",
+        "sha256": "4f688b29cf8d50a27c6a468c7882cf8bfbc736317214f74fc958e01364fe4dd8",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
@@ -100,10 +101,117 @@
       "conservative_ratio": 1.0,
       "report": {
         "path": "governance/evidence/m-pfp-operads-learning.mutation.json",
-        "sha256": "2f55c755b47870e18422c5b063988584b14843665e570fd059cef5ac5525dcde",
+        "sha256": "93391862f84dd3146419a45001f4e92c31b45e0883e94f2dedd669d580f0b1ff",
         "note": "lexical campaign of one-line mutants, crate tests as oracle; 40 mutants"
       }
     }
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-11-14T11:17:43.282132Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/learning.rs",
+          "language": "Rust",
+          "sha256": "ba53f83c2d603b5f9d2f19a89e5241bf2decd86cef7874596072199bb8dcc22a"
+        },
+        "contract_urn": "urn:pfp-operads:learning:v1",
+        "symbols": [
+          "WRONG_RESULT",
+          "HOST_REFUSAL",
+          "Witnessed",
+          "witness",
+          "CaseVerdict",
+          "Scored",
+          "trial"
+        ],
+        "owned_invariants": [
+          "A failure record is written only for an answer the checker's judge rejects; an answer it accepts is refused as NOT_A_FAILURE.",
+          "The record's class is the canon class CounterfeitExactness and its DDC word is the reply's own word followed by the host's refusal letter M. The caller chooses neither.",
+          "evidence_sha256 is the SHA-256 of the domain tag, the checker, the case and the answer, each as given and each followed by a line feed, so the record is bound to what the host saw.",
+          "A trial record's counts are the judge's own verdicts on the baseline and the treated answer of every case; a clean-panel hit is a case the baseline had right and the treated run did not.",
+          "held_out lists the case ids in request order, and the per-case verdicts behind the counts are returned next to the record.",
+          "Requests are closed: a caller cannot supply a failure class, a verdict or a count."
+        ],
+        "boundaries": [
+          "The host judges the answers it is given. It does not see how they were produced, so it cannot tell that a treated answer came from a run with the rule loaded.",
+          "One judge exists: integer_sum_v1.",
+          "These functions write records. Whether a record enters a ledger, and whether a rule is admitted, is decided by ledger.rs."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/learning.rs",
+          "language": "Rust",
+          "sha256": "ba53f83c2d603b5f9d2f19a89e5241bf2decd86cef7874596072199bb8dcc22a"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact profile: every verdict is judge.rs's exact comparison of unbounded integers. Counts are checked conversions to u32; the hash is SHA-256 over raw request text, asserted against a hash the test computes itself. Not B: no proof, and the hash and big-integer libraries are trusted.",
+          "G3": "Typed refusals: BAD_REQUEST, BAD_CASE, UNKNOWN_CHECKER, NOT_A_FAILURE, BAD_COUNT. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+          "G4": "9 learning tests assert the record byte for byte, the hash against an independent computation, the DDC word, every refusal, case-by-case scoring, admission through the ledger and the binary's exit codes. One mutant is recorded as demonstrably equivalent with its justification in the report, and one did not compile and is recorded as invalid. Mutation campaign R = 38/38. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T10:19:38Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v4-test.run.json",
+            "sha256": "e2335bf167572ce371f769568750355a94ea28413587512a269245897cf0a44b",
+            "note": "106 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v4-clippy.run.json",
+            "sha256": "50e8407fcca0920444a54b335c9b3bc7d511a28f7f59c9cc5f815f333e798bf8",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v4-fmt.run.json",
+            "sha256": "98c566bcff32e22301ec7729f9091905ea96c5379103c2f7926988d74098dc10",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v4-metrics.run.json",
+            "sha256": "30e6dfd7118ba3803b13a0cccc337eaf306ee526196ec05528758e1c91976c52",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v4-metrics.json",
+            "sha256": "afaa67dcbd70b24057f91e560fb879f19a245d886517a285e46b26b6fc5842f1",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 38,
+          "survived": 0,
+          "demonstrably_equivalent": 1,
+          "invalid": 1,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-learning.mutation.json",
+            "sha256": "2f55c755b47870e18422c5b063988584b14843665e570fd059cef5ac5525dcde",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 40 mutants"
+          }
+        }
+      }
+    }
+  ]
 }

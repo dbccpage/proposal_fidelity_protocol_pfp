@@ -1,0 +1,105 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/loading.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/loading.rs",
+      "language": "Rust",
+      "sha256": "23326e0e0e1cd199b137370274d6d92e87e01adf5029b243f7036a8183a793da"
+    },
+    "contract_urn": "urn:pfp-operads:tests-loading:v1",
+    "symbols": [
+      "sha256",
+      "record",
+      "failure",
+      "rule",
+      "trial",
+      "admit",
+      "stocked",
+      "text",
+      "seed_request",
+      "loads",
+      "load_code",
+      "a_ledger_with_no_rule_to_load_returns_the_seed_byte_for_byte",
+      "admitted_rules_follow_the_seed_under_the_ledger_state_they_came_from",
+      "the_rule_under_trial_is_loaded_after_the_admitted_ones",
+      "a_rule_that_could_forge_a_line_is_refused",
+      "a_load_request_is_closed_and_the_ledger_is_replayed_first",
+      "check",
+      "a_loaded_seed_is_recognised_at_its_ledger_state_even_after_the_ledger_grows",
+      "an_edited_seed_or_another_base_does_not_match",
+      "a_seed_loaded_for_a_trial_is_checked_with_its_rule",
+      "a_check_the_host_cannot_make_is_refused"
+    ],
+    "owned_invariants": [
+      "A loaded seed is asserted as exact text, and its account field by field with hashes the test computes itself.",
+      "A check is asserted to hold at its ledger state after the ledger grows, and to fail for an edited seed, another base, another head and a missing rule under trial.",
+      "A rule that could write another rule's line is asserted refused, proposed and admitted alike."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/loading.rs",
+      "language": "Rust",
+      "sha256": "23326e0e0e1cd199b137370274d6d92e87e01adf5029b243f7036a8183a793da"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 9 pass in the recorded run; the crate suite they belong to killed 38 of 38 eligible loading mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T11:17:42Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v6-test.run.json",
+        "sha256": "0015073cbbd4f3cb71a51765a6ccd8e96f1ce21307d35dc85a893ccf1a61dbc1",
+        "note": "143 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-clippy.run.json",
+        "sha256": "aec4e9e626e30e4c8b04b8e691152730e9fdbb1e9629cfb80f3c4025103af479",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-fmt.run.json",
+        "sha256": "22353a3ef8d432002b2b4f873ced27261b5407a14b0c8309850e2644b6b2665e",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.run.json",
+        "sha256": "273342cfbdbee0e1cf5add613769ef5b3b0619f76d17ed8ddece27c29aa2f63d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.json",
+        "sha256": "4f688b29cf8d50a27c6a468c7882cf8bfbc736317214f74fc958e01364fe4dd8",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

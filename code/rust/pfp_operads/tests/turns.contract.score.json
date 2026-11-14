@@ -1,0 +1,106 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/turns.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/turns.rs",
+      "language": "Rust",
+      "sha256": "d1fa9a210d2a7ddc5e0e15ba9a8d616588c122d0d109d7f64bd00bd2608c404a"
+    },
+    "contract_urn": "urn:pfp-operads:tests-turns:v1",
+    "symbols": [
+      "sha256",
+      "turn",
+      "total",
+      "witnessed",
+      "case_name",
+      "a_stored_turn_the_judge_rejects_becomes_a_failure_named_after_its_case",
+      "a_case_is_named_by_its_checker_and_integers_not_by_how_they_are_written",
+      "a_full_slot_reply_is_judged_on_its_task_result_and_keeps_its_ddc_word",
+      "an_answer_that_is_not_an_object_is_judged_as_written",
+      "a_turn_the_host_cannot_judge_is_refused",
+      "record",
+      "proposed",
+      "text",
+      "seed",
+      "pair",
+      "scored",
+      "a_rule_is_admitted_on_a_trial_the_host_scored_from_fair_pairs",
+      "a_turn_without_an_answer_is_wrong_and_a_broken_clean_case_is_counted",
+      "a_trial_on_the_case_the_rule_came_from_is_refused_by_the_ledger",
+      "a_pair_that_is_not_fair_is_refused",
+      "the_baseline_carries_the_admitted_rules_and_an_admitted_rule_is_not_retried",
+      "an_edited_ledger_or_an_open_request_is_refused"
+    ],
+    "owned_invariants": [
+      "A failure record from a stored turn is asserted field by field, with its case name and evidence hash computed by the test itself.",
+      "A trial from paired turns is asserted case by case and taken through the ledger to an admission, to SPLIT_OVERLAP on the case the rule came from and to BAD_ID_LIST on a repeated case.",
+      "Each way a pair can be unfair is asserted by its refusal code, and a pair loaded before an admission is asserted to stand at its own ledger state."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/turns.rs",
+      "language": "Rust",
+      "sha256": "d1fa9a210d2a7ddc5e0e15ba9a8d616588c122d0d109d7f64bd00bd2608c404a"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 11 pass in the recorded run; the crate suite they belong to killed 45 of 45 eligible turns mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 3; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T11:17:42Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v6-test.run.json",
+        "sha256": "0015073cbbd4f3cb71a51765a6ccd8e96f1ce21307d35dc85a893ccf1a61dbc1",
+        "note": "143 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-clippy.run.json",
+        "sha256": "aec4e9e626e30e4c8b04b8e691152730e9fdbb1e9629cfb80f3c4025103af479",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-fmt.run.json",
+        "sha256": "22353a3ef8d432002b2b4f873ced27261b5407a14b0c8309850e2644b6b2665e",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.run.json",
+        "sha256": "273342cfbdbee0e1cf5add613769ef5b3b0619f76d17ed8ddece27c29aa2f63d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.json",
+        "sha256": "4f688b29cf8d50a27c6a468c7882cf8bfbc736317214f74fc958e01364fe4dd8",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}
