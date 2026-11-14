@@ -76,17 +76,22 @@ fn stated_total(answer: &RawValue) -> Option<BigInt> {
     }
 }
 
+/// Whether the checker's judge accepts an answer to a case.
+pub(crate) fn accepts(checker: &str, case: &RawValue, answer: &RawValue) -> Result<bool, Refusal> {
+    if checker != INTEGER_SUM {
+        return Err(Refusal::new(
+            "UNKNOWN_CHECKER",
+            format!("no judge is registered for {checker}"),
+        ));
+    }
+    Ok(stated_total(answer) == Some(sum_case(case)?))
+}
+
 /// Judge one reply's task result against the host's own computation.
 pub fn judge(text: &str) -> Result<Verdict, Refusal> {
     let request: Request = serde_json::from_str(text)
         .map_err(|error| Refusal::new("BAD_REQUEST", error.to_string()))?;
-    if request.checker != INTEGER_SUM {
-        return Err(Refusal::new(
-            "UNKNOWN_CHECKER",
-            format!("no judge is registered for {}", request.checker),
-        ));
-    }
-    let accepted = stated_total(request.answer) == Some(sum_case(request.case)?);
+    let accepted = accepts(&request.checker, request.case, request.answer)?;
     Ok(Verdict {
         accepted,
         reason: if accepted {

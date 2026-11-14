@@ -14,6 +14,7 @@ use crate::envelope::{envelope, typing};
 use crate::grounding::grounding;
 use crate::judge::judge;
 use crate::laws::{run_battery, Panel};
+use crate::learning::{trial, witness};
 use crate::ledger::{Ledger, Record};
 use crate::mining::{mining, reuse};
 use crate::term::{Body, Colour, Operation, Term, Value, Variant};
@@ -139,6 +140,8 @@ pub enum Command {
     Typing(String),
     Grounding(String),
     Reuse(String),
+    Witness(String),
+    Trial(String),
     Version,
 }
 
@@ -374,6 +377,8 @@ fn answer(command: &Command) -> Result<(bool, Json), Refusal> {
             grounding(text).and_then(|report| verdict(report.valid, &report))
         }
         Command::Reuse(text) => reuse(text).and_then(|report| verdict(true, &report)),
+        Command::Witness(text) => witness(text).and_then(|found| verdict(true, &found)),
+        Command::Trial(text) => trial(text).and_then(|scored| verdict(true, &scored)),
         Command::LedgerVerify(text) => Ledger::from_lines(text).map(|ledger| {
             (
                 true,
