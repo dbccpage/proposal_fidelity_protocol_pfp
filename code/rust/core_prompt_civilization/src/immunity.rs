@@ -231,15 +231,17 @@ impl BoundaryRecord5eddf435 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::genealogy::InheritanceRelationship;
+    use crate::genealogy::{inheritance_witness_digest, InheritanceRelationship};
 
     #[test]
     fn test_f_immune_10_shortest_hop_distance() {
         let mut g = LineageGraphV1::new();
         // A -> B -> C (2 hops from C to A)
-        g.add_inheritance_edge("A", "B", InheritanceRelationship::DirectMutation, "w1")
+        let w_ab = inheritance_witness_digest("A", "B", &InheritanceRelationship::DirectMutation);
+        let w_bc = inheritance_witness_digest("B", "C", &InheritanceRelationship::DirectMutation);
+        g.add_inheritance_edge("A", "B", InheritanceRelationship::DirectMutation, &w_ab)
             .unwrap();
-        g.add_inheritance_edge("B", "C", InheritanceRelationship::DirectMutation, "w2")
+        g.add_inheritance_edge("B", "C", InheritanceRelationship::DirectMutation, &w_bc)
             .unwrap();
 
         let props = ImmunityEngineV1::compute_backward_propagation(&g, "C", 10);
@@ -263,7 +265,8 @@ mod tests {
         for i in 0..12 {
             let p = format!("N{}", i);
             let c = format!("N{}", i + 1);
-            g.add_inheritance_edge(&p, &c, InheritanceRelationship::DirectMutation, "w")
+            let w = inheritance_witness_digest(&p, &c, &InheritanceRelationship::DirectMutation);
+            g.add_inheritance_edge(&p, &c, InheritanceRelationship::DirectMutation, &w)
                 .unwrap();
         }
 
