@@ -168,6 +168,15 @@ fn a_candidate_the_host_cannot_run_stays_unverified() {
         outcomes(&list_as_integer),
         vec![pair("x", "DOES_NOT_FIT_CASE")]
     );
+    // The right number of inputs is not enough: each one must be an Integer.
+    let mixed_colours = report(
+        json!([{"values": [7, 8]}]),
+        json!([candidate("y", &["IntegerList", "Integer"], "sum")]),
+    );
+    assert_eq!(
+        outcomes(&mixed_colours),
+        vec![pair("y", "DOES_NOT_FIT_CASE")]
+    );
 }
 
 #[test]

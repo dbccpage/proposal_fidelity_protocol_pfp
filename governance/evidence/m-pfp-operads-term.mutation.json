@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/term.rs",
-  "target_sha256": "41e80380804bcb6fb356d9ad46f49c50dc92da66bd0026248741b0bb9d83a232",
+  "target_sha256": "804916f1e6f756845be91538cfeeb3836bee1a1161616095ca6f00e8a6095458",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 21,
+    "killed": 22,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -137,6 +137,12 @@
       "name": "difference accepts lists",
       "old": "            (Body::Difference, [_, _]) => Err(Refusal::new(",
       "new": "            (Body::Difference, [_, _]) if false => Err(Refusal::new(",
+      "outcome": "killed"
+    },
+    {
+      "name": "task value colours not a colour type",
+      "old": "[\"operad_colour\", \"prompt_colour\", \"task_value_colour\"]",
+      "new": "[\"operad_colour\", \"prompt_colour\", \"task_colour\"]",
       "outcome": "killed"
     }
   ]

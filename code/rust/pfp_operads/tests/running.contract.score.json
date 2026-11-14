@@ -1,0 +1,100 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/running.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/running.rs",
+      "language": "Rust",
+      "sha256": "4c6d09598edbb35abc6591a93b9865e1d3aed1f6a79e06fd9f5e3b9c26764098"
+    },
+    "contract_urn": "urn:pfp-operads:tests-running:v1",
+    "symbols": [
+      "request",
+      "report",
+      "candidate",
+      "outcomes",
+      "pair",
+      "a_body_that_reproduces_the_judges_result_on_every_case_is_verified",
+      "a_body_that_gives_another_result_is_refused",
+      "a_probe_case_exposes_a_body_that_agrees_by_coincidence",
+      "a_candidate_the_host_cannot_run_stays_unverified",
+      "a_wrong_result_on_one_case_outweighs_a_case_that_does_not_fit",
+      "an_ill_typed_candidate_is_refused_with_the_code_of_its_fault",
+      "a_body_that_overflows_is_refused_while_the_judge_stays_exact",
+      "a_request_the_host_cannot_run_is_refused",
+      "task_value_colours_type_operations_for_every_host_command",
+      "respond_and_the_command_report_pass_fail_and_refused",
+      "the_shipped_example_verifies_its_candidate"
+    ],
+    "owned_invariants": [
+      "Whole reports are asserted as the JSON a workflow would read: the verdict, the verified ids, and each candidate's disposition, code and message.",
+      "A product that agrees with the sum on one case is shown verified on that case alone and refused once a probe case is added.",
+      "Outcomes of respond and of the built binary are asserted with their exit codes, and the shipped example is run."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/running.rs",
+      "language": "Rust",
+      "sha256": "4c6d09598edbb35abc6591a93b9865e1d3aed1f6a79e06fd9f5e3b9c26764098"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 11 pass in the recorded run; the crate suite they belong to killed 59 of 59 eligible running mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T10:39:32Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v5-test.run.json",
+        "sha256": "d24976ad71618d7ae906357de3cbca2484addbf3d257209698d0301595f30ee9",
+        "note": "117 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v5-clippy.run.json",
+        "sha256": "f424c6bab08e8e49af0145fba5a8b82d78da36288c141de01049f03745a9607b",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v5-fmt.run.json",
+        "sha256": "ba4662166f75a022bcc7eca23ee0cc87df06d2f826f2d5dbee77651753ca28ea",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v5-metrics.run.json",
+        "sha256": "c64f925ce96ad6ab9b0e7f64dde29e2167847314a98eebd23403c4c73c70389b",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v5-metrics.json",
+        "sha256": "21b436e07296cecdf333b73efb72baefe1c8f180e3f8b055cd903799bc8e1f92",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

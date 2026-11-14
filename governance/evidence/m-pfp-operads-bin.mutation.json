@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/bin/pfp_operad.rs",
-  "target_sha256": "afa5deb51eee8069807138725d15c7f0c74ebf22a06553f5ffe7079d44b76826",
+  "target_sha256": "bb93207ed501f2ff564dbd3a08feb0523c4e0b57feec3d9c6acaa594987ed527",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 19,
+    "killed": 20,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -125,6 +125,12 @@
       "name": "trial routed to witness",
       "old": "Ok(Command::Trial(read(file)?))",
       "new": "Ok(Command::Witness(read(file)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "run routed to check",
+      "old": "Ok(Command::Run(read(file)?))",
+      "new": "Ok(Command::Check(read(file)?))",
       "outcome": "killed"
     }
   ]

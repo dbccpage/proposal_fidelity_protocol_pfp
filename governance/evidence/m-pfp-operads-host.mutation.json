@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/host.rs",
-  "target_sha256": "5ff2cedc6d7e31e5f7f199df09fc626f94edd02f6f7f1182524de6dd594118b6",
+  "target_sha256": "dc9a9965f3b7b08b53c2a3beef90e1df938912058dfae9d5064be05af18052e4",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 31,
+    "killed": 33,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -197,6 +197,18 @@
       "name": "trial reported as a failure",
       "old": "trial(text).and_then(|scored| verdict(true, &scored))",
       "new": "trial(text).and_then(|scored| verdict(false, &scored))",
+      "outcome": "killed"
+    },
+    {
+      "name": "run verdict ignored",
+      "old": "run(text).and_then(|report| verdict(report.accepted, &report))",
+      "new": "run(text).and_then(|report| verdict(true, &report))",
+      "outcome": "killed"
+    },
+    {
+      "name": "run verdict inverted",
+      "old": "run(text).and_then(|report| verdict(report.accepted, &report))",
+      "new": "run(text).and_then(|report| verdict(!report.accepted, &report))",
       "outcome": "killed"
     }
   ]
