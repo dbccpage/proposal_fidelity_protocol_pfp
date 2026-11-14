@@ -775,9 +775,10 @@ fn a_check_cannot_read_what_the_host_is_given_on_input() {
     let path = folder.join("request.json");
     fs::write(&path, body.to_string()).unwrap();
     let mut host = Process::new(HOST)
-        .args(["repair", path.to_str().unwrap()])
+        .arg("repair")
         .arg(folder.join("source"))
         .arg(folder.join("run"))
+        .arg(&path)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .spawn()
@@ -809,7 +810,7 @@ fn the_binary_runs_a_repair_and_exits_by_outcome() {
     let source = folder.join("source").to_str().unwrap().to_owned();
     let run = |name: &str| folder.join(name).to_str().unwrap().to_owned();
     let good = write("good.json", &request(&total("answer.json", 5, 6)));
-    let (code, outcome) = cli(&["repair", &good, &source, &run("run-good")]);
+    let (code, outcome) = cli(&["repair", &source, &run("run-good"), &good]);
     assert_eq!(
         (code, &outcome["status"], &outcome["result"]["outcome"]),
         (0, &json!("PASS"), &json!("REPAIRED"))
@@ -817,13 +818,13 @@ fn the_binary_runs_a_repair_and_exits_by_outcome() {
     assert!(folder.join("run-good/record.json").is_file());
 
     let weak = write("weak.json", &request(&total("answer.json", 5, 7)));
-    let (code, outcome) = cli(&["repair", &weak, &source, &run("run-weak")]);
+    let (code, outcome) = cli(&["repair", &source, &run("run-weak"), &weak]);
     assert_eq!(
         (code, &outcome["status"], &outcome["result"]["outcome"]),
         (1, &json!("FAIL"), &json!("INEFFECTIVE"))
     );
 
-    let (code, outcome) = cli(&["repair", &good, &run("no-source"), &run("run-none")]);
+    let (code, outcome) = cli(&["repair", &run("no-source"), &run("run-none"), &good]);
     assert_eq!(
         (code, &outcome["status"], &outcome["refusal"]["code"]),
         (1, &json!("REFUSED"), &json!("SOURCE_ROOT_REFUSED"))
@@ -831,14 +832,20 @@ fn the_binary_runs_a_repair_and_exits_by_outcome() {
     assert!(!folder.join("run-none").exists());
 
     assert_eq!(
-        cli(&["repair", &run("no-request.json"), &source, &run("run-x")]).0,
+        cli(&["repair", &source, &run("run-x"), &run("no-request.json")]).0,
         2
     );
-    assert_eq!(cli(&["repair", &good, &source]).0, 2);
+    assert_eq!(cli(&["repair", &source, &good]).0, 2);
     assert_eq!(
-        cli(&["repair", &good, &source, &run("run-y"), "extra"]).0,
+        cli(&["repair", &source, &run("run-y"), &good, "extra"]).0,
         2
     );
+    assert_eq!(
+        cli(&["repair", &good, &source, &run("run-z")]).0,
+        2,
+        "the request comes last"
+    );
+    assert!(!folder.join("run-z").exists());
     assert!(!folder.join("run-x").exists() && !folder.join("run-y").exists());
     assert_eq!(
         fs::read_to_string(folder.join("source/answer.json")).unwrap(),

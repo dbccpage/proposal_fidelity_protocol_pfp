@@ -20,7 +20,7 @@ outcome and decides nothing. AuthorityEffect: None.
 | `pfp_operad witness REQUEST.json` | Is this answer a failure? The host judges it itself and, if it is wrong, writes the failure record for the ledger. |
 | `pfp_operad trial REQUEST.json` | How did a rule do on held-out cases? The host judges each baseline and treated answer and writes the trial record. |
 | `pfp_operad witness-turn REQUEST.json` | Did this stored turn of a WF1 to WF5 run fail? The host reads the turn's `task.json` and `receipt.json` itself, judges the task result and writes the failure record, named after its case. |
-| `pfp_operad repair REQUEST.json SOURCE_DIR RUN_DIR` | Does a supplied patch make the failing checks pass without breaking a passing one? The host copies the declared sources to a new run folder, runs the request's check commands before and after the patch, and keeps a record. The sources are never written. |
+| `pfp_operad repair SOURCE_DIR RUN_DIR REQUEST.json` | Does a supplied patch make the failing checks pass without breaking a passing one? The host copies the declared sources to a new run folder, runs the request's check commands before and after the patch, and keeps a record. The sources are never written. |
 | `pfp_operad version` | Which host and which canon is this? Workflows record it in every run. |
 | `pfp_operad laws REQUEST.json` | Do these operations obey the operad laws on this panel of inputs? |
 | `pfp_operad ledger append LEDGER.jsonl RECORD.json` | Is this record lawful? If so, add it to the failure ledger. |
@@ -63,7 +63,7 @@ stored answer), so the binary must be on `PATH`:
 
 ```
 cargo build --release -p pfp_operads
-PATH="$PWD/target/release:$PATH" pfp_operad repair pfp_operads/examples/repair/request.json pfp_operads/examples/repair/source my_run
+PATH="$PWD/target/release:$PATH" pfp_operad repair pfp_operads/examples/repair/source my_run pfp_operads/examples/repair/request.json
 ```
 
 It prints `PASS` with `"outcome":"REPAIRED"`, check exits `[1, 0]` before the
