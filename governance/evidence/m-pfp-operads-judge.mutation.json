@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/judge.rs",
-  "target_sha256": "e913caddcb26ea3b32ff523fb6628e455ba1a4bbe07965dff83581d2f5332235",
+  "target_sha256": "8cf17fa1f2d96492d10f61a9500ba64cf5ee677c027cc1278de6b01f37377792",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 16,
+    "killed": 19,
     "survived": 0,
     "demonstrably_equivalent": 2,
     "invalid": 0,
@@ -28,20 +28,20 @@
     },
     {
       "name": "sum starts at one",
-      "old": "let mut total = BigInt::from(0);",
-      "new": "let mut total = BigInt::from(1);",
+      "old": "    let mut result = BigInt::from(0);",
+      "new": "    let mut result = BigInt::from(1);",
       "outcome": "killed"
     },
     {
       "name": "sum subtracts",
-      "old": "        total += integer(literal)",
-      "new": "        total -= integer(literal)",
+      "old": "        result += value;",
+      "new": "        result -= value;",
       "outcome": "killed"
     },
     {
       "name": "sum keeps the last value only",
-      "old": "        total += integer(literal)",
-      "new": "        total = integer(literal)",
+      "old": "        result += value;",
+      "new": "        result = value.clone();",
       "outcome": "killed"
     },
     {
@@ -76,14 +76,14 @@
     },
     {
       "name": "verdict inverted",
-      "old": "    Ok(stated_total(answer) == Some(sum_case(case)?))",
-      "new": "    Ok(stated_total(answer) != Some(sum_case(case)?))",
+      "old": "    Ok(stated_total(answer) == Some(reference(checker, case)?.result))",
+      "new": "    Ok(stated_total(answer) != Some(reference(checker, case)?.result))",
       "outcome": "killed"
     },
     {
       "name": "always accepted",
-      "old": "    Ok(stated_total(answer) == Some(sum_case(case)?))",
-      "new": "    Ok(sum_case(case).is_ok())",
+      "old": "    Ok(stated_total(answer) == Some(reference(checker, case)?.result))",
+      "new": "    Ok(reference(checker, case).is_ok())",
       "outcome": "killed"
     },
     {
@@ -121,6 +121,24 @@
       "name": "judge passes the answer as the case",
       "old": "accepts(&request.checker, request.case, request.answer)?",
       "new": "accepts(&request.checker, request.answer, request.case)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "reference drops the first value",
+      "old": "    Ok(Reference { values, result })",
+      "new": "    Ok(Reference { values: values.into_iter().skip(1).collect(), result })",
+      "outcome": "killed"
+    },
+    {
+      "name": "reference reverses the values",
+      "old": "    Ok(Reference { values, result })",
+      "new": "    Ok(Reference { values: values.into_iter().rev().collect(), result })",
+      "outcome": "killed"
+    },
+    {
+      "name": "reference result is the first value",
+      "old": "    Ok(Reference { values, result })",
+      "new": "    let result = values.first().cloned().unwrap_or(result);\n    Ok(Reference { values, result })",
       "outcome": "killed"
     }
   ]

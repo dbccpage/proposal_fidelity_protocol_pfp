@@ -9,7 +9,8 @@ outcome and decides nothing. AuthorityEffect: None.
 
 | Command | Question it answers |
 | --- | --- |
-| `pfp_operad check REQUEST.json` | Are the model's proposed operations typed by the canon's colours, and do the ones with a body give the host's expected answers? |
+| `pfp_operad check REQUEST.json` | Are the model's proposed operations typed by the canon's colours, and do the ones with a body give the expected answers the request lists? |
+| `pfp_operad run REQUEST.json` | Does a reply's candidate, run by the host on the task's own input, give the result of the host's judge? The request carries no expected value. |
 | `pfp_operad envelope REQUEST.json` | Does a full-slot reply (WF2 to WF5) report every slot once, and do its operad candidates and DDC moves quote real sources and cite known things? Which candidates are typed by the canon, and which have the licensed operation's signature? |
 | `pfp_operad judge REQUEST.json` | Does the reply's task result equal the host's own exact answer? (Integer sum, on unbounded integers.) |
 | `pfp_operad mining REQUEST.json` | Is a mining reply (WF3 to WF5) free of digits outside its source quotes, are its candidates well formed and grounded, and does its guidance cover every grounded slot? |
@@ -41,14 +42,15 @@ cargo run -p pfp_operads -- grounding pfp_operads/examples/grounding.json
 cargo run -p pfp_operads -- laws pfp_operads/examples/laws.json
 cargo run -p pfp_operads -- witness pfp_operads/examples/witness.json
 cargo run -p pfp_operads -- trial pfp_operads/examples/trial.json
+cargo run -p pfp_operads -- run pfp_operads/examples/run.json
 cargo run -p pfp_operads -- ledger append my_ledger.jsonl pfp_operads/examples/failure.json
 cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 ```
 
 ## The pieces
 
-- **Colours** are values of the canon's `prompt_colour` or `operad_colour`
-  (`core_operad_canon`). Any other name is refused.
+- **Colours** are values of the canon's `prompt_colour`, `operad_colour` or
+  `task_value_colour` (`core_operad_canon`). Any other name is refused.
 - **Task value colours** (`task_value_colour`: `Integer`, `IntegerList`) type
   the candidates in a workflow reply. A candidate with another colour is
   reported as untyped; that alone does not fail the reply.
@@ -82,6 +84,15 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
   case the baseline answered correctly and the treated run did not.
   [WF55](../../../workflows/wf55_failure_ledger_with_trial_gated_rules/README.md)
   runs the whole loop.
+- **Candidates the host runs**: `run` takes candidates typed by
+  `task_value_colour`, each with a body from the closed list, and the public
+  input of one or more cases. A candidate's inputs take a case as one
+  `IntegerList` or as one `Integer` per value. The host runs the body and
+  compares with its judge: `HOST_VERIFIED` when it agrees on every case,
+  `REFUSED` when it is ill typed or differs on one, `UNVERIFIED_CANDIDATE`
+  when it has no body or does not fit. The outcome is `PASS` when at least one
+  candidate is verified and none is refused.
+  [WF56](../../../workflows/wf56_host_run_operad_candidates/README.md) uses it.
 
 ## Limits
 
@@ -96,5 +107,7 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
   has the licensed signature.
 - The digit screen in `mining` reads decimal digits in any script. It does not
   catch a number written in words.
+- `run` verifies a candidate on the cases it is given, not on every input. It
+  evaluates on 64-bit integers and refuses a case with a larger value.
 
 Plan and status: [`docs/plans/operads_redesign.md`](../../../docs/plans/operads_redesign.md).

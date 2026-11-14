@@ -1,11 +1,12 @@
-"""Registry of executable workflow families: one module per DAG layer, plus the learning family."""
+"""Registry of executable workflow families: one module per DAG layer, plus the families the Rust host checks."""
 from __future__ import annotations
 
 from importlib import import_module
 
 from .base import WorkflowFamily
 
-LAYER_MODULES = (*(f'{__package__}.layer{n}' for n in range(1, 10)), f'{__package__}.learning')
+LAYER_MODULES = (*(f'{__package__}.layer{n}' for n in range(1, 10)),
+                 f'{__package__}.learning', f'{__package__}.candidates')
 _REGISTRY: dict[str, type[WorkflowFamily]] = {}
 
 

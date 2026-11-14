@@ -1,0 +1,377 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/running.rs",
+  "target_sha256": "e187091a7625c2361c5e3feb2a12ca3781c4112b705413f7822207c443bd7364",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 59,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 1,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "verified verdict changed",
+      "old": "pub const VERIFIED: &str = \"CANDIDATE_VERIFIED\";",
+      "new": "pub const VERIFIED: &str = \"CANDIDATE_OK\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "refused verdict changed",
+      "old": "pub const REFUSED: &str = \"CANDIDATE_REFUSED\";",
+      "new": "pub const REFUSED: &str = \"CANDIDATE_BAD\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "none-verified verdict changed",
+      "old": "pub const NONE_VERIFIED: &str = \"NO_VERIFIED_CANDIDATE\";",
+      "new": "pub const NONE_VERIFIED: &str = \"NOTHING\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "open run request accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct RunRequest<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct RunRequest<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "out-of-range case value clamped",
+      "old": ".map(|value| i64::try_from(value).ok())",
+      "new": ".map(|value| Some(i64::try_from(value).unwrap_or(i64::MAX)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "out-of-range case gets another code",
+      "old": "\"CASE_OUT_OF_RANGE\",",
+      "new": "\"BAD_CASE\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "out-of-range message changed",
+      "old": "\"a candidate is run on 64-bit integers and a case value does not fit\",",
+      "new": "\"a case value does not fit\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "list shape taken for any single input",
+      "old": "    if names == [TaskValueColour::IntegerList.as_str()] {",
+      "new": "    if names.len() == 1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "list shape never taken",
+      "old": "    if names == [TaskValueColour::IntegerList.as_str()] {",
+      "new": "    if false && names == [TaskValueColour::IntegerList.as_str()] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "list shape asks for Integer",
+      "old": "    if names == [TaskValueColour::IntegerList.as_str()] {",
+      "new": "    if names == [TaskValueColour::Integer.as_str()] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "input count not compared",
+      "old": "    } else if names.len() == values.len()\n        && names",
+      "new": "    } else if names",
+      "outcome": "killed"
+    },
+    {
+      "name": "input colours not compared",
+      "old": "names.len() == values.len()\n        && names\n            .iter()\n            .all(|name| *name == TaskValueColour::Integer.as_str())",
+      "new": "names.len() == values.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "each-input shape asks for lists",
+      "old": ".all(|name| *name == TaskValueColour::Integer.as_str())",
+      "new": ".all(|name| *name == TaskValueColour::IntegerList.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "list passed as bare integers",
+      "old": "        Some(vec![Value::List(integers)])",
+      "new": "        Some(integers)",
+      "outcome": "killed"
+    },
+    {
+      "name": "bodiless candidate is run",
+      "old": "    if operation.body() == Body::Opaque {",
+      "new": "    if false && operation.body() == Body::Opaque {",
+      "outcome": "killed"
+    },
+    {
+      "name": "bodiless candidate is refused",
+      "old": "            Disposition::UnverifiedCandidate,\n            \"NO_BODY\",",
+      "new": "            Disposition::Refused,\n            \"NO_BODY\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "no-body code changed",
+      "old": "            \"NO_BODY\",\n            \"the candidate names no body",
+      "new": "            \"ARITY\",\n            \"the candidate names no body",
+      "outcome": "killed"
+    },
+    {
+      "name": "no-body message changed",
+      "old": "\"the candidate names no body, so there is nothing to run\".to_owned()",
+      "new": "\"nothing to run\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "first unfit case forgotten",
+      "old": "            unfit = unfit.or(Some(index));",
+      "new": "            unfit = Some(index);",
+      "outcome": "killed"
+    },
+    {
+      "name": "unfit case ignored",
+      "old": "            unfit = unfit.or(Some(index));\n            continue;",
+      "new": "            unfit = unfit.or(None);\n            continue;",
+      "outcome": "invalid"
+    },
+    {
+      "name": "unfit case stops the run",
+      "old": "            unfit = unfit.or(Some(index));\n            continue;",
+      "new": "            unfit = unfit.or(Some(index));\n            break;",
+      "outcome": "killed"
+    },
+    {
+      "name": "any integer result accepted",
+      "old": "Ok(Value::Int(number)) if BigInt::from(number) == probe.result => {}",
+      "new": "Ok(Value::Int(_)) => {}",
+      "outcome": "killed"
+    },
+    {
+      "name": "only differing results accepted",
+      "old": "if BigInt::from(number) == probe.result => {}",
+      "new": "if BigInt::from(number) != probe.result => {}",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first case is run",
+      "old": "            Ok(Value::Int(number)) if BigInt::from(number) == probe.result => {}",
+      "new": "            Ok(Value::Int(number)) if BigInt::from(number) == probe.result => break,",
+      "outcome": "killed"
+    },
+    {
+      "name": "differing result left unverified",
+      "old": "                    Disposition::Refused,\n                    \"RESULT_DIFFERS\",",
+      "new": "                    Disposition::UnverifiedCandidate,\n                    \"RESULT_DIFFERS\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "differing result gets another code",
+      "old": "                    \"RESULT_DIFFERS\",",
+      "new": "                    \"CHECK_FAILED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "differing result not shown",
+      "old": "format!(\"case {index}: the body gives {shown}, not the judge's result\")",
+      "new": "format!(\"case {index}: not the judge's result\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "differing result names no case",
+      "old": "format!(\"case {index}: the body gives {shown}, not the judge's result\")",
+      "new": "format!(\"the body gives {shown}, not the judge's result\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "evaluation error left unverified",
+      "old": "                    Disposition::Refused,\n                    refusal.code,",
+      "new": "                    Disposition::UnverifiedCandidate,\n                    refusal.code,",
+      "outcome": "killed"
+    },
+    {
+      "name": "evaluation error names no case",
+      "old": "format!(\"case {index}: {}\", refusal.message)",
+      "new": "refusal.message",
+      "outcome": "killed"
+    },
+    {
+      "name": "evaluation error loses its code",
+      "old": "                    refusal.code,\n                    format!(\"case {index}: {}\", refusal.message),",
+      "new": "                    \"RESULT_DIFFERS\",\n                    format!(\"case {index}: {}\", refusal.message),",
+      "outcome": "killed"
+    },
+    {
+      "name": "unfit candidate verified",
+      "old": "    match unfit {\n        None => Ok(()),\n        Some(index) => Err((",
+      "new": "    match unfit.filter(|_| false) {\n        None => Ok(()),\n        Some(index) => Err((",
+      "outcome": "killed"
+    },
+    {
+      "name": "unfit candidate refused",
+      "old": "            Disposition::UnverifiedCandidate,\n            \"DOES_NOT_FIT_CASE\",",
+      "new": "            Disposition::Refused,\n            \"DOES_NOT_FIT_CASE\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "unfit code changed",
+      "old": "            \"DOES_NOT_FIT_CASE\",",
+      "new": "            \"ARITY\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "unfit message names no case",
+      "old": "format!(\"case {index}: the candidate's inputs do not take the case's values\")",
+      "new": "\"the candidate's inputs do not take the case's values\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "verified row carries a code",
+      "old": "            disposition: Disposition::HostVerified,\n            code: None,",
+      "new": "            disposition: Disposition::HostVerified,\n            code: Some(\"OK\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "verified row is unverified",
+      "old": "            disposition: Disposition::HostVerified,\n            code: None,",
+      "new": "            disposition: Disposition::UnverifiedCandidate,\n            code: None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "row loses its id",
+      "old": "        Err((disposition, code, message)) => Ran {\n            id: id.to_owned(),",
+      "new": "        Err((disposition, code, message)) => Ran {\n            id: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "row loses its message",
+      "old": "            message: Some(message),",
+      "new": "            message: None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "row loses its code",
+      "old": "            code: Some(code),",
+      "new": "            code: None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "ill-typed candidate left unverified",
+      "old": "    (Disposition::Refused, refusal.code, refusal.message)",
+      "new": "    (Disposition::UnverifiedCandidate, refusal.code, refusal.message)",
+      "outcome": "killed"
+    },
+    {
+      "name": "malformed run request gets another code",
+      "old": "    let request: RunRequest = serde_json::from_str(text)\n        .map_err(|error| Refusal::new(\"BAD_REQUEST\", error.to_string()))?;",
+      "new": "    let request: RunRequest = serde_json::from_str(text)\n        .map_err(|error| Refusal::new(\"BAD_CASE\", error.to_string()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "no cases accepted",
+      "old": "    if request.cases.is_empty() {",
+      "new": "    if false && request.cases.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no-cases code changed",
+      "old": "            \"NO_CASES\",",
+      "new": "            \"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first case is read",
+      "old": "    for case in &request.cases {\n        probes.push(probe(&request.checker, case)?);\n    }",
+      "new": "    for case in request.cases.iter().take(1) {\n        probes.push(probe(&request.checker, case)?);\n    }",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated ids not detected",
+      "old": "        .filter(|id| !seen.insert(*id))",
+      "new": "        .filter(|id| !seen.insert(*id) && false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "every id counted as repeated",
+      "old": "        .filter(|id| !seen.insert(*id))",
+      "new": "        .filter(|id| seen.insert(*id))",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate code changed",
+      "old": "                    \"DUPLICATE_OPERATION\",",
+      "new": "                    \"BAD_NAME\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate message changed",
+      "old": "                    \"the id is used twice\",",
+      "new": "                    \"twice\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "typed in the prompt colours",
+      "old": "                wire.build(COLOUR_TYPE)",
+      "new": "                wire.build(\"prompt_colour\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "typing fault skips to verified",
+      "old": "                wire.build(COLOUR_TYPE)\n                    .map_err(refused)\n                    .and_then(|operation| examine(&operation, &probes))",
+      "new": "                wire.build(COLOUR_TYPE).map_or(Ok(()), |operation| examine(&operation, &probes))",
+      "outcome": "killed"
+    },
+    {
+      "name": "typed candidates not run",
+      "old": ".and_then(|operation| examine(&operation, &probes))",
+      "new": ".map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "verified list holds every id",
+      "old": "        .filter(|candidate| candidate.disposition == Disposition::HostVerified)",
+      "new": "        .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "verified list holds the unverified",
+      "old": "        .filter(|candidate| candidate.disposition == Disposition::HostVerified)",
+      "new": "        .filter(|candidate| candidate.disposition != Disposition::Refused)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refused candidate does not block",
+      "old": "        .any(|candidate| candidate.disposition == Disposition::Refused)\n    {",
+      "new": "        .any(|_| false)\n    {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unverified candidate blocks",
+      "old": "        .any(|candidate| candidate.disposition == Disposition::Refused)\n    {",
+      "new": "        .any(|candidate| candidate.disposition != Disposition::HostVerified)\n    {",
+      "outcome": "killed"
+    },
+    {
+      "name": "nothing verified still passes",
+      "old": "    } else if verified.is_empty() {\n        NONE_VERIFIED",
+      "new": "    } else if false && verified.is_empty() {\n        NONE_VERIFIED",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted whatever the verdict",
+      "old": "        accepted: verdict == VERIFIED,",
+      "new": "        accepted: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted inverted",
+      "old": "        accepted: verdict == VERIFIED,",
+      "new": "        accepted: verdict != VERIFIED,",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted unless refused",
+      "old": "        accepted: verdict == VERIFIED,",
+      "new": "        accepted: verdict != REFUSED,",
+      "outcome": "killed"
+    }
+  ]
+}

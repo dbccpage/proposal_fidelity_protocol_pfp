@@ -1,0 +1,109 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/running.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/running.rs",
+      "language": "Rust",
+      "sha256": "e187091a7625c2361c5e3feb2a12ca3781c4112b705413f7822207c443bd7364"
+    },
+    "contract_urn": "urn:pfp-operads:running:v1",
+    "symbols": [
+      "VERIFIED",
+      "REFUSED",
+      "NONE_VERIFIED",
+      "Ran",
+      "RunReport",
+      "run"
+    ],
+    "owned_invariants": [
+      "A candidate is typed by the canon's task_value_colour and built as a term.rs operation, so its arity fits its body and an identity keeps its colour.",
+      "The host runs a candidate's body on each case's public input and compares with the result of judge.rs on that case. The request cannot carry an expected value, a verdict or a body outside the closed list.",
+      "A case is given to a candidate as one IntegerList, or as one Integer per value; any other input shape does not fit.",
+      "HOST_VERIFIED: the body gave the judge's result on every case. REFUSED: ill typed, a repeated id, an evaluation error, or another result on a case it fits. UNVERIFIED_CANDIDATE: no body, or a case it does not fit and no case it got wrong.",
+      "The outcome is accepted only when at least one candidate is verified and none is refused; the verdict names which of the three happened.",
+      "A request with no case is refused: nothing is verified on no evidence."
+    ],
+    "boundaries": [
+      "Verified means agreement on the cases given, not on every input. Probe cases narrow the gap and do not close it.",
+      "Bodies are evaluated on 64-bit integers; a case value outside that range is refused as CASE_OUT_OF_RANGE, and a body that overflows is refused as OVERFLOW. The judge itself is unbounded.",
+      "A verified candidate shows the reply named a correct operation, not that the model used it.",
+      "One judge exists: integer_sum_v1."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/running.rs",
+      "language": "Rust",
+      "sha256": "e187091a7625c2361c5e3feb2a12ca3781c4112b705413f7822207c443bd7364"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact profile: the body is evaluated with term.rs's checked 64-bit arithmetic and its result compared with the judge's unbounded integer, so an overflow can refuse a candidate and can never verify one. Not B: no proof; verification is by finite cases.",
+      "G3": "Typed refusals: BAD_REQUEST, NO_CASES, BAD_CASE, UNKNOWN_CHECKER, CASE_OUT_OF_RANGE. A fault in one candidate is reported on that candidate with the code of its fault and never aborts the others. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "11 running tests assert whole reports, each disposition with its code and message, both input shapes, probes, precedence of a wrong result over a case that does not fit, overflow, every refusal and the binary's exit codes. One mutant did not compile and is recorded as invalid. Mutation campaign R = 59/59. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 8, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T10:39:32Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v5-test.run.json",
+        "sha256": "d24976ad71618d7ae906357de3cbca2484addbf3d257209698d0301595f30ee9",
+        "note": "117 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v5-clippy.run.json",
+        "sha256": "f424c6bab08e8e49af0145fba5a8b82d78da36288c141de01049f03745a9607b",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v5-fmt.run.json",
+        "sha256": "ba4662166f75a022bcc7eca23ee0cc87df06d2f826f2d5dbee77651753ca28ea",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v5-metrics.run.json",
+        "sha256": "c64f925ce96ad6ab9b0e7f64dde29e2167847314a98eebd23403c4c73c70389b",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v5-metrics.json",
+        "sha256": "21b436e07296cecdf333b73efb72baefe1c8f180e3f8b055cd903799bc8e1f92",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 59,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 1,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-running.mutation.json",
+        "sha256": "ffa55a8d11940c0a152bed36a00b885a02f4f96a62e80d23fd0f5ad42d2d5c81",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 60 mutants"
+      }
+    }
+  },
+  "history": []
+}

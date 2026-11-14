@@ -1,4 +1,4 @@
-# Workflow families WF6-WF49, WF51 and WF55
+# Workflow families WF6-WF49, WF51, WF55 and WF56
 
 Each family is one class in `pfp_core/workflow_families/` on a shared runtime: one spec, one budget per run, one host check that alone can certify, and offline fixtures that must be accepted or refused. WF1-WF5 keep their own runners (see [Workflows](workflows.md)).
 
@@ -17,6 +17,7 @@ python -m pfp_core.workflow_families check-all
 | [WF24](workflow_wf24.md) | Pinned-token operational scratchpad | 2 | WF2 | `dual_holonomy_checkers` |
 | [WF32](workflow_wf32.md) | Claim-scoped receipt | 2 | WF1, WF2 | `per_claim_independent_checkers` |
 | [WF45](workflow_wf45.md) | Finite terminal selector and plenitude test | 2 | WF7 | `finite_survivor_set_verifier` |
+| [WF56](workflow_wf56.md) | Host-run operad candidates | 2 | WF2 | `rust_candidate_body_run_against_host_judge` |
 | [WF10](workflow_wf10.md) | Local-to-global obstruction certificate | 3 | WF4, WF9 | `cochain_gluing_or_cycle_obstruction` |
 | [WF11](workflow_wf11.md) | Dual-certificate synthesis | 3 | WF3, WF9 | `lp_dual_and_farkas_certificate` |
 | [WF25](workflow_wf25.md) | Hierarchical decimation | 3 | WF24 | `cycle_residual_preserving_decimation` |

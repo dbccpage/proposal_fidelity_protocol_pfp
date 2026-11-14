@@ -17,6 +17,7 @@
 //! pfp_operad reuse REQUEST.json            list emitted candidates that reuse a mined signature
 //! pfp_operad witness REQUEST.json          judge an answer and write its failure record
 //! pfp_operad trial REQUEST.json            judge a rule's held-out trial and write its record
+//! pfp_operad run REQUEST.json              run candidates on the task's input against the judge
 //! pfp_operad version                       name, version and canon of this host
 //! ```
 //!
@@ -29,7 +30,7 @@ use std::process::ExitCode;
 
 use pfp_operads::host::{respond, Command, Outcome};
 
-const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | mining FILE | typing FILE | grounding FILE | reuse FILE | witness FILE | trial FILE | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD";
+const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | mining FILE | typing FILE | grounding FILE | reuse FILE | witness FILE | trial FILE | run FILE | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD";
 
 fn read(path: &str) -> Result<String, String> {
     fs::read_to_string(path).map_err(|error| format!("cannot read {path}: {error}"))
@@ -56,6 +57,7 @@ fn command(args: &[&str]) -> Result<Command, String> {
         ["reuse", file] => Ok(Command::Reuse(read(file)?)),
         ["witness", file] => Ok(Command::Witness(read(file)?)),
         ["trial", file] => Ok(Command::Trial(read(file)?)),
+        ["run", file] => Ok(Command::Run(read(file)?)),
         ["version"] => Ok(Command::Version),
         ["ledger", "verify", file] => Ok(Command::LedgerVerify(read(file)?)),
         ["ledger", "admitted", file] => Ok(Command::LedgerAdmitted(read(file)?)),
