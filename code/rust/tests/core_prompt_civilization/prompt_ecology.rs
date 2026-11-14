@@ -6,9 +6,7 @@ use core_prompt_civilization::ecology::*;
 use core_prompt_civilization::evidence::*;
 use core_prompt_civilization::fitness::PromptFitnessV1;
 use core_prompt_civilization::genealogy::{InheritanceRelationship, LineageGraphV1};
-use core_prompt_civilization::record::{
-    CustodyTier, PacketRefV1, PromptGenomeV1, ProtectedSpanV1,
-};
+use core_prompt_civilization::record::{CustodyTier, PacketRefV1, PromptGenomeV1, ProtectedSpanV1};
 use sha2::{Digest, Sha256};
 
 fn strings(values: &[&str]) -> BTreeSet<String> {

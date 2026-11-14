@@ -12,9 +12,9 @@ pub mod activation;
 pub mod activation_ports;
 pub mod activation_use_case;
 pub mod admission;
-pub mod authenticated;
 pub mod allostery;
 pub mod anti_skill;
+pub mod authenticated;
 pub mod clonal_selection;
 pub mod danger_gate;
 pub mod formulary;
@@ -304,7 +304,13 @@ mod l4_boundary_tests_427bb0b3 {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecord427bb0b3::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryError427bb0b3::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryError427bb0b3::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryError427bb0b3::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryError427bb0b3::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

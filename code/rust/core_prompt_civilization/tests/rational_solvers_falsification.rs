@@ -9,9 +9,6 @@
 //!
 //! AuthorityEffect: None.
 
-use num_bigint::BigInt;
-use num_rational::{BigRational, Rational64};
-use num_traits::{One, Signed, Zero};
 use core_prompt_civilization::rank::{
     CitationGraph, CompactedPageRankResult, CompactedPageRankResultV1, ExactPageRankSolverV1,
     PageRankCertificateV1, PageRankError, RankError, SovereignPrng, SparsePageRankResult,
@@ -21,6 +18,9 @@ use core_prompt_civilization::{
     CochainHistoryTracker, CochainResidualV1, GenealogyError, GenealogyGraph,
     InheritanceRelationship, LamarckianCochainTrackerV1, LamarckianTrackingError,
 };
+use num_bigint::BigInt;
+use num_rational::{BigRational, Rational64};
+use num_traits::{One, Signed, Zero};
 use std::collections::{BTreeMap, HashSet};
 
 fn bound_witness(parent: &str, child: &str) -> String {

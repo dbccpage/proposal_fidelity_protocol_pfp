@@ -1,0 +1,100 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+      "language": "Rust",
+      "sha256": "7e2ebaeca7b9426bba58140d24d1544580f0baa9e815e060b06017267e054c69"
+    },
+    "contract_urn": "urn:code-rust:core-epistemic-immune-system:clonal-selection:v1",
+    "symbols": [
+      "DetectorRule",
+      "AnergyMonitor",
+      "autonomous_decay",
+      "execute",
+      "BoundaryRecord6ecc3c19",
+      "BoundaryError6ecc3c19"
+    ],
+    "owned_invariants": [
+      "Exact rational affinity score: DetectorRule.affinity_score parses exact rationals and integers without floating point arithmetic.",
+      "Exact rational stimulation: DetectorRule.stimulate adds exact BigRational boosts and refuses float boosts.",
+      "Autonomous decay requires external epoch decision.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Bounded admission within capacity_bound.",
+      "Does not claim authority promotion outside declared finite bounds."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+      "language": "Rust",
+      "sha256": "7e2ebaeca7b9426bba58140d24d1544580f0baa9e815e060b06017267e054c69"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Module-level verification for code/rust/core_epistemic_immune_system/src/clonal_selection.rs.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header states AuthorityEffect None and declares exact rational wire types; public symbols match contract.",
+      "G2": "Exact rational parsing and BigRational addition; zero float arithmetic in check and mutate paths.",
+      "G3": "Typed Refusal errors returned on float boosts, zero denominators, negative affinities, and malformed JSON.",
+      "G4": "All unit and integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T10:48:28Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m2-fmt.run.json",
+        "sha256": "8e9de6d83fb4df9baaa159ec1fc27cfd7ec7faf31c09b3909878ce4c9aca54a0",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-clippy.run.json",
+        "sha256": "360df1d68bad550438691750b3ffd452b72782ad639328c4e979c597682fe6f9",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-eis-test.run.json",
+        "sha256": "85590c13449f950e8a64a22160af941191c4599a9110cd64d77d63a1b00afc7f",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-pciv-test.run.json",
+        "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core_epistemic_immune_system-clonal_selection.mutation.json",
+        "sha256": "607cc8346060f4b03378af7ddffd700ac126a00fae5982572370496084753005",
+        "note": "lexical mutation report for clonal_selection"
+      }
+    }
+  },
+  "history": []
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_epistemic_immune_system/src/lib.rs",
+  "target_sha256": "81fc202b4a9a7897e34d52c65f8c28d19db1189bcb8297834d44c4f69395e6b6",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_epistemic_immune_system",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "admitted_items zero check inverted",
+      "old": "if admitted_items == 0",
+      "new": "if admitted_items != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity_bound zero check inverted",
+      "old": "if capacity_bound == 0",
+      "new": "if capacity_bound != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity overflow check inverted",
+      "old": "if admitted_items > capacity_bound",
+      "new": "if admitted_items < capacity_bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "remaining capacity calculation altered",
+      "old": "capacity_bound - admitted_items",
+      "new": "capacity_bound + admitted_items",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty admission invariant clause altered",
+      "old": "\"admitted_items >= 1\"",
+      "new": "\"admitted_items > 0\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity zero invariant clause altered",
+      "old": "\"capacity_bound >= 1\"",
+      "new": "\"capacity_bound > 0\"",
+      "outcome": "killed"
+    }
+  ]
+}

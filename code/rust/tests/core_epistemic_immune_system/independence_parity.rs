@@ -13,7 +13,10 @@ fn decode_optional_danger(
     }
     let danger = DangerEvidence::from_json(danger_json)
         .map_err(|error| format!("danger projection vector {index}: {error}"))?;
-    assert_eq!(danger, DangerEvidence::from_bytes(&serde_json::to_vec(danger_json)?)?);
+    assert_eq!(
+        danger,
+        DangerEvidence::from_bytes(&serde_json::to_vec(danger_json)?)?
+    );
     Ok(Some(danger))
 }
 
@@ -28,7 +31,10 @@ fn decode_and_verify_evidence(
         .collect::<Result<Vec<_>, _>>()?;
     let danger = decode_optional_danger(index, &input["danger"])?;
     for (evidence, value) in matches.iter().zip(raw_matches) {
-        assert_eq!(*evidence, MatchEvidence::from_bytes(&serde_json::to_vec(value)?)?);
+        assert_eq!(
+            *evidence,
+            MatchEvidence::from_bytes(&serde_json::to_vec(value)?)?
+        );
     }
     assert_eq!(json!(matches), input["matches"], "match projection {index}");
     assert_eq!(json!(danger), input["danger"], "danger projection {index}");
@@ -43,10 +49,12 @@ fn evaluate_independence_vector(
     let context: DetectorContext = serde_json::from_value(
         json!({"detector_id":input["detector_id"],"detector_predicates":input["detector_predicates"],"offsets_are_content":input["offsets_are_content"]}),
     )?;
-    Ok(match assert_signals_independent(&matches, danger.as_ref(), &context) {
-        Ok(basis) => json!({"ok":basis}),
-        Err(error) => json!({"error":error}),
-    })
+    Ok(
+        match assert_signals_independent(&matches, danger.as_ref(), &context) {
+            Ok(basis) => json!({"ok":basis}),
+            Err(error) => json!({"error":error}),
+        },
+    )
 }
 
 #[test]

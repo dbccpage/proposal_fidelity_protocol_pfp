@@ -1,0 +1,101 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_epistemic_immune_system/src/thymus.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_epistemic_immune_system/src/thymus.rs",
+      "language": "Rust",
+      "sha256": "27531fe201bb34939e24e7314362011e611af4b644abf3e438d5a3dc70fad72a"
+    },
+    "contract_urn": "urn:code-rust:core-epistemic-immune-system:thymus:v1",
+    "symbols": [
+      "BoundaryErrorc9185ee7",
+      "BoundaryRecordc9185ee7",
+      "ThymusGate",
+      "ThymusVerdict",
+      "new",
+      "screen",
+      "standard_baseline",
+      "try_admit"
+    ],
+    "owned_invariants": [
+      "Public invariants and deterministic checks for thymus.",
+      "Strict typed outcomes and refusal boundaries without unhandled floats or panic conditions.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Bounded execution within declared capability limits.",
+      "Does not claim authority promotion outside declared finite bounds."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_epistemic_immune_system/src/thymus.rs",
+      "language": "Rust",
+      "sha256": "27531fe201bb34939e24e7314362011e611af4b644abf3e438d5a3dc70fad72a"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Module-level verification for code/rust/core_epistemic_immune_system/src/thymus.rs with typed error handling and boundary invariants.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T10:48:28Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m2-fmt.run.json",
+        "sha256": "8e9de6d83fb4df9baaa159ec1fc27cfd7ec7faf31c09b3909878ce4c9aca54a0",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-clippy.run.json",
+        "sha256": "360df1d68bad550438691750b3ffd452b72782ad639328c4e979c597682fe6f9",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-eis-test.run.json",
+        "sha256": "85590c13449f950e8a64a22160af941191c4599a9110cd64d77d63a1b00afc7f",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-pciv-test.run.json",
+        "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core_epistemic_immune_system-thymus.mutation.json",
+        "sha256": "b07881724784ce66ddda184e36b27ea99a73a5b2cc15409e93217b9670fd9736",
+        "note": "lexical mutation report for thymus"
+      }
+    }
+  },
+  "history": []
+}
