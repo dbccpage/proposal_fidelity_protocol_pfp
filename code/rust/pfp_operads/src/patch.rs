@@ -105,8 +105,8 @@ fn number(text: Option<&str>, default: usize) -> Result<usize, Refusal> {
     }
 }
 
-/// Read one hunk: its header, then rows until both declared counts are met.
-fn hunk(header: &str, lines: &mut Lines<'_>) -> Result<Hunk, Refusal> {
+/// Read a hunk header: the first old line it names and its two line counts.
+fn counts(header: &str) -> Result<(usize, usize, usize), Refusal> {
     let pattern = Regex::new(HUNK).map_err(|error| Refusal::new("ENCODING", error.to_string()))?;
     let Some(found) = pattern.captures(header) else {
         return refuse(REFUSED, format!("bad hunk header {:?}", bare(header)));
@@ -117,6 +117,12 @@ fn hunk(header: &str, lines: &mut Lines<'_>) -> Result<Hunk, Refusal> {
     if start == 0 && old > 0 {
         return refuse(REFUSED, "old lines are counted from 1");
     }
+    Ok((start, old, new))
+}
+
+/// Read one hunk: its header, then rows until both declared counts are met.
+fn hunk(header: &str, lines: &mut Lines<'_>) -> Result<Hunk, Refusal> {
+    let (start, old, new) = counts(header)?;
     let (mut old_seen, mut new_seen) = (0, 0);
     let mut rows = Vec::new();
     while old_seen < old || new_seen < new {
