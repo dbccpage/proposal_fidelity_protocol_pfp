@@ -1,6 +1,7 @@
 """WF57: what the workflow hands to the Rust host and reports back. Needs the ``pfp_operad`` binary."""
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 
@@ -11,7 +12,7 @@ from pfp_core.workflow_families.learning import EXAMPLE_LEDGER, lines
 from pfp_core.workflow_families.repair import EXAMPLE, FOLDER, TASK_FIELDS, HostTestedPatchRepair
 
 FAMILY = HostTestedPatchRepair()
-PAPER = REPO_ROOT / 'workflows' / FOLDER / 'examples' / 'paper_adjust'
+ADJUST = 'def adjust(n):\n    if n < 0:\n        return n\n    return n - 1\n'
 FAILED_BEFORE = [('operation', 1), ('answer', 0)]
 
 
@@ -135,20 +136,27 @@ def test_the_shipped_example_is_the_fixture_request_and_the_host_repairs_it(tmp_
 def test_the_archived_papers_worked_example_reproduces(tmp_path):
     """Paper 018, section 4: check exits [1, 0] before the patch and [0, 0] after; the source is untouched.
 
-    The two checks are the example's own Python asserts. The host runs them as commands and reads
-    their exit codes; this test only swaps in the interpreter that is running it.
+    The file under repair is the paper's four-line Python function and the two checks are its own
+    asserts. The host runs them as commands and reads their exit codes; every decision is the host's.
     """
-    request = json.loads((PAPER / 'request.json').read_text(encoding='utf-8'))
-    for check in request['checks']:
-        assert check['argv'][0] == 'python'
-        check['argv'][0] = sys.executable
-    before = (PAPER / 'source' / 'adjust.py').read_bytes()
-    outcome = operad_host.call(('repair', str(PAPER / 'source'), str(tmp_path / 'run')), request)
+    source = tmp_path / 'source'
+    source.mkdir()
+    (source / 'adjust.py').write_bytes(ADJUST.encode('utf-8'))
+
+    def asserts(check_id, claim):
+        return {'check_id': check_id, 'argv': [sys.executable, '-c', f'from adjust import adjust; assert {claim}']}
+    request = {
+        'run_key': 'paper-example-1', 'objective': 'adjust(2) must be 3 and adjust(-2) must stay -2.',
+        'sources': {'adjust.py': hashlib.sha256(ADJUST.encode('utf-8')).hexdigest()}, 'write_paths': ['adjust.py'],
+        'checks': [asserts('positive', 'adjust(2) == 3'), asserts('control', 'adjust(-2) == -2')],
+        'candidate_patch': '--- a/adjust.py\n+++ b/adjust.py\n@@ -4 +4 @@\n-    return n - 1\n+    return n + 1\n',
+    }
+    outcome = operad_host.call(('repair', str(source), str(tmp_path / 'run')), request)
     record = outcome['result']
     assert (outcome['status'], record['outcome'], record['trace']) == ('PASS', 'REPAIRED', 'CREIMT')
     assert (exits(record['baseline']), exits(record['after'])) == (
         [('positive', 1), ('control', 0)], [('positive', 0), ('control', 0)])
-    assert (PAPER / 'source' / 'adjust.py').read_bytes() == before
-    assert sorted(path.name for path in (PAPER / 'source').iterdir()) == ['adjust.py']
+    assert (source / 'adjust.py').read_bytes() == ADJUST.encode('utf-8')
+    assert sorted(path.name for path in source.iterdir()) == ['adjust.py']
     assert sorted(path.name for path in (tmp_path / 'run' / 'workspace').iterdir()) == ['adjust.py']
     assert 'return n + 1' in (tmp_path / 'run' / 'workspace' / 'adjust.py').read_text(encoding='utf-8')

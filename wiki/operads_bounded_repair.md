@@ -87,13 +87,16 @@ checks before and after, and writes the record. The source folder is only read.
 
 ```powershell
 cd code/rust
-cargo run -p pfp_operads -- repair ../../workflows/wf57_host_tested_patch_repair/examples/paper_adjust/source my_run ../../workflows/wf57_host_tested_patch_repair/examples/paper_adjust/request.json
+cargo run -p pfp_operads -- repair ../../workflows/wf57_host_tested_patch_repair/examples/refused_operation/source my_run ../../workflows/wf57_host_tested_patch_repair/examples/refused_operation/request.json
 ```
 
-That is the example above, with the two asserts as its checks (it needs
-`python` on the path). The host prints `"outcome":"REPAIRED"` with check exits
-`[1, 0]` before the patch and `[0, 0]` after it, and `my_run` holds the
-request, the patch, the record and the patched copy.
+That request repairs a small JSON file with the host's own commands as its two
+checks, so it needs no other program. The host prints `"outcome":"REPAIRED"`
+with check exits `[1, 0]` before the patch and `[0, 0]` after it, and `my_run`
+holds the request, the patch, the record and the patched copy.
+
+The example above, `adjust` with its two asserts, runs the same way as a test
+(`pfp_core/workflow_families/tests/test_repair.py`) and gives the same exits.
 
 [WF57](workflow_wf57.md) is the workflow around the command: a model writes the
 patch, the host tests it, and a patch that was tested and did not repair is

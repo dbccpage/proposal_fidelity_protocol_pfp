@@ -79,12 +79,11 @@ the record and the patched copy; the files under `source/` are unchanged. Run
 it again with another folder name, because a run never writes into an
 existing folder.
 
-[`examples/paper_adjust/`](examples/paper_adjust/request.json) is the worked
-example of [paper 018](../../atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md),
-section 4: a four-line Python function and the paper's two asserts as checks.
-It needs `python` on the path. The asserts are the example's own tests; the
-host runs them as commands and reads their exit codes, and every decision
-about the patch is still the host's.
+The worked example of [paper 018](../../atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md),
+section 4, runs as the test `test_the_archived_papers_worked_example_reproduces`:
+a four-line Python function with the paper's two asserts as its checks. A
+check may be any command. The host runs it and reads its exit code, and every
+decision about the patch is still the host's.
 
 ## Limits
 
