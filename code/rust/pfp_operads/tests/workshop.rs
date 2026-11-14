@@ -692,6 +692,104 @@ fn a_stream_is_hashed_whole_and_kept_to_a_bounded_head() {
     assert_eq!(Exit::default().stdout.sha256, "");
 }
 
+/// A reader that hands out at most `step` bytes at a time.
+struct Slow<'a> {
+    rest: &'a [u8],
+    step: usize,
+}
+
+impl std::io::Read for Slow<'_> {
+    fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+        let count = self.step.min(self.rest.len()).min(buffer.len());
+        let (now, later) = self.rest.split_at(count);
+        buffer[..count].copy_from_slice(now);
+        self.rest = later;
+        Ok(count)
+    }
+}
+
+#[test]
+fn a_head_is_filled_across_short_reads() {
+    let big: Vec<u8> = (0..10_000u32)
+        .map(|n| b'a' + u8::try_from(n % 26).unwrap())
+        .collect();
+    let slow = stream(Slow {
+        rest: &big,
+        step: 1000,
+    });
+    assert_eq!(slow.head.as_bytes(), &big[..HEAD_BYTES]);
+    assert_eq!((slow.sha256, slow.truncated), (hex(&big), true));
+    let short = stream(Slow {
+        rest: &big[..HEAD_BYTES],
+        step: 7,
+    });
+    assert_eq!((short.head.len(), short.truncated), (HEAD_BYTES, false));
+}
+
+#[test]
+fn a_working_copy_that_cannot_be_laid_out_is_refused() {
+    let folder = scratch();
+    let clash = BTreeMap::from([
+        ("a".to_owned(), b"file".to_vec()),
+        ("a/b".to_owned(), b"needs a folder named a".to_vec()),
+    ]);
+    let refused = bench(&folder).open(&clash, &[]).unwrap_err();
+    assert_eq!(refused.code, "IO_UNAVAILABLE");
+    assert!(refused.message.contains("workspace"), "{}", refused.message);
+}
+
+#[cfg(target_os = "linux")]
+#[test]
+fn a_regular_file_that_cannot_be_read_is_refused_as_a_source() {
+    let folder = scratch();
+    let mut bench = Workshop::new(Path::new("/proc/self"), &folder.join("run")).unwrap();
+    let refused = bench.source("mem").unwrap_err();
+    assert_eq!(refused.code, "SOURCE_FILE_REFUSED");
+    assert!(refused.message.contains("mem: "), "{}", refused.message);
+}
+
+#[cfg(unix)]
+#[test]
+fn a_check_past_its_deadline_is_no_longer_running() {
+    let folder = scratch();
+    let mut bench = opened(&folder);
+    let script = "echo $$ > pid.txt; exec sleep 30";
+    let late = bench.run(&check(&["sh", "-c", script], 1)).unwrap_err();
+    assert_eq!(late.message, "probe: no exit within 1 s");
+    let pid = fs::read_to_string(folder.join("run").join(WORKSPACE).join("pid.txt")).unwrap();
+    let alive = Process::new("kill")
+        .args(["-0", pid.trim()])
+        .output()
+        .unwrap();
+    assert!(!alive.status.success(), "process {} still runs", pid.trim());
+}
+
+#[cfg(unix)]
+#[test]
+fn a_check_cannot_read_what_the_host_is_given_on_input() {
+    use std::io::Write;
+    use std::process::Stdio;
+    let folder = scratch();
+    let mut body = request(&total("answer.json", 5, 6));
+    body["checks"][1] = json!({"check_id": "reads", "argv": ["cat"], "timeout_seconds": 5});
+    let path = folder.join("request.json");
+    fs::write(&path, body.to_string()).unwrap();
+    let mut host = Process::new(HOST)
+        .args(["repair", path.to_str().unwrap()])
+        .arg(folder.join("source"))
+        .arg(folder.join("run"))
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .spawn()
+        .unwrap();
+    host.stdin.take().unwrap().write_all(b"leaked\n").unwrap();
+    let output = host.wait_with_output().unwrap();
+    let outcome: Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(outcome["result"]["outcome"], "REPAIRED");
+    assert_eq!(outcome["result"]["baseline"][1]["stdout"]["head"], "");
+    assert_eq!(outcome["result"]["baseline"][1]["code"], 0);
+}
+
 fn cli(args: &[&str]) -> (i32, Value) {
     let output = Process::new(HOST).args(args).output().unwrap();
     (

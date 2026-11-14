@@ -208,6 +208,10 @@ fn a_malformed_patch_is_refused() {
         ),
         (hunk("@@ -1 +1", "-a\n+b\n"), "bad hunk header \"@@ -1 +1\""),
         (
+            hunk("@@ note @@ -1 +1 @@", "-a\n+b\n"),
+            "bad hunk header \"@@ note @@ -1 +1 @@\"",
+        ),
+        (
             hunk("@@ -x +1 @@", "-a\n+b\n"),
             "bad hunk header \"@@ -x +1 @@\"",
         ),
