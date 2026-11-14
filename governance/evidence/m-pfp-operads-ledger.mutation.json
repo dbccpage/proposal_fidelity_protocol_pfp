@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/ledger.rs",
-  "target_sha256": "3ab517976a8825412725954cba51004049abb069ee495a99d01334ad58195c2e",
+  "target_sha256": "a22cab695260ee7041a3c77cb815e9fba98757bd022680c548cb9d51e7770092",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 25,
+    "killed": 44,
     "survived": 0,
     "demonstrably_equivalent": 1,
     "invalid": 0,
@@ -98,12 +98,6 @@
       "outcome": "killed"
     },
     {
-      "name": "train/test overlap accepted",
-      "old": "                if !cases.is_disjoint(&rule.derived_from) {",
-      "new": "                if false && !cases.is_disjoint(&rule.derived_from) {",
-      "outcome": "killed"
-    },
-    {
       "name": "count check uses the smaller number",
       "old": "                if (*baseline_correct).max(*treated_correct) as usize > cases.len() {",
       "new": "                if (*baseline_correct).min(*treated_correct) as usize > cases.len() {",
@@ -168,6 +162,126 @@
       "name": "sequence starts at one",
       "old": "        let seq = self.entries.len() as u64;",
       "new": "        let seq = self.entries.len() as u64 + 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "train/test overlap accepted",
+      "old": "if cases.iter().any(|id| seen.contains(case_of(id))) {",
+      "new": "if false && cases.iter().any(|id| seen.contains(case_of(id))) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlap needs every held-out case",
+      "old": "if cases.iter().any(|id| seen.contains(case_of(id))) {",
+      "new": "if cases.iter().all(|id| seen.contains(case_of(id))) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out id not reduced to its case",
+      "old": "seen.contains(case_of(id))",
+      "new": "seen.contains(id.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure id not reduced to its case",
+      "old": "rule.derived_from.iter().map(|id| case_of(id)).collect();",
+      "new": "rule.derived_from.iter().map(|id| id.as_str()).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "case of an id is the whole id",
+      "old": "id.split_once('@').map_or(id, |(case, _)| case)",
+      "new": "id",
+      "outcome": "killed"
+    },
+    {
+      "name": "case cut at the last at sign",
+      "old": "id.split_once('@').map_or(id, |(case, _)| case)",
+      "new": "id.rsplit_once('@').map_or(id, |(case, _)| case)",
+      "outcome": "killed"
+    },
+    {
+      "name": "case is the run part",
+      "old": "id.split_once('@').map_or(id, |(case, _)| case)",
+      "new": "id.split_once('@').map_or(id, |(_, run)| run)",
+      "outcome": "killed"
+    },
+    {
+      "name": "head is the previous hash",
+      "old": ".map_or(GENESIS, |entry| entry.hash.as_str())",
+      "new": ".map_or(GENESIS, |entry| entry.prev.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "head is the first entry",
+      "old": "        self.entries\n            .last()\n            .map_or(GENESIS",
+      "new": "        self.entries\n            .first()\n            .map_or(GENESIS",
+      "outcome": "killed"
+    },
+    {
+      "name": "genesis test inverted",
+      "old": "let kept = if head == GENESIS {",
+      "new": "let kept = if head != GENESIS {",
+      "outcome": "killed"
+    },
+    {
+      "name": "earlier state stops one entry short",
+      "old": "Some(last) => last + 1,",
+      "new": "Some(last) => last,",
+      "outcome": "killed"
+    },
+    {
+      "name": "state found by the previous hash",
+      "old": "position(|entry| entry.hash == head)",
+      "new": "position(|entry| entry.prev == head)",
+      "outcome": "killed"
+    },
+    {
+      "name": "earlier state is the whole ledger",
+      "old": "for entry in &self.entries[..kept] {",
+      "new": "for entry in &self.entries[..kept.max(self.entries.len())] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown head mislabelled",
+      "old": "\"UNKNOWN_LEDGER_HEAD\",",
+      "new": "\"CHAIN_BROKEN\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a rejected rule cannot be retried",
+      "old": "matches!(rule.status, Status::Candidate | Status::Rejected)",
+      "new": "matches!(rule.status, Status::Candidate)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an admitted rule can be put on trial",
+      "old": "matches!(rule.status, Status::Candidate | Status::Rejected)",
+      "new": "matches!(rule.status, Status::Candidate | Status::Rejected | Status::Admitted)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a retired rule can be put on trial",
+      "old": "matches!(rule.status, Status::Candidate | Status::Rejected)",
+      "new": "matches!(rule.status, Status::Candidate | Status::Rejected | Status::Retired)",
+      "outcome": "killed"
+    },
+    {
+      "name": "status refusal mislabelled",
+      "old": "\"NOT_ON_TRIAL\",",
+      "new": "\"UNKNOWN_CANDIDATE\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "status left out of the refusal",
+      "old": "format!(\"{candidate} is {}\", rule.status.as_str()),",
+      "new": "format!(\"{candidate} is {}\", \"not on trial\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule on trial loses its id",
+      "old": "id: candidate.to_owned(),",
+      "new": "id: String::new(),",
       "outcome": "killed"
     }
   ]
