@@ -9,20 +9,17 @@
       "language": "Rust",
       "sha256": "d645d37461330977e95123bc93b057bd683cc55756e88cc531f2a651c51da052"
     },
-    "contract_urn": "urn:core:crates-rs:tests:activation-use-case-parity:v1",
+    "contract_urn": "urn:code-rust:tests:core-epistemic-immune-system:activation-use-case-parity:v1",
     "symbols": [
-      "frozen_python_guard_ports_and_full_ordered_trace",
-      "injected_port_failures_remain_typed_and_stop_dependent_calls",
-      "run_guard_use_case_row",
-      "build_activation_request"
+      "run_guard_use_case_row"
     ],
     "owned_invariants": [
-      "Tests assert parity with frozen Python use-case vectors across sensor, state, and activation calls.",
-      "Injected port failures remain typed and stop dependent calls.",
+      "Verification harness exercising activation_use_case_parity behaviors and contract boundaries.",
+      "Deterministic evaluation with no live network or external service dependencies.",
       "AuthorityEffect: None."
     ],
     "boundaries": [
-      "Integration test suite verifying guard activation port and trace parity."
+      "Test support harness; does not export production runtime symbols."
     ]
   },
   "score": {
@@ -35,7 +32,7 @@
     },
     "profile": "Non-Numeric",
     "level": "L2",
-    "level_basis": "Module-level verification for code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs.",
+    "level_basis": "Integration and unit test suite for activation_use_case_parity.rs.",
     "gates": {
       "G1": "C",
       "G2": "C",
@@ -44,11 +41,11 @@
       "G5": "A"
     },
     "basis": {
-      "G1": "Test module states AuthorityEffect None and tests activation use-case parity.",
-      "G2": "Asserts exact match with frozen Python fixtures without floating-point tolerance.",
-      "G3": "Typed refusals verified on simulated port error injections.",
-      "G4": "All integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
-      "G5": "Standard test function layout within complexity limits."
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
     },
     "composite_grade": "C",
     "score_token": "L2C",
@@ -76,7 +73,8 @@
         "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
         "note": "cargo test for core_prompt_civilization --lib"
       }
-    ]
+    ],
+    "mutation_accounting": null
   },
   "history": []
 }

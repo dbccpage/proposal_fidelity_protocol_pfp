@@ -9,20 +9,26 @@
       "language": "Rust",
       "sha256": "af0a371d2c1d8a6e13ad448252b6494e23027db09544db55f497d1a87a9468cc"
     },
-    "contract_urn": "urn:core:crates-rs:core-prompt-civilization:immunity:v1",
+    "contract_urn": "urn:code-rust:core-prompt-civilization:immunity:v1",
     "symbols": [
+      "BoundaryError5eddf435",
+      "BoundaryRecord5eddf435",
+      "ImmunityAcquisitionV1",
       "ImmunityEngineV1",
-      "filter_armed_repertoire",
+      "ImmunityPropagationV1",
       "compute_backward_propagation",
-      "compute_ancestor_taint"
+      "compute_forward_inheritance",
+      "compute_forward_taint",
+      "filter_armed_repertoire",
+      "try_admit"
     ],
     "owned_invariants": [
-      "Backward propagation attenuation decays exponentially by 2^hop without float drift using BigRational.",
-      "Shortest hop distance and maximum 10-hop depth bound enforced.",
+      "Public invariants and deterministic checks for immunity.",
+      "Strict typed outcomes and refusal boundaries without unhandled floats or panic conditions.",
       "AuthorityEffect: None."
     ],
     "boundaries": [
-      "Bounded admission within capacity_bound.",
+      "Bounded execution within declared capability limits.",
       "Does not claim authority promotion outside declared finite bounds."
     ]
   },
@@ -36,7 +42,7 @@
     },
     "profile": "Non-Numeric",
     "level": "L4",
-    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/immunity.rs.",
+    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/immunity.rs with typed error handling and boundary invariants.",
     "gates": {
       "G1": "C",
       "G2": "C",
@@ -45,11 +51,11 @@
       "G5": "A"
     },
     "basis": {
-      "G1": "Module header declares AuthorityEffect None; public symbols match contract.",
-      "G2": "Exact BigRational attenuation calculations; no floating point used in distance or weight propagation.",
-      "G3": "Sealed witness digest checks verify authentic inheritance edge provenance.",
-      "G4": "All library unit tests pass (116/116); clippy -D warnings and rustfmt check pass cleanly.",
-      "G5": "Clean modular implementation within structure bounds."
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
     },
     "composite_grade": "C",
     "score_token": "L4C",
@@ -77,7 +83,21 @@
         "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
         "note": "cargo test for core_prompt_civilization --lib"
       }
-    ]
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core_prompt_civilization-immunity.mutation.json",
+        "sha256": "786feef219801c0380fb540a6d1e7b5933d09f55d8602efeb9a6585de59212ae",
+        "note": "lexical mutation report for immunity"
+      }
+    }
   },
   "history": []
 }

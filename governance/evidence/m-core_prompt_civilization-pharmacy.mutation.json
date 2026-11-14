@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_prompt_civilization/src/pharmacy.rs",
+  "target_sha256": "0693786bcb1e57a7d1b32bf2100837441ef26fcd984b3ce9fd7a9c6d995af48d",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization --lib",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "is_clean inverted",
+      "old": "findings.is_empty()",
+      "new": "!findings.is_empty()",
+      "outcome": "killed"
+    },
+    {
+      "name": "authority_effect altered",
+      "old": "\"None\".to_string()",
+      "new": "\"Promotion\".to_string()",
+      "outcome": "killed"
+    },
+    {
+      "name": "host only keys detector disabled",
+      "old": "if HOST_ONLY_KEYS.contains(key)",
+      "new": "if false && HOST_ONLY_KEYS.contains(key)",
+      "outcome": "killed"
+    },
+    {
+      "name": "self certifying value detector disabled",
+      "old": "if SELF_CERTIFYING_VALUES.contains(&lower)",
+      "new": "if false && SELF_CERTIFYING_VALUES.contains(&lower)",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate finding filter disabled",
+      "old": "if !findings.iter().any(|f| f.path == path && f.failure_class == failure_class)",
+      "new": "if true",
+      "outcome": "killed"
+    },
+    {
+      "name": "clean candidate detection inverted",
+      "old": "report.is_clean",
+      "new": "!report.is_clean",
+      "outcome": "killed"
+    }
+  ]
+}

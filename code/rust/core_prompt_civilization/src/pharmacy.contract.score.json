@@ -9,22 +9,27 @@
       "language": "Rust",
       "sha256": "0693786bcb1e57a7d1b32bf2100837441ef26fcd984b3ce9fd7a9c6d995af48d"
     },
-    "contract_urn": "urn:core:crates-rs:core-prompt-civilization:pharmacy:v1",
+    "contract_urn": "urn:code-rust:core-prompt-civilization:pharmacy:v1",
     "symbols": [
+      "DetectionContext",
+      "DetectorReport",
+      "Disposition",
       "FailureClass",
       "Finding",
-      "DetectorReport",
-      "PharmacyRule",
-      "screen_candidate",
-      "detect_all"
+      "HostIngestError",
+      "HostReplayReceipt",
+      "as_str",
+      "authority_effect",
+      "code"
     ],
     "owned_invariants": [
-      "Detection is separate from repair: a Finding names what is wrong and carries no fix.",
-      "Passing fixtures proves only that named detectors ran on named bytes; a clean report is not admission.",
+      "Public invariants and deterministic checks for pharmacy.",
+      "Strict typed outcomes and refusal boundaries without unhandled floats or panic conditions.",
       "AuthorityEffect: None."
     ],
     "boundaries": [
-      "Bounded detector operations over candidate packets without semantic replay or authority promotion."
+      "Bounded execution within declared capability limits.",
+      "Does not claim authority promotion outside declared finite bounds."
     ]
   },
   "score": {
@@ -37,7 +42,7 @@
     },
     "profile": "Non-Numeric",
     "level": "L4",
-    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/pharmacy.rs.",
+    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/pharmacy.rs with typed error handling and boundary invariants.",
     "gates": {
       "G1": "C",
       "G2": "C",
@@ -46,11 +51,11 @@
       "G5": "A"
     },
     "basis": {
-      "G1": "Module documentation explicitly states separation of detection and repair with AuthorityEffect None.",
-      "G2": "Deterministic mechanical checks over candidate bytes without lossy float operations.",
-      "G3": "Typed refusal variants for malformed payloads, unhandled types, and boundary overflows.",
-      "G4": "All library unit tests pass; clippy -D warnings and rustfmt check pass cleanly.",
-      "G5": "Organized detector dispatch table within structural bounds."
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
     },
     "composite_grade": "C",
     "score_token": "L4C",
@@ -78,7 +83,21 @@
         "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
         "note": "cargo test for core_prompt_civilization --lib"
       }
-    ]
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core_prompt_civilization-pharmacy.mutation.json",
+        "sha256": "e7d051c8ded5d1ddbbe5ac0023710bd1a4611c1f4320948a200c1b32f6d0e98d",
+        "note": "lexical mutation report for pharmacy"
+      }
+    }
   },
   "history": []
 }
