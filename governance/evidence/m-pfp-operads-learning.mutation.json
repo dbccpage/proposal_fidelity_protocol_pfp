@@ -1,0 +1,258 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/learning.rs",
+  "target_sha256": "ba53f83c2d603b5f9d2f19a89e5241bf2decd86cef7874596072199bb8dcc22a",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 38,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 1,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "wrong result class changed",
+      "old": "pub const WRONG_RESULT: &str = \"CounterfeitExactness\";",
+      "new": "pub const WRONG_RESULT: &str = \"ToyPromotion\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "host refusal letter changed",
+      "old": "pub const HOST_REFUSAL: &str = \"M\";",
+      "new": "pub const HOST_REFUSAL: &str = \"R\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence domain changed",
+      "old": "\"pfp.operads.failure-evidence.v1\"",
+      "new": "\"pfp.operads.failure-evidence.v2\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence leaves out the checker",
+      "old": "[EVIDENCE_DOMAIN, checker, case.get(), answer.get()]",
+      "new": "[EVIDENCE_DOMAIN, case.get(), answer.get()]",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence leaves out the answer",
+      "old": "[EVIDENCE_DOMAIN, checker, case.get(), answer.get()]",
+      "new": "[EVIDENCE_DOMAIN, checker, case.get()]",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence leaves out the case",
+      "old": "[EVIDENCE_DOMAIN, checker, case.get(), answer.get()]",
+      "new": "[EVIDENCE_DOMAIN, checker, answer.get()]",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence leaves out the domain",
+      "old": "[EVIDENCE_DOMAIN, checker, case.get(), answer.get()]",
+      "new": "[checker, case.get(), answer.get()]",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence parts not separated",
+      "old": "        hasher.update(b\"\\n\");\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence swaps case and answer",
+      "old": "[EVIDENCE_DOMAIN, checker, case.get(), answer.get()]",
+      "new": "[EVIDENCE_DOMAIN, checker, answer.get(), case.get()]",
+      "outcome": "killed"
+    },
+    {
+      "name": "correct answer recorded as a failure",
+      "old": "    if accepts(&request.checker, request.case, request.answer)? {",
+      "new": "    if false && accepts(&request.checker, request.case, request.answer)? {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only correct answers recorded",
+      "old": "    if accepts(&request.checker, request.case, request.answer)? {",
+      "new": "    if !accepts(&request.checker, request.case, request.answer)? {",
+      "outcome": "killed"
+    },
+    {
+      "name": "not-a-failure gets another code",
+      "old": "            \"NOT_A_FAILURE\",",
+      "new": "            \"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "reply word dropped",
+      "old": "request.reply_trace + HOST_REFUSAL",
+      "new": "HOST_REFUSAL.to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "host letter not added",
+      "old": "request.reply_trace + HOST_REFUSAL",
+      "new": "request.reply_trace",
+      "outcome": "killed"
+    },
+    {
+      "name": "host letter put first",
+      "old": "request.reply_trace + HOST_REFUSAL",
+      "new": "HOST_REFUSAL.to_owned() + &request.reply_trace",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure class taken from elsewhere",
+      "old": "failure_class: WRONG_RESULT.to_owned(),",
+      "new": "failure_class: HOST_REFUSAL.to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "workflow and run swapped",
+      "old": "            workflow: request.workflow,\n            run: request.run,",
+      "new": "            workflow: request.run,\n            run: request.workflow,",
+      "outcome": "killed"
+    },
+    {
+      "name": "open witness request accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct WitnessRequest<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct WitnessRequest<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "open trial case accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct TrialCase<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct TrialCase<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "open trial request accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct TrialRequest<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct TrialRequest<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "reply word required",
+      "old": "    #[serde(default)]\n    reply_trace: String,",
+      "new": "    reply_trace: String,",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness malformed request gets another code",
+      "old": "    let request: WitnessRequest = serde_json::from_str(text)\n        .map_err(|error| Refusal::new(\"BAD_REQUEST\", error.to_string()))?;",
+      "new": "    let request: WitnessRequest = serde_json::from_str(text)\n        .map_err(|error| Refusal::new(\"BAD_CASE\", error.to_string()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "trial malformed request gets another code",
+      "old": "    let request: TrialRequest = serde_json::from_str(text)\n        .map_err(|error| Refusal::new(\"BAD_REQUEST\", error.to_string()))?;",
+      "new": "    let request: TrialRequest = serde_json::from_str(text)\n        .map_err(|error| Refusal::new(\"BAD_CASE\", error.to_string()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline judged on the treated answer",
+      "old": "baseline: accepts(&request.checker, case.case, case.baseline)?,",
+      "new": "baseline: accepts(&request.checker, case.case, case.treated)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "treated judged on the baseline answer",
+      "old": "treated: accepts(&request.checker, case.case, case.treated)?,",
+      "new": "treated: accepts(&request.checker, case.case, case.baseline)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline always correct",
+      "old": "baseline: accepts(&request.checker, case.case, case.baseline)?,",
+      "new": "baseline: accepts(&request.checker, case.case, case.baseline)? || true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "treated always correct",
+      "old": "treated: accepts(&request.checker, case.case, case.treated)?,",
+      "new": "treated: accepts(&request.checker, case.case, case.treated)? || true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline count uses treated",
+      "old": "baseline_correct: count(&cases, |case| case.baseline)?,",
+      "new": "baseline_correct: count(&cases, |case| case.treated)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "treated count uses baseline",
+      "old": "treated_correct: count(&cases, |case| case.treated)?,",
+      "new": "treated_correct: count(&cases, |case| case.baseline)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "no clean-panel hit counted",
+      "old": "count(&cases, |case| case.baseline && !case.treated)?",
+      "new": "count(&cases, |_| false)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "clean-panel hit counts every treated miss",
+      "old": "|case| case.baseline && !case.treated",
+      "new": "|case| !case.treated",
+      "outcome": "killed"
+    },
+    {
+      "name": "clean-panel hit counts gains",
+      "old": "|case| case.baseline && !case.treated",
+      "new": "|case| !case.baseline && case.treated",
+      "outcome": "killed"
+    },
+    {
+      "name": "clean-panel hit counts every baseline pass",
+      "old": "|case| case.baseline && !case.treated",
+      "new": "|case| case.baseline",
+      "outcome": "killed"
+    },
+    {
+      "name": "count inverted",
+      "old": "cases.iter().filter(|case| pick(case)).count()",
+      "new": "cases.iter().filter(|case| !pick(case)).count()",
+      "outcome": "killed"
+    },
+    {
+      "name": "count is the panel size",
+      "old": "cases.iter().filter(|case| pick(case)).count()",
+      "new": "cases.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out list left empty",
+      "old": "held_out: cases.iter().map(|case| case.id.clone()).collect(),",
+      "new": "held_out: Vec::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "held-out list names the candidate",
+      "old": "held_out: cases.iter().map(|case| case.id.clone()).collect(),",
+      "new": "held_out: cases.iter().map(|_| request.candidate.clone()).collect(),",
+      "outcome": "invalid"
+    },
+    {
+      "name": "case verdicts dropped",
+      "old": "        cases,\n    })\n}",
+      "new": "        cases: Vec::new(),\n    })\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "case verdict loses its id",
+      "old": "            id: case.id.clone(),\n            baseline:",
+      "new": "            id: String::new(),\n            baseline:",
+      "outcome": "killed"
+    },
+    {
+      "name": "count overflow gets another code",
+      "old": "Refusal::new(\"BAD_COUNT\", \"too many cases to count\")",
+      "new": "Refusal::new(\"BAD_REQUEST\", \"too many cases to count\")",
+      "equivalent": "A count only overflows u32 past 4,294,967,295 cases. No request a test can hold reaches that, so the refusal code is unreachable in practice.",
+      "outcome": "demonstrably_equivalent"
+    }
+  ]
+}
