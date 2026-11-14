@@ -9,20 +9,17 @@
       "language": "Rust",
       "sha256": "d645d37461330977e95123bc93b057bd683cc55756e88cc531f2a651c51da052"
     },
-    "contract_urn": "urn:core:crates-rs:tests:activation-use-case-parity:v1",
+    "contract_urn": "urn:code-rust:tests:core-epistemic-immune-system:activation-use-case-parity:v1",
     "symbols": [
-      "frozen_python_guard_ports_and_full_ordered_trace",
-      "injected_port_failures_remain_typed_and_stop_dependent_calls",
-      "run_guard_use_case_row",
-      "build_activation_request"
+      "run_guard_use_case_row"
     ],
     "owned_invariants": [
-      "Tests assert parity with frozen Python use-case vectors across sensor, state, and activation calls.",
-      "Injected port failures remain typed and stop dependent calls.",
+      "Verification harness exercising activation_use_case_parity behaviors and contract boundaries.",
+      "Deterministic evaluation with no live network or external service dependencies.",
       "AuthorityEffect: None."
     ],
     "boundaries": [
-      "Integration test suite verifying guard activation port and trace parity."
+      "Test support harness; does not export production runtime symbols."
     ]
   },
   "score": {
@@ -35,7 +32,7 @@
     },
     "profile": "Non-Numeric",
     "level": "L2",
-    "level_basis": "Module-level verification for code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs.",
+    "level_basis": "Integration and unit test suite for activation_use_case_parity.rs.",
     "gates": {
       "G1": "C",
       "G2": "C",
@@ -44,39 +41,40 @@
       "G5": "A"
     },
     "basis": {
-      "G1": "Test module states AuthorityEffect None and tests activation use-case parity.",
-      "G2": "Asserts exact match with frozen Python fixtures without floating-point tolerance.",
-      "G3": "Typed refusals verified on simulated port error injections.",
-      "G4": "All integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
-      "G5": "Standard test function layout within complexity limits."
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
     },
     "composite_grade": "C",
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T10:48:28Z",
+    "evaluation_timestamp": "2026-11-14T12:30:00Z",
     "evidence": [
       {
-        "path": "governance/evidence/eis-pciv-m2-fmt.run.json",
-        "sha256": "8e9de6d83fb4df9baaa159ec1fc27cfd7ec7faf31c09b3909878ce4c9aca54a0",
+        "path": "governance/evidence/eis-pciv-m4-fmt.run.json",
+        "sha256": "430797cf43ad75a5f96969e5ec859e09902b689dad99022de742708a0ba62ca2",
         "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
       },
       {
-        "path": "governance/evidence/eis-pciv-m2-clippy.run.json",
-        "sha256": "360df1d68bad550438691750b3ffd452b72782ad639328c4e979c597682fe6f9",
+        "path": "governance/evidence/eis-pciv-m4-clippy.run.json",
+        "sha256": "3e06011e0ba37ffc31b45734c5a6aadddb27ba75bdeafc415f3d0b7dd5039a74",
         "note": "clippy with -D warnings on both crates, all targets"
       },
       {
-        "path": "governance/evidence/eis-pciv-m2-eis-test.run.json",
-        "sha256": "85590c13449f950e8a64a22160af941191c4599a9110cd64d77d63a1b00afc7f",
+        "path": "governance/evidence/eis-pciv-m4-eis-test.run.json",
+        "sha256": "935b915107b09a3de6c9744d93b1f7ebc6dc4a234d484dfa0f2d361277a0a5c7",
         "note": "cargo test for core_epistemic_immune_system"
       },
       {
-        "path": "governance/evidence/eis-pciv-m2-pciv-test.run.json",
-        "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
+        "path": "governance/evidence/eis-pciv-m4-pciv-test.run.json",
+        "sha256": "4d29a149eb26c3b5988e5107c6989c58e8e293a5e0e327e1523405087031b4bc",
         "note": "cargo test for core_prompt_civilization --lib"
       }
-    ]
+    ],
+    "mutation_accounting": null
   },
   "history": []
 }

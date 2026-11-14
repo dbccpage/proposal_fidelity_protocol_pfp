@@ -9,27 +9,27 @@
       "language": "Rust",
       "sha256": "8a877f892f5812da7dfab7ee297c1f00b761a9bd5ae95edd0383bb17d0231fbb"
     },
-    "contract_urn": "urn:core:crates-rs:core-epistemic-immune-system:normalization:v1",
+    "contract_urn": "urn:code-rust:core-epistemic-immune-system:normalization:v1",
     "symbols": [
-      "CharpolyWireRefusal",
-      "MonomialWire",
-      "CharpolyWire",
-      "CharpolyReductionReceipt",
-      "NormalizedMatcher",
-      "gcd_bigint",
-      "reduce_rational_string",
-      "normalize_charpoly_wire",
-      "normalize_charpoly_wire_str",
-      "validate_charpoly_json_contract"
+      "BoundaryErrorba4ae545",
+      "BoundaryRecordba4ae545",
+      "MAX_INPUT_BYTES",
+      "MAX_JSON_DEPTH",
+      "MAX_RATIONAL_BITS",
+      "MAX_RATIONAL_CHARS",
+      "MAX_TERMS_PER_COEFFICIENT",
+      "MAX_TOTAL_TERMS",
+      "NormalizationReceipt",
+      "NormalizedMatcher"
     ],
     "owned_invariants": [
-      "Exact rational reduction: reduces rational string coefficients to canonical coprimes with strictly positive denominator.",
-      "Explicit zero omission: drops zero monomials while checking power uniqueness prior to zero omission.",
-      "Refuses non-monic leading coefficient and enforces lexicographical ordering [eJ, eDelta, eK].",
+      "Public invariants and deterministic checks for normalization.",
+      "Strict typed outcomes and refusal boundaries without unhandled floats or panic conditions.",
       "AuthorityEffect: None."
     ],
     "boundaries": [
-      "Finite polynomial wire normalization bounded to monic charpolys within capacity limits."
+      "Bounded execution within declared capability limits.",
+      "Does not claim authority promotion outside declared finite bounds."
     ]
   },
   "score": {
@@ -42,7 +42,7 @@
     },
     "profile": "Non-Numeric",
     "level": "L4",
-    "level_basis": "Module-level verification for code/rust/core_epistemic_immune_system/src/normalization.rs.",
+    "level_basis": "Module-level verification for code/rust/core_epistemic_immune_system/src/normalization.rs with typed error handling and boundary invariants.",
     "gates": {
       "G1": "C",
       "G2": "C",
@@ -51,39 +51,53 @@
       "G5": "A"
     },
     "basis": {
-      "G1": "Module header states AuthorityEffect None and declares wire types; public symbols match contract.",
-      "G2": "Exact rational normalization and zero float arithmetic implemented via BigInt.",
-      "G3": "Typed CharpolyWireRefusal errors returned on non-monic leading coefficient, invalid powers, duplicate powers, and malformed JSON.",
-      "G4": "All unit and integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
       "G5": "Structured Rust module within complexity limits."
     },
     "composite_grade": "C",
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T11:42:00Z",
+    "evaluation_timestamp": "2026-11-14T12:30:00Z",
     "evidence": [
       {
-        "path": "governance/evidence/eis-pciv-m3-fmt.run.json",
-        "sha256": "ee0cf45c0c4a88adf304254411111489bd42a8b6397a49a328f5434e5e077bbf",
+        "path": "governance/evidence/eis-pciv-m4-fmt.run.json",
+        "sha256": "430797cf43ad75a5f96969e5ec859e09902b689dad99022de742708a0ba62ca2",
         "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
       },
       {
-        "path": "governance/evidence/eis-pciv-m3-clippy.run.json",
-        "sha256": "2b8d54d83cd7a0c5fea071e1a4fe0f1ed36ff23a282ebef9e09b239e9ea33674",
+        "path": "governance/evidence/eis-pciv-m4-clippy.run.json",
+        "sha256": "3e06011e0ba37ffc31b45734c5a6aadddb27ba75bdeafc415f3d0b7dd5039a74",
         "note": "clippy with -D warnings on both crates, all targets"
       },
       {
-        "path": "governance/evidence/eis-pciv-m3-eis-test.run.json",
-        "sha256": "a7a021aa5f4ae706efc307e5461f003d1fc888de86fc6916cc2c5211e6249235",
+        "path": "governance/evidence/eis-pciv-m4-eis-test.run.json",
+        "sha256": "935b915107b09a3de6c9744d93b1f7ebc6dc4a234d484dfa0f2d361277a0a5c7",
         "note": "cargo test for core_epistemic_immune_system"
       },
       {
-        "path": "governance/evidence/eis-pciv-m3-pciv-test.run.json",
-        "sha256": "a221369912bbfcd1f33264affc13f0af927b10c6bdf0a426c3f806a05200dd47",
+        "path": "governance/evidence/eis-pciv-m4-pciv-test.run.json",
+        "sha256": "4d29a149eb26c3b5988e5107c6989c58e8e293a5e0e327e1523405087031b4bc",
         "note": "cargo test for core_prompt_civilization --lib"
       }
-    ]
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core_epistemic_immune_system-normalization.mutation.json",
+        "sha256": "964270c1394f9e0e9acd042a6fa2eb63e3000e996961ae60588232b545f19028",
+        "note": "lexical mutation report for normalization"
+      }
+    }
   },
   "history": []
 }

@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_prompt_civilization/src/society.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_prompt_civilization/src/society.rs",
+      "language": "Rust",
+      "sha256": "233024fc1acae109ce25cee8758a9b23c56c8d52fb9a85f629358bb5ff9a43b8"
+    },
+    "contract_urn": "urn:code-rust:core-prompt-civilization:society:v1",
+    "symbols": [
+      "AggregateFitnessVectorV1",
+      "BoundaryErrorf7a65f1f",
+      "BoundaryRecordf7a65f1f",
+      "MigrationPolicyV1",
+      "PromptCivilizationV1",
+      "PromptSocietyV1",
+      "accuracy",
+      "advance_epoch",
+      "canonical_digest",
+      "check_budget_solvency"
+    ],
+    "owned_invariants": [
+      "Public invariants and deterministic checks for society.",
+      "Strict typed outcomes and refusal boundaries without unhandled floats or panic conditions.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Bounded execution within declared capability limits.",
+      "Does not claim authority promotion outside declared finite bounds."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_prompt_civilization/src/society.rs",
+      "language": "Rust",
+      "sha256": "233024fc1acae109ce25cee8758a9b23c56c8d52fb9a85f629358bb5ff9a43b8"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/society.rs with typed error handling and boundary invariants.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:30:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m4-fmt.run.json",
+        "sha256": "430797cf43ad75a5f96969e5ec859e09902b689dad99022de742708a0ba62ca2",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-clippy.run.json",
+        "sha256": "3e06011e0ba37ffc31b45734c5a6aadddb27ba75bdeafc415f3d0b7dd5039a74",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-eis-test.run.json",
+        "sha256": "935b915107b09a3de6c9744d93b1f7ebc6dc4a234d484dfa0f2d361277a0a5c7",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-pciv-test.run.json",
+        "sha256": "4d29a149eb26c3b5988e5107c6989c58e8e293a5e0e327e1523405087031b4bc",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core_prompt_civilization-society.mutation.json",
+        "sha256": "61dc77ca611afe016dbc95ca2030e983518e6942564bc3360f81cdf652df33fe",
+        "note": "lexical mutation report for society"
+      }
+    }
+  },
+  "history": []
+}
