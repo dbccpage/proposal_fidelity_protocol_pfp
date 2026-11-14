@@ -519,7 +519,7 @@ fn scan_string_markers(
     unexplored_branches: usize,
     findings: &mut Vec<Finding>,
 ) {
-    if SELF_CERTIFYING_VALUES.iter().any(|word| lower == *word) {
+    if SELF_CERTIFYING_VALUES.contains(&lower) {
         findings.push(Finding::new(
             FailureClass::SelfCertification,
             path.to_owned(),

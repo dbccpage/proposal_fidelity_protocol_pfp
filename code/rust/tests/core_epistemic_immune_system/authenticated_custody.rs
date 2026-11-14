@@ -1,6 +1,6 @@
 //! Finite signature/custody controls. Fixture keys are not production authority.
-use ed25519_dalek::{Signer, SigningKey};
 use core_epistemic_immune_system::authenticated::*;
+use ed25519_dalek::{Signer, SigningKey};
 use serde_json::json;
 
 fn fixture() -> (SigningKey, TrustPolicy, Binding) {
@@ -134,7 +134,11 @@ fn successful_process_observation_is_limited_to_its_explicit_scope() {
 #[test]
 fn kernel_observation_does_not_widen_process_or_legacy_scopes() {
     let (key, mut policy, mut binding) = fixture();
-    for scope in ["fixture", "adversary.host-process.v1", "adversary.host-lean.v1"] {
+    for scope in [
+        "fixture",
+        "adversary.host-process.v1",
+        "adversary.host-lean.v1",
+    ] {
         binding.scope = scope.into();
         policy.keys[0].scopes = vec![scope.into()];
         let signed = sign(
