@@ -211,6 +211,21 @@ fn refusal(record: &Terminal) -> (&str, &str, &str) {
     (refusal.stage, refusal.code, refusal.message.as_str())
 }
 
+fn evidence(record: &Terminal) -> &str {
+    match record.failure.as_ref().unwrap() {
+        Record::Failure {
+            evidence_sha256, ..
+        } => evidence_sha256,
+        other => panic!("not a failure record: {other:?}"),
+    }
+}
+
+/// The evidence hash a record must carry for what the run saw, built here from its parts.
+fn stated(record: &Terminal, refusal: Option<&str>, baseline: &Exits, after: &Exits) -> String {
+    let seen = serde_json::to_vec(&(&record.request_digest, refusal, baseline, after)).unwrap();
+    hex(&[b"pfp.operads.repair.evidence.v1\n".as_slice(), &seen].concat())
+}
+
 fn failure(record: &Terminal) -> (&str, &str, &str, &str, &str) {
     match record.failure.as_ref().unwrap() {
         Record::Failure {
@@ -367,17 +382,8 @@ fn a_patch_that_leaves_the_failing_check_failing_is_a_recorded_failure() {
             "CREIMT"
         )
     );
-    let seen = serde_json::to_vec(&(
-        &record.request_digest,
-        None::<&str>,
-        [("positive", 1), ("control", 0)],
-        [("positive", 1), ("control", 0)],
-    ))
-    .unwrap();
-    let expected = hex(&[b"pfp.operads.repair.evidence.v1\n".as_slice(), &seen].concat());
-    assert!(
-        matches!(&record.failure, Some(Record::Failure { evidence_sha256, .. }) if *evidence_sha256 == expected)
-    );
+    let same = [("positive", 1), ("control", 0)];
+    assert_eq!(evidence(&record), stated(&record, None, &same, &same));
     let mut ledger = Ledger::new();
     ledger.append(record.failure.clone().unwrap()).unwrap();
     assert_eq!(ledger.entries().len(), 1);
@@ -427,6 +433,16 @@ fn breaking_a_check_that_passed_is_a_regression_even_when_the_target_is_fixed() 
     assert_eq!(exits(&record.after), [("positive", 0), ("control", 1)]);
     assert_eq!(failure(&record).3, LEAK);
     assert_eq!(record.trace, "CREIMT");
+    assert_eq!(
+        evidence(&record),
+        stated(
+            &record,
+            None,
+            &[("positive", 1), ("control", 0)],
+            &[("positive", 0), ("control", 1)]
+        ),
+        "the evidence binds the exits before and after, in that order"
+    );
 }
 
 #[test]
@@ -479,6 +495,16 @@ fn a_patch_outside_the_write_set_is_refused_before_anything_is_written() {
         );
         assert_eq!(failure(&record).3, MISFIT);
         assert_eq!(failure(&record).4, "CRIMT");
+        assert_eq!(
+            evidence(&record),
+            stated(
+                &record,
+                Some("PATCH_SCOPE_REFUSED"),
+                &[("positive", 1), ("control", 0)],
+                &[]
+            ),
+            "the evidence binds the refusal"
+        );
         assert_eq!(bench.copy, bench.source);
         assert!(record.after.is_empty() && record.changed_paths.is_empty());
         assert_eq!(record.working_manifest, record.source_manifest);
@@ -852,7 +878,7 @@ fn observed(pairs: &Exits) -> Vec<Observation> {
 
 #[test]
 fn the_disposition_compares_the_failing_checks_before_and_after() {
-    let table: [(&Exits, &Exits, Disposition); 9] = [
+    let table: [(&Exits, &Exits, Disposition); 10] = [
         (
             &[("a", 1), ("b", 0)],
             &[("a", 0), ("b", 0)],
@@ -888,6 +914,7 @@ fn the_disposition_compares_the_failing_checks_before_and_after() {
             &[("a", 1), ("b", 1)],
             Disposition::Regression,
         ),
+        (&[("a", -1)], &[("a", -1)], Disposition::Ineffective),
         (&[("a", 0), ("b", 0)], &[], Disposition::NoRepairNeeded),
         (&[("a", 0)], &[("a", 1)], Disposition::NoRepairNeeded),
     ];
