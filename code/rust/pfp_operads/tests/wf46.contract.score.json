@@ -1,0 +1,246 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf46.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf46.rs",
+      "language": "Rust",
+      "sha256": "2c7644bca06e1f611c835f92ead3b9228f99045a9d71b97682ebb86b60e142bd"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf46-tests:v1",
+    "symbols": [
+      "sha",
+      "square",
+      "triangle",
+      "prompt",
+      "request",
+      "all",
+      "run",
+      "ask",
+      "bad_task",
+      "malformed",
+      "outcomes",
+      "evidence",
+      "first",
+      "second",
+      "sound",
+      "hidden",
+      "alarm",
+      "caught",
+      "row",
+      "unaccepted",
+      "the_family_is_registered_under_its_names",
+      "every_run_is_asked_the_task_as_written",
+      "runs_whose_packet_and_glued_trace_agree_are_certified",
+      "ngd_is_the_share_of_accepted_runs_whose_glued_trace_fails",
+      "a_glued_trace_that_fails_behind_a_passing_packet_is_a_hidden_failure",
+      "a_packet_that_fails_before_a_passing_glued_trace_does_not_decide_it_either",
+      "a_constant_added_to_a_patch_potential_changes_nothing",
+      "a_potential_that_misses_its_patch_is_not_locally_accepted",
+      "a_potential_covers_exactly_the_vertices_of_its_patch",
+      "a_vertex_listed_twice_keeps_its_last_value",
+      "the_second_potential_is_shifted_to_the_first_where_the_first_says_nothing",
+      "the_shift_is_taken_at_the_first_packet_vertex",
+      "the_first_packet_vertex_alone_fixes_the_shift",
+      "a_run_with_no_reply_is_left_in_the_backlog",
+      "with_no_accepted_run_ngd_is_undefined",
+      "a_reply_the_host_cannot_read_ends_the_run_as_malformed",
+      "the_patches_are_two_lists_that_hold_every_edge_once",
+      "the_packet_is_a_nonempty_list_of_vertices_on_both_patches",
+      "a_task_asks_for_one_to_sixty_four_runs",
+      "a_task_is_read_in_order"
+    ],
+    "owned_invariants": [
+      "Shifts, packets and glued traces are worked by hand on a square and a triangle, including a graph where only the first packet vertex fixes the shift.",
+      "ngd is asserted as an exact fraction, undefined with no accepted run, and the hidden failures by count.",
+      "The run limit is written as the values 1 and 64 and asserted one inside and one outside, and each unreadable task by its reason and in order."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf46.rs",
+      "language": "Rust",
+      "sha256": "2c7644bca06e1f611c835f92ead3b9228f99045a9d71b97682ebb86b60e142bd"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 20 pass in the recorded run; the suite they belong to killed 82 of 82 eligible WF46 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:46.743033Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf46.rs",
+          "language": "Rust",
+          "sha256": "2c7644bca06e1f611c835f92ead3b9228f99045a9d71b97682ebb86b60e142bd"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf46-tests:v1",
+        "symbols": [
+          "sha",
+          "square",
+          "triangle",
+          "prompt",
+          "request",
+          "all",
+          "run",
+          "ask",
+          "bad_task",
+          "malformed",
+          "outcomes",
+          "evidence",
+          "first",
+          "second",
+          "sound",
+          "hidden",
+          "alarm",
+          "caught",
+          "row",
+          "unaccepted",
+          "the_family_is_registered_under_its_names",
+          "every_run_is_asked_the_task_as_written",
+          "runs_whose_packet_and_glued_trace_agree_are_certified",
+          "ngd_is_the_share_of_accepted_runs_whose_glued_trace_fails",
+          "a_glued_trace_that_fails_behind_a_passing_packet_is_a_hidden_failure",
+          "a_packet_that_fails_before_a_passing_glued_trace_does_not_decide_it_either",
+          "a_constant_added_to_a_patch_potential_changes_nothing",
+          "a_potential_that_misses_its_patch_is_not_locally_accepted",
+          "a_potential_covers_exactly_the_vertices_of_its_patch",
+          "a_vertex_listed_twice_keeps_its_last_value",
+          "the_second_potential_is_shifted_to_the_first_where_the_first_says_nothing",
+          "the_shift_is_taken_at_the_first_packet_vertex",
+          "the_first_packet_vertex_alone_fixes_the_shift",
+          "a_run_with_no_reply_is_left_in_the_backlog",
+          "with_no_accepted_run_ngd_is_undefined",
+          "a_reply_the_host_cannot_read_ends_the_run_as_malformed",
+          "the_patches_are_two_lists_that_hold_every_edge_once",
+          "the_packet_is_a_nonempty_list_of_vertices_on_both_patches",
+          "a_task_asks_for_one_to_sixty_four_runs",
+          "a_task_is_read_in_order"
+        ],
+        "owned_invariants": [
+          "Shifts, packets and glued traces are worked by hand on a square and a triangle, including a graph where only the first packet vertex fixes the shift.",
+          "ngd is asserted as an exact fraction, undefined with no accepted run, and the hidden failures by count.",
+          "The run limit is written as the values 1 and 64 and asserted one inside and one outside, and each unreadable task by its reason and in order."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf46.rs",
+          "language": "Rust",
+          "sha256": "2c7644bca06e1f611c835f92ead3b9228f99045a9d71b97682ebb86b60e142bd"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 20 pass in the recorded run; the suite they belong to killed 82 of 82 eligible WF46 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

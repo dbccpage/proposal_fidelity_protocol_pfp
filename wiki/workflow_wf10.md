@@ -4,7 +4,7 @@
 
 **Layer:** 3 · **Builds on:** [WF4](workflow_wf4.md), [WF9](workflow_wf9.md) · **Merges into:** WF4 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`ObstructionCertificate`) · **Folder:** [`workflows/wf10_local_to_global_obstruction_certificate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf10_local_to_global_obstruction_certificate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf10.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/src/families/wf10.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`ObstructionCertificate`) · **Folder:** [`workflows/wf10_local_to_global_obstruction_certificate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf10_local_to_global_obstruction_certificate) · **Tests:** [`code/rust/pfp_operads/tests/wf10.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/tests/wf10.rs), [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Glue local sections of an edge cochain into a global potential, or certify the obstruction.
 
@@ -12,8 +12,7 @@ Domain: a rational 1-cochain ``c`` on a graph covered by patches that each
 carry a local section. A gluing is a vertex potential with ``c - delta phi = 0``
 on every edge; an obstruction is a closed signed cycle on which ``c`` sums to
 a nonzero value, a nonzero class in ``H^1``. Prose claims, open paths and
-zero-sum cycles are refused. Later families call ``certify_gluing`` and
-``certify_obstruction`` directly.
+zero-sum cycles are refused.
 
 ## Procedure
 
@@ -33,13 +32,14 @@ From the DAG node. The runner checks the instance described above; items it does
 
 ## Host check
 
-`cochain_gluing_or_cycle_obstruction`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict.
+`cochain_gluing_or_cycle_obstruction`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
 ## Run it offline
 
-No model call and no spend. From the repository root:
+No model call and no spend. From the repository root (the first line builds the host once):
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF10
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF10-"
 ```

@@ -4,13 +4,13 @@
 
 **Layer:** 3 · **Builds on:** [WF3](workflow_wf3.md), [WF9](workflow_wf9.md) · **Merges into:** WF1 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`DualCertificateSynthesis`) · **Folder:** [`workflows/wf11_dual_certificate_synthesis`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf11_dual_certificate_synthesis) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf11.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/src/families/wf11.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer3.py) (`DualCertificateSynthesis`) · **Folder:** [`workflows/wf11_dual_certificate_synthesis`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf11_dual_certificate_synthesis) · **Tests:** [`code/rust/pfp_operads/tests/wf11.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/tests/wf11.rs), [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Certify an LP optimum with an exact dual, or infeasibility with a Farkas vector.
 
 Domain: ``max c.x`` subject to ``A x <= b, x >= 0`` over Q. An optimum needs
 primal and dual feasibility and ``c.x = b.y``; complementary slackness is
-checked as an independent second checker. Infeasibility needs ``y >= 0``,
+recorded as a second check of the same fact. Infeasibility needs ``y >= 0``,
 ``A^T y >= 0`` and ``b.y < 0``. A feasible pair with a positive gap is a
 weak-duality bound, not a certificate, and is refused.
 
@@ -32,13 +32,14 @@ From the DAG node. The runner checks the instance described above; items it does
 
 ## Host check
 
-`lp_dual_and_farkas_certificate`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict.
+`lp_dual_and_farkas_certificate`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
 ## Run it offline
 
-No model call and no spend. From the repository root:
+No model call and no spend. From the repository root (the first line builds the host once):
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF11
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF11-"
 ```

@@ -1,0 +1,202 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf11.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf11.rs",
+      "language": "Rust",
+      "sha256": "088bedda29edf5d1afb220e6b70897acd83e7e9c637c5e3b83fe440556780381"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf11:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The programme is: maximise c.x subject to A x <= b and x >= 0, over the rationals. The task is A, a nonempty list of rows; b, one exact rational per row; and c, one exact rational per column, at least one. A task the host cannot read is refused before anything is asked.",
+      "One question is asked, the task as written. The reply must be an object that carries farkas, or both x and y; a farkas vector is read first.",
+      "For a pair the host records four predicates: primal_feasible (x >= 0 and A x <= b), dual_feasible (y >= 0 and A^T y >= c), zero_duality_gap (b.y = c.x) and complementary_slackness (y times the slack and x times the reduced cost are zero in every entry). The run is certified as OPTIMAL only when all four pass.",
+      "A feasible pair with a nonzero gap is refused as WEAK_DUALITY_ONLY_BOUND with the gap. Any other failing pair is refused under its first failed predicate.",
+      "A farkas vector y stands as the typed refusal PRIMAL_INFEASIBLE only when y >= 0, A^T y >= 0 and b.y < 0, each recorded as its own predicate."
+    ],
+    "boundaries": [
+      "Unbounded programmes have no certificate here: a run on one can only be refused.",
+      "Complementary slackness follows from the other three predicates. It is recorded as a second check of the same fact and is not an independent claim.",
+      "The size of a programme is bounded by the caller. The host does row by column products only and solves nothing."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf11.rs",
+      "language": "Rust",
+      "sha256": "088bedda29edf5d1afb220e6b70897acd83e7e9c637c5e3b83fe440556780381"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: every entry is an exact rational over unbounded integers; feasibility, the gap and slackness are computed and compared exactly, with no tolerance. Optima, duals and Farkas vectors are worked by hand in the tests, on programmes with as many rows as columns and with more. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable task has its reason, a vector of the wrong length or kind is malformed with the length wanted, and each failing certificate is refused under the predicate it fails. No unwrap or expect, and no index: entries are read with get and zip. Not B: panic-freedom is tested, not proven.",
+      "G4": "17 WF11 tests assert the registry entry, the prompt byte for byte, an optimum with its value and evidence, a programme with more rows than columns, a feasible pair with a gap, slackness on both sides, a point outside the constraints, a dual below the costs and a dual with a negative weight that still covers them, a zero gap between an infeasible pair, a Farkas vector with each of its three conditions failing alone, which form is read first, and each malformed reply and task by its reason. Mutation campaign R = 88/88. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 1; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 88,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf11.mutation.json",
+        "sha256": "f667660faba99671827a252b0bd147744002265eb722a166b4437c912891fa47",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 88 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:43.990243Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf11.rs",
+          "language": "Rust",
+          "sha256": "088bedda29edf5d1afb220e6b70897acd83e7e9c637c5e3b83fe440556780381"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf11:v1",
+        "symbols": [
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The programme is: maximise c.x subject to A x <= b and x >= 0, over the rationals. The task is A, a nonempty list of rows; b, one exact rational per row; and c, one exact rational per column, at least one. A task the host cannot read is refused before anything is asked.",
+          "One question is asked, the task as written. The reply must be an object that carries farkas, or both x and y; a farkas vector is read first.",
+          "For a pair the host records four predicates: primal_feasible (x >= 0 and A x <= b), dual_feasible (y >= 0 and A^T y >= c), zero_duality_gap (b.y = c.x) and complementary_slackness (y times the slack and x times the reduced cost are zero in every entry). The run is certified as OPTIMAL only when all four pass.",
+          "A feasible pair with a nonzero gap is refused as WEAK_DUALITY_ONLY_BOUND with the gap. Any other failing pair is refused under its first failed predicate.",
+          "A farkas vector y stands as the typed refusal PRIMAL_INFEASIBLE only when y >= 0, A^T y >= 0 and b.y < 0, each recorded as its own predicate."
+        ],
+        "boundaries": [
+          "Unbounded programmes have no certificate here: a run on one can only be refused.",
+          "Complementary slackness follows from the other three predicates. It is recorded as a second check of the same fact and is not an independent claim.",
+          "The size of a programme is bounded by the caller. The host does row by column products only and solves nothing."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf11.rs",
+          "language": "Rust",
+          "sha256": "088bedda29edf5d1afb220e6b70897acd83e7e9c637c5e3b83fe440556780381"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: every entry is an exact rational over unbounded integers; feasibility, the gap and slackness are computed and compared exactly, with no tolerance. Optima, duals and Farkas vectors are worked by hand in the tests, on programmes with as many rows as columns and with more. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable task has its reason, a vector of the wrong length or kind is malformed with the length wanted, and each failing certificate is refused under the predicate it fails. No unwrap or expect, and no index: entries are read with get and zip. Not B: panic-freedom is tested, not proven.",
+          "G4": "17 WF11 tests assert the registry entry, the prompt byte for byte, an optimum with its value and evidence, a programme with more rows than columns, a feasible pair with a gap, slackness on both sides, a point outside the constraints, a dual below the costs and a dual with a negative weight that still covers them, a zero gap between an infeasible pair, a Farkas vector with each of its three conditions failing alone, which form is read first, and each malformed reply and task by its reason. Mutation campaign R = 88/88. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 1; ceiling B, recorded B."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 88,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf11.mutation.json",
+            "sha256": "f667660faba99671827a252b0bd147744002265eb722a166b4437c912891fa47",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 88 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

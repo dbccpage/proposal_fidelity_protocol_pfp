@@ -1,0 +1,216 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/cochain.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/cochain.rs",
+      "language": "Rust",
+      "sha256": "c9351ab63a2eca3aa350ac24e3bcdc45f0a1689cc61436df552f446cb4fed404"
+    },
+    "contract_urn": "urn:pfp-operads:families-cochain-tests:v1",
+    "symbols": [
+      "datum",
+      "q",
+      "task",
+      "graph_error",
+      "label_error",
+      "a_task_graph_keeps_the_order_its_edges_name_the_vertices",
+      "a_vertex_is_found_by_its_name",
+      "a_task_needs_at_least_one_edge_of_two_exact_integers",
+      "the_vertices_of_a_task_are_named_zero_up_to_their_count",
+      "a_task_carries_one_exact_rational_per_edge",
+      "a_graph_error_comes_before_a_label_error",
+      "an_edge_list_holds_indices_below_the_edge_count",
+      "a_chain_is_read_step_by_step",
+      "a_chain_needs_at_least_one_step",
+      "a_step_is_an_edge_in_range_and_a_sign",
+      "the_boundary_counts_arrivals_less_departures",
+      "a_closed_chain_has_an_empty_boundary",
+      "a_loop_and_an_edge_out_of_range_add_nothing_to_a_boundary",
+      "a_walk_ends_where_its_last_step_arrives",
+      "a_step_that_does_not_start_where_the_walk_stands_ends_it",
+      "a_potential_is_listed_by_vertex_name",
+      "a_potential_has_one_exact_rational_per_vertex",
+      "a_potential_by_name_explains_the_values_it_was_made_for",
+      "values_are_exact_on_edges_that_close_no_odd_cycle",
+      "exactness_on_a_patch_uses_only_that_patchs_values"
+    ],
+    "owned_invariants": [
+      "The task graph names its vertices out of order, so a reader that confuses a vertex name with its number fails here.",
+      "Boundaries and walk ends are worked by hand on chains that are open, closed, broken and through a loop.",
+      "Each unreadable task, chain and potential is asserted by its reason, and which of two errors is reported first."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/cochain.rs",
+      "language": "Rust",
+      "sha256": "c9351ab63a2eca3aa350ac24e3bcdc45f0a1689cc61436df552f446cb4fed404"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 20 pass in the recorded run; the suite they belong to killed 44 of 44 eligible mutants of the shared cochain readers.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:45.543477Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/cochain.rs",
+          "language": "Rust",
+          "sha256": "c9351ab63a2eca3aa350ac24e3bcdc45f0a1689cc61436df552f446cb4fed404"
+        },
+        "contract_urn": "urn:pfp-operads:families-cochain-tests:v1",
+        "symbols": [
+          "datum",
+          "q",
+          "task",
+          "graph_error",
+          "label_error",
+          "a_task_graph_keeps_the_order_its_edges_name_the_vertices",
+          "a_vertex_is_found_by_its_name",
+          "a_task_needs_at_least_one_edge_of_two_exact_integers",
+          "the_vertices_of_a_task_are_named_zero_up_to_their_count",
+          "a_task_carries_one_exact_rational_per_edge",
+          "a_graph_error_comes_before_a_label_error",
+          "an_edge_list_holds_indices_below_the_edge_count",
+          "a_chain_is_read_step_by_step",
+          "a_chain_needs_at_least_one_step",
+          "a_step_is_an_edge_in_range_and_a_sign",
+          "the_boundary_counts_arrivals_less_departures",
+          "a_closed_chain_has_an_empty_boundary",
+          "a_loop_and_an_edge_out_of_range_add_nothing_to_a_boundary",
+          "a_walk_ends_where_its_last_step_arrives",
+          "a_step_that_does_not_start_where_the_walk_stands_ends_it",
+          "a_potential_is_listed_by_vertex_name",
+          "a_potential_has_one_exact_rational_per_vertex",
+          "a_potential_by_name_explains_the_values_it_was_made_for",
+          "values_are_exact_on_edges_that_close_no_odd_cycle",
+          "exactness_on_a_patch_uses_only_that_patchs_values"
+        ],
+        "owned_invariants": [
+          "The task graph names its vertices out of order, so a reader that confuses a vertex name with its number fails here.",
+          "Boundaries and walk ends are worked by hand on chains that are open, closed, broken and through a loop.",
+          "Each unreadable task, chain and potential is asserted by its reason, and which of two errors is reported first."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/cochain.rs",
+          "language": "Rust",
+          "sha256": "c9351ab63a2eca3aa350ac24e3bcdc45f0a1689cc61436df552f446cb4fed404"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 20 pass in the recorded run; the suite they belong to killed 44 of 44 eligible mutants of the shared cochain readers.",
+          "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

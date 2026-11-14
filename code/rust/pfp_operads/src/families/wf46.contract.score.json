@@ -1,0 +1,206 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf46.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf46.rs",
+      "language": "Rust",
+      "sha256": "a52c7f8304595528431834f42e67b69aa1cbff07fb30550f2da4fc8967dafb84"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf46:v1",
+    "symbols": [
+      "MAX_RUNS",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is the cochain task of cochain.rs: edges on vertices named 0 to n-1 and one exact rational per edge. It also carries patches, two lists of edge indices that together hold every edge exactly once; packet, a nonempty list of vertices that each lie on both patches; and runs, an exact integer from 1 to 64. A task the host cannot read is refused before anything is asked.",
+      "Each run is asked the task as written, under the stage run:<k>. A run with no reply is left in the backlog and the others are still judged. A reply the host cannot read ends the whole run as malformed.",
+      "A reply is one potential per patch, a list of [vertex, value]; a vertex listed twice keeps its last value. A run is locally accepted when each potential covers exactly the vertices of its patch and explains the value on every edge of it.",
+      "For a locally accepted run the second potential is shifted to agree with the first at the first packet vertex. The packet passes when the two then agree at every packet vertex. The glued trace is the first potential, and the shifted second where the first says nothing; it passes when it explains the value on every edge of the task.",
+      "ngd is the share of locally accepted runs whose glued trace fails, an exact fraction. With no accepted run it is undefined and the run is refused as NGD_UNDEFINED.",
+      "The run is certified as BOUNDARY_SUFFICIENT when the packet and the glued trace agree on every accepted run, and is otherwise refused as BOUNDARY_INSUFFICIENT with the count of runs whose packet passed and whose glued trace failed."
+    ],
+    "boundaries": [
+      "Sufficiency is a finding about the runs given. It does not show that the packet decides gluing for every pair of local answers.",
+      "The verdict is the same whether or not every run replied; completed and backlog say how many did.",
+      "A packet that fails while the glued trace passes also counts against sufficiency, and is not counted as a hidden failure."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf46.rs",
+      "language": "Rust",
+      "sha256": "a52c7f8304595528431834f42e67b69aa1cbff07fb30550f2da4fc8967dafb84"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: values and potentials are exact rationals, the shift and every comparison are exact, and ngd is an exact fraction of two counts. Shifts, packets, glued traces and ngd are worked by hand in the tests on a square and on a triangle. The limit is asserted as the value 64. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable task has its own reason, checked in a stated order; an unreadable reply ends the run with its reason; and each way the runs fall short has its own code. No panicking unwrap or expect, and no index: a potential that lacks a vertex fails the comparison it is needed for. Not B: panic-freedom is tested, not proven.",
+      "G4": "20 WF46 tests assert the registry entry, the prompt and stage of every run, runs that agree certified with every row, ngd as a fraction, a hidden failure and its count, a packet that fails before a glued trace that passes, a constant added to a patch potential, a potential that misses its patch or covers other vertices, a vertex listed twice, where the shifted second potential is used, the shift taken at the first packet vertex alone, a run with no reply, no accepted run, a malformed reply, each way the patches, packet and run count are unreadable with the limits 1 and 64, and the order in which a task is read. Mutation campaign R = 82/82. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 82,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf46.mutation.json",
+        "sha256": "bcee7990920d4cda8f6f2fb075056a0585f4aa402f5cfcf4960d0371b779460f",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 82 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:44.658634Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf46.rs",
+          "language": "Rust",
+          "sha256": "a52c7f8304595528431834f42e67b69aa1cbff07fb30550f2da4fc8967dafb84"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf46:v1",
+        "symbols": [
+          "MAX_RUNS",
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is the cochain task of cochain.rs: edges on vertices named 0 to n-1 and one exact rational per edge. It also carries patches, two lists of edge indices that together hold every edge exactly once; packet, a nonempty list of vertices that each lie on both patches; and runs, an exact integer from 1 to 64. A task the host cannot read is refused before anything is asked.",
+          "Each run is asked the task as written, under the stage run:<k>. A run with no reply is left in the backlog and the others are still judged. A reply the host cannot read ends the whole run as malformed.",
+          "A reply is one potential per patch, a list of [vertex, value]; a vertex listed twice keeps its last value. A run is locally accepted when each potential covers exactly the vertices of its patch and explains the value on every edge of it.",
+          "For a locally accepted run the second potential is shifted to agree with the first at the first packet vertex. The packet passes when the two then agree at every packet vertex. The glued trace is the first potential, and the shifted second where the first says nothing; it passes when it explains the value on every edge of the task.",
+          "ngd is the share of locally accepted runs whose glued trace fails, an exact fraction. With no accepted run it is undefined and the run is refused as NGD_UNDEFINED.",
+          "The run is certified as BOUNDARY_SUFFICIENT when the packet and the glued trace agree on every accepted run, and is otherwise refused as BOUNDARY_INSUFFICIENT with the count of runs whose packet passed and whose glued trace failed."
+        ],
+        "boundaries": [
+          "Sufficiency is a finding about the runs given. It does not show that the packet decides gluing for every pair of local answers.",
+          "The verdict is the same whether or not every run replied; completed and backlog say how many did.",
+          "A packet that fails while the glued trace passes also counts against sufficiency, and is not counted as a hidden failure."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf46.rs",
+          "language": "Rust",
+          "sha256": "a52c7f8304595528431834f42e67b69aa1cbff07fb30550f2da4fc8967dafb84"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: values and potentials are exact rationals, the shift and every comparison are exact, and ngd is an exact fraction of two counts. Shifts, packets, glued traces and ngd are worked by hand in the tests on a square and on a triangle. The limit is asserted as the value 64. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable task has its own reason, checked in a stated order; an unreadable reply ends the run with its reason; and each way the runs fall short has its own code. No panicking unwrap or expect, and no index: a potential that lacks a vertex fails the comparison it is needed for. Not B: panic-freedom is tested, not proven.",
+          "G4": "20 WF46 tests assert the registry entry, the prompt and stage of every run, runs that agree certified with every row, ngd as a fraction, a hidden failure and its count, a packet that fails before a glued trace that passes, a constant added to a patch potential, a potential that misses its patch or covers other vertices, a vertex listed twice, where the shifted second potential is used, the shift taken at the first packet vertex alone, a run with no reply, no accepted run, a malformed reply, each way the patches, packet and run count are unreadable with the limits 1 and 64, and the order in which a task is read. Mutation campaign R = 82/82. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 82,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf46.mutation.json",
+            "sha256": "bcee7990920d4cda8f6f2fb075056a0585f4aa402f5cfcf4960d0371b779460f",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 82 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

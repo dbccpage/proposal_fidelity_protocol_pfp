@@ -56,12 +56,18 @@ fn the_host_lists_its_families_in_workflow_order() {
             {"workflow": "WF7", "name": "Typed refusal", "host_check": "typed_refusal_rank_test"},
             {"workflow": "WF9", "name": "Bounded check-and-repair",
              "host_check": "xor_cycle_minimal_repair"},
+            {"workflow": "WF10", "name": "Local-to-global obstruction certificate",
+             "host_check": "cochain_gluing_or_cycle_obstruction"},
+            {"workflow": "WF11", "name": "Dual-certificate synthesis",
+             "host_check": "lp_dual_and_farkas_certificate"},
             {"workflow": "WF13", "name": "Exact-domain capsule battery",
              "host_check": "per_domain_registered_checker"},
             {"workflow": "WF20", "name": "Derivation loop with lift grants",
              "host_check": "structural_lift_grant_loop"},
             {"workflow": "WF24", "name": "Pinned-token operational scratchpad",
              "host_check": "dual_holonomy_checkers"},
+            {"workflow": "WF25", "name": "Hierarchical decimation",
+             "host_check": "cycle_residual_preserving_decimation"},
             {"workflow": "WF26", "name": "Multi-round antibody dialogue",
              "host_check": "epitope_antibody_exact_oracle"},
             {"workflow": "WF27", "name": "Hinted retraction with a stationary-loop detector",
@@ -74,13 +80,19 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "per_claim_independent_checkers"},
             {"workflow": "WF33", "name": "Recursive re-entry with shared fuel",
              "host_check": "shared_fuel_parent_bound_reentry"},
+            {"workflow": "WF38", "name": "Diagnostic-trace proposal selection",
+             "host_check": "host_recomputed_defect_ranking"},
             {"workflow": "WF40", "name": "Restart boundary after exhausted repair",
              "host_check": "cochain_trichotomy_boundary"},
             {"workflow": "WF45", "name": "Finite terminal selector and plenitude test",
              "host_check": "finite_survivor_set_verifier"},
+            {"workflow": "WF46", "name": "Boundary sufficiency and gluing diagnostic",
+             "host_check": "glued_trace_global_evaluator"},
+            {"workflow": "WF47", "name": "Resumable bounded frontier search",
+             "host_check": "sign_gauge_checkpoint_chain"},
         ]})
     );
-    assert_eq!(FAMILIES.len(), 13);
+    assert_eq!(FAMILIES.len(), 19);
 }
 
 #[test]

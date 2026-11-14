@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/graph.rs",
-  "target_sha256": "f25a4cd5c0e4ff9e18ea128e2bb7864884ff1b238449fc9981cb09717e8c87e5",
-  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test graph --test xor --test wf09 --test wf20 --test wf27 --test wf33 --test wf40",
+  "target_sha256": "5d225f2e320a950acc545e695f5f1c283aed347cd55851f07d5159264a996cd6",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test graph --test xor --test cochain --test wf09 --test wf10 --test wf20 --test wf25 --test wf27 --test wf33 --test wf38 --test wf40 --test wf47",
   "counts": {
-    "killed": 46,
+    "killed": 49,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -287,6 +287,24 @@
       "name": "walk sum ignores signs",
       "old": "        .map(|&(edge, sign)| signed(values, edge, sign))\n        .sum()",
       "new": "        .map(|&(edge, _)| signed(values, edge, 1))\n        .sum()",
+      "outcome": "killed"
+    },
+    {
+      "name": "an edge is recorded head first",
+      "old": "            graph.edges.push((from, to));",
+      "new": "            graph.edges.push((to, from));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pair that is not an edge is skipped",
+      "old": "        let pairs: Option<Vec<_>> = edges.as_list()?.iter().map(pair).collect();\n        Some(Self::of(pairs?))",
+      "new": "        let pairs: Vec<_> = edges.as_list()?.iter().filter_map(pair).collect();\n        Some(Self::of(pairs))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a graph of pairs keeps only the first",
+      "old": "        for (from, to) in pairs {",
+      "new": "        for (from, to) in pairs.into_iter().take(1) {",
       "outcome": "killed"
     }
   ]

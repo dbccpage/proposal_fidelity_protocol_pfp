@@ -175,8 +175,8 @@ def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
     listed = operad_host.result(operad_host.call(('family', 'list')))['families']
     assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
                       for wf_id, cls in HOSTED.items()]
-    assert set(HOSTED) == {'WF7', 'WF9', 'WF13', 'WF20', 'WF24', 'WF26', 'WF27', 'WF30', 'WF31', 'WF32', 'WF33',
-                           'WF40', 'WF45'}
+    assert set(HOSTED) == {'WF7', 'WF9', 'WF10', 'WF11', 'WF13', 'WF20', 'WF24', 'WF25', 'WF26', 'WF27', 'WF30',
+                           'WF31', 'WF32', 'WF33', 'WF38', 'WF40', 'WF45', 'WF46', 'WF47'}
 
 
 @pytest.mark.parametrize('wf_id', sorted(HOSTED))
