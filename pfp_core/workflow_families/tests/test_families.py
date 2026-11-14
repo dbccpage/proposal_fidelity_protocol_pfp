@@ -167,6 +167,81 @@ def test_a_short_sealed_answer_is_caught_as_a_whole_token():
     assert family.execute(bundle, budget=new_budget('ok', bundle['task'])).verdict == 'HOST_CERTIFIED'
 
 
+HOSTED = {wf_id: cls for wf_id, cls in REGISTRY.items() if issubclass(cls, base.HostedFamily)}
+
+
+def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
+    from pfp.infrastructure import operad_host
+    listed = operad_host.result(operad_host.call(('family', 'list')))['families']
+    assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
+                      for wf_id, cls in HOSTED.items()]
+    assert {'WF7', 'WF30', 'WF31'} <= set(HOSTED)
+
+
+@pytest.mark.parametrize('wf_id', sorted(HOSTED))
+def test_a_hosted_family_holds_no_check_of_its_own(wf_id):
+    cls = HOSTED[wf_id]
+    for name in ('validate', 'check', 'run', 'prompt', 'execute', '_host', '_verdict'):
+        assert name not in vars(cls), f'{wf_id} overrides {name}'
+    assert set(vars(cls)) - {'__module__', '__doc__', '__qualname__', '__firstlineno__', '__static_attributes__',
+                             '__annotations__'} <= {'spec', 'fixtures'}
+
+
+def test_a_hosted_family_refuses_a_malformed_task_before_any_proposal():
+    from pfp_core.workflow_families.base import CallableProposer
+    calls = []
+
+    def fn(prompt):
+        calls.append(prompt)
+        return {'answer': [1]}, Usage()
+    family = REGISTRY['WF7']()
+    bundle = {'task': {'A': [[1, 2], [3]], 'b': [1, 2]}}
+    budget = new_budget('WF7:ragged', bundle['task'])
+    with pytest.raises(base.MalformedCandidateError, match='rectangular'):
+        family.execute(bundle, budget=budget, proposer=CallableProposer(fn, quote_microusd=0))
+    assert calls == [] and budget.summary()['calls'] == 0
+
+
+def test_a_hosted_family_asks_exactly_what_the_host_wrote():
+    from pfp_core.workflow_families.base import CallableProposer
+    prompts = []
+
+    def fn(prompt):
+        prompts.append(prompt)
+        return {'coefficients': [1, 0, 2]}, Usage()
+    family = REGISTRY['WF31']()
+    bundle, _ = family.fixtures()['held_out_winner']
+    out = family.execute(bundle, budget=new_budget('WF31:host', bundle['task']),
+                         proposer=CallableProposer(fn, quote_microusd=0))
+    assert out.verdict == 'HOST_CERTIFIED' and out.code == 'WINNER_SELECTED'
+    assert [t['stage'] for t in out.transcript] == ['proposer:0', 'proposer:1', 'proposer:2']
+    assert len(set(prompts)) == 1 and prompts[0].startswith('WF31 Multi-agent tournament')
+    assert 'held_out' not in prompts[0]
+    assert {t['request_sha256'] for t in out.transcript} == {base.sha256_hex(prompts[0])}
+    assert out.host['certified_predicates'] == {'splits_disjoint': True, 'winner_beats_baseline': True}
+    assert out.host['final_output_certified'] is True
+
+
+def test_a_sealed_value_in_a_hosted_task_is_refused_by_the_host_and_never_dispatched():
+    family = REGISTRY['WF31']()
+    bundle, _ = family.fixtures()['held_out_winner']
+    leaky = {**bundle, 'task': {**bundle['task'], 'statement': 'One held-out value is 51.'},
+             'sealed': {'held_out': bundle['sealed']['held_out'], 'answer': 51}}
+    budget = new_budget('WF31:leak', leaky['task'])
+    with pytest.raises(SealedLeakError, match='proposer:0'):
+        family.execute(leaky, budget=budget)
+    assert budget.summary()['calls'] == 0
+
+
+def test_the_python_guard_of_the_unported_families_reads_a_closing_mark_as_the_host_does():
+    assert base.prompt_leaks('The total is 42.', {'answer': 42})
+    assert base.prompt_leaks('Is it 42?', {'answer': 42})
+    assert not base.prompt_leaks('p = .42 and 42.5', {'answer': 42})
+    assert not base.prompt_leaks('The total is 42.', {'note': 42})
+    assert base.prompt_leaks('choose a.?', {'answer': 'a.'})
+    assert not base.prompt_leaks('choose a', {'answer': 'a.'})
+
+
 XOR_FAMILIES = sorted(wf for wf, cls in REGISTRY.items()
                       if cls.validate is REGISTRY['WF9'].validate)
 

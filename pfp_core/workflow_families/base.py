@@ -1,5 +1,10 @@
 """Shared runtime for workflow families WF6-WF49.
 
+The families are moving to the Rust host one layer at a time. A ``HostedFamily``
+is already there: ``pfp_operad family`` reads its task, writes and guards its
+prompts and gives its verdict, and this module only asks the model and keeps the
+budget and transcript. The rest of this text describes a family not yet moved.
+
 Every family is a ``WorkflowFamily`` subclass with a ``WorkflowFamilySpecV1``.
 ``execute`` runs the same loop for all of them:
 
@@ -34,6 +39,8 @@ from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, ClassVar, Protocol
+
+from pfp.infrastructure import operad_host
 
 from ..fidelity import HostOracleContext, WholeRunBudget, sha256_hex
 
@@ -174,7 +181,9 @@ def sealed_literals(sealed: Any) -> tuple[set[str], set[str]]:
 
     Any sealed scalar of four or more characters is a substring leak. A scalar
     under an answer-like key is a leak at any length, matched as a whole token
-    so that a short answer such as ``42`` is still caught.
+    so that a short answer such as ``42`` is still caught. A token is also looked
+    up with the full stops, question marks and exclamation marks at its end taken
+    off one at a time.
     """
     substrings: set[str] = set()
     tokens: set[str] = set()
@@ -202,6 +211,10 @@ def _leaks(prompt: str, substrings: set[str], tokens: set[str]) -> bool:
     if any(s in prompt for s in substrings):
         return True
     words = set(re.findall(r'[^\s,:;\[\]{}()"\']+', prompt))
+    for word in list(words):
+        while word[-1:] in ('.', '!', '?'):
+            word = word[:-1]
+            words.add(word)
     return bool(tokens & words)
 
 
@@ -224,14 +237,23 @@ class Session:
         self._leak_substrings, self._leak_tokens = sealed_literals(sealed)
 
     def ask(self, stage: str, prompt: str, **context: Any) -> Proposal | None:
+        """One proposal for a prompt written here, charged to the run.
+
+        The prompt is refused if it contains a sealed literal. A family the Rust host
+        checks does not come this way: the host writes and guards its prompts, and the
+        run uses ``dispatch``.
+        """
+        if _leaks(prompt, self._leak_substrings, self._leak_tokens):
+            raise SealedLeakError(f'{self.spec.wf_id}:{stage} prompt contains sealed literal(s)')
+        return self.dispatch(stage, prompt, **context)
+
+    def dispatch(self, stage: str, prompt: str, **context: Any) -> Proposal | None:
         """One proposal, charged to the run. None means no reply or a budget refusal.
 
         The proposer's upper quote is reserved before dispatch; a call the budget
         cannot cover is never made. The actual charge is settled afterwards, and
         an overrun blocks the run.
         """
-        if _leaks(prompt, self._leak_substrings, self._leak_tokens):
-            raise SealedLeakError(f'{self.spec.wf_id}:{stage} prompt contains sealed literal(s)')
         request = ProposalRequest(self.spec.wf_id, stage, prompt, context)
         request_digest = sha256_hex(prompt)
         label = f'{self.spec.wf_id}:{stage}'
@@ -371,6 +393,52 @@ class WorkflowFamily:
     def fixtures(self) -> Mapping[str, tuple[Mapping[str, Any], str]]:
         """Named offline bundles with their expected verdict: at least one positive, one REFUSED."""
         raise NotImplementedError
+
+
+class HostedFamily(WorkflowFamily):
+    """A family the Rust host checks from the task to the verdict.
+
+    The host (``pfp_operad family``) reads the task, writes each prompt, refuses one
+    that carries a sealed value, and gives the verdict with the predicates it recorded.
+    This class asks the model what the host says to ask and carries each reply back.
+    It checks nothing. A subclass sets ``spec`` and ``fixtures``.
+    """
+
+    def _host(self, action: str, task: Mapping[str, Any], sealed: Mapping[str, Any], replies: list) -> dict:
+        outcome = operad_host.call(('family', action), {
+            'workflow': self.spec.wf_id, 'task': task, 'sealed': sealed, 'replies': replies})
+        refusal = outcome.get('refusal', {})
+        if refusal.get('code') == 'SEALED_LEAK':
+            raise SealedLeakError(f"{self.spec.wf_id}: {refusal['message']}")
+        if refusal.get('code') == 'BAD_TASK':
+            raise MalformedCandidateError(refusal['message'])
+        return operad_host.result(outcome)
+
+    def _verdict(self, task: Mapping[str, Any], sealed: Mapping[str, Any], replies: list,
+                 host: HostOracleContext) -> Verdict:
+        report = self._host('judge', task, sealed, replies)
+        for row in report['predicates']:
+            host.certified_predicates[row['name']] = row['passed']
+            host.evidence[row['name']] = row['evidence_sha256']
+        return Verdict(report['verdict'], report['code'], report['detail'])
+
+    def validate(self, task: Mapping[str, Any]) -> Mapping[str, Any]:
+        """The host reads the task and refuses a malformed one before any proposal."""
+        self._host('next', task, {}, [])
+        return task
+
+    def check(self, task: Mapping[str, Any], sealed: Mapping[str, Any], content: Any,
+              host: HostOracleContext) -> Verdict:
+        """The host's verdict on one reply to a one-step task. Kept for the families that
+        grade their items with this one and have not moved to the host yet."""
+        return self._verdict(task, sealed, [{'content': content}], host)
+
+    def run(self, session: Session, host: HostOracleContext) -> Verdict:
+        replies: list = []
+        while (ask := self._host('next', session.task, session.sealed, replies)['ask']) is not None:
+            reply = session.dispatch(ask['stage'], ask['prompt'])
+            replies.append(None if reply is None else {'content': reply.content})
+        return self._verdict(session.task, session.sealed, replies, host)
 
 
 class MalformedCandidateError(ValueError):

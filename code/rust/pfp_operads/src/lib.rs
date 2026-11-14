@@ -30,13 +30,20 @@
 //!   incorporate, disposition and terminal, with a failure record when the candidate is at fault.
 //! * [`workshop`]: the source tree, run folder and local commands a repair run uses on a real
 //!   machine. This is the one module that writes files and starts processes.
+//! * [`datum`]: exact JSON, with integers read from their digits and nothing rounded.
+//! * [`exact`]: rational arithmetic and linear algebra over unbounded integers.
+//! * [`families`]: the host side of a workflow family run. The host writes each prompt, refuses
+//!   one that carries a sealed value, and gives the verdict with the predicates it recorded.
 //! * [`host`]: the JSON entry points a workflow calls, also exposed by the `pfp_operad` binary.
 //!
 //! Every vocabulary (colours, DDC letters, failure classes, capability kinds, statuses) is read
 //! from `core_operad_canon`. A pass here covers the supplied operations on the supplied panel; it
 //! is not a proof for all terms.
 
+pub mod datum;
 pub mod envelope;
+pub mod exact;
+pub mod families;
 pub mod grounding;
 pub mod host;
 pub mod judge;

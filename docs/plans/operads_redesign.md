@@ -133,9 +133,19 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
    changed source) run as tests. A check is a command and may be in any
    language; the host reads only its exit code. In the shipped fixtures the
    checks are the host's own commands.
-4. **Port the workflow hosts.** The family runtime behind WF6-WF51, then
-   WF1-WF5 and WF52-WF54. After this slice Python only calls the model and
-   moves files.
+4. **Port the workflow hosts**, in steps. After this slice Python only calls
+   the model and moves files.
+   - **4a (built, offline).** The family protocol, and layer 1 (WF7, WF30,
+     WF31). `pfp_operad family next` reads the task and the replies so far
+     and returns the next prompt, word for word; `family judge` returns the
+     verdict and the predicates behind it. The host validates the task,
+     writes and guards every prompt, does the exact arithmetic (unbounded
+     rationals) and decides. The Python class of a ported family is a
+     registry entry and fixtures; its base class, `HostedFamily`, sends
+     prompts and carries replies. Prompts are byte for byte the old ones.
+   - **Next.** Layers 2 to 9 of the families, the WF9 inheritance group
+     (WF9, WF20, WF26, WF27, WF33, WF40) in one step. Then the WF1-WF5 and
+     WF52-WF54 host checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
 6. **Lean.** State and prove the laws for the term model, and link each
@@ -172,6 +182,17 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
+- After 4a only WF7, WF30 and WF31 are checked by the host. Every other
+  family still runs its check and its sealed-value guard in Python. WF6,
+  WF13 and WF22 grade with WF7's check and so reach the host for that part.
+- For a ported family Python still keeps the run budget and the transcript,
+  and sets the run's `final_output_certified` flag from the host's verdict.
+  The host does not see that a reply came from the prompt it wrote.
+- The host reads a rational more strictly than the Python it replaces: text
+  with a plus sign or a space is refused. WF31 takes at most 64 proposers.
+  Old and new agree on 3,400 random runs apart from those readings and one
+  reply (`{"answer": null}`) on which the old check crashed. That compares
+  checkers; no model has run through a ported family.
 - WF4's own local contract (public binding, native integer result, agreement
   of the five totals) is still Python. It is a workflow host check and moves
   in slice 4.

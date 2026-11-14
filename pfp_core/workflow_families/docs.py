@@ -35,12 +35,13 @@ import textwrap
 from pathlib import Path
 
 from .. import REPO_ROOT
-from .base import POSITIVE, run_fixture
+from .base import POSITIVE, HostedFamily, run_fixture
 from .registry import load
 
 REPO_URL = 'https://github.com/dbccpage/proposal_fidelity_protocol_pfp'
 WIKI_URL = REPO_URL + '/wiki/'
 TESTS = 'pfp_core/workflow_families/tests/test_families.py'
+HOST_CRATE = 'code/rust/pfp_operads'
 AUDIT = REPO_ROOT / 'dag' / 'reviews' / 'workflows_audit.json'
 DOCS = REPO_ROOT / 'dag' / 'wiki' / 'workflow_documentation.json'
 HUB = 'workflow_families'
@@ -83,7 +84,7 @@ def page_name(wf_id: str) -> str:
 
 
 def _tree(path: str) -> str:
-    kind = 'blob' if path.endswith('.py') else 'tree'
+    kind = 'blob' if path.endswith(('.py', '.rs')) else 'tree'
     return f'[`{path}`]({REPO_URL}/{kind}/main/{path})'
 
 
@@ -102,6 +103,24 @@ def _module(cls) -> str:
     return inspect.getmodule(cls).__name__.replace('.', '/') + '.py'
 
 
+def host_files(cls) -> tuple[str, str] | None:
+    """The Rust source and test file of a family the host checks; None for one still checked in Python."""
+    if not issubclass(cls, HostedFamily):
+        return None
+    stem = f'wf{cls.spec.number:02d}.rs'
+    source, tests = f'{HOST_CRATE}/src/families/{stem}', f'{HOST_CRATE}/tests/{stem}'
+    for path in (source, tests):
+        if not (REPO_ROOT / path).is_file():
+            raise ValueError(f'{cls.spec.wf_id}: the host file {path} is missing')
+    return source, tests
+
+
+HOSTED_NOTE = ('The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt '
+               'that carries a sealed value and returns the verdict. Python asks the model and carries the '
+               'reply back.')
+HOST_BUILD = 'cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml'
+
+
 def render(cls, node: dict, rows: list[dict]) -> str:
     s = cls.spec
     head, body = _docstring(cls)
@@ -110,6 +129,11 @@ def render(cls, node: dict, rows: list[dict]) -> str:
                          *[('math', m) for m in node.get('math', [])]]:
         guard(s.wf_id, field, value)
     module = _module(cls)
+    hosted = host_files(cls)
+    code = (f'**Code:** {_tree(module)} (`{cls.__name__}`) · **Folder:** {_tree(s.folder)} · '
+            f'**Tests:** {_tree(TESTS)}') if hosted is None else (
+        f'**Check (Rust):** {_tree(hosted[0])} · **Registry entry and fixtures:** {_tree(module)} '
+        f'(`{cls.__name__}`) · **Folder:** {_tree(s.folder)} · **Tests:** {_tree(hosted[1])}, {_tree(TESTS)}')
     positive = [r for r in rows if r['expected'] in POSITIVE]
     negative = [r for r in rows if r['expected'] not in POSITIVE]
     lines = [
@@ -120,7 +144,7 @@ def render(cls, node: dict, rows: list[dict]) -> str:
         f'**Layer:** {s.layer} · **Builds on:** {_links(s.depends_on)} · '
         f'**Merges into:** {s.merge_into or "nothing"} · **Kind:** {node["kind"].replace("_", " ")}',
         '',
-        f'**Code:** {_tree(module)} (`{cls.__name__}`) · **Folder:** {_tree(s.folder)} · **Tests:** {_tree(TESTS)}',
+        code,
         '',
         f'> {head}',
         '',
@@ -140,13 +164,16 @@ def render(cls, node: dict, rows: list[dict]) -> str:
         '## Host check',
         '',
         f'`{s.host_check_id}`. Only this check can certify. Proposers, detectors and adapters carry '
-        "authority effect `None`; a reply is evidence for the check, never a verdict.",
+        "authority effect `None`; a reply is evidence for the check, never a verdict."
+        + ('' if hosted is None else ' ' + HOSTED_NOTE),
         '',
         '## Run it offline',
         '',
-        'No model call and no spend. From the repository root:',
+        'No model call and no spend. From the repository root'
+        + (':' if hosted is None else ' (the first line builds the host once):'),
         '',
         '```powershell',
+        *([] if hosted is None else [HOST_BUILD]),
         f'python -m pfp_core.workflow_families run {s.wf_id}',
         f'python -m pytest {TESTS} -q -k "{s.wf_id}-"',
         '```',
@@ -184,24 +211,29 @@ def render_readme_block(cls) -> str:
     s = cls.spec
     head, _body = _docstring(cls)
     module = _module(cls)
+    hosted = host_files(cls)
+    code = f'**Code:** [`{module}`](../../{module}) (`{cls.__name__}`)' if hosted is None else (
+        f'**Check (Rust):** [`{hosted[0]}`](../../{hosted[0]}) · **Registry entry and fixtures:** '
+        f'[`{module}`](../../{module}) (`{cls.__name__}`)')
     lines = [
         README_BEGIN,
         f'**What it is for:** {head}',
         '',
         f'**Status:** {status_text(cls)}',
         '',
-        '**Run it offline** (no model call, no spend), from the repository root:',
+        '**Run it offline** (no model call, no spend), from the repository root'
+        + (':' if hosted is None else '. The first line builds the Rust host once:'),
         '',
         '```powershell',
+        *([] if hosted is None else [HOST_BUILD]),
         f'python -m pfp_core.workflow_families run {s.wf_id}',
         f'python -m pytest {TESTS} -q -k "{s.wf_id}-"',
         '```',
         '',
         f'**The check:** `{s.host_check_id}`. Only this check can certify; a model reply is evidence for '
-        'it, never a verdict.',
+        'it, never a verdict.' + ('' if hosted is None else ' ' + HOSTED_NOTE),
         '',
-        f'**Code:** [`{module}`](../../{module}) (`{cls.__name__}`) · [tests](../../{TESTS}) · '
-        f'[wiki page]({WIKI_URL}{page_name(s.wf_id)})',
+        f'{code} · [tests](../../{TESTS}) · [wiki page]({WIKI_URL}{page_name(s.wf_id)})',
         README_END,
     ]
     return guard(s.wf_id, 'readme block', '\n'.join(lines))
@@ -249,6 +281,11 @@ def render_hub(registry, nodes) -> str:
         'Each family is one class in `pfp_core/workflow_families/` on a shared runtime: one spec, one '
         'budget per run, one host check that alone can certify, and offline fixtures that must be accepted or '
         'refused. WF1-WF5 keep their own runners (see [Workflows](workflows.md)).',
+        '',
+        'The host checks are moving from Python to the Rust host, `pfp_operad family`, one layer at a time. '
+        'Moved so far: ' + ', '.join(w for w, c in registry.items() if host_files(c) is not None) + '. For '
+        'these the host reads the task, writes and guards the prompt and gives the verdict; their page links '
+        'the Rust file.',
         '',
         '```powershell',
         'python -m pfp_core.workflow_families list',
@@ -304,6 +341,9 @@ def build(check: bool) -> list[str]:
         node.update(status='implemented', runner_source=inspect.getmodule(cls).__name__.replace('.', '/') + '.py',
                     runner_class=cls.__name__, tests=TESTS,
                     audited_availability='offline_family_runner_with_fixture_tests')
+        hosted = host_files(cls)
+        if hosted is not None:
+            node.update(host_check_source=hosted[0], host_check_tests=hosted[1])
     pages[REPO_ROOT / 'wiki' / f'{HUB}.md'] = guard('hub', 'page', render_hub(registry, nodes))
     for wf_id in sorted(README_BLOCK_IDS & set(registry), key=lambda w: int(w[2:])):
         path = REPO_ROOT / registry[wf_id].spec.folder / 'README.md'

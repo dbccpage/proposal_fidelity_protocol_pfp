@@ -2,6 +2,8 @@
 
 Each family is one class in `pfp_core/workflow_families/` on a shared runtime: one spec, one budget per run, one host check that alone can certify, and offline fixtures that must be accepted or refused. WF1-WF5 keep their own runners (see [Workflows](workflows.md)).
 
+The host checks are moving from Python to the Rust host, `pfp_operad family`, one layer at a time. Moved so far: WF7, WF30, WF31. For these the host reads the task, writes and guards the prompt and gives the verdict; their page links the Rust file.
+
 ```powershell
 python -m pfp_core.workflow_families list
 python -m pfp_core.workflow_families check-all

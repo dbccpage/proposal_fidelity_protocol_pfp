@@ -1,0 +1,384 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/datum.rs",
+  "target_sha256": "18f6f6d1fe2691e6de78820ff8932daf8760bb88b22225032e628f3cb6839733",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31",
+  "counts": {
+    "killed": 60,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "depth limit is 63",
+      "old": "pub const MAX_DEPTH: usize = 64;",
+      "new": "pub const MAX_DEPTH: usize = 63;",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth limit is 65",
+      "old": "pub const MAX_DEPTH: usize = 64;",
+      "new": "pub const MAX_DEPTH: usize = 65;",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal code changed",
+      "old": "Refusal::new(\"BAD_JSON\", message)",
+      "new": "Refusal::new(\"BAD_REQUEST\", message)",
+      "outcome": "killed"
+    },
+    {
+      "name": "parse error message dropped",
+      "old": "serde_json::from_str(text).map_err(|error| bad(error.to_string()))",
+      "new": "serde_json::from_str(text).map_err(|_| bad(String::new()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "plus sign... minus not stripped",
+      "old": "let digits = text.strip_prefix('-').unwrap_or(text);",
+      "new": "let digits = text;",
+      "outcome": "killed"
+    },
+    {
+      "name": "any number is an integer",
+      "old": "    if !digits.bytes().all(|byte| byte.is_ascii_digit()) {\n        return None;\n    }\n    text.parse().ok()\n}\n\nfn read_map",
+      "new": "    text.parse().ok()\n}\n\nfn read_map",
+      "equivalent": "BigInt::from_str itself refuses a fraction point or an exponent, and JSON admits no other non-digit in a number; the guard only states the rule",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "no number is an integer",
+      "old": "    if !digits.bytes().all(|byte| byte.is_ascii_digit()) {\n        return None;\n    }\n    text.parse().ok()",
+      "new": "    if digits.bytes().all(|byte| byte.is_ascii_digit()) {\n        return None;\n    }\n    text.parse().ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate key accepted",
+      "old": "        if map.insert(key.clone(), value).is_some() {",
+      "new": "        if map.insert(key.clone(), value).is_some() && false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate refused only when absent",
+      "old": "        if map.insert(key.clone(), value).is_some() {",
+      "new": "        if map.insert(key.clone(), value).is_none() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate message names no key",
+      "old": "return Err(bad(format!(\"the key {key} appears twice in one object\")));",
+      "new": "return Err(bad(format!(\"a key appears twice in one object\")));",
+      "outcome": "killed"
+    },
+    {
+      "name": "map values read at depth zero",
+      "old": "        let value = read(value.get(), depth)?;",
+      "new": "        let value = read(value.get(), 0)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth check off by one (>=)",
+      "old": "    if depth > MAX_DEPTH {",
+      "new": "    if depth >= MAX_DEPTH {",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth never checked",
+      "old": "    if depth > MAX_DEPTH {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth message has another number",
+      "old": "return Err(bad(format!(\"nesting deeper than {MAX_DEPTH}\")));",
+      "new": "return Err(bad(format!(\"nesting deeper than {depth}\")));",
+      "outcome": "killed"
+    },
+    {
+      "name": "null read as false",
+      "old": "        Some(b'n') => Ok(Datum::Null),",
+      "new": "        Some(b'n') => Ok(Datum::Bool(false)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "true read as false",
+      "old": "        Some(b't') => Ok(Datum::Bool(true)),",
+      "new": "        Some(b't') => Ok(Datum::Bool(false)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "false read as true",
+      "old": "        Some(b'f') => Ok(Datum::Bool(false)),",
+      "new": "        Some(b'f') => Ok(Datum::Bool(true)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "text kept with its quotes",
+      "old": "        Some(b'\"') => Ok(Datum::Text(decode(text)?)),",
+      "new": "        Some(b'\"') => Ok(Datum::Text(text.to_owned())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "list items do not deepen",
+      "old": "            .map(|item| read(item.get(), depth + 1))",
+      "new": "            .map(|item| read(item.get(), depth))",
+      "outcome": "killed"
+    },
+    {
+      "name": "objects do not deepen",
+      "old": "        Some(b'{') => read_map(text, depth + 1),",
+      "new": "        Some(b'{') => read_map(text, depth),",
+      "outcome": "killed"
+    },
+    {
+      "name": "integers read as decimals",
+      "old": "        _ => Ok(integer(text).map_or_else(|| Datum::Decimal(text.to_owned()), Datum::Int)),",
+      "new": "        _ => Ok(Datum::Decimal(text.to_owned())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote not escaped",
+      "old": "            '\"' => out.push_str(\"\\\\\\\"\"),",
+      "new": "            '\"' => out.push('\"'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "backslash not escaped",
+      "old": "            '\\\\' => out.push_str(\"\\\\\\\\\"),",
+      "new": "            '\\\\' => out.push('\\\\'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "newline not escaped",
+      "old": "            '\\n' => out.push_str(\"\\\\n\"),",
+      "new": "            '\\n' => out.push('\\n'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "carriage return not escaped",
+      "old": "            '\\r' => out.push_str(\"\\\\r\"),",
+      "new": "            '\\r' => out.push('\\r'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "tab not escaped",
+      "old": "            '\\t' => out.push_str(\"\\\\t\"),",
+      "new": "            '\\t' => out.push('\\t'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "backspace written as unicode escape",
+      "old": "            '\\u{8}' => out.push_str(\"\\\\b\"),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "form feed written as unicode escape",
+      "old": "            '\\u{c}' => out.push_str(\"\\\\f\"),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "control limit below 0x1f",
+      "old": "            control if u32::from(control) < 0x20 => {",
+      "new": "            control if u32::from(control) < 0x1f => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "space escaped",
+      "old": "            control if u32::from(control) < 0x20 => {",
+      "new": "            control if u32::from(control) <= 0x20 => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "DEL escaped",
+      "old": "            control if u32::from(control) < 0x20 => {",
+      "new": "            control if u32::from(control) < 0x20 || control == '\\u{7f}' => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "control escape in upper-case hex",
+      "old": "out.push_str(&format!(\"\\\\u{:04x}\", u32::from(control)));",
+      "new": "out.push_str(&format!(\"\\\\u{:04X}\", u32::from(control)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "control escape not padded",
+      "old": "out.push_str(&format!(\"\\\\u{:04x}\", u32::from(control)));",
+      "new": "out.push_str(&format!(\"\\\\u{:x}\", u32::from(control)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "text written without opening quote",
+      "old": "fn write_text(text: &str, out: &mut String) {\n    out.push('\"');",
+      "new": "fn write_text(text: &str, out: &mut String) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "parse starts one level deep",
+      "old": "        read(decode::<&RawValue>(text)?.get(), 0)",
+      "new": "        read(decode::<&RawValue>(text)?.get(), 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "get answers for the first entry",
+      "old": "            Datum::Map(map) => map.get(key),",
+      "new": "            Datum::Map(map) => map.get(key).or(map.values().next()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "as_list answers nothing",
+      "old": "            Datum::List(items) => Some(items),",
+      "new": "            Datum::List(_) => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "as_int answers nothing",
+      "old": "            Datum::Int(number) => Some(number),",
+      "new": "            Datum::Int(_) => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "as_text answers nothing",
+      "old": "            Datum::Text(text) => Some(text),",
+      "new": "            Datum::Text(_) => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "is_map true for a list",
+      "old": "        matches!(self, Datum::Map(_))",
+      "new": "        matches!(self, Datum::Map(_) | Datum::List(_))",
+      "outcome": "killed"
+    },
+    {
+      "name": "is_map always false",
+      "old": "        matches!(self, Datum::Map(_))",
+      "new": "        false",
+      "outcome": "killed"
+    },
+    {
+      "name": "count reads the absolute value",
+      "old": "        self.as_int()\n            .and_then(|number| usize::try_from(number).ok())",
+      "new": "        self.as_int()\n            .and_then(|number| usize::try_from(number.magnitude()).ok())",
+      "outcome": "killed"
+    },
+    {
+      "name": "null written as text",
+      "old": "            Datum::Null => out.push_str(\"null\"),",
+      "new": "            Datum::Null => out.push_str(\"\\\"null\\\"\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "true and false swapped",
+      "old": "out.push_str(if *flag { \"true\" } else { \"false\" }),",
+      "new": "out.push_str(if *flag { \"false\" } else { \"true\" }),",
+      "outcome": "killed"
+    },
+    {
+      "name": "integer written quoted",
+      "old": "            Datum::Int(number) => out.push_str(&number.to_string()),",
+      "new": "            Datum::Int(number) => write_text(&number.to_string(), out),",
+      "outcome": "killed"
+    },
+    {
+      "name": "decimal written quoted",
+      "old": "            Datum::Decimal(written) => out.push_str(written),",
+      "new": "            Datum::Decimal(written) => write_text(written, out),",
+      "outcome": "killed"
+    },
+    {
+      "name": "list separator before the first item",
+      "old": "                for (index, item) in items.iter().enumerate() {\n                    if index > 0 {",
+      "new": "                for (index, item) in items.iter().enumerate() {\n                    if index >= 0 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "list has no separator",
+      "old": "                for (index, item) in items.iter().enumerate() {\n                    if index > 0 {",
+      "new": "                for (index, item) in items.iter().enumerate() {\n                    if index > 1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "map separator before the first entry",
+      "old": "                for (index, (key, value)) in map.iter().enumerate() {\n                    if index > 0 {",
+      "new": "                for (index, (key, value)) in map.iter().enumerate() {\n                    if index >= 0 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "map loses a separator",
+      "old": "                for (index, (key, value)) in map.iter().enumerate() {\n                    if index > 0 {",
+      "new": "                for (index, (key, value)) in map.iter().enumerate() {\n                    if index > 1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "map key written raw",
+      "old": "                    write_text(key, out);\n                    out.push(':');",
+      "new": "                    out.push_str(key);\n                    out.push(':');",
+      "outcome": "killed"
+    },
+    {
+      "name": "space after the colon",
+      "old": "                    out.push(':');",
+      "new": "                    out.push_str(\": \");",
+      "outcome": "killed"
+    },
+    {
+      "name": "i64 range sent as text",
+      "old": "            Datum::Int(number) => i64::try_from(number)\n                .map(Json::from)\n                .or_else(|_| u64::try_from(number).map(Json::from))",
+      "new": "            Datum::Int(number) => u64::try_from(number)\n                .map(Json::from)",
+      "outcome": "killed"
+    },
+    {
+      "name": "u64 range sent as text",
+      "old": "                .or_else(|_| u64::try_from(number).map(Json::from))\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "wide integer sent as zero",
+      "old": "                .unwrap_or_else(|_| Json::String(number.to_string())),",
+      "new": "                .unwrap_or_else(|_| Json::from(0)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "decimal sent as null",
+      "old": "            Datum::Decimal(written) => Json::String(written.clone()),",
+      "new": "            Datum::Decimal(_) => Json::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "bool sent inverted",
+      "old": "            Datum::Bool(flag) => Json::Bool(*flag),",
+      "new": "            Datum::Bool(flag) => Json::Bool(!*flag),",
+      "outcome": "killed"
+    },
+    {
+      "name": "usize built negative",
+      "old": "impl From<usize> for Datum {\n    fn from(number: usize) -> Self {\n        Datum::Int(BigInt::from(number))",
+      "new": "impl From<usize> for Datum {\n    fn from(number: usize) -> Self {\n        Datum::Int(-BigInt::from(number))",
+      "outcome": "killed"
+    },
+    {
+      "name": "i64 built as absolute value",
+      "old": "impl From<i64> for Datum {\n    fn from(number: i64) -> Self {\n        Datum::Int(BigInt::from(number))",
+      "new": "impl From<i64> for Datum {\n    fn from(number: i64) -> Self {\n        Datum::Int(BigInt::from(number.unsigned_abs()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "list built reversed",
+      "old": "        Datum::List(items.into_iter().map(Into::into).collect())",
+      "new": "        Datum::List(items.into_iter().rev().map(Into::into).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "map builder keeps the first entry",
+      "old": "            entries\n                .into_iter()\n                .map(|(key, value)| (key.to_owned(), value))",
+      "new": "            entries\n                .into_iter()\n                .rev()\n                .map(|(key, value)| (key.to_owned(), value))",
+      "outcome": "killed"
+    }
+  ]
+}

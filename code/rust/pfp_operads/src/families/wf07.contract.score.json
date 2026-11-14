@@ -1,0 +1,105 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf07.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf07.rs",
+      "language": "Rust",
+      "sha256": "e000944ca74187ab236ff2367a2fb8cb151ca22b8699adca28770d5f09a60fd0"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf07:v1",
+    "symbols": [
+      "INCONSISTENT",
+      "UNDERDETERMINED",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is a system A x = b over the rationals: A a nonempty rectangular list of rows with at least one column, b one entry per row, every entry an exact rational. Anything else is refused before a prompt is written.",
+      "The host classifies the system itself by the rank test and reports rank(A), rank([A|b]), the number of unknowns and the status as the witness of every verdict.",
+      "A reply that refuses is a typed refusal only when the system has no unique solution and the reply's code is the one the rank test gives: UNRESOLVED_INCONSISTENT or UNRESOLVED_UNDERDETERMINED. A refusal of a solvable system is FALSE_REFUSAL, and the other code is WRONG_REFUSAL_CODE.",
+      "A reply that answers a system with no unique solution is refused as BLUFF, whatever it answers.",
+      "A reply that answers a solvable system is certified only when its answer equals the unique solution entry for entry as exact rationals; a missing answer is the empty list and does not equal it.",
+      "A reply that is not an object, or whose answer is not a list of exact rationals, is MALFORMED_CANDIDATE."
+    ],
+    "boundaries": [
+      "The check covers the one system in the task. It says nothing about how the model reached its answer.",
+      "A reply that has both refusal and answer is read as a refusal.",
+      "The size of the system is not bounded here; the caller supplies the task."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf07.rs",
+      "language": "Rust",
+      "sha256": "e000944ca74187ab236ff2367a2fb8cb151ca22b8699adca28770d5f09a60fd0"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: ranks and the solution come from exact.rs on unbounded rationals; answers are compared as exact rationals, so 4/2 equals 2 and 0.5 is not accepted. Not B: tested against hand-worked systems, not proven.",
+      "G3": "Each outcome has its own code. Shapes are checked before exact.rs is called, so its indexing is in range. No unwrap, expect or index in this file. Not B: panic-freedom is tested, not proven.",
+      "G4": "14 WF7 tests assert each verdict and code with its witness and predicate rows by digest: the right and a wrong answer, fractions and equal fractions written differently, both refusal codes right and swapped, a false refusal, a bluff on each unsolvable kind, each malformed reply and each malformed task by its reason. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 54/54. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 13, cognitive complexity is not measured for Rust, nesting 2; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v8-test.run.json",
+        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.json",
+        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 54,
+      "survived": 0,
+      "demonstrably_equivalent": 1,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf07.mutation.json",
+        "sha256": "bde1cf966817311e66473e32bbe1af29348685616262b261abfbc64e18d5b937",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 55 mutants"
+      }
+    }
+  },
+  "history": []
+}
