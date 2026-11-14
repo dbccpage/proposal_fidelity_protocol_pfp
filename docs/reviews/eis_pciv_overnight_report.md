@@ -15,10 +15,10 @@ Generated on `2026-11-14` from dedicated worktree `..\pfp_eis_pciv` (`main` chec
 | M5 | `#113` | `gemini/eis-pciv-m5` | `95cff1174` | `main` | Added standalone Rust host binary `code/rust/pfp_immune` (`screen`, `decide`, `taint`, `select`, `exclusion`) + 23 parity tests |
 | M6 | `#118` | `gemini/eis-pciv-m6` | `961376d26` | `main` | Added `pfp_core/operad_ledger.py` + `test_operad_ledger.py` connecting EIS/PCIV outcomes and cemetery headstones to `pfp_operads::ledger` |
 | M7 | `#121` | `gemini/eis-pciv-m7` | `719ed006a` | `M6` (`#118`) | Added `pfp_core/immune_host.py`; routed `WF14`, `WF19`, `WF41`, `WF51`, `immunity.py`, `civilization.py`, `exclusions.py` through `pfp_immune` + `operad_ledger` |
-| M8 | `#<M8_PR>` | `gemini/eis-pciv-m8` | `pending` | `main` | Fixed K9 path drift in 34 doc/YAML files, updated 11 wiki pages + SHA-256 pins, wired 4 K10 Atlas `partial` claims + 4 derivation docs, overnight report |
+| M8 | `#123` | `gemini/eis-pciv-m8` | `eee9f5821` | `main` | Fixed K9 path drift in 34 doc/YAML files, updated 11 wiki pages + SHA-256 pins, wired 4 K10 Atlas `partial` claims + 4 derivation docs, overnight report |
 
 - **Unpushed branches:** none.
-- **Stacking notes:** `#104` builds on `#100`; `#108` builds on `#104`; `#121` builds on `#118`. Draft PRs `#94`, `#100`, `#113`, `#118`, and `#<M8_PR>` branch directly from `origin/main`.
+- **Stacking notes:** `#104` builds on `#100`; `#108` builds on `#104`; `#121` builds on `#118`. Draft PRs `#94`, `#100`, `#113`, `#118`, and `#123` branch directly from `origin/main`.
 
 ## 2. Verified Milestones, Commands, and Before/After Counts
 
@@ -41,7 +41,7 @@ Generated on `2026-11-14` from dedicated worktree `..\pfp_eis_pciv` (`main` chec
 - **M6 (`#118`):** `pfp_core/operad_ledger.py` + `test_operad_ledger.py`: `pytest pfp_core/tests/test_operad_ledger.py pfp_core/tests/test_exclusions.py pfp_core/workflow_families/tests/test_learning.py -q` (`79` passed in `5.59s`), `cargo test -p pfp_operads --test ledger` (`15/15` passed), ruff & `checker.py` (`0/0` violations).
 - **M7 (`#121`):** `pfp_core/immune_host.py` and workflow migrations (`WF14`, `WF19`, `WF41`, `WF51`): `test_immune_parity.py` (`19` passed in `3.78s`), `-k "WF14 or WF19 or WF41 or WF51"` (`34` passed in `7.66s`), `test_operad_ledger.py` + `test_exclusions.py` (`70` passed in `2.63s`), `test_pfp_core.py` + `test_hardening_20261111.py` (`16` passed in `2.85s`), ruff & `checker.py` (`0/0` violations).
 
-### M8 Verification (`gemini/eis-pciv-m8` — `#<M8_PR>`)
+### M8 Verification (`gemini/eis-pciv-m8` — `#123`)
 
 - **K9 doc/YAML updates:** Updated `34` files (`12` YAML specs under `eis/antibodies/` and `eis/antibodies/specs/`, `eis/documentation/oeeis_residual_obligations.md`, and `21` Markdown docs under `pciv/documentation/`):
   - `git grep -n "crates_rs" -- eis/antibodies eis/documentation pciv/documentation` -> `0` matches.
@@ -78,7 +78,7 @@ Generated on `2026-11-14` from dedicated worktree `..\pfp_eis_pciv` (`main` chec
 ## 4. Open Decisions for Jeremy
 
 1. **PR merge sequence and release binary rebuild:**
-   - Merge order recommended: `#94` (M0/M1) -> `#100` (M2) -> `#104` (M3) -> `#108` (M4) and `#113` (M5), `#118` (M6) -> `#121` (M7), `#<M8_PR>` (M8). Once `#113` and `#121` are both on `main`, decide whether CI (`eis_pciv_rust.yml` or workflow jobs) should build `pfp_immune` automatically before Python workflow suites run so `immune_host.py` exercises the native binary instead of offline fallback.
+   - Merge order recommended: `#94` (M0/M1) -> `#100` (M2) -> `#104` (M3) -> `#108` (M4) and `#113` (M5), `#118` (M6) -> `#121` (M7), `#123` (M8). Once `#113` and `#121` are both on `main`, decide whether CI (`eis_pciv_rust.yml` or workflow jobs) should build `pfp_immune` automatically before Python workflow suites run so `immune_host.py` exercises the native binary instead of offline fallback.
 2. **Deprecation/removal schedule for legacy Python check modules & monorepo-dependent tests:**
    - Decide when to remove Python check duplicates (`eis/domain/*`, `pfp_core/immunity.py` fallbacks) and archive or re-home grandfathered `eis/tests` / `pciv/tests` importing `operating_system.*` once M2–M7 land on `main`.
 3. **Wiki publication & `oeeis_residual_obligations.md` operator sign-off:**
@@ -98,4 +98,4 @@ Both `code/rust/core_operad_canon/` and `code/rust/pfp_operads/` were left untou
 1. **What it supports:** Verified offline compilation, formatting, clippy, unit/integration parity, exact-rational migration, CLI binary check routing, append-only ledger persistence, documentation path alignment (`34` doc/YAML files + `11` wiki pages), and `4` new Atlas `partial` links across the M0–M8 Draft PR stack under declared offline test fixtures.
 2. **What it does not support:** Live LLM evaluations, statistical observer independence, population false-positive rates (`FP/(FP+TN)`), closing operator deployment/key-custody obligations, or removing grandfathered monorepo-dependent Python tests.
 3. **The narrowest defensible claim:** Each EIS and PCIV defect and documentation gap addressed across M0–M8 matches its recorded branch checks (`cargo test`, `cargo clippy`, `pytest`, `governance.tools.checker`, and `dag/build_atlas.py --check`), while branches M2–M8 remain separate Draft PRs pending review and integration onto `main`.
-4. **The next test needed:** After merging `#100`->`#104`->`#108`, `#113`, `#118`->`#121`, and `#<M8_PR>` onto a single integration branch, build both `pfp_operads` and `pfp_immune` in release mode and execute `cargo test` plus the combined Python parity and workflow suites (`test_immune_parity.py`, `test_operad_ledger.py`, `pfp_core/workflow_families`) with `pfp_immune` actively on `PATH` (verifying non-fallback execution end-to-end).
+4. **The next test needed:** After merging `#100`->`#104`->`#108`, `#113`, `#118`->`#121`, and `#123` onto a single integration branch, build both `pfp_operads` and `pfp_immune` in release mode and execute `cargo test` plus the combined Python parity and workflow suites (`test_immune_parity.py`, `test_operad_ledger.py`, `pfp_core/workflow_families`) with `pfp_immune` actively on `PATH` (verifying non-fallback execution end-to-end).
